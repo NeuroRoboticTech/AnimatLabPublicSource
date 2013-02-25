@@ -190,12 +190,6 @@ Namespace Forms.Tools
 
         End Sub
 
-        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-            MyBase.AnimatForm_FormClosing(sender, e)
-
-            Dim iVal As Integer = 5
-        End Sub
-
         Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
             MyBase.OnFormClosing(e)
 

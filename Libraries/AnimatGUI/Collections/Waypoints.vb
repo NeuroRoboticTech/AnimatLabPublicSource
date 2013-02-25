@@ -194,4 +194,68 @@ Namespace Collections
 
     End Class 'Joints
 
+
+    Public Class SortedWaypointsList
+        Inherits AnimatSortedList
+
+        Public Sub New(ByVal doParent As Framework.DataObject)
+            MyBase.New(doParent)
+        End Sub
+
+        Default Public Overloads Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.Visualization.Waypoint
+            Get
+                Return CType(MyBase.Item(key), AnimatGUI.DataObjects.Visualization.Waypoint)
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Visualization.Waypoint)
+                MyBase.Item(key) = Value
+            End Set
+        End Property
+
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Visualization.Waypoint, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
+            MyBase.Add(key, value)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
+
+            Me.IsDirty = True
+        End Sub 'Add
+
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As AnimatGUI.DataObjects.Visualization.Waypoint = DirectCast(Me(key), AnimatGUI.DataObjects.Visualization.Waypoint)
+
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            MyBase.Remove(key)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As AnimatGUI.DataObjects.Visualization.Waypoint = DirectCast(Me.GetByIndex(index), AnimatGUI.DataObjects.Visualization.Waypoint)
+
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            MyBase.RemoveAt(index)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overrides Function Copy() As AnimatSortedList
+            Dim aryList As New SortedWaypointsList(m_doParent)
+            aryList.CopyInternal(Me)
+            Return aryList
+        End Function
+
+        Public Overloads Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatSortedList
+            Dim aryList As New SortedWaypointsList(m_doParent)
+            aryList.CloneInternal(Me, doParent, bCutData, doRoot)
+            Return aryList
+        End Function
+
+        Public Overrides Function CloneList() As AnimatSortedList
+            Dim aryList As New SortedWaypointsList(m_doParent)
+            aryList.CloneInternal(Me, Me.Parent, False, Nothing)
+            Return aryList
+        End Function
+
+    End Class
+
 End Namespace

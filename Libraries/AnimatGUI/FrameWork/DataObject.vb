@@ -694,9 +694,9 @@ Namespace Framework
 
         Public Overridable Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             Try
-                If Me.ID = "A5A0FB64-EC61-4C16-9A0C-7B5720A8F017" Then
-                    Dim iVal As Integer = 5
-                End If
+                'If Me.ID = "A5A0FB64-EC61-4C16-9A0C-7B5720A8F017" Then
+                '    Dim iVal As Integer = 5
+                'End If
                 If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
                     m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
                 End If

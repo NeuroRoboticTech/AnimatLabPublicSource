@@ -17,7 +17,7 @@ Namespace DataObjects.Visualization
 
 #Region " Attributes "
 
-        Protected m_aryWaypoints As New Collections.SortedWaypoints(Me)
+        Protected m_aryWaypoints As New Collections.SortedWaypointsList(Me)
 
         Protected m_thLinkedStructure As AnimatGUI.TypeHelpers.LinkedStructureList
         Protected m_thLinkedPart As AnimatGUI.TypeHelpers.LinkedBodyPartList
@@ -50,7 +50,7 @@ Namespace DataObjects.Visualization
             End Set
         End Property
 
-        Public Overridable ReadOnly Property Waypoints() As Collections.SortedWaypoints
+        Public Overridable ReadOnly Property Waypoints() As Collections.SortedWaypointsList
             Get
                 Return m_aryWaypoints
             End Get
@@ -144,7 +144,7 @@ Namespace DataObjects.Visualization
 
             Dim bpOrig As CameraPath = DirectCast(doOriginal, CameraPath)
 
-            m_aryWaypoints = DirectCast(bpOrig.m_aryWaypoints.Clone(Me, bCutData, doRoot), Collections.SortedWaypoints)
+            m_aryWaypoints = DirectCast(bpOrig.m_aryWaypoints.Clone(Me, bCutData, doRoot), Collections.SortedWaypointsList)
             m_thLinkedStructure = DirectCast(bpOrig.m_thLinkedStructure.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedStructureList)
             m_thLinkedPart = DirectCast(bpOrig.m_thLinkedPart.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedBodyPartList)
             m_clLineColor = bpOrig.m_clLineColor
@@ -292,14 +292,16 @@ Namespace DataObjects.Visualization
 #End Region
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
-            MyBase.LoadData(oXml)
 
             oXml.IntoElem()
 
-            m_strLinkedStructureID = Util.LoadID(oXml, "LinkedStructureID", True, "")
-            m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPartID", True, "")
+            Me.Name = oXml.GetChildString("Name")
+            Me.ID = oXml.GetChildString("ID")
 
-            m_clLineColor = Util.LoadColor(oXml, "Linecolor")
+            m_strLinkedStructureID = Util.LoadID(oXml, "LinkedStructure", True, "")
+            m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "")
+
+            m_clLineColor = Util.LoadColor(oXml, "LineColor")
 
             If oXml.FindChildElement("Waypoints", False) Then
                 Dim doWaypoint As Waypoint
@@ -311,7 +313,9 @@ Namespace DataObjects.Visualization
 
                     doWaypoint = New Waypoint(Me)
                     doWaypoint.LoadData(oXml)
-                    m_aryWaypoints.Add(doWaypoint.ID, doWaypoint)
+
+                    'Do not call the sim add method here. We will need to do that later when the window is created.
+                    m_aryWaypoints.Add(doWaypoint.ID, doWaypoint, False)
                 Next
                 oXml.OutOfElem()   'Outof Waypoint Element
             End If
@@ -324,6 +328,11 @@ Namespace DataObjects.Visualization
 
             oXml.AddChildElement("CameraPath")
             oXml.IntoElem()
+
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
 
             If Not m_thLinkedStructure Is Nothing AndAlso Not m_thLinkedStructure.PhysicalStructure Is Nothing Then
                 oXml.AddChildElement("LinkedStructureID", m_thLinkedStructure.PhysicalStructure.ID)

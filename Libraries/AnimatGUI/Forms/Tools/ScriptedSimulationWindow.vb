@@ -4,8 +4,8 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
+Imports System.IO
 Imports AnimatGuiCtrls.Controls
-Imports AnimatGUI
 Imports AnimatGUI.Framework
 Imports AnimatGUI.DataObjects
 Imports System.Drawing.Printing
@@ -337,11 +337,6 @@ Namespace Forms
                 If Not m_aryCameraPaths Is Nothing Then m_aryCameraPaths.ClearIsDirty()
             End Sub
 
-            Protected Overrides Sub ReconnectFormToWorkspace()
-
-
-            End Sub
-
             Public Overrides Function Clone() As ToolForm
                 Try
                     Return New Forms.Tools.ScriptedSimulationWindow
@@ -368,6 +363,25 @@ Namespace Forms
                     doPath = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Visualization.CameraPath)
                     doPath.InitializeSimulationReferences(bShowError)
                 Next
+            End Sub
+
+            Public Overloads Overrides Sub LoadExternalFile(ByVal strFilename As String)
+                Try
+                    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
+
+                    'If no file exsists yet then one has not been saved. Just go with the default creation
+                    Dim strFile As String = Util.GetFilePath(Util.Application.ProjectPath, strFilename)
+                    If File.Exists(strFile) Then
+                        oXml.Load(strFile)
+                        oXml.FindElement("Form")
+                        LoadExternalData(oXml)
+                    End If
+
+                    InitializeAfterLoad()
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+
             End Sub
 
             Public Overridable Function GenerateSimWindowXml() As String
@@ -415,7 +429,9 @@ Namespace Forms
 
                         doPath = New DataObjects.Visualization.CameraPath(Me.FormHelper)
                         doPath.LoadData(oXml)
-                        m_aryCameraPaths.Add(doPath.ID, doPath)
+
+                        'Do not call the sim add method here. We will need to do that later when the window is created.
+                        m_aryCameraPaths.Add(doPath.ID, doPath, False)
                     Next
                     oXml.OutOfElem()   'Outof paths Element
                 End If
@@ -452,7 +468,6 @@ Namespace Forms
                                                            ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                            Optional ByVal bRootObject As Boolean = False)
                 MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
-                m_tnWorkspaceNode.Select()
 
                 Dim doPath As AnimatGUI.DataObjects.Visualization.CameraPath
                 For Each deEntry As DictionaryEntry In m_aryCameraPaths

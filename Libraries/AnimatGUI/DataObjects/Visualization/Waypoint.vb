@@ -129,6 +129,9 @@ Namespace DataObjects.Visualization
 
             oXml.IntoElem()
 
+            Me.Name = oXml.GetChildString("Name")
+            Me.ID = oXml.GetChildString("ID")
+
             m_svPosition.LoadData(oXml, "Position")
             m_snTime.LoadData(oXml, "Time")
 
@@ -140,6 +143,10 @@ Namespace DataObjects.Visualization
 
             oXml.AddChildElement("CameraPath")
             oXml.IntoElem()
+
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
+            oXml.AddChildElement("ID", Me.ID)
 
             m_svPosition.SaveData(oXml, "Position")
             m_snTime.SaveData(oXml, "Time")
