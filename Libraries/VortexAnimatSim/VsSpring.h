@@ -16,10 +16,23 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
+			class VORTEX_PORT AnimatVxSpring : public Vx::VxSpring
+			{
+			public:
+				AnimatVxSpring() : Vx::VxSpring() {};
+				AnimatVxSpring(Vx::VxPart* part1, Vx::VxPart* part2, Vx::VxReal naturalLength, Vx::VxReal stiffness, Vx::VxReal damping)
+					 : Vx::VxSpring(part1, part2, naturalLength,stiffness, damping) {};
+				virtual ~AnimatVxSpring() {};
+				
+				void EnableBodies()
+				{Vx::VxSpring::enableBodies();}
+			};
+
 			class VORTEX_PORT VsSpring : public VsLine, public AnimatSim::Environment::Bodies::Spring     
 			{
 			protected:
-				Vx::VxSpring *m_vxSpring;
+				//Vx::VxSpring *m_vxSpring;
+				AnimatVxSpring *m_vxSpring;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();

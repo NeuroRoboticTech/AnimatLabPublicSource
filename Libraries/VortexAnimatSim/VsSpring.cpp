@@ -113,7 +113,7 @@ void VsSpring::SetupPhysics()
 			return;
 		}
 
-		m_vxSpring = new VxSpring(lpVsPrimary->Part(), lpVsSecondary->Part(), m_fltNaturalLength, m_fltStiffness, m_fltDamping); // attached to the reference frame.
+		m_vxSpring = new AnimatVxSpring(lpVsPrimary->Part(), lpVsSecondary->Part(), m_fltNaturalLength, m_fltStiffness, m_fltDamping); // attached to the reference frame.
 
 		CStdFPoint vPrimPos = lpPrimaryAttachment->AbsolutePosition();
 		CStdFPoint vSecPos = lpSecondaryAttachment->AbsolutePosition();
@@ -141,7 +141,10 @@ void VsSpring::Enabled(BOOL bVal)
 	Spring::Enabled(bVal);
 
 	if(m_vxSpring)
+	{
 		m_vxSpring->enable(m_bEnabled);
+		m_vxSpring->EnableBodies();
+	}
 }
 
 void VsSpring::Physics_CollectData()
