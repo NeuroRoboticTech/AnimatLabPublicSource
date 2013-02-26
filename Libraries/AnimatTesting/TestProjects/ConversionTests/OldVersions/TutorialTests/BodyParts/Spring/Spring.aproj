@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>361</TreeViewHeight>
+<TreeViewHeight>436</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -153,7 +153,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="307, 150" DisplayLocation="150, 150" AutoHideSize="307, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -210,7 +210,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="307, 150" DisplayLocation="150, 150" AutoHideSize="307, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />

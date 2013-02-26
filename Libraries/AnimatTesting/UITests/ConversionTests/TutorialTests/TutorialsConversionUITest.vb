@@ -94,9 +94,8 @@ Namespace UITests
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("Length", 0.000001)
-                    aryMaxErrors.Add("Position", 0.3)
-                    aryMaxErrors.Add("Velocity", 0.0005)
+                    aryMaxErrors.Add("Position", 0.005)
+                    aryMaxErrors.Add("Velocity", 0.005)
                     aryMaxErrors.Add("FF", 0.005)
 
                     m_strProjectName = "Spring"

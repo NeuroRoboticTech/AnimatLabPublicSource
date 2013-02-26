@@ -14,7 +14,7 @@
 <Node>
 <AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
 <ClassName>FastNeuralNetTools.DataObjects.Behavior.NeuralModule</ClassName>
-<TimeStep Value="2.5" Scale="milli" Actual="0.0025"/>
+<TimeStep Value="2" Scale="milli" Actual="0.002"/>
 </Node>
 <Node>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -1112,7 +1112,7 @@
     <GradientColor>0</GradientColor>
     <Text>1</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>3</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>0814b138-802a-4fcf-aca7-2fd0d1ba2525</Tag>
   </Node>
   <Node Left="247" Top="117" Width="40" Height="40">
@@ -1190,7 +1190,7 @@
 </DiagramImage>
 </DiagramImages>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
+  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Toolbox" />
       <State Value="DockLeft" />
@@ -1242,7 +1242,7 @@
             <Item Name="Modules" />
           </Next>
           <Previous Count="0" />
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1253,7 +1253,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Properties" />
       <State Value="DockLeft" />
@@ -1277,10 +1277,11 @@
       <Content Name="Properties" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="3">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1289,7 +1290,8 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
         <Space Value="100" />
-        <Best Count="3">
+        <Best Count="4">
+          <Item Name="Toolbox" />
           <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
@@ -1302,8 +1304,10 @@
             <Item Name="Hierarchy" />
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="1">
+            <Item Name="Toolbox" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1314,7 +1318,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
@@ -1338,9 +1342,11 @@
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="2">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1349,7 +1355,9 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
         <Space Value="100" />
-        <Best Count="2">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
@@ -1360,8 +1368,11 @@
           <Next Count="1">
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="2">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1372,7 +1383,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
+  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Modules" />
       <State Value="DockLeft" />
@@ -1395,8 +1406,11 @@
       <Content Name="Modules" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="1">
+      <Best Count="4">
         <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1405,7 +1419,10 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Modules" />
         <Space Value="100" />
-        <Best Count="1">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
+          <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
         <Next Count="0" />
@@ -1413,7 +1430,11 @@
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Modules" />
           <Next Count="0" />
-          <Previous Count="0" />
+          <Previous Count="3">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+            <Item Name="Hierarchy" />
+          </Previous>
           <Selected Value="True" />
           <Child Type="null" />
         </Child>

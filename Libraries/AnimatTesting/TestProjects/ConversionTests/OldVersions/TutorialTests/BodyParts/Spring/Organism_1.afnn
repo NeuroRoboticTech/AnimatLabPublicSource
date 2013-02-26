@@ -1,5 +1,5 @@
 <NeuralModule>
-<TimeStep>0.0025</TimeStep>
+<TimeStep>0.002</TimeStep>
 <NetworkSize x="1" y="1" z="1"/>
 <Neurons>
 <Neuron>
