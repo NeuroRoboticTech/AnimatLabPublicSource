@@ -75,8 +75,10 @@ Namespace UITests
 
                 'Enter text and verify error. Verify the error.
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
-                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 200, True)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 200, True, True)
                 AssertErrorDialogShown(" already exists. Please choose a different name or location for the project.", enumErrorTextType.Contains)
+                'ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 200, True, True)
+                'ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing, 200, True, True)
 
             End Sub
 
@@ -91,8 +93,8 @@ Namespace UITests
 
                 StartExistingProject()
 
-                ''Start the application.
-                'StartApplication(m_strRootFolder & "TestCloseOpen.aproj")
+                WaitWhileBusy()
+                WaitForProjectToOpen()
 
                 'Run the simulation and wait for it to end.
                 RunSimulationWaitToEnd()
@@ -100,7 +102,7 @@ Namespace UITests
                 'Close the project
                 CloseProjectQuiet()
 
-                OpenExistingProject()
+                OpenExistingProject(True)
 
                 'Run the simulation and wait for it to end.
                 RunSimulationWaitToEnd()

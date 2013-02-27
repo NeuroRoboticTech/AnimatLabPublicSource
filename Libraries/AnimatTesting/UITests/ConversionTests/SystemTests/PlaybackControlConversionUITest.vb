@@ -47,7 +47,7 @@ Namespace UITests
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("TotalStepTimeSmoothed", 0.0005)
-                        aryMaxErrors.Add("FrameRate", 2)
+                        aryMaxErrors.Add("FrameRate", 3)
                         aryMaxErrors.Add("default", 0.0005)
 
                         m_strProjectName = "OdorMouthAndEating"

@@ -148,11 +148,16 @@ Namespace Framework
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
-            OpenExistingProject()
+            OpenExistingProject(False)
         End Sub
 
-        Protected Overridable Sub OpenExistingProject()
+        Protected Overridable Sub OpenExistingProject(ByVal bWaitTillOpen As Boolean)
             ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
+
+            If bWaitTillOpen Then
+                WaitWhileBusy()
+                WaitForProjectToOpen()
+            End If
 
             'Set simulation to fastest possible.
             If DirectCast(GetApplicationProperty("ProjectIsOpen"), Boolean) Then
@@ -163,6 +168,8 @@ Namespace Framework
         Protected Overridable Sub CloseProjectQuiet()
 
             ExecuteMethod("CloseProject", New Object() {False, True})
+
+            WaitWhileBusy()
 
         End Sub
 

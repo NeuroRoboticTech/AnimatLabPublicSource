@@ -5,7 +5,7 @@
 <Version>2</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\CreationTests\TestCloseOpen\</ProjectPath>
-<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -515,8 +515,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>0833876f-4107-45cd-8ae8-b334ac92a3eb</Name>
-<ID>0833876f-4107-45cd-8ae8-b334ac92a3eb</ID>
+<Name>0d734c12-9d5c-4a57-b76a-7be66847ae28</Name>
+<ID>0d734c12-9d5c-4a57-b76a-7be66847ae28</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -532,6 +532,30 @@
 </Simulation>
 <DockingForms>
 <Form>
+<ID>2f461cf9-f01f-4d5b-ba36-96020dcf1588</ID>
+<Title>Receptive Field Current</Title>
+<TabPageName>Receptive Field Current</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldCurrent</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>560882c3-a072-4850-89cb-56906ba1084e</ID>
+<Title>Receptive Field Gain</Title>
+<TabPageName>Receptive Field Gain</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldGain</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>3b4fc761-1b00-4ff1-96cb-256c3d4e7c51</ID>
+<Title>Receptive Field Pairs</Title>
+<TabPageName>Receptive Field Pairs</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldPairs</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
 <ID>122fd1f6-6815-4eec-8778-46a241d97a15</ID>
 <Title>Toolbox</Title>
 <TabPageName>Toolbox</TabPageName>
@@ -540,39 +564,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>d825bfa4-1742-4e4b-aa4a-11462b5c8457</ID>
-<Title>Receptive Field Pairs</Title>
-<TabPageName>Receptive Field Pairs</TabPageName>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.Forms.ReceptiveFieldPairs</ClassName>
-<BackgroundForm>True</BackgroundForm>
-</Form>
-<Form>
-<ID>68e4ef29-9df4-4f4b-ac0f-f53410755402</ID>
-<Title>Receptive Field Current</Title>
-<TabPageName>Receptive Field Current</TabPageName>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.Forms.ReceptiveFieldCurrent</ClassName>
-<BackgroundForm>True</BackgroundForm>
-</Form>
-<Form>
-<ID>fb057483-9c76-4060-ad35-55fed5a004b2</ID>
-<Title>Receptive Field Gain</Title>
-<TabPageName>Receptive Field Gain</TabPageName>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.Forms.ReceptiveFieldGain</ClassName>
-<BackgroundForm>True</BackgroundForm>
-</Form>
-<Form>
-<ID>3acef2c6-074d-459b-a744-7d4cdf857ee0</ID>
-<Title>Properties</Title>
-<TabPageName>Properties</TabPageName>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.Forms.ProjectProperties</ClassName>
-<BackgroundForm>True</BackgroundForm>
-</Form>
-<Form>
-<ID>6a976307-d90c-4b38-a473-3747fce33985</ID>
+<ID>946a0fc6-acee-48ab-9b5b-b6acb714cdd9</ID>
 <Title>Workspace</Title>
 <TabPageName>Workspace</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -580,7 +572,15 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>d37c832c-ffc1-4555-9eba-f9b5b09baef6</ID>
+<ID>0fac83f6-dc96-4f49-a662-6aa5af9db8ff</ID>
+<Title>Properties</Title>
+<TabPageName>Properties</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ProjectProperties</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>ef2aa75d-d568-49e1-a56f-9eba7c5469ab</ID>
 <Title>Simulation Controller</Title>
 <TabPageName>Simulation Controller</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -594,12 +594,12 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
-<ID>2cc6cf78-2a02-4774-8495-fb5a1ce01399</ID>
+<ID>dcee41b1-933a-4d74-a6de-16cdbca71fca</ID>
 <Title>Errors</Title>
 <TabPageName>Errors</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -610,7 +610,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2013 02:13:43"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/27/2013 06:57:06"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -632,9 +632,10 @@
       &lt;/Best&gt;
       &lt;Next Count="0" /&gt;
       &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="2"&gt;
-        &lt;Item Name="Workspace" /&gt;
+      &lt;NextAll Count="3"&gt;
         &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
       &lt;/NextAll&gt;
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
@@ -683,9 +684,10 @@
       &lt;/Best&gt;
       &lt;Next Count="0" /&gt;
       &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="2"&gt;
-        &lt;Item Name="Workspace" /&gt;
+      &lt;NextAll Count="3"&gt;
         &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
       &lt;/NextAll&gt;
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
@@ -711,55 +713,7 @@
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
-    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Workspace" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/DefaultRestore&gt;
-    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
-      &lt;Content Name="Workspace" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/AutoHideRestore&gt;
-    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
-      &lt;Content Name="Workspace" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="200, 150" Location="150, 150" /&gt;
-      &lt;Best Count="2"&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-      &lt;/Best&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="0" /&gt;
-      &lt;PreviousAll Count="0" /&gt;
-      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
-        &lt;Content Name="Workspace" UniqueName="" /&gt;
-        &lt;Space Value="50" /&gt;
-        &lt;Best Count="1"&gt;
-          &lt;Item Name="Workspace" /&gt;
-        &lt;/Best&gt;
-        &lt;Next Count="1"&gt;
-          &lt;Item Name="Properties" /&gt;
-        &lt;/Next&gt;
-        &lt;Previous Count="0" /&gt;
-        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
-          &lt;Content Name="Workspace" UniqueName="" /&gt;
-          &lt;Next Count="0" /&gt;
-          &lt;Previous Count="0" /&gt;
-          &lt;Selected Value="True" /&gt;
-          &lt;Child Type="null" /&gt;
-        &lt;/Child&gt;
-      &lt;/Child&gt;
-    &lt;/DockingRestore&gt;
-    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Workspace" UniqueName="" /&gt;
-      &lt;State Value="Floating" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/FloatingRestore&gt;
-  &lt;/Content&gt;
-  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
@@ -773,13 +727,19 @@
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Position Size="150, 150" Location="150, 150" /&gt;
       &lt;Best Count="1"&gt;
         &lt;Item Name="Properties" /&gt;
       &lt;/Best&gt;
-      &lt;Next Count="0" /&gt;
+      &lt;Next Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/Next&gt;
       &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="0" /&gt;
+      &lt;NextAll Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/NextAll&gt;
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
         &lt;Content Name="Properties" UniqueName="" /&gt;
@@ -804,190 +764,42 @@
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Receptive Field Gain" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Field Gain" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/DefaultRestore&gt;
-    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
-      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="3"&gt;
-        &lt;Item Name="Receptive Field Current" /&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-      &lt;/NextAll&gt;
-      &lt;PreviousAll Count="0" /&gt;
-      &lt;CurrentContent Value="True" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/AutoHideRestore&gt;
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
-      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="150, 150" Location="150, 150" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
       &lt;Best Count="1"&gt;
-        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Workspace" /&gt;
       &lt;/Best&gt;
       &lt;Next Count="1"&gt;
-        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
       &lt;/Next&gt;
-      &lt;Previous Count="4"&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-      &lt;/Previous&gt;
-      &lt;NextAll Count="1"&gt;
-        &lt;Item Name="Receptive Field Current" /&gt;
-      &lt;/NextAll&gt;
-      &lt;PreviousAll Count="6"&gt;
-        &lt;Item Name="Simulation Controller" /&gt;
-        &lt;Item Name="Errors" /&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-      &lt;/PreviousAll&gt;
-      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
-        &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
-        &lt;Space Value="100" /&gt;
-        &lt;Best Count="1"&gt;
-          &lt;Item Name="Receptive Field Gain" /&gt;
-        &lt;/Best&gt;
-        &lt;Next Count="0" /&gt;
-        &lt;Previous Count="0" /&gt;
-        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
-          &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
-          &lt;Next Count="0" /&gt;
-          &lt;Previous Count="0" /&gt;
-          &lt;Selected Value="True" /&gt;
-          &lt;Child Type="null" /&gt;
-        &lt;/Child&gt;
-      &lt;/Child&gt;
-    &lt;/DockingRestore&gt;
-    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
-      &lt;State Value="Floating" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/FloatingRestore&gt;
-  &lt;/Content&gt;
-  &lt;Content Name="Receptive Field Current" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Field Current" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
-    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/DefaultRestore&gt;
-    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
-      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="2"&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-      &lt;/NextAll&gt;
-      &lt;PreviousAll Count="0" /&gt;
-      &lt;CurrentContent Value="True" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/AutoHideRestore&gt;
-    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
-      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="150, 150" Location="150, 150" /&gt;
-      &lt;Best Count="1"&gt;
-        &lt;Item Name="Receptive Field Current" /&gt;
-      &lt;/Best&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="4"&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-      &lt;/Previous&gt;
-      &lt;NextAll Count="0" /&gt;
-      &lt;PreviousAll Count="6"&gt;
-        &lt;Item Name="Simulation Controller" /&gt;
-        &lt;Item Name="Errors" /&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-      &lt;/PreviousAll&gt;
-      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
-        &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-        &lt;Space Value="100" /&gt;
-        &lt;Best Count="1"&gt;
-          &lt;Item Name="Receptive Field Current" /&gt;
-        &lt;/Best&gt;
-        &lt;Next Count="0" /&gt;
-        &lt;Previous Count="0" /&gt;
-        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
-          &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-          &lt;Next Count="0" /&gt;
-          &lt;Previous Count="0" /&gt;
-          &lt;Selected Value="True" /&gt;
-          &lt;Child Type="null" /&gt;
-        &lt;/Child&gt;
-      &lt;/Child&gt;
-    &lt;/DockingRestore&gt;
-    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
-      &lt;State Value="Floating" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/FloatingRestore&gt;
-  &lt;/Content&gt;
-  &lt;Content Name="Receptive Field Pairs" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Field Pairs" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
-    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/DefaultRestore&gt;
-    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
-      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Next Count="0" /&gt;
       &lt;Previous Count="0" /&gt;
       &lt;NextAll Count="1"&gt;
         &lt;Item Name="Toolbox" /&gt;
       &lt;/NextAll&gt;
       &lt;PreviousAll Count="0" /&gt;
-      &lt;CurrentContent Value="True" /&gt;
-      &lt;Child Type="null" /&gt;
-    &lt;/AutoHideRestore&gt;
-    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
-      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
-      &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="150, 150" Location="150, 150" /&gt;
-      &lt;Best Count="1"&gt;
-        &lt;Item Name="Receptive Field Pairs" /&gt;
-      &lt;/Best&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="3"&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-      &lt;/Previous&gt;
-      &lt;NextAll Count="0" /&gt;
-      &lt;PreviousAll Count="5"&gt;
-        &lt;Item Name="Simulation Controller" /&gt;
-        &lt;Item Name="Errors" /&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-        &lt;Item Name="Toolbox" /&gt;
-      &lt;/PreviousAll&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
-        &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+        &lt;Content Name="Workspace" UniqueName="" /&gt;
         &lt;Space Value="100" /&gt;
         &lt;Best Count="1"&gt;
-          &lt;Item Name="Receptive Field Pairs" /&gt;
+          &lt;Item Name="Workspace" /&gt;
         &lt;/Best&gt;
         &lt;Next Count="0" /&gt;
         &lt;Previous Count="0" /&gt;
         &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
-          &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+          &lt;Content Name="Workspace" UniqueName="" /&gt;
           &lt;Next Count="0" /&gt;
           &lt;Previous Count="0" /&gt;
           &lt;Selected Value="True" /&gt;
@@ -996,25 +808,20 @@
       &lt;/Child&gt;
     &lt;/DockingRestore&gt;
     &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
-      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="Floating" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/DefaultRestore&gt;
-    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Next Count="0" /&gt;
-      &lt;Previous Count="0" /&gt;
-      &lt;NextAll Count="0" /&gt;
-      &lt;PreviousAll Count="0" /&gt;
-      &lt;CurrentContent Value="True" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/AutoHideRestore&gt;
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
@@ -1025,17 +832,9 @@
         &lt;Item Name="Toolbox" /&gt;
       &lt;/Best&gt;
       &lt;Next Count="0" /&gt;
-      &lt;Previous Count="2"&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-      &lt;/Previous&gt;
+      &lt;Previous Count="0" /&gt;
       &lt;NextAll Count="0" /&gt;
-      &lt;PreviousAll Count="4"&gt;
-        &lt;Item Name="Simulation Controller" /&gt;
-        &lt;Item Name="Errors" /&gt;
-        &lt;Item Name="Workspace" /&gt;
-        &lt;Item Name="Properties" /&gt;
-      &lt;/PreviousAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
         &lt;Content Name="Toolbox" UniqueName="" /&gt;
         &lt;Space Value="100" /&gt;
@@ -1055,6 +854,190 @@
     &lt;/DockingRestore&gt;
     &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Pairs" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Pairs" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="2"&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="3"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Pairs" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="5"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="3"&gt;
+          &lt;Item Name="Receptive Field Pairs" /&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+          &lt;Next Count="2"&gt;
+            &lt;Item Name="Receptive Field Gain" /&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Gain" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Gain" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="5"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+          &lt;Next Count="1"&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Current" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Current" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="5"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
       &lt;State Value="Floating" /&gt;
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;

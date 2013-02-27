@@ -91,7 +91,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Receptive Fields" />
-        <Space Value="69.215686274509803921568627450" />
+        <Space Value="43.849206349206349206349206350" />
         <Best Count="2">
           <Item Name="Properties" />
           <Item Name="Receptive Fields" />
@@ -145,7 +145,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
-        <Space Value="30.784313725490196078431372550" />
+        <Space Value="56.150793650793650793650793650" />
         <Best Count="1">
           <Item Name="Hierarchy" />
         </Best>
@@ -197,7 +197,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
-        <Space Value="69.215686274509803921568627450" />
+        <Space Value="43.849206349206349206349206350" />
         <Best Count="2">
           <Item Name="Properties" />
           <Item Name="Receptive Fields" />

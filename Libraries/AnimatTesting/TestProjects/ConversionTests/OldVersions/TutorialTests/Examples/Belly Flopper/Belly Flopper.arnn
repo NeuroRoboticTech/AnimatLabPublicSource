@@ -54,28 +54,8 @@
 <Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
-<Name>NMDA type</Name>
-<ID>2</ID>
-<Equil>-10</Equil>
-<SynAmp>0.1</SynAmp>
-<Decay>50</Decay>
-<RelFacil>1</RelFacil>
-<FacilDecay>1</FacilDecay>
-<VoltDep>True</VoltDep>
-<MaxRelCond>5e+06</MaxRelCond>
-<SatPSPot>-30</SatPSPot>
-<ThreshPSPot>-60</ThreshPSPot>
-<Hebbian>False</Hebbian>
-<MaxAugCond>1</MaxAugCond>
-<LearningInc>10</LearningInc>
-<LearningTime>20</LearningTime>
-<AllowForget>True</AllowForget>
-<ForgetTime>10000</ForgetTime>
-<Consolidation>1</Consolidation>
-</SpikingSynapse>
-<SpikingSynapse>
 <Name>AntiFacilitating Ach</Name>
-<ID>3</ID>
+<ID>2</ID>
 <Equil>-10</Equil>
 <SynAmp>1</SynAmp>
 <Decay>3</Decay>
@@ -95,13 +75,33 @@
 </SpikingSynapse>
 <SpikingSynapse>
 <Name>Hyperpolarizing IPSP</Name>
-<ID>4</ID>
+<ID>3</ID>
 <Equil>-70</Equil>
 <SynAmp>0.5</SynAmp>
 <Decay>10</Decay>
 <RelFacil>1.5</RelFacil>
 <FacilDecay>100</FacilDecay>
 <VoltDep>False</VoltDep>
+<MaxRelCond>5e+06</MaxRelCond>
+<SatPSPot>-30</SatPSPot>
+<ThreshPSPot>-60</ThreshPSPot>
+<Hebbian>False</Hebbian>
+<MaxAugCond>1</MaxAugCond>
+<LearningInc>10</LearningInc>
+<LearningTime>20</LearningTime>
+<AllowForget>True</AllowForget>
+<ForgetTime>10000</ForgetTime>
+<Consolidation>1</Consolidation>
+</SpikingSynapse>
+<SpikingSynapse>
+<Name>NMDA type</Name>
+<ID>4</ID>
+<Equil>-10</Equil>
+<SynAmp>0.1</SynAmp>
+<Decay>50</Decay>
+<RelFacil>1</RelFacil>
+<FacilDecay>1</FacilDecay>
+<VoltDep>True</VoltDep>
 <MaxRelCond>5e+06</MaxRelCond>
 <SatPSPot>-30</SatPSPot>
 <ThreshPSPot>-60</ThreshPSPot>
@@ -950,7 +950,7 @@
 <Source>8</Source>
 <Target>25</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -959,7 +959,7 @@
 <Source>13</Source>
 <Target>5</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -968,7 +968,7 @@
 <Source>11</Source>
 <Target>2</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -977,7 +977,7 @@
 <Source>7</Source>
 <Target>12</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -986,7 +986,7 @@
 <Source>2</Source>
 <Target>8</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1022,7 +1022,7 @@
 <Source>17</Source>
 <Target>30</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1031,7 +1031,7 @@
 <Source>10</Source>
 <Target>20</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1040,7 +1040,7 @@
 <Source>27</Source>
 <Target>17</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1058,7 +1058,7 @@
 <Source>20</Source>
 <Target>21</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1067,7 +1067,7 @@
 <Source>1</Source>
 <Target>24</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1085,7 +1085,7 @@
 <Source>9</Source>
 <Target>32</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1112,7 +1112,7 @@
 <Source>23</Source>
 <Target>22</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1121,7 +1121,7 @@
 <Source>12</Source>
 <Target>10</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>0.5</GFacilCx>
 <G>0.5</G>
@@ -1130,7 +1130,7 @@
 <Source>5</Source>
 <Target>0</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1148,7 +1148,7 @@
 <Source>26</Source>
 <Target>24</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1157,7 +1157,7 @@
 <Source>10</Source>
 <Target>8</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1166,7 +1166,7 @@
 <Source>4</Source>
 <Target>5</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1184,7 +1184,7 @@
 <Source>11</Source>
 <Target>18</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1193,7 +1193,7 @@
 <Source>18</Source>
 <Target>6</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1211,7 +1211,7 @@
 <Source>2</Source>
 <Target>20</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1220,7 +1220,7 @@
 <Source>24</Source>
 <Target>16</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1238,7 +1238,7 @@
 <Source>28</Source>
 <Target>12</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1247,7 +1247,7 @@
 <Source>24</Source>
 <Target>4</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>0.5</GFacilCx>
 <G>0.5</G>
@@ -1256,7 +1256,7 @@
 <Source>9</Source>
 <Target>29</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1265,7 +1265,7 @@
 <Source>4</Source>
 <Target>29</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1274,7 +1274,7 @@
 <Source>27</Source>
 <Target>7</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1292,7 +1292,7 @@
 <Source>6</Source>
 <Target>17</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1301,7 +1301,7 @@
 <Source>12</Source>
 <Target>19</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1310,7 +1310,7 @@
 <Source>14</Source>
 <Target>20</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1328,7 +1328,7 @@
 <Source>29</Source>
 <Target>3</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1346,7 +1346,7 @@
 <Source>14</Source>
 <Target>27</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1382,7 +1382,7 @@
 <Source>7</Source>
 <Target>23</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1391,7 +1391,7 @@
 <Source>14</Source>
 <Target>13</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1418,7 +1418,7 @@
 <Source>15</Source>
 <Target>8</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1427,7 +1427,7 @@
 <Source>26</Source>
 <Target>28</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1445,7 +1445,7 @@
 <Source>17</Source>
 <Target>13</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>0.5</GFacilCx>
 <G>0.5</G>
@@ -1454,7 +1454,7 @@
 <Source>6</Source>
 <Target>24</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1463,7 +1463,7 @@
 <Source>32</Source>
 <Target>1</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1472,7 +1472,7 @@
 <Source>13</Source>
 <Target>29</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1490,7 +1490,7 @@
 <Source>28</Source>
 <Target>23</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1499,7 +1499,7 @@
 <Source>23</Source>
 <Target>2</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>0.5</GFacilCx>
 <G>0.5</G>
@@ -1517,7 +1517,7 @@
 <Source>1</Source>
 <Target>17</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1526,7 +1526,7 @@
 <Source>15</Source>
 <Target>26</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1553,7 +1553,7 @@
 <Source>11</Source>
 <Target>5</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1562,7 +1562,7 @@
 <Source>18</Source>
 <Target>23</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1571,7 +1571,7 @@
 <Source>15</Source>
 <Target>4</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1589,7 +1589,7 @@
 <Source>32</Source>
 <Target>12</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>
@@ -1598,7 +1598,7 @@
 <Source>9</Source>
 <Target>10</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>3</ID>
 <Delay>0</Delay>
 <GFacilCx>1</GFacilCx>
 <G>1</G>

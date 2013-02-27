@@ -1,7 +1,7 @@
 <Editor>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="46" y="27"/>
+<NormalLocation x="50" y="50"/>
 <NormalSize Width="911" Height="484"/>
 <WindowState>Normal</WindowState>
 <Structure>a20d32cb-45fe-484b-8d52-f5db13b6f860</Structure>
@@ -11,8 +11,10 @@
 <Zoom>8.23</Zoom>
 <RotateX>-2.88999</RotateX>
 <RotateY>0.939998</RotateY>
+<RotateZ>0</RotateZ>
+<BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 20" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
+  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 81" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Command" />
       <State Value="DockLeft" />
@@ -26,7 +28,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Command" />
       <State Value="DockTop" />
-      <Position Size="150, 20" Location="150, 150" />
+      <Position Size="150, 81" Location="150, 150" />
       <Best Count="1">
         <Item Name="Command" />
       </Best>
@@ -89,7 +91,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Receptive Fields" />
-        <Space Value="50" />
+        <Space Value="62.371134020618556701030927840" />
         <Best Count="2">
           <Item Name="Properties" />
           <Item Name="Receptive Fields" />
@@ -143,7 +145,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
-        <Space Value="50" />
+        <Space Value="37.628865979381443298969072160" />
         <Best Count="1">
           <Item Name="Hierarchy" />
         </Best>
@@ -195,7 +197,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
-        <Space Value="50" />
+        <Space Value="62.371134020618556701030927840" />
         <Best Count="2">
           <Item Name="Properties" />
           <Item Name="Receptive Fields" />

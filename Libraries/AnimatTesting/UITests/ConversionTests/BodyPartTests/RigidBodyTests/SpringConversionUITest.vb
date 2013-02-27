@@ -173,8 +173,8 @@ Namespace UITests
                         ClickMenuItem("CopyToolStripMenuItem", True)
 
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Name", "Spring1"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Name", "Spring2"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Name", "Spring1"})
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
@@ -261,9 +261,9 @@ Namespace UITests
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Length1Disable_")
 
 
-                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_2\RightSide\RightAttach", "Delete Body Part")
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\RightJoint\RightSide\RightAttach", "Delete Body Part")
                         Threading.Thread.Sleep(1000)
-                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_2\RightSide\RightAttach"})) Then
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\RightJoint\RightSide\RightAttach"})) Then
                             Throw New System.Exception("RightAttach node was not removed correctly.")
                         End If
                         If DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "AttachmentPoints.Count"), Integer) <> 1 Then
@@ -290,9 +290,9 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring2Right2_")
 
-                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_2\RightSide", "Delete Body Part")
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\RightJoint\RightSide", "Delete Body Part")
                         Threading.Thread.Sleep(1000)
-                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_2\RightSide"})) Then
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\RightJoint\RightSide"})) Then
                             Throw New System.Exception("RightAttach node was not removed correctly.")
                         End If
                         If DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "AttachmentPoints.Count"), Integer) <> 1 Then

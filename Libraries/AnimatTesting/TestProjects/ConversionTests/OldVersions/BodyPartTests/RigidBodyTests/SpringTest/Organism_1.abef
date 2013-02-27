@@ -35,66 +35,6 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>d79eb29f-d79d-4228-9656-b2a66ced732a</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Fork</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Nicotinic ACh</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="3" Scale="milli" Actual="0.003"/>
-<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
-<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
-<VoltageDependent>False</VoltageDependent>
-<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
-<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
-<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
-<Hebbian>False</Hebbian>
-<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
-<LearningIncrement>0.1</LearningIncrement>
-<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
-<AllowForgetting>True</AllowForgetting>
-<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
-<ConsolidationFactor>1</ConsolidationFactor>
-</Link>
-<Link>
-<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
-<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
 <ID>b73d5d8f-1696-43b0-a184-4d5cadf97a6c</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -259,6 +199,66 @@
 <HighCoupling Value="0.3" Scale="micro" Actual="3e-07"/>
 <TurnOnThreshold Value="10" Scale="milli" Actual="0.01"/>
 <TurnOnSaturate Value="30" Scale="milli" Actual="0.03"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>9977642c-e27d-494b-96af-32c8af51419d</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Depolarizing IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
 </Link>
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -467,11 +467,11 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>9977642c-e27d-494b-96af-32c8af51419d</ID>
+<ID>d79eb29f-d79d-4228-9656-b2a66ced732a</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Circle</Style>
+<Style>Fork</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
 <Filled>False</Filled>
@@ -506,11 +506,11 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Depolarizing IPSP</Name>
-<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<Name>Nicotinic ACh</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
 <DecayRate Value="3" Scale="milli" Actual="0.003"/>
-<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
 <FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
 <VoltageDependent>False</VoltageDependent>
 <MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
@@ -848,7 +848,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="215" y="108.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -919,7 +919,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="118" y="110"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -975,7 +975,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="307" y="102"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>

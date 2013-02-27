@@ -64,18 +64,28 @@
 <Title>BodyData</Title>
 </Form>
 </Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
+<EditorFile>Belly Flopper.abpe</EditorFile>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Behavior.AddFlowDiagram</ClassName>
+<Title>Edit Belly Flopper</Title>
+</Form>
+</Child>
 </ChildForms>
 <ToolViewers>
-<ToolHolder>
-<ID>59e4672b-362d-4307-8591-ca81635e2c06</ID>
-<Name>Left Lower Leg</Name>
-<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
-</ToolHolder>
 <ToolHolder>
 <ID>546ecabd-67dd-4cf4-8ede-fadff29396e8</ID>
 <Name>BodyData</Name>
 <BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>59e4672b-362d-4307-8591-ca81635e2c06</ID>
+<Name>Left Lower Leg</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 </ToolViewers>

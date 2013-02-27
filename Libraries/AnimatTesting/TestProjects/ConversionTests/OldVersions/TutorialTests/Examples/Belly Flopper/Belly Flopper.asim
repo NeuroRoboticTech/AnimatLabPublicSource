@@ -1,5 +1,5 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\Tutorials\Examples\Belly Flopper\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\Belly Flopper\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -8,7 +8,7 @@
 <APIFile/>
 <SimEndTime Value="11" Scale="None" Actual="11"/>
 <Environment>
-<PhysicsTimeStep Value="3" Scale="milli" Actual="0.003"/>
+<PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>
 <MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>

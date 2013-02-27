@@ -492,6 +492,8 @@ Namespace Framework
             Debug.WriteLine("Running Simulation")
             m_oServer.ExecuteIndirectMethod("ToggleSimulation", Nothing)
 
+            Threading.Thread.Sleep(1000)
+
             Dim iIdx As Integer = 0
             Dim bDone As Boolean = False
             While Not bDone

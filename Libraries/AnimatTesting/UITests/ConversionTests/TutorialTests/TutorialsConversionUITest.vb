@@ -323,10 +323,10 @@ Namespace UITests
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("LeftOdor", 0.05)
-                    aryMaxErrors.Add("RightOdor", 0.05)
-                    aryMaxErrors.Add("ROS", 0.05)
-                    aryMaxErrors.Add("LOS", 0.05)
+                    aryMaxErrors.Add("LeftOdor", 1)
+                    aryMaxErrors.Add("RightOdor", 1)
+                    aryMaxErrors.Add("ROS", 1)
+                    aryMaxErrors.Add("LOS", 1)
                     aryMaxErrors.Add("LO", 0.05)
                     aryMaxErrors.Add("RO", 0.05)
                     aryMaxErrors.Add("OS", 0.05)
@@ -425,8 +425,8 @@ Namespace UITests
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
                     aryMaxErrors.Add("3", 0.0001)
-                    aryMaxErrors.Add("Rotation", 0.24)
-                    aryMaxErrors.Add("AVm", 0.05)
+                    aryMaxErrors.Add("Rotation", 0.5)
+                    aryMaxErrors.Add("AVm", 0.0005)
 
                     m_strProjectName = "Enabler"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\StimulusTutorials"
@@ -447,8 +447,8 @@ Namespace UITests
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableMotor", "True"})
 
                     Dim aryIgnoreRows As New ArrayList
-                    aryIgnoreRows.Add(New Point(11500, 14500))
-                    aryMaxErrors("Rotation") = 0.3
+                    'aryIgnoreRows.Add(New Point(11500, 14500))
+                    'aryMaxErrors("Rotation") = 0.3
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwitchEnabledState_", , aryIgnoreRows)
