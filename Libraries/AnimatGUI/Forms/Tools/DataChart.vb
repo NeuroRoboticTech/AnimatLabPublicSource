@@ -503,9 +503,9 @@ Namespace Forms.Tools
             End If
         End Function
 
-        Public Overridable Sub ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "")
+        Public Overridable Function ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "") As Boolean
 
-        End Sub
+        End Function
 
         Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
             'If the file already exists then delete it.

@@ -1781,6 +1781,76 @@ Namespace Framework
             Return tnNode
         End Function
 
+        Public Shared Function CalculateBestStabilityScale() As Single
+
+            If Not Util.Environment Is Nothing Then
+                Dim aryScales As New Hashtable
+
+                aryScales.Add("Kilometers:Kilograms", 0.01)
+                aryScales.Add("Kilometers:Centagrams", 0.1)
+                aryScales.Add("Kilometers:Decagrams", 0.1)
+                aryScales.Add("Kilometers:Grams", 1)
+                aryScales.Add("Kilometers:Decigrams", 1)
+                aryScales.Add("Kilometers:Centigrams", 1)
+                aryScales.Add("Kilometers:Milligrams", 10)
+
+                aryScales.Add("Centameters:Kilograms", 0.1)
+                aryScales.Add("Centameters:Centagrams", 0.1)
+                aryScales.Add("Centameters:Decagrams", 1)
+                aryScales.Add("Centameters:Grams", 1)
+                aryScales.Add("Centameters:Decigrams", 1)
+                aryScales.Add("Centameters:Centigrams", 10)
+                aryScales.Add("Centameters:Milligrams", 100)
+
+                aryScales.Add("Decameters:Kilograms", 0.1)
+                aryScales.Add("Decameters:Centagrams", 1)
+                aryScales.Add("Decameters:Decagrams", 1)
+                aryScales.Add("Decameters:Grams", 1)
+                aryScales.Add("Decameters:Decigrams", 1)
+                aryScales.Add("Decameters:Centigrams", 10)
+                aryScales.Add("Decameters:Milligrams", 100)
+
+                aryScales.Add("Meters:Kilograms", 1)
+                aryScales.Add("Meters:Centagrams", 1)
+                aryScales.Add("Meters:Decagrams", 1)
+                aryScales.Add("Meters:Grams", 10)
+                aryScales.Add("Meters:Decigrams", 10)
+                aryScales.Add("Meters:Centigrams", 10)
+                aryScales.Add("Meters:Milligrams", 100)
+
+                aryScales.Add("Decimeters:Kilograms", 1)
+                aryScales.Add("Decimeters:Centagrams", 1)
+                aryScales.Add("Decimeters:Decagrams", 1)
+                aryScales.Add("Decimeters:Grams", 10)
+                aryScales.Add("Decimeters:Decigrams", 10)
+                aryScales.Add("Decimeters:Centigrams", 10)
+                aryScales.Add("Decimeters:Milligrams", 100)
+
+                aryScales.Add("Centimeters:Kilograms", 1)
+                aryScales.Add("Centimeters:Centagrams", 1)
+                aryScales.Add("Centimeters:Decagrams", 10)
+                aryScales.Add("Centimeters:Grams", 10)
+                aryScales.Add("Centimeters:Decigrams", 10)
+                aryScales.Add("Centimeters:Centigrams", 10)
+                aryScales.Add("Centimeters:Milligrams", 100)
+
+                aryScales.Add("Millimeters:Kilograms", 1)
+                aryScales.Add("Millimeters:Centagrams", 1)
+                aryScales.Add("Millimeters:Decagrams", 100)
+                aryScales.Add("Millimeters:Grams", 100)
+                aryScales.Add("Millimeters:Decigrams", 100)
+                aryScales.Add("Millimeters:Centigrams", 100)
+                aryScales.Add("Millimeters:Milligrams", 1000)
+
+                Dim strKey As String = Util.Environment.DistanceUnits.ToString & ":" & Util.Environment.MassUnits.ToString
+
+                'Return 1
+                Return CSng(aryScales(strKey))
+            Else
+                Return 1
+            End If
+ 
+        End Function
     End Class
 
 End Namespace

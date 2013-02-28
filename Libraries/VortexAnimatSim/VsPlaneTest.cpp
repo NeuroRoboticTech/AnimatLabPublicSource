@@ -103,7 +103,7 @@ void VsPlaneTest::CreateParts()
     this->part = new VxPart;                         // Create the part.
     this->part->setName("TerrainPart");              // Give it a name.
     this->part->setControl(VxEntity::kControlNode);  // Set it to kinetic.
-    this->part->freeze();                            // Freeze it.
+    this->part->freeze(true);                            // Freeze it.
 
     // Add the geometry to the part.
     this->part->addGeometry(terrainGeom, m_MT->getMaterial("DEFAULTMATERIAL"));

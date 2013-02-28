@@ -81,9 +81,9 @@ Vx::VxFrame* VsSimulator::Frame()
 
 #pragma region MutatorOverrides
 
-void VsSimulator::CalcCriticalSimParams(BOOL bVal)
+void VsSimulator::StabilityScale(float fltVal)
 {
-	Simulator::CalcCriticalSimParams(bVal);
+	Simulator::StabilityScale(fltVal);
 	SetSimulationStabilityParams();
 }
 
@@ -102,29 +102,25 @@ void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
 {
 	Simulator::LinearDamping(fltVal, bUseScaling);
-	if(!m_bCalcCriticalSimParams)
-		SetSimulationStabilityParams();
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
 {
 	Simulator::AngularDamping(fltVal, bUseScaling);
-	if(!m_bCalcCriticalSimParams)
-		SetSimulationStabilityParams();
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::LinearKineticLoss(float fltVal, BOOL bUseScaling)
 {
 	Simulator::LinearKineticLoss(fltVal, bUseScaling);
-	if(!m_bCalcCriticalSimParams)
-		SetSimulationStabilityParams();
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularKineticLoss(float fltVal, BOOL bUseScaling)
 {
 	Simulator::AngularKineticLoss(fltVal, bUseScaling);
-	if(!m_bCalcCriticalSimParams)
-		SetSimulationStabilityParams();
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::PhysicsTimeStep(float fltVal)
@@ -291,7 +287,7 @@ void VsSimulator::SetSimulationStabilityParams()
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
 		}*/
-
+		 
 		//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
 		//sp->setConstraintLinearKineticLoss(0.0006);
 		//sp->setConstraintLinearKineticLoss(0.0006);
@@ -300,14 +296,13 @@ void VsSimulator::SetSimulationStabilityParams()
 		//sp->setConstraintLinearDamping(1e4);
 		//sp->setConstraintAngularDamping(1e4);
 
-		//VxReal scale = 10;
-		//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
-		//sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*scale);
-		//sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*scale);
-		//sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/scale);
-		//sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/scale);
-		//sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*scale);
-		//sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*scale);
+		VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
+		sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*m_fltStabilityScale);
+		sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*m_fltStabilityScale);
+		sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/m_fltStabilityScale);
+		sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/m_fltStabilityScale);
+		sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*m_fltStabilityScale);
+		sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*m_fltStabilityScale);
 
 		TRACE_DETAIL("Reset simulation stability params\r\n");
 		TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
@@ -346,20 +341,6 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 
-	//CreateTestSpline();
-}
-
-void VsSimulator::CreateTestSpline()
-{
-	OsgCubicSpline osgSpline;
-
-	osgSpline.AddControlPoint(osg::Vec3d(0, 5, 0), 0);
-	osgSpline.AddControlPoint(osg::Vec3d(5, 5, 0), 1);
-	osgSpline.AddControlPoint(osg::Vec3d(10, 7, 0), 2);
-	osgSpline.AddControlPoint(osg::Vec3d(10, 7, 5), 3);
-
-	m_Spline = osgSpline.CreateTestGeom(true);
-	m_grpScene->addChild(m_Spline);
 }
 
 Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
@@ -471,7 +452,7 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
 
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	ApplyVertexTransform(osgNode, SetupMatrix(vPos, vRot));
+	ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));
 
 	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
 	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
@@ -481,7 +462,7 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 
 	//m_osgRotateMT->addChild(osgNode.get());
 
-	AddNodeTexture(osgNode, strTextFile, GL_TEXTURE_2D);
+	AddNodeTexture(osgNode.get(), strTextFile, GL_TEXTURE_2D);
 
 	//Now save out the new collision mesh.
 	osgDB::writeNodeFile(*osgNode, strNewFile.c_str());

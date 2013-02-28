@@ -1464,12 +1464,6 @@ Namespace Forms.Charts
 
                     'Debug.WriteLine("Updating chart data. RowCount: " & iRowCount & "  SimTime: " & Util.Application.SimulationInterface.CurrentMillisecond)
 
-                    'If Me.UpdateChartAtEnd Then
-                    '    Me.ctrlGraph.PeData.Points = iRowCount
-                    'ElseIf iRowCount > Me.ctrlGraph.PeData.Points Then
-                    '    iRowCount = Me.ctrlGraph.PeData.Points
-                    'End If
-
                     If iRowCount > Me.ctrlGraph.PeData.Points Then
                         If Me.UpdateChartAtEnd Then
                             Me.ctrlGraph.PeData.Points = iRowCount
@@ -1618,17 +1612,22 @@ Namespace Forms.Charts
             frmLineData.ShowDialog()
         End Sub
 
-        Public Overrides Sub ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "")
-            If strFile.Trim.Length = 0 Then
-                strFile = ExportDataFilename(strPrefix)
-            End If
-
-            Dim sr As StreamWriter = File.CreateText(strFile)
+        Public Overrides Function ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "") As Boolean
 
             Dim aryNames() As String
             Dim aryData(,) As Single
 
             PackageChartDataIntoArrays(aryNames, aryData)
+
+            If aryData.Length <= 0 Then
+                Return False
+            End If
+
+            If strFile.Trim.Length = 0 Then
+                strFile = ExportDataFilename(strPrefix)
+            End If
+
+            Dim sr As StreamWriter = File.CreateText(strFile)
 
             Dim strLine As String = ""
             For Each strName As String In aryNames
@@ -1649,7 +1648,8 @@ Namespace Forms.Charts
 
             sr.Close()
 
-        End Sub
+            Return True
+        End Function
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGUICtrls.Controls.PropertyTable)
 
@@ -2389,6 +2389,8 @@ Namespace Forms.Charts
         Protected Sub OnSimulationStopped()
 
             Try
+                Util.Application.AppIsBusy = True
+
                 UpdateChartData()
                 ConfigChartForPausedSimulation()
 
@@ -2397,6 +2399,8 @@ Namespace Forms.Charts
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Sub

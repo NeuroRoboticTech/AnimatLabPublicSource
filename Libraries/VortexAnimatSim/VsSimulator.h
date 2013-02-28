@@ -61,10 +61,8 @@ namespace VortexAnimatSim
 
 		osg::NotifySeverity ConvertTraceLevelToOSG();
 
-		void CreateTestSpline();
-
 		osg::ref_ptr<osg::Node> m_Spline;
-
+	
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();
@@ -93,7 +91,7 @@ namespace VortexAnimatSim
 
 #pragma region MutatorOverrides
 
-		virtual void CalcCriticalSimParams(BOOL bVal);
+		virtual void StabilityScale(float fltVal);
 		virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
 		virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
 		virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);

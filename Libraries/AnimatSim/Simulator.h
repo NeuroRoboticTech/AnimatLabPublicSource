@@ -178,8 +178,8 @@ namespace AnimatSim
 			///The acceleration of gravity to use in the simulation.
 			float m_fltGravity;
 
-			/// Determines whether the critical simulation params are calculated or set manually.
-			BOOL m_bCalcCriticalSimParams;
+			/// A linear scaling factor for setting the simulation parameters.
+			float m_fltStabilityScale;
 
 			/// The linear compliance of the simulation environment.
 			float m_fltLinearCompliance;
@@ -670,8 +670,8 @@ namespace AnimatSim
 			virtual int ManualRandomSeed();
 			virtual void ManualRandomSeed(int iSeed);
 
-			virtual BOOL CalcCriticalSimParams();
-			virtual void CalcCriticalSimParams(BOOL bVal);
+			virtual float StabilityScale();
+			virtual void StabilityScale(float fltVal);
 
 			virtual float LinearCompliance();
 			virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);

@@ -152,8 +152,11 @@ void VsSpring::Physics_CollectData()
 	if(m_vxSpring)
 	{
 		m_fltLength = CalculateLength();
-		m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
-		
+		if(m_bEnabled)
+			m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
+		else
+			m_fltDisplacement = 0;
+
 		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement;
 		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
 	}

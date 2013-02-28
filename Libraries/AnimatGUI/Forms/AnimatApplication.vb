@@ -1181,10 +1181,13 @@ Namespace Forms
         Protected m_bAutomationMethodInProgress As Boolean = False
         Protected m_bAppIsBusy As Boolean = False
         Protected m_iAppBusyCounter As Integer = 0
+        Protected m_bAutomation_ExportedChartData As Boolean = False
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
         Dim m_auBackup As wyDay.Controls.AutomaticUpdaterBackend
+
+        Dim m_bSimStopped As Boolean = True
 
 #Region " Preferences "
 
@@ -1622,6 +1625,12 @@ Namespace Forms
             End Set
         End Property
 
+        Public Overridable ReadOnly Property Automation_ExportedChartData() As Boolean
+            Get
+                Return m_bAutomation_ExportedChartData
+            End Get
+        End Property
+
         Public Overridable Property AppIsBusy() As Boolean
             Get
                 Return m_bAppIsBusy
@@ -1666,7 +1675,11 @@ Namespace Forms
 
         Public Overridable ReadOnly Property SimIsRunning() As Boolean
             Get
-                Return Me.SimulationInterface.SimRunning()
+                If Not m_bSimStopped Then
+                    Return True
+                Else
+                    Return Me.SimulationInterface.SimRunning()
+                End If
             End Get
         End Property
 
@@ -3363,16 +3376,30 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub ExportDataCharts(Optional ByVal strFileName As String = "", Optional ByVal strPrefix As String = "")
+            Dim bRetVal As Boolean = True
 
-            Dim frmChart As Tools.DataChart
-            For Each frmAnimat As AnimatForm In Me.ChildForms
+            Try
+                Me.AppIsBusy = True
+                m_bAutomation_ExportedChartData = False
 
-                If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
-                    frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.ExportChartData(strFileName, strPrefix)
-                End If
-            Next
+                Dim frmChart As Tools.DataChart
+                For Each frmAnimat As AnimatForm In Me.ChildForms
+                    If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
+                        frmChart = DirectCast(frmAnimat, Tools.DataChart)
 
+                        If Not frmChart.ExportChartData(strFileName, strPrefix) Then
+                            bRetVal = False
+                        End If
+                    End If
+                Next
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Me.AppIsBusy = False
+            End Try
+
+            m_bAutomation_ExportedChartData = bRetVal
         End Sub
 
         Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
@@ -4141,6 +4168,7 @@ Namespace Forms
                 If Me.SimulationInterface.Paused Then
                     If Me.SimulationInterface.CurrentMillisecond <= 0 Then
                         RaiseEvent SimulationStarting()
+                        m_bSimStopped = False
                     Else
                         RaiseEvent SimulationResuming()
                     End If
@@ -4184,6 +4212,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
+                m_bSimStopped = True
                 Me.AppIsBusy = False
             End Try
 
@@ -5170,7 +5199,7 @@ Namespace Forms
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
                 frmRelabel.SelectedItem = Util.ProjectWorkspace.SelectedDataObject
-                frmRelabel.ShowDialog
+                frmRelabel.ShowDialog()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5834,7 +5863,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub CheckForUpdatesStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles CheckForUpdatesStripMenuItem.Click
+        Private Sub CheckForUpdatesStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CheckForUpdatesStripMenuItem.Click
             Try
                 CheckForUpdates(True)
             Catch ex As System.Exception
@@ -5842,7 +5871,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub RegisterStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles RegisterStripMenuItem.Click
+        Private Sub RegisterStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles RegisterStripMenuItem.Click
             Try
                 Dim oRegDlg As New AnimatGUI.Forms.Register
                 oRegDlg.ShowDialog()
@@ -6144,7 +6173,7 @@ Namespace Forms
 #End Region
 
 
-        Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles ConsoleToolStripMenuItem.Click
+        Private Sub ConsoleToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ConsoleToolStripMenuItem.Click
             If Me.ConsoleToolStripMenuItem.Checked Then
                 ShowWindow(GetConsoleWindow(), SW_SHOWNORMAL)
             Else
@@ -6617,16 +6646,16 @@ Namespace Forms
                 End Get
             End Property
 
-            Public Function GetService(serviceType As System.Type) As Object Implements System.IServiceProvider.GetService
+            Public Function GetService(ByVal serviceType As System.Type) As Object Implements System.IServiceProvider.GetService
 
             End Function
         End Class
 
 #Region "Autoupdater"
 
-        Private Delegate Sub AutoUpdate_BeforeDelegate(sender As Object, e As wyDay.Controls.BeforeArgs)
+        Private Delegate Sub AutoUpdate_BeforeDelegate(ByVal sender As Object, ByVal e As wyDay.Controls.BeforeArgs)
 
-        Private Sub AutoUpdate_BeforeChecking(sender As Object, e As wyDay.Controls.BeforeArgs)
+        Private Sub AutoUpdate_BeforeChecking(ByVal sender As Object, ByVal e As wyDay.Controls.BeforeArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeChecking), New Object() {sender, e})
@@ -6640,7 +6669,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_BeforeDownloading(sender As Object, e As wyDay.Controls.BeforeArgs)
+        Private Sub AutoUpdate_BeforeDownloading(ByVal sender As Object, ByVal e As wyDay.Controls.BeforeArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeDownloading), New Object() {sender, e})
@@ -6654,7 +6683,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_BeforeExtracting(sender As Object, e As wyDay.Controls.BeforeArgs)
+        Private Sub AutoUpdate_BeforeExtracting(ByVal sender As Object, ByVal e As wyDay.Controls.BeforeArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeExtracting), New Object() {sender, e})
@@ -6668,9 +6697,9 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Delegate Sub AutoUpdate_EventsDelegate(sender As Object, e As EventArgs)
+        Private Delegate Sub AutoUpdate_EventsDelegate(ByVal sender As Object, ByVal e As EventArgs)
 
-        Private Sub AutoUpdate_UpdateAvailable(sender As Object, e As EventArgs)
+        Private Sub AutoUpdate_UpdateAvailable(ByVal sender As Object, ByVal e As EventArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_UpdateAvailable), New Object() {sender, e})
@@ -6686,9 +6715,9 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Delegate Sub AutoUpdate_SuccessArgsDelegate(sender As Object, e As wyDay.Controls.SuccessArgs)
+        Private Delegate Sub AutoUpdate_SuccessArgsDelegate(ByVal sender As Object, ByVal e As wyDay.Controls.SuccessArgs)
 
-        Private Sub AutoUpdate_UpToDate(sender As Object, e As wyDay.Controls.SuccessArgs)
+        Private Sub AutoUpdate_UpToDate(ByVal sender As Object, ByVal e As wyDay.Controls.SuccessArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_SuccessArgsDelegate(AddressOf AutoUpdate_UpToDate), New Object() {sender, e})
@@ -6701,9 +6730,9 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Delegate Sub AutoUpdate_FailedArgsDelegate(sender As Object, e As wyDay.Controls.FailArgs)
+        Private Delegate Sub AutoUpdate_FailedArgsDelegate(ByVal sender As Object, ByVal e As wyDay.Controls.FailArgs)
 
-        Private Sub AutoUpdate_CheckingFailed(sender As Object, e As wyDay.Controls.FailArgs)
+        Private Sub AutoUpdate_CheckingFailed(ByVal sender As Object, ByVal e As wyDay.Controls.FailArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_CheckingFailed), New Object() {sender, e})
@@ -6718,7 +6747,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_CloseAppNow(sender As Object, e As EventArgs)
+        Private Sub AutoUpdate_CloseAppNow(ByVal sender As Object, ByVal e As EventArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_CloseAppNow), New Object() {sender, e})
@@ -6732,7 +6761,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_Downloading_Failed(sender As Object, e As wyDay.Controls.FailArgs)
+        Private Sub AutoUpdate_Downloading_Failed(ByVal sender As Object, ByVal e As wyDay.Controls.FailArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_Downloading_Failed), New Object() {sender, e})
@@ -6747,7 +6776,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_ExtractingFailed(sender As Object, e As wyDay.Controls.FailArgs)
+        Private Sub AutoUpdate_ExtractingFailed(ByVal sender As Object, ByVal e As wyDay.Controls.FailArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_ExtractingFailed), New Object() {sender, e})
@@ -6762,9 +6791,9 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Delegate Sub ProgressChangedDelegate(sender As Object, progress As Integer)
+        Private Delegate Sub ProgressChangedDelegate(ByVal sender As Object, ByVal progress As Integer)
 
-        Private Sub AutoUpdate_ProgressChanged(sender As Object, progress As Integer)
+        Private Sub AutoUpdate_ProgressChanged(ByVal sender As Object, ByVal progress As Integer)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New ProgressChangedDelegate(AddressOf AutoUpdate_ProgressChanged), New Object() {sender, progress})
@@ -6787,7 +6816,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_ReadyToBeInstalled(sender As Object, e As EventArgs)
+        Private Sub AutoUpdate_ReadyToBeInstalled(ByVal sender As Object, ByVal e As EventArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_ReadyToBeInstalled), New Object() {sender, e})
@@ -6801,7 +6830,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_UpdateFailed(sender As Object, e As wyDay.Controls.FailArgs)
+        Private Sub AutoUpdate_UpdateFailed(ByVal sender As Object, ByVal e As wyDay.Controls.FailArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_UpdateFailed), New Object() {sender, e})
@@ -6816,7 +6845,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AutoUpdate_UpdateSuccessful(sender As Object, e As wyDay.Controls.SuccessArgs)
+        Private Sub AutoUpdate_UpdateSuccessful(ByVal sender As Object, ByVal e As wyDay.Controls.SuccessArgs)
             Try
                 If Me.InvokeRequired Then
                     Me.Invoke(New AutoUpdate_SuccessArgsDelegate(AddressOf AutoUpdate_UpdateSuccessful), New Object() {sender, e})

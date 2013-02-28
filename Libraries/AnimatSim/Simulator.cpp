@@ -87,7 +87,7 @@ Simulator::Simulator()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
-	m_bCalcCriticalSimParams = TRUE;
+	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
 	m_fltLinearDamping = 50e9f;
@@ -708,26 +708,24 @@ int Simulator::ManualRandomSeed() {return m_iManualRandomSeed;}
 void Simulator::ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;}
 
 /**
-\brief	If true then the crtical simulation params (linear/angular damping, and kinetic loss) are calculated
-using the linear/angular compliance and the time step. If false, then those values are set manually by the user.
+\brief	Sets the linear scaling factor that controls the simulation stability parameters
 
 \author	dcofer
 \date	1/2/2012
 
-\return	true if it is calculated, false if set manually.
+\return	scale factor.
 **/
-BOOL Simulator::CalcCriticalSimParams() {return m_bCalcCriticalSimParams;}
+float Simulator::StabilityScale() {return m_fltStabilityScale;}
 
 /**
-\brief	If true then the crtical simulation params (linear/angular damping, and kinetic loss) are calculated
-using the linear/angular compliance and the time step. If false, then those values are set manually by the user.
+\brief	Sets the linear scaling factor that controls the simulation stability parameters.
 
 \author	dcofer
 \date	1/2/2012
 
-\param	bVal	true to calculate.
+\param	fltVal	Scale factor.
 **/
-void Simulator::CalcCriticalSimParams(BOOL bVal) {m_bCalcCriticalSimParams = bVal;} 
+void Simulator::StabilityScale(float fltVal) {m_fltStabilityScale = fltVal;} 
 
 
 /**
@@ -1904,7 +1902,7 @@ void Simulator::Reset()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
-	m_bCalcCriticalSimParams = TRUE;
+	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
 	m_fltLinearDamping = 50e9f;
@@ -2725,17 +2723,17 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	MouseSpringStiffness(oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness));
 	MouseSpringDamping(oXml.GetChildFloat("MouseSpringDamping", m_ftlMouseSpringDamping));
 
-	CalcCriticalSimParams(oXml.GetChildBool("CalcCriticalSimParams", m_bCalcCriticalSimParams));
-	LinearCompliance(oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance));
-	AngularCompliance(oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance));
+	StabilityScale(oXml.GetChildFloat("StabilityScale", m_fltStabilityScale));
+	//LinearCompliance(oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance));
+	//AngularCompliance(oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance));
 
-	if(!m_bCalcCriticalSimParams)
-	{
-		LinearDamping(oXml.GetChildFloat("LinearDamping", m_fltLinearDamping));
-		AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
-		LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
-		AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
-	}
+	//if(!m_bCalcCriticalSimParams)
+	//{
+	//	LinearDamping(oXml.GetChildFloat("LinearDamping", m_fltLinearDamping));
+	//	AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
+	//	LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
+	//	AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
+	//}
 
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 	
@@ -4103,11 +4101,6 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 		MouseSpringDamping(atof(strValue.c_str()));
 		return TRUE;
 	}
-	else if(strType == "CALCCRITICALSIMPARAMS")
-	{
-		CalcCriticalSimParams(Std_ToBool(strValue));
-		return TRUE;
-	}
 	else if(strType == "LINEARCOMPLIANCE")
 	{
 		LinearCompliance(atof(strValue.c_str()));
@@ -4197,6 +4190,12 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 		PresetPlaybackTimeStep(atof(strValue.c_str()));
 		return TRUE;
 	}
+	else if(strDataType == "STABILITYSCALE")
+	{
+		StabilityScale(atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -4296,6 +4295,9 @@ void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Integer");
 
 	aryNames.Add("PresetPlaybackTimeStep");
+	aryTypes.Add("Float");
+
+	aryNames.Add("StabilityScale");
 	aryTypes.Add("Float");
 }
 

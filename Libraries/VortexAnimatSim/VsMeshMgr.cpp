@@ -64,7 +64,7 @@ osg::Node *VsMeshMgr::LoadMesh(string strFilename)
 		//If the create dates match then use this one.
 		//If they do not then lets reload it.
 		if(strCreateDate == MeshPair.first)
-			return MeshPair.second;
+			return MeshPair.second.get();
 		else
 		{
 			ReleaseMesh(strFilename);

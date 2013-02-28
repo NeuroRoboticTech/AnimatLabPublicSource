@@ -277,6 +277,9 @@ void Plane::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);
 
+	//Plane  is always frozen
+	m_bFreeze = TRUE;
+
 	oXml.IntoElem();  //Into RigidBody Element
 
 	CStdFPoint vPos;

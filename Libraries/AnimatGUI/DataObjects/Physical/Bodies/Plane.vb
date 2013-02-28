@@ -231,6 +231,9 @@ Namespace DataObjects.Physical.Bodies
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(doStructure, oXml)
 
+            'Plane is always frozen
+            m_bFreeze = True
+
             oXml.IntoElem() 'Into RigidBody Element
 
             m_svSize.LoadData(oXml, "Size")
