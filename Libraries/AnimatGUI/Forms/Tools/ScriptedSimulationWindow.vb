@@ -1149,7 +1149,7 @@ Namespace Forms
                         End If
 
                         Dim doWaypoint As New DataObjects.Visualization.Waypoint(doCameraPath)
-                        doWaypoint.Name = doCameraPath.Waypoints.Count.ToString("D3")
+                        doWaypoint.Name = doCameraPath.NextWaypointName()
 
                         If Not m_doInterface Is Nothing Then
                             doWaypoint.Position.X.ActualValue = m_doInterface.GetDataValueImmediate("CameraPositionX")

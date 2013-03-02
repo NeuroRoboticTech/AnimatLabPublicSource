@@ -353,6 +353,23 @@ Namespace DataObjects.Visualization
             m_aryWaypointsByName.Remove(CInt(doWaypoint.Name))
         End Sub
 
+        Public Overridable Function NextWaypointName() As String
+
+            Dim iMaxName As Integer = -1
+            Dim doWaypoint As Waypoint
+            For Each deEntry As DictionaryEntry In m_aryWaypointsByName
+                doWaypoint = DirectCast(deEntry.Value, Waypoint)
+                Dim iName As Integer = CInt(doWaypoint.Name)
+
+                If iName > iMaxName Then
+                    iMaxName = iName
+                End If
+            Next
+
+            iMaxName = iMaxName + 1
+            Return iMaxName.ToString("D3")
+        End Function
+
         Public Overridable Sub RecalculateTimes()
 
             Dim dblAccumualted As Double = 0
