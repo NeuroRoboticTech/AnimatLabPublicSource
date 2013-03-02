@@ -37,6 +37,10 @@ Namespace Forms
                 Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
                 Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
                 Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
+                Me.lbStucture = New System.Windows.Forms.ToolStripLabel()
+                Me.cboStructure = New System.Windows.Forms.ToolStripComboBox()
+                Me.lblBodyPart = New System.Windows.Forms.ToolStripLabel()
+                Me.cboBodyPart = New System.Windows.Forms.ToolStripComboBox()
                 Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
                 Me.AddCameraPathToolStripButton = New System.Windows.Forms.ToolStripButton()
                 Me.AddWaypointToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -54,7 +58,7 @@ Namespace Forms
                 '
                 'SimWindowToolStrip
                 '
-                Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripButton, Me.CopyToolStripButton, Me.CutToolStripButton, Me.ToolStripSeparator1, Me.AddCameraPathToolStripButton, Me.AddWaypointToolStripButton})
+                Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripButton, Me.CopyToolStripButton, Me.CutToolStripButton, Me.lbStucture, Me.cboStructure, Me.lblBodyPart, Me.cboBodyPart, Me.ToolStripSeparator1, Me.AddCameraPathToolStripButton, Me.AddWaypointToolStripButton})
                 Me.SimWindowToolStrip.Location = New System.Drawing.Point(0, 0)
                 Me.SimWindowToolStrip.Name = "SimWindowToolStrip"
                 Me.SimWindowToolStrip.SecurityMgr = Nothing
@@ -97,6 +101,30 @@ Namespace Forms
                 Me.CutToolStripButton.Name = "CutToolStripButton"
                 Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
                 Me.CutToolStripButton.Text = "C&ut"
+                '
+                'lbStucture
+                '
+                Me.lbStucture.Name = "lbStucture"
+                Me.lbStucture.Size = New System.Drawing.Size(58, 22)
+                Me.lbStucture.Text = "Structure:"
+                '
+                'cboStructure
+                '
+                Me.cboStructure.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+                Me.cboStructure.Name = "cboStructure"
+                Me.cboStructure.Size = New System.Drawing.Size(121, 25)
+                '
+                'lblBodyPart
+                '
+                Me.lblBodyPart.Name = "lblBodyPart"
+                Me.lblBodyPart.Size = New System.Drawing.Size(61, 22)
+                Me.lblBodyPart.Text = "Body Part:"
+                '
+                'cboBodyPart
+                '
+                Me.cboBodyPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+                Me.cboBodyPart.Name = "cboBodyPart"
+                Me.cboBodyPart.Size = New System.Drawing.Size(121, 25)
                 '
                 'ToolStripSeparator1
                 '
@@ -200,7 +228,7 @@ Namespace Forms
                 Me.Controls.Add(Me.SimWindowToolStrip)
                 Me.Controls.Add(Me.SimWindowMenuStrip)
                 Me.MainMenuStrip = Me.SimWindowMenuStrip
-                Me.Name = "ScriptedSimulationWindow"
+                Me.Name = "Scripted Simulation Window"
                 Me.SimWindowToolStrip.ResumeLayout(False)
                 Me.SimWindowToolStrip.PerformLayout()
                 Me.SimWindowMenuStrip.ResumeLayout(False)
@@ -224,10 +252,28 @@ Namespace Forms
             Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
             Friend WithEvents AddCameraPathToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
             Friend WithEvents AddWaypointToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+            Friend WithEvents lbStucture As System.Windows.Forms.ToolStripLabel
+            Friend WithEvents cboStructure As System.Windows.Forms.ToolStripComboBox
+            Friend WithEvents lblBodyPart As System.Windows.Forms.ToolStripLabel
+            Friend WithEvents cboBodyPart As System.Windows.Forms.ToolStripComboBox
 
 #End Region
 
 #Region " Attributes "
+
+            Protected m_thDefaultStructure As AnimatGUI.TypeHelpers.LinkedStructureList
+            Protected m_thDefaultPart As AnimatGUI.TypeHelpers.LinkedBodyPartList
+            Protected m_svDefaultPosition As Framework.ScaledVector3
+
+            'Only used during loading
+            Protected m_strDefaultStructureID As String = ""
+            Protected m_strDefaultBodyPartID As String = ""
+
+            Protected m_doStructure As DataObjects.Physical.PhysicalStructure
+            Protected m_doBodyPart As Physical.BodyPart
+
+            Protected m_bDrawingStructureCombo As Boolean = False
+            Protected m_bDrawingBodyPartCombo As Boolean = False
 
             Protected m_aryCameraPaths As Collections.SortedCameraPathsList
 
@@ -250,27 +296,19 @@ Namespace Forms
 
             Public Overrides ReadOnly Property IconName() As String
                 Get
-                    'If Not Me.PhysicalStructure Is Nothing Then
-                    '    If Util.IsTypeOf(Me.PhysicalStructure.GetType, GetType(Physical.Organism), False) Then
-                    '        Return "AnimatGUI.Organism.gif"
-                    '    Else
-                    '        Return "AnimatGUI.Structure.gif"
-                    '    End If
-                    'End If
-                    Return "AnimatGUI.Structure.gif"
+                    Return "AnimatGUI.ScriptedSimWindow.gif"
                 End Get
             End Property
 
             Public Overrides ReadOnly Property TabImageName() As String
                 Get
-                    'If Not Me.PhysicalStructure Is Nothing Then
-                    '    If Util.IsTypeOf(Me.PhysicalStructure.GetType, GetType(Physical.Organism), False) Then
-                    '        Return "AnimatGUI.Organism.gif"
-                    '    Else
-                    '        Return "AnimatGUI.Structure.gif"
-                    '    End If
-                    'End If
-                    Return "AnimatGUI.Structure.gif"
+                    Return "AnimatGUI.ScriptedSimWindow.gif"
+                End Get
+            End Property
+
+            Public Overrides ReadOnly Property WorkspaceImageName As String
+                Get
+                    Return "AnimatGUI.ScriptedSimWindow.gif"
                 End Get
             End Property
 
@@ -307,6 +345,133 @@ Namespace Forms
                 End Get
             End Property
 
+            Public Overridable Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
+                Get
+                    Return m_doStructure
+                End Get
+                Set(ByVal Value As DataObjects.Physical.PhysicalStructure)
+                    'If we are setting the structure to something different then reset the look at body ID.
+                    'We must do this before the code below or we will get an error.
+                    If Not m_doStructure Is Nothing And Not m_doStructure Is Value Then
+                        Me.BodyPart = Nothing
+                        RemoveHandler m_doStructure.AfterPropertyChanged, AddressOf Me.OnStructurePropertyChanged
+                        RemoveHandler m_doStructure.BeforeRemoveItem, AddressOf Me.OnStructureRemoved
+                    End If
+
+                    If Not Value Is Nothing Then
+                        SetSimData("LookatStructureID", Value.ID, True)
+                    Else
+                        SetSimData("LookatStructureID", "", True)
+
+                        If Not m_doStructure Is Nothing Then
+                            m_doStructure.BodyEditor = Nothing
+                        End If
+                    End If
+
+                    m_doStructure = Value
+
+                    m_bDrawingBodyPartCombo = True
+                    If Not m_doStructure Is Nothing Then
+                        AddHandler m_doStructure.AfterPropertyChanged, AddressOf Me.OnStructurePropertyChanged
+                        AddHandler m_doStructure.BeforeRemoveItem, AddressOf Me.OnStructureRemoved
+                        Me.cboStructure.SelectedItem = m_doStructure
+                    Else
+                        Me.cboStructure.SelectedItem = "No Tracking"
+                    End If
+                    m_bDrawingBodyPartCombo = False
+
+                End Set
+            End Property
+
+            Public Overridable Property BodyPart() As DataObjects.Physical.BodyPart
+                Get
+                    Return m_doBodyPart
+                End Get
+                Set(ByVal Value As DataObjects.Physical.BodyPart)
+                    If Value Is Nothing Then
+                        SetSimData("LookAtBodyID", "", True)
+                    Else
+                        SetSimData("LookAtBodyID", Value.ID, True)
+                    End If
+
+                    If Not m_doBodyPart Is Nothing Then
+                        RemoveHandler m_doBodyPart.BeforeRemoveItem, AddressOf Me.OnBodyPartRemoved
+                    End If
+
+                    m_doBodyPart = Value
+
+                    'Reset the value showing in the combo box.
+                    m_bDrawingBodyPartCombo = True
+                    GenerateBodyPartDropDown()
+                    Me.cboBodyPart.SelectedItem = m_doBodyPart
+                    m_bDrawingBodyPartCombo = False
+
+                    If Not m_doBodyPart Is Nothing Then
+                        AddHandler m_doBodyPart.BeforeRemoveItem, AddressOf Me.OnBodyPartRemoved
+                    End If
+                End Set
+            End Property
+
+            Public Overridable ReadOnly Property DefaultStructureID() As String
+                Get
+                    Return m_strDefaultStructureID
+                End Get
+            End Property
+
+            Public Overridable ReadOnly Property DefaultBodyPartID() As String
+                Get
+                    Return m_strDefaultBodyPartID
+                End Get
+            End Property
+
+            <Browsable(False)> _
+            Public Overridable Property DefaultLinkedStructure() As AnimatGUI.TypeHelpers.LinkedStructureList
+                Get
+                    Return m_thDefaultStructure
+                End Get
+                Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedStructureList)
+                    Dim thPrevLinked As AnimatGUI.TypeHelpers.LinkedStructureList = m_thDefaultStructure
+
+                    DiconnectLinkedEvents()
+                    m_thDefaultStructure = Value
+
+                    If Not m_thDefaultStructure.PhysicalStructure Is thPrevLinked.PhysicalStructure Then
+                        m_thDefaultPart = New TypeHelpers.LinkedBodyPartList(m_thDefaultStructure.PhysicalStructure, Nothing, GetType(AnimatGUI.DataObjects.Physical.BodyPart))
+                    End If
+
+                    Me.PhysicalStructure = m_thDefaultStructure.PhysicalStructure
+
+                    ConnectLinkedEvents()
+                End Set
+            End Property
+
+            <Browsable(False)> _
+            Public Overridable Property DefaultLinkedPart() As AnimatGUI.TypeHelpers.LinkedBodyPartList
+                Get
+                    Return m_thDefaultPart
+                End Get
+                Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPartList)
+                    Dim thPrevLinked As AnimatGUI.TypeHelpers.LinkedBodyPartList = m_thDefaultPart
+
+                    DiconnectLinkedEvents()
+                    m_thDefaultPart = Value
+                    ConnectLinkedEvents()
+
+                    Me.PhysicalStructure = m_thDefaultStructure.PhysicalStructure
+                    Me.BodyPart = m_thDefaultPart.BodyPart
+                End Set
+            End Property
+
+            Public Overridable Property DefaultPosition() As Framework.ScaledVector3
+                Get
+                    Return m_svDefaultPosition
+                End Get
+                Set(ByVal value As Framework.ScaledVector3)
+                    Me.SetSimData("DefaultPosition", value.GetSimulationXml("DefaultPosition"), True)
+                    m_svDefaultPosition.CopyData(value)
+                End Set
+            End Property
+
 #End Region
 
 #Region " Methods "
@@ -317,14 +482,36 @@ Namespace Forms
 
                     MyBase.Initialize(frmParent)
 
+                    Me.Name = "Scripted Simulation Window"
+
                     m_aryCameraPaths = New Collections.SortedCameraPathsList(Me.FormHelper)
 
                     AddHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
                     AddHandler Util.Application.BodyPartPasteStarting, AddressOf Me.OnBodyPartPasteStarting
                     AddHandler Util.Application.BodyPartPasteEnding, AddressOf Me.OnBodyPartPasteEnding
+                    AddHandler Me.cboStructure.DropDown, AddressOf Me.OnStructureDropDown
+                    AddHandler Me.cboStructure.SelectedIndexChanged, AddressOf Me.OnStructureChanged
+                    AddHandler Me.cboBodyPart.DropDown, AddressOf Me.OnBodyPartDropDown
+                    AddHandler Me.cboBodyPart.SelectedIndexChanged, AddressOf Me.OnBodyPartChanged
 
                     m_timerStartSimWindow.Enabled = False
                     m_timerStartSimWindow.Interval = 100
+
+                    If Not m_doStructure Is Nothing Then
+                        AddHandler m_doStructure.AfterPropertyChanged, AddressOf Me.OnStructurePropertyChanged
+                        AddHandler m_doStructure.BeforeRemoveItem, AddressOf Me.OnStructureRemoved
+                    End If
+
+                    If Not m_doBodyPart Is Nothing Then
+                        AddHandler m_doBodyPart.BeforeRemoveItem, AddressOf Me.OnBodyPartRemoved
+                    End If
+
+                    m_thDefaultStructure = New AnimatGUI.TypeHelpers.LinkedStructureList(Nothing, TypeHelpers.LinkedStructureList.enumStructureType.All)
+                    m_thDefaultPart = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Nothing, Nothing, GetType(AnimatGUI.DataObjects.Physical.BodyPart))
+
+                    m_svDefaultPosition = New ScaledVector3(Me.FormHelper, "DefaultPosition", "Initial location of the camera when simulation is started.", "Meters", "m")
+
+                    AddHandler m_svDefaultPosition.ValueChanged, AddressOf Me.OnDefaultPositionValueChanged
 
                 Catch ex As System.Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
@@ -335,6 +522,34 @@ Namespace Forms
             Public Overrides Sub ClearIsDirty()
                 MyBase.ClearIsDirty()
                 If Not m_aryCameraPaths Is Nothing Then m_aryCameraPaths.ClearIsDirty()
+                If Not m_thDefaultStructure Is Nothing Then m_thDefaultStructure.ClearIsDirty()
+                If Not m_thDefaultPart Is Nothing Then m_thDefaultPart.ClearIsDirty()
+                If Not m_svDefaultPosition Is Nothing Then m_svDefaultPosition.ClearIsDirty()
+            End Sub
+
+            Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", Me.Name.GetType(), "Name", _
+                                            "Path Properties", "Name", Me.Name))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
+                                            "Path Properties", "ID", Me.ID, True))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Structure", m_thDefaultStructure.GetType, "DefaultLinkedStructure", _
+                                            "Initial Properties", "When simulation starts the camera is set to look at this structure", m_thDefaultStructure, _
+                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                            GetType(AnimatGUI.TypeHelpers.LinkedStructureTypeConverter)))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Part", m_thDefaultPart.GetType, "DefaultLinkedPart", _
+                                            "Initial Properties", "When simulation starts the camera is set to look at this part", m_thDefaultPart, _
+                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                            GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTypeConverter)))
+
+                Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.DefaultPosition.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "DefaultPosition", _
+                                            "Initial Properties", "Initial location of the camera when simulation is started.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+
             End Sub
 
             Public Overrides Function Clone() As ToolForm
@@ -364,6 +579,39 @@ Namespace Forms
                     doPath.InitializeSimulationReferences(bShowError)
                 Next
             End Sub
+
+            Protected Overridable Sub ConnectLinkedEvents()
+                DiconnectLinkedEvents()
+
+                If Not m_thDefaultStructure Is Nothing AndAlso Not m_thDefaultStructure.PhysicalStructure Is Nothing Then
+                    AddHandler m_thDefaultStructure.PhysicalStructure.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedStructure
+                End If
+                If Not m_thDefaultPart Is Nothing AndAlso Not m_thDefaultPart.BodyPart Is Nothing Then
+                    AddHandler m_thDefaultPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+                End If
+            End Sub
+
+            Protected Overridable Sub DiconnectLinkedEvents()
+                If Not m_thDefaultStructure Is Nothing AndAlso Not m_thDefaultStructure.PhysicalStructure Is Nothing Then
+                    RemoveHandler m_thDefaultStructure.PhysicalStructure.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedStructure
+                End If
+                If Not m_thDefaultPart Is Nothing AndAlso Not m_thDefaultPart.BodyPart Is Nothing Then
+                    RemoveHandler m_thDefaultPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+                End If
+            End Sub
+
+            Public Overridable Function HasPathWithStartTime(ByVal dblTime As Double) As Boolean
+
+                Dim doPath As Visualization.CameraPath
+                For Each deEntry As DictionaryEntry In m_aryCameraPaths
+                    doPath = DirectCast(deEntry.Value, Visualization.CameraPath)
+                    If doPath.StartTime.ActualValue = dblTime Then
+                        Return True
+                    End If
+                Next
+
+                Return False
+            End Function
 
             Public Overloads Overrides Sub LoadExternalFile(ByVal strFilename As String)
                 Try
@@ -396,6 +644,17 @@ Namespace Forms
                 oXml.AddChildElement("Type", "Basic")
                 oXml.AddChildElement("StandAlone", True)
 
+                If Not m_thDefaultStructure Is Nothing AndAlso Not m_thDefaultStructure.PhysicalStructure Is Nothing Then
+                    oXml.AddChildElement("LookAtStructureID", m_thDefaultStructure.PhysicalStructure.ID)
+                End If
+
+                If Not m_thDefaultPart Is Nothing AndAlso Not m_thDefaultPart.BodyPart Is Nothing Then
+                    oXml.AddChildElement("LookAtBodyID", m_thDefaultPart.BodyPart.ID)
+                End If
+                oXml.AddChildElement("TrackCamera", True)
+
+                m_svDefaultPosition.SaveSimulationXml(oXml, Me.FormHelper, "Position")
+
                 If m_aryCameraPaths.Count > 0 Then
                     oXml.AddChildElement("CameraPaths")
                     oXml.IntoElem()
@@ -403,11 +662,12 @@ Namespace Forms
                     Dim doPath As AnimatGUI.DataObjects.Visualization.CameraPath
                     For Each deEntry As DictionaryEntry In m_aryCameraPaths
                         doPath = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Visualization.CameraPath)
-                        doPath.SaveSimulationXml(oXml, Me.FormHelper)
+                        doPath.SaveSimulationXml(oXml)
                     Next
 
                     oXml.OutOfElem() 'Outof Waypoints Element
                 End If
+
                 oXml.OutOfElem()
 
                 Return oXml.Serialize()
@@ -417,6 +677,11 @@ Namespace Forms
                 MyBase.LoadExternalData(oXml)
 
                 oXml.IntoElem()
+
+                m_strDefaultStructureID = Util.LoadID(oXml, "LinkedStructure", True, "")
+                m_strDefaultBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "")
+
+                m_svDefaultPosition.LoadData(oXml, "Position")
 
                 m_aryCameraPaths.Clear()
                 If oXml.FindChildElement("CameraPaths", False) Then
@@ -444,6 +709,16 @@ Namespace Forms
                 MyBase.SaveExternalData(oXml)
 
                 oXml.IntoElem()
+
+                If Not m_thDefaultStructure Is Nothing AndAlso Not m_thDefaultStructure.PhysicalStructure Is Nothing Then
+                    oXml.AddChildElement("LinkedStructureID", m_thDefaultStructure.PhysicalStructure.ID)
+                End If
+
+                If Not m_thDefaultPart Is Nothing AndAlso Not m_thDefaultPart.BodyPart Is Nothing Then
+                    oXml.AddChildElement("LinkedBodyPartID", m_thDefaultPart.BodyPart.ID)
+                End If
+
+                m_svDefaultPosition.SaveData(oXml, "Position")
 
                 If m_aryCameraPaths.Count > 0 Then
                     oXml.AddChildElement("CameraPaths")
@@ -495,7 +770,9 @@ Namespace Forms
 
             Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
-                For Each doPath As DataObjects.Visualization.CameraPath In m_aryCameraPaths
+                Dim doPath As DataObjects.Visualization.CameraPath
+                For Each deEntry As DictionaryEntry In m_aryCameraPaths
+                    doPath = DirectCast(deEntry.Value, Visualization.CameraPath)
                     If doPath.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then Return True
                 Next
 
@@ -518,6 +795,163 @@ Namespace Forms
 
                 Return False
             End Function
+
+
+            Public Overridable Sub GenerateStructureDropDown()
+                m_bDrawingStructureCombo = True
+                Me.cboStructure.Items.Clear()
+
+                Dim strBlank As String = "No Tracking"
+                Me.cboStructure.Items.Add(strBlank)
+                If Me.PhysicalStructure Is Nothing Then
+                    Me.cboStructure.SelectedItem = strBlank
+                End If
+
+                For Each deEntry As DictionaryEntry In Util.Environment.Structures
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+
+                    Me.cboStructure.Items.Add(doStruct)
+
+                    If Not Me.PhysicalStructure Is Nothing AndAlso Me.PhysicalStructure Is doStruct Then
+                        Me.cboStructure.SelectedItem = doStruct
+                    End If
+                Next
+
+                For Each deEntry As DictionaryEntry In Util.Environment.Organisms
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+
+                    Me.cboStructure.Items.Add(doStruct)
+
+                    If Not Me.PhysicalStructure Is Nothing AndAlso Me.PhysicalStructure Is doStruct Then
+                        Me.cboStructure.SelectedItem = doStruct
+                    End If
+                Next
+
+
+                m_bDrawingStructureCombo = False
+            End Sub
+
+            Protected Overridable Sub GenerateBodyPartDropDown(ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
+
+                For Each tnNode As Crownwood.DotNetMagic.Controls.Node In aryNodes
+                    If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(DataObjects.Physical.BodyPart)) Then
+                        Dim bpPart As DataObjects.Physical.BodyPart = DirectCast(tnNode.Tag, DataObjects.Physical.BodyPart)
+                        cboBodyPart.Items.Add(bpPart)
+
+                        If Not m_doBodyPart Is Nothing AndAlso bpPart Is m_doBodyPart Then
+                            Me.cboBodyPart.SelectedItem = bpPart
+                        End If
+                    End If
+
+                    GenerateBodyPartDropDown(tnNode.Nodes)
+                Next
+            End Sub
+
+            Public Overridable Sub GenerateBodyPartDropDown()
+                Try
+                    m_bDrawingBodyPartCombo = True
+
+                    Me.cboBodyPart.Items.Clear()
+
+                    If Not Me.PhysicalStructure Is Nothing AndAlso Not Me.PhysicalStructure.WorkspaceNode Is Nothing Then
+                        GenerateBodyPartDropDown(Me.PhysicalStructure.WorkspaceNode.Nodes)
+                    End If
+
+                Catch ex As System.Exception
+                    Throw ex
+                Finally
+                    m_bDrawingBodyPartCombo = False
+                End Try
+            End Sub
+
+            Protected Overridable Sub OnStructureDropDown(ByVal sender As Object, ByVal e As System.EventArgs)
+                Try
+                    GenerateStructureDropDown()
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Finally
+                    m_bDrawingStructureCombo = False
+                End Try
+
+            End Sub
+
+            Protected Overridable Sub OnStructureChanged(ByVal sender As Object, ByVal e As System.EventArgs)
+                Try
+                    If Not m_bDrawingStructureCombo Then
+                        If Not Me.cboStructure.SelectedItem Is Nothing AndAlso Util.IsTypeOf(Me.cboStructure.SelectedItem.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                            Me.PhysicalStructure = DirectCast(Me.cboStructure.SelectedItem, DataObjects.Physical.PhysicalStructure)
+                        Else
+                            Me.PhysicalStructure = Nothing
+                        End If
+                    End If
+
+                    GenerateBodyPartDropDown()
+
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+
+            End Sub
+
+            Protected Overridable Sub OnBodyPartDropDown(ByVal sender As Object, ByVal e As System.EventArgs)
+                Try
+                    GenerateBodyPartDropDown()
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Finally
+                    m_bDrawingBodyPartCombo = False
+                End Try
+
+            End Sub
+
+            Protected Overridable Sub OnBodyPartChanged(ByVal sender As Object, ByVal e As System.EventArgs)
+                Try
+                    If Not m_bDrawingBodyPartCombo Then
+                        If Not Me.cboBodyPart.SelectedItem Is Nothing AndAlso Util.IsTypeOf(Me.cboBodyPart.SelectedItem.GetType, GetType(DataObjects.Physical.BodyPart), False) Then
+                            Me.BodyPart = DirectCast(Me.cboBodyPart.SelectedItem, DataObjects.Physical.BodyPart)
+                        Else
+                            Me.BodyPart = Nothing
+                        End If
+                    End If
+
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+
+            End Sub
+
+            Protected Overridable Sub OnStructurePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+                Try
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Protected Overridable Sub OnStructureRemoved(ByRef doObject As AnimatGUI.Framework.DataObject)
+                Try
+                    'If we are deleting the structure this window is attached to then set it to be free moving first.
+                    Me.PhysicalStructure = Nothing
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Protected Overridable Sub OnBodyPartRemoved(ByRef doObject As AnimatGUI.Framework.DataObject)
+                Try
+                    'If we are deleting the body part this window is looking at then switch to the root body or null
+                    If Not m_doStructure Is Nothing Then
+                        If Not m_doStructure Is Nothing AndAlso Not m_doStructure.RootBody Is Nothing AndAlso Not doObject Is m_doStructure.RootBody Then
+                            Me.BodyPart = m_doStructure.RootBody
+                        Else
+                            Me.BodyPart = Nothing
+                        End If
+                    Else
+                        Me.BodyPart = Nothing
+                    End If
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
 
 #End Region
 
@@ -557,9 +991,32 @@ Namespace Forms
                     'if the interface has not already been initialized.
                     If m_doInterface Is Nothing Then
 
+                        Dim bpPart As AnimatGUI.DataObjects.Physical.BodyPart
+                        If (Not Me.DefaultLinkedPart Is Nothing AndAlso Me.DefaultLinkedPart.BodyPart Is Nothing) AndAlso (m_strDefaultBodyPartID.Length > 0) Then
+                            bpPart = DirectCast(Util.Simulation.FindObjectByID(m_strDefaultBodyPartID), DataObjects.Physical.BodyPart)
+
+                            If Not bpPart Is Nothing Then
+                                Me.DefaultLinkedStructure = New TypeHelpers.LinkedStructureList(bpPart.ParentStructure, TypeHelpers.LinkedStructureList.enumStructureType.All)
+                                Me.DefaultLinkedPart = New TypeHelpers.LinkedBodyPartList(bpPart.ParentStructure, bpPart, GetType(AnimatGUI.DataObjects.Physical.BodyPart))
+                            End If
+                        End If
+
+                        'Do this after settign the body part. Body part structure has precedence
+                        Dim doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure
+                        If (Not Me.DefaultLinkedStructure Is Nothing AndAlso Me.DefaultLinkedStructure.PhysicalStructure Is Nothing) AndAlso (m_strDefaultStructureID.Length > 0) Then
+                            doStruct = DirectCast(Util.Simulation.FindObjectByID(m_strDefaultStructureID), DataObjects.Physical.PhysicalStructure)
+
+                            If Not doStruct Is Nothing Then
+                                Me.DefaultLinkedStructure = New TypeHelpers.LinkedStructureList(doStruct, TypeHelpers.LinkedStructureList.enumStructureType.All)
+                            End If
+                        End If
+
                         Dim strWinXml As String = GenerateSimWindowXml()
                         Util.Application.SimulationInterface.AddWindow(Me.Handle, "ScriptedSimWindow", strWinXml)
                         InitializeSimulationReferences()
+
+                        GenerateStructureDropDown()
+                        GenerateBodyPartDropDown()
                     End If
 
                     'Reset the visual mode to be collisions.
@@ -577,6 +1034,15 @@ Namespace Forms
                     RemoveHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
                     RemoveHandler Util.Application.BodyPartPasteStarting, AddressOf Me.OnBodyPartPasteStarting
                     RemoveHandler Util.Application.BodyPartPasteEnding, AddressOf Me.OnBodyPartPasteEnding
+
+                    If Not m_doStructure Is Nothing Then
+                        RemoveHandler m_doStructure.AfterPropertyChanged, AddressOf Me.OnStructurePropertyChanged
+                        RemoveHandler m_doStructure.BeforeRemoveItem, AddressOf Me.OnStructureRemoved
+                    End If
+
+                    If Not m_doBodyPart Is Nothing Then
+                        RemoveHandler m_doBodyPart.BeforeRemoveItem, AddressOf Me.OnBodyPartRemoved
+                    End If
 
                     Util.Application.SimulationInterface.RemoveWindow(Me.Handle)
                     m_doInterface = Nothing
@@ -610,6 +1076,22 @@ Namespace Forms
                         Util.Application.SimulationInterface.OnWindowLoseFocus(Me.ID)
                     End If
                 Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Private Sub OnAfterRemoveLinkedStructure(ByRef doObject As Framework.DataObject)
+                Try
+                    Me.DefaultLinkedStructure = New TypeHelpers.LinkedStructureList(Nothing, TypeHelpers.LinkedStructureList.enumStructureType.All)
+                Catch ex As Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Private Sub OnAfterRemoveLinkedPart(ByRef doObject As Framework.DataObject)
+                Try
+                    Me.DefaultLinkedPart = New TypeHelpers.LinkedBodyPartList(Me.DefaultLinkedStructure.PhysicalStructure, Nothing, GetType(AnimatGUI.DataObjects.Physical.BodyPart))
+                Catch ex As Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try
             End Sub
@@ -666,7 +1148,6 @@ Namespace Forms
 
                         Dim doWaypoint As New DataObjects.Visualization.Waypoint(doCameraPath)
                         doWaypoint.Name = doCameraPath.Waypoints.Count.ToString
-                        doWaypoint.Time.ActualValue = doCameraPath.Waypoints.Count
 
                         If Not m_doInterface Is Nothing Then
                             doWaypoint.Position.X.ActualValue = m_doInterface.GetDataValueImmediate("CameraPositionX")
@@ -674,11 +1155,24 @@ Namespace Forms
                             doWaypoint.Position.Z.ActualValue = m_doInterface.GetDataValueImmediate("CameraPositionZ")
                         End If
 
-                        doCameraPath.Waypoints.Add(doWaypoint.ID, doWaypoint)
+                        doCameraPath.AddWaypointSetTimes(doWaypoint)
                         doWaypoint.CreateWorkspaceTreeView(doCameraPath, doCameraPath.WorkspaceNode)
                         doWaypoint.SelectItem(False)
                     End If
 
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            'These three events handlers are called whenever a user manually changes the value of the position or rotation.
+            'This is different from the OnPositionChanged event. Those events come up from the simulation.
+            Protected Overridable Sub OnDefaultPositionValueChanged()
+                Try
+                    If Not Util.ProjectProperties Is Nothing Then
+                        Me.SetSimData("Position", m_svDefaultPosition.GetSimulationXml("Position"), True)
+                        Util.ProjectProperties.RefreshProperties()
+                    End If
                 Catch ex As System.Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

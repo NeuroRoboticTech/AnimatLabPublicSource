@@ -17,8 +17,12 @@ Namespace DataObjects.Visualization
 
 #Region " Attributes "
 
+        Protected m_doParentPath As CameraPath
         Protected m_svPosition As Framework.ScaledVector3
-        Protected m_snTime As Framework.ScaledNumber
+
+        Protected m_snStartTime As Framework.ScaledNumber
+        Protected m_snEndTime As Framework.ScaledNumber
+        Protected m_snTimeSpan As Framework.ScaledNumber
 
 #End Region
 
@@ -28,6 +32,38 @@ Namespace DataObjects.Visualization
             Get
                 Return "Waypoint"
             End Get
+        End Property
+
+        Public Overrides ReadOnly Property WorkspaceImageName As String
+            Get
+                Return "AnimatGUI.CameraWaypoints.gif"
+            End Get
+        End Property
+
+        Public Overrides Property Name As String
+            Get
+                Return MyBase.Name
+            End Get
+            Set(value As String)
+                If m_bIsInitialized Then
+                    If Not m_doParentPath Is Nothing Then
+                        If m_doParentPath.WaypointsByName.Contains(value) Then
+                            Throw New System.Exception("A waypoint with the name '" + value + "' already exists. Waypoint names must be unique.")
+                        End If
+
+                        m_doParentPath.WaypointsByName.Remove(Me.Name)
+                    End If
+
+                    MyBase.Name = value
+
+                    If Not m_doParentPath Is Nothing Then
+                        m_doParentPath.WaypointsByName.Add(Me.Name, Me)
+                        m_doParentPath.RecalculateTimes()
+                    End If
+                Else
+                    MyBase.Name = value
+                End If
+            End Set
         End Property
 
         Public Overridable Property Position() As Framework.ScaledVector3
@@ -40,13 +76,54 @@ Namespace DataObjects.Visualization
             End Set
         End Property
 
-        Public Overridable Property Time() As Framework.ScaledNumber
+        Public Overridable Property TimeSpan() As Framework.ScaledNumber
             Get
-                Return m_snTime
+                Return m_snTimeSpan
             End Get
             Set(ByVal value As Framework.ScaledNumber)
-                Me.SetSimData("Time", value.GetSimulationXml("Time"), True)
-                m_snTime.CopyData(value)
+                m_snTimeSpan.CopyData(value)
+
+                If Not m_doParentPath Is Nothing Then
+                    m_doParentPath.RecalculateTimes()
+                End If
+            End Set
+        End Property
+
+        Public Overridable Property StartTime() As Framework.ScaledNumber
+            Get
+                Return m_snStartTime
+            End Get
+            Set(ByVal value As Framework.ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("You cannot specify a start time less than zero.")
+                End If
+                If Not m_doParentPath Is Nothing AndAlso value.ActualValue < m_doParentPath.StartTime.ActualValue Then
+                    Throw New System.Exception("You cannot specify a start time less than the start time of the path.")
+                End If
+                If value.ActualValue >= m_snEndTime.ActualValue Then
+                    Throw New System.Exception("You cannot specify a start time greater than the end time.")
+                End If
+
+                Me.SetSimData("Time", value.ToString(), True)
+                m_snStartTime.CopyData(value)
+                m_snStartTime.PropertiesReadOnly = True
+            End Set
+        End Property
+
+        Public Overridable Property EndTime() As Framework.ScaledNumber
+            Get
+                Return m_snEndTime
+            End Get
+            Set(ByVal value As Framework.ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("You cannot specify an end time less than zero.")
+                End If
+                If value.ActualValue <= m_snStartTime.ActualValue Then
+                    Throw New System.Exception("You cannot specify an end time less than the start time.")
+                End If
+
+                m_snEndTime.CopyData(value)
+                m_snEndTime.PropertiesReadOnly = True
             End Set
         End Property
 
@@ -57,15 +134,56 @@ Namespace DataObjects.Visualization
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
+            If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(CameraPath), False) Then
+                m_doParentPath = DirectCast(doParent, CameraPath)
+            End If
+
             m_svPosition = New ScaledVector3(Me, "Position", "Location of the waypoint in world coordinates.", "Meters", "m")
-            m_snTime = New ScaledNumber(Me, "Time", 0, ScaledNumber.enumNumericScale.None, "s", "s")
+            m_snStartTime = New ScaledNumber(Me, "StartTime", 0, ScaledNumber.enumNumericScale.None, "s", "s")
+            m_snEndTime = New ScaledNumber(Me, "EndTime", 1, ScaledNumber.enumNumericScale.None, "s", "s")
+            m_snTimeSpan = New ScaledNumber(Me, "TimeSpan", 1, ScaledNumber.enumNumericScale.None, "s", "s")
+
+            m_snStartTime.PropertiesReadOnly = True
+            m_snEndTime.PropertiesReadOnly = True
+
+            AddHandler m_svPosition.ValueChanged, AddressOf Me.OnPositionValueChanged
+
+        End Sub
+
+        Public Overridable Sub SetStartEndTime(ByVal dblStartTime As Double, ByVal dblEndTime As Double)
+
+            If dblStartTime < 0 Then
+                Throw New System.Exception("You cannot specify a start time less than zero.")
+            End If
+
+            If dblEndTime < 0 Then
+                Throw New System.Exception("You cannot specify an end time less than zero.")
+            End If
+
+            If Not m_doParentPath Is Nothing AndAlso dblStartTime < m_doParentPath.StartTime.ActualValue Then
+                Throw New System.Exception("You cannot specify a start time less than the start time of the path.")
+            End If
+
+            If dblEndTime < dblStartTime Then
+                Throw New System.Exception("You cannot specify an end time less than the start time.")
+            End If
+
+            m_snStartTime = New ScaledNumber(Me, "StartTime", dblStartTime, ScaledNumber.enumNumericScale.None, "s", "s")
+            m_snEndTime = New ScaledNumber(Me, "EndTime", dblEndTime, ScaledNumber.enumNumericScale.None, "s", "s")
+
+            m_snStartTime.PropertiesReadOnly = True
+            m_snEndTime.PropertiesReadOnly = True
+
+            Me.SetSimData("Time", m_snStartTime.ActualValue.ToString(), True)
 
         End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_svPosition Is Nothing Then m_svPosition.ClearIsDirty()
-            If Not m_snTime Is Nothing Then m_snTime.ClearIsDirty()
+            If Not m_snStartTime Is Nothing Then m_snStartTime.ClearIsDirty()
+            If Not m_snEndTime Is Nothing Then m_snEndTime.ClearIsDirty()
+            If Not m_snTimeSpan Is Nothing Then m_snTimeSpan.ClearIsDirty()
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
@@ -74,7 +192,9 @@ Namespace DataObjects.Visualization
             Dim bpOrig As Waypoint = DirectCast(doOriginal, Waypoint)
 
             m_svPosition = DirectCast(bpOrig.m_svPosition.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
-            m_snTime = DirectCast(bpOrig.m_snTime.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_snStartTime = DirectCast(bpOrig.m_snStartTime.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_snEndTime = DirectCast(bpOrig.m_snEndTime.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_snTimeSpan = DirectCast(bpOrig.m_snTimeSpan.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
 
         End Sub
 
@@ -99,41 +219,90 @@ Namespace DataObjects.Visualization
                                         "Point Properties", "Sets the location of this waypoint.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-            pbNumberBag = m_snTime.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Time", pbNumberBag.GetType(), "Time", _
-                                        "Point Properties", "Sets the time for this waypoint.", pbNumberBag, _
+            pbNumberBag = m_snTimeSpan.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Time Span", pbNumberBag.GetType(), "TimeSpan", _
+                                        "Time Properties", "Sets the time span between this waypoint this waypoint and the next.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snStartTime.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Start Time", pbNumberBag.GetType(), "StartTime", _
+                                        "Time Properties", "The time when this point will begin execution.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+
+            pbNumberBag = m_snTimeSpan.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("End Time", pbNumberBag.GetType(), "EndTime", _
+                                        "Time Properties", "The time when this point will end execution.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
 
         End Sub
 
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
-            'If Not Util.Simulation Is Nothing Then
-            '    Util.Application.SimulationInterface.AddItem(m_doParent.ID, "CameraPath", Me.ID, Me.GetSimulationXml("CameraPath"), bThrowError, bDoNotInit)
-            '    InitializeSimulationReferences()
-            'End If
+            If Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "Waypoint", Me.ID, Me.GetSimulationXml("Waypoint"), bThrowError, bDoNotInit)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
-            'If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
-            '    Util.Application.SimulationInterface.RemoveItem(m_doParent.ID, "CameraPath", Me.ID, bThrowError)
-            'End If
-            'm_doInterface = Nothing
+            If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(m_doParent.ID, "Waypoint", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
         End Sub
 
 #End Region
+
+        Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
+
+            If tnSelectedNode Is m_tnWorkspaceNode Then
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Waypoint", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+
+                ' Create the popup menu object
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Charting.Axis.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete})
+
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+                Return True
+            End If
+
+            Return False
+        End Function
+
+        Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
+
+            Try
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
+                                    "waypoint?", "Delete Node", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                    Return False
+                End If
+
+                Util.Application.AppIsBusy = True
+                If Not m_doParentPath Is Nothing Then
+                    m_doParentPath.RemoveWaypoint(Me)
+                    Me.RemoveWorksapceTreeView()
+                End If
+
+                Return True
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
+
+        End Function
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
 
-            Me.Name = oXml.GetChildString("Name")
             Me.ID = oXml.GetChildString("ID")
+            Me.Name = oXml.GetChildString("Name")
 
             m_svPosition.LoadData(oXml, "Position")
-            m_snTime.LoadData(oXml, "Time")
+            m_snTimeSpan.LoadData(oXml, "TimeSpan")
 
             oXml.OutOfElem()
 
@@ -141,22 +310,23 @@ Namespace DataObjects.Visualization
 
         Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
-            oXml.AddChildElement("CameraPath")
+            oXml.AddChildElement("Waypoint")
             oXml.IntoElem()
 
             oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
             oXml.AddChildElement("ClassName", Me.ClassName)
             oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
 
             m_svPosition.SaveData(oXml, "Position")
-            m_snTime.SaveData(oXml, "Time")
+            m_snTimeSpan.SaveData(oXml, "TimeSpan")
 
             oXml.OutOfElem()
 
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            oXml.AddChildElement("CameraPath")
+            oXml.AddChildElement("Waypoint")
             oXml.IntoElem()
 
             oXml.AddChildElement("ModuleName", Me.ModuleName)
@@ -164,10 +334,27 @@ Namespace DataObjects.Visualization
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
             m_svPosition.SaveSimulationXml(oXml, Me, "Position")
-            m_snTime.SaveSimulationXml(oXml, Me, "Time")
+            m_snStartTime.SaveSimulationXml(oXml, Me, "Time")
 
             oXml.OutOfElem()
 
+        End Sub
+
+#End Region
+
+#Region " Events "
+
+        'These three events handlers are called whenever a user manually changes the value of the position or rotation.
+        'This is different from the OnPositionChanged event. Those events come up from the simulation.
+        Protected Overridable Sub OnPositionValueChanged()
+            Try
+                If Not Util.ProjectProperties Is Nothing Then
+                    Me.SetSimData("Position", m_svPosition.GetSimulationXml("Position"), True)
+                    Util.ProjectProperties.RefreshProperties()
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

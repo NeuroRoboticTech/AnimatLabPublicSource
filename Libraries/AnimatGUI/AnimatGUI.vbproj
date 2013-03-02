@@ -1405,6 +1405,9 @@
     <EmbeddedResource Include="Graphics\CameraPaths.gif" />
     <EmbeddedResource Include="Graphics\CameraWaypoints.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\ScriptedSimWindow.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

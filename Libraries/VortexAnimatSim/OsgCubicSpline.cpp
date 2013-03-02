@@ -1,5 +1,24 @@
 #include "StdAfx.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
+#include "VsJoint.h"
+#include "VsMotorizedJoint.h"
+#include "VsRigidBody.h"
+#include "VsOrganism.h"
+#include "VsStructure.h"
+#include "VsClassFactory.h"
+#include "VsSimulator.h"
+
+//#include "VsSimulationRecorder.h"
+#include "VsMouseSpring.h"
+#include "VsLight.h"
+#include "VsCameraManipulator.h"
+#include "VsDragger.h"
+#include "MeshMinVertexDistanceVisitor.h"
+
 #include "OsgCubicSpline.h"
+#include "VsSimulationWindow.h"
+#include "VsScriptedSimulationWindow.h"
 
 namespace VortexAnimatSim
 {
@@ -23,10 +42,13 @@ OsgCubicSpline::OsgCubicSpline()
     m_InterpolatedY(0.0, 0.0, 0.0),
     m_InterpolatedY1(0.0, 0.0, 0.0),
     m_InterpolatedY2(0.0, 0.0, 0.0),
-	m_fltStartTime(0),
-	m_fltEndTime(1),
 	m_lpTrackBody(NULL),
-	m_bVisibleInSim(FALSE)
+	m_bVisible(TRUE),
+	m_bVisibleInSim(FALSE),
+	m_bShowWaypoints(FALSE),
+	m_dblStartTime(0),
+	m_dblEndTime(1),
+	m_lpParentWindow(NULL)
 {
 }
 
@@ -39,6 +61,7 @@ OsgCubicSpline::~OsgCubicSpline()
 {
 	//Do not delete
 	m_lpTrackBody = NULL;
+	RemoveCurve();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,17 +102,17 @@ bool OsgCubicSpline::AddControlPoint(ControlPoint *p)
 
     assert(p != NULL);
 
-    if ((p != NULL) && (p->m_T >= 0.0)) {
+    if ((p != NULL) && (p->PointTime() >= 0.0)) {
 
         bool valid = true;
         unsigned int afterI = -1;
 
         for (unsigned int i = 0; i < m_ControlPoints.size(); ++i) {
-            if (p->m_T < m_ControlPoints[i]->m_T) {
+            if (p->PointTime() < m_ControlPoints[i]->PointTime()) {
                 // insert point will be previous index
                 afterI = i - 1;
                 break;
-            } else if (p->m_T == m_ControlPoints[i]->m_T) {
+            } else if (p->PointTime() == m_ControlPoints[i]->PointTime()) {
                 // invalid time
                 valid = false;
                 break;
@@ -107,6 +130,7 @@ bool OsgCubicSpline::AddControlPoint(ControlPoint *p)
             // insert the new waypoint into the list
             PointListType::iterator iter = m_ControlPoints.begin() + index;
             m_ControlPoints.insert(iter, p);
+			ret = true;
         }
     }
 
@@ -187,7 +211,7 @@ bool OsgCubicSpline::BuildCurve()
             // initialize second derivative
             pnts[0]->m_Y2.set(-0.5, -0.5, -0.5);
             // delta time
-            double dt = pnts[1]->m_T - pnts[0]->m_T;
+            double dt = pnts[1]->PointTime() - pnts[0]->PointTime();
             // delta position
             osg::Vec3d dpos = pnts[1]->m_Pos - pnts[0]->m_Pos;
 
@@ -202,15 +226,15 @@ bool OsgCubicSpline::BuildCurve()
         for (unsigned int i = 1; i < (n - 1); i++) {
             // Decompose the tridiagonal
             
-            double sig = (pnts[i]->m_T - pnts[i-1]->m_T) / 
-                (pnts[i+1]->m_T - pnts[i-1]->m_T);
+            double sig = (pnts[i]->PointTime() - pnts[i-1]->PointTime()) / 
+                (pnts[i+1]->PointTime() - pnts[i-1]->PointTime());
 
             // add new entry (referenced as u[i])
             u.push_back(osg::Vec3d(0.0, 0.0, 0.0));
 
-            double dt0 = pnts[i+1]->m_T - pnts[i]->m_T;
-            double dt1 = pnts[i]->m_T - pnts[i-1]->m_T;
-            double dt2 = pnts[i+1]->m_T - pnts[i-1]->m_T;
+            double dt0 = pnts[i+1]->PointTime() - pnts[i]->PointTime();
+            double dt1 = pnts[i]->PointTime() - pnts[i-1]->PointTime();
+            double dt2 = pnts[i+1]->PointTime() - pnts[i-1]->PointTime();
 
             for (unsigned int j = 0; j < 3; j++) {
                 double p = (sig * pnts[i-1]->m_Y2[j]) + 2.0;
@@ -243,7 +267,7 @@ bool OsgCubicSpline::BuildCurve()
             // initialize second derivative
             qn.set(-0.5, -0.5, -0.5);
             // delta time
-            double dt = pnts[n-1]->m_T - pnts[n-2]->m_T;
+            double dt = pnts[n-1]->PointTime() - pnts[n-2]->PointTime();
             // delta position
             osg::Vec3d dpos = pnts[n-1]->m_Pos - pnts[n-2]->m_Pos;
 
@@ -327,17 +351,17 @@ bool OsgCubicSpline::Interpolate(const double t)
     // nothing to do if we have no control points
     if (n > 0) {
 
-        if (interpTime > pnts[n-1]->m_T) {
+        if (interpTime > pnts[n-1]->PointTime()) {
             // maximum time exceeded, cap time
-            interpTime = pnts[n-1]->m_T;
+            interpTime = pnts[n-1]->PointTime();
         } 
 
-        if (interpTime < pnts[0]->m_T) {
+        if (interpTime < pnts[0]->PointTime()) {
             // minimum time exceeded, cap time
-            interpTime = pnts[0]->m_T;
+            interpTime = pnts[0]->PointTime();
         }
 
-        if ((hi == lo) || (interpTime > pnts[hi]->m_T) || (interpTime < pnts[lo]->m_T)) {
+        if ((hi == lo) || (interpTime > pnts[hi]->PointTime()) || (interpTime < pnts[lo]->PointTime())) {
 
             // previous values were out of scope, so reset
             // and find right place using bisection
@@ -346,7 +370,7 @@ bool OsgCubicSpline::Interpolate(const double t)
             hi = pnts.size() - 1;
             while ((hi - lo) > 1) {
                 unsigned int k = (hi + lo) / 2;
-                if (pnts[k]->m_T > t) {
+                if (pnts[k]->PointTime() > t) {
                     hi = k;
                 } else {
                     lo = k;
@@ -354,14 +378,14 @@ bool OsgCubicSpline::Interpolate(const double t)
             }
         }
 
-        double dt = pnts[hi]->m_T - pnts[lo]->m_T;
+        double dt = pnts[hi]->PointTime() - pnts[lo]->PointTime();
         
         if (dt != 0.0) {
             ret = true;
             
             // (eq. 3.3.2)
-            double a = (pnts[hi]->m_T - interpTime) / dt;
-            double b = (interpTime - pnts[lo]->m_T) / dt;
+            double a = (pnts[hi]->PointTime() - interpTime) / dt;
+            double b = (interpTime - pnts[lo]->PointTime()) / dt;
             // (eq 3.3.4)
             double dt2div6 = (dt*dt) / 6.0;
             double c = (a*a*a - a) * dt2div6;
@@ -469,8 +493,8 @@ osg::Node *OsgCubicSpline::CreateTestGeom(const bool showControlPoints,
 
                 // interpolate from one point to the next based on time
 
-                double t = m_ControlPoints[i]->m_T;
-                double dt = (m_ControlPoints[i+1]->m_T - t) / 
+                double t = m_ControlPoints[i]->PointTime();
+                double dt = (m_ControlPoints[i+1]->PointTime() - t) / 
                     double(numSamples-1);
 
                 for (unsigned int ti = 0; ti < numSamples; ++ti) {
@@ -502,7 +526,7 @@ osg::Node *OsgCubicSpline::CreateTestGeom(const bool showControlPoints,
             geometry->setVertexArray(curveVerts.get());
 
             osg::ref_ptr<osg::Vec4Array> color = new osg::Vec4Array;
-            color->push_back(osg::Vec4(1.0, 0.0, 0.0, 1.0));
+            color->push_back(osg::Vec4(m_vLineColor.r(), m_vLineColor.g(), m_vLineColor.b(), m_vLineColor.a()));
             geometry->setColorArray(color.get());
             geometry->setColorBinding(osg::Geometry::BIND_OVERALL);
 
@@ -548,7 +572,7 @@ CStdColor *OsgCubicSpline::LineColor() {return &m_vLineColor;}
 void OsgCubicSpline::LineColor(CStdColor &aryColor)
 {
 	m_vLineColor = aryColor;
-	InvalidateCurve();
+	RedrawCurve();
 }
 
 /**
@@ -577,7 +601,7 @@ void OsgCubicSpline::LineColor(float *aryColor)
 void OsgCubicSpline::LineColor(string strXml)
 {
 	CStdColor vColor(1);
-	vColor.Load(strXml, "Color");
+	vColor.Load(strXml, "LineColor");
 	LineColor(vColor);
 }
 
@@ -604,20 +628,36 @@ void OsgCubicSpline::PartID(string strID)
 	m_strPartID = strID;
 }
 
-float OsgCubicSpline::StartTime() {return m_fltStartTime;}
+double OsgCubicSpline::StartTime() {return m_dblStartTime;}
 
-void OsgCubicSpline::StartTime(float fltTime)
+void OsgCubicSpline::StartTime(double dblTime)
 {
-	Std_IsAboveMin((float) 0, fltTime, TRUE, "StartTime", TRUE);
-	m_fltStartTime = fltTime;
+	Std_IsAboveMin((double) 0, dblTime, TRUE, "StartTime", TRUE);
+	m_dblStartTime = dblTime;
+	RedrawCurve();
+
+	if(m_lpParentWindow)
+		m_lpParentWindow->SortPaths();
 }
 
-float OsgCubicSpline::EndTime() {return m_fltEndTime;}
+double OsgCubicSpline::EndTime() {return m_dblStartTime;}
 
-void OsgCubicSpline::EndTime(float fltTime)
+void OsgCubicSpline::EndTime(double dblTime)
 {
-	Std_IsAboveMin(m_fltStartTime, fltTime, TRUE, "EndTime", TRUE);
-	m_fltEndTime = fltTime;
+	Std_IsAboveMin((double) m_dblStartTime, dblTime, TRUE, "EndTime", TRUE);
+	m_dblEndTime = dblTime;
+
+	if(m_lpParentWindow)
+		m_lpParentWindow->SortPaths();
+}
+
+BOOL OsgCubicSpline::Visible() 
+{return m_bVisible;}
+
+void OsgCubicSpline::Visible(BOOL bVal)
+{
+	m_bVisible = bVal;
+	MakeVisible(bVal);
 }
 
 BOOL OsgCubicSpline::VisibleInSim() 
@@ -625,6 +665,96 @@ BOOL OsgCubicSpline::VisibleInSim()
 
 void OsgCubicSpline::VisibleInSim(BOOL bVal)
 {m_bVisibleInSim = bVal;}
+
+void OsgCubicSpline::MakeVisible(BOOL bVal)
+{
+	if(m_osgSpline)
+	{
+		if(bVal)
+			m_osgSpline->setNodeMask(0x1);
+		else
+			m_osgSpline->setNodeMask(0x0);
+	}
+}
+
+BOOL OsgCubicSpline::ShowWaypoints() 
+{return m_bShowWaypoints;}
+
+void OsgCubicSpline::ShowWaypoints(BOOL bVal)
+{
+	m_bShowWaypoints = bVal;
+	RedrawCurve();
+}
+bool OsgCubicSpline::BeforePathTime(double dblTime)
+{
+	if(dblTime < m_dblStartTime)
+		return true;
+	else
+		return false;
+}
+
+bool OsgCubicSpline::WithinPathTime(double dblTime)
+{
+	if(dblTime >= m_dblStartTime && dblTime <= m_dblEndTime)
+		return true;
+	else
+		return false;
+}
+
+bool OsgCubicSpline::AfterPathTime(double dblTime)
+{
+	if(dblTime > m_dblEndTime)
+		return true;
+	else
+		return false;
+}
+
+void OsgCubicSpline::RemoveCurve()
+{
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+
+	if(lpVsSim && lpVsSim->OSGRoot())
+	{
+		//If we already have a curve then get rid of it first.
+		if(m_osgSpline.valid())
+		{
+			lpVsSim->OSGRoot()->removeChild(m_osgSpline.get());
+			m_osgSpline.release();
+		}
+	}
+}
+
+void OsgCubicSpline::RedrawCurve()
+{
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+
+	RemoveCurve();
+
+	if(lpVsSim && lpVsSim->OSGRoot())
+	{
+		//Now recreate it.
+		InvalidateCurve();
+		m_osgSpline = CreateTestGeom(m_bShowWaypoints);
+		MakeVisible(m_bVisible);
+		lpVsSim->OSGRoot()->addChild(m_osgSpline.get());
+	}
+}
+
+
+void OsgCubicSpline::SimStarting()
+{
+	MakeVisible(m_bVisibleInSim);
+}
+
+void OsgCubicSpline::ResetSimulation()
+{
+	MakeVisible(m_bVisible);
+
+	int iCount = m_ControlPoints.size();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_ControlPoints[iIndex]->ResetSimulation();
+}
+
 
 BOOL OsgCubicSpline::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
@@ -642,13 +772,13 @@ BOOL OsgCubicSpline::SetData(const string &strDataType, const string &strValue, 
 
 	if(strType == "STARTTIME")
 	{
-		StartTime(atof(strValue.c_str()));
+		StartTime((double) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "ENDTIME")
 	{
-		EndTime(atof(strValue.c_str()));
+		EndTime((double) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -686,9 +816,21 @@ BOOL OsgCubicSpline::SetData(const string &strDataType, const string &strValue, 
 		return TRUE;
 	}
 
+	if(strDataType == "VISIBLE")
+	{
+		Visible(Std_ToBool(strValue));
+		return TRUE;
+	}
+
 	if(strDataType == "VISIBLEINSIM")
 	{
 		VisibleInSim(Std_ToBool(strValue));
+		return TRUE;
+	}
+
+	if(strDataType == "SHOWWAYPOINTS")
+	{
+		ShowWaypoints(Std_ToBool(strValue));
 		return TRUE;
 	}
 
@@ -731,15 +873,82 @@ void OsgCubicSpline::QueryProperties(CStdArray<string> &aryNames, CStdArray<stri
 	aryTypes.Add("Boolean");
 }
 
+
+/**
+\brief	Creates and adds a waypoint. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the waypoint. 
+**/
+void OsgCubicSpline::AddWaypoint(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Waypoint");
+
+	osg::ref_ptr<ControlPoint> lpWaypoint = LoadWaypoint(oXml);
+
+	lpWaypoint->Initialize();
+	RedrawCurve();
+}
+
+/**
+\brief	Removes the waypoint with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the waypoint to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void OsgCubicSpline::RemoveWaypoint(string strID, BOOL bThrowError)
+{
+	int iPos = FindWaypointPos(strID, bThrowError);
+	m_ControlPoints.erase(m_ControlPoints.begin()+iPos);
+	RedrawCurve();
+}
+
+/**
+\brief	Finds the array index for the waypoint with the specified ID
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID ID of waypoint to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL, 
+else returns the pointer to the found part.
+**/
+int OsgCubicSpline::FindWaypointPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_ControlPoints.size();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_ControlPoints[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lBodyOrJointIDNotFound, Al_Err_strBodyOrJointIDNotFound, "ID");
+
+	return -1;
+}
+
 BOOL OsgCubicSpline::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
-	/*if(strType == "RIGIDBODY")
+	if(strType == "WAYPOINT")
 	{
-		AddRoot(strXml);
+		AddWaypoint(strXml);
 		return TRUE;
-	}*/
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -752,12 +961,12 @@ BOOL OsgCubicSpline::RemoveItem(const string &strItemType, const string &strID, 
 {
 	string strType = Std_CheckString(strItemType);
 
-	/*if(strType == "RIGIDBODY")
+	if(strType == "WAYPOINT")
 	{
-		RemoveRoot(strID);
+		RemoveWaypoint(strID);
 		return TRUE;
 	}
-*/
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
@@ -772,25 +981,258 @@ void OsgCubicSpline::Initialize()
 	m_lpTrackBody = NULL;
 	if(!Std_IsBlank(m_strPartID))
 		m_lpTrackBody = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
+
+	RedrawCurve();
 }
 
 void OsgCubicSpline::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
-	oXml.IntoElem();  //Into RigidBody Element
+	oXml.IntoElem();  //Into Spline Element
 
 	m_vLineColor.Load(oXml, "LineColor", false);
 
-	EndTime(oXml.GetChildFloat("EndTime", m_fltEndTime));
-	StartTime(oXml.GetChildFloat("StartTime", m_fltStartTime));
-	PartID(oXml.GetChildString("PartID", m_strPartID));
+	EndTime(oXml.GetChildDouble("EndTime", m_dblEndTime));
+	StartTime(oXml.GetChildDouble("StartTime", m_dblStartTime));
+	PartID(oXml.GetChildString("LinkedBodyPartID", m_strPartID));
 	VisibleInSim(oXml.GetChildBool("VisibleInSim", m_bVisibleInSim));
 
-	oXml.OutOfElem(); //OutOf RigidBody Element
+	if(oXml.FindChildElement("Waypoints", false))
+	{
+		oXml.IntoElem(); //IntoOf Waypoints Element
+
+		int iCount = oXml.NumberOfChildren();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+		{
+			oXml.FindChildByIndex(iIndex);
+			LoadWaypoint(oXml);
+		}
+
+		oXml.OutOfElem(); //OutOf Waypoints Element
+	}
+
+	oXml.OutOfElem(); //OutOf Spline Element
+}
+
+/**
+\brief	Loads a camera path waypoint. 
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	oXml The xml data packet to load. 
+
+\return	The root. 
+**/
+osg::ref_ptr<ControlPoint> OsgCubicSpline::LoadWaypoint(CStdXml &oXml)
+{
+	ControlPoint *lpPoint = NULL;
+
+try
+{
+	osg::ref_ptr<ControlPoint> lpPoint(new ControlPoint());
+
+	lpPoint->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+
+	lpPoint->Load(oXml);
+	lpPoint->ParentSpline(this);
+
+	if(!AddControlPoint(lpPoint.get()))
+		THROW_PARAM_ERROR(Vs_Err_lUnableToAddWaypoint, Vs_Err_strUnableToAddWaypoint, "Waypoint ID", lpPoint->ID());
+
+	return lpPoint;
+}
+catch(CStdErrorInfo oError)
+{
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
 }
 
 
+/**
+\brief	Gets the local position. (m_oPosition) 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_oPosition. 
+**/
+osg::Vec3d ControlPoint::Position() {return m_Pos;}
+
+/**
+\brief	Sets the local position. (m_oPosition) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint		The new point to use to set the local position. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void ControlPoint::Position(CStdFPoint &oPoint, BOOL bUseScaling) 
+{
+	CStdFPoint oNewPoint, oReportPosition;
+	if(bUseScaling && m_lpSim)
+	{
+		oNewPoint = oPoint * m_lpSim->InverseDistanceUnits();
+		oReportPosition = oNewPoint * m_lpSim->DistanceUnits();
+	}
+	else
+	{
+		oNewPoint = oPoint;
+		oReportPosition = oPoint;
+	}
+
+	m_Pos.set(oNewPoint.x, oNewPoint.y, oNewPoint.z);
+	m_ReportPos.set(oReportPosition.x, oReportPosition.y, oReportPosition.z);
+
+	if(m_lpParentSpline)
+		m_lpParentSpline->RedrawCurve();
+}
+
+/**
+\brief	Sets the local position. (m_oPosition) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void ControlPoint::Position(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	Position(vPos, bUseScaling);
+}
+
+/**
+\brief	Sets the local position. (m_oPosition). This method is primarily used by the GUI to
+reset the local position using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void ControlPoint::Position(string strXml, BOOL bUseScaling)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Position");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "Position", vPos);
+	Position(vPos, bUseScaling);
+}
+
+double ControlPoint::Time()
+{return m_T;}
+
+void ControlPoint::Time(double dblVal)
+{
+	Std_IsAboveMin((double) 0, dblVal, TRUE, "Waypoint Time", true);
+	m_T = dblVal;
+	if(m_lpParentSpline)
+		m_lpParentSpline->RedrawCurve();
+}
+
+double ControlPoint::PointTime()
+{
+	return m_T;
+}
+
+BOOL ControlPoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strDataType == "POSITION")
+	{
+		Position(strValue);
+		return true;
+	}
+
+	if(strDataType == "POSITION.X")
+	{
+		Position(atof(strValue.c_str()), m_ReportPos.y(), m_ReportPos.z());
+		return true;
+	}
+
+	if(strDataType == "POSITION.Y")
+	{
+		Position(m_ReportPos.x(), atof(strValue.c_str()), m_ReportPos.z());
+		return true;
+	}
+
+	if(strDataType == "POSITION.Z")
+	{
+		Position(m_ReportPos.x(), m_ReportPos.y(), atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "TIME")
+	{
+		Time((double) atof(strValue.c_str()));
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
+
+void ControlPoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Position");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Position.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Position.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Position.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Time");
+	aryTypes.Add("Float");
+}
+
+void ControlPoint::Load(StdUtils::CStdXml &oXml)
+{
+	AnimatBase::Load(oXml);
+
+	oXml.IntoElem();  //Into Spline Element
+
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "Position", vPos);
+	Position(vPos);
+
+	Time(oXml.GetChildDouble("Time", 0));
+
+	oXml.OutOfElem(); //OutOf Spline Element
+}
 
 	}			// Visualization
 //}				//VortexAnimatSim

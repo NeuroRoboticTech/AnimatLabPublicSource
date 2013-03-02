@@ -260,6 +260,32 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 **/
 void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget) {}
 
+/**
+\brief	Manually sets a camera position and look at position.
+
+\details This can be used to manually set where the camera is looking at.
+
+\author	dcofer
+\date	4/19/2011
+
+\param	oTarget	Target position to look at.
+**/
+void SimulationWindow::SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget) {}
+
+/**
+\brief	Manually sets a camera position.
+
+\details This can be used to manually set where the camera is positioned.
+This will only set the position if there is a track body defined. It uses the track body to 
+set the look at position.
+
+\author	dcofer
+\date	4/19/2011
+
+\param	vCameraPos	new Camera position.
+**/
+void SimulationWindow::SetCameraPostion(CStdFPoint vCameraPos) {};
+
 void SimulationWindow::UpdateBackgroundColor() {}
 
 void SimulationWindow::OnGetFocus()

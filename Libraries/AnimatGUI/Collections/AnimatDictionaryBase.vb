@@ -61,17 +61,18 @@ Namespace Collections
 
         End Sub
 
-        Public Overridable Overloads Function GetItem(ByVal iSelIndex As Integer) As Object
+        'Public Overridable Overloads Function GetItem(ByVal iSelIndex As Integer) As Object
 
-            Dim iIndex As Integer = 0
-            For Each deEntry As DictionaryEntry In Me
-                If iSelIndex = iIndex Then
-                    Return deEntry.Value
-                End If
-            Next
+        '    Dim iIndex As Integer = Me.Count() - 1
+        '    For Each deEntry As DictionaryEntry In Me
+        '        If iSelIndex = iIndex Then
+        '            Return deEntry.Value
+        '        End If
+        '        iIndex = iIndex - 1
+        '    Next
 
-            Throw New System.Exception("No entry with index '" & iSelIndex & "' was found.")
-        End Function
+        '    Throw New System.Exception("No entry with index '" & iSelIndex & "' was found.")
+        'End Function
 
         Protected Overridable Sub CopyInternal(ByVal aryOrig As AnimatDictionaryBase)
 

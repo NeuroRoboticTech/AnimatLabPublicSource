@@ -38,9 +38,9 @@ CStdFPoint VsSimulationWindow::GetCameraPosition()
 
 	CStdFPoint vPos(vEye.x(), vEye.y(), vEye.z());
 
-	m_fltCameraPosX = vEye.x();
-	m_fltCameraPosY = vEye.y();
-	m_fltCameraPosZ = vEye.z();
+	m_fltCameraPosX = vEye.x()*m_lpSim->DistanceUnits();
+	m_fltCameraPosY = vEye.y()*m_lpSim->DistanceUnits();
+	m_fltCameraPosZ = vEye.z()*m_lpSim->DistanceUnits();
 
 	return vPos;
 }
@@ -112,13 +112,43 @@ void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
 	m_osgManip->home(0);
 }
 
+
+void VsSimulationWindow::SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget)
+{
+	osg::Vec3d vCameraPos(oCameraPos.x, oCameraPos.y, oCameraPos.z);
+	osg::Vec3d vTargetPos(oTarget.x, oTarget.y, oTarget.z);
+	SetCameraPositionAndLookAt(vCameraPos, vTargetPos);
+}
+
+void VsSimulationWindow::SetCameraPositionAndLookAt(osg::Vec3d vCameraPos, osg::Vec3d vTarget)
+{
+	osg::Vec3d eye, center, up;
+	m_osgManip->getHomePosition(eye, center, up);
+
+	up = osg::Vec3d(0, 1, 0);
+	m_osgManip->setHomePosition(vCameraPos, vTarget, up, false );
+	m_osgManip->home(0);
+}
+
+void VsSimulationWindow::SetCameraPostion(CStdFPoint vCameraPos)
+{
+	if(m_lpTrackBody)
+	{
+		CStdFPoint vTargetPos = m_lpTrackBody->AbsolutePosition();
+		SetCameraPositionAndLookAt(vCameraPos, vTargetPos);		
+	}
+}
+
 void VsSimulationWindow::TrackCamera()
 {
-	CStdFPoint oPos = m_lpTrackBody->AbsolutePosition();
-	VxVector3 position(oPos.x, oPos.y, oPos.z);
+	if(m_lpTrackBody)
+	{
+		CStdFPoint oPos = m_lpTrackBody->AbsolutePosition();
+		VxVector3 position(oPos.x, oPos.y, oPos.z);
 
-	osg::Vec3 v(position[0], position[1], position[2]); 
-	m_osgManip->setCenter(v);
+		osg::Vec3 v(position[0], position[1], position[2]); 
+		m_osgManip->setCenter(v);
+	}
 }
 
 void VsSimulationWindow::UpdateBackgroundColor() 

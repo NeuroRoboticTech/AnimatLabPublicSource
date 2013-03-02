@@ -108,5 +108,8 @@
 #define Vs_Err_lMeshIDNotFound -4040
 #define Vs_Err_strMeshNotFound "Mesh filename was not found in the mesh manager."
 
+#define Vs_Err_lUnableToAddWaypoint -4041
+#define Vs_Err_strUnableToAddWaypoint "Inavlid waypoint defined. Time overlaps with another waypoint."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 
