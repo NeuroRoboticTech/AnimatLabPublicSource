@@ -105,7 +105,7 @@ Namespace Collections
             MyBase.New(doParent)
         End Sub
 
-        Default Public Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.Visualization.Waypoint
+        Default Public Property Item(ByVal key As Integer) As AnimatGUI.DataObjects.Visualization.Waypoint
             Get
                 Return CType(Dictionary(key), AnimatGUI.DataObjects.Visualization.Waypoint)
             End Get
@@ -126,23 +126,23 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Visualization.Waypoint)
+        Public Sub Add(ByVal key As Integer, ByVal value As AnimatGUI.DataObjects.Visualization.Waypoint)
             Dictionary.Add(key, value)
             Me.IsDirty = True
         End Sub 'Add
 
-        Public Function Contains(ByVal key As [String]) As Boolean
+        Public Function Contains(ByVal key As Integer) As Boolean
             Return Dictionary.Contains(key)
         End Function 'Contains
 
-        Public Sub Remove(ByVal key As [String])
+        Public Sub Remove(ByVal key As Integer)
             Dictionary.Remove(key)
             Me.IsDirty = True
         End Sub 'Remove
 
         Protected Overrides Sub OnInsert(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
+            If Not AnimatGUI.Framework.Util.IsTypeOf(key.GetType(), GetType(Integer), False) Then
+                Throw New ArgumentException("key must be of type Integer.", "key")
             End If
 
             If Not TypeOf (value) Is AnimatGUI.DataObjects.Visualization.Waypoint Then
@@ -154,14 +154,14 @@ Namespace Collections
         End Sub 'OnInsert
 
         Protected Overrides Sub OnRemove(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
+            If Not AnimatGUI.Framework.Util.IsTypeOf(key.GetType(), GetType(Integer), False) Then
+                Throw New ArgumentException("key must be of type Integer.", "key")
             End If
         End Sub 'OnRemove
 
         Protected Overrides Sub OnSet(ByVal key As [Object], ByVal oldValue As [Object], ByVal newValue As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
+            If Not AnimatGUI.Framework.Util.IsTypeOf(key.GetType(), GetType(Integer), False) Then
+                Throw New ArgumentException("key must be of type Integer.", "key")
             End If
 
             If Not TypeOf (newValue) Is AnimatGUI.DataObjects.Visualization.Waypoint Then
@@ -170,12 +170,12 @@ Namespace Collections
         End Sub 'OnSet
 
         Protected Overrides Sub OnValidate(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
+            If Not AnimatGUI.Framework.Util.IsTypeOf(key.GetType(), GetType(Integer), False) Then
+                Throw New ArgumentException("key must be of type Integer.", "key")
             End If
 
             If Not TypeOf (value) Is AnimatGUI.DataObjects.Visualization.Waypoint Then
-                Throw New ArgumentException("value must be of type DataObjects.Physical.Joint.", "value")
+                Throw New ArgumentException("value must be of type DataObjects.Physical.Waypoint.", "value")
             End If
         End Sub 'OnValidate 
 
@@ -193,6 +193,63 @@ Namespace Collections
         End Function
 
     End Class 'Joints
+
+    Public Class OrderedWaypointsList
+        Inherits AnimatSortedList
+
+        Public Sub New(ByVal doParent As Framework.DataObject)
+            MyBase.New(doParent)
+        End Sub
+
+        Default Public Overloads Property Item(ByVal key As Integer) As AnimatGUI.DataObjects.Visualization.Waypoint
+            Get
+                Return CType(MyBase.Item(key), AnimatGUI.DataObjects.Visualization.Waypoint)
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Visualization.Waypoint)
+                MyBase.Item(key) = Value
+            End Set
+        End Property
+
+        Public Overloads Sub Add(ByVal key As Integer, ByVal value As AnimatGUI.DataObjects.Visualization.Waypoint, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            MyBase.Add(key, value)
+
+            Me.IsDirty = True
+        End Sub 'Add
+
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As AnimatGUI.DataObjects.Visualization.Waypoint = DirectCast(Me(key), AnimatGUI.DataObjects.Visualization.Waypoint)
+
+            MyBase.Remove(key)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As AnimatGUI.DataObjects.Visualization.Waypoint = DirectCast(Me.GetByIndex(index), AnimatGUI.DataObjects.Visualization.Waypoint)
+
+            MyBase.RemoveAt(index)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overrides Function Copy() As AnimatSortedList
+            Dim aryList As New OrderedWaypointsList(m_doParent)
+            aryList.CopyInternal(Me)
+            Return aryList
+        End Function
+
+        Public Overloads Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatSortedList
+            Dim aryList As New OrderedWaypointsList(m_doParent)
+            aryList.CloneInternal(Me, doParent, bCutData, doRoot)
+            Return aryList
+        End Function
+
+        Public Overrides Function CloneList() As AnimatSortedList
+            Dim aryList As New OrderedWaypointsList(m_doParent)
+            aryList.CloneInternal(Me, Me.Parent, False, Nothing)
+            Return aryList
+        End Function
+
+    End Class
 
 
     Public Class SortedWaypointsList

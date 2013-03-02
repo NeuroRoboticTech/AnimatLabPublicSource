@@ -45,19 +45,23 @@ Namespace DataObjects.Visualization
                 Return MyBase.Name
             End Get
             Set(value As String)
+                If Not IsNumeric(value) Then
+                    Throw New System.Exception("New waypoint names must be numeric")
+                End If
+
                 If m_bIsInitialized Then
                     If Not m_doParentPath Is Nothing Then
-                        If m_doParentPath.WaypointsByName.Contains(value) Then
+                        If m_doParentPath.WaypointsByName.Contains(CInt(value)) Then
                             Throw New System.Exception("A waypoint with the name '" + value + "' already exists. Waypoint names must be unique.")
                         End If
 
-                        m_doParentPath.WaypointsByName.Remove(Me.Name)
+                        m_doParentPath.WaypointsByName.Remove(CInt(Me.Name))
                     End If
 
                     MyBase.Name = value
 
                     If Not m_doParentPath Is Nothing Then
-                        m_doParentPath.WaypointsByName.Add(Me.Name, Me)
+                        m_doParentPath.WaypointsByName.Add(CInt(Me.Name), Me)
                         m_doParentPath.RecalculateTimes()
                     End If
                 Else

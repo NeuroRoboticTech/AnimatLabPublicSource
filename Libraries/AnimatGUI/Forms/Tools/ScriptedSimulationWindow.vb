@@ -390,8 +390,10 @@ Namespace Forms
                 Set(ByVal Value As DataObjects.Physical.BodyPart)
                     If Value Is Nothing Then
                         SetSimData("LookAtBodyID", "", True)
+                        SetSimData("DefaultPartID", "", True)
                     Else
                         SetSimData("LookAtBodyID", Value.ID, True)
+                        SetSimData("DefaultPartID", Value.ID, True)
                     End If
 
                     If Not m_doBodyPart Is Nothing Then
@@ -1147,7 +1149,7 @@ Namespace Forms
                         End If
 
                         Dim doWaypoint As New DataObjects.Visualization.Waypoint(doCameraPath)
-                        doWaypoint.Name = doCameraPath.Waypoints.Count.ToString
+                        doWaypoint.Name = doCameraPath.Waypoints.Count.ToString("D3")
 
                         If Not m_doInterface Is Nothing Then
                             doWaypoint.Position.X.ActualValue = m_doInterface.GetDataValueImmediate("CameraPositionX")

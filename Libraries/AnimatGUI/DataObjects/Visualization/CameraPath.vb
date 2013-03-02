@@ -18,7 +18,7 @@ Namespace DataObjects.Visualization
 #Region " Attributes "
 
         Protected m_aryWaypoints As New Collections.SortedWaypointsList(Me)
-        Protected m_aryWaypointsByName As New Collections.SortedWaypoints(Me)
+        Protected m_aryWaypointsByName As New Collections.OrderedWaypointsList(Me)
 
         Protected m_thLinkedStructure As AnimatGUI.TypeHelpers.LinkedStructureList
         Protected m_thLinkedPart As AnimatGUI.TypeHelpers.LinkedBodyPartList
@@ -72,7 +72,7 @@ Namespace DataObjects.Visualization
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property WaypointsByName() As Collections.SortedWaypoints
+        Public Overridable ReadOnly Property WaypointsByName() As Collections.OrderedWaypointsList
             Get
                 Return m_aryWaypointsByName
             End Get
@@ -104,6 +104,12 @@ Namespace DataObjects.Visualization
             End Get
             Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPartList)
                 Dim thPrevLinked As AnimatGUI.TypeHelpers.LinkedBodyPartList = m_thLinkedPart
+
+                If Not Value Is Nothing AndAlso Not Value.BodyPart Is Nothing Then
+                    SetSimData("TrackPartID", Value.BodyPart.ID, True)
+                Else
+                    SetSimData("TrackPartID", "", True)
+                End If
 
                 DiconnectLinkedEvents()
                 m_thLinkedPart = Value
@@ -254,7 +260,7 @@ Namespace DataObjects.Visualization
             Dim bpOrig As CameraPath = DirectCast(doOriginal, CameraPath)
 
             m_aryWaypoints = DirectCast(bpOrig.m_aryWaypoints.Clone(Me, bCutData, doRoot), Collections.SortedWaypointsList)
-            m_aryWaypointsByName = DirectCast(bpOrig.m_aryWaypointsByName.Clone(Me, bCutData, doRoot), Collections.SortedWaypoints)
+            m_aryWaypointsByName = DirectCast(bpOrig.m_aryWaypointsByName.Clone(Me, bCutData, doRoot), Collections.OrderedWaypointsList)
             m_thLinkedStructure = DirectCast(bpOrig.m_thLinkedStructure.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedStructureList)
             m_thLinkedPart = DirectCast(bpOrig.m_thLinkedPart.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedBodyPartList)
             m_clLineColor = bpOrig.m_clLineColor
@@ -301,7 +307,12 @@ Namespace DataObjects.Visualization
 
         Public Overridable Sub AddWaypoint(ByVal doWaypoint As Waypoint, Optional ByVal bCallSimMethods As Boolean = True)
             m_aryWaypoints.Add(doWaypoint.ID, doWaypoint, bCallSimMethods)
-            m_aryWaypointsByName.Add(doWaypoint.Name, doWaypoint)
+
+            If Not IsNumeric(doWaypoint.Name) Then
+                Throw New System.Exception("New waypoint names must be numeric")
+            End If
+
+            m_aryWaypointsByName.Add(CInt(doWaypoint.Name), doWaypoint)
         End Sub
 
         Protected Overridable Function FindLastWaypoint() As Waypoint
@@ -322,6 +333,10 @@ Namespace DataObjects.Visualization
 
         Public Overridable Sub AddWaypointSetTimes(ByVal doWaypoint As Waypoint, Optional ByVal bCallSimMethods As Boolean = True)
 
+            If Not IsNumeric(doWaypoint.Name) Then
+                Throw New System.Exception("New waypoint names must be numeric")
+            End If
+
             If m_aryWaypointsByName.Count > 0 Then
                 Dim doEndWaypoint As Waypoint = FindLastWaypoint()
                 doWaypoint.EndTime.ActualValue = doEndWaypoint.EndTime.ActualValue + doWaypoint.TimeSpan.ActualValue
@@ -330,12 +345,12 @@ Namespace DataObjects.Visualization
 
             doWaypoint.InitializeAfterLoad()
             m_aryWaypoints.Add(doWaypoint.ID, doWaypoint, bCallSimMethods)
-            m_aryWaypointsByName.Add(doWaypoint.Name, doWaypoint)
+            m_aryWaypointsByName.Add(CInt(doWaypoint.Name), doWaypoint)
         End Sub
 
         Public Overridable Sub RemoveWaypoint(ByVal doWaypoint As Waypoint)
             m_aryWaypoints.Remove(doWaypoint.ID)
-            m_aryWaypointsByName.Remove(doWaypoint.Name)
+            m_aryWaypointsByName.Remove(CInt(doWaypoint.Name))
         End Sub
 
         Public Overridable Sub RecalculateTimes()
