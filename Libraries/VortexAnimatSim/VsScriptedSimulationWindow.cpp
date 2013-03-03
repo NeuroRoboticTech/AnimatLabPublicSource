@@ -168,7 +168,7 @@ void VsScriptedSimulationWindow::AddCameraPath(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("CameraPath");
 
-	OsgCubicSpline *lpPath = LoadCameraPath(oXml);
+	OsgLinearPath *lpPath = LoadCameraPath(oXml);
 	lpPath->Initialize();
 	SortPaths();
 }
@@ -316,7 +316,11 @@ void VsScriptedSimulationWindow::TrackCamera()
 				osg::Vec3d vTargetPos(oPos.x, oPos.y, oPos.z);
 
 				osg::Vec3d vPos = m_lpCurrentPath->GetInterpPosition();
-				SetCameraPositionAndLookAt(m_lpCurrentPath->GetInterpPosition(), vTargetPos);			
+
+				string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
+				OutputDebugString(strMesage.c_str());
+
+				SetCameraPositionAndLookAt(vPos, vTargetPos);			
 			}
 		}
 	}
@@ -377,13 +381,13 @@ void VsScriptedSimulationWindow::Load(CStdXml &oXml)
 
 \return	The root. 
 **/
-OsgCubicSpline *VsScriptedSimulationWindow::LoadCameraPath(CStdXml &oXml)
+OsgLinearPath *VsScriptedSimulationWindow::LoadCameraPath(CStdXml &oXml)
 {
-	OsgCubicSpline *lpSpline = NULL;
+	OsgLinearPath *lpSpline = NULL;
 
 try
 {
-	lpSpline = new OsgCubicSpline;
+	lpSpline = new OsgLinearPath;
 
 	lpSpline->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpSpline->ParentWindow(this);

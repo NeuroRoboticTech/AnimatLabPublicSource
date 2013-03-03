@@ -222,7 +222,7 @@ namespace VortexAnimatSim
 		class VsTrackballDragger;
 		class VsTranslateAxisDragger;
 		class WorldCoordinateNodeVisitor;
-		class OsgCubicSpline;
+		class OsgLinearPath;
 	}
 }
 
@@ -288,7 +288,7 @@ using namespace Vx;
 #include "VsTrackballDragger.h"
 #include "VsTranslateAxisDragger.h"
 #include "WorldCoordinateNodeVisitor.h"
-#include "OsgCubicSpline.h"
+#include "OsgLinearPath.h"
 
 #include "VsHudText.h"
 #include "VsHud.h"

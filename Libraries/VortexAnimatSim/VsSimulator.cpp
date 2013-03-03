@@ -21,8 +21,6 @@
 #include "VsDragger.h"
 #include "MeshMinVertexDistanceVisitor.h"
 
-#include "OsgCubicSpline.h"
-
 namespace VortexAnimatSim
 {
 

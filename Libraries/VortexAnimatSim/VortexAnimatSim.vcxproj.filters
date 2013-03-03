@@ -201,10 +201,10 @@
     <ClCompile Include="VsTerrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OsgCubicSpline.cpp">
+    <ClCompile Include="VsScriptedSimulationWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsScriptedSimulationWindow.cpp">
+    <ClCompile Include="OsgLinearPath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -392,10 +392,10 @@
     <ClInclude Include="VsTerrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OsgCubicSpline.h">
+    <ClInclude Include="VsScriptedSimulationWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsScriptedSimulationWindow.h">
+    <ClInclude Include="OsgLinearPath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

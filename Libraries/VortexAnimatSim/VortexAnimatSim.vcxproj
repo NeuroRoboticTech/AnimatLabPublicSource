@@ -176,8 +176,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MeshMinVertexDistanceVisitor.cpp" />
-    <ClCompile Include="OsgCubicSpline.cpp" />
     <ClCompile Include="OsgGeometry.cpp" />
+    <ClCompile Include="OsgLinearPath.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="VortexAnimatSim.cpp" />
     <ClCompile Include="VsAttachment.cpp" />
@@ -242,8 +242,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h" />
-    <ClInclude Include="OsgCubicSpline.h" />
     <ClInclude Include="OsgGeometry.h" />
+    <ClInclude Include="OsgLinearPath.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="VsAttachment.h" />
     <ClInclude Include="VsAutoTransform.h" />

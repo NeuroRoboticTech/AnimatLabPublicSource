@@ -95,46 +95,61 @@ void VsRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
 
 CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
 {
-	Vx::VxReal3Ptr vPos = NULL;
-	m_vxSensor->getPosition(vPos);
-	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
-	return m_lpThisMI->AbsolutePosition();
+	if(m_vxSensor && m_lpThisMI)
+	{
+		Vx::VxReal3Ptr vPos = NULL;
+		m_vxSensor->getPosition(vPos);
+		m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
+		return m_lpThisMI->AbsolutePosition();
+	}
+	else
+	{
+		CStdFPoint vPos;
+		return vPos;
+	}
 }
 
 void VsRigidBody::Physics_UpdateMatrix()
 {
 	VsBody::Physics_UpdateMatrix();
 
-	m_lpThisRB->UpdatePhysicsPosFromGraphics();
+	if(m_lpThisRB)
+		m_lpThisRB->UpdatePhysicsPosFromGraphics();
 }
  
 void VsRigidBody::UpdatePositionAndRotationFromMatrix()
 {
 	VsBody::UpdatePositionAndRotationFromMatrix();
 
-	m_lpThisRB->UpdatePhysicsPosFromGraphics();
+	if(m_lpThisRB)
+		m_lpThisRB->UpdatePhysicsPosFromGraphics();
 }
 
 void VsRigidBody::Physics_UpdateNode()
 {
-	if(m_lpThisRB->IsContactSensor())
-		ResetSensorCollisionGeom();
-	else if(m_lpThisRB->HasStaticJoint())
-		ResetStaticCollisionGeom(); //If this body uses a static joint then we need to reset the offest matrix for its collision geometry.
-	else if(m_vxSensor)
-		m_vxSensor->updateFromNode();
+	if(m_lpThisRB)
+	{
+		if(m_lpThisRB->IsContactSensor())
+			ResetSensorCollisionGeom();
+		else if(m_lpThisRB->HasStaticJoint())
+			ResetStaticCollisionGeom(); //If this body uses a static joint then we need to reset the offest matrix for its collision geometry.
+		else if(m_vxSensor)
+			m_vxSensor->updateFromNode();
+	}
 
 	Physics_UpdateAbsolutePosition();
 }
 
 void VsRigidBody::Physics_SetColor()
 {
-	SetColor(*m_lpThisRB->Ambient(), *m_lpThisRB->Diffuse(), *m_lpThisRB->Specular(), m_lpThisRB->Shininess()); 
+	if(m_lpThisRB)
+		SetColor(*m_lpThisRB->Ambient(), *m_lpThisRB->Diffuse(), *m_lpThisRB->Specular(), m_lpThisRB->Shininess()); 
 }
 
 void VsRigidBody::Physics_TextureChanged()
 {
-	SetTexture(m_lpThisRB->Texture());
+	if(m_lpThisRB)
+		SetTexture(m_lpThisRB->Texture());
 }
 
 void VsRigidBody::Physics_SetFreeze(BOOL bVal)
@@ -151,7 +166,7 @@ void VsRigidBody::Physics_SetDensity(float fltVal)
 
 void VsRigidBody::Physics_SetMaterialID(string strID)
 {
-	if(m_vxCollisionGeometry)
+	if(m_vxCollisionGeometry && m_lpThisAB)
 	{
 		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(strID);
 	
@@ -199,7 +214,8 @@ void VsRigidBody::Physics_Resize()
 
 		//Create a new box geometry with the new sizes.
 		CreateGraphicsGeometry();
-		m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
+		if(m_lpThisAB)
+			m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
 
 		//Add it to the geode.
 		osgGroup->addDrawable(m_osgGeometry.get());
@@ -221,7 +237,8 @@ void VsRigidBody::Physics_Resize()
 		ResizePhysicsGeometry();
 
 		//We need to reset the density in order for it to recompute the mass and volume.
-		Physics_SetDensity(m_lpThisRB->Density());
+		if(m_lpThisRB)
+			Physics_SetDensity(m_lpThisRB->Density());
 
 		//Now get base values, including mass and volume
 		GetBaseValues();
@@ -243,7 +260,7 @@ void VsRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float flt
 
 void VsRigidBody::ShowSelectedVertex()
 {
-	if(m_lpThisRB->IsCollisionObject() && m_lpThisAB->Selected() && m_osgMT.valid() && m_osgSelVertexMT.valid())
+	if(m_lpThisRB && m_lpThisAB && m_lpThisRB->IsCollisionObject() && m_lpThisAB->Selected() && m_osgMT.valid() && m_osgSelVertexMT.valid())
 	{
 		if(!m_osgMT->containsNode(m_osgSelVertexMT.get()))
 			m_osgMT->addChild(m_osgSelVertexMT.get());
@@ -267,7 +284,7 @@ void VsRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
 
 void  VsRigidBody::Physics_FluidDataChanged()
 {
-	if(m_vxCollisionGeometry)
+	if(m_vxCollisionGeometry && m_lpThisRB)
 	{
 		CStdFPoint vpCenter = m_lpThisRB->BuoyancyCenter();
 		Vx::VxReal3 vCenter = {vpCenter.x, vpCenter.y, vpCenter.z};
@@ -290,7 +307,7 @@ void  VsRigidBody::Physics_FluidDataChanged()
 
 void VsRigidBody::GetBaseValues()
 {
-	if(m_vxPart)
+	if(m_vxPart && m_lpThisRB)
 	{
 		//Fluid Density is in the units being used. So if the user set 1 g/cm^3 
 		//and the units were grams and decimeters then density would be 1000 g/dm^3
@@ -321,10 +338,13 @@ local coordinates of the rigid body.
 void  VsRigidBody::BuildLocalMatrix()
 {
 	//build the local matrix
-	if(m_lpThisRB->IsRoot())
-		VsBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
-	else
-		VsBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
+	{
+		if(m_lpThisRB->IsRoot())
+			VsBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+		else
+			VsBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+	}
 }
 
 /**
@@ -353,7 +373,7 @@ void VsRigidBody::SetupPhysics()
 {
 	//If no geometry is defined then this part does not have a physics representation.
 	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
-	if(m_vxGeometry)
+	if(m_vxGeometry && m_lpThisRB)
 	{
 		//If the parent is not null and the joint is null then that means we need to statically link this part to 
 		//its parent. So we do not create a physics part, we just get a link to its parents part.
@@ -368,26 +388,29 @@ void VsRigidBody::SetupPhysics()
 
 void VsRigidBody::CreateSensorPart()
 {
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+	if(m_lpThisRB && m_lpThisAB)
+	{
+		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
-	m_vxSensor = new VxCollisionSensor;
-	m_vxPart = NULL;
-	m_vxSensor->setUserData((void*) m_lpThisRB);
+		m_vxSensor = new VxCollisionSensor;
+		m_vxPart = NULL;
+		m_vxSensor->setUserData((void*) m_lpThisRB);
 
-	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-    CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
-	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-	m_vxCollisionGeometry->setName(strName.c_str());
+		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
+		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
+		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		m_vxCollisionGeometry->setName(strName.c_str());
 
-	m_vxSensor->setControl(VxEntity::kControlNode);
+		m_vxSensor->setControl(VxEntity::kControlNode);
 
-	//For some reason attempting to disable collisions between a sensor and its parent part does not work.
-	//I put some code in the checking to prevent this from being counted.
+		//For some reason attempting to disable collisions between a sensor and its parent part does not work.
+		//I put some code in the checking to prevent this from being counted.
 
-	if(lpVsParent)
-		SetFollowEntity(lpVsParent);
-	else
-		m_vxSensor->freeze(m_lpThisRB->Freeze());
+		if(lpVsParent)
+			SetFollowEntity(lpVsParent);
+		else
+			m_vxSensor->freeze(m_lpThisRB->Freeze());
+	}
 }
 
 void VsRigidBody::SetFollowEntity(VsRigidBody *lpEntity)
@@ -416,52 +439,61 @@ void VsRigidBody::ResetSensorCollisionGeom()
 
 void VsRigidBody::CreateDynamicPart()
 {
-	// Create the physics object.
-	m_vxPart = new VxPart;
-	m_vxSensor = m_vxPart;
-	m_vxSensor->setUserData((void*) m_lpThisRB);
-	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-    m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
-    CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
-
-	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-	m_vxCollisionGeometry->setName(strName.c_str());
-	m_vxSensor->setFastMoving(true);
-
-	//if this body is frozen; freeze it
-	m_vxSensor->freeze(m_lpThisRB->Freeze());
-
-	//if the center of mass isn't the graphical center then set the offset relative to position and orientation
-	if(m_vxPart)
+	if(m_lpThisRB && m_lpThisAB)
 	{
-		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-			m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
+		// Create the physics object.
+		m_vxPart = new VxPart;
+		m_vxSensor = m_vxPart;
+		m_vxSensor->setUserData((void*) m_lpThisRB);
+		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
-		if(m_lpThisRB->LinearVelocityDamping() > 0)
-			m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
+		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
+		m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
+		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
 
-		if(m_lpThisRB->AngularVelocityDamping() > 0)
-			m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
+		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		m_vxCollisionGeometry->setName(strName.c_str());
+		m_vxSensor->setFastMoving(true);
+
+		//if this body is frozen; freeze it
+		m_vxSensor->freeze(m_lpThisRB->Freeze());
+
+		//if the center of mass isn't the graphical center then set the offset relative to position and orientation
+		if(m_vxPart)
+		{
+			CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+			if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+				m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
+
+			if(m_lpThisRB->LinearVelocityDamping() > 0)
+				m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
+
+			if(m_lpThisRB->AngularVelocityDamping() > 0)
+				m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
+		}
 	}
 }
 
 void VsRigidBody::CreateStaticPart()
 {
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
-
-	Vx::VxReal44 vOffset;
-	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-	if(vxSensor)
+	if(m_lpThisRB && m_lpThisAB)
 	{
-	    CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-		m_vxCollisionGeometry->setName(strName.c_str());
+		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+
+		Vx::VxReal44 vOffset;
+		VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+
+		if(lpVsParent)
+		{
+			Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+			if(vxSensor)
+			{
+				CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
+				string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+				m_vxCollisionGeometry->setName(strName.c_str());
+			}
+		}
 	}
 }
 
@@ -469,23 +501,29 @@ void VsRigidBody::RemoveStaticPart()
 {
 	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
-	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-	if(vxSensor && m_vxCollisionGeometry)
-		vxSensor->removeCollisionGeometry(m_vxCollisionGeometry);
+	if(lpVsParent)
+	{
+		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+		if(vxSensor && m_vxCollisionGeometry)
+			vxSensor->removeCollisionGeometry(m_vxCollisionGeometry);
+	}
 }
 
 void VsRigidBody::ResetStaticCollisionGeom()
 {
-	if(m_osgMT.valid())
+	if(m_osgMT.valid() && m_lpThisRB && m_lpThisRB->Parent())
 	{
 		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
-		Vx::VxReal44 vOffset;
-		VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+		if(lpVsParent)
+		{
+			Vx::VxReal44 vOffset;
+			VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
 
-		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-		if(vxSensor && m_vxCollisionGeometry)
-			m_vxCollisionGeometry->setRelativeTransform(vOffset);
+			Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+			if(vxSensor && m_vxCollisionGeometry)
+				m_vxCollisionGeometry->setRelativeTransform(vOffset);
+		}
 	}
 }
 
@@ -509,7 +547,7 @@ void VsRigidBody::DeletePhysics()
 
 void VsRigidBody::SetBody()
 {
-	if(m_vxSensor)
+	if(m_vxSensor && m_lpThisAB)
 	{
 		//VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
 		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
@@ -518,7 +556,8 @@ void VsRigidBody::SetBody()
 		m_vxSensor->setNode(lpMT);               // Connect to the node.
 
 		// Add the part to the universe.
-		lpVsSim->Universe()->addEntity(m_vxSensor);
+		if(lpVsSim && lpVsSim->Universe())
+			lpVsSim->Universe()->addEntity(m_vxSensor);
 		//lpAssem->addEntity(m_vxSensor);
 	}
 }

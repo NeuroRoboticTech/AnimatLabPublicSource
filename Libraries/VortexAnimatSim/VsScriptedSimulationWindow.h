@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OsgCubicSpline.h"
+#include "OsgLinearPath.h"
 
 namespace VortexAnimatSim
 {
@@ -10,11 +10,11 @@ namespace VortexAnimatSim
 class VORTEX_PORT VsScriptedSimulationWindow : public VsSimulationWindow
 {
 	protected:
-		CStdPtrArray<OsgCubicSpline> m_aryCameraPaths;
-		CStdMap<double, OsgCubicSpline *> m_arySortedCameraPaths;
-		CStdMap<double, OsgCubicSpline *>::iterator m_iCurrentPathIter;
+		CStdPtrArray<OsgLinearPath> m_aryCameraPaths;
+		CStdMap<double, OsgLinearPath *> m_arySortedCameraPaths;
+		CStdMap<double, OsgLinearPath *>::iterator m_iCurrentPathIter;
 
-		OsgCubicSpline *m_lpCurrentPath;
+		OsgLinearPath *m_lpCurrentPath;
 
 		/// Used to keep track of the body part that was being tracked before sim started.
 		BodyPart *m_lpOriginalTrackBody;
@@ -26,7 +26,7 @@ class VORTEX_PORT VsScriptedSimulationWindow : public VsSimulationWindow
 
 		virtual void AddCameraPath(string strXml);
 		virtual void RemoveCameraPath(string strID, BOOL bThrowError = TRUE);
-		virtual OsgCubicSpline *LoadCameraPath(CStdXml &oXml);
+		virtual OsgLinearPath *LoadCameraPath(CStdXml &oXml);
 		virtual void TrackCamera();
 		virtual void FindNextCameraPath();
 
