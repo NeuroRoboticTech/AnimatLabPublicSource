@@ -56,6 +56,13 @@ Namespace Framework
             End Set
         End Property
 
+        Public Overridable ReadOnly Property Point() As Vec3d
+            Get
+                Dim oV As New Vec3d(Nothing, Me.X.ActualValue, Me.Y.ActualValue, Me.Z.ActualValue)
+                Return oV
+            End Get
+        End Property
+
         Public Overridable Property PropertiesReadOnly() As Boolean
             Get
                 Return m_bPropertiesReadOnly

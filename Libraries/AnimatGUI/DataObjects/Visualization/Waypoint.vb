@@ -23,6 +23,8 @@ Namespace DataObjects.Visualization
         Protected m_snStartTime As Framework.ScaledNumber
         Protected m_snEndTime As Framework.ScaledNumber
         Protected m_snTimeSpan As Framework.ScaledNumber
+        Protected m_snVelocity As Framework.ScaledNumber
+        Protected m_snDistance As Framework.ScaledNumber
 
 #End Region
 
@@ -80,11 +82,47 @@ Namespace DataObjects.Visualization
             End Set
         End Property
 
+        Public Overridable Property Distance() As Framework.ScaledNumber
+            Get
+                Return m_snDistance
+            End Get
+            Set(ByVal value As Framework.ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The distance must be greater than zero.")
+                End If
+
+                m_snDistance.CopyData(value)
+
+                If Not m_doParentPath Is Nothing Then
+                    m_doParentPath.RecalculateTimes()
+                End If
+            End Set
+        End Property
+
+        Public Overridable Property Velocity() As Framework.ScaledNumber
+            Get
+                Return m_snVelocity
+            End Get
+            Set(ByVal value As Framework.ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The velocity must be greater than zero.")
+                End If
+
+                m_snVelocity.CopyData(value)
+                Dim dblTime As Double = Me.Distance.ActualValue / m_snVelocity.ActualValue
+                Me.TimeSpan = New ScaledNumber(Me, "TimeSpan", dblTime, ScaledNumber.enumNumericScale.None, "s", "s")
+            End Set
+        End Property
+
         Public Overridable Property TimeSpan() As Framework.ScaledNumber
             Get
                 Return m_snTimeSpan
             End Get
             Set(ByVal value As Framework.ScaledNumber)
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The timespan must be greater than zero.")
+                End If
+
                 m_snTimeSpan.CopyData(value)
 
                 If Not m_doParentPath Is Nothing Then
@@ -146,6 +184,8 @@ Namespace DataObjects.Visualization
             m_snStartTime = New ScaledNumber(Me, "StartTime", 0, ScaledNumber.enumNumericScale.None, "s", "s")
             m_snEndTime = New ScaledNumber(Me, "EndTime", 1, ScaledNumber.enumNumericScale.None, "s", "s")
             m_snTimeSpan = New ScaledNumber(Me, "TimeSpan", 1, ScaledNumber.enumNumericScale.None, "s", "s")
+            m_snVelocity = New ScaledNumber(Me, "Velocity", 1, ScaledNumber.enumNumericScale.None, "m/s", "m/s")
+            m_snDistance = New ScaledNumber(Me, "Distance", 1, ScaledNumber.enumNumericScale.None, "m", "m")
 
             m_snStartTime.PropertiesReadOnly = True
             m_snEndTime.PropertiesReadOnly = True
@@ -182,12 +222,23 @@ Namespace DataObjects.Visualization
 
         End Sub
 
+        Public Overridable Sub SetDistanceVelocity(ByVal dblDistance As Double, ByVal dblVelocity As Double)
+
+            m_snDistance = New ScaledNumber(Me, "Distance", dblDistance, ScaledNumber.enumNumericScale.None, "m", "m")
+            m_snVelocity = New ScaledNumber(Me, "Velocity", dblVelocity, ScaledNumber.enumNumericScale.None, "m/s", "m/s")
+
+            m_snDistance.PropertiesReadOnly = True
+
+        End Sub
+
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_svPosition Is Nothing Then m_svPosition.ClearIsDirty()
             If Not m_snStartTime Is Nothing Then m_snStartTime.ClearIsDirty()
             If Not m_snEndTime Is Nothing Then m_snEndTime.ClearIsDirty()
             If Not m_snTimeSpan Is Nothing Then m_snTimeSpan.ClearIsDirty()
+            If Not m_snVelocity Is Nothing Then m_snVelocity.ClearIsDirty()
+            If Not m_snDistance Is Nothing Then m_snDistance.ClearIsDirty()
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
@@ -199,6 +250,8 @@ Namespace DataObjects.Visualization
             m_snStartTime = DirectCast(bpOrig.m_snStartTime.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_snEndTime = DirectCast(bpOrig.m_snEndTime.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_snTimeSpan = DirectCast(bpOrig.m_snTimeSpan.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_snVelocity = DirectCast(bpOrig.m_snVelocity.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_snDistance = DirectCast(bpOrig.m_snDistance.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
 
         End Sub
 
@@ -217,7 +270,7 @@ Namespace DataObjects.Visualization
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Point Properties", "ID", Me.ID, True))
 
- 
+
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.Position.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "Position", _
                                         "Point Properties", "Sets the location of this waypoint.", pbNumberBag, _
@@ -236,6 +289,16 @@ Namespace DataObjects.Visualization
             pbNumberBag = m_snTimeSpan.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("End Time", pbNumberBag.GetType(), "EndTime", _
                                         "Time Properties", "The time when this point will end execution.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+
+            pbNumberBag = m_snTimeSpan.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Velocity", pbNumberBag.GetType(), "Velocity", _
+                                        "Time Properties", "The velocity for moving along this segment.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snDistance.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Distance", pbNumberBag.GetType(), "Distance", _
+                                        "Time Properties", "The distance between this point and the next one.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
 
         End Sub

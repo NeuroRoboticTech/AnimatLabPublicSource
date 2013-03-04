@@ -229,8 +229,8 @@ Namespace DataObjects.Visualization
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible In Sim", Me.Visible.GetType(), "VisibleInSim", _
                                         "Path Properties", "Sets whether the path is visible while the simulation is running.", Me.VisibleInSim))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Show Waypoints", Me.Visible.GetType(), "ShowWaypoints", _
-                                        "Path Properties", "Determines whether the waypoints and lines between them are shown or not.", Me.ShowWaypoints))
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Show Waypoints", Me.Visible.GetType(), "ShowWaypoints", _
+            '                            "Path Properties", "Determines whether the waypoints and lines between them are shown or not.", Me.ShowWaypoints))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("LinkedStructure", m_thLinkedStructure.GetType, "LinkedStructure", _
                                         "Part Properties", "Associates this camera path to a structure to look at during its movement.", m_thLinkedStructure, _
@@ -375,6 +375,7 @@ Namespace DataObjects.Visualization
             Dim dblAccumualted As Double = 0
             Dim dblLastStartTime As Double = 0
             Dim doWaypoint As Waypoint
+            Dim doPrevWaypoint As Waypoint
             For Each deEntry As DictionaryEntry In m_aryWaypointsByName
                 doWaypoint = DirectCast(deEntry.Value, Waypoint)
 
@@ -383,9 +384,24 @@ Namespace DataObjects.Visualization
 
                 doWaypoint.SetStartEndTime(dblStart, dblEnd)
 
+                If Not doPrevWaypoint Is Nothing Then
+                    Dim vDist As Vec3d = doPrevWaypoint.Position.Point - doWaypoint.Position.Point
+                    Dim dblDist As Double = vDist.Magnitude
+                    Dim dblVelocity As Double = dblDist / doPrevWaypoint.TimeSpan.ActualValue
+
+                    doPrevWaypoint.SetDistanceVelocity(dblDist, dblVelocity)
+                End If
+
                 dblAccumualted = dblAccumualted + doWaypoint.TimeSpan.ActualValue
                 dblLastStartTime = dblStart
+
+                doPrevWaypoint = doWaypoint
             Next
+
+            'Get the last waypoint
+            If Not doPrevWaypoint Is Nothing Then
+                doPrevWaypoint.SetDistanceVelocity(0, 0)
+            End If
 
             'The end time for the entire path is actually the start time of the last waypoint.
             If m_aryWaypoints.Count > 0 Then

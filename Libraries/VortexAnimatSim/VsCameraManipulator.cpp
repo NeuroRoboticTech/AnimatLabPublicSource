@@ -242,6 +242,14 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 					{
 						case GRAPHICS_SELECTION_MODE:
 						case COLLISION_SELECTION_MODE:
+							//if(lpBody)
+							//{ //For debugging.
+							//	BOOL bManip = lpBody->AllowMouseManipulation();
+							//	BOOL bVisible = lpBody->IsVisible();
+							//	int iType = lpBody->VisualSelectionType();
+							//	int iMode = m_lpSim->VisualSelectionMode();
+							//}
+
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )
 							{
 								m_lpPicked = lpBody;

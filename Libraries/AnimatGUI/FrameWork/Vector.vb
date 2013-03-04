@@ -281,6 +281,16 @@ Namespace Framework
 
         End Operator
 
+        Public Shared Operator +(ByVal v1 As Vec3d, ByVal v2 As Vec3d) As Vec3d
+            Dim oV As New Vec3d(v1.Parent, (v1.X + v2.X), (v1.Y + v2.Y), (v1.Z + v2.Z))
+            Return oV
+        End Operator
+
+        Public Shared Operator -(ByVal v1 As Vec3d, ByVal v2 As Vec3d) As Vec3d
+            Dim oV As New Vec3d(v1.Parent, (v1.X - v2.X), (v1.Y - v2.Y), (v1.Z - v2.Z))
+            Return oV
+        End Operator
+
     End Class
 
 End Namespace
