@@ -838,10 +838,13 @@ Namespace Forms
                 For Each tnNode As Crownwood.DotNetMagic.Controls.Node In aryNodes
                     If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(DataObjects.Physical.BodyPart)) Then
                         Dim bpPart As DataObjects.Physical.BodyPart = DirectCast(tnNode.Tag, DataObjects.Physical.BodyPart)
-                        cboBodyPart.Items.Add(bpPart)
 
-                        If Not m_doBodyPart Is Nothing AndAlso bpPart Is m_doBodyPart Then
-                            Me.cboBodyPart.SelectedItem = bpPart
+                        If bpPart.IsMovable Then
+                            cboBodyPart.Items.Add(bpPart)
+
+                            If Not m_doBodyPart Is Nothing AndAlso bpPart Is m_doBodyPart Then
+                                Me.cboBodyPart.SelectedItem = bpPart
+                            End If
                         End If
                     End If
 

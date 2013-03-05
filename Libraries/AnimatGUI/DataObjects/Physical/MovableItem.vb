@@ -301,6 +301,15 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        'Some parts do not really have a physical interface even thought they are derived from 
+        'movable item. This lets us know which those are.
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property IsMovable() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -388,53 +397,56 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Part Properties", "ID", Me.ID, True))
 
-            Me.LocalPosition.PropertiesReadOnly = Not AllowGuiCoordinateChange
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Local Position", pbNumberBag.GetType(), "LocalPosition", _
-                                        "Coordinates", "Sets the local location of this body part.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+            If Me.IsMovable Then
+                Me.LocalPosition.PropertiesReadOnly = Not AllowGuiCoordinateChange
+                Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Local Position", pbNumberBag.GetType(), "LocalPosition", _
+                                            "Coordinates", "Sets the local location of this body part.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
-            Me.WorldPosition.PropertiesReadOnly = Not AllowGuiCoordinateChange
-            pbNumberBag = Me.WorldPosition.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("World Position", pbNumberBag.GetType(), "WorldPosition", _
-                                        "Coordinates", "Sets the world location of this body part.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+                Me.WorldPosition.PropertiesReadOnly = Not AllowGuiCoordinateChange
+                pbNumberBag = Me.WorldPosition.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("World Position", pbNumberBag.GetType(), "WorldPosition", _
+                                            "Coordinates", "Sets the world location of this body part.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
-            Me.Rotation.PropertiesReadOnly = Not AllowGuiCoordinateChange
-            pbNumberBag = Me.Rotation.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Rotation", pbNumberBag.GetType(), "Rotation", _
-                                        "Coordinates", "Sets the rotation of this body part.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+                Me.Rotation.PropertiesReadOnly = Not AllowGuiCoordinateChange
+                pbNumberBag = Me.Rotation.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Rotation", pbNumberBag.GetType(), "Rotation", _
+                                            "Coordinates", "Sets the rotation of this body part.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
-                                        "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
+                                            "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
 
-            pbNumberBag = Me.Transparencies.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Transparencies", pbNumberBag.GetType(), "Transparencies", _
-                                        "Visibility", "Sets the transparencies for this part in the various selection modes.", pbNumberBag, _
-                                        "", GetType(BodyTransparencies.BodyTransparencyPropBagConverter)))
+                pbNumberBag = Me.Transparencies.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Transparencies", pbNumberBag.GetType(), "Transparencies", _
+                                            "Visibility", "Sets the transparencies for this part in the various selection modes.", pbNumberBag, _
+                                            "", GetType(BodyTransparencies.BodyTransparencyPropBagConverter)))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ambient", m_clAmbient.GetType(), "Ambient", _
+                                            "Visibility", "Sets the ambient color for this item.", m_clAmbient))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Diffuse", m_clDiffuse.GetType(), "Diffuse", _
+                                            "Visibility", "Sets the diffuse color for this item.", m_clDiffuse))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Specular", m_clSpecular.GetType(), "Specular", _
+                                            "Visibility", "Sets the specular color for this item.", m_clSpecular))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
+                                            "Visibility", "Sets the shininess for this item.", m_fltShininess))
+
+                pbNumberBag = m_snUserDefinedDraggerRadius.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Dragger Radius", pbNumberBag.GetType(), "UserDefinedDraggerRadius", _
+                                            "Visibility", "Sets a user defined dragger radius. If this is < 0 then it will use the default size for this part.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "Description", _
                                         "Part Properties", "Sets the description for this body part.", m_strDescription, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ambient", m_clAmbient.GetType(), "Ambient", _
-                                        "Visibility", "Sets the ambient color for this item.", m_clAmbient))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Diffuse", m_clDiffuse.GetType(), "Diffuse", _
-                                        "Visibility", "Sets the diffuse color for this item.", m_clDiffuse))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Specular", m_clSpecular.GetType(), "Specular", _
-                                        "Visibility", "Sets the specular color for this item.", m_clSpecular))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
-                                        "Visibility", "Sets the shininess for this item.", m_fltShininess))
-
-            pbNumberBag = m_snUserDefinedDraggerRadius.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Dragger Radius", pbNumberBag.GetType(), "UserDefinedDraggerRadius", _
-                                        "Visibility", "Sets a user defined dragger radius. If this is < 0 then it will use the default size for this part.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
 

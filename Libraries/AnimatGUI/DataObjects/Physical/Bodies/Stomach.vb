@@ -105,6 +105,14 @@ Namespace DataObjects.Physical.Bodies
             End Get
         End Property
 
+        'Stomach does not have a physical interface that can be moved.
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property IsMovable() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
