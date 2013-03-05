@@ -34,6 +34,8 @@ namespace VortexAnimatSim
 		//Vortex Frame
 		VxFrame *m_vxFrame;		
 		
+		osg::AlphaFunc *m_osgAlphafunc;
+
 		VsIntersectionEvent m_vsIntersect;
 
 		double m_dblTotalVortexStepTime;
@@ -120,6 +122,8 @@ namespace VortexAnimatSim
 		virtual void WriteToConsole(string strMessage);
 
 #pragma endregion
+
+		virtual void AlphaThreshold(float fltValue);
 
 		virtual float *GetDataPointer(const string &strDataType);
 

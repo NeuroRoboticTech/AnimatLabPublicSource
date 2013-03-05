@@ -93,6 +93,7 @@
 #include <osg/LineWidth>
 #include <osg/Autotransform>
 #include <osg/StateAttribute>
+#include <osg/AlphaFunc>
 
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>

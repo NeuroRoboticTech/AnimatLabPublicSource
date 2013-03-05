@@ -101,6 +101,7 @@
 #include <osg/LineWidth>
 #include <osg/Autotransform>
 #include <osg/StateAttribute>
+#include <osg/AlphaFunc>
 #include <osg/TexMat>
 
 #include <osgDB/ReadFile>

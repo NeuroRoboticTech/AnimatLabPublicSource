@@ -346,11 +346,14 @@ Namespace DataObjects.Visualization
             doWaypoint.InitializeAfterLoad()
             m_aryWaypoints.Add(doWaypoint.ID, doWaypoint, bCallSimMethods)
             m_aryWaypointsByName.Add(CInt(doWaypoint.Name), doWaypoint)
+
+            RecalculateTimes()
         End Sub
 
         Public Overridable Sub RemoveWaypoint(ByVal doWaypoint As Waypoint)
             m_aryWaypoints.Remove(doWaypoint.ID)
             m_aryWaypointsByName.Remove(CInt(doWaypoint.Name))
+            RecalculateTimes()
         End Sub
 
         Public Overridable Function NextWaypointName() As String
@@ -395,11 +398,13 @@ Namespace DataObjects.Visualization
                 dblAccumualted = dblAccumualted + doWaypoint.TimeSpan.ActualValue
                 dblLastStartTime = dblStart
 
+                doWaypoint.LastWaypoint = False
                 doPrevWaypoint = doWaypoint
             Next
 
             'Get the last waypoint
             If Not doPrevWaypoint Is Nothing Then
+                doPrevWaypoint.LastWaypoint = True
                 doPrevWaypoint.SetDistanceVelocity(0, 0)
             End If
 

@@ -26,6 +26,8 @@ Namespace DataObjects.Visualization
         Protected m_snVelocity As Framework.ScaledNumber
         Protected m_snDistance As Framework.ScaledNumber
 
+        Protected m_bLastWaypoint As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -169,6 +171,15 @@ Namespace DataObjects.Visualization
             End Set
         End Property
 
+        Public Overridable Property LastWaypoint() As Boolean
+            Get
+                Return m_bLastWaypoint
+            End Get
+            Set(ByVal value As Boolean)
+                m_bLastWaypoint = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -252,6 +263,7 @@ Namespace DataObjects.Visualization
             m_snTimeSpan = DirectCast(bpOrig.m_snTimeSpan.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_snVelocity = DirectCast(bpOrig.m_snVelocity.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_snDistance = DirectCast(bpOrig.m_snDistance.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
+            m_bLastWaypoint = bpOrig.m_bLastWaypoint
 
         End Sub
 
@@ -276,30 +288,32 @@ Namespace DataObjects.Visualization
                                         "Point Properties", "Sets the location of this waypoint.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-            pbNumberBag = m_snTimeSpan.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Time Span", pbNumberBag.GetType(), "TimeSpan", _
-                                        "Time Properties", "Sets the time span between this waypoint this waypoint and the next.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            If Not m_bLastWaypoint Then
+                pbNumberBag = m_snTimeSpan.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Time Span", pbNumberBag.GetType(), "TimeSpan", _
+                                            "Time Properties", "Sets the time span between this waypoint this waypoint and the next.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snStartTime.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Start Time", pbNumberBag.GetType(), "StartTime", _
-                                        "Time Properties", "The time when this point will begin execution.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                pbNumberBag = m_snStartTime.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Start Time", pbNumberBag.GetType(), "StartTime", _
+                                            "Time Properties", "The time when this point will begin execution.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
 
-            pbNumberBag = m_snTimeSpan.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("End Time", pbNumberBag.GetType(), "EndTime", _
-                                        "Time Properties", "The time when this point will end execution.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                pbNumberBag = m_snTimeSpan.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("End Time", pbNumberBag.GetType(), "EndTime", _
+                                            "Time Properties", "The time when this point will end execution.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
 
-            pbNumberBag = m_snTimeSpan.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Velocity", pbNumberBag.GetType(), "Velocity", _
-                                        "Time Properties", "The velocity for moving along this segment.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                pbNumberBag = m_snTimeSpan.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Velocity", pbNumberBag.GetType(), "Velocity", _
+                                            "Time Properties", "The velocity for moving along this segment.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snDistance.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Distance", pbNumberBag.GetType(), "Distance", _
-                                        "Time Properties", "The distance between this point and the next one.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                pbNumberBag = m_snDistance.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Distance", pbNumberBag.GetType(), "Distance", _
+                                            "Time Properties", "The distance between this point and the next one.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+            End If
 
         End Sub
 

@@ -46,6 +46,7 @@ VsSimulator::VsSimulator()
 	m_dblTotalVortexStepTime = 0;
 	m_lStepVortexTimeCount = 0;
 	m_lpMeshMgr = NULL;
+	m_osgAlphafunc = NULL;
 }
 
 VsSimulator::~VsSimulator()
@@ -76,6 +77,15 @@ VxUniverse *VsSimulator::Universe()
 
 Vx::VxFrame* VsSimulator::Frame()
 {return m_vxFrame;}
+
+void VsSimulator::AlphaThreshold(float fltValue)
+{
+	Simulator::AlphaThreshold(fltValue);
+
+	if(m_osgAlphafunc)
+		    m_osgAlphafunc->setFunction(osg::AlphaFunc::GEQUAL, m_fltAlphaThreshold);
+}
+
 
 #pragma region MutatorOverrides
 
@@ -261,6 +271,11 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
 	rootStateSet->setMode( GL_LIGHT0, osg::StateAttribute::ON );
 	//rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
+
+    // set up an alphafunc by default to speed up blending operations.
+    m_osgAlphafunc = new osg::AlphaFunc;
+    m_osgAlphafunc->setFunction(osg::AlphaFunc::GEQUAL, m_fltAlphaThreshold);
+    rootStateSet->setAttributeAndModes(m_osgAlphafunc, osg::StateAttribute::ON);
 
 	m_oLightMgr.Initialize();
 }

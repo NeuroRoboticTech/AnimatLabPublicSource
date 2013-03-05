@@ -61,6 +61,7 @@ Namespace DataObjects.Physical
         Protected m_snRecFieldSelRadius As ScaledNumber
 
         Protected m_clBackgroundcolor As System.Drawing.Color
+        Protected m_fltAlphaThreshold As Single = 0.2
 
         Protected m_iNewOrganismCount As Integer
         Protected m_iNewStructureCount As Integer
@@ -349,6 +350,23 @@ Namespace DataObjects.Physical
             Set(ByVal value As System.Drawing.Color)
                 Me.SetSimData("BackgroundColor", Util.SaveColorXml("Color", value), True)
                 m_clBackgroundcolor = value
+            End Set
+        End Property
+
+        Public Overridable Property AlphaThreshold() As Single
+            Get
+                Return m_fltAlphaThreshold
+            End Get
+            Set(ByVal value As Single)
+                If value < 0 Then
+                    Throw New System.Exception("Alpha threshold must be greater than 0.")
+                End If
+                If value > 1 Then
+                    Throw New System.Exception("Alpha threshold must be less than 1.")
+                End If
+
+                Me.SetSimData("AlphaThreshold", value.ToString, True)
+                m_fltAlphaThreshold = value
             End Set
         End Property
 
@@ -1093,6 +1111,9 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Background Color", m_clBackgroundcolor.GetType(), "BackgroundColor", _
                                         "Settings", "Sets the background color for the simulation.", m_clBackgroundcolor))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Alpha Threshold", m_fltAlphaThreshold.GetType(), "AlphaThreshold", _
+                                        "Settings", "Sets the threshold for the alpha channel used to determine depth buffer rendering.", m_fltAlphaThreshold))
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("DistanceUnits", GetType(String), "DistanceUnits", _
                                         "Units", "Determines the distance unit measurements used within the configuration files.", _
                                         m_eDistanceUnits, GetType(AnimatGUI.TypeHelpers.UnitsTypeEditor), GetType(AnimatGUI.TypeHelpers.UnitsTypeConverter)))
@@ -1201,6 +1222,7 @@ Namespace DataObjects.Physical
 
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_clBackgroundcolor = doOrig.m_clBackgroundcolor
+            m_fltAlphaThreshold = doOrig.m_fltAlphaThreshold
 
             m_aryMaterialTypes = DirectCast(doOrig.m_aryMaterialTypes.Clone(Me, bCutData, doRoot), Collections.SortedMaterialTypes)
             m_aryMaterialPairs = DirectCast(doOrig.m_aryMaterialPairs.Clone(Me, bCutData, doRoot), Collections.SortedMaterialPairs)
@@ -1307,6 +1329,8 @@ Namespace DataObjects.Physical
 
             'm_snRecFieldSelRadius.LoadData(oXml, "RecFieldSelRadius")
             m_clBackgroundcolor = Util.LoadColor(oXml, "BackgroundColor", m_clBackgroundcolor)
+
+            m_fltAlphaThreshold = oXml.GetChildFloat("AlphaThreshold", m_fltAlphaThreshold)
 
             m_aryOdorTypes.Clear()
             m_aryOrganisms.Clear()
@@ -1524,6 +1548,7 @@ Namespace DataObjects.Physical
 
             m_snRecFieldSelRadius.SaveData(oXml, "RecFieldSelRadius")
             Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)
+            oXml.AddChildElement("AlphaThreshold", m_fltAlphaThreshold)
 
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
@@ -1637,6 +1662,7 @@ Namespace DataObjects.Physical
 
             m_snRecFieldSelRadius.SaveSimulationXml(oXml, Nothing, "RecFieldSelRadius")
             Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)
+            oXml.AddChildElement("AlphaThreshold", m_fltAlphaThreshold)
 
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 

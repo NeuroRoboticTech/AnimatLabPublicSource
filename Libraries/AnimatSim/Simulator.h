@@ -261,6 +261,9 @@ namespace AnimatSim
 			/// The background color to use when drawing the environment.
 			CStdColor m_vBackgroundColor;
 
+			/// The threshold value to use when setting the AlphaFunc for the entire scene.
+			float m_fltAlphaThreshold;
+
 			/// The radius of the sphere shown for a receptive field. This is used in the selection code
 			/// so we can show the selected vertex. It adds a sphere to the part at that vertex coordinate and
 			/// uses this radius when drawing the sphere.
@@ -720,6 +723,9 @@ namespace AnimatSim
 			virtual void BackgroundColor(CStdColor &aryColor);
 			virtual void BackgroundColor(float *aryColor);
 			virtual void BackgroundColor(string strXml);
+
+			virtual float AlphaThreshold();
+			virtual void AlphaThreshold(float fltValue);
 
 			virtual float RecFieldSelRadius();
 			virtual void RecFieldSelRadius(float fltValue, BOOL bUseScaling = TRUE, BOOL bUpdateAllBodies = TRUE);

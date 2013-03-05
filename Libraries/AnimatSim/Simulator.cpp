@@ -104,6 +104,7 @@ Simulator::Simulator()
 	m_bPaused = TRUE;
 	m_bInitialized = FALSE;
 	m_bSimRunning = FALSE;
+	m_fltAlphaThreshold = 0.2f;
 
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
@@ -1335,6 +1336,14 @@ void Simulator::BackgroundColor(string strXml)
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
 	BackgroundColor(vColor);
+}
+
+float Simulator::AlphaThreshold() {return m_fltAlphaThreshold;}
+
+void Simulator::AlphaThreshold(float fltValue)
+{
+	Std_InValidRange((float) 0, (float) 1, fltValue, TRUE, "AlphaThreshold");
+	m_fltAlphaThreshold = fltValue;
 }
 
 float Simulator::RecFieldSelRadius() {return m_fltRecFieldSelRadius;}
@@ -2738,6 +2747,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 	
 	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
+
+	m_fltAlphaThreshold = oXml.GetChildFloat("AlphaThreshold", m_fltAlphaThreshold);
 
 	m_oMaterialMgr.Load(oXml);
 
@@ -4151,6 +4162,11 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 		BackgroundColor(strValue);
 		return TRUE;
 	}
+	else if(strDataType == "ALPHATHRESHOLD")
+	{
+		AlphaThreshold(atof(strValue.c_str()));
+		return TRUE;
+	}
 	else if(strDataType == "BACKGROUNDCOLOR.RED")
 	{
 		float aryVal[4] = {atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
@@ -4298,6 +4314,9 @@ void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 
 	aryNames.Add("StabilityScale");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AlphaThreshold");
 	aryTypes.Add("Float");
 }
 
