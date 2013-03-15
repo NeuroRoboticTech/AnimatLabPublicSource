@@ -184,7 +184,7 @@ Namespace DataObjects.Behavior.Nodes
                 For Each deEntry As DictionaryEntry In Me.InLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
-                    If bdLink.IsLinkCompatibleWithNodes(bdLink.ActualOrigin, doNewNode) Then
+                    If bdLink.IsLinkCompatibleWithNodes(bdLink.Origin, doNewNode) Then
                         If thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.RemoveInLink(bdLink)
                         If Not thNewLink.Node.InLinks.Contains(bdLink.ID) Then thNewLink.Node.AddInLink(bdLink)
 
@@ -198,7 +198,7 @@ Namespace DataObjects.Behavior.Nodes
                 For Each deEntry As DictionaryEntry In Me.OutLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
-                    If bdLink.IsLinkCompatibleWithNodes(doNewNode, bdLink.ActualDestination) Then
+                    If bdLink.IsLinkCompatibleWithNodes(doNewNode, bdLink.Destination) Then
                         If thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.RemoveOutLink(bdLink)
                         If Not thNewLink.Node.OutLinks.Contains(bdLink.ID) Then thNewLink.Node.AddOutLink(bdLink)
 
