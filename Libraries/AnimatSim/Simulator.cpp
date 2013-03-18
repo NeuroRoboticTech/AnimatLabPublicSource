@@ -96,7 +96,7 @@ Simulator::Simulator()
 	m_fltAngularKineticLoss = 1e-12f;
 
 	m_bForceFastMoving = TRUE;
-	m_iSelectionMode = GRAPHICS_SELECTION_MODE;
+	m_iSelectionMode = COLLISION_SELECTION_MODE;
 	m_bAddBodiesMode = FALSE;
 	m_fltRecFieldSelRadius = 0.05f;
 	m_iPhysicsBodyCount = 0;

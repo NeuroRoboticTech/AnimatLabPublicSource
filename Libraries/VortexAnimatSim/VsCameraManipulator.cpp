@@ -248,6 +248,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 							//	BOOL bVisible = lpBody->IsVisible();
 							//	int iType = lpBody->VisualSelectionType();
 							//	int iMode = m_lpSim->VisualSelectionMode();
+                            //  iMode=iType;
 							//}
 
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )

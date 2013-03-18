@@ -89,12 +89,8 @@ Namespace DataObjects.Physical
                 Return m_bFreeze
             End Get
             Set(ByVal Value As Boolean)
-                If m_JointToParent Is Nothing Then
-                    Me.SetSimData("Freeze", Value.ToString, True)
-                    m_bFreeze = Value
-                Else
-                    Throw New System.Exception("You can only freeze the root body of a structure.")
-                End If
+                Me.SetSimData("Freeze", Value.ToString, True)
+                m_bFreeze = Value
             End Set
         End Property
 
