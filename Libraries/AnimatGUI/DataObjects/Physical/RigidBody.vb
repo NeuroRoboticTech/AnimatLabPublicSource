@@ -946,7 +946,7 @@ Namespace DataObjects.Physical
                 m_JointToParent = Nothing
             End If
 
-            m_bFreeze = False   '' only the root object can be frozen.
+            m_bFreeze = doOrigPart.m_bFreeze
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
             m_snDensity = DirectCast(doOrigPart.m_snDensity.Clone(doOrigPart.m_snDensity.Parent, bCutData, doRoot), ScaledNumber)
@@ -1273,9 +1273,7 @@ Namespace DataObjects.Physical
                 oXml.AddChildElement("MaterialTypeID", m_thMaterialType.MaterialType.ID)
             End If
 
-            If Me Is doStructure.RootBody Then
-                oXml.AddChildElement("Freeze", m_bFreeze)
-            End If
+            oXml.AddChildElement("Freeze", m_bFreeze)
 
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.SaveData(doStructure, oXml)
@@ -1340,9 +1338,7 @@ Namespace DataObjects.Physical
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
 
-            If Me.IsRoot Then
-                oXml.AddChildElement("Freeze", m_bFreeze)
-            End If
+            oXml.AddChildElement("Freeze", m_bFreeze)
 
             If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
                 oXml.AddChildElement("MaterialTypeID", m_thMaterialType.MaterialType.ID)
