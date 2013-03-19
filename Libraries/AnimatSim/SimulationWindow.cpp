@@ -65,6 +65,11 @@ SimulationWindow::~SimulationWindow(void)
 **/
 void SimulationWindow::LookAtStructureID(string strID) 
 {
+    if(Std_IsBlank(strID))
+        m_bTrackCamera = FALSE;
+    else
+        m_bTrackCamera = TRUE;
+
 	m_strLookAtStructureID = strID;
 	SetupTrackCamera();
 }
@@ -89,7 +94,7 @@ string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
 **/
 void SimulationWindow::LookAtBodyID(string strID) 
 {
-	m_strLookAtBodyID = strID;
+    m_strLookAtBodyID = strID;
 	SetupTrackCamera();
 }
 

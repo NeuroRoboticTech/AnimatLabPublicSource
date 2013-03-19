@@ -24,6 +24,7 @@ VsSimulationWindow::VsSimulationWindow()
 	m_lpWinMgr = NULL;
 	m_lpTrackBody = NULL;
 	m_fltCameraPosX = m_fltCameraPosY = m_fltCameraPosZ = 0;
+    m_bEyePosSet = false;
 }
 
 VsSimulationWindow::~VsSimulationWindow(void)
@@ -102,13 +103,23 @@ void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
 {
 	VxVector3 position(oTarget.x, oTarget.y, oTarget.z);
 
-	osg::Vec3d eye, center, up;
-	osg::Vec3d target(position.v[0], position.v[1], position.v[2]);
-	osg::Vec3d pos(position.v[0]+50, position.v[1]+10, position.v[2]);
-	m_osgManip->getHomePosition(eye, center, up);
+	osg::Vec3d vEye, vCenter, vUp;
+	float fltlookat=0;
+	m_osgViewer->getCamera()->getViewMatrixAsLookAt(vEye, vCenter, vUp, fltlookat);
 
-	up = osg::Vec3d(0, 1, 0);
-	m_osgManip->setHomePosition(pos, target, up, false );
+	osg::Vec3d pos;
+    if(!m_bEyePosSet)
+    {
+        pos.set(position.v[0]+50, position.v[1]+10, position.v[2]);
+        m_bEyePosSet = true;
+    }
+    else
+        pos = vEye;
+
+    osg::Vec3d target(position.v[0], position.v[1], position.v[2]);
+
+	vUp = osg::Vec3d(0, 1, 0);
+	m_osgManip->setHomePosition(pos, target, vUp, false );
 	m_osgManip->home(0);
 }
 

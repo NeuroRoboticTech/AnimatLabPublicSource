@@ -32,6 +32,9 @@ VsCameraManipulator::VsCameraManipulator(Simulator *lpSim, osgViewer::Viewer *os
 	m_fltPrevY = 0;
 
 	m_v3Eye.set(0,0, 10);
+
+    //Set this very small to prevent it from keeping you from zooming in as close as you need to for a part.
+    this->setMinimumZoomScale(0.00001);
 }
 
 VsCameraManipulator::~VsCameraManipulator(void)

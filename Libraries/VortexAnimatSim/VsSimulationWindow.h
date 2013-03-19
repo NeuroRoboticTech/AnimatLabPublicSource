@@ -20,6 +20,9 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 
 		float m_fltCameraPosX, m_fltCameraPosY, m_fltCameraPosZ;
 
+        /// true if we have set the eye position at least once.
+        bool m_bEyePosSet;
+
 		virtual void InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim);
 		virtual void InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim);
 		virtual void TrackCamera();
