@@ -491,13 +491,13 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_gnMinf.AddToReplaceIDList(aryReplaceIDList)
-            m_gnTm.AddToReplaceIDList(aryReplaceIDList)
-            m_gnHinf.AddToReplaceIDList(aryReplaceIDList)
-            m_gnTh.AddToReplaceIDList(aryReplaceIDList)
+            m_gnMinf.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnTm.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnHinf.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnTh.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub ClearIsDirty()

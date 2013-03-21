@@ -511,12 +511,21 @@ Namespace DataObjects.Charting
             m_WorkspaceImage = DirectCast(doOrigAxis.m_WorkspaceImage.Clone, Image)
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
             For Each deEntry As DictionaryEntry In m_aryDataColumns
                 Dim doColumn As DataObjects.Charting.DataColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
-                doColumn.AddToReplaceIDList(aryReplaceIDList)
+                doColumn.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            Next
+        End Sub
+
+        Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
+
+             For Each deEntry As DictionaryEntry In m_aryDataColumns
+                Dim doColumn As DataObjects.Charting.DataColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
+                doColumn.AddToRecursiveSelectedItemsList(arySelectedItems)
             Next
         End Sub
 

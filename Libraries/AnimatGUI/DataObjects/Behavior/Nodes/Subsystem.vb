@@ -640,20 +640,35 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
             Dim doObj As Framework.DataObject
             For Each deEntry As DictionaryEntry In Me.BehavioralNodes
                 doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                doObj.AddToReplaceIDList(aryReplaceIDList)
+                doObj.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             Next
 
             For Each deEntry As DictionaryEntry In Me.BehavioralLinks
                 doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                doObj.AddToReplaceIDList(aryReplaceIDList)
+                doObj.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             Next
 
+        End Sub
+
+        Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
+
+            Dim doObj As Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                doObj.AddToRecursiveSelectedItemsList(arySelectedItems)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                doObj.AddToRecursiveSelectedItemsList(arySelectedItems)
+            Next
         End Sub
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)

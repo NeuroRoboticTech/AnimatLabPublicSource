@@ -256,10 +256,23 @@ Namespace DataObjects.Physical
             'First lets sort the selected items into nodes and links and generate temp selected ids
             Dim aryReplaceIDs As New ArrayList
 
-            'Call BeforeCopy first
-            BeforeCopy()
+            Dim aryItems As New ArrayList
+            Dim arySelected As Collections.DataObjects = Util.ProjectWorkspace.SelectedDataObjects
+            For Each dobj As Framework.DataObject In arySelected
+                aryItems.Add(dobj)
+            Next
 
-            Me.AddToReplaceIDList(aryReplaceIDs)
+            'Call BeforeCopy first
+            BeforeCopy(aryItems)
+
+            'We are regenerating this list because BeforeCopy can cause some items to be deselected, or others to be added.
+            aryItems.Clear()
+            arySelected = Util.ProjectWorkspace.SelectedDataObjects
+            For Each dobj As Framework.DataObject In arySelected
+                aryItems.Add(dobj)
+            Next
+
+            Me.AddToReplaceIDList(aryReplaceIDs, aryItems)
 
             'Save the replaceme ID list
             oXml.AddChildElement("ReplaceIDList")

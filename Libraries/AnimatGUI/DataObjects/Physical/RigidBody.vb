@@ -993,17 +993,31 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.AddToReplaceIDList(aryReplaceIDList)
+                m_JointToParent.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             End If
 
-            m_aryChildBodies.AddToReplaceIDList(aryReplaceIDList)
-            m_aryOdorSources.AddToReplaceIDList(aryReplaceIDList)
+            m_aryChildBodies.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_aryOdorSources.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.AddToReplaceIDList(aryReplaceIDList)
+                m_doReceptiveFieldSensor.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            End If
+        End Sub
+
+        Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
+
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.AddToRecursiveSelectedItemsList(arySelectedItems)
+            End If
+
+            m_aryChildBodies.AddToRecursiveSelectedItemsList(arySelectedItems)
+            m_aryOdorSources.AddToRecursiveSelectedItemsList(arySelectedItems)
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.AddToRecursiveSelectedItemsList(arySelectedItems)
             End If
         End Sub
 

@@ -242,11 +242,11 @@ Namespace DataObjects.Physical.Joints
             m_doUpperLimit.InitializeSimulationReferences(bShowError)
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            If Not m_doLowerLimit Is Nothing Then m_doLowerLimit.AddToReplaceIDList(aryReplaceIDList)
-            If Not m_doUpperLimit Is Nothing Then m_doUpperLimit.AddToReplaceIDList(aryReplaceIDList)
+            If Not m_doLowerLimit Is Nothing Then m_doLowerLimit.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doUpperLimit Is Nothing Then m_doUpperLimit.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

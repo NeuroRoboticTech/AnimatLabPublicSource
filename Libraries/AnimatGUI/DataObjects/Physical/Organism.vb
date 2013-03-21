@@ -495,11 +495,17 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_bnRootSubSystem.AddToReplaceIDList(aryReplaceIDList)
-            m_aryNeuralModules.AddToReplaceIDList(aryReplaceIDList)
+            m_bnRootSubSystem.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_aryNeuralModules.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+        End Sub
+
+        Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
+
+            m_aryNeuralModules.AddToRecursiveSelectedItemsList(arySelectedItems)
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

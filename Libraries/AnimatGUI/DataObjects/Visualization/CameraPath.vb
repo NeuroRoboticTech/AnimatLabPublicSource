@@ -420,10 +420,16 @@ Namespace DataObjects.Visualization
             End If
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_aryWaypoints.AddToReplaceIDList(aryReplaceIDList)
+            m_aryWaypoints.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+        End Sub
+
+        Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
+
+            m_aryWaypoints.AddToRecursiveSelectedItemsList(arySelectedItems)
         End Sub
 
         Public Overrides Sub InitializeAfterLoad()

@@ -151,14 +151,14 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_gnReceptiveFieldGain.AddToReplaceIDList(aryReplaceIDList)
-            m_gnReceptiveCurrentGain.AddToReplaceIDList(aryReplaceIDList)
+            m_gnReceptiveFieldGain.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnReceptiveCurrentGain.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_aryFields.AddToReplaceIDList(aryReplaceIDList)
-            m_aryFieldPairs.AddToReplaceIDList(aryReplaceIDList)
+            m_aryFields.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_aryFieldPairs.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub ClearIsDirty()

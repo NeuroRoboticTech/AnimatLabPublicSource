@@ -180,12 +180,12 @@ Namespace DataObjects.Behavior.Neurons
             m_gnInterburstLengthDistribution = DirectCast(bnOrig.m_gnInterburstLengthDistribution.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_gnCurrentDistribution.AddToReplaceIDList(aryReplaceIDList)
-            m_gnBurstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
-            m_gnInterburstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
+            m_gnCurrentDistribution.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnBurstLengthDistribution.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_gnInterburstLengthDistribution.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)

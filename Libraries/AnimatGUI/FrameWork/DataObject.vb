@@ -781,7 +781,7 @@ Namespace Framework
 
 #Region " Copy Methods "
 
-        Public Overridable Sub BeforeCopy()
+        Public Overridable Sub BeforeCopy(ByVal arySelectedItems As ArrayList)
         End Sub
 
         Public Overridable Sub AfterCopy()
@@ -791,8 +791,12 @@ Namespace Framework
             Return True
         End Function
 
-        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
             aryReplaceIDList.Add(Me.ID)
+        End Sub
+
+        Public Overridable Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            arySelectedItems.Add(Me)
         End Sub
 
         Public Overridable Sub VerifyAfterPaste(ByVal aryItems As ArrayList)

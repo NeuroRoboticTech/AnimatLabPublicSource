@@ -2424,18 +2424,19 @@ Namespace Forms.Behavior
             'Call BeforeCopy first
             For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
                 bdData = FindItem(DirectCast(afItem.Tag, String))
-                aryItems.Add(bdData)
+                bdData.AddToRecursiveSelectedItemsList(aryItems)
             Next
 
             For Each bdData In aryItems
-                bdData.BeforeCopy()
+                bdData.BeforeCopy(aryItems)
             Next
 
-            'First get a list of all selected items.
+            'First get a list of all selected items. 
+            'We are regenerating this list because the BeforeCopy could deselect some items that should not be copied.
             aryItems.Clear()
             For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
                 bdData = FindItem(DirectCast(afItem.Tag, String))
-                aryItems.Add(bdData)
+                bdData.AddToRecursiveSelectedItemsList(aryItems)
             Next
 
             'Now check to make sure each object can be copied, and sort into appropriate lists.
@@ -2451,7 +2452,7 @@ Namespace Forms.Behavior
                         Throw New System.Exception("An unkown data type was found in the diagram named '" & bdData.Name & "' of type '" & bdData.GetType.FullName & "'")
                     End If
 
-                    bdData.AddToReplaceIDList(aryReplaceIDs)
+                    bdData.AddToReplaceIDList(aryReplaceIDs, aryItems)
                 Else
                     aryDeselect.Add(afItem)
                 End If

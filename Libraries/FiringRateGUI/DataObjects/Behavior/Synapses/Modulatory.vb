@@ -239,10 +239,21 @@ Namespace DataObjects.Behavior.Synapses
             m_snGain = DirectCast(bnLink.m_snGain.Clone(Me, bCutData, doRoot), ScaledNumber)
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub BeforeCopy(ByVal arySelectedItems As ArrayList)
 
-            m_lsModulatedSynapse.AddToReplaceIDList(aryReplaceIDList)
+            'If the destination is not something being copied then we cannot copy this link without causing an error
+            If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing AndAlso Not m_lsModulatedSynapse.Link.Destination Is Nothing Then
+                If Not arySelectedItems.Contains(m_lsModulatedSynapse.Link.Destination) Then
+                    Me.DeselectItem()
+                End If
+            End If
+
+        End Sub
+
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+
+            m_lsModulatedSynapse.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -313,10 +324,16 @@ Namespace DataObjects.Behavior.Synapses
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
-            If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(m_lsModulatedSynapse.Link.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), True, bDoNotInit)
-                InitializeSimulationReferences()
-            End If
+            Try
+                If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing Then
+                    Util.Application.SimulationInterface.AddItem(m_lsModulatedSynapse.Link.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), True, bDoNotInit)
+                    InitializeSimulationReferences()
+                End If
+            Catch ex As Exception
+                Util.ShowMessage("Error occured while adding a modulatory synapse. This is possible if the gated node is not part of the copied nodes. " & _
+                                 "This is a bu I plan to resolve, but for now it will not correctly copy this link '" & Me.Text & "'. Please delete this node manually." & vbCrLf & _
+                                 "Original Error message: " & ex.Message)
+            End Try
         End Sub
 
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)

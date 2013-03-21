@@ -180,10 +180,10 @@ Namespace DataObjects.Behavior.Nodes
             m_bEnabled = bnOrig.m_bEnabled
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_gnGain.AddToReplaceIDList(aryReplaceIDList)
+            m_gnGain.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub CheckCanAttachAdapter()
@@ -240,7 +240,7 @@ Namespace DataObjects.Behavior.Nodes
             End If
         End Sub
 
-        Public Overrides Sub BeforeCopy()
+        Public Overrides Sub BeforeCopy(ByVal arySelectedItems As ArrayList)
 
             Dim blLink As AnimatGUI.DataObjects.Behavior.Link
             For Each deEntry As DictionaryEntry In m_aryLinks

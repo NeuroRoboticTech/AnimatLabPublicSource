@@ -397,16 +397,16 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            m_atCaActivation.AddToReplaceIDList(aryReplaceIDList)
-            m_atCaDeactivation.AddToReplaceIDList(aryReplaceIDList)
+            m_atCaActivation.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            m_atCaDeactivation.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
             Dim doChannel As DataObjects.Behavior.Neurons.IonChannel
             For Each deEntry As DictionaryEntry In m_aryIonChannels
                 doChannel = DirectCast(deEntry.Value, DataObjects.Behavior.Neurons.IonChannel)
-                doChannel.AddToReplaceIDList(aryReplaceIDList)
+                doChannel.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             Next
         End Sub
 

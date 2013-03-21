@@ -173,15 +173,25 @@ Namespace Collections
             'Debug.WriteLine("")
         End Sub
 
-        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
             Dim doVal As AnimatGUI.Framework.DataObject
             For Each deEntry As DictionaryEntry In Me
                 If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
                     doVal = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doVal.AddToReplaceIDList(aryReplaceIDList)
+                    doVal.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
                 End If
             Next
 
+        End Sub
+
+        Public Overridable Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
+            Dim doVal As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me
+                If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
+                    doVal = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doVal.AddToRecursiveSelectedItemsList(arySelectedItems)
+                End If
+            Next
         End Sub
 
         Public Overridable Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)

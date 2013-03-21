@@ -1851,6 +1851,19 @@ Namespace Framework
             End If
  
         End Function
+
+        Public Shared Function RemoveItemsNotOfType(ByVal aryItems As ArrayList, ByVal tpType As System.Type) As ArrayList
+
+            Dim aryNewItems As New ArrayList
+            For Each oObj As Object In aryItems
+                If Util.IsTypeOf(oObj.GetType(), tpType, False) Then
+                    aryNewItems.Add(oObj)
+                End If
+            Next
+
+            Return aryNewItems
+        End Function
+
     End Class
 
 End Namespace

@@ -121,12 +121,12 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
-            MyBase.AddToReplaceIDList(aryReplaceIDList)
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
             For Each deEntry As DictionaryEntry In m_aryFieldPairs
                 Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
-                doPair.AddToReplaceIDList(aryReplaceIDList)
+                doPair.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             Next
         End Sub
 
