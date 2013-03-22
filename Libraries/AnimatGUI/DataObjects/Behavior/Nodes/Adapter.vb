@@ -164,6 +164,10 @@ Namespace DataObjects.Behavior.Nodes
 
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
 
+                m_thDataTypes.DataTypes.Clear()
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
+                m_thDataTypes.ID = "Enable"
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

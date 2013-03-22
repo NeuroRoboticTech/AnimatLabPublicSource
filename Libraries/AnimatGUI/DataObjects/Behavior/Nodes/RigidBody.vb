@@ -28,13 +28,13 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Bone.gif"
+                Return "AnimatGUI.RigidBodyNode.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property DragImageName As String
             Get
-                Return "AnimatGUI.DragBone.gif"
+                Return "AnimatGUI.RigidBodyNode.gif"
             End Get
         End Property
 
@@ -56,8 +56,13 @@ Namespace DataObjects.Behavior.Nodes
 
                 m_tpBodyPartType = GetType(AnimatGUI.DataObjects.Physical.RigidBody)
 
-                Me.Size = New System.Drawing.SizeF(30, 150)
-                Me.DiagramImageName = "AnimatGUI.BoneNodeImage.gif"
+                Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Merge
+                Size = New System.Drawing.SizeF(50, 50)
+                Me.DrawColor = Color.Black
+                Me.FillColor = Color.Chartreuse
+                Me.Font = New Font("Arial", 14, FontStyle.Bold)
+                Me.Alignment = enumAlignment.CenterMiddle
+
                 Me.Name = "Rigid Body"
                 Me.Description = "This node allows the user to collect data directly from a rigid body."
 

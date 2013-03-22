@@ -1408,6 +1408,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\ScriptedSimWindow.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BehavioralEditor\RigidBodyNode.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

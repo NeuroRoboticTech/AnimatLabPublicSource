@@ -285,8 +285,14 @@ void Adapter::AddExternalNodeInput(float fltInput)
 
 float *Adapter::GetDataPointer(const string &strDataType)
 {
-	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "GetDataPointer");
-	return 0;
+	string strType = Std_CheckString(strDataType);
+
+	float *lpData = NULL;
+
+	if(strType == "ENABLE")
+		return &m_fltEnabled;
+
+	return AnimatBase::GetDataPointer(strDataType);
 }
 
 /**
