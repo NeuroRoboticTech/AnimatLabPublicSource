@@ -210,6 +210,45 @@ Namespace DataObjects.Behavior.Synapses
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+
+            'First we need to find any gated or modulatory synapses in the entire system that are connected to this synapse and delete them as well.
+            FindAndRemoveLinkedSynapses()
+
+            'Synpases are stored in the destination neuron object.
+            If Not Me.Destination Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.Destination.ID, "Synapse", Me.ID, bThrowError)
+                m_doInterface = Nothing
+            End If
+        End Sub
+
+        Protected Overridable Sub FindAndRemoveLinkedSynapses()
+
+            Dim aryGated As New AnimatGUI.Collections.DataObjects(Nothing)
+            Me.Organism.FindChildrenOfType(GetType(Gated), aryGated)
+
+            Dim aryRemove As New ArrayList
+            For Each doGated As Gated In aryGated
+                If Not doGated.GatedSynapse Is Nothing AndAlso Not doGated.GatedSynapse.Link Is Nothing AndAlso doGated.GatedSynapse.Link Is Me Then
+                    aryRemove.Add(doGated)
+                End If
+            Next
+
+            Dim aryModulated As New AnimatGUI.Collections.DataObjects(Nothing)
+            Me.Organism.FindChildrenOfType(GetType(Modulated), aryModulated)
+
+            For Each doModulated As Modulated In aryModulated
+                If Not doModulated.ModulatedSynapse Is Nothing AndAlso Not doModulated.ModulatedSynapse.Link Is Nothing AndAlso doModulated.ModulatedSynapse.Link Is Me Then
+                    aryRemove.Add(doModulated)
+                End If
+            Next
+
+            For Each doObject As AnimatGUI.Framework.DataObject In aryRemove
+                doObject.Delete(False)
+            Next
+
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 

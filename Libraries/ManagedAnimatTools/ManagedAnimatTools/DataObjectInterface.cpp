@@ -195,7 +195,7 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 {
 	try
 	{
-		if(m_lpSim->WaitForSimulationBlock())
+		if(m_lpBase && m_lpSim->WaitForSimulationBlock())
 		{
 			TRACE_DEBUG("Selecting Item. Object ID: " + m_lpBase->ID() + ", Val: " + STR(bVal) + ", Select Multiple: " + STR(bSelectMultiple) + "\r\n");
 

@@ -1234,6 +1234,7 @@ Namespace DataObjects.Behavior
                 End If
 
                 Util.Application.AppIsBusy = True
+                Me.RemoveWorksapceTreeView()
                 Me.ParentSubsystem.RemoveNode(Me)
                 Return True
             Catch ex As System.Exception

@@ -1064,6 +1064,7 @@ Namespace DataObjects.Behavior
                 End If
 
                 Util.Application.AppIsBusy = True
+                Me.RemoveWorksapceTreeView()
                 Me.ParentSubsystem.RemoveLink(Me)
                 Return True
             Catch ex As System.Exception
