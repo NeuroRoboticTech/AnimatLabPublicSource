@@ -6726,6 +6726,8 @@ namespace Crownwood.DotNetMagic.Controls
         public virtual void Sort()
         {
             this.Nodes.SortTree();
+            // Must recalculate the inner drawing rectangle to reflect changing size
+            InvalidateInnerRectangle();
         }
 
 		/// <summary>
