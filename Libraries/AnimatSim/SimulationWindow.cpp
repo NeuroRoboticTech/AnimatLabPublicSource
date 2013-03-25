@@ -71,7 +71,7 @@ void SimulationWindow::LookAtStructureID(string strID)
         m_bTrackCamera = TRUE;
 
 	m_strLookAtStructureID = strID;
-	SetupTrackCamera();
+	SetupTrackCamera(FALSE);
 }
 
 /**
@@ -95,7 +95,7 @@ string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
 void SimulationWindow::LookAtBodyID(string strID) 
 {
     m_strLookAtBodyID = strID;
-	SetupTrackCamera();
+	SetupTrackCamera(FALSE);
 }
 
 /**
@@ -119,7 +119,7 @@ string SimulationWindow::LookAtBodyID() {return m_strLookAtBodyID;}
 void SimulationWindow::UsingTrackCamera(BOOL bVal) 
 {
 	m_bTrackCamera = bVal;
-	SetupTrackCamera();
+	SetupTrackCamera(TRUE);
 }
 
 /**
@@ -250,7 +250,7 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 	m_bTrackCamera = bTrackCamera;
 	m_strLookAtStructureID = strLookAtStructureID;
 	m_strLookAtBodyID = strLookAtBodyID;
-	SetupTrackCamera();
+	SetupTrackCamera(TRUE);
 }
 
 /**
@@ -262,8 +262,9 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 \date	4/19/2011
 
 \param	oTarget	Target position to look at.
+\param	bResetEyePos	If true it will set the eye position new, if not it will use the current position.
 **/
-void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget) {}
+void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos) {}
 
 /**
 \brief	Manually sets a camera position and look at position.

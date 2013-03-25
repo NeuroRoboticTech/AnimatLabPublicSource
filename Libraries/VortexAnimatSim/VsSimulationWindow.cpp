@@ -68,7 +68,7 @@ void VsSimulationWindow::Update()
 	m_osgViewer->frame(); 
 }
 
-void VsSimulationWindow::SetupTrackCamera()
+void VsSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
 {
 	if(m_bTrackCamera)
 	{
@@ -84,9 +84,9 @@ void VsSimulationWindow::SetupTrackCamera()
 				lpBody = dynamic_cast<BodyPart *>(lpStructure->FindNode(m_strLookAtBodyID));
 
 			if(lpBody)
-				SetCameraLookAt(lpBody->GetCurrentPosition());
+				SetCameraLookAt(lpBody->GetCurrentPosition(), bResetEyePos);
 			else
-				SetCameraLookAt(lpStructure->Position());
+				SetCameraLookAt(lpStructure->Position(), bResetEyePos);
 
 			m_lpTrackBody = lpBody;
 		} 
@@ -95,11 +95,11 @@ void VsSimulationWindow::SetupTrackCamera()
 	{
 		m_lpTrackBody = NULL;
 		CStdFPoint vDefault(0, 0, 0);
-		SetCameraLookAt(vDefault);
+		SetCameraLookAt(vDefault, bResetEyePos);
 	}
 }
 
-void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
+void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos)
 {
 	VxVector3 position(oTarget.x, oTarget.y, oTarget.z);
 
@@ -108,11 +108,8 @@ void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
 	m_osgViewer->getCamera()->getViewMatrixAsLookAt(vEye, vCenter, vUp, fltlookat);
 
 	osg::Vec3d pos;
-    if(!m_bEyePosSet)
-    {
+    if(bResetEyePos)
         pos.set(position.v[0]+50, position.v[1]+10, position.v[2]);
-        m_bEyePosSet = true;
-    }
     else
         pos = vEye;
 
@@ -304,7 +301,7 @@ void VsSimulationWindow::Initialize()
 	else
 		InitStandalone(m_lpSim, lpVsSim);
 
-	SetupTrackCamera();
+	SetupTrackCamera(TRUE);
 }
 
 

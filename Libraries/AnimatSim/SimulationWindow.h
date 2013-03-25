@@ -84,9 +84,9 @@ namespace AnimatSim
 		\author	dcofer
 		\date	3/24/2011
 		**/
-		virtual void SetupTrackCamera() = 0;
+		virtual void SetupTrackCamera(BOOL bResetEyePos) = 0;
 		virtual void SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
-		virtual void SetCameraLookAt(CStdFPoint oTarget);
+		virtual void SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos);
 		virtual void SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);
 

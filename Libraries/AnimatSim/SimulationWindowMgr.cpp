@@ -265,7 +265,7 @@ void SimulationWindowMgr::SetupCameras()
 {
 	int iCount = m_aryWindows.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryWindows[iIndex]->SetupTrackCamera();
+		m_aryWindows[iIndex]->SetupTrackCamera(TRUE);
 }
 
 /**
