@@ -801,12 +801,6 @@ void VsMovableItem::SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor
 		m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
 		SetAlpha();
 
-		//if(vDiffuse[3] < 1)
-		//{
-		//	m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-		//	m_osgStateSet->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
-		//}
-
 		//apply the material
 		m_osgStateSet->setAttribute(m_osgMaterial.get(), osg::StateAttribute::ON);
 	}
