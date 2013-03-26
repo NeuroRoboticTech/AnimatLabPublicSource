@@ -168,27 +168,38 @@ void Mouth::StepSimulation()
 	if(m_lpStomach && m_fltEatingRate > 0)
 	{
 		//Now lets find the closest food source.
-		RigidBody *lpFood = m_lpSim->FindClosestFoodSource(this->GetCurrentPosition(), m_fltMinFoodRadius, m_fltFoodDistance);
+        CStdArray<RigidBody *> arySources;
+        CStdArray<float> aryDistances;
+		m_lpSim->FindClosestFoodSources(this->GetCurrentPosition(), m_fltMinFoodRadius, arySources, aryDistances);
 
-		if(lpFood)
+        int iSources = arySources.GetSize();
+		if(iSources > 0)
 		{
-			float fltBiteSize = 0;
+            RigidBody *lpFood = NULL;
+            float fltDist=0;
+            for(int iFoodIdx=0; iFoodIdx<iSources; iFoodIdx++)
+            {
+                lpFood = arySources[iFoodIdx];
+                fltDist = aryDistances[iFoodIdx];
 
-			if(lpFood->FoodQuantity() >= m_fltEatingRate)
-				fltBiteSize = m_fltEatingRate;
-			else
-				fltBiteSize = lpFood->FoodQuantity();
+			    float fltBiteSize = 0;
 
-			float fltEnergy = fltBiteSize*lpFood->FoodEnergyContent();
+			    if(lpFood->FoodQuantity() >= m_fltEatingRate)
+				    fltBiteSize = m_fltEatingRate;
+			    else
+				    fltBiteSize = lpFood->FoodQuantity();
 
-			if(fltEnergy > m_lpStomach->MaxEnergyLevel())
-			{
-				float fltNeededEnergy = m_lpStomach->MaxEnergyLevel() - m_lpStomach->EnergyLevel();
-				fltBiteSize = fltNeededEnergy/lpFood->FoodEnergyContent();
-			}
+			    float fltEnergy = fltBiteSize*lpFood->FoodEnergyContent();
 
-			lpFood->Eat(fltBiteSize, m_lpSim->TimeSlice());
-			m_lpStomach->AddEnergy(fltEnergy);			
+			    if(fltEnergy > m_lpStomach->MaxEnergyLevel())
+			    {
+				    float fltNeededEnergy = m_lpStomach->MaxEnergyLevel() - m_lpStomach->EnergyLevel();
+				    fltBiteSize = fltNeededEnergy/lpFood->FoodEnergyContent();
+			    }
+
+			    lpFood->Eat(fltBiteSize, m_lpSim->TimeSlice());
+			    m_lpStomach->AddEnergy(fltEnergy);			
+            }
 		}
 	}
 }

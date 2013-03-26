@@ -965,7 +965,7 @@ namespace AnimatSim
 			virtual Joint *FindJoint(string strStructureID, string strJointID, BOOL bThrowError = TRUE);
 			virtual RigidBody *FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError = TRUE);
 			virtual OdorType *FindOdorType(string strOdorID, BOOL bThrowError = TRUE);
-			virtual RigidBody *FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius, float &fltDistance);
+			virtual void FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius, CStdArray<RigidBody *> &arySources, CStdArray<float> &aryDistances);
 			virtual AnimatBase *FindByID(string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion

@@ -3569,11 +3569,14 @@ AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
 
 \return	null if it fails, else the found closest food source.
 **/
-RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius, float &fltDistance)
+void Simulator::FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius, CStdArray<RigidBody *> &arySources, CStdArray<float> &aryDistances)
 {
 	RigidBody *lpFood = NULL, *lpMinFood = NULL;
 	float fltDist=0, fltMinDist=0;
 	int iCount = m_aryFoodSources.GetSize();
+
+    arySources.RemoveAll();
+    aryDistances.RemoveAll();
 
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
@@ -3582,13 +3585,10 @@ RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinR
 
 		if( (fltDist <= fltMinRadius) && ((fltDist < fltMinDist) || !lpMinFood))
 		{
-			fltMinDist = fltDist;
-			lpMinFood = lpFood;
+            arySources.Add(lpFood);
+            aryDistances.Add(fltDist);
 		}
 	}
-
-	fltDistance = fltMinDist;
-	return lpMinFood;
 }
 
 #pragma endregion
