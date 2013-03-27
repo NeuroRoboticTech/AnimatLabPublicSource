@@ -94,26 +94,24 @@ void VsLight::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEve
 
 void VsLight::Ambient(CStdColor &aryColor)
 {
-	Light::Diffuse(aryColor);
+	Light::Ambient(aryColor);
 
 	//Reposition the light.
 	if(m_osgLight.valid())
 	{
-		//We swapped the ambient and diffuse for the sphere. We need to swap it back when setting the color for the light object.
-		osg::Vec4 color(m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), 1.0);
+		osg::Vec4 color(m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), 1.0);
 		m_osgLight->setAmbient(color);
 	}
 }
 
 void VsLight::Diffuse(CStdColor &aryColor)
 {
-	Light::Ambient(aryColor);
+	Light::Diffuse(aryColor);
 
 	//Reposition the light.
 	if(m_osgLight.valid())
 	{
-		//We swapped the ambient and diffuse for the sphere. We need to swap it back when setting the color for the light object.
-		osg::Vec4 color(m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), 1.0);
+		osg::Vec4 color(m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), 1.0);
 		m_osgLight->setDiffuse(color);
 	}
 }
@@ -182,33 +180,23 @@ int VsLight::GetGlLight()
 void VsLight::SetupLighting()
 {
     // Set up lighting.
-	//For a light object we want to swap the ambient and diffuse settings for the 
-	//sphere that is shown. When we create the actuall light we will swap these back.
-    osg::Vec4 ambient(m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), 1.0);
-    osg::Vec4 diffuse(m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), 1.0);
+    osg::Vec4 ambient(m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), 1.0);
+    osg::Vec4 diffuse(m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), 1.0);
     osg::Vec4 specular(m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), 1.0);
     osg::Vec4 position(m_oPosition.x, m_oPosition.y, m_oPosition.z, 1);
-    //osg::Vec3 direction(0, -1, 0);
-    //direction.normalize();
 
+	SetAttenuation();
     m_osgLight = new osg::Light(m_iLightNum);
     m_osgLight->setAmbient(ambient);
 	m_osgLight->setDiffuse(diffuse);
     m_osgLight->setSpecular(specular);
     m_osgLight->setPosition(position);
-	//m_osgLight->setQuadraticAttenuation(0.002);
-	SetAttenuation();
 
     m_osgLightSource = new osg::LightSource;
     m_osgLightSource->setLight(m_osgLight.get());
 	GetVsSimulator()->OSGRoot()->addChild(m_osgLightSource.get());
 
 	Enabled(m_bEnabled);
-	//osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
-	//rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
-
-	//m_osgLightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
-	//m_osgLightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
 }
 
 
