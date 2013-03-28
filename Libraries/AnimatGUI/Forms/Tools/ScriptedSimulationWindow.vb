@@ -474,6 +474,12 @@ Namespace Forms
                 End Set
             End Property
 
+            Public Overrides ReadOnly Property Description() As String
+                Get
+                    Return "Allows you to produce a scripted movement of the camera for a professional video"
+                End Get
+            End Property
+
 #End Region
 
 #Region " Methods "
@@ -655,7 +661,7 @@ Namespace Forms
                 End If
                 oXml.AddChildElement("TrackCamera", True)
 
-                m_svDefaultPosition.SaveSimulationXml(oXml, Me.FormHelper, "Position")
+                m_svDefaultPosition.SaveSimulationXml(oXml, Me.FormHelper, "DefaultPosition")
 
                 If m_aryCameraPaths.Count > 0 Then
                     oXml.AddChildElement("CameraPaths")

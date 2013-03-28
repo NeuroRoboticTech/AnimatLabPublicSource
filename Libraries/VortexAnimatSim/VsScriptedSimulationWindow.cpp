@@ -349,7 +349,7 @@ void VsScriptedSimulationWindow::Load(CStdXml &oXml)
 	DefaultPartID(oXml.GetChildString("LookAtBodyID", m_strDefaultPartID));
 
 	CStdFPoint vPos;
-	Std_LoadPoint(oXml, "Position", vPos);
+	Std_LoadPoint(oXml, "DefaultPosition", vPos);
 	DefaultPosition(vPos);
 
 	if(oXml.FindChildElement("CameraPaths", false))

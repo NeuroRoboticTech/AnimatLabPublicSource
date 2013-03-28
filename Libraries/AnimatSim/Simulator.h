@@ -842,7 +842,7 @@ namespace AnimatSim
 			virtual void BlockSimulation();
 			virtual void UnblockSimulation();
 			virtual BOOL SimulationBlockConfirm();
-			virtual BOOL WaitForSimulationBlock(long lTimeout = 2000);
+			virtual BOOL WaitForSimulationBlock(long lTimeout = 6000);
 
 			virtual void Reset(); //Resets the entire application back to the default state 
 			virtual void ResetSimulation(); //Resets the current simulation back to time 0.0

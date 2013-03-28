@@ -291,7 +291,7 @@ Namespace Forms
 
         Public Overridable ReadOnly Property Description() As String
             Get
-
+                Return ""
             End Get
         End Property
 
