@@ -1,0 +1,23 @@
+Multiple views
+ Now you can open multiple windows to see your scene from different views.
+
+window panes
+  New window panes allow you total control of the layout of your windows.
+
+Tabbed behavioral editor
+  Open some or all of the subsystems for an organism and put the tabs where you want them
+
+Professional graphics
+  OSG and OpenGL used for all graphics allows you to create truly professional looking simulations
+
+Easy use of meshes
+  Download meshes from the web, or create your own. 
+
+Faster
+  New physics engine is much faster than version 1.
+
+See collision objects and joint in the simulation
+  Full control over what items are shown or hidden.
+
+
+  
