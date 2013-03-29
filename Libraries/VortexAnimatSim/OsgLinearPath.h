@@ -159,10 +159,10 @@ public:
 	virtual void PartID(string strID);
 
 	virtual double StartTime();
-	virtual void StartTime(double dblTime);
+	virtual void StartTime(double dblTime, BOOL bSortPaths = TRUE);
 
 	virtual double EndTime();
-	virtual void EndTime(double dblTime);
+	virtual void EndTime(double dblTime, BOOL bSortPaths = TRUE);
 
 	virtual BOOL Visible();
 	virtual void Visible(BOOL bVal);

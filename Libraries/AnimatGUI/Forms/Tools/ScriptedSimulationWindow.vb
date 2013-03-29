@@ -1131,10 +1131,26 @@ Namespace Forms
                 Me.PasteToolStripButton.Checked = False
             End Sub
 
+            Protected Function FindPathsEndTime() As Double
+                Dim dblMaxTime As Double = -1
+                Dim doPath As AnimatGUI.DataObjects.Visualization.CameraPath
+                For Each deEntry As DictionaryEntry In m_aryCameraPaths
+                    doPath = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Visualization.CameraPath)
+                    If doPath.EndTime.ActualValue > dblMaxTime Then
+                        dblMaxTime = doPath.EndTime.ActualValue
+                    End If
+                Next
+
+                If dblMaxTime < 0 Then dblMaxTime = 0
+
+                Return dblMaxTime
+            End Function
+
             Private Sub AddCameraPathToolStripButton_Click(sender As Object, e As System.EventArgs) Handles AddCameraPathToolStripButton.Click
                 Try
                     Dim doCamera As New DataObjects.Visualization.CameraPath(Me.FormHelper)
                     doCamera.Name = "Path"
+                    doCamera.StartTime.ActualValue = FindPathsEndTime()
                     m_aryCameraPaths.Add(doCamera.ID, doCamera)
                     doCamera.CreateWorkspaceTreeView(Me.FormHelper, m_tnWorkspaceNode)
                     doCamera.SelectItem(False)

@@ -489,24 +489,24 @@ void OsgLinearPath::PartID(string strID)
 
 double OsgLinearPath::StartTime() {return m_dblStartTime;}
 
-void OsgLinearPath::StartTime(double dblTime)
+void OsgLinearPath::StartTime(double dblTime, BOOL bSortPaths)
 {
 	Std_IsAboveMin((double) 0, dblTime, TRUE, "StartTime", TRUE);
 	m_dblStartTime = dblTime;
 	RedrawCurve();
 
-	if(m_lpParentWindow)
+	if(bSortPaths && m_lpParentWindow)
 		m_lpParentWindow->SortPaths();
 }
 
 double OsgLinearPath::EndTime() {return m_dblStartTime;}
 
-void OsgLinearPath::EndTime(double dblTime)
+void OsgLinearPath::EndTime(double dblTime, BOOL bSortPaths)
 {
 	Std_IsAboveMin((double) m_dblStartTime, dblTime, TRUE, "EndTime", TRUE);
 	m_dblEndTime = dblTime;
 
-	if(m_lpParentWindow)
+	if(bSortPaths && m_lpParentWindow)
 		m_lpParentWindow->SortPaths();
 }
 
@@ -852,8 +852,8 @@ void OsgLinearPath::Load(CStdXml &oXml)
 
 	m_vLineColor.Load(oXml, "LineColor", false);
 
-	EndTime(oXml.GetChildDouble("EndTime", m_dblEndTime));
-	StartTime(oXml.GetChildDouble("StartTime", m_dblStartTime));
+	EndTime(oXml.GetChildDouble("EndTime", m_dblEndTime), FALSE);
+	StartTime(oXml.GetChildDouble("StartTime", m_dblStartTime), FALSE);
 	PartID(oXml.GetChildString("LinkedBodyPartID", m_strPartID));
 	VisibleInSim(oXml.GetChildBool("VisibleInSim", m_bVisibleInSim));
 
@@ -872,6 +872,9 @@ void OsgLinearPath::Load(CStdXml &oXml)
 	}
 
 	oXml.OutOfElem(); //OutOf Spline Element
+
+    if(m_lpParentWindow)
+        m_lpParentWindow->SortPaths();
 }
 
 /**
