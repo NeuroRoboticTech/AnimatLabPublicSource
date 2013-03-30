@@ -305,8 +305,8 @@ Namespace DataObjects
                 Return m_iFrameRate
             End Get
             Set(ByVal value As Integer)
-                If value <= 10 OrElse value > 1000 Then
-                    Throw New System.Exception("The frame rate must be greater than 10 and less than 1000.")
+                If value <= 1 OrElse value > 1000 Then
+                    Throw New System.Exception("The frame rate must be greater than 1 and less than 1000.")
                 End If
 
                 Me.SetSimData("FrameRate", value.ToString, True)

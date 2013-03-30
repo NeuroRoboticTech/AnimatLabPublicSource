@@ -1029,7 +1029,7 @@ float Simulator::DesiredFrameStep() {return m_fltDesiredFrameStep;}
 **/
 void Simulator::DesiredFrameRate(int iVal)
 {
-	Std_IsAboveMin((int) 9, iVal, TRUE, "FrameRate");
+	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
 
 	m_iDesiredFrameRate = iVal;
  	m_fltDesiredFrameStep = ((1/ (float) m_iDesiredFrameRate)*1);
