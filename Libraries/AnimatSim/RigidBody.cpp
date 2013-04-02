@@ -1320,7 +1320,7 @@ void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryNames.Add("EnableFluids");
 	aryTypes.Add("Boolean");
 
-	aryNames.Add("MaterialID");
+	aryNames.Add("MaterialTypeID");
 	aryTypes.Add("String");
 }
 
@@ -1544,7 +1544,7 @@ void RigidBody::Load(CStdXml &oXml)
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
-	MaterialID(oXml.GetChildString("MaterialID", m_strMaterialID));
+	MaterialID(oXml.GetChildString("MaterialTypeID", m_strMaterialID));
 	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
 	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
 	IsCollisionObject(oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject));
