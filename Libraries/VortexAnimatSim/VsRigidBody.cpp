@@ -30,10 +30,6 @@ VsRigidBody::VsRigidBody()
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
 
-	//m_fltBuoyancy = 0;
-	//m_fltReportBuoyancy = 0;
-	m_fltMass = 0;
-
 	for(int i=0; i<3; i++)
 	{
 		m_vTorque[i] = 0;
@@ -323,7 +319,7 @@ void VsRigidBody::GetBaseValues()
 
 void VsRigidBody::Initialize()
 {
-	GetBaseValues();
+	//GetBaseValues();
 }
 
 /**
@@ -450,6 +446,8 @@ void VsRigidBody::CreateDynamicPart()
 		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
 		m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+
+        GetBaseValues();
 
 		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
@@ -883,8 +881,16 @@ float VsRigidBody::Physics_GetMass()
 {
 	float fltMass = 0;
 
+    //If thi spart is frozen then we will get mass values of 0. So we need to
+    //temporarilly unfreeze it to get the mass and volume, then refreeze it.
+    if(m_lpThisRB->Freeze())
+        m_vxSensor->freeze(false);
+
 	if(m_vxPart)
 		fltMass = m_vxPart->getMass();
+
+    if(m_lpThisRB->Freeze())
+        m_vxSensor->freeze(true);
 
 	return fltMass;
 }

@@ -67,6 +67,11 @@ void VsMaterialPair::SetMaterialProperties()
 
 				if(pM)
 				{
+                    //pM->setFrictionModel(VxContactMaterial::kFrictionAxisAngularNormal, VxContactMaterial::kFrictionModelNeutral);
+                    //pM->setFrictionModel(VxContactMaterial::kFrictionAxisAngularPrimary, VxContactMaterial::kFrictionModelNeutral);
+                    //pM->setFrictionModel(VxContactMaterial::kFrictionAxisAngularSecondary, VxContactMaterial::kFrictionModelNeutral);
+                    //pM->setFrictionModel(VxContactMaterial::kFrictionAxisLinear, VxContactMaterial::kFrictionModelScaledBox);
+
 					pM->setFrictionType(VxContactProperties::kFrictionTypeTwoDirection);
 					pM->setFrictionModel(VxContactProperties::kFrictionModelScaledBox);
 					pM->setFrictionCoefficientPrimary(m_fltFrictionPrimary);

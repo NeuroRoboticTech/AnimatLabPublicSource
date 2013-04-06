@@ -72,6 +72,7 @@ RigidBody::RigidBody()
 	m_fltMagnus = 0;
 	m_bEnableFluids = FALSE;
 
+    m_fltMass = 0;
 	m_fltReportMass = 0;
 	m_fltReportVolume = 0;
 
@@ -1886,14 +1887,12 @@ CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
 **/
 float RigidBody::GetMass()
 {
-	float fltMass = 0;
-
 	if(m_lpPhysicsBody)
-		fltMass = m_lpPhysicsBody->Physics_GetMass();
+		m_fltMass = m_lpPhysicsBody->Physics_GetMass();
 
-	m_fltReportMass = fltMass*m_lpSim->DisplayMassUnits();
+	m_fltReportMass = m_fltMass*m_lpSim->DisplayMassUnits();
 
-	return fltMass;
+	return m_fltMass;
 }
 
 /**
@@ -1906,15 +1905,13 @@ float RigidBody::GetMass()
 **/
 float RigidBody::GetVolume()
 {
-	float fltMass = 0;
-
 	if(m_lpPhysicsBody)
-		fltMass = m_lpPhysicsBody->Physics_GetMass();
+		m_fltMass = m_lpPhysicsBody->Physics_GetMass();
 
 	float fltVolume = 0;
 	
 	if(m_fltDensity)
-		fltVolume = fltMass/m_fltDensity;
+		fltVolume = m_fltMass/m_fltDensity;
 
 	m_fltReportVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);
 

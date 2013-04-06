@@ -3,11 +3,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\PerformanceTests\DropBoxesTest_30_NG\DropBoxesTest_Standalone_DT.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\Experiments\Bryce\20130303_RunSims.asim"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10.dll -project "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\CylinderTest_Standalone.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10.dll -project "C:\Projects\AnimatLabSDK\Experiments\Bryce\20130303_RunSims.asim"</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

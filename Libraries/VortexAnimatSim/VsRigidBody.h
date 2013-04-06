@@ -83,8 +83,6 @@ namespace VortexAnimatSim
 			float m_vAngularAcceleration[3];
 			float m_vForce[3];
 			float m_vTorque[3];
-			
-			float m_fltMass;
 
 			virtual void SetThisPointers();
 

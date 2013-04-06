@@ -78,6 +78,9 @@ namespace AnimatSim
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
+			//The mass of the object
+			float m_fltMass;
+
 			//The mass of the object to report to GUI
 			float m_fltReportMass;
 
