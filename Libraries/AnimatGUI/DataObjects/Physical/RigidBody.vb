@@ -458,14 +458,6 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragTorqueY", "Drag Torque Y Axis", "Newton-Meters", "Nm", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragTorqueZ", "Drag Torque Z Axis", "Newton-Meters", "Nm", -100, 100))
 
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassForceX", "Added Mass Force X Axis", "Newtons", "N", -100, 100))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassForceY", "Added Mass Force Y Axis", "Newtons", "N", -100, 100))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassForceZ", "Added Mass Force Z Axis", "Newtons", "N", -100, 100))
-
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassTorqueX", "Added Mass Torque X Axis", "Newton-Meters", "Nm", -100, 100))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassTorqueY", "Added Mass Torque Y Axis", "Newton-Meters", "Nm", -100, 100))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassTorqueZ", "Added Mass Torque Z Axis", "Newton-Meters", "Nm", -100, 100))
-
             'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyBuoyancy", "Buoyancy", "Newtons", "N", 0, 100))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FoodQuantity", "Food Quantity", "", "", 0, 1000))
