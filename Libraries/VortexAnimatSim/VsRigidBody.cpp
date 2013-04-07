@@ -883,14 +883,16 @@ float VsRigidBody::Physics_GetMass()
 
     //If thi spart is frozen then we will get mass values of 0. So we need to
     //temporarilly unfreeze it to get the mass and volume, then refreeze it.
-    if(m_lpThisRB->Freeze())
-        m_vxSensor->freeze(false);
+	if(m_vxPart && m_vxSensor)
+	{
+		if(m_lpThisRB->Freeze())
+			m_vxSensor->freeze(false);
 
-	if(m_vxPart)
 		fltMass = m_vxPart->getMass();
 
-    if(m_lpThisRB->Freeze())
-        m_vxSensor->freeze(true);
+		if(m_lpThisRB->Freeze())
+			m_vxSensor->freeze(true);
+	}
 
 	return fltMass;
 }
