@@ -1177,20 +1177,94 @@ Namespace Framework
             Return strOut
         End Function
 
-        Public Shared Sub UpdateConfigFile()
+        Protected Shared Sub LoadUserConfigData(ByVal strFilePath As String)
+
             Try
-                Dim Myconfig As System.Configuration.Configuration
-                Myconfig = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None)
+                If File.Exists(strFilePath) Then
+                    Dim xmlConfig As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
-                Myconfig.AppSettings.Settings("UpdateFrequency").Value = Util.Application.AutoUpdateInterval.ToString
-                Dim dtTime As DateTime = Util.Application.LastAutoUpdateTime
-                Myconfig.AppSettings.Settings("UpdateTime").Value = dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString
-                Myconfig.AppSettings.Settings("DefaultNewFolder").Value = Util.Application.DefaultNewFolder
-                Myconfig.Save()
+                    xmlConfig.Load(strFilePath)
+                    xmlConfig.FindElement("Config")
 
-                System.Configuration.ConfigurationManager.RefreshSection("appSettings")
+                    Util.Application.DefaultNewFolder = xmlConfig.GetChildString("DefaultNewFolder", "")
+
+                    Dim strAutoupdate As String = xmlConfig.GetChildString("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
+                    Util.Application.AutoUpdateInterval = DirectCast([Enum].Parse(GetType(Forms.AnimatApplication.enumAutoUpdateInterval), strAutoupdate, True), Forms.AnimatApplication.enumAutoUpdateInterval)
+
+                    Try
+                        Dim strDate As String = xmlConfig.GetChildString("UpdateTime", "1/1/2001")
+                        Util.Application.LastAutoUpdateTime = Date.Parse(strDate)
+                    Catch exDate As System.Exception
+                        'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
+                        Util.Application.LastAutoUpdateTime = DateTime.Parse("1/1/2001")
+                    End Try
+                End If
 
             Catch ex As System.Exception
+                'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
+                Util.Application.LastAutoUpdateTime = DateTime.Parse("1/1/2001")
+                Util.Application.DefaultNewFolder = ""
+                Util.Application.AutoUpdateInterval = Forms.AnimatApplication.enumAutoUpdateInterval.Daily
+
+                'The nUnit system eats my configuration settings, so I am changing this to only show this error
+                'when we are in production mode so this error does not get shown and these values are just defaulted.
+#If Not Debug Then
+                AnimatGUI.Framework.Util.DisplayError(ex)
+#End If
+            End Try
+        End Sub
+
+        Protected Shared Sub SaveUserConfigData(ByVal xmlData As ManagedAnimatInterfaces.IStdXml, ByVal dtUpdateTime As DateTime)
+
+            Dim strUpdateTime As String = dtUpdateTime.Month.ToString() & "/" & dtUpdateTime.Day.ToString & "/" & dtUpdateTime.Year.ToString
+
+            xmlData.AddChildElement("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
+            xmlData.AddChildElement("UpdateTime", strUpdateTime)
+            xmlData.AddChildElement("DefaultNewFolder", Util.Application.DefaultNewFolder)
+
+        End Sub
+
+        Protected Shared Sub CreateUserConfigFile(ByVal strFilePath As String, ByVal dtUpdateTime As DateTime)
+            Dim xmlConfig As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
+
+            xmlConfig.AddElement("Config")
+
+            SaveUserConfigData(xmlConfig, dtUpdateTime)
+
+            xmlConfig.Save(strFilePath)
+        End Sub
+
+        Protected Shared Function CheckAppDataFile() As String
+            Dim strAppDataPath As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData)
+            Dim strAnimatAppDataPath As String = strAppDataPath & "\AnimatLab"
+            Dim strAnimatConfigPath As String = strAnimatAppDataPath & "\AnimatUser.config"
+
+            If Not Directory.Exists(strAnimatAppDataPath) Then
+                Directory.CreateDirectory(strAnimatAppDataPath)
+            End If
+
+            If Not File.Exists(strAnimatConfigPath) Then
+                Dim dtDefaultTime As New DateTime(2001, 1, 1)
+                CreateUserConfigFile(strAnimatConfigPath, dtDefaultTime)
+            End If
+
+            Return strAnimatConfigPath
+        End Function
+
+        Public Shared Sub LoadUserConfigData()
+            Try
+                Dim strAnimatConfigPath As String = CheckAppDataFile()
+                LoadUserConfigData(strAnimatConfigPath)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Shared Sub SaveUserConfigData()
+            Try
+                Dim strAnimatConfigPath As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) & "\AnimatLab\AnimatUser.config"
+                CreateUserConfigFile(strAnimatConfigPath, Util.Application.LastAutoUpdateTime)
+            Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub

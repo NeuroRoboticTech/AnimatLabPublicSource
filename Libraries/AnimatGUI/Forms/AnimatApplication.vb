@@ -1954,7 +1954,7 @@ Namespace Forms
                 m_auBackup.ForceCheckForUpdate()
 
                 m_dtLastAutoUpdateTime = Now
-                Util.UpdateConfigFile()
+                Util.SaveUserConfigData()
             End If
 
         End Sub
@@ -1963,19 +1963,9 @@ Namespace Forms
             Try
                 Me.AppStatusText = "Loading user configuration"
 
-                m_strDefaultNewFolder = System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder")
-
-                m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency"), True), enumAutoUpdateInterval)
-
                 m_eDefaultLogLevel = DirectCast([Enum].Parse(GetType(ManagedAnimatInterfaces.ILogger.enumLogLevel), System.Configuration.ConfigurationManager.AppSettings("DefaultLogLevel"), True), ManagedAnimatInterfaces.ILogger.enumLogLevel)
 
-                Try
-                    Dim strDate As String = System.Configuration.ConfigurationManager.AppSettings("UpdateTime")
-                    m_dtLastAutoUpdateTime = Date.Parse(strDate)
-                Catch exDate As System.Exception
-                    'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
-                    m_dtLastAutoUpdateTime = DateTime.Parse("1/1/2001")
-                End Try
+                Util.LoadUserConfigData()
 
             Catch ex As System.Exception
                 'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
