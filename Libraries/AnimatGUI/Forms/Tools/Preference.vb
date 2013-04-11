@@ -225,7 +225,7 @@ Namespace Forms.Tools
 
                 Util.Application.AutoUpdateInterval = CType(cbUpdateInterval.SelectedIndex, AnimatGUI.Forms.AnimatApplication.enumAutoUpdateInterval)
                 Util.Application.DefaultNewFolder = txtDefNewFolder.Text
-                Util.UpdateConfigFile()
+                Util.SaveUserConfigData()
                 Me.Close()
 
             Catch ex As System.Exception
