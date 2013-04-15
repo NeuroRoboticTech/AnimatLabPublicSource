@@ -510,6 +510,12 @@
     <Compile Include="Forms\AnimatMessageBox.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\AnimatUpdate.designer.vb">
+      <DependentUpon>AnimatUpdate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnimatUpdate.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Behavior\Connections.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -834,6 +840,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AnimatMessageBox.resx">
       <DependentUpon>AnimatMessageBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnimatUpdate.resx">
+      <DependentUpon>AnimatUpdate.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\EditMaterialTypes.resx">
       <DependentUpon>EditMaterialTypes.vb</DependentUpon>

@@ -77,8 +77,8 @@ Namespace Forms
         Public WithEvents PreferencesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Public WithEvents IndexToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Public WithEvents SearchToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents WarehouseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents TutorialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents CheckForUpdatesStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -219,8 +219,8 @@ Namespace Forms
             Me.AddStimulusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.SearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.WarehouseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.TutorialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SupportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -664,8 +664,8 @@ Namespace Forms
             '
             'HelpToolStripMenuItem
             '
-            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, _
-                                                                                                      Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, _
+            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.TutorialsToolStripMenuItem, _
+                                                                                                      Me.WarehouseToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, _
                                                                                                       Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem, _
                                                                                                       Me.toolStripSeparatorHelp2, Me.RegisterStripMenuItem})
             Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
@@ -679,19 +679,19 @@ Namespace Forms
             Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
             Me.ContentsToolStripMenuItem.Text = "&Contents"
             '
-            'IndexToolStripMenuItem
+            'WarehouseToolStripMenuItem
             '
-            Me.IndexToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpIndex
-            Me.IndexToolStripMenuItem.Name = "IndexToolStripMenuItem"
-            Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.IndexToolStripMenuItem.Text = "&Index"
+            Me.WarehouseToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpIndex
+            Me.WarehouseToolStripMenuItem.Name = "WarehouseToolStripMenuItem"
+            Me.WarehouseToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.WarehouseToolStripMenuItem.Text = "&Warehouse"
             '
-            'SearchToolStripMenuItem
+            'TutorialsToolStripMenuItem
             '
-            Me.SearchToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
-            Me.SearchToolStripMenuItem.Name = "SearchToolStripMenuItem"
-            Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.SearchToolStripMenuItem.Text = "&Search"
+            Me.TutorialsToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
+            Me.TutorialsToolStripMenuItem.Name = "TutorialsToolStripMenuItem"
+            Me.TutorialsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.TutorialsToolStripMenuItem.Text = "&Tutorials"
             '
             'SupportToolStripMenuItem
             '
@@ -5810,25 +5810,25 @@ Namespace Forms
 
         Protected Sub OnHelpContents(ByVal sender As Object, ByVal e As System.EventArgs) Handles ContentsToolStripMenuItem.Click, HelpToolStripButton.Click
             Try
-                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Help.htm")
+                Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Help/tabid/83/Default.aspx")
                 Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 
-        Protected Sub OnHelpSearch(ByVal sender As Object, ByVal e As System.EventArgs) Handles SearchToolStripMenuItem.Click
+        Protected Sub OnHelpTutorials(ByVal sender As Object, ByVal e As System.EventArgs) Handles TutorialsToolStripMenuItem.Click
             Try
-                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Search.htm")
+                Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Help/Tutorials/tabid/92/Default.aspx")
                 Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 
-        Private Sub OnHelpIndex(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles IndexToolStripMenuItem.Click
+        Private Sub OnHelpWarehouse(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WarehouseToolStripMenuItem.Click
             Try
-                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\sitemap.htm")
+                Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Community/AnimatWarehouse/tabid/240/Default.aspx")
                 Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5837,7 +5837,7 @@ Namespace Forms
 
         Protected Sub OnTechnicalSupport(ByVal sender As Object, ByVal e As System.EventArgs) Handles SupportToolStripMenuItem.Click
             Try
-                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Contact.htm")
+                Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Community/Forum/tabid/204/Default.aspx")
                 Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -6696,10 +6696,13 @@ Namespace Forms
                     Return
                 End If
 
-                Me.UpdateStatusText = "Update available"
-                If Util.ShowMessage("Updates for AnimatLab are available. Would you like to install them now?", "Confirm Update", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                Dim frmUpdate As New Forms.AnimatUpdate
+                frmUpdate.SetMessage(m_auBackup.Changes)
+
+                If frmUpdate.ShowDialog() = DialogResult.Yes Then
                     m_auBackup.InstallNow()
                 End If
+
             Catch ex As Exception
                 Util.DisplayError(ex)
             End Try
