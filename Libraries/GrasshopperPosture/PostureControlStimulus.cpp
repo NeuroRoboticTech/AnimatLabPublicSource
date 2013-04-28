@@ -366,44 +366,44 @@ void PostureControlStimulus::Initialize()
 	}
 
 	//Left front leg joints.
-	m_lpLeftFrontCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftFrontCoxaFemurID));
-	m_lpLeftFrontFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftFrontFemurTibiaID));
-	m_lpLeftFrontTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftFrontTibiaTarsusID));
+	m_lpLeftFrontCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftFrontCoxaFemurID));
+	m_lpLeftFrontFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftFrontFemurTibiaID));
+	m_lpLeftFrontTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftFrontTibiaTarsusID));
 
 	//Left Middle leg joints.
-	m_lpLeftMiddleCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleCoxaFemurID));
-	m_lpLeftMiddleFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleFemurTibiaID));
-	m_lpLeftMiddleTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleTibiaTarsusID));
+	m_lpLeftMiddleCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleCoxaFemurID));
+	m_lpLeftMiddleFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleFemurTibiaID));
+	m_lpLeftMiddleTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftMiddleTibiaTarsusID));
 
 	//Left Rear leg joints.
-	m_lpLeftRearThoracicCoxa = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftRearThoracicCoxaID));
-	m_lpLeftRearCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftRearCoxaFemurID));
-	m_lpLeftSemilunarJoint = dynamic_cast<VsPrismatic *>(m_lpOrganism->FindJoint(m_strLeftSemilunarJointID));
-	m_lpLeftRearFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftRearFemurTibiaID));
-	m_lpLeftRearTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strLeftRearTibiaTarsusID));
+	m_lpLeftRearThoracicCoxa = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftRearThoracicCoxaID));
+	m_lpLeftRearCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftRearCoxaFemurID));
+	m_lpLeftSemilunarJoint = dynamic_cast<Prismatic *>(m_lpOrganism->FindJoint(m_strLeftSemilunarJointID));
+	m_lpLeftRearFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftRearFemurTibiaID));
+	m_lpLeftRearTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strLeftRearTibiaTarsusID));
 
 	//Right front leg joints.
-	m_lpRightFrontCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightFrontCoxaFemurID));
-	m_lpRightFrontFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightFrontFemurTibiaID));
-	m_lpRightFrontTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightFrontTibiaTarsusID));
+	m_lpRightFrontCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightFrontCoxaFemurID));
+	m_lpRightFrontFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightFrontFemurTibiaID));
+	m_lpRightFrontTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightFrontTibiaTarsusID));
 
 	//Right Middle leg joints.
-	m_lpRightMiddleCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightMiddleCoxaFemurID));
-	m_lpRightMiddleFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightMiddleFemurTibiaID));
-	m_lpRightMiddleTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightMiddleTibiaTarsusID));
+	m_lpRightMiddleCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightMiddleCoxaFemurID));
+	m_lpRightMiddleFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightMiddleFemurTibiaID));
+	m_lpRightMiddleTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightMiddleTibiaTarsusID));
 
 	//Right Rear leg joints.
-	m_lpRightRearThoracicCoxa = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightRearThoracicCoxaID));
-	m_lpRightRearCoxaFemur = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightRearCoxaFemurID));
-	m_lpRightSemilunarJoint = dynamic_cast<VsPrismatic *>(m_lpOrganism->FindJoint(m_strRightSemilunarJointID));
-	m_lpRightRearFemurTibia = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightRearFemurTibiaID));
-	m_lpRightRearTibiaTarsus = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strRightRearTibiaTarsusID));
+	m_lpRightRearThoracicCoxa = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightRearThoracicCoxaID));
+	m_lpRightRearCoxaFemur = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightRearCoxaFemurID));
+	m_lpRightSemilunarJoint = dynamic_cast<Prismatic *>(m_lpOrganism->FindJoint(m_strRightSemilunarJointID));
+	m_lpRightRearFemurTibia = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightRearFemurTibiaID));
+	m_lpRightRearTibiaTarsus = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strRightRearTibiaTarsusID));
 
 	//Ab Joints.
-	m_lpAb1Joint = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strAb1JointID));
-	m_lpAb2Joint = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strAb2JointID));
-	m_lpAb3Joint = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strAb3JointID));
-	m_lpAb4Joint = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strAb4JointID));
+	m_lpAb1Joint = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strAb1JointID));
+	m_lpAb2Joint = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strAb2JointID));
+	m_lpAb3Joint = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strAb3JointID));
+	m_lpAb4Joint = dynamic_cast<Hinge *>(m_lpOrganism->FindJoint(m_strAb4JointID));
 
 	//Ab control neurons
 	if(m_strDorsalAbNeuronID.length() > 0)
@@ -425,17 +425,17 @@ void PostureControlStimulus::Initialize()
 	{
 		if(i==0)
 		{
-			strPosData = "BodyPositionX";
+			strPosData = "WorldPositionX";
 			strLinVelData = "BodyLinearVelocityX";
 		}
 		else if(i==1)
 		{
-			strPosData = "BodyPositionY";
+			strPosData = "WorldPositionY";
 			strLinVelData = "BodyLinearVelocityY";
 		}
 		else
 		{
-			strPosData = "BodyPositionZ";
+			strPosData = "WorldPositionZ";
 			strLinVelData = "BodyLinearVelocityZ";
 		}
 
@@ -544,6 +544,8 @@ void PostureControlStimulus::Initialize()
 
 void PostureControlStimulus::Activate()
 {
+	AnimatSim::ExternalStimuli::ExternalStimulus::Activate();
+
 	ActivateMotor(m_lpSim, m_lpLeftFrontCoxaFemur);
 	ActivateMotor(m_lpSim, m_lpLeftFrontFemurTibia);
 	//ActivateMotor(m_lpSim, m_lpLeftFrontTibiaTarsus);
@@ -891,7 +893,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *m_lpSim)
 	//float fltRightA = sqrt( pow((double) (*m_vRightMiddleCoxaFemurPos[0]-*m_vRightMiddleFemurTibiaPos[0]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[1]-*m_vRightMiddleFemurTibiaPos[1]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[2]-*m_vRightMiddleFemurTibiaPos[2]), 2.0) );
 	//float fltRightB = sqrt( pow((double) (*m_vRightMiddleFemurTibiaPos[0]-*m_vRightMiddleTibiaTarsusPos[0]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[1]-*m_vRightMiddleTibiaTarsusPos[1]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[2]-*m_vRightMiddleTibiaTarsusPos[2]), 2.0) );
  
-	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(osg::PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
+	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
 	m_fltRightMiddleCoxaFemurPos = -m_fltLeftMiddleCoxaFemurPos;
 	//m_fltRightMiddleCoxaFemurPos = -asin( (fltRightB*cos(PI/4)-fltRightD)/fltRightA );
 
@@ -901,7 +903,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *m_lpSim)
 
 	fltLeftD = *m_vLeftFrontCoxaFemurPos[1] - *m_vLeftTibiaBetaPos[1];
 
-	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(osg::PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
+	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
 	m_fltRightFrontCoxaFemurPos = m_fltLeftFrontCoxaFemurPos;
 
 	m_fltLeftFrontFemurTibiaPos = 0;
@@ -1028,6 +1030,8 @@ void PostureControlStimulus::CalculateFeedbackAngles(Simulator *m_lpSim)
 
 void PostureControlStimulus::Deactivate()
 {
+	AnimatSim::ExternalStimuli::ExternalStimulus::Deactivate();
+
 	DeactivateMotors(m_lpSim);
 }
 

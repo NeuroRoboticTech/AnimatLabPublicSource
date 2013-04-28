@@ -147,7 +147,7 @@ Namespace Forms
 
                 Dim strText As String = "Send an email to the address below with given subject and body text. " & vbCrLf & _
                                          "A new machine specific registration will be emailed back to you as soon as possible." & vbCrLf & vbCrLf & _
-                                         "mailto: support@animatlab.com" & vbCrLf & _
+                                         "mailto: Sales@NeuroRoboticTech.com" & vbCrLf & _
                                          "subject=AnimatLab Pro Offline Activation" & vbCrLf & _
                                          "body= Serial Number: " & txtSerialNumber.Text & vbCrLf & _
                                          " Machine code: " & Util.Application.SecurityMgr.MachineCode & vbCrLf

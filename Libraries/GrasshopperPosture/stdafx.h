@@ -18,7 +18,7 @@
 
 #include "StdUtils.h"
 #include "AnimatSim.h"
-#include "VortexAnimatSim.h"
+//#include "VortexAnimatSim.h"
 
 #define Nl_Err_lInvalidExternalStimulusType -3027
 #define Nl_Err_strInvalidExternalStimulusType "Invalid external stimulus type."

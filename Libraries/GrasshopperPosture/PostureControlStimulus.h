@@ -125,38 +125,38 @@ namespace GrasshopperPosture
 			Mesh *m_lpLeftMiddleTibia;
 
 			//Joints of the left front leg.
-			VsHinge *m_lpLeftFrontCoxaFemur;
-			VsHinge *m_lpLeftFrontFemurTibia;
-			VsHinge *m_lpLeftFrontTibiaTarsus;
+			Hinge *m_lpLeftFrontCoxaFemur;
+			Hinge *m_lpLeftFrontFemurTibia;
+			Hinge *m_lpLeftFrontTibiaTarsus;
 
 			//Joints of the left middle leg.
-			VsHinge *m_lpLeftMiddleCoxaFemur;
-			VsHinge *m_lpLeftMiddleFemurTibia;
-			VsHinge *m_lpLeftMiddleTibiaTarsus;
+			Hinge *m_lpLeftMiddleCoxaFemur;
+			Hinge *m_lpLeftMiddleFemurTibia;
+			Hinge *m_lpLeftMiddleTibiaTarsus;
 
 			//Joints of the left Rear leg.
-			VsHinge *m_lpLeftRearThoracicCoxa;
-			VsHinge *m_lpLeftRearCoxaFemur;
-			VsPrismatic *m_lpLeftSemilunarJoint;
-			VsHinge *m_lpLeftRearFemurTibia;
-			VsHinge *m_lpLeftRearTibiaTarsus;
+			Hinge *m_lpLeftRearThoracicCoxa;
+			Hinge *m_lpLeftRearCoxaFemur;
+			Prismatic *m_lpLeftSemilunarJoint;
+			Hinge *m_lpLeftRearFemurTibia;
+			Hinge *m_lpLeftRearTibiaTarsus;
 
 			//Joints of the Right front leg.
-			VsHinge *m_lpRightFrontCoxaFemur;
-			VsHinge *m_lpRightFrontFemurTibia;
-			VsHinge *m_lpRightFrontTibiaTarsus;
+			Hinge *m_lpRightFrontCoxaFemur;
+			Hinge *m_lpRightFrontFemurTibia;
+			Hinge *m_lpRightFrontTibiaTarsus;
 
 			//Joints of the Right middle leg.
-			VsHinge *m_lpRightMiddleCoxaFemur;
-			VsHinge *m_lpRightMiddleFemurTibia;
-			VsHinge *m_lpRightMiddleTibiaTarsus;
+			Hinge *m_lpRightMiddleCoxaFemur;
+			Hinge *m_lpRightMiddleFemurTibia;
+			Hinge *m_lpRightMiddleTibiaTarsus;
 
 			//Joints of the Right Rear leg.
-			VsHinge *m_lpRightRearThoracicCoxa;
-			VsHinge *m_lpRightRearCoxaFemur;
-			VsPrismatic *m_lpRightSemilunarJoint;
-			VsHinge *m_lpRightRearFemurTibia;
-			VsHinge *m_lpRightRearTibiaTarsus;
+			Hinge *m_lpRightRearThoracicCoxa;
+			Hinge *m_lpRightRearCoxaFemur;
+			Prismatic *m_lpRightSemilunarJoint;
+			Hinge *m_lpRightRearFemurTibia;
+			Hinge *m_lpRightRearTibiaTarsus;
 
 			//Foot Down sensors for front-middle legs
 			RigidBody *m_lpLeftMiddleFootDown;
@@ -169,10 +169,10 @@ namespace GrasshopperPosture
 			RigidBody *m_lpRightRearTarsusDown;
 
 			//Ab joints
-			VsHinge *m_lpAb1Joint;
-			VsHinge *m_lpAb2Joint;
-			VsHinge *m_lpAb3Joint;
-			VsHinge *m_lpAb4Joint;
+			Hinge *m_lpAb1Joint;
+			Hinge *m_lpAb2Joint;
+			Hinge *m_lpAb3Joint;
+			Hinge *m_lpAb4Joint;
 			
 			//Ab control neurons
 			Node *m_lpDorsalAbNeuron;

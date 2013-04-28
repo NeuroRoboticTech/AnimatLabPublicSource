@@ -1,8 +1,9 @@
 
+
 Namespace DataObjects
 
     Public Class GrasshopperGrid
-        Inherits AnimatTools.DataObjects.ProgramModule
+        Inherits AnimatGUI.DataObjects.Macro
 
 
 #Region " Attributes "
@@ -21,33 +22,20 @@ Namespace DataObjects
 
 #Region " Methods "
 
-        Public Sub New(ByVal doParent As AnimatTools.Framework.DataObject)
+        Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
 
             m_strName = "Grasshopper Grid"
         End Sub
 
-        Public Overrides Sub ShowDialog()
+        Public Overrides Sub Execute()
             Try
                 Dim frmConfig As New Forms.GrasshopperConfig
                 frmConfig.ShowDialog()
             Catch ex As System.Exception
-                AnimatTools.Framework.Util.DisplayError(ex)
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
-
         End Sub
-
-#Region " DataObject Methods "
-
-        Protected Overrides Sub BuildProperties()
-
-        End Sub
-
-        Public Overrides Function Clone(ByVal doParent As AnimatTools.Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As AnimatTools.Framework.DataObject) As AnimatTools.Framework.DataObject
-
-        End Function
-
-#End Region
 
 #End Region
 

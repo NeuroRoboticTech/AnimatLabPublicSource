@@ -105,7 +105,7 @@ void SynergyFitnessEval::Initialize()
 	AnimatSim::ExternalStimuli::ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpStructure = lpSim->FindStructureFromAll(m_strStructureID);
+	m_lpStructure = m_lpSim->FindStructureFromAll(m_strStructureID);
 	m_lpTorso = m_lpStructure->FindRigidBody(m_strTorsoID);
 	m_lpTorsoAlign = m_lpStructure->FindRigidBody(m_strTorsoAlignID);
 
@@ -185,7 +185,7 @@ void SynergyFitnessEval::Initialize()
 	}
 }
 
-void SynergyFitnessEval::Activate(Simulator *lpSim)
+void SynergyFitnessEval::Activate()
 {
 	m_fltTorsoHeightDiff = 0;
 	m_fltTorsoOrientationRad = 0;
@@ -195,7 +195,7 @@ void SynergyFitnessEval::Activate(Simulator *lpSim)
 	m_fltFitness = 0;
 }
 
-void SynergyFitnessEval::StepSimulation(Simulator *lpSim)
+void SynergyFitnessEval::StepSimulation()
 {
 	if(lpSim->Time() < 1)
 	{
@@ -394,7 +394,7 @@ float *SynergyFitnessEval::GetDataPointer(string strDataType)
 
 	return lpData;
 } 
-void SynergyFitnessEval::Load(Simulator *lpSim, CStdXml &oXml)
+void SynergyFitnessEval::Load(CStdXml &oXml)
 {
 	AnimatSim::ActivatedItem::Load(lpSim, oXml);
 
