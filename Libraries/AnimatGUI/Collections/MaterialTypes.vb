@@ -100,8 +100,8 @@ Namespace Collections
                 For Each doPair As AnimatGUI.DataObjects.Physical.MaterialType In Me
                     iIndex = iIndex + 1
 
-                    ptTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("MaterialPair " & iIndex, GetType(String), (iIndex - 1).ToString(), _
-                                           "Material Pair", "Material Pair for friction interaction", doPair.Name, True))
+                    ptTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("MaterialType " & iIndex, GetType(String), (iIndex - 1).ToString(), _
+                                           "Material Type", "Material Type for friction interaction", doPair.Name, True))
                 Next
 
                 Return ptTable
@@ -139,11 +139,11 @@ Namespace Collections
 
         Public Overridable Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure)
 
-            oXml.AddChildElement("MaterialPairs")
+            oXml.AddChildElement("Materials")
             oXml.IntoElem()  'Into MuscleAttachments
 
-            For Each doPair As AnimatGUI.DataObjects.Physical.MaterialType In Me
-                oXml.AddChildElement("PairID", doPair.ID)
+            For Each doMat As AnimatGUI.DataObjects.Physical.MaterialType In Me
+                oXml.AddChildElement("MaterialID", doMat.ID)
             Next
 
             oXml.OutOfElem()  'Outof MuscleAttachments
@@ -151,11 +151,11 @@ Namespace Collections
         End Sub
 
         Public Overridable Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure, Optional ByVal strName As String = "")
-            oXml.AddChildElement("MaterialPairs")
+            oXml.AddChildElement("Materials")
             oXml.IntoElem()  'Into MuscleAttachments
 
-            For Each doPair As AnimatGUI.DataObjects.Physical.MaterialType In Me
-                oXml.AddChildElement("PairID", doPair.ID)
+            For Each doMat As AnimatGUI.DataObjects.Physical.MaterialType In Me
+                oXml.AddChildElement("MaterialID", doMat.ID)
             Next
 
             oXml.OutOfElem()  'Outof MuscleAttachments

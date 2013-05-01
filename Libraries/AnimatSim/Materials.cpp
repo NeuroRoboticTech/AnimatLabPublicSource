@@ -51,7 +51,6 @@ Materials::~Materials()
 try
 {
 	m_aryMaterialTypes.RemoveAll();
-	m_aryMaterialPairs.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Materials\r\n", "", -1, FALSE, TRUE);}
@@ -60,7 +59,6 @@ catch(...)
 void Materials::Reset()
 {
 	m_aryMaterialTypes.RemoveAll();
-	m_aryMaterialPairs.RemoveAll();
 }
 
 /**
@@ -80,13 +78,9 @@ void Materials::AddMaterialType(string strXml, BOOL bDoNotInit)
 
 	MaterialType *lpType = LoadMaterialType(oXml);
 
-	//Get the first matieralpair so we can use it to register the material types.
-	MaterialPair *lpPair = m_aryMaterialPairs[0];
-
 	if(!bDoNotInit)
 		lpType->Initialize();
 
-	lpPair->RegisterMaterialType(lpType->ID());
 	m_aryMaterialTypes.Add(lpType);
 }
 
@@ -106,44 +100,6 @@ void Materials::RemoveMaterialType(string strID, BOOL bThrowError)
 	m_aryMaterialTypes.RemoveAt(iPos);
 }
 
-/**
-\brief	Creates and adds a new material Pair. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strXml	The xml data packet for loading the pair. 
-**/
-void Materials::AddMaterialPair(string strXml, BOOL bDoNotInit)
-{
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("MaterialPair");
-
-	MaterialPair *lpPair = LoadMaterialPair(oXml);
-
-	if(!bDoNotInit)
-		lpPair->Initialize();
-
-	m_aryMaterialPairs.Add(lpPair);
-}
-
-/**
-\brief	Removes the material pair with the specified ID. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strID	ID of the material pair to remove
-\param	bThrowError	If true and ID is not found then it will throw an error.
-\exception If bThrowError is true and ID is not found.
-**/
-void Materials::RemoveMaterialPair(string strID, BOOL bThrowError)
-{
-	int iPos = FindPairListPos(strID, bThrowError);
-	m_aryMaterialPairs.RemoveAt(iPos);
-}
 
 /**
 \brief	Finds the array index for the material type with the specified ID
@@ -173,40 +129,13 @@ int Materials::FindTypeListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-/**
-\brief	Finds the array index for the material pair with the specified ID
-
-\param	strID ID of material pair to find
-\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
-\exception If bThrowError is true and ID is not found.
-
-\return	If bThrowError is false and ID is not found returns NULL, 
-else returns the pointer to the found part.
-**/
-int Materials::FindPairListPos(string strID, BOOL bThrowError)
-{
-	string sID = Std_ToUpper(Std_Trim(strID));
-
-	int iCount = m_aryMaterialPairs.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryMaterialPairs[iIndex]->ID() == sID)
-			return iIndex;
-
-	if(bThrowError)
-		THROW_TEXT_ERROR(Al_Err_lMaterialPairIDNotFound, Al_Err_strMaterialPairIDNotFound, "ID");
-
-	return -1;
-}
 
 void Materials::Initialize()
 {
 	AnimatBase::Initialize();
 
-	if(m_aryMaterialTypes.GetSize() == 0 && m_aryMaterialPairs.GetSize() == 0)
+	if(m_aryMaterialTypes.GetSize() == 0)
 		THROW_ERROR(Al_Err_lDefaultMaterialNotFound, Al_Err_strDefaultMaterialNotFound);
-
-	//Get the first matieralpair so we can use it to register the material types.
-	MaterialPair *lpPair = m_aryMaterialPairs[0];
 
 	MaterialType *lpItem = NULL;
 	int iCount = m_aryMaterialTypes.GetSize();
@@ -214,14 +143,6 @@ void Materials::Initialize()
 	{
 		lpItem = m_aryMaterialTypes[iIndex];
 		lpItem->Initialize();
-		lpPair->RegisterMaterialType(lpItem->ID());
-	}
-
-	iCount = m_aryMaterialPairs.GetSize();
-	for(int iIndex = 0; iIndex < iCount; iIndex++)
-	{
-		lpPair = m_aryMaterialPairs[iIndex];
-		lpPair->Initialize();
 	}
 }
 
@@ -232,12 +153,6 @@ BOOL Materials::AddItem(const string &strItemType, const string &strXml, BOOL bT
 	if(strType == "MATERIALTYPE")
 	{
 		AddMaterialType(strXml, bDoNotInit);
-		return TRUE;
-	}
-
-	if(strType == "MATERIALPAIR")
-	{
-		AddMaterialPair(strXml, bDoNotInit);
 		return TRUE;
 	}
 
@@ -258,12 +173,6 @@ BOOL Materials::RemoveItem(const string &strItemType, const string &strID, BOOL 
 		return TRUE;
 	}
 
-	if(strType == "MATERIALPAIR")
-	{
-		RemoveMaterialPair(strID);
-		return TRUE;
-	}
-
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
@@ -274,23 +183,17 @@ BOOL Materials::RemoveItem(const string &strItemType, const string &strID, BOOL 
 void Materials::CreateDefaultMaterial()
 {
 	MaterialType *lpType=NULL;
-	MaterialPair *lpPair=NULL;
 
 	m_aryMaterialTypes.RemoveAll();
-	lpType = new MaterialType();
+
+	lpType = dynamic_cast<MaterialType *>(m_lpSim->CreateObject("", "Material", "Default"));
+	if(!lpType)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
+
 	lpType->ID("DEFAULTMATERIAL");
 	lpType->Name("Default");
 	lpType->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	m_aryMaterialTypes.Add(lpType);
-
-	lpPair = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "DEFAULT"));
-	if(!lpPair)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
-
-	lpPair->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
-	lpPair->Material1ID(lpType->ID());
-	lpPair->Material2ID(lpType->ID());
-	m_aryMaterialPairs.Add(lpPair);
 }
 
 void Materials::LoadMaterialTypes(CStdXml &oXml)
@@ -318,36 +221,17 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 		THROW_ERROR(Al_Err_lDefaultMaterialNotFound, Al_Err_strDefaultMaterialNotFound);
 }
 
-void Materials::LoadMaterialPairs(CStdXml &oXml)
-{
-	oXml.FindChildElement("MaterialPairs");
-	oXml.IntoElem(); //Into MaterialPairs Element
-
-	int iCount = oXml.NumberOfChildren();
-	MaterialPair *lpItem = NULL;
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		oXml.FindChildByIndex(iIndex);
-		lpItem = LoadMaterialPair(oXml);
-		m_aryMaterialPairs.Add(lpItem);
-	}
-
-	oXml.OutOfElem();  //Outof MaterialPairs Element
-}
-
 void Materials::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	m_aryMaterialTypes.RemoveAll();
-	m_aryMaterialPairs.RemoveAll();
 
 	if(oXml.FindChildElement("Materials", false))
 	{
 		oXml.IntoElem(); //Into Materials Element
 
 		LoadMaterialTypes(oXml);
-		LoadMaterialPairs(oXml);
 
 		oXml.OutOfElem();  //Outof Materials Element
 	}
@@ -362,39 +246,12 @@ MaterialType *Materials::LoadMaterialType(CStdXml &oXml)
 
 try
 {
-	lpItem = new MaterialType();
-	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
-	lpItem->Load(oXml);
-
-	return lpItem;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpItem) delete lpItem;
-	RELAY_ERROR(oError);
-	return NULL;
-}
-catch(...)
-{
-	if(lpItem) delete lpItem;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
-}
-
-MaterialPair *Materials::LoadMaterialPair(CStdXml &oXml)
-{
-	MaterialPair *lpItem=NULL;
-	string strModuleName, strType;
-
-try
-{
 	oXml.IntoElem();  //Into Column Element
 	strModuleName = oXml.GetChildString("ModuleName", "");
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Column Element
 
-	lpItem = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject(strModuleName, "Material", strType));
+	lpItem = dynamic_cast<MaterialType *>(m_lpSim->CreateObject(strModuleName, "Material", strType));
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 

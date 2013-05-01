@@ -221,7 +221,6 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="LinearJoint.cpp" />
     <ClCompile Include="LineBase.cpp" />
     <ClCompile Include="Link.cpp" />
-    <ClCompile Include="MaterialPair.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="MaterialType.cpp" />
     <ClCompile Include="MemoryChart.cpp" />
@@ -315,7 +314,6 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="LinearJoint.h" />
     <ClInclude Include="LineBase.h" />
     <ClInclude Include="Link.h" />
-    <ClInclude Include="MaterialPair.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="MaterialType.h" />
     <ClInclude Include="MemoryChart.h" />

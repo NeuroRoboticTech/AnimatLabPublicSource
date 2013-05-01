@@ -80,7 +80,6 @@ namespace AnimatSim
 		class OdorType;
 		class Materials;
 		class MaterialType;
-		class MaterialPair;
 		class Light;
 		class LightManager;
 
@@ -240,7 +239,6 @@ using namespace AnimatSim::Recording;
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
 #include "MaterialType.h"
-#include "MaterialPair.h"
 #include "Materials.h"
 #include "HudItem.h"
 #include "HudText.h"

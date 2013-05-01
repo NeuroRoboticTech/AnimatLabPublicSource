@@ -454,6 +454,25 @@ Namespace Framework
             Return oRet
         End Function
 
+        Protected Overridable Function MatchSimObjectPropertyString(ByVal strPath As String, ByVal strPropName As String, ByVal strPropValue As String, Optional ByVal iWaitMilliseconds As Integer = 200) As Boolean
+            Dim oPropVal As Object = GetSimObjectProperty(strPath, strPropName, iWaitMilliseconds)
+            If oPropVal Is Nothing Then
+                Return False
+            End If
+
+            If Not TypeOf oPropVal Is String Then
+                Return False
+            End If
+
+            Dim strVal As String = DirectCast(oPropVal, String)
+
+            If strVal = strPropValue Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         Protected Overridable Function UnitTest(ByVal strAssembly As String, ByVal strClassName As String, ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 0) As Object
             Debug.WriteLine("Calling UnitTest Assembly: '" & strAssembly & "', ClassName: '" & strClassName & "', MethodName: '" & strMethodName & "Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
@@ -545,6 +564,14 @@ Namespace Framework
             WaitWhileBusy(bSkipWaiting, bErrorOk)
 
         End Sub
+
+        Public Overridable Overloads Sub IndirectClickToolbarItem(ByVal strItemName As String, ByVal bReturnImmediate As Boolean, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False)
+            Debug.WriteLine("IndirectClickToolbarItem. Toolbar Item Name: " & strItemName & ", bReturnImmediate: " & bReturnImmediate)
+
+            ExecuteIndirectMethod("ClickToolbarItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds, bErrorOk, bSkipWaiting)
+
+        End Sub
+
 #End Region
 
 

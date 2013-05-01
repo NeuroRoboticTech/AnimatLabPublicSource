@@ -1070,7 +1070,7 @@ Namespace Forms
 
 #Region " Attributes "
 
-        Protected m_fltAppVersion As Single = 2.0
+        Protected m_iXmlVersion As Integer = 3
         Protected m_bUseMockSimInterface As Boolean = False
         Protected m_bUseMockDataObjectInterface As Boolean = False
         Protected m_bUseMockStdXml As Boolean = False
@@ -1450,9 +1450,9 @@ Namespace Forms
             End Set
         End Property
 
-        Public ReadOnly Property AppVersion() As Single
+        Public ReadOnly Property XmlVersion() As Integer
             Get
-                Return m_fltAppVersion
+                Return m_iXmlVersion
             End Get
         End Property
 
@@ -2020,12 +2020,14 @@ Namespace Forms
 
             Try
 
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "I am about to open the 'software' registry subkey for read-only access!")
                 'Util.ShowMessage("I am about to open the 'software' registry subkey for read-only access!")
 
                 Dim rkSoftware As Microsoft.Win32.RegistryKey
                 Try
-                    rkSoftware = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software", False)
+                    rkSoftware = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software", False)
                 Catch ex As System.Exception
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Error opening 'software' for read-only access: " & ex.Message)
                     'Util.ShowMessage("Error opening 'software' for read-only access: " & ex.Message)
                     'If we get an error here then assume that we can not open the registry and jump out.
                     Return
@@ -2038,10 +2040,12 @@ Namespace Forms
                 If rkKey Is Nothing Then
 
                     'Util.ShowMessage("'FLEXlm License Manager' subkey was not found. I am opening it for write access")
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "'FLEXlm License Manager' subkey was not found. I am opening it for write access")
 
                     Try
-                        rkSoftware = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software", True)
+                        rkSoftware = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software", True)
                     Catch ex As System.Exception
+                        Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Error opening 'software' for write access: " & ex.Message)
                         'Util.ShowMessage("Error opening 'software' for write access: " & ex.Message)
                         'If we get an error here then assume that we can not open the registry for writing and jump out.
                         Return
@@ -2051,34 +2055,46 @@ Namespace Forms
                 End If
 
                 'Util.ShowMessage("I am attempting to get the item names under 'FLEXlm License Manager'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "I am attempting to get the item names under 'FLEXlm License Manager'")
 
                 Dim aryNames As String() = rkKey.GetValueNames()
 
                 For Each strName As String In aryNames
                     If strName.Trim.ToUpper() = "MATHNGIN_LICENSE_FILE" Then
                         'Util.ShowMessage("'MATHNGIN_LICENSE_FILE' was found. I am exiting")
-                        Return
+                        Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "'MATHNGIN_LICENSE_FILE' was found.")
+
+                        Dim strVal As String = rkKey.GetValue("MATHNGIN_LICENSE_FILE", "").ToString
+                        If strVal.Contains(Util.Application.ApplicationDirectory & "AnimatLab2.lic") Then
+                            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Application Direcotry was found. exiting.")
+                            Return
+                        End If
+
                     End If
                 Next
 
                 'We may have gotten here by only opening the system to read, now lets try and open it for writing
                 Try
                     'Util.ShowMessage("I am about to open the 'FLEXlm License Manager' registry subkey for write access!")
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "I am about to open the 'FLEXlm License Manager' registry subkey for write access!")
 
                     rkKey = rkSoftware.OpenSubKey("FLEXlm License Manager", True)
                 Catch ex As System.Exception
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Error opening 'FLEXlm' for write access: " & ex.Message)
                     'If we get an error here then assume that we can not open the registry for writing and jump out.
                     Return
                 End Try
 
                 'Util.ShowMessage("I am about to write the 'MATHNGIN_LICENSE_FILE' item")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "I am about to write the 'MATHNGIN_LICENSE_FILE' item")
 
                 'If we get here then the license file registry entry does not exist so lets add it.
-                Dim strDir As String = Util.Application.ApplicationDirectory
-                strDir = strDir.Substring(0, strDir.Length - 1)
+                Dim strDir As String = Util.Application.ApplicationDirectory & "AnimatLab2.lic"
+                'strDir = strDir.Substring(0, strDir.Length - 1)
                 rkKey.SetValue("MATHNGIN_LICENSE_FILE", strDir)
 
                 'Util.ShowMessage("I am finished messing with the registry")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "I am finished messing with the registry")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3433,10 +3449,10 @@ Namespace Forms
                 Me.AppIsBusy = True
 
                 m_aryDeleteAfterLoad.Clear()
-                Dim fltVersion As Single = oXml.GetChildFloat("Version", 1)
+                Dim iVersion As Integer = oXml.GetChildInt("Version", 1)
 
-                If fltVersion < Me.AppVersion Then
-                    Throw New OldProjectVersion("You cannot open project files from previous versions of the application.", fltVersion)
+                If iVersion < Me.XmlVersion Then
+                    Throw New OldProjectVersion("You cannot open project files from previous versions of the application.", iVersion)
                 End If
 
                 m_strProjectName = oXml.GetChildString("ProjectName")
@@ -3596,7 +3612,7 @@ Namespace Forms
                 oXml.AddChildElement("ProjectName", m_strProjectName)
                 oXml.AddChildElement("SimulationFile", Me.SimulationFile)
                 oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
-                oXml.AddChildElement("Version", Me.AppVersion)
+                oXml.AddChildElement("Version", Me.XmlVersion)
 
                 m_doSimulation.SaveData(oXml)
 
@@ -5316,7 +5332,7 @@ Namespace Forms
             m_doSimulation.NotifySimTimeStepChanged()
         End Sub
 
-        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal fltOldVersion As Single)
+        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal iOldVersion As Integer)
 
         Public Overridable Sub SignalBeforeAddNode(ByVal doNode As DataObjects.Behavior.Node)
             RaiseEvent BeforeAddNode(doNode)
@@ -6512,22 +6528,25 @@ Namespace Forms
 
 #Region "File Conversion Event Handlers"
 
-        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal fltOldVersion As Single) Handles Me.ConvertFileVersion
+        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer) Handles Me.ConvertFileVersion
             Try
                 Me.AppIsBusy = True
 
-                Dim fltVersion As Single = fltOldVersion
-                Dim fltCurrentVersion As Single = Me.AppVersion
+                Dim iVersion As Integer = iOldVersion
+                Dim iCurrentVersion As Integer = Me.XmlVersion
 
                 'Keep running the file converter until we convert all the way up to the latest version.
-                While fltVersion < fltCurrentVersion
-                    fltVersion = ConvertProjectVersion(strProjectFile, fltVersion)
+                While iVersion < iCurrentVersion
+                    iVersion = ConvertProjectVersion(strProjectFile, iVersion)
                 End While
 
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     Me.LoadProject(strProjectFile)
-                    HideAllContentWidows()
-                    'Me.SaveProject(Me.ProjectFile)
+
+                    If iOldVersion = 1 Then
+                        HideAllContentWidows()
+                    End If
+
                 End If
 
             Catch ex As System.Exception
@@ -6537,14 +6556,14 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal fltVersion As Single) As Single
+        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer) As Integer
 
             'Find a converter that will convert this file type to a newer version.
-            If Not m_aryProjectMigrations.ContainsKey(fltVersion) Then
-                Throw New System.Exception("No file converter was found that can convert a project version '" & fltVersion & "'")
+            If Not m_aryProjectMigrations.ContainsKey(iVersion) Then
+                Throw New System.Exception("No file converter was found that can convert a project version '" & iVersion & "'")
             End If
 
-            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(fltVersion), DataObjects.ProjectMigration)
+            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion), DataObjects.ProjectMigration)
 
             doConv.ConvertFiles(strProjectFile)
 
@@ -6580,21 +6599,21 @@ Namespace Forms
         Public Class OldProjectVersion
             Inherits System.Exception
 
-            Protected m_fltOldVersion As Single
+            Protected m_iOldVersion As Integer
 
-            Public Property OldVersion() As Single
+            Public Property OldVersion() As Integer
                 Get
-                    Return m_fltOldVersion
+                    Return m_iOldVersion
                 End Get
-                Set(ByVal Value As Single)
-                    m_fltOldVersion = Value
+                Set(ByVal Value As Integer)
+                    m_iOldVersion = Value
                 End Set
             End Property
 
-            Public Sub New(ByVal strMessage As String, ByVal fltOldVersion As Single)
+            Public Sub New(ByVal strMessage As String, ByVal iOldVersion As Integer)
                 MyBase.New(strMessage)
 
-                m_fltOldVersion = fltOldVersion
+                m_iOldVersion = iOldVersion
             End Sub
 
         End Class

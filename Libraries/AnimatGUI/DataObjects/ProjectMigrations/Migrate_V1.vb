@@ -12,7 +12,7 @@ Imports AnimatGUI.Framework
 Namespace DataObjects
     Namespace ProjectMigrations
 
-        Public Class Migrate_V1toV2
+        Public Class Migrate_V1
             Inherits ProjectMigration
 
             Protected m_bSimHydro As Boolean = False
@@ -32,15 +32,15 @@ Namespace DataObjects
 
             Protected m_arySubsystemIDs As New ArrayList
 
-            Public Overrides ReadOnly Property ConvertFrom As Single
+            Public Overrides ReadOnly Property ConvertFrom As Integer
                 Get
-                    Return 1.0
+                    Return 1
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As Single
+            Public Overrides ReadOnly Property ConvertTo As Integer
                 Get
-                    Return 2.0
+                    Return 3
                 End Get
             End Property
 
@@ -114,7 +114,7 @@ Namespace DataObjects
                 End If
 
                 m_xnProjectXml.RemoveNode(xnProject, "Version", False)
-                m_xnProjectXml.AddNodeValue(xnProject, "Version", "2.0")
+                m_xnProjectXml.AddNodeValue(xnProject, "Version", ConvertTo().ToString)
 
                 CreateSimulationNode(xnProject)
 

@@ -30,7 +30,7 @@ namespace VortexAnimatSim
 		virtual ExternalStimulus *CreateExternalStimulus(string strType, BOOL bThrowError = TRUE);
 		virtual HudItem *CreateHudItem(string strType, BOOL bThrowError = TRUE);
 		virtual Hud *CreateHud(string strType, BOOL bThrowError = TRUE);
-		virtual MaterialPair *CreateMaterialItem(string strType, BOOL bThrowError = TRUE);
+		virtual MaterialType *CreateMaterialItem(string strType, BOOL bThrowError = TRUE);
 		virtual SimulationWindow *CreateWindowItem(string strType, BOOL bThrowError = TRUE);
 		virtual Light *CreateLight(string strType, BOOL bThrowError = TRUE);
 		virtual NeuralModule *CreateNeuralModule(string strType, BOOL bThrowError = TRUE);

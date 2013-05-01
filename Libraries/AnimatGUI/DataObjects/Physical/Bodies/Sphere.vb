@@ -18,8 +18,8 @@ Namespace DataObjects.Physical.Bodies
 
         Protected m_snRadius As AnimatGUI.Framework.ScaledNumber
 
-        Protected m_iLatitudeSegments As Integer = 50
-        Protected m_iLongtitudeSegments As Integer = 50
+        Protected m_iLatitudeSegments As Integer = 20
+        Protected m_iLongtitudeSegments As Integer = 20
 
 #End Region
 

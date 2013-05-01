@@ -134,6 +134,7 @@
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\CylinderUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\EllipsoidUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\FluidPlaneUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\FrictionUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\MeshUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\PlaneUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />

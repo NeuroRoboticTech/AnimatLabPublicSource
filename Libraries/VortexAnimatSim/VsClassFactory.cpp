@@ -45,7 +45,7 @@
 #include "VsStructure.h"
 #include "VsSimulator.h"
 
-#include "VsMaterialPair.h"
+#include "VsMaterialType.h"
 
 //#include "VsVideoKeyFrame.h"
 //#include "VsSnapshotKeyFrame.h"
@@ -645,16 +645,16 @@ catch(...)
 // 
 // ************* Material Type Conversion functions ******************************
 
-MaterialPair *VsClassFactory::CreateMaterialItem(string strType, BOOL bThrowError)
+MaterialType *VsClassFactory::CreateMaterialItem(string strType, BOOL bThrowError)
 {
-	MaterialPair *lpItem=NULL;
+	MaterialType *lpItem=NULL;
 
 try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC" || strType == "DEFAULT")
-		lpItem = new VsMaterialPair;
+		lpItem = new VsMaterialType;
 	else
 	{
 		lpItem = NULL;

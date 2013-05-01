@@ -391,6 +391,27 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
+        Public Overridable Property MaterialTypeName() As String
+            Get
+                If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
+                    Return m_thMaterialType.MaterialType.Name
+                Else
+                    Return ""
+                End If
+            End Get
+            Set(ByVal Value As String)
+                For Each deEntry As DictionaryEntry In Util.Simulation.Environment.MaterialTypes
+                    Dim doMatType As DataObjects.Physical.MaterialType = DirectCast(deEntry.Value, DataObjects.Physical.MaterialType)
+                    If doMatType.Name = Value Then
+                        Dim thType As New AnimatGUI.TypeHelpers.LinkedMaterialType(Me, doMatType)
+                        Me.MaterialType = thType
+                        Return
+                    End If
+                Next
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overrides ReadOnly Property TotalSubChildren() As Integer
             Get
                 Dim iBodies As Integer = Me.ChildBodies.Count
@@ -478,7 +499,12 @@ Namespace DataObjects.Physical
             m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
             m_svDrag.CopyData(1, 1, 1, True)
 
-            m_thMaterialType = New AnimatGUI.TypeHelpers.LinkedMaterialType(Me)
+            If Not Util.Simulation Is Nothing AndAlso Not Util.Simulation.Environment Is Nothing AndAlso Not Util.Simulation.Environment.MaterialTypes Is Nothing AndAlso _
+                Util.Simulation.Environment.MaterialTypes.ContainsKey("DEFAULTMATERIAL") Then
+                m_thMaterialType = New AnimatGUI.TypeHelpers.LinkedMaterialType(Me, Util.Simulation.Environment.MaterialTypes.Item("DEFAULTMATERIAL"))
+            Else
+                m_thMaterialType = New AnimatGUI.TypeHelpers.LinkedMaterialType(Me)
+            End If
 
             AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
             AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged

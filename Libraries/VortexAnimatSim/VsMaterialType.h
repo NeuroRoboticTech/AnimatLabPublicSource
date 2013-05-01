@@ -1,4 +1,4 @@
-// VsMaterialPair.h: interface for the VsMaterialPair class.
+// VsMaterialType.h: interface for the VsMaterialType class.
 //
 //////////////////////////////////////////////////////////////////////
 #pragma once
@@ -8,19 +8,20 @@ namespace VortexAnimatSim
 	namespace Environment
 	{
 
-		class VORTEX_PORT VsMaterialPair : public AnimatSim::Environment::MaterialPair
+		class VORTEX_PORT VsMaterialType : public AnimatSim::Environment::MaterialType
 		{
 		protected:
 			VxMaterialTable *m_vxMaterialTable;
+            VxMaterial *m_vxMaterial;
 
 			virtual void SetMaterialProperties();
+			virtual void RegisterMaterialType();
 
 		public:
-			VsMaterialPair();
-			virtual ~VsMaterialPair();
+			VsMaterialType();
+			virtual ~VsMaterialType();
 
 			virtual int GetMaterialID(string strName);
-			virtual void RegisterMaterialType(string strID);
 			virtual void Initialize();
 		};
 

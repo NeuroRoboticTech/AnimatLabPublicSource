@@ -90,9 +90,6 @@
     <ClCompile Include="VsLinearHillStretchReceptor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsMaterialPair.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsMotorizedJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -207,6 +204,9 @@
     <ClCompile Include="OsgLinearPath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsMaterialType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h">
@@ -279,9 +279,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsLinearHillStretchReceptor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsMaterialPair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsMotorizedJoint.h">
@@ -396,6 +393,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OsgLinearPath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsMaterialType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

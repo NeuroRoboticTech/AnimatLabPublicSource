@@ -28,14 +28,15 @@ Namespace DataObjects
         Protected m_aryABEF_Files() As String
         Protected m_aryAFNN_Files() As String
         Protected m_aryARNN_Files() As String
+        Protected m_aryAFORM_Files() As String
 
         Protected m_xnProjectXml As New Framework.XmlDom
 
         Protected m_hashRigidBodies As New Hashtable
         Protected m_hashJoints As New Hashtable
 
-        Public MustOverride ReadOnly Property ConvertFrom() As Single
-        Public MustOverride ReadOnly Property ConvertTo() As Single
+        Public MustOverride ReadOnly Property ConvertFrom() As Integer
+        Public MustOverride ReadOnly Property ConvertTo() As Integer
 
         Sub New()
 
@@ -88,26 +89,10 @@ Namespace DataObjects
             m_aryABEF_Files = Directory.GetFiles(m_strProjectPath, "*.abef")
             m_aryAFNN_Files = Directory.GetFiles(m_strProjectPath, "*.afnn")
             m_aryARNN_Files = Directory.GetFiles(m_strProjectPath, "*.arnn")
-
-            'If Not Directory.Exists(m_strProjectPath & "\Backup") Then
-            '    Directory.CreateDirectory(m_strProjectPath & "\Backup")
-            'End If
+            m_aryAFORM_Files = Directory.GetFiles(m_strProjectPath, "*.aform")
 
             'Copy all files in the current directory to the new one.
             Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup", False)
-
-            'CopyFiles(m_aryAPROJ_Files)
-            'CopyFiles(m_aryASTL_Files)
-            'CopyFiles(m_aryABPE_Files)
-            'CopyFiles(m_aryABSYS_Files)
-            'CopyFiles(m_aryASIM_Files)
-            'CopyFiles(m_aryOBJ_Files)
-            'CopyFiles(m_aryMTL_Files)
-            'CopyFiles(m_aryASE_Files)
-            'CopyFiles(m_aryATVF_Files)
-            'CopyFiles(m_aryABEF_Files)
-            'CopyFiles(m_aryAFNN_Files)
-            'CopyFiles(m_aryARNN_Files)
 
         End Sub
 
@@ -158,17 +143,6 @@ Namespace DataObjects
             ConvertProjectNode(xnProjectNode)
 
             m_xnProjectXml.Save(strProjFile)
-
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\Test_CylinderTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MuscleTest\Test_MuscleTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\SphereTest\Test_SphereTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\NeuralTest\Test_NeuralTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeTest\Test_ConeTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeNN\Test_ConeNN.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\HingeTest\Test_HingeTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MeshTest\Test_MeshTest.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\PrismaticTest\Test_PrismaticTest.aproj")
-            'm_xnProjectXml.Save(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
         End Sub
 
         Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode)

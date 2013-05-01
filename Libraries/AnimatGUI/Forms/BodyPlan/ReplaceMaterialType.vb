@@ -176,6 +176,16 @@ Namespace Forms.BodyPlan
 
 #End Region
 
+#Region "Automation"
+
+        Public Sub Automation_SelectMaterialType(ByVal strName As String)
+            Dim doItem As Framework.DataObject = Util.FindComboItemByName(strName, cboMaterialTypes.Items)
+
+            cboMaterialTypes.SelectedItem = doItem
+        End Sub
+
+#End Region
+
     End Class
 
 End Namespace

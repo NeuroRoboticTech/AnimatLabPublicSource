@@ -48,8 +48,8 @@ namespace AnimatSim
 Sphere::Sphere()
 {
 	m_fltRadius = 1;
-	m_iLatitudeSegments = 50;
-	m_iLongtitudeSegments = 50;
+	m_iLatitudeSegments = 20;
+	m_iLongtitudeSegments = 20;
 }
 
 /**

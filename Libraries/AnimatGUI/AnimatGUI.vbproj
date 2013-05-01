@@ -211,7 +211,6 @@
     <Compile Include="Collections\Links.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Collections\MaterialPairs.vb" />
     <Compile Include="Collections\MaterialTypes.vb" />
     <Compile Include="Collections\MetaDocuments.vb">
       <SubType>Code</SubType>
@@ -453,7 +452,6 @@
     <Compile Include="DataObjects\Physical\Light.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Physical\MaterialPair.vb" />
     <Compile Include="DataObjects\Physical\MaterialType.vb" />
     <Compile Include="DataObjects\Physical\MovableItem.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
@@ -479,7 +477,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\ProjectMigration.vb" />
-    <Compile Include="DataObjects\ProjectMigrations\Migrate_V1ToV2.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_V1.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_V2.vb" />
     <Compile Include="DataObjects\Simulation.vb">
       <SubType>Code</SubType>
     </Compile>

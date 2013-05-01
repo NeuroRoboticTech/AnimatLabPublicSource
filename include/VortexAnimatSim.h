@@ -149,7 +149,7 @@ namespace VortexAnimatSim
 		class VsJoint;
 		class VsMotorizedJoint;
 		class VsLine;
-		class VsMaterialPair;
+		class VsMaterialType;
 		class VsOrganism;
 		class VsRigidBody;
 		class VsStructure;
@@ -277,7 +277,7 @@ using namespace Vx;
 #include "VsStructure.h"
 #include "VsSimulator.h"
 
-#include "VsMaterialPair.h"
+#include "VsMaterialType.h"
 //
 //#include "VsVideoKeyFrame.h"
 //#include "VsSnapshotKeyFrame.h"

@@ -1412,26 +1412,26 @@ Namespace Framework
 
         'End Sub
 
-        '''<summary>
-        '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
-        '''</summary>
-        Protected Overridable Sub CheckForErrorDialog(ByVal strEndError As String, Optional ByVal iSleep As Integer = 500)
-            Debug.WriteLine("CheckForErrorDialog. EndError: " & strEndError)
+        ' '''<summary>
+        ' '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
+        ' '''</summary>
+        'Protected Overridable Sub CheckForErrorDialog(ByVal strEndError As String, Optional ByVal iSleep As Integer = 500)
+        '    Debug.WriteLine("CheckForErrorDialog. EndError: " & strEndError)
 
-            Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
-            Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
-            Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
+        '    Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
+        '    Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
+        '    Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
 
-            Threading.Thread.Sleep(iSleep)
+        '    Threading.Thread.Sleep(iSleep)
 
-            'Assert that the error box showed up with the correct ending text.
-            AssertErrorDialog(strEndError)
+        '    'Assert that the error box showed up with the correct ending text.
+        '    AssertErrorDialog(strEndError)
 
-            'Close the error box and new project window.
-            Me.UIMap.CloseNewProjectErrorWindow()
+        '    'Close the error box and new project window.
+        '    Me.UIMap.CloseNewProjectErrorWindow()
 
-            Threading.Thread.Sleep(2 * iSleep)
-        End Sub
+        '    Threading.Thread.Sleep(2 * iSleep)
+        'End Sub
 
         '''<summary>
         '''AssertNewProjectAlreadyExists - Use 'AssertNewProjectAlreadyExistsExpectedValues' to pass parameters into this method.

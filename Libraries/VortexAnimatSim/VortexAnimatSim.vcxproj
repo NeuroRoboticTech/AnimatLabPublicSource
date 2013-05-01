@@ -207,7 +207,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsLine.cpp" />
     <ClCompile Include="VsLinearHillMuscle.cpp" />
     <ClCompile Include="VsLinearHillStretchReceptor.cpp" />
-    <ClCompile Include="VsMaterialPair.cpp" />
+    <ClCompile Include="VsMaterialType.cpp" />
     <ClCompile Include="VsMesh.cpp" />
     <ClCompile Include="VsMeshBase.cpp" />
     <ClCompile Include="VsMeshMgr.cpp" />
@@ -272,7 +272,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsLine.h" />
     <ClInclude Include="VsLinearHillMuscle.h" />
     <ClInclude Include="VsLinearHillStretchReceptor.h" />
-    <ClInclude Include="VsMaterialPair.h" />
+    <ClInclude Include="VsMaterialType.h" />
     <ClInclude Include="VsMesh.h" />
     <ClInclude Include="VsMeshBase.h" />
     <ClInclude Include="VsMeshMgr.h" />

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "VsMeshMgr.h"
-#include "VsMaterialPair.h"
+#include "VsMaterialType.h"
 #include "VsHud.h"
 #include "VsIntersectionEvent.h"
 #include "VsMouseSpring.h"
