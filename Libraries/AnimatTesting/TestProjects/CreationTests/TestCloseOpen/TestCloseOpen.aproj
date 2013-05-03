@@ -2,7 +2,7 @@
 <ProjectName>TestCloseOpen</ProjectName>
 <SimulationFile>TestCloseOpen.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
-<Version>2</Version>
+<Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\CreationTests\TestCloseOpen\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>
@@ -40,30 +40,32 @@
 <ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>
 <ID>DEFAULTMATERIAL</ID>
 <Name>Default</Name>
-</MaterialType>
-</MaterialTypes>
-<MaterialPairs>
-<MaterialPair>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.MaterialPair</ClassName>
-<ID>9bdd69b8-4571-4e8c-b3d3-ef46d5778bf6</ID>
-<Name>Default-Default</Name>
-<Material1ID>DEFAULTMATERIAL</Material1ID>
-<Material2ID>DEFAULTMATERIAL</Material2ID>
-<FrictionPrimaryCoefficient Value="1" Scale="None" Actual="1"/>
-<SecondaryFrictionCoefficient Value="0.2" Scale="None" Actual="0.2"/>
-<PrimaryMaximumFriction Value="10" Scale="None" Actual="10"/>
-<SecondaryMaximumFriction Value="10" Scale="None" Actual="10"/>
+<FrictionLinearPrimary Value="1" Scale="None" Actual="1"/>
+<FrictionLinearSecondary Value="0.2" Scale="None" Actual="0.2"/>
+<FrictionAngularNormal Value="0" Scale="None" Actual="0"/>
+<FrictionAngularPrimary Value="0" Scale="None" Actual="0"/>
+<FrictionAngularSecondary Value="0" Scale="None" Actual="0"/>
+<FrictionLinearPrimaryMax Value="10" Scale="None" Actual="10"/>
+<FrictionLinearSecondaryMax Value="10" Scale="None" Actual="10"/>
+<FrictionAngularNormalMax Value="5" Scale="None" Actual="5"/>
+<FrictionAngularPrimaryMax Value="5" Scale="None" Actual="5"/>
+<FrictionAngularSecondaryMax Value="5" Scale="None" Actual="5"/>
 <Compliance Value="1" Scale="nano" Actual="1e-009"/>
 <Damping Value="50" Scale="Giga" Actual="5e+010"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<PrimarySlip Value="0.2" Scale="None" Actual="0.2"/>
-<SecondarySlip Value="0.2" Scale="None" Actual="0.2"/>
-<PrimarySlide Value="0" Scale="None" Actual="0"/>
-<SecondarySlide Value="0" Scale="None" Actual="0"/>
+<SlipLinearPrimary Value="0.2" Scale="None" Actual="0.2"/>
+<SlipLinearSecondary Value="0.2" Scale="None" Actual="0.2"/>
+<SlipAngularNormal Value="0" Scale="None" Actual="0"/>
+<SlipAngularPrimary Value="0" Scale="None" Actual="0"/>
+<SlipAngularSecondary Value="0" Scale="None" Actual="0"/>
+<SlideLinearPrimary Value="0" Scale="None" Actual="0"/>
+<SlideLinearSecondary Value="0" Scale="None" Actual="0"/>
+<SlideAngularNormal Value="0" Scale="None" Actual="0"/>
+<SlideAngularPrimary Value="0" Scale="None" Actual="0"/>
+<SlideAngularSecondary Value="0" Scale="None" Actual="0"/>
 <MaximumAdhesion Value="0" Scale="None" Actual="0"/>
-</MaterialPair>
-</MaterialPairs>
+</MaterialType>
+</MaterialTypes>
 <Organisms/>
 <Structures>
 <Structure>
@@ -518,8 +520,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>6dfd9322-92b3-47c7-84af-1088efac618a</Name>
-<ID>6dfd9322-92b3-47c7-84af-1088efac618a</ID>
+<Name>4eba1a37-afd7-4782-9bc5-1a9d4a90b49e</Name>
+<ID>4eba1a37-afd7-4782-9bc5-1a9d4a90b49e</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -613,7 +615,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/06/2013 08:24:59"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/03/2013 05:39:43"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

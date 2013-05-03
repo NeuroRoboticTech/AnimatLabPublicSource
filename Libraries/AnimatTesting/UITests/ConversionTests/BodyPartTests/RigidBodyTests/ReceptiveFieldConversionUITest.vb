@@ -209,8 +209,8 @@ Namespace UITests
                         aryMaxErrors.Add("1", 0.1)
                         aryMaxErrors.Add("2", 0.1)
                         aryMaxErrors.Add("RootY", 0.1)
-                        aryMaxErrors.Add("1Ia", 0.00000001)
-                        aryMaxErrors.Add("2Ia", 0.00000001)
+                        aryMaxErrors.Add("1Ia", 0.00000002)
+                        aryMaxErrors.Add("2Ia", 0.00000002)
                         aryMaxErrors.Add("default", 0.1)
 
                         m_strProjectName = "ReceptiveFields_Kg_M"
