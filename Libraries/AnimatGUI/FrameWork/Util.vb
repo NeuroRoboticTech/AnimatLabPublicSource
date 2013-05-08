@@ -1188,6 +1188,10 @@ Namespace Framework
 
                     Util.Application.DefaultNewFolder = xmlConfig.GetChildString("DefaultNewFolder", "")
 
+                    If Util.Application.DefaultNewFolder.Trim.Length = 0 Then
+                        Util.Application.DefaultNewFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) & "\AnimatLab"
+                    End If
+
                     Dim strAutoupdate As String = xmlConfig.GetChildString("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
                     Util.Application.AutoUpdateInterval = DirectCast([Enum].Parse(GetType(Forms.AnimatApplication.enumAutoUpdateInterval), strAutoupdate, True), Forms.AnimatApplication.enumAutoUpdateInterval)
 
