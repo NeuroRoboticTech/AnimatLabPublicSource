@@ -68,6 +68,8 @@ namespace AnimatSim
 		class IMotorizedJoint;
 		class BodyPart;
 		class ConstraintLimit;
+        class ConstratinRelaxation;
+        class ConstratinFriction;
 		class RigidBody;
 		class Joint;
 		class MotorizedJoint;
@@ -182,6 +184,8 @@ using namespace AnimatSim::Recording;
 #include "PropertyControlAdapter.h"
 #include "ContactAdapter.h"
 #include "ConstraintLimit.h"
+#include "ConstraintRelaxation.h"
+#include "ConstraintFriction.h"
 #include "Joint.h"
 #include "MotorizedJoint.h"
 #include "BallSocket.h"

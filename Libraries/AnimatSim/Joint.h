@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include "ConstraintFriction.h"
+#include "ConstraintRelaxation.h"
+
 namespace AnimatSim
 {
 	namespace Environment
@@ -57,6 +60,27 @@ namespace AnimatSim
 			///Scales the size of the graphics for this joint.
 			float m_fltSize;
 
+            ///The relaxation for the primary displacement relaxation
+            ConstraintRelaxation *m_lpPrimaryAxisDisplacement;
+
+            ///The relaxation for the secondary displacement relaxation
+            ConstraintRelaxation *m_lpSecondaryAxisDisplacement;
+
+            ///The relaxation for the third displacement relaxation
+            ConstraintRelaxation *m_lpThirdAxisDisplacement;
+
+            ///The relaxation for the secondary rotation relaxation
+            ConstraintRelaxation *m_lpSecondaryAxisRotation;
+
+            ///The relaxation for the third rotation relaxation
+            ConstraintRelaxation *m_lpThirdAxisRotation;
+
+            ///The friction for this joint
+            ConstraintFriction *m_lpFriction;
+
+            ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, string strName);
+            ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
+
 		public:
 			Joint();
 			virtual ~Joint();
@@ -68,6 +92,30 @@ namespace AnimatSim
 
 			virtual BOOL EnableLimits();
 			virtual void EnableLimits(BOOL bVal);
+
+            virtual ConstraintRelaxation *PrimaryAxisDisplacement();
+            virtual void PrimaryAxisDisplacement(ConstraintRelaxation *lpRelax);
+			virtual void PrimaryAxisDisplacement(string strXml);
+
+            virtual ConstraintRelaxation *SecondaryAxisDisplacement();
+            virtual void SecondaryAxisDisplacement(ConstraintRelaxation *lpRelax);
+			virtual void SecondaryAxisDisplacement(string strXml);
+
+            virtual ConstraintRelaxation *ThirdAxisDisplacement();
+            virtual void ThirdAxisDisplacement(ConstraintRelaxation *lpRelax);
+			virtual void ThirdAxisDisplacement(string strXml);
+
+            virtual ConstraintRelaxation *SecondaryAxisRotation();
+            virtual void SecondaryAxisRotation(ConstraintRelaxation *lpRelax);
+			virtual void SecondaryAxisRotation(string strXml);
+
+            virtual ConstraintRelaxation *ThirdAxisRotation();
+            virtual void ThirdAxisRotation(ConstraintRelaxation *lpRelax);
+			virtual void ThirdAxisRotation(string strXml);
+
+            virtual ConstraintFriction *Friction();
+            virtual void Friction(ConstraintFriction *lpFriction);
+			virtual void Friction(string strXml);
 
 			virtual float GetPositionWithinLimits(float fltPos);
 			virtual float GetLimitRange();
@@ -86,6 +134,7 @@ namespace AnimatSim
 
 			virtual void CreateJoint();
 			virtual void UpdatePhysicsPosFromGraphics();
+            virtual void Initialize();
 
 			virtual float *GetDataPointer(const string &strDataType);
 			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);

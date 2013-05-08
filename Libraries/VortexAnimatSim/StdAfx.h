@@ -165,7 +165,9 @@ namespace VortexAnimatSim
 		class VsJoint;
 		class VsMotorizedJoint;
 		class VsLine;
-		class VsMaterialPair;
+		class VsMaterialType;
+        class VsConstraintRelaxation;
+        class VsConstraintFriction;
 		class VsOrganism;
 		class VsRigidBody;
 		class VsStructure;

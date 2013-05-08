@@ -61,6 +61,11 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "WorldPositionX"
 
+            m_doPrimaryAxisDisplacementRelaxation = New ConstraintRelaxation(Me, "PrimaryAxisDisplacement", ConstraintRelaxation.enumCoordinateID.PrimaryAxisDisplacemnt)
+            m_doSecondaryAxisDisplacement = New ConstraintRelaxation(Me, "SecondaryAxisDisplacement", ConstraintRelaxation.enumCoordinateID.SecondaryAxisDisplacement)
+            m_doThirdAxisDisplacement = New ConstraintRelaxation(Me, "ThirdAxisDisplacement", ConstraintRelaxation.enumCoordinateID.ThirdAxisDisplacement)
+            m_doSecondaryAxisRotation = New ConstraintRelaxation(Me, "SecondaryAxisRotation", ConstraintRelaxation.enumCoordinateID.SecondaryAxisRotation)
+
         End Sub
 
         Public Overrides Sub SetDefaultSizes()

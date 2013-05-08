@@ -19,6 +19,14 @@ Namespace DataObjects.Physical
         Protected m_snSize As AnimatGUI.Framework.ScaledNumber
         Protected m_bEnableLimts As Boolean = True
 
+        Protected m_doPrimaryAxisDisplacementRelaxation As ConstraintRelaxation
+        Protected m_doSecondaryAxisDisplacement As ConstraintRelaxation
+        Protected m_doThirdAxisDisplacement As ConstraintRelaxation
+        Protected m_doSecondaryAxisRotation As ConstraintRelaxation
+        Protected m_doThirdAxisRotation As ConstraintRelaxation
+
+        Protected m_doFriction As ConstraintFriction
+
 #End Region
 
 #Region " Properties "
@@ -93,6 +101,78 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable Property PrimaryAxisDisplacementRelaxation() As ConstraintRelaxation
+            Get
+                Return m_doPrimaryAxisDisplacementRelaxation
+            End Get
+            Set(ByVal value As ConstraintRelaxation)
+                If Not value Is Nothing Then
+                    SetSimData("PrimaryAxisDisplacementRelaxation", value.GetSimulationXml("ConstraintRelaxation", Me), True)
+                End If
+                m_doPrimaryAxisDisplacementRelaxation = value
+            End Set
+        End Property
+
+        Public Overridable Property SecondaryAxisDisplacementRelaxation() As ConstraintRelaxation
+            Get
+                Return m_doSecondaryAxisDisplacement
+            End Get
+            Set(ByVal value As ConstraintRelaxation)
+                If Not value Is Nothing Then
+                    SetSimData("SecondaryAxisDisplacement", value.GetSimulationXml("ConstraintRelaxation", Me), True)
+                End If
+                m_doSecondaryAxisDisplacement = value
+            End Set
+        End Property
+
+        Public Overridable Property ThirdAxisDisplacementRelaxation() As ConstraintRelaxation
+            Get
+                Return m_doThirdAxisDisplacement
+            End Get
+            Set(ByVal value As ConstraintRelaxation)
+                If Not value Is Nothing Then
+                    SetSimData("ThirdAxisDisplacement", value.GetSimulationXml("ConstraintRelaxation", Me), True)
+                End If
+                m_doThirdAxisDisplacement = value
+            End Set
+        End Property
+
+        Public Overridable Property SecondaryAxisRotationRelaxation() As ConstraintRelaxation
+            Get
+                Return m_doSecondaryAxisRotation
+            End Get
+            Set(ByVal value As ConstraintRelaxation)
+                If Not value Is Nothing Then
+                    SetSimData("SecondaryAxisRotation", value.GetSimulationXml("ConstraintRelaxation", Me), True)
+                End If
+                m_doSecondaryAxisRotation = value
+            End Set
+        End Property
+
+        Public Overridable Property ThirdAxisRotationRelaxation() As ConstraintRelaxation
+            Get
+                Return m_doThirdAxisRotation
+            End Get
+            Set(ByVal value As ConstraintRelaxation)
+                If Not value Is Nothing Then
+                    SetSimData("ThirdAxisRotation", value.GetSimulationXml("ConstraintRelaxation", Me), True)
+                End If
+                m_doThirdAxisRotation = value
+            End Set
+        End Property
+
+        Public Overridable Property Friction() As ConstraintFriction
+            Get
+                Return m_doFriction
+            End Get
+            Set(ByVal value As ConstraintFriction)
+                If Not value Is Nothing Then
+                    SetSimData("Friction", value.GetSimulationXml("Friction", Me), True)
+                End If
+                m_doFriction = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -124,6 +204,13 @@ Namespace DataObjects.Physical
             MyBase.ClearIsDirty()
 
             If Not m_snSize Is Nothing Then m_snSize.ClearIsDirty()
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then m_doPrimaryAxisDisplacementRelaxation.ClearIsDirty()
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then m_doSecondaryAxisDisplacement.ClearIsDirty()
+            If Not m_doThirdAxisDisplacement Is Nothing Then m_doThirdAxisDisplacement.ClearIsDirty()
+            If Not m_doSecondaryAxisRotation Is Nothing Then m_doSecondaryAxisRotation.ClearIsDirty()
+            If Not m_doThirdAxisRotation Is Nothing Then m_doThirdAxisRotation.ClearIsDirty()
+            If Not m_doFriction Is Nothing Then m_doFriction.ClearIsDirty()
+
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -133,6 +220,39 @@ Namespace DataObjects.Physical
             Dim doOrigJoint As Joint = DirectCast(doOriginal, Joint)
             m_snSize = DirectCast(doOrigJoint.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_bEnableLimts = doOrigJoint.m_bEnableLimts
+
+            If Not doOrigJoint.m_doPrimaryAxisDisplacementRelaxation Is Nothing Then
+                m_doPrimaryAxisDisplacementRelaxation = DirectCast(doOrigJoint.m_doPrimaryAxisDisplacementRelaxation.Clone(Me, bCutData, doRoot), ConstraintRelaxation)
+            Else
+                m_doPrimaryAxisDisplacementRelaxation = Nothing
+            End If
+
+            If Not doOrigJoint.m_doSecondaryAxisDisplacement Is Nothing Then
+                m_doSecondaryAxisDisplacement = DirectCast(doOrigJoint.m_doSecondaryAxisDisplacement.Clone(Me, bCutData, doRoot), ConstraintRelaxation)
+            Else
+                m_doSecondaryAxisDisplacement = Nothing
+            End If
+
+            If Not doOrigJoint.m_doThirdAxisDisplacement Is Nothing Then
+                m_doThirdAxisDisplacement = DirectCast(doOrigJoint.m_doThirdAxisDisplacement.Clone(Me, bCutData, doRoot), ConstraintRelaxation)
+            Else
+                m_doThirdAxisDisplacement = Nothing
+            End If
+
+            If Not doOrigJoint.m_doSecondaryAxisRotation Is Nothing Then
+                m_doSecondaryAxisRotation = DirectCast(doOrigJoint.m_doSecondaryAxisRotation.Clone(Me, bCutData, doRoot), ConstraintRelaxation)
+            Else
+                m_doSecondaryAxisRotation = Nothing
+            End If
+
+            If Not doOrigJoint.m_doThirdAxisRotation Is Nothing Then
+                m_doThirdAxisRotation = DirectCast(doOrigJoint.m_doThirdAxisRotation.Clone(Me, bCutData, doRoot), ConstraintRelaxation)
+            Else
+                m_doThirdAxisRotation = Nothing
+            End If
+
+            If Not m_doFriction Is Nothing Then m_doFriction = DirectCast(doOrigJoint.m_doFriction.Clone(Me, bCutData, doRoot), ConstraintFriction)
+
         End Sub
 
         Public Overrides Function CreateJointTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
@@ -235,6 +355,20 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then doObject = m_doPrimaryAxisDisplacementRelaxation.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doSecondaryAxisDisplacement Is Nothing Then doObject = m_doSecondaryAxisDisplacement.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doThirdAxisDisplacement Is Nothing Then doObject = m_doThirdAxisDisplacement.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doSecondaryAxisRotation Is Nothing Then doObject = m_doSecondaryAxisRotation.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doThirdAxisRotation Is Nothing Then doObject = m_doThirdAxisRotation.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doFriction Is Nothing Then doObject = m_doFriction.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
@@ -250,6 +384,71 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint Type", Me.Type.GetType(), "Type", _
                                         "Part Properties", "Type of joint.", Me.Type, True))
 
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then
+                pbNumberBag = m_doPrimaryAxisDisplacementRelaxation.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Displacement Axis", pbNumberBag.GetType(), "PrimaryAxisDisplacementRelaxation", _
+                                            "Relaxation Properties", "Sets the relaxation for the primary displacement axis.", pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
+
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then
+                pbNumberBag = m_doSecondaryAxisDisplacement.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Displacement Axis", pbNumberBag.GetType(), "SecondaryAxisDisplacementRelaxation", _
+                                            "Relaxation Properties", "Sets the relaxation for the secondary displacement axis.", pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
+
+            If Not m_doThirdAxisDisplacement Is Nothing Then
+                pbNumberBag = m_doThirdAxisDisplacement.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Third Displacement Axis", pbNumberBag.GetType(), "ThirdAxisDisplacementRelaxation", _
+                                            "Relaxation Properties", "Sets the relaxation for the third displacement axis.", pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
+
+            If Not m_doSecondaryAxisRotation Is Nothing Then
+                pbNumberBag = m_doSecondaryAxisRotation.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Rotation Axis", pbNumberBag.GetType(), "SecondaryAxisRotationRelaxation", _
+                                            "Relaxation Properties", "Sets the relaxation for the secondary rotation axis.", pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
+
+            If Not m_doThirdAxisRotation Is Nothing Then
+                pbNumberBag = m_doThirdAxisRotation.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Third Rotation Axis", pbNumberBag.GetType(), "ThirdAxisRotationRelaxation", _
+                                            "Relaxation Properties", "Sets the relaxation for the third rotation axis.", pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
+
+            If Not m_doFriction Is Nothing Then
+                pbNumberBag = m_doFriction.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Friction", pbNumberBag.GetType(), "Friction", _
+                                            "Part Properties", "Sets the friction parameters for this joint.", pbNumberBag, _
+                                            "", GetType(ConstraintFrictionPropBagConverter)))
+            End If
+
+
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then m_doPrimaryAxisDisplacementRelaxation.InitializeAfterLoad()
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then m_doSecondaryAxisDisplacement.InitializeAfterLoad()
+            If Not m_doThirdAxisDisplacement Is Nothing Then m_doThirdAxisDisplacement.InitializeAfterLoad()
+            If Not m_doSecondaryAxisRotation Is Nothing Then m_doSecondaryAxisRotation.InitializeAfterLoad()
+            If Not m_doThirdAxisRotation Is Nothing Then m_doThirdAxisRotation.InitializeAfterLoad()
+            If Not m_doFriction Is Nothing Then m_doFriction.InitializeAfterLoad()
+        End Sub
+
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
+
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then m_doPrimaryAxisDisplacementRelaxation.InitializeSimulationReferences(bShowError)
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then m_doSecondaryAxisDisplacement.InitializeSimulationReferences(bShowError)
+            If Not m_doThirdAxisDisplacement Is Nothing Then m_doThirdAxisDisplacement.InitializeSimulationReferences()
+            If Not m_doSecondaryAxisRotation Is Nothing Then m_doSecondaryAxisRotation.InitializeSimulationReferences(bShowError)
+            If Not m_doThirdAxisRotation Is Nothing Then m_doThirdAxisRotation.InitializeSimulationReferences(bShowError)
+            If Not m_doFriction Is Nothing Then m_doFriction.InitializeSimulationReferences(bShowError)
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -260,6 +459,25 @@ Namespace DataObjects.Physical
 
             m_snSize.LoadData(oXml, "Size")
             m_bEnableLimts = oXml.GetChildBool("EnableLimits", m_bEnableLimts)
+
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing AndAlso oXml.FindChildElement("PrimaryDisplacementRelaxation", False) Then
+                m_doPrimaryAxisDisplacementRelaxation.LoadData(oXml)
+            End If
+            If Not m_doSecondaryAxisDisplacement Is Nothing AndAlso oXml.FindChildElement("SecondaryAxisDisplacement", False) Then
+                m_doSecondaryAxisDisplacement.LoadData(oXml)
+            End If
+            If Not m_doThirdAxisDisplacement Is Nothing AndAlso oXml.FindChildElement("ThirdAxisDisplacement", False) Then
+                m_doThirdAxisDisplacement.LoadData(oXml)
+            End If
+            If Not m_doSecondaryAxisRotation Is Nothing AndAlso oXml.FindChildElement("SecondaryAxisRotation", False) Then
+                m_doSecondaryAxisRotation.LoadData(oXml)
+            End If
+            If Not m_doSecondaryAxisRotation Is Nothing AndAlso oXml.FindChildElement("ThirdAxisRotation", False) Then
+                m_doThirdAxisRotation.LoadData(oXml)
+            End If
+            If Not m_doFriction Is Nothing AndAlso oXml.FindChildElement("Friction", False) Then
+                m_doFriction.LoadData(oXml)
+            End If
 
             oXml.OutOfElem() 'Outof Joint Element
 
@@ -274,6 +492,25 @@ Namespace DataObjects.Physical
             m_snSize.SaveData(oXml, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then
+                m_doPrimaryAxisDisplacementRelaxation.SaveData(oXml)
+            End If
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then
+                m_doSecondaryAxisDisplacement.SaveData(oXml)
+            End If
+            If Not m_doThirdAxisDisplacement Is Nothing Then
+                m_doThirdAxisDisplacement.SaveData(oXml)
+            End If
+            If Not m_doSecondaryAxisRotation Is Nothing Then
+                m_doSecondaryAxisRotation.SaveData(oXml)
+            End If
+            If Not m_doThirdAxisRotation Is Nothing Then
+                m_doThirdAxisRotation.SaveData(oXml)
+            End If
+            If Not m_doFriction Is Nothing Then
+                m_doFriction.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof Joint Element
 
         End Sub
@@ -285,6 +522,25 @@ Namespace DataObjects.Physical
 
             m_snSize.SaveSimulationXml(oXml, Me, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
+
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then
+                m_doPrimaryAxisDisplacementRelaxation.SaveSimulationXml(oXml, Me)
+            End If
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then
+                m_doSecondaryAxisDisplacement.SaveSimulationXml(oXml, Me)
+            End If
+            If Not m_doThirdAxisDisplacement Is Nothing Then
+                m_doThirdAxisDisplacement.SaveSimulationXml(oXml, Me)
+            End If
+            If Not m_doSecondaryAxisRotation Is Nothing Then
+                m_doSecondaryAxisRotation.SaveSimulationXml(oXml, Me)
+            End If
+            If Not m_doThirdAxisRotation Is Nothing Then
+                m_doThirdAxisRotation.SaveSimulationXml(oXml, Me)
+            End If
+            If Not m_doFriction Is Nothing Then
+                m_doFriction.SaveSimulationXml(oXml, Me)
+            End If
 
             oXml.OutOfElem() 'Outof Joint Element
 

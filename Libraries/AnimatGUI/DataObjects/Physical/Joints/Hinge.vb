@@ -170,6 +170,13 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "JointRotation"
 
+            m_doPrimaryAxisDisplacementRelaxation = New ConstraintRelaxation(Me, "PrimaryAxisDisplacement", ConstraintRelaxation.enumCoordinateID.PrimaryAxisDisplacemnt)
+            m_doSecondaryAxisDisplacement = New ConstraintRelaxation(Me, "SecondaryAxisDisplacement", ConstraintRelaxation.enumCoordinateID.SecondaryAxisDisplacement)
+            m_doThirdAxisDisplacement = New ConstraintRelaxation(Me, "ThirdAxisDisplacement", ConstraintRelaxation.enumCoordinateID.ThirdAxisDisplacement)
+            m_doSecondaryAxisRotation = New ConstraintRelaxation(Me, "SecondaryAxisRotation", ConstraintRelaxation.enumCoordinateID.SecondaryAxisRotation)
+            m_doThirdAxisRotation = New ConstraintRelaxation(Me, "ThirdAxisRotation", ConstraintRelaxation.enumCoordinateID.ThirdAxisRotation)
+
+            m_doFriction = New ConstraintFriction(Me)
         End Sub
 
         Public Overrides Sub InitAfterAppStart()

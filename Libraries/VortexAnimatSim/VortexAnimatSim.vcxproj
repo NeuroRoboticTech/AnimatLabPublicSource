@@ -189,6 +189,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsCameraManipulator.cpp" />
     <ClCompile Include="VsClassFactory.cpp" />
     <ClCompile Include="VsCone.cpp" />
+    <ClCompile Include="VsConstraintFriction.cpp" />
+    <ClCompile Include="VsConstraintRelaxation.cpp" />
     <ClCompile Include="VsCylinder.cpp" />
     <ClCompile Include="VsDistanceJoint.cpp" />
     <ClCompile Include="VsDragger.cpp" />
@@ -254,6 +256,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsCameraManipulator.h" />
     <ClInclude Include="VsClassFactory.h" />
     <ClInclude Include="VsCone.h" />
+    <ClInclude Include="VsConstraintFriction.h" />
+    <ClInclude Include="VsConstraintRelaxation.h" />
     <ClInclude Include="VsCylinder.h" />
     <ClInclude Include="VsDistanceJoint.h" />
     <ClInclude Include="VsDragger.h" />

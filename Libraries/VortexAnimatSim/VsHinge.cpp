@@ -271,15 +271,9 @@ void VsHinge::SetupPhysics()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	EnableMotor(m_bEnableMotorInit);
-	//if(m_bEnableMotor)
-	//	EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 
-	/*VxConstraintFriction *lpFriction = m_vxHinge->getCoordinateFriction(m_iCoordID);
-	int iCount = m_vxHinge->getConstraintEquationCount();
-
-	bool bEnabled = false;
-	for(int iIdx=0; iIdx<iCount; iIdx++)
-		bEnabled = m_vxHinge->getRelaxationEnabled(iIdx);*/
+    Hinge::Initialize();
+    VsJoint::Initialize();
 }
 
 void VsHinge::CreateJoint()

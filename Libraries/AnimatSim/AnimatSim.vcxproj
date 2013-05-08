@@ -183,7 +183,9 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Cone.cpp" />
+    <ClCompile Include="ConstraintFriction.cpp" />
     <ClCompile Include="ConstraintLimit.cpp" />
+    <ClCompile Include="ConstraintRelaxation.cpp" />
     <ClCompile Include="ContactAdapter.cpp" />
     <ClCompile Include="ContactSensor.cpp" />
     <ClCompile Include="CurrentStimulus.cpp" />
@@ -276,7 +278,9 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Cone.h" />
+    <ClInclude Include="ConstraintFriction.h" />
     <ClInclude Include="ConstraintLimit.h" />
+    <ClInclude Include="ConstraintRelaxation.h" />
     <ClInclude Include="ContactAdapter.h" />
     <ClInclude Include="ContactSensor.h" />
     <ClInclude Include="CurrentStimulus.h" />

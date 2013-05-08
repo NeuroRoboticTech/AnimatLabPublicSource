@@ -437,7 +437,7 @@ Namespace DataObjects.Behavior.Neurons
 
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Name", Me.Text)
-            oXml.AddChildElement("Zapped", Not m_bEnabled)
+            oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("TonicStimulus", m_snTonicStimulus.ValueFromDefaultScale)
             oXml.AddChildElement("Noise", m_snTonicNoise.ValueFromDefaultScale)
             oXml.AddChildElement("RestingPot", m_snRestingPotential.ValueFromDefaultScale)

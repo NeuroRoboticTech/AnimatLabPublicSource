@@ -206,6 +206,7 @@ Namespace DataObjects
                 Next
 
                 AddLight(xnEnvironment)
+                AddDefaultMaterial(xnEnvironment)
 
                 Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
@@ -1033,6 +1034,21 @@ Namespace DataObjects
                      "<Stiffness " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Stiffness", False, "Value=""5"" Scale=""Mega"" Actual=""5e+006""") & "/>" & vbCrLf
                     Dim xnUpperLimit As XmlNode = m_xnProjectXml.AddNodeXml(xnJoint, "UpperLimit", strUpperXml)
 
+                    'Create Friction Constraint. Turn off by default.
+                    strID = System.Guid.NewGuid.ToString()
+                    Dim strFrictionXml As String = "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & vbCrLf & _
+                                "<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>" & vbCrLf & _
+                                "<ID>" & strID & "</ID>" & vbCrLf & _
+                                "<Name/>" & vbCrLf & _
+                                "<Enabled>False</Enabled>" & vbCrLf & _
+                                "<Proportional>True</Proportional>" & vbCrLf & _
+                                "<Coefficient Value=""0.02"" Scale=""None"" Actual=""0.02""/>" & vbCrLf & _
+                                "<MaxForce Value=""10"" Scale=""None"" Actual=""10""/>" & vbCrLf & _
+                                "<Loss Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                "<StaticFrictionScale Value=""1"" Scale=""None"" Actual=""1""/>"
+                    Dim xnFriction As XmlNode = m_xnProjectXml.AddNodeXml(xnJoint, "Friction", strFrictionXml)
+
+
                     'Add the enable limits
                     m_xnProjectXml.AddNodeValue(xnJoint, "EnableLimits", bEnableLimits.ToString)
 
@@ -1126,6 +1142,43 @@ Namespace DataObjects
                                        "</Light>"
 
                 Dim xmlLights As XmlNode = m_xnProjectXml.AddNodeXml(xnEnvironment, "Lights", strXml)
+
+            End Sub
+
+            Protected Overridable Sub AddDefaultMaterial(ByVal xnEnvironment As XmlNode)
+
+                Dim strXml As String = "<MaterialType>" & vbCrLf & _
+                            "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & vbCrLf & _
+                            "<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>" & vbCrLf & _
+                            "<ID>DEFAULTMATERIAL</ID>" & vbCrLf & _
+                            "<Name>Default</Name>" & vbCrLf & _
+                            "<FrictionLinearPrimary Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionLinearSecondary Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionAngularNormal Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<FrictionAngularPrimary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<FrictionAngularSecondary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<FrictionLinearPrimaryMax Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionLinearSecondaryMax Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionAngularNormalMax Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionAngularPrimaryMax Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<FrictionAngularSecondaryMax Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                            "<Compliance Value=""1"" Scale=""nano"" Actual=""1e-009""/>" & vbCrLf & _
+                            "<Damping Value=""50"" Scale=""Giga"" Actual=""5e+010""/>" & vbCrLf & _
+                            "<Restitution Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlipLinearPrimary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlipLinearSecondary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlipAngularNormal Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlipAngularPrimary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlipAngularSecondary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlideLinearPrimary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlideLinearSecondary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlideAngularNormal Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlideAngularPrimary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<SlideAngularSecondary Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                            "<MaximumAdhesion Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                        "</MaterialType>" & vbCrLf
+
+                Dim xmlTypes As XmlNode = m_xnProjectXml.AddNodeXml(xnEnvironment, "MaterialTypes", strXml)
 
             End Sub
 

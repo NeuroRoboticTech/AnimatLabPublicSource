@@ -5,6 +5,8 @@
 #include "StdAfx.h"
 #include "VsClassFactory.h"
 
+#include "VsConstraintRelaxation.h"
+#include "VsConstraintFriction.h"
 #include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
@@ -797,6 +799,87 @@ catch(...)
 
 // ************* Neural Module Type Conversion functions ******************************
 
+// ************* Constraint Relaxation Conversion functions ******************************
+
+ConstraintRelaxation *VsClassFactory::CreateConstraintRelaxation(string strType, BOOL bThrowError)
+{
+	ConstraintRelaxation *lpRelax=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "CONSTRAINTRELAXATION" || strType == "DEFAULT")
+	{
+		lpRelax = new VsConstraintRelaxation;
+	}
+	else
+	{
+		lpRelax = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidRelaxationType, Al_Err_strInvalidRelaxationType, "Relaxation", strType);
+	}
+
+	return lpRelax;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpRelax) delete lpRelax;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpRelax) delete lpRelax;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* Constraint Relaxation Type Conversion functions ******************************
+
+// ************* Constraint Friction Conversion functions ******************************
+
+ConstraintFriction *VsClassFactory::CreateConstraintFriction(string strType, BOOL bThrowError)
+{
+	ConstraintFriction *lpFriction=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "CONSTRAINTRELAXATION" || strType == "DEFAULT")
+	{
+		lpFriction = new VsConstraintFriction;
+	}
+	else
+	{
+		lpFriction = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidFrictionType, Al_Err_strInvalidFrictionType, "Friction", strType);
+	}
+
+	return lpFriction;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpFriction) delete lpFriction;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpFriction) delete lpFriction;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* Constraint Friction Type Conversion functions ******************************
+
+
 // ************* IStdClassFactory functions ******************************
 
 CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
@@ -839,6 +922,10 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 		lpObject = CreateLight(strObjectType, bThrowError);
 	else if(strClassType == "NEURALMODULE")
 		lpObject = CreateNeuralModule(strObjectType, bThrowError);
+	else if(strClassType == "CONSTRAINTRELAXATION")
+		lpObject = CreateConstraintRelaxation(strObjectType, bThrowError);
+	else if(strClassType == "CONSTRAINTFRICTION")
+		lpObject = CreateConstraintFriction(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

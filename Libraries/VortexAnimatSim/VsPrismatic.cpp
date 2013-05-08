@@ -231,8 +231,9 @@ void VsPrismatic::SetupPhysics()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	EnableMotor(m_bEnableMotorInit);
-	//if(m_bEnableMotor)
-	//	EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
+
+    Prismatic::Initialize();
+    VsJoint::Initialize();
 }
 
 void VsPrismatic::CreateJoint()

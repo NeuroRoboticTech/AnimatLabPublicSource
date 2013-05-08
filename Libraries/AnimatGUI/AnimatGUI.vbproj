@@ -407,6 +407,8 @@
     <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
     <Compile Include="DataObjects\Physical\Bodies\FluidPlane.vb" />
     <Compile Include="DataObjects\Physical\ContactSensor.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintFriction.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintRelaxation.vb" />
     <Compile Include="DataObjects\Physical\IStretchReceptor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Line.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />

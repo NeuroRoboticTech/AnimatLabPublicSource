@@ -150,6 +150,8 @@ namespace VortexAnimatSim
 		class VsMotorizedJoint;
 		class VsLine;
 		class VsMaterialType;
+        class VsConstraintRelaxation;
+        class VsConstraintFriction;
 		class VsOrganism;
 		class VsRigidBody;
 		class VsStructure;
@@ -240,6 +242,8 @@ using namespace Vx;
 #include "VsClassFactory.h"
 #include "VsMeshMgr.h"
 
+#include "VsConstraintRelaxation.h"
+#include "VsConstraintFriction.h"
 #include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"

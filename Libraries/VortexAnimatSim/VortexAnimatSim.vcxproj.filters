@@ -207,6 +207,12 @@
     <ClCompile Include="VsMaterialType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsConstraintRelaxation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsConstraintFriction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h">
@@ -396,6 +402,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsMaterialType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsConstraintRelaxation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsConstraintFriction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

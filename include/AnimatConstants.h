@@ -457,6 +457,12 @@
 #define Al_Err_lInvalidSetThreshold -4074
 #define Al_Err_strInvalidSetThreshold "Invalid set threshold. It must be greater than or equal to zero."
 
+#define Al_Err_lInvalidRelaxationType -4075
+#define Al_Err_strInvalidRelaxationType "An invalid constraint relaxation type was specified."
+
+#define Al_Err_lInvalidFrictionType -4076
+#define Al_Err_strInvalidFrictionType "An invalid constraint friction type was specified."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

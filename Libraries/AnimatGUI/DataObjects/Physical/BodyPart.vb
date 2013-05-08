@@ -370,11 +370,6 @@ Namespace DataObjects.Physical
             Me.DeselectItem()
         End Sub
 
-        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
-            MyBase.BuildProperties(propTable)
-
-        End Sub
-
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
