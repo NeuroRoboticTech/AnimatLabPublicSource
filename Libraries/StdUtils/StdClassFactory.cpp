@@ -63,7 +63,10 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 #endif
 	
 	if(!hMod)
-		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName);
+    {
+        int iError = GetLastError();
+		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + STR(iError));
+    }
 
 	GetClassFactory lpFactoryFunc = NULL;
 
