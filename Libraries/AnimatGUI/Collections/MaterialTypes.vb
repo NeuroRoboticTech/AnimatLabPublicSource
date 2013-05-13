@@ -122,7 +122,7 @@ Namespace Collections
 
         Public Overridable Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal aryIDs As ArrayList)
             aryIDs.Clear()
-            If oXml.FindChildElement("MaterialPairs", False) Then
+            If oXml.FindChildElement("MaterialTypes", False) Then
                 oXml.IntoElem()
 
                 Dim strID As String

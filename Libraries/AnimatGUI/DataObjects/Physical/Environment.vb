@@ -77,7 +77,6 @@ Namespace DataObjects.Physical
         Protected m_tnLights As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnOdorTypes As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnMaterialTypes As Crownwood.DotNetMagic.Controls.Node
-        Protected m_tnMaterialPairs As Crownwood.DotNetMagic.Controls.Node
 
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
