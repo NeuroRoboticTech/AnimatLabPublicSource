@@ -653,13 +653,15 @@ void VsRigidBody::Physics_CollectData()
 
 		Vx::VxReal3 vData2;
 		m_vxPart->getLastForceAndTorque(vData, vData2);
-		m_vForce[0] = vData[0] * fMassUnits * fDisUnits;
-		m_vForce[1] = vData[1] * fMassUnits * fDisUnits;
-		m_vForce[2] = vData[2] * fMassUnits * fDisUnits;
+        float fltRatio = fMassUnits * fDisUnits;
+		m_vForce[0] = vData[0] * fltRatio;
+		m_vForce[1] = vData[1] * fltRatio;
+		m_vForce[2] = vData[2] * fltRatio;
 
-		m_vTorque[0] = vData2[0] * fMassUnits * fDisUnits * fDisUnits;
-		m_vTorque[1] = vData2[1] * fMassUnits * fDisUnits * fDisUnits;
-		m_vTorque[2] = vData2[2] * fMassUnits * fDisUnits * fDisUnits;
+        fltRatio = fMassUnits * fDisUnits * fDisUnits;
+		m_vTorque[0] = vData2[0] * fltRatio;
+		m_vTorque[1] = vData2[1] * fltRatio;
+		m_vTorque[2] = vData2[2] * fltRatio;
 
 		Vx::VxReal3 vAccel;
 		m_vxPart->getLinearAcceleration(vAccel);
