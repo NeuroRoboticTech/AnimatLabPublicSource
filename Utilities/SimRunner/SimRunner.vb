@@ -345,4 +345,41 @@ Public Class Form1
         Return aryParts(0)
     End Function
 
+    Private Sub OnLoadDialog(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Try
+            Dim args() As String = System.Environment.GetCommandLineArgs()
+
+            Dim bRunImmediate As Boolean = True
+            Dim iCount As Integer = args.Length
+            For iIdx As Integer = 0 To iCount - 1
+                If args(iIdx).Trim.ToUpper = "-SIMFILES" AndAlso iIdx < (iCount - 1) Then
+                    txtSimFiles.Text = args(iIdx + 1)
+                End If
+
+                If args(iIdx).Trim.ToUpper = "-RESULTFILES" AndAlso iIdx < (iCount - 1) Then
+                    txtResultFiles.Text = args(iIdx + 1)
+                End If
+
+                If args(iIdx).Trim.ToUpper = "-COMMONFILES" AndAlso iIdx < (iCount - 1) Then
+                    txtCommonFiles.Text = args(iIdx + 1)
+                End If
+
+                If args(iIdx).Trim.ToUpper = "-SOURCEFILES" AndAlso iIdx < (iCount - 1) Then
+                    txtSourceFiles.Text = args(iIdx + 1)
+                End If
+
+                If args(iIdx).Trim.ToUpper = "-RUN" Then
+                    bRunImmediate = True
+                End If
+            Next
+
+            If bRunImmediate Then
+                btnProcess.PerformClick()
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
 End Class
