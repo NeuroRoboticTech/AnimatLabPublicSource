@@ -16,15 +16,15 @@
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <OptionCompare>Binary</OptionCompare>
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>Off</OptionStrict>
     <RootNamespace>SimRunner</RootNamespace>
-    <StartupObject>SimRunner.Form1</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
@@ -88,6 +88,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
@@ -114,6 +115,7 @@
     <Compile Include="SimRunner.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="StartupClass.vb" />
     <EmbeddedResource Include="SimRunner.resx">
       <DependentUpon>SimRunner.vb</DependentUpon>
     </EmbeddedResource>

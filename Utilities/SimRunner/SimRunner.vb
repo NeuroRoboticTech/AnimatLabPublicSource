@@ -227,6 +227,12 @@ Public Class Form1
 
 #End Region
 
+    Public m_bRunImmediate As Boolean = False
+    Public m_strSimFiles As String = ""
+    Public m_strResultFiles As String = ""
+    Public m_strCommonFiles As String = ""
+    Public m_strSourceFiles As String = ""
+
     Private Sub btnSimFiles_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSimFiles.Click
 
         Try
@@ -288,93 +294,29 @@ Public Class Form1
     End Sub
 
     Private Sub btnProcess_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnProcess.Click
-
         Try
-            'Dim strText As String = txtSourceFiles.Text & "\Animatsimulator -d3d -runtime 2.2 -library vortexanimatlibrary_vc7.dll -project """ & txtCommonFiles.Text & "\BetaPitch_012209_30_6.asim"""
-            Dim strFile As String
-            Dim strOutFile As String
-            Dim strProg As String = txtSourceFiles.Text & "\Animatsimulator"
-            Dim strArg As String
-            Dim procSim As System.Diagnostics.Process
-
-            Dim aryFiles As String() = Directory.GetFiles(txtSimFiles.Text)
-
-            Dim fltPerc As Single = 1 / aryFiles.Length
-            Dim iCount As Integer = 0
-            barProgress.Value = 0
-
-            For Each strFFile As String In aryFiles
-                strFile = GetFilename(strFFile)
-                File.Copy(txtSimFiles.Text & "\" & strFile, txtCommonFiles.Text & "\" & strFile)
-                strArg = "-library VortexAnimatPrivateSim_vc10.dll -project """ & txtCommonFiles.Text & "\" & strFile & """"
-
-                lblStatus.Text = "Processing " & iCount & " of " & aryFiles.Length & "   File: " & strFile
-                Application.DoEvents()
-                procSim = System.Diagnostics.Process.Start(strProg, strArg)
-                procSim.WaitForExit()
-
-                Dim aryOutFiles As String() = Directory.GetFiles(txtCommonFiles.Text, "*.txt")
-
-                For Each strFOutFile As String In aryOutFiles
-                    strOutFile = GetFilename(strFOutFile)
-                    File.Copy(txtCommonFiles.Text & "\" & strOutFile, txtResultFiles.Text & "\" & GetBaseFilename(strFile) & "_" & GetBaseFilename(strOutFile) & ".txt")
-                    File.Delete(txtCommonFiles.Text & "\" & strOutFile)
-                Next
-
-                File.Delete(txtCommonFiles.Text & "\" & strFile)
-
-                iCount = iCount + 1
-                barProgress.Value = (iCount * fltPerc)
-                Application.DoEvents()
-            Next
-
-            MessageBox.Show("Finished")
-
-        Catch ex As System.Exception
+            StartupClass.ProcessFiles(txtSimFiles.Text, txtResultFiles.Text, txtCommonFiles.Text, txtSourceFiles.Text, m_bRunImmediate, barProgress, lblStatus)
+        Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-    Protected Function GetFilename(ByVal strFile As String) As String
-        Dim aryParts As String() = Split(strFile, "\")
-        Return aryParts(aryParts.Length - 1)
-    End Function
-
-    Protected Function GetBaseFilename(ByVal strFile As String) As String
-        Dim aryParts As String() = Split(strFile, ".")
-        Return aryParts(0)
-    End Function
-
     Private Sub OnLoadDialog(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Try
-            Dim args() As String = System.Environment.GetCommandLineArgs()
+            If m_strCommonFiles.Trim.Length > 0 Then
+                txtCommonFiles.Text = m_strCommonFiles
+            End If
 
-            Dim bRunImmediate As Boolean = True
-            Dim iCount As Integer = args.Length
-            For iIdx As Integer = 0 To iCount - 1
-                If args(iIdx).Trim.ToUpper = "-SIMFILES" AndAlso iIdx < (iCount - 1) Then
-                    txtSimFiles.Text = args(iIdx + 1)
-                End If
+            If m_strResultFiles.Trim.Length > 0 Then
+                txtResultFiles.Text = m_strResultFiles
+            End If
 
-                If args(iIdx).Trim.ToUpper = "-RESULTFILES" AndAlso iIdx < (iCount - 1) Then
-                    txtResultFiles.Text = args(iIdx + 1)
-                End If
+            If m_strSimFiles.Trim.Length > 0 Then
+                txtSimFiles.Text = m_strSimFiles
+            End If
 
-                If args(iIdx).Trim.ToUpper = "-COMMONFILES" AndAlso iIdx < (iCount - 1) Then
-                    txtCommonFiles.Text = args(iIdx + 1)
-                End If
-
-                If args(iIdx).Trim.ToUpper = "-SOURCEFILES" AndAlso iIdx < (iCount - 1) Then
-                    txtSourceFiles.Text = args(iIdx + 1)
-                End If
-
-                If args(iIdx).Trim.ToUpper = "-RUN" Then
-                    bRunImmediate = True
-                End If
-            Next
-
-            If bRunImmediate Then
-                btnProcess.PerformClick()
+            If m_strSourceFiles.Trim.Length > 0 Then
+                txtSourceFiles.Text = m_strSourceFiles
             End If
 
         Catch ex As Exception
