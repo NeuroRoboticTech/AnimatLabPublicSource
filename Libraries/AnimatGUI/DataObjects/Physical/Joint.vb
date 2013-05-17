@@ -429,6 +429,17 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList, ByVal arySelectedItems As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+
+            If Not m_doPrimaryAxisDisplacementRelaxation Is Nothing Then m_doPrimaryAxisDisplacementRelaxation.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doSecondaryAxisDisplacement Is Nothing Then m_doSecondaryAxisDisplacement.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doThirdAxisDisplacement Is Nothing Then m_doThirdAxisDisplacement.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doSecondaryAxisRotation Is Nothing Then m_doSecondaryAxisRotation.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doThirdAxisRotation Is Nothing Then m_doThirdAxisRotation.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doFriction Is Nothing Then m_doFriction.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+        End Sub
+
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
