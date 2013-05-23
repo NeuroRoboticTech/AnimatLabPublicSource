@@ -1,0 +1,1841 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doc>
+  <assembly>
+    <name>LogicNP.CryptoLicensing</name>
+  </assembly>
+  <members>
+    <member name="T:LogicNP.CryptoLicensing.EvaluationDialogPane">
+      <summary>Specifies a pane in the evaluation dialog.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.EvaluationDialogPane.EvaluationInfo">
+      <summary>Specifies the 'information' pane.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.EvaluationDialogPane.EnterLicense">
+      <summary>Specifies the 'Enter license' pane.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.FloatingHeartBeatResult">
+      <summary>Indicates the result of heartbeat messages sent to the license service when floating license with heartbeat are used.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.FloatingHeartBeatResult.Failed">
+      <summary>Indicates that the heartbeat message to the license service failed. The  FloatingHeartBeatEventArgs.Exception property can be used to retrieve the exception, if any, associated with the failure. If no exception is present, it usually indicates that the failure occurred because the number of activations exceeded the maximum number of activations allowed by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.FloatingHeartBeatResult.Succeeded">
+      <summary>Indicates that the heartbeat message to the license service succeeded.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseFeatures">
+      <summary>Specifies features that are enabled in the license.</summary>
+      <remarks>    Features can be used to enable/disable functionality in     the software. A common use of features is to define 'editions'     of a software such as 'Standard', 'Professional' and     'Enterprise'.</remarks>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.DoesNotMatter">
+      <summary>Specifies that the license does not define any features.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature1">
+      <summary>Specifies that the license includes 'Feature 1'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature2">
+      <summary>Specifies that the license includes 'Feature 2'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature3">
+      <summary>Specifies that the license includes 'Feature 3'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature4">
+      <summary>Specifies that the license includes 'Feature 4'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature5">
+      <summary>Specifies that the license includes 'Feature 5'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature6">
+      <summary>Specifies that the license includes 'Feature 6'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature7">
+      <summary>Specifies that the license includes 'Feature 7'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature8">
+      <summary>Specifies that the license includes 'Feature 8'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature9">
+      <summary>Specifies that the license includes 'Feature 9'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature10">
+      <summary>Specifies that the license includes 'Feature 10'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature11">
+      <summary>Specifies that the license includes 'Feature 11'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature12">
+      <summary>Specifies that the license includes 'Feature 12'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature13">
+      <summary>Specifies that the license includes 'Feature 13'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature14">
+      <summary>Specifies that the license includes 'Feature 14'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature15">
+      <summary>Specifies that the license includes 'Feature 15'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature16">
+      <summary>Specifies that the license includes 'Feature 16'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature17">
+      <summary>Specifies that the license includes 'Feature 17'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature18">
+      <summary>Specifies that the license includes 'Feature 18'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature19">
+      <summary>Specifies that the license includes 'Feature 19'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature20">
+      <summary>Specifies that the license includes 'Feature 20'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature21">
+      <summary>Specifies that the license includes 'Feature 21'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature22">
+      <summary>Specifies that the license includes 'Feature 22'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature23">
+      <summary>Specifies that the license includes 'Feature 23'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature24">
+      <summary>Specifies that the license includes 'Feature 24'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature25">
+      <summary>Specifies that the license includes 'Feature 25'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature26">
+      <summary>Specifies that the license includes 'Feature 26'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature27">
+      <summary>Specifies that the license includes 'Feature 27'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature28">
+      <summary>Specifies that the license includes 'Feature 28'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature29">
+      <summary>Specifies that the license includes 'Feature 29'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature30">
+      <summary>Specifies that the license includes 'Feature 30'.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseFeatures.Feature31">
+      <summary>Specifies that the license includes 'Feature 31'.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseServiceLanguage">
+      <summary>Indicates the language used by the license service.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseServiceLanguage.CSharp">
+      <summary>Specifies that the license service uses C#.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseServiceLanguage.VB">
+      <summary>Specifies that the license service uses VB.Net.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseServiceType">
+      <summary>Indicates the type of the license service.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseServiceType.InternetDeployed">
+      <summary>Indicates that the license service will be internet deployed.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseServiceType.CustomerDeployed">
+      <summary>Indicates that the license service will be customer deployed.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseStatus">
+      <summary>Indicates the status of the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.Valid">
+      <summary>Indicates that the license is valid in all respects.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.NotValidated">
+      <summary>Indicates that the license is not yet validated.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.SerialCodeInvalid">
+      <summary>Indicates that the serial code is invalid.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.SignatureInvalid">
+      <summary>Indicates that the cryptographic signature is invalid.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.MachineCodeInvalid">
+      <summary>Indicates that the machine code embedded in the license is invalid - that is, it does not match the local machine code.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.Expired">
+      <summary>Indicates that the license has expired. This happens when the local time is greater than the date of expiration specified by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.UsageModeInvalid">
+      <summary>Indicates that the license usage mode is invalid. This happens when a license not marked as 'valid at design-time' is used at design-time or a license not marked as 'valid at run-time' is used at run-time.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.ActivationFailed">
+      <summary>Indicates that the license could not be activated. This happens when the number of activations exceed the maximum activations allowed by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.UsageDaysExceeded">
+      <summary>Indicates that the usage days have exceeded. This happens when the number of days passed since the first time the license was used exceeds the maximum allowed usage days specified by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.UniqueUsageDaysExceeded">
+      <summary>Indicates that the unique usage days have exceeded. This happens when the number of unique days that the software was used on exceeds the maximum allowed unique usage days specified by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.ExecutionsExceeded">
+      <summary>Indicates that the number of executions have exceeded. This happens when the number of executions of the software exceeds the maximum allowed executions specified by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.EvaluationlTampered">
+      <summary>Indicates that the evaluation has been tampered. This happens when the user attempts to extend the evaluation time by setting the local date-time of the computer.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.GenericFailure">
+      <summary>Indicates that a generic failure occurred while validating the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.InstancesExceeded">
+      <summary>Indicates that the number of instances of the software have exceeded. This happens when the number of instances of the host application exceeds the maximum allowed instances specified by the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.RunTimeExceeded">
+      <summary>Indicates that the run-time of the software has exceeded the maximum allowed run-time specified by the license. The  RunTimeExceeded event is fired when this happens.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.CumulativeRunTimeExceeded">
+      <summary>Indicates that the the cumulative (over many runs) run-time of the software has exceeded the maximum allowed cumulative run-time specified by the license. The  CumulativeRunTmeExceeded event is fired when this happens.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.ServiceNotificationFailed">
+      <summary>Indicates that the notification of the validation to the license service failed.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.HostAssemblyDifferent">
+      <summary>Indicates that the host assembly (set via the  HostAssembly property) is different from the host assembly data embedded in the license (which can be retrieved using the  HostAssemblyName property).</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.StrongNameVerificationFailed">
+      <summary>Indicates that the strong name verification of the host assembly (set via the  HostAssembly property) failed.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.Deactivated">
+      <summary>Indicates that the license has been deactivated from the local machine. Attempting to use a deactivated license on the machine fails.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.DebuggerDetected">
+      <summary>Indicates that a managed or unmanaged debugger or tracer was detected during license validation.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.DomainInvalid">
+      <summary>Indicates that the license validation was attempted under a domain different from those specified in the license.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.DateRollbackDetected">
+      <summary>Indicates that a date rollback was detected. This happens when the current date on the machine is earlier than the date on which the license is generated.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.LocalTimeInvalid">
+      <summary>    Indicates that the local     system time differs from the time returned by the license     service by more than 4 hours.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.CryptoLicensingModuleTampered">
+      <summary>Indicates that the strong name verification of the LogicNP.CryptoLicensing.dll assembly failed.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.RemoteSessionDetected">
+      <summary>Indicates that the host software is running in a remote session like that of Remote Desktop, Terminal Services or Citrix.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.LicenseServerMachineCodeInvalid">
+      <summary>Indicates that the machine code on which the license service is running does not match the license server machine code specified in the license code.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.InValid">
+      <summary>Indicates that the license validation failed in one or more respects. Depending on the condition that caused the validation to fail, one or more of the remaining flags are also set.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStatus.EvaluationExpired">
+      <summary>Indicates that the evaluation period has expired. This can happen when either the usage days, unique usage days, executions, instances, run-time or cumulative run-time is exceeded, or if evaluation tampering is detected.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseStorageMode">
+      <summary>Specifies the storage medium where the license is persisted.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStorageMode.None">
+      <summary>Indicates that the license is not persisted to a storage medium.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStorageMode.ToFile">
+      <summary>Indicates that the license is persisted to a file. The     FileStoragePath property specifies the file that the license is persisted to/from.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStorageMode.ToRegistry">
+      <summary>Indicates that the license is persisted to the registry. The  RegistryStoragePath property specifies the registry key that the license is persisted to/from. If  RegistryStoragePath property is not set, a new key whose path and name is derived from the  ValidationKey property is used.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.LicenseStorageMode.FromAssembly">
+      <summary>Indicates that the license will be loaded from an assembly embedded resource.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.SerialValidationLimit">
+      <summary>Specifies how serial validations are limited to a specific number of machines.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationLimit.Explicit_SameAsMaxSerialValidations">
+      <summary>Specifies that the value of the  LicenseService.MaxSerialValidations property specifies the maximum number of machines on which the serial can be validated.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationLimit.FromProfile_MaxActivationsSetting">
+      <summary>Specifies that the value of the 'MaxActivations' setting stored in the profile specifies the maximum number of machines on which the serial can be validated.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationLimit.FromDatabaseLicense_MaxActivationsSetting">
+      <summary>Specifies that the value of the 'MaxActivations' setting stored in the database license specifies the maximum number of machines on which the serial can be validated. This mode requires that the  LicenseService.SerialValidationMode property be set to  UseLicenseDatabaseFirst or  UseLicenseDatabaseOnly.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.SerialValidationMode">
+      <summary>Specifies how licenses are issued by the license service against serials.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationMode.UseLicenseDataBaseOnly">
+      <summary>Specifies that the license server should first check the license database to see if a license corresponding to the serial is present. If present, that license is returned; if not present, the serial validation fails.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationMode.UseLicenseDatabaseFirst">
+      <summary>Specifies that the license server should first check the license database to see if a license corresponding to the serial is present. If present, that license is returned; if not present, a new license is generated and returned.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationMode.DontUseLicenseDataBase">
+      <summary>Specifies that the license server should not use the license database to see if a license corresponding to the serial is present. A new license is always generated and returned.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.SerialValidationResult">
+      <summary>Indicates the result of a serial validation done using the     GetLicenseFromSerial method.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationResult.Success">
+      <summary>Indicates that the serial was successfully validated by the license service and a license was retrieved. You can proceed to validate the license using the  Status property.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationResult.Failed">
+      <summary>    Indicates that the validation of the serial failed. See     Retrieving Additional     Information About API Failures for more information.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.SerialValidationResult.NotASerial">
+      <summary>    Indicates that the 'serial' parameter is not a string in     serial-format. The          IsSerial method is used to test for this.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.ServiceParamEncryptionMode">
+      <summary>Indicates how parameters passed to the license service are encrypted.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.ServiceParamEncryptionMode.RSA">
+      <summary>Indicates that the parameters passed to the license service are encrypted using the RSA algorithm.</summary>
+    </member>
+    <member name="F:LogicNP.CryptoLicensing.ServiceParamEncryptionMode.Compatible">
+      <summary>Indicates that the parameters passed to the license service are encrypted using a proprietory algorithm for compatibility purposes (so that the license service API can be called from PHP, RoR, Python, etc).</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicense">
+      <summary>Represents a license which is validated cryptographically.</summary>
+      <remarks>    A basic license does not specify any information or     limits such as          Features,          DateExpires or          MaxUsageDays. If any limits are specified , they are     checked only after the license is first cryptographically     validated.     The license is validated automatically when the          Status property is first queried.     For evaluation licenses (those that specify max usage     days, may executions, max run-time, etc), the          IsEvaluationExpired property is used to determine whether     the license has expired. The          IsEvaluationLicense property can be used to determine if     any evaluation features are specified.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicense class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicense class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor(LogicNP.CryptoLicensing.LicenseStorageMode,System.String)">
+      <summary>Initializes a new instance of the  CryptoLicense class with the specified storage medium and validation key.</summary>
+      <remarks>    The license code is not automatically loaded from the     specified storage medium. You must call the          Load method to explicitly load the license code.     After loading the license, use the          Status property to actually validate the license and get     the status of the license.</remarks>
+      <param name="storageMode">The storage medium to use when loading or saving a license.</param>
+      <param name="validationKey">The cryptographic validation key used to validate the license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor(LogicNP.CryptoLicensing.LicenseStorageMode,System.String,System.String)">
+      <summary>Initializes a new instance of the  CryptoLicense class with the specified storage medium, storage path and validation key.</summary>
+      <remarks>    The license code is not automatically loaded from the     specified storage medium. You must call the          Load method to explicitly load the license code.     After loading the license, use the          Status property to actually validate the license and get     the status of the license.</remarks>
+      <param name="storageMode">The storage medium to use when loading or saving a license.</param>
+      <param name="storagePath">The file or registry path where the license will be saved. See  RegistryStoragePath and  FileStoragePath properties for more information.</param>
+      <param name="validationKey">The cryptographic validation key used to validate the license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor(System.String)">
+      <summary>Initializes a new instance of the  CryptoLicense class with the specified validation key.</summary>
+      <param name="validationKey">The cryptographic validation key used to validate the license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the  CryptoLicense class with the specified license code and validation key.</summary>
+      <remarks>    Use the          Status property to actually validate the license and get     the status of the license.</remarks>
+      <param name="licenseCode">The license code to be validated.</param>
+      <param name="validationKey">The cryptographic validation key used to validate the license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Base32StringToBase64String(System.String)">
+      <summary>Converts the data encoded by the specified base-32 string to an equivalent base-64 string.</summary>
+      <returns>The equivalent base-64 string.</returns>
+      <param name="base32String">The base-32 string which represents the data.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Base64StringToBase32String(System.String)">
+      <summary>Converts the data encoded by the specified base-64 string to an equivalent base-32 string.</summary>
+      <returns>The equivalent base-32 string.</returns>
+      <param name="base64String">The base-64 string which represents the data.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.CopyLicenseSettingsFrom(LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Copies sett</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.CopySettingsFrom(LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Copies the settings of the specified license to itself.</summary>
+      <param name="src">The source license from which to copy settings.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.CreateDeactivationRecord(System.String)">
+      <summary>Creates a deactivation record associated with the current license code.</summary>
+      <returns>True of the deactivation record was successfully created; False otherwise.</returns>
+      <remarks>    The default implementation creates the record in an     obscure registry location. Override this method to create the     deactivation record in a different registry location or to a     file or even to a server.     Typically this method is overridden together     with the          DeleteDeactivationRecord and          IsDeactivationRecordPresent methods.</remarks>
+      <param name="recordID">The identifier for the deactivation record which is derived from the current license code being validated.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Deactivate">
+      <summary>Deactivates the license from the local machine.</summary>
+      <returns>A string representing a deactivation code if the local machine was successfully deactivated; a null string otherwise.</returns>
+      <remarks>    This method removes the activation record for the local     machine from the license service database. This frees up a slot     for another machine to get activated using the same     license.     This method can be useful if users need to migrate the     software from one machine to another machine.     When this method is called, a hidden record of the     deactivation is stored in the registry of the machine. If this     record is found during license validation, the validation     fails. This prevents the user from using the software on a     machine from which the license has been deactivated.     The deactivation record returned by this method can be     validated from the CryptoLicensing Generator app to verify that     the user has actually deactivated the license from his     machine.     To reactivate the machine, simply validate (using          Status property) the license code having the 'Max     Activations' setting from the machine again.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DeactivateLocally">
+      <summary>Deactivates the license from the local machine.</summary>
+      <remarks>    This method can be useful if users need to migrate the     software from one machine to another machine.     When this method is called, a hidden record of the     deactivation is stored in the registry of the machine. If this     record is found during license validation, the validation     fails. This prevents the user from using the software on a     machine from which th license has been deactivated.     The deactivation record returned by this method can be     validated from the CryptoLicensing Generator app to verify that     the user has actually deactivated the license from his     machine.     This method differs from the Deactivate method in that     this method does not contact the license service to remove the     activation record from the license service database. This     method is typically used when you manually send hardware-locked     licenses to customers who have no access to the     Internet.     To reactivate the license on the machine, use the          DeleteDeactivationRecord method. This ensures that the     license can be validated on the machine again.</remarks>
+      <returns>A string representing a deactivation code if the local machine was successfully deactivated; a null string otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DecodeFromBase32String(System.String)">
+      <summary>Decodes the specified base-32 string to its original data.</summary>
+      <returns>The original data that the encoded string represents.</returns>
+      <param name="str">The base-32 string to decode.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DecodeFromBase64String(System.String)">
+      <summary>Decodes the specified base-64 string to its original data.</summary>
+      <returns>The original data that the encoded string represents.</returns>
+      <remarks>This method is just a wrapper around the Convert.FromBase64String method and is provided for convenience.</remarks>
+      <param name="str">The base-64 string to decode.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DecryptString(System.String)">
+      <summary>Decrypts the specified string.</summary>
+      <returns>The decrypted string.</returns>
+      <remarks>    Use this method to decrypt data which is returned by the     service in encrypted form. For example, when a license code is     sent by the license service for activation, it is encrypted     before sending. The license service then decrypts the code and     tries to activate it.     The EncryptString/DecryptString methods are only     intended to be used when communicating between your software     (client) and the license service. These methods are not     intended to be used and will not work when both the encryption     and decryption takes place on the client side.</remarks>
+      <param name="str">The string to be decrypted.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DeleteDeactivationRecord">
+      <summary>Deletes the locally stored deactivation record.Deletes the locally stored deactivation record.  " --&gt;</summary>
+      <returns>True if the locally stored deactivation record was successfully deleted; False otherwise.</returns>
+      <remarks>This method is automatically called when a license specifying 'Max Activations' is validated. However, you can call this method independently to explicitly delete the locally stored deactivation record created when the  DeactivateLocally method is called.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DeleteDeactivationRecord">
+      <summary>Deletes the locally stored deactivation record.   " --&gt;</summary>
+      <remarks>This method is automatically called when a license specifying 'Max Activations' is validated. However, you can call this method independently to explicitly delete the locally stored deactivation record created when the  DeactivateLocally method is called.</remarks>
+      <returns>True if the locally stored deactivation record was successfully deleted; False otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DeleteDeactivationRecord(System.String)">
+      <summary>Deletes the locally stored deactivation record associated with the current license.  " --&gt;</summary>
+      <returns>True of the deactivation record was successfully deleted; False otherwise.</returns>
+      <remarks>    The default implementation deletes the record from an     obscure registry location. Override this method to delete the     deactivation record from a different registry location or from     a file or even from a server.     Typically this method is overridden together     with the          CreateDeactivationRecord and          IsDeactivationRecordPresent methods.</remarks>
+      <param name="recordID">The identifier for the deactivation record which is derived from the current license code being validated.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.DisableInLicenseService">
+      <summary>Disables the license in the license service.</summary>
+      <returns>True if the operation was successful; False otherwise.</returns>
+      <remarks>    This method is typically used for licenses which require     communication with the license service such as activated     licenses or licenses with the "Notify Service On Validation"     setting.     A disabled license cannot be used in any way in the     license service.     Before calling this method, you must ensure that the          ValidationKey,          LicenseCode and the          LicenseServiceURL properties are set.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Dispose">
+      <summary>Frees all resources associated with the license.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Dispose">
+      <summary>Frees all resources associated with the license.</summary>
+      <remarks>When a floating activated license is disposed, it notifies the license service that the use of the license has ended on the machine. This frees a place for another machine to get activated.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Dispose(System.Boolean)">
+      <summary>Frees all resources associated with the license.</summary>
+      <remarks>When a floating activated license is disposed, it notifies the license service that the use of the license has ended on the machine. This frees a place for another machine to get activated.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.EnableInLicenseService">
+      <summary>Enables the license in the license service.</summary>
+      <remarks>    This method is typically used for licenses which require     communication with the license service such as activated     licenses or licenses with the "Notify Service On Validation"     setting.     By default all licenses are enabled, so this method is     only required if the license has been disabled.     Before calling this method, you must ensure that the          ValidationKey,          LicenseCode and the          LicenseServiceURL properties are set.</remarks>
+      <returns>True if the operation was successful; False otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.EncodeToBase32String(System.Byte[])">
+      <summary>Encodes the given data in base-32 format.</summary>
+      <returns>A string representing the encoded data in base-32 format.</returns>
+      <param name="data">The data to encode.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.EncodeToBase64String(System.Byte[])">
+      <summary>Encodes the given data in base-64 format.</summary>
+      <returns>A string representing the encoded data in base-64 format.</returns>
+      <remarks>This method is just a wrapper around the Convert.ToBase64String method and is provided for convenience.</remarks>
+      <param name="data">The data to encode.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.EncryptString(System.String)">
+      <summary>Encrypts the specified string.</summary>
+      <returns>The encrypted string.</returns>
+      <remarks>    Use this method when passing sensitive data to the     license service. For example, when a license code is sent by     the license service for activation, it is encrypted before     sending. The license service then decrypts the code and tries     to activate it.     The EncryptString/DecryptString methods are only     intended to be used when communicating between your software     (client) and the license service. These methods are not     intended to be used and will not work when both the encryption     and decryption takes place on the client side.</remarks>
+      <param name="str">The string to be encrypted.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetCurrentActivationCount">
+      <summary>Contacts the license service to get the number of activations that have been done for the license.</summary>
+      <returns>The number of activations that have been done for the license. Only activations done from distinct machines are counted.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLicenseFromProfile(System.String,System.String)">
+      <summary>Retrieves a license from the license service generated using the specified profile.</summary>
+      <returns>True if a license was successfully retrieved from the license service; False otherwise.</returns>
+      <remarks>If an On-Demand license is successfully retrieved, the license code is automatically assigned to the  LicenseCode property. The code can then be validated using the  Status property.</remarks>
+      <param name="profileName">The name of the profile used by the license service to generate the license.</param>
+      <param name="userData">The user data to use when generating the license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLicenseFromSerial">
+      <summary>Retrieves a license from the license service for the specified serial code.Retrieves a license from the license service for the specified serial code.</summary>
+      <returns>A  SerialValidationResult value which indicates whether a license was successfully retrieved.</returns>
+      <remarks>    When you distribute serials to your customers, your     software must use this method to retrieve a license     corresponding to the serial using the license service.     If this method returns          SerialValidationResult.Success, this means that the serial     was successfully validated by the license service and a license     was retrieved. You can proceed to validate the license using     the          Status property.     If this method returns          SerialValidationResult.Failed, this means that the     validation of the serial failed.     If this method returns          SerialValidationResult.NotASerial, this means that the     'serial' parameter is not a string in serial-format.     The 'Evaluation Info Dialog' automatically handles     serials as well as licenses. However, if you are presenting     your own UI to the user for entering a serial or license, you     can use the          IsSerial method to determine if the string entered by the     user is a serial or not. If it is a serial, you must call this     method to retrieve the license for the entered serial.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLicenseFromSerial(System.String)">
+      <summary>Retrieves a license from the license service for the specified serial code.</summary>
+      <remarks>    When you distribute serials to your customers, your     software must use this method to retrieve a license     corresponding to the serial using the license service.     If this method returns          SerialValidationResult.Success, this means that the serial     was successfully validated by the license service and a license     was retrieved. You can proceed to validate the license using     the          Status property.     If this method returns          SerialValidationResult.Failed, this means that the     validation of the serial failed.     If this method returns          SerialValidationResult.NotASerial, this means that the     'serial' parameter is not a string in serial-format.     The 'Evaluation Info Dialog' automatically handles     serials as well as licenses. However, if you are presenting     your own UI to the user for entering a serial or license, you     can use the          IsSerial method to determine if the string entered by the     user is a serial or not. If it is a serial, you must call this     method to retrieve the license for the entered serial.</remarks>
+      <returns>A SerialValidationResult value which indicates whether a license was successfully retrieved.</returns>
+      <param name="serial">The serial to validate.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLicenseFromSerial(System.String,System.String)">
+      <summary>Retrieves a license from the license service for the specified serial code.</summary>
+      <remarks>    When you distribute serials to your customers, your     software must use this method to retrieve a license     corresponding to the serial using the license service.     If this method returns          SerialValidationResult.Success, this means that the serial     was successfully validated by the license service and a license     was retrieved. You can proceed to validate the license using     the          Status property.     If this method returns          SerialValidationResult.Failed, this means that the     validation of the serial failed.     If this method returns          SerialValidationResult.NotASerial, this means that the     'serial' parameter is not a string in serial-format.     The 'Evaluation Info Dialog' automatically handles     serials as well as licenses. However, if you are presenting     your own UI to the user for entering a serial or license, you     can use the          IsSerial method to determine if the string entered by the     user is a serial or not. If it is a serial, you must call this     method to retrieve the license for the entered serial.</remarks>
+      <param name="serial">The serial to validate.</param>
+      <param name="userData">The user data to be embedded in the returned license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLocalMachineCode">
+      <summary>Gets the local machine code.</summary>
+      <returns>A byte array representing the local machine code. The default implementation returns a hash of the computer name.</returns>
+      <remarks>Your can override this method to provide your own machine codes which uniquely identify machines.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetLocalMachineCodeAsString">
+      <summary>Gets the local machine code encoded as a string.</summary>
+      <returns>The local machine code encoded as a string.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetRecordGUID(System.String)">
+      <summary>Gets a unique pseudo-GUID based on the license code and the specified key.</summary>
+      <returns>A string representing a pseudo-GUID derived from the license code and the key. Each unique combination of license code and key returns the same pseudo-GUID.</returns>
+      <remarks>For advanced use.</remarks>
+      <param name="recordKey">The key to be used when generating the pseudo-GUID.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetRunTimeLicenseCode">
+      <summary>Gets the run-time license code, if any, embedded in the current license.</summary>
+      <returns>The run-time license code, if any, embedded in the current license.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetSerialFromProfile(System.String)">
+      <summary>Retrieves a serial from the license service generated using the specified profile.</summary>
+      <returns>The newly generated serial code. An empty string if the method fails.</returns>
+      <param name="profileName">The name of the profile used by the license service to generate the serial.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.GetStatusException(LogicNP.CryptoLicensing.LicenseStatus)">
+      <summary>Gets detailed exception, if any, associated with a license status code.</summary>
+      <returns>The exception, if any, associated with the license validation status code.</returns>
+      <remarks>This method can be used to get an exception instance, if any, associated with a particular license validation status code. The most common use of this is for status codes involving the license service. For example, if you receive a  ActivationFailed status code, you can call this method with the  ActivationFailed status code as parameter to retrieve the WebException, if any, associated with the status code. You can then examine the WebException instance for more information about why the activation failed - for example, an internet connection may not be available. If this method does not return any exception object, it means that the  ActivationFailed status code is a result of the number of activations exceeding the limit specified in the license.</remarks>
+      <param name="status">The license validation status code for which you want to get the exception instance for.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.InitWebRequest(System.Net.HttpWebRequest)">
+      <summary>Called before communicating with the license service to perform optional additional initialization.</summary>
+      <remarks>This method is typically overridden to specify additional settings such as proxy settings or credentials on the web request used when communicating with the license service.</remarks>
+      <param name="request">The web request object which will be used when communicating with the license service.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsCurrentMachineActivated">
+      <summary>Determines whether the current machine has been activated. ***NOTE: The actual activation is done when the .Status property is queried, so do not use this method to determine whether the license is valid with respect to the max activation limit.</summary>
+      <remarks>    This method allows you to determine whether the current     machine has been activated without actually activating the     license.     The actual activation is done when the     .     Status property is queried, so do not use this method to     determine whether the license is valid with respect to the max     activation limit - query the     .     Status property for that.</remarks>
+      <returns>True if the current machine has been activated; False otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsDeactivationRecordPresent(System.String)">
+      <summary>Called to determine whether the deactivation record for the specified ID is present.</summary>
+      <returns>    True if the deactivation record for the specified ID is     present; False otherwise. A return value of True indicates that     the current license code is deactivated on the current machine     and license validation will fail.</returns>
+      <remarks>    The default implementation checks for the deactivation     record in an obscure registry location. Override this method to     check in a different registry location or in a file or even at     a server.     Typically this method is overridden together     with the          DeleteDeactivationRecord and          CreateDeactivationRecord methods.</remarks>
+      <param name="recordID">The identifier for the deactivation record which is derived from the current license code being validated.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsEvaluationExpired">
+      <summary>Gets whether the evaluation has expired.</summary>
+      <remarks>The evaluation expires when either the usage days, unique usage days, executions, instances, run-time and cumulative run-time is exceed, or if evaluation tampering is detected.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsEvaluationLicense">
+      <summary>    Gets whether the license specifies any evaluation     limits.</summary>
+      <remarks>    This method returns true only if the license contains one     or more of the following limits:              Limit Usage Days (HasMaxUsageDays is True)         Limit Unique Usage Days (HasMaxUniqueUsageDays is         True)         Limit Executions (HasMaxExecutions is True)         Limit Cumulative Runtime (HasMaxCumulativeRuntime is         True)          This mehtod can be used even before the license has been     validated by querying the Status property.</remarks>
+      <returns>True if the license specifies evaluation limits; False otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsEvaluationTampered">
+      <summary>Gets whether the evaluation information and/or the computer date has been changed so as to attempt to tamper with the evaluation period.</summary>
+      <returns>True if the evaluation has been tampered with; False otherwise.</returns>
+      <remarks>Evaluation tampering is detected if the user tries to set the computer clock back in an attempt to use the software beyond the evaluation period.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsFeaturePresent(LogicNP.CryptoLicensing.LicenseFeatures,System.Boolean)">
+      <summary>    Gets whether the specified feature is present in the     license.     IMPORTANT: This method, which supports     maximum of 31 features, is superseded by the          IsFeaturePresentEx method, which supports a maximum of 2040     features.The feature to test.     Specifies whether higher features are considered when     testing for the existence of this feature. Set this to true, if     the feature is to be considered present if it is not itself     present, but one or more 'higher' features     (numerical-value-wise) are present.     This is useful when features are used to define product     'editions' with increasing levels of functionality. For     example, Feature1, Fteaure2 and Feature3 can be used to define     the 'Standard', 'Professional' and 'Enterprise' editions of the     product. When testing whether the edition is the 'Standard'     edition (Feature1), higher editions (Feaure2 and Feature3)     should also be considered as 'Standard' editions for the sake     of enabling/disabling functionality in your product.</summary>
+      <returns>True if the specified feature is present, False otherwise.</returns>
+      <param name="feature">The feature to test.</param>
+      <param name="considerHigherFeatures">    Specifies whether higher features are considered when     testing for the existence of this feature. Set this to true, if     the feature is to be considered present if it is not itself     present, but one or more 'higher' features     (numerical-value-wise) are present.     This is useful when features are used to define product     'editions' with increasing levels of functionality. For     example, Feature1, Fteaure2 and Feature3 can be used to define     the 'Standard', 'Professional' and 'Enterprise' editions of the     product. When testing whether the edition is the 'Standard'     edition (Feature1), higher editions (Feaure2 and Feature3)     should also be considered as 'Standard' editions for the sake     of enabling/disabling functionality in your product.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsFeaturePresentEx">
+      <summary>Gets whether the specified feature is present in the license.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsFeaturePresentEx(System.Int32)">
+      <summary>Gets whether the specified feature is present in the license.</summary>
+      <returns>True if the specified feature is present, False otherwise.</returns>
+      <remarks>    Features are bit flags which typically corresponding to     specific functionality or modules in your software. You enable     the functionality in your software depending on whether the     corresponding bit is set in the license.     This overload calls the          other overload with considerHigherFeatures set to     False.</remarks>
+      <param name="bitNum">The bit number of the feature to test.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsFeaturePresentEx(System.Int32,System.Boolean)">
+      <summary>Gets whether the specified feature is present in the license.</summary>
+      <remarks>    Features are bit flags which typically corresponding to     specific functionality or modules in your software. You enable     the functionality in your software depending on whether the     corresponding bit is set in the license.</remarks>
+      <returns>True if the specified feature is present, False otherwise.</returns>
+      <param name="bitNum">The bit number of the feature to test.</param>
+      <param name="considerHigherFeatures">    Specifies whether higher features are considered when     testing for the existence of this feature. Set this to true, if     the feature is to be considered present if it is not itself     present, but one or more 'higher' features     (numerical-value-wise) are present.     This is useful when features are used to define product     'editions' with increasing levels of functionality. For     example, Feature1, Fteaure2 and Feature3 can be used to define     the 'Standard', 'Professional' and 'Enterprise' editions of the     product. When testing whether the edition is the 'Standard'     edition (Feature1), higher editions (Feaure2 and Feature3)     should also be considered as 'Standard' editions for the sake     of enabling/disabling functionality in your product.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsLicenseDisabledInService">
+      <summary>Gets whether the license has been disabled in the license service.</summary>
+      <returns>True if the license has been disabled in the license service; False otherwise.</returns>
+      <remarks>    You can use this method to communicate with the license     service to query whether the license has been disabled in the     service. One use of this is to revoke licenses.     A license is considered disabled if its          ID is present in the 'DisabledLicense' table of the     database used by the license service.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsMachineCodeValid">
+      <summary>Called when a machine-locked license is being validated.</summary>
+      <remarks>When a machine-locked is being validated, it byte-compares the machine code embedded in the license with the code returned by the  GetLocalMachineCode method. To have more control over this, override the IsMachineCodeValid method. This can be useful when you want to implement a somewhat lenient machine code comparison method instead of the default strict byte-comparison. For example, your machine code could consist of a combination of the CPU-ID, BIOS serial number, amount of memory, hard-disk serial number and the MAC address. You may want to allow one or more components of the machine code to change so that every small hardware change does not make the license invalid.</remarks>
+      <returns>True if the machine code embedded in the license matches the local machine code; False otherwise.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.IsSerial(System.String)">
+      <summary>Gets whether the specified string is a serial.</summary>
+      <returns>True if the specified string is a serial; False otherwise.</returns>
+      <remarks>    This method only determines whether the string is in     serial-format. It does not actually validate the serial. You     must validate the serial and retrieve the corresponding license     using the          GetLicenseFromSerial method.     A serial string has 37 characters including dashes and     contains only characters from the following set :     "U9VWT2FG3Q7RS0AC1DEYMNX6P8HJ4KL5".</remarks>
+      <param name="str">The string to test.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Load">
+      <summary>Loads the license from the previously set storage mode.</summary>
+      <returns>    True if a license code was successfully loaded, False     otherwise.     The return value only indicates a successfully load, not     whether the loaded license code can be successfully     validated.</returns>
+      <remarks>    The license code is loaded from the storage medium     specified by the          StorageMode property.     If the          StorageMode property is set to None, an exception is     thrown.     When          StorageMode property is set to Registry, the          RegistryStoragePath property determines the registry key     from which the license code is loaded.     If          RegistryStoragePath property is not set, a subkey whose     path and name is derived from the          ValidationKey property is used. In this case, this method     first attempts to load from the subkey under     HKEY_LOCAL_MACHINE. If that fails (most probably due to     insufficient permissions), it attempts to load from the subkey     under HKEY_CURRENT_USER. You can override this behavior by     explicitly specifying the          RegistryStoragePath property.     Instead of using this method, you can also perform your     own loading from your own preferred storage medium     (file/registry/database/network/etc) and then use the          CryptoLicense.LicenseCode property to set the loaded     license code.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.LoadCustomInfo">
+      <summary>Loads the custom info associated with the license.</summary>
+      <returns>A byte array representing the evaluation info.</returns>
+      <remarks>    The default implementation loads the custom info from an     obscure registry location.     You can override this method to load custom info from     your own storage location (such as file or isolated storage).     If no custom info is present, for example when this method is     called for the first time, this method should return     null.     This method is typically overridden together     with the          SaveCustomInfo method. When overriding these methods, you     should treat the custom data as an opaque, encrypted data blob     and the actual format of the data blob is not of any     concern.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.LoadEvaluationInfo">
+      <summary>Loads the evaluation info (such as days used, unique usage days used, last used days, etc) associated with the license.</summary>
+      <returns>A byte array representing the evaluation info.</returns>
+      <remarks>    The default implementation loads the evaluation info from     an obscure registry location.     You can override this method to load evaluation info from     your own storage location (such as file or isolated storage).     If no evaluation info is present, for example when this method     is called for the first time, this method should return     null.     This method is typically overridden together with the          SaveEvaluationInfo method. When overriding these methods,     you should treat the evaluation data as an opaque, encrypted     data blob and the actual format of the data blob is not of any     concern.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ParseUserData(System.String)">
+      <summary>Parses the user data embedded in the license into a hash table.</summary>
+      <returns>A hash table with "fieldname=fieldvalue" key-value pairs.</returns>
+      <remarks>    This is a helper function which parses the user data     embedded in the license into a hash table which contains     "fieldname=fieldvalue" key-value pairs. For example, if the     user data consists of the string "Name=John Doe#Company=John     Doe Inc.#Email=john@doe.com", then this method returns a hash     table with keys "Name", "Company" and "Email" and values "John     Doe", "John Doe Inc." and john@doe.com respectively.</remarks>
+      <param name="separator">The separator used to delimit "fieldname=fieldvalue" pairs.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.PingLicenseService">
+      <summary>Pings the license service to determine if its working.</summary>
+      <returns>An Exception object if the license service was not successfully pinged; a null if the service was successfully pinged. You can examine the Exception object to determine the cause of failure.</returns>
+      <remarks>You can use this method to determine whether the license service is reachable and is properly configured.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.QueryWebService(System.String,System.String[],System.String[])">
+      <summary>Queries the specified method of the license service.</summary>
+      <returns>The value (as string) returned by the invoked method.</returns>
+      <remarks>    The web service whose method is invoked is specified by     the          LicenseServiceURL property.     You can use this method to define custom methods on your     license service and invoke them as needed.</remarks>
+      <param name="methodName">The name of the method which is to be invoked.</param>
+      <param name="paramNames">The names of the parameters to be passed to the method.</param>
+      <param name="paramValues">The values of the parameters to be passed to the method.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Remove">
+      <summary>Removes the license code stored at the previously specified storage medium.</summary>
+      <returns>True if the license code was successfully removed, False otherwise.</returns>
+      <remarks>    Use this method to remove all traces of a stored license     code from the machine.     The          StorageMode property determines the medium from which the     license is removed.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.RemoveCustomInfo(System.String)">
+      <summary>Removes the custom information associated with the specified key.</summary>
+      <remarks>This method causes the custom information to be saved so that it is available the next time the license is validated.</remarks>
+      <param name="key">The key whose associated custom info is to be removed.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.RenewLicense(System.String)">
+      <summary>Renews/updates the license via the license service.</summary>
+      <returns>True of the license service successfully returned a renewed/updated license code, False otherwise.</returns>
+      <remarks>This method is typically used for Subscription Licenses. See the AppLicensing sample that comes with the installation for sample code which uses this method.</remarks>
+      <param name="userData">The new user-data to be embedded in the renewed/updated license code returned by the license service.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ResetCustomInfo">
+      <summary>Removes all custom information associated with the license.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ResetEvaluationInfo">
+      <summary>Resets evaluation information associated with the license.</summary>
+      <remarks>    You can use this method if, for any reason, you want to     reset the evaluation period of the user.     A more robust alternative to using this method is to     simply send a new evaluation license to the user.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ResetStatus">
+      <summary>Resets the validation status of the license.</summary>
+      <remarks>Calling this method resets the validation status of the license so that the next time the  Status property is queried, the license is revalidated.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.Save">
+      <summary>Saves the license code to the previously set storage mode.</summary>
+      <returns>True if a license code was successfully saved, False otherwise.</returns>
+      <remarks>    The license code is saved to the storage medium specified     by the          StorageMode property.     If the          StorageMode property is set to None or FromAssembly, an     exception is thrown.     When          StorageMode property is set to Registry, the          RegistryStoragePath property determines the registry key to     which the license code is saved.     If          RegistryStoragePath property is not set, a subkey whose     path and name is derived from the          ValidationKey property is used. In this case, this method     first attempts to save to a subkey under HKEY_LOCAL_MACHINE. If     that fails (most probably due to insufficient permissions), it     attempts to save to a subkey under HKEY_CURRENT_USER. You can     override this behavior by explicitly specifying the          RegistryStoragePath property.     Instead of using this method, you can also perform your     own saving to your own preferred storage medium     (file/registry/database/network/etc) - in this case, use the          CryptoLicense.LicenseCode property to get the license code     which is to be saved.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.SaveCustomInfo(System.Byte[])">
+      <summary>Saves the custom info associated with the license.</summary>
+      <remarks>    The default implementation saves the custom info to an     obscure registry location.     You can override this method to save custom info to your     own storage location (such as file or isolated storage).     This method is typically overridden together with the          LoadCustomInfo method. When overriding these methods, you     should treat the evaluation data as an opaque, encrypted data     blob and the actual format of the data blob is not of any     concern.</remarks>
+      <param name="info">The evaluation info to be stored.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.SaveEvaluationInfo(System.Byte[])">
+      <summary>Saves the evaluation info (such as days used, unique usage days used, last used days, etc) associated with the license.</summary>
+      <remarks>    The default implementation saves the evaluation info to     an obscure registry location.     You can override this method to save evaluation info to     your own storage location (such as file or isolated     storage).     This method is typically overridden together with the          LoadEvaluationInfo method. When overriding these methods,     you should treat the evaluation data as an opaque, encrypted     data blob and the actual format of the data blob is not of any     concern.</remarks>
+      <param name="info">The evaluation info to be stored.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.SetCustomInfo(System.String,System.String)">
+      <summary>Sets custom information associated with the specified key.</summary>
+      <remarks>This method causes the custom information to be saved so that it is available the next time the license is validated.</remarks>
+      <param name="key">The name of the key.</param>
+      <param name="value">The value of the custom information associated with the key.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ShowEvaluationInfoDialog">
+      <summary>Shows the default evaluation dialog.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ShowEvaluationInfoDialog(System.String,System.String)">
+      <summary>    Obsolete - use          this overload     instead.     Shows the default evaluation dialog.</summary>
+      <param name="productName">The name of the product for which evaluation dialog is to be shown.</param>
+      <param name="purchaseURL">The purchase url for the product</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ShowEvaluationInfoDialog(System.String,System.String,LogicNP.CryptoLicensing.EvaluationDialogPane)">
+      <summary>    Obsolete - use          this overload     instead.     Shows the default evaluation dialog.</summary>
+      <param name="productName">The name of the product for which evaluation dialog is to be shown.</param>
+      <param name="purchaseURL">The purchase url for the product</param>
+      <param name="startPane">The pane in the evaluation dialog.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ShowEvaluationInfoDialog(LogicNP.CryptoLicensing.EvaluationInfoDialog)">
+      <summary>Shows the default evaluation info dialog.</summary>
+      <returns>True if the user clicked the 'Continue' button or if he entered a valid license; False if the user clicked the 'Exit' button or if his evaluation has expired.</returns>
+      <param name="dialog">The evaluation info dialog which is to be shown.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.TryGetCustomInfo(System.String,System.String@)">
+      <summary>Gets the custom information, if any, associated with the specified key.</summary>
+      <returns>True, if custom information associated with the specified key was found and retrieved; False otherwise.</returns>
+      <param name="key">The key whose associated custom information is to be retrieved.</param>
+      <param name="value">On return, this parameter contains the custom information associated with the key.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.UpdateLicense(System.String)">
+      <summary>Gets the new license, if present, from the License table of the license service.</summary>
+      <returns>True if a new license was found and retrieved from the license service; False otherwise.</returns>
+      <remarks>    If a new license is found and retrieved from the     License table of the license service database,     then the          LicenseCode property is automatically set with the new     license code.     This method calls the          UpdateLicense method of the license service.     This method is generally used with Subscription Licenses.     See the Creating Software Subscription     Licenses topic and the corresponding sample code in     the AppLicensing sample.</remarks>
+      <param name="userData">The new user-data that the updated license should have. Note that the server-side default implement does not use this value. See LicenseService.OnUpdateLicense for a sample override which uses this value.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicense.ValidateSignature">
+      <summary>Performs cryptographic validation of the license code.</summary>
+      <returns>True if the cryptographic validation was successful; False otherwise.</returns>
+      <remarks>This method is called as part of the license validation process performed when the  Status property is queried. Typically, you do not need to use this method on its own.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ActivationContext">
+      <summary>Gets/Sets the context or role in which a license should be activated.</summary>
+      <remarks>    Most scenarios involving activated licenses call for a     single role or context in which the license is activated.     However, CryptoLicensing also supports multiple roles or     activation contexts, whereby you can specify that a license     code can be activated X times for one context/role, Y times for     another, and so on. For example, you may specify that the Admin     role may be activated 2 times, a View role may be activated 10     times, and so on. Similarly, you can specify that one     particular feature in your software can be activated X times,     another Y times, and so on.     See Using     Activation Contexts With Activated Licenses for more     information.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ActivationsAreFloating">
+      <summary>Gets whether activations specified by the license are floating (concurrent).</summary>
+      <remarks>    This property only takes effect if the license specifies     the maximum number of activations via the          MaxActivations property.     If this property is True, then activations are floating -     that is, any number of different machines can be successfully     activated by the license service as long the number does not     exceed the          MaxActivations value at any time.     If False, then the license can be activated on a maximum     of          MaxActivations machines. Attempting to activate the license     on more machines fails.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.AllowedDomains">
+      <summary>Gets or sets the list of domains under which validation will be successful.</summary>
+      <remarks>    License validation succeeds only if done under any of the     domains specified by this property.     When setting this property via the Generator API,     multiple domains can be separated by #. Each domain must start     with http:// or https://, for example     http://www.ssware.com#http://www.logicnp.com.     Note that this limit only takes effect when license     valiation occurs in an ASP.Net context such as in a web     application.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.AssemblyStoragePath">
+      <summary>Gets/Sets the fully qualified resource name from where the license should be loaded.</summary>
+      <remarks>    If the license is stored in a .resources     file embedded in the assembly, set this property as follows :     "{Full resource name of .resources file},{Name of Icon}". For     example, if a string name "License" is present in a resource     file named "MyResources.resources" and assuming the root     namespace of your project is "MyRootProjectNamesapce", then     this property should be set to     "MyRootProjectNamesapce.MyResources.resources,License".     If the license file is present directly as a     embedded resource in the assembly (eg : "license.txt"), set     this property to the full name of the resource file ( eg :     "MyRootProjectNamesapce.license.txt").          Note that you must set the          HostAssembly property to the assembly from where the     resource will be extracted. If this property is not set, it is     automatically initialized to the calling assembly.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.CurrentCumulativeRuntime">
+      <summary>Gets the current cumulative run-time (in minutes) used up by the software.</summary>
+      <remarks>License validation fails when the cumulative run-time exceeds the value specified by the  MaxCumulativeRuntime property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.CurrentExecutions">
+      <summary>Gets the number of times that the software has been executed so far.</summary>
+      <remarks>License validation fails when the number of executions exceeds the value specified by the  MaxExecutions property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.CurrentRuntime">
+      <summary>Gets the current run-time (in minutes) since license validation.</summary>
+      <remarks>When the time elapsed since license validation crosess the limit specified by the MaxRuntime property, the RunTimeExceeded event is raised.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.CurrentUniqueUsageDays">
+      <summary>Gets the number of unique usage days that the software has been used on so far.</summary>
+      <remarks>License validation fails when the number of unique usage days exceeds the value specified by the  MaxUniqueUsageDays property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.CurrentUsageDays">
+      <summary>Gets the number of days passed since the first time your software was used.</summary>
+      <remarks>License validation fails when the number of days exceeds the value specified by the  MaxUsageDays property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.DateExpires">
+      <summary>Gets the datetime after which the license expires.</summary>
+      <remarks>    License validation fails when the current datetime     exceeds the value specified by this property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.DateGenerated">
+      <summary>Gets the datetime that the license was generated on.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.DateLastUsed">
+      <summary>Gets the datetime when the license was last validated.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.DetectDateRollback">
+      <summary>Gets whether license validation fails if a date rollback is detected.</summary>
+      <remarks>    Every license code has embedded inside it, the datetime     (in UTC) when it was generated. If date rollback detection is     enabled for the license code, then the current datetime (in     UTC) is compared with the date generated of the license code.     If its earlier, it means that the date of the machine is not     correct (date is usually changed for malicious purposes) and     license validation fails.     A margin of 4 hours is allowed for time drift and other     errors.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.DisallowInRemoteSession">
+      <summary>Gets/Sets whether license validation fails when the host software is running in a remote session like that of Remote Desktop, Terminal Services or Citrix.</summary>
+      <remarks>This setting can be used to disallow usage of your software in a remote session like that of Remote Desktop, Terminal Services or Citrix.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.EnableAntiDebuggerProtection">
+      <summary>Gets whether anti-debugger and anti-tracing protection is enabled.</summary>
+      <remarks>When a license has the setting enabled, more than 10 different heuristic tests are performed during license validation to detect if your software is running under a debugger or tracer. If detected, validation fails and the  Status property returns  DebuggerDetected. Both managed as well as native/unmanaged debuggers (including advanced debuggers such as OllyDbg) are detected. This provides a strong defense against crackers and hackers trying to debug or trace your software for various malicious purposes.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.EnableTamperChecking">
+      <summary>Gets whether tamper checking is enabled.</summary>
+      <remarks>    When set to True, a check for date rollback is done     during license validation. Date rollback is usually done to try     to extend the trial period. If a date rollback is detected,     license validation fails with          Status property returning          EvaluationTampered.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ExplicitRunTimeLicenseCode">
+      <summary>Gets/Sets whether an explicit run-time license is embedded in the license.</summary>
+      <remarks>    The embedded run-time license code can be retrieved using     the          GetRunTimeLicenseCode method.     If the HasSeparateRunTimeLicense is     True, then the embedded run-time license code has the same     properties as this license except that the ValidAtDesignTime     property is False. If you want the run-time license code to     have different settings than the design-time license, this     property can be set in the CryptoLicenseGenerator class to     specify that license code.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.Features">
+      <summary>    Gets the features specified by the license.     IMPORTANT: This property, which supports     maximum of 31 features, is superseded by the FeaturesEx     property, which supports a maximum of 2040 features.</summary>
+      <remarks>    Features can be used to enable/disable specific     functionality in your software. A common use of features is to     define editions of your software such as a 'Standard',     'Professional' and an 'Enterprise' edition with increasing     levels of functionality.     The          IsFeaturePresent method can be used to test whether any     given feature is present in the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.FileStoragePath">
+      <summary>Gets/Sets the full path of the file where the license is to be persisted.</summary>
+      <remarks>    This property takes effect only if the          StorageMode property is set to          LicenseStorageMode.ToFile.     If this property is not specified, then the license is     persisted to a file formed by appending ".license" to the name     of the host application's exe file. For example, if the host     application is executing from "c:\MyApp.exe", then the license     is persisted to "c:\MyApp.exe.license".</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.FloatingHeartBeatInterval">
+      <summary>Gets/Sets the interval (in minutes) used to send heartbeat messages to the license service.</summary>
+      <remarks>When a floating license with a heartbeat interval is validated, a separate thread is started which sends heartbeat messages to the license service after every FloatingHeartBeatInterval minutes.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.FloatingLeasePeriod">
+      <summary>Gets the time for which a floating license remains valid after activation.</summary>
+      <remarks>    Floating licenses can be of two types:     1. Normal floating licenses: These     licenses require communication with the license service every     time the license is validated. If a slot is available for the     machine from which license is being validated, the validation     succeeds. Deactivation occurs when the license is disposed,     thus freeing the slot for use by another machine.     2. Leased floating licenses: These     licenses communicate with the license service only the first     time they are validated. The license service then returns a new     license with          DateExpires set to the lease period (as specified by this     property) after activation. The returned license does not     require communication with the license service the next time it     is validated. The license validation succeeds as long as the     DateExpires limit does not fail. The slot for this machine is     automatically free from the license service database after the     lease period expires.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasAllowedDomains">
+      <summary>Gets whether the license specifies a list of domains under which validation will be successful.</summary>
+      <remarks>The  AllowedDomains property can be used to retrieve the list of domains under which validation will be successful.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasDateExpires">
+      <summary>Gets whether the license specifies a datetime after which it expires.</summary>
+      <remarks>The  DateExpires property can be used to retrieve the datetime after which the license expires.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasFeatures">
+      <summary>Gets whether the license specifies any features.</summary>
+      <remarks>The  Features property can be used to retrieve the features specified in the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasFloatingHeartBeatInterval">
+      <summary>Gets whether the license specifies a floating heartbeat interval.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasFloatingLeasePeriod">
+      <summary>Gets whether the license specifies a floating lease period.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasHostAssemblyName">
+      <summary>Gets whether the license specifies a host assembly name to match against.</summary>
+      <remarks>    The          HostAssemblyName property can be used to retrieve the host     assembly name characteristics (name, versions, public key     token) against which the actual host assembly will be     matched.     The actual host assembly validating the license, which     will typically be your main program assembly, is specified     using the          HostAssembly property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasLeaseExpires">
+      <summary>Gets whether the license specifies when the lease expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasLicenseServerMachineCode">
+      <summary>Gets whether the license specifies a license server machine code.</summary>
+      <remarks>The  LicenseServerMachineCode property can be used to retrieve the machine code to which this license is tied.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMachineCode">
+      <summary>Gets whether the license specifies a machine code.</summary>
+      <remarks>The  MachineCode property can be used to retrieve the machine code to which this license is tied.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxActivations">
+      <summary>Gets whether the license specifies the maximum number of activations.</summary>
+      <remarks>The  MaxActivations property can be used to retrieve the maximum number of activations specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxCumulativeRuntime">
+      <summary>Gets whether the license specifies the maximum cumulative run-time that your software can be used for.</summary>
+      <remarks>The  MaxCumulativeRuntime can be used to retrieve the maximum cumulative run-time specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxExecutions">
+      <summary>Gets whether the license specifies the maximum number of times that your software can be executed.</summary>
+      <remarks>The  MaxExecutions property can be used to retrieve the maximum executions specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxInstances">
+      <summary>Gets whether the license specifies the maximum number of instances of your software that can be running at any one time.</summary>
+      <remarks>The  MaxInstances property can be used to retrieve the maximum instances specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxRuntime">
+      <summary>Gets whether the license specifies the maximum run-time that your software can be used for in any given execution.</summary>
+      <remarks>The  MaxRuntime property can be used to retrieve the maximum run-time specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxUniqueUsageDays">
+      <summary>Gets whether the license specifies the maximum number of unique usage days that your software can be used on.</summary>
+      <remarks>The  MaxUniqueUsageDays property can be used to retrieve the maximum unique usage days specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasMaxUsageDays">
+      <summary>Gets whether the license specifies the maximum days that your software can be used for since the day it is first used.</summary>
+      <remarks>The  MaxUsageDays property can be used to retrieve the maximum usage days specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasNumberOfUsers">
+      <summary>Gets whether the license specifies the number of users.</summary>
+      <remarks>The  NumberOfUsers property can be used to retrieve the number of licenses specified by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasSeparateRuntimeLicense">
+      <summary>Gets whether the license has a separate run-time license.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HasUserData">
+      <summary>Gets whether the license contains any user data.</summary>
+      <remarks>The  UserData property can be used to retrieve the user data contained in the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HostAssembly">
+      <summary>Gets or sets the host assembly which is validating the license.</summary>
+      <remarks>    When validating a license specifying either the          HostAssemblyName check or a          PerformHostAssemblyStrongNameVerification check, set this     property before validating the license. If assembly set above     does not match the assembly name settings (name, version,     public key token) specified in the license, validation will     fail.     If this property is not set,     CryptoLicensing automatically sets it to the first     non-CryptoLicensing assembly found in the stack     trace.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.HostAssemblyName">
+      <summary>Gets or sets the host assembly characteristics (name, version and public key token) against which the host assembly validating the license must be matched.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ID">
+      <summary>Gets the unique identifier of the license.</summary>
+      <remarks>Every license generated by CryptoLicensing Generator is guaranteed to have a unique ID.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LeaseExpires">
+      <summary>Gets the date-time when the license lease expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LicenseCode">
+      <summary>Gets the license code which is to be validated and which contains various information about the license.</summary>
+      <remarks>This property is the same as the  LicenseKey property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LicenseServerMachineCode">
+      <summary>Gets the license server machine code specified by the license.</summary>
+      <remarks>A license which specifies a license server machine code can only be activated by a license service running on the corresponding machine.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LicenseServerMachineCodeAsString">
+      <summary>Gets the license server machine code specified by the license in string format.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LicenseServiceSettingsFilePath">
+      <summary>Specifies the path of the settings file used by the license service.</summary>
+      <remarks>    The path should be of the format     "AppDomainAppPathApp_Data\settings.xml".     Each settings files specifies which license project file     to use. You need to set this property only if you use the same     license service for multiple license project files.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.LicenseServiceURL">
+      <summary>Gets/Sets the URL of the license service which is used to activate licenses.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MachineCode">
+      <summary>Gets the machine code specified by the license.</summary>
+      <remarks>A license which specifies a machine code can only be validated on that machine. This is useful to tie licenses to specific machines.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MachineCodeAsString">
+      <summary>Gets the machine code specified by the license in string format.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxActivations">
+      <summary>Gets the maximum number of different machines that the license can be activated on.</summary>
+      <remarks>    Activations can be used to specify the maximum number of     different machines that the license can be activated on.     If the          ActivationsAreFloating property is True, then activations     are floating - that is, any number of different machines can be     successfully activated by the license service as long the     number does not exceed the          MaxActivations value at any time.     If the          ActivationsAreFloating property is False, then the license     can be activated on a maximum of          MaxActivations machines. Attempting to activate the license     on more machines fails.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxCumulativeRuntime">
+      <summary>Gets the maximum cumulative (over many runs) run-time (in minutes) that your software can be used for.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxExecutions">
+      <summary>Gets the maximum number of times that your software can be executed.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxInstances">
+      <summary>Gets the maximum number of instances of your software that can be run at any time.</summary>
+      <remarks>This setting tracks instances on the local machine only and does not track any other instances that might be running on other machines across the network. This setting also tracks instances executing on the machine via remote sessions.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxRuntime">
+      <summary>Gets the maximum run-time (in minutes) that your software can be used for during any single execution.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxUniqueUsageDays">
+      <summary>Gets the maximum number of unique usage days that your software can be used on.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.MaxUsageDays">
+      <summary>Gets the maximum number of days that your software can be used for since the day it is first used.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.NotifyServiceOnValidation">
+      <summary>Gets whether the license notifies the license service when it is validated.</summary>
+      <remarks>The  LicenseServiceURL specifies the URL of the license service used for notifying the validation.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.NumberOfUsers">
+      <summary>Gets the number of users in the license.</summary>
+      <remarks>This property is for information only and does not enforce any limits on how the license is validated.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.PerformCryptoLicensingModuleStrongNameVerification">
+      <summary>Gets or sets whether to perform strong name verification of the LogicNP.CryptoLicensing.dll assembly during license validation.</summary>
+      <remarks>Check to perform strong name verification of the LogicNP.CryptoLicensing.dll itself to ensure that a tampered version is not being used by your software. Strong name verification is done irrespective of whether such verification has been disabled on the machine (commonly done by crackers). This setting causes license validation to fail if the CryptoLicensing module is tampered and changed. This setting provides very powerful against crackers.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.PerformHostAssemblyStrongNameVerification">
+      <summary>Gets or sets whether to perform strong name verification of the host assembly during license validation.</summary>
+      <remarks>    Strong name verification of the host assembly is     performed irrespective of whether such verification has been     disabled on the machine. Such verification is typically     disabled by hackers or crackers. This check should typically be     combined with the check against the public key token of the     host assembly. This two combined ensures that the host assembly     has not been tampered or changed and that the public key of the     host assembly has not been changed (a typical way for crackers     to crack your software).     Use the          HostAssembly property to specify the host assembly for     which strong name verification is to be performed.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RegistryStoragePath">
+      <summary>Gets/Sets the full path of the registry key where the license is to be persisted.</summary>
+      <remarks>    This property takes effect only if the          StorageMode property is set to          LicenseStorageMode.ToRegistry.     The registry key and value name is specified using the     following format :     "ROOT-KEY\sub-key-path\@value"     For example,     "HKCU\Software\MyProduct\@License"     The value name is optional; if omitted, the default value     for the key is used.     Valid ROOT-KEY names are HKLM, HKCR, HKCU and HKU.     If this property is not specified, then the license is     persisted to a unique registry key derived from the          ValidationKey used to validate the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RemainingCumulativeRuntime">
+      <summary>Gets the remaining cumulative runtime (in minutes) before the license expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RemainingExecutions">
+      <summary>Gets the remaining number of executions before the license expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RemainingRuntime">
+      <summary>Gets the remaining runtime (in minutes) before the license expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RemainingUniqueUsageDays">
+      <summary>Gets the remaining number of unique usage days before the license expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.RemainingUsageDays">
+      <summary>Gets the remaining number of usage days before the license expires.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ServiceParamEncryptionMode">
+      <summary>Gets/Sets how parameters passed to the license service are encrypted.</summary>
+      <remarks>See the documentation of the  ServiceParamEncryptionMode enum for more information.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.Status">
+      <summary>Gets the status of the license.</summary>
+      <remarks>If the license is not already validated, it is first validated before the status is returned.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.StorageMode">
+      <summary>Gets/Sets the storage mode where the license is persisted.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.UseHashedMachineCode">
+      <summary>Gets/Sets whether the machine code is hashed.</summary>
+      <remarks>    The machine code used by CryptoLicensing is the hash of     the computer name. Since the computer name is hashed, it is     impossible to recover the computer name from its hash. This is     done to protect the the privacy of users. However, under     certain circumstances it may be necessary to use the computer     name itself as the machine code. In this case, this property     should be set to False.     When this property is False, the computer name itself     (instead of the hash of the computer name) is used as the     machine code.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.UserData">
+      <summary>Gets the user data contained in the license.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ValidAtDesignTime">
+      <summary>Gets whether the license is valid at design time.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ValidationKey">
+      <summary>Gets/Sets the validation key used to perform cryptographic validation of the license.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.ValidAtRunTime">
+      <summary>Gets whether the license is valid at run time.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicense.VerifyLocalTimeWithService">
+      <summary>Gets whether the local system time is verified with the license service.</summary>
+      <remarks>If this property is True, the local system time is verified with the license service. A difference of more than 4 hours causes license validation to fail.</remarks>
+    </member>
+    <member name="E:LogicNP.CryptoLicensing.CryptoLicense.CumulativeRunTimeExceeded">
+      <summary>Occurs when the cumulative run-time that your software has been run for exceeds the value specified by the  MaxCumulativeRunTime property.</summary>
+    </member>
+    <member name="E:LogicNP.CryptoLicensing.CryptoLicense.FloatingHeartBeat">
+      <summary>Occurs when a status of heartbeat messages sent to the license service changes.</summary>
+      <remarks>    When a floating license with a heartbeat interval is     validated, a separate thread is started which sends heartbeat     messages to the license service after every          FloatingHeartBeatInterval minutes.     This event is raised only if the status of a heartbeat     message changes from success to failure or vice versa. For     example, if 5 heartbeat messages succeed and the 6th message     fails, this event is only raised after the 6th message.     Similarly, if the next 4 also fail, but the 11th again     succeeds, this event is raised only after the 11th     message.     Note that this event will be raised from a     different thread than the one which was used to validate the     license.     Its entirely upto you to decide what to do if a heartbeat     fails - you may limit the functionality of your software,     terminate the software or give a grace time period to the     user.</remarks>
+    </member>
+    <member name="E:LogicNP.CryptoLicensing.CryptoLicense.LeaseExpired">
+      <summary>Occurs when a lease period of a leased license expires.</summary>
+      <remarks>    In this event handler, you should revalidate the license     again by using the          CryptoLicense.Status property.     Its entirely upto you to decide what to do if license     revalidation fails - you may limit the functionality of your     software, terminate the software or give a grace time period to     the user.     Note that this event will be raised from a     different thread than the one which was used to validate the     license.</remarks>
+    </member>
+    <member name="E:LogicNP.CryptoLicensing.CryptoLicense.RunTimeExceeded">
+      <summary>Occurs when the run-time that your software has been run for exceeds the value specified by the  MaxRunTime property.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseGenerator">
+      <summary>Represents the CryptoLicensing license generator.</summary>
+      <remarks>    To generate licenses, first load a project using the          LoadProject method. The          Generate method is used to generate new licenses/serials.     The          CodesToGenerate property specifies the number of codes that     are generated at a time. The          LicenseCodes,          ProcessedLicenseCodes,          SerialCodes,          ProcessSerialCodes and          IDs properties contains the license codes, processed     license codes, serial codes, processed serial codes, and the     license ids of generated codes respectively.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.#ctor">
+      <summary>Initializes a new instance of a license generator.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.#ctor">
+      <summary>Initializes a new instance of a license generator.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.#ctor(System.Int32)">
+      <summary>Initializes a new instance of a license generator.</summary>
+      <remarks>This constructor is used when you want to create new project files via API. This constructor is typically used with the  CryptoLicenseGenerator.SaveProject method which saves the new generated to a file.</remarks>
+      <param name="keyStrength">The number of bits that are used by the underlying RSA algorithm when generating and validating license codes.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.#ctor(System.String)">
+      <summary>Initializes a new instance of a license generator from the specified project file.</summary>
+      <param name="filepath">The project file to load.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.CreateLicenseService(LogicNP.CryptoLicensing.LicenseServiceSettings)">
+      <summary>Creates license service files with the specified settings.</summary>
+      <returns>True if the license service files were successfully created; False otherwise.</returns>
+      <remarks>This method is typically used to create a customer-deployed license service. Since each such service will have different settings, this method can be used to programmatically create a license service.</remarks>
+      <param name="settings">The settings which the newly generated license service files should have.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.Generate">
+      <summary>Generates new license and serial codes.</summary>
+      <remarks>    Each call to this method generates an equal number of     license codes and serial codes specified by the          CodesToGenerate property. The generated license codes and     serial codes can be accessed using the          LicenseCodes and the          SerialCodes properties.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.GetActiveProfile">
+      <summary>Gets the name of the profile currently being used.</summary>
+      <returns>The name of the profile currently being used or a null value if an error occurs.</returns>
+      <remarks>This method is typically used in the  LicenseService.OnValidateSerial method to determine the profile of the serial being validated.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.GetActiveUserDataPlugin">
+      <summary>Gets the active user-data plugin.</summary>
+      <returns>The active user-data plugin.</returns>
+      <remarks>The active user-data plugin is the plugin used to embed user-data in a newly generated license.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.GetUserDataPluginFromName(System.String)">
+      <summary>Gets the user-data plugin having the specified name.</summary>
+      <returns>The user-data plugin with the specified name; or null if no such plugin is found.</returns>
+      <param name="name">The name of the user-data plugin which is to be retrieved.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.GetValidationKey">
+      <summary>Gets the validation key for the project.</summary>
+      <returns>A string representing the validation key for the project.</returns>
+      <remarks>The validation key is used to validate license codes generated by the generator. License codes generator by a specific project can only be validated by the validate key of that project.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.InitUserData">
+      <summary>Initializes the user data from the active user data plugin.</summary>
+      <remarks>This method is called</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LoadLicenseCode(System.String)">
+      <summary>Loads the specified license code and its associated settings in the generator.</summary>
+      <returns>True if the settings were successfully loaded; False otherwise.</returns>
+      <remarks>You can use this method to change license settings programmatically. Instead of specifying all the settings via code, you can load an already generated license code using this method. The settings specified by the license code will then be loaded in the generator. You can then change the settings as required and then call  Generate method to generate the new license code with the changed settings.</remarks>
+      <param name="licenseCode">The license code whose settings are to be loaded.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LoadProject">
+      <summary>Loads the specified license project file.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LoadProject(System.String)">
+      <summary>Loads the specified license project file.</summary>
+      <returns>True if the project was successfully loaded; False otherwise.</returns>
+      <param name="filepath">The license project file to load.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LoadProject(System.IO.Stream)">
+      <summary>Loads a license project from the specified stream.</summary>
+      <returns>True if the project was successfully loaded; False otherwise.</returns>
+      <param name="stream">The stream from which to load the license project.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.NotifySettingsChanged">
+      <summary>Notifies the generator that the plugin settings have changed.</summary>
+      <remarks>This method is used by plugins to notify the generator that plugin settings have changed. When this method is called, the user is prompted to save the project before exiting the application.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SaveProject">
+      <summary>Saves the license project to the specified project file.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SaveProject(System.String)">
+      <summary>Saves the license project to the specified project file.</summary>
+      <returns>True if the project was successfully saved; False otherwise.</returns>
+      <param name="filepath">The full path of the file in which the license project should be saved.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SetActiveProfile(System.String)">
+      <summary>Sets the specified profile as the active profile.</summary>
+      <returns>True if the specified profile was successfully set as the active profile; False otherwise.</returns>
+      <remarks>    You can use this method to quickly generate licenses with     pre-defined profile settings.     When a profile is set as an active profile, any licenses     generated thereafter have the same settings as the profile. For     example, if the profile specifies an evaluation period of 30     days, the generated licenses will also specify an evaluation     period of 30 days.</remarks>
+      <param name="profileName">The name of the profile. This should exactly match the name of the profile defined using CryptoLicensing Generator.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SetFeaturesEx">
+      <summary>Sets the features from the specified BitArray instance.Sets the features from the specified data.  " --&gt;</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SetFeaturesEx(System.Collections.BitArray)">
+      <summary>Sets the features from the specified BitArray instance.   " --&gt;</summary>
+      <param name="bits">             The BitArray instance whose bits specify the features         of the license.         $$GenericArguments$$filtereditemlist" --&gt;$$Return_Type$$comment" blankformat="" --&gt;     </param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SetFeaturesEx(System.Byte[])">
+      <summary>Sets the features from the specified byte array.   " --&gt;</summary>
+      <param name="bits">             The byte array which specifies the features of the         license.         $$GenericArguments$$filtereditemlist" --&gt;$$Return_Type$$comment" blankformat="" --&gt;     </param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SetLicenseCode(System.String)">
+      <summary>Sets the license code for CryptoLicensing.</summary>
+      <remarks>Use this method to set the license code for CryptoLicensing. This is required so that the generator is activated and generation of licenses via code is successful.</remarks>
+      <param name="licenseCode">The license code for CryptoLicensing.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGenerator.ValidateDeactivationCode(System.String)">
+      <summary>Validates the specified deactivation code.</summary>
+      <returns>    A          CryptoLicense object representing the license associated     with the deactivation code. If the deactivation code is     invalid, then a null value is returned.     Note that the returned          CryptoLicense object should only be used to access the     settings of the original license associated with the     deactivation code.</returns>
+      <remarks>A successful validation indicates that the customer has actually deactivated the license from his/her machine.</remarks>
+      <param name="code">The deactivation code to validate.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.ActiveKeyIndex">
+      <summary>Gets or sets the index of the key used when generated and validating licenses.</summary>
+      <remarks>    Each license project can have multiple cryptographic     keys. Multiple keys are useful for different versions of the     same product or for altogether different products.     By default, when a new project is created, it has one key     which is set as the active key.     You can use the          Keys property to access and enumerate through all keys in     the license project. Use the          RSAKeyList.Add method to add a new key to the license     project.     Note that codes generated using one key cannot be     validated using another key.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.CodesToGenerate">
+      <summary>Gets/Sets the number of codes to generate every time the     Generate method is called.</summary>
+      <remarks>The generated license codes and serial codes can be accessed using the  LicenseCodes and the  SerialCodes properties.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.CurrentCodeIndex">
+      <summary>Gets the index of the current code being generated.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.HonorSettingsChangedNotifications">
+      <summary>Gets/Sets whether the generator honors calls made to the     NotifySettingsChanged method.</summary>
+      <remarks>This method is used by plugins to notify the generator to temporarily stop honoring calls to the  NotifySettingsChanged method (such as when UI elements of the plugin are being initialized when first loaded).</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.IDs">
+      <summary>Gets the array of unique ids embedded in the license codes generated when the  Generate method if called.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.Keys">
+      <summary>Gets the list of keys defined in the project.</summary>
+      <remarks>    Each license project can have multiple cryptographic     keys. Multiple keys are useful for different versions of the     same product or for altogether different products.     By default, when a new project is created, it has one key     which is set as the active key.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LicenseCodes">
+      <summary>Gets the license codes generated from the latest call to the  Generate method.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.LicenseManagement">
+      <summary>Gets an instance of the license management settings used by the generator.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.Name">
+      <summary>Gets/Sets the name of the project.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.ProcessedLicenseCodes">
+      <summary>Gets the processed license codes generated from the latest call to the  Generate method.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.ProcessedSerialCodes">
+      <summary>Gets the processed serial codes generated from the latest call to the  Generate method.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.Profiles">
+      <summary>Gets the list of profiles currently in the project.</summary>
+      <remarks>This method is used to modify, remove or add new profiles to the project.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.ProjectFilePath">
+      <summary>Gets the full path of the project file.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SaveInXmlFormat">
+      <summary>Gets/Sets whether to save the license project file in XML format.</summary>
+      <remarks>Saving the project file in XML format allows for easy tracking of changes using file compare tools and makes version control easier.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGenerator.SerialCodes">
+      <summary>Gets the serial codes generated from the latest call to the  Generate method.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseGeneratorDBWorkerPlugin">
+      <summary>Represents a db worker plugin.</summary>
+      <remarks>    CryptoLicensing has built-in support for Access and SQL     Server. To use a different database with the License Management     and License Service functionality, you need to implement a     db-worker plugin which routes SQL queries to the target     database.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorDBWorkerPlugin.GetDBWorker">
+      <summary>Gets the DBWorker derived class instance which will be used to route SQL queries to the target database.</summary>
+      <returns>The DBWorker derived class instance which will be used to route SQL queries to the target database.</returns>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin">
+      <summary>Represents a plugin which can be loaded by the application.</summary>
+      <remarks>    A plugin can be used to provide userdata when generating     license/serial codes. They can also be used to perform     post-processing on generated codes such as importing generated     codes into a database or running external programs.     The          Generator property can be used to get the generator which     has loaded the plugin.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicenseGeneratorPlugin class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.GetName">
+      <summary>Gets the display name of the plugin. This name is displayed in the license generator application UI.</summary>
+      <returns>The display name of the plugin. The default implementation returns the typename of the class implementing the plugin.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.LoadSettings(System.Xml.XmlNode)">
+      <summary>Called to load previously saved plugin settings.</summary>
+      <returns>True if the load was successful, false otherwise. The default implementation returns true.</returns>
+      <param name="node">The node in the XML document where the settings should be loaded from.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.OnAfterGenerate">
+      <summary>Called after all codes are generated.</summary>
+      <remarks>    Any work to be performed by the plugin should be done in     this method.     If you need to process individual codes, use the          ProcessCode method instead.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.OnBeforeGenerate">
+      <summary>Called before codes are generated.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.OnInitialize">
+      <summary>Called when the plugin is first loaded by the generator.</summary>
+      <returns>True if the initialization was successful; False otherwise. The default implementation returns True.</returns>
+      <remarks>The  Generator property can be used to get the generator which has loaded the plugin.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.ProcessCode(System.String@,System.String@)">
+      <summary>Called to process generated codes.</summary>
+      <remarks>The generator calls each plugin in sequence and passes the processed code returned by the previous plugin to the next plugin.</remarks>
+      <returns>True if the processing was successful; False otherwise. The default implementation does not perform any processing and returns True.</returns>
+      <param name="license">The processed license code. If you process (modify) the license code in any way, assign the processed code to this 'ref' parameter. The processed code is then passed to the next plugin.</param>
+      <param name="serial">The processed serial code. If you process (modify) the serial code in any way, assign the processed code to this 'ref' parameter. The processed code is then passed to the next plugin.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.SaveSettings(System.Xml.XmlNode)">
+      <summary>Called to save plugin settings when the project is about be to closed.</summary>
+      <returns>True if the save was successful; False otherwise. The default implementation returns True.</returns>
+      <param name="node">The node in the XML document where the plugin settings should be saved.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseGeneratorPlugin.Generator">
+      <summary>Gets the generator which has loaded the plugin.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseGeneratorSettingsPlugin">
+      <summary>Represents a generator plugin which has its own UI. The UI is displayed as part of the UI of CryptoLicensing Generator.</summary>
+      <remarks>The  GetSettingsUI method is used to get the plugin UI.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorSettingsPlugin.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicenseGeneratorSettingsPlugin class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorSettingsPlugin.GetSettingsUI">
+      <summary>Called to retrieve the UI of the plugin.</summary>
+      <returns>The UI of the plugin.</returns>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseGeneratorUserDataPlugin">
+      <summary>Represents a user data plugin.</summary>
+      <remarks>    A user data plugin provides user data to the license     generator via the          GetUserData method. Optionally, the plugin can also provide     a UI for inputting user data. This UI is displayed as part of     the UI of CryptoLicensing Generator and is retrieved via the          GetUserDataUI method.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorUserDataPlugin.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicenseGeneratorUserDataPlugin class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorUserDataPlugin.GetUserData">
+      <summary>Gets the user data to be used by the generator when generating codes.</summary>
+      <returns>The string representing the user data to be used by the generator when generating codes. The default implementation returns null.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorUserDataPlugin.GetUserDataUI">
+      <summary>Called to retrieve the UI of the plugin.</summary>
+      <returns>The UI of the plugin.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseGeneratorUserDataPlugin.SetUserData(System.String)">
+      <summary>Displays the user data in the plugin's UI.</summary>
+      <remarks>This method is called by CryptoLicensing Generator when a license is validated.</remarks>
+      <param name="userData">The user data to display in the plugin's UI.</param>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseProvider">
+      <summary>Represents a license provider which is used by the .Net framework during licensing.</summary>
+      <remarks>This class is mainly used for component/control licensing. Before calling the LicenseManager.Validate method, use the  SetLicense method to associate a license with a type.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseProvider.#ctor">
+      <summary>Initializes a new instance of the  CryptoLicenseGeneratorUserDataPlugin class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseProvider.GetLicense">
+      <summary>Called by the .Net framework to get the license for the specified type.Gets the license for the specified type.</summary>
+      <returns>The license for the specified type.</returns>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseProvider.GetLicense(System.Type)">
+      <summary>Gets the license for the specified type.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseProvider.GetLicense(System.ComponentModel.LicenseContext,System.Type,System.Object,System.Boolean)">
+      <summary>Gets the license for the specified type.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseProvider.SetLicense(System.Type,LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Associates a license with the specified type.</summary>
+      <param name="type">The type with which to associate the license.</param>
+      <param name="license">The license for the above type.</param>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.CryptoLicenseWrapper">
+      <summary>Represents a simple wrapper which holds a  CryptoLicense object.</summary>
+      <remarks>    This class and the          CryptoLicenseProvider class is used to support the .Net     licensing mechanism. This class is typically only required only     when licensing components and controls.     The          CryptoLicense property can be used to access the inner     license that this object holds.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseWrapper.#ctor(LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Creates a new instance of the  CruptoLicenseWrapper object.</summary>
+      <param name="license">The  CryptoLicense to wrap.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.CryptoLicenseWrapper.Dispose">
+      <summary>Frees all resources associated with the object.</summary>
+      <remarks>This method simply calls the  CryptoLicense.Dispose method.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseWrapper.CryptoLicense">
+      <summary>Gets/Sets the inner  CruptoLicense object of this wrapper.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.CryptoLicenseWrapper.LicenseKey">
+      <summary>Gets the license code of the inner  CryptoLicense object.</summary>
+      <remarks>This property simply returns the value of  CryptoLicense.LicenseCode property of the wrapper  CryptoLicense object.</remarks>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.EvaluationInfoDialog">
+      <summary>Represents a ready-made evaluation information and license entry dialog which can presented to the user.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.EvaluationInfoDialog.#ctor(LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Initializes a new instance of the EvaluationInfoDialog class.</summary>
+      <param name="license">The license to which the evaluation info dialog is tied.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.EvaluationInfoDialog.ProductName">
+      <summary>Gets or sets the product name to be display in the UI of the evaluation info dialog.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.EvaluationInfoDialog.PurchaseURL">
+      <summary>Gets or sets the URL which is opened when the user clicks the 'Purchase Now' button in the evaluation info dialog.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.EvaluationInfoDialog.ShowOfflineActivationButton">
+      <summary>Gets or sets whether the 'Activate Offline' button is shown in the 'Enter License' pane of the evaluation info dialog.</summary>
+      <remarks>Set this property to True if you want the user to have the option of activating his license (if the license requires activation) offline. When the user clicks the 'Activate Offline' button, he is shown his local machine code which he can send to you via email or some other means. Using this machine code, you can generate a machine-locked license from CryptoLicensing Generator and send it back to the user.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.EvaluationInfoDialog.StartPane">
+      <summary>Gets the start pane that is shown when the evaluation info dialog is displayed.</summary>
+      <remarks>In circumstances when you want to directly show the 'Enter License' pane, set this property to  EvaluationDialogPane.EnterLicense before calling the CryptoLicense. ShowEvaluationInfoDialog method.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.EvaluationInfoDialog.UseDateExpires">
+      <summary>Gets/Sets whether the evaluation info dialog shows information about the 'Absolute Date of Expiration' setting, if any, specified in the license.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.FloatingHeartBeatEventArgs">
+      <summary>Provides data for the  FloatingHeartBeat event.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.FloatingHeartBeatEventArgs.Exception">
+      <summary>Gets the exception, if any, associated with the latest heartbeat message sent to the license service.</summary>
+      <remarks>    Causes such as non connectivity, problems with license     service, etc result in an exception which can be retrieved     using this property.     If no exception is present (this property returns null),     it usually indicates that the failure occurred because the     number of activations exceeded the maximum number of     activations allowed by the license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.FloatingHeartBeatEventArgs.Result">
+      <summary>Gets the result of the latest heartbeat message sent to the license service.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseManagement">
+      <summary>Represent settings used for license management.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseManagement.AddToDatabase">
+      <summary>Gets/Sets whether newly generated licenses are added to the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseManagement.ConnectionString">
+      <summary>Gets/Sets the connection string used to connect to the database to add newly generated licenses.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseManagement.LicenseManagementException">
+      <summary>Gets/Sets the exception, if any, that occurred when updating the License Management database after generating a license.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseService">
+      <summary>Represents a license web service which is used for activation, issuing licenses against serials, issue on-demand licenses, etc.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.#ctor">
+      <summary>Initializes a new instance of the  LicenseService class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.Activate(System.String,System.String,System.String)">
+      <summary>Activates the specified license on the specified machine.</summary>
+      <returns>The license with the embedded machine code. This license can now be used only on this machine.</returns>
+      <remarks>This method calls the  OnActivate method.</remarks>
+      <param name="licenseCode">The license to activate.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.ActivateDeregisterFloatingLicense(System.String,System.String,System.String)">
+      <summary>De-registers a floating license.</summary>
+      <remarks>    This method is automatically called by a CryptoLicense     when disposed if it specifies floating activations via the          MaxActivations and          ActivationsAreFloating properties.     When a license de-registers itself for the machine, a     slot is freed so that the same license can be activated on     another machine.     This method calls the virtual          OnActivateDeregisterFloatingLicense method.</remarks>
+      <param name="licenseCode">The license which is to be deactivated.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the de-activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.ActivateRegisterFloatingLicense(System.String,System.String,System.String)">
+      <summary>Registers a license which requires floating activations.</summary>
+      <returns>True if the activation was successful; False otherwise.</returns>
+      <remarks>    This method is automatically called by a CryptoLicense     when it is validated if it specifies floating activations via     the          MaxActivations and          ActivationsAreFloating properties.     When a license registers itself for the machine, a slot     is used up. If the number of activations of the license from     different machines exceeds the value specified by the          MaxActivations property at any time, then this method     fails.     This method calls the virtual          OnActivateRegisterFloatingLicense method.</remarks>
+      <param name="licenseCode">The license which is to be activated.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.AddActivation(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Adds a record of the activation to the database.</summary>
+      <remarks>The default implementation adds the license  ID and the machine code to the  ActivationTableName table in the database.</remarks>
+      <param name="license">The license whose activation is to be recorded in the database.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.AddLicense">
+      <summary>Adds the specified license code to the 'License' table in the database.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.AddLicense(System.String,System.Int64,System.String)">
+      <summary>Adds the specified license code to the 'License' table in the database.</summary>
+      <param name="licenseCode">The license code to add.</param>
+      <param name="id">The ID of the license code.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.AddNotification(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Adds a record of a notification to the database.</summary>
+      <remarks>The default implementation adds the license  ID and the machine code to the  NotificationTableName table in the database.</remarks>
+      <param name="license">The license whose activation is to be recorded in the database.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.DeleteActivation(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Deletes the record of the activation from the database.</summary>
+      <remarks>This method is called by the  OnActivateDeregisterFloatingLicense method when a floating license is de-activated.</remarks>
+      <param name="license">The license whose record is to be deleted.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the de-activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetIPAddress">
+      <summary>Gets the IP address of the remote computer which has contacted the license service.</summary>
+      <returns>The IP address of the remote computer which has contacted the license service.</returns>
+      <remarks>The IP address can be used to allow/disallow license activation, serial validation, etc.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetLicenseCodeFromLicenseTable(System.String)">
+      <summary>Gets the new license code for the specified license id from the License table of the license service database.</summary>
+      <returns>The new license code for the specified license id from the License table of the license service database.</returns>
+      <remarks>This method is used by the  UpdateLicense method which is typically used for subscription licensing scenarios.</remarks>
+      <param name="id">The id by which to search the License table for a new license.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetLicenseFromProfile(System.String,System.String,System.String,System.String)">
+      <summary>Gets a newly generated on-demand license.</summary>
+      <returns>A newly generated license code.</returns>
+      <remarks>    This method calls the          OnGetLicenseFromProfile method.     The method returns a license only if the specified     profile is enabled for use in the license service.</remarks>
+      <param name="profileName">The name of the profile used when generating the license.</param>
+      <param name="userData">The user data to be embedded in the generated license.</param>
+      <param name="machineCodeString">The machine code of the machine from which the request was sent.</param>
+      <param name="settingsFilePath">The settings file to use when servicing this request.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetNumberOfActivations(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Gets the number of machines that the specified license has been activated on.</summary>
+      <returns>The number of machines that the specified license has been activated on.</returns>
+      <param name="license">The license for which the number of activations is to be determined.</param>
+      <param name="excludedMachineCodeString">The string representing the hash of the data which identifies the machine which is to be excluded in the count.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetNumberOfValidations(System.Int64,System.String)">
+      <summary>Gets the number of machines that the specified serial has been activated on.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.GetSerialFromProfile(System.String,System.String)">
+      <summary>Gets a newly generated on-demand serial.</summary>
+      <returns>A newly generated serial code.</returns>
+      <remarks>    This method calls the OnGetSerialFromProfile     method.     The method returns a serial code only if the specified     profile is enabled for use in the license service.</remarks>
+      <param name="profileName">The name of the profile used when generating the serial.</param>
+      <param name="settingsFilePath">The settings file to use when servicing this request.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.Initialise">
+      <summary>Initializes the license service with the specified settings file and license project file.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.Initialise(System.String)">
+      <summary>Initializes the license service with the specified settings file and license project file.</summary>
+      <param name="settingsFilePath">The full path of the license service settings file.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.IsActivated(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Gets whether the specified license is already activated on the specified machine.</summary>
+      <returns>True if the license has been activated on the specified machine; False otherwise.</returns>
+      <param name="license">The license to test for activation.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine for which a record of an existing activation is to be queried.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.IsLicenseDisabled">
+      <summary>Gets whether the specified license is disabled.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.IsLicenseDisabled(LogicNP.CryptoLicensing.CryptoLicense)">
+      <summary>Gets whether the specified license is disabled.</summary>
+      <returns>True, if the specified license is disabled; False otherwise.</returns>
+      <remarks>This method uses the disabled licenses table (specified by the  DisabledLicenseTableName property) to determine whether the license is disabled. If the ID of the license is present in the table, the license is considered disabled.</remarks>
+      <param name="license">The license is check.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.IsLicensePresentForSerial(System.Int64)">
+      <summary>Gets whether a license corresponding to the specified serial exists in the license database.</summary>
+      <returns>True if the license exists in the database; False otherwise. The default implementation queries the  LicenseTableName table in the database.</returns>
+      <param name="id">The ID of the serial.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.LogException(System.Exception)">
+      <summary>Logs an exception to a file in the 'App_Data' folder.</summary>
+      <param name="ex">The exception to log.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.NotifyValidated(System.String,System.String,System.String)">
+      <summary>Notifies the service that a license was validated.</summary>
+      <returns>True if the validation should be allowed; False otherwise (license revoked).</returns>
+      <remarks>This method calls the  OnNotifyValidated method.</remarks>
+      <param name="licenseCode">The license code which was validated.</param>
+      <param name="machineCodeString">The machine code of the machine on which the license was validated.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnActivate(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Attempts activation of the specified license on the specified machine.</summary>
+      <returns>The license with the embedded machine code. This license can now be used only on this machine.</returns>
+      <param name="license">The license which is to be activated.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnActivateDeregisterFloatingLicense(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>De-registers a license which requires floating activations.</summary>
+      <remarks>    This method is automatically called by a CryptoLicense     when disposed if it specifies floating activations via the          MaxActivations and          ActivationsAreFloating properties.     When a license de-registers itself for the machine, a     slot is freed so that the same license can be activated on     another machine.</remarks>
+      <param name="license">The floating license to be de registered.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnActivateRegisterFloatingLicense(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Registers a license which requires floating activations.</summary>
+      <returns>True if the activation was successful; False otherwise.</returns>
+      <remarks>    This method is automatically called by a CryptoLicense     when it is validated if it specifies floating activations via     the          MaxActivations and          ActivationsAreFloating properties.     When a license registers itself for the machine, a slot     is used up. If the number of activations of the license from     different machines exceeds the value specified by the          MaxActivations property at any time, then this method     fails.</remarks>
+      <param name="license">The floating license to be registered.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the activation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnDeactivate(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Removes the activation record corresponding to the specified license and machine code.</summary>
+      <returns>True, if the record was successfully deleted; False otherwise.</returns>
+      <remarks>    This method deletes the activation record corresponding     to the specified license and machine code from the 'Activation'     table of the license service database. This frees up a slot for     another machine to get activated using the same license.</remarks>
+      <param name="license">The license whose activation record is to be deleted.</param>
+      <param name="machineCodeString">The machine code which is to be deleted.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnDisableLicense(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Called when a license is to be disabled.</summary>
+      <returns>True if the license was successfully disabled; False otherwise.</returns>
+      <remarks>The default implementation adds the license ID to the Disabled License table of the database.</remarks>
+      <param name="license">The license to be disabled.</param>
+      <param name="machineCodeString">The machine code of the computer from which the license is being disabled.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnEnableLicense(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Called when a license is to be enabled.</summary>
+      <returns>True if the license was successfully enabled; False otherwise.</returns>
+      <remarks>The default implementation removes the license ID from the Disabled License table of the database.</remarks>
+      <param name="license">The license to be enabled.</param>
+      <param name="machineCodeString">The machine code of the computer from which the license is being enabled.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnGetCurrentActivationCount(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String)">
+      <summary>Gets the number of activations that have been done for the specified license.</summary>
+      <returns>The number of activations that have been done for the specified license.</returns>
+      <remarks>The default implementation calls the GetNumberOfActivations method.</remarks>
+      <param name="license">The license whose activations are to be counted.</param>
+      <param name="machineCodeString">The machine code of the computer from which the call was made.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnGetLicenseFromProfile(System.String,System.String,System.String)">
+      <summary>Gets a newly generated on-demand license.</summary>
+      <remarks>    The method returns a license only if the specified     profile is enabled for use in the license service.</remarks>
+      <returns>A newly generated license code.</returns>
+      <param name="profileName">The name of the profile used when generating the license.</param>
+      <param name="userData">The user data to be embedded in the generated license.</param>
+      <param name="machineCodeString">The machine code of the machine from which the request was sent.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnGetSerialFromProfile(System.String)">
+      <summary>Gets a newly generated on-demand serial.</summary>
+      <param name="profileName">The name of the profile used when generating the serial.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnInitialise(System.String)">
+      <summary>Called when the license service is initialized.</summary>
+      <param name="settingsFilePath">The path to the settings.xml file used by the license service for this particular request.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnNotifyValidated(LogicNP.CryptoLicensing.CryptoLicense,System.String)">
+      <summary>Notifies the service that a license was validated.</summary>
+      <returns>True if the validation should be allowed; False otherwise (license revoked).</returns>
+      <remarks>The SerialValidationMode property determines how licenses are issued for serials.</remarks>
+      <param name="license">The license which has been validated.</param>
+      <param name="machineCodeString">The machine code of the machine on which the license was validated.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnRenewLicense(System.String,System.String)">
+      <summary>Called when CryptoLicense.RenewLicense client side method is called.</summary>
+      <remarks>    This method is typically overridden to perform checks (     for example, to verify that the subscription is valid) before     the base implementation is called. See the AppLicensing sample     that comes with the installation for sample overridden of this     method.     The default implementation calls Generator.Generate and     adds the newly generated license code to the     License table of the license service     database.     The renewed/updated license code has the same ID as the     license code loaded into the CryptoLicense instance the     CryptoLicense.RenewLicense client side method is called.</remarks>
+      <returns>The new license code.</returns>
+      <param name="userData">The user-data to be embedded in the renewed/updated license code. The Generator.UserData property is already set with the value of userData when this method is called.</param>
+      <param name="machineCodeString">The machine code of the client-side machine. The Generator.MachineCode property is already set with the value of machineCodeString when this method is called.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnSendUsageReport(LogicNP.CryptoLicensing.UsageReport)">
+      <summary>Called when a usage report is uploaded to the license service.</summary>
+      <param name="report">The usage report.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnUpdateLicense(LogicNP.CryptoLicensing.CryptoLicense,System.String,System.String,System.String)">
+      <summary>Called by the  UpdateLicense method.</summary>
+      <returns>The default implementation simply returns the newLicenseCode.</returns>
+      <remarks>    You can override the method to further modify the new     license code as follows:     protected     override     string     OnUpdateLicense(     CryptoLicense     originalLicense,     string     userData,     string     machineCodeString,     string     newLicenseCode)     {          this.Generator.     LoadLicenseCode(newLicenseCode);     // Set new user-data if     specified          if(!string.     IsNullOrEmpty(userData))          this.Generator.     UserData = userData;     // If required, the new license can     be locked to machine....     if     (!string.IsNullOrEmpty(     machineCodeString))          this.Generator.     MachineCode =     Convert.FromBase64String(     machineCodeString);     // Generate new license     newLicenseCode =     this.Generator.     Generate();     // Update License table          AddLicense(newLicenseCode,     this.Generator.     IDs[0], machineCodeString,     true);     return     newLicenseCode;     }</remarks>
+      <param name="originalLicense">The CryptoLicense instance loaded with the original license code.</param>
+      <param name="userData">Not currently used.</param>
+      <param name="machineCodeString">Not currently used.</param>
+      <param name="newLicenseCode">The license code found in the License table having the same ID as the original license code. If no such code is found, this is a null or empty string.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnValidateSerial">
+      <summary>Validates a serial code and returns a license code corresponding to the serial code.</summary>
+      <returns>A license code corresponding to the serial code.</returns>
+      <remarks>This method is called by the  ValidateSerial method.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.OnValidateSerial(System.String,System.String)">
+      <summary>Validates a serial code and returns a license code corresponding to the serial code.</summary>
+      <returns>A license code corresponding to the serial code.</returns>
+      <remarks>This method is called by the ValidateSerial method.</remarks>
+      <param name="serial">The serial code to validate.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the serial code validation is taking place.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.SendUsageReport(System.String,System.String)">
+      <summary>Enters information about the usage report into the license service database.</summary>
+      <returns>A string representing a CRC code which is checked by the CryptoLicensing client to ensure that the usage report was successfully sent to the service.</returns>
+      <remarks>This method calls the OnSendUsageReport method.</remarks>
+      <param name="usageData">A base64 encoded usage report.</param>
+      <param name="settingsFilePath">The settings file to use when servicing this request.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.UpdateLicense(System.String,System.String,System.String,System.String)">
+      <summary>Uses the ID of the specified license code to search for an updated license code in the License table and returns the update license code if present</summary>
+      <returns>The updated license code, if present, from the License table of the license service database.</returns>
+      <remarks>    This method is called when the          CryptoLicense.UpdateLicense client-side method is     called.     This method calls the          OnUpdateLicense method.</remarks>
+      <param name="licenseCode">The original license code. The ID of this license code is used to search if a new license code with the same ID is present in the License table.</param>
+      <param name="userData">Not currently used.</param>
+      <param name="machineCodeString">Not currently used.</param>
+      <param name="settingsFilePath">The path to the settings.xml file used by the license service for this particular request. A null or empty value indicates the default settings file.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseService.ValidateSerial(System.String,System.String,System.String,System.String)">
+      <summary>Validates a serial code and returns a license code corresponding to the serial code.</summary>
+      <remarks>    The          SerialValidationMode property determines how licenses are     issued for serials.</remarks>
+      <returns>A license code corresponding to the serial code.</returns>
+      <param name="serial">The serial code to validate.</param>
+      <param name="machineCodeString">The string representing the hash of the data which identifies the machine from which the serial code validation is taking place.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.ActivationTableName">
+      <summary>Gets/Sets the name of the activation table in the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.ConnectionString">
+      <summary>Gets/Sets the connection string used when accessing the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.DBConnection">
+      <summary>Gets the database connection used by the license service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.DefaultSettingsFilePath">
+      <summary>Gets or sets the path to default settings file used by the license service.</summary>
+      <remarks>If the client side requests made from your software via the  CryptoLicense class do not specify the settings file to use for the request via the  CryptoLicense.LicenseServiceSettingsFilePath, the settings file specified by this property is used. This is the typical case when you use only one license project file with one license service. However, you can also use the same license service for multiple projects in which case, the  CryptoLicense.LicenseServiceSettingsFilePath property specifies the settings file to use.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.DisabledLicenseTableName">
+      <summary>Gets/Sets the name of the disabled licenses table in the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.DisallowedMethods">
+      <summary>Gets/Sets the methods which are disabled in the license service.</summary>
+      <remarks>If a method present in the disallowed methods is called, the call will fail.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.Generator">
+      <summary>Gets the license generator used by the license service.</summary>
+      <remarks>The generator is available after the  ProjectFilePath property is set.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.LicenseTableName">
+      <summary>Gets/Sets the name of the license table in the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.LogExceptions">
+      <summary>Gets/Sets whether exception logging is enabled.</summary>
+      <remarks>    If this property is set to True, the license service will     log any exceptions that occur to the App_Data folder. This     facilitates trouble-shooting and diagnosing any problems with     the license service.     Each exception is logged to its own file having following     name: "exception_dd-MMM-yyyy_HH.mm.txt".</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.MaxSerialValidations">
+      <summary>Gets/Sets the maximum number of machines from which a serial can be validated.</summary>
+      <remarks>This property is only used when the  SerialValidationLimit property is set to  Explicit_SameAsMaxSerialValidations.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.NotificationTableName">
+      <summary>Gets/Sets the name of the notification table in the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.RecordIPAddress">
+      <summary>Gets or sets whether the license service records the IP addresses when clients contact it.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.SerialTableName">
+      <summary>Gets/Sets the name of the serial table in the database.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseService.SerialValidationLimit">
+      <summary>Gets/Sets how serial validations are limited to a specific number of machines.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.LicenseServiceSettings">
+      <summary>Represents settings used when generating the license service using the  CryptoLicenseGenerator.CreateLicenseService method.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.LicenseServiceSettings.#ctor">
+      <summary>Initializes a new instance of the  LicenseServiceSettings class.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.AppIcon">
+      <summary>Gets/Sets the icon of a customer-deployed Windows app based license service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.AppText">
+      <summary>Gets/Sets the caption of a customer-deployed Windows app based license service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ConfigPassword">
+      <summary>Gets/Sets the password to be used when accessing the license service configuration pages.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ConfigUserName">
+      <summary>Gets/Sets the user-name to be used when accessing the license service configuration pages.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.HostMachineCode">
+      <summary>Gets/Sets the machine code of the machine on the customer network on which the license service app will be running.</summary>
+      <remarks>The machine code must be in base-64 format.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.Language">
+      <summary>Gets/Sets the language used by the license service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.LicenseCode">
+      <summary>The license code used as a license for the license service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ListenToAddress">
+      <summary>Gets/Sets the address on which the license service will listen to requests for activation.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.OutputFolder">
+      <summary>Gets/Sets the folder where the license service files will be generated.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ServiceDescription">
+      <summary>Gets/Sets the the unique identifying name of the service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ServiceDisplayName">
+      <summary>Gets/Sets the friendly display name of the service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.ServiceName">
+      <summary>Gets/Sets the description of the service.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.StartMinimized">
+      <summary>Gets/Sets whether a customer-deployed Windows app based license service will start minimized.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.LicenseServiceSettings.Type">
+      <summary>Gets/Sets the type of the license service.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.Profile">
+      <summary>Represents a profile in the project file.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.Profile.#ctor(System.String)">
+      <summary>Initializes a new instance of the profile class.</summary>
+      <param name="name">The name of the profile.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.Profile.EnableWithGetProfile">
+      <summary>Gets or sets whether the profile can be used with the  CryptoLicense.GetLicenseFromProfile method.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.Profile.EnableWithSerials">
+      <summary>Gets or sets whether the profile can be used with the  CryptoLicense.GetLicenseFromSerial method.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.Profile.LicenseSettings">
+      <summary>Gets the CryptoLicense instance representing the profile settings.</summary>
+      <remarks>You can set the properties on the CryptoLicense instance to change the profile settings. Be sure to call  CryptoLicenseGenerator.SaveProject after all profile modifications have been done.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.Profile.Name">
+      <summary>Gets or sets the name of the profile.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.Profile.SerialValidationMode">
+      <summary>Gets or sets the serial validation mode used by the profile when validating serials.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.RSAKey">
+      <summary>Represents an RSA key.</summary>
+      <remarks>    Each license project can have multiple cryptographic     keys. Multiple keys are useful for different versions of the     same product or for altogether different products.     By default, when a new project is created, it has one key     which is set as the active key.     You can use the          Keys property to access and enumerate through all keys in     the license project. Use the          RSAKeyList.Add method to add a new key to the license     project.     Note that codes generated using one key cannot be     validated using another key.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.RSAKey.Name">
+      <summary>Gets or sets the name of the key.</summary>
+      <remarks>The name of the key can be used for tagging or identification of the key using user-friendly strings such as "v2.0" or "Product1".</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.RSAKey.Strength">
+      <summary>Gets the strength (in bits) of the key.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.RSAKeyList">
+      <summary>Represents the list of keys defined in the license project.</summary>
+      <remarks>    Each license project can have multiple cryptographic     keys. Multiple keys are useful for different versions of the     same product or for altogether different products.     By default, when a new project is created, it has one key     which is set as the active key.     You can use the          Keys property to access and enumerate through all keys in     the license project. Use the          RSAKeyList.Add method to add a new key to the license     project.     Note that codes generated using one key cannot be     validated using another key.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.RSAKeyList.Add(System.Int32,System.String)">
+      <summary>Adds a new cryptographic key to the license project,</summary>
+      <returns>The newly added key.</returns>
+      <param name="keyStrength">The strength (in bits) that the new key should have. This value should be in the range of 64 to 3072 and should be a multiple of 8.</param>
+      <param name="name">The user-friendly name that the new key should have. This cannot be null or empty string.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.RSAKeyList.IndexOf(LogicNP.CryptoLicensing.RSAKey)">
+      <summary>Gets the index of the specified key in the list.</summary>
+      <returns>The index of the specified key in the list, or -1 if the key is not found in the project's key list.</returns>
+      <param name="item">The key whose index should be returned.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.RSAKeyList.RemoveAt(System.Int32)">
+      <summary>Removes the key at the specified index from the project's key list.</summary>
+      <param name="index">The index of the key that is to be removed from the project's key list.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.RSAKeyList.Count">
+      <summary>Gets the number of keys in the list.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.RSAKeyList.Item(System.Int32)">
+      <summary>Gets the key at the specified index.</summary>
+      <param name="index">The index from where the key should be retrieved.</param>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.UsageReport">
+      <summary>Represents usage report data collected from a run of an application.</summary>
+      <remarks>    The Usage Reporting functonality of CryptoLicensing     allows you to collect data about the usage patterns and the     system hardware and software profile of the machine on which     your application ran.     Use the          RecordFeature,          RecordFeatureStart and          RecordFeatureEnd methods to report a feature as being used.     The          AppName,          AppVersion,          CLRVersion, etc properties can be used to record data about     the application itself. The          SystemMemory,          OS,          UserID, etc properties can be used to record data about the     hardware and software profile of the machine on which your     software ran.     Use the          CustomData property to associate custom data (in the form     of key-value pairs) with a usage report.     The          Load and          Save methods can be used to load and save the usage     report.     Finally, when you have finished collecting usage     reporting data (typically during software termination), use the          SendToService method to send the report to the license     service.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.#ctor">
+      <summary>Initializes a new instance of the  UsageReport class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.RecordFeature(System.String)">
+      <summary>Records the specified feature has having been used by your software.</summary>
+      <returns>A  UsageReportFeature instance which represents this particular use of the specified feauture. You can further associate custom data with this usage of the feature using the  UsageReportFeature.CustomData property.</returns>
+      <remarks>    This method is used for short running or instantenous     features like "Print" or "Save" or those features for which you     do not care about the running times. Both          UsageReportFeature.StartTime and          UsageReportFeature.EndTime are automatically set to the     current UTC time.     For features for which you want to record the start and     end times, use the          RecordFeatureStart and          RecordFeatureEnd methods.</remarks>
+      <param name="featureName">The feature name which uniquely identifies the feature from among all the features. This is typically a short self-descriptive string like "AppStart", "Print" or "Auto Update".</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.RecordFeatureEnd(System.String)">
+      <summary>Records the usage of the specified feature has having ended.</summary>
+      <returns>A  UsageReportFeature instance which represents this particular use of the specified feauture. You can further associate custom data with this usage of the feature using the  UsageReportFeature.CustomData property.</returns>
+      <remarks>This method searches for the last recorded feature having the same name as the featureName parameter and sets its  UsageReportFeature.EndTime to the current UTC time.</remarks>
+      <param name="featureName">The feature name which uniquely identifies the feature from among all the features. This is typically a short self-descriptive string like "AppStart", "Print" or "Auto Update".</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.RecordFeatureStart(System.String)">
+      <summary>Records the usage of the specified feature has having started.</summary>
+      <returns>A  UsageReportFeature instance which represents this particular use of the specified feauture. You can further associate custom data with this usage of the feature using the  UsageReportFeature.CustomData property.</returns>
+      <remarks>The  UsageReportFeature.StartTime is automatically set to the current UTC time. The  UsageReportFeature.EndTime is automatically set when the  RecordFeatureEnd method is called with the same featureName parameter.</remarks>
+      <param name="featureName">The feature name which uniquely identifies the feature from among all the features. This is typically a short self-descriptive string like "AppStart", "Print" or "Auto Update".</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.Save(System.IO.Stream)">
+      <summary>Saves the usage report to the specified stream.</summary>
+      <remarks>The saved usage report can be later sent to the license service using any of the SendToService* methods.</remarks>
+      <param name="st">The stream to which to save the usage report.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.SendToService">
+      <summary>Sends the usage report to the license service.</summary>
+      <returns>True if the usage report was succesfully sent to and accepted by the license service; False otherwise.</returns>
+      <remarks>This method can be called during software termination after all the usage data has been recorded. However, this method requires communication with the license service which may delay the shutdown of your software. If you want to avoid this, an alternative is to save the usage report to a file during software shutdown using the  Save method. The next time your software starts, the usage report can be sent to the license service using any of the SendToService* methods. This is be done on a background thread so that you software's main thread does not block while the usage report is sent.</remarks>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.SendToServiceFromBuffer(System.Byte[])">
+      <summary>Sends the usage report contained in the specified buffer to the license service.</summary>
+      <returns>True if the usage report was succesfully sent to and accepted by the license service; False otherwise.</returns>
+      <param name="buffer">The buffer which contains the usage report previously saved by the  Save method.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.SendToServiceFromFile(System.String)">
+      <summary>Sends the usage report contained in the specified file to the license service.</summary>
+      <returns>True if the usage report was succesfully sent to and accepted by the license service; False otherwise.</returns>
+      <param name="filePath">The file which contains the usage report previously saved by the  Save method.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.SendToServiceFromFolder(System.String,System.String,System.Int32@,System.Int32@)">
+      <summary>Sends all usage report files found in the specified folder to the license service.</summary>
+      <remarks>After each usage report file has been successfully sent to the license service, it is deleted so that the same file does not get sent twice.</remarks>
+      <param name="folderPath">The folder from which all usage report files will be sent. The files must have been previously saved using the  Save method.</param>
+      <param name="reportFilesExtension">The pattern of the usage report files to look for. Example: *.urf. This method will search for all matching files in the specified folder and send them to the license service.</param>
+      <param name="totalSent">[Out]The count of the total number of usage report files successfully sent to the license service.</param>
+      <param name="totalFound">[Out]The count of the total number of usage report files found by this method in the specified folder.</param>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReport.SendToServiceFromStream(System.IO.Stream)">
+      <summary>Sends the usage report contained in the specified stream to the license service.</summary>
+      <returns>True if the usage report was succesfully sent to and accepted by the license service; False otherwise.</returns>
+      <param name="st">The stream which contains the usage report previously saved by the  Save method.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.AppName">
+      <summary>Gets/Sets the name of the applicaiton with which this usage report is associated.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.AppVersion">
+      <summary>Gets/Sets the version of the applicaiton with which this usage report is associated.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.AssociatedLicense">
+      <summary>Gets/Sets the CryptoLicense instance with which to associate this usage report.</summary>
+      <remarks>    The          CryptoLicense.LicenseServiceURL property must be set since     the usage report will be sent to this URL. Further, if the          CryptoLicense.LicenseCode property is set, the usage report     will include the          CryptoLicense.ID property so that a specific usage report     can be associated with a specific license.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.CLRVersion">
+      <summary>Gets/Sets the version of the .Net runtime under which the software is running.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.CustomData">
+      <summary>Gets the custom data (key-value pairs) which should be associcated with the usage report.</summary>
+      <remarks>    You can use this property to associate custom data with     the usage report.     Further each use of a feature in the usage report can     also be associated with custom data using the          UsageReportFeature.CustomData property.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.EndTime">
+      <summary>Gets the end time of the usage report.</summary>
+      <remarks>The end time of the usage report is equal to the time when the last  RecordFeature or  RecordFeatureEnd methods are called.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.OS">
+      <summary>Gets/Sets the operating system under which which the software is running.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.ScreenResolution">
+      <summary>Gets/Sets the screen resolution under which the software is running.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.StartTime">
+      <summary>Gets the start time of the usage report.</summary>
+      <remarks>The start time of the usage report is equal to the time when the first  RecordFeature or  RecordFeatureStart methods are called.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.SystemMemory">
+      <summary>Gets/Sets the system memory of the machine on which the software is running.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReport.UserID">
+      <summary>Gets/Sets the hash of the user name which is logged on when the software is run.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.UsageReportFeature">
+      <summary>Represents data about a feature such as its name and the start and end time.</summary>
+      <remarks>The  CustomData property can be used to associate custom data with each instance of usage of a feature.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReportFeature.CustomData">
+      <summary>Gets the custom data (key-value pairs) which should be associcated with this instance of the use of the feature.</summary>
+      <remarks>Custom data is useful when you want to record method arguments, software state or the hardware/software state when the feature was used.</remarks>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReportFeature.EndTime">
+      <summary>Gets the end time of the feature.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReportFeature.Name">
+      <summary>Gets the name of the feature.</summary>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReportFeature.StartTime">
+      <summary>Gets the start time of the feature.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.UsageReportingConsentForm">
+      <summary>Represents a pre-designed consent form which you can use to ask for the user's consnet for usage reporting.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReportingConsentForm.#ctor">
+      <summary>Initializes a new instance of the  UsageReportingConsentForm class.</summary>
+    </member>
+    <member name="M:LogicNP.CryptoLicensing.UsageReportingConsentForm.ShowDialogInt(System.Windows.Forms.IWin32Window)">
+      <summary>Called to show the consent form on the screen.</summary>
+      <returns>True if the user gave consent to usage reporting; False otherwise.</returns>
+      <param name="owner">The owner window to use for the consent form.</param>
+    </member>
+    <member name="P:LogicNP.CryptoLicensing.UsageReportingConsentForm.ProductName">
+      <summary>Gets/Sets the name of your application.</summary>
+    </member>
+    <member name="T:LogicNP.CryptoLicensing.FloatingHeartBeatHandler">
+      <summary>Represents the method which handles the  CryptoLicense.FloatingHeartBeat event.</summary>
+      <param name="sender">The sender of the event.</param>
+      <param name="e">The data associated with the event.</param>
+    </member>
+  </members>
+</doc>
