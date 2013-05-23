@@ -120,7 +120,7 @@ osg::Group *VsJoint::ParentOSG()
 osg::Group *VsJoint::ChildOSG()
 {
 	if(m_lpVsChild)
-		m_lpVsChild->GetMatrixTransform();
+		return m_lpVsChild->GetMatrixTransform();
 
 	return NULL;
 }
@@ -144,9 +144,42 @@ void VsJoint::Physics_RotationChanged()
 	Physics_ResetGraphicsAndPhysics();
 }
 
-// TODO !!!! This method needs to be implemented.
 void VsJoint::Physics_Resize()
 {
+    if(m_vxJoint)
+    {
+        DeleteJointGraphics();
+        CreateJointGraphics();
+        ResetDraggerOnResize();
+    }
+}
+
+void VsJoint::DeleteGraphics()
+{
+    DeleteJointGraphics();
+    VsBody::DeleteGraphics();
+}
+
+void VsJoint::DeleteJointGraphics()
+{
+	if(m_osgJointMT.valid() && m_osgDefaultBallMT.valid()) m_osgJointMT->removeChild(m_osgDefaultBallMT.get());
+    m_osgDefaultBall.release();
+    m_osgDefaultBallMT.release();
+    m_osgDefaultBallSS.release();
+}
+
+void VsJoint::ResetDraggerOnResize()
+{
+	//Now lets re-adjust the gripper size.
+	if(m_osgDragger.valid())
+		m_osgDragger->SetupMatrix();
+
+	//Reset the user data for the new parts.
+	if(m_osgNodeGroup.valid())
+	{
+		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osgVisitor->traverse(*m_osgNodeGroup);
+	}
 }
 
 /**

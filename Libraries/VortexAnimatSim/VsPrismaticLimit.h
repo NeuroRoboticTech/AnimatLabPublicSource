@@ -46,6 +46,7 @@ namespace VortexAnimatSim
 				osg::StateSet *CylinderSS();
 
 				virtual void SetupGraphics();
+                virtual void DeleteGraphics();
 			};
 
 		}		//Joints

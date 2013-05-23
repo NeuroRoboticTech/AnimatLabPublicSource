@@ -191,6 +191,14 @@ namespace AnimatSim
 			\date	3/22/2011
 			**/
 			virtual void SetupGraphics() = 0;
+
+			/**
+			\brief	Deletes up the graphics for the constraint.
+			
+			\author	dcofer
+			\date	3/22/2011
+			**/
+			virtual void DeleteGraphics() = 0;
 		};
 
 	}			// Environment

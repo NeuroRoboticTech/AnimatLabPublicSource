@@ -46,6 +46,9 @@ namespace VortexAnimatSim
 				/// The osg cylinder geometry.
 				osg::ref_ptr<osg::Geometry> m_osgCylinder;
 
+                /// The osg cylinder geode.
+                osg::ref_ptr<osg::Geode> m_osgCylinderGeode;
+
 				/// The osg cylinder matrix transform.
 				osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
 
@@ -55,6 +58,8 @@ namespace VortexAnimatSim
 				/// The osg cylinder state set.
 				osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
 
+    			virtual void DeleteJointGraphics();
+                virtual void CreateJointGraphics();
 				virtual void SetupGraphics();
 				virtual void UpdateData();
 				virtual void SetupPhysics();

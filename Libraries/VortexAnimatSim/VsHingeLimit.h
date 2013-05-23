@@ -38,7 +38,8 @@ namespace VortexAnimatSim
 				osg::StateSet *FlapSS() {return m_osgFlapSS.get();};
 
 				virtual void SetupGraphics();
-			};
+                virtual void DeleteGraphics();
+            };
 
 		}		//Joints
 	}			// Environment

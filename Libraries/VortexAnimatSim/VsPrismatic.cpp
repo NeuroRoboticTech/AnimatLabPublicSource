@@ -103,37 +103,63 @@ void VsPrismatic::SetAlpha()
 	m_lpPosFlap->Alpha(m_fltAlpha);
 }
 
+void VsPrismatic::DeleteJointGraphics()
+{
+	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
+	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
+	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
+
+    if(m_osgJointMT.valid())
+    {
+		if(lpUpperLimit && lpUpperLimit->BoxMT()) m_osgJointMT->removeChild(lpUpperLimit->BoxMT());
+		if(lpUpperLimit && lpUpperLimit->CylinderMT()) m_osgJointMT->removeChild(lpUpperLimit->CylinderMT());
+
+        if(lpLowerLimit && lpLowerLimit->BoxMT()) m_osgJointMT->removeChild(lpLowerLimit->BoxMT());
+		if(lpLowerLimit && lpLowerLimit->CylinderMT()) m_osgJointMT->removeChild(lpLowerLimit->CylinderMT());
+
+		if(lpPosFlap && lpPosFlap->BoxMT()) m_osgJointMT->removeChild(lpPosFlap->BoxMT());
+    }
+
+    if(m_lpUpperLimit) m_lpUpperLimit->DeleteGraphics();
+    if(m_lpLowerLimit) m_lpLowerLimit->DeleteGraphics();
+    if(m_lpPosFlap) m_lpPosFlap->DeleteGraphics();
+}
+
+void VsPrismatic::CreateJointGraphics()
+{
+	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
+	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
+	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
+
+	lpPosFlap->LimitPos(Prismatic::JointPosition());
+
+	lpUpperLimit->SetupGraphics();
+	lpLowerLimit->SetupGraphics();
+	lpPosFlap->SetupGraphics();
+
+	m_osgJointMT->addChild(lpUpperLimit->BoxMT());
+	m_osgJointMT->addChild(lpUpperLimit->CylinderMT());
+
+	m_osgJointMT->addChild(lpLowerLimit->BoxMT());
+	m_osgJointMT->addChild(lpLowerLimit->CylinderMT());
+
+	m_osgJointMT->addChild(lpPosFlap->BoxMT());
+}
+
 void VsPrismatic::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.
 	m_osgParent = ParentOSG();
-	osg::ref_ptr<osg::Group> osgChild = ChildOSG();
 
 	if(m_osgParent.valid())
 	{
-		VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
-		VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
-		VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
-
-		lpPosFlap->LimitPos(Prismatic::JointPosition());
-
-		lpUpperLimit->SetupGraphics();
-		lpLowerLimit->SetupGraphics();
-		lpPosFlap->SetupGraphics();
-
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgJointMT->addChild(lpUpperLimit->BoxMT());
-		m_osgJointMT->addChild(lpUpperLimit->CylinderMT());
-
-		m_osgJointMT->addChild(lpLowerLimit->BoxMT());
-		m_osgJointMT->addChild(lpLowerLimit->CylinderMT());
-
-		m_osgJointMT->addChild(lpPosFlap->BoxMT());
+        CreateJointGraphics();
 
 		m_osgNode = m_osgJointMT.get();
 
@@ -241,7 +267,6 @@ void VsPrismatic::CreateJoint()
 	SetupGraphics();
 	SetupPhysics();
 }
-
 
 #pragma region DataAccesMethods
 

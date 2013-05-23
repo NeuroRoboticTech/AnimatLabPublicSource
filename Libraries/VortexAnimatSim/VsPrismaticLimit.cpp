@@ -118,6 +118,19 @@ void VsPrismaticLimit::SetLimitValues()
 	}
 }
 
+void VsPrismaticLimit::DeleteGraphics()
+{
+    m_osgBox.release();
+    m_osgBoxMT.release();
+    m_osgBoxMat.release();
+    m_osgBoxSS.release();
+    m_osgCylinder.release();
+    m_osgCylinderGeode.release();
+    m_osgCylinderMT.release();
+    m_osgCylinderMat.release();
+    m_osgCylinderSS.release();
+}
+
 void VsPrismaticLimit::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.

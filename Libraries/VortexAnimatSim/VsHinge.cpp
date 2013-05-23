@@ -107,6 +107,31 @@ void VsHinge::SetAlpha()
 
 }
 
+void VsHinge::DeleteJointGraphics()
+{
+	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
+	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
+	VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
+
+    if(m_osgJointMT.valid())
+    {
+        if(m_osgCylinderMT.valid()) m_osgJointMT->removeChild(m_osgCylinderMT.get());
+		if(lpUpperLimit && lpUpperLimit->FlapTranslateMT()) m_osgJointMT->removeChild(lpUpperLimit->FlapTranslateMT());
+		if(lpLowerLimit && lpLowerLimit->FlapTranslateMT()) m_osgJointMT->removeChild(lpLowerLimit->FlapTranslateMT());
+		if(lpPosFlap && lpPosFlap->FlapTranslateMT()) m_osgJointMT->removeChild(lpPosFlap->FlapTranslateMT());
+    }
+
+    m_osgCylinder.release();
+    m_osgCylinderGeode.release();
+    m_osgCylinderMT.release();
+    m_osgCylinderMat.release();
+    m_osgCylinderSS.release();
+
+    if(m_lpUpperLimit) m_lpUpperLimit->DeleteGraphics();
+    if(m_lpLowerLimit) m_lpLowerLimit->DeleteGraphics();
+    if(m_lpPosFlap) m_lpPosFlap->DeleteGraphics();
+}
+
 /**
 \brief	Creates the cylinder graphics.
 
@@ -117,13 +142,13 @@ void VsHinge::CreateCylinderGraphics()
 {
 	//Create the cylinder for the hinge
 	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 30, true, true, true);
-	osg::ref_ptr<osg::Geode> osgCylinder = new osg::Geode;
-	osgCylinder->addDrawable(m_osgCylinder.get());
+	m_osgCylinderGeode = new osg::Geode;
+	m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
 
 	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 	m_osgCylinderMT = new osg::MatrixTransform();
 	m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
-	m_osgCylinderMT->addChild(osgCylinder.get());
+	m_osgCylinderMT->addChild(m_osgCylinderGeode.get());
 
 	//create a material to use with the pos flap
 	if(!m_osgCylinderMat.valid())
@@ -143,26 +168,33 @@ void VsHinge::CreateCylinderGraphics()
 	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 }
 
+void VsHinge::CreateJointGraphics()
+{
+	CreateCylinderGraphics();
+
+	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
+	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
+	VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
+
+	lpPosFlap->LimitPos(Hinge::JointPosition());
+
+	lpUpperLimit->SetupGraphics();
+	lpLowerLimit->SetupGraphics();
+	lpPosFlap->SetupGraphics();
+
+	m_osgJointMT->addChild(m_osgCylinderMT.get());
+	m_osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
+	m_osgJointMT->addChild(lpLowerLimit->FlapTranslateMT());
+	m_osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
+}
+
 void VsHinge::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.
 	m_osgParent = ParentOSG();
-	osg::ref_ptr<osg::Group> osgChild = ChildOSG();
 
 	if(m_osgParent.valid())
 	{
-		CreateCylinderGraphics();
-
-		VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
-		VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
-		VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
-
-		lpPosFlap->LimitPos(Hinge::JointPosition());
-
-		lpUpperLimit->SetupGraphics();
-		lpLowerLimit->SetupGraphics();
-		lpPosFlap->SetupGraphics();
-
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
@@ -170,10 +202,7 @@ void VsHinge::SetupGraphics()
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgJointMT->addChild(m_osgCylinderMT.get());
-		m_osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
-		m_osgJointMT->addChild(lpLowerLimit->FlapTranslateMT());
-		m_osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
+        CreateJointGraphics();
 
 		m_osgNode = m_osgJointMT.get();
 
@@ -281,7 +310,6 @@ void VsHinge::CreateJoint()
 	SetupGraphics();
 	SetupPhysics();
 }
-
 
 #pragma region DataAccesMethods
 

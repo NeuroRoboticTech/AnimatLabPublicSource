@@ -83,6 +83,14 @@ void VsHingeLimit::SetLimitValues()
 	}
 }
 
+void VsHingeLimit::DeleteGraphics()
+{
+    m_osgFlapRotateMT.release();
+    m_osgFlap.release();
+    m_osgFlapMat.release();
+    m_osgFlapSS.release();
+}
+
 void VsHingeLimit::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.
