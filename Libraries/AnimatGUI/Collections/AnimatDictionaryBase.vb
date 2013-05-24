@@ -157,6 +157,17 @@ Namespace Collections
             Return Nothing
         End Function
 
+        Public Overridable Sub FindChildrenOfType(ByVal tpTemplate As Type, ByVal colDataObjects As Collections.DataObjects)
+
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me
+                If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.FindChildrenOfType(tpTemplate, colDataObjects)
+                End If
+            Next
+        End Sub
+
         Public Overridable Sub DumpListInfo()
 
             'Debug.WriteLine("")

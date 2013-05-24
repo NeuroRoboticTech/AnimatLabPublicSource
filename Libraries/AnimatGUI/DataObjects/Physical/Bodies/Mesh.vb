@@ -261,6 +261,8 @@ Namespace DataObjects.Physical.Bodies
         End Function
 
         Public Overrides Sub BeforeAddBody()
+            MyBase.BeforeAddBody()
+
             Try
                 Dim frmMesh As New Forms.BodyPlan.SelectMesh
 

@@ -324,6 +324,8 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub BeforeAddBody()
+            MyBase.BeforeAddBody()
+
             Try
                 If Me.IsRoot Then
                     Me.Rotation.X.ActualValue = -90

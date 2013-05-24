@@ -2,6 +2,7 @@
 Public Interface ISimApplication
 
     ReadOnly Property Logger() As ManagedAnimatInterfaces.ILogger
+    ReadOnly Property ApplicationDirectory() As String
 
     Event ProjectLoaded()
     Event ProjectSaved()
@@ -28,5 +29,7 @@ Public Interface ISimApplication
     Event AfterAddBody(ByVal doBody As Object)
 
     Sub StartApplication(ByVal bModal As Boolean, ByVal bConsoleApp As Boolean, ByVal oSecCtrl As Object)
+
+    Function ExecuteMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
 
 End Interface

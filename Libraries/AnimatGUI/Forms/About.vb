@@ -51,7 +51,7 @@ Namespace Forms
             Me.lblAnimatLab.LinkColor = System.Drawing.Color.Black
             Me.lblAnimatLab.Location = New System.Drawing.Point(16, 8)
             Me.lblAnimatLab.Name = "lblAnimatLab"
-            Me.lblAnimatLab.Size = New System.Drawing.Size(408, 40)
+            Me.lblAnimatLab.Size = New System.Drawing.Size(514, 40)
             Me.lblAnimatLab.TabIndex = 3
             Me.lblAnimatLab.TabStop = True
             Me.lblAnimatLab.Text = "AnimatLab"
@@ -60,9 +60,9 @@ Namespace Forms
             'lblUrl
             '
             Me.lblUrl.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.lblUrl.Location = New System.Drawing.Point(72, 48)
+            Me.lblUrl.Location = New System.Drawing.Point(12, 48)
             Me.lblUrl.Name = "lblUrl"
-            Me.lblUrl.Size = New System.Drawing.Size(288, 24)
+            Me.lblUrl.Size = New System.Drawing.Size(518, 24)
             Me.lblUrl.TabIndex = 6
             Me.lblUrl.TabStop = True
             Me.lblUrl.Text = "http:\\www.AnimatLab.com"
@@ -74,7 +74,7 @@ Namespace Forms
             Me.linkPurchase.LinkColor = System.Drawing.Color.Red
             Me.linkPurchase.Location = New System.Drawing.Point(16, 72)
             Me.linkPurchase.Name = "linkPurchase"
-            Me.linkPurchase.Size = New System.Drawing.Size(408, 24)
+            Me.linkPurchase.Size = New System.Drawing.Size(514, 24)
             Me.linkPurchase.TabIndex = 7
             Me.linkPurchase.TabStop = True
             Me.linkPurchase.Text = "Upgrade to AnimatLab Pro"
@@ -86,13 +86,13 @@ Namespace Forms
             Me.txtInfo.Multiline = True
             Me.txtInfo.Name = "txtInfo"
             Me.txtInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-            Me.txtInfo.Size = New System.Drawing.Size(424, 249)
+            Me.txtInfo.Size = New System.Drawing.Size(518, 249)
             Me.txtInfo.TabIndex = 8
             '
             'About
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(448, 360)
+            Me.ClientSize = New System.Drawing.Size(542, 360)
             Me.Controls.Add(Me.txtInfo)
             Me.Controls.Add(Me.linkPurchase)
             Me.Controls.Add(Me.lblUrl)
@@ -114,17 +114,23 @@ Namespace Forms
             Try
                 lblAnimatLab.Links.Add(0, lblAnimatLab.Text.Length, "http:\\www.AnimatLab.com")
 
-                If Util.Application.SecurityMgr.IsValidSerialNumber Then
-                    linkPurchase.Visible = False
-                    lblAnimatLab.Text = "AnimatLab Pro"
-                Else
-                    lblAnimatLab.Text = "AnimatLab"
+                Dim strProductName As String = "AnimatLab"
+                Dim strProductExtra As String = ""
+                Dim strProductVersion As String = ""
+                Dim bFullVersion As Boolean = False
+
+                Util.Application.GetProductInfo(strProductName, strProductVersion, strProductExtra, bFullVersion)
+
+                lblAnimatLab.Text = strProductName
+                If Not bFullVersion Then
                     linkPurchase.Visible = True
                     linkPurchase.Links.Add(0, linkPurchase.Text.Length, "http:\\www.AnimatLab.com\Products")
+                Else
+                    linkPurchase.Visible = False
                 End If
 
-                txtInfo.Text = lblAnimatLab.Text & " Version " & Util.VersionNumber & vbCrLf & vbCrLf & _
-                          "AnimatLab Version 2 " & vbCrLf & vbCrLf & _
+                txtInfo.Text = lblAnimatLab.Text & vbCrLf & strProductVersion & strProductExtra & vbCrLf & vbCrLf & _
+                          "AnimatLab Version 2 Project Team" & vbCrLf & vbCrLf & _
                           "   Devloper and Manger: David Cofer" & vbCrLf & _
                           "   NeuroRobotic Technologies, LLC." & vbCrLf & vbCrLf & _
                           "AnimatLab Version 1 Project Team" & vbCrLf & vbCrLf & _

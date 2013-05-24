@@ -14,9 +14,14 @@ namespace AnimatGuiCtrls.Forms
     public delegate void DelegateCloseSplash();
 
     public class SplashForm : Form
-    {	
+    {
+        //private string m_strText = "This is a test string\r\nSecond row";
+        //private System.Drawing.Font m_Font = new System.Drawing.Font("Arial", 16);
+        //private PointF m_TextPos = new PointF(10, 10);
+        //private System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
+
         #region Constructor
-        public SplashForm(Bitmap bmpFile, Color col)
+        public SplashForm(Bitmap bmpFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor)
         {
             // ====================================================================================
             // Setup the form
@@ -27,6 +32,11 @@ namespace AnimatGuiCtrls.Forms
 
             // make form transparent
             this.TransparencyKey = this.BackColor;
+
+            m_strText = strText;
+            m_Font = fontText;
+            m_TextPos = TextPos;
+            m_TextColor = TextColor;
 
             // tie up the events
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SplashForm_KeyUp);
@@ -55,18 +65,28 @@ namespace AnimatGuiCtrls.Forms
 
         #region Public methods
         // this can be used for About dialogs
-        public static void ShowModal(Bitmap imageFile, Color col)
+        public static void ShowModal(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor)
         {
             m_imageFile = imageFile;
             m_transColor = col;
+            m_strText = strText;
+            m_Font = fontText;
+            m_TextPos = TextPos;
+            m_TextColor = TextColor;
+
             MySplashThreadFunc();
         }
         // Call this method with the image file path and the color 
         // in the image to be rendered transparent
-        public static void StartSplash(Bitmap imageFile, Color col)
+        public static void StartSplash(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor)
         {
             m_imageFile = imageFile;
             m_transColor = col;
+            m_strText = strText;
+            m_Font = fontText;
+            m_TextPos = TextPos;
+            m_TextColor = TextColor;
+
             // Create and Start the splash thread
             Thread InstanceCaller = new Thread(new ThreadStart(MySplashThreadFunc));
             InstanceCaller.Start();
@@ -103,7 +123,7 @@ namespace AnimatGuiCtrls.Forms
         // this is called by the new thread to show the splash screen
         private static void MySplashThreadFunc()
         {
-            m_instance = new SplashForm(m_imageFile, m_transColor);
+            m_instance = new SplashForm(m_imageFile, m_transColor, m_strText, m_Font, m_TextPos, m_TextColor);
             m_instance.TopMost = false;
             m_instance.ShowDialog();
         }
@@ -119,6 +139,9 @@ namespace AnimatGuiCtrls.Forms
         private void SplashForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             e.Graphics.DrawImage(m_bmp, 0,0);
+
+            if(m_strText.Length > 0)
+                e.Graphics.DrawString(m_strText, m_Font, new System.Drawing.SolidBrush(m_TextColor), m_TextPos);
         }
 
         private void SplashForm_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -133,6 +156,10 @@ namespace AnimatGuiCtrls.Forms
         private static Bitmap m_imageFile;
         private static Color m_transColor;
         private Bitmap m_bmp;
+        private static string m_strText = "";
+        private static System.Drawing.Font m_Font = new System.Drawing.Font("Arial", 16);
+        private static PointF m_TextPos = new PointF(10, 10);
+        private static System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
         private DelegateCloseSplash m_delegateClose;
         #endregion
     }

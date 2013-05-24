@@ -71,6 +71,7 @@ Namespace DataObjects.Physical
         Protected m_aryStructures As New Collections.SortedStructures(Me)
         Protected m_aryOdorTypes As New Collections.SortedOdorTypes(Me)
         Protected m_aryLights As New Collections.SortedLights(Me)
+        Protected m_aryMaterialTypes As New Collections.SortedMaterialTypes(Me)
 
         Protected m_tnOrganisms As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnStructures As Crownwood.DotNetMagic.Controls.Node
@@ -80,8 +81,6 @@ Namespace DataObjects.Physical
 
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
-
-        Protected m_aryMaterialTypes As New Collections.SortedMaterialTypes(Me)
 
 #End Region
 
@@ -986,6 +985,16 @@ Namespace DataObjects.Physical
 
             Return doStructure
         End Function
+
+        Public Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByVal colDataObjects As Collections.DataObjects)
+
+            m_aryOrganisms.FindChildrenOfType(tpTemplate, colDataObjects)
+            m_aryStructures.FindChildrenOfType(tpTemplate, colDataObjects)
+            m_aryOdorTypes.FindChildrenOfType(tpTemplate, colDataObjects)
+            m_aryLights.FindChildrenOfType(tpTemplate, colDataObjects)
+            m_aryMaterialTypes.FindChildrenOfType(tpTemplate, colDataObjects)
+
+        End Sub
 
 #End Region
 

@@ -35,8 +35,6 @@ Namespace Forms
         Public Sub New()
             MyBase.New()
 
-            ShowSplashScreen()
-
             Me.WindowState = FormWindowState.Maximized
             Me.IsMdiContainer = True
             Me.AllowDrop = True
@@ -1185,9 +1183,9 @@ Namespace Forms
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
-        Dim m_auBackup As wyDay.Controls.AutomaticUpdaterBackend
+        Protected m_auBackup As wyDay.Controls.AutomaticUpdaterBackend
 
-        Dim m_bSimStopped As Boolean = True
+        Protected m_bSimStopped As Boolean = True
 
 #Region " Preferences "
 
@@ -1378,7 +1376,7 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property ApplicationDirectory() As String
+        Public Overridable ReadOnly Property ApplicationDirectory() As String Implements ManagedAnimatInterfaces.ISimApplication.ApplicationDirectory
             Get
                 Dim strPath As String, strFile As String
                 Util.SplitPathAndFile(Application.ExecutablePath, strPath, strFile)
@@ -1740,6 +1738,8 @@ Namespace Forms
                 If m_SecurityMgr Is Nothing Then
                     Throw New System.Exception("Security manager was not defined.")
                 End If
+
+                ShowSplashScreen()
 
                 Initialize(Nothing)
 
@@ -2883,7 +2883,7 @@ Namespace Forms
                 Me.EditMaterialsToolStripMenuItem.Enabled = False
             End If
 
-            If m_SecurityMgr.IsValidSerialNumber Then
+            If m_SecurityMgr.IsValidSerialNumber AndAlso Not m_SecurityMgr.IsEvaluationLicense Then
                 Me.RegisterStripMenuItem.Visible = False
                 Me.toolStripSeparatorHelp2.Visible = False
             Else
@@ -3996,12 +3996,27 @@ Namespace Forms
             Try
 
                 '#If Not Debug Then
-                '                Dim imgSplash As Image = ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash.jpg")
+                Dim imgSplash As Image = ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash.jpg")
 
-                '                If Not imgSplash Is Nothing AndAlso TypeOf imgSplash Is Bitmap Then
-                '                    Dim bmpSplash As Bitmap = DirectCast(imgSplash, Bitmap)
-                '                    Crownwood.Magic.Forms.SplashForm.StartSplash(bmpSplash, Color.FromArgb(64, 0, 63))
-                '                End If
+                If Not imgSplash Is Nothing AndAlso TypeOf imgSplash Is Bitmap Then
+                    Dim strProductName As String = "AnimatLab"
+                    Dim strProductExtra As String = ""
+                    Dim strProductVersion As String = ""
+                    Dim bFullVersion As Boolean = False
+
+                    GetProductInfo(strProductName, strProductVersion, strProductExtra, bFullVersion)
+
+                    Dim strText As String = strProductName & vbCrLf & strProductVersion
+                    If strProductExtra.Length > 0 Then
+                        strText = strText & strProductExtra
+                    End If
+                    If Not bFullVersion Then
+                        strText = strText & vbCrLf & "Upgrade to AnimatLab Pro at www.AnimatLab.com"
+                    End If
+
+                    Dim bmpSplash As Bitmap = DirectCast(imgSplash, Bitmap)
+                    AnimatGuiCtrls.Forms.SplashForm.StartSplash(bmpSplash, System.Drawing.Color.White, strText, New System.Drawing.Font("Arial", 16), New PointF(10, 10), System.Drawing.Color.Black)
+                End If
                 '#End If
 
             Catch ex As System.Exception
@@ -4012,11 +4027,34 @@ Namespace Forms
         Protected Sub CloseSplashScreen()
             Try
 
-#If Not Debug Then
-#End If
+                '#If Not Debug Then
+                AnimatGuiCtrls.Forms.SplashForm.CloseSplash()
+                '#End If
             Catch ex As System.Exception
 
             End Try
+        End Sub
+
+        Public Sub GetProductInfo(ByRef strProductName As String, ByRef strProductVersion As String, ByRef strProductExtraInfo As String, ByRef bFullVersion As Boolean)
+
+            strProductVersion = "Version " & Util.VersionNumber
+
+            If Not m_SecurityMgr Is Nothing Then
+                Dim strTitleExtra As String = ""
+                If m_SecurityMgr.IsValidSerialNumber Then
+                    If m_SecurityMgr.IsEvaluationLicense Then
+                        bFullVersion = False
+                        strProductName = "AnimatLab Pro Evaluation"
+                        strProductExtraInfo = vbCrLf & m_SecurityMgr.EvaluationDaysLeft & " days left in evaluation"
+                    Else
+                        bFullVersion = True
+                        strProductName = "AnimatLab Pro"
+                    End If
+                Else
+                    strProductName = "AnimatLab Standard"
+                    bFullVersion = False
+                End If
+            End If
         End Sub
 
 #End Region
@@ -4261,7 +4299,7 @@ Namespace Forms
 
         Private Delegate Sub ExecuteMethodOnObjectDelegate(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object)
 
-        Public Function ExecuteMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+        Public Function ExecuteMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object Implements ManagedAnimatInterfaces.ISimApplication.ExecuteMethodOnObject
 
             If Me.InvokeRequired Then
                 Return Me.Invoke(New ExecuteMethodOnObjectDelegate(AddressOf ExecuteMethodOnObject), New Object() {strPath, strMethodName, aryParams})

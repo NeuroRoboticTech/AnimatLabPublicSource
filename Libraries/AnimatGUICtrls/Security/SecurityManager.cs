@@ -61,6 +61,9 @@ namespace AnimatGuiCtrls.Security
         public abstract bool ValidateSerialNumber(string strSerialNumber);
         public abstract string MachineCode();
         public abstract string ValidationFailureError();
+        public abstract bool IsEvaluationLicense();
+        public abstract bool IsEvaluationExpired();
+        public abstract Int32 EvaluationDaysLeft();
 
     }
 }
