@@ -1104,7 +1104,6 @@
     <EmbeddedResource Include="Graphics\Simulation.gif" />
     <EmbeddedResource Include="Graphics\SimulationController.gif" />
     <EmbeddedResource Include="Graphics\SimulationController.ico" />
-    <EmbeddedResource Include="Graphics\Splash.jpg" />
     <EmbeddedResource Include="Graphics\StepBackLarge.gif" />
     <EmbeddedResource Include="Graphics\StepForwardLarge.gif" />
     <EmbeddedResource Include="Graphics\StimulusTension.gif" />
@@ -1420,6 +1419,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BehavioralEditor\RigidBodyNode.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Splash_Crayfish.jpg" />
+    <EmbeddedResource Include="Graphics\Splash_Frog.jpg" />
+    <EmbeddedResource Include="Graphics\Splash_Locust.jpg" />
+    <EmbeddedResource Include="Graphics\Splash_Robot.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

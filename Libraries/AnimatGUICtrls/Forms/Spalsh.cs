@@ -15,10 +15,6 @@ namespace AnimatGuiCtrls.Forms
 
     public class SplashForm : Form
     {
-        //private string m_strText = "This is a test string\r\nSecond row";
-        //private System.Drawing.Font m_Font = new System.Drawing.Font("Arial", 16);
-        //private PointF m_TextPos = new PointF(10, 10);
-        //private System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
 
         #region Constructor
         public SplashForm(Bitmap bmpFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor)
@@ -52,8 +48,8 @@ namespace AnimatGuiCtrls.Forms
 //	            m_bmp.MakeTransparent(col);
 
             // resize the form to the size of the iamge
-            this.Width = m_bmp.Width;
-            this.Height = m_bmp.Height;
+            this.Width = m_bmp.Width+10;
+            this.Height = m_bmp.Height+10;
 
             // center the form
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -78,7 +74,7 @@ namespace AnimatGuiCtrls.Forms
         }
         // Call this method with the image file path and the color 
         // in the image to be rendered transparent
-        public static void StartSplash(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor)
+        public static void StartSplash(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor, int iSeconds)
         {
             m_imageFile = imageFile;
             m_transColor = col;
@@ -87,9 +83,23 @@ namespace AnimatGuiCtrls.Forms
             m_TextPos = TextPos;
             m_TextColor = TextColor;
 
+            if (iSeconds > 0)
+            {
+                m_SplashTimer = new System.Timers.Timer(iSeconds * 1000);
+                m_SplashTimer.Elapsed += new System.Timers.ElapsedEventHandler(SplashTimerElapsed);
+                m_SplashTimer.Start();
+            }
+
             // Create and Start the splash thread
             Thread InstanceCaller = new Thread(new ThreadStart(MySplashThreadFunc));
             InstanceCaller.Start();
+        }
+
+        private static void SplashTimerElapsed(object source, System.Timers.ElapsedEventArgs e)
+        {
+            m_SplashTimer.Stop();
+            m_SplashTimer = null;
+            CloseSplash();
         }
 
         // Call this at the end of your apps initialization to close the splash screen
@@ -126,6 +136,9 @@ namespace AnimatGuiCtrls.Forms
             m_instance = new SplashForm(m_imageFile, m_transColor, m_strText, m_Font, m_TextPos, m_TextColor);
             m_instance.TopMost = false;
             m_instance.ShowDialog();
+
+            if (m_ParentForm != null)
+                m_ParentForm.BringToFront();
         }
         #endregion // Multithreading code
 
@@ -138,7 +151,7 @@ namespace AnimatGuiCtrls.Forms
 
         private void SplashForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            e.Graphics.DrawImage(m_bmp, 0,0);
+            e.Graphics.DrawImage(m_bmp, new RectangleF(0, 0, m_bmp.Width, m_bmp.Height));
 
             if(m_strText.Length > 0)
                 e.Graphics.DrawString(m_strText, m_Font, new System.Drawing.SolidBrush(m_TextColor), m_TextPos);
@@ -160,7 +173,21 @@ namespace AnimatGuiCtrls.Forms
         private static System.Drawing.Font m_Font = new System.Drawing.Font("Arial", 16);
         private static PointF m_TextPos = new PointF(10, 10);
         private static System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
+        private static System.Timers.Timer m_SplashTimer;
         private DelegateCloseSplash m_delegateClose;
+        private static System.Windows.Forms.Form m_ParentForm;
         #endregion
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // SplashForm
+            // 
+            this.ClientSize = new System.Drawing.Size(584, 412);
+            this.Name = "SplashForm";
+            this.ResumeLayout(false);
+
+        }
     }
 }

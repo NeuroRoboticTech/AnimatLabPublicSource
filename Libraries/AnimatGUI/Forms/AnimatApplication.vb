@@ -1187,6 +1187,8 @@ Namespace Forms
 
         Protected m_bSimStopped As Boolean = True
 
+        Protected m_SplashTimer As New System.Timers.Timer
+
 #Region " Preferences "
 
         Protected m_strDefaultNewFolder As String = ""
@@ -3992,13 +3994,23 @@ Namespace Forms
 
 #Region " Splash Screen Methods "
 
+        Protected Class SplashInfo
+            Public m_Image As Bitmap
+            Public m_Font As System.Drawing.Font
+            Public m_Position As PointF
+            Public m_Color As System.Drawing.Color
+        End Class
+
         Protected Sub ShowSplashScreen()
             Try
 
-                '#If Not Debug Then
-                Dim imgSplash As Image = ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash.jpg")
+#If Not Debug Then
 
-                If Not imgSplash Is Nothing AndAlso TypeOf imgSplash Is Bitmap Then
+                Dim arySplashInfo As New ArrayList
+                PopulateSplashArray(arySplashInfo)
+                Dim infoSplash As SplashInfo = PickSplashInfo(arySplashInfo)
+
+                If Not infoSplash Is Nothing AndAlso Not infoSplash.m_Image Is Nothing AndAlso TypeOf infoSplash.m_Image Is Bitmap Then
                     Dim strProductName As String = "AnimatLab"
                     Dim strProductExtra As String = ""
                     Dim strProductVersion As String = ""
@@ -4008,32 +4020,67 @@ Namespace Forms
 
                     Dim strText As String = strProductName & vbCrLf & strProductVersion
                     If strProductExtra.Length > 0 Then
-                        strText = strText & strProductExtra
+                        strText = strText & vbCrLf & strProductExtra
                     End If
                     If Not bFullVersion Then
-                        strText = strText & vbCrLf & "Upgrade to AnimatLab Pro at www.AnimatLab.com"
+                        strText = strText & vbCrLf & "Upgrade to AnimatLab Pro"
                     End If
 
-                    Dim bmpSplash As Bitmap = DirectCast(imgSplash, Bitmap)
-                    AnimatGuiCtrls.Forms.SplashForm.StartSplash(bmpSplash, System.Drawing.Color.White, strText, New System.Drawing.Font("Arial", 16), New PointF(10, 10), System.Drawing.Color.Black)
+                    AnimatGuiCtrls.Forms.SplashForm.StartSplash(infoSplash.m_Image, System.Drawing.Color.White, strText, infoSplash.m_Font, infoSplash.m_Position, infoSplash.m_Color, 5)
                 End If
-                '#End If
+#End If
 
             Catch ex As System.Exception
 
             End Try
         End Sub
 
-        Protected Sub CloseSplashScreen()
-            Try
+        Protected Overridable Sub PopulateSplashArray(ByVal arySplashInfo As ArrayList)
 
-                '#If Not Debug Then
-                AnimatGuiCtrls.Forms.SplashForm.CloseSplash()
-                '#End If
-            Catch ex As System.Exception
+            Dim infoSplash As New SplashInfo
+            infoSplash.m_Image = DirectCast(ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash_Crayfish.jpg"), Bitmap)
+            infoSplash.m_Font = New System.Drawing.Font("Arial", 12, FontStyle.Bold)
+            infoSplash.m_Color = System.Drawing.Color.White
+            infoSplash.m_Position = New PointF(350, 45)
+            arySplashInfo.Add(infoSplash)
 
-            End Try
+            infoSplash = New SplashInfo
+            infoSplash.m_Image = DirectCast(ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash_Frog.jpg"), Bitmap)
+            infoSplash.m_Font = New System.Drawing.Font("Arial", 12, FontStyle.Bold)
+            infoSplash.m_Color = System.Drawing.Color.White
+            infoSplash.m_Position = New PointF(280, 50)
+            arySplashInfo.Add(infoSplash)
+
+            infoSplash = New SplashInfo
+            infoSplash.m_Image = DirectCast(ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash_Locust.jpg"), Bitmap)
+            infoSplash.m_Font = New System.Drawing.Font("Arial", 12, FontStyle.Bold)
+            infoSplash.m_Color = System.Drawing.Color.White
+            infoSplash.m_Position = New PointF(130, 50)
+            arySplashInfo.Add(infoSplash)
+
+            infoSplash = New SplashInfo
+            infoSplash.m_Image = DirectCast(ImageManager.LoadImage("AnimatGUI", "AnimatGUI.Splash_Robot.jpg"), Bitmap)
+            infoSplash.m_Font = New System.Drawing.Font("Arial", 12, FontStyle.Bold)
+            infoSplash.m_Color = System.Drawing.Color.White
+            infoSplash.m_Position = New PointF(10, 100)
+            arySplashInfo.Add(infoSplash)
+
         End Sub
+
+        Protected Overridable Function PickSplashInfo(ByVal arySplashInfo As ArrayList) As SplashInfo
+
+            Dim infoSplash As SplashInfo = Nothing
+
+            If arySplashInfo.Count > 0 Then
+                Dim iVal As Integer = CInt(Util.Rand(0, (arySplashInfo.Count - 1)))
+
+                If iVal > (arySplashInfo.Count - 1) Then iVal = arySplashInfo.Count - 1
+
+                infoSplash = DirectCast(arySplashInfo(iVal), SplashInfo)
+            End If
+
+            Return infoSplash
+        End Function
 
         Public Sub GetProductInfo(ByRef strProductName As String, ByRef strProductVersion As String, ByRef strProductExtraInfo As String, ByRef bFullVersion As Boolean)
 
@@ -4045,7 +4092,7 @@ Namespace Forms
                     If m_SecurityMgr.IsEvaluationLicense Then
                         bFullVersion = False
                         strProductName = "AnimatLab Pro Evaluation"
-                        strProductExtraInfo = vbCrLf & m_SecurityMgr.EvaluationDaysLeft & " days left in evaluation"
+                        strProductExtraInfo = m_SecurityMgr.EvaluationDaysLeft & " days left in evaluation"
                     Else
                         bFullVersion = True
                         strProductName = "AnimatLab Pro"
@@ -6302,8 +6349,6 @@ Namespace Forms
 
         Private Sub AnimatApplication_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Try
-                CloseSplashScreen()
-
                 If m_strCmdLineProject.Length > 0 Then
                     Me.LoadProject(m_strCmdLineProject)
                 End If

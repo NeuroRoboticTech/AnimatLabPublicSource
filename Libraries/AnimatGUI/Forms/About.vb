@@ -129,6 +129,8 @@ Namespace Forms
                     linkPurchase.Visible = False
                 End If
 
+                If strProductExtra.Length > 0 Then strProductExtra = vbCrLf & strProductExtra
+
                 txtInfo.Text = lblAnimatLab.Text & vbCrLf & strProductVersion & strProductExtra & vbCrLf & vbCrLf & _
                           "AnimatLab Version 2 Project Team" & vbCrLf & vbCrLf & _
                           "   Devloper and Manger: David Cofer" & vbCrLf & _
