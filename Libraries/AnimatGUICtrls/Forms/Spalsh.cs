@@ -136,9 +136,6 @@ namespace AnimatGuiCtrls.Forms
             m_instance = new SplashForm(m_imageFile, m_transColor, m_strText, m_Font, m_TextPos, m_TextColor);
             m_instance.TopMost = false;
             m_instance.ShowDialog();
-
-            if (m_ParentForm != null)
-                m_ParentForm.BringToFront();
         }
         #endregion // Multithreading code
 
@@ -175,7 +172,6 @@ namespace AnimatGuiCtrls.Forms
         private static System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
         private static System.Timers.Timer m_SplashTimer;
         private DelegateCloseSplash m_delegateClose;
-        private static System.Windows.Forms.Form m_ParentForm;
         #endregion
 
         private void InitializeComponent()

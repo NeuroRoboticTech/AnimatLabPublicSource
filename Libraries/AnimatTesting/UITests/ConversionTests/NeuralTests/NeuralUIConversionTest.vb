@@ -2191,6 +2191,230 @@ Namespace UITests
 
                 End Sub
 
+
+                <TestMethod()>
+                Public Sub Test_IGF_SynapseTypes()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("A", 0.00001)
+                    aryMaxErrors.Add("B", 0.00001)
+                    aryMaxErrors.Add("C", 0.00001)
+                    aryMaxErrors.Add("D", 0.00001)
+                    aryMaxErrors.Add("E", 0.00001)
+                    aryMaxErrors.Add("F", 0.00001)
+                    aryMaxErrors.Add("default", 0.00001)
+
+                    m_strProjectName = "IGF_SynapseTypes"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\Nicotinic ACh type"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"MaxSynapticConductance", "1 u"})
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"HighCoupling", "0.5 u"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"LowCoupling", "0.5 u"})
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"DecayRate", "20 m"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Change1_")
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh"})
+                    ExecuteActiveDialogMethod("Automation_CloneSynapseType", New Object() {"Nicotinic ACh 2"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"EquilibriumPotential", "-40 m"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"DecayRate", "5 m"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CloneSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\Nicotinic ACh type"})
+                    ExecuteActiveDialogMethod("Automation_CloneSynapseType", New Object() {"Nicotinic ACh type 2"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"EquilibriumPotential", "0 m"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CloneNonSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse"})
+                    ExecuteActiveDialogMethod("Automation_CloneSynapseType", New Object() {"Non-Rectifying Synapse 2"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"HighCoupling", "0.1 u"})
+                    ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"LowCoupling", "0.1 u"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CloneElectrical_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses"})
+                    ExecuteActiveDialogMethod("Automation_AddSynapseType", New Object() {"New Synapse 1"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NewSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses"})
+                    ExecuteActiveDialogMethod("Automation_AddSynapseType", New Object() {"New Synapse 2"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NewNonSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses"})
+                    ExecuteActiveDialogMethod("Automation_AddSynapseType", New Object() {"Non-Rectifying Synapse 3"})
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NewElectrical_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A (0.5 uS)", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses\New Synapse 1"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("SelectItemInComboBox", New Object() {"NMDA type"}, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\New Synapse 2"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("SelectItemInComboBox", New Object() {"Depolarising IPSP"}, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\Depolarising IPSP"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteNonSpiking_")
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse 3"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("SelectItemInComboBox", New Object() {"Rectifying Synapse"}, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Rectifying Synapse"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteElectrical_")
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse 2"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("SelectItemInComboBox", New Object() {"Non-Rectifying Synapse"}, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("SelectItemInComboBox", New Object() {"Rectifying Synapse"}, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Rectifying Synapse"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Rectifying Synapse"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    AssertErrorDialogShown("You cannot delete the last synapse type because there are still synapses that use it and we have nothing to replace it with.", enumErrorTextType.Contains)
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F\E", "Delete Link")
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", False})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C", "SynapseType"}, 500)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Electrical Synapses\Rectifying Synapse"})
+                    ExecuteIndirectActiveDialogMethod("Automation_DeleteSynapseType", Nothing, 2000, , True)
+
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , True, True)
+
+                    AssertErrorDialogShown("You must select a synapse type or hit cancel.", enumErrorTextType.Contains)
+
+                    ExecuteActiveDialogMethod("Automation_SelectSynapseType", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\Depolarising IPSP"}, 2000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                End Sub
+
 #End Region
 
 #Region "Additional test attributes"

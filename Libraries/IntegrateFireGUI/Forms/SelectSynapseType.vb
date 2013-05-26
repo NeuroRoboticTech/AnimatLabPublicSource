@@ -129,6 +129,8 @@ Namespace Forms
         Protected m_tnNonSpikingChemical As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnElectrical As Crownwood.DotNetMagic.Controls.Node
 
+        Protected m_doSelectedGridItem As Framework.DataObject
+
         Protected m_bFirstSelect As Boolean = True
 
 #End Region
@@ -206,6 +208,8 @@ Namespace Forms
                 m_tnElectrical.Nodes.Add(stType.WorkspaceNode)
             End If
 
+            tvSynapseTypes.Sort()
+
             Return stType.WorkspaceNode
         End Function
 
@@ -220,6 +224,15 @@ Namespace Forms
                 End If
             Next
 
+        End Sub
+
+        Protected Sub SetSelectedGridObject(ByVal doObject As Framework.DataObject)
+            If Not doObject Is Nothing Then
+                pgTypeProperties.SelectedObject = doObject.Properties
+            Else
+                pgTypeProperties.SelectedObject = Nothing
+            End If
+            m_doSelectedGridItem = doObject
         End Sub
 
 #End Region
@@ -265,6 +278,7 @@ Namespace Forms
                     End If
                 Next
 
+                tvSynapseTypes.Sort()
                 tvSynapseTypes.ExpandAll()
 
             Catch ex As System.Exception
@@ -272,25 +286,6 @@ Namespace Forms
             End Try
 
         End Sub
-
-        'Protected Overrides Sub OnResize(ByVal e As System.EventArgs)
-        '    MyBase.OnResize(e)
-
-        '    Try
-        '        tvSynapseTypes.Width = CInt((Me.Width / 2) - 40)
-        '        pgTypeProperties.Left = tvSynapseTypes.Left + tvSynapseTypes.Width + 10
-        '        pgTypeProperties.Width = CInt(Me.Width - tvSynapseTypes.Width - 35)
-
-        '        tvSynapseTypes.Height = Me.Height - 80
-        '        pgTypeProperties.Height = Me.Height - 80
-
-        '        btnOk.Left = CInt((Me.Width / 2) - btnOk.Width - 2)
-        '        btnCancel.Left = CInt((Me.Width / 2) + 2)
-
-        '    Catch ex As System.Exception
-
-        '    End Try
-        'End Sub
 
         Private Sub tvSynapseTypes_AfterSelect(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles tvSynapseTypes.AfterSelect
             Try
@@ -303,9 +298,9 @@ Namespace Forms
 
                 If Not e.Node Is Nothing AndAlso Not e.Node.Tag Is Nothing Then
                     Dim stType As DataObjects.Behavior.SynapseType = DirectCast(e.Node.Tag, DataObjects.Behavior.SynapseType)
-                    pgTypeProperties.SelectedObject = stType.Properties
+                    SetSelectedGridObject(stType)
                 Else
-                    pgTypeProperties.SelectedObject = Nothing
+                    SetSelectedGridObject(Nothing)
                 End If
 
             Catch ex As System.Exception
@@ -346,7 +341,7 @@ Namespace Forms
             tnNewType.Name = strNewName
         End Sub
 
-        Protected Function CloneSelectedSynapseType() As DataObjects.Behavior.SynapseType
+        Protected Function CloneSelectedSynapseType(Optional ByVal strName As String = "") As DataObjects.Behavior.SynapseType
             Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
             If tnSelected Is Nothing Then
                 Return Nothing
@@ -357,7 +352,11 @@ Namespace Forms
             Dim stType As DataObjects.Behavior.SynapseType = DirectCast(tnSelected.Tag, DataObjects.Behavior.SynapseType)
 
             Dim stNewType As DataObjects.Behavior.SynapseType = DirectCast(stType.Clone(m_nmNeuralModule, False, Nothing), DataObjects.Behavior.SynapseType)
-            stNewType.Name = "New Synapse Type"
+            If strName.Length > 0 Then
+                stNewType.Name = strName
+            Else
+                stNewType.Name = "New Synapse Type"
+            End If
 
             m_nmNeuralModule.SynapseTypes.Add(stNewType.ID, stNewType, True)
             tvSynapseTypes.SelectedNode = AddSynapseType(stNewType)
@@ -374,29 +373,39 @@ Namespace Forms
 
         End Sub
 
+        Protected Function AddSynapse(Optional ByVal strName As String = "") As DataObjects.Behavior.SynapseType
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
+            If tnSelected Is Nothing Then
+                Throw New System.Exception("You must select one of the synapse classes where you want to add a new type.")
+            End If
+
+            Dim stNewType As DataObjects.Behavior.SynapseType
+            If tnSelected Is m_tnSpikingChemical Then
+                stNewType = New DataObjects.Behavior.SynapseTypes.SpikingChemical(m_nmNeuralModule)
+            ElseIf tnSelected Is m_tnNonSpikingChemical Then
+                stNewType = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(m_nmNeuralModule)
+            ElseIf tnSelected Is m_tnElectrical Then
+                stNewType = New DataObjects.Behavior.SynapseTypes.Electrical(m_nmNeuralModule)
+            Else
+                Throw New System.Exception("You must select one of the synapse classes where you want to add a new type.")
+            End If
+
+            If strName.Length > 0 Then
+                stNewType.Name = strName
+            Else
+                stNewType.Name = "New Synapse Type"
+            End If
+
+            m_nmNeuralModule.SynapseTypes.Add(stNewType.ID, stNewType, True)
+            tvSynapseTypes.SelectedNode = AddSynapseType(stNewType)
+
+            Return stNewType
+        End Function
+
         Protected Sub OnNewSynapseType(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-
-                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
-                If tnSelected Is Nothing Then
-                    Return
-                End If
-
-                Dim stNewType As DataObjects.Behavior.SynapseType
-                If tnSelected Is m_tnSpikingChemical Then
-                    stNewType = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Nothing)
-                ElseIf tnSelected Is m_tnNonSpikingChemical Then
-                    stNewType = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(Nothing)
-                ElseIf tnSelected Is m_tnElectrical Then
-                    stNewType = New DataObjects.Behavior.SynapseTypes.Electrical(Nothing)
-                Else
-                    Return
-                End If
-                stNewType.Name = "New Synapse Type"
-
-                m_nmNeuralModule.SynapseTypes.Add(stNewType.ID, stNewType, True)
-                tvSynapseTypes.SelectedNode = AddSynapseType(stNewType)
+                AddSynapse()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -404,41 +413,65 @@ Namespace Forms
 
         End Sub
 
+        Protected Sub DeleteSynapse()
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
+            If tnSelected Is Nothing Then
+                Return
+            ElseIf tnSelected.Tag Is Nothing Then
+                Return
+            End If
+
+            Dim stType As DataObjects.Behavior.SynapseType = DirectCast(tnSelected.Tag, DataObjects.Behavior.SynapseType)
+            Dim colReplace As AnimatGUI.Collections.DataObjects = FindSynapsesToReplace(stType)
+
+            If tnSelected.Parent.Nodes.Count = 1 And colReplace.Count > 0 Then
+                Throw New System.Exception("You cannot delete the last synapse type because there are still synapses that use it and we have nothing to replace it with.")
+            End If
+
+            Dim eDialogResult As System.Windows.Forms.DialogResult = Windows.Forms.DialogResult.OK
+
+            If colReplace.Count > 0 Then
+                Dim frmDelete As New Forms.DeleteSynapseType
+                frmDelete.m_doNeuralModule = Me.NeuralModule
+                frmDelete.m_doTypeToDelete = stType
+                eDialogResult = frmDelete.ShowDialog()
+                If eDialogResult = DialogResult.OK AndAlso Not frmDelete.m_doTypeToReplace Is Nothing Then
+                    For Each doSynapse As IntegrateFireGUI.DataObjects.Behavior.Synapse In colReplace
+                        doSynapse.SynapseType = frmDelete.m_doTypeToReplace
+                    Next
+                End If
+            End If
+
+            If eDialogResult = DialogResult.OK Then
+                stType.WorkspaceNode.Remove()
+                Me.NeuralModule.SynapseTypes.Remove(stType.ID)
+                SetSelectedGridObject(Nothing)
+            End If
+        End Sub
+
+        Protected Function FindSynapsesToReplace(ByVal stType As DataObjects.Behavior.SynapseType) As AnimatGUI.Collections.DataObjects
+
+            Dim colReplace As New AnimatGUI.Collections.DataObjects(Nothing)
+
+            'First lets go through and replace any synapses that are using this type. 
+            If Not Me.NeuralModule.Organism Is Nothing Then
+                Dim aryLinks As AnimatGUI.Collections.DataObjects = New AnimatGUI.Collections.DataObjects(Nothing)
+                Me.NeuralModule.Organism.RootSubSystem.FindChildrenOfType(GetType(IntegrateFireGUI.DataObjects.Behavior.Synapse), aryLinks)
+
+                For Each doSynapse As IntegrateFireGUI.DataObjects.Behavior.Synapse In aryLinks
+                    If doSynapse.SynapseType Is stType Then
+                        colReplace.Add(doSynapse)
+                    End If
+                Next
+            End If
+
+            Return colReplace
+        End Function
+
         Protected Sub OnDelete(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
-                If tnSelected Is Nothing Then
-                    Return
-                ElseIf tnSelected.Tag Is Nothing Then
-                    Return
-                End If
-
-                Dim stType As DataObjects.Behavior.SynapseType = DirectCast(tnSelected.Tag, DataObjects.Behavior.SynapseType)
-
-                Dim frmDelete As New Forms.DeleteSynapseType
-
-                frmDelete.m_doNeuralModule = Me.NeuralModule
-                frmDelete.m_doTypeToDelete = stType
-                If frmDelete.ShowDialog = DialogResult.OK AndAlso Not frmDelete.m_doTypeToReplace Is Nothing Then
-                    'First lets go through and replace any synapses that are using this type. 
-                    If Not Me.NeuralModule.Organism Is Nothing Then
-
-                        Dim aryLinks As AnimatGUI.Collections.DataObjects = New AnimatGUI.Collections.DataObjects(Nothing)
-                        Me.NeuralModule.Organism.RootSubSystem.FindChildrenOfType(GetType(IntegrateFireGUI.DataObjects.Behavior.Synapse), aryLinks)
-
-                        For Each doSynapse As IntegrateFireGUI.DataObjects.Behavior.Synapse In aryLinks
-                            If doSynapse.SynapseType Is stType Then
-                                doSynapse.SynapseType = frmDelete.m_doTypeToReplace
-                            End If
-                        Next
-                    End If
-
-                    stType.WorkspaceNode.Remove()
-                    Me.NeuralModule.SynapseTypes.Remove(stType.ID)
-                    Me.pgTypeProperties.SelectedObject = Nothing
-                End If
-
+                DeleteSynapse()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -460,6 +493,7 @@ Namespace Forms
 
                     Dim stType As DataObjects.Behavior.SynapseType = DirectCast(e.Node.Tag, DataObjects.Behavior.SynapseType)
                     stType.Name = e.Label
+                    tvSynapseTypes.Sort()
                 Else
                     e.Cancel = True
                 End If
@@ -470,11 +504,16 @@ Namespace Forms
         End Sub
 
         Private Sub tvSynapseTypes_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tvSynapseTypes.DoubleClick
-            btnOk_Click(sender, e)
+            Try
+                btnOk_Click(sender, e)
 
-            If Me.DialogResult = DialogResult.OK Then
-                Me.Close()
-            End If
+                If Me.DialogResult = DialogResult.OK Then
+                    Me.Close()
+                End If
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
 
         End Sub
 
@@ -507,6 +546,71 @@ Namespace Forms
 
         Private Sub btnCancel_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCancel.Click
             CheckForSynapseTypeChanges()
+        End Sub
+
+        Private Sub OnPropertyValueChanged(s As System.Object, e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles pgTypeProperties.PropertyValueChanged
+            Try
+                If e.ChangedItem.Label = "Name" Then
+                    tvSynapseTypes.Sort()
+                End If
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
+
+#Region "Automation"
+
+        Public Sub Automation_SelectSynapseType(ByVal strPath As String)
+
+            Try
+                Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strPath, tvSynapseTypes.Nodes)
+
+                tvSynapseTypes.ClearSelection()
+                tnNode.Select()
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Sub Automation_AddSynapseType(ByVal strName As String)
+            Try
+                AddSynapse(strName)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub Automation_DeleteSynapseType()
+            Try
+                DeleteSynapse()
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub Automation_CloneSynapseType(ByVal strName As String)
+            Try
+                CloneSelectedSynapseType(strName)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub Automation_SetSelectedItemProperty(ByVal strProperty As String, ByVal strValue As String)
+            Try
+                If m_doSelectedGridItem Is Nothing Then
+                    Throw New System.Exception("No synapse type is currently selected.")
+                End If
+
+                Util.SetObjectProperty(m_doSelectedGridItem, strProperty, strValue)
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

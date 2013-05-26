@@ -8,6 +8,8 @@ Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.DataObjects
+Imports AnimatGUI.Collections
+Imports AnimatGUI
 
 Namespace Collections
 
@@ -112,5 +114,69 @@ Namespace Collections
         End Function
 
     End Class 'DiagramsDictionary
+
+    Public Class SortedSynapseTypes
+        Inherits AnimatSortedList
+
+        Public Sub New(ByVal doParent As Framework.DataObject)
+            MyBase.New(doParent)
+        End Sub
+
+        Default Public Overloads Property Item(ByVal key As [String]) As IntegrateFireGUI.DataObjects.Behavior.SynapseType
+            Get
+                Return CType(MyBase.Item(key), IntegrateFireGUI.DataObjects.Behavior.SynapseType)
+            End Get
+            Set(ByVal Value As IntegrateFireGUI.DataObjects.Behavior.SynapseType)
+                MyBase.Item(key) = Value
+            End Set
+        End Property
+
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As IntegrateFireGUI.DataObjects.Behavior.SynapseType, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
+            MyBase.Add(key, value)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
+
+            Me.IsDirty = True
+        End Sub 'Add
+
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As IntegrateFireGUI.DataObjects.Behavior.SynapseType = DirectCast(Me(key), IntegrateFireGUI.DataObjects.Behavior.SynapseType)
+
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            MyBase.Remove(key)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As IntegrateFireGUI.DataObjects.Behavior.SynapseType = DirectCast(Me.GetByIndex(index), IntegrateFireGUI.DataObjects.Behavior.SynapseType)
+
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            MyBase.RemoveAt(index)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Me.IsDirty = True
+        End Sub
+
+        Public Overrides Function Copy() As AnimatSortedList
+            Dim aryList As New SortedSynapseTypes(m_doParent)
+            aryList.CopyInternal(Me)
+            Return aryList
+        End Function
+
+        Public Overloads Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatSortedList
+            Dim aryList As New SortedSynapseTypes(m_doParent)
+            aryList.CloneInternal(Me, doParent, bCutData, doRoot)
+            Return aryList
+        End Function
+
+        Public Overrides Function CloneList() As AnimatSortedList
+            Dim aryList As New SortedSynapseTypes(m_doParent)
+            aryList.CloneInternal(Me, Me.Parent, False, Nothing)
+            Return aryList
+        End Function
+
+    End Class
 
 End Namespace

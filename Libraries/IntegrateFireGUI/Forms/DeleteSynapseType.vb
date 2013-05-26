@@ -12,7 +12,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms
 
     Public Class DeleteSynapseType
-        Inherits System.Windows.Forms.Form
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -112,6 +112,9 @@ Namespace Forms
 
         Private Sub DeleteSynapseType_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Try
+                m_btnOk = btnDelete
+                m_btnCancel = Me.btnCancel
+                m_cbItems = cboSynapseTypes
 
                 If Not m_doTypeToDelete Is Nothing Then
                     lblMessage.Text = "Are you sure you want to permanently delete this synapse type? If you do then any " & _

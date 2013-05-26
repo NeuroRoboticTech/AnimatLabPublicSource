@@ -21,10 +21,10 @@
 #define Rn_Err_strInvalidSynapseID "No matching synapse type ID was found."
 
 #define Rn_Err_lInvalidNeuronType -3035
-#define Rn_Err_strInvalidNeuronType "Invalid synapse type was specified."
+#define Rn_Err_strInvalidNeuronType "Invalid neuron type was specified."
 
 #define Rn_Err_lInvalidSynapseType -3036
-#define Rn_Err_strInvalidSynapseType "Invalid neuron type was specified."
+#define Rn_Err_strInvalidSynapseType "Invalid synapse type was specified."
 
 #define Rn_Err_lInvalidIonChannelType -3037
 #define Rn_Err_strInvalidIonChannelType "Invalid ion channel type was specified."

@@ -16,6 +16,7 @@ Namespace Forms
         Protected m_btnCancel As Button
         Protected m_btnIgnore As Button
         Protected m_lvItems As ListView
+        Protected m_cbItems As ComboBox
         Protected m_tvItems As Crownwood.DotNetMagic.Controls.TreeControl
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
@@ -92,6 +93,17 @@ Namespace Forms
 
             Return Util.GetObjectProperty(lvSelected.Tag, strPropertyName)
         End Function
+
+        Public Overridable Sub SelectItemInComboBox(ByVal strItemName As String)
+
+            If m_cbItems Is Nothing Then
+                Throw New System.Exception("No combo box was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim doItem As Framework.DataObject = Util.FindComboItemByName(strItemName, m_cbItems.Items)
+            m_cbItems.SelectedItem = doItem
+
+        End Sub
 
         Public Overridable Sub SelectItemInTreeView(ByVal strPath As String)
 

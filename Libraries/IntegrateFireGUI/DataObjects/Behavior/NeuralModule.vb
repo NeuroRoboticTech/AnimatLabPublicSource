@@ -30,7 +30,7 @@ Namespace DataObjects.Behavior
         Protected m_bFreezeHebb As Boolean
         Protected m_bRetainHebbMemory As Boolean
 
-        Protected m_arySynapseTypes As New Collections.SynapseTypes(Me)
+        Protected m_arySynapseTypes As New Collections.SortedSynapseTypes(Me)
 
 #End Region
 
@@ -225,7 +225,7 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property SynapseTypes() As Collections.SynapseTypes
+        Public Overridable ReadOnly Property SynapseTypes() As Collections.SortedSynapseTypes
             Get
                 Return m_arySynapseTypes
             End Get
@@ -267,12 +267,12 @@ Namespace DataObjects.Behavior
             Dim slSynapse As DataObjects.Behavior.SynapseType
 
             Dim scSynapse As DataObjects.Behavior.SynapseTypes.SpikingChemical
-            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(doParent)
+            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Me)
             slSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Fork
             slSynapse.Name = "Nicotinic ACh"
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(doParent)
+            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Me)
             scSynapse = DirectCast(slSynapse, DataObjects.Behavior.SynapseTypes.SpikingChemical)
             scSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
             scSynapse.ArrowDestination.Filled = True
@@ -281,7 +281,7 @@ Namespace DataObjects.Behavior
             scSynapse.DecayRate.ValueManual = 10
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(doParent)
+            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Me)
             scSynapse = DirectCast(slSynapse, DataObjects.Behavior.SynapseTypes.SpikingChemical)
             scSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
             scSynapse.ArrowDestination.Filled = False
@@ -290,7 +290,7 @@ Namespace DataObjects.Behavior
             scSynapse.RelativeFacilitation.ValueManual = 1
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(doParent)
+            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Me)
             scSynapse = DirectCast(slSynapse, DataObjects.Behavior.SynapseTypes.SpikingChemical)
             scSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
             scSynapse.ArrowDestination.Filled = False
@@ -303,7 +303,7 @@ Namespace DataObjects.Behavior
             scSynapse.MaxRelativeConductance.ValueManual = 10
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(doParent)
+            slSynapse = New DataObjects.Behavior.SynapseTypes.SpikingChemical(Me)
             scSynapse = DirectCast(slSynapse, DataObjects.Behavior.SynapseTypes.SpikingChemical)
             scSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
             scSynapse.ArrowDestination.Filled = False
@@ -319,12 +319,12 @@ Namespace DataObjects.Behavior
             scSynapse.ConsolidationFactor = 20
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            Dim ncSynapse As New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(doParent)
+            Dim ncSynapse As New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(Me)
             slSynapse = ncSynapse
             ncSynapse.Name = "Nicotinic ACh type"
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            ncSynapse = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(doParent)
+            ncSynapse = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(Me)
             slSynapse = ncSynapse
             ncSynapse.Name = "Hyperpolarising IPSP"
             ncSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
@@ -336,7 +336,7 @@ Namespace DataObjects.Behavior
             ncSynapse.PreSynapticSaturationLevel.ValueManual = -40
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            ncSynapse = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(doParent)
+            ncSynapse = New DataObjects.Behavior.SynapseTypes.NonSpikingChemical(Me)
             slSynapse = ncSynapse
             ncSynapse.Name = "Depolarising IPSP"
             ncSynapse.ArrowDestination.Style = AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Circle
@@ -348,7 +348,7 @@ Namespace DataObjects.Behavior
             ncSynapse.PreSynapticSaturationLevel.ValueManual = -40
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            Dim esSynapse As New DataObjects.Behavior.SynapseTypes.Electrical(doParent)
+            Dim esSynapse As New DataObjects.Behavior.SynapseTypes.Electrical(Me)
             slSynapse = esSynapse
             esSynapse.Name = "Non-Rectifying Synapse"
             esSynapse.LowCoupling.ValueManual = 0.2
@@ -357,7 +357,7 @@ Namespace DataObjects.Behavior
             esSynapse.TurnOnSaturate.ValueManual = 0
             m_arySynapseTypes.Add(slSynapse.ID, slSynapse, False)
 
-            esSynapse = New DataObjects.Behavior.SynapseTypes.Electrical(doParent)
+            esSynapse = New DataObjects.Behavior.SynapseTypes.Electrical(Me)
             slSynapse = esSynapse
             esSynapse.Name = "Rectifying Synapse"
             esSynapse.LowCoupling.ValueManual = 0.1

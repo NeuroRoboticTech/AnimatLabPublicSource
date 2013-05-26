@@ -1704,7 +1704,7 @@ void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError
 			int iPos = FindNonSpikingChemListPos(strID, bThrowError);
 			m_aryNonSpikingChemSyn.RemoveAt(iPos);
 		}
-		else if(strType == "NONSPIKINGCHEMICAL")
+		else if(strType == "ELECTRICAL")
 		{
 			int iPos = FindElectricalListPos(strID, bThrowError);
 			m_aryElecSyn.RemoveAt(iPos);
