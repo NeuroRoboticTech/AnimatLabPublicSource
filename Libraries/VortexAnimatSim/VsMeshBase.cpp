@@ -75,9 +75,9 @@ void VsMeshBase::LoadMeshNode()
 
 	CStdFPoint vScale(1, 1, 1);
 
-	//If this is a collision object then it does not get scaled here. That is done
+	//If this is a convex collision object then it does not get scaled here. That is done
 	//when it is converted into a collision mesh by the editor. Otherwise use the scaling.
-	if(!m_lpThisMesh->IsCollisionObject())
+	if( !(m_lpThisMesh->IsCollisionObject() && m_lpThisMesh->CollisionMeshType() == "CONVEX") )
 		vScale= m_lpThisMesh->Scale();
 
 	osg::Matrix osgScaleMatrix = osg::Matrix::identity();

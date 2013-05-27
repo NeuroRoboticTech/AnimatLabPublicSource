@@ -324,7 +324,10 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub BeforeAddBody()
-            MyBase.BeforeAddBody()
+
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeAddBody(Me)
+            End If
 
             Try
                 If Me.IsRoot Then
