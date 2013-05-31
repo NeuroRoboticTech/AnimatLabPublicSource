@@ -53,11 +53,12 @@ Joint::Joint()
 	m_fltSize = 0.02f;
 	m_bEnableLimits = TRUE;
 
-    m_lpPrimaryAxisDisplacement = NULL;
-    m_lpSecondaryAxisDisplacement = NULL;
-    m_lpThirdAxisDisplacement = NULL;
-    m_lpSecondaryAxisRotation = NULL;
-    m_lpThirdAxisRotation = NULL;
+    m_lpRelaxation1 = NULL;
+    m_lpRelaxation2 = NULL;
+    m_lpRelaxation3 = NULL;
+    m_lpRelaxation4 = NULL;
+    m_lpRelaxation5 = NULL;
+    m_lpRelaxation6 = NULL;
     m_lpFriction = NULL;
 }
 
@@ -76,11 +77,12 @@ try
 	m_lpParent = NULL;
 	m_lpChild = NULL;
 
-    if(m_lpPrimaryAxisDisplacement) {delete m_lpPrimaryAxisDisplacement; m_lpPrimaryAxisDisplacement = NULL;}
-    if(m_lpSecondaryAxisDisplacement) {delete m_lpSecondaryAxisDisplacement; m_lpSecondaryAxisDisplacement = NULL;}
-    if(m_lpThirdAxisDisplacement) {delete m_lpThirdAxisDisplacement; m_lpThirdAxisDisplacement = NULL;}
-    if(m_lpSecondaryAxisRotation) {delete m_lpSecondaryAxisRotation; m_lpSecondaryAxisRotation = NULL;}
-    if(m_lpThirdAxisRotation) {delete m_lpThirdAxisRotation; m_lpThirdAxisRotation = NULL;}
+    if(m_lpRelaxation1) {delete m_lpRelaxation1; m_lpRelaxation1 = NULL;}
+    if(m_lpRelaxation2) {delete m_lpRelaxation2; m_lpRelaxation2 = NULL;}
+    if(m_lpRelaxation3) {delete m_lpRelaxation3; m_lpRelaxation3 = NULL;}
+    if(m_lpRelaxation4) {delete m_lpRelaxation4; m_lpRelaxation4 = NULL;}
+    if(m_lpRelaxation5) {delete m_lpRelaxation5; m_lpRelaxation5 = NULL;}
+    if(m_lpRelaxation6) {delete m_lpRelaxation6; m_lpRelaxation6 = NULL;}
     if(m_lpFriction) {delete m_lpFriction; m_lpFriction = NULL;}
 }
 catch(...)
@@ -161,7 +163,7 @@ void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::PrimaryAxisDisplacement() {return m_lpPrimaryAxisDisplacement;}
+ConstraintRelaxation *Joint::Relaxation1() {return m_lpRelaxation1;}
 
 /**
 \brief	Sets the pointer to the primary axis displacement relaxation 
@@ -171,15 +173,15 @@ ConstraintRelaxation *Joint::PrimaryAxisDisplacement() {return m_lpPrimaryAxisDi
 
 \return	nothing 
 **/
-void Joint::PrimaryAxisDisplacement(ConstraintRelaxation *lpRelax)
+void Joint::Relaxation1(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpPrimaryAxisDisplacement)
+    if(m_lpRelaxation1)
     {
-        delete m_lpPrimaryAxisDisplacement;
-        m_lpPrimaryAxisDisplacement = NULL;
+        delete m_lpRelaxation1;
+        m_lpRelaxation1 = NULL;
     }
 
-    m_lpPrimaryAxisDisplacement = lpRelax;
+    m_lpRelaxation1 = lpRelax;
 }
 
 /**
@@ -190,13 +192,13 @@ void Joint::PrimaryAxisDisplacement(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::PrimaryAxisDisplacement(string strXml)
+void Joint::Relaxation1(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	
-    PrimaryAxisDisplacement(LoadConstraintRelaxation(oXml, "PrimaryAxisDisplacement"));
+    Relaxation1(LoadConstraintRelaxation(oXml, "Relaxation1"));
 }
 
 /**
@@ -207,7 +209,7 @@ void Joint::PrimaryAxisDisplacement(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::SecondaryAxisDisplacement() {return m_lpSecondaryAxisDisplacement;}
+ConstraintRelaxation *Joint::Relaxation2() {return m_lpRelaxation2;}
 
 /**
 \brief	Sets the pointer to the secondary axis displacement relaxation 
@@ -217,15 +219,15 @@ ConstraintRelaxation *Joint::SecondaryAxisDisplacement() {return m_lpSecondaryAx
 
 \return	nothing 
 **/
-void Joint::SecondaryAxisDisplacement(ConstraintRelaxation *lpRelax)
+void Joint::Relaxation2(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpSecondaryAxisDisplacement)
+    if(m_lpRelaxation2)
     {
-        delete m_lpSecondaryAxisDisplacement;
-        m_lpSecondaryAxisDisplacement = NULL;
+        delete m_lpRelaxation2;
+        m_lpRelaxation2 = NULL;
     }
 
-    m_lpSecondaryAxisDisplacement = lpRelax;
+    m_lpRelaxation2 = lpRelax;
 }
 
 /**
@@ -236,13 +238,13 @@ void Joint::SecondaryAxisDisplacement(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::SecondaryAxisDisplacement(string strXml)
+void Joint::Relaxation2(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	
-    SecondaryAxisDisplacement(LoadConstraintRelaxation(oXml, "SecondaryAxisDisplacement"));
+    Relaxation2(LoadConstraintRelaxation(oXml, "Relaxation2"));
 }
 
 /**
@@ -253,7 +255,7 @@ void Joint::SecondaryAxisDisplacement(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::ThirdAxisDisplacement() {return m_lpThirdAxisDisplacement;}
+ConstraintRelaxation *Joint::Relaxation3() {return m_lpRelaxation3;}
 
 /**
 \brief	Sets the pointer to the third axis displacement relaxation 
@@ -263,15 +265,15 @@ ConstraintRelaxation *Joint::ThirdAxisDisplacement() {return m_lpThirdAxisDispla
 
 \return	nothing 
 **/
-void Joint::ThirdAxisDisplacement(ConstraintRelaxation *lpRelax)
+void Joint::Relaxation3(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpThirdAxisDisplacement)
+    if(m_lpRelaxation3)
     {
-        delete m_lpThirdAxisDisplacement;
-        m_lpThirdAxisDisplacement = NULL;
+        delete m_lpRelaxation3;
+        m_lpRelaxation3 = NULL;
     }
 
-    m_lpThirdAxisDisplacement = lpRelax;
+    m_lpRelaxation3 = lpRelax;
 }
 
 /**
@@ -282,13 +284,13 @@ void Joint::ThirdAxisDisplacement(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::ThirdAxisDisplacement(string strXml)
+void Joint::Relaxation3(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	
-    ThirdAxisDisplacement(LoadConstraintRelaxation(oXml, "ThirdAxisDisplacement"));
+    Relaxation3(LoadConstraintRelaxation(oXml, "Relaxation3"));
 }
 
 /**
@@ -299,7 +301,7 @@ void Joint::ThirdAxisDisplacement(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::SecondaryAxisRotation() {return m_lpSecondaryAxisRotation;}
+ConstraintRelaxation *Joint::Relaxation4() {return m_lpRelaxation4;}
 
 /**
 \brief	Sets the pointer to the secondary axis rotation relaxation 
@@ -309,15 +311,15 @@ ConstraintRelaxation *Joint::SecondaryAxisRotation() {return m_lpSecondaryAxisRo
 
 \return	nothing 
 **/
-void Joint::SecondaryAxisRotation(ConstraintRelaxation *lpRelax)
+void Joint::Relaxation4(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpSecondaryAxisRotation)
+    if(m_lpRelaxation4)
     {
-        delete m_lpSecondaryAxisRotation;
-        m_lpSecondaryAxisRotation = NULL;
+        delete m_lpRelaxation4;
+        m_lpRelaxation4 = NULL;
     }
 
-    m_lpSecondaryAxisRotation = lpRelax;
+    m_lpRelaxation4 = lpRelax;
 }
 
 /**
@@ -328,13 +330,13 @@ void Joint::SecondaryAxisRotation(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::SecondaryAxisRotation(string strXml)
+void Joint::Relaxation4(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	
-    SecondaryAxisRotation(LoadConstraintRelaxation(oXml, "SecondaryAxisRotation"));
+    Relaxation4(LoadConstraintRelaxation(oXml, "Relaxation4"));
 }
 
 /**
@@ -345,7 +347,7 @@ void Joint::SecondaryAxisRotation(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::ThirdAxisRotation() {return m_lpThirdAxisRotation;}
+ConstraintRelaxation *Joint::Relaxation5() {return m_lpRelaxation5;}
 
 /**
 \brief	Sets the pointer to the thirdary axis rotation relaxation 
@@ -355,15 +357,15 @@ ConstraintRelaxation *Joint::ThirdAxisRotation() {return m_lpThirdAxisRotation;}
 
 \return	nothing 
 **/
-void Joint::ThirdAxisRotation(ConstraintRelaxation *lpRelax)
+void Joint::Relaxation5(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpThirdAxisRotation)
+    if(m_lpRelaxation5)
     {
-        delete m_lpThirdAxisRotation;
-        m_lpThirdAxisRotation = NULL;
+        delete m_lpRelaxation5;
+        m_lpRelaxation5 = NULL;
     }
 
-    m_lpThirdAxisRotation = lpRelax;
+    m_lpRelaxation5 = lpRelax;
 }
 
 /**
@@ -374,13 +376,59 @@ void Joint::ThirdAxisRotation(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::ThirdAxisRotation(string strXml)
+void Joint::Relaxation5(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	
-    ThirdAxisRotation(LoadConstraintRelaxation(oXml, "ThirdAxisRotation"));
+    Relaxation5(LoadConstraintRelaxation(oXml, "Relaxation5"));
+}
+
+/**
+\brief	Gets the pointer to the thirdary axis rotation relaxation 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_oPosition. 
+**/
+ConstraintRelaxation *Joint::Relaxation6() {return m_lpRelaxation6;}
+
+/**
+\brief	Sets the pointer to the thirdary axis rotation relaxation 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	nothing 
+**/
+void Joint::Relaxation6(ConstraintRelaxation *lpRelax)
+{
+    if(m_lpRelaxation6)
+    {
+        delete m_lpRelaxation6;
+        m_lpRelaxation6 = NULL;
+    }
+
+    m_lpRelaxation6 = lpRelax;
+}
+
+/**
+\brief	Sets the thirdary axis rotation relaxation
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the relaxation. 
+**/
+void Joint::Relaxation6(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	
+    Relaxation6(LoadConstraintRelaxation(oXml, "Relaxation6"));
 }
 
 /**
@@ -557,11 +605,12 @@ void Joint::Initialize()
 {
     BodyPart::Initialize();
 
-    if(m_lpPrimaryAxisDisplacement) m_lpPrimaryAxisDisplacement->Initialize();
-    if(m_lpSecondaryAxisDisplacement) m_lpSecondaryAxisDisplacement->Initialize();
-    if(m_lpThirdAxisDisplacement) m_lpThirdAxisDisplacement->Initialize();
-    if(m_lpSecondaryAxisRotation) m_lpSecondaryAxisRotation->Initialize();
-    if(m_lpThirdAxisRotation) m_lpThirdAxisRotation->Initialize();
+    if(m_lpRelaxation1) m_lpRelaxation1->Initialize();
+    if(m_lpRelaxation2) m_lpRelaxation2->Initialize();
+    if(m_lpRelaxation3) m_lpRelaxation3->Initialize();
+    if(m_lpRelaxation4) m_lpRelaxation4->Initialize();
+    if(m_lpRelaxation5) m_lpRelaxation5->Initialize();
+    if(m_lpRelaxation6) m_lpRelaxation6->Initialize();
     if(m_lpFriction) m_lpFriction->Initialize();
 
 }
@@ -610,32 +659,37 @@ BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThr
 		return true;
 	}
 
-    if(strType == "PRIMARYAXISDISPLACEMENT")
+    if(strType == "RELAXATION1")
     {
-        PrimaryAxisDisplacement(strValue);
+        Relaxation1(strValue);
     }
 
-    if(strType == "SECONDARYAXISDISPLACEMENT")
+    if(strType == "RELAXATION2")
     {
-        SecondaryAxisDisplacement(strValue);
+        Relaxation2(strValue);
     }
 
-    if(strType == "THIRDAXISDISPLACEMENT")
+    if(strType == "RELAXATION3")
     {
-        ThirdAxisDisplacement(strValue);
+        Relaxation3(strValue);
     }
 
-    if(strType == "SECONDARYAXISROTATION")
+    if(strType == "RELAXATION4")
     {
-        SecondaryAxisRotation(strValue);
+        Relaxation4(strValue);
     }
 
-    if(strType == "THIRDAXISROTATION")
+    if(strType == "RELAXATION5")
     {
-        ThirdAxisRotation(strValue);
+        Relaxation5(strValue);
     }
 
-    if(strType == "FRICTION")
+    if(strType == "RELAXATION6")
+    {
+        Relaxation6(strValue);
+    }
+
+	if(strType == "FRICTION")
     {
         Friction(strValue);
     }
@@ -657,19 +711,22 @@ void Joint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryT
 	aryNames.Add("Size");
 	aryTypes.Add("Float");
 
-	aryNames.Add("PrimaryAxisDisplacement");
+	aryNames.Add("Relaxation1");
 	aryTypes.Add("Xml");
 
-	aryNames.Add("SecondaryAxisDisplacement");
+	aryNames.Add("Relaxation2");
 	aryTypes.Add("Xml");
 
-	aryNames.Add("ThirdAxisDisplacement");
+	aryNames.Add("Relaxation3");
 	aryTypes.Add("Xml");
 
-	aryNames.Add("SecondaryAxisRotation");
+	aryNames.Add("Relaxation4");
 	aryTypes.Add("Xml");
 
-	aryNames.Add("ThirdAxisRotation");
+	aryNames.Add("Relaxation5");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Relaxation6");
 	aryTypes.Add("Xml");
 
 	aryNames.Add("Friction");
@@ -718,27 +775,31 @@ void Joint::Load(CStdXml &oXml)
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 
-    if(m_lpPrimaryAxisDisplacement) {delete m_lpPrimaryAxisDisplacement; m_lpPrimaryAxisDisplacement = NULL;} 
-    if(m_lpSecondaryAxisDisplacement) {delete m_lpSecondaryAxisDisplacement; m_lpSecondaryAxisDisplacement = NULL;} 
-    if(m_lpThirdAxisDisplacement) {delete m_lpThirdAxisDisplacement; m_lpThirdAxisDisplacement = NULL;} 
-    if(m_lpSecondaryAxisRotation) {delete m_lpSecondaryAxisRotation; m_lpSecondaryAxisRotation = NULL;} 
-    if(m_lpThirdAxisRotation) {delete m_lpThirdAxisRotation; m_lpThirdAxisRotation = NULL;} 
+    if(m_lpRelaxation1) {delete m_lpRelaxation1; m_lpRelaxation1 = NULL;} 
+    if(m_lpRelaxation2) {delete m_lpRelaxation2; m_lpRelaxation2 = NULL;} 
+    if(m_lpRelaxation3) {delete m_lpRelaxation3; m_lpRelaxation3 = NULL;} 
+    if(m_lpRelaxation4) {delete m_lpRelaxation4; m_lpRelaxation4 = NULL;} 
+    if(m_lpRelaxation5) {delete m_lpRelaxation5; m_lpRelaxation5 = NULL;} 
+    if(m_lpRelaxation6) {delete m_lpRelaxation6; m_lpRelaxation6 = NULL;} 
     if(m_lpFriction) {delete m_lpFriction; m_lpFriction = NULL;} 
 
-    if(oXml.FindChildElement("PrimaryAxisDisplacement", false))
-        m_lpPrimaryAxisDisplacement = LoadConstraintRelaxation(oXml, "PrimaryAxisDisplacement");
+    if(oXml.FindChildElement("Relaxation1", false))
+        m_lpRelaxation1 = LoadConstraintRelaxation(oXml, "Relaxation1");
 
-    if(oXml.FindChildElement("SecondaryAxisDisplacement", false))
-        m_lpSecondaryAxisDisplacement = LoadConstraintRelaxation(oXml, "SecondaryAxisDisplacement");
+    if(oXml.FindChildElement("Relaxation2", false))
+        m_lpRelaxation2 = LoadConstraintRelaxation(oXml, "Relaxation2");
 
-    if(oXml.FindChildElement("ThirdAxisDisplacement", false))
-        m_lpThirdAxisDisplacement = LoadConstraintRelaxation(oXml, "ThirdAxisDisplacement");
+    if(oXml.FindChildElement("Relaxation3", false))
+        m_lpRelaxation3 = LoadConstraintRelaxation(oXml, "Relaxation3");
 
-    if(oXml.FindChildElement("SecondaryAxisRotation", false))
-        m_lpSecondaryAxisRotation = LoadConstraintRelaxation(oXml, "SecondaryAxisRotation");
+    if(oXml.FindChildElement("Relaxation4", false))
+        m_lpRelaxation4 = LoadConstraintRelaxation(oXml, "Relaxation4");
 
-    if(oXml.FindChildElement("ThirdAxisRotation", false))
-        m_lpThirdAxisRotation = LoadConstraintRelaxation(oXml, "ThirdAxisRotation");
+    if(oXml.FindChildElement("Relaxation5", false))
+        m_lpRelaxation5 = LoadConstraintRelaxation(oXml, "Relaxation5");
+
+    if(oXml.FindChildElement("Relaxation6", false))
+        m_lpRelaxation6 = LoadConstraintRelaxation(oXml, "Relaxation6");
 
     if(oXml.FindChildElement("Friction", false))
         m_lpFriction = LoadConstraintFriction(oXml);    

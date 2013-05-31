@@ -19,19 +19,23 @@ Namespace DataObjects.Physical
 #Region " Enums "
 
         Public Enum enumCoordinateID
-            PrimaryAxisDisplacemnt = 0
-            SecondaryAxisDisplacement = 1
-            ThirdAxisDisplacement = 2
-            SecondaryAxisRotation = 3
-            ThirdAxisRotation = 4
+            Relaxation1 = 0
+            Relaxation2 = 1
+            Relaxation3 = 2
+            Relaxation4 = 3
+            Relaxation5 = 4
+            Relaxation6 = 5
         End Enum
 
 #End Region
 
 #Region " Attributes "
 
+        'The description of this relaxation parameter
+        Protected m_strDescription As String = ""
+
         'The coordinate ID that this is associated with
-        Protected m_eCoordinateID As enumCoordinateID = enumCoordinateID.PrimaryAxisDisplacemnt
+        Protected m_eCoordinateID As enumCoordinateID = enumCoordinateID.Relaxation1
 
         'The stiffness of the constraint coordinate.
         Protected m_snStiffness As ScaledNumber
@@ -45,6 +49,15 @@ Namespace DataObjects.Physical
 #End Region
 
 #Region " Properties "
+
+        Public Overridable Property Description() As String
+            Get
+                Return m_strDescription
+            End Get
+            Set(ByVal Value As String)
+                m_strDescription = Value
+            End Set
+        End Property
 
         Public Overridable Property CoordinateID() As enumCoordinateID
             Get
@@ -110,10 +123,11 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal eCoordID As enumCoordinateID)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strDescription As String, ByVal eCoordID As enumCoordinateID)
             MyBase.New(doParent)
 
             m_strName = strName
+            m_strDescription = strDescription
             m_eCoordinateID = eCoordID
 
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "m/N", "m/N")
@@ -145,6 +159,8 @@ Namespace DataObjects.Physical
 
             Dim doOrig As ConstraintRelaxation = DirectCast(doOriginal, ConstraintRelaxation)
 
+            m_eCoordinateID = doOrig.m_eCoordinateID
+            m_strDescription = m_strDescription
             m_snStiffness = DirectCast(doOrig.m_snStiffness.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snDamping = DirectCast(doOrig.m_snDamping.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snLoss = DirectCast(doOrig.m_snLoss.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
@@ -199,25 +215,27 @@ Namespace DataObjects.Physical
 
 #End Region
 
-        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+        Public Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strTagName As String)
 
-            oXml.IntoElem()
+            If oXml.FindChildElement(strTagName, False) Then
+                oXml.IntoElem()
 
-            m_strID = oXml.GetChildString("ID")
-            m_strName = oXml.GetChildString("Name")
-            m_bEnabled = oXml.GetChildBool("Enabled")
+                m_strID = oXml.GetChildString("ID")
+                m_strName = oXml.GetChildString("Name")
+                m_bEnabled = oXml.GetChildBool("Enabled")
 
-            m_snStiffness.LoadData(oXml, "Stiffness")
-            m_snDamping.LoadData(oXml, "Damping")
-            m_snLoss.LoadData(oXml, "Loss")
+                m_snStiffness.LoadData(oXml, "Stiffness")
+                m_snDamping.LoadData(oXml, "Damping")
+                m_snLoss.LoadData(oXml, "Loss")
 
-            oXml.OutOfElem()
+                oXml.OutOfElem()
+            End If
 
         End Sub
 
-        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+        Public Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strTagName As String)
 
-            oXml.AddChildElement(Me.Name)
+            oXml.AddChildElement(strTagName)
             oXml.IntoElem()
 
             oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
@@ -238,7 +256,7 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-            oXml.AddChildElement(Me.Name)
+            oXml.AddChildElement(strName)
             oXml.IntoElem()
 
             oXml.AddChildElement("ID", Me.ID)

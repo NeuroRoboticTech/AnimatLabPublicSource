@@ -323,6 +323,7 @@ Namespace DataObjects.Physical
 
                 rbRootToAdd = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
                 bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
+
                 rbRootToAdd.SetDefaultSizes()
             End If
 
@@ -331,6 +332,7 @@ Namespace DataObjects.Physical
             rbRootToAdd.IsContactSensor = False
             rbRootToAdd.IsCollisionObject = True
             rbRootToAdd.Freeze = False
+            If Not bAddDefaultGraphics Then rbRootToAdd.Transparencies.SimulationTransparency = 0
             rbRootToAdd.BeforeAddBody()
             rbRootToAdd.BeforeAddToList(False, True)
 

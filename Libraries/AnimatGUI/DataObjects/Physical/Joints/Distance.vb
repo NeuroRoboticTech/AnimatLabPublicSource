@@ -55,7 +55,7 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "WorldPositionX"
 
-            m_doPrimaryAxisDisplacementRelaxation = New ConstraintRelaxation(Me, "PrimaryAxisDisplacement", ConstraintRelaxation.enumCoordinateID.PrimaryAxisDisplacemnt)
+            m_doRelaxation1 = New ConstraintRelaxation(Me, "Distance Displacement", "Sets the relaxation for the distance constraint.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
 
         End Sub
 

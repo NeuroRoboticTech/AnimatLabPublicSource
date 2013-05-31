@@ -61,19 +61,22 @@ namespace AnimatSim
 			float m_fltSize;
 
             ///The relaxation for the primary displacement relaxation
-            ConstraintRelaxation *m_lpPrimaryAxisDisplacement;
+            ConstraintRelaxation *m_lpRelaxation1;
 
             ///The relaxation for the secondary displacement relaxation
-            ConstraintRelaxation *m_lpSecondaryAxisDisplacement;
+            ConstraintRelaxation *m_lpRelaxation2;
 
             ///The relaxation for the third displacement relaxation
-            ConstraintRelaxation *m_lpThirdAxisDisplacement;
+            ConstraintRelaxation *m_lpRelaxation3;
 
             ///The relaxation for the secondary rotation relaxation
-            ConstraintRelaxation *m_lpSecondaryAxisRotation;
+            ConstraintRelaxation *m_lpRelaxation4;
 
             ///The relaxation for the third rotation relaxation
-            ConstraintRelaxation *m_lpThirdAxisRotation;
+            ConstraintRelaxation *m_lpRelaxation5;
+
+            ///The relaxation for the third rotation relaxation
+            ConstraintRelaxation *m_lpRelaxation6;
 
             ///The friction for this joint
             ConstraintFriction *m_lpFriction;
@@ -93,25 +96,29 @@ namespace AnimatSim
 			virtual BOOL EnableLimits();
 			virtual void EnableLimits(BOOL bVal);
 
-            virtual ConstraintRelaxation *PrimaryAxisDisplacement();
-            virtual void PrimaryAxisDisplacement(ConstraintRelaxation *lpRelax);
-			virtual void PrimaryAxisDisplacement(string strXml);
+            virtual ConstraintRelaxation *Relaxation1();
+            virtual void Relaxation1(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation1(string strXml);
 
-            virtual ConstraintRelaxation *SecondaryAxisDisplacement();
-            virtual void SecondaryAxisDisplacement(ConstraintRelaxation *lpRelax);
-			virtual void SecondaryAxisDisplacement(string strXml);
+            virtual ConstraintRelaxation *Relaxation2();
+            virtual void Relaxation2(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation2(string strXml);
 
-            virtual ConstraintRelaxation *ThirdAxisDisplacement();
-            virtual void ThirdAxisDisplacement(ConstraintRelaxation *lpRelax);
-			virtual void ThirdAxisDisplacement(string strXml);
+            virtual ConstraintRelaxation *Relaxation3();
+            virtual void Relaxation3(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation3(string strXml);
 
-            virtual ConstraintRelaxation *SecondaryAxisRotation();
-            virtual void SecondaryAxisRotation(ConstraintRelaxation *lpRelax);
-			virtual void SecondaryAxisRotation(string strXml);
+            virtual ConstraintRelaxation *Relaxation4();
+            virtual void Relaxation4(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation4(string strXml);
 
-            virtual ConstraintRelaxation *ThirdAxisRotation();
-            virtual void ThirdAxisRotation(ConstraintRelaxation *lpRelax);
-			virtual void ThirdAxisRotation(string strXml);
+            virtual ConstraintRelaxation *Relaxation5();
+            virtual void Relaxation5(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation5(string strXml);
+
+            virtual ConstraintRelaxation *Relaxation6();
+            virtual void Relaxation6(ConstraintRelaxation *lpRelax);
+			virtual void Relaxation6(string strXml);
 
             virtual ConstraintFriction *Friction();
             virtual void Friction(ConstraintFriction *lpFriction);
