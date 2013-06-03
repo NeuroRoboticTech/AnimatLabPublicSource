@@ -116,7 +116,7 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "m/N", "m/N")
+            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
             m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 5, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
             m_snLoss = New AnimatGUI.Framework.ScaledNumber(Me, "Loss", 0, ScaledNumber.enumNumericScale.None)
             m_bEnabled = False
@@ -130,7 +130,7 @@ Namespace DataObjects.Physical
             m_strDescription = strDescription
             m_eCoordinateID = eCoordID
 
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "m/N", "m/N")
+            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
             m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 5, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
             m_snLoss = New AnimatGUI.Framework.ScaledNumber(Me, "Loss", 0, ScaledNumber.enumNumericScale.None)
             m_bEnabled = False
@@ -221,7 +221,6 @@ Namespace DataObjects.Physical
                 oXml.IntoElem()
 
                 m_strID = oXml.GetChildString("ID")
-                m_strName = oXml.GetChildString("Name")
                 m_bEnabled = oXml.GetChildBool("Enabled")
 
                 m_snStiffness.LoadData(oXml, "Stiffness")
@@ -242,7 +241,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("ClassName", Me.ClassName)
 
             oXml.AddChildElement("ID", Me.ID)
-            oXml.AddChildElement("Name", Me.Name)
             oXml.AddChildElement("Enabled", Me.Enabled)
 
             oXml.AddChildElement("CoordinateID", Convert.ToInt32(m_eCoordinateID))

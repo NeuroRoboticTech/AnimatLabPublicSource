@@ -5,7 +5,7 @@
 <Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\CreationTests\TestCloseOpen\</ProjectPath>
-<AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -236,17 +236,16 @@
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Distance</PartType>
 <Size Value="5" Scale="milli" Actual="0.005"/>
 <EnableLimits>True</EnableLimits>
-<PrimaryAxisDisplacement>
+<Relaxation1>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>579f956d-13e2-4656-90c5-59a0ddcf8ecd</ID>
-<Name>PrimaryAxisDisplacement</Name>
+<ID>8d751753-27cc-4a8b-b2a5-26b941c3c3a0</ID>
 <Enabled>False</Enabled>
 <CoordinateID>0</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
 <Damping Value="5" Scale="Kilo" Actual="5000"/>
 <Loss Value="0" Scale="None" Actual="0"/>
-</PrimaryAxisDisplacement>
+</Relaxation1>
 </Joint>
 <FoodSource>False</FoodSource>
 <LowerRadius Value="0" Scale="centi" Actual="0"/>
@@ -531,8 +530,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>623e2099-8b6e-4635-aa1b-719c7325f98f</Name>
-<ID>623e2099-8b6e-4635-aa1b-719c7325f98f</ID>
+<Name>3f585c92-0bb8-49e8-9f56-b21451b0afbb</Name>
+<ID>3f585c92-0bb8-49e8-9f56-b21451b0afbb</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -626,7 +625,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/14/2013 09:33:55"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="06/02/2013 17:20:37"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

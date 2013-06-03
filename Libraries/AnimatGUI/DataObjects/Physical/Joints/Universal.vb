@@ -61,10 +61,10 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "WorldPositionX"
 
-            m_doRelaxation1 = New ConstraintRelaxation(Me, "Primary Axis Displacement", "Sets the relaxation for the primary displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
-            m_doRelaxation2 = New ConstraintRelaxation(Me, "Secondary Axis Displacement", "Sets the relaxation for the secondary displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
-            m_doRelaxation3 = New ConstraintRelaxation(Me, "Third Axis Displacement", "Sets the relaxation for the third displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
-            m_doRelaxation4 = New ConstraintRelaxation(Me, "Primary Axis Rotation", "Sets the relaxation for the primary displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
+            m_doRelaxation1 = New ConstraintRelaxation(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
+            m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
+            m_doRelaxation3 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
+            m_doRelaxation4 = New ConstraintRelaxation(Me, "X Axis Rotation", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
 
         End Sub
 

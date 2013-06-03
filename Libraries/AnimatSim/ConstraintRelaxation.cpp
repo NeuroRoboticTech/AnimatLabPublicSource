@@ -145,7 +145,7 @@ void ConstraintRelaxation::Stiffness(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Stiffness", TRUE);
 
 	if(bUseScaling)
-		fltVal *= m_lpSim->InverseMassUnits();  //Stiffness units are m/N or s^2/Kg
+		fltVal *= m_lpSim->InverseMassUnits();
 	
 	m_fltStiffness = fltVal;
 	SetRelaxationProperties();
@@ -234,7 +234,7 @@ void ConstraintRelaxation::CreateDefaultUnits()
 
 	//scale the varios units to be consistent
 	//Friction coefficients are unitless
-	m_fltStiffness *= m_lpSim->InverseMassUnits();  //Stiffness units are m/N or s^2/Kg
+	m_fltStiffness *= m_lpSim->InverseMassUnits(); 
 	m_fltDamping *= m_lpSim->InverseMassUnits();
 	m_fltLoss *= m_lpSim->MassUnits();  //Slip units are s/Kg
 }
