@@ -151,7 +151,7 @@ Namespace Forms
                                          "subject=AnimatLab Pro Offline Activation" & vbCrLf & _
                                          "body= Serial Number: " & txtSerialNumber.Text & vbCrLf & _
                                          " Machine code: " & Util.Application.SecurityMgr.MachineCode & vbCrLf
-                Util.ShowMessage(strText, "Registration result", MessageBoxButtons.OK, 650, 200, ContentAlignment.MiddleLeft)
+                Util.ShowMessage(strText, "Registration result", MessageBoxButtons.OK, 650, 200, HorizontalAlignment.Left)
 
             Catch ex As Exception
                 Util.DisplayError(ex)

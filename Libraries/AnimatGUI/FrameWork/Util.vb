@@ -435,7 +435,8 @@ Namespace Framework
         Public Shared Function ShowMessage(ByVal strMessage As String, Optional ByVal strCaption As String = "", _
                                            Optional ByVal eButtons As System.Windows.Forms.MessageBoxButtons = MessageBoxButtons.OK, _
                                            Optional ByVal iWidth As Integer = -1, Optional ByVal iHeight As Integer = -1, _
-                                           Optional ByVal eTextAlign As System.Drawing.ContentAlignment = ContentAlignment.MiddleCenter) As System.Windows.Forms.DialogResult
+                                           Optional ByVal eTextAlign As System.Windows.Forms.HorizontalAlignment = HorizontalAlignment.Center, _
+                                           Optional ByVal bReadOnly As Boolean = True) As System.Windows.Forms.DialogResult
 
             Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting ShowMessage: '" & strMessage & "'")
 
@@ -445,6 +446,7 @@ Namespace Framework
             m_frmMessage.SetWidth = iWidth
             m_frmMessage.SetHeight = iHeight
             m_frmMessage.SetTextAlign = eTextAlign
+            m_frmMessage.TextReadOnly = bReadOnly
 
             Return m_frmMessage.ShowDialog(Util.Application)
         End Function

@@ -14,7 +14,8 @@ Namespace Forms
 
         Protected m_iSetHeight As Integer = -1
         Protected m_iSetWidth As Integer = -1
-        Protected m_eSetTextAlign As System.Drawing.ContentAlignment
+        Protected m_eSetTextAlign As System.Windows.Forms.HorizontalAlignment
+        Protected m_bReadOnly As Boolean = True
 
         Public Property SetHeight() As Integer
             Get
@@ -34,32 +35,30 @@ Namespace Forms
             End Set
         End Property
 
-        Public Property SetTextAlign() As System.Drawing.ContentAlignment
+        Public Property SetTextAlign() As System.Windows.Forms.HorizontalAlignment
             Get
                 Return m_eSetTextAlign
             End Get
-            Set(ByVal value As System.Drawing.ContentAlignment)
+            Set(ByVal value As System.Windows.Forms.HorizontalAlignment)
                 m_eSetTextAlign = value
             End Set
         End Property
 
+        Public Property TextReadOnly() As Boolean
+            Get
+                Return m_bReadOnly
+            End Get
+            Set(ByVal value As Boolean)
+                m_bReadOnly = value
+            End Set
+        End Property
+
         Private Sub InitializeComponent()
-            Me.lblMessage = New System.Windows.Forms.Label()
             Me.btn2 = New System.Windows.Forms.Button()
             Me.btn3 = New System.Windows.Forms.Button()
             Me.btn1 = New System.Windows.Forms.Button()
+            Me.txtMessage = New System.Windows.Forms.TextBox()
             Me.SuspendLayout()
-            '
-            'lblMessage
-            '
-            Me.lblMessage.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.lblMessage.Location = New System.Drawing.Point(13, 13)
-            Me.lblMessage.Name = "lblMessage"
-            Me.lblMessage.Size = New System.Drawing.Size(516, 67)
-            Me.lblMessage.TabIndex = 0
-            Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'btn2
             '
@@ -91,15 +90,26 @@ Namespace Forms
             Me.btn1.Text = "1"
             Me.btn1.UseVisualStyleBackColor = True
             '
+            'txtMessage
+            '
+            Me.txtMessage.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.txtMessage.Location = New System.Drawing.Point(13, 13)
+            Me.txtMessage.Multiline = True
+            Me.txtMessage.Name = "txtMessage"
+            Me.txtMessage.Size = New System.Drawing.Size(516, 65)
+            Me.txtMessage.TabIndex = 4
+            '
             'AnimatMessageBox
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(541, 119)
+            Me.Controls.Add(Me.txtMessage)
             Me.Controls.Add(Me.btn1)
             Me.Controls.Add(Me.btn3)
             Me.Controls.Add(Me.btn2)
-            Me.Controls.Add(Me.lblMessage)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
@@ -107,9 +117,9 @@ Namespace Forms
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
             Me.Text = "AnimatMessageBox"
             Me.ResumeLayout(False)
+            Me.PerformLayout()
 
         End Sub
-        Friend WithEvents lblMessage As System.Windows.Forms.Label
         Friend WithEvents btn2 As System.Windows.Forms.Button
         Friend WithEvents btn3 As System.Windows.Forms.Button
         Friend WithEvents btn1 As System.Windows.Forms.Button
@@ -136,9 +146,10 @@ Namespace Forms
 
                 Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "AnimatMessageBox::InitializeComponent")
 
-                lblMessage.Text = m_strMessage
+                txtMessage.Text = m_strMessage
                 Me.Text = m_strCaption
-                Me.lblMessage.TextAlign = m_eSetTextAlign
+                Me.txtMessage.TextAlign = m_eSetTextAlign
+                Me.txtMessage.ReadOnly = m_bReadOnly
 
                 If m_iSetWidth > 100 Then
                     Me.Width = m_iSetWidth
@@ -214,6 +225,7 @@ Namespace Forms
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
+        Friend WithEvents txtMessage As System.Windows.Forms.TextBox
     End Class
 
 End Namespace

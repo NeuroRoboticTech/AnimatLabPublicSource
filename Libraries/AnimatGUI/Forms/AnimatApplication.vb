@@ -77,6 +77,7 @@ Namespace Forms
         Public WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents WarehouseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents TutorialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents MouseCheatSheetToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents CheckForUpdatesStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -219,6 +220,7 @@ Namespace Forms
             Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.WarehouseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.TutorialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.MouseCheatSheetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SupportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -663,7 +665,8 @@ Namespace Forms
             'HelpToolStripMenuItem
             '
             Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.TutorialsToolStripMenuItem, _
-                                                                                                      Me.WarehouseToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, _
+                                                                                                      Me.WarehouseToolStripMenuItem, Me.SupportToolStripMenuItem, _
+                                                                                                      Me.MouseCheatSheetToolStripMenuItem, Me.toolStripSeparator7, _
                                                                                                       Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem, _
                                                                                                       Me.toolStripSeparatorHelp2, Me.RegisterStripMenuItem})
             Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
@@ -690,6 +693,13 @@ Namespace Forms
             Me.TutorialsToolStripMenuItem.Name = "TutorialsToolStripMenuItem"
             Me.TutorialsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
             Me.TutorialsToolStripMenuItem.Text = "&Tutorials"
+            '
+            'TutorialsToolStripMenuItem
+            '
+            Me.MouseCheatSheetToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
+            Me.MouseCheatSheetToolStripMenuItem.Name = "MouseCheatSheetToolStripMenuItem"
+            Me.MouseCheatSheetToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.MouseCheatSheetToolStripMenuItem.Text = "&Simulation Mouse Controls Guide"
             '
             'SupportToolStripMenuItem
             '
@@ -4026,7 +4036,7 @@ Namespace Forms
                         strText = strText & vbCrLf & "Upgrade to AnimatLab Pro"
                     End If
 
-                    AnimatGuiCtrls.Forms.SplashForm.StartSplash(infoSplash.m_Image, System.Drawing.Color.White, strText, infoSplash.m_Font, infoSplash.m_Position, infoSplash.m_Color, 5)
+                    AnimatGuiCtrls.Forms.SplashForm.StartSplash(infoSplash.m_Image, System.Drawing.Color.White, strText, infoSplash.m_Font, infoSplash.m_Position, infoSplash.m_Color, 5, Me)
                 End If
 #End If
 
@@ -5927,6 +5937,16 @@ Namespace Forms
             End Try
         End Sub
 
+        Protected Sub OnouseCheatSheet(ByVal sender As Object, ByVal e As System.EventArgs) Handles MouseCheatSheetToolStripMenuItem.Click
+            Try
+                Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Help/Documentation/Simulator/tabid/89/Default.aspx")
+                Process.Start(sInfo)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
         Private Sub OnHelpWarehouse(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WarehouseToolStripMenuItem.Click
             Try
                 Dim sInfo As New ProcessStartInfo("http://www.animatlab.com/Community/AnimatWarehouse/tabid/240/Default.aspx")
@@ -6835,7 +6855,12 @@ Namespace Forms
                 End If
 
                 Dim except As New System.Exception("Error occurred while checking for new updates. " & e.ErrorMessage)
-                Util.DisplayError(except)
+
+                'If it fails because we are not connected to the internet then skip over this and just update the status bar.
+                'Otherwise show it.
+                If Not e.ErrorMessage.Contains("The remote name could not be resolved: 'www.animatlab.com'") Then
+                    Util.DisplayError(except)
+                End If
                 Me.UpdateStatusText = "Error checking for update"
             Catch ex As Exception
                 Util.DisplayError(ex)

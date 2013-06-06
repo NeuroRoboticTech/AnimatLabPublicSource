@@ -74,7 +74,7 @@ namespace AnimatGuiCtrls.Forms
         }
         // Call this method with the image file path and the color 
         // in the image to be rendered transparent
-        public static void StartSplash(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor, int iSeconds)
+        public static void StartSplash(Bitmap imageFile, Color col, string strText, System.Drawing.Font fontText, PointF TextPos, System.Drawing.Color TextColor, int iSeconds, System.Windows.Forms.Form frmParent)
         {
             m_imageFile = imageFile;
             m_transColor = col;
@@ -82,6 +82,7 @@ namespace AnimatGuiCtrls.Forms
             m_Font = fontText;
             m_TextPos = TextPos;
             m_TextColor = TextColor;
+            m_ParentForm = frmParent;
 
             if (iSeconds > 0)
             {
@@ -107,6 +108,8 @@ namespace AnimatGuiCtrls.Forms
         {
             if(m_instance != null)
                 m_instance.Invoke(m_instance.m_delegateClose);
+            if (m_ParentForm != null)
+                m_ParentForm.Activate();
 
         }
         #endregion // Public methods
@@ -172,6 +175,7 @@ namespace AnimatGuiCtrls.Forms
         private static System.Drawing.Color m_TextColor = System.Drawing.Color.Black;
         private static System.Timers.Timer m_SplashTimer;
         private DelegateCloseSplash m_delegateClose;
+        private static System.Windows.Forms.Form m_ParentForm;
         #endregion
 
         private void InitializeComponent()
