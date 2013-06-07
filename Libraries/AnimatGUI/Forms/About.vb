@@ -124,7 +124,7 @@ Namespace Forms
                 lblAnimatLab.Text = strProductName
                 If Not bFullVersion Then
                     linkPurchase.Visible = True
-                    linkPurchase.Links.Add(0, linkPurchase.Text.Length, "http:\\www.AnimatLab.com\Products")
+                    linkPurchase.Links.Add(0, linkPurchase.Text.Length, "http:\\www.AnimatLab.com\Store")
                 Else
                     linkPurchase.Visible = False
                 End If
@@ -161,7 +161,7 @@ Namespace Forms
 
         Private Sub linkPurchase_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles linkPurchase.Click
             Try
-                System.Diagnostics.Process.Start("http:\\www.AnimatLab.com\Products")
+                System.Diagnostics.Process.Start("http:\\www.AnimatLab.com\Store")
             Catch ex As System.Exception
 
             End Try

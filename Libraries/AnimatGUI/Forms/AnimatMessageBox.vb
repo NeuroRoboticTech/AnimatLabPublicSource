@@ -95,6 +95,7 @@ Namespace Forms
             Me.txtMessage.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                 Or System.Windows.Forms.AnchorStyles.Left) _
                 Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.None
             Me.txtMessage.Location = New System.Drawing.Point(13, 13)
             Me.txtMessage.Multiline = True
             Me.txtMessage.Name = "txtMessage"

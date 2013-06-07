@@ -43,19 +43,19 @@ Namespace Forms
             'lblMessage
             '
             Me.lblMessage.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.lblMessage.Location = New System.Drawing.Point(13, 13)
             Me.lblMessage.Name = "lblMessage"
-            Me.lblMessage.Size = New System.Drawing.Size(568, 49)
+            Me.lblMessage.Size = New System.Drawing.Size(718, 49)
             Me.lblMessage.TabIndex = 0
             Me.lblMessage.Text = "A new update for AnimatLab is available. Please see the description below." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Would" & _
-                " you like to install this update now?"
+        " you like to install this update now?"
             Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'btnNo
             '
             Me.btnNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnNo.Location = New System.Drawing.Point(505, 310)
+            Me.btnNo.Location = New System.Drawing.Point(655, 310)
             Me.btnNo.Name = "btnNo"
             Me.btnNo.Size = New System.Drawing.Size(75, 23)
             Me.btnNo.TabIndex = 1
@@ -66,7 +66,7 @@ Namespace Forms
             '
             Me.btnYes.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnYes.DialogResult = System.Windows.Forms.DialogResult.Yes
-            Me.btnYes.Location = New System.Drawing.Point(424, 310)
+            Me.btnYes.Location = New System.Drawing.Point(574, 310)
             Me.btnYes.Name = "btnYes"
             Me.btnYes.Size = New System.Drawing.Size(75, 23)
             Me.btnYes.TabIndex = 3
@@ -76,11 +76,11 @@ Namespace Forms
             'txtDescription
             '
             Me.txtDescription.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtDescription.Location = New System.Drawing.Point(15, 64)
             Me.txtDescription.Name = "txtDescription"
-            Me.txtDescription.Size = New System.Drawing.Size(565, 237)
+            Me.txtDescription.Size = New System.Drawing.Size(715, 237)
             Me.txtDescription.TabIndex = 4
             Me.txtDescription.Text = ""
             '
@@ -88,7 +88,7 @@ Namespace Forms
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(593, 345)
+            Me.ClientSize = New System.Drawing.Size(743, 345)
             Me.Controls.Add(Me.txtDescription)
             Me.Controls.Add(Me.btnYes)
             Me.Controls.Add(Me.btnNo)
