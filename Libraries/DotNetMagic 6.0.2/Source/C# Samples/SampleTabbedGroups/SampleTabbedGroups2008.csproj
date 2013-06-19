@@ -93,7 +93,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SampleTabbedGroups.cs">
-      <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="SampleTabbedGroups.resx">
       <DependentUpon>SampleTabbedGroups.cs</DependentUpon>

@@ -1539,6 +1539,326 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonCloseA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonCloseAH">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonCloseI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMaxA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMaxAH">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMaxI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMinA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMinAH">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonMinI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonPressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonPressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonRestoreA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonRestoreAH">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonRestoreI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonTracking">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackButtonTrackingS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackCaptionA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlackCaptionI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonCloseA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonCloseI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonMaxA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonMaxI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonMinA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonMinI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonPressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonPressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonRestoreA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonRestoreI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonTracking">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueButtonTrackingS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueCaptionA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.BlueCaptionI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonCloseA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonCloseI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonMaxA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonMaxI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonMinA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonMinI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonPressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonPressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonRestoreA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonRestoreI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonTracking">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverButtonTrackingS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverCaptionA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SilverCaptionI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonBluePressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonBluePressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonCloseA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonCloseI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonMaxA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonMaxI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonMinA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonMinI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonOrangePressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonOrangePressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonPurplePressed">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonPurplePressedS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonRestoreA">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonRestoreI">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonTracking">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleButtonTrackingS">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleGrayChecked">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Crownwood.DotNetMagic.Properties.Resources.SparkleGrayIndeterminate">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
         <member name="T:Crownwood.DotNetMagic.Docking.WindowDetailCaption">
             <summary>
             Base class for caption detail implementations.
