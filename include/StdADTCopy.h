@@ -25,12 +25,12 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(lpObject) delete lpObject;
-	RELAY_ERROR(oError);
+	Std_RelayError(oError, __FILE__, __LINE__);
 }
 catch(...)
 {
 	if(lpObject) delete lpObject;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	Std_ThrowError(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError, __FILE__, __LINE__);
 }
 }
 
