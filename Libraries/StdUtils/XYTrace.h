@@ -1,8 +1,11 @@
 #ifndef XY_TRACE_H
 #define XY_TRACE_H
 
-#include <windows.h>
-#include <tchar.h>
+#ifdef _WINDOWS
+	#include <windows.h>
+	#include <tchar.h>
+#endif
+
 #include <stdio.h>
 
 namespace StdUtils

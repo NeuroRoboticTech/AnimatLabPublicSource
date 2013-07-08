@@ -4,7 +4,7 @@
 \brief	Implements the standard lookup table class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 
 namespace StdUtils

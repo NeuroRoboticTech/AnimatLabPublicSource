@@ -11,7 +11,7 @@
    Copyright (c) 2002 Lucian Wischik.  (99% of StdAvi.cpp is based on code from
                                         Lucian Wischik)
 
-   Copyright (c) 2004, 2005 René Nyffenegger (adding C++ class features)
+   Copyright (c) 2004, 2005 Renï¿½ Nyffenegger (adding C++ class features)
 
    This source code is provided 'as-is', without any express or implied
    warranty. In no event will the authors be held liable for any damages
@@ -32,10 +32,10 @@
    3. This notice may not be removed or altered from any source distribution.
 
    Lucian Wischik. 
-   René Nyffenegger rene.nyffenegger@adp-gmbh.ch
+   Renï¿½ Nyffenegger rene.nyffenegger@adp-gmbh.ch
 */
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <vfw.h>
 #include "StdBitmap.h"
 #include "StdAvi.h"

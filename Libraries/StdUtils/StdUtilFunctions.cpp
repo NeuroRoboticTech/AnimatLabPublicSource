@@ -4,7 +4,7 @@
 \brief	Implements the standard utility functions class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -603,6 +603,8 @@ string STD_UTILS_PORT Std_NullStr(string strFormat)
 		return "NULL";
 }
 
+#ifdef _WINDOWS
+
 /**
 \brief	converts LPCWSTR to ansi
 
@@ -650,6 +652,7 @@ LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData)
 
 	return result;
 }
+#endif
 
 /**
 \brief	Standard variant type to constant.
@@ -1054,6 +1057,7 @@ string STD_UTILS_PORT Std_Replace(string strVal, string strFind, string strRepla
 **/
 string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 {
+#ifdef _WINDOWS
 	std::vector<CHAR> _buffer(8096);
 	va_list argList;
 	va_start(argList,szFormat);
@@ -1064,6 +1068,9 @@ string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 
 	strVal.assign(&_buffer[0],ret);
 	return strVal;
+#else
+	return "";
+#endif
 }
 
 /**
@@ -1082,6 +1089,7 @@ long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned c
 {
 	return ((iBlue << 16) | (iGreen << 8) | (iRed));
 }
+
 
 /**
 \brief	Loads a color
@@ -2978,7 +2986,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	\return	trace level.
 	**/
 	int STD_UTILS_PORT Std_GetTraceLevel()
-	{return GetTraceLevel();}
+	{
+#ifdef _WINDOWS
+		return GetTraceLevel();
+#else
+		return 0;
+#endif
+	}
 
 	/**
 	\brief	Sets teh trace level.
@@ -2990,7 +3004,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	**/
 	void STD_UTILS_PORT Std_SetTraceLevel(const int iVal)
-	{SetTraceLevel(iVal);}
+	{
+#ifdef _WINDOWS
+	SetTraceLevel(iVal);
+#endif
+	}
 
 	/**
 	\brief	Sets the log file prefix.
@@ -3003,8 +3021,10 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_SetLogFilePrefix(string strFilePrefix)
 	{
+#ifdef _WINDOWS
 		if(GetTraceFilePrefix() != strFilePrefix)
 			SetTraceFilePrefix(strFilePrefix.c_str());
+#endif
 	}
 
 	/**
@@ -3016,7 +3036,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	\return	prefix.
 	**/
 	string STD_UTILS_PORT Std_GetLogFilePrefix()
-	{return GetTraceFilePrefix();}
+	{
+#ifdef _WINDOWS
+		return GetTraceFilePrefix();
+#else
+		return "";
+#endif
+	}
 
 	/**
 	\brief	Sets the log level.
@@ -3028,7 +3054,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	**/
 	void STD_UTILS_PORT Std_SetLogLevel(const int iLevel)
-	{SetTraceLevel(iLevel);}
+	{
+#ifdef _WINDOWS
+		SetTraceLevel(iLevel);
+#endif
+	}
 
 	/**
 	\brief	Logs a message,
@@ -3045,6 +3075,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_LogMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bPrintHeader)
 	{
+#ifdef _WINDOWS
 		if(GetTraceLevel()==0 || iLevel>GetTraceLevel())
 			return;
 
@@ -3056,6 +3087,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 			strFinalMessage = strMessage;
 
 		Std_Log(iLevel, bPrintHeader, strFinalMessage.c_str());
+#endif
 	}
 
 	/**
@@ -3074,6 +3106,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
 	{
+#ifdef _WINDOWS
 		int iLogLevel = GetTraceLevel();
 		if(iLogLevel==0||iLevel>iLogLevel) return;
 
@@ -3090,6 +3123,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 			Std_Log(iLevel, bPrintHeader, strMessage.c_str());
 		}
+#endif
 	}
 #endif
 
@@ -3113,14 +3147,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 \return	time tick.
 **/
 unsigned long STD_UTILS_PORT Std_GetTick()
-	{
-		/*
-	  struct _timeb stTime;
-		_ftime( &stTime );
-		return ((stTime.time*1000)+ stTime.millitm);
-		*/
-		return  GetTickCount64();
-	}
+{
+#ifdef _WINDOWS
+	return  GetTickCount64();
+#else
+	return  -1;
+#endif
+}
 
 #endif 
 
@@ -3219,6 +3252,8 @@ string STD_UTILS_PORT Std_FileExtension(string &strFile)
 **/
 BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
 {
+#ifdef _WINDOWS
+
 #ifdef _WIN32_WCE
 	wchar_t *sPath = Std_ConvertFromANSI(strPath);
 	DWORD dwAttr = GetFileAttributes(sPath);
@@ -3231,9 +3266,14 @@ BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
 		return FALSE;
 	else if(dwAttr & FILE_ATTRIBUTE_DIRECTORY)
 		return TRUE;
-
+	else
+		return FALSE;
+#else
 	return FALSE;
+#endif
 }
+
+#ifdef _WINDOWS
 
 void STD_UTILS_PORT Std_SetFileTime(string strFilename)
 {
@@ -3264,6 +3304,7 @@ void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 	CloseHandle(filename);
 }
 
+#endif
 
 // File Functions
 //***************************************************************************************************************

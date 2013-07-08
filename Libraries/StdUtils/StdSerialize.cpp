@@ -4,7 +4,7 @@
 \brief	Implements the standard serialize class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

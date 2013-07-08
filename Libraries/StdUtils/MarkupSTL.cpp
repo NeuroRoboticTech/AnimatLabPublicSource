@@ -6,7 +6,7 @@
 // Use in commercial applications requires written permission
 // This software is provided "as is", with no warranty.
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 using namespace std;
 

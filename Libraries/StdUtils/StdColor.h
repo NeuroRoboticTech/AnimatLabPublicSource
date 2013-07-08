@@ -45,7 +45,7 @@ public:
 	\author	dcofer
 	\date	5/3/2011
 	**/
-	CStdColor::CStdColor();
+	CStdColor();
 
 	/**
 	\brief	Constructor with maximum range.
@@ -55,7 +55,7 @@ public:
 
 	\param	fltMaxRange	The maximum range used for color values. 
 	**/
-	CStdColor::CStdColor(float fltMaxRange);
+	CStdColor(float fltMaxRange);
 
 	/**
 	\brief	Constructor.
@@ -69,7 +69,7 @@ public:
 	\param	vala	   	The alpha value. 
 	\param	fltMaxRange	The maximum range for the color values. 
 	**/
-	CStdColor::CStdColor(float valr, float valg, float valb, float vala, float fltMaxRange);
+	CStdColor(float valr, float valg, float valb, float vala, float fltMaxRange);
 
 	void r(float fltR, BOOL bThrowError = TRUE);
 	float r();

@@ -4,7 +4,7 @@
 \brief	Implements the standard xml class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {

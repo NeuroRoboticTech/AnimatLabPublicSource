@@ -4,7 +4,7 @@
 \brief	Implements the standard post fix equation evaluation class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -276,7 +276,8 @@ double CStdPostFixEval::Solve()
 	}
 
 	//If there is more than one entry in the stack then something is wrong
-	if(m_aryStack.GetSize() != 1) THROW_ERROR(Std_Err_lToManyParamsLeft, Std_Err_strToManyParamsLeft);
+	if(m_aryStack.GetSize() != 1) 
+		THROW_ERROR(Std_Err_lToManyParamsLeft, Std_Err_strToManyParamsLeft);
 	dblVal = m_aryStack.Pop();
 
 	return dblVal;

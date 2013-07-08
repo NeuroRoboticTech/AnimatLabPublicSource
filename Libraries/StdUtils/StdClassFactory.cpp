@@ -4,7 +4,7 @@
 \brief	Implements the standard class factory class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 
 namespace StdUtils
@@ -29,6 +29,7 @@ IStdClassFactory::IStdClassFactory()
 IStdClassFactory::~IStdClassFactory()
 {}
 
+#ifdef _WINDOWS
 /**
 \brief	Loads a DLL module by name and attempts to call the GetStdClassFactory method to get a pointer to the class factory.
 
@@ -84,6 +85,53 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 	TRACE_DEBUG("Finished Loading Module: " + strModuleName);
 	return lpFactoryFunc();
 }
+#else
+/**
+\brief	Loads a DLL module by name and attempts to call the GetStdClassFactory method to get a pointer to the class factory.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	strModuleName	Name of the DLL module. 
+
+\return	Pointer to the loaded module, exception if not found.
+**/
+IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
+{
+	TRACE_DEBUG("Loading Module: " + strModuleName);
+
+	if(Std_IsBlank(strModuleName))
+		THROW_ERROR(Std_Err_lModuleNameIsBlank, Std_Err_strModuleNameIsBlank);
+
+	string strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
+
+	void *hMod = NULL;
+
+	hMod = dlopen(strModRenamed.c_str(), RTLD_LAZY);
+	
+	if(!hMod)
+		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + dlerror());
+
+	GetClassFactory lpFactoryFunc = NULL;
+
+	TRACE_DEBUG("  Gettting the classfactory pointer.");
+
+	lpFactoryFunc = (GetClassFactory) dlsym(hMod, "GetStdClassFactory");
+
+	if(!lpFactoryFunc || dlerror() != NULL)
+		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModuleName + ", Last Error: " + dlerror());
+
+	TRACE_DEBUG("Finished Loading Module: " + strModuleName);
+	IStdClassFactory *lpFact = lpFactoryFunc();
+	
+	TRACE_DEBUG("Closing Loaded Module: " + strModuleName);
+	dlclose(hMod);
+	
+	TRACE_DEBUG("Returning class factory: " + strModuleName);
+	return lpFact;
+}
+
+#endif
 
 
 }				//StdUtils

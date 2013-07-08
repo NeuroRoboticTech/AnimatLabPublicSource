@@ -58,7 +58,7 @@ solution "StdUtilsGen"
 			                    "Copy $(TargetPath) ../../bin",  }
 	 
 		configuration { "Release", "windows" }
-			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "WXNETTEST_EXPORTS" }
+			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_vc10")
@@ -66,12 +66,14 @@ solution "StdUtilsGen"
 			                    "Copy $(TargetPath) ../../bin",  }
 
 		configuration { "Debug", "linux" }
-			defines { "_DEBUG", "WXNETTEST_EXPORTS"	}
+			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
 			flags   { "Symbols" }
 			targetdir ("Debug")
+			targetname ("StdUtils_vc10D")
 	 
 		configuration { "Release", "linux" }
-			defines { "NDEBUG", "WXNETTEST_EXPORTS" }
+			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize" }
 			targetdir ("Release")
+			targetname ("StdUtils_vc10")
 			

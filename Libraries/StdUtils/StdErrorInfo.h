@@ -36,7 +36,7 @@ public:
 
 	CStdErrorInfo();
 	CStdErrorInfo(long lError, string strError, string strSourceFile, long lSourceLine);
-	virtual ~CStdErrorInfo();
+	~CStdErrorInfo() throw(); 
 
 	virtual string Log();
 

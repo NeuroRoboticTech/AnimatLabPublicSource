@@ -99,8 +99,11 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, double dblVal);
 bool STD_UTILS_PORT Std_ToBool(int iVal);
 bool STD_UTILS_PORT Std_ToBool(string strVal);
 string STD_UTILS_PORT Std_NullStr(string strFormat);
-string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData);
-LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData);
+
+#ifdef _WINDOWS
+	string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData);
+	LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData);
+#endif
 
 #define STR(v) Std_ToStr(v)
 #define FSTR(f, v) Std_ToStr(f, v)
@@ -124,9 +127,9 @@ string STD_UTILS_PORT Std_Replace(string strVal, string strFind, string strRepla
 string STD_UTILS_PORT Std_Format(const char* szFormat,...);
 
 long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned char iBlue);
-long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, string strParamName, bool bThrowError = true, long lDefault = 0);
-void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, string strParamName, float *aryColor, bool bThrowError = true);
-void STD_UTILS_PORT Std_LoadColor(string strXml, string strParamName, float *aryColor, bool bThrowError = true);
+//long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, string strParamName, bool bThrowError = true, long lDefault = 0);
+//void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, string strParamName, float *aryColor, bool bThrowError = true);
+//void STD_UTILS_PORT Std_LoadColor(string strXml, string strParamName, float *aryColor, bool bThrowError = true);
 
 int STD_UTILS_PORT Std_Sign(float fltVal);
 void STD_UTILS_PORT Std_SRand(unsigned long lSeed);
@@ -326,8 +329,11 @@ bool STD_UTILS_PORT Std_IsFullPath(string strPath);
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile);
 string STD_UTILS_PORT Std_FileExtension(string &strFile);
 BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath);
-void STD_UTILS_PORT Std_SetFileTime(string strFilename);
-void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime);
+
+#ifdef _WINDOWS
+	void STD_UTILS_PORT Std_SetFileTime(string strFilename);
+	void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime);
+#endif
 
 // File Functions
 //***************************************************************************************************************

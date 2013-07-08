@@ -4,7 +4,7 @@
 \brief	Implements the standard error information class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {

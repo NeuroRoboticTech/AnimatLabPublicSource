@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {

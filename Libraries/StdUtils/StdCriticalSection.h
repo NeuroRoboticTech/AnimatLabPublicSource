@@ -148,7 +148,7 @@ protected:
 	  **/
 	  ~InternalLocker();
    };
-   friend InternalLocker;
+   friend class InternalLocker;
 
 #pragma endregion
 
@@ -163,4 +163,4 @@ public:
 
 }				//StdUtils
 
-#endif CTRYENTERCS_H
+#endif // CTRYENTERCS_H
