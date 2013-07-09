@@ -3,7 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "StdUtils.vcxproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtilsTest", "StdUtilsTest\StdUtilsTest.vcxproj", "{1182AA30-D2A0-48A8-9507-6F0553019F10}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils_UnitTests", "StdUtils_UnitTests\StdUtils_UnitTests.vcxproj", "{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE} = {AE688CE5-23AB-4375-96BC-6931768FF5FE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdClassFactoryTester", "StdClassFactoryTester\StdClassFactoryTester.vcxproj", "{AE688CE5-23AB-4375-96BC-6931768FF5FE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,12 +27,18 @@ Global
 		{D1B49952-2999-4336-AE54-525373AA6251}.Release|Win32.Build.0 = Release|Win32
 		{D1B49952-2999-4336-AE54-525373AA6251}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
 		{D1B49952-2999-4336-AE54-525373AA6251}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.Debug|Win32.Build.0 = Debug|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.Release|Win32.ActiveCfg = Release|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.Release|Win32.Build.0 = Release|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = Release|Win32
-		{1182AA30-D2A0-48A8-9507-6F0553019F10}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = Release|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.Debug|Win32.Build.0 = Debug|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.Release|Win32.ActiveCfg = Release|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.Release|Win32.Build.0 = Release|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = Release|Win32
+		{2DB8AA67-36C6-4320-A2CA-CDDD2CA92E79}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = Release|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.Debug|Win32.Build.0 = Debug|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.Release|Win32.ActiveCfg = Release|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.Release|Win32.Build.0 = Release|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = Release|Win32
+		{AE688CE5-23AB-4375-96BC-6931768FF5FE}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

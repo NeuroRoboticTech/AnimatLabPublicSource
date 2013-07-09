@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtilsTest", "StdUtilsTest.vcproj", "{1182AA30-D2A0-48A8-9507-6F0553019F10}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtilsTest", "StdUtilsTest.vcxproj", "{1182AA30-D2A0-48A8-9507-6F0553019F10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "..\StdUtils.vcproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "..\StdUtils.vcxproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
