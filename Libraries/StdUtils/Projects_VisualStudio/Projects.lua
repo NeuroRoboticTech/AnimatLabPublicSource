@@ -38,7 +38,7 @@
 				 "../StdVariable.cpp",
 				 "../StdVariant.cpp",
 				 "../StdXml.cpp",
-				 "../XYTrace.cpp", }
+				 "../XYTrace.cpp" }
 		includedirs { "../../../include" }	  
 		libdirs { "../../../lib" }
 	  

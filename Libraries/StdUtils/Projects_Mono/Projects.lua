@@ -2,39 +2,37 @@
 	project "StdUtils"
 		language "C++"
 		kind     "SharedLib"
-		files  { "../../MarkupSTL.h",
-				 "../../StdAfx.h",
-				 "../../StdClassFactory.h",
-				 "../../StdColor.h",
-				 "../../StdErrorInfo.h",
-				 "../../StdFixed.h",
-				 "../../StdFont.h",
-				 "../../StdIncludes.h",
-				 "../../StdLookupTable.h",
-				 "../../StdPostFixEval.h",
-				 "../../StdSerialize.h",
-				 "../../StdUtilFunctions.h",
-				 "../../StdVariable.h",
-				 "../../StdVariant.h",
-				 "../../StdXml.h",
-				 "../../XYTrace.h",
-				 "../../MarkupSTL.cpp",
-				 "../../MersenneTwister.cpp",
-				 "../../StdAfx.cpp",
-				 "../../StdClassFactory.cpp",
-				 "../../StdColor.cpp",
-				 "../../StdErrorInfo.cpp",
-				 "../../StdFixed.cpp",
-				 "../../StdFont.cpp",
-				 "../../StdLookupTable.cpp",
-				 "../../StdPostFixEval.cpp",
-				 "../../StdSerialize.cpp",
-				 "../../StdUtilFunctions.cpp",
-				 "../../StdUtils.cpp",
-				 "../../StdVariable.cpp",
-				 "../../StdVariant.cpp",
-				 "../../StdXml.cpp",
-				 "../../XYTrace.cpp", }
+		files  { "../MarkupSTL.h",
+				 "../StdAfx.h",
+				 "../StdClassFactory.h",
+				 "../StdColor.h",
+				 "../StdErrorInfo.h",
+				 "../StdFixed.h",
+				 "../StdFont.h",
+				 "../StdIncludes.h",
+				 "../StdLookupTable.h",
+				 "../StdPostFixEval.h",
+				 "../StdSerialize.h",
+				 "../StdUtilFunctions.h",
+				 "../StdVariable.h",
+				 "../StdVariant.h",
+				 "../StdXml.h",
+				 "../MarkupSTL.cpp",
+				 "../MersenneTwister.cpp",
+				 "../StdAfx.cpp",
+				 "../StdClassFactory.cpp",
+				 "../StdColor.cpp",
+				 "../StdErrorInfo.cpp",
+				 "../StdFixed.cpp",
+				 "../StdFont.cpp",
+				 "../StdLookupTable.cpp",
+				 "../StdPostFixEval.cpp",
+				 "../StdSerialize.cpp",
+				 "../StdUtilFunctions.cpp",
+				 "../StdUtils.cpp",
+				 "../StdVariable.cpp",
+				 "../StdVariant.cpp",
+				 "../StdXml.cpp" }
 		includedirs { "../../../../include" }	  
 		libdirs { "../../../../lib" }
 	  
@@ -42,28 +40,26 @@
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("StdUtils_vc10D")
-			postbuildcommands { "cp $(OutDir)StdUtils_vc10D.lib ../../../../lib/StdUtils_vc10D.lib", 
-			                    "cp $(TargetPath) ../../../../bin",
-								"cp $(TargetPATH) ../../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			targetname ("StdUtilsD")
+			postbuildcommands { "cp Debug/libStdUtilsD.so ../../../bin",
+								"cp Debug/libStdUtilsD.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("StdUtils_vc10")
-			postbuildcommands { "cp $(OutDir)StdUtils_vc10.lib ../../../../lib/StdUtils_vc10.lib", 
-			                    "cp $(TargetPath) ../../../../bin", 
-								"cp $(TargetPATH) ../../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			targetname ("StdUtils")
+			postbuildcommands { "cp libStdUtils.so ../../../bin", 
+								"cp libStdUtils.so ../../../unit_test_bin" }
 
 	project "StdClassFactoryTester"
 		language "C++"
 		kind     "SharedLib"
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
-		includedirs { "../../../include", 
-					  "../../StdUtils" }	  
-		libdirs { "../../../lib" }
+		includedirs { "../../../../include", 
+					  "../../../StdUtils" }	  
+		libdirs { "../../../../lib" }
 		links { "StdUtils" }
 		
 		configuration { "Debug", "linux" }
@@ -71,24 +67,24 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "cp $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			postbuildcommands { "cp libStdClassFactoryTester.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDCLASSFACTORYTESTER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			postbuildcommands { "cp libStdClassFactoryTester.so ../../../unit_test_bin" }
 
 	project "StdUtils_UnitTests"
 		language "C++"
 		kind     "ConsoleApp"
 		files  { "../StdUtils_UnitTests/*.h",
 				 "../StdUtils_UnitTests/*.cpp"}
-		includedirs { "../../../include", 
-					  "../../StdUtils", 
+		includedirs { "../../../../include", 
+					  "../../../StdUtils", 
 					  "$(BOOST_ROOT)" }	  
-		libdirs { "../../../lib", 
+		libdirs { "../../../../lib", 
 				  "$(BOOST_ROOT)/lib" }
 		links { "StdUtils" }
 		
@@ -97,12 +93,12 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
-			postbuildcommands { "Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
-			postbuildcommands { "Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" }
+			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
 						
