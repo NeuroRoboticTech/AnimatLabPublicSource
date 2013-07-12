@@ -1,0 +1,1 @@
+premake4m --os=linux --file=Solution.lua monodevelop

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8CAAC0D7-7C9C-6B4E-A460-796762D91022}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdClassFactoryTester.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+        <Include>..</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>Debug\libStdUtils_vc10D.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdClassFactoryTester.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+        <Include>..</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>Release\libStdUtils_vc10.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\StdClassFactoryTester\TestClassFactory.h">
+      <Link>StdClassFactoryTester/TestClassFactory.h</Link>
+    </None>
+    <None Include="..\StdClassFactoryTester\TestObject.h">
+      <Link>StdClassFactoryTester/TestObject.h</Link>
+    </None>
+    <None Include="..\StdClassFactoryTester\stdafx.h">
+      <Link>StdClassFactoryTester/stdafx.h</Link>
+    </None>
+    <None Include="..\StdClassFactoryTester\targetver.h">
+      <Link>StdClassFactoryTester/targetver.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\StdClassFactoryTester\StdClassFactoryTester.cpp">
+      <Link>StdClassFactoryTester/StdClassFactoryTester.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdClassFactoryTester\TestClassFactory.cpp">
+      <Link>StdClassFactoryTester/TestClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdClassFactoryTester\TestObject.cpp">
+      <Link>StdClassFactoryTester/TestObject.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdClassFactoryTester\dllmain.cpp">
+      <Link>StdClassFactoryTester/dllmain.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdClassFactoryTester\stdafx.cpp">
+      <Link>StdClassFactoryTester/stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4DB0982E-4A3F-7A49-8F23-228B355E4320}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+        <Include>..</Include>
+        <Include>$(BOOST_ROOT)</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>Debug\libStdUtils_vc10D.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+        <Include>..</Include>
+        <Include>$(BOOST_ROOT)</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>Release\libStdUtils_vc10.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="Copy $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\StdUtils_UnitTests\stdafx.h">
+      <Link>StdUtils_UnitTests/stdafx.h</Link>
+    </None>
+    <None Include="..\StdUtils_UnitTests\targetver.h">
+      <Link>StdUtils_UnitTests/targetver.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\StdUtils_UnitTests\ClassFactory_Tests.cpp">
+      <Link>StdUtils_UnitTests/ClassFactory_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\StdUtils_UnitTests.cpp">
+      <Link>StdUtils_UnitTests/StdUtils_UnitTests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\Tree_Tests.cpp">
+      <Link>StdUtils_UnitTests/Tree_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\stdafx.cpp">
+      <Link>StdUtils_UnitTests/stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

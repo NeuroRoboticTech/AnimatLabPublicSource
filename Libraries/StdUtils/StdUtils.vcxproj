@@ -102,7 +102,9 @@
     <PostBuildEvent>
       <Command>Copy "$(OutDir)StdUtils_vc10D.lib" ..\..\lib\StdUtils_vc10D.lib
 Copy "$(TargetPath)" ..\..\bin
-Copy "$(TargetPath)" StdUtils_UnitTests\Debug</Command>
+Copy $(TargetPATH) ..\..\unit_test_bin\$(TargetName)$(TargetExt)
+Copy $(TargetPATH) StdUtils_UnitTests\Debug\$(TargetName)$(TargetExt)
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,7 +136,8 @@ Copy "$(TargetPath)" StdUtils_UnitTests\Debug</Command>
     <PostBuildEvent>
       <Command>Copy "$(OutDir)StdUtils_vc10.lib" ..\..\lib\StdUtils_vc10.lib
 Copy "$(TargetPath)" ..\..\bin
-Copy "$(TargetPath)" StdUtils_UnitTests\Release</Command>
+Copy $(TargetPATH) ..\..\unit_test_bin\$(TargetName)$(TargetExt)
+Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnoptimizedWithSymbols|Win32'">
@@ -166,7 +169,8 @@ Copy "$(TargetPath)" StdUtils_UnitTests\Release</Command>
     <PostBuildEvent>
       <Command>Copy "$(OutDir)StdUtils_vc10.lib" ..\..\lib\StdUtils_vc10.lib
 Copy "$(TargetPath)" ..\..\bin
-</Command>
+Copy $(TargetPATH) ..\..\unit_test_bin\$(TargetName)$(TargetExt)
+Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

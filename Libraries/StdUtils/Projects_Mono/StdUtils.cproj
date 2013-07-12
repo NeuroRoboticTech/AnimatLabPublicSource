@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBA97B16-D61E-E64B-957E-60A2EC79CE07}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG STDUTILS_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdUtils_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp $(OutDir)StdUtils_vc10D.lib ../../../lib/StdUtils_vc10D.lib" />
+        <Command type="AfterBuild" command="cp $(TargetPath) ../../../bin" />
+        <Command type="AfterBuild" command="cp $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdUtils_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>..\..\..\include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp $(OutDir)StdUtils_vc10.lib ../../../lib/StdUtils_vc10.lib" />
+        <Command type="AfterBuild" command="cp $(TargetPath) ../../../bin" />
+        <Command type="AfterBuild" command="cp $(TargetPATH) ../../../unit_test_bin/$(TargetName)$(TargetExt)" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\MarkupSTL.h">
+      <Link>MarkupSTL.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+    <None Include="..\StdAvi.h">
+      <Link>StdAvi.h</Link>
+    </None>
+    <None Include="..\StdBitmap.h">
+      <Link>StdBitmap.h</Link>
+    </None>
+    <None Include="..\StdClassFactory.h">
+      <Link>StdClassFactory.h</Link>
+    </None>
+    <None Include="..\StdColor.h">
+      <Link>StdColor.h</Link>
+    </None>
+    <None Include="..\StdCriticalSection.h">
+      <Link>StdCriticalSection.h</Link>
+    </None>
+    <None Include="..\StdErrorInfo.h">
+      <Link>StdErrorInfo.h</Link>
+    </None>
+    <None Include="..\StdFixed.h">
+      <Link>StdFixed.h</Link>
+    </None>
+    <None Include="..\StdFont.h">
+      <Link>StdFont.h</Link>
+    </None>
+    <None Include="..\StdIncludes.h">
+      <Link>StdIncludes.h</Link>
+    </None>
+    <None Include="..\StdLookupTable.h">
+      <Link>StdLookupTable.h</Link>
+    </None>
+    <None Include="..\StdPostFixEval.h">
+      <Link>StdPostFixEval.h</Link>
+    </None>
+    <None Include="..\StdSerialize.h">
+      <Link>StdSerialize.h</Link>
+    </None>
+    <None Include="..\StdTimer.h">
+      <Link>StdTimer.h</Link>
+    </None>
+    <None Include="..\StdUtilFunctions.h">
+      <Link>StdUtilFunctions.h</Link>
+    </None>
+    <None Include="..\StdVariable.h">
+      <Link>StdVariable.h</Link>
+    </None>
+    <None Include="..\StdVariant.h">
+      <Link>StdVariant.h</Link>
+    </None>
+    <None Include="..\StdXml.h">
+      <Link>StdXml.h</Link>
+    </None>
+    <None Include="..\XYTrace.h">
+      <Link>XYTrace.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\MarkupSTL.cpp">
+      <Link>MarkupSTL.cpp</Link>
+    </Compile>
+    <Compile Include="..\MersenneTwister.cpp">
+      <Link>MersenneTwister.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAvi.cpp">
+      <Link>StdAvi.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdBitmap.cpp">
+      <Link>StdBitmap.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdClassFactory.cpp">
+      <Link>StdClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdColor.cpp">
+      <Link>StdColor.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdCriticalSection.cpp">
+      <Link>StdCriticalSection.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdErrorInfo.cpp">
+      <Link>StdErrorInfo.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdFixed.cpp">
+      <Link>StdFixed.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdFont.cpp">
+      <Link>StdFont.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdLookupTable.cpp">
+      <Link>StdLookupTable.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdPostFixEval.cpp">
+      <Link>StdPostFixEval.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdSerialize.cpp">
+      <Link>StdSerialize.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdTimer.cpp">
+      <Link>StdTimer.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtilFunctions.cpp">
+      <Link>StdUtilFunctions.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils.cpp">
+      <Link>StdUtils.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdVariable.cpp">
+      <Link>StdVariable.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdVariant.cpp">
+      <Link>StdVariant.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdXml.cpp">
+      <Link>StdXml.cpp</Link>
+    </Compile>
+    <Compile Include="..\XYTrace.cpp">
+      <Link>XYTrace.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

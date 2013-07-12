@@ -453,7 +453,7 @@ public:
 		map<Key, T*>::clear();
 	};
 
-	virtual typename T::size_type erase(const Key &oKey)
+	virtual typename map<Key, T*>::size_type erase(const Key &oKey)
 	{	
 		typename map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end() && oPos->second)

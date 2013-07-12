@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "StdUtils", "StdUtils.cproj", "{BBA97B16-D61E-E64B-957E-60A2EC79CE07}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "StdClassFactoryTester", "StdClassFactoryTester.cproj", "{8CAAC0D7-7C9C-6B4E-A460-796762D91022}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07} = {BBA97B16-D61E-E64B-957E-60A2EC79CE07}
+	EndProjectSection
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "StdUtils_UnitTests", "StdUtils_UnitTests.cproj", "{4DB0982E-4A3F-7A49-8F23-228B355E4320}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07} = {BBA97B16-D61E-E64B-957E-60A2EC79CE07}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{BBA97B16-D61E-E64B-957E-60A2EC79CE07}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{8CAAC0D7-7C9C-6B4E-A460-796762D91022}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{8CAAC0D7-7C9C-6B4E-A460-796762D91022}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{8CAAC0D7-7C9C-6B4E-A460-796762D91022}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{8CAAC0D7-7C9C-6B4E-A460-796762D91022}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{4DB0982E-4A3F-7A49-8F23-228B355E4320}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{4DB0982E-4A3F-7A49-8F23-228B355E4320}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{4DB0982E-4A3F-7A49-8F23-228B355E4320}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{4DB0982E-4A3F-7A49-8F23-228B355E4320}.Release|AnyCPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal
