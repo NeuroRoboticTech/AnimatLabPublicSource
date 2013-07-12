@@ -46,7 +46,7 @@ CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile,
 \author	dcofer
 \date	5/3/2011
 **/
-CStdErrorInfo::~CStdErrorInfo()
+CStdErrorInfo::~CStdErrorInfo() throw()
 {
 
 try

@@ -95,7 +95,6 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 
 #include "tree.hh"
-#include "tree_util.hh"
 
 #include "StdConstants.h"
 #include "StdADT.h"
@@ -115,6 +114,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 #include "StdColor.h"
 
 #ifdef _WINDOWS
+	#include "tree_util.hh"
 	#include "StdTimer.h"
 	#include "StdCriticalSection.h"
 
