@@ -4,8 +4,6 @@
 		kind     "SharedLib"
 		files  { "../MarkupSTL.h",
 				 "../StdAfx.h",
-				 "../StdAvi.h",
-				 "../StdBitmap.h",
 				 "../StdClassFactory.h",
 				 "../StdColor.h",
 				 "../StdCriticalSection.h",
@@ -25,8 +23,6 @@
 				 "../MarkupSTL.cpp",
 				 "../MersenneTwister.cpp",
 				 "../StdAfx.cpp",
-				 "../StdAvi.cpp",
-				 "../StdBitmap.cpp",
 				 "../StdClassFactory.cpp",
 				 "../StdColor.cpp",
 				 "../StdCriticalSection.cpp",

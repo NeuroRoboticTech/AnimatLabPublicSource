@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{49CBBDED-ED45-F546-BDC6-91EE1847DBAE}</ProjectGuid>
+		<ProjectGuid>{9929D2AD-D943-5644-A2FF-329298593F8E}</ProjectGuid>
 		<RootNamespace>StdClassFactoryTester</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{ABF294C8-04B9-E54D-900D-779AEB862CB6}</ProjectGuid>
+		<ProjectGuid>{9FB6D82D-29C4-B047-93A7-F9BCF5284374}</ProjectGuid>
 		<RootNamespace>StdUtils</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -116,8 +116,6 @@
 	<ItemGroup>
 		<ClInclude Include="..\MarkupSTL.h" />
 		<ClInclude Include="..\StdAfx.h" />
-		<ClInclude Include="..\StdAvi.h" />
-		<ClInclude Include="..\StdBitmap.h" />
 		<ClInclude Include="..\StdClassFactory.h" />
 		<ClInclude Include="..\StdColor.h" />
 		<ClInclude Include="..\StdCriticalSection.h" />
@@ -141,10 +139,6 @@
 		<ClCompile Include="..\MersenneTwister.cpp">
 		</ClCompile>
 		<ClCompile Include="..\StdAfx.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdAvi.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdBitmap.cpp">
 		</ClCompile>
 		<ClCompile Include="..\StdClassFactory.cpp">
 		</ClCompile>
