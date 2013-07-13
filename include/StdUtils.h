@@ -9,17 +9,43 @@
 	#endif          
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 
-#define STD_UTILS_PORT __declspec( dllimport )
+#ifdef _WINDOWS
+	#define STD_UTILS_PORT __declspec( dllimport )
+#else
+	#define STD_UTILS_PORT 
+#endif
 
 #pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482 4996)
 
-#ifndef _WIN32_WCE
-	#include <conio.h>
-	#include <sys/types.h>
-	#include <sys/timeb.h>
-	#include <io.h>
+
+#ifdef _WINDOWS
+	#ifndef _WIN32_WCE
+		#include <conio.h>
+		#include <io.h>
+		#include <tchar.h> 
+	#endif
+	
 	#include <direct.h>
+	#include <wtypes.h>
+#else
+	#include <linux/types.h>
+	#include <stdbool.h>
+	#include <dlfcn.h>
+	
+	#define BOOL bool
+	#define DWORD unsigned long
+	#define LPCSTR const char *
+	#define FALSE 0
+	#define TRUE 1
+	#define LONG long
+	#define ULONG unsigned long
+	#define LPLONG long *
+	#define __int64 int64_t
+	#define LPCTSTR const char*
 #endif
+
+#include <sys/types.h>
+#include <sys/timeb.h>
 
 #include <exception>
 #include <string>
@@ -39,10 +65,8 @@
 #include <math.h>
 #include <memory.h>
 #include <algorithm>
-#include <tchar.h> 
 #include <string.h>
-#include <wtypes.h>
-#include <vfw.h>
+//#include <vfw.h>
 using namespace std;
 
 #define STD_TRACING_ON
@@ -62,16 +86,32 @@ namespace StdUtils
 	class CMarkupSTL;
 	class CStdXml;
 	class CStdCriticalSection;
-	class CStdBitmap;
-	class CStdAvi;
-}
+	class CStdErrorInfo;
 
 #ifndef THROW_ERROR
 	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__)
 #endif
+	
+	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, unsigned char iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, unsigned short iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, int iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, long lVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, float fltVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, double dblVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, string strVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strText);
+}
 
 #include "tree.hh"
-#include "tree_util.hh"
 
 #include "StdConstants.h"
 #include "StdADT.h"
@@ -87,18 +127,27 @@ namespace StdUtils
 #include "StdVariant.h"
 #include "StdClassFactory.h"
 #include "StdLookupTable.h"
-#include "StdCriticalSection.h"
 #include "StdFixed.h"
-#include "StdBitmap.h"
-#include "StdAvi.h"
 #include "StdColor.h"
-#include "StdTimer.h"
 
 #ifndef _WIN32_WCE
 	#define STRING_TYPE LPCSTR
 #else
 	#define STRING_TYPE LPCWSTR
 	#include "StdLogFile.h"
+#endif
+
+
+#ifdef _WINDOWS
+	#include "tree_util.hh"
+	#include "StdTimer.h"
+	#include "StdCriticalSection.h"
+
+	#ifndef _WIN32_WCE
+		#include "XYTrace.h"
+	#else
+		#include "StdLogFile.h"
+	#endif
 #endif
 
 using namespace StdUtils;

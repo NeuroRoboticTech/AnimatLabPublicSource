@@ -62,7 +62,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
 																	 string strValueName, string strVal);
 void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strText = "");
+																	 string strText);
 
 #ifndef RELAY_ERROR
 	#define RELAY_ERROR(oError) Std_RelayError(oError, __FILE__, __LINE__)
@@ -77,7 +77,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 #endif
 
 #ifndef THROW_ERROR
-	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__)
+	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__, "")
 #endif
 
 string STD_UTILS_PORT Std_ToStr(string strVal);

@@ -46,9 +46,12 @@ CStdSerialize *TestClassFactory::CreateObject(string strClassType, string strObj
 // ************* IStdClassFactory functions ******************************
 
 
-
-extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
-{
-	IStdClassFactory *lpFactory = new TestClassFactory;
-	return lpFactory;
-}
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+	IStdClassFactory *GetStdClassFactory() 
+#endif
+	{
+		IStdClassFactory *lpFactory = new TestClassFactory;
+		return lpFactory;
+	}

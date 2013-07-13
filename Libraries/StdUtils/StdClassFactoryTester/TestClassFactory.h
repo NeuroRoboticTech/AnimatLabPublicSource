@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
+using namespace StdUtils;
 
 class TestClassFactory : public IStdClassFactory  
 {

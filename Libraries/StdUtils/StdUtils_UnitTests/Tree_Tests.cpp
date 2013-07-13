@@ -17,11 +17,11 @@ BOOST_AUTO_TEST_CASE( test_case1 )
 	tr.append_child(two, "peach");
 	three = tr.append_child(one,"three");
 	
-	kptree::print_tree_bracketed(tr);
+	//kptree::print_tree_bracketed(tr);
 
 	tr.move_below(banana, three);
 
-	kptree::print_tree_bracketed(tr);
+	//kptree::print_tree_bracketed(tr);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,4 +1,5 @@
 #pragma once
+using namespace StdUtils;
 
 class TestObject : public CStdSerialize 
 {

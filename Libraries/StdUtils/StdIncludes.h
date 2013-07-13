@@ -67,32 +67,34 @@ using namespace std;
 #define STD_TRACE_TO_DEBUGGER
 #define STD_TRACE_TO_FILE true
 
-class CStdFont;
-class CStdVariable;
-class CStdPostFixEval;
-class CMarkupSTL;
-class CStdXml;
-class CStdCriticalSection;
-class CStdErrorInfo;
-
-void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, unsigned char iVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, unsigned short iVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, int iVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, long lVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, float fltVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, double dblVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, string strVal);
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strText = "");
-
+namespace StdUtils
+{
+	class CStdFont;
+	class CStdVariable;
+	class CStdPostFixEval;
+	class CMarkupSTL;
+	class CStdXml;
+	class CStdCriticalSection;
+	class CStdErrorInfo;
+	
+	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, unsigned char iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, unsigned short iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, int iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, long lVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, float fltVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, double dblVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strValueName, string strVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
+																		 string strText);
+}
 
 #include "tree.hh"
 

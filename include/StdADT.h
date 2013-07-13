@@ -420,7 +420,7 @@ public:
 	{
 		typename map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end())
-			Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
 		this->insert(make_pair(oKey, lpVal));
 	};
@@ -431,7 +431,7 @@ public:
 	{
 		typename map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos==this->end())
-			Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
 		this->erase(oKey);
 	};
@@ -523,7 +523,7 @@ public:
 	{
 		typename map<Key, T>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end())
-			Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
 		this->insert(make_pair(oKey, oVal));
 	};
@@ -537,7 +537,7 @@ public:
 	{
 		typename map<Key, T>::iterator oPos = this->find(oKey);
 		if(oPos==this->end())
-			Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
 		this->erase(oKey);
 	};
@@ -662,7 +662,7 @@ public:
 			z/=fltVal;
 		}
 		else
-			Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 	};
 
 	CStdPoint<T> operator+(const float fltVal)
@@ -698,7 +698,7 @@ public:
 	CStdPoint<T> operator/(const float fltVal)
 	{
 		if(!fltVal)
-			Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 
 		CStdPoint<T> oNewPoint;
 
@@ -752,7 +752,7 @@ public:
 		case 2:
 			return z;
 		default:
-			Std_ThrowError(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, __FILE__, __LINE__);
+			StdUtils::Std_ThrowError(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, __FILE__, __LINE__, "");
 		}
 		return 0;
 	};
