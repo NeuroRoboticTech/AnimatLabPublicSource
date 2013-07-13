@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{65C254DF-E09E-3B43-BECD-F8B8578FA220}</ProjectGuid>
+    <ProjectGuid>{7EFAB8D3-B4D9-E244-AFB1-C58B864D7D9C}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -26,19 +26,14 @@
         <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../lib</LibPath>
-      </LibPaths>
-    </LibPaths>
     <Libs>
       <Libs>
-        <Lib>Debug\libStdUtilsD.so</Lib>
+        <Lib>ld</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp libStdClassFactoryTester.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Debug/libStdClassFactoryTester.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -56,19 +51,14 @@
         <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../lib</LibPath>
-      </LibPaths>
-    </LibPaths>
     <Libs>
       <Libs>
-        <Lib>Release\libStdUtils.so</Lib>
+        <Lib>ld</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp libStdClassFactoryTester.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/libStdClassFactoryTester.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

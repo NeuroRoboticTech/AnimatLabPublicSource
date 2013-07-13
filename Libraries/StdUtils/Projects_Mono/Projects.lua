@@ -33,8 +33,8 @@
 				 "../StdVariable.cpp",
 				 "../StdVariant.cpp",
 				 "../StdXml.cpp" }
-		includedirs { "../../../../include" }	  
-		libdirs { "../../../../lib" }
+		includedirs { "../../../../include" }
+		links {"ld"}
 	  
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
@@ -48,7 +48,7 @@
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("StdUtils")
+			targetname ("StdUtilsR")
 			postbuildcommands { "cp libStdUtils.so ../../../bin", 
 								"cp libStdUtils.so ../../../unit_test_bin" }
 
@@ -59,22 +59,21 @@
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../StdUtils" }	  
-		libdirs { "../../../../lib" }
-		links { "StdUtils" }
+		links {"ld"}
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDCLASSFACTORYTESTER_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "cp libStdClassFactoryTester.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libStdClassFactoryTester.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDCLASSFACTORYTESTER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "cp libStdClassFactoryTester.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libStdClassFactoryTester.so ../../../unit_test_bin" }
 
 	project "StdUtils_UnitTests"
 		language "C++"
@@ -86,13 +85,13 @@
 					  "$(BOOST_ROOT)" }	  
 		libdirs { "../../../../lib", 
 				  "$(BOOST_ROOT)/lib" }
-		links { "StdUtils" }
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
+			links { "StdUtilsD" }
 			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
@@ -100,5 +99,6 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
+			links { "StdUtilsR" }
 			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
 						

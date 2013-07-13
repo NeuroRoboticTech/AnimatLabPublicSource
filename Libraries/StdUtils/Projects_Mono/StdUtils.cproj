@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E028635C-6B73-9445-9A94-BE873B32FC73}</ProjectGuid>
+    <ProjectGuid>{CB304C03-2294-7443-9E0C-81853EEC315D}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,11 +25,11 @@
         <Include>../../../../include</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../lib</LibPath>
-      </LibPaths>
-    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>ld</Lib>
+      </Libs>
+    </Libs>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp Debug/libStdUtilsD.so ../../../bin" />
@@ -41,7 +41,7 @@
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libStdUtils.so</OutputName>
+    <OutputName>libStdUtilsR.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -50,11 +50,11 @@
         <Include>../../../../include</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../lib</LibPath>
-      </LibPaths>
-    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>ld</Lib>
+      </Libs>
+    </Libs>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp libStdUtils.so ../../../bin" />
