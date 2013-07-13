@@ -3199,8 +3199,19 @@ bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 **/
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile)
 {
-	CStdArray<string> aryParts;
-	int iCount = Std_Split(strFullPath, "\\", aryParts);
+	CStdArray<string> aryParts1, aryParts2, aryParts;
+	string strFolderSeparator = "\\";
+	
+	int iCount1 = Std_Split(strFullPath, "\\", aryParts1);
+	int iCount2 = Std_Split(strFullPath, "/", aryParts2);
+	
+	if(iCount1 < iCount2)
+		strFolderSeparator = "\\";
+	else
+		strFolderSeparator = "\\";
+	
+	int iCount = Std_Split(strFullPath, strFolderSeparator, aryParts1);
+
 	if(iCount<=0)
 	{
 		strPath = "";
@@ -3211,8 +3222,8 @@ void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, st
 		strFile = aryParts[iCount-1];
 		aryParts.RemoveAt(iCount-1);
 
-		strPath = Std_Combine(aryParts, "\\");
-		if(!Std_IsBlank(strPath)) strPath += "\\";
+		strPath = Std_Combine(aryParts, strFolderSeparator);
+		if(!Std_IsBlank(strPath)) strPath += strFolderSeparator;
 	}
 }
 

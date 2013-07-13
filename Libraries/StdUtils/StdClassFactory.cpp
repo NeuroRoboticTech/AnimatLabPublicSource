@@ -104,13 +104,14 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 		THROW_ERROR(Std_Err_lModuleNameIsBlank, Std_Err_strModuleNameIsBlank);
 
 	string strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
-
+	//string strModRenamed = "/home/me/Projects/AnimatLabPublicSource/unit_test_bin/libStdClassFactoryTester.so";
+	
 	void *hMod = NULL;
 
 	hMod = dlopen(strModRenamed.c_str(), RTLD_LAZY);
 	
 	if(!hMod)
-		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + dlerror());
+		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
 
 	GetClassFactory lpFactoryFunc = NULL;
 
@@ -119,15 +120,12 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 	lpFactoryFunc = (GetClassFactory) dlsym(hMod, "GetStdClassFactory");
 
 	if(!lpFactoryFunc || dlerror() != NULL)
-		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModuleName + ", Last Error: " + dlerror());
+		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
 
-	TRACE_DEBUG("Finished Loading Module: " + strModuleName);
+	TRACE_DEBUG("Finished Loading Module: " + strModRenamed);
 	IStdClassFactory *lpFact = lpFactoryFunc();
 	
-	TRACE_DEBUG("Closing Loaded Module: " + strModuleName);
-	dlclose(hMod);
-	
-	TRACE_DEBUG("Returning class factory: " + strModuleName);
+	TRACE_DEBUG("Returning class factory: " + strModRenamed);
 	return lpFact;
 }
 
