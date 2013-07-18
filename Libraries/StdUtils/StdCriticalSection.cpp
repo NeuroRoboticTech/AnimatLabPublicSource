@@ -128,7 +128,7 @@ bool CStdCriticalSection::TryEnter()
       m_dwOwner = ::GetCurrentThreadId();
       m_ulRefCnt = 1;
       bRet = true;
-   }
+   } 
    else if (m_dwOwner == ::GetCurrentThreadId())
    {
       //The current thread already owns this cs

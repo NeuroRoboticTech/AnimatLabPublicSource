@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7EFAB8D3-B4D9-E244-AFB1-C58B864D7D9C}</ProjectGuid>
+    <ProjectGuid>{34FC8F04-FC87-954F-9E2B-AB0AE024B741}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -24,11 +24,17 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>$(BOOST_ROOT)</Include>
       </Includes>
     </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
     <Libs>
       <Libs>
-        <Lib>ld</Lib>
+        <Lib>dl</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -49,11 +55,17 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>$(BOOST_ROOT)</Include>
       </Includes>
     </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+      </LibPaths>
+    </LibPaths>
     <Libs>
       <Libs>
-        <Lib>ld</Lib>
+        <Lib>dl</Lib>
       </Libs>
     </Libs>
     <CustomCommands>

@@ -5,6 +5,8 @@
 **/
 
 #include "StdAfx.h"
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 namespace StdUtils
 {
@@ -603,7 +605,7 @@ string STD_UTILS_PORT Std_NullStr(string strFormat)
 		return "NULL";
 }
 
-#ifdef _WINDOWS
+#ifdef WIN32
 
 /**
 \brief	converts LPCWSTR to ansi
@@ -1057,7 +1059,7 @@ string STD_UTILS_PORT Std_Replace(string strVal, string strFind, string strRepla
 **/
 string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 {
-#ifdef _WINDOWS
+#ifdef WIN32
 	std::vector<CHAR> _buffer(8096);
 	va_list argList;
 	va_start(argList,szFormat);
@@ -2987,7 +2989,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	int STD_UTILS_PORT Std_GetTraceLevel()
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		return GetTraceLevel();
 #else
 		return 0;
@@ -3005,7 +3007,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_SetTraceLevel(const int iVal)
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 	SetTraceLevel(iVal);
 #endif
 	}
@@ -3021,7 +3023,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_SetLogFilePrefix(string strFilePrefix)
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		if(GetTraceFilePrefix() != strFilePrefix)
 			SetTraceFilePrefix(strFilePrefix.c_str());
 #endif
@@ -3037,7 +3039,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	string STD_UTILS_PORT Std_GetLogFilePrefix()
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		return GetTraceFilePrefix();
 #else
 		return "";
@@ -3055,7 +3057,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_SetLogLevel(const int iLevel)
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		SetTraceLevel(iLevel);
 #endif
 	}
@@ -3075,7 +3077,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_LogMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bPrintHeader)
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		if(GetTraceLevel()==0 || iLevel>GetTraceLevel())
 			return;
 
@@ -3106,7 +3108,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
 	{
-#ifdef _WINDOWS
+#ifdef WIN32
 		int iLogLevel = GetTraceLevel();
 		if(iLogLevel==0||iLevel>iLogLevel) return;
 
@@ -3148,7 +3150,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 **/
 unsigned long STD_UTILS_PORT Std_GetTick()
 {
-#ifdef _WINDOWS
+#ifdef WIN32
 	return  GetTickCount64();
 #else
 	return  -1;
@@ -3178,12 +3180,13 @@ unsigned long STD_UTILS_PORT Std_GetTick()
 **/
 bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 {
-	CStdArray<string> aryParts;
-	int iCount = Std_Split(strPath, ":", aryParts);
-	if(iCount>1)
-		return true;
-	else
-		return false;
+	return boost::filesystem::path(strPath).has_root_path();
+	//CStdArray<string> aryParts;
+	//int iCount = Std_Split(strPath, ":", aryParts);
+	//if(iCount>1)
+	//	return true;
+	//else
+	//	return false;
 }
 
 /**
@@ -3199,56 +3202,9 @@ bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 **/
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile)
 {
-	CStdArray<string> aryParts1, aryParts2, aryParts;
-	string strFolderSeparator = "\\";
-	
-	int iCount1 = Std_Split(strFullPath, "\\", aryParts1);
-	int iCount2 = Std_Split(strFullPath, "/", aryParts2);
-	
-	if(iCount1 < iCount2)
-		strFolderSeparator = "\\";
-	else
-		strFolderSeparator = "\\";
-	
-	int iCount = Std_Split(strFullPath, strFolderSeparator, aryParts1);
-
-	if(iCount<=0)
-	{
-		strPath = "";
-		strFile = strFullPath;
-	}
-	else
-	{
-		strFile = aryParts[iCount-1];
-		aryParts.RemoveAt(iCount-1);
-
-		strPath = Std_Combine(aryParts, strFolderSeparator);
-		if(!Std_IsBlank(strPath)) strPath += strFolderSeparator;
-	}
-}
-
-/**
-\brief	Gets the file extension.
-
-\author	dcofer
-\date	5/4/2011
-
-\param [in,out]	strFile	Filename. 
-
-\return	file extension.
-**/
-string STD_UTILS_PORT Std_FileExtension(string &strFile)
-{
-	CStdArray<string> aryParts;
-	int iCount = Std_Split(strFile, ".", aryParts);
-	string strExt = "";
-
-	if(iCount >0)
-	{
-		strExt = "." + aryParts[iCount-1];
-	}
-
-	return strExt;
+	boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
+	strFile = path.filename().string();
+	strPath = Std_Replace(path.string(), strFile, "");
 }
 
 /**
@@ -3263,28 +3219,31 @@ string STD_UTILS_PORT Std_FileExtension(string &strFile)
 **/
 BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
 {
-#ifdef _WINDOWS
+	boost::filesystem::path p = boost::filesystem::path(strPath);
+	return boost::filesystem::is_directory(p);
 
-#ifdef _WIN32_WCE
-	wchar_t *sPath = Std_ConvertFromANSI(strPath);
-	DWORD dwAttr = GetFileAttributes(sPath);
-	if(sPath) delete sPath;
-#else
-	DWORD dwAttr = GetFileAttributes(strPath.c_str());
-#endif
-
-	if(dwAttr == 0xffffffff)
-		return FALSE;
-	else if(dwAttr & FILE_ATTRIBUTE_DIRECTORY)
-		return TRUE;
-	else
-		return FALSE;
-#else
-	return FALSE;
-#endif
+//#ifdef WIN32
+//
+//#ifdef _WIN32_WCE
+//	wchar_t *sPath = Std_ConvertFromANSI(strPath);
+//	DWORD dwAttr = GetFileAttributes(sPath);
+//	if(sPath) delete sPath;
+//#else
+//	DWORD dwAttr = GetFileAttributes(strPath.c_str());
+//#endif
+//
+//	if(dwAttr == 0xffffffff)
+//		return FALSE;
+//	else if(dwAttr & FILE_ATTRIBUTE_DIRECTORY)
+//		return TRUE;
+//	else
+//		return FALSE;
+//#else
+//	return FALSE;
+//#endif
 }
 
-#ifdef _WINDOWS
+#ifdef WIN32
 
 void STD_UTILS_PORT Std_SetFileTime(string strFilename)
 {

@@ -1,7 +1,7 @@
 #ifndef XY_TRACE_H
 #define XY_TRACE_H
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#include <windows.h>
 	#include <tchar.h>
 #endif

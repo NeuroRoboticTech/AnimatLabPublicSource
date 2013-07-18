@@ -22,15 +22,15 @@ try
 		aryNew.Add(lpObject);
 	}
 }
-catch(StdUtils::CStdErrorInfo oError)
+catch(CStdErrorInfo oError)
 {
 	if(lpObject) delete lpObject;
-	StdUtils::Std_RelayError(oError, __FILE__, __LINE__);
+	RELAY_ERROR(oError);
 }
 catch(...)
 {
 	if(lpObject) delete lpObject;
-	StdUtils::Std_ThrowError(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError, __FILE__, __LINE__, "");
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 }
 }
 

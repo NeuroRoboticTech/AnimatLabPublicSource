@@ -3,7 +3,7 @@
 
 #include "StdAfx.h"
 
-#ifdef _WINDOWS
+#ifdef WIN32
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 

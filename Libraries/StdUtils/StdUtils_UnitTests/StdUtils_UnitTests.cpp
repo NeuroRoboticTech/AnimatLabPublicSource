@@ -3,6 +3,10 @@
 
 #include "stdafx.h"
 
-#define BOOST_TEST_DYN_LINK
+#ifndef _WINDOWS
+	//Not sure why, but this is required on linux, but causes LNK2005 errors on windows
+	#define BOOST_TEST_DYN_LINK
+#endif
+
 #define BOOST_TEST_MODULE StdUtilTests
 #include <boost/test/unit_test.hpp>

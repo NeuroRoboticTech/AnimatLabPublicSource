@@ -39,8 +39,10 @@
 				 "../StdVariant.cpp",
 				 "../StdXml.cpp",
 				 "../XYTrace.cpp" }
-		includedirs { "../../../include" }	  
-		libdirs { "../../../lib" }
+		includedirs { "../../../include", 
+					  "$(BOOST_ROOT)" }	  
+		libdirs { "../../../lib", 
+				  "$(BOOST_ROOT)/lib" }
 	  
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "STDUTILS_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
@@ -66,8 +68,10 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../include", 
-					  "../../StdUtils" }	  
-		libdirs { "../../../lib" }
+					  "../../StdUtils", 
+					  "$(BOOST_ROOT)" }	  
+		libdirs { "../../../lib", 
+				  "$(BOOST_ROOT)/lib" }
 		links { "StdUtils" }
 	  
 		configuration { "Debug", "windows" }

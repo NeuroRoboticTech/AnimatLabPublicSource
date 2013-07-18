@@ -5,6 +5,7 @@
 **/
 
 #pragma once
+using namespace StdUtils;
 
 #include "MaterialType.h"
 #include "Materials.h"
@@ -411,12 +412,6 @@ namespace AnimatSim
 
 			/// The video frame
 			long m_lVideoFrame;
-
-			/// The pointer to an avi
-			CStdAvi *m_lpAvi;
-
-			/// Options for controlling the avi
-			AVICOMPRESSOPTIONS m_aviOpts; 
 
 #pragma endregion
 

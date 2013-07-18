@@ -33,14 +33,16 @@
 				 "../StdVariable.cpp",
 				 "../StdVariant.cpp",
 				 "../StdXml.cpp" }
-		includedirs { "../../../../include" }
-		links {"ld"}
+		includedirs { "../../../../include", 
+					  "$(BOOST_ROOT)" }
+		libdirs { "$(BOOST_ROOT)/lib" }
+		links {"dl"}
 	  
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("StdUtilsD")
+			targetname ("StdUtils_vc10D")
 			postbuildcommands { "cp Debug/libStdUtilsD.so ../../../bin",
 								"cp Debug/libStdUtilsD.so ../../../unit_test_bin" }
 	 
@@ -48,7 +50,7 @@
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("StdUtilsR")
+			targetname ("StdUtils_vc10")
 			postbuildcommands { "cp libStdUtils.so ../../../bin", 
 								"cp libStdUtils.so ../../../unit_test_bin" }
 
@@ -58,8 +60,10 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdUtils" }	  
-		links {"ld"}
+					  "../../../StdUtils", 
+					  "$(BOOST_ROOT)" }	  
+		libdirs { "$(BOOST_ROOT)/lib" }
+		links {"dl"}
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDCLASSFACTORYTESTER_EXPORTS"	}
@@ -91,14 +95,14 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
-			links { "StdUtilsD" }
-			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
+			links { "StdUtils_vc10D" }
+			postbuildcommands { "cp Debug/StdUtils_UnitTests.exe ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
-			links { "StdUtilsR" }
-			postbuildcommands { "Copy StdUtils_UnitTests.exe ../../../unit_test_bin" }
+			links { "StdUtils_vc10" }
+			postbuildcommands { "cp Release/StdUtils_UnitTests.exe ../../../unit_test_bin" }
 						

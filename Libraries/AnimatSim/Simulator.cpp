@@ -154,19 +154,6 @@ Simulator::Simulator()
 	m_lVideoStartSlice = -1;
 	m_lVideoEndSlice = -1;
 	m_lVideoFrame = 0;
-	m_lpAvi = NULL;
-
-	m_aviOpts.cbFormat = 0;
-	m_aviOpts.cbParms = 4;
-	m_aviOpts.dwBytesPerSecond = 0;
-	m_aviOpts.dwFlags = 8;
-	m_aviOpts.dwInterleaveEvery = 0;
-	m_aviOpts.dwKeyFrameEvery = 0;
-	m_aviOpts.dwQuality = 7500;
-	m_aviOpts.fccHandler = 1668707181;
-	m_aviOpts.fccType = 0;
-	m_aviOpts.lpFormat = 0;
-	m_aviOpts.lpParms = 0;
 
 	m_vBackgroundColor.Set(0.2f, 0.2f, 0.6f, 1);
 
@@ -209,12 +196,6 @@ try
 	{
 		delete m_lpSimStopPoint;
 		m_lpSimStopPoint = NULL;
-	}
-
-	if(m_lpAvi)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
 	}
 
 	if(m_lpWinMgr)
@@ -1737,19 +1718,6 @@ void Simulator::InitializeStructures()
 		BOOL bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
 		if(bFileExists)
 			remove(strVideoFile.c_str( ));
-
-		m_lpAvi = new CStdAvi(strVideoFile, (int) (m_fltVideoPlaybackFrameTime*1000), NULL); 
-		m_lpAvi->m_aviOpts.cbFormat = m_aviOpts.cbFormat;
-		m_lpAvi->m_aviOpts.cbParms = m_aviOpts.cbParms;
-		m_lpAvi->m_aviOpts.dwBytesPerSecond = m_aviOpts.dwBytesPerSecond;
-		m_lpAvi->m_aviOpts.dwFlags = m_aviOpts.dwFlags;
-		m_lpAvi->m_aviOpts.dwInterleaveEvery = m_aviOpts.dwInterleaveEvery;
-		m_lpAvi->m_aviOpts.dwKeyFrameEvery = m_aviOpts.dwKeyFrameEvery;
-		m_lpAvi->m_aviOpts.dwQuality = m_aviOpts.dwQuality;
-		m_lpAvi->m_aviOpts.fccHandler = m_aviOpts.fccHandler;
-		m_lpAvi->m_aviOpts.fccType = m_aviOpts.fccType;
-		m_lpAvi->m_aviOpts.lpFormat = m_aviOpts.lpFormat;
-		m_lpAvi->m_aviOpts.lpParms = m_aviOpts.lpParms;
 	}
 
 }
@@ -1974,18 +1942,6 @@ void Simulator::Reset()
 	m_lVideoEndSlice = -1;
 	m_lVideoFrame = 0;
 
-	m_aviOpts.cbFormat = 0;
-	m_aviOpts.cbParms = 4;
-	m_aviOpts.dwBytesPerSecond = 0;
-	m_aviOpts.dwFlags = 8;
-	m_aviOpts.dwInterleaveEvery = 0;
-	m_aviOpts.dwKeyFrameEvery = 0;
-	m_aviOpts.dwQuality = 7500;
-	m_aviOpts.fccHandler = 1668707181;
-	m_aviOpts.fccType = 0;
-	m_aviOpts.lpFormat = 0;
-	m_aviOpts.lpParms = 0;
-
 	m_oDataChartMgr.Reset();
 	m_oExternalStimuliMgr.Reset();
 	m_oMaterialMgr.Reset();
@@ -2000,12 +1956,6 @@ void Simulator::Reset()
 	{
 		delete m_lpSimStopPoint;
 		m_lpSimStopPoint = NULL;
-	}
-
-	if(m_lpAvi)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
 	}
 
 	if(m_lpSimCallback)
@@ -4659,25 +4609,6 @@ void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 **/
 void Simulator::RecordVideoFrame()
 {
-	if(m_lpAvi && (m_lTimeSlice >= m_lVideoStartSlice) && (m_lTimeSlice <= m_lVideoEndSlice))
-	{
-		m_iVideoStep--;
-		if(m_iVideoStep <= 0)
-		{
-			m_lVideoFrame++;
-			//m_strVideoFile = "C:\\Projects\\Documentation\\Results\\Thesis\\Hi Speed Video\\Sim_Track_Error_Test\\VideoImages\\Frame_" + STR(m_lVideoFrame) + ".bmp";
-			//If this is the first
-			//m_lpAvi->AddWindowFrame(m_hSimulationWnd, FALSE, "");				
-			m_iVideoStep = m_iVideoStepSize;
-		}	
-	}
-
-	//If we have recorded the entire video then close it out.
-	if(m_lpAvi && m_lTimeSlice >= m_lVideoEndSlice)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
-	}
 }
 
 #pragma endregion

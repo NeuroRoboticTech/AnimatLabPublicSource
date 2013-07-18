@@ -100,7 +100,7 @@ bool STD_UTILS_PORT Std_ToBool(int iVal);
 bool STD_UTILS_PORT Std_ToBool(string strVal);
 string STD_UTILS_PORT Std_NullStr(string strFormat);
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData);
 	LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData);
 #endif
@@ -327,10 +327,9 @@ unsigned long STD_UTILS_PORT Std_GetTick();
 
 bool STD_UTILS_PORT Std_IsFullPath(string strPath);
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile);
-string STD_UTILS_PORT Std_FileExtension(string &strFile);
 BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath);
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	void STD_UTILS_PORT Std_SetFileTime(string strFilename);
 	void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime);
 #endif

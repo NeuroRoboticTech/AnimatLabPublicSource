@@ -1,23 +1,19 @@
 #if !defined STD_UTILS_INCLUDES
 #define STD_UTILS_INCLUDES
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#define STD_UTILS_PORT __declspec( dllexport )
-#else
-	#define STD_UTILS_PORT 
-#endif
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+	#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 
-#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 )
-
-#ifdef _WINDOWS
 	#ifndef _WIN32_WCE
 		#include <conio.h>
 		#include <io.h>
 		#include <tchar.h> 
 	#endif
 #else
+	#define STD_UTILS_PORT 
+
 	#include <linux/types.h>
 	#include <stdbool.h>
 	#include <dlfcn.h>
@@ -33,6 +29,8 @@
 	#define __int64 int64_t
 	#define LPCTSTR const char*
 #endif
+
+#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 )
 
 #include <sys/types.h>
 #include <sys/timeb.h>
@@ -115,7 +113,7 @@ namespace StdUtils
 #include "StdFixed.h"
 #include "StdColor.h"
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#include "tree_util.hh"
 	#include "StdTimer.h"
 	#include "StdCriticalSection.h"

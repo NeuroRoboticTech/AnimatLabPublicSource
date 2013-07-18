@@ -29,7 +29,7 @@ IStdClassFactory::IStdClassFactory()
 IStdClassFactory::~IStdClassFactory()
 {}
 
-#ifdef _WINDOWS
+#ifdef WIN32
 /**
 \brief	Loads a DLL module by name and attempts to call the GetStdClassFactory method to get a pointer to the class factory.
 

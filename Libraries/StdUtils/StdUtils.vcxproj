@@ -75,7 +75,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -89,7 +89,7 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10D.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\lib;$(BOOST_ROOT)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)StdUtils.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -101,15 +101,12 @@
     </Link>
     <PostBuildEvent>
       <Command>Copy "$(OutDir)StdUtils_vc10D.lib" ..\..\lib\StdUtils_vc10D.lib
-Copy "$(TargetPath)" ..\..\bin
-Copy $(TargetPATH) ..\..\unit_test_bin\$(TargetName)$(TargetExt)
-Copy $(TargetPATH) StdUtils_UnitTests\Debug\$(TargetName)$(TargetExt)
-</Command>
+Copy "$(TargetPath)" ..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -122,7 +119,7 @@ Copy $(TargetPATH) StdUtils_UnitTests\Debug\$(TargetName)$(TargetExt)
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\lib;$(BOOST_ROOT)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -135,14 +132,12 @@ Copy $(TargetPATH) StdUtils_UnitTests\Debug\$(TargetName)$(TargetExt)
     </Link>
     <PostBuildEvent>
       <Command>Copy "$(OutDir)StdUtils_vc10.lib" ..\..\lib\StdUtils_vc10.lib
-Copy "$(TargetPath)" ..\..\bin
-Copy $(TargetPATH) ..\..\unit_test_bin\$(TargetName)$(TargetExt)
-Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command>
+Copy "$(TargetPath)" ..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnoptimizedWithSymbols|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -155,7 +150,7 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\lib;$(BOOST_ROOT)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

@@ -9,7 +9,7 @@
 	#endif          
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#define STD_UTILS_PORT __declspec( dllimport )
 #else
 	#define STD_UTILS_PORT 
@@ -18,7 +18,7 @@
 #pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482 4996)
 
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#ifndef _WIN32_WCE
 		#include <conio.h>
 		#include <io.h>
@@ -89,7 +89,7 @@ namespace StdUtils
 	class CStdErrorInfo;
 
 #ifndef THROW_ERROR
-	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__)
+	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__, "")
 #endif
 	
 	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
@@ -138,7 +138,7 @@ namespace StdUtils
 #endif
 
 
-#ifdef _WINDOWS
+#ifdef WIN32
 	#include "tree_util.hh"
 	#include "StdTimer.h"
 	#include "StdCriticalSection.h"
