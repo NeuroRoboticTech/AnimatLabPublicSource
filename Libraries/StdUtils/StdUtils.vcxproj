@@ -193,7 +193,9 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClCompile Include="XYTrace.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IStdTimer.h" />
     <ClInclude Include="MarkupSTL.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="StdAvi.h" />
     <ClInclude Include="StdBitmap.h" />
@@ -214,6 +216,9 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClInclude Include="StdVariant.h" />
     <ClInclude Include="StdXml.h" />
     <ClInclude Include="XYTrace.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="StdUtils.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

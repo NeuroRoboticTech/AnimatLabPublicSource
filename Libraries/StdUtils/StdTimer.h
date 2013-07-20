@@ -32,20 +32,20 @@ typedef struct {
 \author	dcofer
 \date	5/3/2011
 **/
-class STD_UTILS_PORT CStdTimer {
- 
+class CStdWinTimer : public IStdTimer
+{
  private:
      stopWatch timer;
      LARGE_INTEGER frequency;
      double LIToSecs( LARGE_INTEGER & L) ;
 	 bool m_bStarted;
  public:
-     CStdTimer() ;
-     void StartTimer( ) ;
-     double StopTimer( ) ;
-     double ElapsedTime() ;
-
-	 bool TimerStarted() {return m_bStarted;}
+     CStdWinTimer() ;
+     
+     virtual void StartTimer();
+     virtual double StopTimer();
+     virtual double ElapsedTime();
+	 virtual bool TimerStarted() {return m_bStarted;}
  };
 
 }				//StdUtils

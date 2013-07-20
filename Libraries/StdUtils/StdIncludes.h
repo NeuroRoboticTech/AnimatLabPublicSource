@@ -79,6 +79,7 @@ namespace StdUtils
 	class CStdXml;
 	class CStdCriticalSection;
 	class CStdErrorInfo;
+    class IStdTimer;
 	
 	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
 	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
@@ -117,11 +118,11 @@ namespace StdUtils
 #include "StdLookupTable.h"
 #include "StdFixed.h"
 #include "StdColor.h"
+#include "StdCriticalSection.h"
+#include "IStdTimer.h"
 
 #ifdef WIN32
 	#include "tree_util.hh"
-	#include "StdTimer.h"
-	#include "StdCriticalSection.h"
 
 	#ifndef _WIN32_WCE
 		#include "XYTrace.h"

@@ -5,33 +5,34 @@
 **/
 
 #include "StdAfx.h"
+#include "StdTimer.h"
 
 namespace StdUtils
 {
 
- double CStdTimer::LIToSecs( LARGE_INTEGER & L) {
+ double CStdWinTimer::LIToSecs( LARGE_INTEGER & L) {
      return ((double)L.QuadPart /(double)frequency.QuadPart) ;
  }
  
- CStdTimer::CStdTimer(){
+ CStdWinTimer::CStdWinTimer(){
      timer.start.QuadPart=0;
      timer.stop.QuadPart=0; 
      QueryPerformanceFrequency( &frequency ) ;
  	 m_bStarted = false;
 }
  
- void CStdTimer::StartTimer( ) {
+ void CStdWinTimer::StartTimer( ) {
 	 m_bStarted = true;
      QueryPerformanceCounter(&timer.start) ;
  }
  
- double CStdTimer::StopTimer( ) {
+ double CStdWinTimer::StopTimer( ) {
      QueryPerformanceCounter(&timer.stop) ;
 	 m_bStarted = false;
 	 return ElapsedTime();
  }
  
- double CStdTimer::ElapsedTime() {
+ double CStdWinTimer::ElapsedTime() {
      LARGE_INTEGER time;
      time.QuadPart = timer.stop.QuadPart - timer.start.QuadPart;
      return LIToSecs( time) ;
