@@ -5,8 +5,6 @@
 **/
 
 #include "StdAfx.h"
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 
 namespace StdUtils
 {

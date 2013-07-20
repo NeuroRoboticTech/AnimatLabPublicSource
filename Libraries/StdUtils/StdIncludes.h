@@ -57,6 +57,11 @@
 #include <string.h>
 using namespace std;
 
+#include <boost/thread.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/atomic.hpp>
+
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
 //#define STD_TRACE_INFO

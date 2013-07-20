@@ -31,6 +31,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #ifndef CTRYENTERCS_H
 #define CTRYENTERCS_H
 
@@ -47,119 +49,15 @@ used when multithreading to prevent multiple threads from modifying the same res
 **/
 class STD_UTILS_PORT CStdCriticalSection
 {
-protected:
-   //Do not allow copy constructor or copy operator
-
-   /**
-   \brief	Copy constructor.
-   
-   \author	dcofer
-   \date	5/4/2011
-   
-   \param	src	Source for the. 
-   **/
-   CStdCriticalSection(const CStdCriticalSection& src);
-
-   /**
-   \brief	Assignment operator.
-   
-   \author	dcofer
-   \date	5/4/2011
-   
-   \param	src	Source for the. 
-   
-   \return	A shallow copy of this object.
-   **/
-   const CStdCriticalSection& operator=(const CStdCriticalSection& src);
-
-   /// Tells if this critical section is currently being used.
-   LONG  m_lBusy;
-
-   /// The current owner of this critical section.
-   DWORD m_dwOwner;
-
-   /// The number of reference counts to this critical section.
-   ULONG m_ulRefCnt;
-
-#pragma region InternalLocker
-
-   /**
-   \brief	Internal locker. 
-
-   \An internal locking class.
-   
-   \author	dcofer
-   \date	5/3/2011
-   **/
-   class InternalLocker
-   {
-   protected:
-      //Do not allow copy constructor or copy operator
-
-      /**
-      \brief	Default constructor.
-      
-      \author	dcofer
-      \date	5/3/2011
-      **/
-      InternalLocker();
-
-      /**
-      \brief	Copy constructor.
-      
-      \author	dcofer
-      \date	5/3/2011
-      
-      \param	src	Source for the. 
-      **/
-      InternalLocker(const InternalLocker& src);
-
-      /**
-      \brief	Assignment operator.
-      
-      \author	dcofer
-      \date	5/3/2011
-      
-      \param	src	Source for the. 
-      
-      \return	A shallow copy of this object.
-      **/
-      const InternalLocker& operator=(const InternalLocker& src);
-
-	  /// Tells if this is busy.
-	  LPLONG m_plBusy;
-   public:
-
-      /**
-      \brief	Constructor.
-      
-      \author	dcofer
-      \date	5/3/2011
-      
-      \param	plBusy	The pl busy. 
-      **/
-      explicit InternalLocker(LPLONG plBusy);
-
-	  /**
-	  \brief	Finaliser.
-	  
-	  \author	dcofer
-	  \date	5/3/2011
-	  **/
-	  ~InternalLocker();
-   };
-   friend class InternalLocker;
-
-#pragma endregion
-
 public:
    CStdCriticalSection();
    ~CStdCriticalSection();
 
-   bool TryEnter();
-   bool Enter(long lMilliTimeout = -1);
-   bool Leave();
+   virtual bool TryEnter() = 0;
+   virtual bool Leave() = 0;
 };
+
+CStdCriticalSection STD_UTILS_PORT *Std_GetCriticalSection();
 
 }				//StdUtils
 

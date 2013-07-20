@@ -28,7 +28,7 @@ namespace AnimatSim
 		{
 		protected:
 			/// Critical section to lock access to the data buffer for writing.
-			CStdCriticalSection m_oRowCountLock;
+			CStdCriticalSection *m_oRowCountLock;
 
 		public:
 			MemoryChart();
