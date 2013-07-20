@@ -50,14 +50,13 @@ an instance of CStdCriticalSection from other threads
 
 \param	plBusy	The busy flag. 
 **/
-CStdCriticalSectionInternal::InternalLocker::InternalLocker(LPLONG plBusy) :
-   m_plBusy(NULL)
+CStdCriticalSectionInternal::InternalLocker::InternalLocker(boost::atomic<LockState> &iBusy) :
+   m_iBusy(iBusy)
 {
-   while (::InterlockedExchange(plBusy, 1) != 0)
+   while (m_iBusy.exchange(Locked, boost::memory_order_acquire) == Locked)
    {
       Sleep(0);
    }
-   m_plBusy = plBusy;
 }
 
 /**
@@ -72,8 +71,7 @@ class gained.
 **/
 CStdCriticalSectionInternal::InternalLocker::~InternalLocker()
 {
-   ::InterlockedExchange(m_plBusy, 0); //lint !e534
-   m_plBusy = NULL;
+   m_iBusy.exchange(Unlocked, boost::memory_order_acquire);
 }
 
 /**
@@ -83,8 +81,8 @@ CStdCriticalSectionInternal::InternalLocker::~InternalLocker()
 \date	5/3/2011
 **/
 CStdCriticalSectionInternal::CStdCriticalSectionInternal() :
-   m_lBusy(0),
-   m_dwOwner(0),
+   m_iBusy(Unlocked), 
+   m_bOwned(false),
    m_ulRefCnt(0)
 {
 }
@@ -122,16 +120,18 @@ is reentry, the current thread is allowed to pass
 bool CStdCriticalSectionInternal::TryEnter()
 {
    bool bRet(false);
-   InternalLocker locker(&m_lBusy);
-   if (m_dwOwner == 0)
+   InternalLocker locker(m_iBusy);
+   
+   if (!m_bOwned)
    {
       //Nobody owns this cs, so the current will gain ownership
       //ATLASSERT(m_ulRefCnt == 0);
-      m_dwOwner = ::GetCurrentThreadId();
+      m_dwOwner = boost::this_thread::get_id();
+      m_bOwned = true;
       m_ulRefCnt = 1;
       bRet = true;
    }
-   else if (m_dwOwner == ::GetCurrentThreadId())
+   else if (m_dwOwner == boost::this_thread::get_id())
    {
       //The current thread already owns this cs
       //ATLASSERT(m_ulRefCnt > 0);
@@ -193,9 +193,9 @@ then the count is simply decremented.
 **/
 bool CStdCriticalSectionInternal::Leave()
 {
-   InternalLocker locker(&m_lBusy);
+   InternalLocker locker(m_iBusy);
    //If the current thread owns this cs
-   if (m_dwOwner == ::GetCurrentThreadId())
+   if (m_dwOwner == boost::this_thread::get_id())
    {
       //and if decrementing the recursive ownership count results in
       // a recursive ownership count of zero, then the current thread
@@ -205,7 +205,7 @@ bool CStdCriticalSectionInternal::Leave()
       {
          //By setting m_dwOwner to zero, we're stating that no thread owns
          // this cs
-         m_dwOwner = 0;
+         m_bOwned = false;
       }
       return true;
    }

@@ -35,6 +35,9 @@
 
 namespace StdUtils
 {
+
+typedef enum {Locked, Unlocked} LockState;
+    
 /**
 \brief	Standard critical section. 
 
@@ -48,21 +51,28 @@ class CStdCriticalSectionInternal : public CStdCriticalSection
 {
 protected:
 
-   /// Tells if this critical section is currently being used.
-   LONG  m_lBusy;
+    /// Tells if this critical section is currently being used.
+    boost::atomic<LockState> m_iBusy;
 
-   /// The current owner of this critical section.
-   DWORD m_dwOwner;
+    boost::thread::id m_dwOwner;
 
-   /// The number of reference counts to this critical section.
-   ULONG m_ulRefCnt;
+    bool m_bOwned;
+
+    ///// Tells if this critical section is currently being used.
+    //LONG  m_lBusy;
+
+    ///// The current owner of this critical section.
+    //DWORD m_dwOwner;
+
+    /// The number of reference counts to this critical section.
+    ULONG m_ulRefCnt;
 
 #pragma region InternalLocker
 
    /**
    \brief	Internal locker. 
 
-   \An internal locking class.
+  \An internal locking class.
    
    \author	dcofer
    \date	5/3/2011
@@ -103,7 +113,7 @@ protected:
       const InternalLocker& operator=(const InternalLocker& src);
 
 	  /// Tells if this is busy.
-	  LPLONG m_plBusy;
+	  boost::atomic<LockState> &m_iBusy;
    public:
 
       /**
@@ -114,7 +124,7 @@ protected:
       
       \param	plBusy	The pl busy. 
       **/
-      explicit InternalLocker(LPLONG plBusy);
+      explicit InternalLocker(boost::atomic<LockState> &iBusy);
 
 	  /**
 	  \brief	Finaliser.
@@ -129,6 +139,7 @@ protected:
 #pragma endregion
 
 public:
+
    CStdCriticalSectionInternal();
    ~CStdCriticalSectionInternal();
 
