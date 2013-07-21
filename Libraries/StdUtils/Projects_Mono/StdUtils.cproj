@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{254394AC-93EE-DE44-8CF5-53315374B3C1}</ProjectGuid>
+    <ProjectGuid>{8B3246B2-BDF9-7544-B173-B99F22762E43}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -38,8 +38,8 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libStdUtilsD.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Debug/libStdUtilsD.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Debug/libStdUtils_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libStdUtils_vc10D.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -69,8 +69,8 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp libStdUtils.so ../../../bin" />
-        <Command type="AfterBuild" command="cp libStdUtils.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/libStdUtils_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libStdUtils_vc10.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

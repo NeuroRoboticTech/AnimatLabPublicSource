@@ -14,16 +14,16 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_vc10D")
-			postbuildcommands { "cp Debug/libStdUtilsD.so ../../../bin",
-								"cp Debug/libStdUtilsD.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libStdUtils_vc10D.so ../../../bin",
+								"cp Debug/libStdUtils_vc10D.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_vc10")
-			postbuildcommands { "cp libStdUtils.so ../../../bin", 
-								"cp libStdUtils.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libStdUtils_vc10.so ../../../bin", 
+								"cp Release/libStdUtils_vc10.so ../../../unit_test_bin" }
 
 	project "StdClassFactoryTester"
 		language "C++"
