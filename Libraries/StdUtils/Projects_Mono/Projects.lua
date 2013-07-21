@@ -56,7 +56,7 @@
 		includedirs { "../../../../include", 
 					  "../../../StdUtils", 
 					  "../../../../../3rdParty/boost_1_54_0" }	  
-		libdirs { "../../../../lib", 
+		libdirs { "../../../../bin", 
 				  "../../../../../3rdParty/boost_1_54_0/lib" }
 		
 		configuration { "Debug", "linux" }
