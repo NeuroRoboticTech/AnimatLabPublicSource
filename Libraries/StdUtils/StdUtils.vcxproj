@@ -172,8 +172,6 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClCompile Include="MarkupSTL.cpp" />
     <ClCompile Include="MersenneTwister.cpp" />
     <ClCompile Include="StdAfx.cpp" />
-    <ClCompile Include="StdAvi.cpp" />
-    <ClCompile Include="StdBitmap.cpp" />
     <ClCompile Include="StdClassFactory.cpp" />
     <ClCompile Include="StdColor.cpp" />
     <ClCompile Include="StdCriticalSection.cpp" />
@@ -184,7 +182,6 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClCompile Include="StdLookupTable.cpp" />
     <ClCompile Include="StdPostFixEval.cpp" />
     <ClCompile Include="StdSerialize.cpp" />
-    <ClCompile Include="StdTimer.cpp" />
     <ClCompile Include="StdUtilFunctions.cpp" />
     <ClCompile Include="StdUtils.cpp" />
     <ClCompile Include="StdVariable.cpp" />
@@ -193,12 +190,9 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClCompile Include="XYTrace.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IStdTimer.h" />
     <ClInclude Include="MarkupSTL.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="StdAvi.h" />
-    <ClInclude Include="StdBitmap.h" />
     <ClInclude Include="StdClassFactory.h" />
     <ClInclude Include="StdColor.h" />
     <ClInclude Include="StdCriticalSection.h" />
@@ -210,15 +204,11 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClInclude Include="StdLookupTable.h" />
     <ClInclude Include="StdPostFixEval.h" />
     <ClInclude Include="StdSerialize.h" />
-    <ClInclude Include="StdTimer.h" />
     <ClInclude Include="StdUtilFunctions.h" />
     <ClInclude Include="StdVariable.h" />
     <ClInclude Include="StdVariant.h" />
     <ClInclude Include="StdXml.h" />
     <ClInclude Include="XYTrace.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="StdUtils.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

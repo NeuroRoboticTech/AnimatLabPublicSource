@@ -24,12 +24,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StdAvi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StdBitmap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StdClassFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +69,6 @@
     <ClCompile Include="XYTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StdTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StdCriticalSectionInternal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,12 +78,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StdAvi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StdBitmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StdClassFactory.h">
@@ -140,16 +125,10 @@
     <ClInclude Include="XYTrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StdTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StdCriticalSectionInternal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IStdTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

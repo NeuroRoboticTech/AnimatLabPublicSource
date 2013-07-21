@@ -2,47 +2,12 @@
 	project "StdUtils"
 		language "C++"
 		kind     "SharedLib"
-		files  { "../MarkupSTL.h",
-				 "../StdAfx.h",
-				 "../StdClassFactory.h",
-				 "../StdColor.h",
-				 "../StdCriticalSection.h",
-				 "../StdErrorInfo.h",
-				 "../StdFixed.h",
-				 "../StdFont.h",
-				 "../StdIncludes.h",
-				 "../StdLookupTable.h",
-				 "../StdPostFixEval.h",
-				 "../StdSerialize.h",
-				 "../StdTimer.h",
-				 "../StdUtilFunctions.h",
-				 "../StdVariable.h",
-				 "../StdVariant.h",
-				 "../StdXml.h",
-				 "../XYTrace.h",
-				 "../MarkupSTL.cpp",
-				 "../MersenneTwister.cpp",
-				 "../StdAfx.cpp",
-				 "../StdClassFactory.cpp",
-				 "../StdColor.cpp",
-				 "../StdCriticalSection.cpp",
-				 "../StdErrorInfo.cpp",
-				 "../StdFixed.cpp",
-				 "../StdFont.cpp",
-				 "../StdLookupTable.cpp",
-				 "../StdPostFixEval.cpp",
-				 "../StdSerialize.cpp",
-				 "../StdTimer.cpp",
-				 "../StdUtilFunctions.cpp",
-				 "../StdUtils.cpp",
-				 "../StdVariable.cpp",
-				 "../StdVariant.cpp",
-				 "../StdXml.cpp",
-				 "../XYTrace.cpp" }
+		files  { "../*.h",
+				 "../*.cpp"}
 		includedirs { "../../../include", 
-					  "$(BOOST_ROOT)" }	  
+					  "../../../../3rdParty/boost_1_54_0" }	  
 		libdirs { "../../../lib", 
-				  "$(BOOST_ROOT)/lib" }
+				  "../../../../3rdParty/boost_1_54_0/lib" }
 	  
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "STDUTILS_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
@@ -68,10 +33,8 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../include", 
-					  "../../StdUtils", 
-					  "$(BOOST_ROOT)" }	  
-		libdirs { "../../../lib", 
-				  "$(BOOST_ROOT)/lib" }
+					  "../../StdUtils" }	  
+		libdirs { "../../../lib" }
 		links { "StdUtils" }
 	  
 		configuration { "Debug", "windows" }
@@ -95,9 +58,9 @@
 				 "../StdUtils_UnitTests/*.cpp"}
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
-					  "$(BOOST_ROOT)" }	  
+					  "../../../../3rdParty/boost_1_54_0" }	  
 		libdirs { "../../../lib", 
-				  "$(BOOST_ROOT)/lib" }
+				  "../../../../3rdParty/boost_1_54_0/lib" }
 		links { "StdUtils" }
 		
 		configuration { "Debug", "windows" }

@@ -562,8 +562,8 @@ void VsSimulator::Initialize(int argc, const char **argv)
 
 void VsSimulator::StepSimulation()
 {
-	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
-		m_timePeriod.StartTimer();
+	//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
+	//	m_timePeriod.StartTimer();
 
 
 	try

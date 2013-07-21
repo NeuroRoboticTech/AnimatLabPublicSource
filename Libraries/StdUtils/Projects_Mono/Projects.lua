@@ -2,40 +2,11 @@
 	project "StdUtils"
 		language "C++"
 		kind     "SharedLib"
-		files  { "../MarkupSTL.h",
-				 "../StdAfx.h",
-				 "../StdClassFactory.h",
-				 "../StdColor.h",
-				 "../StdErrorInfo.h",
-				 "../StdFixed.h",
-				 "../StdFont.h",
-				 "../StdIncludes.h",
-				 "../StdLookupTable.h",
-				 "../StdPostFixEval.h",
-				 "../StdSerialize.h",
-				 "../StdUtilFunctions.h",
-				 "../StdVariable.h",
-				 "../StdVariant.h",
-				 "../StdXml.h",
-				 "../MarkupSTL.cpp",
-				 "../MersenneTwister.cpp",
-				 "../StdAfx.cpp",
-				 "../StdClassFactory.cpp",
-				 "../StdColor.cpp",
-				 "../StdErrorInfo.cpp",
-				 "../StdFixed.cpp",
-				 "../StdFont.cpp",
-				 "../StdLookupTable.cpp",
-				 "../StdPostFixEval.cpp",
-				 "../StdSerialize.cpp",
-				 "../StdUtilFunctions.cpp",
-				 "../StdUtils.cpp",
-				 "../StdVariable.cpp",
-				 "../StdVariant.cpp",
-				 "../StdXml.cpp" }
+		files  { "../*.h",
+				 "../*.cpp"}
 		includedirs { "../../../../include", 
-					  "$(BOOST_ROOT)" }
-		libdirs { "$(BOOST_ROOT)/lib" }
+					  "../../../../../3rdParty/boost_1_54_0" }
+		libdirs { "../../../../../3rdParty/boost_1_54_0/lib" }
 		links {"dl"}
 	  
 		configuration { "Debug", "linux" }
@@ -60,9 +31,7 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdUtils", 
-					  "$(BOOST_ROOT)" }	  
-		libdirs { "$(BOOST_ROOT)/lib" }
+					  "../../../StdUtils" }	  
 		links {"dl"}
 		
 		configuration { "Debug", "linux" }
@@ -86,9 +55,9 @@
 				 "../StdUtils_UnitTests/*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../StdUtils", 
-					  "$(BOOST_ROOT)" }	  
+					  "../../../../../3rdParty/boost_1_54_0" }	  
 		libdirs { "../../../../lib", 
-				  "$(BOOST_ROOT)/lib" }
+				  "../../../../../3rdParty/boost_1_54_0/lib" }
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG"	}

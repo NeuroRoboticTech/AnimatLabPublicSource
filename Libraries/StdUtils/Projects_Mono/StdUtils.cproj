@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EA049F8D-7331-884D-AF33-0C2601E331EF}</ProjectGuid>
+    <ProjectGuid>{669B467C-5E8D-3642-8F73-E8CC52F750AD}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -23,12 +23,12 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>$(BOOST_ROOT)</Include>
+        <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+        <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -54,12 +54,12 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>$(BOOST_ROOT)</Include>
+        <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>$(BOOST_ROOT)\lib</LibPath>
+        <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -86,6 +86,12 @@
     </None>
     <None Include="..\StdColor.h">
       <Link>StdColor.h</Link>
+    </None>
+    <None Include="..\StdCriticalSection.h">
+      <Link>StdCriticalSection.h</Link>
+    </None>
+    <None Include="..\StdCriticalSectionInternal.h">
+      <Link>StdCriticalSectionInternal.h</Link>
     </None>
     <None Include="..\StdErrorInfo.h">
       <Link>StdErrorInfo.h</Link>
@@ -120,6 +126,9 @@
     <None Include="..\StdXml.h">
       <Link>StdXml.h</Link>
     </None>
+    <None Include="..\XYTrace.h">
+      <Link>XYTrace.h</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\MarkupSTL.cpp">
@@ -136,6 +145,12 @@
     </Compile>
     <Compile Include="..\StdColor.cpp">
       <Link>StdColor.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdCriticalSection.cpp">
+      <Link>StdCriticalSection.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdCriticalSectionInternal.cpp">
+      <Link>StdCriticalSectionInternal.cpp</Link>
     </Compile>
     <Compile Include="..\StdErrorInfo.cpp">
       <Link>StdErrorInfo.cpp</Link>
@@ -169,6 +184,9 @@
     </Compile>
     <Compile Include="..\StdXml.cpp">
       <Link>StdXml.cpp</Link>
+    </Compile>
+    <Compile Include="..\XYTrace.cpp">
+      <Link>XYTrace.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>

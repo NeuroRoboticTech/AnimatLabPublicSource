@@ -61,7 +61,12 @@ void print_tree_bracketed(const tree<T>& t)
 	ostringstream str;
 	print_tree_bracketed(t, str);
 	str << std::endl << std::endl;
+
+#ifdef WIN32
 	OutputDebugString(str.str().c_str());
+#else
+    cout << str.str();
+#endif
 }
 
 template<class T>
@@ -84,7 +89,12 @@ void ptr_print_tree_bracketed(const tree<T>& t)
 	ostringstream str;
 	ptr_print_tree_bracketed(t, str);
 	str << std::endl << std::endl;
+
+#ifdef WIN32
 	OutputDebugString(str.str().c_str());
+#else
+    cout << str.str();
+#endif
 }
 
 template<class T>

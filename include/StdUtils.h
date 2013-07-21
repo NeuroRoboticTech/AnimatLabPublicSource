@@ -112,6 +112,7 @@ namespace StdUtils
 }
 
 #include "tree.hh"
+#include "tree_util.hh"
 
 #include "StdConstants.h"
 #include "StdADT.h"
@@ -129,26 +130,7 @@ namespace StdUtils
 #include "StdLookupTable.h"
 #include "StdFixed.h"
 #include "StdColor.h"
-
-#ifndef _WIN32_WCE
-	#define STRING_TYPE LPCSTR
-#else
-	#define STRING_TYPE LPCWSTR
-	#include "StdLogFile.h"
-#endif
-
-
-#ifdef WIN32
-	#include "tree_util.hh"
-	#include "StdTimer.h"
-	#include "StdCriticalSection.h"
-
-	#ifndef _WIN32_WCE
-		#include "XYTrace.h"
-	#else
-		#include "StdLogFile.h"
-	#endif
-#endif
+#include "StdCriticalSection.h"
 
 using namespace StdUtils;
 

@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{B32CCAA1-5208-9D49-AC3B-72DC485921E4}</ProjectGuid>
+		<ProjectGuid>{EAE5A1FE-5B39-424A-A066-4E6A7C9242D0}</ProjectGuid>
 		<RootNamespace>StdUtils</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -53,7 +53,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -66,11 +66,11 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)StdUtils_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(BOOST_ROOT)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)StdUtils_vc10D.pdb</ProgramDataBaseFileName>
@@ -84,7 +84,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -97,11 +97,11 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)StdUtils_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(BOOST_ROOT)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>
@@ -119,6 +119,7 @@
 		<ClInclude Include="..\StdClassFactory.h" />
 		<ClInclude Include="..\StdColor.h" />
 		<ClInclude Include="..\StdCriticalSection.h" />
+		<ClInclude Include="..\StdCriticalSectionInternal.h" />
 		<ClInclude Include="..\StdErrorInfo.h" />
 		<ClInclude Include="..\StdFixed.h" />
 		<ClInclude Include="..\StdFont.h" />
@@ -126,7 +127,6 @@
 		<ClInclude Include="..\StdLookupTable.h" />
 		<ClInclude Include="..\StdPostFixEval.h" />
 		<ClInclude Include="..\StdSerialize.h" />
-		<ClInclude Include="..\StdTimer.h" />
 		<ClInclude Include="..\StdUtilFunctions.h" />
 		<ClInclude Include="..\StdVariable.h" />
 		<ClInclude Include="..\StdVariant.h" />
@@ -146,6 +146,8 @@
 		</ClCompile>
 		<ClCompile Include="..\StdCriticalSection.cpp">
 		</ClCompile>
+		<ClCompile Include="..\StdCriticalSectionInternal.cpp">
+		</ClCompile>
 		<ClCompile Include="..\StdErrorInfo.cpp">
 		</ClCompile>
 		<ClCompile Include="..\StdFixed.cpp">
@@ -157,8 +159,6 @@
 		<ClCompile Include="..\StdPostFixEval.cpp">
 		</ClCompile>
 		<ClCompile Include="..\StdSerialize.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdTimer.cpp">
 		</ClCompile>
 		<ClCompile Include="..\StdUtilFunctions.cpp">
 		</ClCompile>

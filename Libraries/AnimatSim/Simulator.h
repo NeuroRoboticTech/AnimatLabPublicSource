@@ -352,7 +352,6 @@ namespace AnimatSim
 
 			double m_dblTotalStepTime;
 			long m_lStepTimeCount;
-			CStdTimer m_Timer;
 
 #pragma endregion
 
