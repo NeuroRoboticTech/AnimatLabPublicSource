@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85CD2E85-5931-014A-99D8-167AA221A2BC}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libAnimatSim_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+      </Includes>
+    </Includes>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libAnimatSimD.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libAnimatSimD.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libAnimatSim_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+      </Includes>
+    </Includes>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp libAnimatSim.so ../../../bin" />
+        <Command type="AfterBuild" command="cp libAnimatSim.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\ActivatedItem.h">
+      <Link>ActivatedItem.h</Link>
+    </None>
+    <None Include="..\ActivatedItemMgr.h">
+      <Link>ActivatedItemMgr.h</Link>
+    </None>
+    <None Include="..\Adapter.h">
+      <Link>Adapter.h</Link>
+    </None>
+    <None Include="..\AnimatBase.h">
+      <Link>AnimatBase.h</Link>
+    </None>
+    <None Include="..\AnimatLibraryIncludes.h">
+      <Link>AnimatLibraryIncludes.h</Link>
+    </None>
+    <None Include="..\AnimatUtils.h">
+      <Link>AnimatUtils.h</Link>
+    </None>
+    <None Include="..\ArrayChart.h">
+      <Link>ArrayChart.h</Link>
+    </None>
+    <None Include="..\Attachment.h">
+      <Link>Attachment.h</Link>
+    </None>
+    <None Include="..\BallSocket.h">
+      <Link>BallSocket.h</Link>
+    </None>
+    <None Include="..\BellGain.h">
+      <Link>BellGain.h</Link>
+    </None>
+    <None Include="..\BodyPart.h">
+      <Link>BodyPart.h</Link>
+    </None>
+    <None Include="..\BoundingBox.h">
+      <Link>BoundingBox.h</Link>
+    </None>
+    <None Include="..\Box.h">
+      <Link>Box.h</Link>
+    </None>
+    <None Include="..\Cone.h">
+      <Link>Cone.h</Link>
+    </None>
+    <None Include="..\ConstraintFriction.h">
+      <Link>ConstraintFriction.h</Link>
+    </None>
+    <None Include="..\ConstraintLimit.h">
+      <Link>ConstraintLimit.h</Link>
+    </None>
+    <None Include="..\ConstraintRelaxation.h">
+      <Link>ConstraintRelaxation.h</Link>
+    </None>
+    <None Include="..\ContactAdapter.h">
+      <Link>ContactAdapter.h</Link>
+    </None>
+    <None Include="..\ContactSensor.h">
+      <Link>ContactSensor.h</Link>
+    </None>
+    <None Include="..\CurrentStimulus.h">
+      <Link>CurrentStimulus.h</Link>
+    </None>
+    <None Include="..\Cylinder.h">
+      <Link>Cylinder.h</Link>
+    </None>
+    <None Include="..\DataChart.h">
+      <Link>DataChart.h</Link>
+    </None>
+    <None Include="..\DataChartMgr.h">
+      <Link>DataChartMgr.h</Link>
+    </None>
+    <None Include="..\DataColumn.h">
+      <Link>DataColumn.h</Link>
+    </None>
+    <None Include="..\DelayLine.h">
+      <Link>DelayLine.h</Link>
+    </None>
+    <None Include="..\Ellipsoid.h">
+      <Link>Ellipsoid.h</Link>
+    </None>
+    <None Include="..\EnablerStimulus.h">
+      <Link>EnablerStimulus.h</Link>
+    </None>
+    <None Include="..\EquationGain.h">
+      <Link>EquationGain.h</Link>
+    </None>
+    <None Include="..\ExternalInputStimulus.h">
+      <Link>ExternalInputStimulus.h</Link>
+    </None>
+    <None Include="..\ExternalStimuliMgr.h">
+      <Link>ExternalStimuliMgr.h</Link>
+    </None>
+    <None Include="..\ExternalStimulus.h">
+      <Link>ExternalStimulus.h</Link>
+    </None>
+    <None Include="..\FileChart.h">
+      <Link>FileChart.h</Link>
+    </None>
+    <None Include="..\FluidPlane.h">
+      <Link>FluidPlane.h</Link>
+    </None>
+    <None Include="..\Gain.h">
+      <Link>Gain.h</Link>
+    </None>
+    <None Include="..\Hinge.h">
+      <Link>Hinge.h</Link>
+    </None>
+    <None Include="..\Hud.h">
+      <Link>Hud.h</Link>
+    </None>
+    <None Include="..\HudItem.h">
+      <Link>HudItem.h</Link>
+    </None>
+    <None Include="..\HudText.h">
+      <Link>HudText.h</Link>
+    </None>
+    <None Include="..\IMotorizedJoint.h">
+      <Link>IMotorizedJoint.h</Link>
+    </None>
+    <None Include="..\IMovableItemCallback.h">
+      <Link>IMovableItemCallback.h</Link>
+    </None>
+    <None Include="..\IPhysicsBody.h">
+      <Link>IPhysicsBody.h</Link>
+    </None>
+    <None Include="..\IPhysicsMovableItem.h">
+      <Link>IPhysicsMovableItem.h</Link>
+    </None>
+    <None Include="..\ISimGUICallback.h">
+      <Link>ISimGUICallback.h</Link>
+    </None>
+    <None Include="..\InverseMuscleCurrent.h">
+      <Link>InverseMuscleCurrent.h</Link>
+    </None>
+    <None Include="..\Joint.h">
+      <Link>Joint.h</Link>
+    </None>
+    <None Include="..\KeyFrame.h">
+      <Link>KeyFrame.h</Link>
+    </None>
+    <None Include="..\LengthTensionGain.h">
+      <Link>LengthTensionGain.h</Link>
+    </None>
+    <None Include="..\Light.h">
+      <Link>Light.h</Link>
+    </None>
+    <None Include="..\LightManager.h">
+      <Link>LightManager.h</Link>
+    </None>
+    <None Include="..\LineBase.h">
+      <Link>LineBase.h</Link>
+    </None>
+    <None Include="..\LinearHillMuscle.h">
+      <Link>LinearHillMuscle.h</Link>
+    </None>
+    <None Include="..\LinearHillStretchReceptor.h">
+      <Link>LinearHillStretchReceptor.h</Link>
+    </None>
+    <None Include="..\LinearJoint.h">
+      <Link>LinearJoint.h</Link>
+    </None>
+    <None Include="..\Link.h">
+      <Link>Link.h</Link>
+    </None>
+    <None Include="..\MaterialType.h">
+      <Link>MaterialType.h</Link>
+    </None>
+    <None Include="..\Materials.h">
+      <Link>Materials.h</Link>
+    </None>
+    <None Include="..\MemoryChart.h">
+      <Link>MemoryChart.h</Link>
+    </None>
+    <None Include="..\Mesh.h">
+      <Link>Mesh.h</Link>
+    </None>
+    <None Include="..\MotorizedJoint.h">
+      <Link>MotorizedJoint.h</Link>
+    </None>
+    <None Include="..\Mouth.h">
+      <Link>Mouth.h</Link>
+    </None>
+    <None Include="..\MovableItem.h">
+      <Link>MovableItem.h</Link>
+    </None>
+    <None Include="..\MuscleBase.h">
+      <Link>MuscleBase.h</Link>
+    </None>
+    <None Include="..\NervousSystem.h">
+      <Link>NervousSystem.h</Link>
+    </None>
+    <None Include="..\NeuralModule.h">
+      <Link>NeuralModule.h</Link>
+    </None>
+    <None Include="..\Node.h">
+      <Link>Node.h</Link>
+    </None>
+    <None Include="..\Odor.h">
+      <Link>Odor.h</Link>
+    </None>
+    <None Include="..\OdorSensor.h">
+      <Link>OdorSensor.h</Link>
+    </None>
+    <None Include="..\OdorType.h">
+      <Link>OdorType.h</Link>
+    </None>
+    <None Include="..\Organism.h">
+      <Link>Organism.h</Link>
+    </None>
+    <None Include="..\PhysicalNeuralModule.h">
+      <Link>PhysicalNeuralModule.h</Link>
+    </None>
+    <None Include="..\Plane.h">
+      <Link>Plane.h</Link>
+    </None>
+    <None Include="..\PolynomialGain.h">
+      <Link>PolynomialGain.h</Link>
+    </None>
+    <None Include="..\Prismatic.h">
+      <Link>Prismatic.h</Link>
+    </None>
+    <None Include="..\PropertyControlAdapter.h">
+      <Link>PropertyControlAdapter.h</Link>
+    </None>
+    <None Include="..\PropertyControlStimulus.h">
+      <Link>PropertyControlStimulus.h</Link>
+    </None>
+    <None Include="..\RPRO.h">
+      <Link>RPRO.h</Link>
+    </None>
+    <None Include="..\ReceptiveField.h">
+      <Link>ReceptiveField.h</Link>
+    </None>
+    <None Include="..\ReceptiveFieldPair.h">
+      <Link>ReceptiveFieldPair.h</Link>
+    </None>
+    <None Include="..\RigidBody.h">
+      <Link>RigidBody.h</Link>
+    </None>
+    <None Include="..\Sensor.h">
+      <Link>Sensor.h</Link>
+    </None>
+    <None Include="..\SigmoidGain.h">
+      <Link>SigmoidGain.h</Link>
+    </None>
+    <None Include="..\SimulationRecorder.h">
+      <Link>SimulationRecorder.h</Link>
+    </None>
+    <None Include="..\SimulationWindow.h">
+      <Link>SimulationWindow.h</Link>
+    </None>
+    <None Include="..\SimulationWindowMgr.h">
+      <Link>SimulationWindowMgr.h</Link>
+    </None>
+    <None Include="..\Simulator.h">
+      <Link>Simulator.h</Link>
+    </None>
+    <None Include="..\Sphere.h">
+      <Link>Sphere.h</Link>
+    </None>
+    <None Include="..\Spring.h">
+      <Link>Spring.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+    <None Include="..\Stomach.h">
+      <Link>Stomach.h</Link>
+    </None>
+    <None Include="..\Structure.h">
+      <Link>Structure.h</Link>
+    </None>
+    <None Include="..\Terrain.h">
+      <Link>Terrain.h</Link>
+    </None>
+    <None Include="..\Torus.h">
+      <Link>Torus.h</Link>
+    </None>
+    <None Include="..\VoltageClamp.h">
+      <Link>VoltageClamp.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\ActivatedItem.cpp">
+      <Link>ActivatedItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\ActivatedItemMgr.cpp">
+      <Link>ActivatedItemMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\Adapter.cpp">
+      <Link>Adapter.cpp</Link>
+    </Compile>
+    <Compile Include="..\AnimatBase.cpp">
+      <Link>AnimatBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\AnimatLibrary.cpp">
+      <Link>AnimatLibrary.cpp</Link>
+    </Compile>
+    <Compile Include="..\AnimatUtils.cpp">
+      <Link>AnimatUtils.cpp</Link>
+    </Compile>
+    <Compile Include="..\ArrayChart.cpp">
+      <Link>ArrayChart.cpp</Link>
+    </Compile>
+    <Compile Include="..\Attachment.cpp">
+      <Link>Attachment.cpp</Link>
+    </Compile>
+    <Compile Include="..\BallSocket.cpp">
+      <Link>BallSocket.cpp</Link>
+    </Compile>
+    <Compile Include="..\BellGain.cpp">
+      <Link>BellGain.cpp</Link>
+    </Compile>
+    <Compile Include="..\BodyPart.cpp">
+      <Link>BodyPart.cpp</Link>
+    </Compile>
+    <Compile Include="..\BoundingBox.cpp">
+      <Link>BoundingBox.cpp</Link>
+    </Compile>
+    <Compile Include="..\Box.cpp">
+      <Link>Box.cpp</Link>
+    </Compile>
+    <Compile Include="..\Cone.cpp">
+      <Link>Cone.cpp</Link>
+    </Compile>
+    <Compile Include="..\ConstraintFriction.cpp">
+      <Link>ConstraintFriction.cpp</Link>
+    </Compile>
+    <Compile Include="..\ConstraintLimit.cpp">
+      <Link>ConstraintLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\ConstraintRelaxation.cpp">
+      <Link>ConstraintRelaxation.cpp</Link>
+    </Compile>
+    <Compile Include="..\ContactAdapter.cpp">
+      <Link>ContactAdapter.cpp</Link>
+    </Compile>
+    <Compile Include="..\ContactSensor.cpp">
+      <Link>ContactSensor.cpp</Link>
+    </Compile>
+    <Compile Include="..\CurrentStimulus.cpp">
+      <Link>CurrentStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\Cylinder.cpp">
+      <Link>Cylinder.cpp</Link>
+    </Compile>
+    <Compile Include="..\DataChart.cpp">
+      <Link>DataChart.cpp</Link>
+    </Compile>
+    <Compile Include="..\DataChartMgr.cpp">
+      <Link>DataChartMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\DataColumn.cpp">
+      <Link>DataColumn.cpp</Link>
+    </Compile>
+    <Compile Include="..\DelayLine.cpp">
+      <Link>DelayLine.cpp</Link>
+    </Compile>
+    <Compile Include="..\Ellipsoid.cpp">
+      <Link>Ellipsoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\EnablerStimulus.cpp">
+      <Link>EnablerStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\EquationGain.cpp">
+      <Link>EquationGain.cpp</Link>
+    </Compile>
+    <Compile Include="..\ExternalInputStimulus.cpp">
+      <Link>ExternalInputStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\ExternalStimuliMgr.cpp">
+      <Link>ExternalStimuliMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\ExternalStimulus.cpp">
+      <Link>ExternalStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\FileChart.cpp">
+      <Link>FileChart.cpp</Link>
+    </Compile>
+    <Compile Include="..\FluidPlane.cpp">
+      <Link>FluidPlane.cpp</Link>
+    </Compile>
+    <Compile Include="..\Gain.cpp">
+      <Link>Gain.cpp</Link>
+    </Compile>
+    <Compile Include="..\Hinge.cpp">
+      <Link>Hinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\Hud.cpp">
+      <Link>Hud.cpp</Link>
+    </Compile>
+    <Compile Include="..\HudItem.cpp">
+      <Link>HudItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\HudText.cpp">
+      <Link>HudText.cpp</Link>
+    </Compile>
+    <Compile Include="..\IMotorizedJoint.cpp">
+      <Link>IMotorizedJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\IMovableItemCallback.cpp">
+      <Link>IMovableItemCallback.cpp</Link>
+    </Compile>
+    <Compile Include="..\IPhysicsBody.cpp">
+      <Link>IPhysicsBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\IPhysicsMovableItem.cpp">
+      <Link>IPhysicsMovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\ISimGUICallback.cpp">
+      <Link>ISimGUICallback.cpp</Link>
+    </Compile>
+    <Compile Include="..\InverseMuscleCurrent.cpp">
+      <Link>InverseMuscleCurrent.cpp</Link>
+    </Compile>
+    <Compile Include="..\Joint.cpp">
+      <Link>Joint.cpp</Link>
+    </Compile>
+    <Compile Include="..\KeyFrame.cpp">
+      <Link>KeyFrame.cpp</Link>
+    </Compile>
+    <Compile Include="..\LengthTensionGain.cpp">
+      <Link>LengthTensionGain.cpp</Link>
+    </Compile>
+    <Compile Include="..\Light.cpp">
+      <Link>Light.cpp</Link>
+    </Compile>
+    <Compile Include="..\LightManager.cpp">
+      <Link>LightManager.cpp</Link>
+    </Compile>
+    <Compile Include="..\LineBase.cpp">
+      <Link>LineBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\LinearHillMuscle.cpp">
+      <Link>LinearHillMuscle.cpp</Link>
+    </Compile>
+    <Compile Include="..\LinearHillStretchReceptor.cpp">
+      <Link>LinearHillStretchReceptor.cpp</Link>
+    </Compile>
+    <Compile Include="..\LinearJoint.cpp">
+      <Link>LinearJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\Link.cpp">
+      <Link>Link.cpp</Link>
+    </Compile>
+    <Compile Include="..\MaterialType.cpp">
+      <Link>MaterialType.cpp</Link>
+    </Compile>
+    <Compile Include="..\Materials.cpp">
+      <Link>Materials.cpp</Link>
+    </Compile>
+    <Compile Include="..\MemoryChart.cpp">
+      <Link>MemoryChart.cpp</Link>
+    </Compile>
+    <Compile Include="..\Mesh.cpp">
+      <Link>Mesh.cpp</Link>
+    </Compile>
+    <Compile Include="..\MotorizedJoint.cpp">
+      <Link>MotorizedJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\Mouth.cpp">
+      <Link>Mouth.cpp</Link>
+    </Compile>
+    <Compile Include="..\MovableItem.cpp">
+      <Link>MovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\MuscleBase.cpp">
+      <Link>MuscleBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\NervousSystem.cpp">
+      <Link>NervousSystem.cpp</Link>
+    </Compile>
+    <Compile Include="..\NeuralModule.cpp">
+      <Link>NeuralModule.cpp</Link>
+    </Compile>
+    <Compile Include="..\Node.cpp">
+      <Link>Node.cpp</Link>
+    </Compile>
+    <Compile Include="..\Odor.cpp">
+      <Link>Odor.cpp</Link>
+    </Compile>
+    <Compile Include="..\OdorSensor.cpp">
+      <Link>OdorSensor.cpp</Link>
+    </Compile>
+    <Compile Include="..\OdorType.cpp">
+      <Link>OdorType.cpp</Link>
+    </Compile>
+    <Compile Include="..\Organism.cpp">
+      <Link>Organism.cpp</Link>
+    </Compile>
+    <Compile Include="..\PhysicalNeuralModule.cpp">
+      <Link>PhysicalNeuralModule.cpp</Link>
+    </Compile>
+    <Compile Include="..\Plane.cpp">
+      <Link>Plane.cpp</Link>
+    </Compile>
+    <Compile Include="..\PolynomialGain.cpp">
+      <Link>PolynomialGain.cpp</Link>
+    </Compile>
+    <Compile Include="..\Prismatic.cpp">
+      <Link>Prismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\PropertyControlAdapter.cpp">
+      <Link>PropertyControlAdapter.cpp</Link>
+    </Compile>
+    <Compile Include="..\PropertyControlStimulus.cpp">
+      <Link>PropertyControlStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\RPRO.cpp">
+      <Link>RPRO.cpp</Link>
+    </Compile>
+    <Compile Include="..\ReceptiveField.cpp">
+      <Link>ReceptiveField.cpp</Link>
+    </Compile>
+    <Compile Include="..\ReceptiveFieldPair.cpp">
+      <Link>ReceptiveFieldPair.cpp</Link>
+    </Compile>
+    <Compile Include="..\RigidBody.cpp">
+      <Link>RigidBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\Sensor.cpp">
+      <Link>Sensor.cpp</Link>
+    </Compile>
+    <Compile Include="..\SigmoidGain.cpp">
+      <Link>SigmoidGain.cpp</Link>
+    </Compile>
+    <Compile Include="..\SimulationRecorder.cpp">
+      <Link>SimulationRecorder.cpp</Link>
+    </Compile>
+    <Compile Include="..\SimulationWindow.cpp">
+      <Link>SimulationWindow.cpp</Link>
+    </Compile>
+    <Compile Include="..\SimulationWindowMgr.cpp">
+      <Link>SimulationWindowMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\Simulator.cpp">
+      <Link>Simulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\Sphere.cpp">
+      <Link>Sphere.cpp</Link>
+    </Compile>
+    <Compile Include="..\Spring.cpp">
+      <Link>Spring.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+    <Compile Include="..\Stomach.cpp">
+      <Link>Stomach.cpp</Link>
+    </Compile>
+    <Compile Include="..\Structure.cpp">
+      <Link>Structure.cpp</Link>
+    </Compile>
+    <Compile Include="..\Terrrain.cpp">
+      <Link>Terrrain.cpp</Link>
+    </Compile>
+    <Compile Include="..\Torus.cpp">
+      <Link>Torus.cpp</Link>
+    </Compile>
+    <Compile Include="..\VoltageClamp.cpp">
+      <Link>VoltageClamp.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

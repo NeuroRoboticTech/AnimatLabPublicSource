@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{608033C9-7A22-D643-BE2D-52EB06827611}</ProjectGuid>
+    <ProjectGuid>{1CB0AEB8-442E-174C-9900-48FFE3917124}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,14 +22,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
         <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../lib</LibPath>
+        <LibPath>..\..\..\..\lib</LibPath>
         <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
       </LibPaths>
     </LibPaths>
@@ -54,14 +54,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
         <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../lib</LibPath>
+        <LibPath>..\..\..\..\lib</LibPath>
         <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
       </LibPaths>
     </LibPaths>

@@ -7,7 +7,6 @@
 		includedirs { "../../../include", 
 					  "../../StdUtils" }	  
 		libdirs { "../../../lib" }
-		links {"Stdutils"}
 		
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "ANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }

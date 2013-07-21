@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{669B467C-5E8D-3642-8F73-E8CC52F750AD}</ProjectGuid>
+    <ProjectGuid>{2FB3698B-927D-E241-A55C-A56997CB9F33}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,7 +22,7 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>
@@ -53,7 +53,7 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
       </Includes>
     </Includes>

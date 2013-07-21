@@ -5,7 +5,7 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdIncludes" }
+					  "../../../StdUtils" }
 		links {"dl"}
 	  
 		configuration { "Debug", "linux" }
