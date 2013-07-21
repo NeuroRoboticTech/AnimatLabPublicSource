@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2FB3698B-927D-E241-A55C-A56997CB9F33}</ProjectGuid>
+    <ProjectGuid>{254394AC-93EE-DE44-8CF5-53315374B3C1}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,13 +22,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../../../3rdParty/boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
+        <LibPath>../../../../../3rdParty/boost_1_54_0/lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -53,13 +53,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../../../3rdParty/boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\..\3rdParty\boost_1_54_0\lib</LibPath>
+        <LibPath>../../../../../3rdParty/boost_1_54_0/lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
