@@ -1,50 +1,52 @@
 #ifndef __STD_ADT_DLL_H__
 #define __STD_ADT_DLL_H__
 
+
 template <class T>
 // the linked list class
 class CStdPtrArray : public vector<T*>
 {
 
 public:
-	virtual ~CStdPtrArray() {clear();};
+	virtual ~CStdPtrArray() {this->clear();};
 
 	virtual void Add(T *lpVal)
 	{push_back(lpVal);};
 	
 	virtual void clear()
 	{		
-		int iCount = size();
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			T *lpVal = at(i);
+			T *lpVal = this->at(i);
 			if(lpVal) 
 				delete lpVal;
 
-			at(i) = NULL;
+			this->at(i) = NULL;
 		}
 
 		vector<T*>::clear();
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
+
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(vector<T*>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename std::vector<T*>::iterator oPos)
+	{this->erase(oPos);}
 
-	virtual void erase(vector<T*>::iterator oPos)
+	virtual void erase(typename std::vector<T*>::iterator oPos)
 	{
-		if(oPos!=end())
+		if(oPos!=this->end())
 		{
 			if(*oPos) 
 				delete *oPos;
@@ -54,9 +56,9 @@ public:
 		vector<T*>::erase(oPos);
 	}
 
-	virtual void erase(vector<T*>::iterator oBegin, vector<T*>::iterator oEnd)
+	virtual void erase(typename vector<T*>::iterator oBegin, typename vector<T*>::iterator oEnd)
 	{
-		vector<T*>::iterator oPos;
+		typename vector<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(*oPos) 
@@ -69,24 +71,23 @@ public:
 
 
 	virtual void SetSize(long lSize)
-	{resize(lSize);};
+	{this->resize(lSize);};
 
 	virtual void InsertAt(int iPos, T *lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos > iSize) )
 			return;
 		else if(iPos == iSize)
 			Add(lpVal);
 		else
-			insert((begin()+iPos), lpVal);
+			this->insert((this->begin()+iPos), lpVal);
 	};
 
-
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 
 };
 
@@ -117,44 +118,44 @@ class CStdArray : public vector<T>
 {
 
 public:
-	virtual ~CStdArray() {clear();};
+	virtual ~CStdArray() {this->clear();};
 
 	virtual void Add(T lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 	
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(vector<T>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename vector<T>::iterator oPos)
+	{this->erase(oPos);}
 
 	virtual void SetSize(long lSize)
-	{resize(lSize);};
+	{this->resize(lSize);};
 
 	virtual void InsertAt(int iPos, T lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos > iSize) )
 			return;
 		else if(iPos == iSize)
 			Add(lpVal);
 		else
-			insert((begin()+iPos), lpVal);
+			this->insert((this->begin()+iPos), lpVal);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 
 };
 
@@ -165,57 +166,57 @@ class CStdPtrDeque : public deque<T*>
 {
 
 public:
-	virtual ~CStdPtrDeque() {clear();};
+	virtual ~CStdPtrDeque() {this->clear();};
 
 	virtual void AddFront(T *lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 
 	virtual void AddBack(T *lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 
 	virtual void Add(T *lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 	
 	virtual void Push(T lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 	
 	virtual T Pop()
 	{
-		T lpVal = front();
-		pop_front();
+		T lpVal = this->front();
+		this->pop_front();
 		return lpVal;
 	};
 	
 	virtual void clear()
 	{		
-		int iCount = size();
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			if(at(i)) delete at(i);
-			at(i) = NULL;
+			if(this->at(i)) delete this->at(i);
+			this->at(i) = NULL;
 		}
 
 		deque<T*>::clear();
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(deque<T*>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename deque<T*>::iterator oPos)
+	{this->erase(oPos);}
 
-	virtual void erase(deque<T*>::iterator oPos)
+	virtual void erase(typename deque<T*>::iterator oPos)
 	{
-		if(oPos!=end())
+		if(oPos!=this->end())
 		{
 			if(*oPos) 
 				delete *oPos;
@@ -225,9 +226,9 @@ public:
 		deque<T*>::erase(oPos);
 	}
 
-	virtual void erase(deque<T*>::iterator oBegin, deque<T*>::iterator oEnd)
+	virtual void erase(typename deque<T*>::iterator oBegin, typename deque<T*>::iterator oEnd)
 	{
-		deque<T*>::iterator oPos;
+		typename deque<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(*oPos) 
@@ -241,21 +242,20 @@ public:
 
 	virtual void InsertAt(int iPos, T *lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		insert((begin()+iPos), lpVal);
+		this->insert((this->begin()+iPos), lpVal);
 	};
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 
 };
-
 
 
 template <class T>
@@ -264,57 +264,57 @@ class CStdDeque : public deque<T>
 {
 
 public:
-	virtual ~CStdDeque() {clear();};
+	virtual ~CStdDeque() {this->clear();};
 
 	virtual void AddFront(T lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 
 	virtual void AddBack(T lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 
 	virtual void Add(T lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 	
 	virtual void Push(T lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 	
 	virtual T Pop()
 	{
-		T lpVal = front();
-		pop_front();
+		T lpVal = this->front();
+		this->pop_front();
 		return lpVal;
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(deque<T>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename deque<T>::iterator oPos)
+	{this->erase(oPos);}
 
 
 	virtual void InsertAt(int iPos, T lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		insert((begin()+iPos), lpVal);
+		this->insert((this->begin()+iPos), lpVal);
 	};
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 
 };
 
@@ -324,33 +324,33 @@ template <class T>
 class CStdPtrStack : public stack<T*>
 {
 public:
-	virtual ~CStdPtrStack() {clear();};
+	virtual ~CStdPtrStack() {this->clear();};
 
-	virtual void RemoveAll() {clear();};
-	virtual void Clear() {clear();};
+	virtual void RemoveAll() {this->clear();};
+	virtual void Clear() {this->clear();};
 	virtual void clear()
 	{	
 		T *lpNode;
 
-		int iCount = size();
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			lpNode = Pop();
+			lpNode = this->Pop();
 			if(lpNode) delete lpNode;
 		}
 	};
 
 	virtual void Push(T *lpElement)
-	{push(lpElement);};
+	{this->push(lpElement);};
 
 	virtual T *Pop()
 	{
 		T *lpElement = NULL;
 
-		if( size() > 0 )
+		if( this->size() > 0 )
 			{
-				lpElement = top();
-				pop();
+				lpElement = this->top();
+				this->pop();
 				return lpElement;
 			}
 			else
@@ -359,12 +359,12 @@ public:
 
 	virtual T *Top() {return Examine();}
 
-	virtual int IsEmpty() {return !size();};
-	virtual int GetSize() {return size();};
+	virtual int IsEmpty() {return !this->size();};
+	virtual int GetSize() {return this->size();};
 	virtual T *Examine()
 	{
-	   	if( size() )
-				return top();
+	   	if( this->size() )
+				return this->top();
 			else
 				return NULL;
 	};
@@ -376,42 +376,36 @@ template <class T>
 class CStdStack : public stack<T>
 {
 public:
-	virtual ~CStdStack() {clear();};
+	virtual ~CStdStack() {this->clear();};
 
-	virtual void RemoveAll() {clear();};
-	virtual void Clear() {clear();};
+	virtual void RemoveAll() {this->clear();};
+	virtual void Clear() {this->clear();};
 	virtual void clear()
 	{	
-		int iCount = size();
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
-			pop();
+			this->pop();
 	};
 
 	virtual void Push(T lpElement)
-	{push(lpElement);};
+	{this->push(lpElement);};
 
 	virtual T Pop()
 	{
 		T oElement;
 
-		if( size() > 0 )
-			{
-				oElement = top();
-				pop();
-				return oElement;
-			}
-			else
-				return NULL;
+		oElement = this->top();
+		this->pop();
+		return oElement;
 	};
 
 	virtual T Top() {return Examine();}
 
-	virtual int IsEmpty() {return !size();};
-	virtual int GetSize() {return size();};
+	virtual int IsEmpty() {return !this->size();};
+	virtual int GetSize() {return this->size();};
 	virtual T Examine()
 	{return Top();};
 };
-
 
 
 template <class Key, class T>
@@ -420,37 +414,37 @@ class CStdPtrMap : public map<Key, T*>
 {
 
 public:
-	virtual ~CStdPtrMap() {clear();};
+	virtual ~CStdPtrMap() {this->clear();};
 
 	virtual void Add(Key oKey, T *lpVal)
 	{
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos!=end())
-			THROW_ERROR(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap); 
+		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end())
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		insert(make_pair(oKey, lpVal));
+		this->insert(make_pair(oKey, lpVal));
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void Remove(const Key &oKey)
 	{
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos==end())
-			THROW_ERROR(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap); 
+		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos==this->end())
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
-		erase(oKey);
+		this->erase(oKey);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 
 	virtual void clear()
 	{	
 		//Lets go through and delete all the non null pointers.
-		map<Key, T*>::iterator oPos;
-		for(oPos=begin(); oPos!=end(); ++oPos)
+		typename map<Key, T*>::iterator oPos;
+		for(oPos=this->begin(); oPos!=this->end(); ++oPos)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
@@ -459,10 +453,10 @@ public:
 		map<Key, T*>::clear();
 	};
 
-	virtual size_type erase(const Key &oKey)
+	virtual typename map<Key, T*>::size_type erase(const Key &oKey)
 	{	
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos!=end() && oPos->second)
+		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end() && oPos->second)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
@@ -504,7 +498,7 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 
 	oDest.RemoveAll();
 
-	map<Key, T*>::iterator oPos;
+	typename map<Key, T*>::iterator oPos;
 	for(oPos=oSource.begin(); oPos!=oSource.end(); ++oPos)
 	{
 		if(oPos->second) 
@@ -523,34 +517,34 @@ class CStdMap : public map<Key, T>
 {
 
 public:
-	virtual ~CStdMap() {clear();};
+	virtual ~CStdMap() {this->clear();};
 
 	virtual void Add(Key oKey, T oVal)
 	{
-		map<Key, T>::iterator oPos = find(oKey);
-		if(oPos!=end())
-			THROW_ERROR(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap); 
+		typename map<Key, T>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end())
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		insert(make_pair(oKey, oVal));
+		this->insert(make_pair(oKey, oVal));
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
-	virtual void RemoveAt(iterator it)
-	{erase(it);};
+	virtual void RemoveAt(typename map<Key, T>::iterator it)
+	{this->erase(it);};
 
 	virtual void Remove(const Key &oKey)
 	{
-		map<Key, T>::iterator oPos = find(oKey);
-		if(oPos==end())
-			THROW_ERROR(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap); 
+		typename map<Key, T>::iterator oPos = this->find(oKey);
+		if(oPos==this->end())
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
-		erase(oKey);
+		this->erase(oKey);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();}; 
+	virtual void Clear() {this->clear();};
 };
 
 
@@ -668,7 +662,7 @@ public:
 			z/=fltVal;
 		}
 		else
-			THROW_ERROR(Std_Err_lDivByZero, Std_Err_strDivByZero);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 	};
 
 	CStdPoint<T> operator+(const float fltVal)
@@ -704,7 +698,7 @@ public:
 	CStdPoint<T> operator/(const float fltVal)
 	{
 		if(!fltVal)
-			THROW_ERROR(Std_Err_lDivByZero, Std_Err_strDivByZero);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 
 		CStdPoint<T> oNewPoint;
 
@@ -758,7 +752,7 @@ public:
 		case 2:
 			return z;
 		default:
-			THROW_PARAM_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, "Index", iIndex);
+			StdUtils::Std_ThrowError(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, __FILE__, __LINE__, "");
 		}
 		return 0;
 	};
@@ -824,7 +818,6 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 #define LongVector vector<long>
 #define FloatVector vector<float>
 #define DoubleVector vector<float>
-
 
 #ifdef NOTDEFINEDNOW
 	template<typename T>
@@ -941,7 +934,7 @@ void SaveToTextSTL_Container(const char* ObjectName, T &t, std::ostringstream &o
 	 oss << Description << "\r\n";
 
 	int Idx = 0;
-	for (T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
+	for (typename T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
 	{
 			std::string szObjectName = ObjectName;
 			SaveToTextSTL_Obj(ObjectName, *i, oss, Idx);
@@ -957,7 +950,7 @@ void SaveToTextSTL_AsscContainer(const char* ObjectName, T &t, std::ostringstrea
 	 oss << Description << "\r\n";
 
 	int Idx = 0;
-	for (T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
+	for (typename T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
 	{
 			std::string szObjectName = ObjectName;
 			SaveToTextSTL_Obj(ObjectName, i->first, oss, Idx);
