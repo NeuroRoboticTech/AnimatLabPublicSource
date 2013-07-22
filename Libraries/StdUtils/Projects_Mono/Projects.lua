@@ -6,8 +6,11 @@
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../../../3rdParty/boost_1_54_0" }
-		libdirs { "../../../../../3rdParty/boost_1_54_0/lib" }
-		links {"dl"}
+		libdirs { "../../../../../3rdParty/boost_1_54_0/lib/static" }
+		links { "dl", 
+				"boost_system", 
+				"boost_filesystem",
+				"boost_unit_test_framework" }
 	  
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
@@ -57,7 +60,10 @@
 					  "../../../StdUtils", 
 					  "../../../../../3rdParty/boost_1_54_0" }	  
 		libdirs { "../../../../bin", 
-				  "../../../../../3rdParty/boost_1_54_0/lib" }
+				  "../../../../../3rdParty/boost_1_54_0/lib/static" }
+		links { "boost_system", 
+				"boost_filesystem",
+				"boost_unit_test_framework" }
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG"	}
@@ -65,7 +71,7 @@
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10D" }
-			postbuildcommands { "cp Debug/StdUtils_UnitTests.exe ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
@@ -73,5 +79,5 @@
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10" }
-			postbuildcommands { "cp Release/StdUtils_UnitTests.exe ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../../unit_test_bin" }
 						

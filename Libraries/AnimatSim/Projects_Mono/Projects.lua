@@ -6,13 +6,14 @@
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../StdUtils" }
-		links {"dl"}
+		links { "dl"}
 	  
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "ANIMATLIBRARY_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("AnimatSim_vc10D")
+			links { "StdUtils_vc10D"}
 			postbuildcommands { "cp Debug/libAnimatSimD.so ../../../bin",
 								"cp Debug/libAnimatSimD.so ../../../unit_test_bin" }
 	 
@@ -21,5 +22,6 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("AnimatSim_vc10")
-			postbuildcommands { "cp libAnimatSim.so ../../../bin", 
-								"cp libAnimatSim.so ../../../unit_test_bin" }
+			links { "StdUtils_vc10"}
+			postbuildcommands { "cp Release/libAnimatSim.so ../../../bin", 
+								"cp Release/libAnimatSim.so ../../../unit_test_bin" }
