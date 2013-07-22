@@ -10,13 +10,15 @@
 #pragma once
 #endif 
 
-
-// Insert your headers here
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
- 
-#include <windows.h>
-
-#define ANIMAT_PORT __declspec( dllexport )
+#ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+	 
+	#include <windows.h>
+	
+	#define ANIMAT_PORT __declspec( dllexport )
+#else
+	#define ANIMAT_PORT	
+#endif
 
 #define STD_TRACING_ON
 

@@ -208,7 +208,7 @@ namespace AnimatSim
 			virtual Joint *JointToParent();
 			virtual void JointToParent(Joint *lpValue);
 
-			virtual ContactSensor *ContactSensor();
+			virtual ContactSensor *GetContactSensor();
 
 			virtual float Density();
 			virtual void Density(float fltVal, BOOL bUseScaling = TRUE);

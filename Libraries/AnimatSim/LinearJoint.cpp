@@ -4,7 +4,7 @@
 \brief	Implements the linear 1-D, 2-D, and 3-D class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"

@@ -1,7 +1,7 @@
 // InverseMuscleCurrent.cpp: implementation of the InverseMuscleCurrent class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <iostream>
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
