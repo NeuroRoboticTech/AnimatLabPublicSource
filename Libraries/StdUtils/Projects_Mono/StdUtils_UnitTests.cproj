@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2743C38C-A76A-EB43-9516-30A1BF3E180B}</ProjectGuid>
+    <ProjectGuid>{2E463E31-0BE2-8248-9F72-80DDF8605A7B}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -30,17 +30,20 @@
     <LibPaths>
       <LibPaths>
         <LibPath>..\..\..\..\bin</LibPath>
-        <LibPath>../../../../../3rdParty/boost_1_54_0/lib</LibPath>
+        <LibPath>../../../../../3rdParty/boost_1_54_0/lib/static</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_vc10D</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/StdUtils_UnitTests.exe ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Debug/StdUtils_UnitTests ../../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -62,17 +65,20 @@
     <LibPaths>
       <LibPaths>
         <LibPath>..\..\..\..\bin</LibPath>
-        <LibPath>../../../../../3rdParty/boost_1_54_0/lib</LibPath>
+        <LibPath>../../../../../3rdParty/boost_1_54_0/lib/static</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_vc10</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/StdUtils_UnitTests.exe ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/StdUtils_UnitTests ../../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
