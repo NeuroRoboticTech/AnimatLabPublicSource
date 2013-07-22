@@ -42,6 +42,7 @@
 	#define LPLONG long *
 	#define __int64 int64_t
 	#define LPCTSTR const char*
+	#define byte unsigned char
 #endif
 
 #include <sys/types.h>

@@ -4,7 +4,7 @@
 \brief	Implements the relative position, relative orientation class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"

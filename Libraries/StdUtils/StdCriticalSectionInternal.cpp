@@ -31,7 +31,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "StdCriticalSection.h"
 #include "StdCriticalSectionInternal.h"
 
@@ -55,7 +55,11 @@ CStdCriticalSectionInternal::InternalLocker::InternalLocker(boost::atomic<LockSt
 {
    while (m_iBusy.exchange(Locked, boost::memory_order_acquire) == Locked)
    {
-      Sleep(0);
+	   #ifdef WIN32
+	   		Sleep(0);
+	   #else
+	   		sleep(0);
+	   #endif   
    }
 }
 
@@ -165,7 +169,11 @@ bool CStdCriticalSectionInternal::Enter(long lMilliTimeout)
 
 		if(!bDone)
 		{
-			Sleep(10);
+	   #ifdef WIN32
+	   		Sleep(10);
+	   #else
+	   		sleep(10);
+	   #endif   
 			lTotal+=10;
 
 			if(lMilliTimeout > 0 && lTotal >= lMilliTimeout)

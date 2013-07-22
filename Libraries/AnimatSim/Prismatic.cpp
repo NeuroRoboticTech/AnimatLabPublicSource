@@ -4,7 +4,7 @@
 \brief	Implements the prismatic class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMotorizedJoint.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"

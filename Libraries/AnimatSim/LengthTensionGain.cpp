@@ -4,7 +4,7 @@
 \brief	Implements an inverted quadratic gain class used to calculate length-tension relationship for muscle. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"

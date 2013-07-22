@@ -4,7 +4,7 @@
 \brief	Implements the constraint limit class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "AnimatBase.h"
 
 #include "Node.h"

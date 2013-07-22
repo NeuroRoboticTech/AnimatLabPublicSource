@@ -4,7 +4,7 @@
 \brief	Implements the bounding box class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "BoundingBox.h"
 
 namespace AnimatSim
