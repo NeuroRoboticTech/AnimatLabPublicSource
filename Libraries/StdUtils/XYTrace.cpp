@@ -4,6 +4,8 @@
 namespace StdUtils
 {
 
+#ifdef WIN32
+
 // private helper class
 class XYTraceHelper
 {
@@ -288,4 +290,5 @@ void STD_UTILS_PORT Std_Log(const int nLevel, bool bPrintHeader, LPCTSTR strForm
 	theHelper.Unlock();
 }
 
+#endif
 }				//StdUtils

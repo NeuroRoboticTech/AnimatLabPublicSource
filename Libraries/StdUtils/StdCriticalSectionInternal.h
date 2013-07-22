@@ -134,7 +134,7 @@ protected:
 	  **/
 	  ~InternalLocker();
    };
-   friend InternalLocker;
+   friend class InternalLocker;
 
 #pragma endregion
 
