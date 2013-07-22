@@ -965,10 +965,10 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
+						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->GetDataChartMgr();
 						lpChartMgr->ReInitialize();
 
-						AnimatSim::ExternalStimuli::ExternalStimuliMgr *lpStimMgr = m_lpSim->ExternalStimuliMgr();
+						AnimatSim::ExternalStimuli::ExternalStimuliMgr *lpStimMgr = m_lpSim->GetExternalStimuliMgr();
 						lpStimMgr->ReInitialize();
 					}
 				}
@@ -997,7 +997,7 @@ namespace AnimatGUI
 					{
 						string strChartKey = Util::StringToStd(sChartKey);
 
-						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
+						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->GetDataChartMgr();
 						AnimatSim::Charting::DataChart *lpChart = dynamic_cast<AnimatSim::Charting::DataChart *>(lpChartMgr->Find(strChartKey));
 
 						if(lpChart->Lock())

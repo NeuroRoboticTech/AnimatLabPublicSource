@@ -244,7 +244,7 @@ void RigidBody::JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;}
 
 \return	Pointer to the receptive field contact sensor object. 
 **/
-ContactSensor *RigidBody::ContactSensor() {return m_lpContactSensor;}
+ContactSensor *RigidBody::GetContactSensor() {return m_lpContactSensor;}
 
 /**
 \brief	Gets the uniform density. 
