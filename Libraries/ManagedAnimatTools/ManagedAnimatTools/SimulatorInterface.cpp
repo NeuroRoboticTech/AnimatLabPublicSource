@@ -297,7 +297,7 @@ namespace AnimatGUI
 					{
 						string strWindowType = Util::StringToStd(sWindowType);
 
-						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, bInit, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->GetWindowMgr()->AddSimulationWindow("", strWindowType, bInit, hWnd, Util::StringToStd(sWindowXml));
 						m_lpSim->UnblockSimulation();
 					}
 					else
@@ -342,7 +342,7 @@ namespace AnimatGUI
 						string strWindowType = Util::StringToStd(sWindowType);
 
 						CreateSimulation();
-						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, false, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->GetWindowMgr()->AddSimulationWindow("", strWindowType, false, hWnd, Util::StringToStd(sWindowXml));
 						Simulate(true);
 						return true;
 					}
@@ -371,7 +371,7 @@ namespace AnimatGUI
 
 					if(m_lpSim->WaitForSimulationBlock())
 					{
-						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
+						m_lpSim->GetWindowMgr()->RemoveSimulationWindow(hWnd);
 						m_lpSim->UnblockSimulation();
 					}
 					else
@@ -1432,7 +1432,7 @@ namespace AnimatGUI
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to initialize the simulator");
 
 					//HWND hWnd = (HWND) m_hParentWnd.ToInt32();
-					//m_lpSim->WindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", FALSE, hWnd,  Util::StringToStd(m_strWindowXml));
+					//m_lpSim->GetWindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", FALSE, hWnd,  Util::StringToStd(m_strWindowXml));
 
 					m_lpSim->Paused(m_bPaused);
 					m_lpSim->Initialize(0, NULL);

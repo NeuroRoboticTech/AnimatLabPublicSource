@@ -570,7 +570,7 @@ int VsRigidBody::GetPartIndex(VxPart *vxP0, VxPart *vxP1)
 
 void VsRigidBody::ProcessContacts()
 {
-	ContactSensor *lpSensor = m_lpThisRB->ContactSensor();
+	ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
 	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
@@ -675,7 +675,7 @@ void VsRigidBody::Physics_CollectData()
 		m_vAngularAcceleration[2] = vAccel[2];
 	}
 
-	if(m_lpThisRB->ContactSensor()) 
+	if(m_lpThisRB->GetContactSensor()) 
 		ProcessContacts();
 }
 

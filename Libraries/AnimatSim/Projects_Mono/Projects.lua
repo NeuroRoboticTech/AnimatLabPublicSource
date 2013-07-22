@@ -6,6 +6,7 @@
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../StdUtils" }
+		libdirs { "../../../../bin" }
 		links { "dl"}
 	  
 		configuration { "Debug", "linux" }

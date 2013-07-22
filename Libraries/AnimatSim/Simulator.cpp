@@ -350,7 +350,7 @@ CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;
 
 \return	Pointer to DataChartMgr.
 **/
-DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
+DataChartMgr *Simulator::GetDataChartMgr() {return &m_oDataChartMgr;}
 
 /**
 \brief	Gets the external stimuli manager.
@@ -360,7 +360,7 @@ DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
 
 \return	Pointer to ExternalStimuliMgr.
 **/
-ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
+ExternalStimuliMgr *Simulator::GetExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
 
 /**
 \brief	Gets the simulation recorder.
@@ -370,7 +370,7 @@ ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliM
 
 \return	Pointer to SimulationRecorder.
 **/
-SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
+SimulationRecorder *Simulator::GetSimulationRecorder() {return m_lpSimRecorder;}
 
 /**
 \brief	Gets the light manager.
@@ -380,7 +380,7 @@ SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
 
 \return	Pointer to the light manager.
 **/
-LightManager *Simulator::LightMgr() {return &m_oLightMgr;}
+LightManager *Simulator::GetLightMgr() {return &m_oLightMgr;}
 
 /**
 \brief	Gets the material manager.
@@ -390,7 +390,7 @@ LightManager *Simulator::LightMgr() {return &m_oLightMgr;}
 
 \return	Pointer to Materials.
 **/
-Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
+Materials *Simulator::GetMaterialMgr() {return &m_oMaterialMgr;}
 
 /**
 \brief	Gets the window manager.
@@ -400,7 +400,7 @@ Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
 
 \return	Pointer to SimulationWindowMgr.
 **/
-SimulationWindowMgr *Simulator::WindowMgr() {return m_lpWinMgr;}
+SimulationWindowMgr *Simulator::GetWindowMgr() {return m_lpWinMgr;}
 
 /**
 \brief	Gets the visual selection mode.

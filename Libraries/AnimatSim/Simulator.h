@@ -606,12 +606,12 @@ namespace AnimatSim
 
 			virtual CStdMap<string, AnimatBase *> *ObjectList();
 			
-			virtual DataChartMgr *DataChartMgr();
-			virtual ExternalStimuliMgr *ExternalStimuliMgr();
-			virtual SimulationRecorder *SimulationRecorder();
-			virtual Materials *MaterialMgr();
-			virtual SimulationWindowMgr *WindowMgr();
-			virtual LightManager *LightMgr();
+			virtual DataChartMgr *GetDataChartMgr();
+			virtual ExternalStimuliMgr *GetExternalStimuliMgr();
+			virtual SimulationRecorder *GetSimulationRecorder();
+			virtual Materials *GetMaterialMgr();
+			virtual SimulationWindowMgr *GetWindowMgr();
+			virtual LightManager *GetLightMgr();
 
 			virtual int VisualSelectionMode();
 			virtual void VisualSelectionMode(int iVal);

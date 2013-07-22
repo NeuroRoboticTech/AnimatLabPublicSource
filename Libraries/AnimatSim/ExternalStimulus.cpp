@@ -70,7 +70,7 @@ BOOL ExternalStimulus::SetData(const string &strDataType, const string &strValue
 
 	if(ActivatedItem::SetData(strDataType, strValue, bThrowError))
 	{
-		m_lpSim->ExternalStimuliMgr()->ReInitialize();
+		m_lpSim->GetExternalStimuliMgr()->ReInitialize();
 		return TRUE;
 	}
 
