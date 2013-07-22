@@ -25,8 +25,8 @@ namespace AnimatSim
 		protected:
 			CStdPtrArray<MaterialType> m_aryMaterialTypes;
 
-			virtual void Materials::LoadMaterialTypes(CStdXml &oXml);
-			virtual MaterialType *Materials::LoadMaterialType(CStdXml &oXml);
+			virtual void LoadMaterialTypes(CStdXml &oXml);
+			virtual MaterialType *LoadMaterialType(CStdXml &oXml);
 
 			virtual void AddMaterialType(string strXml, BOOL bDoNotInit);
 			virtual void RemoveMaterialType(string strID, BOOL bThrowError = TRUE);

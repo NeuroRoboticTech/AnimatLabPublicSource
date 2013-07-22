@@ -488,8 +488,8 @@ namespace AnimatSim
 			virtual int FindFoodSourceIndex(RigidBody *lpFood);
 			
 			virtual void AddOdorType(OdorType *lpOdorType);
-			virtual void Simulator::AddOdorType(string strXml, BOOL bDoNotInit);
-			virtual void Simulator::RemoveOdorType(string strID, BOOL bThrowError = TRUE);
+			virtual void AddOdorType(string strXml, BOOL bDoNotInit);
+			virtual void RemoveOdorType(string strID, BOOL bThrowError = TRUE);
 			
 #pragma endregion
 

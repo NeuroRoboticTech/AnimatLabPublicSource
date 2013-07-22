@@ -61,7 +61,7 @@ namespace AnimatSim
 			virtual void MinTimeStep(float &fltMin);
 
 			virtual void Load(CStdXml &oXml);
-			virtual AnimatSim::Behavior::NervousSystem *NervousSystem();
+			virtual AnimatSim::Behavior::NervousSystem *GetNervousSystem();
 		};
 
 	}			// Environment

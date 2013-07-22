@@ -43,6 +43,7 @@
 	#define __int64 int64_t
 	#define LPCTSTR const char*
 	#define byte unsigned char
+	#define HWND long
 #endif
 
 #include <sys/types.h>

@@ -408,20 +408,20 @@ AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const string &strName)
 		{
 			string strType = Std_CheckString(aryTypes[iIdx]);
 			if(strType == "BOOLEAN")
-				return AnimatPropertyType::Boolean;
+				return AnimatBase::AnimatPropertyType::Boolean;
 			else if(strType == "INTEGER")
-				return AnimatPropertyType::Integer;
+				return AnimatBase::AnimatPropertyType::Integer;
 			else if(strType == "FLOAT")
-				return AnimatPropertyType::Float;
+				return AnimatBase::AnimatPropertyType::Float;
 			else if(strType == "STRING")
-				return AnimatPropertyType::String;
+				return AnimatBase::AnimatPropertyType::String;
 			else if(strType == "XML")
-				return AnimatPropertyType::Xml;
+				return AnimatBase::AnimatPropertyType::Xml;
 			else
-				return AnimatPropertyType::Invalid;
+				return AnimatBase::AnimatPropertyType::Invalid;
 		}
 
-	return AnimatPropertyType::Invalid;
+	return AnimatBase::AnimatPropertyType::Invalid;
 }
 
 /**
