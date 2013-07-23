@@ -1807,8 +1807,12 @@ BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 	{
 		if(!m_bSimBlockConfirm)
 		{
+#ifdef WIN32
 			Sleep(10);
-
+#else
+			sleep(10);
+#endif
+			
 			lTime+=10;
 			if(lTimeout > 0 && lTime >= lTimeout)
 			{
@@ -1840,7 +1844,11 @@ BOOL Simulator::CheckSimulationBlock()
 	if(m_bBlockSimulation)
 	{
 		m_bSimBlockConfirm = TRUE;
-		Sleep(1);
+#ifdef WIN32
+			Sleep(1);
+#else
+			sleep(1);
+#endif		
 	}
 	else
 		m_bSimBlockConfirm = FALSE;
@@ -3531,7 +3539,8 @@ void Simulator::FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		lpFood = m_aryFoodSources[iIndex];
-		fltDist = Std_CalculateDistance(oMouthPos, lpFood->GetCurrentPosition());
+		CStdFPoint oPos = lpFood->GetCurrentPosition();
+		fltDist = Std_CalculateDistance(oMouthPos, oPos);
 
 		if( (fltDist <= fltMinRadius) && ((fltDist < fltMinDist) || !lpMinFood))
 		{
@@ -3635,7 +3644,7 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->AttachSourceAdapter(lpAdapter);
 	}
 }
@@ -3667,7 +3676,7 @@ void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->RemoveSourceAdapter(lpAdapter);
 	}
 }
@@ -3701,7 +3710,7 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->AttachTargetAdapter(lpAdapter);
 	}
 }
@@ -3736,7 +3745,7 @@ void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->RemoveTargetAdapter(lpAdapter);
 	}
 }

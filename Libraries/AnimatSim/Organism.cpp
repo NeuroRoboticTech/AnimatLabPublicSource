@@ -222,7 +222,7 @@ BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL b
 
 \return	Pointer to the nervous system. 
 **/
-AnimatSim::Behavior::NervousSystem *Organism::NervousSystem()
+AnimatSim::Behavior::NervousSystem *Organism::GetNervousSystem()
 {return m_lpNervousSystem;}
 
 long Organism::CalculateSnapshotByteSize()

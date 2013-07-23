@@ -182,7 +182,10 @@ float LineBase::CalculateLength()
 	for(int iIndex=1; iIndex<iCount; iIndex++)
 	{
 		lpAttach2 = m_aryAttachmentPoints[iIndex];
-		fltLength += Std_CalculateDistance(lpAttach1->GetCurrentPosition(), lpAttach2->GetCurrentPosition());
+		CStdFPoint oPos1 = lpAttach1->GetCurrentPosition();
+		CStdFPoint oPos2 = lpAttach2->GetCurrentPosition();
+		
+		fltLength += Std_CalculateDistance(oPos1, oPos2);
 		lpAttach1 = lpAttach2;
 	}
 

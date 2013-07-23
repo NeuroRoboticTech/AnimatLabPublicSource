@@ -6,6 +6,8 @@
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
+#ifdef WIN32
+
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
@@ -14,3 +16,4 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     return TRUE;
 }
 
+#endif

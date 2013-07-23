@@ -1518,8 +1518,10 @@ void RigidBody::LoadPosition(CStdXml &oXml)
 		//AbsolutePosition(m_lpParent->AbsolutePosition() + m_oPosition);
 	}
 	else
-		BodyPart::Position(m_lpStructure->Position(), FALSE, FALSE, FALSE);
-		//AbsolutePosition(m_lpStructure->AbsolutePosition());
+	{
+		CStdFPoint oPos = m_lpStructure->Position();
+		BodyPart::Position(oPos, FALSE, FALSE, FALSE);
+	}
 }
 
 void RigidBody::Load(CStdXml &oXml)

@@ -170,7 +170,8 @@ void Mouth::StepSimulation()
 		//Now lets find the closest food source.
         CStdArray<RigidBody *> arySources;
         CStdArray<float> aryDistances;
-		m_lpSim->FindClosestFoodSources(this->GetCurrentPosition(), m_fltMinFoodRadius, arySources, aryDistances);
+        CStdFPoint oPos = this->GetCurrentPosition();
+		m_lpSim->FindClosestFoodSources(oPos, m_fltMinFoodRadius, arySources, aryDistances);
 
         int iSources = arySources.GetSize();
 		if(iSources > 0)
