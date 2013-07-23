@@ -1807,11 +1807,7 @@ BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 	{
 		if(!m_bSimBlockConfirm)
 		{
-#ifdef WIN32
-			Sleep(10);
-#else
-			sleep(10);
-#endif
+            Std_Sleep(10);
 			
 			lTime+=10;
 			if(lTimeout > 0 && lTime >= lTimeout)
@@ -1844,11 +1840,7 @@ BOOL Simulator::CheckSimulationBlock()
 	if(m_bBlockSimulation)
 	{
 		m_bSimBlockConfirm = TRUE;
-#ifdef WIN32
-			Sleep(1);
-#else
-			sleep(1);
-#endif		
+        Std_Sleep(1);
 	}
 	else
 		m_bSimBlockConfirm = FALSE;
@@ -2994,33 +2986,7 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 {	
 	string strExecutablePath, strExeFile;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+    string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//Set the log file prefix
@@ -3058,38 +3024,12 @@ Simulator *Simulator::CreateSimulator(string strAnimatModule, string strSimulati
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
 	string strProjectPath, strProjectFile;
 	string strExecutablePath, strExeFile;
 
 try
 { 
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+    string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//_getcwd( strBuffer, 2000 );
@@ -3157,38 +3097,12 @@ Simulator *Simulator::CreateSimulator(string strAnimatModule, CStdXml &oXml)
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
 	string strProjectPath, strProjectFile;
 	string strExecutablePath, strExeFile;
 
 try
 { 
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+    string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	if(Std_IsBlank(strAnimatModule))

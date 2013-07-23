@@ -55,11 +55,7 @@ CStdCriticalSectionInternal::InternalLocker::InternalLocker(boost::atomic<LockSt
 {
    while (m_iBusy.exchange(Locked, boost::memory_order_acquire) == Locked)
    {
-	   #ifdef WIN32
-	   		Sleep(0);
-	   #else
-	   		sleep(0);
-	   #endif   
+       Std_Sleep(0);
    }
 }
 
@@ -169,11 +165,7 @@ bool CStdCriticalSectionInternal::Enter(long lMilliTimeout)
 
 		if(!bDone)
 		{
-	   #ifdef WIN32
-	   		Sleep(10);
-	   #else
-	   		sleep(10);
-	   #endif   
+            Std_Sleep(10);
 			lTotal+=10;
 
 			if(lMilliTimeout > 0 && lTotal >= lMilliTimeout)

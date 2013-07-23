@@ -3157,6 +3157,15 @@ unsigned long STD_UTILS_PORT Std_GetTick()
 
 #endif 
 
+void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds)
+{
+#ifdef WIN32
+    Sleep(lMilliseconds);
+#else
+    sleep(lMilliseconds);
+#endif
+}
+
   
 // Timing Functions
 //***************************************************************************************************************
@@ -3219,27 +3228,34 @@ BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
 {
 	boost::filesystem::path p = boost::filesystem::path(strPath);
 	return boost::filesystem::is_directory(p);
-
-//#ifdef WIN32
-//
-//#ifdef _WIN32_WCE
-//	wchar_t *sPath = Std_ConvertFromANSI(strPath);
-//	DWORD dwAttr = GetFileAttributes(sPath);
-//	if(sPath) delete sPath;
-//#else
-//	DWORD dwAttr = GetFileAttributes(strPath.c_str());
-//#endif
-//
-//	if(dwAttr == 0xffffffff)
-//		return FALSE;
-//	else if(dwAttr & FILE_ATTRIBUTE_DIRECTORY)
-//		return TRUE;
-//	else
-//		return FALSE;
-//#else
-//	return FALSE;
-//#endif
 }
+
+/**
+\brief	Finds the name and path of the current executable.
+
+\author	dcofer
+\date	7/23/2013
+
+\return	Path to the current executable.
+**/
+string STD_UTILS_PORT Std_ExecutablePath()
+{
+    string strPath = "";
+	char strBuffer[2000];
+
+#ifdef WIN32
+	//Get the working directory for the exe.
+    HINSTANCE hInst = GetModuleHandle(NULL);
+	GetModuleFileName(hInst, strBuffer, 2000);
+#else
+    readlink( "/proc/self/exe", strBuffer, 2000 );
+#endif
+
+    strPath = strBuffer;
+    return strPath;
+}
+
+
 
 #ifdef WIN32
 

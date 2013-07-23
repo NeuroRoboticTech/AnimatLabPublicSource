@@ -17,7 +17,9 @@
 	#include <linux/types.h>
 	#include <stdbool.h>
 	#include <dlfcn.h>
-	
+    #include <limits.h>
+    #include <unistd.h>
+
 	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
