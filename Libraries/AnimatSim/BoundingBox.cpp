@@ -63,11 +63,11 @@ float BoundingBox::MaxDimension()
 	float fltMax = -1;
 
 	fltMax = max(fabs(Min.x), fabs(Min.y));
-	fltMax = max((double) fltMax, fabs(Min.z));
+	fltMax = max(fltMax, fabs(Min.z));
 
-	fltMax = max((double) fltMax, fabs(Max.x));
-	fltMax = max((double) fltMax, fabs(Max.y));
-	fltMax = max((double) fltMax, fabs(Max.z));
+	fltMax = max(fltMax, fabs(Max.x));
+	fltMax = max(fltMax, fabs(Max.y));
+	fltMax = max(fltMax, fabs(Max.z));
 
 	return fltMax;
 }
