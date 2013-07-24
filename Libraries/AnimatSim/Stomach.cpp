@@ -266,19 +266,19 @@ BOOL Stomach::SetData(const string &strDataType, const string &strValue, BOOL bT
 
 	if(strType == "ENERGYLEVEL")
 	{
-		EnergyLevel(atof(strValue.c_str()));
+		EnergyLevel((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "MAXENERGYLEVEL")
 	{
-		MaxEnergyLevel(atof(strValue.c_str()));
+		MaxEnergyLevel((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "BASECONSUMPTIONRATE")
 	{
-		BaseConsumptionRate(atof(strValue.c_str()));
+		BaseConsumptionRate((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

@@ -539,43 +539,43 @@ BOOL CurrentStimulus::SetData(const string &strDataType, const string &strValue,
 
 	if(strType == "CURRENTON")
 	{
-		CurrentOn(atof(strValue.c_str()));
+		CurrentOn((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "CURRENTOFF")
 	{
-		CurrentOff(atof(strValue.c_str()));
+		CurrentOff((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "CURRENTBURSTOFF")
 	{
-		CurrentBurstOff(atof(strValue.c_str()));
+		CurrentBurstOff((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "CYCLEONDURATION")
 	{
-		CycleOnDuration(atof(strValue.c_str()));
+		CycleOnDuration((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "CYCLEOFFDURATION")
 	{
-		CycleOffDuration(atof(strValue.c_str()));
+		CycleOffDuration((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "BURSTONDURATION")
 	{
-		BurstOnDuration(atof(strValue.c_str()));
+		BurstOnDuration((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "BURSTOFFDURATION")
 	{
-		BurstOffDuration(atof(strValue.c_str()));
+		BurstOffDuration((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

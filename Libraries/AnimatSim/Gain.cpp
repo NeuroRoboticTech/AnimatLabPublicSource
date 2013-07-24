@@ -186,25 +186,25 @@ BOOL Gain::SetData(const string &strDataType, const string &strValue, BOOL bThro
 
 	if(strDataType == "LOWERLIMIT")
 	{
-		LowerLimit(atof(strValue.c_str()));
+		LowerLimit((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "LOWEROUTPUT")
 	{
-		LowerOutput(atof(strValue.c_str()));
+		LowerOutput((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "UPPERLIMIT")
 	{
-		UpperLimit(atof(strValue.c_str()));
+		UpperLimit((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "UPPEROUTPUT")
 	{
-		UpperOutput(atof(strValue.c_str()));
+		UpperOutput((float) atof(strValue.c_str()));
 		return true;
 	}
 

@@ -289,7 +289,7 @@ BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL
 
 	if(strDataType == "MAXTENSION")
 	{
-		MaxTension(atof(strValue.c_str()));
+		MaxTension((float) atof(strValue.c_str()));
 		return true;
 	}
 

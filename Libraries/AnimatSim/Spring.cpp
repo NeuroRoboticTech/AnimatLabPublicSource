@@ -197,19 +197,19 @@ BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bTh
 
 	if(strDataType == "NATURALLENGTH")
 	{
-		NaturalLength(atof(strValue.c_str()));
+		NaturalLength((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "STIFFNESS")
 	{
-		Stiffness(atof(strValue.c_str()));
+		Stiffness((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return true;
 	}
 

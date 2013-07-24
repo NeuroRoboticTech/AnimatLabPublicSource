@@ -177,7 +177,7 @@ BOOL OdorType::SetData(const string &strDataType, const string &strValue, BOOL b
 
 	if(strType == "DIFFUSIONCONSTANT")
 	{
-		DiffusionConstant(atof(strValue.c_str()));
+		DiffusionConstant((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

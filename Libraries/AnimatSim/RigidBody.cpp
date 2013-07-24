@@ -1168,7 +1168,7 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "DENSITY")
 	{
-		Density(atof(strValue.c_str()));
+		Density((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -1186,25 +1186,25 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 	
 	if(strType == "FOODQUANTITY")
 	{
-		FoodQuantity(atof(strValue.c_str()));
+		FoodQuantity((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "MAXFOODQUANTITY")
 	{
-		MaxFoodQuantity(atof(strValue.c_str()));
+		MaxFoodQuantity((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "FOODREPLENISHRATE")
 	{
-		FoodReplenishRate(atof(strValue.c_str()));
+		FoodReplenishRate((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "FOODENERGYCONTENT")
 	{
-		FoodEnergyContent(atof(strValue.c_str()));
+		FoodEnergyContent((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -1216,7 +1216,7 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "BUOYANCYSCALE")
 	{
-		BuoyancyScale(atof(strValue.c_str()));
+		BuoyancyScale((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -1246,7 +1246,7 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "MAGNUS")
 	{
-		Magnus(atof(strValue.c_str()));
+		Magnus((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

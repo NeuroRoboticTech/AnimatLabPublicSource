@@ -298,7 +298,7 @@ BOOL Light::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "RADIUS")
 	{
-		Radius(atof(strValue.c_str()));
+		Radius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -316,19 +316,19 @@ BOOL Light::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "CONSTANTATTENUATION")
 	{
-		ConstantAttenRatio(atof(strValue.c_str()));
+		ConstantAttenRatio((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "LINEARATTENUATIONDISTANCE")
 	{
-		LinearAttenDistance(atof(strValue.c_str()));
+		LinearAttenDistance((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "QUADRATICATTENUATIONDISTANCE")
 	{
-		QuadraticAttenDistance(atof(strValue.c_str()));
+		QuadraticAttenDistance((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

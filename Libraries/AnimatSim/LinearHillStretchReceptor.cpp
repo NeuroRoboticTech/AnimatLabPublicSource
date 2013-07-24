@@ -212,13 +212,13 @@ BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string 
 
 	if(strDataType == "IADISCHARGE")
 	{
-		IaDischargeConstant(atof(strValue.c_str()));
+		IaDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "IIDISCHARGE")
 	{
-		IIDischargeConstant(atof(strValue.c_str()));
+		IIDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 

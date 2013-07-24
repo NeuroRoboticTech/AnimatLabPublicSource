@@ -281,13 +281,13 @@ BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strV
 
 	if(strDataType == "RESTPOTENTIAL")
 	{
-		RestPotential(atof(strValue.c_str()));
+		RestPotential((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "CONDUCTANCE")
 	{
-		Conductance(atof(strValue.c_str()));
+		Conductance((float) atof(strValue.c_str()));
 		return true;
 	}
 

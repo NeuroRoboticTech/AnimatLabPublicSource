@@ -150,19 +150,19 @@ BOOL Terrain::SetData(const string &strDataType, const string &strValue, BOOL bT
 
 	if(strType == "SEGMENTWIDTH")
 	{
-		SegmentWidth(atof(strValue.c_str()));
+		SegmentWidth((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "SEGMENTLENGTH")
 	{
-		SegmentLength(atof(strValue.c_str()));
+		SegmentLength((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "MAXHEIGHT")
 	{
-		MaxHeight(atof(strValue.c_str()));
+		MaxHeight((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

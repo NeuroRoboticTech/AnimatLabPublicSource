@@ -145,19 +145,19 @@ BOOL Cone::SetData(const string &strDataType, const string &strValue, BOOL bThro
 
 	if(strType == "LOWERRADIUS")
 	{
-		LowerRadius(atof(strValue.c_str()));
+		LowerRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "UPPERRADIUS")
 	{
-		UpperRadius(atof(strValue.c_str()));
+		UpperRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "HEIGHT")
 	{
-		Height(atof(strValue.c_str()));
+		Height((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

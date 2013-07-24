@@ -124,13 +124,13 @@ BOOL Cylinder::SetData(const string &strDataType, const string &strValue, BOOL b
 
 	if(strType == "RADIUS")
 	{
-		Radius(atof(strValue.c_str()));
+		Radius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "HEIGHT")
 	{
-		Height(atof(strValue.c_str()));
+		Height((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

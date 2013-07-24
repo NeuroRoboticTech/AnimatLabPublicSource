@@ -153,19 +153,19 @@ BOOL Ellipsoid::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "MAJORRADIUS")
 	{
-		MajorRadius(atof(strValue.c_str()));
+		MajorRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "MINORRADIUS")
 	{
-		MinorRadius(atof(strValue.c_str()));
+		MinorRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "LATITUDESEGMENTS")
 	{
-		LatSegments(atof(strValue.c_str()));
+		LatSegments((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

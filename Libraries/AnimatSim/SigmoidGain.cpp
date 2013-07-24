@@ -143,25 +143,25 @@ BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "A")
 	{
-		A(atof(strValue.c_str()));
+		A((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "B")
 	{
-		B(atof(strValue.c_str()));
+		B((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "C")
 	{
-		C(atof(strValue.c_str()));
+		C((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "D")
 	{
-		D(atof(strValue.c_str()));
+		D((float) atof(strValue.c_str()));
 		return true;
 	}
 

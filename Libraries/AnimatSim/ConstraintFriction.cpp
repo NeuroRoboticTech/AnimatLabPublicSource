@@ -264,19 +264,19 @@ BOOL ConstraintFriction::SetData(const string &strDataType, const string &strVal
 
 	if(strType == "COEFFICIENT")
 	{
-		Coefficient(atof(strValue.c_str()));
+		Coefficient((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "MAXFORCE")
 	{
-		MaxForce(atof(strValue.c_str()));
+		MaxForce((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "LOSS")
 	{
-		Loss(atof(strValue.c_str()));
+		Loss((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
@@ -294,7 +294,7 @@ BOOL ConstraintFriction::SetData(const string &strDataType, const string &strVal
 	
 	if(strType == "STATICFRICTIONSCALE")
 	{
-		StaticFrictionScale(atof(strValue.c_str()));
+		StaticFrictionScale((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	

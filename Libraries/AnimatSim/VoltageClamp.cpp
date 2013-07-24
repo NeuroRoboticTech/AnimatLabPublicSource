@@ -206,7 +206,7 @@ BOOL VoltageClamp::SetData(const string &strDataType, const string &strValue, BO
 
 	if(strType == "VTARGET")
 	{
-		Vtarget(atof(strValue.c_str()));
+		Vtarget((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

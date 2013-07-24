@@ -162,25 +162,25 @@ BOOL LengthTensionGain::SetData(const string &strDataType, const string &strValu
 
 	if(strDataType == "RESTINGLENGTH")
 	{
-		RestingLength(atof(strValue.c_str()));
+		RestingLength((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "LWIDTH")
 	{
-		TLwidth(atof(strValue.c_str()));
+		TLwidth((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "PELENGTHPERCENTAGE")
 	{
-		PeLengthPercentage(atof(strValue.c_str()));
+		PeLengthPercentage((float) atof(strValue.c_str()));
 		return true;
 	}
 	
 	if(strDataType == "MINPELENGTHPERCENTAGE")
 	{
-		MinPeLengthPercentage(atof(strValue.c_str()));
+		MinPeLengthPercentage((float) atof(strValue.c_str()));
 		return true;
 	}
 

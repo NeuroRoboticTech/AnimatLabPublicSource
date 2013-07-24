@@ -949,145 +949,145 @@ BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BO
 
 	if(strType == "FRICTIONLINEARPRIMARY")
 	{
-		FrictionLinearPrimary(atof(strValue.c_str()));
+		FrictionLinearPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONLINEARSECONDARY")
 	{
-		FrictionLinearSecondary(atof(strValue.c_str()));
+		FrictionLinearSecondary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARNORMAL")
 	{
-		FrictionAngularNormal(atof(strValue.c_str()));
+		FrictionAngularNormal((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARPRIMARY")
 	{
-		FrictionAngularPrimary(atof(strValue.c_str()));
+		FrictionAngularPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARSECONDARY")
 	{
-		FrictionAngularSecondary(atof(strValue.c_str()));
+		FrictionAngularSecondary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONLINEARPRIMARYMAX")
 	{
-		FrictionLinearPrimaryMax(atof(strValue.c_str()));
+		FrictionLinearPrimaryMax((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONLINEARSECONDARYMAX")
 	{
-		FrictionLinearSecondaryMax(atof(strValue.c_str()));
+		FrictionLinearSecondaryMax((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARNORMALMAX")
 	{
-		FrictionAngularNormalMax(atof(strValue.c_str()));
+		FrictionAngularNormalMax((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARPRIMARYMAX")
 	{
-		FrictionAngularPrimaryMax(atof(strValue.c_str()));
+		FrictionAngularPrimaryMax((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "FRICTIONANGULARSECONDARYMAX")
 	{
-		FrictionAngularSecondaryMax(atof(strValue.c_str()));
+		FrictionAngularSecondaryMax((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "COMPLIANCE")
 	{
-		Compliance(atof(strValue.c_str()));
+		Compliance((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "RESTITUTION")
 	{
-		Restitution(atof(strValue.c_str()));
+		Restitution((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "SLIPLINEARPRIMARY")
 	{
-		SlipLinearPrimary(atof(strValue.c_str()));
+		SlipLinearPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strDataType == "SLIPLINEARSECONDARY")
 	{
-		SlipLinearSecondary(atof(strValue.c_str()));
+		SlipLinearSecondary((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "SLIPANGULARNORMAL")
 	{
-		SlipAngularNormal(atof(strValue.c_str()));
+		SlipAngularNormal((float) atof(strValue.c_str()));
 		return true;
 	}
 	
 	if(strType == "SLIPANGULARPRIMARY")
 	{
-		SlipAngularPrimary(atof(strValue.c_str()));
+		SlipAngularPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strDataType == "SLIPANGULARSECONDARY")
 	{
-		SlipAngularSecondary(atof(strValue.c_str()));
+		SlipAngularSecondary((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "SLIDELINEARPRIMARY")
 	{
-		SlideLinearPrimary(atof(strValue.c_str()));
+		SlideLinearPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strDataType == "SLIDELINEARSECONDARY")
 	{
-		SlideLinearSecondary(atof(strValue.c_str()));
+		SlideLinearSecondary((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "SLIDEANGULARNORMAL")
 	{
-		SlideAngularNormal(atof(strValue.c_str()));
+		SlideAngularNormal((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "SLIDEANGULARPRIMARY")
 	{
-		SlideAngularPrimary(atof(strValue.c_str()));
+		SlideAngularPrimary((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strDataType == "SLIDEANGULARSECONDARY")
 	{
-		SlideAngularSecondary(atof(strValue.c_str()));
+		SlideAngularSecondary((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "MAXADHESION")
 	{
-		MaxAdhesive(atof(strValue.c_str()));
+		MaxAdhesive((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	

@@ -3075,6 +3075,7 @@ Simulator *Simulator::CreateSimulator(string strAnimatModule, string strSimulati
 
 try
 { 
+
 	//Get the working directory for the exe.
   HINSTANCE hInst = GetModuleHandle(NULL);
 
@@ -3173,7 +3174,8 @@ Simulator *Simulator::CreateSimulator(string strAnimatModule, CStdXml &oXml)
 	string strExecutablePath, strExeFile;
 
 try
-{ 
+{
+
 	//Get the working directory for the exe.
   HINSTANCE hInst = GetModuleHandle(NULL);
 
@@ -4028,12 +4030,12 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strType == "GRAVITY")
 	{
-		Gravity(atof(strValue.c_str()));
+		Gravity((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "PHYSICSTIMESTEP")
 	{
-		PhysicsTimeStep(atof(strValue.c_str()));
+		PhysicsTimeStep((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "SIMULATEHYDRODYNAMICS")
@@ -4048,7 +4050,7 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strType == "MANUALRANDOMSEED")
 	{
-		ManualRandomSeed(atof(strValue.c_str()));
+		ManualRandomSeed((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "FRAMERATE")
@@ -4063,42 +4065,42 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strType == "MOUSESPRINGSTIFFNESS")
 	{
-		MouseSpringStiffness(atof(strValue.c_str()));
+		MouseSpringStiffness((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "MOUSESPRINGDAMPING")
 	{
-		MouseSpringDamping(atof(strValue.c_str()));
+		MouseSpringDamping((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "LINEARCOMPLIANCE")
 	{
-		LinearCompliance(atof(strValue.c_str()));
+		LinearCompliance((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "ANGULARCOMPLIANCE")
 	{
-		AngularCompliance(atof(strValue.c_str()));
+		AngularCompliance((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "LINEARDAMPING")
 	{
-		LinearDamping(atof(strValue.c_str()));
+		LinearDamping((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "ANGULARDAMPING")
 	{
-		AngularDamping(atof(strValue.c_str()));
+		AngularDamping((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "LINEARKINETICLOSS")
 	{
-		LinearKineticLoss(atof(strValue.c_str()));
+		LinearKineticLoss((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "ANGULARKINETICLOSS")
 	{
-		AngularKineticLoss(atof(strValue.c_str()));
+		AngularKineticLoss((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "SETENDSIMTIME")
@@ -4108,12 +4110,12 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strType == "ENDSIMTIME")
 	{
-		EndSimTime(atof(strValue.c_str()));
+		EndSimTime((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "RECFIELDSELRADIUS")
 	{
-		RecFieldSelRadius(atof(strValue.c_str()));
+		RecFieldSelRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR")
@@ -4123,30 +4125,30 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strDataType == "ALPHATHRESHOLD")
 	{
-		AlphaThreshold(atof(strValue.c_str()));
+		AlphaThreshold((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
 		return TRUE;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.GREEN")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		float aryVal[4] = {m_vBackgroundColor.r(), (float) atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
 		return TRUE;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.BLUE")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), atof(strValue.c_str()), m_vBackgroundColor.a()};
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), (float) atof(strValue.c_str()), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
 		return TRUE;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.ALPHA")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), (float) atof(strValue.c_str())};
 		BackgroundColor(aryVal);
 		return TRUE;
 	}
@@ -4162,12 +4164,12 @@ BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL 
 	}
 	else if(strDataType == "PRESETPLAYBACKTIMESTEP")
 	{
-		PresetPlaybackTimeStep(atof(strValue.c_str()));
+		PresetPlaybackTimeStep((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strDataType == "STABILITYSCALE")
 	{
-		StabilityScale(atof(strValue.c_str()));
+		StabilityScale((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

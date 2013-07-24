@@ -153,13 +153,13 @@ BOOL Torus::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "OUTSIDERADIUS")
 	{
-		OutsideRadius(atof(strValue.c_str()));
+		OutsideRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "INSIDERADIUS")
 	{
-		InsideRadius(atof(strValue.c_str()));
+		InsideRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

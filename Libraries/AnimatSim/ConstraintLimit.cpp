@@ -286,22 +286,22 @@ BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 
 	if(strType == "LIMITPOS")
 	{
-		LimitPos(atof(strValue.c_str()));
+		LimitPos((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "RESTITUTION")
 	{
-		Restitution(atof(strValue.c_str()));
+		Restitution((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "STIFFNESS")
 	{
-		Stiffness(atof(strValue.c_str()));
+		Stiffness((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "COLOR")
@@ -311,7 +311,7 @@ BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 	}
 	else if(strType == "ALPHA")
 	{
-		Alpha(atof(strValue.c_str()));
+		Alpha((float) atof(strValue.c_str()));
 		return true;
 	}
 

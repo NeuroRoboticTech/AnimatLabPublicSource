@@ -254,19 +254,19 @@ BOOL ConstraintRelaxation::SetData(const string &strDataType, const string &strV
 
 	if(strType == "STIFFNESS")
 	{
-		Stiffness(atof(strValue.c_str()));
+		Stiffness((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
 	if(strType == "LOSS")
 	{
-		Loss(atof(strValue.c_str()));
+		Loss((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	

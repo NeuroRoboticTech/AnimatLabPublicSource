@@ -381,19 +381,19 @@ BOOL MotorizedJoint::SetData(const string &strDataType, const string &strValue, 
 	
 	if(strType == "SERVOGAIN")
 	{
-		ServoGain(atof(strValue.c_str()));
+		ServoGain((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "MAXFORCE")
 	{
-		MaxForce(atof(strValue.c_str()));
+		MaxForce((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "MAXVELOCITY")
 	{
-		MaxVelocity(atof(strValue.c_str()));
+		MaxVelocity((float) atof(strValue.c_str()));
 		return true;
 	}
 

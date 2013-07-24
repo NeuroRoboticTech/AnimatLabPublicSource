@@ -113,7 +113,7 @@ BOOL Sensor::SetData(const string &strDataType, const string &strValue, BOOL bTh
 
 	if(strType == "RADIUS")
 	{
-		Radius(atof(strValue.c_str()));
+		Radius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

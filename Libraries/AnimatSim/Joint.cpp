@@ -655,7 +655,7 @@ BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "SIZE")
 	{
-		Size(atof(strValue.c_str()));
+		Size((float) atof(strValue.c_str()));
 		return true;
 	}
 

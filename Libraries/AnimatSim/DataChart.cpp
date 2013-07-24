@@ -645,13 +645,13 @@ BOOL DataChart::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "STARTTIME")
 	{
-		StartTime(atof(strValue.c_str()));
+		StartTime((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "ENDTIME")
 	{
-		EndTime(atof(strValue.c_str()));
+		EndTime((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

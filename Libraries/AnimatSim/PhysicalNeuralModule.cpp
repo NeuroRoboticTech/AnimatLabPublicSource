@@ -125,7 +125,7 @@ BOOL PhysicsNeuralModule::SetData(const string &strDataType, const string &strVa
 
 	if(strType == "TIMESTEP")
 	{
-		TimeStep(atof(strValue.c_str()));
+		TimeStep((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

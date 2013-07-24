@@ -595,25 +595,25 @@ BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue
 
 	if(strDataType == "KSE")
 	{
-		Kse(atof(strValue.c_str()));
+		Kse((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "KPE")
 	{
-		Kpe(atof(strValue.c_str()));
+		Kpe((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "B")
 	{
-		B(atof(strValue.c_str()));
+		B((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "IBDISCHARGE")
 	{
-		IbDischargeConstant(atof(strValue.c_str()));
+		IbDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 

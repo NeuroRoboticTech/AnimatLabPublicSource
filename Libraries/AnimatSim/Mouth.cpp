@@ -220,7 +220,7 @@ BOOL Mouth::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "MINIMUMFOODRADIUS")
 	{
-		MinFoodRadius(atof(strValue.c_str()));
+		MinFoodRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

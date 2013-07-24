@@ -546,13 +546,13 @@ BOOL ActivatedItem::SetData(const string &strDataType, const string &strValue, B
 
 	if(strType == "STARTTIME")
 	{
-		StartTime(atof(strValue.c_str()));
+		StartTime((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "ENDTIME")
 	{
-		EndTime(atof(strValue.c_str()));
+		EndTime((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -564,7 +564,7 @@ BOOL ActivatedItem::SetData(const string &strDataType, const string &strValue, B
 
 	if(strType == "STEPINTERVAL")
 	{
-		StepInterval(atoi(strValue.c_str()));
+		StepInterval((float) atoi(strValue.c_str()));
 		return TRUE;
 	}
 

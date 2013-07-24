@@ -1284,31 +1284,31 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "GRAPHICSALPHA")
 	{
-		GraphicsAlpha(atof(strValue.c_str()));
+		GraphicsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "COLLISIONALPHA")
 	{
-		CollisionsAlpha(atof(strValue.c_str()));
+		CollisionsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "JOINTSALPHA")
 	{
-		JointsAlpha(atof(strValue.c_str()));
+		JointsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "RECEPTIVEFIELDSALPHA")
 	{
-		ReceptiveFieldsAlpha(atof(strValue.c_str()));
+		ReceptiveFieldsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "SIMULATIONALPHA")
 	{
-		SimulationAlpha(atof(strValue.c_str()));
+		SimulationAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -1320,28 +1320,28 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "AMBIENT.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "AMBIENT.GREEN")
 	{
-		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {m_vAmbient.r(), (float) atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "AMBIENT.BLUE")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), (float) atof(strValue.c_str()), m_vAmbient.a()};
 		Ambient(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "AMBIENT.ALPHA")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), (float) atof(strValue.c_str())};
 		Ambient(aryVal);
 		return TRUE;
 	}
@@ -1354,28 +1354,28 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "DIFFUSE.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.GREEN")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
+		float aryVal[4] = {m_vDiffuse.r(), (float) atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.BLUE")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), atof(strValue.c_str()), m_vDiffuse.a()};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), (float) atof(strValue.c_str()), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.ALPHA")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), (float) atof(strValue.c_str())};
 		Diffuse(aryVal);
 		return TRUE;
 	}
@@ -1388,35 +1388,35 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "SPECULAR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.GREEN")
 	{
-		float aryVal[4] = {m_vSpecular.r(), atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
+		float aryVal[4] = {m_vSpecular.r(), (float) atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.BLUE")
 	{
-		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), atof(strValue.c_str()), m_vSpecular.a()};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), (float) atof(strValue.c_str()), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.ALPHA")
 	{
-		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), (float) atof(strValue.c_str())};
 		Specular(aryVal);
 		return TRUE;
 	}
 	
 	if(strDataType == "SHININESS")
 	{
-		Shininess(atof(strValue.c_str()));
+		Shininess((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 	
@@ -1428,7 +1428,7 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 	
 	if(strDataType == "DRAGGERRADIUS")
 	{
-		UserDefinedDraggerRadius(atof(strValue.c_str()));
+		UserDefinedDraggerRadius((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 

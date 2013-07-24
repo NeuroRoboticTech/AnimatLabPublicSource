@@ -223,19 +223,19 @@ BOOL Box::SetData(const string &strDataType, const string &strValue, BOOL bThrow
 
 	if(strType == "LENGTH")
 	{
-		Length(atof(strValue.c_str()));
+		Length((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "WIDTH")
 	{
-		Width(atof(strValue.c_str()));
+		Width((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "HEIGHT")
 	{
-		Height(atof(strValue.c_str()));
+		Height((float) atof(strValue.c_str()));
 		return TRUE;
 	}
 
