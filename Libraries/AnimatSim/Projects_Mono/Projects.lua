@@ -15,8 +15,8 @@
 			targetdir ("Debug")
 			targetname ("AnimatSim_vc10D")
 			links { "StdUtils_vc10D"}
-			postbuildcommands { "cp Debug/libAnimatSimD.so ../../../bin",
-								"cp Debug/libAnimatSimD.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libAnimatSim_vc10D.so ../../../bin",
+								"cp Debug/libAnimatSim_vc10D.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "ANIMATLIBRARY_EXPORTS" }
@@ -24,5 +24,5 @@
 			targetdir ("Release")
 			targetname ("AnimatSim_vc10")
 			links { "StdUtils_vc10"}
-			postbuildcommands { "cp Release/libAnimatSim.so ../../../bin", 
-								"cp Release/libAnimatSim.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libAnimatSim_vc10.so ../../../bin", 
+								"cp Release/libAnimatSim_vc10.so ../../../unit_test_bin" }

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BootstrapLoader", "BootstrapLoader.cproj", "{20F197D6-0ABC-8142-B94C-F177D41FC70E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20F197D6-0ABC-8142-B94C-F177D41FC70E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{20F197D6-0ABC-8142-B94C-F177D41FC70E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{20F197D6-0ABC-8142-B94C-F177D41FC70E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{20F197D6-0ABC-8142-B94C-F177D41FC70E}.Release|AnyCPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal
