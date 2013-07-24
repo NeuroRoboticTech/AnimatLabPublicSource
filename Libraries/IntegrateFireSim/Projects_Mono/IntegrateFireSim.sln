@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "IntegrateFireSim.cproj", "{94E17E30-BF9F-0442-B162-8D64CA369695}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "IntegrateFireSim.cproj", "{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94E17E30-BF9F-0442-B162-8D64CA369695}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{94E17E30-BF9F-0442-B162-8D64CA369695}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{94E17E30-BF9F-0442-B162-8D64CA369695}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{94E17E30-BF9F-0442-B162-8D64CA369695}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

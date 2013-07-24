@@ -2,7 +2,19 @@ echo "Generating AnimatLabSimCode Mono Solution"
 
 premake4m --os=linux --file=AnimatLabSimCode.lua monodevelop
 
-..\Libraries\StdUtils\Projects_Mono\GenerateSolution.bat
-..\Libraries\AnimatSim\Projects_Mono\GenerateSolution.bat
+cd ..\Libraries\BootstrapLoader\Projects_Mono
+@call GenerateSolution.bat
+
+cd ..\..\StdUtils\Projects_Mono
+@call GenerateSolution.bat
+
+cd ..\..\FiringRateSim\Projects_Mono
+@call GenerateSolution.bat
+
+cd ..\..\IntegrateFireSim\Projects_Mono
+@call GenerateSolution.bat
+
+cd ..\..\VortexAnimatSim\Projects_Mono
+@call GenerateSolution.bat
 
 @pause

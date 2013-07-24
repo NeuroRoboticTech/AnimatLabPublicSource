@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{169532EF-986B-8F47-80EB-A472A1E32EEA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{20409EE8-9CD8-3343-BAF1-AAB355296612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{169532EF-986B-8F47-80EB-A472A1E32EEA}.Debug|Win32.ActiveCfg = Debug|Win32
-		{169532EF-986B-8F47-80EB-A472A1E32EEA}.Debug|Win32.Build.0 = Debug|Win32
-		{169532EF-986B-8F47-80EB-A472A1E32EEA}.Release|Win32.ActiveCfg = Release|Win32
-		{169532EF-986B-8F47-80EB-A472A1E32EEA}.Release|Win32.Build.0 = Release|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Debug|Win32.ActiveCfg = Debug|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Debug|Win32.Build.0 = Debug|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Release|Win32.ActiveCfg = Release|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

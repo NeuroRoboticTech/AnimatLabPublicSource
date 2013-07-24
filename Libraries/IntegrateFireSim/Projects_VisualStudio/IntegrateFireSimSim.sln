@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "IntegrateFireSim.vcxproj", "{75904C0E-45EF-4748-B2D8-88E312629A50}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "IntegrateFireSim.vcxproj", "{810292D4-41A0-4F42-B7CB-3082907473FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{75904C0E-45EF-4748-B2D8-88E312629A50}.Debug|Win32.ActiveCfg = Debug|Win32
-		{75904C0E-45EF-4748-B2D8-88E312629A50}.Debug|Win32.Build.0 = Debug|Win32
-		{75904C0E-45EF-4748-B2D8-88E312629A50}.Release|Win32.ActiveCfg = Release|Win32
-		{75904C0E-45EF-4748-B2D8-88E312629A50}.Release|Win32.Build.0 = Release|Win32
+		{810292D4-41A0-4F42-B7CB-3082907473FC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{810292D4-41A0-4F42-B7CB-3082907473FC}.Debug|Win32.Build.0 = Debug|Win32
+		{810292D4-41A0-4F42-B7CB-3082907473FC}.Release|Win32.ActiveCfg = Release|Win32
+		{810292D4-41A0-4F42-B7CB-3082907473FC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
