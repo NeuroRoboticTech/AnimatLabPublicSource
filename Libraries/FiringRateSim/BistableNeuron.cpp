@@ -4,7 +4,7 @@
 \brief	Implements the bistable neuron class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"

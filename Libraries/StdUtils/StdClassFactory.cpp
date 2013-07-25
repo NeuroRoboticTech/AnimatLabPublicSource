@@ -49,19 +49,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 
 	HMODULE hMod = NULL;
 
-#ifdef _WIN32_WCE
-	wchar_t *sMessage = Std_ConvertFromANSI(strModuleName);
-
-	if(sMessage)
-	{
-		OutputDebugString(sMessage);
-		hMod = LoadLibrary(sMessage);
-		delete sMessage;
-		sMessage = NULL;
-	}
-#else
 	hMod = LoadLibrary(strModuleName.c_str());
-#endif
 	
 	if(!hMod)
     {
@@ -73,11 +61,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 
 	TRACE_DEBUG("  Gettting the classfactory pointer.");
 
-#ifdef _WIN32_WCE
-	lpFactoryFunc = (GetClassFactory) GetProcAddress(hMod, _T("GetStdClassFactory")); 
-#else
     lpFactoryFunc = (GetClassFactory) GetProcAddress(hMod, "GetStdClassFactory"); 
-#endif
 
 	if(!lpFactoryFunc)
 		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModuleName);
@@ -85,6 +69,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 	TRACE_DEBUG("Finished Loading Module: " + strModuleName);
 	return lpFactoryFunc();
 }
+
 #else
 /**
 \brief	Loads a DLL module by name and attempts to call the GetStdClassFactory method to get a pointer to the class factory.

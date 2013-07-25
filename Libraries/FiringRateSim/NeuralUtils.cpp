@@ -4,7 +4,7 @@
 \brief	Implements the neural utilities class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 
 #include "Synapse.h"
@@ -26,8 +26,11 @@ string Nl_NeuralModuleName()
 	//#endif
 }
 
-
+#ifdef WIN32
 extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
 {
 	IStdClassFactory *lpFactory = new ClassFactory;
 	return lpFactory;

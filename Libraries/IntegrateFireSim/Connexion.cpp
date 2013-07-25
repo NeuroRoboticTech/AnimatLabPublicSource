@@ -626,7 +626,7 @@ double Connexion::ProcessOutput(BOOL bFreezeHebb)
 	}
 
 	double G;
-	G=max(0,m_dGFacilCx);	// get conductance, if not facil below 0
+	G=max((double) 0,m_dGFacilCx);	// get conductance, if not facil below 0
 	m_dGFacilCx=(m_dGFacilCx-m_dG)+(m_dG*RelFacil());	// facilitate next response
 	m_TransitCx.Del();				// remove spike from list
 
@@ -676,7 +676,7 @@ double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
 	}
 
 //TRACE("GetProspectiveCond = %lf\n",G);
-	return(max(0,G));	// get conductance, if not facil below 0
+	return(max((double) 0,G));	// get conductance, if not facil below 0
 }
 
 void Connexion::ResetSimulation()

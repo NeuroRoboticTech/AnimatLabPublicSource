@@ -4,7 +4,7 @@
 \brief	Implements the class factory class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "GatedSynapse.h"

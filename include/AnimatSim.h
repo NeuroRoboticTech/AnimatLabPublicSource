@@ -9,7 +9,11 @@
 	#endif
 #endif          // _ANIMAT_LIB_DLL_NOFORCELIBS
 
-#define ANIMAT_PORT __declspec( dllimport )
+#ifdef WIN32	
+	#define ANIMAT_PORT __declspec( dllimport )
+#else
+	#define ANIMAT_PORT
+#endif
 
 #include "StdUtils.h"
 #include "AnimatConstants.h"

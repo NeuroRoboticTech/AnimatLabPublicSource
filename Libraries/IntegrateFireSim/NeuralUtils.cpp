@@ -17,8 +17,11 @@
 #include "IonChannelSigmoid.h"
 #include "ClassFactory.h"
 
-
+#ifdef WIN32
 extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
 {
 	IStdClassFactory *lpFactory = new ClassFactory;
 	return lpFactory;

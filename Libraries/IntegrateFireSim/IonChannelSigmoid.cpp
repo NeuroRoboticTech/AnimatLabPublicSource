@@ -4,7 +4,7 @@
 \brief	Implements the ion channel sigmoid class.
 **/
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "IonChannelSigmoid.h"
 
 

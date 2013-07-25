@@ -15,6 +15,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_vc10D.so</OutputName>
@@ -22,13 +23,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\StdUtils</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -49,6 +50,7 @@
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_vc10.so</OutputName>
+    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>

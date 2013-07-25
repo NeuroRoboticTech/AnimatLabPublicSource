@@ -1,7 +1,11 @@
 #ifndef __REAL_NET_INCLUDES_H__
 #define __REAL_NET_INCLUDES_H__
 
-#define ADV_NEURAL_PORT __declspec( dllexport )
+#ifdef WIN32
+	#define ADV_NEURAL_PORT __declspec( dllexport )
+#else
+	#define ADV_NEURAL_PORT
+#endif
 
 #include "AnimatSim.h"
 #include "IntegrateFireSimConstants.h"

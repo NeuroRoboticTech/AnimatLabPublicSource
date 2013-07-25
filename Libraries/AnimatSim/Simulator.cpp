@@ -2472,12 +2472,14 @@ double Simulator::RemainingVideoFrameTime()
 **/
 void Simulator::GenerateAutoSeed()
 {
+	/* TODO NEED TO REPLACE
 	SYSTEMTIME st;
 	GetLocalTime(&st);
 
 	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
 	Std_SRand(m_iManualRandomSeed);
 	srand(m_iManualRandomSeed);
+	*/
 }
 
 /**

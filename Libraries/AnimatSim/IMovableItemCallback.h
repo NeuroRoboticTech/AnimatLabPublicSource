@@ -86,4 +86,4 @@ namespace AnimatSim
 		virtual void SelectedVertexChanged(float fltPosX, float fltPosY, float fltPosZ) = 0;
 
 	};
-}
+};

@@ -317,6 +317,7 @@ void STD_UTILS_PORT Std_ResetLog();
 // Timing Functions
 
 unsigned long STD_UTILS_PORT Std_GetTick();
+void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds);
 
 // Timing Functions
 //***************************************************************************************************************
@@ -328,6 +329,7 @@ unsigned long STD_UTILS_PORT Std_GetTick();
 bool STD_UTILS_PORT Std_IsFullPath(string strPath);
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile);
 BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath);
+string STD_UTILS_PORT Std_ExecutablePath();
 
 #ifdef WIN32
 	void STD_UTILS_PORT Std_SetFileTime(string strFilename);

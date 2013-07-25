@@ -4,7 +4,7 @@
 \brief	Implements the firing rate module class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"

@@ -4,7 +4,7 @@
 \brief	Implements the gated synapse class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "GatedSynapse.h"

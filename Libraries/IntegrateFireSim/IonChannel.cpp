@@ -4,7 +4,7 @@
 \brief	Implements the ion channel class.
 **/
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "IonChannel.h"
 #include "SynapseType.h"
 #include "Connexion.h"

@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -48,7 +49,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>

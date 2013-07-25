@@ -4,7 +4,7 @@
 \brief	Implements the modulated synapse class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "ModulatedSynapse.h"
