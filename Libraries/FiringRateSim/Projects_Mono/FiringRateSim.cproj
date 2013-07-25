@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libFiringRateSim_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libFiringRateSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libFiringRateSim_vc10D.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libFiringRateSim_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10</Lib>
+        <Lib>AnimatSim_vc10</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libFiringRateSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libFiringRateSim_vc10.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\BistableNeuron.h">
+      <Link>BistableNeuron.h</Link>
+    </None>
+    <None Include="..\ClassFactory.h">
+      <Link>ClassFactory.h</Link>
+    </None>
+    <None Include="..\FiringRateModule.h">
+      <Link>FiringRateModule.h</Link>
+    </None>
+    <None Include="..\FiringRateSimIncludes.h">
+      <Link>FiringRateSimIncludes.h</Link>
+    </None>
+    <None Include="..\GatedSynapse.h">
+      <Link>GatedSynapse.h</Link>
+    </None>
+    <None Include="..\ModulatedSynapse.h">
+      <Link>ModulatedSynapse.h</Link>
+    </None>
+    <None Include="..\NeuralUtils.h">
+      <Link>NeuralUtils.h</Link>
+    </None>
+    <None Include="..\Neuron.h">
+      <Link>Neuron.h</Link>
+    </None>
+    <None Include="..\PacemakerNeuron.h">
+      <Link>PacemakerNeuron.h</Link>
+    </None>
+    <None Include="..\RandomNeuron.h">
+      <Link>RandomNeuron.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+    <None Include="..\Synapse.h">
+      <Link>Synapse.h</Link>
+    </None>
+    <None Include="..\TonicNeuron.h">
+      <Link>TonicNeuron.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\BistableNeuron.cpp">
+      <Link>BistableNeuron.cpp</Link>
+    </Compile>
+    <Compile Include="..\ClassFactory.cpp">
+      <Link>ClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\FiringRateModule.cpp">
+      <Link>FiringRateModule.cpp</Link>
+    </Compile>
+    <Compile Include="..\FiringRateSim.cpp">
+      <Link>FiringRateSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\GatedSynapse.cpp">
+      <Link>GatedSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\ModulatedSynapse.cpp">
+      <Link>ModulatedSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\NeuralUtils.cpp">
+      <Link>NeuralUtils.cpp</Link>
+    </Compile>
+    <Compile Include="..\Neuron.cpp">
+      <Link>Neuron.cpp</Link>
+    </Compile>
+    <Compile Include="..\PacemakerNeuron.cpp">
+      <Link>PacemakerNeuron.cpp</Link>
+    </Compile>
+    <Compile Include="..\RandomNeuron.cpp">
+      <Link>RandomNeuron.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+    <Compile Include="..\Synapse.cpp">
+      <Link>Synapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\TonicNeuron.cpp">
+      <Link>TonicNeuron.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "IntegrateFireSim.cproj", "{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{6B5C3DD5-CE6E-0845-9D12-80684F2FC0E5}.Release|AnyCPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal

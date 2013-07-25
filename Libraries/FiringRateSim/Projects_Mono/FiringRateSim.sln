@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "FiringRateSim", "FiringRateSim.cproj", "{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{B97D9EC4-C769-B644-97EC-DEBFFDF93D84}.Release|AnyCPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal

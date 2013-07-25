@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0D3FCCAE-A4CD-F241-8E5B-164C78A276B5}</ProjectGuid>
+    <ProjectGuid>{2F7574AF-B381-BC42-BE21-C36DE44C7B0B}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,10 +22,15 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
       </Includes>
     </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\..\bin</LibPath>
+      </LibPaths>
+    </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
@@ -34,8 +39,8 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libAnimatSimD.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Debug/libAnimatSimD.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Debug/libAnimatSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libAnimatSim_vc10D.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -49,10 +54,15 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
       </Includes>
     </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>..\..\..\..\bin</LibPath>
+      </LibPaths>
+    </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
@@ -61,8 +71,8 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libAnimatSim.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Release/libAnimatSim.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/libAnimatSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libAnimatSim_vc10.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2E463E31-0BE2-8248-9F72-80DDF8605A7B}</ProjectGuid>
+    <ProjectGuid>{FF0AC8E0-AEDD-C84E-BC5A-4541A71D4D2C}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
+    <OutputPath>Debug</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -48,7 +48,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
+    <OutputPath>Release</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
