@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_vc10D.so</OutputName>
@@ -24,7 +24,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
-        <Include>..\..\..\AnimatSim</Include>
+        <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -47,7 +47,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath></ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_vc10.so</OutputName>
