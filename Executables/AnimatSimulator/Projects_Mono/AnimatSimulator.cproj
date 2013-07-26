@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A4E4F2C9-63C9-4244-AE66-9156314620EB}</ProjectGuid>
+    <ProjectGuid>{68DE00E3-14BD-BF4B-9039-2D1F8C501FE1}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -37,7 +37,7 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD.exe ../../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -66,7 +66,7 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/AnimatSimulator.exe ../../../../bin" />
+        <Command type="AfterBuild" command="cp Release/AnimatSimulator ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

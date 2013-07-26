@@ -13,7 +13,7 @@
 			targetdir ("Debug")
 			targetname ("AnimatSimulatorD")
 			links { "BootstrapLoader_vc10D" }
-			postbuildcommands { "cp Debug/AnimatSimulatorD.exe ../../../../bin" }
+			postbuildcommands { "cp Debug/AnimatSimulatorD ../../../bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
@@ -21,4 +21,4 @@
 			targetdir ("Release")
 			targetname ("AnimatSimulator")
 			links { "BootstrapLoader_vc10" }
-			postbuildcommands { "cp Release/AnimatSimulator.exe ../../../../bin" }
+			postbuildcommands { "cp Release/AnimatSimulator ../../../bin" }
