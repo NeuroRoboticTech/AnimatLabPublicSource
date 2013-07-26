@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EA34D1AB-C670-D540-98FA-1F01C934686A}</ProjectGuid>
+    <ProjectGuid>{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -24,7 +24,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
-        <Include>..\..\..\AnimatSim</Include>
+        <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -58,7 +58,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
-        <Include>..\..\..\AnimatSim</Include>
+        <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>

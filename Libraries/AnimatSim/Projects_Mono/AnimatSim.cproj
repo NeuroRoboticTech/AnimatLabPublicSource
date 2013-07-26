@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{83842FD1-6244-D84F-B695-9075A52D55D9}</ProjectGuid>
+    <ProjectGuid>{56BA7822-86D1-CB49-AEBB-1A0F6579F658}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -28,7 +28,7 @@
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -60,7 +60,7 @@
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
