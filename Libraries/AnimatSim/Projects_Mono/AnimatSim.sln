@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSim", "AnimatSim.cproj", "{D82773F1-9B57-DD42-BCFB-BA617A220C3E}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSim", "AnimatSim.cproj", "{83842FD1-6244-D84F-B695-9075A52D55D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D82773F1-9B57-DD42-BCFB-BA617A220C3E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{D82773F1-9B57-DD42-BCFB-BA617A220C3E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{D82773F1-9B57-DD42-BCFB-BA617A220C3E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{D82773F1-9B57-DD42-BCFB-BA617A220C3E}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{83842FD1-6244-D84F-B695-9075A52D55D9}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{83842FD1-6244-D84F-B695-9075A52D55D9}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{83842FD1-6244-D84F-B695-9075A52D55D9}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{83842FD1-6244-D84F-B695-9075A52D55D9}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

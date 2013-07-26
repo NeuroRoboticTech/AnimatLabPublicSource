@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}</ProjectGuid>
+    <ProjectGuid>{A4E4F2C9-63C9-4244-AE66-9156314620EB}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,11 +14,11 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
-    <DefineSymbols>_DEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10D.so</OutputName>
-    <CompileTarget>SharedLibrary</CompileTarget>
+    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
@@ -32,24 +32,21 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>dl</Lib>
-        <Lib>StdUtils_vc10D</Lib>
-        <Lib>AnimatSim_vc10D</Lib>
+        <Lib>BootstrapLoader_vc10D</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD.exe ../../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
-    <DefineSymbols>NDEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10.so</OutputName>
-    <CompileTarget>SharedLibrary</CompileTarget>
+    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -64,29 +61,23 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>dl</Lib>
-        <Lib>StdUtils_vc10</Lib>
-        <Lib>AnimatSim_vc10</Lib>
+        <Lib>BootstrapLoader_vc10</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/AnimatSimulator.exe ../../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\stdafx.h">
-      <Link>stdafx.h</Link>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\BootstrapLoader.cpp">
-      <Link>BootstrapLoader.cpp</Link>
-    </Compile>
-    <Compile Include="..\stdafx.cpp">
-      <Link>stdafx.cpp</Link>
+    <Compile Include="..\AnimatSimulator.cpp">
+      <Link>AnimatSimulator.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>

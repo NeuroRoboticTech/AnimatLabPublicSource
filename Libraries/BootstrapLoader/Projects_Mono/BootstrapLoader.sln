@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BootstrapLoader", "BootstrapLoader.cproj", "{7F4056E9-C69B-A247-A48B-16D05230EF0D}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BootstrapLoader", "BootstrapLoader.cproj", "{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F4056E9-C69B-A247-A48B-16D05230EF0D}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{7F4056E9-C69B-A247-A48B-16D05230EF0D}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{7F4056E9-C69B-A247-A48B-16D05230EF0D}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{7F4056E9-C69B-A247-A48B-16D05230EF0D}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{64F20FDD-262B-F34B-B9CF-2DCEBDACA681}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

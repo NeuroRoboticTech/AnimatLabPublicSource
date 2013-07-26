@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{76907692-2758-B844-B487-0A6C5CED7399}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{EA34D1AB-C670-D540-98FA-1F01C934686A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{76907692-2758-B844-B487-0A6C5CED7399}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{76907692-2758-B844-B487-0A6C5CED7399}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{76907692-2758-B844-B487-0A6C5CED7399}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{76907692-2758-B844-B487-0A6C5CED7399}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EA34D1AB-C670-D540-98FA-1F01C934686A}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EA34D1AB-C670-D540-98FA-1F01C934686A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EA34D1AB-C670-D540-98FA-1F01C934686A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EA34D1AB-C670-D540-98FA-1F01C934686A}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

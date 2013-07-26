@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2F7574AF-B381-BC42-BE21-C36DE44C7B0B}</ProjectGuid>
+    <ProjectGuid>{83842FD1-6244-D84F-B695-9075A52D55D9}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_vc10D.so</OutputName>
@@ -29,7 +28,7 @@
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -46,18 +45,17 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_vc10.so</OutputName>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\StdUtils</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
