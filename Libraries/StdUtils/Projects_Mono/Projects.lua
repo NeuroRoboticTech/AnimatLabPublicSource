@@ -71,7 +71,7 @@
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10D" }
-			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
@@ -79,5 +79,5 @@
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10" }
-			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../../unit_test_bin" }
+			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../unit_test_bin" }
 						
