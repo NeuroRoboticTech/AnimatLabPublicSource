@@ -23,8 +23,8 @@ class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow, 
         /// true if we have set the eye position at least once.
         bool m_bEyePosSet;
 
-		virtual void InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim);
-		virtual void InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim);
+		virtual void InitEmbedded(Simulator *lpSim, OsgSimulator *lpVsSim);
+		virtual void InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim);
 		virtual void TrackCamera();
 
 	public:

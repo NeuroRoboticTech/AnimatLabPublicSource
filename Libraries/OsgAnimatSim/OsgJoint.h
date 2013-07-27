@@ -8,7 +8,6 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		class VsRigidBody;
 
 		/*! \brief 
 			A common class for all joint data specific to vortex.
@@ -24,11 +23,9 @@ namespace OsgAnimatSim
 			RigidBody, CVsAlJoint
 		*/
 
-		class ANIMAT_OSG_PORT OsgJoint : public VsBody
+		class ANIMAT_OSG_PORT OsgJoint : public OsgBody
 		{
 		protected:
-			Vx::VxConstraint *m_vxJoint;
-			Vx::VxConstraint::CoordinateID m_iCoordID;
 
 			//This is the offset from the child to the parent. We must add the osg graphics to the parent osg node
 			//because if we do not then the joint will move when the child moves, and that is not correct. However, 
@@ -58,11 +55,10 @@ namespace OsgAnimatSim
 #pragma endregion
 
 			Joint *m_lpThisJoint;
-			VsRigidBody *m_lpVsParent;
-			VsRigidBody *m_lpVsChild;
+			OsgBody *m_lpVsParent;
+			OsgBody *m_lpVsChild;
 
 			virtual void SetThisPointers();
-			void UpdatePosition();
 
             virtual void ResetDraggerOnResize();
             virtual void DeleteJointGraphics();
@@ -70,7 +66,7 @@ namespace OsgAnimatSim
 			virtual void SetupGraphics();
             virtual void DeleteGraphics();
 			virtual void SetupPhysics();
-			virtual VxVector3 NormalizeAxis(CStdFPoint vLocalRot);
+			//virtual VxVector3 NormalizeAxis(CStdFPoint vLocalRot); //NEED TO REPLACE
 			virtual void UpdatePositionAndRotationFromMatrix();
 
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
@@ -87,14 +83,8 @@ namespace OsgAnimatSim
 
 			virtual void Initialize();
 			virtual void SetBody();
-			virtual void Physics_ResetSimulation();
-			virtual void Physics_CollectData();
 			virtual BOOL Physics_SetData(const string &strDataType, const string &strValue);
 			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual void Physics_Resize();
-
-			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
-			virtual Vx::VxConstraint::CoordinateID CoordinateID() {return m_iCoordID;};
 
 			//Methods not used by joints.
 			virtual void Physics_SetParent(MovableItem *lpParent);

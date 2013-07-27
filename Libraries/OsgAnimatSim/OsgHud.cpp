@@ -5,7 +5,17 @@
 **/
 
 #include "StdAfx.h"
-#include "VsSimulator.h"
+#include "OsgMovableItem.h"
+#include "OsgOrganism.h"
+#include "OsgStructure.h"
+#include "OsgUserData.h"
+#include "OsgUserDataVisitor.h"
+
+#include "OsgMouseSpring.h"
+#include "OsgLight.h"
+#include "OsgCameraManipulator.h"
+#include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -58,7 +68,7 @@ void OsgHud::Initialize()
     m_osgMT->getOrCreateStateSet()->setAttributeAndModes(new osg::Program, osg::StateAttribute::ON);
     m_osgMT->addChild(m_osgProjection.get());
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+	OsgSimulator *lpVsSim = dynamic_cast<OsgSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Osg_Err_lUnableToConvertToVsSimulator, Osg_Err_strUnableToConvertToVsSimulator);
 

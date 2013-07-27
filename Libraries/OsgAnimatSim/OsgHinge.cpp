@@ -35,24 +35,7 @@ namespace OsgAnimatSim
 OsgHinge::OsgHinge()
 {
 	SetThisPointers();
-	m_vxHinge = NULL;
 	m_fltRotationDeg = 0;
-
-	m_lpUpperLimit = new OsgHingeLimit();
-	m_lpLowerLimit = new OsgHingeLimit();
-	m_lpPosFlap = new OsgHingeLimit();
-
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
-	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
-
-	m_lpUpperLimit->Color(1, 0, 0, 1);
-	m_lpLowerLimit->Color(1, 1, 1, 1);
-	m_lpPosFlap->Color(0, 0, 1, 1);
-
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
 }
 
 /**
@@ -63,35 +46,6 @@ OsgHinge::OsgHinge()
 **/
 OsgHinge::~OsgHinge()
 {
-	//ConstraintLimits are deleted in the base objects.
-	try
-	{
-		DeleteGraphics();
-		DeletePhysics();
-	}
-	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of OsgHinge\r\n", "", -1, FALSE, TRUE);}
-}
-
-void OsgHinge::EnableLimits(BOOL bVal)
-{
-	Hinge::EnableLimits(bVal);
-
-	if(m_vxHinge)
-		m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
-
-	if(m_bEnableLimits)
-	{
-		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
-		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
-	}
-}
-
-void OsgHinge::JointPosition(float fltPos)
-{
-	m_fltPosition = fltPos;
-	if(m_lpPosFlap)
-		m_lpPosFlap->LimitPos(fltPos);
 }
 
 void OsgHinge::SetAlpha()
@@ -223,86 +177,6 @@ void OsgHinge::SetupGraphics()
 		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
-}
-
-void OsgHinge::DeletePhysics()
-{
-	if(!m_vxHinge)
-		return;
-
-	if(GetVsSimulator() && GetVsSimulator()->Universe())
-	{
-		GetVsSimulator()->Universe()->removeConstraint(m_vxHinge);
-		delete m_vxHinge;
-		
-		if(m_lpChild && m_lpParent)
-			m_lpChild->EnableCollision(m_lpParent);
-	}
-
-	m_vxHinge = NULL;
-	m_vxJoint = NULL;
-}
-
-void OsgHinge::SetupPhysics()
-{
-	if(m_vxHinge)
-		DeletePhysics();
-
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
-
-	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
-
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
-	CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	
-	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
-	Vx::VxTransform vTrans(vMT);
-	Vx::VxReal3 vxRot;
-	vTrans.getRotationEulerAngles(vxRot);
-
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
-
-    VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
-
-	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	m_vxHinge->setName(m_strID.c_str());
-
-	//lpAssem->addConstraint(m_vxHinge);
-	GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
-
-	//Disable collisions between this object and its parent
-	m_lpChild->DisableCollision(m_lpParent);
-
-	OsgHingeLimit *lpUpperLimit = dynamic_cast<OsgHingeLimit *>(m_lpUpperLimit);
-	OsgHingeLimit *lpLowerLimit = dynamic_cast<OsgHingeLimit *>(m_lpLowerLimit);
-
-	lpUpperLimit->HingeRef(m_vxHinge);
-	lpLowerLimit->HingeRef(m_vxHinge);
-
-	//Re-enable the limits once we have initialized the joint
-	EnableLimits(m_bEnableLimits);
-
-	m_vxJoint = m_vxHinge;
-	m_iCoordID = m_vxHinge->kAngularCoordinate;
-
-	//If the motor is enabled then it will start out with a velocity of	zero.
-	EnableMotor(m_bEnableMotorInit);
-
-    Hinge::Initialize();
-    OsgJoint::Initialize();
 }
 
 void OsgHinge::CreateJoint()

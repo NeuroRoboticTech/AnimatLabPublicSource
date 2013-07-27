@@ -23,8 +23,6 @@ namespace OsgAnimatSim
 		osg::Vec3Array ANIMAT_OSG_PORT *CreateCircleVerts( int plane, int approx, float radius );
 		osg::Geometry ANIMAT_OSG_PORT *CreateTorusGeometry(float innerRadius, float outerRadius, int sides, int rings);
 		osg::Node ANIMAT_OSG_PORT *CreateHeightField(std::string heightFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap);
-		Vx::VxHeightField ANIMAT_OSG_PORT *CreateVxHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float fltBaseHeight, float fltXCenter, float fltYCenter);
-		osg::Geometry ANIMAT_OSG_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometry);
 
 	}			// Environment
 }				//OsgAnimatSim

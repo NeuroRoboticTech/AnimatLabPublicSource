@@ -1,13 +1,14 @@
 #include "StdAfx.h"
 
-#include "OsgMouseSpring.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgUserDataVisitor.h"
 #include "OsgUserData.h"
 #include "OsgDragger.h"
+#include "OsgMouseSpring.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {

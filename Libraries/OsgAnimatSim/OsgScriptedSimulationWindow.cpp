@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "OsgMouseSpring.h"
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgLight.h"
 #include "OsgUserData.h"
@@ -12,6 +11,7 @@
 #include "OsgMouseSpring.h"
 #include "OsgDraggerHandler.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {

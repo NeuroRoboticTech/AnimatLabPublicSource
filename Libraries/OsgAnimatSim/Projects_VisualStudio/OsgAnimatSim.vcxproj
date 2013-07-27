@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{91FFAF89-E04B-974E-AEEB-0549C9007DF4}</ProjectGuid>
+    <ProjectGuid>{5994B824-C86B-7848-B13D-472D17672C41}</ProjectGuid>
     <RootNamespace>OsgAnimatSim</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,12 +67,12 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libVx51d.lib;libVxController51d.lib;libVxControllerPersistence51d.lib;libVxGraphics51d.lib;libVxPersistence51d.lib;libVxPs51d.lib;libVxPsExtraOSG51d.lib;libVxVehicle51d.lib;libVxVehiclePersistence51d.lib;libVxExtra51d.lib;libVxExtraOSG51d.lib;libVxVehicleExtra51d.lib;libVxVehicleExtraOSG51d.lib;libVxOSG51d-2.8.3.lib;libboostVx_filesystem-vc100-mt-gd.lib;libboostVx_regex-vc100-mt-gd.lib;libboostVx_serialization-vc100-mt-gd.lib;libboostVx_system-vc100-mt-gd.lib;OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)OsgAnimatSim_vc10D.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;..\..\Vortex_5_1\lib;..\..\Vortex_5_1\3rdparty\boost-1.45.0\lib;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDataBaseFileName>$(OutDir)OsgAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
@@ -88,7 +88,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
@@ -103,12 +103,12 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libVx51.lib;libVxController51.lib;libVxControllerPersistence51.lib;libVxGraphics51.lib;libVxPersistence51.lib;libVxPs51.lib;libVxPsExtraOSG51.lib;libVxVehicle51.lib;libVxVehiclePersistence51.lib;libVxExtra51.lib;libVxExtraOSG51.lib;libVxVehicleExtra51.lib;libVxVehicleExtraOSG51.lib;libVxOSG51-2.8.3.lib;libboostVx_filesystem-vc100-mt.lib;libboostVx_regex-vc100-mt.lib;libboostVx_serialization-vc100-mt.lib;libboostVx_system-vc100-mt.lib;OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)OsgAnimatSim_vc10.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;..\..\Vortex_5_1\lib;..\..\Vortex_5_1\3rdparty\boost-1.45.0\lib;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
@@ -124,49 +124,38 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\OsgBody.h" />
-    <ClInclude Include="..\OsgMeshMinVertexDistanceVisitor.h" />
-    <ClInclude Include="..\OsgGeometry.h" />
-    <ClInclude Include="..\OsgLinearPath.h" />
-    <ClInclude Include="..\OsgTrackballManipulator.h" />
-    <ClInclude Include="..\StdAfx.h" />
     <ClInclude Include="..\OsgCameraManipulator.h" />
     <ClInclude Include="..\OsgDragger.h" />
     <ClInclude Include="..\OsgDraggerHandler.h" />
-    <ClInclude Include="..\OsgHinge.h" />
-    <ClInclude Include="..\OsgHingeLimit.h" />
+    <ClInclude Include="..\OsgGeometry.h" />
     <ClInclude Include="..\OsgHud.h" />
     <ClInclude Include="..\OsgHudText.h" />
+    <ClInclude Include="..\OsgJoint.h" />
     <ClInclude Include="..\OsgLight.h" />
-    <ClInclude Include="..\OsgLine.h" />
+    <ClInclude Include="..\OsgLinearPath.h" />
     <ClInclude Include="..\OsgMeshMgr.h" />
+    <ClInclude Include="..\OsgMeshMinVertexDistanceVisitor.h" />
     <ClInclude Include="..\OsgMouseSpring.h" />
     <ClInclude Include="..\OsgMovableItem.h" />
     <ClInclude Include="..\OsgOrganism.h" />
-    <ClInclude Include="..\OsgUserData.h" />
-    <ClInclude Include="..\OsgUserDataVisitor.h" />
-    <ClInclude Include="..\OsgPrismatic.h" />
-    <ClInclude Include="..\OsgPrismaticLimit.h" />
+    <ClInclude Include="..\OsgRigidBody.h" />
     <ClInclude Include="..\OsgScriptedSimulationWindow.h" />
     <ClInclude Include="..\OsgSimulationWindow.h" />
     <ClInclude Include="..\OsgSimulationWindowMgr.h" />
+    <ClInclude Include="..\OsgSimulator.h" />
     <ClInclude Include="..\OsgStructure.h" />
     <ClInclude Include="..\OsgTrackballDragger.h" />
+    <ClInclude Include="..\OsgTrackballManipulator.h" />
     <ClInclude Include="..\OsgTranslateAxisDragger.h" />
+    <ClInclude Include="..\OsgUserData.h" />
+    <ClInclude Include="..\OsgUserDataVisitor.h" />
     <ClInclude Include="..\OsgWorldCoordinateNodeVisitor.h" />
+    <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\OsgBody.cpp" />
-    <ClCompile Include="..\OsgMeshMinVertexDistanceVisitor.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgGeometry.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgLinearPath.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgTrackballManipulator.cpp">
-    </ClCompile>
-    <ClCompile Include="..\StdAfx.cpp">
-    </ClCompile>
     <ClCompile Include="..\OsgAnimatSim.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgBody.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgCameraManipulator.cpp">
     </ClCompile>
@@ -174,19 +163,20 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgDraggerHandler.cpp">
     </ClCompile>
-    <ClCompile Include="..\OsgHinge.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgHingeLimit.cpp">
+    <ClCompile Include="..\OsgGeometry.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgHud.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgHudText.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgJoint.cpp" />
     <ClCompile Include="..\OsgLight.cpp">
     </ClCompile>
-    <ClCompile Include="..\OsgLine.cpp">
+    <ClCompile Include="..\OsgLinearPath.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgMeshMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMeshMinVertexDistanceVisitor.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgMouseSpring.cpp">
     </ClCompile>
@@ -194,27 +184,30 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgOrganism.cpp">
     </ClCompile>
-    <ClCompile Include="..\OsgUserData.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgUserDataVisitor.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgPrismatic.cpp">
-    </ClCompile>
-    <ClCompile Include="..\OsgPrismaticLimit.cpp">
-    </ClCompile>
+    <ClCompile Include="..\OsgRigidBody.cpp" />
     <ClCompile Include="..\OsgScriptedSimulationWindow.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgSimulationWindow.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgSimulationWindowMgr.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgSimulator.cpp">
+    </ClCompile>
     <ClCompile Include="..\OsgStructure.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgTrackballDragger.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgTrackballManipulator.cpp">
+    </ClCompile>
     <ClCompile Include="..\OsgTranslateAxisDragger.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgUserData.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgUserDataVisitor.cpp">
+    </ClCompile>
     <ClCompile Include="..\OsgWorldCoordinateNodeVisitor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\StdAfx.cpp">
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

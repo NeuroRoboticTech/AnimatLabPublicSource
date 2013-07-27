@@ -21,8 +21,6 @@ namespace OsgAnimatSim
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void SetupGraphics();
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
 
 			public:
 				OsgPrismatic();
@@ -40,7 +38,6 @@ namespace OsgAnimatSim
 
 #pragma endregion
 
-				virtual void EnableLimits(BOOL bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();
 			};

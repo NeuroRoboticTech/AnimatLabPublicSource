@@ -33,12 +33,9 @@ namespace OsgAnimatSim
 			\author	dcofer
 			\date	4/15/2011
 			**/
-			class ANIMAT_OSG_PORT OsgHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge     
+			class ANIMAT_OSG_PORT OsgHinge : public AnimatSim::Environment::Joints::Hinge     
 			{
 			protected:
-				/// The vortex hinge class.
-				Vx::VxHinge *m_vxHinge;
-
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;
 
@@ -62,15 +59,11 @@ namespace OsgAnimatSim
                 virtual void CreateJointGraphics();
 				virtual void SetupGraphics();
 				virtual void UpdateData();
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
 				virtual void CreateCylinderGraphics();
 
 			public:
 				OsgHinge();
 				virtual ~OsgHinge();
-
-				virtual void JointPosition(float fltPos);
 
 				virtual void SetAlpha();
 
@@ -82,7 +75,6 @@ namespace OsgAnimatSim
 
 #pragma endregion
 
-				virtual void EnableLimits(BOOL bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();
 			};

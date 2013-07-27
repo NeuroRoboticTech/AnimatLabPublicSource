@@ -1,12 +1,18 @@
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
-namespace VortexAnimatSim
+namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		/**
+
+        enum DynamicsControlType
+        {
+            ControlAnimated,
+            ControlNode,
+            ControlDynamic
+        };
+
+        /**
 		\brief	Vortex base body class.
 
 		\details This is a base, secondary derived class for all body part objects within animatlab. It is
@@ -16,11 +22,11 @@ namespace VortexAnimatSim
 		\author	dcofer
 		\date	5/2/2011
 		**/
-		class VORTEX_PORT OsgBody : public VsMovableItem, public AnimatSim::Environment::IPhysicsBody
+		class ANIMAT_OSG_PORT OsgBody : public OsgMovableItem, public AnimatSim::Environment::IPhysicsBody
 		{
 		protected:
 			BodyPart *m_lpThisBP;
-			Vx::VxEntity::EntityControlTypeEnum m_eControlType;
+			DynamicsControlType m_eControlType;
 
 			virtual void SetThisPointers();
 
@@ -42,6 +48,6 @@ namespace VortexAnimatSim
 		};
 
 	}			// Environment
-}				//VortexAnimatSim
+}				//OsgAnimatSim
 
 

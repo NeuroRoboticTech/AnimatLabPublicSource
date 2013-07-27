@@ -18,7 +18,8 @@ class OsgMouseSpring
 		osg::Vec3 m_v3End;
 		osg::ref_ptr<osg::Vec3Array> m_aryLines;
 		osg::Vec3 m_v3Grab;
-		VsRigidBody *m_osgRB;
+        RigidBody *m_lpRB;
+		OsgMovableItem *m_osgRB;
 
 	protected:
 		void Update();
@@ -48,8 +49,13 @@ class OsgMouseSpring
 		void SetGrabPosition(osg::Vec3 v3Grab) {m_v3Grab = v3Grab;};
 		osg::Vec3 GetGrabPosition() {return m_v3Grab;}
 
-		void SetRigidBody (VsRigidBody *osgRB) {m_osgRB = osgRB;};
-		VsRigidBody* GetRigidBody() {return m_osgRB;};
+		void SetRigidBody (RigidBody *lpRB) 
+        {
+            m_lpRB = lpRB;
+            m_osgRB = dynamic_cast<OsgMovableItem *>(lpRB);
+        };
+		RigidBody* GetRigidBody() {return m_lpRB;};
+		OsgMovableItem* GetMovableItem() {return m_osgRB;};
 
 		void Visible(BOOL bVal);
 		void Initialize();

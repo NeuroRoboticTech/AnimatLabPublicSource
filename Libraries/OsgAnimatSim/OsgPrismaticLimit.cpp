@@ -18,16 +18,10 @@ namespace OsgAnimatSim
 
 OsgPrismaticLimit::OsgPrismaticLimit()
 {
-	m_vxPrismatic = NULL;
 }
 
 OsgPrismaticLimit::~OsgPrismaticLimit()
 {
-}
-
-void OsgPrismaticLimit::PrismaticRef(Vx::VxPrismatic *vxPrismatic)
-{
-	m_vxPrismatic = vxPrismatic;
 }
 
 void OsgPrismaticLimit::Alpha(float fltA)
@@ -102,17 +96,6 @@ void OsgPrismaticLimit::SetLimitPos()
 
 	//Set the limit on the physics Prismatic object.
 	SetLimitValues();
-}
-
-void OsgPrismaticLimit::SetLimitValues()
-{
-	if(m_vxPrismatic)
-	{
-		if(m_bIsLowerLimit)
-			m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-		else
-			m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	}
 }
 
 void OsgPrismaticLimit::DeleteGraphics()

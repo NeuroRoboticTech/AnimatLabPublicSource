@@ -6,10 +6,11 @@
 
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -36,13 +37,12 @@ OsgStructure::OsgStructure()
 **/
 OsgStructure::~OsgStructure()
 {
-	m_lpAssembly = NULL;
 }
 
 void OsgStructure::Body(RigidBody *lpBody)
 {
 	Structure::Body(lpBody);
-	m_lpOsgBody = dynamic_cast<VsRigidBody *>(lpBody);
+	m_lpOsgBody = dynamic_cast<OsgMovableItem *>(lpBody);
 
 	if(!m_lpOsgBody)
 		THROW_TEXT_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
@@ -59,7 +59,7 @@ void OsgStructure::SetThisPointers()
 
 osg::Group *OsgStructure::ParentOSG()
 {
-	return GetVsSimulator()->OSGRoot();
+	return GetOsgSimulator()->OSGRoot();
 }
 
 void OsgStructure::Create()

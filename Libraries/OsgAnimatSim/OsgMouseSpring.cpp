@@ -1,6 +1,17 @@
 #include "StdAfx.h"
-#include "OsgMouseSpring.h"
+#include "OsgMovableItem.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
+#include "OsgOrganism.h"
+#include "OsgStructure.h"
+#include "OsgUserData.h"
+#include "OsgUserDataVisitor.h"
 
+#include "OsgLight.h"
+#include "OsgCameraManipulator.h"
+#include "OsgDragger.h"
+#include "OsgMouseSpring.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -15,6 +26,7 @@ OsgMouseSpring::OsgMouseSpring(void)
 	m_aryLines = NULL;
 	m_v3Start.set(0,0,0);
 	m_v3End.set(1,0,0);
+    m_lpRB = NULL;
 	m_osgRB = NULL;
 }
 

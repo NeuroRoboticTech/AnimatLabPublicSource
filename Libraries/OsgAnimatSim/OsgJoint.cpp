@@ -3,15 +3,18 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include <stdarg.h>
 #include "OsgMovableItem.h"
-#include "VsBody.h"
+#include "OsgBody.h"
 #include "OsgJoint.h"
-#include "VsMotorizedJoint.h"
-#include "VsRigidBody.h"
+#include "OsgRigidBody.h"
 #include "OsgStructure.h"
-#include "VsSimulator.h"
 #include "OsgUserData.h"
 #include "OsgUserDataVisitor.h"
+
+#include "OsgMouseSpring.h"
+#include "OsgLight.h"
+#include "OsgCameraManipulator.h"
 #include "OsgDragger.h"
 
 namespace OsgAnimatSim
@@ -25,11 +28,8 @@ namespace OsgAnimatSim
 
 OsgJoint::OsgJoint()
 {
-	m_vxJoint = NULL;
 	m_lpVsParent = NULL;
 	m_lpVsChild = NULL;
-
-	m_iCoordID = -1; //-1 if not used.
 }
 
 OsgJoint::~OsgJoint()
@@ -39,17 +39,17 @@ OsgJoint::~OsgJoint()
 void OsgJoint::Physics_SetParent(MovableItem *lpParent)
 {
 	m_lpParentVsMI = dynamic_cast<OsgMovableItem *>(lpParent);
-	m_lpVsParent = dynamic_cast<VsRigidBody *>(lpParent);
+	m_lpVsParent = dynamic_cast<OsgBody *>(lpParent);
 }
 
 void OsgJoint::Physics_SetChild(MovableItem *lpChild) 
 {
-	m_lpVsChild = dynamic_cast<VsRigidBody *>(lpChild);
+	m_lpVsChild = dynamic_cast<OsgRigidBody *>(lpChild);
 }
 
 void OsgJoint::SetThisPointers()
 {
-	VsBody::SetThisPointers();
+	OsgBody::SetThisPointers();
 
 	m_lpThisJoint = dynamic_cast<Joint *>(this);
 	if(!m_lpThisJoint)
@@ -57,57 +57,20 @@ void OsgJoint::SetThisPointers()
 
 	m_lpThisJoint->PhysicsBody(this);
 }
-
-VxVector3 OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
-{
-	osg::Vec3 vPosN(1, 0, 0);
-	CStdFPoint vMatrixPos(0, 0, 0);
-
-	osg::Matrix osgMT = SetupMatrix(vMatrixPos, vLocalRot);
-
-	osg::Vec3 vNorm = vPosN * osgMT;
-
-	VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
-
-	return axis;
-}
-
-void OsgJoint::UpdatePosition()
-{	
-	Vx::VxReal3 vPos;
-	m_vxJoint->getPartAttachmentPosition(0, vPos);
-
-	UpdateWorldMatrix();
-	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
-}
-
-void OsgJoint::Physics_CollectData()
-{
-	if(m_lpThisJoint && m_vxJoint)
-	{
-		UpdatePosition();
-
-		//Only attempt to make these calls if the coordinate ID is a valid number.
-		if(m_iCoordID >= 0)
-		{
-			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-
-			if(m_vxJoint->isAngular(m_iCoordID) == true)
-			{
-				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID)); 
-				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity (m_iCoordID));
-				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
-			}
-			else
-			{
-				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
-				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
-				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
-			}
-		}
-	}
-}
+//NEED TO REPAIR
+//VxVector3 OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
+//{
+//	osg::Vec3 vPosN(1, 0, 0);
+//	CStdFPoint vMatrixPos(0, 0, 0);
+//
+//	osg::Matrix osgMT = SetupMatrix(vMatrixPos, vLocalRot);
+//
+//	osg::Vec3 vNorm = vPosN * osgMT;
+//
+//	VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
+//
+//	return axis;
+//}
 
 osg::Group *OsgJoint::ParentOSG()
 {
@@ -127,7 +90,7 @@ osg::Group *OsgJoint::ChildOSG()
 
 void OsgJoint::SetAlpha()
 {
-	VsBody::SetAlpha();
+	OsgBody::SetAlpha();
 
 	if(m_osgDefaultBallMat.valid() && m_osgDefaultBallSS.valid())
 		SetMaterialAlpha(m_osgDefaultBallMat.get(), m_osgDefaultBallSS.get(), m_lpThisMI->Alpha());
@@ -135,7 +98,7 @@ void OsgJoint::SetAlpha()
 
 void OsgJoint::Physics_PositionChanged()
 {
-	VsBody::Physics_PositionChanged();
+	OsgBody::Physics_PositionChanged();
 	Physics_ResetGraphicsAndPhysics();
 }
 
@@ -144,20 +107,10 @@ void OsgJoint::Physics_RotationChanged()
 	Physics_ResetGraphicsAndPhysics();
 }
 
-void OsgJoint::Physics_Resize()
-{
-    if(m_vxJoint)
-    {
-        DeleteJointGraphics();
-        CreateJointGraphics();
-        ResetDraggerOnResize();
-    }
-}
-
 void OsgJoint::DeleteGraphics()
 {
     DeleteJointGraphics();
-    VsBody::DeleteGraphics();
+    OsgBody::DeleteGraphics();
 }
 
 void OsgJoint::DeleteJointGraphics()
@@ -195,7 +148,7 @@ void OsgJoint::CreateJointGraphics()
 	osg::ref_ptr<osg::Geode> osgBall = new osg::Geode;
 	osgBall->addDrawable(m_osgDefaultBall.get());
 
-	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
+	CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
 	m_osgDefaultBallMT = new osg::MatrixTransform();
 	m_osgDefaultBallMT->setMatrix(SetupMatrix(vPos, vRot));
 	m_osgDefaultBallMT->addChild(osgBall.get());
@@ -236,11 +189,11 @@ graphics then just override this function and define it yourself, but do not cal
 void OsgJoint::SetupGraphics()
 {
 	//Setup Vs pointers to child and parent.
-	m_lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Parent());
+	m_lpVsParent = dynamic_cast<OsgRigidBody *>(m_lpThisJoint->Parent());
 	if(!m_lpVsParent)
 		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
 
-	m_lpVsChild = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Child());
+	m_lpVsChild = dynamic_cast<OsgRigidBody *>(m_lpThisJoint->Child());
 	if(!m_lpVsChild)
 		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
 
@@ -251,8 +204,8 @@ void OsgJoint::SetupGraphics()
 	if(m_osgParent.valid())
 	{
 		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
+		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
+		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
 		
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
@@ -309,7 +262,7 @@ void OsgJoint::ChildOffsetMatrix(osg::Matrix osgMT)
 
 void OsgJoint::UpdatePositionAndRotationFromMatrix()
 {
-	VsBody::UpdatePositionAndRotationFromMatrix();
+	OsgBody::UpdatePositionAndRotationFromMatrix();
 	SetupPhysics();
 }
 
@@ -320,7 +273,7 @@ void OsgJoint::Physics_UpdateMatrix()
 	m_osgDragger->SetupMatrix();
 
 	//Now lets get the localmatrix from the child object and use that for our offsetmatrix
-	VsBody *lpVsChild = dynamic_cast<VsBody *>(m_lpThisJoint->Child());
+	OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
 	if(lpVsChild)
 		ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
@@ -330,7 +283,7 @@ void OsgJoint::Physics_UpdateMatrix()
 
 void  OsgJoint::BuildLocalMatrix()
 {
-	VsBody::BuildLocalMatrix();
+	OsgBody::BuildLocalMatrix();
 }
 
 void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
@@ -362,7 +315,7 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 	m_osgMT->setName(strName.c_str());
 
 	//Now lets get the localmatrix from the child object and use that for our offsetmatrix
-	VsBody *lpVsChild = dynamic_cast<VsBody *>(m_lpThisJoint->Child());
+	OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
 	if(lpVsChild)
 		ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
@@ -412,20 +365,6 @@ BOOL OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWo
 
 	return FALSE;
 }
-
-void OsgJoint::Physics_ResetSimulation()
-{
-	if(m_vxJoint)
-	{
-		m_vxJoint->resetDynamics();
-
-		UpdatePosition();
-		m_lpThisJoint->JointPosition(0); 
-		m_lpThisJoint->JointVelocity(0);
-		m_lpThisJoint->JointForce(0);
-	}
-}
-
 
 BOOL OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
 {

@@ -1,13 +1,14 @@
 #include "StdAfx.h"
 
+#include "OsgMovableItem.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgMouseSpring.h"
 #include "OsgDraggerHandler.h"
-#include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgUserData.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -101,7 +102,7 @@ void OsgDraggerHandler::EndGripDrag()
 		OsgUserData *osgData = dynamic_cast<OsgUserData *>(m_osgActiveDragger->getUserData());
 		if(osgData && osgData->GetMovable())
 		{
-			OsgMovableItem *lpItem = osgData->GetVsMovable();
+			OsgMovableItem *lpItem = osgData->GetOsgMovable();
 			lpItem->EndGripDrag();
 		}
 	}

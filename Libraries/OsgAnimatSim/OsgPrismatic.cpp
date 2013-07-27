@@ -31,23 +31,6 @@ namespace OsgAnimatSim
 OsgPrismatic::OsgPrismatic()
 {
 	SetThisPointers();
-	m_vxPrismatic = NULL;
-
-	m_lpUpperLimit = new OsgPrismaticLimit();
-	m_lpLowerLimit = new OsgPrismaticLimit();
-	m_lpPosFlap = new OsgPrismaticLimit();
-
-	m_lpUpperLimit->LimitPos(1, FALSE);
-	m_lpLowerLimit->LimitPos(-1, FALSE);
-	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
-
-	m_lpUpperLimit->Color(0, 0, 1, 1);
-	m_lpLowerLimit->Color(1, 1, 0.333, 1);
-	m_lpPosFlap->Color(1, 0, 1, 1);
-
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
 }
 
 /**
@@ -58,30 +41,8 @@ OsgPrismatic::OsgPrismatic()
 **/
 OsgPrismatic::~OsgPrismatic()
 {
-	//ConstraintLimits are deleted in the base objects.
-	try
-	{
-		DeleteGraphics();
-		DeletePhysics();
-	}
-	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of OsgPrismatic/\r\n", "", -1, FALSE, TRUE);}
 }
 
-
-void OsgPrismatic::EnableLimits(BOOL bVal)
-{
-	Prismatic::EnableLimits(bVal);
-
-	if(m_vxPrismatic)
-		m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);	
-
-	if(m_bEnableLimits)
-	{
-		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
-		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
-	}
-}
 
 void OsgPrismatic::JointPosition(float fltPos)
 {
@@ -177,86 +138,6 @@ void OsgPrismatic::SetupGraphics()
 		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
-}
-
-void OsgPrismatic::DeletePhysics()
-{
-	if(!m_vxPrismatic)
-		return;
-
-	if(GetVsSimulator() && GetVsSimulator()->Universe())
-	{
-		GetVsSimulator()->Universe()->removeConstraint(m_vxPrismatic);
-		delete m_vxPrismatic;
-
-		if(m_lpChild && m_lpParent)
-			m_lpChild->EnableCollision(m_lpParent);
-	}
-
-	m_vxPrismatic = NULL;
-	m_vxJoint = NULL;
-}
-
-void OsgPrismatic::SetupPhysics()
-{
-	if(m_vxPrismatic)
-		DeletePhysics();
-
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
-
-	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Osg_Err_lUnableToConvertToVsRigidBody, Osg_Err_strUnableToConvertToVsRigidBody);
-
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
-	CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	
-	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
-	Vx::VxTransform vTrans(vMT);
-	Vx::VxReal3 vxRot;
-	vTrans.getRotationEulerAngles(vxRot);
-
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]);
-
-    VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
-
-	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	m_vxPrismatic->setName(m_strID.c_str());
-
-	//lpAssem->addConstraint(m_vxPrismatic);
-	GetVsSimulator()->Universe()->addConstraint(m_vxPrismatic);
-
-	//Disable collisions between this object and its parent
-	m_lpChild->DisableCollision(m_lpParent);
-
-	OsgPrismaticLimit *lpUpperLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpUpperLimit);
-	OsgPrismaticLimit *lpLowerLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpLowerLimit);
-
-	lpUpperLimit->PrismaticRef(m_vxPrismatic);
-	lpLowerLimit->PrismaticRef(m_vxPrismatic);
-
-	//Re-enable the limits once we have initialized the joint
-	EnableLimits(m_bEnableLimits);
-
-	m_vxJoint = m_vxPrismatic;
-	m_iCoordID = m_vxPrismatic->kLinearCoordinate;
-
-	//If the motor is enabled then it will start out with a velocity of	zero.
-	EnableMotor(m_bEnableMotorInit);
-
-    Prismatic::Initialize();
-    OsgJoint::Initialize();
 }
 
 void OsgPrismatic::CreateJoint()

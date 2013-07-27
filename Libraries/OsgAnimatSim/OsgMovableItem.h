@@ -5,6 +5,8 @@
 
 namespace OsgAnimatSim
 {
+    class OsgSimulator;
+
 	namespace Environment
 	{
 
@@ -15,6 +17,7 @@ namespace OsgAnimatSim
 			MovableItem *m_lpThisMI;
 			OsgMovableItem *m_lpThisVsMI;
 			OsgMovableItem *m_lpParentVsMI;
+            OsgSimulator *m_lpOsgSim;
 
 			osg::Matrix m_osgWorldMatrix;
 
@@ -65,7 +68,7 @@ namespace OsgAnimatSim
 			virtual void DeleteSelectedVertex();
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
-			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
+			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT) = 0;
 
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
@@ -81,7 +84,7 @@ namespace OsgAnimatSim
 			OsgMovableItem();
 			virtual ~OsgMovableItem();
 
-			virtual VsSimulator *GetVsSimulator();
+            virtual OsgSimulator *GetOsgSimulator() {return m_lpOsgSim;};
 			virtual OsgMovableItem *VsParent();
 			virtual osg::Group *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};
@@ -144,7 +147,7 @@ namespace OsgAnimatSim
 
 			virtual void BuildLocalMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
-			virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);
+			//virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);  NEED TO REPLACE
 
 		};
 

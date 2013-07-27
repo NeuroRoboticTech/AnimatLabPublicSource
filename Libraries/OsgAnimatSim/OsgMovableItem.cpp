@@ -1,18 +1,18 @@
 #include "StdAfx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgUserData.h"
 #include "OsgUserDataVisitor.h"
 
-//#include "VsSimulationRecorder.h"
 #include "OsgMouseSpring.h"
 #include "OsgLight.h"
 #include "OsgCameraManipulator.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -28,6 +28,7 @@ OsgMovableItem::OsgMovableItem()
 	m_bCullBackfaces = FALSE; //No backface culling by default.
 	m_eTextureMode = GL_TEXTURE_2D;
 
+    m_lpOsgSim = NULL;
 	m_lpThisAB = NULL;
 	m_lpThisMI = NULL;
 	m_lpThisVsMI = NULL;
@@ -37,14 +38,6 @@ OsgMovableItem::OsgMovableItem()
 
 OsgMovableItem::~OsgMovableItem()
 {
-}
-
-VsSimulator *OsgMovableItem::GetVsSimulator()
-{
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-	//if(!lpVsSim)
-	//	THROW_ERROR(Osg_Err_lUnableToConvertToVsSimulator, Osg_Err_strUnableToConvertToVsSimulator);
-	return lpVsSim;
 }
 
 void OsgMovableItem::SetThisPointers()
@@ -62,6 +55,8 @@ void OsgMovableItem::SetThisPointers()
 		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpThisVsMI, " + m_lpThisAB->Name());
 
 	m_lpThisMI->PhysicsMovableItem(this);
+
+    m_lpOsgSim = dynamic_cast<OsgSimulator *>(m_lpThisAB->GetSimulator());
 }
 
 string OsgMovableItem::Physics_ID()
@@ -133,11 +128,9 @@ void OsgMovableItem::CreateSelectedGraphics(string strName)
 
 void OsgMovableItem::CreateDragger(string strName)
 {
-	string strVers = osgGetSOVersion();  
-
 	if(m_lpThisAB->GetSimulator())
 	{
-		if(GetVsSimulator()->OsgCmdMgr())
+		if(GetOsgSimulator()->OsgCmdMgr())
 		{
 			if(m_osgDragger.valid())
 				m_osgDragger.release();
@@ -149,7 +142,7 @@ void OsgMovableItem::CreateDragger(string strName)
 
 			m_osgDragger->setupDefaultGeometry();
 
-			GetVsSimulator()->OsgCmdMgr()->connect(*m_osgDragger, *m_osgMT);
+			GetOsgSimulator()->OsgCmdMgr()->connect(*m_osgDragger, *m_osgMT);
 
 			//Add pointers to this object to the grip so it will no which body part to
 			//call the EndGripDrag method on when the drag is finished.
@@ -370,60 +363,24 @@ BOOL OsgMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float
 
 	return FALSE;
 }
-
-/*
-CStdFPoint OsgMovableItem::GetOSGWorldCoords()
-{
-	CStdFPoint vTemp = GetMyOSGWorldCoords();
-
-	CStdFPoint vOld = GetOSGWorldCoords(GetMatrixTransform());
-
-	int iDiff = 0;
-	if(vOld != vTemp)
-		iDiff = 1;
-
-	return vOld;
-}
-
-CStdFPoint OsgMovableItem::GetOSGWorldCoords(osg::MatrixTransform *osgMT)
-{
-	OsgWorldCoordinateNodeVisitor ncv;
-	osgMT->accept(ncv);
-	osg::Vec3 vCoord = ncv.MatrixTransform().getTrans();
-	CStdFPoint vPoint(vCoord[0], vCoord[1], vCoord[2]);
-	return vPoint;
-}
-
-osg::Matrix OsgMovableItem::GetOSGWorldMatrix()
-{
-	return GetOSGWorldMatrix(GetMatrixTransform());
-}
-
-osg::Matrix OsgMovableItem::GetOSGWorldMatrix(osg::MatrixTransform *osgMT)
-{
-	OsgWorldCoordinateNodeVisitor ncv;
-	osgMT->accept(ncv);
-	return ncv.MatrixTransform();
-}
-*/
-
-void OsgMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
-{
-	osg::Vec3f vWorldPos;
-	osg::Vec3f vLocal;
-
-	vLocalPos[0] = vWorld[0]; vLocalPos[1] = vWorld[1]; vLocalPos[2] = vWorld[2];
-	vWorldPos[0] = vWorld[0]; vWorldPos[1] = vWorld[1]; vWorldPos[2] = vWorld[2];
-
-	if(m_osgNode.valid())
-	{
-	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
-	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
-	  vLocal = vWorldPos * worldToLocal;
-	}
-
-	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];
-} 
+// NEED TO REPLACE
+//void OsgMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
+//{
+//	osg::Vec3f vWorldPos;
+//	osg::Vec3f vLocal;
+//
+//	vLocalPos[0] = vWorld[0]; vLocalPos[1] = vWorld[1]; vLocalPos[2] = vWorld[2];
+//	vWorldPos[0] = vWorld[0]; vWorldPos[1] = vWorld[1]; vWorldPos[2] = vWorld[2];
+//
+//	if(m_osgNode.valid())
+//	{
+//	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
+//	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
+//	  vLocal = vWorldPos * worldToLocal;
+//	}
+//
+//	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];
+//} 
 
 osg::MatrixTransform* OsgMovableItem::GetMatrixTransform()
 {
@@ -457,36 +414,36 @@ void OsgMovableItem::UpdatePositionAndRotationFromMatrix()
 {
 	UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
 }
-
-void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
-{
-	LocalMatrix(osgMT);
-
-	//Lets get the current world coordinates for this body part and then recalculate the 
-	//new local position for the part and then finally reset its new local position.
-	osg::Vec3 vL = osgMT.getTrans();
-	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
-	vLocal.ClearNearZero();
-	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
-		
-	//Now lets get the euler angle rotation
-	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
-	Vx::VxTransform vTrans(vxTM);
-	Vx::VxReal3 vEuler;
-	vTrans.getRotationEulerAngles(vEuler);
-	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-	vRot.ClearNearZero();
-	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
-
-	if(m_osgDragger.valid())
-		m_osgDragger->SetupMatrix();
-
-	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
-	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
-	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
-		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
-}
+//
+//void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
+//{
+//	LocalMatrix(osgMT);
+//
+//	//Lets get the current world coordinates for this body part and then recalculate the 
+//	//new local position for the part and then finally reset its new local position.
+//	osg::Vec3 vL = osgMT.getTrans();
+//	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
+//	vLocal.ClearNearZero();
+//	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
+//		
+//	//Now lets get the euler angle rotation
+//	Vx::VxReal44 vxTM;
+//	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
+//	Vx::VxTransform vTrans(vxTM);
+//	Vx::VxReal3 vEuler;
+//	vTrans.getRotationEulerAngles(vEuler);
+//	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+//	vRot.ClearNearZero();
+//	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
+//
+//	if(m_osgDragger.valid())
+//		m_osgDragger->SetupMatrix();
+//
+//	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
+//	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
+//	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
+//		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
+//}
 
 void OsgMovableItem::Physics_UpdateMatrix()
 {

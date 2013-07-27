@@ -1,14 +1,15 @@
 #include "StdAfx.h"
 
-#include "OsgMouseSpring.h"
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
+#include "OsgMouseSpring.h"
 #include "OsgStructure.h"
 #include "OsgLight.h"
 #include "OsgUserData.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -230,8 +231,8 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 				
 				if(osgData && m_lpSim)
 				{
-					lpBody = osgData->GetBody();
-					lpJoint = osgData->GetJoint();
+					//lpBody = osgData->GetBody();  //NEED TO REPAIR
+					//lpJoint = osgData->GetJoint();
 					lpStruct = osgData->GetStructure();
 					lpLight = osgData->GetLight();
 
@@ -288,9 +289,10 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 						case SIMULATION_SELECTION_MODE:
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )
 							{
-								OsgMouseSpring::GetInstance()->SetRigidBody(osgData->GetOsgBody());
-								OsgMouseSpring::GetInstance()->SetGrabPosition(hitr->getLocalIntersectPoint());            
-								m_lpPicked = osgData->GetBody();
+                                //NEED TO REPAIR
+								//OsgMouseSpring::GetInstance()->SetRigidBody(osgData->GetOsgBody());
+								//OsgMouseSpring::GetInstance()->SetGrabPosition(hitr->getLocalIntersectPoint());            
+								//m_lpPicked = osgData->GetBody();
 								return;
 							}
 							break;
@@ -368,31 +370,20 @@ void OsgCameraManipulator::GetPickedFace(int iIndex, osg::Geometry *osgGeo)
 
 BOOL OsgCameraManipulator::CanDoMouseSpring()
 {
-	VsRigidBody *osgRBBody = OsgMouseSpring::GetInstance()->GetRigidBody();
-
-	if (!osgRBBody)
-		return FALSE;
-
-	RigidBody *rbBody = dynamic_cast<RigidBody *>(osgRBBody);
-	
-	if (!rbBody)
-		return FALSE;
-
-	return TRUE;
+    if(OsgMouseSpring::GetInstance()->GetRigidBody() && OsgMouseSpring::GetInstance()->GetMovableItem())
+    	return TRUE;
+    else
+        return FALSE;
 }
 
 BOOL OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
 {	
 	OsgMouseSpring::GetInstance()->Visible(FALSE);
 
-	VsRigidBody *osgRBBody = OsgMouseSpring::GetInstance()->GetRigidBody();
+	OsgMovableItem *osgRBBody = OsgMouseSpring::GetInstance()->GetMovableItem();
+	RigidBody *rbBody = OsgMouseSpring::GetInstance()->GetRigidBody();
 
-	if (!osgRBBody)
-		return FALSE;
-
-	RigidBody *rbBody = dynamic_cast<RigidBody *>(osgRBBody);
-	
-	if (!rbBody)
+	if (!osgRBBody || !rbBody)
 		return FALSE;
 
 	OsgMouseSpring::GetInstance()->Visible(TRUE);

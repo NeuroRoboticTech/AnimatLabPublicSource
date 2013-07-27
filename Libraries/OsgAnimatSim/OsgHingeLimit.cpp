@@ -18,16 +18,10 @@ namespace OsgAnimatSim
 
 OsgHingeLimit::OsgHingeLimit()
 {
-	m_vxHinge = NULL;
 }
 
 OsgHingeLimit::~OsgHingeLimit()
 {
-}
-
-void OsgHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
-{
-	m_vxHinge = vxHinge;
 }
 
 void OsgHingeLimit::Alpha(float fltA)
@@ -67,17 +61,6 @@ void OsgHingeLimit::SetLimitPos()
 
 	//Set the limit on the physics hinge object.
 	SetLimitValues();
-}
-
-void OsgHingeLimit::SetLimitValues()
-{
-	if(m_vxHinge)
-	{
-		if(m_bIsLowerLimit)
-			m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-		else
-			m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	}
 }
 
 void OsgHingeLimit::DeleteGraphics()

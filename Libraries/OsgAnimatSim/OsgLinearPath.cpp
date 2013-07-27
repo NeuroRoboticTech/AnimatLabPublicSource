@@ -1,11 +1,10 @@
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 
-//#include "VsSimulationRecorder.h"
 #include "OsgMouseSpring.h"
 #include "OsgLight.h"
 #include "OsgCameraManipulator.h"
@@ -15,6 +14,7 @@
 #include "OsgLinearPath.h"
 #include "OsgSimulationWindow.h"
 #include "OsgScriptedSimulationWindow.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -566,7 +566,7 @@ bool OsgLinearPath::AfterPathTime(double dblTime)
 
 void OsgLinearPath::RemoveCurve()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+	OsgSimulator *lpVsSim = dynamic_cast<OsgSimulator *>(m_lpSim);
 
 	if(lpVsSim && lpVsSim->OSGRoot())
 	{
@@ -581,7 +581,7 @@ void OsgLinearPath::RemoveCurve()
 
 void OsgLinearPath::RedrawCurve()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+	OsgSimulator *lpVsSim = dynamic_cast<OsgSimulator *>(m_lpSim);
 
 	RemoveCurve();
 

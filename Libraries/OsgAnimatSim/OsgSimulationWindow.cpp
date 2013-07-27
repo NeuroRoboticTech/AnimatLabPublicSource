@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "OsgMouseSpring.h"
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgLight.h"
 #include "OsgUserData.h"
@@ -11,6 +10,7 @@
 #include "OsgMouseSpring.h"
 #include "OsgDraggerHandler.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -99,7 +99,7 @@ void OsgSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
 
 void OsgSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos)
 {
-	VxVector3 position(oTarget.x, oTarget.y, oTarget.z);
+	osg::Vec3d position(oTarget.x, oTarget.y, oTarget.z);
 
 	osg::Vec3d vEye, vCenter, vUp;
 	float fltlookat=0;
@@ -107,11 +107,11 @@ void OsgSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos)
 
 	osg::Vec3d pos;
     if(bResetEyePos)
-        pos.set(position.v[0]+50, position.v[1]+10, position.v[2]);
+        pos.set(position[0]+50, position[1]+10, position[2]);
     else
         pos = vEye;
 
-    osg::Vec3d target(position.v[0], position.v[1], position.v[2]);
+    osg::Vec3d target(position[0], position[1], position[2]);
 
 	vUp = osg::Vec3d(0, 1, 0);
 	m_osgManip->setHomePosition(pos, target, vUp, false );
@@ -150,9 +150,7 @@ void OsgSimulationWindow::TrackCamera()
 	if(m_lpTrackBody)
 	{
 		CStdFPoint oPos = m_lpTrackBody->AbsolutePosition();
-		VxVector3 position(oPos.x, oPos.y, oPos.z);
-
-		osg::Vec3 v(position[0], position[1], position[2]); 
+		osg::Vec3d v(oPos.x, oPos.y, oPos.z);
 		m_osgManip->setCenter(v);
 	}
 }
@@ -164,7 +162,7 @@ void OsgSimulationWindow::UpdateBackgroundColor()
 		m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 }
 
-void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim)
+void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, OsgSimulator *lpVsSim)
 {
     m_osgViewer = new osgViewer::Viewer;
 
@@ -235,7 +233,7 @@ void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim)
 	m_osgViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
 }
 
-void OsgSimulationWindow::InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim)
+void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim)
 {
 
 	m_osgViewer = new osgViewer::Viewer;
@@ -290,7 +288,7 @@ void OsgSimulationWindow::Initialize()
 	if(!m_lpWinMgr)
 		THROW_ERROR(Osg_Err_lUnableToConvertToVsWinMgr, Osg_Err_strUnableToConvertToVsWinMgr);
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
+	OsgSimulator *lpVsSim = dynamic_cast<OsgSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Osg_Err_lUnableToConvertToVsSimulator, Osg_Err_strUnableToConvertToVsSimulator);
 

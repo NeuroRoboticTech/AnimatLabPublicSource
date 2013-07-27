@@ -22,8 +22,7 @@ namespace OsgAnimatSim
 		protected:
 			Structure *m_lpThisST;
 			Organism *m_lpThisOG;
-			VsRigidBody *m_lpOsgBody;
-			Vx::VxAssembly *m_lpAssembly;
+			OsgMovableItem *m_lpOsgBody;
 
 			virtual void SetThisPointers();
 			virtual void SetupPhysics();
@@ -35,7 +34,6 @@ namespace OsgAnimatSim
 			virtual ~OsgOrganism();
 
 			virtual void Body(RigidBody *lpBody);
-			virtual void *Assembly() {return (void *)m_lpAssembly;};
 
 			virtual osg::Group *ParentOSG();
 			virtual void Create();

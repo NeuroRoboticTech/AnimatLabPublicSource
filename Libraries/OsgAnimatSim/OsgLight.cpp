@@ -6,13 +6,14 @@
 
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
-#include "OsgBody.h"
-#include "OsgJoint.h"
+//#include "OsgBody.h"
+//#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgLight.h"
 #include "OsgUserData.h"
 #include "OsgUserDataVisitor.h"
 #include "OsgDragger.h"
+#include "OsgSimulator.h"
 
 namespace OsgAnimatSim
 {
@@ -59,16 +60,16 @@ void OsgLight::SetThisPointers()
 
 osg::Group *OsgLight::ParentOSG()
 {
-	return GetVsSimulator()->OSGRoot();
+	return GetOsgSimulator()->OSGRoot();
 }
 
 void OsgLight::Enabled(BOOL bVal)
 {
 	 AnimatSim::Environment::Light::Enabled(bVal);
 
-	 if(GetVsSimulator() &&  GetVsSimulator()->OSGRoot())
+	 if(GetOsgSimulator() &&  GetOsgSimulator()->OSGRoot())
 	 {
-		osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+		osg::StateSet *rootStateSet = GetOsgSimulator()->OSGRoot()->getOrCreateStateSet();
 
 		if(bVal)
 			rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
@@ -191,7 +192,7 @@ void OsgLight::SetupLighting()
 
     m_osgLightSource = new osg::LightSource;
     m_osgLightSource->setLight(m_osgLight.get());
-	GetVsSimulator()->OSGRoot()->addChild(m_osgLightSource.get());
+	GetOsgSimulator()->OSGRoot()->addChild(m_osgLightSource.get());
 
 	Enabled(m_bEnabled);
 }
@@ -213,12 +214,12 @@ void OsgLight::DeleteGraphics()
 {
 	OsgMovableItem::DeleteGraphics();
 
-	if(m_osgLightSource.valid() && GetVsSimulator() && GetVsSimulator()->OSGRoot())
+	if(m_osgLightSource.valid() && GetOsgSimulator() && GetOsgSimulator()->OSGRoot())
 	{
-		if(GetVsSimulator()->OSGRoot()->containsNode(m_osgLightSource.get()))
-			GetVsSimulator()->OSGRoot()->removeChild(m_osgLightSource.get());
+		if(GetOsgSimulator()->OSGRoot()->containsNode(m_osgLightSource.get()))
+			GetOsgSimulator()->OSGRoot()->removeChild(m_osgLightSource.get());
 		
-		osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+		osg::StateSet *rootStateSet = GetOsgSimulator()->OSGRoot()->getOrCreateStateSet();
 		rootStateSet->setMode( GetGlLight(), osg::StateAttribute::OFF );
 	}
 
