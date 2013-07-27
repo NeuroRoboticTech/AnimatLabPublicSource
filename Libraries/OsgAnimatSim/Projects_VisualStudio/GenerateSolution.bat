@@ -1,4 +1,4 @@
-echo "Generating VortexAnimatSim Visual Studio Solution"
+echo "Generating OsgAnimatSim Visual Studio Solution"
 
 premake4 --os=windows --file=Solution.lua vs2010
 
