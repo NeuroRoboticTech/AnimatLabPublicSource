@@ -8,13 +8,12 @@
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
 #include "OsgJoint.h"
-#include "VsMotorizedJoint.h"
-#include "VsRigidBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
 #include "OsgHingeLimit.h"
 #include "OsgHinge.h"
 #include "OsgStructure.h"
-#include "VsSimulator.h"
+#include "OsgSimulator.h"
 #include "OsgUserData.h"
 #include "OsgUserDataVisitor.h"
 #include "OsgDragger.h"
@@ -34,7 +33,6 @@ namespace OsgAnimatSim
 **/
 OsgHinge::OsgHinge()
 {
-	SetThisPointers();
 	m_fltRotationDeg = 0;
 }
 
@@ -99,7 +97,7 @@ void OsgHinge::CreateCylinderGraphics()
 	m_osgCylinderGeode = new osg::Geode;
 	m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
 
-	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
+	CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
 	m_osgCylinderMT = new osg::MatrixTransform();
 	m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
 	m_osgCylinderMT->addChild(m_osgCylinderGeode.get());
@@ -150,8 +148,8 @@ void OsgHinge::SetupGraphics()
 	if(m_osgParent.valid())
 	{
 		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
+		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
+		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
 		
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
@@ -253,7 +251,7 @@ void OsgHinge::StepSimulation()
 void OsgHinge::UpdateData()
 {
 	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/VX_PI)*180);
+	m_fltRotationDeg = ((m_fltPosition/osg::PI)*180);
 }
 
 		}		//Joints

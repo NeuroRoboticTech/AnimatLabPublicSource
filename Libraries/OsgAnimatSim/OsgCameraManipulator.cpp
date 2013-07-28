@@ -2,8 +2,9 @@
 
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
-//#include "OsgBody.h"
-//#include "OsgJoint.h"
+#include "OsgBody.h"
+#include "OsgRigidBody.h"
+#include "OsgJoint.h"
 #include "OsgMouseSpring.h"
 #include "OsgStructure.h"
 #include "OsgLight.h"
@@ -231,8 +232,8 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 				
 				if(osgData && m_lpSim)
 				{
-					//lpBody = osgData->GetBody();  //NEED TO REPAIR
-					//lpJoint = osgData->GetJoint();
+					lpBody = osgData->GetBody();
+					lpJoint = osgData->GetJoint();
 					lpStruct = osgData->GetStructure();
 					lpLight = osgData->GetLight();
 
@@ -289,10 +290,9 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 						case SIMULATION_SELECTION_MODE:
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )
 							{
-                                //NEED TO REPAIR
-								//OsgMouseSpring::GetInstance()->SetRigidBody(osgData->GetOsgBody());
-								//OsgMouseSpring::GetInstance()->SetGrabPosition(hitr->getLocalIntersectPoint());            
-								//m_lpPicked = osgData->GetBody();
+								OsgMouseSpring::GetInstance()->SetRigidBody(osgData->GetBody());
+								OsgMouseSpring::GetInstance()->SetGrabPosition(hitr->getLocalIntersectPoint());            
+								m_lpPicked = osgData->GetBody();
 								return;
 							}
 							break;

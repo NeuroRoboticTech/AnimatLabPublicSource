@@ -1,8 +1,9 @@
 #include "StdAfx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
-//#include "OsgBody.h"
-//#include "OsgJoint.h"
+#include "OsgBody.h"
+#include "OsgRigidBody.h"
+#include "OsgJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgUserData.h"
@@ -363,24 +364,6 @@ BOOL OsgMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float
 
 	return FALSE;
 }
-// NEED TO REPLACE
-//void OsgMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
-//{
-//	osg::Vec3f vWorldPos;
-//	osg::Vec3f vLocal;
-//
-//	vLocalPos[0] = vWorld[0]; vLocalPos[1] = vWorld[1]; vLocalPos[2] = vWorld[2];
-//	vWorldPos[0] = vWorld[0]; vWorldPos[1] = vWorld[1]; vWorldPos[2] = vWorld[2];
-//
-//	if(m_osgNode.valid())
-//	{
-//	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
-//	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
-//	  vLocal = vWorldPos * worldToLocal;
-//	}
-//
-//	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];
-//} 
 
 osg::MatrixTransform* OsgMovableItem::GetMatrixTransform()
 {

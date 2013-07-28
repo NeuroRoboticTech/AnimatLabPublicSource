@@ -2,6 +2,7 @@
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
 #include "OsgPrismaticLimit.h"
 #include "OsgStructure.h"
@@ -90,7 +91,7 @@ void OsgPrismaticLimit::SetLimitPos()
 		m_osgCylinder = CreateConeGeometry(fabs(m_fltLimitPos), lpPrismatic->CylinderRadius(), lpPrismatic->CylinderRadius(), 10, true, true, true);
 		m_osgCylinderGeode->addDrawable(m_osgCylinder.get());		
 
-		vPos.Set(0, 0, (-m_fltLimitPos/2)); vRot.Set(VX_PI/2, 0, 0); 
+		vPos.Set(0, 0, (-m_fltLimitPos/2)); vRot.Set(osg::PI/2, 0, 0); 
 		m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
 	}
 
@@ -161,7 +162,7 @@ void OsgPrismaticLimit::SetupGraphics()
 			m_osgCylinderGeode = new osg::Geode;
 			m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
 
-			CStdFPoint vPos(0, 0, (-m_fltLimitPos/2)), vRot(VX_PI/2, 0, 0); 
+			CStdFPoint vPos(0, 0, (-m_fltLimitPos/2)), vRot(osg::PI/2, 0, 0); 
 			m_osgCylinderMT = new osg::MatrixTransform();
 			m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
 			m_osgCylinderMT->addChild(m_osgCylinderGeode.get());

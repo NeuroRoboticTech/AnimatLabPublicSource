@@ -147,8 +147,6 @@ namespace OsgAnimatSim
 
 			virtual void BuildLocalMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
-			//virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);  NEED TO REPLACE
-
 		};
 
 	}			// Environment

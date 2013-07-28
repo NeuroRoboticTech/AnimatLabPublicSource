@@ -5,9 +5,14 @@
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
-#include "OsgLine.h"
+#include "OsgStructure.h"
+#include "OsgSimulator.h"
+#include "OsgUserData.h"
+#include "OsgUserDataVisitor.h"
 #include "OsgDragger.h"
+#include "OsgLine.h"
 
 
 namespace OsgAnimatSim
@@ -35,7 +40,7 @@ catch(...)
 
 void OsgLine::SetThisPointers()
 {
-	VsRigidBody::SetThisPointers();
+	OsgRigidBody::SetThisPointers();
 
 	m_lpLineBase = dynamic_cast<LineBase *>(this);
 	if(!m_lpLineBase)
@@ -145,7 +150,7 @@ void OsgLine::DrawLine()
 void OsgLine::SetupGraphics()
 {
 	//Add it to the root scene graph because the vertices are in global coords.
-	GetVsSimulator()->OSGRoot()->addChild(m_osgNode.get());
+	GetOsgSimulator()->OSGRoot()->addChild(m_osgNode.get());
 	SetVisible(m_lpThisMI->IsVisible());
 }
 
@@ -158,7 +163,7 @@ void OsgLine::DeleteGraphics()
 		SetVisible(FALSE);
 	}
 
-	VsRigidBody::DeleteGraphics();
+	OsgRigidBody::DeleteGraphics();
 }
 
 void OsgLine::CreateGraphicsGeometry()
@@ -167,17 +172,12 @@ void OsgLine::CreateGraphicsGeometry()
 	m_osgGeometry = CreateLineGeometry();
 }
 
-void OsgLine::CreatePhysicsGeometry()
-{
-	m_vxGeometry = NULL;
-}
-
 void OsgLine::CreateParts()
 {
 	CreateGeometry();
 
-	VsRigidBody::CreateItem();
-	VsRigidBody::SetBody();
+	OsgRigidBody::CreateItem();
+	SetBody();
 }
 
 void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)

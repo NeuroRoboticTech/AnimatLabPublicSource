@@ -7,8 +7,6 @@ namespace OsgAnimatSim
 	{
 		void ANIMAT_OSG_PORT ApplyVertexTransform(osg::Node *node, osg::Matrix omat);
 		BOOL ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2);
-		osg::Quat ANIMAT_OSG_PORT EulerToQuaternion(float fX, float fY, float fZ);
-		CStdFPoint ANIMAT_OSG_PORT QuaterionToEuler(osg::Quat vQuat);
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot);
 		void ANIMAT_OSG_PORT SetNodeColor(osg::Node *osgNode, CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);

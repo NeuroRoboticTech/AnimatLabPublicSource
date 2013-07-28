@@ -1,8 +1,9 @@
 #include "StdAfx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
-//#include "OsgBody.h"
-//#include "OsgJoint.h"
+#include "OsgBody.h"
+#include "OsgRigidBody.h"
+#include "OsgJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgUserData.h"
@@ -757,127 +758,15 @@ BOOL ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 	return TRUE;
 }
 
-osg::Quat ANIMAT_OSG_PORT EulerToQuaternion(float fX, float fY, float fZ)
-{
-	//Vx::VxTransform vTrans;
-	//vTrans.createFromTranslationAndEulerAngles(vTrans, vEuler);
-
-
-	//Vx::VxEulerAngles vAngle(fX, fY, fZ);
-	//VxReal44 M; 
-	//vAngle.toVxMatrix44(M);
-
-	float c1 = cos(fY/2); 
-	float c2 = cos(fZ/2); 
-	float c3 = cos(fX/2); 
-	
-	float s1 = sin(fY/2);
-	float s2 = sin(fZ/2);
-	float s3 = sin(fX/2);
-
-	float c1c2 = c1 * c2;
-	float s1s2 = s1 * s2;
-	
-	float w =c1c2 * c3 - s1s2 * s3;
-  	float x =c1c2 * s3 + s1s2 * c3;
-	float y =s1*c2 * c3 + c1 * s2*s3;
-	float z =c1*s2 * c3 - s1 * c2*s3;
-	
-	return osg::Quat(x, y, z, w);
-}
-
-CStdFPoint ANIMAT_OSG_PORT QuaterionToEuler(osg::Quat vQ)
-{
-    //NEED TO REPAIR
-	//Vx::VxQuaternion vxQuat(vQ.w(), vQ.x(), vQ.y(), vQ.z());
-	//Vx::VxVector3 vEuler;
-	//vxQuat.toEulerXYZ(&vEuler);
-	//CStdFPoint vRot(vEuler.x(), vEuler.y(), vEuler.z());
-	CStdFPoint vRot;
-	return vRot;
-}
-
-/*
-osg::Quat EulerToQuaternion(float fX, float fY, float fZ)
-{
-	float cos_z_2 = cosf(0.5*fZ);
-	float cos_y_2 = cosf(0.5*fY);
-	float cos_x_2 = cosf(0.5*fX);
-
-	float sin_z_2 = sinf(0.5*fZ);
-	float sin_y_2 = sinf(0.5*fY);
-	float sin_x_2 = sinf(0.5*fX);
-
-	// and now compute quaternion
-	float w  = cos_z_2*cos_y_2*cos_x_2 + sin_z_2*sin_y_2*sin_x_2;
-	float x = cos_z_2*cos_y_2*sin_x_2 - sin_z_2*sin_y_2*cos_x_2;
-	float y = cos_z_2*sin_y_2*cos_x_2 + sin_z_2*cos_y_2*sin_x_2;
-	float z = sin_z_2*cos_y_2*cos_x_2 - cos_z_2*sin_y_2*sin_x_2;
-
-	return osg::Quat(x, y, z, w);
-}
-
-CStdFPoint QuaterionToEuler(osg::Quat vQuat)
-{
-	osg::Vec4d v = vQuat.asVec4();
-	float sqw = v.w()*v.w();    
-	float sqx = v.x()*v.x();    
-	float sqy = v.y()*v.y();    
-	float sqz = v.z()*v.z();    
-
-	CStdFPoint vEuler;
-	vEuler.x = atan2f(2.f * (v.x()*v.y() + v.z()*v.w()), sqx - sqy - sqz + sqw);    		
-	vEuler.y = asinf(-2.f * (v.x()*v.z() - v.y()*v.w()));
-	vEuler.z = atan2f(2.f * (v.y()*v.z() + v.x()*v.w()), -sqx - sqy + sqz + sqw);    
-	return vEuler;
-}
-
-CStdFPoint QuaterionToEuler(osg::Quat q1) 
-{
-    double sqw = q1.w()*q1.w();
-    double sqx = q1.x()*q1.x();
-    double sqy = q1.y()*q1.y();
-    double sqz = q1.z()*q1.z();
-	double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-	double test = q1.x()*q1.y() + q1.z()*q1.w();
-	float heading, attitude, bank;
-
-	if (test > 0.499*unit) 
-	{ // singularity at north pole
-		heading = 2 * atan2(q1.x(),q1.w());
-		attitude = PI_HALF;
-		bank = 0;
-	}
-	else if (test < -0.499*unit) 
-	{ // singularity at south pole
-		heading = -2 * atan2(q1.x(),q1.w());
-		attitude = -PI_HALF;
-		bank = 0;
-	}
-	else
-	{
-		heading = atan2(2*q1.y()*q1.w()-2*q1.x()*q1.z() , sqx - sqy - sqz + sqw);
-		attitude = asin(2*test/unit);
-		bank = atan2(2*q1.x()*q1.w()-2*q1.y()*q1.z() , -sqx + sqy - sqz + sqw);
-	}
-
-	CStdFPoint vRot(bank, heading, attitude);
-	return vRot;
-}
-*/
 
 osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 {
-    //NEED TO REPAIR
-	//Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
-	//Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
-	//Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
-
-	//osg::Matrix osgLocalMatrix;
-	//VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
-
 	osg::Matrix osgLocalMatrix;
-	return osgLocalMatrix;
+	osg::Vec3d vLoc(localPos.x, localPos.y, localPos.z);
+	osg::Vec3d vEuler(localRot.x, localRot.y, localRot.z);
+    OsgMatrixUtil::PositionAndHprToMatrix(osgLocalMatrix, vLoc, vEuler);
+
+    return osgLocalMatrix;
 }
 
 osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)

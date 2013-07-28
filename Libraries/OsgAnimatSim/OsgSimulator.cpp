@@ -68,13 +68,6 @@ void OsgSimulator::AlphaThreshold(float fltValue)
 		    m_osgAlphafunc->setFunction(osg::AlphaFunc::GEQUAL, m_fltAlphaThreshold);
 }
 
-
-SimulationRecorder *OsgSimulator::CreateSimulationRecorder()
-{
-//NEED_TO_FIX
-	return NULL; //new VsSimulationRecorder;
-}
-
 void OsgSimulator::Reset()
 {
 	Simulator::Reset();

@@ -6,6 +6,7 @@
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
 #include "OsgRigidBody.h"
+#include "OsgJoint.h"
 #include "OsgStructure.h"
 #include "OsgSimulator.h"
 #include "OsgUserData.h"

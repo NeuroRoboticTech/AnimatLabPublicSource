@@ -89,11 +89,13 @@ using namespace osgGA;
 namespace OsgAnimatSim
 {
 	class OsgMeshMgr;
+    class OsgMatrixUtils;
 
 	namespace Environment
 	{
         class OsgBody;
 		class OsgJoint;
+        class OsgRigidBody;
 		class OsgLine;
 		class OsgOrganism;
 		class OsgStructure;
@@ -115,7 +117,6 @@ namespace OsgAnimatSim
 		class OsgHud;
 		class OsgHudItem;
 		class OsgHudText;
-		class VsIntersectionEvent;
 		class OsgMouseSpring;
 		class OsgUserData;
 		class OsgUserDataVisitor;
@@ -132,10 +133,12 @@ using namespace OsgAnimatSim::Environment;
 using namespace OsgAnimatSim::Environment::Joints;
 using namespace OsgAnimatSim::Visualization;
 
-#include "VsMeshMgr.h"
+#include "OsgMatrixUtil.h"
+#include "OsgMeshMgr.h"
 
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
 
 #include "OsgHinge.h"

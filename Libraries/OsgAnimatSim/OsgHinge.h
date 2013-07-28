@@ -33,7 +33,7 @@ namespace OsgAnimatSim
 			\author	dcofer
 			\date	4/15/2011
 			**/
-			class ANIMAT_OSG_PORT OsgHinge : public AnimatSim::Environment::Joints::Hinge     
+			class ANIMAT_OSG_PORT OsgHinge : public OsgJoint, AnimatSim::Environment::Joints::Hinge     
 			{
 			protected:
 				/// The rotation of the hinge in degrees.

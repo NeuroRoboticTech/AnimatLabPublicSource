@@ -34,7 +34,6 @@ namespace OsgAnimatSim
 
 		OsgMeshMgr *m_lpMeshMgr;
 
-		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
 
 		virtual void UpdateSimulationWindows();

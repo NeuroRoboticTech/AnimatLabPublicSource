@@ -91,15 +91,18 @@ using namespace osgGA;
 #include <OpenThreads/Thread>
 
 #include "OsgAnimatSimConstants.h"
+#include "OsgMatrixUtil.h"
 
 //Simulation Objects
 namespace OsgAnimatSim
 {
 	class OsgMeshMgr;
+    class OsgMatrixUtil;
 
 	namespace Environment
 	{
         class OsgBody;
+        class OsgRigidBody;
 		class OsgJoint;
 		class OsgLine;
 		class OsgOrganism;
@@ -122,7 +125,6 @@ namespace OsgAnimatSim
 		class OsgHud;
 		class OsgHudItem;
 		class OsgHudText;
-		class VsIntersectionEvent;
 		class OsgMouseSpring;
 		class OsgUserData;
 		class OsgUserDataVisitor;

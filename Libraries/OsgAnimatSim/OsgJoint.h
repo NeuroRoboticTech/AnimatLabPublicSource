@@ -66,7 +66,7 @@ namespace OsgAnimatSim
 			virtual void SetupGraphics();
             virtual void DeleteGraphics();
 			virtual void SetupPhysics();
-			//virtual VxVector3 NormalizeAxis(CStdFPoint vLocalRot); //NEED TO REPLACE
+			virtual osg::Vec3d NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
 
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);

@@ -2,6 +2,7 @@
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
 #include "OsgHingeLimit.h"
 #include "OsgStructure.h"

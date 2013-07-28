@@ -8,7 +8,7 @@ namespace OsgAnimatSim
 	namespace Environment
 	{
 
-		class ANIMAT_OSG_PORT OsgLine : public VsRigidBody
+		class ANIMAT_OSG_PORT OsgLine : public OsgRigidBody
 		{
 		protected:
 			LineBase *m_lpLineBase;
@@ -23,7 +23,6 @@ namespace OsgAnimatSim
 			virtual void SetTexture(string strTexture) {};
 			virtual void SetCulling() {};
 			virtual void CreateGraphicsGeometry();
-			virtual void CreatePhysicsGeometry();
 			virtual int BuildLines(osg::Geometry *linesGeom);
 			virtual void SetThisPointers();
 			virtual void DeleteGraphics();

@@ -13,11 +13,9 @@ namespace OsgAnimatSim
 		namespace Joints
 		{
 
-			class ANIMAT_OSG_PORT OsgPrismatic : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Prismatic     
+			class ANIMAT_OSG_PORT OsgPrismatic : public OsgJoint, public AnimatSim::Environment::Joints::Prismatic     
 			{
 			protected:
-				Vx::VxPrismatic *m_vxPrismatic;
-
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void SetupGraphics();

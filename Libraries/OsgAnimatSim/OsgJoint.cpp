@@ -57,20 +57,19 @@ void OsgJoint::SetThisPointers()
 
 	m_lpThisJoint->PhysicsBody(this);
 }
-//NEED TO REPAIR
-//VxVector3 OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
-//{
-//	osg::Vec3 vPosN(1, 0, 0);
-//	CStdFPoint vMatrixPos(0, 0, 0);
-//
-//	osg::Matrix osgMT = SetupMatrix(vMatrixPos, vLocalRot);
-//
-//	osg::Vec3 vNorm = vPosN * osgMT;
-//
-//	VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
-//
-//	return axis;
-//}
+
+osg::Vec3d OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
+{
+	osg::Vec3 vPosN(1, 0, 0);
+	CStdFPoint vMatrixPos(0, 0, 0);
+
+	osg::Matrix osgMT = SetupMatrix(vMatrixPos, vLocalRot);
+
+	osg::Vec3 vNorm = vPosN * osgMT;
+	//VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
+
+	return vNorm;
+}
 
 osg::Group *OsgJoint::ParentOSG()
 {

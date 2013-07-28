@@ -7,6 +7,7 @@
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
+#include "OsgRigidBody.h"
 #include "OsgJoint.h"
 #include "OsgPrismaticLimit.h"
 #include "OsgPrismatic.h"
@@ -30,7 +31,6 @@ namespace OsgAnimatSim
 **/
 OsgPrismatic::OsgPrismatic()
 {
-	SetThisPointers();
 }
 
 /**
@@ -112,8 +112,8 @@ void OsgPrismatic::SetupGraphics()
 	if(m_osgParent.valid())
 	{
 		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
+		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
+		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 

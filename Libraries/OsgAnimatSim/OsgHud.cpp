@@ -6,6 +6,9 @@
 
 #include "StdAfx.h"
 #include "OsgMovableItem.h"
+#include "OsgBody.h"
+#include "OsgRigidBody.h"
+#include "OsgJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgUserData.h"
