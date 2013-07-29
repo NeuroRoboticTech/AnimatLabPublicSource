@@ -5,14 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsBallSocket.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -88,8 +85,6 @@ void VsBallSocket::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
@@ -101,12 +96,12 @@ void VsBallSocket::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
+	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
 
 	m_vxSocket = new VxBallAndSocket(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxSocket->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
 	GetVsSimulator()->Universe()->addConstraint(m_vxSocket);
 
 	//Disable collisions between this object and its parent

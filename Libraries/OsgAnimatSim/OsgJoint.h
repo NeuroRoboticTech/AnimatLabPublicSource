@@ -87,6 +87,8 @@ namespace OsgAnimatSim
 			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			//Methods not used by joints.
+			virtual void Physics_Resize();
+			virtual void Physics_ResetSimulation();
 			virtual void Physics_SetParent(MovableItem *lpParent);
 			virtual void Physics_SetChild(MovableItem *lpChild);
 			virtual void Physics_UpdateMatrix();

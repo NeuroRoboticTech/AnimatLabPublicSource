@@ -381,5 +381,26 @@ void OsgJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<st
 {
 }
 
+void OsgJoint::Physics_Resize()
+{
+    if(Physics_IsDefined())
+    {
+        DeleteJointGraphics();
+        CreateJointGraphics();
+        ResetDraggerOnResize();
+    }
+}
+
+void OsgJoint::Physics_ResetSimulation()
+{
+	if(Physics_IsDefined())
+	{
+		m_lpThisJoint->JointPosition(0); 
+		m_lpThisJoint->JointVelocity(0);
+		m_lpThisJoint->JointForce(0);
+	}
+}
+
+
 	}			// Environment
 }				//OsgAnimatSim

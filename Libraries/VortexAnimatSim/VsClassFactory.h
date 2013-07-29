@@ -2,12 +2,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_VSCLASSFACTORY_H__DCB5874D_000C_499E_833C_89D8D1629818__INCLUDED_)
-#define AFX_VSCLASSFACTORY_H__DCB5874D_000C_499E_833C_89D8D1629818__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
+
 
 namespace VortexAnimatSim
 {
@@ -41,5 +37,3 @@ namespace VortexAnimatSim
 	};
 
 }			//VortexAnimatSim
-
-#endif // !defined(AFX_VSCLASSFACTORY_H__DCB5874D_000C_499E_833C_89D8D1629818__INCLUDED_)

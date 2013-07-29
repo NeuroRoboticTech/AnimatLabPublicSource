@@ -5,17 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPlane.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -69,7 +63,7 @@ void VsPlane::CreateParts()
 	CreateGeometry();
 
 	//Create the geometry and osg drawable nodes.
-	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
+	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
 	VsRigidBody::CreateItem();
 	Plane::CreateParts();

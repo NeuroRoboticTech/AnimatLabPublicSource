@@ -145,22 +145,7 @@ namespace AnimatSim
 
 			virtual void MinTimeStep(float &fltMin);
 
-			/**
-			\fn	virtual void Structure::*Assembly() = 0;
-			
-			\brief	Gets the assembly pointer.
-
-			\details This is a pure virtual method that is used in the derived class to return 
-			a pointer to the vortex assembly object. 
-			
-			\author	dcofer
-			\date	2/25/2011
-			
-			\return	null if it fails, else. 
-			**/
-			virtual void *Assembly() = 0;
-
-			virtual void Create();
+            virtual void Create();
 			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
 

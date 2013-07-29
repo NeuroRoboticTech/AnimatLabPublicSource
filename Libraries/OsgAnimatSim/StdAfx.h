@@ -98,23 +98,16 @@ namespace OsgAnimatSim
 {
 	class OsgMeshMgr;
     class OsgMatrixUtil;
+    class OsgSimulator;
 
 	namespace Environment
 	{
+        class OsgLight;
         class OsgBody;
         class OsgRigidBody;
 		class OsgJoint;
-		class OsgLine;
 		class OsgOrganism;
 		class OsgStructure;
-
-		namespace Joints
-		{
-			class OsgHinge;
-			class OsgHingeLimit;
-			class OsgPrismatic;
-			class OsgPrismaticLimit;
-		}
 	}
 
 	namespace Visualization
@@ -138,5 +131,4 @@ namespace OsgAnimatSim
 
 using namespace OsgAnimatSim;
 using namespace OsgAnimatSim::Environment;
-using namespace OsgAnimatSim::Environment::Joints;
 using namespace OsgAnimatSim::Visualization;

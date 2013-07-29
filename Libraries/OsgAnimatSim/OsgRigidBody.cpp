@@ -124,6 +124,18 @@ void OsgRigidBody::Physics_Resize()
 			osgVisitor->traverse(*m_osgNodeGroup);
 		}
 	}
+
+	if(Physics_IsDefined())
+	{
+		ResizePhysicsGeometry();
+
+		//We need to reset the density in order for it to recompute the mass and volume.
+		if(m_lpThisRB)
+			Physics_SetDensity(m_lpThisRB->Density());
+
+		//Now get base values, including mass and volume
+		GetBaseValues();
+	}
 }
 
 void OsgRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos)
@@ -163,6 +175,10 @@ void OsgRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
 	CreateSelectedVertex(m_lpThisAB->Name());
 }
 
+void OsgRigidBody::Initialize()
+{
+	//GetBaseValues();
+}
 
 /**
 \brief	Builds the local matrix.
@@ -213,6 +229,23 @@ void OsgRigidBody::ResetSensorCollisionGeom()
 
 	if(lpVsParent)
 		SetFollowEntity(lpVsParent);
+}
+
+void OsgRigidBody::SetupPhysics()
+{
+	//If no geometry is defined then this part does not have a physics representation.
+	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
+	if(Physics_IsDefined() && m_lpThisRB)
+	{
+		//If the parent is not null and the joint is null then that means we need to statically link this part to 
+		//its parent. So we do not create a physics part, we just get a link to its parents part.
+		if(m_lpThisRB->IsContactSensor())
+			CreateSensorPart();
+		else if(m_lpThisRB->HasStaticJoint())
+			CreateStaticPart();
+		else
+			CreateDynamicPart();
+	}
 }
 
 float *OsgRigidBody::Physics_GetDataPointer(const string &strDataType)

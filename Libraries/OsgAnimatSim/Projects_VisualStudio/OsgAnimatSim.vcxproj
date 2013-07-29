@@ -1,229 +1,221 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
-			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
-			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-	</ItemGroup>
-	<PropertyGroup Label="Globals">
-		<ProjectGuid>{D89130C9-37B7-5947-9B57-7073DB5983EF}</ProjectGuid>
-		<RootNamespace>OsgAnimatSim</RootNamespace>
-		<Keyword>Win32Proj</Keyword>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Label="ExtensionSettings">
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup>
-		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\Debug\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OsgAnimatSim_vc10D</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\Release\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OsgAnimatSim_vc10</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-	</PropertyGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)OsgAnimatSim_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)OsgAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\OsgAnimatSim_vc10D.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)OsgAnimatSim_vc10D.lib ..\..\..\lib\OsgAnimatSim_vc10D.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)OsgAnimatSim_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\OsgAnimatSim_vc10.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)OsgAnimatSim_vc10.lib ..\..\..\lib\OsgAnimatSim_vc10.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<ClInclude Include="..\OsgBody.h" />
-		<ClInclude Include="..\OsgCameraManipulator.h" />
-		<ClInclude Include="..\OsgDragger.h" />
-		<ClInclude Include="..\OsgDraggerHandler.h" />
-		<ClInclude Include="..\OsgGeometry.h" />
-		<ClInclude Include="..\OsgHinge.h" />
-		<ClInclude Include="..\OsgHingeLimit.h" />
-		<ClInclude Include="..\OsgHud.h" />
-		<ClInclude Include="..\OsgHudText.h" />
-		<ClInclude Include="..\OsgJoint.h" />
-		<ClInclude Include="..\OsgLight.h" />
-		<ClInclude Include="..\OsgLine.h" />
-		<ClInclude Include="..\OsgLinearPath.h" />
-		<ClInclude Include="..\OsgMatrixUtil.h" />
-		<ClInclude Include="..\OsgMeshMgr.h" />
-		<ClInclude Include="..\OsgMeshMinVertexDistanceVisitor.h" />
-		<ClInclude Include="..\OsgMouseSpring.h" />
-		<ClInclude Include="..\OsgMovableItem.h" />
-		<ClInclude Include="..\OsgOrganism.h" />
-		<ClInclude Include="..\OsgPrismatic.h" />
-		<ClInclude Include="..\OsgPrismaticLimit.h" />
-		<ClInclude Include="..\OsgRigidBody.h" />
-		<ClInclude Include="..\OsgScriptedSimulationWindow.h" />
-		<ClInclude Include="..\OsgSimulationWindow.h" />
-		<ClInclude Include="..\OsgSimulationWindowMgr.h" />
-		<ClInclude Include="..\OsgSimulator.h" />
-		<ClInclude Include="..\OsgStructure.h" />
-		<ClInclude Include="..\OsgTrackballDragger.h" />
-		<ClInclude Include="..\OsgTrackballManipulator.h" />
-		<ClInclude Include="..\OsgTranslateAxisDragger.h" />
-		<ClInclude Include="..\OsgUserData.h" />
-		<ClInclude Include="..\OsgUserDataVisitor.h" />
-		<ClInclude Include="..\OsgWorldCoordinateNodeVisitor.h" />
-		<ClInclude Include="..\StdAfx.h" />
-	</ItemGroup>
-	<ItemGroup>
-		<ClCompile Include="..\OsgAnimatSim.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgCameraManipulator.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgDragger.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgDraggerHandler.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgGeometry.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgHinge.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgHingeLimit.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgHud.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgHudText.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgLight.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgLine.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgLinearPath.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgMatrixUtil.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgMeshMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgMeshMinVertexDistanceVisitor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgMouseSpring.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgMovableItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgOrganism.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgPrismatic.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgPrismaticLimit.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgRigidBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgScriptedSimulationWindow.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgSimulationWindow.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgSimulationWindowMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgSimulator.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgStructure.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgTrackballDragger.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgTrackballManipulator.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgTranslateAxisDragger.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgUserData.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgUserDataVisitor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OsgWorldCoordinateNodeVisitor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdAfx.cpp">
-		</ClCompile>
-	</ItemGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-	<ImportGroup Label="ExtensionTargets">
-	</ImportGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D89130C9-37B7-5947-9B57-7073DB5983EF}</ProjectGuid>
+    <RootNamespace>OsgAnimatSim</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OsgAnimatSim_vc10D</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OsgAnimatSim_vc10</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)OsgAnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDataBaseFileName>$(OutDir)OsgAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
+      <ImportLibrary>Debug\OsgAnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)OsgAnimatSim_vc10D.lib ..\..\..\lib\OsgAnimatSim_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin
+Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)OsgAnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\Vortex_5_1\3rdparty\osg-2.8.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>Release\OsgAnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)OsgAnimatSim_vc10.lib ..\..\..\lib\OsgAnimatSim_vc10.lib
+Copy $(TargetPath) ..\..\..\bin
+Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\OsgBody.h" />
+    <ClInclude Include="..\OsgCameraManipulator.h" />
+    <ClInclude Include="..\OsgDragger.h" />
+    <ClInclude Include="..\OsgDraggerHandler.h" />
+    <ClInclude Include="..\OsgGeometry.h" />
+    <ClInclude Include="..\OsgHud.h" />
+    <ClInclude Include="..\OsgHudText.h" />
+    <ClInclude Include="..\OsgJoint.h" />
+    <ClInclude Include="..\OsgLight.h" />
+    <ClInclude Include="..\OsgLinearPath.h" />
+    <ClInclude Include="..\OsgMatrixUtil.h" />
+    <ClInclude Include="..\OsgMeshMgr.h" />
+    <ClInclude Include="..\OsgMeshMinVertexDistanceVisitor.h" />
+    <ClInclude Include="..\OsgMouseSpring.h" />
+    <ClInclude Include="..\OsgMovableItem.h" />
+    <ClInclude Include="..\OsgOrganism.h" />
+    <ClInclude Include="..\OsgRigidBody.h" />
+    <ClInclude Include="..\OsgScriptedSimulationWindow.h" />
+    <ClInclude Include="..\OsgSimulationWindow.h" />
+    <ClInclude Include="..\OsgSimulationWindowMgr.h" />
+    <ClInclude Include="..\OsgSimulator.h" />
+    <ClInclude Include="..\OsgStructure.h" />
+    <ClInclude Include="..\OsgTrackballDragger.h" />
+    <ClInclude Include="..\OsgTrackballManipulator.h" />
+    <ClInclude Include="..\OsgTranslateAxisDragger.h" />
+    <ClInclude Include="..\OsgUserData.h" />
+    <ClInclude Include="..\OsgUserDataVisitor.h" />
+    <ClInclude Include="..\OsgWorldCoordinateNodeVisitor.h" />
+    <ClInclude Include="..\StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\OsgAnimatSim.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgCameraManipulator.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgDragger.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgDraggerHandler.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgGeometry.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgHud.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgHudText.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgLight.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgLinearPath.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMatrixUtil.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMeshMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMeshMinVertexDistanceVisitor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMouseSpring.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgMovableItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgOrganism.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgRigidBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgScriptedSimulationWindow.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgSimulationWindow.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgSimulationWindowMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgSimulator.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgStructure.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgTrackballDragger.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgTrackballManipulator.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgTranslateAxisDragger.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgUserData.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgUserDataVisitor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OsgWorldCoordinateNodeVisitor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\StdAfx.cpp">
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

@@ -5,17 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSphere.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 #include "VsDistanceJoint.h"
 
 namespace VortexAnimatSim
@@ -103,14 +97,11 @@ void VsDistanceJoint::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	float fltDistance = Std_CalculateDistance(m_lpParent->AbsolutePosition(), m_lpChild->AbsolutePosition());
 
 	m_vxDistance = new VxDistanceJoint(lpVsParent->Part(), lpVsChild->Part(), fltDistance);
 	m_vxDistance->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
 	GetVsSimulator()->Universe()->addConstraint(m_vxDistance);
 
 	//Disable collisions between this object and its parent

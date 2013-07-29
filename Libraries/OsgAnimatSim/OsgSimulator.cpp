@@ -5,8 +5,6 @@
 #include "stdafx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
-//#include "VsBody.h"
-//#include "VsJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgSimulator.h"
@@ -39,6 +37,7 @@ OsgSimulator::OsgSimulator()
 	m_lStepTimeCount = 0;
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
+    m_lpMouseSpring = new OsgMouseSpring;
 }
 
 OsgSimulator::~OsgSimulator()
@@ -53,6 +52,9 @@ try
 	}
 
 	m_bShuttingDown = TRUE;
+
+    if(m_lpMouseSpring)
+        delete m_lpMouseSpring;
 
 	Reset();
 }

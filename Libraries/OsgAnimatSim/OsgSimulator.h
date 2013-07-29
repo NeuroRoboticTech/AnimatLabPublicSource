@@ -42,6 +42,8 @@ namespace OsgAnimatSim
 
 		osg::ref_ptr<osg::Node> m_Spline;
 	
+        OsgMouseSpring *m_lpMouseSpring;
+
 	public:
 		OsgSimulator();
 		virtual ~OsgSimulator();
@@ -56,6 +58,7 @@ namespace OsgAnimatSim
 
 			return m_lpMeshMgr;
 		};
+        OsgMouseSpring *MouseSpring() {return m_lpMouseSpring;};
 		
 #pragma region HelperMethods
 

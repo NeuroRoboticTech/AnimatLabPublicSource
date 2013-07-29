@@ -62,77 +62,7 @@
 #include <VxPersistence/Persistence.h>
 #include "Vx/VxEulerAngles.h"
 
-// OSG includes
-#include <osg/Group>
-#include <osg/Geode>
-#include <osg/Geometry>
-#include <osg/Matrixd>
-#include <osg/MatrixTransform>
-#include <osg/Material> 
-#include <osg/Math>
-#include <osg/Node>
-#include <osg/PolygonMode>
-#include <osg/PolygonOffset>
-#include <osg/ShapeDrawable>
-#include <osg/StateSet>
-#include <osg/TexGen>
-#include <osg/Plane>
-#include <osg/Texture>
-#include <osg/Texture1D>
-#include <osg/Texture2D>
-#include <osg/Texture3D>
-#include <osg/TextureCubeMap>
-#include <osg/TextureRectangle>
-#include <osg/CullFace>
-#include <osgText/Text>
-#include <osg/ref_ptr>
-#include <osg/CoordinateSystemNode>
-#include <osg/ClusterCullingCallback>
-#include <osg/Camera>
-#include <osg/io_utils>
-#include <osg/LineWidth>
-#include <osg/Autotransform>
-#include <osg/StateAttribute>
-#include <osg/AlphaFunc>
-
-#include <osgDB/ReadFile>
-#include <osgDB/WriteFile>
-#include <osgDB/FileUtils>
-
-#include <osgFX/BumpMapping>
-#include <osgSim/DOFTransform>
-
-#include <osgUtil/Optimizer>
-#include <osgUtil/SmoothingVisitor>
-
-#include <osgViewer/GraphicsWindow>
-#include <osgViewer/Viewer>
-#include <osgViewer/ViewerEventHandlers>
-#include <osgViewer/api/win32/GraphicsWindowWin32>
-#include <osgViewer/CompositeViewer>
-
-#include <osgGA/GUIEventAdapter>
-#include <osgGA/GUIActionAdapter>
-#include <osgGA/StateSetManipulator>
-#include <osgGA/TrackballManipulator>
-#include <osgGA/MatrixManipulator>
-
-#include <osgManipulator/CommandManager>
-#include <osgManipulator/TabBoxDragger>
-#include <osgManipulator/TabPlaneDragger>
-#include <osgManipulator/TabPlaneTrackballDragger>
-#include <osgManipulator/TrackballDragger>
-#include <osgManipulator/Translate1DDragger>
-#include <osgManipulator/Translate2DDragger>
-#include <osgManipulator/TranslateAxisDragger>
-#include <osgManipulator/AntiSquish>
-
-#include "WorldCoordinateNodeVisitor.h"
-
-using namespace osgGA;
-
-#include <OpenThreads/Thread>
-
+#include "OsgAnimatSim.h"
 #include "VortexAnimatSimConstants.h"
 
 //Simulation Objects
@@ -140,12 +70,9 @@ namespace VortexAnimatSim
 {
 	class VsClassFactory;
 	class VsSimulator;
-	class VsMeshMgr;
 
 	namespace Environment
 	{
-		class VsMovableItem;
-		class VsBody;
 		class VsJoint;
 		class VsMotorizedJoint;
 		class VsLine;
@@ -209,23 +136,7 @@ namespace VortexAnimatSim
 
 	namespace Visualization
 	{
-		class VsCameraManipulator;
-		class VsDragger;
-		class VsDraggerHandler;
-		class VsHud;
-		class VsHudItem;
-		class VsHudText;
 		class VsIntersectionEvent;
-		class VsMouseSpring;
-		class VsOsgUserData;
-		class VsOsgUserDataVisitor;
-		class VsSimulationWindow;
-		class VsScriptedSimulationWindow;
-		class VsSimulationWindowMgr;
-		class VsTrackballDragger;
-		class VsTranslateAxisDragger;
-		class WorldCoordinateNodeVisitor;
-		class OsgLinearPath;
 	}
 }
 
@@ -240,12 +151,9 @@ using namespace VortexAnimatSim::Visualization;
 using namespace Vx;
 
 #include "VsClassFactory.h"
-#include "VsMeshMgr.h"
 
 #include "VsConstraintRelaxation.h"
 #include "VsConstraintFriction.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
@@ -277,8 +185,6 @@ using namespace Vx;
 #include "VsLinearHillStretchReceptor.h"
 #include "VsSpring.h"
 
-#include "VsOrganism.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
 
 #include "VsMaterialType.h"
@@ -289,24 +195,7 @@ using namespace Vx;
 
 #include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
-
-#include "VsTrackballDragger.h"
-#include "VsTranslateAxisDragger.h"
-#include "WorldCoordinateNodeVisitor.h"
-#include "OsgLinearPath.h"
-
-#include "VsHudText.h"
-#include "VsHud.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
-#include "VsDraggerHandler.h"
-#include "VsMouseSpring.h"
-#include "VsCameraManipulator.h"
 #include "VsIntersectionEvent.h"
-#include "VsSimulationWindow.h"
-#include "VsScriptedSimulationWindow.h"
-#include "VsSimulationWindowMgr.h"
 
 
 #endif // __VORTEX_ANIMAT_LIB_DLL_H__

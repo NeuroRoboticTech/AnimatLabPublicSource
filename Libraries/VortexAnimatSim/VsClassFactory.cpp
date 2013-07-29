@@ -7,8 +7,6 @@
 
 #include "VsConstraintRelaxation.h"
 #include "VsConstraintFriction.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
@@ -43,26 +41,13 @@
 #include "VsLinearHillStretchReceptor.h"
 #include "VsSpring.h"
 
-#include "VsOrganism.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
 
 #include "VsMaterialType.h"
 
-//#include "VsVideoKeyFrame.h"
-//#include "VsSnapshotKeyFrame.h"
-
 #include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
 //#include "VsInverseMuscleCurrent.h"
-
-#include "VsHudText.h"
-#include "VsHud.h"
-#include "VsSimulationWindow.h"
-#include "VsScriptedSimulationWindow.h"
-#include "VsDragger.h"
-
-#include "VsLight.h"
 
 namespace VortexAnimatSim
 {
@@ -227,11 +212,11 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC")
-		lpStructure = new VsOrganism;
+		lpStructure = new OsgOrganism;
 	else if(strType == "ORGANISM")
-		lpStructure = new VsOrganism;
+		lpStructure = new OsgOrganism;
 	else if(strType == "STRUCTURE")
-		lpStructure = new VsStructure;
+		lpStructure = new OsgStructure;
 	else
 	{
 		lpStructure = NULL;
@@ -393,12 +378,6 @@ try
 
 	if(strType == "DATACOLUMN")
 		lpColumn = new DataColumn;
-	//else if(strType == "RIGIDBODYDATA")
-	//	lpColumn = new RigidBodyDataColumn;
-	//else if(strType == "JOINTDATA")
-	//	lpColumn = new JointDataColumn;
-	//else if(strType == "STIMULUSDATA")
-	//	lpColumn = new StimulusDataColumn;
 	else
 	{
 		lpColumn = NULL;
@@ -582,7 +561,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUDTEXT")
-		lpItem = new VsHudText;
+		lpItem = new OsgHudText;
 	else
 	{
 		lpItem = NULL;
@@ -619,7 +598,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUD")
-		lpHud = new VsHud;
+		lpHud = new OsgHud;
 	else
 	{
 		lpHud = NULL;
@@ -693,9 +672,9 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC" || strType == "DEFAULT")
-		lpItem = new VsSimulationWindow;
+		lpItem = new OsgSimulationWindow;
 	else if(strType == "SCRIPTEDSIMWINDOW")
-		lpItem = new VsScriptedSimulationWindow;
+		lpItem = new OsgScriptedSimulationWindow;
 	else
 	{
 		lpItem = NULL;
@@ -732,7 +711,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "LIGHT")
-		lpItem = new VsLight;
+		lpItem = new OsgLight;
 	else
 	{
 		lpItem = NULL;

@@ -32,6 +32,7 @@ namespace OsgAnimatSim
 			virtual void SetupPhysics();
 			virtual void DeletePhysics() {};
 			virtual void UpdatePositionAndRotationFromMatrix();
+            virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT) {};  //REFACTOR
 
 		public:
 			OsgStructure();

@@ -3,15 +3,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsMeshBase.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
-#include "VsOsgUserDataVisitor.h"
 
 namespace VortexAnimatSim
 {
@@ -180,7 +176,7 @@ void VsMeshBase::Physics_Resize()
 		//Reset the user data for the new parts.
 		if(m_osgNodeGroup.valid())
 		{
-			osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+			osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 			osgVisitor->traverse(*m_osgNodeGroup);
 		}
 	}

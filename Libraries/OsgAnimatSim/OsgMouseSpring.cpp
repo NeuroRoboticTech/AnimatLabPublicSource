@@ -19,8 +19,6 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-OsgMouseSpring* OsgMouseSpring::m_instance = NULL;
-
 OsgMouseSpring::OsgMouseSpring(void)
 {
 	m_gdeLine = NULL;

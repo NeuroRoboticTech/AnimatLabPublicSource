@@ -41,6 +41,8 @@ namespace OsgAnimatSim
 			virtual void SetAttenuation();
 			virtual int GetGlLight();
 
+            virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT) {};  //REFACTOR
+
 		public:
 			OsgLight();
 			virtual ~OsgLight();

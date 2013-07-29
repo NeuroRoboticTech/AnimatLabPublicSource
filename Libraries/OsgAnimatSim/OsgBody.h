@@ -9,7 +9,8 @@ namespace OsgAnimatSim
         {
             ControlAnimated,
             ControlNode,
-            ControlDynamic
+            ControlDynamic,
+            ControlStatic
         };
 
         /**

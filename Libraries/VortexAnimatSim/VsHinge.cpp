@@ -5,19 +5,13 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsJoint.h"
 #include "VsHingeLimit.h"
 #include "VsHinge.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -220,7 +214,7 @@ void VsHinge::SetupGraphics()
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
 }
@@ -262,8 +256,6 @@ void VsHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
@@ -275,12 +267,12 @@ void VsHinge::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
+	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
 
 	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxHinge->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
 	GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
 
 	//Disable collisions between this object and its parent

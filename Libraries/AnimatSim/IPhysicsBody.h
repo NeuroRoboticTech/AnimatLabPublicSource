@@ -14,6 +14,7 @@ namespace AnimatSim
 			IPhysicsBody(void);
 			virtual ~IPhysicsBody(void);
 
+            virtual BOOL Physics_IsDefined() = 0;
 			virtual void Physics_SetFreeze(BOOL bVal) = 0;
 			virtual void Physics_SetDensity(float fltVal) = 0;
 			virtual void Physics_SetMaterialID(string strID) = 0;

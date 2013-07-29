@@ -5,14 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsRPRO.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -87,8 +84,6 @@ void VsRPRO::SetupPhysics()
 	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
 
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	

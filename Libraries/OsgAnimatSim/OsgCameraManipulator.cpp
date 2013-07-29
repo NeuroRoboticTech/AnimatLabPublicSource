@@ -20,6 +20,7 @@ namespace OsgAnimatSim
 OsgCameraManipulator::OsgCameraManipulator(Simulator *lpSim, osgViewer::Viewer *osgViewer, osg::Viewport *osgViewport)
 {
 	m_lpSim = lpSim;
+    m_lpOsgSim = dynamic_cast<OsgSimulator *>(lpSim);
 	m_osgViewer = osgViewer;
 	m_osgViewport = osgViewport;
 	m_lpPicked = NULL;
@@ -39,7 +40,7 @@ OsgCameraManipulator::OsgCameraManipulator(Simulator *lpSim, osgViewer::Viewer *
 
 OsgCameraManipulator::~OsgCameraManipulator(void)
 {
-	OsgMouseSpring::GetInstance()->SetRigidBody(NULL);
+	m_lpOsgSim->MouseSpring()->SetRigidBody(NULL);
 }
 
 
@@ -63,7 +64,7 @@ bool OsgCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& a
 
 			case(GUIEventAdapter::RELEASE):
 			{
-				OsgMouseSpring::GetInstance()->Visible(FALSE);
+				m_lpOsgSim->MouseSpring()->Visible(FALSE);
 
 				if(!m_bInDrag)
 				{
@@ -200,7 +201,7 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 	m_lpPicked = NULL;
 
 	//We have clicked something else so set the rigid body to null.
-	OsgMouseSpring::GetInstance()->SetRigidBody(NULL);
+	m_lpOsgSim->MouseSpring()->SetRigidBody(NULL);
 
     float x = ea.getX();
     float y = ea.getY();	
@@ -290,8 +291,8 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 						case SIMULATION_SELECTION_MODE:
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )
 							{
-								OsgMouseSpring::GetInstance()->SetRigidBody(osgData->GetBody());
-								OsgMouseSpring::GetInstance()->SetGrabPosition(hitr->getLocalIntersectPoint());            
+								m_lpOsgSim->MouseSpring()->SetRigidBody(osgData->GetBody());
+								m_lpOsgSim->MouseSpring()->SetGrabPosition(hitr->getLocalIntersectPoint());            
 								m_lpPicked = osgData->GetBody();
 								return;
 							}
@@ -308,7 +309,7 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 	}   
 
 	//If nothing was picked then set the mouse spring body to null
-	OsgMouseSpring::GetInstance()->SetRigidBody(NULL);
+	m_lpOsgSim->MouseSpring()->SetRigidBody(NULL);
 	m_lpPicked = NULL;
 }
 
@@ -370,7 +371,7 @@ void OsgCameraManipulator::GetPickedFace(int iIndex, osg::Geometry *osgGeo)
 
 BOOL OsgCameraManipulator::CanDoMouseSpring()
 {
-    if(OsgMouseSpring::GetInstance()->GetRigidBody() && OsgMouseSpring::GetInstance()->GetMovableItem())
+    if(m_lpOsgSim->MouseSpring()->GetRigidBody() && m_lpOsgSim->MouseSpring()->GetMovableItem())
     	return TRUE;
     else
         return FALSE;
@@ -378,25 +379,25 @@ BOOL OsgCameraManipulator::CanDoMouseSpring()
 
 BOOL OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
 {	
-	OsgMouseSpring::GetInstance()->Visible(FALSE);
+	m_lpOsgSim->MouseSpring()->Visible(FALSE);
 
-	OsgMovableItem *osgRBBody = OsgMouseSpring::GetInstance()->GetMovableItem();
-	RigidBody *rbBody = OsgMouseSpring::GetInstance()->GetRigidBody();
+	OsgMovableItem *osgRBBody = m_lpOsgSim->MouseSpring()->GetMovableItem();
+	RigidBody *rbBody = m_lpOsgSim->MouseSpring()->GetRigidBody();
 
 	if (!osgRBBody || !rbBody)
 		return FALSE;
 
-	OsgMouseSpring::GetInstance()->Visible(TRUE);
+	m_lpOsgSim->MouseSpring()->Visible(TRUE);
 
 	char strDest[150];
 
 	//get the grab position on the body
-	osg::Vec3 vGrabPos = OsgMouseSpring::GetInstance()->GetGrabPosition() *osgRBBody->GetCameraMatrixTransform()->getWorldMatrices().at(0);
-	OsgMouseSpring::GetInstance()->SetStart(vGrabPos);
+	osg::Vec3 vGrabPos = m_lpOsgSim->MouseSpring()->GetGrabPosition() *osgRBBody->GetCameraMatrixTransform()->getWorldMatrices().at(0);
+	m_lpOsgSim->MouseSpring()->SetStart(vGrabPos);
 
 	//get the 3D mouse coords
 	osg::Vec3 v3End = ConvertMouseTo3D(ea, x, y, vGrabPos);
-	OsgMouseSpring::GetInstance()->SetEnd(v3End);
+	m_lpOsgSim->MouseSpring()->SetEnd(v3End);
 
 	//Calculate the force from the spring
 	osg::Vec3 vSpringLength = ((v3End - vGrabPos)); 

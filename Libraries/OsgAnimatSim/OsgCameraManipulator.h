@@ -16,6 +16,7 @@ namespace OsgAnimatSim
 				float m_fltPrevY;
 
 				Simulator *m_lpSim;
+                OsgSimulator *m_lpOsgSim;
 
 				osg::Vec3 m_vPickPoint;
 				osg::Vec3 m_vPickNormal;
