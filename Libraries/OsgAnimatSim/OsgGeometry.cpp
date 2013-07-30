@@ -784,6 +784,15 @@ osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 	return osgLocalMatrix;
 }
 
+CStdFPoint ANIMAT_OSG_PORT EulerRotationFromMatrix(osg::Matrix osgMT)
+{
+    osg::Vec3 vEuler;
+    OsgMatrixUtil::MatrixToHprRad(vEuler, osgMT);
+	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+	vRot.ClearNearZero();
+    return vRot;
+}
+
 void ANIMAT_OSG_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)
 {
 	if(osgNode)

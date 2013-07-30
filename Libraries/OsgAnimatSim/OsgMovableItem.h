@@ -68,7 +68,7 @@ namespace OsgAnimatSim
 			virtual void DeleteSelectedVertex();
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
-			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT) = 0;
+			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
@@ -84,7 +84,7 @@ namespace OsgAnimatSim
 			OsgMovableItem();
 			virtual ~OsgMovableItem();
 
-            virtual OsgSimulator *GetOsgSimulator() {return m_lpOsgSim;};
+            virtual OsgSimulator *GetOsgSimulator();
 			virtual OsgMovableItem *VsParent();
 			virtual osg::Group *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};

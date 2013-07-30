@@ -56,8 +56,18 @@ void OsgMovableItem::SetThisPointers()
 		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpThisVsMI, " + m_lpThisAB->Name());
 
 	m_lpThisMI->PhysicsMovableItem(this);
+}
 
-    m_lpOsgSim = dynamic_cast<OsgSimulator *>(m_lpThisAB->GetSimulator());
+OsgSimulator *OsgMovableItem::GetOsgSimulator()
+{
+    if(!m_lpOsgSim)
+    {
+        m_lpOsgSim = dynamic_cast<OsgSimulator *>(m_lpThisAB->GetSimulator());
+	    if(!m_lpThisVsMI)
+		    THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpOsgSim, " + m_lpThisAB->Name());
+    }
+    
+    return m_lpOsgSim;
 }
 
 string OsgMovableItem::Physics_ID()
@@ -397,36 +407,30 @@ void OsgMovableItem::UpdatePositionAndRotationFromMatrix()
 {
 	UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
 }
-//
-//void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
-//{
-//	LocalMatrix(osgMT);
-//
-//	//Lets get the current world coordinates for this body part and then recalculate the 
-//	//new local position for the part and then finally reset its new local position.
-//	osg::Vec3 vL = osgMT.getTrans();
-//	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
-//	vLocal.ClearNearZero();
-//	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
-//		
-//	//Now lets get the euler angle rotation
-//	Vx::VxReal44 vxTM;
-//	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
-//	Vx::VxTransform vTrans(vxTM);
-//	Vx::VxReal3 vEuler;
-//	vTrans.getRotationEulerAngles(vEuler);
-//	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-//	vRot.ClearNearZero();
-//	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
-//
-//	if(m_osgDragger.valid())
-//		m_osgDragger->SetupMatrix();
-//
-//	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
-//	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
-//	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
-//		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
-//}
+
+void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
+{
+	LocalMatrix(osgMT);
+
+	//Lets get the current world coordinates for this body part and then recalculate the 
+	//new local position for the part and then finally reset its new local position.
+	osg::Vec3 vL = osgMT.getTrans();
+	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
+	vLocal.ClearNearZero();
+	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
+		
+	//Now lets get the euler angle rotation
+    CStdFPoint vRot = EulerRotationFromMatrix(osgMT);    
+	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
+
+	if(m_osgDragger.valid())
+		m_osgDragger->SetupMatrix();
+
+	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
+	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
+	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
+		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
+}
 
 void OsgMovableItem::Physics_UpdateMatrix()
 {

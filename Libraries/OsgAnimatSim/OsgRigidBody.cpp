@@ -235,7 +235,7 @@ void OsgRigidBody::SetupPhysics()
 {
 	//If no geometry is defined then this part does not have a physics representation.
 	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
-	if(Physics_IsDefined() && m_lpThisRB)
+	if(Physics_IsGeometryDefined() && m_lpThisRB)
 	{
 		//If the parent is not null and the joint is null then that means we need to statically link this part to 
 		//its parent. So we do not create a physics part, we just get a link to its parents part.

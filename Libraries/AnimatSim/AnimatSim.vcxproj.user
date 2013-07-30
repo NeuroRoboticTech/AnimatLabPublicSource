@@ -3,7 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\Experiments\Bryce\20130303_RunSims.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-library VortexAnimatSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\Experiments\SingleJointGround\SingleJoint_StandaloneD.asim"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>

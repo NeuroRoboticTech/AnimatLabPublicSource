@@ -165,6 +165,13 @@ void OsgMatrixUtil::PositionAndHprToMatrix(osg::Matrix& rotation, const osg::Vec
    rotation(3, 2) = xyz[2];
 }
 
+void OsgMatrixUtil::MatrixToHprRad(osg::Vec3& hpr, const osg::Matrix& rotation)
+{
+    MatrixToHpr(hpr, rotation);
+    hpr[0] = osg::DegreesToRadians(hpr[0]);
+    hpr[1] = osg::DegreesToRadians(hpr[1]);
+    hpr[2] = osg::DegreesToRadians(hpr[2]);
+}
 
 void OsgMatrixUtil::MatrixToHpr(osg::Vec3& hpr, const osg::Matrix& rotation)
 {

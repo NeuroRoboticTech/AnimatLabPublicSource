@@ -9,6 +9,7 @@ namespace OsgAnimatSim
 		BOOL ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2);
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot);
+        CStdFPoint ANIMAT_OSG_PORT EulerRotationFromMatrix(osg::Matrix osgMT);
 		void ANIMAT_OSG_PORT SetNodeColor(osg::Node *osgNode, CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
 		void ANIMAT_OSG_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode);
 		osg::Geometry ANIMAT_OSG_PORT *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth);

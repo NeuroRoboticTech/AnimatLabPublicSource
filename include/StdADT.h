@@ -579,17 +579,23 @@ public:
 
 	bool operator==(const CStdPoint<T> &oPoint)
 	{
-		if( (x == oPoint.x) && (y == oPoint.y) && (z == oPoint.z) )
-			return true;
-		return false;
+		return Equal(oPoint, 1e-6);
 	};
 
 	bool operator!=(const CStdPoint<T> &oPoint)
 	{
-		if( (x == oPoint.x) && (y == oPoint.y) && (z == oPoint.z) )
-			return false;
-		return true;
+        return !Equal(oPoint, 1e-6);
 	};
+
+    bool Equal(const CStdPoint<T> &oPoint, double fltTolerance)
+    {
+        if( (fabs(x - oPoint.x) < fltTolerance) && 
+            (fabs(y - oPoint.y) < fltTolerance) && 
+            (fabs(z - oPoint.z) < fltTolerance) )
+            return true;
+        else
+            return false;
+    }
 
 	void operator=(const CStdPoint<T> &oPoint)
 	{

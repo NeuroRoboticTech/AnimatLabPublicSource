@@ -56,6 +56,7 @@ namespace VortexAnimatSim
 			VxGeometry *m_vxGeometry;
 			VxCollisionGeometry *m_vxCollisionGeometry;
 			VxNode m_vxGraphicNode;
+            VsSimulator *m_lpVsSim;
 
 			virtual void ProcessContacts();
 
@@ -72,7 +73,6 @@ namespace VortexAnimatSim
 
             virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
             virtual void WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos);
-            virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 
         public:
 			VsRigidBody();
@@ -89,6 +89,7 @@ namespace VortexAnimatSim
 			virtual void SetBody();
 			
             virtual BOOL Physics_IsDefined();
+            virtual BOOL Physics_IsGeometryDefined();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);

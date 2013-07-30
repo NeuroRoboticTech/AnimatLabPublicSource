@@ -29,11 +29,11 @@ namespace VortexAnimatSim
 		protected:
 			Vx::VxConstraint *m_vxJoint;
 			Vx::VxConstraint::CoordinateID m_iCoordID;
+            VsSimulator *m_lpVsSim;
 
 			void UpdatePosition();
 
 			virtual VsSimulator *GetVsSimulator();
-            virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 
 		public:
 			VsJoint();

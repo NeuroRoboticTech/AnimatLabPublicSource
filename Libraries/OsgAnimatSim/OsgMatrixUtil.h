@@ -96,6 +96,13 @@ namespace OsgAnimatSim
 
       /**
       * Translates the rotation part of an osg::Matrix to Euler Angles
+      * @param hpr: the vector to fill with the Euler Angles
+      * @param rotation: the current rotation matrix in radians
+      */
+      static void MatrixToHprRad(osg::Vec3& hpr, const osg::Matrix& rotation);
+
+      /**
+      * Translates the rotation part of an osg::Matrix to Euler Angles
       * As well as the translation to a vector
       * @param xyz: the vector to fill with the translation part of the matrix
       * @param hpr: the vector to fill with the Euler Angles

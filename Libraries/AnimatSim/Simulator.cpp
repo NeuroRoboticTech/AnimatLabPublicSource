@@ -2992,12 +2992,10 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//Set the log file prefix
-#ifndef _WIN32_WCE
 	if(Std_DirectoryExists(strExecutablePath + "Logs"))
 		Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
 	else
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
-#endif
 
 	string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
 	string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);

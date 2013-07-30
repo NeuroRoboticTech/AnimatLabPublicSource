@@ -22,6 +22,7 @@ VsRigidBody::VsRigidBody()
 	m_vxPart = NULL;
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
+    m_lpVsSim = NULL;
 }
 
 VsRigidBody::~VsRigidBody()
@@ -69,6 +70,14 @@ BOOL VsRigidBody::Physics_IsDefined()
         return FALSE;
 }
 
+BOOL VsRigidBody::Physics_IsGeometryDefined()
+{
+    if(m_vxGeometry)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 Vx::VxEntity::EntityControlTypeEnum VsRigidBody::ConvertControlType()
 {
     if(m_eControlType == ControlAnimated)
@@ -99,8 +108,13 @@ CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
 
 VsSimulator *VsRigidBody::GetVsSimulator()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-	return lpVsSim;
+    if(!m_lpVsSim)
+    {
+    	m_lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
+	    if(!m_lpThisVsMI)
+		    THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpVsSim, " + m_lpThisAB->Name());
+    }
+	return m_lpVsSim;
 }
 
 void VsRigidBody::Physics_UpdateNode()
@@ -667,38 +681,6 @@ BOOL VsRigidBody::Physics_HasCollisionGeometry()
 	else
 		return FALSE;
 }
-
-//REFACTOR
-void VsRigidBody::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
-{
-	LocalMatrix(osgMT);
-
-	//Lets get the current world coordinates for this body part and then recalculate the 
-	//new local position for the part and then finally reset its new local position.
-	osg::Vec3 vL = osgMT.getTrans();
-	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
-	vLocal.ClearNearZero();
-	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
-		
-	//Now lets get the euler angle rotation
-	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
-	Vx::VxTransform vTrans(vxTM);
-	Vx::VxReal3 vEuler;
-	vTrans.getRotationEulerAngles(vEuler);
-	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-	vRot.ClearNearZero();
-	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
-
-	if(m_osgDragger.valid())
-		m_osgDragger->SetupMatrix();
-
-	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
-	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
-	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
-		THROW_ERROR(Vs_Err_lUpdateMatricesDoNotMatch, Vs_Err_strUpdateMatricesDoNotMatch);
-}
-
 
 	}			// Environment
 }				//VortexAnimatSim
