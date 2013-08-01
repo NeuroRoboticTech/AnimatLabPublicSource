@@ -54,7 +54,7 @@ try
 	m_aryCallChain.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CStdErrorInfo\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CStdErrorInfo\n", "", -1, false, true);}
 }
 
 /**

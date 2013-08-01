@@ -739,7 +739,7 @@ osg::Geometry ANIMAT_OSG_PORT *CreateEllipsoidGeometry(int latres,
     return sphereGeom;
 }
 
-osg::Geometry ANIMAT_OSG_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid, BOOL bBothSides)
+osg::Geometry ANIMAT_OSG_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid, bool bBothSides)
 {
 	float A = fltCornerX;
 	float B = fltCornerY;
@@ -793,14 +793,14 @@ osg::Geometry ANIMAT_OSG_PORT *CreatePlaneGeometry(float fltCornerX, float fltCo
 	return geom;
 }
 
-BOOL ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
+bool ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 {
 	for(int iRow=0; iRow<4; iRow++)
 		for(int iCol=0; iCol<4; iCol++)
 			if(fabs(v1(iRow,iCol)-v2(iRow,iCol)) > 1e-5)
-				return FALSE;
+				return false;
 
-	return TRUE;
+	return true;
 }
 
 void ANIMAT_OSG_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)

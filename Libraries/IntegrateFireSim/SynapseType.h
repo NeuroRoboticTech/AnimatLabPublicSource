@@ -34,7 +34,7 @@ namespace IntegrateFireSim
 
 #pragma endregion
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify);
 		virtual void VerifySystemPointers();
 
 		protected:

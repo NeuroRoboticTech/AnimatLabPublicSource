@@ -60,7 +60,7 @@ namespace AnimatSim
 **/
 LinearHillStretchReceptor::LinearHillStretchReceptor()
 {
-	m_bApplyTension = FALSE;
+	m_bApplyTension = false;
 	m_fltIaDischargeConstant = 100;
 	m_fltIIDischargeConstant = 100;
 	m_fltIaRate = 0;
@@ -85,7 +85,7 @@ LinearHillStretchReceptor::~LinearHillStretchReceptor()
 
 \return	true to apply tension, false to not.
 **/
-BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
+bool LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
 
 /**
 \brief	Sets wheter tension is applied by the receptor or not.
@@ -95,7 +95,7 @@ BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
 
 \param	bVal	true to apply tension.
 **/
-void LinearHillStretchReceptor::ApplyTension(BOOL bVal) {m_bApplyTension = bVal;}
+void LinearHillStretchReceptor::ApplyTension(bool bVal) {m_bApplyTension = bVal;}
 
 /**
 \brief	Gets the ia discharge constant.
@@ -117,7 +117,7 @@ float LinearHillStretchReceptor::IaDischargeConstant() {return m_fltIaDischargeC
 **/
 void LinearHillStretchReceptor::IaDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IaDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IaDischargeConstant");
 	m_fltIaDischargeConstant = fltVal;
 }
 
@@ -141,7 +141,7 @@ float LinearHillStretchReceptor::IIDischargeConstant() {return m_fltIIDischargeC
 **/
 void LinearHillStretchReceptor::IIDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IIDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IIDischargeConstant");
 	m_fltIIDischargeConstant = fltVal;
 }
 
@@ -199,7 +199,7 @@ float *LinearHillStretchReceptor::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearHillStretchReceptor::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(LinearHillMuscle::SetData(strDataType, strValue, false))
 		return true;
@@ -226,7 +226,7 @@ BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void LinearHillStretchReceptor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

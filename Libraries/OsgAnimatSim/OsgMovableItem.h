@@ -48,7 +48,7 @@ namespace OsgAnimatSim
 			//Some parts, like joints, have an additional offset matrix. This
 			//Final Matrix is the combination of the local and offset matrix. 
 			osg::Matrix m_osgFinalMatrix;		
-			BOOL m_bCullBackfaces;
+			bool m_bCullBackfaces;
 			osg::StateAttribute::GLMode m_eTextureMode;
 
 			osg::ref_ptr<osg::MatrixTransform> m_osgSelVertexMT;
@@ -101,7 +101,7 @@ namespace OsgAnimatSim
 
 			//virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
 			virtual CStdFPoint GetOSGWorldCoords();
-			virtual osg::Matrix GetOSGWorldMatrix(BOOL bUpdate = FALSE);
+			virtual osg::Matrix GetOSGWorldMatrix(bool bUpdate = false);
 			//virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
 
 			virtual void EndGripDrag();
@@ -112,7 +112,7 @@ namespace OsgAnimatSim
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
 			virtual void Physics_UpdateAbsolutePosition();
-			virtual void Physics_Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Physics_Selected(bool bValue, bool bSelectMultiple); 
 			virtual float Physics_GetBoundingRadius();
 			virtual BoundingBox Physics_GetBoundingBox();
 			virtual void Physics_SetColor() {};
@@ -123,7 +123,7 @@ namespace OsgAnimatSim
 			virtual float *Physics_GetDataPointer(const string &strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
-			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
 			virtual void Physics_ResizeDragHandler(float fltRadius);
 
@@ -132,8 +132,8 @@ namespace OsgAnimatSim
 			virtual void SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
 			virtual void SetAlpha();
 			virtual void SetMaterialAlpha(osg::Material *osgMat, osg::StateSet *ss, float fltAlpha);
-			virtual void SetVisible(BOOL bVisible);
-			virtual void SetVisible(osg::Node *osgNode, BOOL bVisible);
+			virtual void SetVisible(bool bVisible);
+			virtual void SetVisible(osg::Node *osgNode, bool bVisible);
 			//virtual osg::Vec3 FindPointOnSurface(osg::Vec3 vDirection);
 
 			//virtual void Initialize() = 0;

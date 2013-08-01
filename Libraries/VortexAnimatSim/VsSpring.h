@@ -36,10 +36,10 @@ namespace VortexAnimatSim
 				VsSpring();
 				virtual ~VsSpring();
 
-				virtual void Enabled(BOOL bVal);
-				virtual void NaturalLength(float fltVal, BOOL bUseScaling = TRUE);
-				virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
-				virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Enabled(bool bVal);
+				virtual void NaturalLength(float fltVal, bool bUseScaling = true);
+				virtual void Stiffness(float fltVal, bool bUseScaling = true);
+				virtual void Damping(float fltVal, bool bUseScaling = true);
 
 				virtual void Physics_CollectData();
 				virtual void Physics_Resize();

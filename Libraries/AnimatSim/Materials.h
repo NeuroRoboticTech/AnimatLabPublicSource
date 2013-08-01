@@ -28,10 +28,10 @@ namespace AnimatSim
 			virtual void LoadMaterialTypes(CStdXml &oXml);
 			virtual MaterialType *LoadMaterialType(CStdXml &oXml);
 
-			virtual void AddMaterialType(string strXml, BOOL bDoNotInit);
-			virtual void RemoveMaterialType(string strID, BOOL bThrowError = TRUE);
+			virtual void AddMaterialType(string strXml, bool bDoNotInit);
+			virtual void RemoveMaterialType(string strID, bool bThrowError = true);
 
-			virtual int FindTypeListPos(string strID, BOOL bThrowError = TRUE);
+			virtual int FindTypeListPos(string strID, bool bThrowError = true);
 
 			virtual void CreateDefaultMaterial();
 
@@ -44,8 +44,8 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 

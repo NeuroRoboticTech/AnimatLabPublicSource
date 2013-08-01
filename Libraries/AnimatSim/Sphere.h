@@ -56,7 +56,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Radius(float fltVal, bool bUseScaling = true);
 
 				virtual void LatitudeSegments(int iVal);
 				virtual int LatitudeSegments();
@@ -64,7 +64,7 @@ namespace AnimatSim
 				virtual void LongtitudeSegments(int iVal);
 				virtual int LongtitudeSegments();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

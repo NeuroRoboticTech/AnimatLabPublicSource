@@ -50,7 +50,7 @@ DataColumn::DataColumn()
 {
 	m_lpDataValue = NULL;
 	m_iAppendSpaces = 0;
-	m_bInitialized = FALSE;
+	m_bInitialized = false;
 	m_iColumnIndex = -1;
 	m_iRowIndex = -1; 
 }
@@ -156,7 +156,7 @@ int DataColumn::AppendSpaces() {return m_iAppendSpaces;}
 **/
 void DataColumn::AppendSpaces(int iSpaces)
 {
-	Std_InValidRange((int) 0, (int) 10, iSpaces, TRUE, "AppendSpaces");
+	Std_InValidRange((int) 0, (int) 10, iSpaces, true, "AppendSpaces");
 	m_iAppendSpaces = iSpaces;
 }
 
@@ -180,7 +180,7 @@ int DataColumn::ColumnIndex() {return m_iColumnIndex;}
 **/
 void DataColumn::ColumnIndex(int iIndex)
 {
-	Std_IsAboveMin((int) -1, iIndex, TRUE, "ColumnIndex", TRUE);
+	Std_IsAboveMin((int) -1, iIndex, true, "ColumnIndex", true);
 	m_iColumnIndex = iIndex;
 }
 
@@ -204,7 +204,7 @@ int DataColumn::RowIndex() {return m_iRowIndex;}
 **/
 void DataColumn::RowIndex(int iIndex)
 {
-	Std_IsAboveMin((int) -1, iIndex, TRUE, "RowIndex", TRUE);
+	Std_IsAboveMin((int) -1, iIndex, true, "RowIndex", true);
 	m_iRowIndex = iIndex;
 }
 
@@ -216,7 +216,7 @@ void DataColumn::RowIndex(int iIndex)
 
 \return	true if initialized, false if not.
 **/
-BOOL DataColumn::IsInitialized() {return m_bInitialized;}
+bool DataColumn::IsInitialized() {return m_bInitialized;}
 
 /**
 \brief	Sets whether this column is initialized.
@@ -226,7 +226,7 @@ BOOL DataColumn::IsInitialized() {return m_bInitialized;}
 
 \param	bVal	true to set that it is initialized. 
 **/
-void DataColumn::IsInitialized(BOOL bVal) {m_bInitialized = bVal;}
+void DataColumn::IsInitialized(bool bVal) {m_bInitialized = bVal;}
 
 /**
 \brief	Gets the pointer to the data value we are collecting.
@@ -249,7 +249,7 @@ void DataColumn::Initialize()
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, 
 		("DataColumn: " + m_strID + " TargetID: " + m_strTargetID +  " DataType: " + m_strDataType));
 
-	m_bInitialized = TRUE;
+	m_bInitialized = true;
 }
 
 void DataColumn::ReInitialize()
@@ -258,31 +258,31 @@ void DataColumn::ReInitialize()
 		Initialize();
 }
 
-BOOL DataColumn::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool DataColumn::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "COLUMNINDEX")
 	{
 		ColumnIndex(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DATATYPE")
 	{
 		DataType(strValue);
 		Initialize();
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void DataColumn::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -316,9 +316,9 @@ void DataColumn::SaveColumnNames(ofstream &oStream)
 }
 
 void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule,
-	                               Node *lpNode, DataChart *lpChart, BOOL bVerify)
+	                               Node *lpNode, DataChart *lpChart, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	m_lpChart = lpChart;
 
 	if(bVerify) VerifySystemPointers();
@@ -344,12 +344,12 @@ void DataColumn::StepSimulation()
 
 \return	true if this objects index value is less than the object passed in, false otherwise.
 **/
-BOOL DataColumn::operator<(DataColumn *lpColumn)
+bool DataColumn::operator<(DataColumn *lpColumn)
 {
 	if(this->m_iColumnIndex < lpColumn->m_iColumnIndex)
-		return TRUE;
+		return true;
 
-	return FALSE;
+	return false;
 }
 
 void DataColumn::Load(CStdXml &oXml)
@@ -380,7 +380,7 @@ void DataColumn::Load(CStdXml &oXml)
 
 \return	true if index of column1 is less than column2.
 **/
-BOOL LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2)
+bool LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2)
 {
 	return lpColumn1->operator<(lpColumn2);
 }

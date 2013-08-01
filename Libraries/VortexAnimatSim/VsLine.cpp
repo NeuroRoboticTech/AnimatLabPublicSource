@@ -31,7 +31,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsLine\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsLine\r\n", "", -1, false, true);}
 }
 
 void VsLine::SetThisPointers()
@@ -156,7 +156,7 @@ void VsLine::DeleteGraphics()
 	{
 		m_osgGeometry->setDataVariance(osg::Object::STATIC);
 		m_osgGeometry->dirtyBound();
-		SetVisible(FALSE);
+		SetVisible(false);
 	}
 
 	VsRigidBody::DeleteGraphics();
@@ -220,8 +220,8 @@ void VsLine::StepSimulation(float fltTension)
 				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
 				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-				lpAttach1Parent->AddForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, TRUE); 
-				lpAttach2Parent->AddForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, TRUE); 
+				lpAttach1Parent->AddForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
+				lpAttach2Parent->AddForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
 
 				lpAttach1 = lpAttach2;
 			}

@@ -171,7 +171,7 @@ CStdFPoint Mesh::Scale() {return m_vScale;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(CStdFPoint &oPoint, BOOL bUpdateMatrix) 
+void Mesh::Scale(CStdFPoint &oPoint, bool bUpdateMatrix) 
 {
 	m_vScale = oPoint;
 
@@ -194,7 +194,7 @@ void Mesh::Scale(CStdFPoint &oPoint, BOOL bUpdateMatrix)
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(float fltX, float fltY, float fltZ, BOOL bUpdateMatrix) 
+void Mesh::Scale(float fltX, float fltY, float fltZ, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Scale(vPos);
@@ -215,7 +215,7 @@ scale of the mesh using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(string strXml, BOOL bUpdateMatrix)
+void Mesh::Scale(string strXml, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -240,66 +240,66 @@ void Mesh::SetMeshFile(string strXml)
 	CollisionMeshType(oXml.GetChildString("MeshType"));
 }
 
-BOOL Mesh::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Mesh::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "MESHFILE")
 	{
 		MeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MESHTYPE")
 	{
 		CollisionMeshType(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONVEXMESHFILE")
 	{
 		ConvexMeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SETMESHFILE")
 	{
 		SetMeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE")
 	{
 		Scale(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.X")
 	{
 		Scale(atof(strValue.c_str()), m_vScale.y, m_vScale.z);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.Y")
 	{
 		Scale(m_vScale.x, atof(strValue.c_str()), m_vScale.z);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.Z")
 	{
 		Scale(m_vScale.x, m_vScale.y, atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Mesh::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -332,7 +332,7 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 	}
 }
 
-BOOL OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
@@ -359,13 +359,13 @@ BOOL OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWo
 				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
 				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
 		
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-BOOL OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
+bool OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
@@ -374,7 +374,7 @@ BOOL OsgJoint::Physics_SetData(const string &strDataType, const string &strValue
 		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 void OsgJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

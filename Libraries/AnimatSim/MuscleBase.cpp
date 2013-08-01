@@ -78,7 +78,7 @@ MuscleBase::~MuscleBase()
 	{
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of MuscleBase\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of MuscleBase\r\n", "", -1, false, true);}
 }
 
 /**
@@ -129,7 +129,7 @@ float MuscleBase::MaxTension() {return m_fltMaxTension;}
 **/
 void MuscleBase::MaxTension(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Max Tension");
+	Std_IsAboveMin((float) 0, fltVal, true, "Max Tension");
 	m_fltMaxTension = fltVal;
 }
 
@@ -171,7 +171,7 @@ float MuscleBase::PrevTension() {return m_fltPrevTension;}
 
 \return	true if it enabled, false otherwise. 
 **/
-BOOL MuscleBase::Enabled() {return m_bEnabled;};
+bool MuscleBase::Enabled() {return m_bEnabled;};
 
 /**
 \brief	Sets whether this muscle is Enabled. 
@@ -181,7 +181,7 @@ BOOL MuscleBase::Enabled() {return m_bEnabled;};
 
 \param	bVal	true to enable. 
 **/
-void MuscleBase::Enabled(BOOL bVal)
+void MuscleBase::Enabled(bool bVal)
 {
 	LineBase::Enabled(bVal);
 
@@ -250,7 +250,7 @@ void MuscleBase::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-void MuscleBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void MuscleBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	m_gainStimTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_gainLengthTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
@@ -282,9 +282,9 @@ float *MuscleBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MuscleBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
-	if(LineBase::SetData(strDataType, strValue, FALSE))
+	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "MAXTENSION")
@@ -309,7 +309,7 @@ BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void MuscleBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

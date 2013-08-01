@@ -52,7 +52,7 @@ namespace AnimatSim
 **/
 EnablerStimulus::EnablerStimulus()
 {
-	m_bEnableWhenActive = TRUE;
+	m_bEnableWhenActive = true;
 }
 
 /**
@@ -68,7 +68,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, false, true);}
 }
 
 string EnablerStimulus::Type() {return "EnablerInput";}
@@ -107,7 +107,7 @@ node during the active period, or disabling it.
 
 \return	true if it enabled while active, false otherwise. 
 **/
-BOOL EnablerStimulus::EnableWhenActive() {return m_bEnableWhenActive;}
+bool EnablerStimulus::EnableWhenActive() {return m_bEnableWhenActive;}
 
 /**
 \brief	Sets whether the node is enabled when active. This is used to control if we are enabling the
@@ -118,7 +118,7 @@ node during the active period, or disabling it.
 
 \param	bVal	true to enable when active. 
 **/
-void EnablerStimulus::EnableWhenActive(BOOL bVal) {m_bEnableWhenActive = bVal;}
+void EnablerStimulus::EnableWhenActive(bool bVal) {m_bEnableWhenActive = bVal;}
 
 void EnablerStimulus::Initialize()
 {
@@ -132,9 +132,9 @@ void EnablerStimulus::Activate()
 	ExternalStimulus::Activate();
 
 	if(m_bEnableWhenActive)
-		m_lpNode->Enabled(TRUE);
+		m_lpNode->Enabled(true);
 	else
-		m_lpNode->Enabled(FALSE);
+		m_lpNode->Enabled(false);
 }
 
 void EnablerStimulus::StepSimulation()
@@ -146,29 +146,29 @@ void EnablerStimulus::Deactivate()
 	ExternalStimulus::Deactivate();
 
 	if(m_bEnableWhenActive)
-		m_lpNode->Enabled(FALSE);
+		m_lpNode->Enabled(false);
 	else
-		m_lpNode->Enabled(TRUE);
+		m_lpNode->Enabled(true);
 }
 
-BOOL EnablerStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool EnablerStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "ENABLEWHENACTIVE")
 	{
 		EnableWhenActive(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void EnablerStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

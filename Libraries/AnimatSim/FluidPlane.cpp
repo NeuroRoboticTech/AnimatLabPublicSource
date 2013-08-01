@@ -82,7 +82,7 @@ CStdFPoint FluidPlane::Velocity() {return m_vVelocity;}
 \param	bUseScaling   	If true then the position values that are passed in will be scaled by the
 						unit scaling values.
 **/
-void FluidPlane::Velocity(CStdFPoint &oPoint, BOOL bUseScaling) 
+void FluidPlane::Velocity(CStdFPoint &oPoint, bool bUseScaling) 
 {
 	if(bUseScaling)
 		m_vVelocity = oPoint * m_lpMovableSim->InverseDistanceUnits();
@@ -102,7 +102,7 @@ void FluidPlane::Velocity(CStdFPoint &oPoint, BOOL bUseScaling)
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void FluidPlane::Velocity(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+void FluidPlane::Velocity(float fltX, float fltY, float fltZ, bool bUseScaling) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Velocity(vPos, bUseScaling);
@@ -119,7 +119,7 @@ reset the velocity using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void FluidPlane::Velocity(string strXml, BOOL bUseScaling)
+void FluidPlane::Velocity(string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -143,36 +143,36 @@ This method allows me to do that. It will be overridden in the VsFluidPlane obje
 void FluidPlane::SetGravity()
 {}
 
-BOOL FluidPlane::AllowRotateDragX() {return FALSE;}
+bool FluidPlane::AllowRotateDragX() {return false;}
 
-BOOL FluidPlane::AllowRotateDragY() {return FALSE;}
+bool FluidPlane::AllowRotateDragY() {return false;}
 
-BOOL FluidPlane::AllowRotateDragZ() {return FALSE;}
+bool FluidPlane::AllowRotateDragZ() {return false;}
 
-BOOL FluidPlane::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool FluidPlane::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Plane::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Plane::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "VELOCITY")
 	{
 		Velocity(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GRAVITY")
 	{
 		SetGravity();
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void FluidPlane::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -193,7 +193,7 @@ void FluidPlane::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	CStdFPoint vPoint;
-	Std_LoadPoint(oXml, "Velocity", vPoint, FALSE);
+	Std_LoadPoint(oXml, "Velocity", vPoint, false);
 	Velocity(vPoint);
 
 	oXml.OutOfElem(); //OutOf RigidBody Element

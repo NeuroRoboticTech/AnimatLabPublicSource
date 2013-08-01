@@ -176,19 +176,19 @@ void CStdXml::Deserialize(string &strXml)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL CStdXml::FindElement(string strElementName, bool bThrowError)
+bool CStdXml::FindElement(string strElementName, bool bThrowError)
 {
 	if(CMarkupSTL::FindElem(strElementName.c_str()))
 	{
 		ClearTagStack();
 		m_aryTagStack.push(strElementName);
 
-		return TRUE;
+		return true;
 	}
 	else if(bThrowError) 
 		THROW_PARAM_ERROR(Std_Err_lElementNotFound, Std_Err_strElementNotFound, "Element", (FullTagPath(false) + "\\" + strElementName));
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -222,7 +222,7 @@ int CStdXml::NumberOfChildren()
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL CStdXml::FindChildByIndex(int iIndex, bool bThrowError)
+bool CStdXml::FindChildByIndex(int iIndex, bool bThrowError)
 {
 	int iPos;
 
@@ -235,11 +235,11 @@ BOOL CStdXml::FindChildByIndex(int iIndex, bool bThrowError)
 			if(bThrowError)
 				THROW_PARAM_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, "Index", iIndex);
 			else
-				return FALSE;
+				return false;
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -253,15 +253,15 @@ BOOL CStdXml::FindChildByIndex(int iIndex, bool bThrowError)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL CStdXml::FindChildElement(string strElementName, bool bThrowError)
+bool CStdXml::FindChildElement(string strElementName, bool bThrowError)
 {
 	ResetChildPos();
 	if(CMarkupSTL::FindChildElem(strElementName.c_str()))
-		return TRUE;
+		return true;
 	else if(bThrowError) 
 		THROW_PARAM_ERROR(Std_Err_lElementNotFound, Std_Err_strElementNotFound, "Element", (FullTagPath(false) + "\\" + strElementName));
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -669,7 +669,7 @@ float CStdXml::GetChildFloat(string strElementName, float fltDefault)
 
 \return	The child bool value.
 **/
-BOOL CStdXml::GetChildBool()
+bool CStdXml::GetChildBool()
 {
 	string strVal;
 
@@ -677,13 +677,13 @@ BOOL CStdXml::GetChildBool()
 	strVal = Std_CheckString(strVal);
 
 	if(strVal == "TRUE" || strVal == "1")
-		return TRUE;
+		return true;
 	else if(strVal == "FALSE" || strVal == "0")
-		return FALSE;
+		return false;
 	else
 		THROW_TEXT_ERROR(Std_Err_lNotBoolType, Std_Err_strNotBoolType, ValueErrorString(strVal));
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -696,7 +696,7 @@ BOOL CStdXml::GetChildBool()
 
 \return	The child bool value.
 **/
-BOOL CStdXml::GetChildBool(string strElementName)
+bool CStdXml::GetChildBool(string strElementName)
 {
 	string strVal;
 
@@ -705,13 +705,13 @@ BOOL CStdXml::GetChildBool(string strElementName)
 	strVal = Std_CheckString(strVal);
 
 	if(strVal == "TRUE" || strVal == "1")
-		return TRUE;
+		return true;
 	else if(strVal == "FALSE" || strVal == "0")
-		return FALSE;
+		return false;
 	else
 		THROW_TEXT_ERROR(Std_Err_lNotBoolType, Std_Err_strNotBoolType, ValueErrorString(strVal));
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -725,10 +725,10 @@ BOOL CStdXml::GetChildBool(string strElementName)
 
 \return	The child bool value.
 **/
-BOOL CStdXml::GetChildBool(string strElementName, bool bDefault)
+bool CStdXml::GetChildBool(string strElementName, bool bDefault)
 {
 	string strVal;
-	BOOL bVal=FALSE;
+	bool bVal=false;
 
 	if(FindChildElement(strElementName, false))
 	{
@@ -736,23 +736,23 @@ BOOL CStdXml::GetChildBool(string strElementName, bool bDefault)
 		strVal = Std_CheckString(strVal);
 
 		if(strVal == "TRUE" || strVal == "1")
-			return TRUE;
+			return true;
 		else if(strVal == "FALSE" || strVal == "0")
-			return FALSE;
+			return false;
 		else
 		{
 			if(bDefault)
-				bVal = TRUE;
+				bVal = true;
 			else
-				bVal = FALSE;
+				bVal = false;
 		}
 	}
 	else
 	{
 		if(bDefault)
-			bVal = TRUE;
+			bVal = true;
 		else
-			bVal = FALSE;
+			bVal = false;
 	}
 
 	return bVal;
@@ -1126,7 +1126,7 @@ float CStdXml::GetAttribFloat(string strAttribName, bool bThrowError, float fltD
 
 \return	The attribute bool.
 **/
-BOOL CStdXml::GetAttribBool(string strAttribName, bool bThrowError, bool bDefault)
+bool CStdXml::GetAttribBool(string strAttribName, bool bThrowError, bool bDefault)
 {
 	string strVal;
 
@@ -1142,13 +1142,13 @@ BOOL CStdXml::GetAttribBool(string strAttribName, bool bThrowError, bool bDefaul
 	}
 
 	if(strVal == "TRUE" || strVal == "1")
-		return TRUE;
+		return true;
 	else if(strVal == "FALSE" || strVal == "0")
-		return FALSE;
+		return false;
 	else
 		THROW_TEXT_ERROR(Std_Err_lNotBoolType, Std_Err_strNotBoolType, ValueErrorString(strVal));
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -1465,7 +1465,7 @@ float CStdXml::GetChildAttribFloat(string strAttribName, bool bThrowError, float
 
 \return	The child attribute bool.
 **/
-BOOL CStdXml::GetChildAttribBool(string strAttribName, bool bThrowError, bool bDefault)
+bool CStdXml::GetChildAttribBool(string strAttribName, bool bThrowError, bool bDefault)
 {
 	string strVal;
 
@@ -1479,13 +1479,13 @@ BOOL CStdXml::GetChildAttribBool(string strAttribName, bool bThrowError, bool bD
 			THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, ValueErrorString(strVal));
 
 	if(strVal == "TRUE" || strVal == "1")
-		return TRUE;
+		return true;
 	else if(strVal == "FALSE" || strVal == "0")
-		return FALSE;
+		return false;
 	else
 		THROW_TEXT_ERROR(Std_Err_lNotBoolType, Std_Err_strNotBoolType, ValueErrorString(strVal));
 
-	return FALSE;
+	return false;
 }
 
 /**

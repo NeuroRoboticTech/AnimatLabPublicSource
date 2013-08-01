@@ -73,7 +73,7 @@ try
 	m_lpTargetObject = NULL;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlAdapter\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlAdapter\r\n", "", -1, false, true);}
 }
 
 /**
@@ -209,42 +209,42 @@ float PropertyControlAdapter::FinalValue()
 **/
 AnimatBase *PropertyControlAdapter::TargetObject() {return m_lpTargetObject;}
 
-BOOL PropertyControlAdapter::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PropertyControlAdapter::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Adapter::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Adapter::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "PROPERTYNAME")
 	{
 		PropertyName(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SETTHRESHOLD")
 	{
 		SetThreshold(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "INITIALVALUE")
 	{
 		InitialValue(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FINALVALUE")
 	{
 		FinalValue(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void PropertyControlAdapter::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

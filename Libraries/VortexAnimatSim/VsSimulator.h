@@ -55,15 +55,15 @@ namespace VortexAnimatSim
 #pragma region MutatorOverrides
 
 		virtual void StabilityScale(float fltVal);
-		virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void LinearKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void AngularKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void LinearCompliance(float fltVal, bool bUseScaling = true);
+		virtual void AngularCompliance(float fltVal, bool bUseScaling = true);
+		virtual void LinearDamping(float fltVal, bool bUseScaling = true);
+		virtual void AngularDamping(float fltVal, bool bUseScaling = true);
+		virtual void LinearKineticLoss(float fltVal, bool bUseScaling = true);
+		virtual void AngularKineticLoss(float fltVal, bool bUseScaling = true);
 
 		virtual void PhysicsTimeStep(float fltVal);
-		virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void Gravity(float fltVal, bool bUseScaling = true);
 		virtual int GetMaterialID(string strID);
 
 #pragma endregion

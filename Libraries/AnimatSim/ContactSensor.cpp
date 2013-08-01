@@ -73,7 +73,7 @@ try
 	m_aryFields.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ContactSensor\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ContactSensor\r\n", "", -1, false, true);}
 }
 
 /**
@@ -109,7 +109,7 @@ Gain *ContactSensor::CurrentGain() {return m_lpCurrentGain;}
 **/
 ReceptiveField *ContactSensor::GetReceptiveField(int iIndex)
 {
-	Std_InValidRange((int) 0, (m_aryFields.GetSize()-1), iIndex, TRUE, "Receptive Field Index");
+	Std_InValidRange((int) 0, (m_aryFields.GetSize()-1), iIndex, true, "Receptive Field Index");
 	return m_aryFields[iIndex];
 }
 
@@ -127,7 +127,7 @@ ReceptiveField *ContactSensor::GetReceptiveField(int iIndex)
 
 \return	true if a ReceptiveField is found, false otherwise.
 **/
-BOOL ContactSensor::FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex)
+bool ContactSensor::FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex)
 {
 	int high = aryFields.GetSize(), low = -1, probe=0;
 
@@ -148,9 +148,9 @@ BOOL ContactSensor::FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, 
 	if((probe < aryFields.GetSize() && aryFields[probe]->Equals(fltX, fltY, fltZ))
 		|| (low > -1 && low < aryFields.GetSize() && aryFields[low]->Equals(fltX, fltY, fltZ))
 		|| (high < aryFields.GetSize() && aryFields[high]->Equals(fltX, fltY, fltZ)))
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -203,7 +203,7 @@ int ContactSensor::FindClosestReceptiveField(float fltX, float fltY, float fltZ)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL ContactSensor::FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex)
+bool ContactSensor::FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex)
 {
 	return FindReceptiveField(m_aryFields, fltX, fltY, fltZ, iIndex);
 }
@@ -249,13 +249,13 @@ void ContactSensor::AddReceptiveField(string strXml)
 	LoadReceptiveField(oXml);
 }
 
-void ContactSensor::RemoveReceptiveField(string strID, BOOL bThrowError)
+void ContactSensor::RemoveReceptiveField(string strID, bool bThrowError)
 {
 	int iPos = FindReceptiveFieldListPos(strID, bThrowError);
 	m_aryFields.RemoveAt(iPos);
 }
 
-int ContactSensor::FindReceptiveFieldListPos(string strID, BOOL bThrowError)
+int ContactSensor::FindReceptiveFieldListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -320,38 +320,38 @@ void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 	}
 }
 
-BOOL ContactSensor::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool ContactSensor::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "RECEPTIVEFIELD")
 	{
 		AddReceptiveField(strXml);
-		return TRUE;
+		return true;
 	}
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL ContactSensor::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool ContactSensor::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "RECEPTIVEFIELD")
 	{
 		RemoveReceptiveField(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 
@@ -370,7 +370,7 @@ void ContactSensor::Load(CStdXml &oXml)
 	if(!m_lpFieldGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
-	m_lpFieldGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	m_lpFieldGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	m_lpFieldGain->Load(oXml);
 
 	oXml.IntoChildElement("CurrentGain");
@@ -382,13 +382,13 @@ void ContactSensor::Load(CStdXml &oXml)
 	if(!m_lpCurrentGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
-	m_lpCurrentGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	m_lpCurrentGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	m_lpCurrentGain->Load(oXml);
 
 	if(m_lpCurrentGain->UseLimits())
 		m_fltMaxForce = m_lpCurrentGain->UpperLimit();
 
-	if(oXml.FindChildElement("Fields", FALSE))
+	if(oXml.FindChildElement("Fields", false))
 	{
 		oXml.IntoElem(); //Into Fields Element
 		int iCount = oXml.NumberOfChildren();
@@ -420,7 +420,7 @@ void ContactSensor::LoadReceptiveField(CStdXml &oXml)
 	try
 	{
 		lpField = new ReceptiveField();
-		lpField->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+		lpField->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 		lpField->Load(oXml);
 
 		m_aryFields.Add(lpField);

@@ -35,7 +35,7 @@ namespace OsgAnimatSim
 			OsgBody();
 			virtual ~OsgBody();
 
-			virtual void Physics_SetFreeze(BOOL bVal) {};
+			virtual void Physics_SetFreeze(bool bVal) {};
 			virtual void Physics_SetDensity(float fltVal) {};
 			virtual void Physics_SetMaterialID(string strID) {};
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) {};
@@ -45,7 +45,7 @@ namespace OsgAnimatSim
 			virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};
-			virtual BOOL Physics_HasCollisionGeometry() {return FALSE;};
+			virtual bool Physics_HasCollisionGeometry() {return false;};
 		};
 
 	}			// Environment

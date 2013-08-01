@@ -28,7 +28,7 @@ namespace IntegrateFireSim
 **/
 IonChannel::IonChannel()
 {
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_fltGmax = 0;
 	m_fltG = 0;
 	m_fltMPower = 0;
@@ -74,7 +74,7 @@ try
 	if(m_lpTh) delete m_lpTh;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of IonChannel\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of IonChannel\r\n", "", -1, false, true);}
 }
 
 
@@ -88,7 +88,7 @@ catch(...)
 
 \param	bVal	true to enable. 
 **/
-void  IonChannel::Enabled(BOOL bVal) {m_bEnabled = bVal;}
+void  IonChannel::Enabled(bool bVal) {m_bEnabled = bVal;}
 
 /**
 \brief	Gets whether this channel is enabled.
@@ -98,7 +98,7 @@ void  IonChannel::Enabled(BOOL bVal) {m_bEnabled = bVal;}
 
 \return	true if enabled, false else.
 **/
-BOOL  IonChannel::Enabled() {return m_bEnabled;}
+bool  IonChannel::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Sets maximum conductance.
@@ -578,102 +578,102 @@ float *IonChannel::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL IonChannel::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool IonChannel::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GMAX")
 	{
 		Gmax(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GINIT")
 	{
 		Ginit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINIT")
 	{
 		Minit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HINIT")
 	{
 		Hinit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MPOWER")
 	{
 		MPower(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HPOWER")
 	{
 		HPower(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{
 		EquilibriumPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "NM")
 	{
 		Nm(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "NH")
 	{
 		Nh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINF")
 	{
 		Minf(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TM")
 	{
 		Tm(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HINF")
 	{
 		Hinf(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TH")
 	{
 		Th(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void IonChannel::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -752,7 +752,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpMinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpMinf->Load(oXml);
 
 	//Load Tm
@@ -765,7 +765,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTm)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpTm->Load(oXml);
 
 	Hinit(oXml.GetChildFloat("Hinit"));
@@ -781,7 +781,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpHinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpHinf->Load(oXml);
 
 	//Load Th
@@ -794,7 +794,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTh)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpTh->Load(oXml);
 
 	oXml.OutOfElem(); //OutOf IonChannel Element

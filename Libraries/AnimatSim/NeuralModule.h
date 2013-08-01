@@ -61,7 +61,7 @@ namespace AnimatSim
 			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
-			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError = true);
 
 		public:
 			NeuralModule();
@@ -111,7 +111,7 @@ namespace AnimatSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 
 			/**
@@ -165,7 +165,7 @@ namespace AnimatSim
 			virtual float *GetDataPointer(const string &strDataType);
 
 			virtual void Initialize();
-			virtual BOOL NeedToStep(BOOL bIncrement);
+			virtual bool NeedToStep(bool bIncrement);
 			virtual void ResetStepCounter();
 			virtual void StepSimulation();
 

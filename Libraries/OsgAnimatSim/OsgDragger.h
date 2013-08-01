@@ -20,15 +20,15 @@ namespace OsgAnimatSim
 				float m_fltUserDefinedRadius;
 
 			public:
-				OsgDragger(OsgMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
-					      BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ, float fltUserDefinedRadius);
+				OsgDragger(OsgMovableItem *lpParent, bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ, 
+					      bool bAllowRotateX, bool bAllowRotateY, bool bAllowRotateZ, float fltUserDefinedRadius);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();
 
 				virtual void AddToScene();
 				virtual void RemoveFromScene();
-				virtual BOOL IsInScene();
+				virtual bool IsInScene();
 				virtual void SetupMatrix();
 		};
 

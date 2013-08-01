@@ -53,7 +53,7 @@ try
 	m_aryMaterialTypes.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Materials\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Materials\r\n", "", -1, false, true);}
 }
 
 void Materials::Reset()
@@ -69,7 +69,7 @@ void Materials::Reset()
 
 \param	strXml	The xml data packet for loading the type. 
 **/
-void Materials::AddMaterialType(string strXml, BOOL bDoNotInit)
+void Materials::AddMaterialType(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -94,7 +94,7 @@ void Materials::AddMaterialType(string strXml, BOOL bDoNotInit)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void Materials::RemoveMaterialType(string strID, BOOL bThrowError)
+void Materials::RemoveMaterialType(string strID, bool bThrowError)
 {
 	int iPos = FindTypeListPos(strID, bThrowError);
 	m_aryMaterialTypes.RemoveAt(iPos);
@@ -114,7 +114,7 @@ void Materials::RemoveMaterialType(string strID, BOOL bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int Materials::FindTypeListPos(string strID, BOOL bThrowError)
+int Materials::FindTypeListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -146,38 +146,38 @@ void Materials::Initialize()
 	}
 }
 
-BOOL Materials::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Materials::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "MATERIALTYPE")
 	{
 		AddMaterialType(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Materials::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Materials::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "MATERIALTYPE")
 	{
 		RemoveMaterialType(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 void Materials::CreateDefaultMaterial()
@@ -192,7 +192,7 @@ void Materials::CreateDefaultMaterial()
 
 	lpType->ID("DEFAULTMATERIAL");
 	lpType->Name("Default");
-	lpType->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpType->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	m_aryMaterialTypes.Add(lpType);
 }
 
@@ -203,7 +203,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 
 	string strMaterial;
 	MaterialType *lpItem = NULL;
-	BOOL bDefaultFound = FALSE;
+	bool bDefaultFound = false;
 	int iCount = oXml.NumberOfChildren();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
@@ -212,7 +212,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 		m_aryMaterialTypes.Add(lpItem);
 
 		if(lpItem->ID() == "DEFAULTMATERIAL")
-			bDefaultFound = TRUE;
+			bDefaultFound = true;
 	}
 
 	oXml.OutOfElem(); //Outof MaterialsTypes Element
@@ -255,7 +255,7 @@ try
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	lpItem->Load(oXml);
 
 	return lpItem;

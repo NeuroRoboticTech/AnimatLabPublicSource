@@ -46,7 +46,7 @@ try
 	m_arySynapses.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, false, true);}
 }
 
 /**
@@ -134,7 +134,7 @@ Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 
 \param	strXml	The xml packet to load. 
 **/
-void Synapse::AddSynapse(string strXml, BOOL bDoNotInit)
+void Synapse::AddSynapse(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -156,7 +156,7 @@ void Synapse::AddSynapse(string strXml, BOOL bDoNotInit)
 \param	strID	   	GUID ID for the synaspe to remove. 
 \param	bThrowError	true to throw error if synapse is not found. 
 **/
-void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
+void Synapse::RemoveSynapse(string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
@@ -173,7 +173,7 @@ void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
 
 \return	The found synapse list position.
 **/
-int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
+int Synapse::FindSynapseListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -228,9 +228,9 @@ void Synapse::Initialize()
 		m_arySynapses[iIndex]->Initialize();
 }
 
-void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, FALSE);
+	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpFRModule = dynamic_cast<FiringRateModule *>(lpModule);
 
@@ -262,24 +262,24 @@ float *Synapse::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL Synapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Synapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 		
-	if(Link::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Link::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "WEIGHT")
 	{
 		Weight(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -290,14 +290,14 @@ void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 	aryTypes.Add("Float");
 }
 
-BOOL Synapse::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Synapse::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		AddSynapse(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 
@@ -305,24 +305,24 @@ BOOL Synapse::AddItem(const string &strItemType, const string &strXml, BOOL bThr
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Synapse::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Synapse::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		RemoveSynapse(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -348,13 +348,13 @@ void Synapse::Load(CStdXml &oXml)
 	if(Std_IsBlank(m_strFromID)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: FromID");
 
-	m_bEnabled = oXml.GetChildBool("Enabled", TRUE);
+	m_bEnabled = oXml.GetChildBool("Enabled", true);
 	m_fltWeight = oXml.GetChildFloat("Weight");
 
 	m_arySynapses.RemoveAll();
 
 	//*** Begin Loading CompoundSynapses. *****
-	if(oXml.FindChildElement("CompoundSynapses", FALSE))
+	if(oXml.FindChildElement("CompoundSynapses", false))
 	{
 		oXml.IntoChildElement("CompoundSynapses");
 
@@ -397,7 +397,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, m_lpNode, TRUE);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, m_lpNode, true);
 	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
 

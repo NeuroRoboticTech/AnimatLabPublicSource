@@ -53,8 +53,8 @@ ConstraintLimit::ConstraintLimit()
 	m_fltDamping = 0;
 	m_fltRestitution = 0;
 	m_fltStiffness = 0;
-	m_bIsLowerLimit = TRUE;
-	m_bIsShowPosition = FALSE;
+	m_bIsLowerLimit = true;
+	m_bIsShowPosition = false;
 }
 
 /**
@@ -69,7 +69,7 @@ ConstraintLimit::~ConstraintLimit()
 
 float ConstraintLimit::LimitPos() {return m_fltLimitPos;}
 
-void ConstraintLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck) 
+void ConstraintLimit::LimitPos(float fltVal, bool bUseScaling, bool bOverrideSameCheck) 
 {
 	//If the values are the same then skip setting this step to preven having to
 	//recalculate the matrix positions repeatedly. Only do this when the new position is
@@ -87,9 +87,9 @@ void ConstraintLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSam
 
 float ConstraintLimit::Damping() {return m_fltDamping;};
 
-void ConstraintLimit::Damping(float fltVal, BOOL bUseScaling)
+void ConstraintLimit::Damping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Damping", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
@@ -102,16 +102,16 @@ float ConstraintLimit::Restitution() {return m_fltRestitution;};
 
 void ConstraintLimit::Restitution(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Restitution", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Restitution", true);
 	m_fltRestitution = fltVal;
 	SetLimitValues();
 }
 
 float ConstraintLimit::Stiffness() {return m_fltStiffness;};
 
-void ConstraintLimit::Stiffness(float fltVal, BOOL bUseScaling)
+void ConstraintLimit::Stiffness(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Stiffness", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Stiffness", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
@@ -169,7 +169,7 @@ float ConstraintLimit::Alpha() {return m_vColor.a();}
 
 \param	bVal	true if lower limit. 
 **/
-void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
+void ConstraintLimit::IsLowerLimit(bool bVal) {m_bIsLowerLimit = bVal;}
 
 /**
 \brief	Query if this object is lower limit.
@@ -179,7 +179,7 @@ void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
 
 \return	true if lower limit, false if not.
 **/
-BOOL ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
+bool ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
 
 /**
 \brief	Sets whether this contstraint is actually just being used to show the current position of the joint,
@@ -190,7 +190,7 @@ as opposed to being used to show the limit of a constraint..
 
 \param	bVal	true to set this to be a position limit.
 **/
-void ConstraintLimit::IsShowPosition(BOOL bVal) {m_bIsShowPosition = bVal;}
+void ConstraintLimit::IsShowPosition(bool bVal) {m_bIsShowPosition = bVal;}
 
 /**
 \brief	Gets whether this contstraint is actually just being used to show the current position of the joint,
@@ -201,7 +201,7 @@ as opposed to being used to show the limit of a constraint..
 
 \return	true if show position, false if not.
 **/
-BOOL ConstraintLimit::IsShowPosition() {return m_bIsShowPosition;}
+bool ConstraintLimit::IsShowPosition() {return m_bIsShowPosition;}
 
 /**
 \brief	Sets the system pointers.
@@ -225,9 +225,9 @@ be safely used throughout the rest of the system.
 \param [in,out]	lpNode		The pointer to the parent node. 
 \param	bVerify				true to call VerifySystemPointers. 
 **/
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	m_lpJoint = dynamic_cast<Joint *>(lpNode);
 
 	if(bVerify) VerifySystemPointers();
@@ -246,7 +246,7 @@ void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure
 \param	fltPosition		   	The new position. 
 \param	bVerify			   	true to verify. 
 **/
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, bool bVerify)
 {
 	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	LimitPos(fltPosition);
@@ -277,12 +277,12 @@ float *ConstraintLimit::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ConstraintLimit::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "LIMITPOS")
 	{
@@ -319,7 +319,7 @@ BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

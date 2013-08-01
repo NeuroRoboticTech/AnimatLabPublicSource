@@ -33,7 +33,7 @@ VsCylinder::~VsCylinder()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, false, true);}
 }
 
 void VsCylinder::CreateGraphicsGeometry()

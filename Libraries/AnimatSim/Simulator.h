@@ -108,44 +108,44 @@ namespace AnimatSim
 			int m_iSelectionMode;
 
 			/// true if the AddBodies mode is enabled within the GUI.
-			BOOL m_bAddBodiesMode;
+			bool m_bAddBodiesMode;
 
 			/// true to block simulation. See WaitForBlock for more info.
-			BOOL m_bBlockSimulation;
+			bool m_bBlockSimulation;
 
 			/// true to confirm that a simulation block is in place.
-			BOOL m_bSimBlockConfirm;
+			bool m_bSimBlockConfirm;
 
 			/// Pointer to a simulation callback class. This is only set if we are using the GUI. This is set by the managed wrapper to 
 			/// allow us to post callback notifications to the GUI.
 			ISimGUICallback *m_lpSimCallback;
 
 			/// Set to true to stop the simulation.
-			BOOL m_bStopSimulation;
+			bool m_bStopSimulation;
 
 			/// Set to true to stop the simulation. This is a more forceful way of stopping the sim.
-			BOOL m_bForceSimulationStop;
+			bool m_bForceSimulationStop;
 
 			/// If true then the user is manually stepping the simulation
-			BOOL m_bManualStepSimulation;
+			bool m_bManualStepSimulation;
 
 			/// true if the simulation is paused.
-			BOOL m_bPaused;
+			bool m_bPaused;
 
 			/// true if the simulation has been initialized.
-			BOOL m_bInitialized;
+			bool m_bInitialized;
 
 			/// true if the simulation is running
-			BOOL m_bSimRunning;
+			bool m_bSimRunning;
 
 			/// true if stepping of simulation has begun. This is set to true once the Simulate methods has been called.
-			BOOL m_bSteppingSim;
+			bool m_bSteppingSim;
 
 			/// true if we need to set the physics system to force handling of fast moving objects.
-			BOOL m_bForceFastMoving;
+			bool m_bForceFastMoving;
 
 			/// True if the simulation is shutting down. This is used by other objects in their destructor to know whether to do certain operations or not.
-			BOOL m_bShuttingDown;
+			bool m_bShuttingDown;
 
 #pragma endregion
 
@@ -201,9 +201,9 @@ namespace AnimatSim
 
 			///Tells whether or not we will be doing hydrodynamic simulations.
 			///If you are not doing stuff underwater then be sure this is set to
-			///FALSE. The hydrodynamics adds extra overhead that can slow the
+			///false. The hydrodynamics adds extra overhead that can slow the
 			///simulation down slightly.
-			BOOL m_bSimulateHydrodynamics;
+			bool m_bSimulateHydrodynamics;
 
 			///This is the minimum integration time step taken for all neural modules and the physics engine.
 			float m_fltTimeStep;
@@ -217,7 +217,7 @@ namespace AnimatSim
 			double m_dblTime;
 
 			/// true if we the user has manually set the simulation end time.
-			BOOL m_bSetEndSim;
+			bool m_bSetEndSim;
 
 			///The time when the simulation should end.
 			float m_fltEndSimTime;
@@ -246,7 +246,7 @@ namespace AnimatSim
 
 			///Determines whether a random seed is automatically generated when the 
 			///simulation is initialized, or if a manual seed is used.
-			BOOL m_bAutoGenerateRandomSeed;
+			bool m_bAutoGenerateRandomSeed;
 
 			///If the AutoGenerateRandomSeed variable is false then this manual seed is
 			///used for the random number generator.
@@ -358,7 +358,7 @@ namespace AnimatSim
 #pragma region RecordingVariables
 
 			/// true to enable simulation recording
-			BOOL m_bEnableSimRecording;
+			bool m_bEnableSimRecording;
 
 			/// Size of a memory snapshot in bytes.
 			long m_lSnapshotByteSize;
@@ -380,7 +380,7 @@ namespace AnimatSim
 
 			//Video variables
 			/// true to record video
-			BOOL m_bRecordVideo;
+			bool m_bRecordVideo;
 
 			/// Filename of the video file
 			string m_strVideoFilename;
@@ -470,7 +470,7 @@ namespace AnimatSim
 			**/
 			virtual void AddOrganism(Organism *lpOrganism);
 			virtual void AddOrganism(string strXml);
-			virtual void RemoveOrganism(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveOrganism(string strID, bool bThrowError = true);
 
 			/**
 			\brief	Adds a new "static" structure to the list of structures for this simulation.
@@ -482,14 +482,14 @@ namespace AnimatSim
 			**/
 			virtual void AddStructure(Structure *lpStructure);
 			virtual void AddStructure(string strXml);
-			virtual void RemoveStructure(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveStructure(string strID, bool bThrowError = true);
 
-			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError = true);
 			virtual int FindFoodSourceIndex(RigidBody *lpFood);
 			
 			virtual void AddOdorType(OdorType *lpOdorType);
-			virtual void AddOdorType(string strXml, BOOL bDoNotInit);
-			virtual void RemoveOdorType(string strID, BOOL bThrowError = TRUE);
+			virtual void AddOdorType(string strXml, bool bDoNotInit);
+			virtual void RemoveOdorType(string strID, bool bThrowError = true);
 			
 #pragma endregion
 
@@ -509,7 +509,7 @@ namespace AnimatSim
 
 			virtual void NotifyTimeStepModified();
 
-			virtual BOOL CheckSimulationBlock();
+			virtual bool CheckSimulationBlock();
 			virtual void CheckEndSimulationTime();
 
 			virtual void StepNeuralEngine();
@@ -598,11 +598,11 @@ namespace AnimatSim
 			virtual string SimulationFile();
 			virtual void SimulationFile(string strFile);
 
-			virtual BOOL Paused();
-			virtual void Paused(BOOL bVal);
+			virtual bool Paused();
+			virtual void Paused(bool bVal);
 
-			virtual BOOL Initialized();
-			virtual void Initialized(BOOL bVal);
+			virtual bool Initialized();
+			virtual void Initialized(bool bVal);
 
 			virtual CStdMap<string, AnimatBase *> *ObjectList();
 			
@@ -616,8 +616,8 @@ namespace AnimatSim
 			virtual int VisualSelectionMode();
 			virtual void VisualSelectionMode(int iVal);
 
-			virtual BOOL AddBodiesMode();
-			virtual void AddBodiesMode(BOOL bVal);
+			virtual bool AddBodiesMode();
+			virtual void AddBodiesMode(bool bVal);
 			
 			virtual	ISimGUICallback *SimCallback();
 			virtual void SimCallBack(ISimGUICallback *lpCallback);
@@ -635,8 +635,8 @@ namespace AnimatSim
 			virtual float MinTimeStep();
 			virtual float TimeStep();
 
-			virtual BOOL SetEndSimTime();
-			virtual void SetEndSimTime(BOOL bVal);
+			virtual bool SetEndSimTime();
+			virtual void SetEndSimTime(bool bVal);
 
 			virtual float EndSimTime();
 			virtual void EndSimTime(float fltVal);
@@ -650,18 +650,18 @@ namespace AnimatSim
 			virtual long PhysicsSliceCount();
 			virtual void PhysicsSliceCount(long lVal);
 
-			virtual BOOL ManualStepSimulation();
-			virtual void ManualStepSimulation(BOOL bVal);
+			virtual bool ManualStepSimulation();
+			virtual void ManualStepSimulation(bool bVal);
 
-			virtual BOOL SimRunning();
+			virtual bool SimRunning();
 
-			virtual BOOL ShuttingDown();
+			virtual bool ShuttingDown();
 
-			virtual BOOL ForceFastMoving();
-			virtual void ForceFastMoving(BOOL bVal);
+			virtual bool ForceFastMoving();
+			virtual void ForceFastMoving(bool bVal);
 
-			virtual BOOL AutoGenerateRandomSeed();
-			virtual void AutoGenerateRandomSeed(BOOL bVal);
+			virtual bool AutoGenerateRandomSeed();
+			virtual void AutoGenerateRandomSeed(bool bVal);
 
 			virtual int ManualRandomSeed();
 			virtual void ManualRandomSeed(int iSeed);
@@ -670,24 +670,24 @@ namespace AnimatSim
 			virtual void StabilityScale(float fltVal);
 
 			virtual float LinearCompliance();
-			virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearCompliance(float fltVal, bool bUseScaling = true);
 
 			virtual float AngularCompliance();
-			virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void AngularCompliance(float fltVal, bool bUseScaling = true);
 
 			virtual float LinearDamping();
-			virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearDamping(float fltVal, bool bUseScaling = true);
 
 			virtual float AngularDamping();
-			virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void AngularDamping(float fltVal, bool bUseScaling = true);
 
 			virtual float LinearKineticLoss();
-			virtual void LinearKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearKineticLoss(float fltVal, bool bUseScaling = true);
 
 			virtual float AngularKineticLoss();
-			virtual void AngularKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void AngularKineticLoss(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL Stopped();
+			virtual bool Stopped();
 
 			virtual short PhysicsStepInterval();
 			virtual void PhysicsStepInterval(short iVal);
@@ -697,20 +697,20 @@ namespace AnimatSim
 			virtual long PhysicsStepCount();
 
 			virtual float Gravity();
-			virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Gravity(float fltVal, bool bUseScaling = true);
 
 			virtual float MouseSpringStiffness();
-			virtual void MouseSpringStiffness(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MouseSpringStiffness(float fltVal, bool bUseScaling = true);
 
 			virtual float MouseSpringDamping();
-			virtual void MouseSpringDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MouseSpringDamping(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL SimulateHydrodynamics();
-			virtual void SimulateHydrodynamics(BOOL bVal);
+			virtual bool SimulateHydrodynamics();
+			virtual void SimulateHydrodynamics(bool bVal);
 
 			virtual int GetMaterialID(string strID);
 
-			virtual BOOL IsPhysicsBeingUpdated();	
+			virtual bool IsPhysicsBeingUpdated();	
 			
 			virtual CStdColor *BackgroundColor();
 			virtual void BackgroundColor(CStdColor &aryColor);
@@ -721,7 +721,7 @@ namespace AnimatSim
 			virtual void AlphaThreshold(float fltValue);
 
 			virtual float RecFieldSelRadius();
-			virtual void RecFieldSelRadius(float fltValue, BOOL bUseScaling = TRUE, BOOL bUpdateAllBodies = TRUE);
+			virtual void RecFieldSelRadius(float fltValue, bool bUseScaling = true, bool bUpdateAllBodies = true);
 
 			virtual int PlaybackControlMode();
 			virtual void PlaybackControlMode(int iMode);
@@ -819,8 +819,8 @@ namespace AnimatSim
 			**/
 			virtual void VideoPlayback(KeyFrame *lpFrame);
 
-			virtual BOOL EnableSimRecording();
-			virtual void EnableSimRecording(BOOL bVal);
+			virtual bool EnableSimRecording();
+			virtual void EnableSimRecording(bool bVal);
 
 			virtual long SnapshotByteSize();
 
@@ -834,8 +834,8 @@ namespace AnimatSim
 
 			virtual void BlockSimulation();
 			virtual void UnblockSimulation();
-			virtual BOOL SimulationBlockConfirm();
-			virtual BOOL WaitForSimulationBlock(long lTimeout = 6000);
+			virtual bool SimulationBlockConfirm();
+			virtual bool WaitForSimulationBlock(long lTimeout = 6000);
 
 			virtual void Reset(); //Resets the entire application back to the default state 
 			virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
@@ -899,7 +899,7 @@ namespace AnimatSim
 			
 			\return	true if it succeeds, false if it fails.
 			**/
-			virtual BOOL StartSimulation() = 0;
+			virtual bool StartSimulation() = 0;
 
 			/**
 			\brief	Pauses the simulation.
@@ -909,7 +909,7 @@ namespace AnimatSim
 			
 			\return	true if it succeeds, false if it fails.
 			**/
-			virtual BOOL PauseSimulation() = 0;
+			virtual bool PauseSimulation() = 0;
 
 			/**
 			\brief	Runs the simulation.
@@ -938,7 +938,7 @@ namespace AnimatSim
 		 			
 #pragma region CreateMethods
 
-			virtual CStdSerialize *CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError = TRUE);
+			virtual CStdSerialize *CreateObject(string strModule, string strClassName, string strType, bool bThrowError = true);
 			static Simulator *CreateSimulator(string strAnimatModule, string strSimulationFile);
 			static Simulator *CreateSimulator(string strAnimatModule, CStdXml &oXml);
 			static Simulator *CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath);
@@ -951,15 +951,15 @@ namespace AnimatSim
 	
 #pragma region FindMethods
 
-			virtual IStdClassFactory *FindNeuralModuleFactory(string strModuleName, BOOL bThrowError = FALSE);
-			virtual Organism *FindOrganism(string strOrganismID, BOOL bThrowError = TRUE);
-			virtual Structure *FindStructure(string strStructureID, BOOL bThrowError = TRUE);
-			virtual Structure *FindStructureFromAll(string strStructureID, BOOL bThrowError = TRUE);
-			virtual Joint *FindJoint(string strStructureID, string strJointID, BOOL bThrowError = TRUE);
-			virtual RigidBody *FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError = TRUE);
-			virtual OdorType *FindOdorType(string strOdorID, BOOL bThrowError = TRUE);
+			virtual IStdClassFactory *FindNeuralModuleFactory(string strModuleName, bool bThrowError = false);
+			virtual Organism *FindOrganism(string strOrganismID, bool bThrowError = true);
+			virtual Structure *FindStructure(string strStructureID, bool bThrowError = true);
+			virtual Structure *FindStructureFromAll(string strStructureID, bool bThrowError = true);
+			virtual Joint *FindJoint(string strStructureID, string strJointID, bool bThrowError = true);
+			virtual RigidBody *FindRigidBody(string strStructureID, string strBodyID, bool bThrowError = true);
+			virtual OdorType *FindOdorType(string strOdorID, bool bThrowError = true);
 			virtual void FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius, CStdArray<RigidBody *> &arySources, CStdArray<float> &aryDistances);
-			virtual AnimatBase *FindByID(string strID, BOOL bThrowError = TRUE);
+			virtual AnimatBase *FindByID(string strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -982,10 +982,10 @@ namespace AnimatSim
 #pragma region DataAccesMethods
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 

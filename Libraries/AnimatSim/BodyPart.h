@@ -45,14 +45,14 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion
 
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void UpdatePhysicsPosFromGraphics();

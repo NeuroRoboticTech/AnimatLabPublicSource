@@ -88,13 +88,13 @@ namespace VortexAnimatSim
 			virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 			virtual void SetBody();
 			
-            virtual BOOL Physics_IsDefined();
-            virtual BOOL Physics_IsGeometryDefined();
+            virtual bool Physics_IsDefined();
+            virtual bool Physics_IsGeometryDefined();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
-			virtual void Physics_SetFreeze(BOOL bVal);
+			virtual void Physics_SetFreeze(bool bVal);
 			virtual void Physics_SetDensity(float fltVal);
 			virtual void Physics_SetMaterialID(string strID);
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular);
@@ -102,11 +102,11 @@ namespace VortexAnimatSim
 			virtual void Physics_UpdateNode();
 			virtual void Physics_FluidDataChanged();
 
-			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
-			virtual BOOL Physics_HasCollisionGeometry();
+			virtual bool Physics_HasCollisionGeometry();
 		};
 
 	}			// Environment

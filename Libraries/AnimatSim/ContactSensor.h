@@ -39,13 +39,13 @@ namespace AnimatSim
 
 			void LoadReceptiveField(CStdXml &oXml);
 
-			BOOL FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex);
+			bool FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex);
 
 			void DumpVertices(CStdPtrArray<ReceptiveField> &aryFields);
 
 			virtual void AddReceptiveField(string strXml);
-			virtual void RemoveReceptiveField(string strID, BOOL bThrowError = TRUE);
-			virtual int FindReceptiveFieldListPos(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveReceptiveField(string strID, bool bThrowError = true);
+			virtual int FindReceptiveFieldListPos(string strID, bool bThrowError = true);
 
 		public:
 			ContactSensor();
@@ -56,15 +56,15 @@ namespace AnimatSim
 			float ReceptiveFieldDistance();
 
 			ReceptiveField *GetReceptiveField(int iIndex);
-			BOOL FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex);
+			bool FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex);
 			int FindClosestReceptiveField(float fltX, float fltY, float fltZ);
 			void AddVertex(float fltX, float fltY, float fltZ);
 			void FinishedAddingVertices();
 
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 

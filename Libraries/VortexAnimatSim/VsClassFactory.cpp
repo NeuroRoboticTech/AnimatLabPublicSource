@@ -68,7 +68,7 @@ VsClassFactory::~VsClassFactory()
 
 // ************* Body Type Conversion functions ******************************
 
-RigidBody *VsClassFactory::CreateRigidBody(string strType, BOOL bThrowError)
+RigidBody *VsClassFactory::CreateRigidBody(string strType, bool bThrowError)
 {
 	RigidBody *lpPart=NULL;
 
@@ -83,14 +83,14 @@ try
 	else if(strType == "BOXCONTACTSENSOR")
 	{
 		lpPart = new VsBox;
-		lpPart->IsContactSensor(TRUE);
+		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CYLINDER")
 		lpPart = new VsCylinder;
 	else if(strType == "CYLINDERCONTACTSENSOR")
 	{
 		lpPart = new VsCylinder;
-		lpPart->IsContactSensor(TRUE);
+		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CONE")
 		lpPart = new VsCone;
@@ -152,7 +152,7 @@ catch(...)
 
 // ************* Body Joint Conversion functions ******************************
 
-Joint *VsClassFactory::CreateJoint(string strType, BOOL bThrowError)
+Joint *VsClassFactory::CreateJoint(string strType, bool bThrowError)
 {
 	Joint *lpJoint=NULL;
 
@@ -203,7 +203,7 @@ catch(...)
 
 // ************* Organism Type Conversion functions ******************************
 
-Structure *VsClassFactory::CreateStructure(string strType, BOOL bThrowError)
+Structure *VsClassFactory::CreateStructure(string strType, bool bThrowError)
 {
 	Structure *lpStructure=NULL;
 
@@ -245,7 +245,7 @@ catch(...)
 
 // ************* Simulator Type Conversion functions ******************************
 
-Simulator *VsClassFactory::CreateSimulator(string strType, BOOL bThrowError)
+Simulator *VsClassFactory::CreateSimulator(string strType, bool bThrowError)
 {
 	Simulator *lpSimulator=NULL;
 
@@ -285,7 +285,7 @@ catch(...)
 
 
 // ************* KeyFrame Type Conversion functions ******************************
-KeyFrame *VsClassFactory::CreateKeyFrame(string strType, BOOL bThrowError)
+KeyFrame *VsClassFactory::CreateKeyFrame(string strType, bool bThrowError)
 {
 	KeyFrame *lpFrame=NULL;
 
@@ -325,7 +325,7 @@ catch(...)
 
 // ************* DataChart Type Conversion functions ******************************
 
-DataChart *VsClassFactory::CreateDataChart(string strType, BOOL bThrowError)
+DataChart *VsClassFactory::CreateDataChart(string strType, bool bThrowError)
 {
 	DataChart *lpChart=NULL;
 
@@ -368,7 +368,7 @@ catch(...)
 
 // ************* DataColumn Type Conversion functions ******************************
 
-DataColumn *VsClassFactory::CreateDataColumn(string strType, BOOL bThrowError)
+DataColumn *VsClassFactory::CreateDataColumn(string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -406,7 +406,7 @@ catch(...)
 
 // ************* Adapter Type Conversion functions ******************************
 
-Adapter *VsClassFactory::CreateAdapter(string strType, BOOL bThrowError)
+Adapter *VsClassFactory::CreateAdapter(string strType, bool bThrowError)
 {
 	Adapter *lpAdapter=NULL;
 
@@ -452,7 +452,7 @@ catch(...)
 
 // ************* Gain Type Conversion functions ******************************
 
-Gain *VsClassFactory::CreateGain(string strType, BOOL bThrowError)
+Gain *VsClassFactory::CreateGain(string strType, bool bThrowError)
 {
 	Gain *lpGain=NULL;
 
@@ -496,7 +496,7 @@ catch(...)
 
 // ************* External Stimulus Type Conversion functions ******************************
 
-ExternalStimulus *VsClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
+ExternalStimulus *VsClassFactory::CreateExternalStimulus(string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -552,7 +552,7 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
-HudItem *VsClassFactory::CreateHudItem(string strType, BOOL bThrowError)
+HudItem *VsClassFactory::CreateHudItem(string strType, bool bThrowError)
 {
 	HudItem *lpItem=NULL;
 
@@ -589,7 +589,7 @@ catch(...)
 
 // ************* Hud Type Conversion functions ******************************
 
-Hud *VsClassFactory::CreateHud(string strType, BOOL bThrowError)
+Hud *VsClassFactory::CreateHud(string strType, bool bThrowError)
 {
 	Hud *lpHud=NULL;
 
@@ -626,7 +626,7 @@ catch(...)
 // 
 // ************* Material Type Conversion functions ******************************
 
-MaterialType *VsClassFactory::CreateMaterialItem(string strType, BOOL bThrowError)
+MaterialType *VsClassFactory::CreateMaterialItem(string strType, bool bThrowError)
 {
 	MaterialType *lpItem=NULL;
 
@@ -663,7 +663,7 @@ catch(...)
 
 // ************* Material Type Conversion functions ******************************
 
-SimulationWindow *VsClassFactory::CreateWindowItem(string strType, BOOL bThrowError)
+SimulationWindow *VsClassFactory::CreateWindowItem(string strType, bool bThrowError)
 {
 	SimulationWindow *lpItem=NULL;
 
@@ -702,7 +702,7 @@ catch(...)
 
 // ************* Light Conversion functions ******************************
 
-Light *VsClassFactory::CreateLight(string strType, BOOL bThrowError)
+Light *VsClassFactory::CreateLight(string strType, bool bThrowError)
 {
 	Light *lpItem=NULL;
 
@@ -739,7 +739,7 @@ catch(...)
 
 // ************* External Neural Module Conversion functions ******************************
 
-NeuralModule *VsClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
+NeuralModule *VsClassFactory::CreateNeuralModule(string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -780,7 +780,7 @@ catch(...)
 
 // ************* Constraint Relaxation Conversion functions ******************************
 
-ConstraintRelaxation *VsClassFactory::CreateConstraintRelaxation(string strType, BOOL bThrowError)
+ConstraintRelaxation *VsClassFactory::CreateConstraintRelaxation(string strType, bool bThrowError)
 {
 	ConstraintRelaxation *lpRelax=NULL;
 
@@ -820,7 +820,7 @@ catch(...)
 
 // ************* Constraint Friction Conversion functions ******************************
 
-ConstraintFriction *VsClassFactory::CreateConstraintFriction(string strType, BOOL bThrowError)
+ConstraintFriction *VsClassFactory::CreateConstraintFriction(string strType, bool bThrowError)
 {
 	ConstraintFriction *lpFriction=NULL;
 
@@ -861,7 +861,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
+CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 

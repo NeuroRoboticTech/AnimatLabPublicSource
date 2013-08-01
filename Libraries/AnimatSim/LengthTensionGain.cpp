@@ -47,7 +47,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of LengthTensionGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of LengthTensionGain\r\n", "", -1, false, true);}
 }
 
 
@@ -55,7 +55,7 @@ float LengthTensionGain::RestingLength() {return m_fltRestingLength;}
 
 void LengthTensionGain::RestingLength(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "RestingLength");
+	Std_IsAboveMin((float) 0, fltVal, true, "RestingLength");
 	m_fltRestingLength = fltVal;
 	m_fltSeRestLength = m_fltRestingLength - (m_fltRestingLength * m_fltPeLengthPercentage);
 	m_fltMinPeLength = m_fltRestingLength * m_fltMinPeLengthPercentage;
@@ -65,7 +65,7 @@ float LengthTensionGain::TLwidth() {return m_fltTLwidth;}
 
 void LengthTensionGain::TLwidth(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "TLwidth");
+	Std_IsAboveMin((float) 0, fltVal, true, "TLwidth");
 	m_fltTLwidth = fltVal;
 	m_fltTLc = pow(m_fltTLwidth, 2);
 }
@@ -102,7 +102,7 @@ void LengthTensionGain::PeLengthPercentage(float fltVal)
 	//We need to scale it because this comes in as 0-100, but we need it in 0-1.
 	fltVal = fltVal/100;
 
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "PeLengthPercentage");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "PeLengthPercentage");
 	m_fltPeLengthPercentage = fltVal;
 	m_fltSeRestLength = m_fltRestingLength - (m_fltRestingLength * m_fltPeLengthPercentage);
 }
@@ -130,7 +130,7 @@ void LengthTensionGain::MinPeLengthPercentage(float fltVal)
 	//We need to scale it because this comes in as 0-100, but we need it in 0-1.
 	fltVal = fltVal/100;
 
-	Std_InValidRange((float) 0, m_fltPeLengthPercentage, fltVal, TRUE, "MinPeLengthPercentage");
+	Std_InValidRange((float) 0, m_fltPeLengthPercentage, fltVal, true, "MinPeLengthPercentage");
 	m_fltMinPeLengthPercentage = fltVal;
 	m_fltMinPeLength = m_fltRestingLength * m_fltMinPeLengthPercentage;
 }
@@ -155,7 +155,7 @@ float LengthTensionGain::SeRestLength() {return m_fltSeRestLength;}
 **/
 float LengthTensionGain::MinPeLength() {return m_fltMinPeLength;}
 
-BOOL LengthTensionGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LengthTensionGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -188,7 +188,7 @@ BOOL LengthTensionGain::SetData(const string &strDataType, const string &strValu
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void LengthTensionGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

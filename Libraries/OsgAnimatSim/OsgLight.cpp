@@ -47,7 +47,7 @@ OsgLight::~OsgLight()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsBox\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsBox\r\n", "", -1, false, true);}
 }
 
 void OsgLight::SetThisPointers()
@@ -64,7 +64,7 @@ osg::Group *OsgLight::ParentOSG()
 	return GetOsgSimulator()->OSGRoot();
 }
 
-void OsgLight::Enabled(BOOL bVal)
+void OsgLight::Enabled(bool bVal)
 {
 	 AnimatSim::Environment::Light::Enabled(bVal);
 
@@ -79,7 +79,7 @@ void OsgLight::Enabled(BOOL bVal)
 	 }
 }
 
-void OsgLight::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void OsgLight::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	Light::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 

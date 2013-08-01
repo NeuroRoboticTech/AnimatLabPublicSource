@@ -16,8 +16,8 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-OsgDragger::OsgDragger(OsgMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
-					 BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ, float fltUserDefinedRadius)
+OsgDragger::OsgDragger(OsgMovableItem *lpParent, bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ, 
+					 bool bAllowRotateX, bool bAllowRotateY, bool bAllowRotateZ, float fltUserDefinedRadius)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -88,13 +88,13 @@ void OsgDragger::RemoveFromScene()
 			m_lpVsParent->RootGroup()->removeChild(m_osgGripperMT.get());
 }
 
-BOOL OsgDragger::IsInScene()
+bool OsgDragger::IsInScene()
 {
 	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
 		if(m_lpVsParent->RootGroup()->containsNode(m_osgGripperMT.get()))
-			return TRUE;
+			return true;
 
-	return FALSE;
+	return false;
 }
 
 void OsgDragger::SetupMatrix()

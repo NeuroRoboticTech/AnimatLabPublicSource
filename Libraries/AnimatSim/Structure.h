@@ -113,7 +113,7 @@ namespace AnimatSim
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
 
 			virtual void AddRoot(string strXml);
-			virtual void RemoveRoot(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveRoot(string strID, bool bThrowError = true);
 			
 			virtual void UpdateData();
 
@@ -127,18 +127,18 @@ namespace AnimatSim
 			virtual RigidBody *Body();
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual float Size();
-			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Size(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL AllowTranslateDragX();
-			virtual BOOL AllowTranslateDragY();
-			virtual BOOL AllowTranslateDragZ();
+			virtual bool AllowTranslateDragX();
+			virtual bool AllowTranslateDragY();
+			virtual bool AllowTranslateDragZ();
 
-			virtual BOOL AllowRotateDragX();
-			virtual BOOL AllowRotateDragY();
-			virtual BOOL AllowRotateDragZ();
+			virtual bool AllowRotateDragX();
+			virtual bool AllowRotateDragY();
+			virtual bool AllowRotateDragZ();
 
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);
@@ -154,28 +154,28 @@ namespace AnimatSim
 			void AddRigidBody(RigidBody *lpBody);
 			void RemoveRigidBody(string strID);
 
-			virtual Joint *FindJoint(string strJointID, BOOL bThrowError = TRUE);
-			virtual RigidBody *FindRigidBody(string strBodyID, BOOL bThrowError = TRUE);
-			virtual Node *FindNode(string strID, BOOL bThrowError = TRUE);
-			//virtual AnimatBase *FindCollisionPair(string strID, BOOL bThrowError = TRUE);
+			virtual Joint *FindJoint(string strJointID, bool bThrowError = true);
+			virtual RigidBody *FindRigidBody(string strBodyID, bool bThrowError = true);
+			virtual Node *FindNode(string strID, bool bThrowError = true);
+			//virtual AnimatBase *FindCollisionPair(string strID, bool bThrowError = true);
 
-			virtual void EnableMotor(string strJointID, BOOL bVal);
+			virtual void EnableMotor(string strJointID, bool bVal);
 			virtual void SetMotorInput(string strJointID, float fltInput);
 
 			virtual void EnableCollision(RigidBody *lpCollisionBody);
 			virtual void DisableCollision(RigidBody *lpCollisionBody);
 
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void UpdatePhysicsPosFromGraphics();
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 

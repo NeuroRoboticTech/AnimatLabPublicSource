@@ -73,7 +73,7 @@ try
 	if(m_lpGain) delete m_lpGain;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Adapter\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Adapter\r\n", "", -1, false, true);}
 }
 
 /**
@@ -266,7 +266,7 @@ void Adapter::SetGain(Gain *lpGain)
 	}
 
 	m_lpGain = lpGain;
-	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 }
 
 void Adapter::DetachAdaptersFromSimulation()
@@ -358,36 +358,36 @@ void Adapter::SetDestinationID(string strXml)
 	Initialize();
 }
 
-BOOL Adapter::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Adapter::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Node::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Node::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "GAIN")
 	{
 		AddGain(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ORIGINID")
 	{
 		SetOriginID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DESTINATIONID")
 	{
 		SetDestinationID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Adapter::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

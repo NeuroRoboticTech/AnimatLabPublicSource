@@ -354,54 +354,54 @@ float *PacemakerNeuron::GetDataPointer(const string &strDataType)
 	return Neuron::GetDataPointer(strDataType);
 }
 
-BOOL PacemakerNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PacemakerNeuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Neuron::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Neuron::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VSSM")
 	{
 		Vssm(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BTL")
 	{
 		Btl(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MTL")
 	{
 		Mtl(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "TH")
 	{
 		Th(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "IL")
 	{
 		Il(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "IH")
 	{
 		Ih(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void PacemakerNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

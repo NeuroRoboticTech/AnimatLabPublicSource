@@ -37,7 +37,6 @@
 	#include <stdbool.h>
 	#include <dlfcn.h>
 	
-	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
 	#define FALSE 0

@@ -10,7 +10,7 @@ namespace VortexAnimatSim
 		{
 		protected:
 			MotorizedJoint *m_lpThisMotorJoint;
-			BOOL m_bMotorOn;
+			bool m_bMotorOn;
 
 			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
@@ -20,8 +20,8 @@ namespace VortexAnimatSim
 			virtual ~VsMotorizedJoint();
 
 			virtual void Physics_SetVelocityToDesired();
-			virtual void Physics_EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce);
-			virtual void Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce);
+			virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
+			virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce);
 			virtual void Physics_MaxForce(float fltVal);
 		};
 

@@ -54,7 +54,7 @@ namespace AnimatSim
 **/
 LineBase::LineBase()
 {
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 
 	m_fltDensity = 0;
 	m_lpJointToParent = NULL;
@@ -77,10 +77,10 @@ LineBase::~LineBase()
 		m_aryAttachmentPoints.Clear();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, false, true);}
 }
 
-void  LineBase::Enabled(BOOL bValue)
+void  LineBase::Enabled(bool bValue)
 {
 	RigidBody::Enabled(bValue);
 
@@ -109,10 +109,10 @@ float LineBase::Length() {return m_fltLength;}
 **/
 float LineBase::PrevLength() {return m_fltPrevLength;}
 
-BOOL LineBase::AllowMouseManipulation() {return FALSE;}
+bool LineBase::AllowMouseManipulation() {return false;}
 
 //Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
-void  LineBase::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void  LineBase::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {}
 
 //Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
@@ -232,9 +232,9 @@ float *LineBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LineBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LineBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
-	if(RigidBody::SetData(strDataType, strValue, FALSE))
+	if(RigidBody::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "ATTACHMENTPOINTS")
@@ -259,7 +259,7 @@ BOOL LineBase::SetData(const string &strDataType, const string &strValue, BOOL b
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void LineBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -303,7 +303,7 @@ void LineBase::InitializeAttachments()
 	}
 
 	if(m_aryAttachmentPoints.GetSize() < 2)
-		Enabled(FALSE);
+		Enabled(false);
 
 	//Get the current length of the muscle.
 	m_fltLength = CalculateLength();
@@ -354,7 +354,7 @@ void LineBase::Load(CStdXml &oXml)
 void LineBase::LoadAttachments(CStdXml &oXml)
 {
 	m_aryAttachmentPointIDs.Clear();
-	if(oXml.FindChildElement("Attachments", FALSE))
+	if(oXml.FindChildElement("Attachments", false))
 	{
 		oXml.IntoElem();
 		int iCount = oXml.NumberOfChildren();
@@ -369,7 +369,7 @@ void LineBase::LoadAttachments(CStdXml &oXml)
 	}
 
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
-		Enabled(FALSE);
+		Enabled(false);
 }
 
 		}		//Bodies

@@ -48,7 +48,7 @@
 **/
 Organism::Organism()
 {
-	m_bDead = FALSE;
+	m_bDead = false;
 	m_lpNervousSystem = NULL;
 }
 
@@ -70,7 +70,7 @@ try
 	}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, false, true);}
 }
 
 /**
@@ -81,10 +81,10 @@ catch(...)
 
 \return	true if dead, false if not. 
 **/
-BOOL Organism::IsDead() 
+bool Organism::IsDead() 
 {return m_bDead;}
 
-void Organism::Kill(BOOL bState)
+void Organism::Kill(bool bState)
 {
 	m_bDead = bState;
 	
@@ -107,7 +107,7 @@ void Organism::ResetSimulation()
 	Structure::ResetSimulation();
 
 	//Make sure to reset us from being killed if it happend during the sim.
-	Kill(FALSE);
+	Kill(false);
 
 	m_lpNervousSystem->ResetSimulation();
 }
@@ -133,39 +133,39 @@ void Organism::MinTimeStep(float &fltMin)
 
 #pragma region DataAccesMethods
 
-BOOL Organism::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Organism::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Structure::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Structure::SetData(strDataType, strValue, false))
+		return true;
 
 	//if(strType == "TIMESTEP")
 	//{
 	//	TimeStep((float) atof(strValue.c_str()));
-	//	return TRUE;
+	//	return true;
 	//}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Organism::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Organism::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(Structure::AddItem(strItemType, strXml, FALSE))
-		return TRUE;
+	if(Structure::AddItem(strItemType, strXml, false))
+		return true;
 
 	if(strType == "NEURALMODULE")
 	{
 		try
 		{
 			m_lpNervousSystem->AddNeuralModule(strXml);
-			return TRUE;
+			return true;
 		}
 		catch(CStdErrorInfo oError)
 		{
@@ -179,22 +179,22 @@ BOOL Organism::AddItem(const string &strItemType, const string &strXml, BOOL bTh
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Organism::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 	
-	if(Structure::RemoveItem(strItemType, strID, FALSE))
-		return TRUE;
+	if(Structure::RemoveItem(strItemType, strID, false))
+		return true;
 
 	if(strType == "NEURALMODULE")
 	{
 		try
 		{
 			m_lpNervousSystem->RemoveNeuralModule(strID);
-			return TRUE;
+			return true;
 		}
 		catch(CStdErrorInfo oError)
 		{
@@ -207,7 +207,7 @@ BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL b
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -247,7 +247,7 @@ void Organism::Load(CStdXml &oXml)
 
 	oXml.IntoChildElement("NervousSystem");
 
-	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
+	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
 	m_lpNervousSystem->Load(oXml);
 
 	oXml.OutOfElem();

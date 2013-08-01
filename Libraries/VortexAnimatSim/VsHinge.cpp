@@ -36,17 +36,17 @@ VsHinge::VsHinge()
 	m_lpLowerLimit = new VsHingeLimit();
 	m_lpPosFlap = new VsHingeLimit();
 
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
-	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(0.25*VX_PI, false);
+	m_lpLowerLimit->LimitPos(-0.25*VX_PI, false);
+	m_lpPosFlap->LimitPos(Hinge::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(1, 0, 0, 1);
 	m_lpLowerLimit->Color(1, 1, 1, 1);
 	m_lpPosFlap->Color(0, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -64,10 +64,10 @@ VsHinge::~VsHinge()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, false, true);}
 }
 
-void VsHinge::EnableLimits(BOOL bVal)
+void VsHinge::EnableLimits(bool bVal)
 {
 	Hinge::EnableLimits(bVal);
 
@@ -339,19 +339,19 @@ float *VsHinge::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsHinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsHinge::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Hinge::SetData(strDataType, strValue, FALSE))
+	if(Hinge::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

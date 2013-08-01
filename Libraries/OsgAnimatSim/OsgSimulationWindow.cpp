@@ -67,7 +67,7 @@ void OsgSimulationWindow::Update()
 	m_osgViewer->frame(); 
 }
 
-void OsgSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
+void OsgSimulationWindow::SetupTrackCamera(bool bResetEyePos)
 {
 	if(m_bTrackCamera)
 	{
@@ -98,7 +98,7 @@ void OsgSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
 	}
 }
 
-void OsgSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos)
+void OsgSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos)
 {
 	osg::Vec3d position(oTarget.x, oTarget.y, oTarget.z);
 
@@ -298,7 +298,7 @@ void OsgSimulationWindow::Initialize()
 	else
 		InitStandalone(m_lpSim, lpVsSim);
 
-	SetupTrackCamera(TRUE);
+	SetupTrackCamera(true);
 }
 
 

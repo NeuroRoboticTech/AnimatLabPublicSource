@@ -66,9 +66,9 @@ Cone::~Cone()
 
 float Cone::LowerRadius() {return m_fltLowerRadius;}
 
-void Cone::LowerRadius(float fltVal, BOOL bUseScaling)
+void Cone::LowerRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.LowerRadius", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Cone.LowerRadius", true);
 	if(fltVal == 0 && m_fltUpperRadius == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
@@ -82,9 +82,9 @@ void Cone::LowerRadius(float fltVal, BOOL bUseScaling)
 
 float Cone::UpperRadius() {return m_fltUpperRadius;}
 
-void Cone::UpperRadius(float fltVal, BOOL bUseScaling)
+void Cone::UpperRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.UpperRadius", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Cone.UpperRadius", true);
 	if(m_fltLowerRadius == 0 && fltVal == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
@@ -99,9 +99,9 @@ void Cone::UpperRadius(float fltVal, BOOL bUseScaling)
 
 float Cone::Height() {return m_fltHeight;}
 
-void Cone::Height(float fltVal, BOOL bUseScaling)
+void Cone::Height(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.Height");
+	Std_IsAboveMin((float) 0, fltVal, true, "Cone.Height");
 	if(bUseScaling)
 		m_fltHeight = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -120,7 +120,7 @@ void Cone::Height(float fltVal, BOOL bUseScaling)
 **/
 void Cone::Sides(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Cone.Sides", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Cone.Sides", true);
 	m_iSides = iVal;
 
 	Resize();
@@ -136,42 +136,42 @@ void Cone::Sides(int iVal)
 **/
 int Cone::Sides() {return m_iSides;}
 
-BOOL Cone::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Cone::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "LOWERRADIUS")
 	{
 		LowerRadius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "UPPERRADIUS")
 	{
 		UpperRadius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HEIGHT")
 	{
 		Height((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SIDES")
 	{
 		Sides(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Cone::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

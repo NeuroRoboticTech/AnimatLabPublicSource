@@ -67,7 +67,7 @@ try
 	m_aryAdapters.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PhysicsNeuralModule\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PhysicsNeuralModule\r\n", "", -1, false, true);}
 }
 
 //The physics neural module should always return and be set to the physics time step of the simulation.
@@ -84,7 +84,7 @@ void PhysicsNeuralModule::TimeStep(float fltVal)
 		NeuralModule::TimeStep(m_lpSim->PhysicsTimeStep());
 }
 
-void PhysicsNeuralModule::Kill(BOOL bState)
+void PhysicsNeuralModule::Kill(bool bState)
 {
 	int iCount = m_aryAdapters.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -116,24 +116,24 @@ void PhysicsNeuralModule::Initialize()
 
 #pragma region DataAccesMethods
 
-BOOL PhysicsNeuralModule::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PhysicsNeuralModule::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(NeuralModule::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(NeuralModule::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "TIMESTEP")
 	{
 		TimeStep((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void PhysicsNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -144,7 +144,7 @@ void PhysicsNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray
 	aryTypes.Add("Float");
 }
 
-void PhysicsNeuralModule::AddAdapter(string strXml, BOOL bDoNotInit)
+void PhysicsNeuralModule::AddAdapter(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -163,7 +163,7 @@ void PhysicsNeuralModule::RemoveAdapter(string strID)
 	m_aryAdapters.RemoveAt(iIdx);
 }
 
-int PhysicsNeuralModule::FindAdapterListPos(string strID, BOOL bThrowError)
+int PhysicsNeuralModule::FindAdapterListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -178,7 +178,7 @@ int PhysicsNeuralModule::FindAdapterListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-BOOL PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -187,7 +187,7 @@ BOOL PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXm
 		try
 		{
 			AddAdapter(strXml, bDoNotInit);
-			return TRUE;
+			return true;
 		}
 		catch(CStdErrorInfo oError)
 		{
@@ -201,17 +201,17 @@ BOOL PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXm
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL PhysicsNeuralModule::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool PhysicsNeuralModule::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "ADAPTER")
 	{
 		RemoveAdapter(strID);
-		return TRUE;
+		return true;
 	}
 	//Synapses are stored in the destination neuron. They will be removed there.
 
@@ -220,7 +220,7 @@ BOOL PhysicsNeuralModule::RemoveItem(const string &strItemType, const string &st
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -273,7 +273,7 @@ void PhysicsNeuralModule::Load(CStdXml &oXml)
 	m_arySourceAdapters.RemoveAll();
 	m_aryTargetAdapters.RemoveAll();
 
-	if(oXml.FindChildElement("Adapters", FALSE))
+	if(oXml.FindChildElement("Adapters", false))
 	{
 		oXml.IntoElem(); //Into Adapters Element
 		int iCount = oXml.NumberOfChildren();
@@ -324,7 +324,7 @@ try
 	if(!lpAdapter)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Adapter");
 
-	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	lpAdapter->Load(oXml);
 
 	m_aryAdapters.Add(lpAdapter);

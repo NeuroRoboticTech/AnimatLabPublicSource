@@ -79,7 +79,7 @@ void LinearJoint::LinearType(string strType)
 
 void LinearJoint::LinearType(int iType)
 {
-	Std_InValidRange((int) 0, (int) 2, iType, TRUE, "LinearType");
+	Std_InValidRange((int) 0, (int) 2, iType, true, "LinearType");
 	m_iLinearType = iType;
 }
 
@@ -95,12 +95,12 @@ float  LinearJoint::CylinderHeight()  {return m_fltSize;}
 
 #pragma region DataAccesMethods
 
-BOOL LinearJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Joint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Joint::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "LINEARTYPE")
 	{
@@ -112,7 +112,7 @@ BOOL LinearJoint::SetData(const string &strDataType, const string &strValue, BOO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void LinearJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

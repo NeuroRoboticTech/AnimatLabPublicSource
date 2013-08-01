@@ -93,7 +93,7 @@ try
 	m_aryTargetAdapters.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of NeuralModule\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of NeuralModule\r\n", "", -1, false, true);}
 }
 
 /**
@@ -174,7 +174,7 @@ void NeuralModule::TimeStepInterval(short iVal)
 {
 	if(iVal == 0) iVal = 1;
 
-	Std_IsAboveMin((int) 0, (int) iVal, TRUE, "TimeStepInterval");
+	Std_IsAboveMin((int) 0, (int) iVal, true, "TimeStepInterval");
 	m_iTimeStepInterval = iVal;
 }
 
@@ -201,7 +201,7 @@ float NeuralModule::TimeStep()
 **/
 void NeuralModule::TimeStep(float fltVal)
 {
-	Std_IsAboveMin((float) 0, (float) fltVal, TRUE, "TimeStep");
+	Std_IsAboveMin((float) 0, (float) fltVal, true, "TimeStep");
 
 	//Set it so that it will be taken into consideration when finding min value.
 	m_fltTimeStep = fltVal;
@@ -242,15 +242,15 @@ void NeuralModule::Initialize()
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL NeuralModule::NeedToStep(BOOL bIncrement)
+bool NeuralModule::NeedToStep(bool bIncrement)
 {
 	if(bIncrement)
 		m_iTimeStepCount++;
 
 	if(m_iTimeStepInterval == m_iTimeStepCount)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void NeuralModule::ResetStepCounter()
@@ -258,7 +258,7 @@ void NeuralModule::ResetStepCounter()
 	m_iTimeStepCount = 0;
 }
 
-int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
+int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError)
 {
 	int iCount = aryAdapters.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -273,20 +273,20 @@ int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string 
 
 void NeuralModule::AttachSourceAdapter(Adapter *lpAdapter)
 {
-	if(FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), FALSE) == -1)
+	if(FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), false) == -1)
 		m_arySourceAdapters.Add(lpAdapter);
 }
 
 void NeuralModule::RemoveSourceAdapter(Adapter *lpAdapter)
 {
-	int iIdx = FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), FALSE);
+	int iIdx = FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), false);
 	if(iIdx > -1)
 		m_arySourceAdapters.RemoveAt(iIdx);
 }
 
 void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 {
-	if(FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), FALSE) == -1)
+	if(FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), false) == -1)
 	{
 		m_aryTargetAdapters.Add(lpAdapter);
 		m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
@@ -295,7 +295,7 @@ void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 
 void NeuralModule::RemoveTargetAdapter(Adapter *lpAdapter)
 {
-	int iIdx = FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), FALSE);
+	int iIdx = FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), false);
 	if(iIdx > -1)
 	{
 		m_aryTargetAdapters.RemoveAt(iIdx);
@@ -303,9 +303,9 @@ void NeuralModule::RemoveTargetAdapter(Adapter *lpAdapter)
 	}
 }
 
-void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 

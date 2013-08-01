@@ -33,7 +33,7 @@ try
 	//int i= 5;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, false, true);}
 }
 
 Vx::VxCollisionSensor* VsRigidBody::Sensor()
@@ -62,20 +62,20 @@ void VsRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
 	Physics_FluidDataChanged();
 }
 
-BOOL VsRigidBody::Physics_IsDefined()
+bool VsRigidBody::Physics_IsDefined()
 {
     if(m_vxSensor && m_vxGeometry)
-        return TRUE;
+        return true;
     else
-        return FALSE;
+        return false;
 }
 
-BOOL VsRigidBody::Physics_IsGeometryDefined()
+bool VsRigidBody::Physics_IsGeometryDefined()
 {
     if(m_vxGeometry)
-        return TRUE;
+        return true;
     else
-        return FALSE;
+        return false;
 }
 
 Vx::VxEntity::EntityControlTypeEnum VsRigidBody::ConvertControlType()
@@ -132,7 +132,7 @@ void VsRigidBody::Physics_UpdateNode()
 	Physics_UpdateAbsolutePosition();
 }
 
-void VsRigidBody::Physics_SetFreeze(BOOL bVal)
+void VsRigidBody::Physics_SetFreeze(bool bVal)
 {
 	if(m_vxSensor)
 		m_vxSensor->freeze(bVal);
@@ -185,7 +185,7 @@ void  VsRigidBody::Physics_FluidDataChanged()
 
 		float fltScale = m_lpThisRB->BuoyancyScale();
 		float fltMagnus = m_lpThisRB->Magnus();
-		BOOL bEnabled = m_lpThisRB->EnableFluids();
+		bool bEnabled = m_lpThisRB->EnableFluids();
 
 		m_vxCollisionGeometry->setFluidInteractionData(vCenter, vDrag, fltScale, fltMagnus);
 
@@ -592,7 +592,7 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
-void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{
@@ -618,7 +618,7 @@ void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
 	}
 }
 
-void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltTx || fltTy || fltTz))
 	{
@@ -674,12 +674,12 @@ float VsRigidBody::Physics_GetMass()
 	return fltMass;
 }
 
-BOOL VsRigidBody::Physics_HasCollisionGeometry()
+bool VsRigidBody::Physics_HasCollisionGeometry()
 {
 	if(m_vxSensor)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 	}			// Environment

@@ -45,7 +45,7 @@ VsDistanceJoint::~VsDistanceJoint()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsDistanceJoint/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsDistanceJoint/\r\n", "", -1, false, true);}
 }
 
 /**
@@ -120,19 +120,19 @@ void VsDistanceJoint::CreateJoint()
 #pragma region DataAccesMethods
 
 
-BOOL VsDistanceJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsDistanceJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Joint::SetData(strDataType, strValue, FALSE))
+	if(Joint::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsDistanceJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

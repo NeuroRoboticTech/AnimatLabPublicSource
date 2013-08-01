@@ -43,7 +43,7 @@ namespace AnimatSim
 			int m_iAppendSpaces;
 
 			/// true it this chart has been initialized
-			BOOL m_bInitialized;
+			bool m_bInitialized;
 
 			///This index is used to determine where in the array buffer that the data is stored. This is direclty related to the
 			/// index in the array that is used in the GUI to retrieve the data, so they must match or the data plotted in the GUI
@@ -71,8 +71,8 @@ namespace AnimatSim
 			virtual int AppendSpaces();
 			virtual void AppendSpaces(int iSpaces);
 
-			virtual BOOL IsInitialized();
-			virtual void IsInitialized(BOOL bVal);
+			virtual bool IsInitialized();
+			virtual void IsInitialized(bool bVal);
 
 			virtual int ColumnIndex();
 			virtual void ColumnIndex(int iIndex);
@@ -95,20 +95,20 @@ namespace AnimatSim
 			\param [in,out]	lpChart	   	The pointer to the parent chart. 
 			\param	bVerify			   	true to verify. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void ReInitialize();
 			virtual void StepSimulation();
-			virtual BOOL operator<(DataColumn *lpColumn);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool operator<(DataColumn *lpColumn);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);
 			virtual void SaveColumnNames(ofstream &oStream);
 		};
 
-		BOOL LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
+		bool LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
 
 	}			//Charting
 }				//AnimatSim

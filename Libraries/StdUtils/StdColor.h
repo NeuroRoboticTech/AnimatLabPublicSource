@@ -71,16 +71,16 @@ public:
 	**/
 	CStdColor(float valr, float valg, float valb, float vala, float fltMaxRange);
 
-	void r(float fltR, BOOL bThrowError = TRUE);
+	void r(float fltR, bool bThrowError = true);
 	float r();
 
-	void g(float fltG, BOOL bThrowError = TRUE);
+	void g(float fltG, bool bThrowError = true);
 	float g();
 
-	void b(float fltB, BOOL bThrowError = TRUE);
+	void b(float fltB, bool bThrowError = true);
 	float b();
 
-	void a(float fltA, BOOL bThrowError = TRUE);
+	void a(float fltA, bool bThrowError = true);
 	float a();
 
 	void Set(float R, float G, float B, float A);
@@ -104,8 +104,8 @@ public:
 	void Normalize();
 	void ClearNearZero(float fltTolerance = 1e-5f);
 	float operator[](const int iIndex);
-	void Load(CStdXml &oXml, string strParamName, BOOL bThrowError = TRUE);
-	void Load(string strXml, string strParamName, BOOL bThrowError = TRUE);
+	void Load(CStdXml &oXml, string strParamName, bool bThrowError = true);
+	void Load(string strXml, string strParamName, bool bThrowError = true);
 
 };
 

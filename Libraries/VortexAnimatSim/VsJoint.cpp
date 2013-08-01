@@ -42,12 +42,12 @@ VsSimulator *VsJoint::GetVsSimulator()
 	return m_lpVsSim;
 }
 
-BOOL VsJoint::Physics_IsDefined()
+bool VsJoint::Physics_IsDefined()
 {
     if(m_vxJoint)
-        return TRUE;
+        return true;
     else
-        return FALSE;
+        return false;
 }
 
 void VsJoint::UpdatePosition()

@@ -68,7 +68,7 @@ try
 	m_aryFieldPairs.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ContactAdapter\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ContactAdapter\r\n", "", -1, false, true);}
 }
 
 /**
@@ -118,7 +118,7 @@ void ContactAdapter::TargetModule(string strModule)
 }
 
 
-void ContactAdapter::AddFieldPair(string strXml, BOOL bDoNotInit)
+void ContactAdapter::AddFieldPair(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -130,13 +130,13 @@ void ContactAdapter::AddFieldPair(string strXml, BOOL bDoNotInit)
 		lpPair->Initialize();
 }
 
-void ContactAdapter::RemoveFieldPair(string strID, BOOL bThrowError)
+void ContactAdapter::RemoveFieldPair(string strID, bool bThrowError)
 {
 	int iPos = FindFieldPairListPos(strID, bThrowError);
 	m_aryFieldPairs.RemoveAt(iPos);
 }
 
-int ContactAdapter::FindFieldPairListPos(string strID, BOOL bThrowError)
+int ContactAdapter::FindFieldPairListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -171,38 +171,38 @@ void ContactAdapter::Initialize()
 	}
 }
 
-BOOL ContactAdapter::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool ContactAdapter::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "FIELDPAIR")
 	{
 		AddFieldPair(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL ContactAdapter::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool ContactAdapter::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "FIELDPAIR")
 	{
 		RemoveFieldPair(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 void ContactAdapter::StepSimulation()
@@ -223,7 +223,7 @@ void ContactAdapter::Load(CStdXml &oXml)
 
 	m_aryFieldPairs.RemoveAll();
 
-	if(oXml.FindChildElement("FieldPairs", FALSE))
+	if(oXml.FindChildElement("FieldPairs", false))
 	{
 		oXml.IntoElem(); //Into FieldPairs Element
 		int iCount = oXml.NumberOfChildren();
@@ -257,7 +257,7 @@ ReceptiveFieldPair *ContactAdapter::LoadFieldPair(CStdXml &oXml)
 try
 {
 	lpPair = new ReceptiveFieldPair();
-	lpPair->SetSystemPointers(m_lpSim, m_lpStructure, NULL, m_lpNode, TRUE);
+	lpPair->SetSystemPointers(m_lpSim, m_lpStructure, NULL, m_lpNode, true);
 	lpPair->Load(oXml);
 	m_aryFieldPairs.Add(lpPair);
 

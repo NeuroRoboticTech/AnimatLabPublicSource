@@ -73,7 +73,7 @@ namespace AnimatSim
 			///Specifies if the part should frozen in place to the world. If a rigid body 
 			///is frozen then it is as if it is nailed in place and can not move. Gravity and 
 			///and other forces will not act on it.
-			BOOL m_bFreeze;
+			bool m_bFreeze;
 
 			///Uniform density for the rigid body.
 			float m_fltDensity;
@@ -98,14 +98,14 @@ namespace AnimatSim
 
 			///Some body parts like contact sensors and muscle attachments do not have joints. If not then we should not 
 			///attempt to load them.
-			BOOL m_bUsesJoint;
+			bool m_bUsesJoint;
 
-			///This determines whether or not this is a contact sensor. If this is TRUE then
+			///This determines whether or not this is a contact sensor. If this is true then
 			///this object does not take part in collisions and such, it is a contact sensor only.
-			BOOL m_bIsContactSensor;
+			bool m_bIsContactSensor;
 
 			///This determines whether the object is a collision geometry object
-			BOOL m_bIsCollisionObject;
+			bool m_bIsCollisionObject;
 
 			///This keeps track of the current number of surface contacts that are occuring for this
 			///contact sensor. This is only used for sensors.
@@ -125,7 +125,7 @@ namespace AnimatSim
 			CStdPtrMap<string, Odor> m_aryOdorSources;
 			
 			///Tells if this body is considered a food source.
-			BOOL m_bFoodSource;  
+			bool m_bFoodSource;  
 			
 			/// The quantity of food that this part contains
 			float m_fltFoodQuantity;
@@ -167,7 +167,7 @@ namespace AnimatSim
 			float m_fltMagnus;
 			
 			/// true to enable fluid interactions.
-			BOOL m_bEnableFluids;
+			bool m_bEnableFluids;
 
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
@@ -175,17 +175,17 @@ namespace AnimatSim
 			virtual void LoadPosition(CStdXml &oXml);
 
 			virtual void AddRigidBody(string strXml);
-			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
-			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveRigidBody(string strID, bool bThrowError = true);
+			virtual int FindChildListPos(string strID, bool bThrowError = true);
 
 			virtual void AddContactSensor(string strXml);
-			virtual void RemoveContactSensor(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveContactSensor(string strID, bool bThrowError = true);
 			virtual void LoadContactSensor(CStdXml &oXml);
 
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
-			virtual void AddOdor(string strXml, BOOL bDoNotInit);
-			virtual void RemoveOdor(string strID, BOOL bThrowError = TRUE);
+			virtual void AddOdor(string strXml, bool bDoNotInit);
+			virtual void RemoveOdor(string strID, bool bThrowError = true);
 
 		public:
 			RigidBody();
@@ -194,14 +194,14 @@ namespace AnimatSim
 #pragma region AccessorMutators
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 			
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();
-			virtual void CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling = TRUE);
-			virtual void CenterOfMass(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-			virtual void CenterOfMass(string strXml, BOOL bUseScaling = TRUE);
+			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling = true);
+			virtual void CenterOfMass(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+			virtual void CenterOfMass(string strXml, bool bUseScaling = true);
 
 			virtual CStdPtrArray<RigidBody>* ChildParts();
 
@@ -211,22 +211,22 @@ namespace AnimatSim
 			virtual ContactSensor *GetContactSensor();
 
 			virtual float Density();
-			virtual void Density(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Density(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL Freeze();
-			virtual void Freeze(BOOL bVal);
+			virtual bool Freeze();
+			virtual void Freeze(bool bVal);
 
-			virtual BOOL IsContactSensor();
-			virtual void IsContactSensor(BOOL bVal);
+			virtual bool IsContactSensor();
+			virtual void IsContactSensor(bool bVal);
 
-			virtual BOOL IsCollisionObject();
-			virtual void IsCollisionObject(BOOL bVal);
+			virtual bool IsCollisionObject();
+			virtual void IsCollisionObject(bool bVal);
 			
-			virtual BOOL IsRoot();
-			virtual BOOL HasStaticJoint();
+			virtual bool IsRoot();
+			virtual bool HasStaticJoint();
 
-			virtual BOOL IsFoodSource();
-			virtual void IsFoodSource(BOOL bVal);
+			virtual bool IsFoodSource();
+			virtual void IsFoodSource(bool bVal);
 
 			virtual float FoodQuantity();
 			virtual void FoodQuantity(float fltVal);
@@ -244,18 +244,18 @@ namespace AnimatSim
 			virtual void MaxFoodQuantity(float fltVal);
 
 			virtual float LinearVelocityDamping();
-			virtual void LinearVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearVelocityDamping(float fltVal, bool bUseScaling = true);
 
 			virtual float AngularVelocityDamping();
-			virtual void AngularVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void AngularVelocityDamping(float fltVal, bool bUseScaling = true);
 
 			virtual string MaterialID();
 			virtual void MaterialID(string strID);
 
 			virtual CStdFPoint BuoyancyCenter();
-			virtual void BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-			virtual void BuoyancyCenter(string strXml, BOOL bUseScaling = TRUE);
+			virtual void BuoyancyCenter(CStdFPoint &oPoint, bool bUseScaling = true);
+			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+			virtual void BuoyancyCenter(string strXml, bool bUseScaling = true);
 
 			virtual float BuoyancyScale();
 			virtual void BuoyancyScale(float fltVal);
@@ -268,10 +268,10 @@ namespace AnimatSim
 			virtual float Magnus();
 			virtual void Magnus(float fltVal);
 
-			virtual BOOL EnableFluids();
-			virtual void EnableFluids(BOOL bVal);
+			virtual bool EnableFluids();
+			virtual void EnableFluids(bool bVal);
 
-			virtual BOOL HasCollisionGeometry();
+			virtual bool HasCollisionGeometry();
 
 #pragma endregion
 
@@ -280,8 +280,8 @@ namespace AnimatSim
 			virtual void Eat(float fltBiteSize, long lTimeSlice);
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);
-			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMass();
 			virtual float GetVolume();
@@ -298,10 +298,10 @@ namespace AnimatSim
 #pragma region DataAccesMethods
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -309,7 +309,7 @@ namespace AnimatSim
 			virtual void StepSimulation();
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
-			virtual void Kill(BOOL bState = TRUE);
+			virtual void Kill(bool bState = true);
 			virtual void Load(CStdXml &oXml);
 		};
 

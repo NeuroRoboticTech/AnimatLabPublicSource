@@ -45,7 +45,7 @@ VsBallSocket::~VsBallSocket()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsBallSocket\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsBallSocket\r\n", "", -1, false, true);}
 }
 
 void VsBallSocket::DeletePhysics()
@@ -119,19 +119,19 @@ void VsBallSocket::CreateJoint()
 
 #pragma region DataAccesMethods
 
-BOOL VsBallSocket::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsBallSocket::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(BallSocket::SetData(strDataType, strValue, FALSE))
+	if(BallSocket::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsBallSocket::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -18,7 +18,7 @@ namespace VortexAnimatSim
 VsMotorizedJoint::VsMotorizedJoint()
 {
 	m_lpThisMotorJoint = NULL;
-	m_bMotorOn = FALSE;
+	m_bMotorOn = false;
 }
 
 VsMotorizedJoint::~VsMotorizedJoint()
@@ -84,14 +84,14 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 			if(fabs(fltSetVelocity) > 1e-4 && m_vxJoint)
 			{
 				if(m_vxJoint->getControl(m_iCoordID) == Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
-					Physics_EnableMotor(TRUE, fltSetVelocity, fltMaxForce);
+					Physics_EnableMotor(true, fltSetVelocity, fltMaxForce);
 				else
 					m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
 			}
 			else
 			{ 
 				if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
-					m_lpThisMotorJoint->EnableLock(TRUE, m_vxJoint->getCoordinateCurrentPosition(m_iCoordID), fltMaxForce);
+					m_lpThisMotorJoint->EnableLock(true, m_vxJoint->getCoordinateCurrentPosition(m_iCoordID), fltMaxForce);
 			}
 		}
 
@@ -99,7 +99,7 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 	}
 }
 
-void VsMotorizedJoint::Physics_EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce)
+void VsMotorizedJoint::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
 	if (m_vxJoint)
 	{ 		
@@ -111,13 +111,13 @@ void VsMotorizedJoint::Physics_EnableLock(BOOL bOn, float fltPosition, float flt
 			m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlLocked);
 		}
 		else if (m_bMotorOn)
-			Physics_EnableMotor(TRUE, 0, fltMaxLockForce);
+			Physics_EnableMotor(true, 0, fltMaxLockForce);
 		else
 			m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlFree);
 	}
 }
 
-void VsMotorizedJoint::Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce)
+void VsMotorizedJoint::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
 {
 	if (m_vxJoint)
 	{   

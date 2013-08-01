@@ -27,7 +27,7 @@ namespace VortexAnimatSim
 VsPlane::VsPlane()
 {
 	SetThisPointers();
-	m_bCullBackfaces = TRUE; //we want back face culling on by default for planes.
+	m_bCullBackfaces = true; //we want back face culling on by default for planes.
 }
 
 /**
@@ -44,12 +44,12 @@ VsPlane::~VsPlane()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsPlane/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPlane/\r\n", "", -1, false, true);}
 }
 
 void VsPlane::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), FALSE);
+	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), false);
 }
 
 void VsPlane::CreatePhysicsGeometry()

@@ -86,8 +86,8 @@ void HudText::Load(CStdXml &oXml)
 
 	oXml.IntoElem();
 
-	m_aryColor.Load(oXml, "Color", FALSE);
-	Std_LoadPoint(oXml, "Position", m_ptPosition, FALSE);
+	m_aryColor.Load(oXml, "Color", false);
+	Std_LoadPoint(oXml, "Position", m_ptPosition, false);
 	m_strFont = oXml.GetChildString("Font", m_strFont);
 	m_iCharSize = oXml.GetChildInt("CharSize", m_iCharSize);
 	m_strText = oXml.GetChildString("Text", m_strText);

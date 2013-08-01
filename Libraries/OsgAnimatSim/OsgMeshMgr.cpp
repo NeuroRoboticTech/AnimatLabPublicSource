@@ -33,7 +33,7 @@ OsgMeshMgr::~OsgMeshMgr()
 		m_aryMeshes.RemoveAll();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of OsgMeshMgr\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of OsgMeshMgr\r\n", "", -1, false, true);}
 }
 
 string OsgMeshMgr::FileCreateTime(string strFilename)
@@ -55,7 +55,7 @@ osg::Node *OsgMeshMgr::LoadMesh(string strFilename)
 	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
 	
 	//If not found then load it.
-	if(!FindMesh(strFilename, MeshPair, FALSE))
+	if(!FindMesh(strFilename, MeshPair, false))
 		return AddMesh(strFilename);
 	else
 	{
@@ -94,7 +94,7 @@ void OsgMeshMgr::ReleaseMesh(string strFilename)
 {
 	int iIndex=0;
 	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
-	if(!FindMesh(strFilename, MeshPair, FALSE)) return;
+	if(!FindMesh(strFilename, MeshPair, false)) return;
 	
 	MeshPair.second.release();
 
@@ -105,7 +105,7 @@ bool OsgMeshMgr::ContainesMesh(string strFilename)
 {
 	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
 
-	if(FindMesh(strFilename, MeshPair, FALSE))
+	if(FindMesh(strFilename, MeshPair, false))
 		return true;
 	else
 		return false;
@@ -122,7 +122,7 @@ bool OsgMeshMgr::ContainesMesh(string strFilename)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-bool OsgMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, BOOL bThrowError)
+bool OsgMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError)
 {
 	CStdMap<string, pair<string, osg::ref_ptr<osg::Node>> >::iterator oPos;
 	oPos = m_aryMeshes.find(Std_CheckString(strFilename));

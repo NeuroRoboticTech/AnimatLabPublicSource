@@ -79,9 +79,9 @@ void SynapseType::SynapseTypeID(int iID) {m_iSynapseTypeID = iID;}
 
 #pragma endregion
 
-void SynapseType::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void SynapseType::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	
 	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
 

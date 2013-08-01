@@ -24,7 +24,7 @@ namespace VortexAnimatSim
 			string m_strVelocityEquation;
 			CStdPostFixEval *m_lpEval;
 
-			BOOL m_bDisableMotorWhenDone;
+			bool m_bDisableMotorWhenDone;
 
 			float m_fltVelocity;
 			float m_fltVelocityReport;
@@ -42,8 +42,8 @@ namespace VortexAnimatSim
 			string VelocityEquation() {return m_strVelocityEquation;};
 			void VelocityEquation(string strVal);
 
-			BOOL DisableMotorWhenDone() {return m_bDisableMotorWhenDone;};
-			void DisableMotorWhenDone(BOOL bVal) {m_bDisableMotorWhenDone = bVal;};
+			bool DisableMotorWhenDone() {return m_bDisableMotorWhenDone;};
+			void DisableMotorWhenDone(bool bVal) {m_bDisableMotorWhenDone = bVal;};
 
 			virtual void Load(CStdXml &oXml);
 
@@ -56,7 +56,7 @@ namespace VortexAnimatSim
 			virtual void Deactivate();
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 		};
 

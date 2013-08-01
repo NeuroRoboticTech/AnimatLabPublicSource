@@ -24,7 +24,7 @@ namespace AnimatSim
             int m_iCoordinateID;
 
             ///whether the relaxation is enabled or not
-            BOOL m_bEnabled;
+            bool m_bEnabled;
 
 			/// The compliance of the collision between those two materials.
 			float m_fltStiffness;
@@ -44,20 +44,20 @@ namespace AnimatSim
             virtual int CoordinateID();
             virtual void CoordinateID(int iVal);
 
-            virtual BOOL Enabled();
-            virtual void Enabled(BOOL bVal);
+            virtual bool Enabled();
+            virtual void Enabled(bool bVal);
 
     		virtual float Stiffness();
-			virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Stiffness(float fltVal, bool bUseScaling = true);
 
 			virtual float Damping();
-			virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Damping(float fltVal, bool bUseScaling = true);
 
 			virtual float Loss();
-			virtual void Loss(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Loss(float fltVal, bool bUseScaling = true);
 
 			virtual void CreateDefaultUnits();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);

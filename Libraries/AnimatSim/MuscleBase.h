@@ -69,8 +69,8 @@ namespace AnimatSim
 				float Tdot();
 				float PrevTension();
 
-				virtual BOOL Enabled();
-				virtual void Enabled(BOOL bVal);
+				virtual bool Enabled();
+				virtual void Enabled(bool bVal);
 
 				virtual SigmoidGain *StimTension();
 				virtual void StimTension(string strXml);
@@ -93,13 +93,13 @@ namespace AnimatSim
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
 				virtual void AddExternalNodeInput(float fltInput);
 
-				virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+				virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 				virtual void VerifySystemPointers();
 
 				virtual void ResetSimulation();
 
 				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 				virtual void Load(CStdXml &oXml);

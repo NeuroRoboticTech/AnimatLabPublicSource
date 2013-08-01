@@ -130,7 +130,7 @@ void SimulationRecorder::Load(CStdXml &oXml)
 
 	Reset();
 
-	if(oXml.FindChildElement("KeyFrames", FALSE))
+	if(oXml.FindChildElement("KeyFrames", false))
 	{
 		oXml.IntoElem(); //Into KeyFrames Element
 
@@ -171,7 +171,7 @@ try
 	if(!lpFrame)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "KeyFrame");
 
-	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpFrame->Load(oXml);
 
 	Add(lpFrame);

@@ -64,20 +64,20 @@ bool OsgCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& a
 
 			case(GUIEventAdapter::RELEASE):
 			{
-				m_lpOsgSim->MouseSpring()->Visible(FALSE);
+				m_lpOsgSim->MouseSpring()->Visible(false);
 
 				if(!m_bInDrag)
 				{
 					if(m_lpPicked && m_lpSim && m_lpSim->VisualSelectionMode() != SIMULATION_SELECTION_MODE)
 					{
 						//Change the selected vertex of the selected part.
-						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), TRUE, TRUE);
+						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), true, true);
 
 						if(m_lpSim->AddBodiesMode())
 							m_lpPicked->AddBodyClicked(m_vPickPoint.x(), m_vPickPoint.y(), m_vPickPoint.z(), 
 													   m_vPickNormal.x(), m_vPickNormal.y(), m_vPickNormal.z());
 						else
-							m_lpPicked->Selected(TRUE, m_bControlDown);
+							m_lpPicked->Selected(true, m_bControlDown);
 					}
 				}
 
@@ -172,9 +172,9 @@ bool OsgCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& a
 
 	}  //Eat any erorrs here.
 	catch(CStdErrorInfo oError)
-	{return FALSE;}
+	{return false;}
 	catch(...)
-	{return FALSE;}
+	{return false;}
 
 	return bHandled;
 }
@@ -248,8 +248,8 @@ void OsgCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapt
 						case COLLISION_SELECTION_MODE:
 							//if(lpBody)
 							//{ //For debugging.
-							//	BOOL bManip = lpBody->AllowMouseManipulation();
-							//	BOOL bVisible = lpBody->IsVisible();
+							//	bool bManip = lpBody->AllowMouseManipulation();
+							//	bool bVisible = lpBody->IsVisible();
 							//	int iType = lpBody->VisualSelectionType();
 							//	int iMode = m_lpSim->VisualSelectionMode();
                             //  iMode=iType;
@@ -369,25 +369,25 @@ void OsgCameraManipulator::GetPickedFace(int iIndex, osg::Geometry *osgGeo)
 }
 */
 
-BOOL OsgCameraManipulator::CanDoMouseSpring()
+bool OsgCameraManipulator::CanDoMouseSpring()
 {
     if(m_lpOsgSim->MouseSpring()->GetRigidBody() && m_lpOsgSim->MouseSpring()->GetMovableItem())
-    	return TRUE;
+    	return true;
     else
-        return FALSE;
+        return false;
 }
 
-BOOL OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
+bool OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
 {	
-	m_lpOsgSim->MouseSpring()->Visible(FALSE);
+	m_lpOsgSim->MouseSpring()->Visible(false);
 
 	OsgMovableItem *osgRBBody = m_lpOsgSim->MouseSpring()->GetMovableItem();
 	RigidBody *rbBody = m_lpOsgSim->MouseSpring()->GetRigidBody();
 
 	if (!osgRBBody || !rbBody)
-		return FALSE;
+		return false;
 
-	m_lpOsgSim->MouseSpring()->Visible(TRUE);
+	m_lpOsgSim->MouseSpring()->Visible(true);
 
 	char strDest[150];
 
@@ -416,12 +416,12 @@ BOOL OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, flo
 
 	//Then the total force = Spring force - damping force
 	osg::Vec3 vTotalForce = vSpringForce - v3DampForce;
-	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), FALSE);
+	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), false);
 
 	sprintf(strDest, "Length: (%3.3f, %3.3f, %3.3f)   MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n\n", vSpringLength[0], vSpringLength[1], vSpringLength[2], vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
 	OutputDebugString(strDest);
 
-	return TRUE;
+	return true;
 }
 
 osg::Vec3 OsgCameraManipulator::ConvertMouseTo3D(const GUIEventAdapter& ea, int x, int y, osg::Vec3 vGrabPos)

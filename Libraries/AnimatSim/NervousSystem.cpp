@@ -69,7 +69,7 @@ try
 	m_aryNeuralModules.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, false, true);}
 }
 
 
@@ -147,7 +147,7 @@ void NervousSystem::RemoveNeuralModule(string strID)
 
 
 /**
-\fn	NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
+\fn	NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, bool bThrowError)
 
 \brief	Searches for a neural module with a matching module name. 
 
@@ -162,7 +162,7 @@ void NervousSystem::RemoveNeuralModule(string strID)
 \return	null if it fails, else the found neural module. 
 \exception If bThrowError is true and nothing is found.
 **/
-NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
+NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, bool bThrowError)
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
@@ -177,7 +177,7 @@ NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowE
 }
 
 
-void NervousSystem::Kill(BOOL bState)
+void NervousSystem::Kill(bool bState)
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
@@ -199,9 +199,9 @@ void NervousSystem::ResetSimulation()
 	}
 }
 
-void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
@@ -263,7 +263,7 @@ void NervousSystem::StepSim()
 	{
 		lpModule = oPos->second;
 
-		if(lpModule->NeedToStep(TRUE))
+		if(lpModule->NeedToStep(true))
 			lpModule->StepSimulation();
 	}
 }
@@ -277,7 +277,7 @@ void NervousSystem::StepAdapters()
 	{
 		lpModule = oPos->second;
 
-		if(lpModule->NeedToStep(FALSE))
+		if(lpModule->NeedToStep(false))
 		{
 			lpModule->StepAdapters();
 			lpModule->ResetStepCounter();
@@ -378,11 +378,11 @@ try
 	lpFactory = m_lpSim->LoadClassFactory(strModuleFileName);
 
 	//Now create an instance of a neural module. There is only one type of 
-	lpModule = dynamic_cast<NeuralModule *>(lpFactory->CreateObject("NeuralModule", strModuleType, TRUE));
+	lpModule = dynamic_cast<NeuralModule *>(lpFactory->CreateObject("NeuralModule", strModuleType, true));
 	if(!lpModule)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "NeuralModule");
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 
 	//Clean up the original class factory. We will use the one in the NeuralModule from now on.
 	if(lpFactory)
@@ -393,7 +393,7 @@ try
 	//that the sim have a pointer to this factory.
 	m_lpSim->AddNeuralModuleFactory(strModuleName, lpModule);
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	lpModule->Load(oXml);
 
 	AddNeuralModule(lpModule);

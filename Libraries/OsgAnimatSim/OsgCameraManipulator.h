@@ -35,8 +35,8 @@ namespace OsgAnimatSim
 				virtual osg::Vec3 FindSelectedVertex(osgUtil::LineSegmentIntersector::Intersections::iterator &hitr);
 
 			protected:
-				BOOL CanDoMouseSpring();
-				BOOL DoMouseSpring(const GUIEventAdapter& ea, float x, float y);
+				bool CanDoMouseSpring();
+				bool DoMouseSpring(const GUIEventAdapter& ea, float x, float y);
 				void DoPan(const GUIEventAdapter& ea, float x, float y);
 				void DoZoom(const GUIEventAdapter& ea, float x, float y);
 				void DoRotate(const GUIEventAdapter& ea, float x, float y);

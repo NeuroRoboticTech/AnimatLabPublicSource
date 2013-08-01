@@ -20,11 +20,11 @@
     #include <limits.h>
     #include <unistd.h>
 
-	#define BOOL bool
+	#define bool bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
-	#define FALSE 0
-	#define TRUE 1
+	#define false 0
+	#define true 1
 	#define LONG long
 	#define ULONG unsigned long
 	#define LPLONG long *

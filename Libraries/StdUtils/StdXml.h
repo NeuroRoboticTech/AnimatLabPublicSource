@@ -37,9 +37,9 @@ public:
 	virtual string FullTagPath(bool bAddChildName = true);
 
 	virtual int NumberOfChildren();
-	virtual BOOL FindElement(string strElementName, bool fThrowError = true);
-	virtual BOOL FindChildByIndex(int iIndex, bool bThrowError = true);
-	virtual BOOL FindChildElement(string strElementName, bool fThrowError = true);
+	virtual bool FindElement(string strElementName, bool fThrowError = true);
+	virtual bool FindChildByIndex(int iIndex, bool bThrowError = true);
+	virtual bool FindChildElement(string strElementName, bool fThrowError = true);
 
 	virtual bool IntoChildElement(string strElementName, bool bThrowError = true);
 
@@ -58,9 +58,9 @@ public:
 	virtual float GetChildFloat(string strElementName);
 	virtual float GetChildFloat(string strElementName, float fltDefault);
 	virtual float GetChildFloat();
-	virtual BOOL GetChildBool(string strElementName);
-	virtual BOOL GetChildBool(string strElementName, bool bDefault);
-	virtual BOOL GetChildBool();
+	virtual bool GetChildBool(string strElementName);
+	virtual bool GetChildBool(string strElementName, bool bDefault);
+	virtual bool GetChildBool();
 
 	virtual void AddElement(string strElementName, string strData = "");
 	//virtual bool RemoveElement(string strElementName, bool bThrowError = true);
@@ -83,7 +83,7 @@ public:
 	virtual int GetAttribInt(string strAttribName, bool bThrowError = true, int iDefault = 0);
 	virtual double GetAttribDouble(string strAttribName, bool bThrowError = true, double dblDefault = 0);
 	virtual float GetAttribFloat(string strAttribName, bool bThrowError = true, float fltDefault = 0);
-	virtual BOOL GetAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
+	virtual bool GetAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
 
 	virtual void SetAttrib(string strAttribName, string strVal);
 	virtual void SetAttrib(string strAttribName, char cVal);
@@ -99,7 +99,7 @@ public:
 	virtual int GetChildAttribInt(string strAttribName, bool bThrowError = true, int iDefault = 0);
 	virtual double GetChildAttribDouble(string strAttribName, bool bThrowError = true, double dblDefault = 0);
 	virtual float GetChildAttribFloat(string strAttribName, bool bThrowError = true, float fltDefault = 0);
-	virtual BOOL GetChildAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
+	virtual bool GetChildAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
 
 	virtual void SetChildAttrib(string strAttribName, string strVal);
 	virtual void SetChildAttrib(string strAttribName, char cVal);

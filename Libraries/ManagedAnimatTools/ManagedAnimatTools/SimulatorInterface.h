@@ -129,7 +129,7 @@ namespace AnimatGUI
 			virtual void RunSimulator();
 
 			virtual void LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage);
-			virtual void AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, BOOL bInit, HWND hWnd);
+			virtual void AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, bool bInit, HWND hWnd);
 			virtual void RemoveSimWindow(HWND hWnd);
 
 #pragma endregion

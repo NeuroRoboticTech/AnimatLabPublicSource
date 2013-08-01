@@ -36,7 +36,7 @@ namespace AnimatSim
 		{
 		protected:
 			/// Determines whether or not the gain uses upper and lower limits during its calculations.
-			BOOL m_bUseLimits;
+			bool m_bUseLimits;
 
 			/// The lower limit value that is checked if UseLimits is true.
 			float m_fltLowerLimit;
@@ -60,12 +60,12 @@ namespace AnimatSim
 			
 			\return	true if it is within limits, false otherwise. 
 			**/
-			BOOL InLimits(float fltInput)
+			bool InLimits(float fltInput)
 			{
 				if( m_bUseLimits && ( (fltInput < m_fltLowerLimit) || (fltInput > m_fltUpperLimit) ) ) 
-					return FALSE;
+					return false;
 				else
-					return TRUE;
+					return true;
 			}
 
 			/**
@@ -93,8 +93,8 @@ namespace AnimatSim
 			Gain();
 			virtual ~Gain();
 
-			BOOL UseLimits();
-			void UseLimits(BOOL bVal);
+			bool UseLimits();
+			void UseLimits(bool bVal);
 
 			float LowerLimit();
 			void LowerLimit(float fltVal);
@@ -124,7 +124,7 @@ namespace AnimatSim
 			**/
 			virtual float CalculateGain(float fltInput) = 0;
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual void Load(CStdXml &oXml);
 		};

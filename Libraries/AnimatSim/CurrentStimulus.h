@@ -93,10 +93,10 @@ namespace AnimatSim
 			long m_lBurstStart;
 
 			/// Tells whether a cycle is on or not.
-			BOOL m_bCycleOn;
+			bool m_bCycleOn;
 
 			/// Tells whether a burst is on or not.
-			BOOL m_bBurstOn;
+			bool m_bBurstOn;
 
 			virtual float GetCurrentOn();
 			virtual void SetSliceData();
@@ -109,7 +109,7 @@ namespace AnimatSim
 			virtual string Type();
 			virtual void Type(string strValue);
 			
-			virtual void AlwaysActive(BOOL bVal);
+			virtual void AlwaysActive(bool bVal);
 
 			virtual string TargetNodeID();
 			virtual void TargetNodeID(string strID);
@@ -148,7 +148,7 @@ namespace AnimatSim
 			virtual void Deactivate();
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 		};
 

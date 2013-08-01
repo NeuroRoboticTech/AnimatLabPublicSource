@@ -38,7 +38,7 @@ namespace AnimatSim
 			string m_strConfigFilename;
 
 			/// true to set the start and end time. If false then the chart collects continuously.
-			BOOL m_bSetStartEndTime;
+			bool m_bSetStartEndTime;
 
 			/// Tells what the time slice step interval to use when collecting data. This is 
 			short m_iCollectInterval;
@@ -79,7 +79,7 @@ namespace AnimatSim
 
 			virtual long CalculateChartColumnCount();
 			DataColumn *LoadDataColumn(CStdXml &oXml);
-			virtual DataColumn *FindColumn(string strID, int &iIndex, BOOL bThrowError);
+			virtual DataColumn *FindColumn(string strID, int &iIndex, bool bThrowError);
 
 		public:
 			DataChart();
@@ -87,11 +87,11 @@ namespace AnimatSim
 
 			virtual string Type();
 
-			virtual void StartTime(float fltVal, BOOL bReInit = TRUE);
-			virtual void EndTime(float fltVal, BOOL bReInit = TRUE);
+			virtual void StartTime(float fltVal, bool bReInit = true);
+			virtual void EndTime(float fltVal, bool bReInit = true);
 
-			virtual BOOL SetStartEndTime();
-			virtual void SetStartEndTime(BOOL bVal);
+			virtual bool SetStartEndTime();
+			virtual void SetStartEndTime(bool bVal);
 
 			virtual long BufferSize();
 			virtual long UsedBufferSize();
@@ -103,12 +103,12 @@ namespace AnimatSim
 			virtual float *DataBuffer();
 
 			virtual int CollectInterval();
-			virtual void CollectInterval(int iVal, BOOL bReInit = TRUE);
-			virtual void CollectInterval(float fltVal, BOOL bReInit = TRUE);
+			virtual void CollectInterval(int iVal, bool bReInit = true);
+			virtual void CollectInterval(float fltVal, bool bReInit = true);
 
 			virtual long CollectTimeWindow();
-			virtual void CollectTimeWindow(long lVal, BOOL bReInit = TRUE);
-			virtual void CollectTimeWindow(float fltVal, BOOL bReInit = TRUE);
+			virtual void CollectTimeWindow(long lVal, bool bReInit = true);
+			virtual void CollectTimeWindow(float fltVal, bool bReInit = true);
 
 			virtual string ProjectPath();
 			virtual void ProjectPath(string strVal);
@@ -118,7 +118,7 @@ namespace AnimatSim
 			virtual long CurrentRow();
 			virtual void CurrentRow(long iVal);
 
-			virtual BOOL Lock();
+			virtual bool Lock();
 			virtual void Unlock();
 
 			virtual void AddData(int iColumn, int iRow, float fltVal);
@@ -127,18 +127,18 @@ namespace AnimatSim
 			virtual void Load(CStdXml &oXml);
 
 			virtual void AddColumn(DataColumn *lpColumn);
-			virtual void AddColumn(string strXml, BOOL bDoNotInit);
-			virtual void RemoveColumn(string strID, BOOL bThrowError = TRUE);
-			virtual DataColumn *FindColumn(string strID, BOOL bThrowError = TRUE);
+			virtual void AddColumn(string strXml, bool bDoNotInit);
+			virtual void RemoveColumn(string strID, bool bThrowError = true);
+			virtual DataColumn *FindColumn(string strID, bool bThrowError = true);
 
 #pragma region DataAccesMethods
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 #pragma endregion
 
-			virtual BOOL operator<(ActivatedItem *lpItem);
+			virtual bool operator<(ActivatedItem *lpItem);
 			virtual void Initialize();
 			virtual void ReInitialize();
 			virtual void ResetSimulation();

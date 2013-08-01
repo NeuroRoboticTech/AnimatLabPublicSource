@@ -70,17 +70,17 @@ try
         delete m_oRowCountLock;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, false, true);}
 }
 
 string MemoryChart::Type() {return "MemoryChart";}
 
-BOOL MemoryChart::Lock()
+bool MemoryChart::Lock()
 {
 	if(m_oRowCountLock && m_oRowCountLock->TryEnter())
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void MemoryChart::Unlock()

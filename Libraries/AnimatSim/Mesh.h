@@ -38,12 +38,12 @@ namespace AnimatSim
 
 				virtual void SetMeshFile(string strXml);
 
-				virtual void Scale(CStdFPoint &vScale, BOOL bUpdateMatrix = TRUE);
-				virtual void Scale(string strXml, BOOL bUpdateMatrix = TRUE);
-				virtual void Scale(float fltX, float fltY, float fltZ, BOOL bUpdateMatrix = TRUE); 
+				virtual void Scale(CStdFPoint &vScale, bool bUpdateMatrix = true);
+				virtual void Scale(string strXml, bool bUpdateMatrix = true);
+				virtual void Scale(float fltX, float fltY, float fltZ, bool bUpdateMatrix = true); 
 				virtual CStdFPoint Scale();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

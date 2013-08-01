@@ -80,7 +80,7 @@ try
 	m_lpGm = NULL;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, false, true);}
 }
 
 string VoltageClamp::Type() {return "VoltageClamp";}
@@ -197,24 +197,24 @@ float *VoltageClamp::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VoltageClamp::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VoltageClamp::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 		
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VTARGET")
 	{
 		Vtarget((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VoltageClamp::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

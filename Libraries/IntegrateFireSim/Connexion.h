@@ -35,11 +35,11 @@ namespace IntegrateFireSim
 			virtual void Load(CStdXml &oXml);
 
 			virtual void ResetSimulation();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual float *GetDataPointer(const string &strDataType);
 			
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 
 #pragma region Accessor-Mutators
@@ -123,12 +123,12 @@ namespace IntegrateFireSim
 
 			double FacilD();
 			double RelFacil();
-			BOOL VoltDep();
-			BOOL Hebbian();
+			bool VoltDep();
+			bool Hebbian();
 			double HebbIncrement();
 			double HebbTimeWindow();
 			double MaxGHebb();
-			BOOL AllowForgetting();
+			bool AllowForgetting();
 			double ForgettingWindow();
 			double Consolidation();
 			double MaxGVoltDepRel();
@@ -156,7 +156,7 @@ namespace IntegrateFireSim
 			**/
 			void AppendTransitSpike() {m_TransitCx.AddTail(m_dDelay);}
 
-			void DecrementLatencies(double dt,BOOL FreezeLearning=FALSE);
+			void DecrementLatencies(double dt,bool FreezeLearning=false);
 			void DecrementFacilitation();
 
 			/**
@@ -168,8 +168,8 @@ namespace IntegrateFireSim
 			\return	null if it fails, else the time to next spike pointer.
 			**/
 			double *GetTimeToNextSpikePtr() {return m_TransitCx.First();}
-			double ProcessOutput(BOOL bFreezeHebb=FALSE);
-			double GetProspectiveCond(BOOL bFreezeHebb);
+			double ProcessOutput(bool bFreezeHebb=false);
+			double GetProspectiveCond(bool bFreezeHebb);
 			void IncrementHebbian();
 
 

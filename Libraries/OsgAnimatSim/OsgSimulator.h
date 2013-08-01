@@ -86,8 +86,8 @@ namespace OsgAnimatSim
 		virtual void ShutdownSimulation();
 		virtual void ToggleSimulation();
 		virtual void StopSimulation();
-		virtual BOOL StartSimulation();
-		virtual BOOL PauseSimulation();
+		virtual bool StartSimulation();
+		virtual bool PauseSimulation();
 		virtual void Save(string strFile);
 
 		static OsgSimulator *ConvertSimulator(Simulator *lpSim);

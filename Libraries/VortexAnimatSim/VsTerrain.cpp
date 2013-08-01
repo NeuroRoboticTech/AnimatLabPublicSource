@@ -25,7 +25,7 @@ namespace VortexAnimatSim
 VsTerrain::VsTerrain()
 {
 	SetThisPointers();
-	m_bCullBackfaces = TRUE; //we want back face culling on by default for Terrains.
+	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
 	m_vxHeightField = NULL;
 }
@@ -38,12 +38,12 @@ VsTerrain::~VsTerrain()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, false, true);}
 }
 
 void VsTerrain::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, FALSE);
+	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, false);
 }
 
 void VsTerrain::SetTexture(string strTexture)

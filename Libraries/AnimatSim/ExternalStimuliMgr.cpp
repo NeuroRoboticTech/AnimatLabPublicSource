@@ -76,7 +76,7 @@ ExternalStimuliMgr::~ExternalStimuliMgr()
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL ExternalStimuliMgr::AddStimulus(string strXml)
+bool ExternalStimuliMgr::AddStimulus(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -85,7 +85,7 @@ BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 	ExternalStimulus *lpStim = LoadExternalStimuli(oXml);
 	lpStim->Initialize();
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -98,10 +98,10 @@ BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL ExternalStimuliMgr::RemoveStimulus(string strID)
+bool ExternalStimuliMgr::RemoveStimulus(string strID)
 {
 	Remove(strID);
-	return TRUE;
+	return true;
 }
 /*
 void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
@@ -127,7 +127,7 @@ void ExternalStimuliMgr::Load(CStdXml &oXml)
 
 	Reset();
 
-	if(oXml.FindChildElement("ExternalStimuli", FALSE))
+	if(oXml.FindChildElement("ExternalStimuli", false))
 	{
 		oXml.IntoElem(); //Into ExternalStimuli Element
 
@@ -169,7 +169,7 @@ try
 	if(!lpStimulus)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ExternalStimulus");
 
-	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpStimulus->Load(oXml);
 
 	Add(lpStimulus);

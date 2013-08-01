@@ -35,12 +35,12 @@ namespace VortexAnimatSim
 #pragma region DataAccesMethods
 
 				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion
 
-				virtual void EnableLimits(BOOL bVal);
+				virtual void EnableLimits(bool bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();
 			};

@@ -38,8 +38,8 @@ class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow, 
 		virtual osg::Viewport* GetViewport();
 		virtual osgViewer::Viewer *Viewer() {return m_osgViewer.get();};
 
-		virtual void SetupTrackCamera(BOOL bResetEyePos);
-		virtual void SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos);
+		virtual void SetupTrackCamera(bool bResetEyePos);
+		virtual void SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos);
 		virtual void SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget);
 		virtual void SetCameraPositionAndLookAt(osg::Vec3d vCameraPos, osg::Vec3d vTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);

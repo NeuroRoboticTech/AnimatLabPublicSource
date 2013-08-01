@@ -49,9 +49,9 @@ namespace AnimatSim
 			///regular rotation information so it can be used during a simulation reset.
 			CStdFPoint m_oReportRotation;
 
-			///Determines if this body is physically seen or not. If this is FALSE then 
+			///Determines if this body is physically seen or not. If this is false then 
 			///whatever geometry this is, like a box, is not seen in the graphics.
-			BOOL m_bIsVisible;
+			bool m_bIsVisible;
 
 			//Used to report back if visible.
 			float m_fltReportIsVisible;
@@ -118,12 +118,12 @@ namespace AnimatSim
 			void Parent(RigidBody *lpValue);
 
 			virtual int VisualSelectionType() ;
-			virtual BOOL AllowMouseManipulation();
+			virtual bool AllowMouseManipulation();
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Position(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Position(string strXml, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Position(float fltX, float fltY, float fltZ, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Position(string strXml, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint AbsolutePosition();
 			virtual void AbsolutePosition(CStdFPoint &oPoint);
@@ -141,16 +141,16 @@ namespace AnimatSim
 			virtual CStdFPoint GetCurrentPosition();
 
 			virtual CStdFPoint Rotation();
-			virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Rotation(string strXml, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Rotation(CStdFPoint &oPoint, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Rotation(float fltX, float fltY, float fltZ, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Rotation(string strXml, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint ReportRotation();
 			virtual void ReportRotation(CStdFPoint &oPoint);
 			virtual void ReportRotation(float fltX, float fltY, float fltZ);
 
-			virtual BOOL IsVisible();
-			virtual void IsVisible(BOOL bVal);
+			virtual bool IsVisible();
+			virtual void IsVisible(bool bVal);
 
 			virtual float GraphicsAlpha();
 			virtual void GraphicsAlpha(float fltVal);
@@ -192,8 +192,8 @@ namespace AnimatSim
 			virtual void Texture(string strValue);
 	
 			virtual CStdFPoint SelectedVertex();
-			virtual void SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
-			virtual void SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
+			virtual void SelectedVertex(CStdFPoint &vPoint, bool bFireChangeEvent = false, bool bUpdatePhysics = true);
+			virtual void SelectedVertex(float fltX, float fltY, float fltZ, bool bFireChangeEvent = false, bool bUpdatePhysics = true);
 
 			virtual IMovableItemCallback *Callback();
 			virtual void Callback(IMovableItemCallback *lpCallback);
@@ -204,13 +204,13 @@ namespace AnimatSim
 			virtual float GetBoundingRadius();
 			virtual BoundingBox GetBoundingBox();
 
-			virtual BOOL AllowTranslateDragX();
-			virtual BOOL AllowTranslateDragY();
-			virtual BOOL AllowTranslateDragZ();
+			virtual bool AllowTranslateDragX();
+			virtual bool AllowTranslateDragY();
+			virtual bool AllowTranslateDragZ();
 
-			virtual BOOL AllowRotateDragX();
-			virtual BOOL AllowRotateDragY();
-			virtual BOOL AllowRotateDragZ();
+			virtual bool AllowRotateDragX();
+			virtual bool AllowRotateDragY();
+			virtual bool AllowRotateDragZ();
 
 			virtual void UserDefinedDraggerRadius(float fltRadius);
 			virtual float UserDefinedDraggerRadius();
@@ -220,16 +220,16 @@ namespace AnimatSim
 #pragma region DataAccesMethods
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion
 
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
-			virtual BOOL CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			virtual bool CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 			virtual void Load(CStdXml &oXml);
 		};

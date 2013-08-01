@@ -44,20 +44,20 @@ namespace AnimatSim
 			**/
 			virtual string ModuleName() {return "PhysicsNeuralModule";};
 
-			virtual void AddAdapter(string strXml, BOOL bDoNotInit);
+			virtual void AddAdapter(string strXml, bool bDoNotInit);
 			virtual void RemoveAdapter(string strID);
-			virtual int FindAdapterListPos(string strID, BOOL bThrowError = TRUE);
+			virtual int FindAdapterListPos(string strID, bool bThrowError = true);
 
-			virtual void Kill(BOOL bState = TRUE);
+			virtual void Kill(bool bState = true);
 			virtual void Initialize();
 			virtual void ResetSimulation();
 			virtual void Load(CStdXml &oXml);
 
 	#pragma region DataAccesMethods
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 	#pragma endregion
 
 	#pragma region SnapshotMethods

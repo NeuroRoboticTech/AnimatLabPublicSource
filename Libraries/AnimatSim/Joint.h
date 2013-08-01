@@ -44,7 +44,7 @@ namespace AnimatSim
 			RigidBody *m_lpChild;
 
 			/// If true then any ConstraintLimits for this joint are enabled.
-			BOOL m_bEnableLimits;
+			bool m_bEnableLimits;
 
 			/// The current position of the joint. This value can be in radians or meters 
 			/// depending on the type of joint. UsesRadians lets you know whether it is using radians.
@@ -88,13 +88,13 @@ namespace AnimatSim
 			Joint();
 			virtual ~Joint();
 
-			virtual BOOL UsesRadians();
+			virtual bool UsesRadians();
 
 			virtual float Size();
-			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Size(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL EnableLimits();
-			virtual void EnableLimits(BOOL bVal);
+			virtual bool EnableLimits();
+			virtual void EnableLimits(bool bVal);
 
             virtual ConstraintRelaxation *Relaxation1();
             virtual void Relaxation1(ConstraintRelaxation *lpRelax);
@@ -144,7 +144,7 @@ namespace AnimatSim
             virtual void Initialize();
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void AddExternalNodeInput(float fltInput);

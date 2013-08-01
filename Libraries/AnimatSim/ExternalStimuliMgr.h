@@ -26,8 +26,8 @@ namespace AnimatSim
 			ExternalStimuliMgr();
 			virtual ~ExternalStimuliMgr();
 
-			virtual BOOL AddStimulus(string strXml);
-			virtual BOOL RemoveStimulus(string strID);
+			virtual bool AddStimulus(string strXml);
+			virtual bool RemoveStimulus(string strID);
 
 			//virtual void Load(string strProjectPath, string strFileName);
 			virtual void Load(CStdXml &oXml);

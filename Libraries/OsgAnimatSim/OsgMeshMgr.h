@@ -30,7 +30,7 @@ namespace OsgAnimatSim
 		osg::Node *LoadMesh(string strFilename);
 		void ReleaseMesh(string strFilename);
 		bool ContainesMesh(string strFilename);
-		bool OsgMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, BOOL bThrowError = TRUE);
+		bool OsgMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError = true);
 	};
 
 }				//OsgAnimatSim

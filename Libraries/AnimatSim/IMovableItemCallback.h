@@ -56,7 +56,7 @@ namespace AnimatSim
 		\param	bSelected	   	true if it was selected. 
 		\param	bSelectMultiple	true if multiple items were selected. 
 		**/
-		virtual void SelectionChanged(BOOL bSelected, BOOL bSelectMultiple) = 0;
+		virtual void SelectionChanged(bool bSelected, bool bSelectMultiple) = 0;
 
 		/**
 		\brief	Called to signal to the GUI that a part was clicked while AddBody mode was active.

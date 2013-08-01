@@ -68,9 +68,9 @@ public:
 	OsgLinearPath *m_lpParentSpline;
 
 	virtual osg::Vec3d Position();
-	virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-	virtual void Position(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-	virtual void Position(string strXml, BOOL bUseScaling = TRUE);
+	virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true);
+	virtual void Position(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+	virtual void Position(string strXml, bool bUseScaling = true);
 
 	virtual double Time();
 	virtual void Time(double dblVal);
@@ -78,7 +78,7 @@ public:
 	virtual OsgLinearPath *ParentSpline() {return m_lpParentSpline;}; 
 	virtual void ParentSpline(OsgLinearPath *lpParentSpline) {m_lpParentSpline = lpParentSpline;};
 
-	virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+	virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 	virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
@@ -159,29 +159,29 @@ public:
 	virtual void PartID(string strID);
 
 	virtual double StartTime();
-	virtual void StartTime(double dblTime, BOOL bSortPaths = TRUE);
+	virtual void StartTime(double dblTime, bool bSortPaths = true);
 
 	virtual double EndTime();
-	virtual void EndTime(double dblTime, BOOL bSortPaths = TRUE);
+	virtual void EndTime(double dblTime, bool bSortPaths = true);
 
-	virtual BOOL Visible();
-	virtual void Visible(BOOL bVal);
+	virtual bool Visible();
+	virtual void Visible(bool bVal);
 
-	virtual BOOL VisibleInSim();
-	virtual void VisibleInSim(BOOL bVal);
+	virtual bool VisibleInSim();
+	virtual void VisibleInSim(bool bVal);
 
-	virtual BOOL ShowWaypoints();
-	virtual void ShowWaypoints(BOOL bVal);
+	virtual bool ShowWaypoints();
+	virtual void ShowWaypoints(bool bVal);
 
 	virtual BodyPart *TrackBody() {return m_lpTrackBody;};
 
 	virtual void SimStarting();
 	virtual void ResetSimulation();
 
-	virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+	virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 	virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-	virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-	virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+	virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+	virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 	virtual void Initialize();
 	virtual void Load(StdUtils::CStdXml &oXml);
 
@@ -209,9 +209,9 @@ protected:
 	osg::ref_ptr<ControlPoint> LoadWaypoint(CStdXml &oXml);
 
 	virtual void AddWaypoint(string strXml);
-	virtual void RemoveWaypoint(string strID, BOOL bThrowError = TRUE);
-	virtual int FindWaypointPos(string strID, BOOL bThrowError = TRUE);
-	virtual void MakeVisible(BOOL bVal);
+	virtual void RemoveWaypoint(string strID, bool bThrowError = true);
+	virtual int FindWaypointPos(string strID, bool bThrowError = true);
+	virtual void MakeVisible(bool bVal);
 
 protected:
 
@@ -240,13 +240,13 @@ protected:
 	CStdColor m_vLineColor;
 
 	//Turns visibility of line on/off while not running.
-	BOOL m_bVisible;
+	bool m_bVisible;
 
 	//Turns visibility of line on/off while running simulation
-	BOOL m_bVisibleInSim;
+	bool m_bVisibleInSim;
 
 	//Tells if we should show the waypoints or not.
-	BOOL m_bShowWaypoints;
+	bool m_bShowWaypoints;
 
 	//The osg spline node
 	osg::ref_ptr<osg::Node> m_osgSpline;

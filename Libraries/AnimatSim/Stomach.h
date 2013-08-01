@@ -50,10 +50,10 @@ namespace AnimatSim
 				float m_fltConsumptionForStep;
 
 				/// If this is true then if the energy level reaches zero then the organism is killed.
-				BOOL m_bKillOrganism;
+				bool m_bKillOrganism;
 
 				/// Set to true if the organism is killed.
-				BOOL m_bKilled;
+				bool m_bKilled;
 
 				/// Used to report in GetDataPointer if the organism was killed.
 				float m_fltReportAlive;
@@ -75,15 +75,15 @@ namespace AnimatSim
 				virtual float MaxEnergyLevel();
 				virtual void MaxEnergyLevel(float fltVal);
 
-				virtual BOOL KillOrganism();
-				virtual void KillOrganism(BOOL bVal);
+				virtual bool KillOrganism();
+				virtual void KillOrganism(bool bVal);
 
 				virtual void CreateParts();
 
 				//Node Overrides
 				virtual void AddExternalNodeInput(float fltInput);
 				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void StepSimulation();
 				virtual void ResetSimulation();

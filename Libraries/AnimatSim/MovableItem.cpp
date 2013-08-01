@@ -45,7 +45,7 @@ namespace AnimatSim
 **/
 MovableItem::MovableItem(void)
 {
-	m_bIsVisible = TRUE;
+	m_bIsVisible = true;
 	m_fltReportIsVisible = 1;
 	m_lpCallback = NULL;
 	m_lpParent = NULL;
@@ -129,7 +129,7 @@ int MovableItem::VisualSelectionType() {return 0;}
 
 \return	true if it can be manipulated, false if not. 
 **/
-BOOL MovableItem::AllowMouseManipulation() {return TRUE;}
+bool MovableItem::AllowMouseManipulation() {return true;}
 
 /**
 \brief	Gets the local position. (m_oPosition) 
@@ -157,7 +157,7 @@ CStdFPoint MovableItem::Position() {return m_oPosition;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	if(bUseScaling)
 		m_oPosition = oPoint * m_lpMovableSim->InverseDistanceUnits();
@@ -193,7 +193,7 @@ void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChang
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(float fltX, float fltY, float fltZ, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Position(float fltX, float fltY, float fltZ, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Position(vPos, bUseScaling, bFireChangeEvent);
@@ -216,7 +216,7 @@ reset the local position using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(string strXml, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void MovableItem::Position(string strXml, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -382,7 +382,7 @@ CStdFPoint MovableItem::Rotation()	{return m_oRotation;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Rotation(CStdFPoint &oPoint, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	m_oRotation = oPoint;
 	m_oReportRotation = m_oRotation;
@@ -410,7 +410,7 @@ void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpda
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Rotation(float fltX, float fltY, float fltZ, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Rotation(vPos, bFireChangeEvent);
@@ -431,7 +431,7 @@ by the GUI to reset the rotation using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(string strXml, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void MovableItem::Rotation(string strXml, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -483,7 +483,7 @@ void MovableItem::ReportRotation(float fltX, float fltY, float fltZ) {m_oReportR
 
 \return	true if visible, false if not. 
 **/
-BOOL MovableItem::IsVisible() {return m_bIsVisible;}
+bool MovableItem::IsVisible() {return m_bIsVisible;}
 
 /**
 \brief	Sets whether this part is visible or not. 
@@ -493,7 +493,7 @@ BOOL MovableItem::IsVisible() {return m_bIsVisible;}
 
 \param	bVal	true to make visible, false to make invisible. 
 **/
-void MovableItem::IsVisible(BOOL bVal) 
+void MovableItem::IsVisible(bool bVal) 
 {
 	m_bIsVisible = bVal;
 	m_fltReportIsVisible = (float) bVal;
@@ -523,7 +523,7 @@ float MovableItem::GraphicsAlpha() {return m_fltGraphicsAlpha;}
 **/
 void MovableItem::GraphicsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "GraphicsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "GraphicsAlpha");
 
 	m_fltGraphicsAlpha = fltVal;
 
@@ -552,7 +552,7 @@ float MovableItem::CollisionsAlpha() {return m_fltCollisionsAlpha;}
 **/
 void MovableItem::CollisionsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "CollisionsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "CollisionsAlpha");
 
 	m_fltCollisionsAlpha = fltVal;
 
@@ -581,7 +581,7 @@ float MovableItem::JointsAlpha() {return m_fltJointsAlpha;}
 **/
 void MovableItem::JointsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "JointsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "JointsAlpha");
 
 	m_fltJointsAlpha = fltVal;
 
@@ -610,7 +610,7 @@ float MovableItem::ReceptiveFieldsAlpha() {return m_fltReceptiveFieldsAlpha;}
 **/
 void MovableItem::ReceptiveFieldsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "ReceptiveFieldsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "ReceptiveFieldsAlpha");
 
 	m_fltReceptiveFieldsAlpha = fltVal;
 
@@ -639,7 +639,7 @@ float MovableItem::SimulationAlpha() {return m_fltSimulationAlpha;}
 **/
 void MovableItem::SimulationAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "SimulationAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "SimulationAlpha");
 
 	m_fltSimulationAlpha = fltVal;
 
@@ -671,7 +671,7 @@ float MovableItem::Alpha() {return m_fltAlpha;}
 **/
 void MovableItem::Alpha(float fltAlpha) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltAlpha, TRUE, "Alpha");
+	Std_InValidRange((float) 0, (float) 1, fltAlpha, true, "Alpha");
 
 	m_fltAlpha = fltAlpha;
 }
@@ -857,7 +857,7 @@ float MovableItem::Shininess() {return m_fltShininess;}
 **/
 void MovableItem::Shininess(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
+	Std_InValidRange((float) 0, (float) 128, fltVal, true, "Shininess");
 	m_fltShininess = fltVal;
 	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
 }
@@ -908,7 +908,7 @@ CStdFPoint MovableItem::SelectedVertex() {return m_vSelectedVertex;}
 							then this callback will be skipped. 
 \param bUpdatePhysics		If true then the physcis object is also updated.
 **/
-void MovableItem::SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+void MovableItem::SelectedVertex(CStdFPoint &vPoint, bool bFireChangeEvent, bool bUpdatePhysics) 
 {
 	m_vSelectedVertex = vPoint;
 	
@@ -933,7 +933,7 @@ void MovableItem::SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent, BOOL
 							then this callback will be skipped. 
 \param bUpdatePhysics		If true then the physcis object is also updated.
 **/
-void MovableItem::SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+void MovableItem::SelectedVertex(float fltX, float fltY, float fltZ, bool bFireChangeEvent, bool bUpdatePhysics) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	SelectedVertex(vPos, bFireChangeEvent, bUpdatePhysics);
@@ -1027,7 +1027,7 @@ BoundingBox MovableItem::GetBoundingBox()
 
 \return	true if can drag along x-axis.
 **/
-BOOL MovableItem::AllowTranslateDragX() {return TRUE;}
+bool MovableItem::AllowTranslateDragX() {return true;}
 
 
 /**
@@ -1038,7 +1038,7 @@ BOOL MovableItem::AllowTranslateDragX() {return TRUE;}
 
 \return	true if can drag along y-axis.
 **/
-BOOL MovableItem::AllowTranslateDragY() {return TRUE;}
+bool MovableItem::AllowTranslateDragY() {return true;}
 
 /**
 \brief	Gets whether this body part can be translated along the z-axis by the user with the drag handlers.
@@ -1048,7 +1048,7 @@ BOOL MovableItem::AllowTranslateDragY() {return TRUE;}
 
 \return	true if can drag along z-axis.
 **/
-BOOL MovableItem::AllowTranslateDragZ() {return TRUE;}
+bool MovableItem::AllowTranslateDragZ() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the x-axis by the user with the drag handlers.
@@ -1058,7 +1058,7 @@ BOOL MovableItem::AllowTranslateDragZ() {return TRUE;}
 
 \return	true if can rotate along x-axis.
 **/
-BOOL MovableItem::AllowRotateDragX() {return TRUE;}
+bool MovableItem::AllowRotateDragX() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the y-axis by the user with the drag handlers.
@@ -1068,7 +1068,7 @@ BOOL MovableItem::AllowRotateDragX() {return TRUE;}
 
 \return	true if can rotate along y-axis.
 **/
-BOOL MovableItem::AllowRotateDragY() {return TRUE;}
+bool MovableItem::AllowRotateDragY() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the z-axis by the user with the drag handlers.
@@ -1078,7 +1078,7 @@ BOOL MovableItem::AllowRotateDragY() {return TRUE;}
 
 \return	true if can rotate along z-axis.
 **/
-BOOL MovableItem::AllowRotateDragZ() {return TRUE;}
+bool MovableItem::AllowRotateDragZ() {return true;}
 
 
 void MovableItem::UserDefinedDraggerRadius(float fltRadius)
@@ -1098,7 +1098,7 @@ float MovableItem::UserDefinedDraggerRadius()
 
 #pragma endregion
 
-void MovableItem::Selected(BOOL bValue, BOOL bSelectMultiple)
+void MovableItem::Selected(bool bValue, bool bSelectMultiple)
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Selected(bValue, bSelectMultiple);
@@ -1180,11 +1180,11 @@ void MovableItem::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, flo
 
 \return	The calculated local position for world position.
 **/
-BOOL MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	if(m_lpPhysicsMovableItem)
 		return m_lpPhysicsMovableItem->Physics_CalculateLocalPosForWorldPos(fltWorldX, fltWorldY, fltWorldZ, vLocalPos);
-	return FALSE;
+	return false;
 }
 
 #pragma region DataAccesMethods
@@ -1226,7 +1226,7 @@ float *MovableItem::GetDataPointer(const string &strDataType)
 	return 0;
 }
 
-BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MovableItem::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(strDataType == "POSITION")
 	{
@@ -1315,128 +1315,128 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 	if(strDataType == "AMBIENT")
 	{
 		Ambient(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.RED")
 	{
 		float aryVal[4] = {(float) atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.GREEN")
 	{
 		float aryVal[4] = {m_vAmbient.r(), (float) atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.BLUE")
 	{
 		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), (float) atof(strValue.c_str()), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.ALPHA")
 	{
 		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), (float) atof(strValue.c_str())};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "DIFFUSE")
 	{
 		Diffuse(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.RED")
 	{
 		float aryVal[4] = {(float) atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.GREEN")
 	{
 		float aryVal[4] = {m_vDiffuse.r(), (float) atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.BLUE")
 	{
 		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), (float) atof(strValue.c_str()), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.ALPHA")
 	{
 		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), (float) atof(strValue.c_str())};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "SPECULAR")
 	{
 		Specular(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.RED")
 	{
 		float aryVal[4] = {(float) atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.GREEN")
 	{
 		float aryVal[4] = {m_vSpecular.r(), (float) atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.BLUE")
 	{
 		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), (float) atof(strValue.c_str()), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.ALPHA")
 	{
 		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), (float) atof(strValue.c_str())};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "SHININESS")
 	{
 		Shininess((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "TEXTURE")
 	{
 		Texture(strValue);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "DRAGGERRADIUS")
 	{
 		UserDefinedDraggerRadius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void MovableItem::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -1557,7 +1557,7 @@ void MovableItem::LoadPosition(CStdXml &oXml)
 	CStdFPoint vTemp;
 
 	Std_LoadPoint(oXml, "Position", vTemp);
-	Position(vTemp, TRUE, FALSE, FALSE);	
+	Position(vTemp, true, false, false);	
 
 	//if(!m_lpParent)
 	//	AbsolutePosition(m_oPosition);
@@ -1579,7 +1579,7 @@ void MovableItem::LoadRotation(CStdXml &oXml)
 {
 	CStdFPoint vTemp;
 	Std_LoadPoint(oXml, "Rotation", vTemp);
-	Rotation(vTemp, FALSE, FALSE);	
+	Rotation(vTemp, false, false);	
 }
 
 void MovableItem::Load(CStdXml &oXml)

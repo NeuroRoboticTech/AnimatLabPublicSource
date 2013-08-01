@@ -67,7 +67,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, false, true);}
 }
 
 string ArrayChart::Type() {return "ArrayChart";}

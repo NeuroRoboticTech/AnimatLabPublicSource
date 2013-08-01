@@ -46,7 +46,7 @@ VsUniversal::~VsUniversal()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsUniversal/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsUniversal/\r\n", "", -1, false, true);}
 }
 
 void VsUniversal::DeletePhysics()
@@ -89,7 +89,7 @@ void VsUniversal::SetupPhysics()
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
+	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
 	Vx::VxTransform vTrans(vMT);
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
@@ -122,19 +122,19 @@ void VsUniversal::CreateJoint()
 #pragma region DataAccesMethods
 
 
-BOOL VsUniversal::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsUniversal::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(BallSocket::SetData(strDataType, strValue, FALSE))
+	if(BallSocket::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsUniversal::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

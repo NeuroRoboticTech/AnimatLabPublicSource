@@ -47,9 +47,9 @@ namespace IntegrateFireSim
 			double FacilitationDecay();
 			double FacilDecay();
 
-			void VoltageDependent(BOOL bVal);
-			BOOL VoltageDependent();
-			BOOL VoltDep();
+			void VoltageDependent(bool bVal);
+			bool VoltageDependent();
+			bool VoltDep();
 
 			void MaxRelativeConductance(double dVal);
 			double MaxRelativeConductance();
@@ -63,8 +63,8 @@ namespace IntegrateFireSim
 			double ThresholdPotential();
 			double ThreshPSPot();
 
-			void Hebbian(BOOL bVal);
-			BOOL Hebbian();
+			void Hebbian(bool bVal);
+			bool Hebbian();
 
 			void MaxAugmentedConductance(double dVal);
 			double MaxAugmentedConductance();
@@ -78,9 +78,9 @@ namespace IntegrateFireSim
 			double LearningTimeWindow();
 			double HebbTimeWindow();
 
-			void AllowForgetting(BOOL bVal);
-			BOOL AllowForgetting();
-			BOOL AllowForget();
+			void AllowForgetting(bool bVal);
+			bool AllowForgetting();
+			bool AllowForget();
 
 			void ForgettingTimeWindow(double dVal);
 			double ForgettingTimeWindow();
@@ -92,7 +92,7 @@ namespace IntegrateFireSim
 
 #pragma endregion
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 		protected:
@@ -116,7 +116,7 @@ namespace IntegrateFireSim
 			double m_dFacilDecay;
 
 			/// true if voltage dependent
-			BOOL m_bVoltDep;
+			bool m_bVoltDep;
 
 			/// The maximum relative conductance
 			double m_dMaxRelCond;
@@ -128,7 +128,7 @@ namespace IntegrateFireSim
 			double m_dThreshPSPot;
 
 			/// true if hebbian learning is used.
-			BOOL m_bHebbian;
+			bool m_bHebbian;
 
 			/// The maximum augmented conductance
 			double m_dMaxAugCond;
@@ -140,7 +140,7 @@ namespace IntegrateFireSim
 			double m_dLearningTime;
 
 			/// true if forgetting is allowed.
-			BOOL m_bAllowForget;
+			bool m_bAllowForget;
 
 			/// Forgetting time window
 			double m_dForgetTime;

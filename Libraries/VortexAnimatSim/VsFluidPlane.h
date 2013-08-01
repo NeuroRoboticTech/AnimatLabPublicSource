@@ -32,8 +32,8 @@ namespace VortexAnimatSim
 				VsFluidPlane();
 				virtual ~VsFluidPlane();
 
-				virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-				virtual void Velocity(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
+				virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+				virtual void Velocity(CStdFPoint &oPoint, bool bUseScaling = true);
 
 				virtual void CreateParts();
 				virtual void Physics_SetDensity(float fltVal);

@@ -26,7 +26,7 @@ VsSimulator::VsSimulator()
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new OsgSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
-	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
 	m_dblTotalStepTime = 0;
@@ -54,7 +54,7 @@ try
 		m_lpMeshMgr = NULL;
 	}
 
-	m_bShuttingDown = TRUE;
+	m_bShuttingDown = true;
 
 	//Set this to NULL so all of the DeletePhysics calls will not try and remove
 	//entities from the universe when shutting down.
@@ -63,7 +63,7 @@ try
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
 VxUniverse *VsSimulator::Universe()
@@ -80,37 +80,37 @@ void VsSimulator::StabilityScale(float fltVal)
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearCompliance(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearCompliance(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::LinearCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularCompliance(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::AngularCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearDamping(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::LinearDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularDamping(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::AngularDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearKineticLoss(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearKineticLoss(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::LinearKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularKineticLoss(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularKineticLoss(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::AngularKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
@@ -127,7 +127,7 @@ void VsSimulator::PhysicsTimeStep(float fltVal)
 	}
 }
 
-void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
+void VsSimulator::Gravity(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::Gravity(fltVal, bUseScaling);
 
@@ -178,7 +178,7 @@ void VsSimulator::ResetSimulation()
 		m_uUniverse->resetDynamics();
 		m_uUniverse->resetContacts();
 	}
-	m_bSimRunning = FALSE;
+	m_bSimRunning = false;
 }
 
 void VsSimulator::InitializeVortexViewer(int argc, const char **argv)

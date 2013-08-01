@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of IonChannelSigmoid\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of IonChannelSigmoid\r\n", "", -1, false, true);}
 }
 
 float IonChannelSigmoid::CalculateGain(float fltInput)
@@ -55,7 +55,7 @@ float IonChannelSigmoid::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-BOOL IonChannelSigmoid::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool IonChannelSigmoid::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -112,7 +112,7 @@ BOOL IonChannelSigmoid::SetData(const string &strDataType, const string &strValu
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void IonChannelSigmoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

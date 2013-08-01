@@ -23,7 +23,7 @@ namespace AnimatSim
 			string m_strTargetNodeID;
 
 			/// Tells whether the node is enabled while stimulus is active or not.
-			BOOL m_bEnableWhenActive;
+			bool m_bEnableWhenActive;
 
 		public:
 			EnablerStimulus();
@@ -34,14 +34,14 @@ namespace AnimatSim
 			virtual string TargetNodeID();
 			virtual void TargetNodeID(string strID);
 
-			virtual BOOL EnableWhenActive();
-			virtual void EnableWhenActive(BOOL bVal);
+			virtual bool EnableWhenActive();
+			virtual void EnableWhenActive(bool bVal);
 
 			virtual void Initialize();
 			virtual void Activate();
 			virtual void StepSimulation();
 			virtual void Deactivate();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);

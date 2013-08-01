@@ -42,7 +42,7 @@ class OsgMouseSpring
 		RigidBody* GetRigidBody() {return m_lpRB;};
 		OsgMovableItem* GetMovableItem() {return m_osgRB;};
 
-		void Visible(BOOL bVal);
+		void Visible(bool bVal);
 		void Initialize();
 };
 

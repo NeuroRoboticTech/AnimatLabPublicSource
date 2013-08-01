@@ -39,7 +39,7 @@ namespace VortexAnimatSim
 			VsJoint();
 			virtual ~VsJoint();
 
-            virtual BOOL Physics_IsDefined();
+            virtual bool Physics_IsDefined();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
 

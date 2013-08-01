@@ -15,7 +15,7 @@ namespace OsgAnimatSim
 				virtual ~OsgTranslateAxisDragger(void);
 
 			public:
-				OsgTranslateAxisDragger(BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ);
+				OsgTranslateAxisDragger(bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();

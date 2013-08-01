@@ -29,7 +29,7 @@ VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 	m_lpEval = NULL;
 	m_fltVelocity = 0;
 	m_fltVelocityReport = 0;
-	m_bDisableMotorWhenDone = FALSE;
+	m_bDisableMotorWhenDone = false;
 	m_lpPosition = NULL;
 	m_lpVelocity = NULL;
 }
@@ -49,7 +49,7 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, false, true);}
 }
 
 /**
@@ -102,7 +102,7 @@ void VsMotorVelocityStimulus::Activate()
 
 	if(m_bEnabled)
 	{
-		m_lpJoint->EnableMotor(TRUE);
+		m_lpJoint->EnableMotor(true);
 		m_lpJoint->DesiredVelocity(0);
 	}
 }
@@ -155,7 +155,7 @@ void VsMotorVelocityStimulus::Deactivate()
 	{
 		m_lpJoint->DesiredVelocity(0);
 		if(m_bDisableMotorWhenDone)
-			m_lpJoint->EnableMotor(FALSE);
+			m_lpJoint->EnableMotor(false);
 	}
 }
 
@@ -172,30 +172,30 @@ float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VELOCITY" || strType == "EQUATION")
 	{
 		VelocityEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DISABLEWHENDONE")
 	{
 		DisableMotorWhenDone(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -102,44 +102,44 @@ void LightManager::AddLight(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void LightManager::RemoveLight(string strID, BOOL bThrowError)
+void LightManager::RemoveLight(string strID, bool bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
 	m_aryLights.RemoveAt(iPos);
 }
 
-BOOL LightManager::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool LightManager::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "LIGHT")
 	{
 		AddLight(strXml);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL LightManager::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool LightManager::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "LIGHT")
 	{
 		RemoveLight(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -155,7 +155,7 @@ BOOL LightManager::RemoveItem(const string &strItemType, const string &strID, BO
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int LightManager::FindChildListPos(string strID, BOOL bThrowError)
+int LightManager::FindChildListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -224,7 +224,7 @@ try
 	if(!lpLight)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Light");
 
-	lpLight->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpLight->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpLight->Load(oXml);
 
 	m_aryLights.Add(lpLight);

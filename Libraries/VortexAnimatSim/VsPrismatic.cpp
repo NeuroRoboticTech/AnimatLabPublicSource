@@ -34,17 +34,17 @@ VsPrismatic::VsPrismatic()
 	m_lpLowerLimit = new VsPrismaticLimit();
 	m_lpPosFlap = new VsPrismaticLimit();
 
-	m_lpUpperLimit->LimitPos(1, FALSE);
-	m_lpLowerLimit->LimitPos(-1, FALSE);
-	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(1, false);
+	m_lpLowerLimit->LimitPos(-1, false);
+	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(0, 0, 1, 1);
 	m_lpLowerLimit->Color(1, 1, 0.333, 1);
 	m_lpPosFlap->Color(1, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -62,11 +62,11 @@ VsPrismatic::~VsPrismatic()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, false, true);}
 }
 
 
-void VsPrismatic::EnableLimits(BOOL bVal)
+void VsPrismatic::EnableLimits(bool bVal)
 {
 	Prismatic::EnableLimits(bVal);
 
@@ -216,7 +216,7 @@ void VsPrismatic::SetupPhysics()
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
+	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
 	Vx::VxTransform vTrans(vMT);
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
@@ -294,19 +294,19 @@ float *VsPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsPrismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsPrismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Prismatic::SetData(strDataType, strValue, FALSE))
+	if(Prismatic::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

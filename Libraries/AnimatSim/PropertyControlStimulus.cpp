@@ -76,7 +76,7 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlStimulus\r\n", "", -1, false, true);}
 }
 
 string PropertyControlStimulus::Type() {return "PropertyControlStimulus";}
@@ -361,54 +361,54 @@ void PropertyControlStimulus::Deactivate()
 	}
 }
 
-BOOL PropertyControlStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PropertyControlStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 	
 	if(strType == "TARGETID")
 	{
 		TargetID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "PROPERTYNAME")
 	{
 		PropertyName(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SETTHRESHOLD")
 	{
 		SetThreshold(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "INITIALVALUE")
 	{
 		InitialValue(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FINALVALUE")
 	{
 		FinalValue(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "EQUATION")
 	{
 		Equation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void PropertyControlStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

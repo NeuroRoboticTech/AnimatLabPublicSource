@@ -23,7 +23,7 @@ OsgScriptedSimulationWindow::OsgScriptedSimulationWindow()
 {
 	m_lpCurrentPath = NULL;
 	//Scripted sim window always has track camera as true.
-	m_bTrackCamera = TRUE;
+	m_bTrackCamera = true;
 	m_lpDefaultTrackBody = NULL;
 	m_lpOriginalTrackBody = NULL;
 }
@@ -51,7 +51,7 @@ CStdFPoint OsgScriptedSimulationWindow::DefaultPosition() {return m_vDefaultPosi
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void OsgScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, BOOL bUseScaling) 
+void OsgScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, bool bUseScaling) 
 {
 	CStdFPoint oNewPoint, oReportPosition;
 	if(bUseScaling && m_lpSim)
@@ -80,7 +80,7 @@ void OsgScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, BOOL bUseS
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void OsgScriptedSimulationWindow::DefaultPosition(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+void OsgScriptedSimulationWindow::DefaultPosition(float fltX, float fltY, float fltZ, bool bUseScaling) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	DefaultPosition(vPos, bUseScaling);
@@ -97,7 +97,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void OsgScriptedSimulationWindow::DefaultPosition(string strXml, BOOL bUseScaling)
+void OsgScriptedSimulationWindow::DefaultPosition(string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -124,30 +124,30 @@ void OsgScriptedSimulationWindow::DefaultPartID(string strID)
 	}
 }
 
-BOOL OsgScriptedSimulationWindow::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OsgScriptedSimulationWindow::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
-	if(OsgSimulationWindow::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(OsgSimulationWindow::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "POSITION")
 	{
 		DefaultPosition(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DEFAULTPARTID")
 	{
 		DefaultPartID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -186,14 +186,14 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void OsgScriptedSimulationWindow::RemoveCameraPath(string strID, BOOL bThrowError)
+void OsgScriptedSimulationWindow::RemoveCameraPath(string strID, bool bThrowError)
 {
 	int iIdx = FindCameraPath(strID);
 	m_aryCameraPaths.RemoveAt(iIdx);
 	SortPaths();
 }
 
-int OsgScriptedSimulationWindow::FindCameraPath(string strID, BOOL bThrowError)
+int OsgScriptedSimulationWindow::FindCameraPath(string strID, bool bThrowError)
 {
 	int iCount = m_aryCameraPaths.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -217,38 +217,38 @@ void OsgScriptedSimulationWindow::SortPaths()
 	}
 }
 
-BOOL OsgScriptedSimulationWindow::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool OsgScriptedSimulationWindow::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
 		AddCameraPath(strXml);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL OsgScriptedSimulationWindow::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool OsgScriptedSimulationWindow::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
 		RemoveCameraPath(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 void OsgScriptedSimulationWindow::Initialize()
@@ -388,7 +388,7 @@ try
 {
 	lpSpline = new OsgLinearPath;
 
-	lpSpline->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpSpline->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpSpline->ParentWindow(this);
 
 	lpSpline->Load(oXml);
