@@ -465,9 +465,6 @@
 
 #define MAX_DATA_CHART_BUFFER 10485760
 
-#define PI 3.14159
-#define PI_2 6.28319
-#define PI_HALF 1.570796f
 
 #define ERROR_THRESHOLD 0.0001
 

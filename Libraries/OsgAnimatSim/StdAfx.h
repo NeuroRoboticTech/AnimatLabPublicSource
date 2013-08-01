@@ -5,12 +5,15 @@
 
 #pragma once
 
+#ifdef WIN32
+    #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+    // Windows Header Files:
+    #include <windows.h>
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-
-#define ANIMAT_OSG_PORT __declspec( dllexport )
+    #define ANIMAT_OSG_PORT __declspec( dllexport )
+#else
+    #define ANIMAT_OSG_PORT
+#endif
 
 //#define STD_TRACING_ON
 
@@ -47,7 +50,7 @@
 #include <osg/Camera>
 #include <osg/io_utils>
 #include <osg/LineWidth>
-#include <osg/Autotransform>
+#include <osg/AutoTransform>
 #include <osg/StateAttribute>
 #include <osg/AlphaFunc>
 #include <osg/TexMat>
@@ -65,7 +68,6 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
-#include <osgViewer/api/win32/GraphicsWindowWin32>
 #include <osgViewer/CompositeViewer>
 
 #include <osgGA/GUIEventAdapter>
@@ -89,6 +91,10 @@
 using namespace osgGA;
 
 #include <OpenThreads/Thread>
+
+#ifdef WIN32
+    #include <osgViewer/api/win32/GraphicsWindowWin32>
+#endif
 
 #include "OsgAnimatSimConstants.h"
 #include "OsgMatrixUtil.h"

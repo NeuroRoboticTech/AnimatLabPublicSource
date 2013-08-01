@@ -37,6 +37,10 @@ VsSimulator::VsSimulator()
 	m_lStepVortexTimeCount = 0;
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
+
+    //Setup the global matrix util.
+    m_lpMatrixUtil = new VsMatrixUtil;
+    SetMatrixUtil(m_lpMatrixUtil);
 }
 
 VsSimulator::~VsSimulator()
@@ -397,7 +401,7 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
 
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));
+	//ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));   //NEED TO FIX
 
 	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
 	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;

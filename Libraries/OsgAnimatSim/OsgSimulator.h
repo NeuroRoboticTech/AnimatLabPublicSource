@@ -44,6 +44,8 @@ namespace OsgAnimatSim
 	
         OsgMouseSpring *m_lpMouseSpring;
 
+        OsgMatrixUtil *m_lpMatrixUtil;
+
 	public:
 		OsgSimulator();
 		virtual ~OsgSimulator();

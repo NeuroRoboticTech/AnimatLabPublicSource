@@ -47,7 +47,7 @@ namespace VortexAnimatSim
 
 				virtual void SetupGraphics();
                 virtual void DeleteGraphics();
-			};
+            };
 
 		}		//Joints
 	}			// Environment

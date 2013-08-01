@@ -111,5 +111,9 @@
 #define Osg_Err_lUnableToAddWaypoint -4041
 #define Osg_Err_strUnableToAddWaypoint "Inavlid waypoint defined. Time overlaps with another waypoint."
 
+#define Osg_Err_lMatrixUtilNotDefined -4042
+#define Osg_Err_strMatrixUtilNotDefined "Matrix utility was not defined."
+
+
 #endif // __OSG_ERROR_CONSTANTS_H__
 

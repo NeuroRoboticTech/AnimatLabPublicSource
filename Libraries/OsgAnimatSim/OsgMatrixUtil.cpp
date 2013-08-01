@@ -15,6 +15,7 @@ void OsgMatrixUtil::Print(const osg::Matrix& matrix)
       }
       std::cout << std::endl;
    }
+      std::cout << std::endl;
 }
 
 
@@ -155,6 +156,15 @@ void OsgMatrixUtil::HprToMatrix(osg::Matrix& rotation, const osg::Vec3& hpr)
    rotation(3, 3) =  1.0;
 }
 
+void OsgMatrixUtil::PositionAndHprRadToMatrix(osg::Matrix& rotation, const osg::Vec3& xyz, const osg::Vec3& hpr)
+{
+    osg::Vec3 vHpr;
+    vHpr[0] =  osg::RadiansToDegrees(hpr[0]);
+    vHpr[1] =  osg::RadiansToDegrees(hpr[1]);
+    vHpr[2] =  osg::RadiansToDegrees(hpr[2]);
+
+   PositionAndHprToMatrix(rotation, xyz, vHpr);
+}
 
 void OsgMatrixUtil::PositionAndHprToMatrix(osg::Matrix& rotation, const osg::Vec3& xyz, const osg::Vec3& hpr)
 {
@@ -280,6 +290,25 @@ void OsgMatrixUtil::TransformVec3(osg::Vec3& vec_in, const osg::Vec3& xyz, const
    vec_in[0] += transformMat(3,0);
    vec_in[1] += transformMat(3,1);
    vec_in[2] += transformMat(3,2);
+}
+
+osg::Matrix OsgMatrixUtil::SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
+{
+    osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
+    osg::Matrix osgLocalMatrix;
+    osgLocalMatrix.makeIdentity();
+    osgLocalMatrix.makeRotate(localRot.x, osg::Vec3d(1, 0, 0), localRot.y, osg::Vec3d(0, 1, 0), localRot.z, osg::Vec3d(0, 0, 1));
+    osgLocalMatrix.setTrans(vPos);
+    return osgLocalMatrix;
+}
+
+CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix(osg::Matrix osgMT)
+{
+    osg::Vec3 vEuler;
+    OsgMatrixUtil::MatrixToHprRad(vEuler, osgMT);
+	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+	vRot.ClearNearZero();
+    return vRot;
 }
 
 }				//OsgAnimatSim

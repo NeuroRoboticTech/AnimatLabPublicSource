@@ -35,6 +35,9 @@ namespace OsgAnimatSim
    {
    public:
 
+      virtual osg::Matrix SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
+      virtual CStdFPoint EulerRotationFromMatrix(osg::Matrix osgMT);
+
       ///Prints a matrix
       static void Print( const osg::Matrix& matrix );
       ///Prints a vector
@@ -86,6 +89,8 @@ namespace OsgAnimatSim
       * @param hpr: the current Heading, pitch, roll to translate to a matrix
       */
       static void PositionAndHprToMatrix( osg::Matrix& rotation, const osg::Vec3& xyz, const osg::Vec3& hpr );
+
+      static void PositionAndHprRadToMatrix( osg::Matrix& rotation, const osg::Vec3& xyz, const osg::Vec3& hpr );
 
       /**
       * Translates the rotation part of an osg::Matrix to Euler Angles

@@ -22,6 +22,51 @@ namespace OsgAnimatSim
 
 #pragma region CreateGeometry_Code
 
+OsgMatrixUtil *g_lpUtil = NULL;
+
+void ANIMAT_OSG_PORT SetMatrixUtil(OsgMatrixUtil *lpUtil)
+{
+    g_lpUtil = lpUtil;
+}
+
+osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
+{
+    if(g_lpUtil)
+        return g_lpUtil->SetupMatrix(localPos, localRot);
+    else
+    {
+        osg::Matrix m;
+        THROW_ERROR(Osg_Err_lMatrixUtilNotDefined, Osg_Err_strMatrixUtilNotDefined);
+        return m;
+    }
+}
+
+osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
+{
+	osg::Matrix osgLocalMatrix;
+	osgLocalMatrix.makeIdentity();
+	
+	//convert cstdpoint to osg::Vec3
+	osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
+	
+	//build the matrix
+	osgLocalMatrix.makeRotate(qRot);
+	osgLocalMatrix.setTrans(vPos);
+
+	return osgLocalMatrix;
+}
+
+CStdFPoint ANIMAT_OSG_PORT EulerRotationFromMatrix(osg::Matrix osgMT)
+{
+    if(g_lpUtil)
+        return g_lpUtil->EulerRotationFromMatrix(osgMT);
+    else
+    {
+        CStdFPoint p;
+        THROW_ERROR(Osg_Err_lMatrixUtilNotDefined, Osg_Err_strMatrixUtilNotDefined);
+        return p;
+    }
+}
 
 void ANIMAT_OSG_PORT ApplyVertexTransform(osg::Node *node, osg::Matrix omat)
 {
@@ -756,41 +801,6 @@ BOOL ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 				return FALSE;
 
 	return TRUE;
-}
-
-
-osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
-{
-	osg::Matrix osgLocalMatrix;
-	osg::Vec3d vLoc(localPos.x, localPos.y, localPos.z);
-	osg::Vec3d vEuler(localRot.x, localRot.y, localRot.z);
-    OsgMatrixUtil::PositionAndHprToMatrix(osgLocalMatrix, vLoc, vEuler);
-
-    return osgLocalMatrix;
-}
-
-osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
-{
-	osg::Matrix osgLocalMatrix;
-	osgLocalMatrix.makeIdentity();
-	
-	//convert cstdpoint to osg::Vec3
-	osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
-	
-	//build the matrix
-	osgLocalMatrix.makeRotate(qRot);
-	osgLocalMatrix.setTrans(vPos);
-
-	return osgLocalMatrix;
-}
-
-CStdFPoint ANIMAT_OSG_PORT EulerRotationFromMatrix(osg::Matrix osgMT)
-{
-    osg::Vec3 vEuler;
-    OsgMatrixUtil::MatrixToHprRad(vEuler, osgMT);
-	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-	vRot.ClearNearZero();
-    return vRot;
 }
 
 void ANIMAT_OSG_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)

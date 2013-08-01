@@ -5,6 +5,7 @@
 #include "VsRigidBody.h"
 #include "VsClassFactory.h"
 #include "VsSimulator.h"
+#include "VsOsgGeometry.h"
 
 namespace VortexAnimatSim
 {
@@ -13,6 +14,31 @@ namespace VortexAnimatSim
 
 #pragma region CreateGeometry_Code
 
+
+osg::Matrix VsMatrixUtil::SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
+{
+	Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
+	Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
+	Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
+
+	osg::Matrix osgLocalMatrix;
+	VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
+
+	return osgLocalMatrix;
+}
+
+CStdFPoint VsMatrixUtil::EulerRotationFromMatrix(osg::Matrix osgMT)
+{
+	//Now lets get the euler angle rotation
+	Vx::VxReal44 vxTM;
+	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
+	Vx::VxTransform vTrans(vxTM);
+	Vx::VxReal3 vEuler;
+	vTrans.getRotationEulerAngles(vEuler);
+	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+	vRot.ClearNearZero();
+    return vRot;
+}
 
 Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float fltBaseHeight, float fltXCenter, float fltYCenter)
 {

@@ -5,12 +5,17 @@
 
 #pragma once
 
+#ifdef WIN32
+    #define _SCL_SECURE_NO_WARNINGS
+    #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+    // Windows Header Files:
+    #include <windows.h>
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-
-#define VORTEX_PORT __declspec( dllexport )
+    #define VORTEX_PORT __declspec( dllexport )
+    #include "VxOSG/VxOSG.h"
+#else
+    #define VORTEX_PORT
+#endif
 
 //#define STD_TRACING_ON
 
@@ -52,7 +57,6 @@
 #include "Vx/VxContactProperties.h"
 #include "Vx/VxConstraintController.h"
 #include "Vx/VxVector3.h"
-#include "VxOSG/VxOSG.h"
 
 #include "Vx/VxConstraintController.h"
 #include "Vx/VxEventSubscriber.h"

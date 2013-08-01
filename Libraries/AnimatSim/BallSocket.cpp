@@ -48,7 +48,7 @@ namespace AnimatSim
 **/
 BallSocket::BallSocket()
 {
-	//m_fltConstraintAngle = (float) (0.25*PI);
+	//m_fltConstraintAngle = (float) (0.25*STD_PI);
 	//m_fltStiffness = AL_INFINITY;
 	//m_fltDamping = AL_INFINITY;
 }

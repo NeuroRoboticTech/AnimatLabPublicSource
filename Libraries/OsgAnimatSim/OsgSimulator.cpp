@@ -38,6 +38,7 @@ OsgSimulator::OsgSimulator()
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
     m_lpMouseSpring = new OsgMouseSpring;
+    m_lpMatrixUtil = NULL;
 }
 
 OsgSimulator::~OsgSimulator()
@@ -55,6 +56,9 @@ try
 
     if(m_lpMouseSpring)
         delete m_lpMouseSpring;
+
+    if(m_lpMatrixUtil)
+        delete m_lpMatrixUtil;
 
 	Reset();
 }
