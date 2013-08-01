@@ -76,7 +76,7 @@ osg::Matrix NewSetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 	osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
     osg::Matrix m;
     m.makeIdentity();
-    m.makeRotate(localRot.x, osg::Vec3d(1, 0, 0), localRot.y, osg::Vec3d(0, 1, 0), localRot.z, osg::Vec3d(0, 0, 1));
+    m.makeRotate(localRot.z, osg::Vec3d(0, 0, 1), localRot.y, osg::Vec3d(0, 1, 0), localRot.x, osg::Vec3d(1, 0, 0));
     m.setTrans(vPos);
     return m;
 
@@ -158,16 +158,16 @@ BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
     //    CStdFPoint &vPos = *m_aryPos[iPosIdx];
     CStdFPoint vPos(0, 0, 0);
    
-        float fltDiv = osg::PI/20;
+        float fltDiv = osg::PI/100;
         float fltStart = -osg::PI*2;
         float fltEnd = osg::PI*2;
 
-        vRot.Set(osg::PI/2, osg::PI/2, 0);
+        //vRot.Set(osg::PI/4, osg::PI/4, -osg::PI/6);
 
-        //for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
-        //    for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
-        //        for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
-        //        {
+        for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+            for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
+                for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+                {
                     osg::Matrix vNew, vOld;
                     //osg::Quat vNew, vOld;
                     //vRot.Set(fltXRot, fltYRot, fltZRot);
@@ -178,8 +178,8 @@ BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
                     vOld = OldSetupMatrix(vPos, vRot);
                     vNew = NewSetupMatrix(vPos, vRot);
 
-                    OsgMatrixUtil::Print(vOld);
-                    OsgMatrixUtil::Print(vNew);
+                    //OsgMatrixUtil::Print(vOld);
+                    //OsgMatrixUtil::Print(vNew);
 
                     int i=5;
                     if(!(vOld == vNew))
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
                     //if(!QuatEqual(vOld, vNew))
                     //    i=6;
                     //BOOST_ASSERT();
-                //}
+                }
     //}
 }
 
