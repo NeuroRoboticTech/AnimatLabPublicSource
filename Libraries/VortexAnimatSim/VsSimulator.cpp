@@ -39,7 +39,7 @@ VsSimulator::VsSimulator()
 	m_osgAlphafunc = NULL;
 
     //Setup the global matrix util.
-    m_lpMatrixUtil = new VsMatrixUtil;
+    m_lpMatrixUtil = new OsgMatrixUtil;
     SetMatrixUtil(m_lpMatrixUtil);
 }
 

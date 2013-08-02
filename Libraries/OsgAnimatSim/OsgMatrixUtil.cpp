@@ -297,7 +297,7 @@ osg::Matrix OsgMatrixUtil::SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRo
     osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
     osg::Matrix osgLocalMatrix;
     osgLocalMatrix.makeIdentity();
-    osgLocalMatrix.makeRotate(localRot.x, osg::Vec3d(1, 0, 0), localRot.y, osg::Vec3d(0, 1, 0), localRot.z, osg::Vec3d(0, 0, 1));
+    osgLocalMatrix.makeRotate(localRot.z, osg::Vec3d(0, 0, 1), localRot.y, osg::Vec3d(0, 1, 0), localRot.x, osg::Vec3d(1, 0, 0));
     osgLocalMatrix.setTrans(vPos);
     return osgLocalMatrix;
 }
