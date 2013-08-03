@@ -52,9 +52,11 @@ string OsgMeshMgr::FileCreateTime(string strFilename)
 #else
    struct stat attrib;
    stat(strFilename.c_str(), &attrib);
-
    
-   ss << attrib.st_mtime.tm_yday << '/' << attrib.st_mtime.tm_wday << '/' << attrib.st_mtime.tm_year << " " << attrib.st_mtime.tm_hour << ":" << attrib.st_mtime.tm_minute << ":" << attrib.st_mtime.tm_sec;
+   struct tm  *ts;
+   ts = localtime(&attrib.st_mtime);
+   
+   ss << ts->tm_mon << '/' << ts->tm_wday << '/' << ts->tm_year << " " << ts->tm_hour << ":" << ts->tm_min << ":" << ts->tm_sec;
 #endif
 
     return ss.str();
