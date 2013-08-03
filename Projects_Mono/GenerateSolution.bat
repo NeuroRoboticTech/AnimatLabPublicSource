@@ -14,6 +14,9 @@ cd ..\..\FiringRateSim\Projects_Mono
 cd ..\..\IntegrateFireSim\Projects_Mono
 @call GenerateSolution.bat
 
+cd ..\..\OsgAnimatSim\Projects_Mono
+@call GenerateSolution.bat
+
 cd ..\..\VortexAnimatSim\Projects_Mono
 @call GenerateSolution.bat
 

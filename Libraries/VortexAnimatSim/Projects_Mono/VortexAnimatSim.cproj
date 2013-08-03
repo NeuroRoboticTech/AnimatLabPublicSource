@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}</ProjectGuid>
+    <ProjectGuid>{F1F7A357-31B8-AE4A-BE53-5C22186D3036}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10D.so</OutputName>
@@ -42,8 +41,6 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10D</Lib>
-        <Lib>AnimatSim_vc10D</Lib>
         <Lib>Vx51</Lib>
         <Lib>VxController51</Lib>
         <Lib>VxControllerPersistence51</Lib>
@@ -62,6 +59,8 @@
         <Lib>boostVx_regex</Lib>
         <Lib>boostVx_serialization</Lib>
         <Lib>boostVx_system</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
         <Lib>OpenThreadsd</Lib>
         <Lib>osgAnimationd</Lib>
         <Lib>osgd</Lib>
@@ -78,6 +77,7 @@
         <Lib>osgViewerd</Lib>
         <Lib>osgVolumed</Lib>
         <Lib>osgWidgetd</Lib>
+        <Lib>SDL</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -88,8 +88,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10.so</OutputName>
@@ -101,9 +100,9 @@
         <Include>../../../../include</Include>
         <Include>../../../Vortex_5_1/include</Include>
         <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
-        <Include>../../../Vortex_5_1/3rdparty/sdl-1.2.14/include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -112,32 +111,31 @@
         <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
         <LibPath>../../../Vortex_5_1/lib</LibPath>
         <LibPath>../../../Vortex_5_1/3rdparty/boost-1.45.0/lib</LibPath>
-        <LibPath>../../../Vortex_5_1/3rdparty/sdl-1.2.14/lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
+        <Lib>Vx51</Lib>
+        <Lib>VxController51</Lib>
+        <Lib>VxControllerPersistence51</Lib>
+        <Lib>VxGraphics51</Lib>
+        <Lib>VxPersistence51</Lib>
+        <Lib>VxPs51</Lib>
+        <Lib>VxPsExtraOSG51</Lib>
+        <Lib>VxVehicle51</Lib>
+        <Lib>VxVehiclePersistence51</Lib>
+        <Lib>VxExtra51</Lib>
+        <Lib>VxExtraOSG51</Lib>
+        <Lib>VxVehicleExtra51</Lib>
+        <Lib>VxVehicleExtraOSG51</Lib>
+        <Lib>VxOSG51-2.8.3</Lib>
+        <Lib>boostVx_filesystem</Lib>
+        <Lib>boostVx_regex</Lib>
+        <Lib>boostVx_serialization</Lib>
+        <Lib>boostVx_system</Lib>
         <Lib>StdUtils_vc10</Lib>
         <Lib>AnimatSim_vc10</Lib>
-        <Lib>libVx51</Lib>
-        <Lib>libVxController51</Lib>
-        <Lib>libVxControllerPersistence51</Lib>
-        <Lib>libVxGraphics51</Lib>
-        <Lib>libVxPersistence51</Lib>
-        <Lib>libVxPs51</Lib>
-        <Lib>libVxPsExtraOSG51</Lib>
-        <Lib>libVxVehicle51</Lib>
-        <Lib>libVxVehiclePersistence51</Lib>
-        <Lib>libVxExtra51</Lib>
-        <Lib>libVxExtraOSG51</Lib>
-        <Lib>libVxVehicleExtra51</Lib>
-        <Lib>libVxVehicleExtraOSG51</Lib>
-        <Lib>libVxOSG51-2.8.3</Lib>
-        <Lib>libboostVx_filesystem</Lib>
-        <Lib>libboostVx_regex</Lib>
-        <Lib>libboostVx_serialization</Lib>
-        <Lib>libboostVx_system</Lib>
         <Lib>OpenThreads</Lib>
         <Lib>osgAnimation</Lib>
         <Lib>osg</Lib>
