@@ -36,11 +36,12 @@
 	#include <linux/types.h>
 	#include <stdbool.h>
 	#include <dlfcn.h>
+    #include <utime.h>
+    #include <sys/stat.h>
+    #include <unistd.h>
 	
 	#define DWORD unsigned long
 	#define LPCSTR const char *
-	#define FALSE 0
-	#define TRUE 1
 	#define LONG long
 	#define ULONG unsigned long
 	#define LPLONG long *

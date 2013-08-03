@@ -380,10 +380,7 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 
 	//Make sure we stamp the new file tim on the file. For some reason osgDB is not settign that correctly.
 	//If we do not do this then the mesh mgr will not recognize that it has changed, and will not load it.
-	///NEED TO FIX
-#ifdef WIN32
 	Std_SetFileTime(strNewFile);
-#endif
 }
 
 void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)
@@ -404,7 +401,7 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
 
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	//ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));   //NEED TO FIX
+	ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));
 
 	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
 	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;

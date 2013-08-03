@@ -56,8 +56,7 @@
 					"osgUtild", 
 					"osgViewerd", 
 					"osgVolumed", 
-					"osgWidgetd", 
-					"SDL" }
+					"osgWidgetd" }
 			postbuildcommands { "cp Debug/libVortexAnimatSim_vc10D.so ../../../bin",
 								"cp Debug/libVortexAnimatSim_vc10D.so ../../../unit_test_bin" }
 	 
@@ -83,7 +82,6 @@
 					"osgUtil",
 					"osgViewer",
 					"osgVolume",
-					"osgWidget",
-					"SDL" }					
+					"osgWidget" }					
 			postbuildcommands { "cp Release/libVortexAnimatSim_vc10.so ../../../bin", 
 								"cp Release/libVortexAnimatSim_vc10.so ../../../unit_test_bin" }

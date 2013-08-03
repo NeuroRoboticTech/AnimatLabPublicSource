@@ -331,10 +331,7 @@ void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, st
 bool STD_UTILS_PORT Std_DirectoryExists(string strPath);
 string STD_UTILS_PORT Std_ExecutablePath();
 
-#ifdef WIN32
-	void STD_UTILS_PORT Std_SetFileTime(string strFilename);
-	void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime);
-#endif
+void STD_UTILS_PORT Std_SetFileTime(string strFilename);
 
 // File Functions
 //***************************************************************************************************************

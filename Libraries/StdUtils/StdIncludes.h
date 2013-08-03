@@ -19,6 +19,8 @@
 	#include <dlfcn.h>
     #include <limits.h>
     #include <unistd.h>
+    #include <utime.h>
+    #include <sys/stat.h>
 
 	#define DWORD unsigned long
 	#define LPCSTR const char *

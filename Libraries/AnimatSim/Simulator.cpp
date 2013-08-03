@@ -11,6 +11,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 #include "Gain.h"
 #include "Node.h"
 #include "IPhysicsMovableItem.h"
@@ -2472,14 +2473,16 @@ double Simulator::RemainingVideoFrameTime()
 **/
 void Simulator::GenerateAutoSeed()
 {
-	/* TODO NEED TO REPLACE
-	SYSTEMTIME st;
-	GetLocalTime(&st);
+    //NEED TO TEST
+    time_t rawtime;
+    struct tm * timeinfo;
 
-	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+	m_iManualRandomSeed = (unsigned) (timeinfo->tm_sec + timeinfo->tm_hour + Std_IRand(0, 1000));
 	Std_SRand(m_iManualRandomSeed);
 	srand(m_iManualRandomSeed);
-	*/
 }
 
 /**

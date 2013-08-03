@@ -3259,19 +3259,7 @@ string STD_UTILS_PORT Std_ExecutablePath()
 
 #ifdef WIN32
 
-void STD_UTILS_PORT Std_SetFileTime(string strFilename)
-{
-	// Create a systemtime struct
-	SYSTEMTIME thesystemtime;
-	 
-	// Get current system time and then change the day to the 3rd
-	// You can also change year, month, day of week etc
-	GetSystemTime(&thesystemtime);
-
-	Std_SetFileTime(strFilename, thesystemtime);
-}
-
-void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
+void Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 {
 	// Create a FILETIME struct and convert our new SYSTEMTIME
 	// over to the FILETIME struct for use in SetFileTime below
@@ -3286,6 +3274,26 @@ void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 	    
 	// Close our handle.
 	CloseHandle(filename);
+}
+
+void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+{
+	// Create a systemtime struct
+	SYSTEMTIME thesystemtime;
+	 
+	// Get current system time and then change the day to the 3rd
+	// You can also change year, month, day of week etc
+	GetSystemTime(&thesystemtime);
+
+	Std_SetFileTime(strFilename, thesystemtime);
+}
+
+#else
+
+//NEED TO TEST
+void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+{
+    utime(strFilename.c_str(), NULL);
 }
 
 #endif
