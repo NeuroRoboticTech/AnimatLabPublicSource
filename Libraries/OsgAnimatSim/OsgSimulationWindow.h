@@ -5,7 +5,7 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow //, osgGA::GUIEventHandler 
+class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow
 {
 	protected:
 		OsgSimulationWindowMgr *m_lpWinMgr;
