@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <stdarg.h>
 #include "VsOsgGeometry.h"
 #include "VsJoint.h"
@@ -380,7 +380,10 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 
 	//Make sure we stamp the new file tim on the file. For some reason osgDB is not settign that correctly.
 	//If we do not do this then the mesh mgr will not recognize that it has changed, and will not load it.
+	///NEED TO FIX
+#ifdef WIN32
 	Std_SetFileTime(strNewFile);
+#endif
 }
 
 void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)

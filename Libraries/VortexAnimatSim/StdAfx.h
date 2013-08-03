@@ -12,7 +12,6 @@
     #include <windows.h>
 
     #define VORTEX_PORT __declspec( dllexport )
-    #include "VxOSG/VxOSG.h"
 #else
     #define VORTEX_PORT
 #endif
@@ -57,6 +56,7 @@
 #include "Vx/VxContactProperties.h"
 #include "Vx/VxConstraintController.h"
 #include "Vx/VxVector3.h"
+#include "VxOSG/VxOSG.h"
 
 #include "Vx/VxConstraintController.h"
 #include "Vx/VxEventSubscriber.h"

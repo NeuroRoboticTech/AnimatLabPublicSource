@@ -17,6 +17,8 @@ Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "..\Libr
 EndProject
 Project("{2857B73E-F847-4B02-9238-064979017E93}") = "OsgAnimatSim", "..\Libraries\OsgAnimatSim\Projects_Mono\OsgAnimatSim.cproj", "{B429E916-CD7C-1B43-BEA2-A460DE64AB48}"
 EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "..\Libraries\VortexAnimatSim\Projects_Mono\VortexAnimatSim.cproj", "{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
@@ -31,6 +33,10 @@ Global
 		{3F194C4F-A2C3-F14F-A95C-2A7CBCB932C2}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{3F194C4F-A2C3-F14F-A95C-2A7CBCB932C2}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{3F194C4F-A2C3-F14F-A95C-2A7CBCB932C2}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{482E05DA-FCAD-DF42-9D5B-7D7039065A5A}.Release|AnyCPU.Build.0 = Release|Any CPU
 		{56BA7822-86D1-CB49-AEBB-1A0F6579F658}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
 		{56BA7822-86D1-CB49-AEBB-1A0F6579F658}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{56BA7822-86D1-CB49-AEBB-1A0F6579F658}.Release|AnyCPU.ActiveCfg = Release|Any CPU

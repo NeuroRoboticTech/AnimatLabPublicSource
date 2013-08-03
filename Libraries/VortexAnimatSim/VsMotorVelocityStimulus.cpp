@@ -4,7 +4,7 @@
 \brief	Implements the vs motor velocity stimulus class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"

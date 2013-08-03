@@ -7,7 +7,11 @@
 	#pragma comment(lib, "OsgAnimatSim_vc10.lib")
 #endif
 
-#define ANIMAT_OSG_PORT __declspec( dllimport )
+#ifdef WIN32
+	#define ANIMAT_OSG_PORT __declspec( dllimport )
+#else
+    #define ANIMAT_OSG_PORT
+#endif
 
 #include "StdUtils.h"
 #include "AnimatSim.h"
@@ -42,7 +46,7 @@
 #include <osg/Camera>
 #include <osg/io_utils>
 #include <osg/LineWidth>
-#include <osg/Autotransform>
+#include <osg/AutoTransform>
 #include <osg/StateAttribute>
 #include <osg/AlphaFunc>
 #include <osg/TexMat>
@@ -60,7 +64,6 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
-#include <osgViewer/api/win32/GraphicsWindowWin32>
 #include <osgViewer/CompositeViewer>
 
 #include <osgGA/GUIEventAdapter>
@@ -84,6 +87,10 @@
 using namespace osgGA;
 
 #include <OpenThreads/Thread>
+
+#ifdef WIN32
+    #include <osgViewer/api/win32/GraphicsWindowWin32>
+#endif
 
 #include "OsgAnimatSimConstants.h"
 
