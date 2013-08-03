@@ -123,7 +123,7 @@ void KeyFrame::GenerateID()
 	m_strID = Type();
 
 	char strTail[20];
-	sprintf(strTail, "%010d", m_lStartSlice);
+	sprintf(strTail, "%010d", (int) m_lStartSlice);
 
 	m_strID += strTail;
 	m_strID = Std_CheckString(m_strID);

@@ -436,7 +436,9 @@ void OsgMovableItem::Physics_UpdateMatrix()
 {
 	if(m_osgMT.valid())
 	{
-		LocalMatrix(SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation()));
+		CStdFPoint vPos = m_lpThisMI->Position();
+		CStdFPoint vRot = m_lpThisMI->Rotation();
+		LocalMatrix(SetupMatrix(vPos, vRot));
 		m_osgMT->setMatrix(m_osgLocalMatrix);
 
 		if(m_osgDragger.valid())
@@ -641,7 +643,8 @@ void OsgMovableItem::Physics_ResetSimulation()
 
 		//Set the position with the world coordinates.
 		Physics_UpdateAbsolutePosition();
-		m_lpThisMI->ReportRotation(m_lpThisMI->Rotation());
+		CStdFPoint vRot = m_lpThisMI->Rotation();
+		m_lpThisMI->ReportRotation(vRot);
 	}
 }
 

@@ -5,7 +5,7 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow, osgGA::GUIEventHandler 
+class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow //, osgGA::GUIEventHandler 
 {
 	protected:
 		OsgSimulationWindowMgr *m_lpWinMgr;
@@ -27,9 +27,10 @@ class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow, 
 		virtual void InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim);
 		virtual void TrackCamera();
 
+		virtual ~OsgSimulationWindow(void);
+
 	public:
 		OsgSimulationWindow(void);
-		virtual ~OsgSimulationWindow(void);
 
 		virtual CStdFPoint GetCameraPosition();
 

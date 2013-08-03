@@ -21,7 +21,7 @@ namespace AnimatSim
 **/
 SimulationWindow::SimulationWindow(void)
 {
-	m_HWND = NULL;
+	m_HWND = 0;
 	m_ptPosition.Set(0, 0, 0);
 	m_ptSize.Set(500, 500, 0);
 	m_bTrackCamera = false;

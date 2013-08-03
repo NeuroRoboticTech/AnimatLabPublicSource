@@ -38,7 +38,9 @@ OsgMeshMgr::~OsgMeshMgr()
 
 string OsgMeshMgr::FileCreateTime(string strFilename)
 {
+	//NEED TO REPAIR
     stringstream ss;
+    /*
     WIN32_FILE_ATTRIBUTE_DATA wfad;
     SYSTEMTIME st;
      
@@ -46,7 +48,7 @@ string OsgMeshMgr::FileCreateTime(string strFilename)
     FileTimeToSystemTime(&wfad.ftLastWriteTime, &st);
  
     ss << st.wMonth << '/' << st.wDay << '/' << st.wYear << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond;
-     
+*/     
     return ss.str();
 }
 

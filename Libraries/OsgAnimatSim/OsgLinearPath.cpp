@@ -646,28 +646,28 @@ bool OsgLinearPath::SetData(const string &strDataType, const string &strValue, b
 	
 	if(strDataType == "LINECOLOR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vLineColor.g(), m_vLineColor.b(), m_vLineColor.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vLineColor.g(), m_vLineColor.b(), m_vLineColor.a()};
 		LineColor(aryVal);
 		return true;
 	}
 
 	if(strDataType == "LINECOLOR.GREEN")
 	{
-		float aryVal[4] = {m_vLineColor.r(), atof(strValue.c_str()), m_vLineColor.b(), m_vLineColor.a()};
+		float aryVal[4] = {m_vLineColor.r(), (float) atof(strValue.c_str()), m_vLineColor.b(), m_vLineColor.a()};
 		LineColor(aryVal);
 		return true;
 	}
 
 	if(strDataType == "LINECOLOR.BLUE")
 	{
-		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), atof(strValue.c_str()), m_vLineColor.a()};
+		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), (float) atof(strValue.c_str()), m_vLineColor.a()};
 		LineColor(aryVal);
 		return true;
 	}
 
 	if(strDataType == "LINECOLOR.ALPHA")
 	{
-		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), m_vLineColor.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), m_vLineColor.b(), (float) atof(strValue.c_str())};
 		LineColor(aryVal);
 		return true;
 	}
