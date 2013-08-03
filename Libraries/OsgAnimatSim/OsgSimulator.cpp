@@ -38,6 +38,7 @@ OsgSimulator::OsgSimulator()
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
     m_lpMouseSpring = new OsgMouseSpring;
+    m_lpMouseSpring->Initialize();
     m_lpMatrixUtil = NULL;
 }
 

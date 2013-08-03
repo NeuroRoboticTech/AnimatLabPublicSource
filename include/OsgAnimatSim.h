@@ -102,6 +102,7 @@ namespace OsgAnimatSim
         class OsgRigidBody;
 		class OsgOrganism;
 		class OsgStructure;
+        class OsgLine;
 	}
 
 	namespace Visualization
@@ -135,6 +136,7 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgRigidBody.h"
 #include "OsgJoint.h"
 #include "OsgLight.h"
+#include "OsgLine.h"
 
 #include "OsgOrganism.h"
 #include "OsgStructure.h"

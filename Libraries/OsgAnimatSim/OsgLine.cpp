@@ -26,6 +26,7 @@ namespace OsgAnimatSim
 
 OsgLine::OsgLine()
 {
+    m_lpLinesGeom = NULL;
 }
 
 OsgLine::~OsgLine()
@@ -33,18 +34,18 @@ OsgLine::~OsgLine()
 
 try
 {
+    //Deleted elsewhere
+    m_lpLinesGeom = NULL;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of OsgLine\r\n", "", -1, FALSE, TRUE);}
 }
 
-void OsgLine::SetThisPointers()
+void OsgLine::SetThisLinePointers()
 {
-	OsgRigidBody::SetThisPointers();
-
 	m_lpLineBase = dynamic_cast<LineBase *>(this);
 	if(!m_lpLineBase)
-		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpLineBase, " + m_lpThisAB->Name());
+		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpLineBase ");
 }
 
 osg::Geometry *OsgLine::CreateLineGeometry()
@@ -53,7 +54,7 @@ osg::Geometry *OsgLine::CreateLineGeometry()
     int iCount = BuildLines(linesGeom);
 
     // set the colors as before, plus using the above
-	CStdColor &aryDiffuse = *m_lpThisRB->Diffuse();
+	CStdColor &aryDiffuse = *m_lpLineBase->Diffuse();
     osg::Vec4Array* colors = new osg::Vec4Array;
     colors->push_back(osg::Vec4(aryDiffuse[0], aryDiffuse[1], aryDiffuse[2], aryDiffuse[3]));
     linesGeom->setColorArray(colors);
@@ -75,6 +76,7 @@ osg::Geometry *OsgLine::CreateLineGeometry()
 	linesGeom->setDataVariance(osg::Object::DYNAMIC);
 	linesGeom->setUseDisplayList(false);
 
+    m_lpLinesGeom = linesGeom;
 	return linesGeom;
 }
 
@@ -143,42 +145,11 @@ void OsgLine::DrawLine()
 			iLineIdx+=2;
 		}
 
-		m_osgGeometry->dirtyBound();
+        if(m_lpLinesGeom)
+            m_lpLinesGeom->dirtyBound();
 	}
 }
 
-void OsgLine::SetupGraphics()
-{
-	//Add it to the root scene graph because the vertices are in global coords.
-	GetOsgSimulator()->OSGRoot()->addChild(m_osgNode.get());
-	SetVisible(m_lpThisMI->IsVisible());
-}
-
-void OsgLine::DeleteGraphics()
-{
-	if(m_osgGeometry.valid())
-	{
-		m_osgGeometry->setDataVariance(osg::Object::STATIC);
-		m_osgGeometry->dirtyBound();
-		SetVisible(FALSE);
-	}
-
-	OsgRigidBody::DeleteGraphics();
-}
-
-void OsgLine::CreateGraphicsGeometry()
-{
-	fltA = 0;
-	m_osgGeometry = CreateLineGeometry();
-}
-
-void OsgLine::CreateParts()
-{
-	CreateGeometry();
-
-	OsgRigidBody::CreateItem();
-	SetBody();
-}
 
 void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)
 {
@@ -190,9 +161,9 @@ void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float 
 	oPrimForce *= fltTension;
 }
 
-void OsgLine::StepSimulation(float fltTension)
+void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 {
-	if(m_lpThisBP->Enabled())
+	if(bEnabled)
 	{
 		//Dont bother with this unless there is actually tension developed by the muscle.
 		if(fltTension > 1e-5)
@@ -204,7 +175,7 @@ void OsgLine::StepSimulation(float fltTension)
 			CStdFPoint oPrimForce, oSecForce;
 			RigidBody *lpAttach1Parent, *lpAttach2Parent;
 
-			if(m_lpThisBP->GetSimulator()->Time() >= 0.99)
+			if(m_lpLineBase->GetSimulator()->Time() >= 0.99)
 				iCount = iCount;
 
 			//Go through each set of muscle attachments and add the tension force pointing towards the other
@@ -227,16 +198,6 @@ void OsgLine::StepSimulation(float fltTension)
 		}
 	}
 
-	DrawLine();
-}
-
-void OsgLine::ResetSimulation()
-{
-	//We do nothing in the reset simulation because we need the attachment points to be reset before we can do anything.
-}
-
-void OsgLine::AfterResetSimulation()
-{
 	DrawLine();
 }
 

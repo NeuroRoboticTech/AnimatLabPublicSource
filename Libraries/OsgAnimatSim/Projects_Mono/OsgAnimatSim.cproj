@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B429E916-CD7C-1B43-BEA2-A460DE64AB48}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libOsgAnimatSim_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
+        <Lib>OpenThreadsd</Lib>
+        <Lib>osgAnimationd</Lib>
+        <Lib>osgd</Lib>
+        <Lib>osgDBd</Lib>
+        <Lib>osgFXd</Lib>
+        <Lib>osgGAd</Lib>
+        <Lib>osgManipulatord</Lib>
+        <Lib>osgParticled</Lib>
+        <Lib>osgShadowd</Lib>
+        <Lib>osgSimd</Lib>
+        <Lib>osgTerraind</Lib>
+        <Lib>osgTextd</Lib>
+        <Lib>osgUtild</Lib>
+        <Lib>osgViewerd</Lib>
+        <Lib>osgVolumed</Lib>
+        <Lib>osgWidgetd</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libOsgAnimatSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libOsgAnimatSim_vc10D.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libOsgAnimatSim_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10</Lib>
+        <Lib>AnimatSim_vc10</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libOsgAnimatSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libOsgAnimatSim_vc10.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\OsgBody.h">
+      <Link>OsgBody.h</Link>
+    </None>
+    <None Include="..\OsgCameraManipulator.h">
+      <Link>OsgCameraManipulator.h</Link>
+    </None>
+    <None Include="..\OsgDragger.h">
+      <Link>OsgDragger.h</Link>
+    </None>
+    <None Include="..\OsgDraggerHandler.h">
+      <Link>OsgDraggerHandler.h</Link>
+    </None>
+    <None Include="..\OsgGeometry.h">
+      <Link>OsgGeometry.h</Link>
+    </None>
+    <None Include="..\OsgHinge.h">
+      <Link>OsgHinge.h</Link>
+    </None>
+    <None Include="..\OsgHingeLimit.h">
+      <Link>OsgHingeLimit.h</Link>
+    </None>
+    <None Include="..\OsgHud.h">
+      <Link>OsgHud.h</Link>
+    </None>
+    <None Include="..\OsgHudText.h">
+      <Link>OsgHudText.h</Link>
+    </None>
+    <None Include="..\OsgJoint.h">
+      <Link>OsgJoint.h</Link>
+    </None>
+    <None Include="..\OsgLight.h">
+      <Link>OsgLight.h</Link>
+    </None>
+    <None Include="..\OsgLine.h">
+      <Link>OsgLine.h</Link>
+    </None>
+    <None Include="..\OsgLinearPath.h">
+      <Link>OsgLinearPath.h</Link>
+    </None>
+    <None Include="..\OsgMatrixUtil.h">
+      <Link>OsgMatrixUtil.h</Link>
+    </None>
+    <None Include="..\OsgMeshMgr.h">
+      <Link>OsgMeshMgr.h</Link>
+    </None>
+    <None Include="..\OsgMeshMinVertexDistanceVisitor.h">
+      <Link>OsgMeshMinVertexDistanceVisitor.h</Link>
+    </None>
+    <None Include="..\OsgMouseSpring.h">
+      <Link>OsgMouseSpring.h</Link>
+    </None>
+    <None Include="..\OsgMovableItem.h">
+      <Link>OsgMovableItem.h</Link>
+    </None>
+    <None Include="..\OsgOrganism.h">
+      <Link>OsgOrganism.h</Link>
+    </None>
+    <None Include="..\OsgPrismatic.h">
+      <Link>OsgPrismatic.h</Link>
+    </None>
+    <None Include="..\OsgPrismaticLimit.h">
+      <Link>OsgPrismaticLimit.h</Link>
+    </None>
+    <None Include="..\OsgRigidBody.h">
+      <Link>OsgRigidBody.h</Link>
+    </None>
+    <None Include="..\OsgScriptedSimulationWindow.h">
+      <Link>OsgScriptedSimulationWindow.h</Link>
+    </None>
+    <None Include="..\OsgSimulationWindow.h">
+      <Link>OsgSimulationWindow.h</Link>
+    </None>
+    <None Include="..\OsgSimulationWindowMgr.h">
+      <Link>OsgSimulationWindowMgr.h</Link>
+    </None>
+    <None Include="..\OsgSimulator.h">
+      <Link>OsgSimulator.h</Link>
+    </None>
+    <None Include="..\OsgStructure.h">
+      <Link>OsgStructure.h</Link>
+    </None>
+    <None Include="..\OsgTrackballDragger.h">
+      <Link>OsgTrackballDragger.h</Link>
+    </None>
+    <None Include="..\OsgTrackballManipulator.h">
+      <Link>OsgTrackballManipulator.h</Link>
+    </None>
+    <None Include="..\OsgTranslateAxisDragger.h">
+      <Link>OsgTranslateAxisDragger.h</Link>
+    </None>
+    <None Include="..\OsgUserData.h">
+      <Link>OsgUserData.h</Link>
+    </None>
+    <None Include="..\OsgUserDataVisitor.h">
+      <Link>OsgUserDataVisitor.h</Link>
+    </None>
+    <None Include="..\OsgWorldCoordinateNodeVisitor.h">
+      <Link>OsgWorldCoordinateNodeVisitor.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\OsgAnimatSim.cpp">
+      <Link>OsgAnimatSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgBody.cpp">
+      <Link>OsgBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgCameraManipulator.cpp">
+      <Link>OsgCameraManipulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgDragger.cpp">
+      <Link>OsgDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgDraggerHandler.cpp">
+      <Link>OsgDraggerHandler.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgGeometry.cpp">
+      <Link>OsgGeometry.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgHinge.cpp">
+      <Link>OsgHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgHingeLimit.cpp">
+      <Link>OsgHingeLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgHud.cpp">
+      <Link>OsgHud.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgHudText.cpp">
+      <Link>OsgHudText.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgJoint.cpp">
+      <Link>OsgJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgLight.cpp">
+      <Link>OsgLight.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgLine.cpp">
+      <Link>OsgLine.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgLinearPath.cpp">
+      <Link>OsgLinearPath.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgMatrixUtil.cpp">
+      <Link>OsgMatrixUtil.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgMeshMgr.cpp">
+      <Link>OsgMeshMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgMeshMinVertexDistanceVisitor.cpp">
+      <Link>OsgMeshMinVertexDistanceVisitor.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgMouseSpring.cpp">
+      <Link>OsgMouseSpring.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgMovableItem.cpp">
+      <Link>OsgMovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgOrganism.cpp">
+      <Link>OsgOrganism.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgPrismatic.cpp">
+      <Link>OsgPrismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgPrismaticLimit.cpp">
+      <Link>OsgPrismaticLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgRigidBody.cpp">
+      <Link>OsgRigidBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgScriptedSimulationWindow.cpp">
+      <Link>OsgScriptedSimulationWindow.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgSimulationWindow.cpp">
+      <Link>OsgSimulationWindow.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgSimulationWindowMgr.cpp">
+      <Link>OsgSimulationWindowMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgSimulator.cpp">
+      <Link>OsgSimulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgStructure.cpp">
+      <Link>OsgStructure.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgTrackballDragger.cpp">
+      <Link>OsgTrackballDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgTrackballManipulator.cpp">
+      <Link>OsgTrackballManipulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgTranslateAxisDragger.cpp">
+      <Link>OsgTranslateAxisDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgUserData.cpp">
+      <Link>OsgUserData.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgUserDataVisitor.cpp">
+      <Link>OsgUserDataVisitor.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgWorldCoordinateNodeVisitor.cpp">
+      <Link>OsgWorldCoordinateNodeVisitor.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

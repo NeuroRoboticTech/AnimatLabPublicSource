@@ -132,6 +132,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClInclude Include="..\OsgHudText.h" />
     <ClInclude Include="..\OsgJoint.h" />
     <ClInclude Include="..\OsgLight.h" />
+    <ClInclude Include="..\OsgLine.h" />
     <ClInclude Include="..\OsgLinearPath.h" />
     <ClInclude Include="..\OsgMatrixUtil.h" />
     <ClInclude Include="..\OsgMeshMgr.h" />
@@ -174,6 +175,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgLight.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgLine.cpp" />
     <ClCompile Include="..\OsgLinearPath.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgMatrixUtil.cpp">

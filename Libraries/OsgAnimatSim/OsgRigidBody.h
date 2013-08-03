@@ -91,7 +91,6 @@ namespace OsgAnimatSim
 
 			virtual osg::Group *ParentOSG();
 
-			virtual void SetBody() = 0;
 			virtual void SetupPhysics();
 
 			virtual void Initialize();
