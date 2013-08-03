@@ -1,7 +1,7 @@
 // VortexAnimatSim.cpp : Defines the entry point for the DLL application.
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #ifdef WIN32
 

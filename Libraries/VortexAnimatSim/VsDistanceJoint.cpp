@@ -97,7 +97,9 @@ void VsDistanceJoint::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	float fltDistance = Std_CalculateDistance(m_lpParent->AbsolutePosition(), m_lpChild->AbsolutePosition());
+	CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
+	CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
+	float fltDistance = Std_CalculateDistance(vParentPos, vChildPos);
 
 	m_vxDistance = new VxDistanceJoint(lpVsParent->Part(), lpVsChild->Part(), fltDistance);
 	m_vxDistance->setName(m_strID.c_str());

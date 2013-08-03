@@ -21,7 +21,7 @@
 #include "VsEllipsoid.h"
 #include "VsMouth.h"
 #include "VsOdorSensor.h"
-#include "VsFluidPlane.H"
+#include "VsFluidPlane.h"
 #include "VsMeshBase.h"
 #include "VsMesh.h"
 #include "VsTerrain.h"
@@ -920,13 +920,21 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 
 }			//VortexAnimatSim
 
-extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+	extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
 {
 	IStdClassFactory *lpFactory = new VsClassFactory;
 	return lpFactory;
 }
 
-extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
+#else
+	extern "C" int BootstrapRunLibrary(int argc, const char **argv) 
+#endif
 {
 	Simulator *lpSim = NULL;
 
@@ -945,7 +953,7 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(lpSim) delete lpSim;
-	printf("Error occurred: %s\n", oError.m_strError) ;
+	printf("Error occurred: %s\n", oError.m_strError.c_str()) ;
 	return (int) oError.m_lError;
 }
 catch(...)
