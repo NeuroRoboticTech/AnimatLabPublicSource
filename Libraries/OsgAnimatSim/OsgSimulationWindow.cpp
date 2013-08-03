@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
@@ -165,6 +165,7 @@ void OsgSimulationWindow::UpdateBackgroundColor()
 
 void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, OsgSimulator *lpVsSim)
 {
+#ifdef WIN32
     m_osgViewer = new osgViewer::Viewer;
 
 	osg::GraphicsContext::Traits *traits =	new osg::GraphicsContext::Traits();
@@ -232,6 +233,7 @@ void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, OsgSimulator *lpVsSim)
 	m_osgViewer->getCamera()->getProjectionMatrixAsPerspective(fovy,aspectRatio, z1,z2);
 	aspectRatio=double(traits->width)/double(traits->height);
 	m_osgViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
+#endif
 }
 
 void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim)

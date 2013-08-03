@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
 #include "OsgOrganism.h"

@@ -219,19 +219,19 @@ float *OsgHinge::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL OsgHinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OsgHinge::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(OsgJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Hinge::SetData(strDataType, strValue, FALSE))
+	if(Hinge::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void OsgHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

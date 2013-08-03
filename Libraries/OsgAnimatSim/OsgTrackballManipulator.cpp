@@ -346,9 +346,9 @@ bool OsgTrackballManipulator::calcMovement()
 
             _center += dv;
 
-          	char strDest[250];
-	        sprintf(strDest, "center: (%3.3f, %3.3f, %3.3f), dv: (%3.3f, %3.3f, %3.3f)\n", _center[0], _center[1], _center[2], dv[0], dv[1], dv[2]);
-	        OutputDebugString(strDest);
+          	//char strDest[250];
+	        //sprintf(strDest, "center: (%3.3f, %3.3f, %3.3f), dv: (%3.3f, %3.3f, %3.3f)\n", _center[0], _center[1], _center[2], dv[0], dv[1], dv[2]);
+	        //OutputDebugString(strDest);
 
         }
 

@@ -1,7 +1,7 @@
 // OsgAnimatSim.cpp : Defines the entry point for the DLL application.
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #ifdef WIN32
 bool APIENTRY DllMain( HANDLE hModule, 

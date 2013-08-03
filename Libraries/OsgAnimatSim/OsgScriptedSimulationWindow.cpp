@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "OsgCameraManipulator.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
@@ -316,8 +316,8 @@ void OsgScriptedSimulationWindow::TrackCamera()
 
 				osg::Vec3d vPos = m_lpCurrentPath->GetInterpPosition();
 
-				string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
-				OutputDebugString(strMesage.c_str());
+				//string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
+				//OutputDebugString(strMesage.c_str());
 
 				SetCameraPositionAndLookAt(vPos, vTargetPos);			
 			}

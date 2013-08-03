@@ -267,7 +267,9 @@ void OsgJoint::UpdatePositionAndRotationFromMatrix()
 
 void OsgJoint::Physics_UpdateMatrix()
 {
-	LocalMatrix(SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation()));
+	CStdFPoint vPos = m_lpThisMI->Position();
+	CStdFPoint vRot = m_lpThisMI->Rotation();
+	LocalMatrix(SetupMatrix(vPos, vRot));
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
