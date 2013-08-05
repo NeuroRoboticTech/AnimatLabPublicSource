@@ -17,7 +17,8 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputName>AnimatSimulatorD</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'/home/me/Projects/AnimatLabPublicSource/bin'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -40,12 +41,14 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
+    <Commandlineparameters>-library libStdUtils_vc10D.so -path "/home/me/Projects/Experiments/SingleJointGround/SingleJoint_StandaloneD.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputName>AnimatSimulator</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
