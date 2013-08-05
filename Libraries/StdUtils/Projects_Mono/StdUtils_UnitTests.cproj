@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AE63D4A2-4081-DA49-9785-DC1C7D059D38}</ProjectGuid>
+    <ProjectGuid>{435257AB-3B68-994E-9A36-D592555620A7}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -49,8 +48,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -86,24 +84,24 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\StdUtils_UnitTests\stdafx.h">
-      <Link>StdUtils_UnitTests\stdafx.h</Link>
+      <Link>StdUtils_UnitTests/stdafx.h</Link>
     </None>
     <None Include="..\StdUtils_UnitTests\targetver.h">
-      <Link>StdUtils_UnitTests\targetver.h</Link>
+      <Link>StdUtils_UnitTests/targetver.h</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\StdUtils_UnitTests\ClassFactory_Tests.cpp">
-      <Link>StdUtils_UnitTests\ClassFactory_Tests.cpp</Link>
+      <Link>StdUtils_UnitTests/ClassFactory_Tests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\StdUtils_UnitTests.cpp">
-      <Link>StdUtils_UnitTests\StdUtils_UnitTests.cpp</Link>
+      <Link>StdUtils_UnitTests/StdUtils_UnitTests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\Tree_Tests.cpp">
-      <Link>StdUtils_UnitTests\Tree_Tests.cpp</Link>
+      <Link>StdUtils_UnitTests/Tree_Tests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\stdafx.cpp">
-      <Link>StdUtils_UnitTests\stdafx.cpp</Link>
+      <Link>StdUtils_UnitTests/stdafx.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>

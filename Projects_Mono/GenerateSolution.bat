@@ -20,4 +20,7 @@ cd ..\..\OsgAnimatSim\Projects_Mono
 cd ..\..\VortexAnimatSim\Projects_Mono
 @call GenerateSolution.bat
 
+cd ..\..\..\Applications\AnimatSimulator\Projects_Mono
+@call GenerateSolution.bat
+
 @pause
