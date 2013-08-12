@@ -511,8 +511,19 @@ Namespace Framework
             Debug.WriteLine("Running Simulation")
             m_oServer.ExecuteIndirectMethod("ToggleSimulation", Nothing)
 
+            'First wait for it to go into a running state.
+            Debug.WriteLine("Waiting for start")
+            Dim bStarted As Boolean = False
+            While Not bStarted
+                bStarted = DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
+                Debug.WriteLine("Checking start: " & bStarted)
+            End While
+
+            Debug.WriteLine("Sim Started")
             Threading.Thread.Sleep(1000)
 
+            'Then wait for it to finish a running state.
+            Debug.WriteLine("Waiting for Sim end")
             Dim iIdx As Integer = 0
             Dim bDone As Boolean = False
             While Not bDone
