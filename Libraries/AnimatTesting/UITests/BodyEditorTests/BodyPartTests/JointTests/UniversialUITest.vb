@@ -81,6 +81,7 @@ Namespace UITests
                     End Sub
 
                     Protected Overrides Sub TestConstraintLimitsWithForce()
+
                         'Add force stimulus to child part. 
                         AddStimulus("Force", m_strStruct1Name, "\Body Plan\Root\Joint_1\Arm", "ArmForce") ', "Stimulus_2"
                         SetForceStimulus("ArmForce", False, True, 1, 1.1, 0, 0, 0, 0, 0, 0.05, 0, 0, 0)
@@ -184,6 +185,10 @@ Namespace UITests
 
                         m_ptTransJointYAxisStart = New Point(641, 430)
                         m_ptTransJointYAxisEnd = New Point(654, 322)
+
+                        'Shorten the sim time. We do not need 8 seconds like the motorized tests
+                        m_dblSimEndTime = 5
+                        m_dblChartEndTime = 2
 
                         CleanupProjectDirectory()
                     End Sub

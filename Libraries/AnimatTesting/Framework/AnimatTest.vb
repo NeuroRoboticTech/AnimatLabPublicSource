@@ -355,7 +355,7 @@ Namespace Framework
                 End If
                 iCount = iCount + 1
 
-                If iCount > 5 Then
+                If iCount > 20 Then
                     Throw New System.Exception(strDlgName & " dialog would not open.")
                 End If
             End While
@@ -511,9 +511,24 @@ Namespace Framework
             Debug.WriteLine("Running Simulation")
             m_oServer.ExecuteIndirectMethod("ToggleSimulation", Nothing)
 
+            'First wait for it to go into a running state.
+            Debug.WriteLine("Waiting for start")
+            Dim iIdx As Integer = 0
+            Dim bStarted As Boolean = False
+            While Not bStarted
+                bStarted = DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
+                Debug.WriteLine("Checking start: " & bStarted)
+                iIdx = iIdx + 1
+                If iIdx = 90 Then
+                    bStarted = True 'Assume we missed the started command.
+                End If
+            End While
+
+            Debug.WriteLine("Sim Started")
             Threading.Thread.Sleep(1000)
 
-            Dim iIdx As Integer = 0
+            'Then wait for it to finish a running state.
+            Debug.WriteLine("Waiting for Sim end")
             Dim bDone As Boolean = False
             While Not bDone
                 Threading.Thread.Sleep(1000)
