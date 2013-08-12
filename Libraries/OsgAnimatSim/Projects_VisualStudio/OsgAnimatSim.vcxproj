@@ -128,6 +128,8 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClInclude Include="..\OsgDragger.h" />
     <ClInclude Include="..\OsgDraggerHandler.h" />
     <ClInclude Include="..\OsgGeometry.h" />
+    <ClInclude Include="..\OsgHinge.h" />
+    <ClInclude Include="..\OsgHingeLimit.h" />
     <ClInclude Include="..\OsgHud.h" />
     <ClInclude Include="..\OsgHudText.h" />
     <ClInclude Include="..\OsgJoint.h" />
@@ -167,6 +169,8 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgGeometry.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgHinge.cpp" />
+    <ClCompile Include="..\OsgHingeLimit.cpp" />
     <ClCompile Include="..\OsgHud.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgHudText.cpp">

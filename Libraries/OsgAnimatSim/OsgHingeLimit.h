@@ -8,7 +8,7 @@ namespace OsgAnimatSim
 		namespace Joints
 		{
 
-			class ANIMAT_OSG_PORT OsgHingeLimit : public AnimatSim::Environment::ConstraintLimit
+			class ANIMAT_OSG_PORT OsgHingeLimit
 			{
 			protected:
 				osg::ref_ptr<osg::Geometry> m_osgFlap;
@@ -22,8 +22,8 @@ namespace OsgAnimatSim
 				OsgHingeLimit();
 				virtual ~OsgHingeLimit();
 
-				virtual void Alpha(float fltA);
-				virtual void SetLimitPos();
+				virtual void LimitAlpha(float fltA);
+                virtual void SetLimitPos(float fltHeight, float fltLimitPos);
 				
 				osg::Geometry *FlapGeometry() {return m_osgFlap.get();};
 				osg::MatrixTransform *FlapTranslateMT() {return m_osgFlapTranslateMT.get();};
@@ -31,8 +31,8 @@ namespace OsgAnimatSim
 				osg::Material *FlapMat() {return m_osgFlapMat.get();};
 				osg::StateSet *FlapSS() {return m_osgFlapSS.get();};
 
-				virtual void SetupGraphics();
-                virtual void DeleteGraphics();
+                virtual void SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight, float fltLimitPos, CStdColor vColor);
+                virtual void DeleteLimitGraphics();
             };
 
 		}		//Joints

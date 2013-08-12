@@ -33,12 +33,9 @@ namespace OsgAnimatSim
 			\author	dcofer
 			\date	4/15/2011
 			**/
-			class ANIMAT_OSG_PORT OsgHinge : public OsgJoint, AnimatSim::Environment::Joints::Hinge     
+			class ANIMAT_OSG_PORT OsgHinge    
 			{
 			protected:
-				/// The rotation of the hinge in degrees.
-				float m_fltRotationDeg;
-
 				//Graphics objects for the hinge drawing code
 				/// The osg cylinder geometry.
 				osg::ref_ptr<osg::Geometry> m_osgCylinder;
@@ -55,28 +52,16 @@ namespace OsgAnimatSim
 				/// The osg cylinder state set.
 				osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
 
-    			virtual void DeleteJointGraphics();
-                virtual void CreateJointGraphics();
-				virtual void SetupGraphics();
-				virtual void UpdateData();
-				virtual void CreateCylinderGraphics();
+    			virtual void DeleteHingeGraphics(osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap);
+                virtual void CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth, float fltLimitPos, CStdColor vColor, 
+                                   osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, 
+                                   OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap);
+                virtual void CreateCylinderGraphics(float fltHeight, float fltRadius);
 
 			public:
 				OsgHinge();
 				virtual ~OsgHinge();
 
-				virtual void SetAlpha();
-
-#pragma region DataAccesMethods
-
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-
-#pragma endregion
-
-				virtual void CreateJoint();
-				virtual void StepSimulation();
 			};
 
 		}		//Joints
