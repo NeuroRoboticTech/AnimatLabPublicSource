@@ -44,10 +44,10 @@ namespace AnimatSim
 		virtual ~ActivatedItemMgr();
 
 		virtual void Add(ActivatedItem *lpItem);
-		virtual void Remove(string strID, BOOL bThrowError = TRUE);
-		virtual ActivatedItem *Find(string strID, int &iIndex, BOOL bThrowError);
-		virtual ActivatedItem *Find(string strID, BOOL bThrowError = TRUE);
-		virtual int FindListPos(string strID, BOOL bThrowError = TRUE);
+		virtual void Remove(string strID, bool bThrowError = true);
+		virtual ActivatedItem *Find(string strID, int &iIndex, bool bThrowError);
+		virtual ActivatedItem *Find(string strID, bool bThrowError = true);
+		virtual int FindListPos(string strID, bool bThrowError = true);
 
 		virtual void Reset();
 		virtual void Initialize();

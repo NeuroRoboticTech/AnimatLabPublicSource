@@ -29,12 +29,12 @@ namespace AnimatSim
 			DataChartMgr();
 			virtual ~DataChartMgr();
 
-			virtual BOOL AddDataChart(string strXml);
-			virtual BOOL RemoveDataChart(string strID);
+			virtual bool AddDataChart(string strXml);
+			virtual bool RemoveDataChart(string strID);
 
 			virtual void AddDataColumn(string strChartKey, DataColumn *lpColumn);
-			virtual void RemoveDataColumn(string strChartKey, string strColumnName, BOOL bThrowError = TRUE);
-			virtual DataColumn *FindDataColumn(string strChartKey, string strColumnName, BOOL bThrowError = TRUE);
+			virtual void RemoveDataColumn(string strChartKey, string strColumnName, bool bThrowError = true);
+			virtual DataColumn *FindDataColumn(string strChartKey, string strColumnName, bool bThrowError = true);
 
 			virtual void Load(CStdXml &oXml);
 		};

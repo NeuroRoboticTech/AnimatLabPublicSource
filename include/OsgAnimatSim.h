@@ -7,7 +7,11 @@
 	#pragma comment(lib, "OsgAnimatSim_vc10.lib")
 #endif
 
-#define ANIMAT_OSG_PORT __declspec( dllimport )
+#ifdef WIN32
+	#define ANIMAT_OSG_PORT __declspec( dllimport )
+#else
+    #define ANIMAT_OSG_PORT
+#endif
 
 #include "StdUtils.h"
 #include "AnimatSim.h"
@@ -16,6 +20,7 @@
 #include <osg/Group>
 #include <osg/Geode>
 #include <osg/Geometry>
+#include <osg/Matrix>
 #include <osg/Matrixd>
 #include <osg/MatrixTransform>
 #include <osg/Material> 
@@ -41,9 +46,10 @@
 #include <osg/Camera>
 #include <osg/io_utils>
 #include <osg/LineWidth>
-#include <osg/Autotransform>
+#include <osg/AutoTransform>
 #include <osg/StateAttribute>
 #include <osg/AlphaFunc>
+#include <osg/TexMat>
 
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>
@@ -58,7 +64,6 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
-#include <osgViewer/api/win32/GraphicsWindowWin32>
 #include <osgViewer/CompositeViewer>
 
 #include <osgGA/GUIEventAdapter>
@@ -83,6 +88,10 @@ using namespace osgGA;
 
 #include <OpenThreads/Thread>
 
+#ifdef WIN32
+    #include <osgViewer/api/win32/GraphicsWindowWin32>
+#endif
+
 #include "OsgAnimatSimConstants.h"
 
 //Simulation Objects
@@ -90,23 +99,17 @@ namespace OsgAnimatSim
 {
 	class OsgMeshMgr;
     class OsgMatrixUtils;
+    class OsgSimulator;
 
 	namespace Environment
 	{
+        class OsgLight;
         class OsgBody;
 		class OsgJoint;
         class OsgRigidBody;
-		class OsgLine;
 		class OsgOrganism;
 		class OsgStructure;
-
-		namespace Joints
-		{
-			class OsgHinge;
-			class OsgHingeLimit;
-			class OsgPrismatic;
-			class OsgPrismaticLimit;
-		}
+        class OsgLine;
 	}
 
 	namespace Visualization
@@ -130,7 +133,6 @@ namespace OsgAnimatSim
 
 using namespace OsgAnimatSim;
 using namespace OsgAnimatSim::Environment;
-using namespace OsgAnimatSim::Environment::Joints;
 using namespace OsgAnimatSim::Visualization;
 
 #include "OsgMatrixUtil.h"
@@ -140,12 +142,9 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgBody.h"
 #include "OsgRigidBody.h"
 #include "OsgJoint.h"
-
-#include "OsgHinge.h"
-#include "OsgHingeLimit.h"
-#include "OsgPrismatic.h"
-#include "OsgPrismaticLimit.h"
+#include "OsgLight.h"
 #include "OsgLine.h"
+
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgTrackballDragger.h"
@@ -163,6 +162,6 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgSimulationWindow.h"
 #include "OsgScriptedSimulationWindow.h"
 #include "OsgSimulationWindowMgr.h"
-
+#include "OsgSimulator.h"
 
 #endif // __OSG_ANIMAT_LIB_DLL_H__

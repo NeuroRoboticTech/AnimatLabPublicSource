@@ -48,7 +48,7 @@ try
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CStdVariant\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CStdVariant\r\n", "", -1, false, true);}
 }
 
 /**

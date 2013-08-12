@@ -80,7 +80,7 @@ try
 	m_aryDataColumns.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, false, true);}
 }
 
 /**
@@ -90,7 +90,7 @@ catch(...)
 
 \return	true if this items start slice is less than the one passed in, false if not.
 **/
-BOOL DataChart::operator<(ActivatedItem *lpItem)
+bool DataChart::operator<(ActivatedItem *lpItem)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(lpItem);
 
@@ -98,17 +98,17 @@ BOOL DataChart::operator<(ActivatedItem *lpItem)
 		THROW_ERROR(Al_Err_lItemNotDataChartType, Al_Err_strItemNotDataChartType);
 
 	if(m_lStartSlice < lpChart->m_lStartSlice)
-		return TRUE;
+		return true;
 
 	if( (m_lStartSlice == lpChart->m_lStartSlice) && (m_lEndSlice < lpChart->m_lEndSlice))
-		return TRUE;
+		return true;
 
-	return FALSE;
+	return false;
 }
 
 string DataChart::Type() {return "DataChart";}
 
-void DataChart::StartTime(float fltVal, BOOL bReInit) 
+void DataChart::StartTime(float fltVal, bool bReInit) 
 {
 	ActivatedItem::StartTime(fltVal, bReInit);
 	
@@ -116,7 +116,7 @@ void DataChart::StartTime(float fltVal, BOOL bReInit)
 		ReInitialize();
 }
 
-void DataChart::EndTime(float fltVal, BOOL bReInit) 
+void DataChart::EndTime(float fltVal, bool bReInit) 
 {
 	ActivatedItem::EndTime(fltVal, bReInit);
 
@@ -132,7 +132,7 @@ void DataChart::EndTime(float fltVal, BOOL bReInit)
 
 \return	true if it start/end time is specified, false otherwise.
 **/
-BOOL DataChart::SetStartEndTime() {return m_bSetStartEndTime;}
+bool DataChart::SetStartEndTime() {return m_bSetStartEndTime;}
 
 /**
 \brief	Sets whether a start/end time is specified for this chart.
@@ -142,7 +142,7 @@ BOOL DataChart::SetStartEndTime() {return m_bSetStartEndTime;}
 
 \param	bVal	true to use the start/end time. 
 **/
-void DataChart::SetStartEndTime(BOOL bVal)
+void DataChart::SetStartEndTime(bool bVal)
 {
 	m_bSetStartEndTime = bVal;
 	ActivatedItem::AlwaysActive(!m_bSetStartEndTime);
@@ -230,7 +230,7 @@ int DataChart::CollectInterval() {return m_iCollectInterval;};
 
 \param	iVal	The new interval. 
 **/
-void DataChart::CollectInterval(int iVal, BOOL bReInit)
+void DataChart::CollectInterval(int iVal, bool bReInit)
 {
 	m_iCollectInterval = iVal;
 	m_fltCollectInterval = m_iCollectInterval*m_lpSim->TimeStep();
@@ -250,9 +250,9 @@ It then calculates the number of time slices for the collect interval.
 
 \param	fltVal	The new time value. 
 **/
-void DataChart::CollectInterval(float fltVal, BOOL bReInit)
+void DataChart::CollectInterval(float fltVal, bool bReInit)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "CollectInterval");
+	Std_IsAboveMin((float) 0, fltVal, true, "CollectInterval");
 
 	//Find min time step.
 	float fltMin = m_lpSim->MinTimeStep();
@@ -285,7 +285,7 @@ long DataChart::CollectTimeWindow() {return m_lCollectTimeWindow;}
 
 \param	lVal	The new value in time slices. 
 **/
-void DataChart::CollectTimeWindow(long lVal, BOOL bReInit)
+void DataChart::CollectTimeWindow(long lVal, bool bReInit)
 {
 	m_lCollectTimeWindow = lVal;
 
@@ -301,7 +301,7 @@ void DataChart::CollectTimeWindow(long lVal, BOOL bReInit)
 
 \param	fltVal	The new time value. 
 **/
-void DataChart::CollectTimeWindow(float fltVal, BOOL bReInit)
+void DataChart::CollectTimeWindow(float fltVal, bool bReInit)
 {
 	m_fltCollectTimeWindow = fltVal;
 
@@ -375,7 +375,7 @@ to the buffer to prevent any other process from modifying the buffer while we ar
 
 \return	true if it locks the buffer, false if it is already locked.
 **/
-BOOL DataChart::Lock() {return TRUE;}
+bool DataChart::Lock() {return true;}
 
 /**
 \brief	Unlocks this data chart buffer from being written by any other process.
@@ -436,9 +436,9 @@ void DataChart::ReInitialize()
 	else
 	{
 		//Re-init the end and start and collect interval slices based on the time and current timestep values.
-		StartTime(m_fltStartTime, FALSE);
-		EndTime(m_fltEndTime, FALSE);
-		CollectInterval(m_fltCollectInterval, FALSE);
+		StartTime(m_fltStartTime, false);
+		EndTime(m_fltEndTime, false);
+		CollectInterval(m_fltCollectInterval, false);
 
 		if(m_fltCollectTimeWindow <= 0)
 			m_lCollectTimeWindow = m_lEndSlice - m_lStartSlice;
@@ -524,7 +524,7 @@ long DataChart::CalculateChartColumnCount()
 
 \param	strXml	The xml packet to load for the data column. 
 **/
-void DataChart::AddColumn(string strXml, BOOL bDoNotInit)
+void DataChart::AddColumn(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -568,7 +568,7 @@ void DataChart::AddColumn(DataColumn *lpColumn)
 \param	strID	GUID ID of the DataColumn to remove.
 \param	bThrowError	If true and the ID is not found then it throws an error, otherwise it does nothing.
 **/
-void DataChart::RemoveColumn(string strID, BOOL bThrowError)
+void DataChart::RemoveColumn(string strID, bool bThrowError)
 {
 	int iIndex=0;
 	DataColumn *lpColumn = FindColumn(strID, iIndex, bThrowError);
@@ -589,7 +589,7 @@ void DataChart::RemoveColumn(string strID, BOOL bThrowError)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-DataColumn *DataChart::FindColumn(string strID, BOOL bThrowError)
+DataColumn *DataChart::FindColumn(string strID, bool bThrowError)
 {
 	DataColumn *lpColumn = NULL;
 	CStdMap<string, DataColumn *>::iterator oPos;
@@ -615,7 +615,7 @@ DataColumn *DataChart::FindColumn(string strID, BOOL bThrowError)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-DataColumn *DataChart::FindColumn(string strID, int &iIndex, BOOL bThrowError)
+DataColumn *DataChart::FindColumn(string strID, int &iIndex, bool bThrowError)
 {
 	int iCount = m_aryDataColumns.GetSize();
 	DataColumn *lpColumn = NULL;
@@ -636,48 +636,48 @@ DataColumn *DataChart::FindColumn(string strID, int &iIndex, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
-BOOL DataChart::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool DataChart::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(ActivatedItem::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ActivatedItem::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "STARTTIME")
 	{
 		StartTime((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ENDTIME")
 	{
 		EndTime((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SETSTARTENDTIME")
 	{
 		SetStartEndTime(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "COLLECTTIMEWINDOW")
 	{
 		CollectTimeWindow((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "COLLECTINTERVAL")
 	{
 		CollectInterval((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -700,38 +700,38 @@ void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-BOOL DataChart::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool DataChart::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "DATACOLUMN")
 	{
 		AddColumn(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL DataChart::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool DataChart::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "DATACOLUMN")
 	{
 		RemoveColumn(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -832,7 +832,7 @@ void DataChart::Load(CStdXml &oXml)
 
 	CollectInterval(oXml.GetChildFloat("CollectInterval"));
 
-	SetStartEndTime(oXml.GetChildBool("SetStartEndTime", FALSE));
+	SetStartEndTime(oXml.GetChildBool("SetStartEndTime", false));
 	CollectTimeWindow(oXml.GetChildFloat("CollectTimeWindow", -1));
 	
 	//If we are not setting start/end time then it is always active.
@@ -882,7 +882,7 @@ try
 	if(!lpColumn)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataColumn");
 
-	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL, this, TRUE);
+	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL, this, true);
 	lpColumn->Load(oXml);
 
 	AddColumn(lpColumn);

@@ -180,19 +180,19 @@ float *OsgPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL OsgPrismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OsgPrismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(OsgJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Prismatic::SetData(strDataType, strValue, FALSE))
+	if(Prismatic::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void OsgPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

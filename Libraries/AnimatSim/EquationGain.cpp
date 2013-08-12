@@ -44,7 +44,7 @@ try
 		delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of EquationGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of EquationGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -102,7 +102,7 @@ float EquationGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-BOOL EquationGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool EquationGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -117,7 +117,7 @@ BOOL EquationGain::SetData(const string &strDataType, const string &strValue, BO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void EquationGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

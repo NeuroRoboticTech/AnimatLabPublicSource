@@ -4,16 +4,9 @@
 
 #include "StdAfx.h"
 #include "VsConstraintRelaxation.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
-#include "VsStructure.h"
-#include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 #include "VsSimulator.h"
 
 namespace VortexAnimatSim

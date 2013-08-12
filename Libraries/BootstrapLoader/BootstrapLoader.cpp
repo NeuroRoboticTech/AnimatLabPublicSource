@@ -31,7 +31,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 {
 	int iParam=0;
-	BOOL bRetrieved=FALSE, bFound = FALSE;
+	bool bRetrieved=false, bFound = false;
 	char strParam[200], strLibrary[200], strError[200];
 
 	//Clear out the library first.
@@ -95,7 +95,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 {
 	int iParam=0;
-	BOOL bRetrieved=FALSE, bFound = FALSE;
+	bool bRetrieved=false, bFound = false;
 	char strParam[200], strLibrary[200], strError[200];
 
 	//Clear out the library first.

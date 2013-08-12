@@ -30,10 +30,10 @@ namespace AnimatSim
 
 		///Determines if this node is enabled. This will only have any effect if this node can be disabled.
 		///The majority of nodes, like rigid bodies, can not be disabled.
-		BOOL m_bEnabled;
+		bool m_bEnabled;
 
 		/// Keeps track of the enabled state at sim startup.
-		BOOL m_bInitEnabled;
+		bool m_bInitEnabled;
 
 		///This is used for reporting the enabled state in a GetDataPointer call.
 		float m_fltEnabled;
@@ -44,10 +44,10 @@ namespace AnimatSim
 		Node();
 		virtual ~Node();
 
-		virtual BOOL Enabled();
-		virtual void Enabled(BOOL bValue);
+		virtual bool Enabled();
+		virtual void Enabled(bool bValue);
 
-		virtual void Kill(BOOL bState = TRUE);
+		virtual void Kill(bool bState = true);
 
 		/**
 		\brief	Adds an external node input.
@@ -68,9 +68,9 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion

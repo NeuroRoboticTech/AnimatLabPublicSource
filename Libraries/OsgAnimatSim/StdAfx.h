@@ -5,12 +5,15 @@
 
 #pragma once
 
+#ifdef WIN32
+    #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+    // Windows Header Files:
+    #include <windows.h>
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-
-#define ANIMAT_OSG_PORT __declspec( dllexport )
+    #define ANIMAT_OSG_PORT __declspec( dllexport )
+#else
+    #define ANIMAT_OSG_PORT
+#endif
 
 //#define STD_TRACING_ON
 
@@ -47,7 +50,7 @@
 #include <osg/Camera>
 #include <osg/io_utils>
 #include <osg/LineWidth>
-#include <osg/Autotransform>
+#include <osg/AutoTransform>
 #include <osg/StateAttribute>
 #include <osg/AlphaFunc>
 #include <osg/TexMat>
@@ -65,7 +68,6 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
-#include <osgViewer/api/win32/GraphicsWindowWin32>
 #include <osgViewer/CompositeViewer>
 
 #include <osgGA/GUIEventAdapter>
@@ -90,6 +92,10 @@ using namespace osgGA;
 
 #include <OpenThreads/Thread>
 
+#ifdef WIN32
+    #include <osgViewer/api/win32/GraphicsWindowWin32>
+#endif
+
 #include "OsgAnimatSimConstants.h"
 #include "OsgMatrixUtil.h"
 
@@ -98,23 +104,16 @@ namespace OsgAnimatSim
 {
 	class OsgMeshMgr;
     class OsgMatrixUtil;
+    class OsgSimulator;
 
 	namespace Environment
 	{
+        class OsgLight;
         class OsgBody;
         class OsgRigidBody;
 		class OsgJoint;
-		class OsgLine;
 		class OsgOrganism;
 		class OsgStructure;
-
-		namespace Joints
-		{
-			class OsgHinge;
-			class OsgHingeLimit;
-			class OsgPrismatic;
-			class OsgPrismaticLimit;
-		}
 	}
 
 	namespace Visualization
@@ -138,5 +137,4 @@ namespace OsgAnimatSim
 
 using namespace OsgAnimatSim;
 using namespace OsgAnimatSim::Environment;
-using namespace OsgAnimatSim::Environment::Joints;
 using namespace OsgAnimatSim::Visualization;

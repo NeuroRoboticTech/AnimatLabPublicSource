@@ -5,17 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPlaneTest.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -33,7 +27,7 @@ namespace VortexAnimatSim
 VsPlaneTest::VsPlaneTest()
 {
 	//SetThisPointers();
-	//m_bCullBackfaces = TRUE; //we want back face culling on by default for planes.
+	//m_bCullBackfaces = true; //we want back face culling on by default for planes.
 }
 
 /**
@@ -50,12 +44,12 @@ VsPlaneTest::~VsPlaneTest()
 	//	DeletePhysics();
 	//}
 	//catch(...)
-	//{Std_TraceMsg(0, "Caught Error in desctructor of VsPlaneTest/\r\n", "", -1, FALSE, TRUE);}
+	//{Std_TraceMsg(0, "Caught Error in desctructor of VsPlaneTest/\r\n", "", -1, false, true);}
 }
 
 void VsPlaneTest::CreateGraphicsGeometry()
 {
-	//m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), FALSE);
+	//m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), false);
 }
 
 void VsPlaneTest::CreatePhysicsGeometry()

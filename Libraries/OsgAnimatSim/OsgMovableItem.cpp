@@ -26,7 +26,7 @@ namespace OsgAnimatSim
 
 OsgMovableItem::OsgMovableItem()
 {
-	m_bCullBackfaces = FALSE; //No backface culling by default.
+	m_bCullBackfaces = false; //No backface culling by default.
 	m_eTextureMode = GL_TEXTURE_2D;
 
     m_lpOsgSim = NULL;
@@ -56,8 +56,18 @@ void OsgMovableItem::SetThisPointers()
 		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpThisVsMI, " + m_lpThisAB->Name());
 
 	m_lpThisMI->PhysicsMovableItem(this);
+}
 
-    m_lpOsgSim = dynamic_cast<OsgSimulator *>(m_lpThisAB->GetSimulator());
+OsgSimulator *OsgMovableItem::GetOsgSimulator()
+{
+    if(!m_lpOsgSim)
+    {
+        m_lpOsgSim = dynamic_cast<OsgSimulator *>(m_lpThisAB->GetSimulator());
+	    if(!m_lpThisVsMI)
+		    THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpOsgSim, " + m_lpThisAB->Name());
+    }
+    
+    return m_lpOsgSim;
 }
 
 string OsgMovableItem::Physics_ID()
@@ -70,14 +80,14 @@ string OsgMovableItem::Physics_ID()
 
 #pragma region Selection-Code
 
-void OsgMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)  
+void OsgMovableItem::Physics_Selected(bool bValue, bool bSelectMultiple)  
 {
 	if(m_osgNodeGroup.valid() && m_osgDragger.valid() && m_osgSelectedGroup.valid())
 	{
-		BOOL bIsReceptiveFieldMode = (m_lpThisAB->GetSimulator()->VisualSelectionMode() & RECEPTIVE_FIELD_SELECTION_MODE);
+		bool bIsReceptiveFieldMode = (m_lpThisAB->GetSimulator()->VisualSelectionMode() & RECEPTIVE_FIELD_SELECTION_MODE);
 
 		//If selecting and not already selected then select it
-		BOOL bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
+		bool bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
 		if(bValue && !bNodeFound)
 		{
 			m_osgNodeGroup->addChild(m_osgSelectedGroup.get());
@@ -328,7 +338,7 @@ CStdFPoint OsgMovableItem::GetOSGWorldCoords()
 	return vPoint;
 }
 
-osg::Matrix OsgMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
+osg::Matrix OsgMovableItem::GetOSGWorldMatrix(bool bUpdate)
 {
 	if(bUpdate)
 		UpdateWorldMatrix();
@@ -336,7 +346,7 @@ osg::Matrix OsgMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
 	return m_osgWorldMatrix;
 }
 
-BOOL OsgMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool OsgMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
@@ -359,10 +369,10 @@ BOOL OsgMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float
 				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
 				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
 		
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 osg::MatrixTransform* OsgMovableItem::GetMatrixTransform()
@@ -397,42 +407,38 @@ void OsgMovableItem::UpdatePositionAndRotationFromMatrix()
 {
 	UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
 }
-//
-//void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
-//{
-//	LocalMatrix(osgMT);
-//
-//	//Lets get the current world coordinates for this body part and then recalculate the 
-//	//new local position for the part and then finally reset its new local position.
-//	osg::Vec3 vL = osgMT.getTrans();
-//	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
-//	vLocal.ClearNearZero();
-//	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
-//		
-//	//Now lets get the euler angle rotation
-//	Vx::VxReal44 vxTM;
-//	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
-//	Vx::VxTransform vTrans(vxTM);
-//	Vx::VxReal3 vEuler;
-//	vTrans.getRotationEulerAngles(vEuler);
-//	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-//	vRot.ClearNearZero();
-//	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
-//
-//	if(m_osgDragger.valid())
-//		m_osgDragger->SetupMatrix();
-//
-//	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
-//	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
-//	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
-//		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
-//}
+
+void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
+{
+	LocalMatrix(osgMT);
+
+	//Lets get the current world coordinates for this body part and then recalculate the 
+	//new local position for the part and then finally reset its new local position.
+	osg::Vec3 vL = osgMT.getTrans();
+	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
+	vLocal.ClearNearZero();
+	m_lpThisMI->Position(vLocal, false, true, false);
+		
+	//Now lets get the euler angle rotation
+    CStdFPoint vRot = EulerRotationFromMatrix(osgMT);    
+	m_lpThisMI->Rotation(vRot, true, false);
+
+	if(m_osgDragger.valid())
+		m_osgDragger->SetupMatrix();
+
+	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
+	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
+	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
+		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
+}
 
 void OsgMovableItem::Physics_UpdateMatrix()
 {
 	if(m_osgMT.valid())
 	{
-		LocalMatrix(SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation()));
+		CStdFPoint vPos = m_lpThisMI->Position();
+		CStdFPoint vRot = m_lpThisMI->Rotation();
+		LocalMatrix(SetupMatrix(vPos, vRot));
 		m_osgMT->setMatrix(m_osgLocalMatrix);
 
 		if(m_osgDragger.valid())
@@ -518,11 +524,11 @@ void OsgMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml)
 
 void OsgMovableItem::Physics_ResizeDragHandler(float fltRadius)
 {
-	BOOL bInScene = FALSE;
+	bool bInScene = false;
 	if(m_osgDragger.valid() && m_osgDragger->IsInScene())
 	{
 		m_osgDragger->RemoveFromScene();
-		bInScene = TRUE;
+		bInScene = true;
 	}
 
 	CreateDragger(m_lpThisAB->Name());
@@ -637,7 +643,8 @@ void OsgMovableItem::Physics_ResetSimulation()
 
 		//Set the position with the world coordinates.
 		Physics_UpdateAbsolutePosition();
-		m_lpThisMI->ReportRotation(m_lpThisMI->Rotation());
+		CStdFPoint vRot = m_lpThisMI->Rotation();
+		m_lpThisMI->ReportRotation(vRot);
 	}
 }
 
@@ -742,7 +749,7 @@ void OsgMovableItem::SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColo
 	}
 }
 
-void OsgMovableItem::SetVisible(osg::Node *osgNode, BOOL bVisible)
+void OsgMovableItem::SetVisible(osg::Node *osgNode, bool bVisible)
 {
 	if(osgNode)
 	{
@@ -753,7 +760,7 @@ void OsgMovableItem::SetVisible(osg::Node *osgNode, BOOL bVisible)
 	}
 }
 
-void OsgMovableItem::SetVisible(BOOL bVisible)
+void OsgMovableItem::SetVisible(bool bVisible)
 {
 	SetVisible(m_osgNode.get(), bVisible);
 }
@@ -864,7 +871,7 @@ void OsgMovableItem::Physics_OrientNewPart(float fltXPos, float fltYPos, float f
 	osg::Vec3 vLocalPos = vWorldPos - vParent;
 
 	//Now reset our position
-	m_lpThisMI->Position(vLocalPos[0], vLocalPos[1], vLocalPos[2], FALSE, TRUE, TRUE);
+	m_lpThisMI->Position(vLocalPos[0], vLocalPos[1], vLocalPos[2], false, true, true);
 }
 
 	}			// Environment

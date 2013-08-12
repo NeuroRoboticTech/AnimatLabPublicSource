@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PolynomialGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PolynomialGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -136,7 +136,7 @@ float PolynomialGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }	
 
-BOOL PolynomialGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PolynomialGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -169,7 +169,7 @@ BOOL PolynomialGain::SetData(const string &strDataType, const string &strValue, 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void PolynomialGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

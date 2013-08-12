@@ -49,7 +49,7 @@ namespace AnimatSim
 				float CylinderRadius();
 				float BoxSize();
 
-				virtual void Enabled(BOOL bValue);
+				virtual void Enabled(bool bValue);
 
 				virtual ConstraintLimit *UpperLimit() ;
 				virtual ConstraintLimit *LowerLimit();
@@ -57,9 +57,9 @@ namespace AnimatSim
 				virtual float GetPositionWithinLimits(float fltPos);
 				virtual float GetLimitRange();
 
-				virtual BOOL UsesRadians() {return FALSE;};
+				virtual bool UsesRadians() {return false;};
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void AddExternalNodeInput(float fltInput);
 
 				virtual void Load(CStdXml &oXml);

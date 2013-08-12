@@ -8,14 +8,9 @@ namespace VortexAnimatSim
 	namespace Environment
 	{
 
-		class VORTEX_PORT VsLine : public VsRigidBody
+		class VORTEX_PORT VsLine : public VsRigidBody, public OsgLine
 		{
 		protected:
-			LineBase *m_lpLineBase;
-			osg::ref_ptr<osg::Vec3Array> m_aryLines;
-			float fltA;
-
-			osg::Geometry *CreateLineGeometry();
 
 			virtual void SetupGraphics();
 
@@ -24,7 +19,6 @@ namespace VortexAnimatSim
 			virtual void SetCulling() {};
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
-			virtual int BuildLines(osg::Geometry *linesGeom);
 			virtual void SetThisPointers();
 			virtual void DeleteGraphics();
 
@@ -33,12 +27,10 @@ namespace VortexAnimatSim
 			virtual ~VsLine();
 
 			virtual void Initialize() {};
-			virtual void CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce);
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
 			virtual void StepSimulation(float fltTension);
 			virtual void CreateParts();
-			virtual void DrawLine();
 		};
 
 	}			// Visualization

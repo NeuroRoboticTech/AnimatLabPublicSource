@@ -3,14 +3,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsCylinder.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -36,7 +33,7 @@ VsCylinder::~VsCylinder()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, false, true);}
 }
 
 void VsCylinder::CreateGraphicsGeometry()

@@ -69,7 +69,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void MinFoodRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void MinFoodRadius(float fltVal, bool bUseScaling = true);
 
 				virtual void StomachID(string strID);
 				virtual string StomachID();
@@ -77,7 +77,7 @@ namespace AnimatSim
 				//Node Overrides
 				virtual void Initialize();
 				virtual void AddExternalNodeInput(float fltInput);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual float *GetDataPointer(const string &strDataType);
 				virtual void StepSimulation();

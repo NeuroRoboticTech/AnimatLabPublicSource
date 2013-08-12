@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}</ProjectGuid>
+    <ProjectGuid>{A6A192A7-8744-1E44-A909-3AD5B147E535}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10D.so</OutputName>
@@ -23,20 +23,60 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
+        <Include>../../../Vortex_5_1/include</Include>
+        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+        <LibPath>../../../Vortex_5_1/lib</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/boost-1.45.0/lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
+        <Lib>Vx51</Lib>
+        <Lib>VxController51</Lib>
+        <Lib>VxControllerPersistence51</Lib>
+        <Lib>VxGraphics51</Lib>
+        <Lib>VxPersistence51</Lib>
+        <Lib>VxPs51</Lib>
+        <Lib>VxPsExtraOSG51</Lib>
+        <Lib>VxVehicle51</Lib>
+        <Lib>VxVehiclePersistence51</Lib>
+        <Lib>VxExtra51</Lib>
+        <Lib>VxExtraOSG51</Lib>
+        <Lib>VxVehicleExtra51</Lib>
+        <Lib>VxVehicleExtraOSG51</Lib>
+        <Lib>VxOSG51-2.8.3</Lib>
+        <Lib>boostVx_filesystem</Lib>
+        <Lib>boostVx_regex</Lib>
+        <Lib>boostVx_serialization</Lib>
+        <Lib>boostVx_system</Lib>
         <Lib>StdUtils_vc10D</Lib>
         <Lib>AnimatSim_vc10D</Lib>
+        <Lib>OpenThreadsd</Lib>
+        <Lib>osgAnimationd</Lib>
+        <Lib>osgd</Lib>
+        <Lib>osgDBd</Lib>
+        <Lib>osgFXd</Lib>
+        <Lib>osgGAd</Lib>
+        <Lib>osgManipulatord</Lib>
+        <Lib>osgParticled</Lib>
+        <Lib>osgShadowd</Lib>
+        <Lib>osgSimd</Lib>
+        <Lib>osgTerraind</Lib>
+        <Lib>osgTextd</Lib>
+        <Lib>osgUtild</Lib>
+        <Lib>osgViewerd</Lib>
+        <Lib>osgVolumed</Lib>
+        <Lib>osgWidgetd</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -47,7 +87,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10.so</OutputName>
@@ -57,20 +97,60 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
+        <Include>../../../Vortex_5_1/include</Include>
+        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+        <LibPath>../../../Vortex_5_1/lib</LibPath>
+        <LibPath>../../../Vortex_5_1/3rdparty/boost-1.45.0/lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
+        <Lib>Vx51</Lib>
+        <Lib>VxController51</Lib>
+        <Lib>VxControllerPersistence51</Lib>
+        <Lib>VxGraphics51</Lib>
+        <Lib>VxPersistence51</Lib>
+        <Lib>VxPs51</Lib>
+        <Lib>VxPsExtraOSG51</Lib>
+        <Lib>VxVehicle51</Lib>
+        <Lib>VxVehiclePersistence51</Lib>
+        <Lib>VxExtra51</Lib>
+        <Lib>VxExtraOSG51</Lib>
+        <Lib>VxVehicleExtra51</Lib>
+        <Lib>VxVehicleExtraOSG51</Lib>
+        <Lib>VxOSG51-2.8.3</Lib>
+        <Lib>boostVx_filesystem</Lib>
+        <Lib>boostVx_regex</Lib>
+        <Lib>boostVx_serialization</Lib>
+        <Lib>boostVx_system</Lib>
         <Lib>StdUtils_vc10</Lib>
         <Lib>AnimatSim_vc10</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -81,41 +161,20 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\MeshMinVertexDistanceVisitor.h">
-      <Link>MeshMinVertexDistanceVisitor.h</Link>
-    </None>
-    <None Include="..\OsgGeometry.h">
-      <Link>OsgGeometry.h</Link>
-    </None>
-    <None Include="..\OsgLinearPath.h">
-      <Link>OsgLinearPath.h</Link>
-    </None>
-    <None Include="..\OsgTrackballManipulator.h">
-      <Link>OsgTrackballManipulator.h</Link>
-    </None>
     <None Include="..\StdAfx.h">
       <Link>StdAfx.h</Link>
     </None>
     <None Include="..\VsAttachment.h">
       <Link>VsAttachment.h</Link>
     </None>
-    <None Include="..\VsAutoTransform.h">
-      <Link>VsAutoTransform.h</Link>
-    </None>
     <None Include="..\VsBallSocket.h">
       <Link>VsBallSocket.h</Link>
-    </None>
-    <None Include="..\VsBody.h">
-      <Link>VsBody.h</Link>
     </None>
     <None Include="..\VsBox.h">
       <Link>VsBox.h</Link>
     </None>
     <None Include="..\VsBoxTest.h">
       <Link>VsBoxTest.h</Link>
-    </None>
-    <None Include="..\VsCameraManipulator.h">
-      <Link>VsCameraManipulator.h</Link>
     </None>
     <None Include="..\VsClassFactory.h">
       <Link>VsClassFactory.h</Link>
@@ -135,12 +194,6 @@
     <None Include="..\VsDistanceJoint.h">
       <Link>VsDistanceJoint.h</Link>
     </None>
-    <None Include="..\VsDragger.h">
-      <Link>VsDragger.h</Link>
-    </None>
-    <None Include="..\VsDraggerHandler.h">
-      <Link>VsDraggerHandler.h</Link>
-    </None>
     <None Include="..\VsEllipsoid.h">
       <Link>VsEllipsoid.h</Link>
     </None>
@@ -159,20 +212,11 @@
     <None Include="..\VsHingeLimit.h">
       <Link>VsHingeLimit.h</Link>
     </None>
-    <None Include="..\VsHud.h">
-      <Link>VsHud.h</Link>
-    </None>
-    <None Include="..\VsHudText.h">
-      <Link>VsHudText.h</Link>
-    </None>
     <None Include="..\VsIntersectionEvent.h">
       <Link>VsIntersectionEvent.h</Link>
     </None>
     <None Include="..\VsJoint.h">
       <Link>VsJoint.h</Link>
-    </None>
-    <None Include="..\VsLight.h">
-      <Link>VsLight.h</Link>
     </None>
     <None Include="..\VsLine.h">
       <Link>VsLine.h</Link>
@@ -192,35 +236,20 @@
     <None Include="..\VsMeshBase.h">
       <Link>VsMeshBase.h</Link>
     </None>
-    <None Include="..\VsMeshMgr.h">
-      <Link>VsMeshMgr.h</Link>
-    </None>
     <None Include="..\VsMotorVelocityStimulus.h">
       <Link>VsMotorVelocityStimulus.h</Link>
     </None>
     <None Include="..\VsMotorizedJoint.h">
       <Link>VsMotorizedJoint.h</Link>
     </None>
-    <None Include="..\VsMouseSpring.h">
-      <Link>VsMouseSpring.h</Link>
-    </None>
     <None Include="..\VsMouth.h">
       <Link>VsMouth.h</Link>
-    </None>
-    <None Include="..\VsMovableItem.h">
-      <Link>VsMovableItem.h</Link>
     </None>
     <None Include="..\VsOdorSensor.h">
       <Link>VsOdorSensor.h</Link>
     </None>
-    <None Include="..\VsOrganism.h">
-      <Link>VsOrganism.h</Link>
-    </None>
-    <None Include="..\VsOsgUserData.h">
-      <Link>VsOsgUserData.h</Link>
-    </None>
-    <None Include="..\VsOsgUserDataVisitor.h">
-      <Link>VsOsgUserDataVisitor.h</Link>
+    <None Include="..\VsOsgGeometry.h">
+      <Link>VsOsgGeometry.h</Link>
     </None>
     <None Include="..\VsPlane.h">
       <Link>VsPlane.h</Link>
@@ -240,15 +269,6 @@
     <None Include="..\VsRigidBody.h">
       <Link>VsRigidBody.h</Link>
     </None>
-    <None Include="..\VsScriptedSimulationWindow.h">
-      <Link>VsScriptedSimulationWindow.h</Link>
-    </None>
-    <None Include="..\VsSimulationWindow.h">
-      <Link>VsSimulationWindow.h</Link>
-    </None>
-    <None Include="..\VsSimulationWindowMgr.h">
-      <Link>VsSimulationWindowMgr.h</Link>
-    </None>
     <None Include="..\VsSimulator.h">
       <Link>VsSimulator.h</Link>
     </None>
@@ -258,41 +278,17 @@
     <None Include="..\VsSpring.h">
       <Link>VsSpring.h</Link>
     </None>
-    <None Include="..\VsStructure.h">
-      <Link>VsStructure.h</Link>
-    </None>
     <None Include="..\VsTerrain.h">
       <Link>VsTerrain.h</Link>
     </None>
     <None Include="..\VsTorus.h">
       <Link>VsTorus.h</Link>
     </None>
-    <None Include="..\VsTrackballDragger.h">
-      <Link>VsTrackballDragger.h</Link>
-    </None>
-    <None Include="..\VsTranslateAxisDragger.h">
-      <Link>VsTranslateAxisDragger.h</Link>
-    </None>
     <None Include="..\VsUniversal.h">
       <Link>VsUniversal.h</Link>
     </None>
-    <None Include="..\WorldCoordinateNodeVisitor.h">
-      <Link>WorldCoordinateNodeVisitor.h</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MeshMinVertexDistanceVisitor.cpp">
-      <Link>MeshMinVertexDistanceVisitor.cpp</Link>
-    </Compile>
-    <Compile Include="..\OsgGeometry.cpp">
-      <Link>OsgGeometry.cpp</Link>
-    </Compile>
-    <Compile Include="..\OsgLinearPath.cpp">
-      <Link>OsgLinearPath.cpp</Link>
-    </Compile>
-    <Compile Include="..\OsgTrackballManipulator.cpp">
-      <Link>OsgTrackballManipulator.cpp</Link>
-    </Compile>
     <Compile Include="..\StdAfx.cpp">
       <Link>StdAfx.cpp</Link>
     </Compile>
@@ -302,23 +298,14 @@
     <Compile Include="..\VsAttachment.cpp">
       <Link>VsAttachment.cpp</Link>
     </Compile>
-    <Compile Include="..\VsAutoTransform.cpp">
-      <Link>VsAutoTransform.cpp</Link>
-    </Compile>
     <Compile Include="..\VsBallSocket.cpp">
       <Link>VsBallSocket.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsBody.cpp">
-      <Link>VsBody.cpp</Link>
     </Compile>
     <Compile Include="..\VsBox.cpp">
       <Link>VsBox.cpp</Link>
     </Compile>
     <Compile Include="..\VsBoxTest.cpp">
       <Link>VsBoxTest.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsCameraManipulator.cpp">
-      <Link>VsCameraManipulator.cpp</Link>
     </Compile>
     <Compile Include="..\VsClassFactory.cpp">
       <Link>VsClassFactory.cpp</Link>
@@ -338,12 +325,6 @@
     <Compile Include="..\VsDistanceJoint.cpp">
       <Link>VsDistanceJoint.cpp</Link>
     </Compile>
-    <Compile Include="..\VsDragger.cpp">
-      <Link>VsDragger.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsDraggerHandler.cpp">
-      <Link>VsDraggerHandler.cpp</Link>
-    </Compile>
     <Compile Include="..\VsEllipsoid.cpp">
       <Link>VsEllipsoid.cpp</Link>
     </Compile>
@@ -362,20 +343,11 @@
     <Compile Include="..\VsHingeLimit.cpp">
       <Link>VsHingeLimit.cpp</Link>
     </Compile>
-    <Compile Include="..\VsHud.cpp">
-      <Link>VsHud.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsHudText.cpp">
-      <Link>VsHudText.cpp</Link>
-    </Compile>
     <Compile Include="..\VsIntersectionEvent.cpp">
       <Link>VsIntersectionEvent.cpp</Link>
     </Compile>
     <Compile Include="..\VsJoint.cpp">
       <Link>VsJoint.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsLight.cpp">
-      <Link>VsLight.cpp</Link>
     </Compile>
     <Compile Include="..\VsLine.cpp">
       <Link>VsLine.cpp</Link>
@@ -395,35 +367,20 @@
     <Compile Include="..\VsMeshBase.cpp">
       <Link>VsMeshBase.cpp</Link>
     </Compile>
-    <Compile Include="..\VsMeshMgr.cpp">
-      <Link>VsMeshMgr.cpp</Link>
-    </Compile>
     <Compile Include="..\VsMotorVelocityStimulus.cpp">
       <Link>VsMotorVelocityStimulus.cpp</Link>
     </Compile>
     <Compile Include="..\VsMotorizedJoint.cpp">
       <Link>VsMotorizedJoint.cpp</Link>
     </Compile>
-    <Compile Include="..\VsMouseSpring.cpp">
-      <Link>VsMouseSpring.cpp</Link>
-    </Compile>
     <Compile Include="..\VsMouth.cpp">
       <Link>VsMouth.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsMovableItem.cpp">
-      <Link>VsMovableItem.cpp</Link>
     </Compile>
     <Compile Include="..\VsOdorSensor.cpp">
       <Link>VsOdorSensor.cpp</Link>
     </Compile>
-    <Compile Include="..\VsOrganism.cpp">
-      <Link>VsOrganism.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsOsgUserData.cpp">
-      <Link>VsOsgUserData.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsOsgUserDataVisitor.cpp">
-      <Link>VsOsgUserDataVisitor.cpp</Link>
+    <Compile Include="..\VsOsgGeometry.cpp">
+      <Link>VsOsgGeometry.cpp</Link>
     </Compile>
     <Compile Include="..\VsPlane.cpp">
       <Link>VsPlane.cpp</Link>
@@ -443,15 +400,6 @@
     <Compile Include="..\VsRigidBody.cpp">
       <Link>VsRigidBody.cpp</Link>
     </Compile>
-    <Compile Include="..\VsScriptedSimulationWindow.cpp">
-      <Link>VsScriptedSimulationWindow.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsSimulationWindow.cpp">
-      <Link>VsSimulationWindow.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsSimulationWindowMgr.cpp">
-      <Link>VsSimulationWindowMgr.cpp</Link>
-    </Compile>
     <Compile Include="..\VsSimulator.cpp">
       <Link>VsSimulator.cpp</Link>
     </Compile>
@@ -461,26 +409,14 @@
     <Compile Include="..\VsSpring.cpp">
       <Link>VsSpring.cpp</Link>
     </Compile>
-    <Compile Include="..\VsStructure.cpp">
-      <Link>VsStructure.cpp</Link>
-    </Compile>
     <Compile Include="..\VsTerrain.cpp">
       <Link>VsTerrain.cpp</Link>
     </Compile>
     <Compile Include="..\VsTorus.cpp">
       <Link>VsTorus.cpp</Link>
     </Compile>
-    <Compile Include="..\VsTrackballDragger.cpp">
-      <Link>VsTrackballDragger.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsTranslateAxisDragger.cpp">
-      <Link>VsTranslateAxisDragger.cpp</Link>
-    </Compile>
     <Compile Include="..\VsUniversal.cpp">
       <Link>VsUniversal.cpp</Link>
-    </Compile>
-    <Compile Include="..\WorldCoordinateNodeVisitor.cpp">
-      <Link>WorldCoordinateNodeVisitor.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>

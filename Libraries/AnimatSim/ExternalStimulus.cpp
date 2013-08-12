@@ -64,26 +64,26 @@ ExternalStimulus::~ExternalStimulus()
 {
 }
 
-BOOL ExternalStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ExternalStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
 	if(ActivatedItem::SetData(strDataType, strValue, bThrowError))
 	{
 		m_lpSim->GetExternalStimuliMgr()->ReInitialize();
-		return TRUE;
+		return true;
 	}
 
 	//Value type tells whether this is using an equation or constant. This is determined in the
 	//derived class. Lets set this to true here just so we do not generate an exception.
 	if(strType == "VALUETYPE")
-		return TRUE;
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void ExternalStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -94,7 +94,7 @@ void ExternalStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<st
 	aryTypes.Add("Integer");
 }
 
-BOOL ExternalStimulus::operator<(ActivatedItem *lpItem)
+bool ExternalStimulus::operator<(ActivatedItem *lpItem)
 {
 	ExternalStimulus *lpStimulus = dynamic_cast<ExternalStimulus *>(lpItem);
 
@@ -102,12 +102,12 @@ BOOL ExternalStimulus::operator<(ActivatedItem *lpItem)
 		THROW_ERROR(Al_Err_lItemNotStimulusType, Al_Err_strItemNotStimulusType);
 
 	if(m_lStartSlice < lpStimulus->m_lStartSlice)
-		return TRUE;
+		return true;
 
 	if( (m_lStartSlice == lpStimulus->m_lStartSlice) && (m_lEndSlice < lpStimulus->m_lEndSlice))
-		return TRUE;
+		return true;
 
-	return FALSE;
+	return false;
 }
 
 	}			//ExternalStimuli

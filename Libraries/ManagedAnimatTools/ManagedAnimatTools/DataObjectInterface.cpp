@@ -122,7 +122,7 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 
 				TRACE_DEBUG("Setting data. Object ID: " + m_lpBase->ID() + ", DataType: " + strDataType + ", Value: " + strValue + "\r\n");
 
-				BOOL bVal = m_lpBase->SetData(strDataType, strValue, bThrowError);
+				bool bVal = m_lpBase->SetData(strDataType, strValue, bThrowError);
 
 				m_lpSim->UnblockSimulation();
 
@@ -199,8 +199,8 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 		{
 			TRACE_DEBUG("Selecting Item. Object ID: " + m_lpBase->ID() + ", Val: " + STR(bVal) + ", Select Multiple: " + STR(bSelectMultiple) + "\r\n");
 
-			if(m_lpBase && ((BOOL) bVal) != m_lpBase->Selected())
-				m_lpBase->Selected( (BOOL) bVal, (BOOL) bSelectMultiple);
+			if(m_lpBase && ((bool) bVal) != m_lpBase->Selected())
+				m_lpBase->Selected( (bool) bVal, (bool) bSelectMultiple);
 
 			m_lpSim->UnblockSimulation();
 		}
@@ -240,7 +240,7 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 			if(!m_aryDataPointers)
 				m_aryDataPointers = new CStdMap<string, float *>;
 
-			if(FindDataPointer(strData, FALSE) == NULL)
+			if(FindDataPointer(strData, false) == NULL)
 				m_aryDataPointers->Add(Std_CheckString(strData), lpData);
 		}
 	}
@@ -259,7 +259,7 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 	}
 }
 
-float *DataObjectInterface::FindDataPointer(string strData, BOOL bThrowError)
+float *DataObjectInterface::FindDataPointer(string strData, bool bThrowError)
 {
 	float *lpData = NULL;
 

@@ -69,7 +69,7 @@ Mouth::~Mouth()
 		m_lpStomach = NULL;
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, false, true);}
 }
 
 /**
@@ -84,9 +84,9 @@ float Mouth::EatingRate() {return m_fltEatingRate;}
 
 float Mouth::MinFoodRadius() {return m_fltMinFoodRadius;}
 
-void Mouth::MinFoodRadius(float fltVal, BOOL bUseScaling)
+void Mouth::MinFoodRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Mouth.MinFoodRadius", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Mouth.MinFoodRadius", true);
 	if(bUseScaling)
 		m_fltMinFoodRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -205,30 +205,30 @@ void Mouth::StepSimulation()
 	}
 }
 
-BOOL Mouth::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Mouth::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Sensor::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Sensor::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "STOMACHID")
 	{
 		StomachID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINIMUMFOODRADIUS")
 	{
 		MinFoodRadius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

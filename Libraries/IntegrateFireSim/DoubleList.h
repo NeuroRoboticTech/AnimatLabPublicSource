@@ -66,7 +66,7 @@ namespace IntegrateFireSim
 			
 			\return	true if empty, false if not.
 			**/
-			BOOL IsEmpty() {return head==0;}
+			bool IsEmpty() {return head==0;}
 
 			/**
 			\brief	Gets the head object from this queue.

@@ -5,18 +5,12 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsPrismaticLimit.h"
 #include "VsRigidBody.h"
 #include "VsPrismatic.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -40,17 +34,17 @@ VsPrismatic::VsPrismatic()
 	m_lpLowerLimit = new VsPrismaticLimit();
 	m_lpPosFlap = new VsPrismaticLimit();
 
-	m_lpUpperLimit->LimitPos(1, FALSE);
-	m_lpLowerLimit->LimitPos(-1, FALSE);
-	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(1, false);
+	m_lpLowerLimit->LimitPos(-1, false);
+	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(0, 0, 1, 1);
 	m_lpLowerLimit->Color(1, 1, 0.333, 1);
 	m_lpPosFlap->Color(1, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -68,11 +62,11 @@ VsPrismatic::~VsPrismatic()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, false, true);}
 }
 
 
-void VsPrismatic::EnableLimits(BOOL bVal)
+void VsPrismatic::EnableLimits(bool bVal)
 {
 	Prismatic::EnableLimits(bVal);
 
@@ -177,7 +171,7 @@ void VsPrismatic::SetupGraphics()
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
 }
@@ -219,12 +213,10 @@ void VsPrismatic::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
+	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
 	Vx::VxTransform vTrans(vMT);
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
@@ -232,12 +224,12 @@ void VsPrismatic::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]);
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
+	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
 
 	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxPrismatic->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxPrismatic);
 	GetVsSimulator()->Universe()->addConstraint(m_vxPrismatic);
 
 	//Disable collisions between this object and its parent
@@ -302,19 +294,19 @@ float *VsPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsPrismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsPrismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Prismatic::SetData(strDataType, strValue, FALSE))
+	if(Prismatic::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

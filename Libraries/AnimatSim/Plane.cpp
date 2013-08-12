@@ -49,7 +49,7 @@ namespace AnimatSim
 Plane::Plane()
 {
 	m_fltDensity = 0;
-	m_bFreeze = TRUE;
+	m_bFreeze = true;
 
 	m_ptSize.Set(200, 200, 0);
 }
@@ -138,7 +138,7 @@ CStdFPoint Plane::Size() {return m_ptSize;}
 
 \except The x and y values must be greater than zero.
 **/
-void Plane::Size(CStdFPoint ptPoint, BOOL bUseScaling)
+void Plane::Size(CStdFPoint ptPoint, bool bUseScaling)
 {
 	if(ptPoint.x <= 0)
 		THROW_PARAM_ERROR(Al_Err_lInavlidPlaneSize, Al_Err_strInavlidPlaneSize, "X Size", ptPoint.x);
@@ -153,7 +153,7 @@ void Plane::Size(CStdFPoint ptPoint, BOOL bUseScaling)
 	Resize();
 }
 
-void Plane::Size(string strXml, BOOL bUseScaling)
+void Plane::Size(string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -190,7 +190,7 @@ int Plane::WidthSegments() {return m_iWidthSegments;}
 **/
 void Plane::WidthSegments(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "Plane.WidthSegments");
+	Std_IsAboveMin((int) 0, iVal, true, "Plane.WidthSegments");
 	m_iWidthSegments = iVal;
 
 	Resize();
@@ -221,42 +221,42 @@ int Plane::LengthSegments() {return m_iLengthSegments;}
 **/
 void Plane::LengthSegments(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "Plane.LengthSegments");
+	Std_IsAboveMin((int) 0, iVal, true, "Plane.LengthSegments");
 	m_iLengthSegments = iVal;
 
 	Resize();
 }
 
-BOOL Plane::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Plane::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "SIZE")
 	{
 		Size(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LENGTHSEGMENTS")
 	{
 		LengthSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "WIDTHSEGMENTS")
 	{
 		WidthSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Plane::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -278,7 +278,7 @@ void Plane::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	//Plane  is always frozen
-	m_bFreeze = TRUE;
+	m_bFreeze = true;
 
 	oXml.IntoElem();  //Into RigidBody Element
 

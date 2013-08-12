@@ -38,7 +38,7 @@ namespace FiringRateSim
 
 		/// Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
 		/// This tells which of these array elements is currently the active one.
-		BOOL m_bActiveArray;
+		bool m_bActiveArray;
 
 		Neuron *LoadNeuron(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
@@ -57,27 +57,27 @@ namespace FiringRateSim
 		**/
 		virtual string ModuleName() {return Nl_NeuralModuleName();};
 
-		virtual void Kill(BOOL bState = TRUE);
+		virtual void Kill(bool bState = true);
 		virtual void Initialize();
 		virtual void ResetSimulation();
 		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
 
 #pragma region DataAccesMethods
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddNeuron(string strXml, BOOL bDoNotInit = FALSE);
-		virtual void RemoveNeuron(string strID, BOOL bThrowError = TRUE);
-		virtual int FindNeuronListPos(string strID, BOOL bThrowError = TRUE);
+		virtual void AddNeuron(string strXml, bool bDoNotInit = false);
+		virtual void RemoveNeuron(string strID, bool bThrowError = true);
+		virtual int FindNeuronListPos(string strID, bool bThrowError = true);
 
-		BOOL ActiveArray();
-		void ActiveArray(BOOL bVal);
-		BOOL InactiveArray();
-		void InactiveArray(BOOL bVal);
+		bool ActiveArray();
+		void ActiveArray(bool bVal);
+		bool InactiveArray();
+		void InactiveArray(bool bVal);
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();

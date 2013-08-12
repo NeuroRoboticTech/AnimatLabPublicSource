@@ -5,17 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPlane.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -33,7 +27,7 @@ namespace VortexAnimatSim
 VsPlane::VsPlane()
 {
 	SetThisPointers();
-	m_bCullBackfaces = TRUE; //we want back face culling on by default for planes.
+	m_bCullBackfaces = true; //we want back face culling on by default for planes.
 }
 
 /**
@@ -50,12 +44,12 @@ VsPlane::~VsPlane()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsPlane/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPlane/\r\n", "", -1, false, true);}
 }
 
 void VsPlane::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), FALSE);
+	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), false);
 }
 
 void VsPlane::CreatePhysicsGeometry()
@@ -69,7 +63,7 @@ void VsPlane::CreateParts()
 	CreateGeometry();
 
 	//Create the geometry and osg drawable nodes.
-	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
+	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
 	VsRigidBody::CreateItem();
 	Plane::CreateParts();

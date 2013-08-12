@@ -69,8 +69,8 @@ CurrentStimulus::CurrentStimulus()
 	m_fltInitialActiveCurrent = m_fltActiveCurrent;
 	m_lCycleStart = 0;
 	m_lBurstStart = 0;
-	m_bCycleOn = TRUE;
-	m_bBurstOn = TRUE;
+	m_bCycleOn = true;
+	m_bBurstOn = true;
 	m_lpCurrentOnEval = NULL;
 	m_iType = AL_TONIC_CURRENT;
 }
@@ -93,7 +93,7 @@ try
 
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CurrentStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CurrentStimulus\r\n", "", -1, false, true);}
 }
 
 /**
@@ -129,7 +129,7 @@ void CurrentStimulus::Type(string strType)
 		THROW_PARAM_ERROR(Al_Err_lInvalidCurrentType, Al_Err_strInvalidCurrentType, "Type", strType);
 }
 
-void CurrentStimulus::AlwaysActive(BOOL bVal)
+void CurrentStimulus::AlwaysActive(bool bVal)
 {
 	ActivatedItem::AlwaysActive(bVal);
 
@@ -227,7 +227,7 @@ float CurrentStimulus::CycleOnDuration() {return m_fltCycleOnDuration;}
 **/
 void CurrentStimulus::CycleOnDuration(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "CycleOnDuration", FALSE);
+	Std_IsAboveMin((float) 0, fltVal, true, "CycleOnDuration", false);
 	m_fltCycleOnDuration = fltVal;
 	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / m_lpSim->TimeStep() + 0.5);
 }
@@ -252,7 +252,7 @@ float CurrentStimulus::CycleOffDuration() {return m_fltCycleOffDuration;}
 **/
 void CurrentStimulus::CycleOffDuration(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "CycleOffDuration", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "CycleOffDuration", true);
 	m_fltCycleOffDuration = fltVal;
 	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / m_lpSim->TimeStep() + 0.5);
 }
@@ -277,7 +277,7 @@ float CurrentStimulus::BurstOnDuration() {return m_fltBurstOnDuration;}
 **/
 void CurrentStimulus::BurstOnDuration(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BurstOnDuration", FALSE);
+	Std_IsAboveMin((float) 0, fltVal, true, "BurstOnDuration", false);
 	m_fltBurstOnDuration = fltVal;
 	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / m_lpSim->TimeStep() + 0.5);
 }
@@ -302,7 +302,7 @@ float CurrentStimulus::BurstOffDuration() {return m_fltBurstOffDuration;}
 **/
 void CurrentStimulus::BurstOffDuration(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BurstOffDuration", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "BurstOffDuration", true);
 	m_fltBurstOffDuration = fltVal;
 	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / m_lpSim->TimeStep() + 0.5);
 }
@@ -452,7 +452,7 @@ void CurrentStimulus::StepSimulation()
 	{
 		if( (m_bCycleOn && (lCycleDiff >= m_lCycleOnDuration)) )
 		{
-			m_bCycleOn = FALSE;
+			m_bCycleOn = false;
 			m_lCycleStart = m_lpSim->TimeSlice();
 			
 			*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
@@ -461,7 +461,7 @@ void CurrentStimulus::StepSimulation()
 		}
 		else if( (!m_bCycleOn && (lCycleDiff >= m_lCycleOffDuration)) )
 		{
-			m_bCycleOn = TRUE;
+			m_bCycleOn = true;
 			m_lCycleStart = m_lpSim->TimeSlice();
 
 			*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
@@ -472,8 +472,8 @@ void CurrentStimulus::StepSimulation()
 
 	if( (m_bBurstOn && (lBurstDiff >= m_lBurstOnDuration)) )
 	{
-		m_bCycleOn = FALSE;
-		m_bBurstOn = FALSE;
+		m_bCycleOn = false;
+		m_bBurstOn = false;
 		m_lBurstStart = m_lpSim->TimeSlice();
 
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
@@ -482,8 +482,8 @@ void CurrentStimulus::StepSimulation()
 	}
 	else if( (!m_bBurstOn && (lBurstDiff >= m_lBurstOffDuration)) )
 	{
-		m_bCycleOn = TRUE;
-		m_bBurstOn = TRUE;
+		m_bCycleOn = true;
+		m_bBurstOn = true;
 		m_lBurstStart = m_lpSim->TimeSlice();
 		m_lCycleStart = m_lBurstStart;
 
@@ -510,8 +510,8 @@ void CurrentStimulus::ResetSimulation()
 {
 	ExternalStimulus::ResetSimulation();
 
-	m_bCycleOn = TRUE;
-	m_bBurstOn = TRUE;
+	m_bCycleOn = true;
+	m_bBurstOn = true;
 	m_lCycleStart = 0;
 	m_lBurstStart = 0;
 	m_fltActiveCurrent = m_fltInitialActiveCurrent;
@@ -530,66 +530,66 @@ float *CurrentStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL CurrentStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool CurrentStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "CURRENTON")
 	{
 		CurrentOn((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CURRENTOFF")
 	{
 		CurrentOff((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CURRENTBURSTOFF")
 	{
 		CurrentBurstOff((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CYCLEONDURATION")
 	{
 		CycleOnDuration((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "CYCLEOFFDURATION")
 	{
 		CycleOffDuration((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BURSTONDURATION")
 	{
 		BurstOnDuration((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BURSTOFFDURATION")
 	{
 		BurstOffDuration((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "EQUATION")
 	{
 		CurrentEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void CurrentStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

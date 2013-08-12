@@ -59,7 +59,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void LowerRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void LowerRadius(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the upper radius. 
@@ -80,7 +80,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void UpperRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void UpperRadius(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the height. 
@@ -101,12 +101,12 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Height(float fltVal, bool bUseScaling = true);
 				
 				virtual void Sides(int iVal);
 				virtual int Sides();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

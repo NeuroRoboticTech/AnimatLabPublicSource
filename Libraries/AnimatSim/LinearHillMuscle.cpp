@@ -110,7 +110,7 @@ LinearHillMuscle::~LinearHillMuscle()
 
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of LinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of LinearHillMuscle\r\n", "", -1, false, true);}
 }
 
 /**
@@ -133,7 +133,7 @@ float LinearHillMuscle::Kse() {return m_fltKse;}
 **/
 void LinearHillMuscle::Kse(float fltVal)
 {
-	Std_InValidRange((float) 0.00001, (float) 1e11, fltVal, TRUE, "Kse");
+	Std_InValidRange((float) 0.00001, (float) 1e11, fltVal, true, "Kse");
 	m_fltKse = fltVal;
 	m_fltKseByB = m_fltKse/m_fltB;
 	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
@@ -159,7 +159,7 @@ float LinearHillMuscle::Kpe() {return m_fltKpe;}
 **/
 void LinearHillMuscle::Kpe(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "Kpe");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "Kpe");
 	m_fltKpe = fltVal;
 	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
 }
@@ -184,7 +184,7 @@ float LinearHillMuscle::B() {return m_fltB;}
 **/
 void LinearHillMuscle::B(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "B");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "B");
 	m_fltB = fltVal;
 	m_fltKseByB = m_fltKse/m_fltB;
 }
@@ -229,7 +229,7 @@ float LinearHillMuscle::IbDischargeConstant() {return m_fltIbDischargeConstant;}
 **/
 void LinearHillMuscle::IbDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IbDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IbDischargeConstant");
 	m_fltIbDischargeConstant = fltVal;
 }
 
@@ -323,7 +323,7 @@ float LinearHillMuscle::InternalTension() {return m_fltInternalTension;}
 **/
 float LinearHillMuscle::Vmuscle() {return m_fltVmuscle;}
 
-void LinearHillMuscle::Enabled(BOOL bVal)
+void LinearHillMuscle::Enabled(bool bVal)
 {
 	MuscleBase::Enabled(bVal);
 
@@ -588,7 +588,7 @@ float *LinearHillMuscle::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearHillMuscle::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(MuscleBase::SetData(strDataType, strValue, false))
 		return true;
@@ -621,7 +621,7 @@ BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void LinearHillMuscle::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -55,7 +55,7 @@ namespace OsgAnimatSim
 			//We need these arrays to store body data that could potentially be charted.
 			//this may be scaled so we need to store it in here instead of just using the
 			//body data directly from the physics engine.
-			BOOL m_bCollectExtraData;
+			bool m_bCollectExtraData;
 			CStdFPoint m_vPos;
 
 			//float m_vPosition[3];
@@ -70,6 +70,12 @@ namespace OsgAnimatSim
 			virtual void SetThisPointers();
 
 			virtual void ProcessContacts() = 0;
+            
+			virtual void DeletePhysics() = 0;
+			virtual void CreateSensorPart() = 0;
+			virtual void CreateStaticPart() = 0;
+			virtual void CreateDynamicPart() = 0;
+			virtual void RemoveStaticPart() = 0;
 
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void ResetSensorCollisionGeom();
@@ -77,6 +83,7 @@ namespace OsgAnimatSim
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();
+            virtual void GetBaseValues() = 0;
 
 		public:
 			OsgRigidBody();
@@ -84,8 +91,9 @@ namespace OsgAnimatSim
 
 			virtual osg::Group *ParentOSG();
 
-			virtual void SetBody() = 0;
-			
+			virtual void SetupPhysics();
+
+			virtual void Initialize();
 			virtual void BuildLocalMatrix();
 			virtual float *Physics_GetDataPointer(const string &strDataType);
 			virtual void Physics_UpdateMatrix();

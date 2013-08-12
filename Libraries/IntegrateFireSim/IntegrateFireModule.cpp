@@ -33,21 +33,21 @@ IntegrateFireNeuralModule::IntegrateFireNeuralModule()
 //	m_fltStepSize = 0;
 	m_dTimeStep =1.;
 
-	m_bNeedInitialiseHebb=TRUE;		
-	m_bRandomisedHebb=FALSE;
-	m_bFreezeLearning=FALSE;	
-	m_bUseCriticalPeriod = FALSE;
+	m_bNeedInitialiseHebb=true;		
+	m_bRandomisedHebb=false;
+	m_bFreezeLearning=false;	
+	m_bUseCriticalPeriod = false;
 	m_dStartCriticalPeriod = 0;
 	m_dEndCriticalPeriod = 0;
-	m_bFreezeHebb = FALSE;
-	m_bNeedInitialiseHebb = FALSE;		
-	m_bRandomisedHebb = FALSE;
-	m_bFreezeLearning = FALSE;
+	m_bFreezeHebb = false;
+	m_bNeedInitialiseHebb = false;		
+	m_bRandomisedHebb = false;
+	m_bFreezeLearning = false;
 	m_dCurrentTime = 0;
 
-	m_bTTX = FALSE;
-	m_bCd = FALSE;
-	m_bHH = FALSE;
+	m_bTTX = false;
+	m_bCd = false;
+	m_bHH = false;
 
 
 
@@ -68,7 +68,7 @@ IntegrateFireNeuralModule::~IntegrateFireNeuralModule()
 		m_arySpikingChemSyn.RemoveAll();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of IntegrateFireNeuralModule\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of IntegrateFireNeuralModule\r\n", "", -1, false, true);}
 }
 
 
@@ -156,7 +156,7 @@ Connexion *IntegrateFireNeuralModule::GetConnexionAt(int i) {return m_aryConnexi
 
 \param	bVal	true to use cadmium. 
 **/
-void IntegrateFireNeuralModule::Cd(BOOL bVal) {m_bCd = bVal;}
+void IntegrateFireNeuralModule::Cd(bool bVal) {m_bCd = bVal;}
 
 /**
 \brief	Gets whether Cadmium is applied to the nervous system.
@@ -166,7 +166,7 @@ void IntegrateFireNeuralModule::Cd(BOOL bVal) {m_bCd = bVal;}
 
 \return	true if Cd applied, false else.
 **/
-BOOL IntegrateFireNeuralModule::Cd() {return m_bCd;}
+bool IntegrateFireNeuralModule::Cd() {return m_bCd;}
 
 /**
 \brief	Sets whether ttx is applied to the nervous system.
@@ -176,7 +176,7 @@ BOOL IntegrateFireNeuralModule::Cd() {return m_bCd;}
 
 \param	bVal	true to use ttx. 
 **/
-void IntegrateFireNeuralModule::TTX(BOOL bVal) {m_bTTX = bVal;}
+void IntegrateFireNeuralModule::TTX(bool bVal) {m_bTTX = bVal;}
 
 /**
 \brief	Gets whether ttx is applied to the nervous system.
@@ -186,7 +186,7 @@ void IntegrateFireNeuralModule::TTX(BOOL bVal) {m_bTTX = bVal;}
 
 \return	true if ttx applied, false else.
 **/
-BOOL IntegrateFireNeuralModule::TTX() {return m_bTTX;}
+bool IntegrateFireNeuralModule::TTX() {return m_bTTX;}
 
 /**
 \brief	Sets whether hodgkin-huxely model is used.
@@ -196,7 +196,7 @@ BOOL IntegrateFireNeuralModule::TTX() {return m_bTTX;}
 
 \param	bVal	true to use HH. 
 **/
-void IntegrateFireNeuralModule::HH(BOOL bVal) {m_bHH = bVal;}
+void IntegrateFireNeuralModule::HH(bool bVal) {m_bHH = bVal;}
 
 /**
 \brief	Gets whether hodgkin-huxely model is used.
@@ -206,7 +206,7 @@ void IntegrateFireNeuralModule::HH(BOOL bVal) {m_bHH = bVal;}
 
 \return	true if HH used, false else.
 **/
-BOOL IntegrateFireNeuralModule::HH() {return m_bHH;}
+bool IntegrateFireNeuralModule::HH() {return m_bHH;}
 
 /**
 \brief	Sets the Time step.
@@ -244,7 +244,7 @@ float IntegrateFireNeuralModule::TimeStep() {return m_fltTimeStep;}
 
 \param	bVal	true to retain. 
 **/
-void IntegrateFireNeuralModule::RetainHebbMemory(BOOL bVal) {m_bRetainHebbMemory = bVal;}
+void IntegrateFireNeuralModule::RetainHebbMemory(bool bVal) {m_bRetainHebbMemory = bVal;}
 
 /**
 \brief	Gets whether to  retain hebbian memory.
@@ -254,7 +254,7 @@ void IntegrateFireNeuralModule::RetainHebbMemory(BOOL bVal) {m_bRetainHebbMemory
 
 \return	true if retaining, false else.
 **/
-BOOL IntegrateFireNeuralModule::RetainHebbMemory() {return m_bRetainHebbMemory;}
+bool IntegrateFireNeuralModule::RetainHebbMemory() {return m_bRetainHebbMemory;}
 
 /**
 \brief	Sets whether to use critical period.
@@ -264,7 +264,7 @@ BOOL IntegrateFireNeuralModule::RetainHebbMemory() {return m_bRetainHebbMemory;}
 
 \param	bVal	true to use critical period. 
 **/
-void IntegrateFireNeuralModule::UseCriticalPeriod(BOOL bVal) {m_bUseCriticalPeriod = bVal;}
+void IntegrateFireNeuralModule::UseCriticalPeriod(bool bVal) {m_bUseCriticalPeriod = bVal;}
 
 /**
 \brief	Gets whether to use critical period.
@@ -274,7 +274,7 @@ void IntegrateFireNeuralModule::UseCriticalPeriod(BOOL bVal) {m_bUseCriticalPeri
 
 \return	true if critical period used. 
 **/
-BOOL IntegrateFireNeuralModule::UseCriticalPeriod() {return m_bUseCriticalPeriod;}
+bool IntegrateFireNeuralModule::UseCriticalPeriod() {return m_bUseCriticalPeriod;}
 
 /**
 \brief	Sets the start time of the critical period.
@@ -324,7 +324,7 @@ double IntegrateFireNeuralModule::EndCriticalPeriod() {return m_dEndCriticalPeri
 
 \param	bVal	true to freeze. 
 **/
-void IntegrateFireNeuralModule::FreezeHebb(BOOL bVal) {m_bFreezeHebb = bVal;}
+void IntegrateFireNeuralModule::FreezeHebb(bool bVal) {m_bFreezeHebb = bVal;}
 
 /**
 \brief	Sets whether to freeze hebbian learning.
@@ -334,7 +334,7 @@ void IntegrateFireNeuralModule::FreezeHebb(BOOL bVal) {m_bFreezeHebb = bVal;}
 
 \return	true if frozen, false else.
 **/
-BOOL IntegrateFireNeuralModule::FreezeHebb() {return m_bFreezeHebb;}
+bool IntegrateFireNeuralModule::FreezeHebb() {return m_bFreezeHebb;}
 
 /**
 \brief	Sets the spike peak.
@@ -545,11 +545,11 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
 	m_fltTimeStep = oXml.GetChildFloat("TimeStep");
 	m_dTimeStep = m_fltTimeStep * 1000;
-	Std_InValidRange((float) 1e-10, (float) 1, m_fltTimeStep, TRUE, "TimeStep");
+	Std_InValidRange((float) 1e-10, (float) 1, m_fltTimeStep, true, "TimeStep");
 
-	TTX(oXml.GetChildBool("TTX", FALSE));
-	Cd(oXml.GetChildBool("Cd", FALSE));
-	HH(oXml.GetChildBool("HH", FALSE));
+	TTX(oXml.GetChildBool("TTX", false));
+	Cd(oXml.GetChildBool("Cd", false));
+	HH(oXml.GetChildBool("HH", false));
 
 	RetainHebbMemory(oXml.GetChildBool("RetainHebbMemory", 0));
 	UseCriticalPeriod(oXml.GetChildBool("UseCriticalPeriod"));
@@ -657,7 +657,7 @@ Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 
 		lpNeuron = new Neuron;
 
-		lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
+		lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 		lpNeuron->Load(oXml);
 
 		m_aryNeurons.Add(lpNeuron);
@@ -729,7 +729,7 @@ SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &o
 	{
 
 		pSpikingChemSyn = new SpikingChemicalSynapse;
-		pSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
+		pSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 		pSpikingChemSyn->Load(oXml);
 		pSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -772,7 +772,7 @@ NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStd
 	{
 
 		pNonSpikingChemSyn = new NonSpikingChemicalSynapse;
-		pNonSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
+		pNonSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 		pNonSpikingChemSyn->Load(oXml);
 		pNonSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -815,7 +815,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIn
 	{
 
 		pElecSyn = new ElectricalSynapse;
-		pElecSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
+		pElecSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 		pElecSyn->Load(oXml);
 		pElecSyn->SynapseTypeID(iIndex);
 
@@ -856,7 +856,7 @@ Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 	{
 
 		pConnexion = new Connexion;
-		pConnexion->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
+		pConnexion->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 		pConnexion->Load(oXml);
 
 		m_aryConnexion.Add(pConnexion);
@@ -1099,7 +1099,7 @@ FOLLOWING COMMENTS ARE FROM NEUROSIM - I don't really understand them any more!!
 // could skip all pCx initialisation if retain memory, so long as done it at least once.
 // since can't change circuit while retain memory, so no need to worry about
 // params changing.
-// set DoneInitHebb FALSE when setting RetainMemory
+// set DoneInitHebb false when setting RetainMemory
 // BUT since may be loading from file, and don't want to save all m_FacilD etc,
 // just skip initialising the bits that hold the memory trace
 
@@ -1108,8 +1108,8 @@ FOLLOWING COMMENTS ARE FROM NEUROSIM - I don't really understand them any more!!
 		pCx=GetConnexionAt(i);
 		InitSynapse(pCx);
     }
-	m_bNeedInitialiseHebb=FALSE;
-	m_bRandomisedHebb=FALSE;     // randomising done in menu handler
+	m_bNeedInitialiseHebb=false;
+	m_bRandomisedHebb=false;     // randomising done in menu handler
 
 	ResetIDs();
 // do any zero-latency stimulus
@@ -1151,10 +1151,10 @@ void IntegrateFireNeuralModule::CalcUpdate()
 
 // check if in Critical Period( if used)
 	m_bFreezeLearning=m_bFreezeHebb;
-	if (m_bFreezeLearning==FALSE && m_bUseCriticalPeriod)
+	if (m_bFreezeLearning==false && m_bUseCriticalPeriod)
 	{
 		if (m_dCurrentTime<m_dStartCriticalPeriod || m_dCurrentTime>m_dEndCriticalPeriod)
-			m_bFreezeLearning=TRUE;
+			m_bFreezeLearning=true;
 	}
 
 	
@@ -1323,7 +1323,7 @@ void IntegrateFireNeuralModule::CalcUpdate()
 
 \return	The found neuron list position.
 **/
-int IntegrateFireNeuralModule::FindNeuronListPos(string strID, BOOL bThrowError)
+int IntegrateFireNeuralModule::FindNeuronListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1349,7 +1349,7 @@ int IntegrateFireNeuralModule::FindNeuronListPos(string strID, BOOL bThrowError)
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindSynapseListPos(string strID, BOOL bThrowError)
+int IntegrateFireNeuralModule::FindSynapseListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1375,7 +1375,7 @@ int IntegrateFireNeuralModule::FindSynapseListPos(string strID, BOOL bThrowError
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, BOOL bThrowError)
+int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1401,7 +1401,7 @@ int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, BOOL bThrowE
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, BOOL bThrowError)
+int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1427,7 +1427,7 @@ int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, BOOL bThr
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindElectricalListPos(string strID, BOOL bThrowError)
+int IntegrateFireNeuralModule::FindElectricalListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1444,102 +1444,102 @@ int IntegrateFireNeuralModule::FindElectricalListPos(string strID, BOOL bThrowEr
 
 #pragma region DataAccesMethods
 
-BOOL IntegrateFireNeuralModule::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool IntegrateFireNeuralModule::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(NeuralModule::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(NeuralModule::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "TIMESTEP")
 	{
 		TimeStep(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TTX")
 	{
 		TTX(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CD")
 	{
 		Cd(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HH")
 	{
 		HH(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RETAINHEBBMEMORY")
 	{
 		RetainHebbMemory(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "USECRITICALPERIOD")
 	{
 		UseCriticalPeriod(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "STARTCRITICALPERIOD")
 	{
 		StartCriticalPeriod(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ENDCRITICALPERIOD")
 	{
 		EndCriticalPeriod(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FREEZEHEBB")
 	{
 		FreezeHebb(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SPIKEPEAK")
 	{
 		SpikePeak(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SPIKESTRENGTH")
 	{
 		SpikeStrength(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CAEQUILPOT")
 	{
 		CaEquilPot(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ABSOLUTEREFR")
 	{
 		AbsoluteRefr(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "AHPEQUILPOT")
 	{
 		AHPEquilPot(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void IntegrateFireNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -1597,7 +1597,7 @@ void IntegrateFireNeuralModule::QueryProperties(CStdArray<string> &aryNames, CSt
 
 \param	strXml	The string xml to load. 
 **/
-void IntegrateFireNeuralModule::AddNeuron(string strXml, BOOL bDoNotInit)
+void IntegrateFireNeuralModule::AddNeuron(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1617,7 +1617,7 @@ void IntegrateFireNeuralModule::AddNeuron(string strXml, BOOL bDoNotInit)
 \param	strID	   	GUID ID for the neuron to remove. 
 \param	bThrowError	true to throw error if no neuron is found. 
 **/
-void IntegrateFireNeuralModule::RemoveNeuron(string strID, BOOL bThrowError)
+void IntegrateFireNeuralModule::RemoveNeuron(string strID, bool bThrowError)
 {
 	int iPos = FindNeuronListPos(strID, bThrowError);
 	m_aryNeurons.RemoveAt(iPos);
@@ -1632,7 +1632,7 @@ void IntegrateFireNeuralModule::RemoveNeuron(string strID, BOOL bThrowError)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapse(string strXml, BOOL bDoNotInit)
+void IntegrateFireNeuralModule::AddSynapse(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1651,7 +1651,7 @@ void IntegrateFireNeuralModule::AddSynapse(string strXml, BOOL bDoNotInit)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapseType(string strXml, BOOL bDoNotInit)
+void IntegrateFireNeuralModule::AddSynapseType(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1671,7 +1671,7 @@ void IntegrateFireNeuralModule::AddSynapseType(string strXml, BOOL bDoNotInit)
 \param	strID	   	GUUId for the string. 
 \param	bThrowError	true to throw error. 
 **/
-void IntegrateFireNeuralModule::RemoveSynapse(string strID, BOOL bThrowError)
+void IntegrateFireNeuralModule::RemoveSynapse(string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_aryConnexion.RemoveAt(iPos);
@@ -1687,7 +1687,7 @@ void IntegrateFireNeuralModule::RemoveSynapse(string strID, BOOL bThrowError)
 \param	strID	   	GUID ID for the synapse type to remove. 
 \param	bThrowError	true to throw error if synapse type was not found. 
 **/
-void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError)
+void IntegrateFireNeuralModule::RemoveSynapseType(string strID, bool bThrowError)
 {
 	SynapseType *lpType = dynamic_cast<SynapseType *>(GetSimulator()->FindByID(strID, bThrowError));
 
@@ -1720,51 +1720,51 @@ void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError
 	}
 }
 
-BOOL IntegrateFireNeuralModule::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool IntegrateFireNeuralModule::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
 		AddNeuron(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SYNAPSE")
 	{
 		AddSynapse(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SYNAPSETYPE")
 	{
 		AddSynapseType(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL IntegrateFireNeuralModule::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool IntegrateFireNeuralModule::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
 		RemoveNeuron(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SYNAPSE")
 	{
 		RemoveSynapse(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SYNAPSETYPE")
 	{
 		RemoveSynapseType(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 
@@ -1772,12 +1772,12 @@ BOOL IntegrateFireNeuralModule::RemoveItem(const string &strItemType, const stri
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
 
-void IntegrateFireNeuralModule::Kill(BOOL bState)
+void IntegrateFireNeuralModule::Kill(bool bState)
 {
 	int iSize = m_aryNeurons.GetSize(), iNeuron;
 	for(iNeuron=0; iNeuron<iSize; iNeuron++)

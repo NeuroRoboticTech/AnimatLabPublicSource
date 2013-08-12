@@ -3,15 +3,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
+#include "VsOsgGeometry.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsMeshBase.h"
 #include "VsTerrain.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -27,7 +25,7 @@ namespace VortexAnimatSim
 VsTerrain::VsTerrain()
 {
 	SetThisPointers();
-	m_bCullBackfaces = TRUE; //we want back face culling on by default for Terrains.
+	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
 	m_vxHeightField = NULL;
 }
@@ -40,12 +38,12 @@ VsTerrain::~VsTerrain()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, false, true);}
 }
 
 void VsTerrain::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, FALSE);
+	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, false);
 }
 
 void VsTerrain::SetTexture(string strTexture)
@@ -122,7 +120,7 @@ void VsTerrain::CreatePhysicsGeometry()
 		m_vxGeometry = m_vxHeightField;
 	}
 
-	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
+	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
 	if(!m_vxGeometry)
 		THROW_TEXT_ERROR(Vs_Err_lCreatingGeometry, Vs_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));

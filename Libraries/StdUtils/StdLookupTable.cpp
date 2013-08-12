@@ -25,8 +25,8 @@ CStdLookupTable::CStdLookupTable()
 	m_aryM = NULL;
 	m_aryB = NULL;
 
-	m_bUseLowLimitValue = TRUE;
-	m_bUseHighLimitValue = TRUE;
+	m_bUseLowLimitValue = true;
+	m_bUseHighLimitValue = true;
 	m_dblLowLimitValue = 0;
 	m_dblHighLimitValue = 0;
 }
@@ -44,7 +44,7 @@ CStdLookupTable::~CStdLookupTable()
 		Clear();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of CStdLookupTable\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of CStdLookupTable\r\n", "", -1, false, true);}
 }
 
 /**
@@ -90,12 +90,12 @@ void CStdLookupTable::AddPoint(double dblX, double dblY)
 
 \return	true if point1.x less than point2.x, false else.
 **/
-BOOL CompareDataPoints(CStdDPoint oPoint1, CStdDPoint oPoint2)
+bool CompareDataPoints(CStdDPoint oPoint1, CStdDPoint oPoint2)
 {
 	if(oPoint1.x<oPoint2.x)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -243,8 +243,8 @@ void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 			m_aryInitialPoints.Add(oPoint);
 		}
 
-		m_bUseLowLimitValue = (BOOL) oXml.GetChildBool("UseLowLimitValue", m_bUseLowLimitValue);
-		m_bUseHighLimitValue = (BOOL) oXml.GetChildBool("UseHighLimitValue", m_bUseHighLimitValue);
+		m_bUseLowLimitValue = (bool) oXml.GetChildBool("UseLowLimitValue", m_bUseLowLimitValue);
+		m_bUseHighLimitValue = (bool) oXml.GetChildBool("UseHighLimitValue", m_bUseHighLimitValue);
 		m_dblLowLimitValue = oXml.GetChildDouble("LowLimitValue", m_dblLowLimitValue);
 		m_dblHighLimitValue = oXml.GetChildDouble("HighLimitValue", m_dblHighLimitValue);
 

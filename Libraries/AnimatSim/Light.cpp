@@ -75,7 +75,7 @@ Light::~Light(void)
 
 \return	true if it enabled, false if not. 
 **/
-BOOL Light::Enabled() {return m_bEnabled;}
+bool Light::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Enables the node.
@@ -87,7 +87,7 @@ BOOL Light::Enabled() {return m_bEnabled;}
 
 \param	bValue	true to enable. 
 **/
-void Light::Enabled(BOOL bValue) 
+void Light::Enabled(bool bValue) 
 {
 	m_bEnabled = bValue;
 }
@@ -121,9 +121,9 @@ void Light::Resize()
 
 float Light::Radius() {return m_fltRadius;}
 
-void Light::Radius(float fltVal, BOOL bUseScaling)
+void Light::Radius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.Radius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Light.Radius");
 	if(bUseScaling)
 		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -142,7 +142,7 @@ void Light::Radius(float fltVal, BOOL bUseScaling)
 **/
 void Light::LatitudeSegments(int iVal) 
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Light.LatitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Light.LatitudeSegments", true);
 	m_iLatitudeSegments = iVal;
 	Resize();
 }
@@ -167,7 +167,7 @@ int Light::LatitudeSegments() {return m_iLatitudeSegments;}
 **/
 void Light::LongtitudeSegments(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Light.LongtitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Light.LongtitudeSegments", true);
 	m_iLongtitudeSegments = iVal;
 	Resize();
 }
@@ -184,7 +184,7 @@ int Light::LongtitudeSegments() {return m_iLongtitudeSegments;}
 
 #pragma endregion
 
-void Light::Selected(BOOL bValue, BOOL bSelectMultiple)
+void Light::Selected(bool bValue, bool bSelectMultiple)
 {
 	AnimatBase::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
@@ -200,7 +200,7 @@ void Light::Selected(BOOL bValue, BOOL bSelectMultiple)
 **/
 void Light::LightNumber(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "Light.LightNumber", TRUE);
+	Std_IsAboveMin((int) 0, iVal, true, "Light.LightNumber", true);
 	m_iLightNum = iVal;
 }
 
@@ -216,16 +216,16 @@ int Light::LightNumber() {return m_iLightNum;}
 
 void Light::ConstantAttenRatio(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "Receptive Field Index");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "Receptive Field Index");
 	m_fltConstantAttenRatio = fltVal;
 	Resize();
 }
 
 float Light::ConstantAttenRatio() {return m_fltConstantAttenRatio;}
 
-void Light::LinearAttenDistance(float fltVal, BOOL bUseScaling)
+void Light::LinearAttenDistance(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.LinearAttenDistance", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Light.LinearAttenDistance", true);
 	if(bUseScaling)
 		m_fltLinearAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -236,9 +236,9 @@ void Light::LinearAttenDistance(float fltVal, BOOL bUseScaling)
 
 float Light::LinearAttenDistance() {return m_fltLinearAttenDistance;}
 
-void Light::QuadraticAttenDistance(float fltVal, BOOL bUseScaling)
+void Light::QuadraticAttenDistance(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.QuadraticAttenDistance", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Light.QuadraticAttenDistance", true);
 	if(bUseScaling)
 		m_fltQuadraticAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -269,7 +269,7 @@ void Light::VisualSelectionModeChanged(int iNewMode)
 
 #pragma region DataAccesMethods
 
-void Light::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Light::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
@@ -280,63 +280,63 @@ float *Light::GetDataPointer(const string &strDataType)
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-BOOL Light::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Light::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
+	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
-	if(MovableItem::SetData(strType, strValue, FALSE))
+	if(MovableItem::SetData(strType, strValue, false))
 		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RADIUS")
 	{
 		Radius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LATITUDESEGMENTS")
 	{
 		LatitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LONGTITUDESEGMENTS")
 	{
 		LongtitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONSTANTATTENUATION")
 	{
 		ConstantAttenRatio((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LINEARATTENUATIONDISTANCE")
 	{
 		LinearAttenDistance((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "QUADRATICATTENUATIONDISTANCE")
 	{
 		QuadraticAttenDistance((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Light::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

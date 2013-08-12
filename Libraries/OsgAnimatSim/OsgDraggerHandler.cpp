@@ -89,9 +89,9 @@ bool OsgDraggerHandler::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa)
 
 	}  //Eat any erorrs here.
 	catch(CStdErrorInfo oError)
-	{return FALSE;}
+	{return false;}
 	catch(...)
-	{return FALSE;}
+	{return false;}
 
 	return bHandled;
 }

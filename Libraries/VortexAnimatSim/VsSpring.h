@@ -1,13 +1,7 @@
 // VsSpring.h: interface for the VsSpring class.
 //
 //////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_VSSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_VSSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace VortexAnimatSim
 {
@@ -28,7 +22,7 @@ namespace VortexAnimatSim
 				{Vx::VxSpring::enableBodies();}
 			};
 
-			class VORTEX_PORT VsSpring : public VsLine, public AnimatSim::Environment::Bodies::Spring     
+			class VORTEX_PORT VsSpring : public AnimatSim::Environment::Bodies::Spring, public VsLine     
 			{
 			protected:
 				//Vx::VxSpring *m_vxSpring;
@@ -42,10 +36,10 @@ namespace VortexAnimatSim
 				VsSpring();
 				virtual ~VsSpring();
 
-				virtual void Enabled(BOOL bVal);
-				virtual void NaturalLength(float fltVal, BOOL bUseScaling = TRUE);
-				virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
-				virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Enabled(bool bVal);
+				virtual void NaturalLength(float fltVal, bool bUseScaling = true);
+				virtual void Stiffness(float fltVal, bool bUseScaling = true);
+				virtual void Damping(float fltVal, bool bUseScaling = true);
 
 				virtual void Physics_CollectData();
 				virtual void Physics_Resize();
@@ -59,5 +53,3 @@ namespace VortexAnimatSim
 		}		//Joints
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

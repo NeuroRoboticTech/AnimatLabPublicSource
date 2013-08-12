@@ -116,7 +116,7 @@ void BodyPart::Resize()
 
 #pragma endregion
 
-void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)
+void BodyPart::Selected(bool bValue, bool bSelectMultiple)
 {
 	Node::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
@@ -148,7 +148,7 @@ void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float
 
 #pragma region DataAccesMethods
 
-void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
@@ -159,19 +159,19 @@ float *BodyPart::GetDataPointer(const string &strDataType)
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-BOOL BodyPart::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool BodyPart::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
-	if(Node::SetData(strDataType, strValue, FALSE))
+	if(Node::SetData(strDataType, strValue, false))
 		return true;
 
-	if(MovableItem::SetData(strDataType, strValue, FALSE))
+	if(MovableItem::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void BodyPart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

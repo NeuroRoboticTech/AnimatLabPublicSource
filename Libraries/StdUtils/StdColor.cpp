@@ -48,7 +48,7 @@ CStdColor::CStdColor(float valr, float valg, float valb, float vala, float fltMa
 \param	fltR	   	The new red value. 
 \param	bThrowError	true to throw error if there is a problem. 
 **/
-void CStdColor::r(float fltR, BOOL bThrowError)
+void CStdColor::r(float fltR, bool bThrowError)
 {
 	if(Std_InValidRange((float) 0, (float) 1, fltR, bThrowError, "R"))
 		m_fltR = fltR;
@@ -73,7 +73,7 @@ float CStdColor::r() {return m_fltR;}
 \param	fltG	   	The new green value. 
 \param	bThrowError	true to throw error if there is a problem.
 **/
-void CStdColor::g(float fltG, BOOL bThrowError)
+void CStdColor::g(float fltG, bool bThrowError)
 {
 	if(Std_InValidRange((float) 0, (float) 1, fltG, bThrowError, "G"))
 		m_fltG = fltG;
@@ -98,7 +98,7 @@ float CStdColor::g() {return m_fltG;}
 \param	fltB	   	The new blue value. 
 \param	bThrowError	true to throw error if there is a problem.
 **/
-void CStdColor::b(float fltB, BOOL bThrowError)
+void CStdColor::b(float fltB, bool bThrowError)
 {
 	if(Std_InValidRange((float) 0, (float) 1, fltB, bThrowError, "B"))
 		m_fltB = fltB;
@@ -123,7 +123,7 @@ float CStdColor::b() {return m_fltB;}
 \param	fltA	   	The new alpha value. 
 \param	bThrowError	true to throw error if there is a problem.
 **/
-void CStdColor::a(float fltA, BOOL bThrowError)
+void CStdColor::a(float fltA, bool bThrowError)
 {
 	if(Std_InValidRange((float) 0, (float) 1, fltA, bThrowError, "A"))
 		m_fltA = fltA;
@@ -537,7 +537,7 @@ float CStdColor::operator[](const int iIndex)
 \param	strParamName	Name of the string parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdColor::Load(CStdXml &oXml, string strParamName, BOOL bThrowError)
+void CStdColor::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -563,7 +563,7 @@ void CStdColor::Load(CStdXml &oXml, string strParamName, BOOL bThrowError)
 \param	strParamName	Name of the string parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdColor::Load(string strXml, string strParamName, BOOL bThrowError)
+void CStdColor::Load(string strXml, string strParamName, bool bThrowError)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);

@@ -24,7 +24,7 @@ namespace OsgAnimatSim
 
 OsgRigidBody::OsgRigidBody()
 {
-	m_bCollectExtraData = FALSE;
+	m_bCollectExtraData = false;
 
 	for(int i=0; i<3; i++)
 	{
@@ -45,7 +45,7 @@ try
 	//int i= 5;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of OsgRigidBody\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of OsgRigidBody\r\n", "", -1, false, true);}
 }
 
 void OsgRigidBody::SetThisPointers()
@@ -124,6 +124,18 @@ void OsgRigidBody::Physics_Resize()
 			osgVisitor->traverse(*m_osgNodeGroup);
 		}
 	}
+
+	if(Physics_IsDefined())
+	{
+		ResizePhysicsGeometry();
+
+		//We need to reset the density in order for it to recompute the mass and volume.
+		if(m_lpThisRB)
+			Physics_SetDensity(m_lpThisRB->Density());
+
+		//Now get base values, including mass and volume
+		GetBaseValues();
+	}
 }
 
 void OsgRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos)
@@ -163,6 +175,10 @@ void OsgRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
 	CreateSelectedVertex(m_lpThisAB->Name());
 }
 
+void OsgRigidBody::Initialize()
+{
+	//GetBaseValues();
+}
 
 /**
 \brief	Builds the local matrix.
@@ -215,67 +231,84 @@ void OsgRigidBody::ResetSensorCollisionGeom()
 		SetFollowEntity(lpVsParent);
 }
 
+void OsgRigidBody::SetupPhysics()
+{
+	//If no geometry is defined then this part does not have a physics representation.
+	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
+	if(Physics_IsGeometryDefined() && m_lpThisRB)
+	{
+		//If the parent is not null and the joint is null then that means we need to statically link this part to 
+		//its parent. So we do not create a physics part, we just get a link to its parents part.
+		if(m_lpThisRB->IsContactSensor())
+			CreateSensorPart();
+		else if(m_lpThisRB->HasStaticJoint())
+			CreateStaticPart();
+		else
+			CreateDynamicPart();
+	}
+}
+
 float *OsgRigidBody::Physics_GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
 
 	if(strType == "BODYTORQUEX")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[0]);}
+		{m_bCollectExtraData = true; return (&m_vTorque[0]);}
 
 	if(strType == "BODYTORQUEY")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[1]);}
+		{m_bCollectExtraData = true; return (&m_vTorque[1]);}
 
 	if(strType == "BODYTORQUEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[2]);}
+		{m_bCollectExtraData = true; return (&m_vTorque[2]);}
 
 	if(strType == "BODYFORCEX")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[0]);}
+		{m_bCollectExtraData = true; return (&m_vForce[0]);}
 
 	if(strType == "BODYFORCEY")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[1]);}
+		{m_bCollectExtraData = true; return (&m_vForce[1]);}
 
 	if(strType == "BODYFORCEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[2]);}
+		{m_bCollectExtraData = true; return (&m_vForce[2]);}
 
 	if(strType == "BODYLINEARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[0]);}
+		{m_bCollectExtraData = true; return (&m_vLinearVelocity[0]);}
 
 	if(strType == "BODYLINEARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[1]);}
+		{m_bCollectExtraData = true; return (&m_vLinearVelocity[1]);}
 
 	if(strType == "BODYLINEARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[2]);}
+		{m_bCollectExtraData = true; return (&m_vLinearVelocity[2]);}
 
 	if(strType == "BODYANGULARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[0]);}
+		{m_bCollectExtraData = true; return (&m_vAngularVelocity[0]);}
 
 	if(strType == "BODYANGULARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[1]);}
+		{m_bCollectExtraData = true; return (&m_vAngularVelocity[1]);}
 
 	if(strType == "BODYANGULARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[2]);}
+		{m_bCollectExtraData = true; return (&m_vAngularVelocity[2]);}
 
 	//if(strType == "BODYBUOYANCY")
-	//	{m_bCollectExtraData = TRUE; return (&m_fltReportBuoyancy);}
+	//	{m_bCollectExtraData = true; return (&m_fltReportBuoyancy);}
 
 	if(strType == "BODYLINEARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[0]);}
+		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[0]);}
 
 	if(strType == "BODYLINEARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[1]);}
+		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[1]);}
 
 	if(strType == "BODYLINEARACCELERATIONZ")
 		return (&m_vLinearAcceleration[2]);
 
 	if(strType == "BODYANGULARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[0]);}
+		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[0]);}
 
 	if(strType == "BODYANGULARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[1]);}
+		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[1]);}
 
 	if(strType == "BODYANGULARACCELERATIONZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[2]);}
+		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[2]);}
 
 	return NULL;
 }

@@ -45,13 +45,13 @@ namespace AnimatSim
 				LineBase();
 				virtual ~LineBase();
 
-				virtual void Enabled(BOOL bValue);
+				virtual void Enabled(bool bValue);
 
 				virtual float Length();
 				virtual float PrevLength();
 
-				virtual BOOL AllowMouseManipulation();
-				virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+				virtual bool AllowMouseManipulation();
+				virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 				virtual void AbsolutePosition(CStdFPoint &oPoint);
 				virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 
@@ -63,7 +63,7 @@ namespace AnimatSim
 				virtual void AfterResetSimulation();
 
 				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				
 				virtual void CreateParts();

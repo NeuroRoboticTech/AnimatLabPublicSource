@@ -40,7 +40,7 @@ namespace AnimatGUI
 
 			void GetPointers();
 
-			float *FindDataPointer(string strData, BOOL bThrowError);
+			float *FindDataPointer(string strData, bool bThrowError);
 
 		public:
 			DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID);

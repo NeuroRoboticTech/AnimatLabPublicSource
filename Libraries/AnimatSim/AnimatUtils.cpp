@@ -68,7 +68,7 @@ namespace AnimatSim
 		return strPath;
 	}
 
-	//float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, string strName, BOOL bThrowError = TRUE, float fltDefault = 0)
+	//float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, string strName, bool bThrowError = true, float fltDefault = 0)
 	//{
 	//	float fltValue = fltDefault;
 

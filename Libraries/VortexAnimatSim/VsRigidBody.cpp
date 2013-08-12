@@ -3,15 +3,9 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsRigidBody.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -24,22 +18,11 @@ namespace VortexAnimatSim
 
 VsRigidBody::VsRigidBody()
 {
-	m_bCollectExtraData = FALSE;
 	m_vxSensor = NULL;
 	m_vxPart = NULL;
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
-
-	for(int i=0; i<3; i++)
-	{
-		m_vTorque[i] = 0;
-		m_vForce[i] = 0;
-		m_vLinearVelocity[i] = 0;
-		m_vAngularVelocity[i] = 0;
-		m_vLinearAcceleration[i] = 0;
-		m_vAngularAcceleration[i] = 0;
-	}
-
+    m_lpVsSim = NULL;
 }
 
 VsRigidBody::~VsRigidBody()
@@ -50,17 +33,7 @@ try
 	//int i= 5;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, FALSE, TRUE);}
-}
-
-void VsRigidBody::SetThisPointers()
-{
-	VsBody::SetThisPointers();
-	m_lpThisRB = dynamic_cast<RigidBody *>(this);
-	if(!m_lpThisRB)
-		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisRB, " + m_lpThisAB->Name());
-
-	m_lpThisRB->PhysicsBody(this);
+{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, false, true);}
 }
 
 Vx::VxCollisionSensor* VsRigidBody::Sensor()
@@ -89,6 +62,34 @@ void VsRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
 	Physics_FluidDataChanged();
 }
 
+bool VsRigidBody::Physics_IsDefined()
+{
+    if(m_vxSensor && m_vxGeometry)
+        return true;
+    else
+        return false;
+}
+
+bool VsRigidBody::Physics_IsGeometryDefined()
+{
+    if(m_vxGeometry)
+        return true;
+    else
+        return false;
+}
+
+Vx::VxEntity::EntityControlTypeEnum VsRigidBody::ConvertControlType()
+{
+    if(m_eControlType == ControlAnimated)
+        return Vx::VxEntity::EntityControlTypeEnum::kControlAnimated;
+    else if(m_eControlType == ControlNode)
+        return Vx::VxEntity::EntityControlTypeEnum::kControlNode;
+    else if(m_eControlType == ControlDynamic)
+        return Vx::VxEntity::EntityControlTypeEnum::kControlDynamic;
+    else
+        return Vx::VxEntity::EntityControlTypeEnum::kControlStatic;
+}
+
 CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
 {
 	if(m_vxSensor && m_lpThisMI)
@@ -105,20 +106,15 @@ CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
 	}
 }
 
-void VsRigidBody::Physics_UpdateMatrix()
+VsSimulator *VsRigidBody::GetVsSimulator()
 {
-	VsBody::Physics_UpdateMatrix();
-
-	if(m_lpThisRB)
-		m_lpThisRB->UpdatePhysicsPosFromGraphics();
-}
- 
-void VsRigidBody::UpdatePositionAndRotationFromMatrix()
-{
-	VsBody::UpdatePositionAndRotationFromMatrix();
-
-	if(m_lpThisRB)
-		m_lpThisRB->UpdatePhysicsPosFromGraphics();
+    if(!m_lpVsSim)
+    {
+    	m_lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
+	    if(!m_lpThisVsMI)
+		    THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpVsSim, " + m_lpThisAB->Name());
+    }
+	return m_lpVsSim;
 }
 
 void VsRigidBody::Physics_UpdateNode()
@@ -136,19 +132,7 @@ void VsRigidBody::Physics_UpdateNode()
 	Physics_UpdateAbsolutePosition();
 }
 
-void VsRigidBody::Physics_SetColor()
-{
-	if(m_lpThisRB)
-		SetColor(*m_lpThisRB->Ambient(), *m_lpThisRB->Diffuse(), *m_lpThisRB->Specular(), m_lpThisRB->Shininess()); 
-}
-
-void VsRigidBody::Physics_TextureChanged()
-{
-	if(m_lpThisRB)
-		SetTexture(m_lpThisRB->Texture());
-}
-
-void VsRigidBody::Physics_SetFreeze(BOOL bVal)
+void VsRigidBody::Physics_SetFreeze(bool bVal)
 {
 	if(m_vxSensor)
 		m_vxSensor->freeze(bVal);
@@ -189,95 +173,6 @@ void VsRigidBody::Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz)
 	}
 }
 
-void VsRigidBody::Physics_Resize()
-{
-	//First lets get rid of the current current geometry and then put new geometry in place.
-	if(m_osgNode.valid())
-	{
-		osg::Geode *osgGroup = NULL;
-		if(m_osgGeometryRotationMT.valid())
-			osgGroup = dynamic_cast<osg::Geode *>(m_osgGeometryRotationMT->getChild(0));
-		else
-			osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
-
-		if(!osgGroup)
-			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
-
-		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
-			osgGroup->removeDrawable(m_osgGeometry.get());
-
-		m_osgGeometry.release();
-
-		//Create a new box geometry with the new sizes.
-		CreateGraphicsGeometry();
-		if(m_lpThisAB)
-			m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
-
-		//Add it to the geode.
-		osgGroup->addDrawable(m_osgGeometry.get());
-
-		//Now lets re-adjust the gripper size.
-		if(m_osgDragger.valid())
-			m_osgDragger->SetupMatrix();
-
-		//Reset the user data for the new parts.
-		if(m_osgNodeGroup.valid())
-		{
-			osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
-			osgVisitor->traverse(*m_osgNodeGroup);
-		}
-	}
-
-	if(m_vxGeometry)
-	{
-		ResizePhysicsGeometry();
-
-		//We need to reset the density in order for it to recompute the mass and volume.
-		if(m_lpThisRB)
-			Physics_SetDensity(m_lpThisRB->Density());
-
-		//Now get base values, including mass and volume
-		GetBaseValues();
-	}
-}
-
-void VsRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos)
-{
-	if(m_lpThisRB->IsCollisionObject() && m_osgSelVertexMT.valid())
-	{
-		osg::Matrix osgMT;
-		osgMT.makeIdentity();
-		osgMT = osgMT.translate(fltXPos, fltYPos, fltZPos);
-
-		m_osgSelVertexMT->setMatrix(osgMT);
-	}
-}
-
-
-void VsRigidBody::ShowSelectedVertex()
-{
-	if(m_lpThisRB && m_lpThisAB && m_lpThisRB->IsCollisionObject() && m_lpThisAB->Selected() && m_osgMT.valid() && m_osgSelVertexMT.valid())
-	{
-		if(!m_osgMT->containsNode(m_osgSelVertexMT.get()))
-			m_osgMT->addChild(m_osgSelVertexMT.get());
-	}
-}
-
-void VsRigidBody::HideSelectedVertex()
-{
-	if(m_lpThisRB->IsCollisionObject() && m_osgMT.valid() && m_osgSelVertexMT.valid())
-	{
-		if(m_osgMT->containsNode(m_osgSelVertexMT.get()))
-			m_osgMT->removeChild(m_osgSelVertexMT.get());
-	}
-}
-
-void VsRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
-{
-	DeleteSelectedVertex();
-	CreateSelectedVertex(m_lpThisAB->Name());
-}
-
 void  VsRigidBody::Physics_FluidDataChanged()
 {
 	if(m_vxCollisionGeometry && m_lpThisRB)
@@ -290,7 +185,7 @@ void  VsRigidBody::Physics_FluidDataChanged()
 
 		float fltScale = m_lpThisRB->BuoyancyScale();
 		float fltMagnus = m_lpThisRB->Magnus();
-		BOOL bEnabled = m_lpThisRB->EnableFluids();
+		bool bEnabled = m_lpThisRB->EnableFluids();
 
 		m_vxCollisionGeometry->setFluidInteractionData(vCenter, vDrag, fltScale, fltMagnus);
 
@@ -314,71 +209,6 @@ void VsRigidBody::GetBaseValues()
 
 		//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
 		//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
-	}
-}
-
-void VsRigidBody::Initialize()
-{
-	//GetBaseValues();
-}
-
-/**
-\brief	Builds the local matrix.
-
-\details If this is the root object then use the world coordinates of the structure instead of the
-local coordinates of the rigid body.
-
-\author	dcofer
-\date	5/11/2011
-**/
-void  VsRigidBody::BuildLocalMatrix()
-{
-	//build the local matrix
-	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
-	{
-		if(m_lpThisRB->IsRoot())
-			VsBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
-		else
-			VsBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
-	}
-}
-
-/**
-\brief	Gets the parent osg node.
-
-\details If this is the root object then attach it directly to the OSG root node because we are building its local matrix
-using the structures absolute position. This is so the vortex stuff works correctly, and so that you can move the structure
-by moving the root body. 
-
-\author	dcofer
-\date	5/11/2011
-
-\return	Pointer to the OSG group node of the parent.
-**/
-osg::Group *VsRigidBody::ParentOSG()
-{
-	VsMovableItem *lpItem = NULL;
-
-	if(!m_lpThisRB->IsRoot() && m_lpParentVsMI)
-		return m_lpParentVsMI->GetMatrixTransform();
-	else
-		return GetVsSimulator()->OSGRoot();
-}
-
-void VsRigidBody::SetupPhysics()
-{
-	//If no geometry is defined then this part does not have a physics representation.
-	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
-	if(m_vxGeometry && m_lpThisRB)
-	{
-		//If the parent is not null and the joint is null then that means we need to statically link this part to 
-		//its parent. So we do not create a physics part, we just get a link to its parents part.
-		if(m_lpThisRB->IsContactSensor())
-			CreateSensorPart();
-		else if(m_lpThisRB->HasStaticJoint())
-			CreateStaticPart();
-		else
-			CreateDynamicPart();
 	}
 }
 
@@ -409,29 +239,25 @@ void VsRigidBody::CreateSensorPart()
 	}
 }
 
-void VsRigidBody::SetFollowEntity(VsRigidBody *lpEntity)
+void VsRigidBody::SetFollowEntity(OsgRigidBody *lpEntity)
 {
 	if(m_vxSensor)
 	{
-		m_vxSensor->setFastMoving(true);
-		Vx::VxReal44 vOffset;
-		VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-		Vx::VxTransform vTM(vOffset);
+        VsRigidBody *lpVsEntity = dynamic_cast<VsRigidBody *>(lpEntity);
 
-		Vx::VxCollisionSensor *vxSensor = lpEntity->Sensor();
-		if(vxSensor)
-			m_vxSensor->followEntity(vxSensor, true, &vTM);
+        if(lpVsEntity)
+        {
+		    m_vxSensor->setFastMoving(true);
+		    Vx::VxReal44 vOffset;
+		    VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+		    Vx::VxTransform vTM(vOffset);
+
+		    Vx::VxCollisionSensor *vxSensor = lpVsEntity->Sensor();
+		    if(vxSensor)
+			    m_vxSensor->followEntity(vxSensor, true, &vTM);
+        }
 	}
 }
-
-void VsRigidBody::ResetSensorCollisionGeom()
-{
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
-
-	if(lpVsParent)
-		SetFollowEntity(lpVsParent);
-}
-
 
 void VsRigidBody::CreateDynamicPart()
 {
@@ -444,7 +270,7 @@ void VsRigidBody::CreateDynamicPart()
 		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
 		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-		m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
+		m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
 
         GetBaseValues();
@@ -547,7 +373,6 @@ void VsRigidBody::SetBody()
 {
 	if(m_vxSensor && m_lpThisAB)
 	{
-		//VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
 		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 
 		osg::MatrixTransform *lpMT = dynamic_cast<osg::MatrixTransform *>(m_osgMT.get());
@@ -556,7 +381,6 @@ void VsRigidBody::SetBody()
 		// Add the part to the universe.
 		if(lpVsSim && lpVsSim->Universe())
 			lpVsSim->Universe()->addEntity(m_vxSensor);
-		//lpAssem->addEntity(m_vxSensor);
 	}
 }
 
@@ -607,6 +431,24 @@ void VsRigidBody::ProcessContacts()
 		}
 	}
 }
+
+void VsRigidBody::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
+{
+	osg::Vec3f vWorldPos;
+	osg::Vec3f vLocal;
+
+	vLocalPos[0] = vWorld[0]; vLocalPos[1] = vWorld[1]; vLocalPos[2] = vWorld[2];
+	vWorldPos[0] = vWorld[0]; vWorldPos[1] = vWorld[1]; vWorldPos[2] = vWorld[2];
+
+	if(m_osgNode.valid())
+	{
+	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
+	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
+	  vLocal = vWorldPos * worldToLocal;
+	}
+
+	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];
+} 
 
 void VsRigidBody::Physics_CollectData()
 {
@@ -681,7 +523,7 @@ void VsRigidBody::Physics_CollectData()
 
 void VsRigidBody::Physics_ResetSimulation()
 {
-	VsBody::Physics_ResetSimulation();
+	OsgRigidBody::Physics_ResetSimulation();
 
 	if(m_vxSensor)
 	{
@@ -750,72 +592,7 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
-float *VsRigidBody::Physics_GetDataPointer(const string &strDataType)
-{
-	string strType = Std_CheckString(strDataType);
-	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
-
-	if(strType == "BODYTORQUEX")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[0]);}
-
-	if(strType == "BODYTORQUEY")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[1]);}
-
-	if(strType == "BODYTORQUEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[2]);}
-
-	if(strType == "BODYFORCEX")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[0]);}
-
-	if(strType == "BODYFORCEY")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[1]);}
-
-	if(strType == "BODYFORCEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[2]);}
-
-	if(strType == "BODYLINEARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[0]);}
-
-	if(strType == "BODYLINEARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[1]);}
-
-	if(strType == "BODYLINEARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[2]);}
-
-	if(strType == "BODYANGULARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[0]);}
-
-	if(strType == "BODYANGULARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[1]);}
-
-	if(strType == "BODYANGULARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[2]);}
-
-	//if(strType == "BODYBUOYANCY")
-	//	{m_bCollectExtraData = TRUE; return (&m_fltReportBuoyancy);}
-
-	if(strType == "BODYLINEARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[0]);}
-
-	if(strType == "BODYLINEARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[1]);}
-
-	if(strType == "BODYLINEARACCELERATIONZ")
-		return (&m_vLinearAcceleration[2]);
-
-	if(strType == "BODYANGULARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[0]);}
-
-	if(strType == "BODYANGULARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[1]);}
-
-	if(strType == "BODYANGULARACCELERATIONZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[2]);}
-
-	return NULL;
-}
-
-void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{
@@ -841,7 +618,7 @@ void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
 	}
 }
 
-void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltTx || fltTy || fltTz))
 	{
@@ -897,12 +674,12 @@ float VsRigidBody::Physics_GetMass()
 	return fltMass;
 }
 
-BOOL VsRigidBody::Physics_HasCollisionGeometry()
+bool VsRigidBody::Physics_HasCollisionGeometry()
 {
 	if(m_vxSensor)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 	}			// Environment

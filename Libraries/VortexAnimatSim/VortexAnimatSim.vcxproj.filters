@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MeshMinVertexDistanceVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OsgGeometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,13 +27,7 @@
     <ClCompile Include="VsBallSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsBody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsCameraManipulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsClassFactory.cpp">
@@ -51,12 +39,6 @@
     <ClCompile Include="VsCylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsDragger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsDraggerHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsForceStimulus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,22 +48,10 @@
     <ClCompile Include="VsHingeLimit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsHud.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsHudText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsIntersectionEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsJoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsLinearHillMuscle.cpp">
@@ -96,21 +66,6 @@
     <ClCompile Include="VsMotorVelocityStimulus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsMouseSpring.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsMovableItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsOrganism.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsOsgUserData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsOsgUserDataVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,12 +78,6 @@
     <ClCompile Include="VsRigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsSimulationWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsSimulationWindowMgr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsSimulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -138,21 +87,6 @@
     <ClCompile Include="VsSpring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsStructure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsTrackballDragger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsTranslateAxisDragger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldCoordinateNodeVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsAutoTransform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsRPRO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -160,9 +94,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsPlaneTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsMeshMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsUniversal.cpp">
@@ -198,12 +129,6 @@
     <ClCompile Include="VsTerrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsScriptedSimulationWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OsgLinearPath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsMaterialType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -213,14 +138,14 @@
     <ClCompile Include="VsConstraintFriction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsOsgGeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MeshMinVertexDistanceVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OsgGeometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -230,13 +155,7 @@
     <ClInclude Include="VsBallSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsBody.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsCameraManipulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsClassFactory.h">
@@ -248,12 +167,6 @@
     <ClInclude Include="VsCylinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsDragger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsDraggerHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsForceStimulus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -263,22 +176,10 @@
     <ClInclude Include="VsHingeLimit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsHud.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsHudText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsIntersectionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsJoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsLinearHillMuscle.h">
@@ -293,21 +194,6 @@
     <ClInclude Include="VsMotorVelocityStimulus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsMouseSpring.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsMovableItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsOrganism.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsOsgUserData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsOsgUserDataVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -320,12 +206,6 @@
     <ClInclude Include="VsRigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsSimulationWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsSimulationWindowMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsSimulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -335,21 +215,6 @@
     <ClInclude Include="VsSpring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsStructure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsTrackballDragger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsTranslateAxisDragger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldCoordinateNodeVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsAutoTransform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsRPRO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -357,9 +222,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsPlaneTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsMeshMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsUniversal.h">
@@ -395,12 +257,6 @@
     <ClInclude Include="VsTerrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsScriptedSimulationWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OsgLinearPath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsMaterialType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -408,6 +264,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsConstraintFriction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsOsgGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

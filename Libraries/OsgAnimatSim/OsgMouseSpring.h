@@ -7,10 +7,7 @@ namespace OsgAnimatSim
 
 class OsgMouseSpring
 {
-	private:
-		OsgMouseSpring(void);
-		static OsgMouseSpring *m_instance;
-
+	protected:
 		osg::ref_ptr<osg::Geode> m_gdeLine;
 		osg::ref_ptr<osg::Geometry> m_linesGeom;
 		osg::ref_ptr<osg::LineWidth> m_lineWidth;
@@ -21,22 +18,10 @@ class OsgMouseSpring
         RigidBody *m_lpRB;
 		OsgMovableItem *m_osgRB;
 
-	protected:
 		void Update();
 
 	public:
-		
-		static OsgMouseSpring* GetInstance()
-		{
-			if(!m_instance)
-			{
-				m_instance = new OsgMouseSpring();
-				m_instance->Initialize();
-			}
-			
-			return m_instance;
-		};
-
+		OsgMouseSpring(void);
 		~OsgMouseSpring(void);
 
 		osg::Node* GetNode(){return m_gdeLine.get();};
@@ -57,7 +42,7 @@ class OsgMouseSpring
 		RigidBody* GetRigidBody() {return m_lpRB;};
 		OsgMovableItem* GetMovableItem() {return m_osgRB;};
 
-		void Visible(BOOL bVal);
+		void Visible(bool bVal);
 		void Initialize();
 };
 

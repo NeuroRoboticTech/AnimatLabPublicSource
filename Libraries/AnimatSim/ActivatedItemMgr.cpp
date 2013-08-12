@@ -65,7 +65,7 @@ try
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ActivatedItemMgr\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ActivatedItemMgr\r\n", "", -1, false, true);}
 }
 
 /**
@@ -86,7 +86,7 @@ try
 	m_aryItemsMap.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, false, true);}
 }
 
 /**
@@ -124,7 +124,7 @@ void ActivatedItemMgr::Add(ActivatedItem *lpItem)
 }
 
 /**
-\fn	void ActivatedItemMgr::Remove(string strID, BOOL bThrowError)
+\fn	void ActivatedItemMgr::Remove(string strID, bool bThrowError)
 
 \brief	Removes the item with the specified ID. 
 
@@ -135,7 +135,7 @@ void ActivatedItemMgr::Add(ActivatedItem *lpItem)
 \param	bThrowError	true to throw error if not found. 
 **/
 
-void ActivatedItemMgr::Remove(string strID, BOOL bThrowError)
+void ActivatedItemMgr::Remove(string strID, bool bThrowError)
 {
 	int iIndex=0;
 	ActivatedItem *lpItem = Find(strID, iIndex, bThrowError);
@@ -155,7 +155,7 @@ void ActivatedItemMgr::Remove(string strID, BOOL bThrowError)
 }
 
 /**
-\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowError)
+\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, bool bThrowError)
 
 \brief	Searches for an item with the specified ID and sets its index in the array. 
 
@@ -171,7 +171,7 @@ if it is found then it returns pointer to the item.
 \exception If bThrowError is true and no item with the specified ID is found then
 an exception is thrown.
 **/
-ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowError)
+ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, bool bThrowError)
 {
 	int iCount = m_aryItems.GetSize();
 	ActivatedItem *lpItem = NULL;
@@ -191,7 +191,7 @@ ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowErro
 }
 
 /**
-\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
+\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, bool bThrowError)
 
 \brief	Searches for an item with the specified ID. 
 
@@ -206,7 +206,7 @@ if it is found then it returns pointer to the item.
 \exception If bThrowError is true and no item with the specified ID is found then
 an exception is thrown.
 **/
-ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
+ActivatedItem *ActivatedItemMgr::Find(string strID, bool bThrowError)
 {
 	ActivatedItem *lpItem = NULL;
 	CStdMap<string, ActivatedItem *>::iterator oPos;
@@ -221,7 +221,7 @@ ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
 }
 
 /**
-\fn	int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
+\fn	int ActivatedItemMgr::FindListPos(string strID, bool bThrowError)
 
 \brief	Searches for the item with the specified ID and returns its position in the m_aryItems array. 
 
@@ -233,7 +233,7 @@ ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
 
 \return	Items position in the m_aryItems array. 
 **/
-int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
+int ActivatedItemMgr::FindListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 

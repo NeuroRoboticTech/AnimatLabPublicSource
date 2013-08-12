@@ -85,7 +85,7 @@ try
 	}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Prismatic\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Prismatic\r\n", "", -1, false, true);}
 }
 
 /**
@@ -116,7 +116,7 @@ float Prismatic::BoxSize()
 	return m_fltSize * 3;
 };
 
-void Prismatic::Enabled(BOOL bValue) 
+void Prismatic::Enabled(bool bValue) 
 {
 	EnableMotor(m_bEnableMotorInit);
 	m_bEnabled = bValue;
@@ -163,18 +163,18 @@ float Prismatic::GetLimitRange()
 		return -1;
 }
 
-BOOL Prismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Prismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(MotorizedJoint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(MotorizedJoint::SetData(strType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Prismatic::AddExternalNodeInput(float fltInput)
@@ -188,8 +188,8 @@ void Prismatic::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
-	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
 	m_lpUpperLimit->Load(oXml, "UpperLimit");

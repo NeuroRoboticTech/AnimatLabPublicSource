@@ -49,7 +49,7 @@ namespace AnimatSim
 **/
 Spring::Spring()
 {
-	m_bInitEnabled = FALSE;
+	m_bInitEnabled = false;
 	m_fltNaturalLength = 1;
 	m_fltNaturalLengthNotScaled = m_fltNaturalLength;
 	m_fltStiffness = 5000;
@@ -78,13 +78,13 @@ Spring::~Spring()
 
 \return	true if it enabled at startup, false otherwise. 
 **/
-BOOL Spring::InitEnabled() {return m_bInitEnabled;}
+bool Spring::InitEnabled() {return m_bInitEnabled;}
 
 float Spring::NaturalLength() {return m_fltNaturalLength;}
 
-void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
+void Spring::NaturalLength(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.NaturalLength");
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.NaturalLength");
 
 	m_fltNaturalLengthNotScaled = fltVal;
 	if(bUseScaling)
@@ -95,9 +95,9 @@ void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
 
 float Spring::Stiffness() {return m_fltStiffness;}
 
-void Spring::Stiffness(float fltVal, BOOL bUseScaling)
+void Spring::Stiffness(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Stiffness");
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.Stiffness");
 
 	m_fltStiffnessNotScaled = fltVal;
 	if(bUseScaling)
@@ -108,9 +108,9 @@ void Spring::Stiffness(float fltVal, BOOL bUseScaling)
 
 float Spring::Damping() {return m_fltDamping;}
 
-void Spring::Damping(float fltVal, BOOL bUseScaling)
+void Spring::Damping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.Damping", true);
 
 	if(bUseScaling)
 		m_fltDamping = fltVal/m_lpSim->DisplayMassUnits();
@@ -164,7 +164,7 @@ void Spring::AddExternalNodeInput(float fltInput)
 			Enabled(m_bInitEnabled);
 	}
 	else
-		m_bEnabled = FALSE;
+		m_bEnabled = false;
 }
 
 
@@ -190,7 +190,7 @@ float *Spring::GetDataPointer(const string &strDataType)
 	return LineBase::GetDataPointer(strDataType);
 }
 
-BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Spring::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
@@ -217,7 +217,7 @@ BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bTh
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Spring::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -244,7 +244,7 @@ void Spring::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
-		m_bEnabled = FALSE;
+		m_bEnabled = false;
 
 	NaturalLength(oXml.GetChildFloat("NaturalLength", m_fltNaturalLength));
 	Stiffness(oXml.GetChildFloat("Stiffness", m_fltStiffness));

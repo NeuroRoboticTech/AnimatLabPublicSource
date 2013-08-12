@@ -38,7 +38,7 @@ osg::Geometry* createCircleGeometry(float radius, unsigned int numSegments)
     return geometry;
 }
 
-OsgTrackballDragger::OsgTrackballDragger(BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ)
+OsgTrackballDragger::OsgTrackballDragger(bool bAllowRotateX, bool bAllowRotateY, bool bAllowRotateZ)
 {
 	if(bAllowRotateX)
 	{

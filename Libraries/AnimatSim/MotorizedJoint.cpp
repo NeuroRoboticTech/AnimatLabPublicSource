@@ -46,10 +46,10 @@ MotorizedJoint::MotorizedJoint(void)
 	m_fltReportSetVelocity = 0;
 	m_fltMaxVelocity = 100;
 	m_fltPrevVelocity = -1000000;
-	m_bEnableMotor = FALSE;
-	m_bEnableMotorInit = FALSE;
+	m_bEnableMotor = false;
+	m_bEnableMotorInit = false;
 	m_fltMaxForce = 1000;
-	m_bServoMotor = FALSE;
+	m_bServoMotor = false;
 	m_ftlServoGain = 100;
 	m_lpPhysicsMotorJoint = NULL;
 }
@@ -93,7 +93,7 @@ void MotorizedJoint::PhysicsMotorJoint(IMotorizedJoint *lpJoint)
 
 \return	true if it is enabled, false otherwise.
 **/
-BOOL MotorizedJoint::EnableMotor() {return m_bEnableMotor;}
+bool MotorizedJoint::EnableMotor() {return m_bEnableMotor;}
 
 /**
 \brief	Enables\disables the motor.
@@ -108,7 +108,7 @@ Velocity for its current load.
 
 \param	bVal	true to enable. 
 **/
-void MotorizedJoint::EnableMotor(BOOL bVal)
+void MotorizedJoint::EnableMotor(bool bVal)
 {
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_EnableMotor(bVal, m_fltDesiredVelocity, m_fltMaxForce);
@@ -131,7 +131,7 @@ used to control the motor.
 
 \param	bServo	true to set to be a servo motor. 
 **/
-void MotorizedJoint::ServoMotor(BOOL bServo) {m_bServoMotor = bServo;}
+void MotorizedJoint::ServoMotor(bool bServo) {m_bServoMotor = bServo;}
 
 /**
 \brief	Gets whether this is set to be a servo motor.
@@ -141,7 +141,7 @@ void MotorizedJoint::ServoMotor(BOOL bServo) {m_bServoMotor = bServo;}
 
 \return	true if it is a servo motor, false otherwise.
 **/
-BOOL MotorizedJoint::ServoMotor() {return m_bServoMotor;}
+bool MotorizedJoint::ServoMotor() {return m_bServoMotor;}
 
 /**
 \brief	Sets the servo gain used to calculate the new velocity for maintaining a position with a servo motor.
@@ -153,7 +153,7 @@ BOOL MotorizedJoint::ServoMotor() {return m_bServoMotor;}
 **/
 void MotorizedJoint::ServoGain(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "ServoGain", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "ServoGain", true);
 	m_ftlServoGain= fltVal;
 }
 
@@ -176,9 +176,9 @@ float MotorizedJoint::ServoGain() {return m_ftlServoGain;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MotorizedJoint::MaxForce(float fltVal, BOOL bUseScaling)
+void MotorizedJoint::MaxForce(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxTorque");
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxTorque");
 
 	//If max torque is over 1000 N then assume we mean infinity.
 	if(fltVal >= 5000)
@@ -230,9 +230,9 @@ float MotorizedJoint::MaxVelocity() {return m_fltMaxVelocity;};
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MotorizedJoint::MaxVelocity(float fltVal, BOOL bUseScaling)
+void MotorizedJoint::MaxVelocity(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.MaxVelocity");
+	Std_IsAboveMin((float) 0, fltVal, true, "Joint.MaxVelocity");
 
 	if(bUseScaling && !UsesRadians())
 		m_fltMaxVelocity = fltVal * m_lpSim->InverseDistanceUnits();
@@ -343,7 +343,7 @@ Only a force greater than fltMaxLockForce will be able to move it from this posi
 \param	fltPosition	   	The flt position. 
 \param	fltMaxLockForce	The flt maximum lock force. 
 **/
-void MotorizedJoint::EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce)
+void MotorizedJoint::EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_EnableLock(bOn, fltPosition, fltMaxLockForce);
@@ -360,12 +360,12 @@ void MotorizedJoint::ResetSimulation()
 	EnableMotor(m_bEnableMotorInit);
 }
 
-BOOL MotorizedJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MotorizedJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Joint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Joint::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ENABLEMOTOR")
 	{
@@ -401,7 +401,7 @@ BOOL MotorizedJoint::SetData(const string &strDataType, const string &strValue, 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void MotorizedJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

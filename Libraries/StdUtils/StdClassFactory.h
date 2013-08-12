@@ -35,7 +35,7 @@ public:
 	
 	\return	null if it fails and bThrowError is false, else a pointer to the created object.
 	**/
-	virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, BOOL bThrowError = TRUE) = 0;
+	virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, bool bThrowError = true) = 0;
 
 	static IStdClassFactory *LoadModule(string strModuleName);
 };

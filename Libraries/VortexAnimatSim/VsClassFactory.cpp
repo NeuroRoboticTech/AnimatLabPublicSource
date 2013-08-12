@@ -7,8 +7,6 @@
 
 #include "VsConstraintRelaxation.h"
 #include "VsConstraintFriction.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
@@ -23,7 +21,7 @@
 #include "VsEllipsoid.h"
 #include "VsMouth.h"
 #include "VsOdorSensor.h"
-#include "VsFluidPlane.H"
+#include "VsFluidPlane.h"
 #include "VsMeshBase.h"
 #include "VsMesh.h"
 #include "VsTerrain.h"
@@ -43,26 +41,13 @@
 #include "VsLinearHillStretchReceptor.h"
 #include "VsSpring.h"
 
-#include "VsOrganism.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
 
 #include "VsMaterialType.h"
 
-//#include "VsVideoKeyFrame.h"
-//#include "VsSnapshotKeyFrame.h"
-
 #include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
 //#include "VsInverseMuscleCurrent.h"
-
-#include "VsHudText.h"
-#include "VsHud.h"
-#include "VsSimulationWindow.h"
-#include "VsScriptedSimulationWindow.h"
-#include "VsDragger.h"
-
-#include "VsLight.h"
 
 namespace VortexAnimatSim
 {
@@ -83,7 +68,7 @@ VsClassFactory::~VsClassFactory()
 
 // ************* Body Type Conversion functions ******************************
 
-RigidBody *VsClassFactory::CreateRigidBody(string strType, BOOL bThrowError)
+RigidBody *VsClassFactory::CreateRigidBody(string strType, bool bThrowError)
 {
 	RigidBody *lpPart=NULL;
 
@@ -98,14 +83,14 @@ try
 	else if(strType == "BOXCONTACTSENSOR")
 	{
 		lpPart = new VsBox;
-		lpPart->IsContactSensor(TRUE);
+		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CYLINDER")
 		lpPart = new VsCylinder;
 	else if(strType == "CYLINDERCONTACTSENSOR")
 	{
 		lpPart = new VsCylinder;
-		lpPart->IsContactSensor(TRUE);
+		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CONE")
 		lpPart = new VsCone;
@@ -167,7 +152,7 @@ catch(...)
 
 // ************* Body Joint Conversion functions ******************************
 
-Joint *VsClassFactory::CreateJoint(string strType, BOOL bThrowError)
+Joint *VsClassFactory::CreateJoint(string strType, bool bThrowError)
 {
 	Joint *lpJoint=NULL;
 
@@ -218,7 +203,7 @@ catch(...)
 
 // ************* Organism Type Conversion functions ******************************
 
-Structure *VsClassFactory::CreateStructure(string strType, BOOL bThrowError)
+Structure *VsClassFactory::CreateStructure(string strType, bool bThrowError)
 {
 	Structure *lpStructure=NULL;
 
@@ -227,11 +212,11 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC")
-		lpStructure = new VsOrganism;
+		lpStructure = new OsgOrganism;
 	else if(strType == "ORGANISM")
-		lpStructure = new VsOrganism;
+		lpStructure = new OsgOrganism;
 	else if(strType == "STRUCTURE")
-		lpStructure = new VsStructure;
+		lpStructure = new OsgStructure;
 	else
 	{
 		lpStructure = NULL;
@@ -260,7 +245,7 @@ catch(...)
 
 // ************* Simulator Type Conversion functions ******************************
 
-Simulator *VsClassFactory::CreateSimulator(string strType, BOOL bThrowError)
+Simulator *VsClassFactory::CreateSimulator(string strType, bool bThrowError)
 {
 	Simulator *lpSimulator=NULL;
 
@@ -300,7 +285,7 @@ catch(...)
 
 
 // ************* KeyFrame Type Conversion functions ******************************
-KeyFrame *VsClassFactory::CreateKeyFrame(string strType, BOOL bThrowError)
+KeyFrame *VsClassFactory::CreateKeyFrame(string strType, bool bThrowError)
 {
 	KeyFrame *lpFrame=NULL;
 
@@ -340,7 +325,7 @@ catch(...)
 
 // ************* DataChart Type Conversion functions ******************************
 
-DataChart *VsClassFactory::CreateDataChart(string strType, BOOL bThrowError)
+DataChart *VsClassFactory::CreateDataChart(string strType, bool bThrowError)
 {
 	DataChart *lpChart=NULL;
 
@@ -383,7 +368,7 @@ catch(...)
 
 // ************* DataColumn Type Conversion functions ******************************
 
-DataColumn *VsClassFactory::CreateDataColumn(string strType, BOOL bThrowError)
+DataColumn *VsClassFactory::CreateDataColumn(string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -393,12 +378,6 @@ try
 
 	if(strType == "DATACOLUMN")
 		lpColumn = new DataColumn;
-	//else if(strType == "RIGIDBODYDATA")
-	//	lpColumn = new RigidBodyDataColumn;
-	//else if(strType == "JOINTDATA")
-	//	lpColumn = new JointDataColumn;
-	//else if(strType == "STIMULUSDATA")
-	//	lpColumn = new StimulusDataColumn;
 	else
 	{
 		lpColumn = NULL;
@@ -427,7 +406,7 @@ catch(...)
 
 // ************* Adapter Type Conversion functions ******************************
 
-Adapter *VsClassFactory::CreateAdapter(string strType, BOOL bThrowError)
+Adapter *VsClassFactory::CreateAdapter(string strType, bool bThrowError)
 {
 	Adapter *lpAdapter=NULL;
 
@@ -473,7 +452,7 @@ catch(...)
 
 // ************* Gain Type Conversion functions ******************************
 
-Gain *VsClassFactory::CreateGain(string strType, BOOL bThrowError)
+Gain *VsClassFactory::CreateGain(string strType, bool bThrowError)
 {
 	Gain *lpGain=NULL;
 
@@ -517,7 +496,7 @@ catch(...)
 
 // ************* External Stimulus Type Conversion functions ******************************
 
-ExternalStimulus *VsClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
+ExternalStimulus *VsClassFactory::CreateExternalStimulus(string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -573,7 +552,7 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
-HudItem *VsClassFactory::CreateHudItem(string strType, BOOL bThrowError)
+HudItem *VsClassFactory::CreateHudItem(string strType, bool bThrowError)
 {
 	HudItem *lpItem=NULL;
 
@@ -582,7 +561,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUDTEXT")
-		lpItem = new VsHudText;
+		lpItem = new OsgHudText;
 	else
 	{
 		lpItem = NULL;
@@ -610,7 +589,7 @@ catch(...)
 
 // ************* Hud Type Conversion functions ******************************
 
-Hud *VsClassFactory::CreateHud(string strType, BOOL bThrowError)
+Hud *VsClassFactory::CreateHud(string strType, bool bThrowError)
 {
 	Hud *lpHud=NULL;
 
@@ -619,7 +598,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUD")
-		lpHud = new VsHud;
+		lpHud = new OsgHud;
 	else
 	{
 		lpHud = NULL;
@@ -647,7 +626,7 @@ catch(...)
 // 
 // ************* Material Type Conversion functions ******************************
 
-MaterialType *VsClassFactory::CreateMaterialItem(string strType, BOOL bThrowError)
+MaterialType *VsClassFactory::CreateMaterialItem(string strType, bool bThrowError)
 {
 	MaterialType *lpItem=NULL;
 
@@ -684,7 +663,7 @@ catch(...)
 
 // ************* Material Type Conversion functions ******************************
 
-SimulationWindow *VsClassFactory::CreateWindowItem(string strType, BOOL bThrowError)
+SimulationWindow *VsClassFactory::CreateWindowItem(string strType, bool bThrowError)
 {
 	SimulationWindow *lpItem=NULL;
 
@@ -693,9 +672,9 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC" || strType == "DEFAULT")
-		lpItem = new VsSimulationWindow;
+		lpItem = new OsgSimulationWindow;
 	else if(strType == "SCRIPTEDSIMWINDOW")
-		lpItem = new VsScriptedSimulationWindow;
+		lpItem = new OsgScriptedSimulationWindow;
 	else
 	{
 		lpItem = NULL;
@@ -723,7 +702,7 @@ catch(...)
 
 // ************* Light Conversion functions ******************************
 
-Light *VsClassFactory::CreateLight(string strType, BOOL bThrowError)
+Light *VsClassFactory::CreateLight(string strType, bool bThrowError)
 {
 	Light *lpItem=NULL;
 
@@ -732,7 +711,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "LIGHT")
-		lpItem = new VsLight;
+		lpItem = new OsgLight;
 	else
 	{
 		lpItem = NULL;
@@ -760,7 +739,7 @@ catch(...)
 
 // ************* External Neural Module Conversion functions ******************************
 
-NeuralModule *VsClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
+NeuralModule *VsClassFactory::CreateNeuralModule(string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -801,7 +780,7 @@ catch(...)
 
 // ************* Constraint Relaxation Conversion functions ******************************
 
-ConstraintRelaxation *VsClassFactory::CreateConstraintRelaxation(string strType, BOOL bThrowError)
+ConstraintRelaxation *VsClassFactory::CreateConstraintRelaxation(string strType, bool bThrowError)
 {
 	ConstraintRelaxation *lpRelax=NULL;
 
@@ -841,7 +820,7 @@ catch(...)
 
 // ************* Constraint Friction Conversion functions ******************************
 
-ConstraintFriction *VsClassFactory::CreateConstraintFriction(string strType, BOOL bThrowError)
+ConstraintFriction *VsClassFactory::CreateConstraintFriction(string strType, bool bThrowError)
 {
 	ConstraintFriction *lpFriction=NULL;
 
@@ -882,7 +861,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
+CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 
@@ -941,13 +920,21 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 
 }			//VortexAnimatSim
 
-extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+	extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
 {
 	IStdClassFactory *lpFactory = new VsClassFactory;
 	return lpFactory;
 }
 
-extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
+#else
+	extern "C" int BootstrapRunLibrary(int argc, const char **argv) 
+#endif
 {
 	Simulator *lpSim = NULL;
 
@@ -966,7 +953,7 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(lpSim) delete lpSim;
-	printf("Error occurred: %s\n", oError.m_strError) ;
+	printf("Error occurred: %s\n", oError.m_strError.c_str()) ;
 	return (int) oError.m_lError;
 }
 catch(...)

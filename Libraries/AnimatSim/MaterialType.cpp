@@ -102,7 +102,7 @@ float MaterialType::FrictionLinearPrimary() {return m_fltFrictionLinearPrimary;}
 **/
 void MaterialType::FrictionLinearPrimary(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionLinearPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionLinearPrimary", true);
 	
 	m_fltFrictionLinearPrimary = fltVal;
 	SetMaterialProperties();
@@ -128,7 +128,7 @@ float MaterialType::FrictionLinearSecondary() {return m_fltFrictionLinearSeconda
 **/
 void MaterialType::FrictionLinearSecondary(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionLinearSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionLinearSecondary", true);
 	m_fltFrictionLinearSecondary = fltVal;
 	SetMaterialProperties();
 }
@@ -153,7 +153,7 @@ float MaterialType::FrictionAngularNormal() {return m_fltFrictionAngularNormal;}
 **/
 void MaterialType::FrictionAngularNormal(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularNormal", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularNormal", true);
 	
 	m_fltFrictionAngularNormal = fltVal;
 	SetMaterialProperties();
@@ -179,7 +179,7 @@ float MaterialType::FrictionAngularPrimary() {return m_fltFrictionAngularPrimary
 **/
 void MaterialType::FrictionAngularPrimary(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularPrimary", true);
 	
 	m_fltFrictionAngularPrimary = fltVal;
 	SetMaterialProperties();
@@ -205,7 +205,7 @@ float MaterialType::FrictionAngularSecondary() {return m_fltFrictionAngularSecon
 **/
 void MaterialType::FrictionAngularSecondary(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularSecondary", true);
 	
 	m_fltFrictionAngularSecondary = fltVal;
 	SetMaterialProperties();
@@ -230,9 +230,9 @@ float MaterialType::FrictionLinearPrimaryMax() {return m_fltFrictionLinearPrimar
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::FrictionLinearPrimaryMax(float fltVal, BOOL bUseScaling) 
+void MaterialType::FrictionLinearPrimaryMax(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionLinearPrimaryMax", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionLinearPrimaryMax", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -260,9 +260,9 @@ float MaterialType::FrictionLinearSecondaryMax() {return m_fltFrictionLinearSeco
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::FrictionLinearSecondaryMax(float fltVal, BOOL bUseScaling) 
+void MaterialType::FrictionLinearSecondaryMax(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionLinearSecondaryMax", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionLinearSecondaryMax", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -290,9 +290,9 @@ float MaterialType::FrictionAngularNormalMax() {return m_fltFrictionAngularNorma
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::FrictionAngularNormalMax(float fltVal, BOOL bUseScaling) 
+void MaterialType::FrictionAngularNormalMax(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularNormalMax", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularNormalMax", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -320,9 +320,9 @@ float MaterialType::FrictionAngularPrimaryMax() {return m_fltFrictionAngularPrim
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::FrictionAngularPrimaryMax(float fltVal, BOOL bUseScaling) 
+void MaterialType::FrictionAngularPrimaryMax(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularPrimaryMax", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularPrimaryMax", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -350,9 +350,9 @@ float MaterialType::FrictionAngularSecondaryMax() {return m_fltFrictionAngularSe
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::FrictionAngularSecondaryMax(float fltVal, BOOL bUseScaling) 
+void MaterialType::FrictionAngularSecondaryMax(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionAngularSecondaryMax", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularSecondaryMax", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -388,9 +388,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlipLinearPrimary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlipLinearPrimary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlipLinearPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlipLinearPrimary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -427,9 +427,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlipLinearSecondary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlipLinearSecondary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlipLinearSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlipLinearSecondary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -466,9 +466,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlipAngularNormal(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlipAngularNormal(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlipAngularNormal", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlipAngularNormal", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -504,9 +504,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlipAngularPrimary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlipAngularPrimary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlipAngularPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlipAngularPrimary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -543,9 +543,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlipAngularSecondary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlipAngularSecondary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlipAngularSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlipAngularSecondary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -581,9 +581,9 @@ would not be moving.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlideLinearPrimary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlideLinearPrimary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlideLinearPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlideLinearPrimary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
@@ -621,9 +621,9 @@ would not be moving.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlideLinearSecondary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlideLinearSecondary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlideLinearSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlideLinearSecondary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
@@ -660,9 +660,9 @@ would not be moving.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlideAngularNormal(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlideAngularNormal(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlideAngularNormal", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlideAngularNormal", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
@@ -698,9 +698,9 @@ would not be moving.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlideAngularPrimary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlideAngularPrimary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlideAngularPrimary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlideAngularPrimary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
@@ -738,9 +738,9 @@ would not be moving.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::SlideAngularSecondary(float fltVal, BOOL bUseScaling) 
+void MaterialType::SlideAngularSecondary(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "SlideAngularSecondary", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "SlideAngularSecondary", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
@@ -768,9 +768,9 @@ float MaterialType::Compliance() {return m_fltCompliance;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::Compliance(float fltVal, BOOL bUseScaling) 
+void MaterialType::Compliance(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Compliance", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Compliance", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Compliance units are m/N or s^2/Kg
@@ -798,9 +798,9 @@ float MaterialType::Damping() {return m_fltDamping;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::Damping(float fltVal, BOOL bUseScaling) 
+void MaterialType::Damping(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Damping", true);
 
 	if(bUseScaling)
 		fltVal = fltVal/m_lpSim->DisplayMassUnits();
@@ -845,7 +845,7 @@ of most simulations.
 **/
 void MaterialType::Restitution(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "Restitution");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "Restitution");
 	m_fltRestitution = fltVal;
 	SetMaterialProperties();
 }
@@ -875,7 +875,7 @@ force needed to separate the two objects.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void MaterialType::MaxAdhesive(float fltVal, BOOL bUseScaling) 
+void MaterialType::MaxAdhesive(float fltVal, bool bUseScaling) 
 {
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
@@ -940,95 +940,95 @@ void MaterialType::CreateDefaultUnits()
     m_fltMaxAdhesive *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 }
 
-BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MaterialType::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "FRICTIONLINEARPRIMARY")
 	{
 		FrictionLinearPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONLINEARSECONDARY")
 	{
 		FrictionLinearSecondary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARNORMAL")
 	{
 		FrictionAngularNormal((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARPRIMARY")
 	{
 		FrictionAngularPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARSECONDARY")
 	{
 		FrictionAngularSecondary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONLINEARPRIMARYMAX")
 	{
 		FrictionLinearPrimaryMax((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONLINEARSECONDARYMAX")
 	{
 		FrictionLinearSecondaryMax((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARNORMALMAX")
 	{
 		FrictionAngularNormalMax((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARPRIMARYMAX")
 	{
 		FrictionAngularPrimaryMax((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FRICTIONANGULARSECONDARYMAX")
 	{
 		FrictionAngularSecondaryMax((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "COMPLIANCE")
 	{
 		Compliance((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "DAMPING")
 	{
 		Damping((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "RESTITUTION")
 	{
 		Restitution((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "SLIPLINEARPRIMARY")
 	{
 		SlipLinearPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SLIPLINEARSECONDARY")
@@ -1046,7 +1046,7 @@ BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BO
 	if(strType == "SLIPANGULARPRIMARY")
 	{
 		SlipAngularPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SLIPANGULARSECONDARY")
@@ -1058,7 +1058,7 @@ BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BO
 	if(strType == "SLIDELINEARPRIMARY")
 	{
 		SlideLinearPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SLIDELINEARSECONDARY")
@@ -1076,7 +1076,7 @@ BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BO
 	if(strType == "SLIDEANGULARPRIMARY")
 	{
 		SlideAngularPrimary((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SLIDEANGULARSECONDARY")
@@ -1088,14 +1088,14 @@ BOOL MaterialType::SetData(const string &strDataType, const string &strValue, BO
 	if(strType == "MAXADHESION")
 	{
 		MaxAdhesive((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void MaterialType::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

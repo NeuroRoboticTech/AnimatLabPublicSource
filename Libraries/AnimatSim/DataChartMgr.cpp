@@ -71,9 +71,9 @@ DataChartMgr::~DataChartMgr()
 \param	strColumnName	Name of the DataColumn we are searching for. 
 \param	bThrowError  	If no column is found and this is true, then an exception is thrown, otherwise NULL is returned. 
 
-\return	Pointer to the found DataColumn, NULL if not found and bThrowError = FALSE.
+\return	Pointer to the found DataColumn, NULL if not found and bThrowError = false.
 **/
-DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnName, BOOL bThrowError)
+DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnName, bool bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
 	if(!lpChart) return NULL;
@@ -92,7 +92,7 @@ DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnNam
 \param	strColumnName	Name of the DataColumn we are deleting. 
 \param	bThrowError  	If no column is found and this is true, then an exception is thrown, otherwise NULL is returned. 
 **/
-void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, BOOL bThrowError)
+void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, bool bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
 	if(!lpChart) return;
@@ -127,7 +127,7 @@ void DataChartMgr::AddDataColumn(string strChartKey, DataColumn *lpColumn)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL DataChartMgr::AddDataChart(string strXml)
+bool DataChartMgr::AddDataChart(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -135,7 +135,7 @@ BOOL DataChartMgr::AddDataChart(string strXml)
 	oXml.FindChildElement("DataChart");
 	LoadDataChart(oXml);
 	ReInitialize();
-	return TRUE;
+	return true;
 }
 
 /**
@@ -148,11 +148,11 @@ BOOL DataChartMgr::AddDataChart(string strXml)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL DataChartMgr::RemoveDataChart(string strID)
+bool DataChartMgr::RemoveDataChart(string strID)
 {
 	Remove(strID);
 	ReInitialize();
-	return TRUE;
+	return true;
 }
 
 void DataChartMgr::Load(CStdXml &oXml)
@@ -161,7 +161,7 @@ void DataChartMgr::Load(CStdXml &oXml)
 
 	Reset();
 
-	if(oXml.FindChildElement("DataCharts", FALSE))
+	if(oXml.FindChildElement("DataCharts", false))
 	{
 		oXml.IntoElem(); //Into DataCharts Element
 
@@ -204,7 +204,7 @@ try
 	if(!lpChart)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataChart");
 
-	lpChart->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpChart->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	if(!Std_IsBlank(strFilename))
 		lpChart->Load(m_lpSim->ProjectPath(), strFilename);
 	else

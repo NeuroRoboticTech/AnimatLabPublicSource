@@ -31,11 +31,11 @@ namespace AnimatSim
 			ExternalStimulus();
 			virtual ~ExternalStimulus();
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			//ActiveItem overrides
-			virtual BOOL operator<(ActivatedItem *lpItem);
+			virtual bool operator<(ActivatedItem *lpItem);
 		};
 
 	}			//ExternalStimuli

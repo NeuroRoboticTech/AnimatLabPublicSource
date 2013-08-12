@@ -267,7 +267,9 @@ void OsgJoint::UpdatePositionAndRotationFromMatrix()
 
 void OsgJoint::Physics_UpdateMatrix()
 {
-	LocalMatrix(SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation()));
+	CStdFPoint vPos = m_lpThisMI->Position();
+	CStdFPoint vRot = m_lpThisMI->Rotation();
+	LocalMatrix(SetupMatrix(vPos, vRot));
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
@@ -332,7 +334,7 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 	}
 }
 
-BOOL OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
@@ -359,13 +361,13 @@ BOOL OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWo
 				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
 				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
 		
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-BOOL OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
+bool OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
@@ -374,12 +376,33 @@ BOOL OsgJoint::Physics_SetData(const string &strDataType, const string &strValue
 		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 void OsgJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
 {
 }
+
+void OsgJoint::Physics_Resize()
+{
+    if(Physics_IsDefined())
+    {
+        DeleteJointGraphics();
+        CreateJointGraphics();
+        ResetDraggerOnResize();
+    }
+}
+
+void OsgJoint::Physics_ResetSimulation()
+{
+	if(Physics_IsDefined())
+	{
+		m_lpThisJoint->JointPosition(0); 
+		m_lpThisJoint->JointVelocity(0);
+		m_lpThisJoint->JointForce(0);
+	}
+}
+
 
 	}			// Environment
 }				//OsgAnimatSim

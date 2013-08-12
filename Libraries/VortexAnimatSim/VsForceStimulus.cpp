@@ -2,17 +2,14 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSimulator.h"
 
 #include "VsForceStimulus.h"
- #include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -72,7 +69,7 @@ try
 	if(m_lpTorqueZEval) delete m_lpTorqueZEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, false, true);}
 }
 
 CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
@@ -302,72 +299,72 @@ float *VsForceStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VsForceStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsForceStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strType == "POSITIONX")
 	{
 		RelativePositionX(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "POSITIONY")
 	{
 		RelativePositionY(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "POSITIONZ")
 	{
 		RelativePositionZ(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEX")
 	{
 		ForceXEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEY")
 	{
 		ForceYEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEZ")
 	{
 		ForceZEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEX")
 	{
 		TorqueXEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEY")
 	{
 		TorqueYEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEZ")
 	{
 		TorqueZEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -65,9 +65,9 @@ Cylinder::~Cylinder()
 
 float Cylinder::Radius() {return m_fltRadius;}
 
-void Cylinder::Radius(float fltVal, BOOL bUseScaling)
+void Cylinder::Radius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cylinder.Radius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Cylinder.Radius");
 	if(bUseScaling)
 		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -79,9 +79,9 @@ void Cylinder::Radius(float fltVal, BOOL bUseScaling)
 
 float Cylinder::Height() {return m_fltHeight;}
 
-void Cylinder::Height(float fltVal, BOOL bUseScaling)
+void Cylinder::Height(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cylinder.Height");
+	Std_IsAboveMin((float) 0, fltVal, true, "Cylinder.Height");
 	if(bUseScaling)
 		m_fltHeight = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -99,7 +99,7 @@ void Cylinder::Height(float fltVal, BOOL bUseScaling)
 **/
 void Cylinder::Sides(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Cone.Sides", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Cone.Sides", true);
 	m_iSides = iVal;
 
 	Resize();
@@ -115,36 +115,36 @@ void Cylinder::Sides(int iVal)
 **/
 int Cylinder::Sides() {return m_iSides;}
 
-BOOL Cylinder::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Cylinder::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "RADIUS")
 	{
 		Radius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HEIGHT")
 	{
 		Height((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SIDES")
 	{
 		Sides(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Cylinder::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

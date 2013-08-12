@@ -21,11 +21,11 @@ namespace AnimatSim
 **/
 SimulationWindow::SimulationWindow(void)
 {
-	m_HWND = NULL;
+	m_HWND = 0;
 	m_ptPosition.Set(0, 0, 0);
 	m_ptSize.Set(500, 500, 0);
-	m_bTrackCamera = FALSE;
-	m_bStandAlone = TRUE;
+	m_bTrackCamera = false;
+	m_bStandAlone = true;
 }
 
 /**
@@ -41,8 +41,8 @@ SimulationWindow::SimulationWindow(HWND win)
 	m_HWND = win;
 	m_ptPosition.Set(0, 0, 0);
 	m_ptSize.Set(500, 500, 0);
-	m_bTrackCamera = FALSE;
-	m_bStandAlone = TRUE;
+	m_bTrackCamera = false;
+	m_bStandAlone = true;
 }
 
 /**
@@ -66,12 +66,12 @@ SimulationWindow::~SimulationWindow(void)
 void SimulationWindow::LookAtStructureID(string strID) 
 {
     if(Std_IsBlank(strID))
-        m_bTrackCamera = FALSE;
+        m_bTrackCamera = false;
     else
-        m_bTrackCamera = TRUE;
+        m_bTrackCamera = true;
 
 	m_strLookAtStructureID = strID;
-	SetupTrackCamera(FALSE);
+	SetupTrackCamera(false);
 }
 
 /**
@@ -95,7 +95,7 @@ string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
 void SimulationWindow::LookAtBodyID(string strID) 
 {
     m_strLookAtBodyID = strID;
-	SetupTrackCamera(FALSE);
+	SetupTrackCamera(false);
 }
 
 /**
@@ -116,10 +116,10 @@ string SimulationWindow::LookAtBodyID() {return m_strLookAtBodyID;}
 
 \param	bVal	true to use camera tracking. 
 **/
-void SimulationWindow::UsingTrackCamera(BOOL bVal) 
+void SimulationWindow::UsingTrackCamera(bool bVal) 
 {
 	m_bTrackCamera = bVal;
-	SetupTrackCamera(TRUE);
+	SetupTrackCamera(true);
 }
 
 /**
@@ -130,7 +130,7 @@ void SimulationWindow::UsingTrackCamera(BOOL bVal)
 
 \return	true if camera tracking is being used.
 **/
-BOOL SimulationWindow::UsingTrackCamera() {return m_bTrackCamera;}
+bool SimulationWindow::UsingTrackCamera() {return m_bTrackCamera;}
 
 /**
 \brief	Gets the HWND window identifier.
@@ -160,7 +160,7 @@ void SimulationWindow::WindowID(HWND win) {m_HWND = win;}
 
 \return	true if it stands alone, false else.
 **/
-BOOL SimulationWindow::StandAlone() {return m_bStandAlone;}
+bool SimulationWindow::StandAlone() {return m_bStandAlone;}
 
 /**
 \brief	Sets whether this window stands alone.
@@ -170,7 +170,7 @@ BOOL SimulationWindow::StandAlone() {return m_bStandAlone;}
 
 \param	bVal	true make stand alone. 
 **/
-void SimulationWindow::StandAlone(BOOL bVal) {m_bStandAlone = bVal;}
+void SimulationWindow::StandAlone(bool bVal) {m_bStandAlone = bVal;}
 
 #pragma region DataAccesMethods
 
@@ -187,36 +187,36 @@ float *SimulationWindow::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL SimulationWindow::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool SimulationWindow::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "LOOKATSTRUCTUREID")
 	{
 		LookAtStructureID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LOOKATBODYID")
 	{
 		LookAtBodyID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TRACKCAMERA")
 	{
 		UsingTrackCamera(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void SimulationWindow::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -245,12 +245,12 @@ void SimulationWindow::QueryProperties(CStdArray<string> &aryNames, CStdArray<st
 \param	strLookAtStructureID	Identifier for the string look at structure. 
 \param	strLookAtBodyID			Identifier for the string look at body. 
 **/
-void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID)
+void SimulationWindow::SetupTrackCamera(bool bTrackCamera, string strLookAtStructureID, string strLookAtBodyID)
 {
 	m_bTrackCamera = bTrackCamera;
 	m_strLookAtStructureID = strLookAtStructureID;
 	m_strLookAtBodyID = strLookAtBodyID;
-	SetupTrackCamera(TRUE);
+	SetupTrackCamera(true);
 }
 
 /**
@@ -264,7 +264,7 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 \param	oTarget	Target position to look at.
 \param	bResetEyePos	If true it will set the eye position new, if not it will use the current position.
 **/
-void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos) {}
+void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos) {}
 
 /**
 \brief	Manually sets a camera position and look at position.
@@ -321,9 +321,9 @@ void SimulationWindow::Load(CStdXml &oXml)
 
 	oXml.IntoElem(); //Into Window Element
 
-	if(oXml.FindChildElement("Position", FALSE))
+	if(oXml.FindChildElement("Position", false))
 		Std_LoadPoint(oXml, "Position", m_ptPosition);
-	if(oXml.FindChildElement("Size", FALSE))
+	if(oXml.FindChildElement("Size", false))
 		Std_LoadPoint(oXml, "Size", m_ptSize);
 
 	m_bStandAlone = oXml.GetChildBool("StandAlone", m_bStandAlone);

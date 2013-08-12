@@ -36,7 +36,7 @@ namespace AnimatSim
 
 			virtual string Type();
 
-			virtual BOOL Lock();
+			virtual bool Lock();
 			virtual void Unlock();
 
 			virtual void Initialize();

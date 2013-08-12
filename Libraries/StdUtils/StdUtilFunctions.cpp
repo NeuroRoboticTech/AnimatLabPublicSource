@@ -579,7 +579,7 @@ bool STD_UTILS_PORT Std_ToBool(string strVal)
 {
 	string strV = Std_ToUpper(Std_Trim(strVal));
 
-	if(strV == "TRUE" || strV == "1")
+	if(strV == "true" || strV == "1")
 		return true;
 	else
 		return false;
@@ -679,7 +679,7 @@ int STD_UTILS_PORT Std_VariantTypeToConst(string strType)
 		return StdVtFloat;
 	else if(strType == "DOUBLE")
 		return StdVtDouble;
-	else if(strType == "BOOL")
+	else if(strType == "bool")
 		return StdVtBool;
 	else if(strType == "CHAR")
 		return StdVtChar;
@@ -928,7 +928,7 @@ string STD_UTILS_PORT Std_TrimRight(string strVal)
 
 \return	.
 **/
-BOOL STD_UTILS_PORT Std_IsNumeric(string strVal)
+bool STD_UTILS_PORT Std_IsNumeric(string strVal)
 {
 	int iPos = strVal.find_first_not_of("0123456789.+-eE");
 	if(iPos == -1)
@@ -947,7 +947,7 @@ BOOL STD_UTILS_PORT Std_IsNumeric(string strVal)
 
 \return	.
 **/
-BOOL STD_UTILS_PORT Std_IsIntegerType(string strVal)
+bool STD_UTILS_PORT Std_IsIntegerType(string strVal)
 {
 	int iPos = strVal.find_first_not_of("0123456789+-");
 	if(iPos == -1)
@@ -3224,7 +3224,7 @@ void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, st
 
 \return	.
 **/
-BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
+bool STD_UTILS_PORT Std_DirectoryExists(string strPath)
 {
 	boost::filesystem::path p = boost::filesystem::path(strPath);
 	return boost::filesystem::is_directory(p);
@@ -3259,19 +3259,7 @@ string STD_UTILS_PORT Std_ExecutablePath()
 
 #ifdef WIN32
 
-void STD_UTILS_PORT Std_SetFileTime(string strFilename)
-{
-	// Create a systemtime struct
-	SYSTEMTIME thesystemtime;
-	 
-	// Get current system time and then change the day to the 3rd
-	// You can also change year, month, day of week etc
-	GetSystemTime(&thesystemtime);
-
-	Std_SetFileTime(strFilename, thesystemtime);
-}
-
-void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
+void Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 {
 	// Create a FILETIME struct and convert our new SYSTEMTIME
 	// over to the FILETIME struct for use in SetFileTime below
@@ -3286,6 +3274,26 @@ void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 	    
 	// Close our handle.
 	CloseHandle(filename);
+}
+
+void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+{
+	// Create a systemtime struct
+	SYSTEMTIME thesystemtime;
+	 
+	// Get current system time and then change the day to the 3rd
+	// You can also change year, month, day of week etc
+	GetSystemTime(&thesystemtime);
+
+	Std_SetFileTime(strFilename, thesystemtime);
+}
+
+#else
+
+//NEED TO TEST
+void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+{
+    utime(strFilename.c_str(), NULL);
 }
 
 #endif

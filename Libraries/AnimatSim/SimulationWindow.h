@@ -21,7 +21,7 @@ namespace AnimatSim
 	{
 	protected:
 		/// true if the window is seperate from all other windows.
-		BOOL m_bStandAlone;
+		bool m_bStandAlone;
 
 		/// Handle of the hwnd
 		HWND m_HWND;
@@ -34,19 +34,19 @@ namespace AnimatSim
 
 		///The ID of the structure that the camera should look at initially. If this
 		///is blank or missing then the camera looks in its default direction. If 
-		///m_bTrackCamera is TRUE then it will follow the structure identfied here.
+		///m_bTrackCamera is true then it will follow the structure identfied here.
 		string m_strLookAtStructureID;
 
 		///The ID of the body item within the structure that the camera should look at initially. If this
 		///is blank or missing then the camera looks in its default direction. If 
-		///m_bTrackCamera is TRUE then it will follow the structure identfied here.
+		///m_bTrackCamera is true then it will follow the structure identfied here.
 		string m_strLookAtBodyID;
 
-		///If this is TRUE then the camera will update its position and orientation so
+		///If this is true then the camera will update its position and orientation so
 		///that it stays focues on the structure specified by the m_strLookAtID element.
 		///The camera always looks at the center of the root rigid body object of the 
 		///structure.
-		BOOL m_bTrackCamera;
+		bool m_bTrackCamera;
 
 		/**
 		\brief	Implements code to do the camera tracking.
@@ -67,14 +67,14 @@ namespace AnimatSim
 		virtual void LookAtBodyID(string strID);
 		virtual string LookAtBodyID();
 
-		virtual void UsingTrackCamera(BOOL bVal);
-		virtual BOOL UsingTrackCamera();
+		virtual void UsingTrackCamera(bool bVal);
+		virtual bool UsingTrackCamera();
 
 		virtual HWND WindowID();
 		virtual void WindowID(HWND win);
 
-		virtual BOOL StandAlone();
-		virtual void StandAlone(BOOL bVal);
+		virtual bool StandAlone();
+		virtual void StandAlone(bool bVal);
 
 		virtual CStdFPoint GetCameraPosition() = 0;
 
@@ -84,9 +84,9 @@ namespace AnimatSim
 		\author	dcofer
 		\date	3/24/2011
 		**/
-		virtual void SetupTrackCamera(BOOL bResetEyePos) = 0;
-		virtual void SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
-		virtual void SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos);
+		virtual void SetupTrackCamera(bool bResetEyePos) = 0;
+		virtual void SetupTrackCamera(bool bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
+		virtual void SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos);
 		virtual void SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);
 
@@ -95,7 +95,7 @@ namespace AnimatSim
 #pragma region DataAccesMethods
 
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion

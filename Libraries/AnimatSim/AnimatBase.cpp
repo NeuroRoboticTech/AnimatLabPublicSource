@@ -61,7 +61,7 @@ AnimatBase::AnimatBase()
 	m_lpModule = NULL;
 	m_lpNode = NULL;
 	m_strID = Std_CreateAppID();
-	m_bSelected = FALSE;
+	m_bSelected = false;
 }
 
 /**
@@ -85,7 +85,7 @@ try
 		m_lpSim->RemoveFromObjectList(this);
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, false, true);}
 }
 
 /**
@@ -221,7 +221,7 @@ it know that a part has been selected.
 
 \return	true if it selected, false if not. 
 **/
-BOOL AnimatBase::Selected() {return m_bSelected;}
+bool AnimatBase::Selected() {return m_bSelected;}
 
 /**
 \brief	Selects this object.
@@ -240,7 +240,7 @@ or not is done in the GUI project workspace.
 \param	bSelectMultiple	If true then this items is added as part of a group. If false then it is
 						removed from a group. 
 **/
-void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bValue;}
+void AnimatBase::Selected(bool bValue, bool bSelectMultiple) {m_bSelected = bValue;}
 
 
 #pragma region DataAccesMethods
@@ -248,7 +248,7 @@ void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bVal
 
 //Don't know why, but the documentation for this has to be in the .h file. When I try and put it here
 //it is not processed by doxygen. ????
-void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	m_lpSim = lpSim;
 	m_lpStructure = lpStructure;
@@ -328,24 +328,24 @@ developers responsibilty to know what type of data is needed and to process it a
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool AnimatBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(strDataType == "NAME")
 	{
 		Name(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "CALL_INIT")
 	{
 		this->Initialize();
-		return TRUE;
+		return true;
 	}
 
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
-	return FALSE;
+	return false;
 }
 
 /**
@@ -381,7 +381,7 @@ void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 
 \return	True if a property with that exact name is found. Capilalization is not important. 
 **/
-BOOL AnimatBase::HasProperty(const string &strName)
+bool AnimatBase::HasProperty(const string &strName)
 {
 	CStdArray<string> aryNames, aryTypes;
 	QueryProperties(aryNames, aryTypes);
@@ -390,9 +390,9 @@ BOOL AnimatBase::HasProperty(const string &strName)
 	int iCount = aryNames.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		if(Std_CheckString(aryNames[iIdx]) == strCheck)
-			return TRUE;
+			return true;
 
-	return FALSE;
+	return false;
 }
 
 
@@ -444,12 +444,12 @@ needed initialization and adds it to the parent.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool AnimatBase::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lItemTypeInvalid, Al_Err_strItemTypeInvalid, ("ID: " + m_strID + " ItemType: " + strItemType));
-	return FALSE;
+	return false;
 }
 
 /**
@@ -469,12 +469,12 @@ part, etc.. The ID is then used to delete that specific item.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool AnimatBase::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lItemNotFound, Al_Err_strItemNotFound, ("ID: " + m_strID));
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -558,7 +558,7 @@ called.
 
 \param	bState	true to state. 
 **/
-void AnimatBase::Kill(BOOL bState) {};
+void AnimatBase::Kill(bool bState) {};
 
 /**
 \brief	Step the simulation for this object.

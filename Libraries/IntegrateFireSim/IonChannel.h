@@ -24,7 +24,7 @@ namespace IntegrateFireSim
 		float m_fltHInit;
 
 		/// true to enable, false to disable
-		BOOL m_bEnabled;
+		bool m_bEnabled;
 
 		/// The maximum conductance
 		float m_fltGmax;
@@ -90,8 +90,8 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void Enabled(BOOL bVal);
-		BOOL Enabled();
+		void Enabled(bool bVal);
+		bool Enabled();
 
 		void Gmax(float fltVal);
 		float Gmax();
@@ -141,7 +141,7 @@ namespace IntegrateFireSim
 #pragma region DataAccesMethods
 
 		virtual float *GetDataPointer(const string &strDataType);
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion

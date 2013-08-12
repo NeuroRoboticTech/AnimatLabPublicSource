@@ -39,16 +39,16 @@ namespace AnimatSim
 				FluidPlane();
 				virtual ~FluidPlane();
 
-				virtual BOOL AllowRotateDragX();
-				virtual BOOL AllowRotateDragY();
-				virtual BOOL AllowRotateDragZ();
+				virtual bool AllowRotateDragX();
+				virtual bool AllowRotateDragY();
+				virtual bool AllowRotateDragZ();
 
 				virtual CStdFPoint Velocity();
-				virtual void Velocity(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-				virtual void Velocity(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-				virtual void Velocity(string strXml, BOOL bUseScaling = TRUE);
+				virtual void Velocity(CStdFPoint &oPoint, bool bUseScaling = true);
+				virtual void Velocity(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+				virtual void Velocity(string strXml, bool bUseScaling = true);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

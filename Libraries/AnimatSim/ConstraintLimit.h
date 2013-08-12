@@ -38,14 +38,14 @@ namespace AnimatSim
 			float m_fltStiffness;
 
 			/// If true then this is the lower limit of a pair of ConstraintLimits, else it is the upper limit.
-			BOOL m_bIsLowerLimit;
+			bool m_bIsLowerLimit;
 
 			/// The color used to display the limit.
 			CStdColor m_vColor;
 
 			/// Tells whether this contstraint is actually just being used to show the current position of the joint,
 			/// as opposed to being used to show the limit of a constraint.
-			BOOL m_bIsShowPosition;
+			bool m_bIsShowPosition;
 
 			/// Sets the limit values of the joint in the child object.
 			virtual void SetLimitValues() = 0;
@@ -74,7 +74,7 @@ namespace AnimatSim
 			\param	bUseScaling		  	true to use unit scaling. 
 			\param	bOverrideSameCheck	true to override the check of whether the currentpos = new pos. 
 			**/
-			virtual void LimitPos(float fltVal, BOOL bUseScaling = TRUE, BOOL bOverrideSameCheck = FALSE);
+			virtual void LimitPos(float fltVal, bool bUseScaling = true, bool bOverrideSameCheck = false);
 
 			/**
 			\brief	Sets the limit position using the current value set within the object.
@@ -103,7 +103,7 @@ namespace AnimatSim
 			\param	fltVal	   	The new value. 
 			\param	bUseScaling	true to use unit scaling. 
 			**/
-			virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Damping(float fltVal, bool bUseScaling = true);
 
 			/**
 			\brief	Gets the restitution coefficient of the constraint.
@@ -144,7 +144,7 @@ namespace AnimatSim
 			\param	fltVal	   	The new value. 
 			\param	bUseScaling	true to use unit scaling. 
 			**/
-			virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Stiffness(float fltVal, bool bUseScaling = true);
 
 			virtual void Color(float fltR, float fltG, float fltB, float fltA);
 			virtual CStdColor *Color();
@@ -170,17 +170,17 @@ namespace AnimatSim
 			**/
 			virtual float Alpha();
 
-			virtual void IsLowerLimit(BOOL bVal);
-			virtual BOOL IsLowerLimit();
+			virtual void IsLowerLimit(bool bVal);
+			virtual bool IsLowerLimit();
 
-			virtual void IsShowPosition(BOOL bVal);
-			virtual BOOL IsShowPosition();
+			virtual void IsShowPosition(bool bVal);
+			virtual bool IsShowPosition();
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify);
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, bool bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual void Load(CStdXml &oXml, string strName);
 

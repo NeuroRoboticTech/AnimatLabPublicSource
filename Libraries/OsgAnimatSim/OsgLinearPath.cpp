@@ -34,9 +34,9 @@ OsgLinearPath::OsgLinearPath()
     m_CurveIsValid(false),
     m_Interpolated(0.0, 0.0, 0.0),
 	m_lpTrackBody(NULL),
-	m_bVisible(TRUE),
-	m_bVisibleInSim(FALSE),
-	m_bShowWaypoints(FALSE),
+	m_bVisible(true),
+	m_bVisibleInSim(false),
+	m_bShowWaypoints(false),
 	m_dblStartTime(0),
 	m_dblEndTime(1),
 	m_lpParentWindow(NULL),
@@ -486,9 +486,9 @@ void OsgLinearPath::PartID(string strID)
 
 double OsgLinearPath::StartTime() {return m_dblStartTime;}
 
-void OsgLinearPath::StartTime(double dblTime, BOOL bSortPaths)
+void OsgLinearPath::StartTime(double dblTime, bool bSortPaths)
 {
-	Std_IsAboveMin((double) 0, dblTime, TRUE, "StartTime", TRUE);
+	Std_IsAboveMin((double) 0, dblTime, true, "StartTime", true);
 	m_dblStartTime = dblTime;
 	RedrawCurve();
 
@@ -498,31 +498,31 @@ void OsgLinearPath::StartTime(double dblTime, BOOL bSortPaths)
 
 double OsgLinearPath::EndTime() {return m_dblStartTime;}
 
-void OsgLinearPath::EndTime(double dblTime, BOOL bSortPaths)
+void OsgLinearPath::EndTime(double dblTime, bool bSortPaths)
 {
-	Std_IsAboveMin((double) m_dblStartTime, dblTime, TRUE, "EndTime", TRUE);
+	Std_IsAboveMin((double) m_dblStartTime, dblTime, true, "EndTime", true);
 	m_dblEndTime = dblTime;
 
 	if(bSortPaths && m_lpParentWindow)
 		m_lpParentWindow->SortPaths();
 }
 
-BOOL OsgLinearPath::Visible() 
+bool OsgLinearPath::Visible() 
 {return m_bVisible;}
 
-void OsgLinearPath::Visible(BOOL bVal)
+void OsgLinearPath::Visible(bool bVal)
 {
 	m_bVisible = bVal;
 	MakeVisible(bVal);
 }
 
-BOOL OsgLinearPath::VisibleInSim() 
+bool OsgLinearPath::VisibleInSim() 
 {return m_bVisibleInSim;}
 
-void OsgLinearPath::VisibleInSim(BOOL bVal)
+void OsgLinearPath::VisibleInSim(bool bVal)
 {m_bVisibleInSim = bVal;}
 
-void OsgLinearPath::MakeVisible(BOOL bVal)
+void OsgLinearPath::MakeVisible(bool bVal)
 {
 	if(m_osgSpline)
 	{
@@ -533,10 +533,10 @@ void OsgLinearPath::MakeVisible(BOOL bVal)
 	}
 }
 
-BOOL OsgLinearPath::ShowWaypoints() 
+bool OsgLinearPath::ShowWaypoints() 
 {return m_bShowWaypoints;}
 
-void OsgLinearPath::ShowWaypoints(BOOL bVal)
+void OsgLinearPath::ShowWaypoints(bool bVal)
 {
 	m_bShowWaypoints = bVal;
 	RedrawCurve();
@@ -612,89 +612,89 @@ void OsgLinearPath::ResetSimulation()
 }
 
 
-BOOL OsgLinearPath::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OsgLinearPath::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "TRACKPARTID")
 	{
 		PartID(strValue);
 		Initialize();
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "STARTTIME")
 	{
 		StartTime((double) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ENDTIME")
 	{
 		EndTime((double) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LINECOLOR")
 	{
 		LineColor(strValue);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "LINECOLOR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vLineColor.g(), m_vLineColor.b(), m_vLineColor.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vLineColor.g(), m_vLineColor.b(), m_vLineColor.a()};
 		LineColor(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "LINECOLOR.GREEN")
 	{
-		float aryVal[4] = {m_vLineColor.r(), atof(strValue.c_str()), m_vLineColor.b(), m_vLineColor.a()};
+		float aryVal[4] = {m_vLineColor.r(), (float) atof(strValue.c_str()), m_vLineColor.b(), m_vLineColor.a()};
 		LineColor(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "LINECOLOR.BLUE")
 	{
-		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), atof(strValue.c_str()), m_vLineColor.a()};
+		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), (float) atof(strValue.c_str()), m_vLineColor.a()};
 		LineColor(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "LINECOLOR.ALPHA")
 	{
-		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), m_vLineColor.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vLineColor.r(), m_vLineColor.g(), m_vLineColor.b(), (float) atof(strValue.c_str())};
 		LineColor(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "VISIBLE")
 	{
 		Visible(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "VISIBLEINSIM")
 	{
 		VisibleInSim(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SHOWWAYPOINTS")
 	{
 		ShowWaypoints(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void OsgLinearPath::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -761,7 +761,7 @@ void OsgLinearPath::AddWaypoint(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void OsgLinearPath::RemoveWaypoint(string strID, BOOL bThrowError)
+void OsgLinearPath::RemoveWaypoint(string strID, bool bThrowError)
 {
 	int iPos = FindWaypointPos(strID, bThrowError);
 	m_ControlPoints.erase(m_ControlPoints.begin()+iPos);
@@ -781,7 +781,7 @@ void OsgLinearPath::RemoveWaypoint(string strID, BOOL bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int OsgLinearPath::FindWaypointPos(string strID, BOOL bThrowError)
+int OsgLinearPath::FindWaypointPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -796,38 +796,38 @@ int OsgLinearPath::FindWaypointPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-BOOL OsgLinearPath::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool OsgLinearPath::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "WAYPOINT")
 	{
 		AddWaypoint(strXml);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL OsgLinearPath::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool OsgLinearPath::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "WAYPOINT")
 	{
 		RemoveWaypoint(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 void OsgLinearPath::Initialize()
@@ -849,8 +849,8 @@ void OsgLinearPath::Load(CStdXml &oXml)
 
 	m_vLineColor.Load(oXml, "LineColor", false);
 
-	EndTime(oXml.GetChildDouble("EndTime", m_dblEndTime), FALSE);
-	StartTime(oXml.GetChildDouble("StartTime", m_dblStartTime), FALSE);
+	EndTime(oXml.GetChildDouble("EndTime", m_dblEndTime), false);
+	StartTime(oXml.GetChildDouble("StartTime", m_dblStartTime), false);
 	PartID(oXml.GetChildString("LinkedBodyPartID", m_strPartID));
 	VisibleInSim(oXml.GetChildBool("VisibleInSim", m_bVisibleInSim));
 
@@ -892,7 +892,7 @@ try
 {
 	osg::ref_ptr<ControlPoint> lpPoint(new ControlPoint());
 
-	lpPoint->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpPoint->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 
 	lpPoint->Load(oXml);
 	lpPoint->ParentSpline(this);
@@ -935,7 +935,7 @@ osg::Vec3d ControlPoint::Position() {return m_Pos;}
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void ControlPoint::Position(CStdFPoint &oPoint, BOOL bUseScaling) 
+void ControlPoint::Position(CStdFPoint &oPoint, bool bUseScaling) 
 {
 	CStdFPoint oNewPoint, oReportPosition;
 	if(bUseScaling && m_lpSim)
@@ -968,7 +968,7 @@ void ControlPoint::Position(CStdFPoint &oPoint, BOOL bUseScaling)
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void ControlPoint::Position(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+void ControlPoint::Position(float fltX, float fltY, float fltZ, bool bUseScaling) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Position(vPos, bUseScaling);
@@ -985,7 +985,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void ControlPoint::Position(string strXml, BOOL bUseScaling)
+void ControlPoint::Position(string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1002,18 +1002,18 @@ double ControlPoint::Time()
 
 void ControlPoint::Time(double dblVal)
 {
-	Std_IsAboveMin((double) 0, dblVal, TRUE, "Waypoint Time", true);
+	Std_IsAboveMin((double) 0, dblVal, true, "Waypoint Time", true);
 	m_T = dblVal;
 	if(m_lpParentSpline)
 		m_lpParentSpline->RedrawCurve();
 }
 
-BOOL ControlPoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ControlPoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strDataType == "POSITION")
 	{
@@ -1049,7 +1049,7 @@ BOOL ControlPoint::SetData(const string &strDataType, const string &strValue, BO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 

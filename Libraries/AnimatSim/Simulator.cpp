@@ -11,6 +11,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 #include "Gain.h"
 #include "Node.h"
 #include "IPhysicsMovableItem.h"
@@ -55,8 +56,8 @@ Simulator ANIMAT_PORT *GetSimulator()
 **/
 Simulator::Simulator()
 {
-	m_bSteppingSim = FALSE;
-	m_bShuttingDown = FALSE;
+	m_bSteppingSim = false;
+	m_bShuttingDown = false;
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
 	m_fltTime = 0;
@@ -67,16 +68,16 @@ Simulator::Simulator()
 	m_fltEndSimTime = -1;
 	m_lEndSimTimeSlice = -1;
 	m_lStartSimTick = 0;
-	m_bStopSimulation = FALSE;
-	m_bForceSimulationStop = FALSE;
-    m_bBlockSimulation = FALSE;
-	m_bSimBlockConfirm = FALSE;
+	m_bStopSimulation = false;
+	m_bForceSimulationStop = false;
+    m_bBlockSimulation = false;
+	m_bSimBlockConfirm = false;
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iPhysicsStepCount = 0;
 	m_iVideoLoops = 0;
 	m_lpAnimatClassFactory = NULL;
-	m_bSimulateHydrodynamics = FALSE;
+	m_bSimulateHydrodynamics = false;
 
 	m_fltGravity = (float) -9.81;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
@@ -95,28 +96,28 @@ Simulator::Simulator()
 	m_fltLinearKineticLoss = 0.1e-9f;
 	m_fltAngularKineticLoss = 1e-12f;
 
-	m_bForceFastMoving = TRUE;
+	m_bForceFastMoving = true;
 	m_iSelectionMode = COLLISION_SELECTION_MODE;
-	m_bAddBodiesMode = FALSE;
+	m_bAddBodiesMode = false;
 	m_fltRecFieldSelRadius = 0.05f;
 	m_iPhysicsBodyCount = 0;
 
-	m_bPaused = TRUE;
-	m_bInitialized = FALSE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bInitialized = false;
+	m_bSimRunning = false;
 	m_fltAlphaThreshold = 0.2f;
 
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
-	m_bManualStepSimulation = FALSE;
+	m_bManualStepSimulation = false;
 	m_lpVideoRecorder = NULL;
 	m_lpVideoPlayback = NULL;
 	m_lpSimRecorder = NULL;
 	m_lpSimStopPoint = NULL;
-	m_bEnableSimRecording = FALSE;
+	m_bEnableSimRecording = false;
 	m_lSnapshotByteSize = 0;
 
-	m_bAutoGenerateRandomSeed = TRUE;
+	m_bAutoGenerateRandomSeed = true;
 	m_iManualRandomSeed = 12345;
 
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
@@ -143,7 +144,7 @@ Simulator::Simulator()
 	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
-	m_bRecordVideo = FALSE;
+	m_bRecordVideo = false;
 	m_strVideoFilename = "Video.avi";
 	m_fltVideoRecordFrameTime = 1e-3f;
 	m_fltVideoPlaybackFrameTime = 100e-3f;
@@ -159,10 +160,10 @@ Simulator::Simulator()
 
 	m_lpSimCallback = NULL;
 	m_lpWinMgr = NULL;
-	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
 
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
@@ -179,8 +180,8 @@ Simulator::~Simulator()
 
 try
 {
-	m_bSteppingSim = FALSE;
-	m_bShuttingDown = TRUE;
+	m_bSteppingSim = false;
+	m_bShuttingDown = true;
 	g_lpSimulator = NULL;
 	if(m_lpAnimatClassFactory) {delete m_lpAnimatClassFactory; m_lpAnimatClassFactory = NULL;}
 	m_aryOrganisms.RemoveAll();
@@ -221,7 +222,7 @@ try
 	m_aryFoodSources.RemoveAll();	
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
 
@@ -297,7 +298,7 @@ void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL Simulator::Paused() {return m_bPaused;}
+bool Simulator::Paused() {return m_bPaused;}
 
 /**
 \brief	Sets the Paused flag.
@@ -310,7 +311,7 @@ need to call the PauseSimulation method.
 
 \param	bVal	true to value. 
 **/
-void Simulator::Paused(BOOL bVal) {m_bPaused = bVal;}
+void Simulator::Paused(bool bVal) {m_bPaused = bVal;}
 
 /**
 \brief	Tells if the simulation has been initialized or not. 
@@ -320,7 +321,7 @@ void Simulator::Paused(BOOL bVal) {m_bPaused = bVal;}
 
 \return	true if Initialized, false else.
 **/
-BOOL Simulator::Initialized() {return m_bInitialized;}
+bool Simulator::Initialized() {return m_bInitialized;}
 
 /**
 \brief	Sets whether the simulation has been Initialized. 
@@ -330,7 +331,7 @@ BOOL Simulator::Initialized() {return m_bInitialized;}
 
 \param	bVal	true if initialized. 
 **/
-void Simulator::Initialized(BOOL bVal) {m_bInitialized = bVal;}
+void Simulator::Initialized(bool bVal) {m_bInitialized = bVal;}
 
 /**
 \brief	Gets the list of pointers to all objects in the simulation.
@@ -449,7 +450,7 @@ void Simulator::VisualSelectionMode(int iVal)
 
 \return	true if GUI is in AddBody mode, false else.
 **/
-BOOL Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
+bool Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
 
 /**
 \brief	Sets the AddBodies mode. 
@@ -463,7 +464,7 @@ the correct manner. This flag lets it know the state of that mode.
 
 \param	bVal	new value. 
 **/
-void Simulator::AddBodiesMode(BOOL bVal) {m_bAddBodiesMode = bVal;}
+void Simulator::AddBodiesMode(bool bVal) {m_bAddBodiesMode = bVal;}
 
 /**
 \brief	Calback object from the simulation.
@@ -595,7 +596,7 @@ void Simulator::PhysicsSliceCount(long lVal) {m_lPhysicsSliceCount = lVal;}
 
 \return	true if manual stepping, false else.
 **/
-BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
+bool Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
 
 /**
 \brief	Sets whether the simulation is being stepped manually by the user.
@@ -605,7 +606,7 @@ BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
 
 \param	bVal	true to step manually. 
 **/
-void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;}
+void Simulator::ManualStepSimulation(bool bVal) {m_bManualStepSimulation = bVal;}
 
 /**
 \brief	Gets whether the simulation is running.
@@ -615,7 +616,7 @@ void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;
 
 \return	true if it is running, false else.
 **/
-BOOL Simulator::SimRunning() {return m_bSimRunning;}
+bool Simulator::SimRunning() {return m_bSimRunning;}
 
 /**
 \brief	Tells whether the simulation is shutting down or not.
@@ -627,7 +628,7 @@ BOOL Simulator::SimRunning() {return m_bSimRunning;}
 
 \return	true if it shutting down, false otherwise.
 **/
-BOOL Simulator::ShuttingDown() {return m_bShuttingDown;}
+bool Simulator::ShuttingDown() {return m_bShuttingDown;}
 
 /**
 \brief	Gets whether we have set the simulation to force fast moving calculations.
@@ -637,7 +638,7 @@ BOOL Simulator::ShuttingDown() {return m_bShuttingDown;}
 
 \return	true if it force, false else.
 **/
-BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
+bool Simulator::ForceFastMoving() {return m_bForceFastMoving;}
 
 /**
 \brief	Set simulation to Force fast moving caculations.
@@ -647,7 +648,7 @@ BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
 
 \param	bVal	true to force. 
 **/
-void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
+void Simulator::ForceFastMoving(bool bVal) {m_bForceFastMoving = bVal;}
 
 /**
 \brief	Gets whether to automatically generate a random seed.
@@ -657,7 +658,7 @@ void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
 
 \return	true if auto generating seed, false to if using currently set seed.
 **/
-BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
+bool Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
 
 /**
 \brief	Sets whether to automatically generate random seed.
@@ -667,7 +668,7 @@ BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
 
 \param	bVal	true to generate automatic seed. 
 **/
-void Simulator::AutoGenerateRandomSeed(BOOL bVal) {m_bAutoGenerateRandomSeed = bVal;}
+void Simulator::AutoGenerateRandomSeed(bool bVal) {m_bAutoGenerateRandomSeed = bVal;}
 
 /**
 \brief	Gets the manual random seed value.
@@ -729,9 +730,9 @@ float Simulator::LinearCompliance() {return m_fltLinearCompliance;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearCompliance(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearCompliance");
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearCompliance");
 	
 	if(bUseScaling)
 		fltVal *= m_fltMassUnits;
@@ -758,9 +759,9 @@ float Simulator::AngularCompliance() {return m_fltAngularCompliance;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularCompliance(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularCompliance");
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularCompliance");
 	
 	if(bUseScaling)
 		fltVal *= m_fltMassUnits*m_fltDistanceUnits*m_fltDistanceUnits;
@@ -787,9 +788,9 @@ float Simulator::LinearDamping() {return m_fltLinearDamping;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearDamping(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearDamping");
 	
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
@@ -816,9 +817,9 @@ float Simulator::AngularDamping() {return m_fltAngularDamping;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularDamping(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularDamping");
 	
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
@@ -844,9 +845,9 @@ float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
 
 \param	fltVal	The new value. 
 **/
-void Simulator::LinearKineticLoss(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearKineticLoss(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearKineticLoss");
 	
 	if(bUseScaling)
 		fltVal = fltVal * this->DisplayMassUnits();
@@ -872,9 +873,9 @@ float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
 
 \param	fltVal	The new value. 
 **/
-void Simulator::AngularKineticLoss(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularKineticLoss(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularKineticLoss");
 	
 	if(bUseScaling)
 		fltVal = fltVal * this->DisplayMassUnits();
@@ -904,7 +905,7 @@ float Simulator::TimeStep()
 
 \return	true to use the sim end time, false else.
 **/
-BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
+bool Simulator::SetEndSimTime() {return m_bSetEndSim;}
 
 /**
 \brief	Sets whether to use the simulation end time.
@@ -914,7 +915,7 @@ BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
 
 \param	bVal	true to use simulation end time. 
 **/
-void Simulator::SetEndSimTime(BOOL bVal) {m_bSetEndSim = bVal;}
+void Simulator::SetEndSimTime(bool bVal) {m_bSetEndSim = bVal;}
 
 /**
 \brief	Gets the time at which to automatically end the simulation.
@@ -936,7 +937,7 @@ float Simulator::EndSimTime() {return m_fltEndSimTime;}
 **/
 void Simulator::EndSimTime(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "EndSimTime");
+	Std_IsAboveMin((float) 0, fltVal, true, "EndSimTime");
 
 	m_fltEndSimTime = fltVal;
 	m_lEndSimTimeSlice = fltVal/m_fltTimeStep; 
@@ -962,7 +963,7 @@ long Simulator::EndSimTimeSlice() {return m_lEndSimTimeSlice;}
 **/
 void Simulator::EndSimTimeSlice(long lVal) 
 {
-	Std_IsAboveMin((long) 0, lVal, TRUE, "EndSimTimeSlice");
+	Std_IsAboveMin((long) 0, lVal, true, "EndSimTimeSlice");
 
 	m_lEndSimTimeSlice = lVal;
 	m_fltEndSimTime = m_lEndSimTimeSlice*m_fltTimeStep;
@@ -976,7 +977,7 @@ void Simulator::EndSimTimeSlice(long lVal)
 
 \return	true if it is stopped, false else.
 **/
-BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
+bool Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
 
 /**
 \brief	Gets the frame rate used for the simulation windows in cylces per second.
@@ -1010,7 +1011,7 @@ float Simulator::DesiredFrameStep() {return m_fltDesiredFrameStep;}
 **/
 void Simulator::DesiredFrameRate(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+	Std_IsAboveMin((int) 0, iVal, true, "FrameRate");
 
 	m_iDesiredFrameRate = iVal;
  	m_fltDesiredFrameStep = ((1/ (float) m_iDesiredFrameRate)*1);
@@ -1056,7 +1057,7 @@ between each iteration of the physics engine.
 void Simulator::PhysicsStepInterval(short iVal) 
 {
 	if(iVal == 0) iVal = 1;
-	Std_IsAboveMin((int) 0, (int) iVal, TRUE, "PhysicsStepInterval");
+	Std_IsAboveMin((int) 0, (int) iVal, true, "PhysicsStepInterval");
 	m_iPhysicsStepInterval = iVal;
 }
 
@@ -1070,7 +1071,7 @@ void Simulator::PhysicsStepInterval(short iVal)
 **/
 void Simulator::PhysicsTimeStep(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
+	Std_IsAboveMin((float) 0, fltVal, true, "PhysicsTimeStep");
 
 	//Set it so that it will be taken into consideration when finding min value.
 	m_fltPhysicsTimeStep = fltVal;
@@ -1133,7 +1134,7 @@ float Simulator::Gravity() {return m_fltGravity;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::Gravity(float fltVal, BOOL bUseScaling)
+void Simulator::Gravity(float fltVal, bool bUseScaling)
 {
 	//We must convert the gravity to use the correct scale.
 	if(bUseScaling)
@@ -1163,9 +1164,9 @@ float Simulator::MouseSpringStiffness() {return m_fltMouseSpringStiffness;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
+void Simulator::MouseSpringStiffness(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringStiffness", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "MouseSpringStiffness", true);
 
 	if(bUseScaling)
 		fltVal *= this->InverseMassUnits();
@@ -1194,9 +1195,9 @@ float Simulator::MouseSpringDamping() {return m_ftlMouseSpringDamping;}
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::MouseSpringDamping(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "MouseSpringDamping", true);
 
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
@@ -1208,7 +1209,7 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 
 \details Tells whether or not we will be doing hydrodynamic simulations.
 If you are not doing stuff underwater then be sure this is set to
-FALSE. The hydrodynamics adds extra overhead that can slow the
+false. The hydrodynamics adds extra overhead that can slow the
 simulation down slightly.
 
 \author	dcofer
@@ -1216,14 +1217,14 @@ simulation down slightly.
 
 \return	true if it uses hydrodynamics, false else.
 **/
-BOOL Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
+bool Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
 
 /**
 \brief	Sets whether the simulation uses hydrodynamics.
 
 \details Tells whether or not we will be doing hydrodynamic simulations.
 If you are not doing stuff underwater then be sure this is set to
-FALSE. The hydrodynamics adds extra overhead that can slow the
+false. The hydrodynamics adds extra overhead that can slow the
 simulation down slightly.
 
 \author	dcofer
@@ -1231,7 +1232,7 @@ simulation down slightly.
 
 \param	bVal	true use hydrodynamics. 
 **/
-void Simulator::SimulateHydrodynamics(BOOL bVal)
+void Simulator::SimulateHydrodynamics(bool bVal)
 {
 	m_bSimulateHydrodynamics = bVal;
 }
@@ -1258,12 +1259,12 @@ int Simulator::GetMaterialID(string strID) {return -1;}
 
 \return	true if physics being updated, false if not.
 **/
-BOOL Simulator::IsPhysicsBeingUpdated()
+bool Simulator::IsPhysicsBeingUpdated()
 {
 	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -1323,13 +1324,13 @@ float Simulator::AlphaThreshold() {return m_fltAlphaThreshold;}
 
 void Simulator::AlphaThreshold(float fltValue)
 {
-	Std_InValidRange((float) 0, (float) 1, fltValue, TRUE, "AlphaThreshold");
+	Std_InValidRange((float) 0, (float) 1, fltValue, true, "AlphaThreshold");
 	m_fltAlphaThreshold = fltValue;
 }
 
 float Simulator::RecFieldSelRadius() {return m_fltRecFieldSelRadius;}
 
-void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdateAllBodies)
+void Simulator::RecFieldSelRadius(float fltValue, bool bUseScaling, bool bUpdateAllBodies)
 {
 	if(bUseScaling)
 		m_fltRecFieldSelRadius = fltValue * this->InverseDistanceUnits();
@@ -1623,7 +1624,7 @@ void Simulator::VideoPlayback(KeyFrame *lpFrame) {m_lpVideoPlayback = lpFrame;}
 
 \return	true if recording is enabled, false else.
 **/
-BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
+bool Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
 
 /**
 \brief	Sets whether simulation recording is Enabled.
@@ -1633,7 +1634,7 @@ BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
 
 \param	bVal	true to enable. 
 **/
-void Simulator::EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;}
+void Simulator::EnableSimRecording(bool bVal) {m_bEnableSimRecording = bVal;}
 
 /**
 \brief	Gets the snapshot byte size.
@@ -1715,7 +1716,7 @@ void Simulator::InitializeStructures()
 		//name. If there is then get rid of it.
 		string strVideoFile = m_strProjectPath + m_strVideoFilename;
 		struct stat f__stat;
-		BOOL bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
+		bool bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
 		if(bFileExists)
 			remove(strVideoFile.c_str( ));
 	}
@@ -1752,7 +1753,7 @@ changes.
 \author	dcofer
 \date	3/28/2011
 **/
-void Simulator::BlockSimulation() {m_bBlockSimulation = TRUE;}
+void Simulator::BlockSimulation() {m_bBlockSimulation = true;}
 
 /**
 \brief	Unblock simulation.
@@ -1764,7 +1765,7 @@ This method unblocks the simulation to allow processing to resume.
 \author	dcofer
 \date	3/28/2011
 **/
-void Simulator::UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;}
+void Simulator::UnblockSimulation() {m_bBlockSimulation = false; m_bSimBlockConfirm = false;}
 
 /**
 \brief	Confirms that the simulation has been blocked.
@@ -1778,7 +1779,7 @@ This method tells whether the simulation has been blocked.
 
 \return	true if it is blocked, false else.
 **/
-BOOL Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
+bool Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
 
 /**
 \brief	Wait for simulation block.
@@ -1795,14 +1796,14 @@ occurs.
 
 \return	true if it succeeds in getting the simulation block, false if it fails.
 **/
-BOOL Simulator::WaitForSimulationBlock(long lTimeout)
+bool Simulator::WaitForSimulationBlock(long lTimeout)
 {
 	if(!m_bSteppingSim)
-		return TRUE;
+		return true;
 
-	m_bBlockSimulation = TRUE;
+	m_bBlockSimulation = true;
 	long lTime = 0;
-	BOOL bDone = FALSE;
+	bool bDone = false;
 	while(!bDone)
 	{
 		if(!m_bSimBlockConfirm)
@@ -1812,12 +1813,12 @@ BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 			lTime+=10;
 			if(lTimeout > 0 && lTime >= lTimeout)
 			{
-				bDone = TRUE;
-				m_bBlockSimulation = FALSE;
+				bDone = true;
+				m_bBlockSimulation = false;
 			}
 		}
 		else
-			bDone = TRUE;
+			bDone = true;
 	}
 
 	return m_bSimBlockConfirm;
@@ -1835,15 +1836,15 @@ This blocks the simulation and lets the WaitForSimulationBlock code to proceed.
 
 \return	true if it blocks, false if it not.
 **/
-BOOL Simulator::CheckSimulationBlock()
+bool Simulator::CheckSimulationBlock()
 {
 	if(m_bBlockSimulation)
 	{
-		m_bSimBlockConfirm = TRUE;
+		m_bSimBlockConfirm = true;
         Std_Sleep(1);
 	}
 	else
-		m_bSimBlockConfirm = FALSE;
+		m_bSimBlockConfirm = false;
 
 	return m_bSimBlockConfirm;
 }
@@ -1869,7 +1870,7 @@ void Simulator::Reset()
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iVideoLoops = 0;
-	m_bSimulateHydrodynamics = FALSE;
+	m_bSimulateHydrodynamics = false;
 	m_fltGravity = (float) -9.8;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -1888,8 +1889,8 @@ void Simulator::Reset()
 	m_fltAngularKineticLoss = 1e-12f;
 	m_iPhysicsBodyCount = 0;
 
-	m_bForceFastMoving = TRUE;
-	m_bSteppingSim = FALSE;
+	m_bForceFastMoving = true;
+	m_bSteppingSim = false;
 
 	if(m_lpWinMgr)
 		m_lpWinMgr->Close();
@@ -1900,7 +1901,7 @@ void Simulator::Reset()
 	m_aryAllStructures.RemoveAll();
 	m_lpVideoRecorder = NULL; //Do not delete this object. It is in the list of Keyframes.
 	m_lpVideoPlayback = NULL; //Do not delete this object. It is in the list of Keyframes.
-	m_bEnableSimRecording = FALSE;
+	m_bEnableSimRecording = false;
 	m_lSnapshotByteSize = 0;
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
 	m_fltPresetPlaybackTimeStep = 0;
@@ -1926,11 +1927,11 @@ void Simulator::Reset()
 	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
-	m_bPaused = TRUE;
-	m_bInitialized = FALSE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bInitialized = false;
+	m_bSimRunning = false;
 
-	m_bRecordVideo = FALSE;
+	m_bRecordVideo = false;
 	m_strVideoFilename = "Video.avi";
 	m_fltVideoRecordFrameTime = 1e-3f;
 	m_fltVideoPlaybackFrameTime = 100e-3f;
@@ -1991,8 +1992,8 @@ void Simulator::ResetSimulation()
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iPhysicsStepCount = 0;
-	m_bPaused = TRUE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bSimRunning = false;
 
 	InitializeRandomNumbers();
 
@@ -2238,7 +2239,7 @@ void Simulator::StepSimulation()
 **/
 void Simulator::SimulateBegin()
 {
-	m_bSteppingSim = TRUE;
+	m_bSteppingSim = true;
 }
 
 /**
@@ -2472,14 +2473,16 @@ double Simulator::RemainingVideoFrameTime()
 **/
 void Simulator::GenerateAutoSeed()
 {
-	/* TODO NEED TO REPLACE
-	SYSTEMTIME st;
-	GetLocalTime(&st);
+    //NEED TO TEST
+    time_t rawtime;
+    struct tm * timeinfo;
 
-	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+	m_iManualRandomSeed = (unsigned) (timeinfo->tm_sec + timeinfo->tm_hour + Std_IRand(0, 1000));
 	Std_SRand(m_iManualRandomSeed);
 	srand(m_iManualRandomSeed);
-	*/
 }
 
 /**
@@ -2575,7 +2578,7 @@ void Simulator::Load(CStdXml &oXml)
 	m_bPaused = oXml.GetChildBool("StartPaused", m_bPaused);
 	m_bEnableSimRecording = oXml.GetChildBool("EnableSimRecording", m_bEnableSimRecording);
 	
-	SetEndSimTime(oXml.GetChildBool("SetSimEnd", FALSE));
+	SetEndSimTime(oXml.GetChildBool("SetSimEnd", false));
 	EndSimTime(oXml.GetChildFloat("SimEndTime", m_fltEndSimTime));
  
 	PlaybackControlMode(oXml.GetChildInt("PlaybackControlMode", m_iPlaybackControlMode));
@@ -2591,10 +2594,10 @@ void Simulator::Load(CStdXml &oXml)
 	if(m_lpWinMgr) 
 		m_lpWinMgr->Load(oXml);
 
-	if(oXml.FindChildElement("ExternalStimuli", FALSE))
+	if(oXml.FindChildElement("ExternalStimuli", false))
 		m_oExternalStimuliMgr.Load(oXml);
 
-	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
+	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", false))
 		m_lpSimRecorder->Load(oXml);
 
 	TRACE_DEBUG("Finished loading simulator config from Xml.");
@@ -2704,7 +2707,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	m_oMaterialMgr.Load(oXml);
 
-	if(oXml.FindChildElement("OdorTypes", FALSE))
+	if(oXml.FindChildElement("OdorTypes", false))
 	{
 		oXml.IntoElem();  //Into Odors Element
 		int iChildCount = oXml.NumberOfChildren();
@@ -2717,7 +2720,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf Odors Element
 	}	
 
-	if(oXml.FindChildElement("Organisms", FALSE))
+	if(oXml.FindChildElement("Organisms", false))
 	{
 		oXml.IntoElem(); //Into Organisms Element
 		int iCount = oXml.NumberOfChildren();
@@ -2730,7 +2733,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf Organisms Element
 	}
 
-	if(oXml.FindChildElement("Structures", FALSE))
+	if(oXml.FindChildElement("Structures", false))
 	{
 		oXml.IntoElem(); //Into Structures Element
 		int iCount = oXml.NumberOfChildren();
@@ -2768,8 +2771,8 @@ Structure *Simulator::LoadStructure(CStdXml &oXml)
 
 try
 {
-	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", TRUE));
-	lpStructure->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", true));
+	lpStructure->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpStructure->Load(oXml);
 
 	AddStructure(lpStructure);
@@ -2817,7 +2820,7 @@ try
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpOrganism->Load(oXml);
 
 	AddOrganism(lpOrganism);
@@ -2857,7 +2860,7 @@ try
 {
 	lpOdorType = new OdorType();
 
-	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpOdorType->Load(oXml);
 
 	AddOdorType(lpOdorType);
@@ -2941,7 +2944,7 @@ by simply specifying the name of the dll and the class we want.
 
 \return	Pointer to the created object.
 **/
-CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError)
+CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, bool bThrowError)
 {
 	strModule = Std_CheckString(strModule);
 	
@@ -2954,7 +2957,7 @@ CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, st
 	}
 	else
 	{
-		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, FALSE);
+		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, false);
 
 		if(lpFactory)
 			return lpFactory->CreateObject(strClassName, strType, bThrowError);
@@ -2992,12 +2995,10 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//Set the log file prefix
-#ifndef _WIN32_WCE
 	if(Std_DirectoryExists(strExecutablePath + "Logs"))
 		Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
 	else
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
-#endif
 
 	string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
 	string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
@@ -3217,7 +3218,7 @@ catch(...)
 \return	null if it fails and bThrowError=false, else the found neural module factory.
 \exception If bThrowError=True and no factory is found it throws an exception.
 **/
-IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL bThrowError)
+IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, bool bThrowError)
 {
 	IStdClassFactory *lpFactory = NULL;
 	CStdMap<string, IStdClassFactory *>::iterator oPos;
@@ -3245,7 +3246,7 @@ IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL 
 \return	null if it fails, else the found organism.
 \exception If bThrowError=True and no organism is found it throws an exception.
 **/
-Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
+Organism *Simulator::FindOrganism(string strOrganismID, bool bThrowError)
 {
 	Organism *lpOrganism = NULL;
 	CStdPtrMap<string, Organism>::iterator oPos;
@@ -3275,7 +3276,7 @@ Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
+Structure *Simulator::FindStructure(string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
 	CStdPtrMap<string, Structure>::iterator oPos;
@@ -3301,7 +3302,7 @@ Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
 \return	null if it fails, else the found odor type.
 \exception If bThrowError=True and no odor type is found it throws an exception.
 **/
-OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
+OdorType *Simulator::FindOdorType(string strOdorID, bool bThrowError)
 {
 	OdorType *lpOdorType = NULL;
 	CStdPtrMap<string, OdorType>::iterator oPos;
@@ -3330,7 +3331,7 @@ OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowError)
+Structure *Simulator::FindStructureFromAll(string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
 	CStdPtrMap<string, Structure>::iterator oPos;
@@ -3364,7 +3365,7 @@ specified StructureID.
 
 \exception	If	bThrowError=True and no structure or joint is found it throws an exception. 
 **/
-Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThrowError)
+Joint *Simulator::FindJoint(string strStructureID, string strJointID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3393,7 +3394,7 @@ specified StructureID.
 \return	null if it fails, else the found structure.
 \exception	If	bThrowError=True and no structure or body is found it throws an exception. 
 **/
-RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError)
+RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3418,7 +3419,7 @@ and tries to find one with a matching ID.
 \return	null if it fails, else the found by identifier.
 \exception	If	bThrowError=True and no objects is found it throws an exception. 
 **/
-AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
+AnimatBase *Simulator::FindByID(string strID, bool bThrowError)
 {
 	AnimatBase *lpFind = NULL;
 	CStdMap<string, AnimatBase *>::iterator oPos;
@@ -3480,7 +3481,7 @@ void Simulator::FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius
 **/
 void Simulator::AddToObjectList(AnimatBase *lpItem)
 {
-	if(FindByID(lpItem->ID(), FALSE) != NULL)
+	if(FindByID(lpItem->ID(), false) != NULL)
 		THROW_PARAM_ERROR(Al_Err_lDuplicateAddOfObject, Al_Err_strDuplicateAddOfObject, "ID", lpItem->ID());
 
 	m_aryObjectList.Add(lpItem->ID(), lpItem);
@@ -3496,7 +3497,7 @@ void Simulator::AddToObjectList(AnimatBase *lpItem)
 **/
 void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
 {
-	if(FindByID(lpItem->ID(), FALSE))
+	if(FindByID(lpItem->ID(), false))
 		m_aryObjectList.Remove(lpItem->ID());
 }
 
@@ -3516,12 +3517,12 @@ void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpMod
 	if(!lpModule->ClassFactory())
 		THROW_PARAM_ERROR(Al_Err_lModuleClassFactoryNotDefined, Al_Err_strModuleClassFactoryNotDefined, "ModuleName", strModuleName);
 
-	if(!FindNeuralModuleFactory(strModuleName, FALSE))
+	if(!FindNeuralModuleFactory(strModuleName, false))
 		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
 }
 
 
-int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
+int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError)
 {
 	int iCount = aryAdapters.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -3551,7 +3552,7 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		if(FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+		if(FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false) == -1)
 			m_arySourcePhysicsAdapters.Add(lpAdapter);
 	}
 	else
@@ -3582,7 +3583,7 @@ void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		int iIdx = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE);
+		int iIdx = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false);
 		if(iIdx > -1)
 			m_arySourcePhysicsAdapters.RemoveAt(iIdx);
 	}
@@ -3614,7 +3615,7 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		if(FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+		if(FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false) == -1)
 		{
 			m_aryTargetPhysicsAdapters.Add(lpAdapter);
 			m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
@@ -3648,7 +3649,7 @@ void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		int iIdx = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE);
+		int iIdx = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false);
 		if(iIdx > -1)
 		{
 			m_aryTargetPhysicsAdapters.RemoveAt(iIdx);
@@ -3766,7 +3767,7 @@ void Simulator::AddOrganism(string strXml)
 \param	strID	   	GUID ID of the organism to remove. 
 \param	bThrowError	true to throw error if the organism is not found. 
 **/
-void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
+void Simulator::RemoveOrganism(string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryOrganisms.Remove(strID);
@@ -3822,7 +3823,7 @@ void Simulator::AddStructure(string strXml)
 \param	strID	   	Identifier for the structure. 
 \param	bThrowError	true to throw error if the structure is not found. 
 **/
-void Simulator::RemoveStructure(string strID, BOOL bThrowError)
+void Simulator::RemoveStructure(string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryStructures.Remove(strID);
@@ -3852,7 +3853,7 @@ void Simulator::AddOdorType(OdorType *lpOdorType)
 	}
 }
 
-void Simulator::AddOdorType(string strXml, BOOL bDoNotInit)
+void Simulator::AddOdorType(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3865,7 +3866,7 @@ void Simulator::AddOdorType(string strXml, BOOL bDoNotInit)
 		lpType->Initialize();
 }
 
-void Simulator::RemoveOdorType(string strID, BOOL bThrowError)
+void Simulator::RemoveOdorType(string strID, bool bThrowError)
 {
 	m_aryOdorTypes.Remove(strID);
 }
@@ -3918,180 +3919,180 @@ float *Simulator::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Simulator::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
 	if(strType == "VISUALSELECTIONMODE")
 	{
 		VisualSelectionMode(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ADDBODIESMODE")
 	{
 		AddBodiesMode(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "DISTANCEUNITS")
 	{
 		DistanceUnits(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MASSUNITS")
 	{
 		MassUnits(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "GRAVITY")
 	{
 		Gravity((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "PHYSICSTIMESTEP")
 	{
 		PhysicsTimeStep((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SIMULATEHYDRODYNAMICS")
 	{
 		SimulateHydrodynamics(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "AUTOGENERATERANDOMSEED")
 	{
 		AutoGenerateRandomSeed(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MANUALRANDOMSEED")
 	{
 		ManualRandomSeed((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "FRAMERATE")
 	{
 		DesiredFrameRate(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "FORCEFASTMOVING")
 	{
 		ForceFastMoving(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MOUSESPRINGSTIFFNESS")
 	{
 		MouseSpringStiffness((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MOUSESPRINGDAMPING")
 	{
 		MouseSpringDamping((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "LINEARCOMPLIANCE")
 	{
 		LinearCompliance((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ANGULARCOMPLIANCE")
 	{
 		AngularCompliance((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "LINEARDAMPING")
 	{
 		LinearDamping((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ANGULARDAMPING")
 	{
 		AngularDamping((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "LINEARKINETICLOSS")
 	{
 		LinearKineticLoss((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ANGULARKINETICLOSS")
 	{
 		AngularKineticLoss((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "SETENDSIMTIME")
 	{
 		SetEndSimTime(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ENDSIMTIME")
 	{
 		EndSimTime((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "RECFIELDSELRADIUS")
 	{
 		RecFieldSelRadius((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR")
 	{
 		BackgroundColor(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "ALPHATHRESHOLD")
 	{
 		AlphaThreshold((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.RED")
 	{
 		float aryVal[4] = {(float) atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.GREEN")
 	{
 		float aryVal[4] = {m_vBackgroundColor.r(), (float) atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.BLUE")
 	{
 		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), (float) atof(strValue.c_str()), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.ALPHA")
 	{
 		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), (float) atof(strValue.c_str())};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "TIMESTEPMODIFIED")
 	{
 		NotifyTimeStepModified();
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "PLAYBACKCONTROLMODE")
 	{
 		PlaybackControlMode(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "PRESETPLAYBACKTIMESTEP")
 	{
 		PresetPlaybackTimeStep((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "STABILITYSCALE")
 	{
 		StabilityScale((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -4195,7 +4196,7 @@ void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Simulator::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -4208,23 +4209,23 @@ BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bT
 	else if(strType == "STRUCTURE")
 	{
 		AddStructure(strXml);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ORGANISM")
 	{
 		AddOrganism(strXml);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "HUDITEM")
 	{
 		if(m_lpWinMgr)
-			return m_lpWinMgr->AddItem(strType, strXml, TRUE);
-		return FALSE;
+			return m_lpWinMgr->AddItem(strType, strXml, true);
+		return false;
 	}
 	else if(strType == "ODORTYPE")
 	{
 		AddOdorType(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError, bDoNotInit);
@@ -4233,10 +4234,10 @@ BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bT
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Simulator::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -4249,17 +4250,17 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 	else if(strType == "STRUCTURE")
 	{
 		RemoveStructure(strID);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ORGANISM")
 	{
 		RemoveOrganism(strID);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ODORTYPE")
 	{
 		RemoveOdorType(strID);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.RemoveItem(strItemType, strID, bThrowError);
@@ -4270,7 +4271,7 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion

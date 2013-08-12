@@ -64,7 +64,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of KeyFrame\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of KeyFrame\r\n", "", -1, false, true);}
 }
 
 /**
@@ -92,7 +92,7 @@ void KeyFrame::CollectInterval(int iVal) {m_iCollectInterval = iVal;}
 
 \return	true if start slice of this key frame is less than the one passed in.
 **/
-BOOL KeyFrame::operator<(ActivatedItem *lpItem)
+bool KeyFrame::operator<(ActivatedItem *lpItem)
 {
 	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(lpItem);
 
@@ -100,12 +100,12 @@ BOOL KeyFrame::operator<(ActivatedItem *lpItem)
 		THROW_ERROR(Al_Err_lItemNotKeyFrameType, Al_Err_strItemNotKeyFrameType);
 
 	if(m_lStartSlice < lpFrame->m_lStartSlice)
-		return TRUE;
+		return true;
 
 	if( (m_lStartSlice == lpFrame->m_lStartSlice) && (m_lEndSlice < lpFrame->m_lEndSlice))
-		return TRUE;
+		return true;
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -117,13 +117,13 @@ BOOL KeyFrame::operator<(ActivatedItem *lpItem)
 void KeyFrame::GenerateID()
 {
 	//Lets verify the slice data is setup correctly.
-	Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
-	Std_IsAboveMin(m_lStartSlice, m_lEndSlice, TRUE, "EndSlice");
+	Std_IsAboveMin((long) -1, m_lStartSlice, true, "StartSlice");
+	Std_IsAboveMin(m_lStartSlice, m_lEndSlice, true, "EndSlice");
 
 	m_strID = Type();
 
 	char strTail[20];
-	sprintf(strTail, "%010d", m_lStartSlice);
+	sprintf(strTail, "%010d", (int) m_lStartSlice);
 
 	m_strID += strTail;
 	m_strID = Std_CheckString(m_strID);
@@ -136,11 +136,11 @@ void KeyFrame::Load(CStdXml &oXml)
 	m_lStartSlice = oXml.GetChildLong("StartSlice");
 	m_lEndSlice = oXml.GetChildLong("EndSlice");
 
-	Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
-	Std_IsAboveMin(m_lStartSlice, m_lEndSlice, TRUE, "EndSlice");
+	Std_IsAboveMin((long) -1, m_lStartSlice, true, "StartSlice");
+	Std_IsAboveMin(m_lStartSlice, m_lEndSlice, true, "EndSlice");
 
 	m_iCollectInterval = oXml.GetChildInt("CollectInterval");
-	Std_IsAboveMin((int) 0, m_iCollectInterval, TRUE, "CollectInterval");
+	Std_IsAboveMin((int) 0, m_iCollectInterval, true, "CollectInterval");
 
 	GenerateID();
 
@@ -158,7 +158,7 @@ void KeyFrame::Load(CStdXml &oXml)
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
+bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
 {
 	return lpItem1->operator<(lpItem2);
 }

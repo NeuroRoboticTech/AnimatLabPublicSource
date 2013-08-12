@@ -36,7 +36,7 @@ double Neuron::m_dDT=0.5;
 Neuron::Neuron()
 {
 
-	m_bZapped = FALSE;
+	m_bZapped = false;
 	m_dRestingPot = -70;
 	m_dSize = 1;
 	m_dTimeConst = 0;
@@ -60,7 +60,7 @@ Neuron::Neuron()
 	m_dMemPot = 0;
 	m_dNewMemPot = 0;
 	m_dThresh = 0;
-	m_bSpike = FALSE;
+	m_bSpike = false;
 	m_fltEMemory = 0;
 
 	m_dElecSynCur = 0;
@@ -142,9 +142,9 @@ int Neuron::NeuronID() {return m_iNeuronID;}
 **/
 void Neuron::NeuronID(int iID) {m_iNeuronID = iID;}
 
-BOOL Neuron::Enabled() {return m_bZapped;}
+bool Neuron::Enabled() {return m_bZapped;}
 
-void Neuron::Enabled(BOOL bValue) 
+void Neuron::Enabled(bool bValue) 
 {
 	Node::Enabled(bValue);
 	m_bZapped = !bValue;
@@ -201,7 +201,7 @@ double Neuron::GetThresh() {return m_bZapped?0:m_dThresh;}
 
 \return	true if it spiked, false else.
 **/
-BOOL Neuron::GetSpike() {return m_bZapped?FALSE:m_bSpike;}
+bool Neuron::GetSpike() {return m_bZapped?false:m_bSpike;}
 
 /**
 \brief	Gets if the neuron is disabled.
@@ -211,7 +211,7 @@ BOOL Neuron::GetSpike() {return m_bZapped?FALSE:m_bSpike;}
 
 \return	true if it is disabled, false else.
 **/
-BOOL Neuron::GetZapped() {return m_bZapped;}
+bool Neuron::GetZapped() {return m_bZapped;}
 
 /**
 \brief	Increments the current stimulus.
@@ -637,9 +637,9 @@ double Neuron::TonicNoise() {return m_dNoise;}
 #pragma endregion
 
 
-void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	
 	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
 
@@ -666,7 +666,7 @@ void Neuron::Load(CStdXml &oXml)
 	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
-	Enabled(oXml.GetChildBool("Enabled", TRUE));
+	Enabled(oXml.GetChildBool("Enabled", true));
 	m_dToniCurrentStimulusulus=oXml.GetChildDouble("TonicStimulus");
 	m_dNoise=oXml.GetChildDouble("Noise");
 	m_dRestingPot=oXml.GetChildDouble("RestingPot");
@@ -684,7 +684,7 @@ void Neuron::Load(CStdXml &oXml)
 		if(m_lpCaActive)
 		{delete m_lpCaActive; m_lpCaActive = NULL;}
 		m_lpCaActive = new CaActivation(this, "ACTIVE");
-		m_lpCaActive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+		m_lpCaActive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 		m_lpCaActive->Load(oXml);
 	}
 
@@ -693,14 +693,14 @@ void Neuron::Load(CStdXml &oXml)
 		if(m_lpCaInactive)
 		{delete m_lpCaInactive; m_lpCaInactive = NULL;}
 		m_lpCaInactive = new CaActivation(this, "INACTIVE");
-		m_lpCaInactive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+		m_lpCaInactive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 		m_lpCaInactive->Load(oXml);
 	}
 
 	m_fltGm = (float) (1/(m_dSize*1e6));
 	m_fltVrest = (float) (m_dRestingPot*1e-3);
 	
-	if(oXml.FindChildElement("NeuronTonicInputs", FALSE) )
+	if(oXml.FindChildElement("NeuronTonicInputs", false) )
 	{
 		oXml.IntoElem();
 		int iTotalNeuronTonicInputs = oXml.NumberOfChildren();
@@ -728,7 +728,7 @@ void Neuron::Load(CStdXml &oXml)
 
 
 	m_aryIonChannels.RemoveAll();
-	if(oXml.FindChildElement("IonChannels", FALSE) )
+	if(oXml.FindChildElement("IonChannels", false) )
 	{
 		oXml.IntoElem();
 
@@ -762,7 +762,7 @@ IonChannel *Neuron::LoadIonChannel(CStdXml &oXml)
 try
 {
 	lpIonChannel = new IonChannel();
-	lpIonChannel->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	lpIonChannel->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 	lpIonChannel->Load(oXml);
 	m_aryIonChannels.Add(lpIonChannel);
 
@@ -919,7 +919,7 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 	}
 
 	m_dGK=0;
-	m_bSpike=FALSE;
+	m_bSpike=false;
 	m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
 	m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
 	m_lRefrCountDown=0;
@@ -971,12 +971,12 @@ void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 	if (m_lRefrCountDown>0)
 	{
 		m_lRefrCountDown--;
-		m_bSpike=FALSE;
+		m_bSpike=false;
 	}
 	else if (lpNS->TTX() || lpNS->HH())
-		m_bSpike=FALSE;
+		m_bSpike=false;
 	else
-		m_bSpike=(m_dMemPot>m_dThresh) ? TRUE : FALSE;
+		m_bSpike=(m_dMemPot>m_dThresh) ? true : false;
 	
 	if (m_bSpike)
 		m_lRefrCountDown=m_lAbsoluteRefr;
@@ -1251,7 +1251,7 @@ void Neuron::AddExternalNodeInput(float fltInput)
 
 \return	Pointer to the ion channel.
 **/
-IonChannel *Neuron::FindIonChannel(string strID, BOOL bThrowError)
+IonChannel *Neuron::FindIonChannel(string strID, bool bThrowError)
 {
 	for(int iChannel=0; iChannel<m_iIonChannels; iChannel++)
 		if(m_aryIonChannels[iChannel]->ID() == strID)
@@ -1274,7 +1274,7 @@ IonChannel *Neuron::FindIonChannel(string strID, BOOL bThrowError)
 
 \return	The found ion channel list position.
 **/
-int Neuron::FindIonChannelListPos(string strID, BOOL bThrowError)
+int Neuron::FindIonChannelListPos(string strID, bool bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
 
@@ -1314,7 +1314,7 @@ void Neuron::ResetSimulation()
 	m_fltEMemory = 0;
 
 	m_dGK=0;
-	m_bSpike=FALSE;
+	m_bSpike=false;
 	m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
 	m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
 	m_lRefrCountDown=0;
@@ -1421,90 +1421,90 @@ float *Neuron::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL Neuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Neuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(Node::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Node::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "RESTINGPOTENTIAL")
 	{
 		RestingPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RELATIVESIZE")
 	{
 		Size(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TIMECONSTANT")
 	{
 		TimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "INITIALTHRESHOLD")
 	{
 		InitialThreshold(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RELATIVEACCOMODATION")
 	{
 		RelativeAccomodation(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ACCOMODATIONTIMECONSTANT")
 	{
 		AccomodationTimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "AHP_CONDUCTANCE")
 	{
 		AHPAmplitude(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "AHP_TIMECONSTANT")
 	{
 		AHPTimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MAXCACONDUCTANCE")
 	{
 		BurstGMaxCa(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "TONICSTIMULUS")
 	{
 		TonicStimulus(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TONICNOISE")
 	{
 		TonicNoise(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ADDEXTERNALCURRENT")
 	{
 		AddExternalI(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -1556,7 +1556,7 @@ void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ary
 
 \param	strXml	The xml to load. 
 **/
-void Neuron::AddIonChannel(string strXml, BOOL bDoNotInit)
+void Neuron::AddIonChannel(string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1578,44 +1578,44 @@ void Neuron::AddIonChannel(string strXml, BOOL bDoNotInit)
 \param	strID	   	GUID ID for the channel to remove. 
 \param	bThrowError	true to throw error if channel is not found. 
 **/
-void Neuron::RemoveIonChannel(string strID, BOOL bThrowError)
+void Neuron::RemoveIonChannel(string strID, bool bThrowError)
 {
 	int iPos = FindIonChannelListPos(strID, bThrowError);
 	m_aryIonChannels.RemoveAt(iPos);
 }
 
-BOOL Neuron::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Neuron::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "IONCHANNEL")
 	{
 		AddIonChannel(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Neuron::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Neuron::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "IONCHANNEL")
 	{
 		RemoveIonChannel(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion

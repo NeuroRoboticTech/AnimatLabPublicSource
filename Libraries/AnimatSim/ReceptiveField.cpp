@@ -77,7 +77,7 @@ void ReceptiveField::SetVertex(CStdFPoint vPoint)
 
 \return	true if this vertex is less than the one passed in, false if not.
 **/
-BOOL ReceptiveField::operator<(ReceptiveField *lpItem)
+bool ReceptiveField::operator<(ReceptiveField *lpItem)
 {
 	if(this->m_vVertex[0] > lpItem->m_vVertex[0])
 		return false;
@@ -103,7 +103,7 @@ BOOL ReceptiveField::operator<(ReceptiveField *lpItem)
 
 \return	true if this vertex is more than the one passed in, false if not.
 **/
-BOOL ReceptiveField::operator>(ReceptiveField *lpItem)
+bool ReceptiveField::operator>(ReceptiveField *lpItem)
 {return !this->operator<(lpItem);}
 
 /**
@@ -118,7 +118,7 @@ BOOL ReceptiveField::operator>(ReceptiveField *lpItem)
 
 \return	The result of the operation.
 **/
-BOOL ReceptiveField::operator==(ReceptiveField *lpItem)
+bool ReceptiveField::operator==(ReceptiveField *lpItem)
 {
 	if( fabs(this->m_vVertex[0] - lpItem->m_vVertex[0]) < 1e-4 &&
 		  fabs(this->m_vVertex[1] - lpItem->m_vVertex[1]) < 1e-4 &&
@@ -142,7 +142,7 @@ BOOL ReceptiveField::operator==(ReceptiveField *lpItem)
 
 \return	true if this vertex is less than the one passed in, else false.
 **/
-BOOL ReceptiveField::LessThanThan(float fltX, float fltY, float fltZ)
+bool ReceptiveField::LessThanThan(float fltX, float fltY, float fltZ)
 {
 	//If the x values are not identical then decide if it is less than using the x value.
 	if(fabs(this->m_vVertex[0] - fltX) > 1e-4)
@@ -189,7 +189,7 @@ BOOL ReceptiveField::LessThanThan(float fltX, float fltY, float fltZ)
 
 \return	true if this vertex is greater than the one passed in, else false.
 **/
-BOOL ReceptiveField::GreaterThanThan(float fltX, float fltY, float fltZ)
+bool ReceptiveField::GreaterThanThan(float fltX, float fltY, float fltZ)
 {return !this->LessThanThan(fltX, fltY, fltZ);}
 
 /**
@@ -204,7 +204,7 @@ BOOL ReceptiveField::GreaterThanThan(float fltX, float fltY, float fltZ)
 
 \return	true if this vertices are the same, else false.
 **/
-BOOL ReceptiveField::Equals(float fltX, float fltY, float fltZ)
+bool ReceptiveField::Equals(float fltX, float fltY, float fltZ)
 {
 	if( fabs(this->m_vVertex[0] - fltX) < 1e-4 &&
 		  fabs(this->m_vVertex[1] - fltY) < 1e-4 &&

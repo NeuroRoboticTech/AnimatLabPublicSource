@@ -15,7 +15,7 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-OsgTranslateAxisDragger::OsgTranslateAxisDragger(BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ)
+OsgTranslateAxisDragger::OsgTranslateAxisDragger(bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ)
 {
 	if(bAllowTranslateX)
 	{

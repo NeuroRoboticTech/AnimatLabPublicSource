@@ -122,49 +122,49 @@ namespace AnimatSim
 			virtual void FrictionAngularSecondary(float fltVal);
 
 			virtual float FrictionLinearPrimaryMax();
-			virtual void FrictionLinearPrimaryMax(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void FrictionLinearPrimaryMax(float fltVal, bool bUseScaling = true);
 			virtual float FrictionLinearSecondaryMax();
-			virtual void FrictionLinearSecondaryMax(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void FrictionLinearSecondaryMax(float fltVal, bool bUseScaling = true);
 			virtual float FrictionAngularNormalMax();
-			virtual void FrictionAngularNormalMax(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void FrictionAngularNormalMax(float fltVal, bool bUseScaling = true);
 			virtual float FrictionAngularPrimaryMax();
-			virtual void FrictionAngularPrimaryMax(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void FrictionAngularPrimaryMax(float fltVal, bool bUseScaling = true);
 			virtual float FrictionAngularSecondaryMax();
-			virtual void FrictionAngularSecondaryMax(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void FrictionAngularSecondaryMax(float fltVal, bool bUseScaling = true);
 
 			virtual float SlipLinearPrimary();
-			virtual void SlipLinearPrimary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlipLinearPrimary(float fltVal, bool bUseScaling = true);
 			virtual float SlipLinearSecondary();
-			virtual void SlipLinearSecondary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlipLinearSecondary(float fltVal, bool bUseScaling = true);
 			virtual float SlipAngularNormal();
-			virtual void SlipAngularNormal(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlipAngularNormal(float fltVal, bool bUseScaling = true);
 			virtual float SlipAngularPrimary();
-			virtual void SlipAngularPrimary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlipAngularPrimary(float fltVal, bool bUseScaling = true);
 			virtual float SlipAngularSecondary();
-			virtual void SlipAngularSecondary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlipAngularSecondary(float fltVal, bool bUseScaling = true);
 
 			virtual float SlideLinearPrimary();
-			virtual void SlideLinearPrimary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlideLinearPrimary(float fltVal, bool bUseScaling = true);
 			virtual float SlideLinearSecondary();
-			virtual void SlideLinearSecondary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlideLinearSecondary(float fltVal, bool bUseScaling = true);
 			virtual float SlideAngularNormal();
-			virtual void SlideAngularNormal(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlideAngularNormal(float fltVal, bool bUseScaling = true);
 			virtual float SlideAngularPrimary();
-			virtual void SlideAngularPrimary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlideAngularPrimary(float fltVal, bool bUseScaling = true);
 			virtual float SlideAngularSecondary();
-			virtual void SlideAngularSecondary(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void SlideAngularSecondary(float fltVal, bool bUseScaling = true);
 
 			virtual float Compliance();
-			virtual void Compliance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Compliance(float fltVal, bool bUseScaling = true);
 
 			virtual float Damping();
-			virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Damping(float fltVal, bool bUseScaling = true);
 
 			virtual float Restitution();
 			virtual void Restitution(float fltVal);
 
 			virtual float MaxAdhesive();
-			virtual void MaxAdhesive(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MaxAdhesive(float fltVal, bool bUseScaling = true);
 
 			/**
 			\brief	Gets a material identifier used by the physics engine.
@@ -181,7 +181,7 @@ namespace AnimatSim
 			virtual int GetMaterialID(string strName) = 0;
 
 			virtual void CreateDefaultUnits();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);

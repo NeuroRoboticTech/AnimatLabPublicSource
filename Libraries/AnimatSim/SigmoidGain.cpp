@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of SigmoidGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of SigmoidGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -136,7 +136,7 @@ float SigmoidGain::CalculateGain(float fltInput)
 }
 
 
-BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool SigmoidGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -169,7 +169,7 @@ BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void SigmoidGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

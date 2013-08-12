@@ -23,7 +23,6 @@
     #include <limits.h>
     #include <unistd.h>
 
-	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
 	#define FALSE 0

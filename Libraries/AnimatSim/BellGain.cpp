@@ -43,7 +43,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of BellGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of BellGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -145,7 +145,7 @@ float BellGain::CalculateGain(float fltInput)
 	return fltVal;
 }
 
-BOOL BellGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool BellGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -178,7 +178,7 @@ BOOL BellGain::SetData(const string &strDataType, const string &strValue, BOOL b
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void BellGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

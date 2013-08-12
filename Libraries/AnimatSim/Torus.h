@@ -59,7 +59,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void OutsideRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void OutsideRadius(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the inside radius. 
@@ -80,7 +80,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void InsideRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void InsideRadius(float fltVal, bool bUseScaling = true);
 
 				virtual int Sides();
 				virtual void Sides(int iVal);
@@ -88,7 +88,7 @@ namespace AnimatSim
 				virtual void Rings(int iVal);
 				virtual int Rings();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

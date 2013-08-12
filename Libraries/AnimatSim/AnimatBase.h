@@ -58,7 +58,7 @@ namespace AnimatSim
 		string m_strName;  
 
 		///Tells whether the object is selected or not
-		BOOL m_bSelected;
+		bool m_bSelected;
 
 	public:
 		AnimatBase();
@@ -78,8 +78,8 @@ namespace AnimatSim
 		virtual string Type();
 		virtual void Type(string strValue);
 
-		virtual BOOL Selected();
-		virtual void Selected(BOOL bValue, BOOL bSelectMultiple);
+		virtual bool Selected();
+		virtual void Selected(bool bValue, bool bSelectMultiple);
 
 #pragma region DataAccesMethods
 
@@ -115,15 +115,15 @@ namespace AnimatSim
 		\param [in,out]	lpNode		The pointer to the parent node. 
 		\param	bVerify				true to call VerifySystemPointers. 
 		**/
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 		virtual void VerifySystemPointers();
 		virtual float *GetDataPointer(const string &strDataType);
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL HasProperty(const string &strName);
+		virtual bool HasProperty(const string &strName);
 		virtual AnimatPropertyType PropertyType(const string &strName);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -134,7 +134,7 @@ namespace AnimatSim
 		virtual void ResetSimulation();
 		virtual void AfterResetSimulation();
 		virtual void ReInitialize();
-		virtual void Kill(BOOL bState = TRUE);
+		virtual void Kill(bool bState = true);
 		virtual void StepSimulation();
 
 		virtual void SimStarting();

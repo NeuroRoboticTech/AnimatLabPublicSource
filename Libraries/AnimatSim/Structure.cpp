@@ -74,7 +74,7 @@ try
 	if(m_lpBody) delete m_lpBody;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Structure\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Structure\r\n", "", -1, false, true);}
 }
 
 /**
@@ -114,7 +114,7 @@ RigidBody *Structure::Body()
 
 CStdFPoint Structure::Position() {return MovableItem::Position();}
 
-void Structure::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void Structure::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	MovableItem::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 
@@ -142,33 +142,33 @@ float Structure::Size() {return m_fltSize;};
 \param	fltVal	   	The new size value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Structure::Size(float fltVal, BOOL bUseScaling)
+void Structure::Size(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Structure.Size");
+	Std_IsAboveMin((float) 0, fltVal, true, "Structure.Size");
 	if(bUseScaling)
 		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
 	else
 		m_fltSize = fltVal;
 }
 
-void Structure::Selected(BOOL bValue, BOOL bSelectMultiple)
+void Structure::Selected(bool bValue, bool bSelectMultiple)
 {
 	AnimatBase::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
 }
 
 //The structure is not manipulated directly through the editor window. Instead, the root rigid body is moved/rotated.
-BOOL Structure::AllowTranslateDragX() {return FALSE;}
+bool Structure::AllowTranslateDragX() {return false;}
 
-BOOL Structure::AllowTranslateDragY() {return FALSE;}
+bool Structure::AllowTranslateDragY() {return false;}
 
-BOOL Structure::AllowTranslateDragZ() {return FALSE;}
+bool Structure::AllowTranslateDragZ() {return false;}
 
-BOOL Structure::AllowRotateDragX() {return FALSE;}
+bool Structure::AllowRotateDragX() {return false;}
 
-BOOL Structure::AllowRotateDragY() {return FALSE;}
+bool Structure::AllowRotateDragY() {return false;}
 
-BOOL Structure::AllowRotateDragZ() {return FALSE;}
+bool Structure::AllowRotateDragZ() {return false;}
 
 
 /**
@@ -394,12 +394,12 @@ it will either throw an exception or return NULL based on the bThrowError parame
 \date	2/25/2011
 
 \param	strJointID	ID of the joint to find. This is not case sensitive.
-\param	bThrowError	If this is TRUE and the ID is not found then an
-exception is thrown. If this is FALSE and the ID is not found then NULL is returned.
+\param	bThrowError	If this is true and the ID is not found then an
+exception is thrown. If this is false and the ID is not found then NULL is returned.
 
 \return	null if it fails and bThrowError is false, else the pointer to the found joint. 
 **/
-Joint *Structure::FindJoint(string strJointID, BOOL bThrowError)
+Joint *Structure::FindJoint(string strJointID, bool bThrowError)
 {
 	Joint *lpJoint = NULL;
 	CStdMap<string, Joint *>::iterator oPos;
@@ -426,12 +426,12 @@ it will either throw an exception or return NULL based on the bThrowError parame
 \date	2/25/2011
 
 \param	strBodyID	ID of the body to find. This is not case sensitive.
-\param	bThrowError	If this is TRUE and the ID is not found then an
-exception is thrown. If this is FALSE and the ID is not found then NULL is returned.
+\param	bThrowError	If this is true and the ID is not found then an
+exception is thrown. If this is false and the ID is not found then NULL is returned.
 
 \return	null if it fails and bThrowError is false, else the pointer to the found rigid body. 
 **/
-RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
+RigidBody *Structure::FindRigidBody(string strBodyID, bool bThrowError)
 {
 	RigidBody *lpBody = NULL;
 	CStdMap<string, RigidBody *>::iterator oPos;
@@ -457,14 +457,14 @@ RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
 
 \return	null if it fails and bThrowError=false, else the found node. 
 **/
-Node *Structure::FindNode(string strID, BOOL bThrowError)
+Node *Structure::FindNode(string strID, bool bThrowError)
 {
-	Node *lpNode = FindRigidBody(strID, FALSE);
+	Node *lpNode = FindRigidBody(strID, false);
 
 	if(lpNode)
 		return lpNode;
 
-	lpNode = FindJoint(strID, FALSE);
+	lpNode = FindJoint(strID, false);
 
 	if(lpNode)
 		return lpNode;
@@ -477,7 +477,7 @@ Node *Structure::FindNode(string strID, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
-void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
@@ -497,21 +497,21 @@ float *Structure::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL Structure::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Structure::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
-	if(MovableItem::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(MovableItem::SetData(strDataType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -520,38 +520,38 @@ void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	MovableItem::QueryProperties(aryNames, aryTypes);
 }
 
-BOOL Structure::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Structure::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		AddRoot(strXml);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Structure::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Structure::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		RemoveRoot(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -597,7 +597,7 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void Structure::RemoveRoot(string strID, BOOL bThrowError)
+void Structure::RemoveRoot(string strID, bool bThrowError)
 {
 	if(m_lpBody && m_lpBody->ID() == strID)
 	{
@@ -619,7 +619,7 @@ void Structure::RemoveRoot(string strID, BOOL bThrowError)
 \param	strJointID	GUID ID of the joint. 
 \param	bVal		Enable/disable value. 
 **/
-void Structure::EnableMotor(string strJointID, BOOL bVal)
+void Structure::EnableMotor(string strJointID, bool bVal)
 {
 	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
 	if(lpJoint)
@@ -838,17 +838,17 @@ void Structure::LoadLayout(CStdXml &oXml)
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 
-	BOOL bFound = FALSE;
-	if(oXml.FindChildElement("Body", FALSE))
-		bFound = TRUE;
-	else if(oXml.FindChildElement("RigidBody", FALSE))
-		bFound = TRUE;
+	bool bFound = false;
+	if(oXml.FindChildElement("Body", false))
+		bFound = true;
+	else if(oXml.FindChildElement("RigidBody", false))
+		bFound = true;
 
 	if(bFound)
 	{
 		LoadRoot(oXml);
 
-		if(oXml.FindChildElement("CollisionExclusionPairs", FALSE))
+		if(oXml.FindChildElement("CollisionExclusionPairs", false))
 		{
 			oXml.IntoElem();  //Into CollisionExclusionPairs Element
 			int iChildCount = oXml.NumberOfChildren();
@@ -894,7 +894,7 @@ try
 	Body(lpBody);
 
 	m_lpBody->Parent(NULL);
-	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
+	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
 
 	m_lpBody->Load(oXml);
 	AddRigidBody(m_lpBody);

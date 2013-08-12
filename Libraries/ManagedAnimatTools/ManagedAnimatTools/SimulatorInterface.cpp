@@ -287,7 +287,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, BOOL bInit, HWND hWnd)
+			void SimulatorInterface::AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, bool bInit, HWND hWnd)
 			{
 				try
 				{
@@ -432,7 +432,7 @@ namespace AnimatGUI
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, false));
 						if(lpWin)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
@@ -478,7 +478,7 @@ namespace AnimatGUI
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, false));
 						if(lpWin)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
@@ -677,7 +677,7 @@ namespace AnimatGUI
 				{
 					if(m_lpSim) 
 					{
-						BOOL bVal = bTrackCamera;
+						bool bVal = bTrackCamera;
 						string strLookAtStructureID = Util::StringToStd(sLookAtStructureID);
 						string strLookAtBodyID = Util::StringToStd(sLookAtBodyID);
 
@@ -1185,25 +1185,25 @@ namespace AnimatGUI
 						string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
 						string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
 						string strXml = Util::StringToStd(sXml);
-						BOOL bNoInit = FALSE;
-						if(bDoNotInit) bNoInit=TRUE;
+						bool bNoInit = false;
+						if(bDoNotInit) bNoInit=true;
 
 						string strTest = Std_CheckString(strXml);
 						if(strTest == "" || strTest == "<ROOT/>")
 							throw gcnew PropertyUpdateException("No xml provided for adding type '" + sItemType + "' to partID '" + sParentID + "'.");
 
 						//First check to see if this item already exists. If it does then do not attempt to add it again.
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 
 						if(lpItem != NULL)
-							return TRUE;
+							return true;
 
-						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, FALSE);
+						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, false);
 						if(lpParent)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpParent->AddItem(strItemType, strXml, bThrowError, bNoInit);
+								bool bVal = lpParent->AddItem(strItemType, strXml, bThrowError, bNoInit);
 
 								m_lpSim->UnblockSimulation();
 
@@ -1257,12 +1257,12 @@ namespace AnimatGUI
 						string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, FALSE);
+						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, false);
 						if(lpParent)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpParent->RemoveItem(strItemType, strID, bThrowError);
+								bool bVal = lpParent->RemoveItem(strItemType, strID, bThrowError);
 
 								m_lpSim->UnblockSimulation();
 
@@ -1316,12 +1316,12 @@ namespace AnimatGUI
 						string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
 						string strValue = Util::StringToStd(sValue);
 
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 						if(lpItem)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpItem->SetData(strDataType, strValue, bThrowError);
+								bool bVal = lpItem->SetData(strDataType, strValue, bThrowError);
 								m_lpSim->UnblockSimulation();
 								return bVal;
 							}
@@ -1371,7 +1371,7 @@ namespace AnimatGUI
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 						if(lpItem)
 						{
 							return true;
@@ -1432,7 +1432,7 @@ namespace AnimatGUI
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to initialize the simulator");
 
 					//HWND hWnd = (HWND) m_hParentWnd.ToInt32();
-					//m_lpSim->GetWindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", FALSE, hWnd,  Util::StringToStd(m_strWindowXml));
+					//m_lpSim->GetWindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", false, hWnd,  Util::StringToStd(m_strWindowXml));
 
 					m_lpSim->Paused(m_bPaused);
 					m_lpSim->Initialize(0, NULL);

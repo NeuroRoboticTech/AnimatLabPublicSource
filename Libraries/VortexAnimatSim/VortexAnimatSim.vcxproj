@@ -75,7 +75,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -108,7 +108,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;.\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -142,7 +142,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnoptimizedWithSymbols|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5_1\include;..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -175,139 +175,93 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MeshMinVertexDistanceVisitor.cpp" />
-    <ClCompile Include="OsgGeometry.cpp" />
-    <ClCompile Include="OsgLinearPath.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="VortexAnimatSim.cpp" />
     <ClCompile Include="VsAttachment.cpp" />
-    <ClCompile Include="VsAutoTransform.cpp" />
     <ClCompile Include="VsBallSocket.cpp" />
-    <ClCompile Include="VsBody.cpp" />
     <ClCompile Include="VsBox.cpp" />
     <ClCompile Include="VsBoxTest.cpp" />
-    <ClCompile Include="VsCameraManipulator.cpp" />
     <ClCompile Include="VsClassFactory.cpp" />
     <ClCompile Include="VsCone.cpp" />
     <ClCompile Include="VsConstraintFriction.cpp" />
     <ClCompile Include="VsConstraintRelaxation.cpp" />
     <ClCompile Include="VsCylinder.cpp" />
     <ClCompile Include="VsDistanceJoint.cpp" />
-    <ClCompile Include="VsDragger.cpp" />
-    <ClCompile Include="VsDraggerHandler.cpp" />
     <ClCompile Include="VsEllipsoid.cpp" />
     <ClCompile Include="VsFluidPlane.cpp" />
     <ClCompile Include="VsForceStimulus.cpp" />
     <ClCompile Include="VsFreeJoint.cpp" />
     <ClCompile Include="VsHinge.cpp" />
     <ClCompile Include="VsHingeLimit.cpp" />
-    <ClCompile Include="VsHud.cpp" />
-    <ClCompile Include="VsHudText.cpp" />
     <ClCompile Include="VsIntersectionEvent.cpp" />
     <ClCompile Include="VsJoint.cpp" />
-    <ClCompile Include="VsLight.cpp" />
     <ClCompile Include="VsLine.cpp" />
     <ClCompile Include="VsLinearHillMuscle.cpp" />
     <ClCompile Include="VsLinearHillStretchReceptor.cpp" />
     <ClCompile Include="VsMaterialType.cpp" />
     <ClCompile Include="VsMesh.cpp" />
     <ClCompile Include="VsMeshBase.cpp" />
-    <ClCompile Include="VsMeshMgr.cpp" />
     <ClCompile Include="VsMotorizedJoint.cpp" />
     <ClCompile Include="VsMotorVelocityStimulus.cpp" />
-    <ClCompile Include="VsMouseSpring.cpp" />
     <ClCompile Include="VsMouth.cpp" />
-    <ClCompile Include="VsMovableItem.cpp" />
     <ClCompile Include="VsOdorSensor.cpp" />
-    <ClCompile Include="VsOrganism.cpp" />
-    <ClCompile Include="VsOsgUserData.cpp" />
-    <ClCompile Include="VsOsgUserDataVisitor.cpp" />
+    <ClCompile Include="VsOsgGeometry.cpp" />
     <ClCompile Include="VsPlane.cpp" />
     <ClCompile Include="VsPlaneTest.cpp" />
     <ClCompile Include="VsPrismatic.cpp" />
     <ClCompile Include="VsPrismaticLimit.cpp" />
     <ClCompile Include="VsRigidBody.cpp" />
     <ClCompile Include="VsRPRO.cpp" />
-    <ClCompile Include="VsScriptedSimulationWindow.cpp" />
-    <ClCompile Include="VsSimulationWindow.cpp" />
-    <ClCompile Include="VsSimulationWindowMgr.cpp" />
     <ClCompile Include="VsSimulator.cpp" />
     <ClCompile Include="VsSphere.cpp" />
     <ClCompile Include="VsSpring.cpp" />
-    <ClCompile Include="VsStructure.cpp" />
     <ClCompile Include="VsTerrain.cpp" />
     <ClCompile Include="VsTorus.cpp" />
-    <ClCompile Include="VsTrackballDragger.cpp" />
-    <ClCompile Include="VsTranslateAxisDragger.cpp" />
     <ClCompile Include="VsUniversal.cpp" />
-    <ClCompile Include="WorldCoordinateNodeVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MeshMinVertexDistanceVisitor.h" />
-    <ClInclude Include="OsgGeometry.h" />
-    <ClInclude Include="OsgLinearPath.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="VsAttachment.h" />
-    <ClInclude Include="VsAutoTransform.h" />
     <ClInclude Include="VsBallSocket.h" />
-    <ClInclude Include="VsBody.h" />
     <ClInclude Include="VsBox.h" />
     <ClInclude Include="VsBoxTest.h" />
-    <ClInclude Include="VsCameraManipulator.h" />
     <ClInclude Include="VsClassFactory.h" />
     <ClInclude Include="VsCone.h" />
     <ClInclude Include="VsConstraintFriction.h" />
     <ClInclude Include="VsConstraintRelaxation.h" />
     <ClInclude Include="VsCylinder.h" />
     <ClInclude Include="VsDistanceJoint.h" />
-    <ClInclude Include="VsDragger.h" />
-    <ClInclude Include="VsDraggerHandler.h" />
     <ClInclude Include="VsEllipsoid.h" />
     <ClInclude Include="VsFluidPlane.h" />
     <ClInclude Include="VsForceStimulus.h" />
     <ClInclude Include="VsFreeJoint.h" />
     <ClInclude Include="VsHinge.h" />
     <ClInclude Include="VsHingeLimit.h" />
-    <ClInclude Include="VsHud.h" />
-    <ClInclude Include="VsHudText.h" />
     <ClInclude Include="VsIntersectionEvent.h" />
     <ClInclude Include="VsJoint.h" />
-    <ClInclude Include="VsLight.h" />
     <ClInclude Include="VsLine.h" />
     <ClInclude Include="VsLinearHillMuscle.h" />
     <ClInclude Include="VsLinearHillStretchReceptor.h" />
     <ClInclude Include="VsMaterialType.h" />
     <ClInclude Include="VsMesh.h" />
     <ClInclude Include="VsMeshBase.h" />
-    <ClInclude Include="VsMeshMgr.h" />
     <ClInclude Include="VsMotorizedJoint.h" />
     <ClInclude Include="VsMotorVelocityStimulus.h" />
-    <ClInclude Include="VsMouseSpring.h" />
     <ClInclude Include="VsMouth.h" />
-    <ClInclude Include="VsMovableItem.h" />
     <ClInclude Include="VsOdorSensor.h" />
-    <ClInclude Include="VsOrganism.h" />
-    <ClInclude Include="VsOsgUserData.h" />
-    <ClInclude Include="VsOsgUserDataVisitor.h" />
+    <ClInclude Include="VsOsgGeometry.h" />
     <ClInclude Include="VsPlane.h" />
     <ClInclude Include="VsPlaneTest.h" />
     <ClInclude Include="VsPrismatic.h" />
     <ClInclude Include="VsPrismaticLimit.h" />
     <ClInclude Include="VsRigidBody.h" />
     <ClInclude Include="VsRPRO.h" />
-    <ClInclude Include="VsScriptedSimulationWindow.h" />
-    <ClInclude Include="VsSimulationWindow.h" />
-    <ClInclude Include="VsSimulationWindowMgr.h" />
     <ClInclude Include="VsSimulator.h" />
     <ClInclude Include="VsSphere.h" />
     <ClInclude Include="VsSpring.h" />
-    <ClInclude Include="VsStructure.h" />
     <ClInclude Include="VsTerrain.h" />
     <ClInclude Include="VsTorus.h" />
-    <ClInclude Include="VsTrackballDragger.h" />
-    <ClInclude Include="VsTranslateAxisDragger.h" />
     <ClInclude Include="VsUniversal.h" />
-    <ClInclude Include="WorldCoordinateNodeVisitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimatSim\AnimatSim.vcxproj">

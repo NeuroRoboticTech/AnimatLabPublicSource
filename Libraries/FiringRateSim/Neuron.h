@@ -76,10 +76,10 @@ namespace FiringRateSim
 			float m_fltVNoiseMax; 
 
 			///Tells if we should use noise or not.
-			BOOL m_bUseNoise;    
+			bool m_bUseNoise;    
 
 			/// Tells whether to use the old type gain or new type gain.
-			BOOL m_bGainType; 
+			bool m_bGainType; 
 
 			/// expon decline working factor for thresh accomm
 			float m_fltDCTH;      
@@ -91,7 +91,7 @@ namespace FiringRateSim
 			float m_fltRelativeAccom;
 
 			/// true use accomodation
-			BOOL m_bUseAccom;
+			bool m_bUseAccom;
 
 			///Current membrane voltage.
 			float m_fltVn;     
@@ -164,11 +164,11 @@ namespace FiringRateSim
 			virtual float VNoiseMax();
 			virtual void VNoiseMax(float fltVal);
 
-			virtual BOOL UseNoise();
-			virtual void UseNoise(BOOL bVal);
+			virtual bool UseNoise();
+			virtual void UseNoise(bool bVal);
 
-			virtual BOOL UseAccom();
-			virtual void UseAccom(BOOL bVal);
+			virtual bool UseAccom();
+			virtual void UseAccom(bool bVal);
 
 			virtual float RelativeAccommodation();
 			virtual void RelativeAccommodation(float fltVal);
@@ -176,8 +176,8 @@ namespace FiringRateSim
 			virtual float AccommodationTimeConstant();
 			virtual void AccommodationTimeConstant(float fltVal);
 
-			virtual BOOL GainType();
-			virtual void GainType(BOOL bVal);
+			virtual bool GainType();
+			virtual void GainType(bool bVal);
 
 			virtual float Vn();
 			virtual float FiringFreq(FiringRateModule *lpModule);
@@ -195,13 +195,13 @@ namespace FiringRateSim
 			\param [in,out]	lpSynapse	Pointer to the synapse to add. 
 			**/
 			virtual void AddSynapse(Synapse *lpSynapse);
-			virtual void AddSynapse(string strXml, BOOL bDoNotInit);
+			virtual void AddSynapse(string strXml, bool bDoNotInit);
 			virtual void RemoveSynapse(int iIndex);
-			virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
+			virtual void RemoveSynapse(string strID, bool bThrowError = true);
 			virtual Synapse *GetSynapse(int iIndex);
 			virtual int TotalSynapses();
 			virtual void ClearSynapses();
-			virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
+			virtual int FindSynapseListPos(string strID, bool bThrowError = true);
 
 			virtual void AddExternalNodeInput(float fltInput);
 
@@ -227,7 +227,7 @@ namespace FiringRateSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void TimeStepModified();
@@ -244,10 +244,10 @@ namespace FiringRateSim
 
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 #pragma endregion
 
 			virtual void Load(CStdXml &oXml);

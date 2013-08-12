@@ -48,7 +48,7 @@ namespace AnimatSim
 Node::Node()
 {
 	m_lpOrganism = NULL;	
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_bInitEnabled = m_bEnabled;
 	m_fltEnabled = 0;
 }
@@ -66,7 +66,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, false, true);}
 }
 
 /**
@@ -80,7 +80,7 @@ what enabled state the node is in. This will not apply to every node object type
 
 \return	true if it enabled, false if not. 
 **/
-BOOL Node::Enabled() {return m_bEnabled;}
+bool Node::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Enables the node.
@@ -92,7 +92,7 @@ BOOL Node::Enabled() {return m_bEnabled;}
 
 \param	bValue	true to enable. 
 **/
-void Node::Enabled(BOOL bValue) 
+void Node::Enabled(bool bValue) 
 {
 	m_bEnabled = bValue;
 	m_fltEnabled = (float) m_bEnabled;
@@ -111,10 +111,10 @@ void Node::ResetSimulation()
 	Enabled(m_bInitEnabled);
 }
 
-void Node::Kill(BOOL bState)
+void Node::Kill(bool bState)
 {
 	if(bState)
-		Enabled(FALSE);
+		Enabled(false);
 	else
 		Enabled(m_bInitEnabled);
 }
@@ -128,9 +128,9 @@ void Node::Kill(BOOL bState)
 void Node::UpdateData()
 {}
 
-void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
@@ -145,24 +145,24 @@ void Node::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
 }
 
-BOOL Node::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Node::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
+	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Node::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

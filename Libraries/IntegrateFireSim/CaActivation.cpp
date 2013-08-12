@@ -37,12 +37,12 @@ CaActivation::~CaActivation()
 {
 }
 
-BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool CaActivation::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "MIDPOINT")
 	{
@@ -50,7 +50,7 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstVm(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstVh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SLOPE")
@@ -59,7 +59,7 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstSm(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstSh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TIMECONSTANT")
@@ -68,14 +68,14 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstMTimeConstant(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstHTimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void CaActivation::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

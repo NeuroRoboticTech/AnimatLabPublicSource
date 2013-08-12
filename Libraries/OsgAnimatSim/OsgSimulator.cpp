@@ -2,11 +2,9 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <stdarg.h>
 #include "OsgMovableItem.h"
-//#include "VsBody.h"
-//#include "VsJoint.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
 #include "OsgSimulator.h"
@@ -32,13 +30,16 @@ OsgSimulator::OsgSimulator()
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new OsgSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
-	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
 	m_dblTotalStepTime= 0;
 	m_lStepTimeCount = 0;
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
+    m_lpMouseSpring = new OsgMouseSpring;
+    m_lpMouseSpring->Initialize();
+    m_lpMatrixUtil = NULL;
 }
 
 OsgSimulator::~OsgSimulator()
@@ -52,12 +53,18 @@ try
 		m_lpMeshMgr = NULL;
 	}
 
-	m_bShuttingDown = TRUE;
+	m_bShuttingDown = true;
+
+    if(m_lpMouseSpring)
+        delete m_lpMouseSpring;
+
+    if(m_lpMatrixUtil)
+        delete m_lpMatrixUtil;
 
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
 void OsgSimulator::AlphaThreshold(float fltValue)
@@ -98,7 +105,7 @@ void OsgSimulator::StopSimulation()
 	SimStopping();
 	if(!m_bPaused)
 		ToggleSimulation();
-	m_bSimRunning = FALSE;
+	m_bSimRunning = false;
 }
 
 
@@ -171,24 +178,24 @@ void OsgSimulator::UpdateSimulationWindows()
 void OsgSimulator::ShutdownSimulation()
 {
 	SimStopping();
-	m_bForceSimulationStop = TRUE;
+	m_bForceSimulationStop = true;
 }
 
-BOOL OsgSimulator::PauseSimulation()
+bool OsgSimulator::PauseSimulation()
 {
 	SimPausing();
-	m_bPaused = TRUE;
-	return TRUE;
+	m_bPaused = true;
+	return true;
 }
 
-BOOL OsgSimulator::StartSimulation()
+bool OsgSimulator::StartSimulation()
 {
 	m_lStartSimTick = GetTimerTick();
 
 	SimStarting();
-	m_bSimRunning = TRUE;
-	m_bPaused = FALSE;
-	return TRUE;
+	m_bSimRunning = true;
+	m_bPaused = false;
+	return true;
 }
 
 float *OsgSimulator::GetDataPointer(const string &strDataType)

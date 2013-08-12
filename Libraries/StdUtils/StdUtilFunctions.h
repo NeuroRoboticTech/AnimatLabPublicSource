@@ -117,8 +117,8 @@ string STD_UTILS_PORT Std_Combine(CStdArray<string> &aryParts, string strDelimit
 string STD_UTILS_PORT Std_Trim(string strVal);
 string STD_UTILS_PORT Std_TrimLeft(string strVal);
 string STD_UTILS_PORT Std_TrimRight(string strVal);
-BOOL STD_UTILS_PORT Std_IsNumeric(string strVal);
-BOOL STD_UTILS_PORT Std_IsIntegerType(string strVal);
+bool STD_UTILS_PORT Std_IsNumeric(string strVal);
+bool STD_UTILS_PORT Std_IsIntegerType(string strVal);
 string STD_UTILS_PORT Std_Left(string strVal, int iCount);
 string STD_UTILS_PORT Std_Right(string strVal, int iCount);
 string STD_UTILS_PORT Std_ToUpper(string strVal);
@@ -328,13 +328,10 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds);
 
 bool STD_UTILS_PORT Std_IsFullPath(string strPath);
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile);
-BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath);
+bool STD_UTILS_PORT Std_DirectoryExists(string strPath);
 string STD_UTILS_PORT Std_ExecutablePath();
 
-#ifdef WIN32
-	void STD_UTILS_PORT Std_SetFileTime(string strFilename);
-	void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime);
-#endif
+void STD_UTILS_PORT Std_SetFileTime(string strFilename);
 
 // File Functions
 //***************************************************************************************************************

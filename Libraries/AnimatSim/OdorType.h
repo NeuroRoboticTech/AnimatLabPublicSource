@@ -38,14 +38,14 @@ namespace AnimatSim
 			virtual ~OdorType();
 
 			virtual float DiffusionConstant();
-			virtual void DiffusionConstant(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void DiffusionConstant(float fltVal, bool bUseScaling = true);
 
-			virtual Odor *FindOdorSource(string strOdorID, BOOL bThrowError = TRUE);
+			virtual Odor *FindOdorSource(string strOdorID, bool bThrowError = true);
 			virtual void AddOdorSource(Odor *lpOdor);
 			
 			virtual float CalculateOdorValue(CStdFPoint &oSensorPos);
 			
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);

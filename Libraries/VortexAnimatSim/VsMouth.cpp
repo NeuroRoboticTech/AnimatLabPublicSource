@@ -5,17 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSphere.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 #include "VsFreeJoint.h"
 #include "VsMouth.h"
 #include "VsSimulator.h"
@@ -52,7 +46,7 @@ VsMouth::~VsMouth()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsMouth/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsMouth/\r\n", "", -1, false, true);}
 }
 
 void VsMouth::CreateGraphicsGeometry() 

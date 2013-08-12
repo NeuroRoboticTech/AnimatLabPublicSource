@@ -57,7 +57,7 @@ try
 	if(m_lpIBurstGraph) delete m_lpIBurstGraph;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of RandomNeuron\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of RandomNeuron\r\n", "", -1, false, true);}
 }
 
 /**
@@ -390,35 +390,35 @@ void RandomNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 #pragma region DataAccesMethods
 
-BOOL RandomNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool RandomNeuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Neuron::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Neuron::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "IL")
 	{
 		Ilinit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CURRENTDISTRIBUTION")
 	{
 		CurrentDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BURSTLENGTHDISTRIBUTION")
 	{
 		BurstLengthDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "INTERBURSTLENGTHDISTRIBUTION")
 	{
 		InterbusrtLengthDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 
@@ -426,7 +426,7 @@ BOOL RandomNeuron::SetData(const string &strDataType, const string &strValue, BO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void RandomNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

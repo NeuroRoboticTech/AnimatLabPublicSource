@@ -34,7 +34,7 @@ namespace AnimatSim
 
 			virtual void Load(CStdXml &oXml);
 
-			virtual BOOL operator<(ActivatedItem *lpItem);
+			virtual bool operator<(ActivatedItem *lpItem);
 
 			/**
 			\brief	Enables the video playback.
@@ -113,7 +113,7 @@ namespace AnimatSim
 			virtual void MakeCurrentFrame() = 0;
 		};
 
-		BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
+		bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
 
 	}			//Recording
 }				//AnimatSim

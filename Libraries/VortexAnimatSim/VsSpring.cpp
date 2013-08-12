@@ -3,15 +3,12 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsLine.h"
 #include "VsSpring.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -38,24 +35,24 @@ VsSpring::~VsSpring()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsSpring/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsSpring/\r\n", "", -1, false, true);}
 }
 
-void VsSpring::NaturalLength(float fltVal, BOOL bUseScaling)
+void VsSpring::NaturalLength(float fltVal, bool bUseScaling)
 {
 	Spring::NaturalLength(fltVal, bUseScaling);
 	if(m_vxSpring)
 		m_vxSpring->setNaturalLength(m_fltNaturalLength);
 }
 
-void VsSpring::Stiffness(float fltVal, BOOL bUseScaling)
+void VsSpring::Stiffness(float fltVal, bool bUseScaling)
 {
 	Spring::Stiffness(fltVal, bUseScaling);
 	if(m_vxSpring)
 		m_vxSpring->setStiffness(m_fltStiffness);
 }
 
-void VsSpring::Damping(float fltVal, BOOL bUseScaling)
+void VsSpring::Damping(float fltVal, bool bUseScaling)
 {
 	Spring::Damping(fltVal, bUseScaling);
 	if(m_vxSpring)
@@ -100,7 +97,7 @@ void VsSpring::SetupPhysics()
 
 		if(!lpPrimaryAttachment && !lpSecondaryAttachment)
 		{
-			Enabled(FALSE);
+			Enabled(false);
 			return;
 		}
 
@@ -109,7 +106,7 @@ void VsSpring::SetupPhysics()
 
 		if(!lpVsPrimary && !lpVsSecondary)
 		{
-			Enabled(FALSE);
+			Enabled(false);
 			return;
 		}
 
@@ -125,7 +122,7 @@ void VsSpring::SetupPhysics()
 		GetVsSimulator()->Universe()->addConstraint(m_vxSpring);
 	}
 	else
-		Enabled(FALSE);
+		Enabled(false);
 }
 
 void VsSpring::CreateJoints()
@@ -136,7 +133,7 @@ void VsSpring::CreateJoints()
 	SetupPhysics();
 }
 
-void VsSpring::Enabled(BOOL bVal)
+void VsSpring::Enabled(bool bVal)
 {
 	Spring::Enabled(bVal);
 

@@ -15,7 +15,7 @@ namespace OsgAnimatSim
 			virtual ~OsgTrackballDragger(void);
 
 			public:
-				OsgTrackballDragger(BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ);
+				OsgTrackballDragger(bool bAllowRotateX, bool bAllowRotateY, bool bAllowRotateZ);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();

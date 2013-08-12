@@ -113,24 +113,24 @@ void OdorSensor::ResetSimulation()
 	m_fltOdorValue = 0;
 }
 
-BOOL OdorSensor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OdorSensor::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Sensor::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Sensor::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ODORTYPEID")
 	{
 		OdorTypeID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

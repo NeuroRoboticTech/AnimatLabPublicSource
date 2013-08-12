@@ -85,13 +85,13 @@ try
 	m_aryVelocity.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of InverseMuscleCurrent\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of InverseMuscleCurrent\r\n", "", -1, false, true);}
 }
 
 
 void InverseMuscleCurrent::RestPotential(float fltV)
 {
-	Std_IsAboveMin((float) 0, fltV, FALSE, "RestPotential");
+	Std_IsAboveMin((float) 0, fltV, false, "RestPotential");
 
 	m_fltRestPotential = fltV;
 }
@@ -100,7 +100,7 @@ float InverseMuscleCurrent::RestPotential() {return m_fltRestPotential;}
 
 void InverseMuscleCurrent::Conductance(float fltG)
 {
-	Std_IsAboveMin((float) 0, fltG, FALSE, "Conductance");
+	Std_IsAboveMin((float) 0, fltG, false, "Conductance");
 
 	m_fltConductance = fltG;
 }
@@ -145,7 +145,7 @@ void InverseMuscleCurrent::MuscleLengthData(string strFilename)
 			THROW_TEXT_ERROR(Al_Err_lMuscleLengthTimeStep, Al_Err_strMuscleLengthTimeStep, " File Time Step: " + STR(fltStep) + " Physics Time Step: " + STR(m_lpSim->PhysicsTimeStep()) );
 
 		//Set the start and end times using the data file
-		m_bLoadedTime = TRUE;
+		m_bLoadedTime = true;
 		m_fltStartTime = m_aryTime[0];
 		m_fltEndTime = m_aryTime[m_aryTime.GetSize()-1];
 
@@ -274,7 +274,7 @@ float *InverseMuscleCurrent::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool InverseMuscleCurrent::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -307,7 +307,7 @@ BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strV
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void InverseMuscleCurrent::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

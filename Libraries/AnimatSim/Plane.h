@@ -57,8 +57,8 @@ namespace AnimatSim
 				virtual float GridY();
 
 				virtual CStdFPoint Size();
-				virtual void Size(CStdFPoint ptPoint, BOOL bUseScaling = TRUE);
-				virtual void Size(string strXml, BOOL bUseScaling = TRUE);
+				virtual void Size(CStdFPoint ptPoint, bool bUseScaling = true);
+				virtual void Size(string strXml, bool bUseScaling = true);
 
 				virtual int WidthSegments();
 				virtual void WidthSegments(int iVal);
@@ -66,7 +66,7 @@ namespace AnimatSim
 				virtual int LengthSegments();
 				virtual void LengthSegments(int iVal);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

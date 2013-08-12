@@ -45,9 +45,9 @@ namespace OsgAnimatSim
 			OsgLight();
 			virtual ~OsgLight();
 
-			virtual void Enabled(BOOL bVal);
+			virtual void Enabled(bool bVal);
 
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Diffuse(CStdColor &aryColor);
 			virtual void Specular(CStdColor &aryColor);

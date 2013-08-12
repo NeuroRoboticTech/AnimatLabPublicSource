@@ -80,7 +80,7 @@ namespace AnimatGUI
 			try
 			{
 				string strMessage = Util::StringToStd(sMessage);
-				Std_LogMsg((int)eLevel, strMessage, "", -1, TRUE);
+				Std_LogMsg((int)eLevel, strMessage, "", -1, true);
 			}
 			catch(CStdErrorInfo oError)
 			{

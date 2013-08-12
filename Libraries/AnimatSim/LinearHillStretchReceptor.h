@@ -56,7 +56,7 @@ namespace AnimatSim
 			{
 			protected:
 				///Determines whether the receptor applies tension or not.
-				BOOL m_bApplyTension;
+				bool m_bApplyTension;
 
 				///Constant that relates length of muscle segment to discharge rate of type Ia fibers.
 				float m_fltIaDischargeConstant;
@@ -76,8 +76,8 @@ namespace AnimatSim
 				LinearHillStretchReceptor();
 				virtual ~LinearHillStretchReceptor();
 
-				virtual BOOL ApplyTension();
-				virtual void ApplyTension(BOOL bVal);
+				virtual bool ApplyTension();
+				virtual void ApplyTension(bool bVal);
 
 				virtual float IaDischargeConstant();
 				virtual void IaDischargeConstant(float fltVal);
@@ -89,7 +89,7 @@ namespace AnimatSim
 				virtual float IIRate();
 
 				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 				virtual void ResetSimulation();

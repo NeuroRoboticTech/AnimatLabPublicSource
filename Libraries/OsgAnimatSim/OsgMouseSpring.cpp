@@ -19,8 +19,6 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-OsgMouseSpring* OsgMouseSpring::m_instance = NULL;
-
 OsgMouseSpring::OsgMouseSpring(void)
 {
 	m_gdeLine = NULL;
@@ -35,7 +33,7 @@ OsgMouseSpring::~OsgMouseSpring(void)
 {
 }
 
-void OsgMouseSpring::Visible(BOOL bVal)
+void OsgMouseSpring::Visible(bool bVal)
 {
 	if(bVal)
 		m_gdeLine->setNodeMask(0x1);
@@ -83,7 +81,7 @@ void OsgMouseSpring::Initialize()
     m_gdeLine->setStateSet(ss);
 
 	//Initially not visible.
-	Visible(FALSE);
+	Visible(false);
 }
 
 void OsgMouseSpring::SetStart(osg::Vec3 v3Start)

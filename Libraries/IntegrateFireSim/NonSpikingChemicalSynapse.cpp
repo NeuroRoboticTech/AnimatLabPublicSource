@@ -124,42 +124,42 @@ double NonSpikingChemicalSynapse::PreSynapticSaturationLevel() {return m_dSatura
 
 #pragma region DataAccesMethods
 
-BOOL NonSpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool NonSpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{
 		EquilibriumPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MAXSYNAPTICCONDUCTANCE")
 	{
 		MaxSynapticConductance(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "PRESYNAPTICTHRESHOLD")
 	{
 		PreSynapticThreshold(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "PRESYNAPTICSATURATIONLEVEL")
 	{
 		PreSynapticSaturationLevel(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void NonSpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

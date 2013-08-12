@@ -64,7 +64,7 @@ ConstraintRelaxation::~ConstraintRelaxation()
 }
 
 /**
-\fn	BOOL Enabled()
+\fn	bool Enabled()
 
 \brief	Gets whether the item is enabled or not. 
 
@@ -73,11 +73,11 @@ ConstraintRelaxation::~ConstraintRelaxation()
 
 \return	true if it enabled, false if not. 
 **/
-BOOL ConstraintRelaxation::Enabled()
+bool ConstraintRelaxation::Enabled()
 {return m_bEnabled;}
 
 /**
-\fn	void Enabled(BOOL bVal)
+\fn	void Enabled(bool bVal)
 
 \brief	Enables the item. 
 
@@ -86,7 +86,7 @@ BOOL ConstraintRelaxation::Enabled()
 
 \param	bVal	true to enable, false to disable. 
 **/
-void ConstraintRelaxation::Enabled(BOOL bVal)
+void ConstraintRelaxation::Enabled(bool bVal)
 {
 	m_bEnabled = bVal;
 	SetRelaxationProperties();
@@ -104,7 +104,7 @@ int ConstraintRelaxation::CoordinateID()
 {return m_iCoordinateID;}
 
 /**
-\fn	void Enabled(BOOL bVal)
+\fn	void Enabled(bool bVal)
 
 \brief	Enables the item. 
 
@@ -115,7 +115,7 @@ int ConstraintRelaxation::CoordinateID()
 **/
 void ConstraintRelaxation::CoordinateID(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "CoordinateID", TRUE);
+	Std_IsAboveMin((int) 0, iVal, true, "CoordinateID", true);
 
 	m_iCoordinateID = iVal;
 	SetRelaxationProperties();
@@ -140,9 +140,9 @@ float ConstraintRelaxation::Stiffness() {return m_fltStiffness;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void ConstraintRelaxation::Stiffness(float fltVal, BOOL bUseScaling) 
+void ConstraintRelaxation::Stiffness(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Stiffness", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Stiffness", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
@@ -170,9 +170,9 @@ float ConstraintRelaxation::Damping() {return m_fltDamping;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void ConstraintRelaxation::Damping(float fltVal, BOOL bUseScaling) 
+void ConstraintRelaxation::Damping(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Damping", true);
 
 	if(bUseScaling)
 		fltVal = fltVal/m_lpSim->DisplayMassUnits();
@@ -208,9 +208,9 @@ amount of slip, the vehicle would have a hard time turning.
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void ConstraintRelaxation::Loss(float fltVal, BOOL bUseScaling) 
+void ConstraintRelaxation::Loss(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Loss", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Loss", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -239,48 +239,48 @@ void ConstraintRelaxation::CreateDefaultUnits()
 	m_fltLoss *= m_lpSim->MassUnits();  //Slip units are s/Kg
 }
 
-BOOL ConstraintRelaxation::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ConstraintRelaxation::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "COORDINATEID")
 	{
 		CoordinateID(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "STIFFNESS")
 	{
 		Stiffness((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "DAMPING")
 	{
 		Damping((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "LOSS")
 	{
 		Loss((float) atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void ConstraintRelaxation::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

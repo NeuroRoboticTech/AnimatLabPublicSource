@@ -35,11 +35,11 @@ namespace AnimatSim
 			float m_fltPrevVelocity;
 
 			/// If true then the motor for this joint is enabled.
-			BOOL m_bEnableMotor;
+			bool m_bEnableMotor;
 
 			/// Tells whether the motor was enabled when the sim started. This is used when 
 			/// resetting the simulation back to its initial settings.
-			BOOL m_bEnableMotorInit;
+			bool m_bEnableMotorInit;
 
 			/// The maximum force/torque that the motor can apply. Whether this is force or torque
 			/// depends on whether the joint uses radians or not.
@@ -49,7 +49,7 @@ namespace AnimatSim
 			float m_ftlServoGain;
 
 			/// true if this is a servo motor. A servo motor is position controlled instead of velocity controlled.
-			BOOL m_bServoMotor;
+			bool m_bServoMotor;
 
 		public:
 			MotorizedJoint(void);
@@ -58,20 +58,20 @@ namespace AnimatSim
 			virtual IMotorizedJoint *PhysicsMotorJoint();
 			virtual void PhysicsMotorJoint(IMotorizedJoint *lpJoint);
 
-			virtual BOOL EnableMotor();
-			virtual void EnableMotor(BOOL bVal);
+			virtual bool EnableMotor();
+			virtual void EnableMotor(bool bVal);
 
-			virtual void ServoMotor(BOOL bServo);
-			virtual BOOL ServoMotor();
+			virtual void ServoMotor(bool bServo);
+			virtual bool ServoMotor();
 
 			virtual void ServoGain(float fltVal);
 			virtual float ServoGain();
 
-			virtual void MaxForce(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MaxForce(float fltVal, bool bUseScaling = true);
 			virtual float MaxForce();
 
 			virtual float MaxVelocity();
-			virtual void MaxVelocity(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MaxVelocity(float fltVal, bool bUseScaling = true);
 
 			virtual float DesiredVelocity();
 			virtual void DesiredVelocity(float fltVelocity);
@@ -85,11 +85,11 @@ namespace AnimatSim
 			virtual void MotorInput(float fltInput);
 
 			virtual void SetVelocityToDesired();
-			virtual void EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce);
+			virtual void EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
 
 			virtual void ResetSimulation();
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);

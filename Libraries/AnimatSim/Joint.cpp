@@ -51,7 +51,7 @@ Joint::Joint()
 	m_fltVelocity = 0;
 	m_fltForce = 0;
 	m_fltSize = 0.02f;
-	m_bEnableLimits = TRUE;
+	m_bEnableLimits = true;
 
     m_lpRelaxation1 = NULL;
     m_lpRelaxation2 = NULL;
@@ -86,14 +86,14 @@ try
     if(m_lpFriction) {delete m_lpFriction; m_lpFriction = NULL;}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Joint\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Joint\r\n", "", -1, false, true);}
 }
 
 			
 /**
 \brief	Tells whether this joint uses radians or meters for its measurements.
 
-\details This is defaulted to TRUE. You must override this and set it to the appropriate
+\details This is defaulted to true. You must override this and set it to the appropriate
 value for your derived classes.
 
 \author	dcofer
@@ -101,7 +101,7 @@ value for your derived classes.
 
 \return	true if it uses radians, false if it uses meters.
 **/
-BOOL Joint::UsesRadians() {return TRUE;}
+bool Joint::UsesRadians() {return true;}
 
 /**
 \brief	Gets the size of the graphical representation of this joint.
@@ -122,9 +122,9 @@ float Joint::Size() {return m_fltSize;};
 \param	fltVal	   	The new size value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Joint::Size(float fltVal, BOOL bUseScaling)
+void Joint::Size(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.Size");
+	Std_IsAboveMin((float) 0, fltVal, true, "Joint.Size");
 	if(bUseScaling)
 		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -143,7 +143,7 @@ void Joint::Size(float fltVal, BOOL bUseScaling)
 
 \return	true if it limits are enabled, false otherwise.
 **/
-BOOL Joint::EnableLimits() {return m_bEnableLimits;};
+bool Joint::EnableLimits() {return m_bEnableLimits;};
 
 /**
 \brief	Sets whether ContrainLimits are enabled or not.
@@ -153,7 +153,7 @@ BOOL Joint::EnableLimits() {return m_bEnableLimits;};
 
 \param	bVal	true to enable. 
 **/
-void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
+void Joint::EnableLimits(bool bVal) {m_bEnableLimits = bVal;}
 
 /**
 \brief	Gets the pointer to the primary axis displacement relaxation 
@@ -640,12 +640,12 @@ float *Joint::GetDataPointer(const string &strDataType)
 	return BodyPart::GetDataPointer(strDataType);
 }
 
-BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Joint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(BodyPart::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(BodyPart::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ENABLELIMITS")
 	{
@@ -698,7 +698,7 @@ BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThr
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void Joint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
@@ -837,7 +837,7 @@ try
 	if(!lpConstraintRelaxation)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ConstraintRelaxation");
 
-	lpConstraintRelaxation->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	lpConstraintRelaxation->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 	lpConstraintRelaxation->Load(oXml);
 
 	return lpConstraintRelaxation;
@@ -887,7 +887,7 @@ try
 	if(!lpConstraintFriction)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ConstraintFriction");
 
-	lpConstraintFriction->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	lpConstraintFriction->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 	lpConstraintFriction->Load(oXml);
 
 	return lpConstraintFriction;

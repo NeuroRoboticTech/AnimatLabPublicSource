@@ -82,24 +82,24 @@ float *GatedSynapse::GetDataPointer(const string &strDataType)
 	return Synapse::GetDataPointer(strDataType);
 }
 
-BOOL GatedSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool GatedSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Synapse::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Synapse::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "GATEINITIALLYON")
 	{
 		InitialGateValue(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void GatedSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

@@ -55,7 +55,7 @@ namespace IntegrateFireSim
 		int m_iNeuronID;
 
 		/// Sets whether the neuron is disabled or not.
-		BOOL m_bZapped;
+		bool m_bZapped;
 
 		// individual, basic properties
 			/// The resting potential of the neuron
@@ -143,7 +143,7 @@ namespace IntegrateFireSim
 		double m_dThresh;
 
 		/// true if spike occured.
-		BOOL m_bSpike;		// spike flag
+		bool m_bSpike;		// spike flag
 
 		// electrical synapse current
 		/// The electrical synaptic current.
@@ -266,14 +266,14 @@ namespace IntegrateFireSim
 		CStdArray<double> m_aryFacilD;		
 
 		virtual IonChannel *LoadIonChannel(CStdXml &oXml);
-		IonChannel *FindIonChannel(string strID, BOOL bThrowError);
+		IonChannel *FindIonChannel(string strID, bool bThrowError);
 
 	protected:
 		//void ClearSpikeTimes();
 		//void StoreSpikeForFreqAnalysis(IntegrateFireNeuralModule *lpNS);
 		void CalculateFiringFreq(IntegrateFireNeuralModule *lpNS);
-		virtual void AddIonChannel(string strXml, BOOL bDoNotInit);
-		virtual void RemoveIonChannel(string strID, BOOL bThrowError = TRUE);
+		virtual void AddIonChannel(string strXml, bool bDoNotInit);
+		virtual void RemoveIonChannel(string strID, bool bThrowError = true);
 	
 	public:
 		Neuron();
@@ -285,8 +285,8 @@ namespace IntegrateFireSim
 		int NeuronID();
 		void NeuronID(int iID);
 
-		virtual BOOL Enabled();
-		virtual void Enabled(BOOL bValue);
+		virtual bool Enabled();
+		virtual void Enabled(bool bValue);
 
 		virtual void AddExternalI(float fltVal);
 
@@ -295,8 +295,8 @@ namespace IntegrateFireSim
 		double GetRestingPot();
 		double GetMemPot();
 		double GetThresh();
-		BOOL GetSpike();
-		BOOL GetZapped();
+		bool GetSpike();
+		bool GetZapped();
 		void IncrementStim(double stim);
 		void InElectricalSynapseCurr(double cur);
 		void InElectricalSynapseCond(double cond);
@@ -363,22 +363,22 @@ namespace IntegrateFireSim
 		void CalcUpdateFinal(IntegrateFireNeuralModule *lpNS);
 		void PostCalc(IntegrateFireNeuralModule *lpNS);
 
-		virtual int FindIonChannelListPos(string strID, BOOL bThrowError = TRUE);
+		virtual int FindIonChannelListPos(string strID, bool bThrowError = true);
 
 		//Node Overrides
 #pragma region DataAccesMethods
 		virtual float *GetDataPointer(const string &strDataType);
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 #pragma endregion
 
 		virtual void AddExternalNodeInput(float fltInput);
 		virtual void ResetSimulation();
 		//Node Overrides
 					
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify);
 		virtual void VerifySystemPointers();
 
 	friend class IntegrateFireSim::IntegrateFireNeuralModule;

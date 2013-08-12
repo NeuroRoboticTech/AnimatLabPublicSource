@@ -13,7 +13,7 @@ namespace AnimatSim
 			virtual ~IMotorizedJoint(void);
 
 			virtual void Physics_SetVelocityToDesired() = 0;
-			virtual void Physics_EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce) = 0;
+			virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce) = 0;
 
 			/**
 			\brief	Enables\disables the motor.
@@ -29,7 +29,7 @@ namespace AnimatSim
 			\param	fltDesiredVelocity	The desired motor velocity. 
 			\param	fltMaxForce		  	The maximum motor force. 
 			**/
-			virtual void Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce) = 0;
+			virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce) = 0;
 	
 			/**
 			\brief	Sets the maximum forces allowed by the motorized joint.

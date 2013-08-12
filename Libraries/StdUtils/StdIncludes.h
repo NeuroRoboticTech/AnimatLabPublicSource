@@ -19,12 +19,11 @@
 	#include <dlfcn.h>
     #include <limits.h>
     #include <unistd.h>
+    #include <utime.h>
+    #include <sys/stat.h>
 
-	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
-	#define FALSE 0
-	#define TRUE 1
 	#define LONG long
 	#define ULONG unsigned long
 	#define LPLONG long *

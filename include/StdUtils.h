@@ -9,6 +9,8 @@
 	#endif          
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 
+#define _SCL_SECURE_NO_WARNINGS
+
 #ifdef WIN32
 	#define STD_UTILS_PORT __declspec( dllimport )
 #else
@@ -17,6 +19,9 @@
 
 #pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482 4996)
 
+#define STD_PI 3.14159
+#define STD_PI_2 6.28319
+#define STD_PI_HALF 1.570796f
 
 #ifdef WIN32
 	#ifndef _WIN32_WCE
@@ -31,12 +36,12 @@
 	#include <linux/types.h>
 	#include <stdbool.h>
 	#include <dlfcn.h>
+    #include <utime.h>
+    #include <sys/stat.h>
+    #include <unistd.h>
 	
-	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
-	#define FALSE 0
-	#define TRUE 1
 	#define LONG long
 	#define ULONG unsigned long
 	#define LPLONG long *

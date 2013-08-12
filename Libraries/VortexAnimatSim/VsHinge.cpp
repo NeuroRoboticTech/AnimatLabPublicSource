@@ -5,19 +5,13 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsJoint.h"
 #include "VsHingeLimit.h"
 #include "VsHinge.h"
-#include "VsStructure.h"
 #include "VsSimulator.h"
-#include "VsOsgUserData.h"
-#include "VsOsgUserDataVisitor.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -42,17 +36,17 @@ VsHinge::VsHinge()
 	m_lpLowerLimit = new VsHingeLimit();
 	m_lpPosFlap = new VsHingeLimit();
 
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
-	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(0.25*VX_PI, false);
+	m_lpLowerLimit->LimitPos(-0.25*VX_PI, false);
+	m_lpPosFlap->LimitPos(Hinge::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(1, 0, 0, 1);
 	m_lpLowerLimit->Color(1, 1, 1, 1);
 	m_lpPosFlap->Color(0, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -70,10 +64,10 @@ VsHinge::~VsHinge()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, false, true);}
 }
 
-void VsHinge::EnableLimits(BOOL bVal)
+void VsHinge::EnableLimits(bool bVal)
 {
 	Hinge::EnableLimits(bVal);
 
@@ -220,7 +214,7 @@ void VsHinge::SetupGraphics()
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
 }
@@ -262,8 +256,6 @@ void VsHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
@@ -275,12 +267,12 @@ void VsHinge::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	VxVector3 axis = NormalizeAxis(vLocalRot);
+	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
 
 	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxHinge->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
 	GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
 
 	//Disable collisions between this object and its parent
@@ -347,19 +339,19 @@ float *VsHinge::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsHinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsHinge::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Hinge::SetData(strDataType, strValue, FALSE))
+	if(Hinge::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void VsHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)

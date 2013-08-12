@@ -5,14 +5,11 @@
 **/
 
 #include "StdAfx.h"
-#include "VsMovableItem.h"
-#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsFluidPlane.h"
 #include "VsSimulator.h"
-#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -47,7 +44,7 @@ VsFluidPlane::~VsFluidPlane()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsFluidPlane/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsFluidPlane/\r\n", "", -1, false, true);}
 }
 
 void VsFluidPlane::CreateGraphicsGeometry()
@@ -64,7 +61,7 @@ void VsFluidPlane::CreateParts()
 	CreateGeometry();
 
 	//Create the geometry and osg drawable nodes.
-	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
+	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
 	VsRigidBody::CreateItem();
 	FluidPlane::CreateParts();
@@ -85,7 +82,7 @@ void VsFluidPlane::SetGravity()
 		m_vxFluidPlane->setGravity(VxVector3(0, m_lpSim->Gravity(), 0));
 }
 
-void VsFluidPlane::Velocity(CStdFPoint &oPoint, BOOL bUseScaling)
+void VsFluidPlane::Velocity(CStdFPoint &oPoint, bool bUseScaling)
 {
 	FluidPlane::Velocity(oPoint, bUseScaling);
 
@@ -114,7 +111,7 @@ void VsFluidPlane::UpdateFluidPlaneHeight()
 	}
 }
 
-void VsFluidPlane::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void VsFluidPlane::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	FluidPlane::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 	UpdateFluidPlaneHeight();

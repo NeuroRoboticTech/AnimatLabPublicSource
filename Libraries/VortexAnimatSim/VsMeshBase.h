@@ -1,13 +1,7 @@
 // VsMesh.h: interface for the VsMesh class.
 //
 //////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_VSMESH_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)
-#define AFX_VSMESH_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace VortexAnimatSim
 {
@@ -46,5 +40,3 @@ namespace VortexAnimatSim
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSMESH_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)

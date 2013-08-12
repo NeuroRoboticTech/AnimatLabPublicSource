@@ -74,16 +74,16 @@ namespace FiringRateSim
 			float *ModulationPointer();
 			virtual float CalculateModulation(FiringRateModule *lpModule);
 			virtual Synapse *GetCompoundSynapse(short iCompoundIndex);
-			virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
-			virtual void AddSynapse(string strXml, BOOL bDoNotInit);
-			virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
+			virtual int FindSynapseListPos(string strID, bool bThrowError = true);
+			virtual void AddSynapse(string strXml, bool bDoNotInit);
+			virtual void RemoveSynapse(string strID, bool bThrowError = true);
 
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
 #pragma endregion
 
 			/**
@@ -108,7 +108,7 @@ namespace FiringRateSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void ResetSimulation();
 			virtual void Initialize();

@@ -42,6 +42,10 @@ namespace OsgAnimatSim
 
 		osg::ref_ptr<osg::Node> m_Spline;
 	
+        OsgMouseSpring *m_lpMouseSpring;
+
+        OsgMatrixUtil *m_lpMatrixUtil;
+
 	public:
 		OsgSimulator();
 		virtual ~OsgSimulator();
@@ -56,6 +60,7 @@ namespace OsgAnimatSim
 
 			return m_lpMeshMgr;
 		};
+        OsgMouseSpring *MouseSpring() {return m_lpMouseSpring;};
 		
 #pragma region HelperMethods
 
@@ -81,8 +86,8 @@ namespace OsgAnimatSim
 		virtual void ShutdownSimulation();
 		virtual void ToggleSimulation();
 		virtual void StopSimulation();
-		virtual BOOL StartSimulation();
-		virtual BOOL PauseSimulation();
+		virtual bool StartSimulation();
+		virtual bool PauseSimulation();
 		virtual void Save(string strFile);
 
 		static OsgSimulator *ConvertSimulator(Simulator *lpSim);
