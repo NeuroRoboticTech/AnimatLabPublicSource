@@ -517,7 +517,7 @@ Namespace Framework
             Dim bStarted As Boolean = False
             While Not bStarted
                 bStarted = DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
-                Debug.WriteLine("Checking start: " & bStarted)
+                'Debug.WriteLine("Checking start: " & bStarted)
                 iIdx = iIdx + 1
                 If iIdx = 90 Then
                     bStarted = True 'Assume we missed the started command.
