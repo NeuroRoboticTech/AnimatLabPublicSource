@@ -105,8 +105,6 @@ void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFl
 {
 	CreateCylinderGraphics(fltHeight, fltRadius);
 
-//float fltFlapWidth, float fltCylinderHeight, float fltLimitPos, CStdColor vColor
-
 	if(lpUpperLimit) lpUpperLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);
 	if(lpLowerLimit) lpLowerLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);
 	if(lpPosFlap) lpPosFlap->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);

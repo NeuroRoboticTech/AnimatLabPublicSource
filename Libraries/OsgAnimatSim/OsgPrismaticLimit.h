@@ -8,7 +8,7 @@ namespace OsgAnimatSim
 		namespace Joints
 		{
 
-			class ANIMAT_OSG_PORT OsgPrismaticLimit : public AnimatSim::Environment::ConstraintLimit
+			class ANIMAT_OSG_PORT OsgPrismaticLimit
 			{
 			protected:
 				osg::ref_ptr<osg::Geometry> m_osgCylinder;
@@ -26,8 +26,8 @@ namespace OsgAnimatSim
 				OsgPrismaticLimit();
 				virtual ~OsgPrismaticLimit();
 
-				virtual void Alpha(float fltA);
-				virtual void SetLimitPos();
+				virtual void LimitAlpha(float fltA);
+				virtual void SetLimitPos(float fltRadius, float fltLimitPos);
 
 				osg::Geometry *BoxGeometry();
 				osg::MatrixTransform *BoxMT();
@@ -39,8 +39,8 @@ namespace OsgAnimatSim
 				osg::Material *CylinderMat();
 				osg::StateSet *CylinderSS();
 
-				virtual void SetupGraphics();
-                virtual void DeleteGraphics();
+                virtual void SetupLimitGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, bool bIsShowPosition, CStdColor vColor);
+                virtual void DeleteLimitGraphics();
 			};
 
 		}		//Joints
