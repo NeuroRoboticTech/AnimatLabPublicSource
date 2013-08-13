@@ -103,83 +103,28 @@ void VsHinge::SetAlpha()
 
 void VsHinge::DeleteJointGraphics()
 {
-	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
-	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
-	VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
+	OsgHingeLimit *lpUpperLimit = dynamic_cast<OsgHingeLimit *>(m_lpUpperLimit);
+	OsgHingeLimit *lpLowerLimit = dynamic_cast<OsgHingeLimit *>(m_lpLowerLimit);
+	OsgHingeLimit *lpPosFlap = dynamic_cast<OsgHingeLimit *>(m_lpPosFlap);
 
-    if(m_osgJointMT.valid())
-    {
-        if(m_osgCylinderMT.valid()) m_osgJointMT->removeChild(m_osgCylinderMT.get());
-		if(lpUpperLimit && lpUpperLimit->FlapTranslateMT()) m_osgJointMT->removeChild(lpUpperLimit->FlapTranslateMT());
-		if(lpLowerLimit && lpLowerLimit->FlapTranslateMT()) m_osgJointMT->removeChild(lpLowerLimit->FlapTranslateMT());
-		if(lpPosFlap && lpPosFlap->FlapTranslateMT()) m_osgJointMT->removeChild(lpPosFlap->FlapTranslateMT());
-    }
-
-    m_osgCylinder.release();
-    m_osgCylinderGeode.release();
-    m_osgCylinderMT.release();
-    m_osgCylinderMat.release();
-    m_osgCylinderSS.release();
+    OsgHinge::DeleteHingeGraphics(m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 
     if(m_lpUpperLimit) m_lpUpperLimit->DeleteGraphics();
     if(m_lpLowerLimit) m_lpLowerLimit->DeleteGraphics();
     if(m_lpPosFlap) m_lpPosFlap->DeleteGraphics();
 }
 
-/**
-\brief	Creates the cylinder graphics.
-
-\author	dcofer
-\date	4/15/2011
-**/
-void VsHinge::CreateCylinderGraphics()
-{
-	//Create the cylinder for the hinge
-	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 30, true, true, true);
-	m_osgCylinderGeode = new osg::Geode;
-	m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
-
-	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-	m_osgCylinderMT = new osg::MatrixTransform();
-	m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
-	m_osgCylinderMT->addChild(m_osgCylinderGeode.get());
-
-	//create a material to use with the pos flap
-	if(!m_osgCylinderMat.valid())
-		m_osgCylinderMat = new osg::Material();		
-
-	//create a stateset for this node
-	m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
-
-	//set the diffuse property of this node to the color of this body	
-	m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-	m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
-	m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-	m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-	m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-	//apply the material
-	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
-}
-
 void VsHinge::CreateJointGraphics()
 {
-	CreateCylinderGraphics();
+	OsgHingeLimit *lpUpperLimit = dynamic_cast<OsgHingeLimit *>(m_lpUpperLimit);
+	OsgHingeLimit *lpLowerLimit = dynamic_cast<OsgHingeLimit *>(m_lpLowerLimit);
+	OsgHingeLimit *lpPosFlap = dynamic_cast<OsgHingeLimit *>(m_lpPosFlap);
 
-	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
-	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
-	VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
+    float fltLimitPos = Hinge::JointPosition();
+	m_lpPosFlap->LimitPos(fltLimitPos);
 
-	lpPosFlap->LimitPos(Hinge::JointPosition());
-
-	lpUpperLimit->SetupGraphics();
-	lpLowerLimit->SetupGraphics();
-	lpPosFlap->SetupGraphics();
-
-	m_osgJointMT->addChild(m_osgCylinderMT.get());
-	m_osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
-	m_osgJointMT->addChild(lpLowerLimit->FlapTranslateMT());
-	m_osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
+    OsgHinge::CreateHingeGraphics(CylinderHeight(), CylinderRadius(), FlapWidth(), fltLimitPos, 
+                                  m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 }
 
 void VsHinge::SetupGraphics()

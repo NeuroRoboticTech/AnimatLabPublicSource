@@ -33,7 +33,7 @@ namespace VortexAnimatSim
 			\author	dcofer
 			\date	4/15/2011
 			**/
-			class VORTEX_PORT VsHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge     
+			class VORTEX_PORT VsHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge, public OsgAnimatSim::Environment::OsgHinge     
 			{
 			protected:
 				/// The vortex hinge class.
@@ -42,29 +42,12 @@ namespace VortexAnimatSim
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;
 
-				//Graphics objects for the hinge drawing code
-				/// The osg cylinder geometry.
-				osg::ref_ptr<osg::Geometry> m_osgCylinder;
-
-                /// The osg cylinder geode.
-                osg::ref_ptr<osg::Geode> m_osgCylinderGeode;
-
-				/// The osg cylinder matrix transform.
-				osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
-
-				/// The osg cylinder material.
-				osg::ref_ptr<osg::Material> m_osgCylinderMat;
-
-				/// The osg cylinder state set.
-				osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
-
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void SetupGraphics();
 				virtual void UpdateData();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
-				virtual void CreateCylinderGraphics();
 
 			public:
 				VsHinge();

@@ -20,8 +20,6 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		namespace Joints
-		{
 
 /**
 \brief	Default constructor.
@@ -76,6 +74,5 @@ void OsgPrismatic::CreatePrismaticGraphics(float fltBoxSize, float fltRadius, fl
 	osgJointMT->addChild(lpPosFlap->BoxMT());
 }
 
-		}		//Joints
 	}			// Environment
 }				//OsgAnimatSim

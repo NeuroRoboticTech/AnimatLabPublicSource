@@ -22,8 +22,6 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		namespace Joints
-		{
 
 /**
 \brief	Default constructor.
@@ -99,15 +97,15 @@ void OsgHinge::CreateCylinderGraphics(float fltHeight, float fltRadius)
 	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 }
 
-void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth, float fltLimitPos, CStdColor vColor, 
+void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth, float fltLimitPos,  
                                    osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, 
                                    OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap)
 {
 	CreateCylinderGraphics(fltHeight, fltRadius);
 
-	if(lpUpperLimit) lpUpperLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);
-	if(lpLowerLimit) lpLowerLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);
-	if(lpPosFlap) lpPosFlap->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos, vColor);
+	if(lpUpperLimit) lpUpperLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
+	if(lpLowerLimit) lpLowerLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
+	if(lpPosFlap) lpPosFlap->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
 
 	osgJointMT->addChild(m_osgCylinderMT.get());
 	osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
@@ -115,6 +113,5 @@ void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFl
 	osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
 }
 
-		}		//Joints
 	}			// Environment
 }				//OsgAnimatSim

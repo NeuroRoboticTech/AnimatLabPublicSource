@@ -48,14 +48,6 @@ namespace AnimatSim
 				/// Pointer to a constraint that is used to represent the position flap.
 				ConstraintLimit *m_lpPosFlap;
 
-				/**
-				\brief	Creates the cylinder graphics for the visible hinge.
-				
-				\author	dcofer
-				\date	3/24/2011
-				**/
-				virtual void CreateCylinderGraphics() = 0;
-
 			public:
 				Hinge();
 				virtual ~Hinge();

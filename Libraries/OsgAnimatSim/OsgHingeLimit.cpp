@@ -14,8 +14,6 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		namespace Joints
-		{
 
 OsgHingeLimit::OsgHingeLimit()
 {
@@ -63,7 +61,7 @@ void OsgHingeLimit::DeleteLimitGraphics()
     m_osgFlapSS.release();
 }
 
-void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight, float fltLimitPos, CStdColor vColor)
+void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight, float fltLimitPos)
 {
 	//Create the min flap
 	m_osgFlap = CreateBoxGeometry(fltFlapWidth, (fltCylinderHeight/2), 
@@ -94,6 +92,7 @@ void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeig
 	m_osgFlapSS = m_osgFlapTranslateMT->getOrCreateStateSet();
 
 	//set the diffuse property of this node to the color of this body	
+    CStdColor vColor = GetLimitColor();
 	m_osgFlapMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
 	m_osgFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
 	m_osgFlapMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
@@ -104,6 +103,5 @@ void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeig
 	m_osgFlapSS->setAttribute(m_osgFlapMat.get(), osg::StateAttribute::ON);
 }
 
-		}		//Bodies
 	}			// Environment
 }				//OsgAnimatSim
