@@ -230,7 +230,7 @@ Namespace Framework
         Protected Overridable Sub ExportDataCharts(Optional ByVal strFilename As String = "", Optional ByVal strPrefix As String = "")
             Debug.WriteLine("Exporting data Charts File: '" & strFilename & "', Prefix: '" & strPrefix)
 
-            'System.Threading.Thread.Sleep(2000)
+            System.Threading.Thread.Sleep(2000)
             WaitWhileBusy()
 
             Dim bDone As Boolean = False

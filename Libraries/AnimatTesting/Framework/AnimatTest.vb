@@ -158,6 +158,8 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub CleanupConversionProjectDirectory()
+            Debug.WriteLine("Cleaning up the conversion project directory")
+
             'Make sure any left over project directory is cleaned up before starting the test.
             If m_strRootFolder.Length > 0 AndAlso m_strProjectPath.Length > 0 AndAlso m_strProjectName.Length > 0 Then
                 DeleteDirectory(m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
@@ -517,11 +519,12 @@ Namespace Framework
             Dim bStarted As Boolean = False
             While Not bStarted
                 bStarted = DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
-                'Debug.WriteLine("Checking start: " & bStarted)
+                Debug.WriteLine("Checking start: " & bStarted)
                 iIdx = iIdx + 1
-                If iIdx = 90 Then
+                If iIdx = 200 Then
                     bStarted = True 'Assume we missed the started command.
                 End If
+                Threading.Thread.Sleep(20)
             End While
 
             Debug.WriteLine("Sim Started")
@@ -535,23 +538,31 @@ Namespace Framework
                 CheckForErrorDialog(False)
 
                 bDone = Not DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
+                Debug.WriteLine("Checking end: " & bDone)
                 iIdx = iIdx + 1
                 If iIdx = 90 Then
                     Throw New System.Exception("Timed out waiting for simulation to end.")
                 End If
             End While
+            Debug.WriteLine("Sim Finished")
 
         End Sub
 
         Protected Overridable Sub DeleteDirectory(ByVal strPath As String)
-            Debug.WriteLine("Attempting to delete directory: " & strPath)
-            If System.IO.Directory.Exists(strPath) Then
-                Debug.WriteLine("Deleting Directory: '" & strPath & "'")
-                System.IO.Directory.Delete(strPath, True)
-                Debug.WriteLine("Directory deleted")
-            Else
-                Debug.WriteLine("Directory not found.")
-            End If
+            Dim iAttempts As Integer = 10
+            For iTries = 0 To iAttempts
+                Try
+                    Debug.WriteLine("Attempting to delete directory: " & strPath)
+                    System.IO.Directory.Delete(strPath, True)
+                Catch ex1 As DirectoryNotFoundException
+                    Debug.WriteLine("Directory deleted or does not exist")
+                    'The directory has been deleted
+                    Return
+                Catch ex2 As IOException
+                    Debug.WriteLine("Got IOException while attempting to delete dir. Retrying.")
+                    Threading.Thread.Sleep(200)
+                End Try
+            Next
         End Sub
 
         Public Overridable Sub AssertMatch(ByVal iFound As Integer, ByVal iExpected As Integer, ByVal strName As String)

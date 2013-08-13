@@ -29,11 +29,11 @@ Namespace UITests
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("Px", 0.01)
-                        aryMaxErrors.Add("Py", 0.01)
+                        aryMaxErrors.Add("Py", 0.02)
                         aryMaxErrors.Add("Pz", 0.01)
-                        aryMaxErrors.Add("Vx", 0.01)
+                        aryMaxErrors.Add("Vx", 0.1)
                         aryMaxErrors.Add("Vy", 2) 'essentially ignore this setting. It is pretty variable.
-                        aryMaxErrors.Add("Vz", 0.01)
+                        aryMaxErrors.Add("Vz", 0.1)
 
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
