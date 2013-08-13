@@ -144,51 +144,51 @@ bool QuatEqual(osg::Quat q1, osg::Quat q2)
 
 BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
 {
-    CStdFPoint vRot(0, 0, 0);
+    //CStdFPoint vRot(0, 0, 0);
 
-    CStdPtrArray<CStdFPoint> m_aryPos;
-    m_aryPos.Add(new CStdFPoint(0, 0, 0));
-    m_aryPos.Add(new CStdFPoint(-10, 0, 0));
-    m_aryPos.Add(new CStdFPoint(10, 0, 10));
-    m_aryPos.Add(new CStdFPoint(10, 10, 10));
+    //CStdPtrArray<CStdFPoint> m_aryPos;
+    //m_aryPos.Add(new CStdFPoint(0, 0, 0));
+    //m_aryPos.Add(new CStdFPoint(-10, 0, 0));
+    //m_aryPos.Add(new CStdFPoint(10, 0, 10));
+    //m_aryPos.Add(new CStdFPoint(10, 10, 10));
 
-    //int iPosCount = m_aryPos.GetSize();
-    //for(int iPosIdx=0; iPosIdx<iPosCount; iPosIdx++)
-    //{
-    //    CStdFPoint &vPos = *m_aryPos[iPosIdx];
-    CStdFPoint vPos(0, 0, 0);
+    ////int iPosCount = m_aryPos.GetSize();
+    ////for(int iPosIdx=0; iPosIdx<iPosCount; iPosIdx++)
+    ////{
+    ////    CStdFPoint &vPos = *m_aryPos[iPosIdx];
+    //CStdFPoint vPos(0, 0, 0);
    
-        float fltDiv = osg::PI/100;
-        float fltStart = -osg::PI*2;
-        float fltEnd = osg::PI*2;
+    //    float fltDiv = osg::PI/100;
+    //    float fltStart = -osg::PI*2;
+    //    float fltEnd = osg::PI*2;
 
-        //vRot.Set(osg::PI/4, osg::PI/4, -osg::PI/6);
+    //    //vRot.Set(osg::PI/4, osg::PI/4, -osg::PI/6);
 
-        for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
-            for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
-                for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
-                {
-                    osg::Matrix vNew, vOld;
-                    //osg::Quat vNew, vOld;
-                    //vRot.Set(fltXRot, fltYRot, fltZRot);
+    //    for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+    //        for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
+    //            for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+    //            {
+    //                osg::Matrix vNew, vOld;
+    //                //osg::Quat vNew, vOld;
+    //                //vRot.Set(fltXRot, fltYRot, fltZRot);
 
-                    //vOld = OldSetupMatrixQuat(vPos, vRot);
-                    //vNew = FromEuler(vRot.y, vRot.z, vRot.x);
+    //                //vOld = OldSetupMatrixQuat(vPos, vRot);
+    //                //vNew = FromEuler(vRot.y, vRot.z, vRot.x);
 
-                    vOld = OldSetupMatrix(vPos, vRot);
-                    vNew = NewSetupMatrix(vPos, vRot);
+    //                vOld = OldSetupMatrix(vPos, vRot);
+    //                vNew = NewSetupMatrix(vPos, vRot);
 
-                    //OsgMatrixUtil::Print(vOld);
-                    //OsgMatrixUtil::Print(vNew);
+    //                //OsgMatrixUtil::Print(vOld);
+    //                //OsgMatrixUtil::Print(vNew);
 
-                    int i=5;
-                    if(!(vOld == vNew))
-                        i=6;
-                    //if(!QuatEqual(vOld, vNew))
-                    //    i=6;
-                    //BOOST_ASSERT();
-                }
-    //}
+    //                int i=5;
+    //                if(!(vOld == vNew))
+    //                    i=6;
+    //                //if(!QuatEqual(vOld, vNew))
+    //                //    i=6;
+    //                //BOOST_ASSERT();
+    //            }
+    ////}
 }
 
 
@@ -213,5 +213,62 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
     //            //BOOST_ASSERT(vOld == vNew);
     //        }
 }
+
+BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
+{
+    osg::Matrix osgMT(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255, 0.00000000000000000,
+                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 0.00000000000000000, 
+                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916, 0.00000000000000000, 
+                      0.00000000000000000, 1.5000000000000000, 0, 1);
+    
+    OsgMatrixUtil osgUtil;
+    VsMatrixUtil vsUtil;
+
+    SetMatrixUtil(&osgUtil);
+    CStdFPoint vOsgRot = EulerRotationFromMatrix(osgMT);  
+
+    SetMatrixUtil(&vsUtil);
+    CStdFPoint vVsRot = EulerRotationFromMatrix(osgMT);  
+
+    int i=5;
+    if(vOsgRot != vVsRot)
+        i=6;
+
+   //osgUItil.
+}
+
+//+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
+//+		vRot	{x=-3.1415927 y=1.4628686 z=3.1415927 }	CStdPoint<float>
+//
+//
+//
+//+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
+//+		vRot	{x=0.00000000 y=0.00000000 z=1.6122011 }	CStdPoint<float>
+//-		osgMT	{_mat=0x0ce5dffc }	osg::Matrixd
+//-		_mat	0x0ce5dffc	double [4][4]
+//-		[0]	0x0ce5dffc	double [4]
+//		[0]	-0.041392912621901916	double
+//		[1]	2.2185430073521640e-016	double
+//		[2]	-0.99914294612166255	double
+//		[3]	0.00000000000000000	double
+
+//-		[1]	0x0ce5e01c	double [4]
+//		[0]	-2.2185430073521640e-016	double
+//		[1]	0.99999999999999989	double
+//		[2]	2.3123567785485781e-016	double
+//		[3]	0.00000000000000000	double
+
+//-		[2]	0x0ce5e03c	double [4]
+//		[0]	0.99914294612166255	double
+//		[1]	2.3123567785485781e-016	double
+//		[2]	-0.041392912621901916	double
+//		[3]	0.00000000000000000	double
+
+//-		[3]	0x0ce5e05c	double [4]
+//		[0]	0.00000000000000000	double
+//		[1]	1.5000000000000000	double
+//		[2]	0.00000000000000000	double
+//		[3]	1.0000000000000000	double
+
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{53CA023B-C6C2-6347-8FF3-00142968C1E9}</ProjectGuid>
+		<ProjectGuid>{9322B286-3472-204D-BC3B-68457685E452}</ProjectGuid>
 		<RootNamespace>Vortex_UnitTests</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

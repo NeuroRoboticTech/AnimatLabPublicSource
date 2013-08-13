@@ -82,6 +82,7 @@ namespace VortexAnimatSim
 		class VsOrganism;
 		class VsRigidBody;
 		class VsStructure;
+        class VsMatrixUtil;
 
 		namespace Bodies
 		{
@@ -152,6 +153,7 @@ using namespace Vx;
 
 #include "VsClassFactory.h"
 
+#include "VsOsgGeometry.h"
 #include "VsConstraintRelaxation.h"
 #include "VsConstraintFriction.h"
 #include "VsJoint.h"
