@@ -142,6 +142,62 @@ bool QuatEqual(osg::Quat q1, osg::Quat q2)
 }
 
 
+//----------------------------------------------------------------------------
+CStdFPoint ExtractEulerXYZ (osg::Matrix osgMT)
+{
+    //We need to transpose the matrix that osg provides for us in 
+    //order to do the following calculations.
+    osg::Matrix3 osgMT3(osgMT(0, 0), osgMT(1, 0), osgMT(2, 0), 
+                        osgMT(0, 1), osgMT(1, 1), osgMT(2, 1),
+                        osgMT(0, 2), osgMT(1, 2), osgMT(2, 2));
+
+    // +-           -+   +-                                        -+
+    // | r00 r01 r02 |   |  cy*cz           -cy*sz            sy    |
+    // | r10 r11 r12 | = |  cz*sx*sy+cx*sz   cx*cz-sx*sy*sz  -cy*sx |
+    // | r20 r21 r22 |   | -cx*cz*sy+sx*sz   cz*sx+cx*sy*sz   cx*cy |
+    // +-           -+   +-                                        -+
+    float xAngle=0, yAngle=0, zAngle=0;
+
+    if (osgMT3(0, 2) < 1)
+    {
+        if (osgMT3(0, 2) > -1)
+        {
+            // y_angle = asin(r02)
+            // x_angle = atan2(-r12,r22)
+            // z_angle = atan2(-r01,r00)
+            yAngle = (float) asin((double) osgMT3(0, 2));
+            xAngle = (float) atan2((double) -osgMT3(1, 2), (double) osgMT3(2, 2));
+            zAngle = (float) atan2((double) -osgMT3(0, 1), (double) osgMT3(0, 0));
+            //return EA_UNIQUE;
+        }
+        else
+        {
+            // y_angle = -pi/2
+            // z_angle - x_angle = atan2(r10,r11)
+            // WARNING.  The solution is not unique.  Choosing z_angle = 0.
+            yAngle = -(osg::PI/2);
+            xAngle = -atan2((double) osgMT3(1, 0), (double) osgMT3(1, 1));
+            zAngle = 0;
+            //return EA_NOT_UNIQUE_DIF;
+        }
+    }
+    else
+    {
+        // y_angle = +pi/2
+        // z_angle + x_angle = atan2(r10,r11)
+        // WARNING.  The solutions is not unique.  Choosing z_angle = 0.
+        yAngle = osg::PI/2;
+        xAngle = atan2((double) osgMT3(1, 0), (double) osgMT3(1, 1));
+        zAngle = 0;
+        //return EA_NOT_UNIQUE_SUM;
+    }
+
+    CStdFPoint vRot(xAngle, yAngle, zAngle);
+    vRot.ClearNearZero();
+
+    return vRot;
+}
+
 BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
 {
     //CStdFPoint vRot(0, 0, 0);
@@ -194,24 +250,38 @@ BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
 
 BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
 {
-    //CStdFPoint vRot(0, 0, 0);
-    //CStdFPoint vPos(0, 0, 0);
-   
-    //for(float fltXRot = -360; fltXRot<360; fltXRot+=20)
-    //    for(float fltYRot = -360; fltYRot<360; fltYRot+=20)
-    //        for(float fltZRot = -360; fltZRot<360; fltZRot+=20)
-    //        {
-    //            osg::Matrix osgMT;
-    //            vRot.Set(fltXRot, fltYRot, fltZRot);
+    CStdFPoint vRot(0, 0, 0);
+    CStdFPoint vPos(0, 0, 0);
 
-    //            osgMT = SetupMatrix(vPos, vRot);
+    //OsgMatrixUtil osgUtil;
+    VsMatrixUtil vsUtil;
 
-    //            CStdFPoint vOld = OldEulerRotationFromMatrix(osgMT);
-    //            CStdFPoint vNew = EulerRotationFromMatrix(osgMT);
-    //            
-    //            int i=5;
-    //            //BOOST_ASSERT(vOld == vNew);
-    //        }
+    //SetMatrixUtil(&osgUtil);
+    SetMatrixUtil(&vsUtil);
+
+    float fltDiv = osg::PI/100;
+    float fltStart = -osg::PI*2;
+    float fltEnd = osg::PI*2;
+
+    for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+        for(float fltYRot = -((osg::PI/2)-0.001); fltYRot<((osg::PI/2)-0.001); fltYRot+=fltDiv)
+            for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+            {
+                osg::Matrix osgMT;
+                vRot.Set(fltXRot, fltYRot, fltZRot);
+
+                osgMT = SetupMatrix(vPos, vRot);
+
+
+                CStdFPoint vOld = EulerRotationFromMatrix(osgMT);
+                CStdFPoint vNew = ExtractEulerXYZ(osgMT);
+                
+                int i=5;
+                if(!vOld.Equal(vNew, 1e-4))
+                    i=6;
+
+                //BOOST_ASSERT(vOld == vNew);
+            }
 }
 
 BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
@@ -221,6 +291,15 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
                       0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916, 0.00000000000000000, 
                       0.00000000000000000, 1.5000000000000000, 0, 1);
     
+    osg::Matrix3 osgMT3(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255,
+                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 
+                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
+
+    osg::Matrix3 osgMT3T(-0.041392912621901916, -2.2185430073521640e-016, 0.99914294612166255,
+                         2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016,
+                         -0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
+        
+
     OsgMatrixUtil osgUtil;
     VsMatrixUtil vsUtil;
 
@@ -229,6 +308,8 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
 
     SetMatrixUtil(&vsUtil);
     CStdFPoint vVsRot = EulerRotationFromMatrix(osgMT);  
+
+    CStdFPoint vtRot = ExtractEulerXYZ(osgMT);
 
     int i=5;
     if(vOsgRot != vVsRot)
