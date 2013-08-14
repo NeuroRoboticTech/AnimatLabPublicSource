@@ -8,21 +8,23 @@ namespace OsgAnimatSim
 		class ANIMAT_OSG_PORT OsgHingeLimit
 		{
 		protected:
-			osg::ref_ptr<osg::Geometry> m_osgFlap;
+            ConstraintLimit *m_lpThisLimit;
+
+            osg::ref_ptr<osg::Geometry> m_osgFlap;
 			osg::ref_ptr<osg::MatrixTransform> m_osgFlapTranslateMT;
 			osg::ref_ptr<osg::MatrixTransform> m_osgFlapRotateMT;
 
 			osg::ref_ptr<osg::Material> m_osgFlapMat;
 			osg::ref_ptr<osg::StateSet> m_osgFlapSS;
 
-            virtual CStdColor GetLimitColor() = 0;
-
 		public:
 			OsgHingeLimit();
 			virtual ~OsgHingeLimit();
+            
+            virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
 
 			virtual void LimitAlpha(float fltA);
-            virtual void SetLimitPos(float fltHeight, float fltLimitPos);
+            virtual void SetLimitPos(float fltHeight);
 				
 			osg::Geometry *FlapGeometry() {return m_osgFlap.get();};
 			osg::MatrixTransform *FlapTranslateMT() {return m_osgFlapTranslateMT.get();};
@@ -30,7 +32,7 @@ namespace OsgAnimatSim
 			osg::Material *FlapMat() {return m_osgFlapMat.get();};
 			osg::StateSet *FlapSS() {return m_osgFlapSS.get();};
 
-            virtual void SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight, float fltLimitPos);
+            virtual void SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight);
             virtual void DeleteLimitGraphics();
         };
 

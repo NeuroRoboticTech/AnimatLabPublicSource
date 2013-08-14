@@ -9,6 +9,8 @@ namespace OsgAnimatSim
 		class ANIMAT_OSG_PORT OsgPrismaticLimit
 		{
 		protected:
+            ConstraintLimit *m_lpThisLimit;
+
 			osg::ref_ptr<osg::Geometry> m_osgCylinder;
 			osg::ref_ptr<osg::Geode> m_osgCylinderGeode;
 			osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
@@ -25,7 +27,9 @@ namespace OsgAnimatSim
 			virtual ~OsgPrismaticLimit();
 
 			virtual void LimitAlpha(float fltA);
-			virtual void SetLimitPos(float fltRadius, float fltLimitPos);
+			virtual void SetLimitPos(float fltRadius);
+
+            virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
 
 			osg::Geometry *BoxGeometry();
 			osg::MatrixTransform *BoxMT();
@@ -37,7 +41,7 @@ namespace OsgAnimatSim
 			osg::Material *CylinderMat();
 			osg::StateSet *CylinderSS();
 
-            virtual void SetupLimitGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, bool bIsShowPosition, CStdColor vColor);
+            virtual void SetupLimitGraphics(float fltBoxSize, float fltRadius);
             virtual void DeleteLimitGraphics();
 		};
 

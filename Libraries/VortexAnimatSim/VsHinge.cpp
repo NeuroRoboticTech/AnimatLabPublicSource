@@ -123,7 +123,7 @@ void VsHinge::CreateJointGraphics()
     float fltLimitPos = Hinge::JointPosition();
 	m_lpPosFlap->LimitPos(fltLimitPos);
 
-    OsgHinge::CreateHingeGraphics(CylinderHeight(), CylinderRadius(), FlapWidth(), fltLimitPos, 
+    OsgHinge::CreateHingeGraphics(CylinderHeight(), CylinderRadius(), FlapWidth(), 
                                   m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 }
 

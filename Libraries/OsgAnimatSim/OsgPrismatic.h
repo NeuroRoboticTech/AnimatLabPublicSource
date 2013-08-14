@@ -15,8 +15,7 @@ namespace OsgAnimatSim
 		{
 		protected:
             virtual void DeletePrismaticGraphics(osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
-            virtual void CreatePrismaticGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, 
-                                                    bool bIsShowPosition, CStdColor vColor,
+            virtual void CreatePrismaticGraphics(float fltBoxSize, float fltRadius, 
                                                     osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, 
                                                     OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
 

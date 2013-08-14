@@ -46,7 +46,7 @@ namespace OsgAnimatSim
 			osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
 
     		virtual void DeleteHingeGraphics(osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap);
-            virtual void CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth, float fltLimitPos, 
+            virtual void CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidths, 
                                 osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, 
                                 OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap);
             virtual void CreateCylinderGraphics(float fltHeight, float fltRadius);

@@ -56,15 +56,14 @@ void OsgPrismatic::DeletePrismaticGraphics(osg::ref_ptr<osg::MatrixTransform> os
     }
 }
 
-void OsgPrismatic::CreatePrismaticGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, 
-                                           bool bIsShowPosition, CStdColor vColor,
+void OsgPrismatic::CreatePrismaticGraphics(float fltBoxSize, float fltRadius, 
                                            osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, 
                                            OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap)
 {
-	lpUpperLimit->SetupLimitGraphics(fltBoxSize, fltRadius, fltLimitPos, bIsShowPosition, vColor);
-	lpLowerLimit->SetupLimitGraphics(fltBoxSize, fltRadius, fltLimitPos, bIsShowPosition, vColor);
-	lpPosFlap->SetupLimitGraphics(fltBoxSize, fltRadius, fltLimitPos, bIsShowPosition, vColor);
-
+	lpUpperLimit->SetupLimitGraphics(fltBoxSize, fltRadius);
+	lpLowerLimit->SetupLimitGraphics(fltBoxSize, fltRadius);
+	lpPosFlap->SetupLimitGraphics(fltBoxSize, fltRadius);
+        
 	osgJointMT->addChild(lpUpperLimit->BoxMT());
 	osgJointMT->addChild(lpUpperLimit->CylinderMT());
 

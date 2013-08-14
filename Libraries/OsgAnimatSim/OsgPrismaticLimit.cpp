@@ -62,9 +62,10 @@ osg::Material *OsgPrismaticLimit::CylinderMat() {return m_osgCylinderMat.get();}
 
 osg::StateSet *OsgPrismaticLimit::CylinderSS() {return m_osgCylinderSS.get();}
 
-void OsgPrismaticLimit::SetLimitPos(float fltRadius, float fltLimitPos)
+void OsgPrismaticLimit::SetLimitPos(float fltRadius)
 {
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
+    float fltLimitPos = m_lpThisLimit->LimitPos();
 
 	//Reset the position of the Box.
 	if(m_osgBoxMT.valid())
@@ -103,8 +104,11 @@ void OsgPrismaticLimit::DeleteLimitGraphics()
     m_osgCylinderSS.release();
 }
 
-void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, bool bIsShowPosition, CStdColor vColor)
+void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius)
 {
+    float fltLimitPos = m_lpThisLimit->LimitPos();
+    CStdColor *vColor =  m_lpThisLimit->Color();
+
 	//Create the LIMIT Box
 	m_osgBox = CreateBoxGeometry(fltBoxSize, fltBoxSize, 
 									fltBoxSize, fltBoxSize, 
@@ -130,7 +134,7 @@ void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius, fl
 
 	//set the diffuse property of this node to the color of this body	
 	m_osgBoxMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-	m_osgBoxMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
+	m_osgBoxMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 	m_osgBoxMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
 	m_osgBoxMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
 	m_osgBoxSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
@@ -142,7 +146,7 @@ void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius, fl
 	//Create the cylinder for the Prismatic
 	//If this is the limit for showing the position then we should not create a cylinder. We only do that for the
 	// upper and lower limits.
-	if(!bIsShowPosition)
+	if(!m_lpThisLimit->IsShowPosition())
 	{
 		m_osgCylinder = CreateConeGeometry(fabs(fltLimitPos), fltRadius, fltRadius, 10, true, true, true);
 		m_osgCylinderGeode = new osg::Geode;
@@ -162,7 +166,7 @@ void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius, fl
 
 		//set the diffuse property of this node to the color of this body	
 		m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
+		m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 		//m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
 		m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
 		m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);

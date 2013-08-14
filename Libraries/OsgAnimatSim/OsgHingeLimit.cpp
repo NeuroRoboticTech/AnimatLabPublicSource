@@ -36,9 +36,9 @@ void OsgHingeLimit::LimitAlpha(float fltA)
 	}
 }
 
-void OsgHingeLimit::SetLimitPos(float fltHeight, float fltLimitPos)
+void OsgHingeLimit::SetLimitPos(float fltHeight)
 {
-
+    float fltLimitPos = m_lpThisLimit->LimitPos();
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 
 	//Reset the position and rotation of the flap.
@@ -61,8 +61,11 @@ void OsgHingeLimit::DeleteLimitGraphics()
     m_osgFlapSS.release();
 }
 
-void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight, float fltLimitPos)
+void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeight)
 {
+    float fltLimitPos = m_lpThisLimit->LimitPos();
+    CStdColor *vColor =  m_lpThisLimit->Color();
+
 	//Create the min flap
 	m_osgFlap = CreateBoxGeometry(fltFlapWidth, (fltCylinderHeight/2), 
 									fltCylinderHeight, fltFlapWidth, 
@@ -92,9 +95,8 @@ void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeig
 	m_osgFlapSS = m_osgFlapTranslateMT->getOrCreateStateSet();
 
 	//set the diffuse property of this node to the color of this body	
-    CStdColor vColor = GetLimitColor();
 	m_osgFlapMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-	m_osgFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
+	m_osgFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 	m_osgFlapMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
 	m_osgFlapMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
 	m_osgFlapSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 

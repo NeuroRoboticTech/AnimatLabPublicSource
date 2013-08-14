@@ -99,20 +99,11 @@ void VsPrismatic::SetAlpha()
 
 void VsPrismatic::DeleteJointGraphics()
 {
-	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
-	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
-	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
+	OsgPrismaticLimit *lpUpperLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpUpperLimit);
+	OsgPrismaticLimit *lpLowerLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpLowerLimit);
+	OsgPrismaticLimit *lpPosFlap = dynamic_cast<OsgPrismaticLimit *>(m_lpPosFlap);
 
-    if(m_osgJointMT.valid())
-    {
-		if(lpUpperLimit && lpUpperLimit->BoxMT()) m_osgJointMT->removeChild(lpUpperLimit->BoxMT());
-		if(lpUpperLimit && lpUpperLimit->CylinderMT()) m_osgJointMT->removeChild(lpUpperLimit->CylinderMT());
-
-        if(lpLowerLimit && lpLowerLimit->BoxMT()) m_osgJointMT->removeChild(lpLowerLimit->BoxMT());
-		if(lpLowerLimit && lpLowerLimit->CylinderMT()) m_osgJointMT->removeChild(lpLowerLimit->CylinderMT());
-
-		if(lpPosFlap && lpPosFlap->BoxMT()) m_osgJointMT->removeChild(lpPosFlap->BoxMT());
-    }
+    OsgPrismatic::DeletePrismaticGraphics(m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 
     if(m_lpUpperLimit) m_lpUpperLimit->DeleteGraphics();
     if(m_lpLowerLimit) m_lpLowerLimit->DeleteGraphics();
@@ -121,23 +112,14 @@ void VsPrismatic::DeleteJointGraphics()
 
 void VsPrismatic::CreateJointGraphics()
 {
-	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
-	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
-	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
+	OsgPrismaticLimit *lpUpperLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpUpperLimit);
+	OsgPrismaticLimit *lpLowerLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpLowerLimit);
+	OsgPrismaticLimit *lpPosFlap = dynamic_cast<OsgPrismaticLimit *>(m_lpPosFlap);
 
-	lpPosFlap->LimitPos(Prismatic::JointPosition());
-
-	lpUpperLimit->SetupGraphics();
-	lpLowerLimit->SetupGraphics();
-	lpPosFlap->SetupGraphics();
-
-	m_osgJointMT->addChild(lpUpperLimit->BoxMT());
-	m_osgJointMT->addChild(lpUpperLimit->CylinderMT());
-
-	m_osgJointMT->addChild(lpLowerLimit->BoxMT());
-	m_osgJointMT->addChild(lpLowerLimit->CylinderMT());
-
-	m_osgJointMT->addChild(lpPosFlap->BoxMT());
+	m_lpPosFlap->LimitPos(Prismatic::JointPosition());
+	OsgPrismatic::CreatePrismaticGraphics(BoxSize(), CylinderRadius(), 
+                                          m_osgJointMT, lpUpperLimit, 
+                                          lpLowerLimit, lpPosFlap);
 }
 
 void VsPrismatic::SetupGraphics()

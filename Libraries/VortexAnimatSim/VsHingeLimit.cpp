@@ -16,6 +16,7 @@ namespace VortexAnimatSim
 VsHingeLimit::VsHingeLimit()
 {
 	m_vxHinge = NULL;
+    OsgHingeLimit::ConstraintLimit(this);
 }
 
 VsHingeLimit::~VsHingeLimit()
@@ -39,10 +40,7 @@ void VsHingeLimit::SetLimitPos()
 	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpJoint);
 
     if(lpHinge)
-    {
-		float fltHeight = lpHinge->CylinderHeight();
-        OsgHingeLimit::SetLimitPos(fltHeight, m_fltLimitPos);
-	}
+        OsgHingeLimit::SetLimitPos(lpHinge->CylinderHeight());
 
 	//Set the limit on the physics hinge object.
 	SetLimitValues();
@@ -70,7 +68,7 @@ void VsHingeLimit::SetupGraphics()
 	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpJoint);
 
 	if(lpHinge)
-        OsgHingeLimit::SetupLimitGraphics(lpHinge->FlapWidth(), lpHinge->CylinderHeight(), m_fltLimitPos);
+        OsgHingeLimit::SetupLimitGraphics(lpHinge->FlapWidth(), lpHinge->CylinderHeight());
 }
 
 		}		//Bodies

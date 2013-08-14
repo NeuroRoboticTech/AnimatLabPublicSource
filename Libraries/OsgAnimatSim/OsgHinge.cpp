@@ -97,15 +97,15 @@ void OsgHinge::CreateCylinderGraphics(float fltHeight, float fltRadius)
 	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 }
 
-void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth, float fltLimitPos,  
+void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFlapWidth,  
                                    osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgHingeLimit *lpUpperLimit, 
                                    OsgHingeLimit *lpLowerLimit, OsgHingeLimit *lpPosFlap)
 {
 	CreateCylinderGraphics(fltHeight, fltRadius);
 
-	if(lpUpperLimit) lpUpperLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
-	if(lpLowerLimit) lpLowerLimit->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
-	if(lpPosFlap) lpPosFlap->SetupLimitGraphics(fltFlapWidth, fltHeight, fltLimitPos);
+	if(lpUpperLimit) lpUpperLimit->SetupLimitGraphics(fltFlapWidth, fltHeight);
+	if(lpLowerLimit) lpLowerLimit->SetupLimitGraphics(fltFlapWidth, fltHeight);
+	if(lpPosFlap) lpPosFlap->SetupLimitGraphics(fltFlapWidth, fltHeight);
 
 	osgJointMT->addChild(m_osgCylinderMT.get());
 	osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
