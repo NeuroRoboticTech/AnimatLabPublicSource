@@ -115,9 +115,9 @@ void OsgJoint::DeleteGraphics()
 void OsgJoint::DeleteJointGraphics()
 {
 	if(m_osgJointMT.valid() && m_osgDefaultBallMT.valid()) m_osgJointMT->removeChild(m_osgDefaultBallMT.get());
-    m_osgDefaultBall.release();
-    m_osgDefaultBallMT.release();
-    m_osgDefaultBallSS.release();
+    if(m_osgDefaultBall.valid()) m_osgDefaultBall.release();
+    if(m_osgDefaultBallMT.valid()) m_osgDefaultBallMT.release();
+    if(m_osgDefaultBallSS.valid()) m_osgDefaultBallSS.release();
 }
 
 void OsgJoint::ResetDraggerOnResize()

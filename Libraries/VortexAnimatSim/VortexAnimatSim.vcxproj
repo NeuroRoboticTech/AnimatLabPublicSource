@@ -177,7 +177,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="VortexAnimatSim.cpp" />
-    <ClCompile Include="VsAttachment.cpp" />
     <ClCompile Include="VsBallSocket.cpp" />
     <ClCompile Include="VsBox.cpp" />
     <ClCompile Include="VsBoxTest.cpp" />
@@ -190,7 +189,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsEllipsoid.cpp" />
     <ClCompile Include="VsFluidPlane.cpp" />
     <ClCompile Include="VsForceStimulus.cpp" />
-    <ClCompile Include="VsFreeJoint.cpp" />
     <ClCompile Include="VsHinge.cpp" />
     <ClCompile Include="VsHingeLimit.cpp" />
     <ClCompile Include="VsIntersectionEvent.cpp" />
@@ -221,7 +219,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="VsAttachment.h" />
     <ClInclude Include="VsBallSocket.h" />
     <ClInclude Include="VsBox.h" />
     <ClInclude Include="VsBoxTest.h" />
@@ -234,7 +231,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsEllipsoid.h" />
     <ClInclude Include="VsFluidPlane.h" />
     <ClInclude Include="VsForceStimulus.h" />
-    <ClInclude Include="VsFreeJoint.h" />
     <ClInclude Include="VsHinge.h" />
     <ClInclude Include="VsHingeLimit.h" />
     <ClInclude Include="VsIntersectionEvent.h" />

@@ -86,7 +86,6 @@ namespace VortexAnimatSim
 
 		namespace Bodies
 		{
-			class VsAttachment;
 			class VsBox;
 			class VsCone;
 			class VsCylinder;
@@ -113,7 +112,6 @@ namespace VortexAnimatSim
 			class VsPrismatic;
 			class VsPrismaticLimit;
 			class VsUniversal;
-			class VsFreeJoint;
 		}
 	}
 
@@ -179,9 +177,7 @@ using namespace Vx;
 #include "VsPrismaticLimit.h"
 #include "VsBallSocket.h"
 #include "VsUniversal.h"
-#include "VsFreeJoint.h"
 
-#include "VsAttachment.h"
 #include "VsLine.h"
 #include "VsLinearHillMuscle.h"
 #include "VsLinearHillStretchReceptor.h"

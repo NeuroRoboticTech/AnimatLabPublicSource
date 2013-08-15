@@ -100,7 +100,6 @@ namespace VortexAnimatSim
 
 		namespace Bodies
 		{
-			class VsAttachment;
 			class VsBox;
 			class VsCone;
 			class VsCylinder;

@@ -123,10 +123,12 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\OsgAttachment.h" />
     <ClInclude Include="..\OsgBody.h" />
     <ClInclude Include="..\OsgCameraManipulator.h" />
     <ClInclude Include="..\OsgDragger.h" />
     <ClInclude Include="..\OsgDraggerHandler.h" />
+    <ClInclude Include="..\OsgFreeJoint.h" />
     <ClInclude Include="..\OsgGeometry.h" />
     <ClInclude Include="..\OsgHinge.h" />
     <ClInclude Include="..\OsgHingeLimit.h" />
@@ -161,6 +163,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
   <ItemGroup>
     <ClCompile Include="..\OsgAnimatSim.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgAttachment.cpp" />
     <ClCompile Include="..\OsgBody.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgCameraManipulator.cpp">
@@ -169,6 +172,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgDraggerHandler.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgFreeJoint.cpp" />
     <ClCompile Include="..\OsgGeometry.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgHinge.cpp" />

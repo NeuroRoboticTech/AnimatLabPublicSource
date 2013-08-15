@@ -21,9 +21,6 @@
     <ClCompile Include="VortexAnimatSim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsAttachment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsBallSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
     <ClCompile Include="VsEllipsoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsFreeJoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsMouth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,9 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsAttachment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsBallSocket.h">
@@ -231,9 +222,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsEllipsoid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsFreeJoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsMouth.h">

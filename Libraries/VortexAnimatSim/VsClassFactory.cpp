@@ -31,10 +31,7 @@
 #include "VsBallSocket.h"
 #include "VsRPRO.h"
 #include "VsUniversal.h"
-#include "VsFreeJoint.h"
 #include "VsDistanceJoint.h"
-
-#include "VsAttachment.h"
 
 #include "VsLine.h"
 #include "VsLinearHillMuscle.h"
@@ -101,7 +98,7 @@ try
 	else if(strType == "PLANETEST")
 		lpPart = new VsPlaneTest;
 	else if(strType == "ATTACHMENT")
-		lpPart = new VsAttachment;
+		lpPart = new OsgAnimatSim::Environment::Bodies::OsgAttachment;
 	else if(strType == "LINEARHILLMUSCLE")
 		lpPart = new VsLinearHillMuscle;
 	else if(strType == "LINEARHILLSTRETCHRECEPTOR")
@@ -173,7 +170,7 @@ try
 	else if(strType == "UNIVERSAL")
 		lpJoint = new VsUniversal;
 	else if(strType == "FREEJOINT")
-		lpJoint = new VsFreeJoint;
+		lpJoint = new OsgAnimatSim::Environment::OsgFreeJoint;
 	else if(strType == "DISTANCE")
 		lpJoint = new VsDistanceJoint;
 	else
