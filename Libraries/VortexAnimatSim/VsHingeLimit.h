@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsHingeLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::OsgHingeLimit
+			class VORTEX_PORT VsHingeLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::Joints::OsgHingeLimit
 			{
 			protected:
 				Vx::VxHinge *m_vxHinge;

@@ -26,6 +26,8 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
+		namespace Joints
+		{
 
 /**
 \brief	Default constructor.
@@ -97,5 +99,6 @@ void OsgFreeJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string
 
 #pragma endregion
 
+    	}			// Joints
 	}			// Environment
 }				//VortexAnimatSim

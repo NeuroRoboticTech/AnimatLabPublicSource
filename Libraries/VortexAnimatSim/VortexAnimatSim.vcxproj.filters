@@ -102,13 +102,7 @@
     <ClCompile Include="VsEllipsoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsMouth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsDistanceJoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VsOdorSensor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VsFluidPlane.cpp">
@@ -224,13 +218,7 @@
     <ClInclude Include="VsEllipsoid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsMouth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsDistanceJoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsOdorSensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsFluidPlane.h">

@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsPrismaticLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::OsgPrismaticLimit
+			class VORTEX_PORT VsPrismaticLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::Joints::OsgPrismaticLimit
 			{
 			protected:
 				Vx::VxPrismatic *m_vxPrismatic;

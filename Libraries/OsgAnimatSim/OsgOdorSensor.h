@@ -1,6 +1,8 @@
-// OsgAttachment.h: interface for the OsgAttachment class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	OsgOdorSensor.h
+
+\brief	Declares the vortex odor sensor class.
+**/
 
 #pragma once
 
@@ -11,7 +13,7 @@ namespace OsgAnimatSim
 		namespace Bodies
 		{
 
-class ANIMAT_OSG_PORT OsgAttachment  : public AnimatSim::Environment::Bodies::Attachment, public OsgRigidBody
+class ANIMAT_OSG_PORT OsgOdorSensor : public AnimatSim::Environment::Bodies::OdorSensor, public OsgRigidBody
 {
 protected:
     bool m_bPhsyicsDefined;
@@ -19,7 +21,7 @@ protected:
 	virtual void CreateGraphicsGeometry();
 	virtual void CreatePhysicsGeometry();
 	virtual void ResizePhysicsGeometry();
-
+    
     virtual void ProcessContacts() {};
 	virtual void DeletePhysics() {};
 	virtual void CreateSensorPart() {};
@@ -30,9 +32,9 @@ protected:
     virtual void GetBaseValues() {};
 
 public:
-	OsgAttachment();
-	virtual ~OsgAttachment();
-
+	OsgOdorSensor();
+	virtual ~OsgOdorSensor();
+    
     virtual bool Physics_IsGeometryDefined() {return false;};
     virtual void Physics_EnableCollision(RigidBody *lpBody) {};
     virtual void Physics_DisableCollision(RigidBody *lpBody) {};
@@ -49,4 +51,3 @@ public:
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
-

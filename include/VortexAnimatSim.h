@@ -97,7 +97,6 @@ namespace VortexAnimatSim
 			class VsTorus;
 			class VsEllipsoid;
 			class VsMouth;
-			class VsOdorSensor;
 			class VsFluidPlane;
 			class VsMeshBase;
 			class VsMesh;
@@ -164,8 +163,6 @@ using namespace Vx;
 #include "VsSphere.h"
 #include "VsTorus.h"
 #include "VsEllipsoid.h"
-#include "VsMouth.h"
-#include "VsOdorSensor.h"
 #include "VsFluidPlane.h"
 #include "VsMeshBase.h"
 #include "VsMesh.h"

@@ -33,7 +33,7 @@ namespace VortexAnimatSim
 			\author	dcofer
 			\date	4/15/2011
 			**/
-			class VORTEX_PORT VsHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge, public OsgAnimatSim::Environment::OsgHinge     
+			class VORTEX_PORT VsHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge, public OsgAnimatSim::Environment::Joints::OsgHinge     
 			{
 			protected:
 				/// The vortex hinge class.

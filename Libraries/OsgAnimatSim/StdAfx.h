@@ -114,7 +114,23 @@ namespace OsgAnimatSim
 		class OsgJoint;
 		class OsgOrganism;
 		class OsgStructure;
-	}
+
+        namespace Bodies
+        {
+            class OsgAttachment;
+            class OsgMouth;
+            class OsgOdorSensor;
+        }
+
+        namespace Joints
+        {
+            class OsgHinge;
+            class OsgHingeLimit;
+            class OsgPrismatic;
+            class OsgPrismaticLimit;
+            class OsgFreeJoint;
+        }
+    }
 
 	namespace Visualization
 	{

@@ -1,6 +1,8 @@
-// OsgAttachment.h: interface for the OsgAttachment class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsMouth.h
+
+\brief	Declares the vortex mouth class.
+**/
 
 #pragma once
 
@@ -11,7 +13,7 @@ namespace OsgAnimatSim
 		namespace Bodies
 		{
 
-class ANIMAT_OSG_PORT OsgAttachment  : public AnimatSim::Environment::Bodies::Attachment, public OsgRigidBody
+class ANIMAT_OSG_PORT OsgMouth : public AnimatSim::Environment::Bodies::Mouth, public OsgRigidBody
 {
 protected:
     bool m_bPhsyicsDefined;
@@ -19,7 +21,7 @@ protected:
 	virtual void CreateGraphicsGeometry();
 	virtual void CreatePhysicsGeometry();
 	virtual void ResizePhysicsGeometry();
-
+    
     virtual void ProcessContacts() {};
 	virtual void DeletePhysics() {};
 	virtual void CreateSensorPart() {};
@@ -30,8 +32,8 @@ protected:
     virtual void GetBaseValues() {};
 
 public:
-	OsgAttachment();
-	virtual ~OsgAttachment();
+	OsgMouth();
+	virtual ~OsgMouth();
 
     virtual bool Physics_IsGeometryDefined() {return false;};
     virtual void Physics_EnableCollision(RigidBody *lpBody) {};
@@ -49,4 +51,3 @@ public:
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
-

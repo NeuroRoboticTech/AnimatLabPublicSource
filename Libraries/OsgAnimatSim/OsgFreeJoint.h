@@ -10,29 +10,32 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-
-		class ANIMAT_OSG_PORT OsgFreeJoint : public OsgJoint, public BallSocket     
+		namespace Joints
 		{
-		protected:
-            bool m_bPhsyicsDefined;
 
-			virtual void SetupPhysics();
-			virtual void DeletePhysics();
+		    class ANIMAT_OSG_PORT OsgFreeJoint : public OsgJoint, public BallSocket     
+		    {
+		    protected:
+                bool m_bPhsyicsDefined;
 
-		public:
-			OsgFreeJoint();
-			virtual ~OsgFreeJoint();
+			    virtual void SetupPhysics();
+			    virtual void DeletePhysics();
 
-#pragma region DataAccesMethods
+		    public:
+			    OsgFreeJoint();
+			    virtual ~OsgFreeJoint();
 
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-            virtual bool Physics_IsDefined() {return m_bPhsyicsDefined;};
+    #pragma region DataAccesMethods
 
-#pragma endregion
+			    virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
+			    virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+                virtual bool Physics_IsDefined() {return m_bPhsyicsDefined;};
 
-			virtual void CreateJoint();
-		};
+    #pragma endregion
 
+			    virtual void CreateJoint();
+		    };
+
+    	}			// Joints
 	}			// Environment
 }				//VortexAnimatSim

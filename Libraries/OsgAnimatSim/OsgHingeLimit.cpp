@@ -14,6 +14,8 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
+		namespace Joints
+		{
 
 OsgHingeLimit::OsgHingeLimit()
 {
@@ -105,5 +107,6 @@ void OsgHingeLimit::SetupLimitGraphics(float fltFlapWidth, float fltCylinderHeig
 	m_osgFlapSS->setAttribute(m_osgFlapMat.get(), osg::StateAttribute::ON);
 }
 
+    	}			// Joints
 	}			// Environment
 }				//OsgAnimatSim

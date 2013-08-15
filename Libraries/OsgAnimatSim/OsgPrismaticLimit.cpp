@@ -14,6 +14,8 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
+		namespace Joints
+		{
 
 OsgPrismaticLimit::OsgPrismaticLimit()
 {
@@ -177,5 +179,6 @@ void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius)
 	}
 }
 
+    	}			// Joints
 	}			// Environment
 }				//OsgAnimatSim

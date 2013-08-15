@@ -110,15 +110,21 @@ namespace OsgAnimatSim
 		class OsgOrganism;
 		class OsgStructure;
         class OsgLine;
-        class OsgHinge;
-        class OsgHingeLimit;
-        class OsgPrismatic;
-        class OsgPrismaticLimit;
-        class OsgFreeJoint;
 
         namespace Bodies
         {
             class OsgAttachment;
+            class OsgMouth;
+            class OsgOdorSensor;
+        }
+
+        namespace Joints
+        {
+            class OsgHinge;
+            class OsgHingeLimit;
+            class OsgPrismatic;
+            class OsgPrismaticLimit;
+            class OsgFreeJoint;
         }
 	}
 
@@ -143,6 +149,8 @@ namespace OsgAnimatSim
 
 using namespace OsgAnimatSim;
 using namespace OsgAnimatSim::Environment;
+using namespace OsgAnimatSim::Environment::Joints;
+using namespace OsgAnimatSim::Environment::Bodies;
 using namespace OsgAnimatSim::Visualization;
 
 #include "OsgMatrixUtil.h"
@@ -160,6 +168,8 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgPrismaticLimit.h"
 #include "OsgFreeJoint.h"
 #include "OsgAttachment.h"
+#include "OsgMouth.h"
+#include "OsgOdorSensor.h"
 
 #include "OsgOrganism.h"
 #include "OsgStructure.h"

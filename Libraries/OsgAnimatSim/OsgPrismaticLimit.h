@@ -5,45 +5,48 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-
-		class ANIMAT_OSG_PORT OsgPrismaticLimit
+		namespace Joints
 		{
-		protected:
-            ConstraintLimit *m_lpThisLimit;
 
-			osg::ref_ptr<osg::Geometry> m_osgCylinder;
-			osg::ref_ptr<osg::Geode> m_osgCylinderGeode;
-			osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
-			osg::ref_ptr<osg::Material> m_osgCylinderMat;
-			osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
+		    class ANIMAT_OSG_PORT OsgPrismaticLimit
+		    {
+		    protected:
+                ConstraintLimit *m_lpThisLimit;
 
-			osg::ref_ptr<osg::Geometry> m_osgBox;
-			osg::ref_ptr<osg::MatrixTransform> m_osgBoxMT;
-			osg::ref_ptr<osg::Material> m_osgBoxMat;
-			osg::ref_ptr<osg::StateSet> m_osgBoxSS;
+			    osg::ref_ptr<osg::Geometry> m_osgCylinder;
+			    osg::ref_ptr<osg::Geode> m_osgCylinderGeode;
+			    osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
+			    osg::ref_ptr<osg::Material> m_osgCylinderMat;
+			    osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
 
-		public:
-			OsgPrismaticLimit();
-			virtual ~OsgPrismaticLimit();
+			    osg::ref_ptr<osg::Geometry> m_osgBox;
+			    osg::ref_ptr<osg::MatrixTransform> m_osgBoxMT;
+			    osg::ref_ptr<osg::Material> m_osgBoxMat;
+			    osg::ref_ptr<osg::StateSet> m_osgBoxSS;
 
-			virtual void LimitAlpha(float fltA);
-			virtual void SetLimitPos(float fltRadius);
+		    public:
+			    OsgPrismaticLimit();
+			    virtual ~OsgPrismaticLimit();
 
-            virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
+			    virtual void LimitAlpha(float fltA);
+			    virtual void SetLimitPos(float fltRadius);
 
-			osg::Geometry *BoxGeometry();
-			osg::MatrixTransform *BoxMT();
-			osg::Material *BoxMat();
-			osg::StateSet *BoxSS();
+                virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
 
-			osg::Geometry *CylinderGeometry();
-			osg::MatrixTransform *CylinderMT();
-			osg::Material *CylinderMat();
-			osg::StateSet *CylinderSS();
+			    osg::Geometry *BoxGeometry();
+			    osg::MatrixTransform *BoxMT();
+			    osg::Material *BoxMat();
+			    osg::StateSet *BoxSS();
 
-            virtual void SetupLimitGraphics(float fltBoxSize, float fltRadius);
-            virtual void DeleteLimitGraphics();
-		};
+			    osg::Geometry *CylinderGeometry();
+			    osg::MatrixTransform *CylinderMT();
+			    osg::Material *CylinderMat();
+			    osg::StateSet *CylinderSS();
 
+                virtual void SetupLimitGraphics(float fltBoxSize, float fltRadius);
+                virtual void DeleteLimitGraphics();
+		    };
+
+    	}			// Joints
 	}			// Environment
 }				//OsgAnimatSim

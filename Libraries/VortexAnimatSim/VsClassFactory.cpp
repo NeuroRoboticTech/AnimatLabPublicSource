@@ -19,8 +19,6 @@
 #include "VsSphere.h"
 #include "VsTorus.h"
 #include "VsEllipsoid.h"
-#include "VsMouth.h"
-#include "VsOdorSensor.h"
 #include "VsFluidPlane.h"
 #include "VsMeshBase.h"
 #include "VsMesh.h"
@@ -110,9 +108,9 @@ try
 	else if(strType == "ELLIPSOID")
 		lpPart = new VsEllipsoid;
 	else if(strType == "MOUTH")
-		lpPart = new VsMouth;
+		lpPart = new OsgAnimatSim::Environment::Bodies::OsgMouth;
 	else if(strType == "ODORSENSOR")
-		lpPart = new VsOdorSensor;
+		lpPart = new OsgAnimatSim::Environment::Bodies::OsgOdorSensor;
 	else if(strType == "FLUIDPLANE")
 		lpPart = new VsFluidPlane;
 	else if(strType == "TERRAIN")
@@ -170,7 +168,7 @@ try
 	else if(strType == "UNIVERSAL")
 		lpJoint = new VsUniversal;
 	else if(strType == "FREEJOINT")
-		lpJoint = new OsgAnimatSim::Environment::OsgFreeJoint;
+		lpJoint = new OsgAnimatSim::Environment::Joints::OsgFreeJoint;
 	else if(strType == "DISTANCE")
 		lpJoint = new VsDistanceJoint;
 	else

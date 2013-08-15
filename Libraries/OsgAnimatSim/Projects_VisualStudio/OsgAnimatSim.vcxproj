@@ -142,7 +142,9 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClInclude Include="..\OsgMeshMgr.h" />
     <ClInclude Include="..\OsgMeshMinVertexDistanceVisitor.h" />
     <ClInclude Include="..\OsgMouseSpring.h" />
+    <ClInclude Include="..\OsgMouth.h" />
     <ClInclude Include="..\OsgMovableItem.h" />
+    <ClInclude Include="..\OsgOdorSensor.h" />
     <ClInclude Include="..\OsgOrganism.h" />
     <ClInclude Include="..\OsgPrismatic.h" />
     <ClInclude Include="..\OsgPrismaticLimit.h" />
@@ -196,8 +198,10 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </ClCompile>
     <ClCompile Include="..\OsgMouseSpring.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgMouth.cpp" />
     <ClCompile Include="..\OsgMovableItem.cpp">
     </ClCompile>
+    <ClCompile Include="..\OsgOdorSensor.cpp" />
     <ClCompile Include="..\OsgOrganism.cpp">
     </ClCompile>
     <ClCompile Include="..\OsgPrismatic.cpp" />

@@ -389,7 +389,7 @@ bool OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, flo
 
 	m_lpOsgSim->MouseSpring()->Visible(true);
 
-	char strDest[150];
+	//char strDest[150];
 
 	//get the grab position on the body
 	osg::Vec3 vGrabPos = m_lpOsgSim->MouseSpring()->GetGrabPosition() *osgRBBody->GetCameraMatrixTransform()->getWorldMatrices().at(0);

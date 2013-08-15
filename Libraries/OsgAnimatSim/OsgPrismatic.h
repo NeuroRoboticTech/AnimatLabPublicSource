@@ -10,19 +10,22 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-
-		class ANIMAT_OSG_PORT OsgPrismatic
+		namespace Joints
 		{
-		protected:
-            virtual void DeletePrismaticGraphics(osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
-            virtual void CreatePrismaticGraphics(float fltBoxSize, float fltRadius, 
-                                                    osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, 
-                                                    OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
 
-		public:
-			OsgPrismatic();
-			virtual ~OsgPrismatic();
-		};
+		    class ANIMAT_OSG_PORT OsgPrismatic
+		    {
+		    protected:
+                virtual void DeletePrismaticGraphics(osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
+                virtual void CreatePrismaticGraphics(float fltBoxSize, float fltRadius, 
+                                                        osg::ref_ptr<osg::MatrixTransform> osgJointMT, OsgPrismaticLimit *lpUpperLimit, 
+                                                        OsgPrismaticLimit *lpLowerLimit, OsgPrismaticLimit *lpPosFlap);
 
+		    public:
+			    OsgPrismatic();
+			    virtual ~OsgPrismatic();
+		    };
+
+    	}			// Joints
 	}			// Environment
 }				//OsgAnimatSim

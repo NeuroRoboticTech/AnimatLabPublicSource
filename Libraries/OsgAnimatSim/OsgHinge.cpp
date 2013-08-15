@@ -22,6 +22,8 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
+		namespace Joints
+		{
 
 /**
 \brief	Default constructor.
@@ -113,5 +115,6 @@ void OsgHinge::CreateHingeGraphics(float fltHeight, float fltRadius, float fltFl
 	osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
 }
 
+    	}			// Joints
 	}			// Environment
 }				//OsgAnimatSim
