@@ -10,7 +10,6 @@
 #include "VsRigidBody.h"
 #include "VsSphere.h"
 #include "VsSimulator.h"
-#include "VsFreeJoint.h"
 #include "VsMouth.h"
 #include "VsSimulator.h"
 
