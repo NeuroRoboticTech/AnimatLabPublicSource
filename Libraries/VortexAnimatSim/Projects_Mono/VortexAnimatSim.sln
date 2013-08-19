@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{6194F479-3E8C-0246-AB20-8D113E048EDE}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{30F391EF-B836-4F46-8BEC-0994F8F4B479}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{7B6BD16D-B594-9647-9909-A9091ABF287C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{30F391EF-B836-4F46-8BEC-0994F8F4B479}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{30F391EF-B836-4F46-8BEC-0994F8F4B479}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{30F391EF-B836-4F46-8BEC-0994F8F4B479}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{30F391EF-B836-4F46-8BEC-0994F8F4B479}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

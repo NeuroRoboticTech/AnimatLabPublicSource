@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B3E7C09B-FDAF-344F-8AE5-00DEA3CB1A68}</ProjectGuid>
+    <ProjectGuid>{6194F479-3E8C-0246-AB20-8D113E048EDE}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -34,7 +34,7 @@
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
         <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
-        <LibPath>..\..\..\Vortex_5_1\lib</LibPath>
+        <LibPath>../../../Vortex_5_1/lib</LibPath>
         <LibPath>../../../Vortex_5_1/3rdparty/boost-1.45.0/lib</LibPath>
       </LibPaths>
     </LibPaths>
@@ -108,7 +108,7 @@
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
         <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
-        <LibPath>..\..\..\Vortex_5_1\lib</LibPath>
+        <LibPath>../../../Vortex_5_1/lib</LibPath>
         <LibPath>../../../Vortex_5_1/3rdparty/boost-1.45.0/lib</LibPath>
       </LibPaths>
     </LibPaths>
