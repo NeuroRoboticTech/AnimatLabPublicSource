@@ -14,8 +14,6 @@ namespace OsgAnimatSim
 {
 	namespace Environment
 	{
-		namespace Joints
-		{
 
 OsgPrismaticLimit::OsgPrismaticLimit()
 {
@@ -25,10 +23,8 @@ OsgPrismaticLimit::~OsgPrismaticLimit()
 {
 }
 
-void OsgPrismaticLimit::Alpha(float fltA)
+void OsgPrismaticLimit::LimitAlpha(float fltA)
 {
-	m_vColor.a(fltA);
-
 	if(m_osgBoxMat.valid() && m_osgBoxSS.valid())
 	{
 		m_osgBoxMat->setAlpha(osg::Material::FRONT_AND_BACK, fltA);
@@ -66,21 +62,19 @@ osg::Material *OsgPrismaticLimit::CylinderMat() {return m_osgCylinderMat.get();}
 
 osg::StateSet *OsgPrismaticLimit::CylinderSS() {return m_osgCylinderSS.get();}
 
-void OsgPrismaticLimit::SetLimitPos()
+void OsgPrismaticLimit::SetLimitPos(float fltRadius, float fltLimitPos)
 {
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 
-	Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpJoint);
-
 	//Reset the position of the Box.
-	if(m_osgBoxMT.valid() && lpPrismatic)
+	if(m_osgBoxMT.valid())
 	{
-		vPos.Set(0, 0, -m_fltLimitPos); vRot.Set(0, 0, 0); 
+		vPos.Set(0, 0, -fltLimitPos); vRot.Set(0, 0, 0); 
 		m_osgBoxMT->setMatrix(SetupMatrix(vPos, vRot));
 	}
 
 	//Reset the position and size of the Cylinder.
-	if(m_osgCylinderMT.valid() && m_osgCylinder.valid() && m_osgCylinderGeode.valid() && lpPrismatic)
+	if(m_osgCylinderMT.valid() && m_osgCylinder.valid() && m_osgCylinderGeode.valid())
 	{
 		//First delete the cylinder geometry that currently exists.
 		if(m_osgCylinderGeode->containsDrawable(m_osgCylinder.get()))
@@ -88,18 +82,15 @@ void OsgPrismaticLimit::SetLimitPos()
 		m_osgCylinder.release();
 
 		//Now recreate the cylinder using the new limit position.
-		m_osgCylinder = CreateConeGeometry(fabs(m_fltLimitPos), lpPrismatic->CylinderRadius(), lpPrismatic->CylinderRadius(), 10, true, true, true);
+		m_osgCylinder = CreateConeGeometry(fabs(fltLimitPos), fltRadius, fltRadius, 10, true, true, true);
 		m_osgCylinderGeode->addDrawable(m_osgCylinder.get());		
 
-		vPos.Set(0, 0, (-m_fltLimitPos/2)); vRot.Set(osg::PI/2, 0, 0); 
+		vPos.Set(0, 0, (-fltLimitPos/2)); vRot.Set(osg::PI/2, 0, 0); 
 		m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
 	}
-
-	//Set the limit on the physics Prismatic object.
-	SetLimitValues();
 }
 
-void OsgPrismaticLimit::DeleteGraphics()
+void OsgPrismaticLimit::DeleteLimitGraphics()
 {
     m_osgBox.release();
     m_osgBoxMT.release();
@@ -112,82 +103,75 @@ void OsgPrismaticLimit::DeleteGraphics()
     m_osgCylinderSS.release();
 }
 
-void OsgPrismaticLimit::SetupGraphics()
+void OsgPrismaticLimit::SetupLimitGraphics(float fltBoxSize, float fltRadius, float fltLimitPos, bool bIsShowPosition, CStdColor vColor)
 {
-	//The parent osg object for the joint is actually the child rigid body object.
-	Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpJoint);
+	//Create the LIMIT Box
+	m_osgBox = CreateBoxGeometry(fltBoxSize, fltBoxSize, 
+									fltBoxSize, fltBoxSize, 
+									fltBoxSize, fltBoxSize);
+	osg::ref_ptr<osg::Geode> osgBox = new osg::Geode;
+	osgBox->addDrawable(m_osgBox.get());
 
-	if(lpPrismatic)
+	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
+
+	//Translate box
+	vPos.Set(0, 0, -fltLimitPos); 
+	vRot.Set(0, 0, 0); 
+	m_osgBoxMT = new osg::MatrixTransform();
+	m_osgBoxMT->setMatrix(SetupMatrix(vPos, vRot));
+	m_osgBoxMT->addChild(osgBox.get());
+
+	//create a material to use with the pos Box
+	if(!m_osgBoxMat.valid())
+		m_osgBoxMat = new osg::Material();		
+
+	//create a stateset for this node
+	m_osgBoxSS = m_osgBoxMT->getOrCreateStateSet();
+
+	//set the diffuse property of this node to the color of this body	
+	m_osgBoxMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
+	m_osgBoxMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
+	m_osgBoxMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
+	m_osgBoxMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
+	m_osgBoxSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+
+	//apply the material
+	m_osgBoxSS->setAttribute(m_osgBoxMat.get(), osg::StateAttribute::ON);
+
+
+	//Create the cylinder for the Prismatic
+	//If this is the limit for showing the position then we should not create a cylinder. We only do that for the
+	// upper and lower limits.
+	if(!bIsShowPosition)
 	{
-		//Create the LIMIT Box
-		m_osgBox = CreateBoxGeometry(lpPrismatic->BoxSize(), lpPrismatic->BoxSize(), 
-									 lpPrismatic->BoxSize(), lpPrismatic->BoxSize(), 
-									 lpPrismatic->BoxSize(), lpPrismatic->BoxSize());
-		osg::ref_ptr<osg::Geode> osgBox = new osg::Geode;
-		osgBox->addDrawable(m_osgBox.get());
+		m_osgCylinder = CreateConeGeometry(fabs(fltLimitPos), fltRadius, fltRadius, 10, true, true, true);
+		m_osgCylinderGeode = new osg::Geode;
+		m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
 
-		CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
+		CStdFPoint vPos(0, 0, (-fltLimitPos/2)), vRot(osg::PI/2, 0, 0); 
+		m_osgCylinderMT = new osg::MatrixTransform();
+		m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
+		m_osgCylinderMT->addChild(m_osgCylinderGeode.get());
 
-		//Translate box
-		vPos.Set(0, 0, -m_fltLimitPos); 
-		vRot.Set(0, 0, 0); 
-		m_osgBoxMT = new osg::MatrixTransform();
-		m_osgBoxMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgBoxMT->addChild(osgBox.get());
-
-		//create a material to use with the pos Box
-		if(!m_osgBoxMat.valid())
-			m_osgBoxMat = new osg::Material();		
+		//create a material to use with the pos flap
+		if(!m_osgCylinderMat.valid())
+			m_osgCylinderMat = new osg::Material();		
 
 		//create a stateset for this node
-		m_osgBoxSS = m_osgBoxMT->getOrCreateStateSet();
+		m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
 
 		//set the diffuse property of this node to the color of this body	
-		m_osgBoxMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgBoxMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(m_vColor.r(), m_vColor.g(), m_vColor.b(), m_vColor.a()));
-		m_osgBoxMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-		m_osgBoxMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-		m_osgBoxSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+		m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
+		m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vColor.r(), vColor.g(), vColor.b(), vColor.a()));
+		//m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
+		m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
+		m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
+		m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
 
 		//apply the material
-		m_osgBoxSS->setAttribute(m_osgBoxMat.get(), osg::StateAttribute::ON);
-
-
-		//Create the cylinder for the Prismatic
-		//If this is the limit for showing the position then we should not create a cylinder. We only do that for the
-		// upper and lower limits.
-		if(!m_bIsShowPosition)
-		{
-			m_osgCylinder = CreateConeGeometry(fabs(m_fltLimitPos), lpPrismatic->CylinderRadius(), lpPrismatic->CylinderRadius(), 10, true, true, true);
-			m_osgCylinderGeode = new osg::Geode;
-			m_osgCylinderGeode->addDrawable(m_osgCylinder.get());
-
-			CStdFPoint vPos(0, 0, (-m_fltLimitPos/2)), vRot(osg::PI/2, 0, 0); 
-			m_osgCylinderMT = new osg::MatrixTransform();
-			m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
-			m_osgCylinderMT->addChild(m_osgCylinderGeode.get());
-
-			//create a material to use with the pos flap
-			if(!m_osgCylinderMat.valid())
-				m_osgCylinderMat = new osg::Material();		
-
-			//create a stateset for this node
-			m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
-
-			//set the diffuse property of this node to the color of this body	
-			m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-			m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(m_vColor.r(), m_vColor.g(), m_vColor.b(), m_vColor.a()));
-			//m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
-			m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-			m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-			m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-			//apply the material
-			m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
-		}
+		m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 	}
 }
 
-		}		//Bodies
 	}			// Environment
 }				//OsgAnimatSim

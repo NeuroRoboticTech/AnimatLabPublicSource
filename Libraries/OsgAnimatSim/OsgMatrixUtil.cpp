@@ -302,13 +302,66 @@ osg::Matrix OsgMatrixUtil::SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRo
     return osgLocalMatrix;
 }
 
-CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix(osg::Matrix osgMT)
+//CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix(osg::Matrix osgMT)
+//{
+//    osg::Vec3 vEuler;
+//    OsgMatrixUtil::MatrixToHprRad(vEuler, osgMT);
+//	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+//	vRot.ClearNearZero();
+//    return vRot;
+//}
+
+CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix (osg::Matrix osgMT)
 {
-    osg::Vec3 vEuler;
-    OsgMatrixUtil::MatrixToHprRad(vEuler, osgMT);
-	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
-	vRot.ClearNearZero();
+    //We need to transpose the matrix that osg provides for us in 
+    //order to do the following calculations.
+    osg::Matrix3 osgMT3(osgMT(0, 0), osgMT(1, 0), osgMT(2, 0), 
+                        osgMT(0, 1), osgMT(1, 1), osgMT(2, 1),
+                        osgMT(0, 2), osgMT(1, 2), osgMT(2, 2));
+
+    // +-           -+   +-                                        -+
+    // | r00 r01 r02 |   |  cy*cz           -cy*sz            sy    |
+    // | r10 r11 r12 | = |  cz*sx*sy+cx*sz   cx*cz-sx*sy*sz  -cy*sx |
+    // | r20 r21 r22 |   | -cx*cz*sy+sx*sz   cz*sx+cx*sy*sz   cx*cy |
+    // +-           -+   +-                                        -+
+    float xAngle=0, yAngle=0, zAngle=0;
+
+    if (osgMT3(0, 2) < 1)
+    {
+        if (osgMT3(0, 2) > -1)
+        {
+            // y_angle = asin(r02)
+            // x_angle = atan2(-r12,r22)
+            // z_angle = atan2(-r01,r00)
+            yAngle = (float) asin((double) osgMT3(0, 2));
+            xAngle = (float) atan2((double) -osgMT3(1, 2), (double) osgMT3(2, 2));
+            zAngle = (float) atan2((double) -osgMT3(0, 1), (double) osgMT3(0, 0));
+        }
+        else
+        {
+            // y_angle = -pi/2
+            // z_angle - x_angle = atan2(r10,r11)
+            // WARNING.  The solution is not unique.  Choosing z_angle = 0.
+            yAngle = -(osg::PI/2);
+            xAngle = -atan2((double) osgMT3(1, 0), (double) osgMT3(1, 1));
+            zAngle = 0;
+        }
+    }
+    else
+    {
+        // y_angle = +pi/2
+        // z_angle + x_angle = atan2(r10,r11)
+        // WARNING.  The solutions is not unique.  Choosing z_angle = 0.
+        yAngle = osg::PI/2;
+        xAngle = atan2((double) osgMT3(1, 0), (double) osgMT3(1, 1));
+        zAngle = 0;
+    }
+
+    CStdFPoint vRot(xAngle, yAngle, zAngle);
+    vRot.ClearNearZero();
+
     return vRot;
 }
+
 
 }				//OsgAnimatSim

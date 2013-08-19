@@ -579,7 +579,7 @@ bool STD_UTILS_PORT Std_ToBool(string strVal)
 {
 	string strV = Std_ToUpper(Std_Trim(strVal));
 
-	if(strV == "true" || strV == "1")
+	if(strV == "TRUE" || strV == "1")
 		return true;
 	else
 		return false;

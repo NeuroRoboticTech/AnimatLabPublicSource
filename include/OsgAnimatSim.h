@@ -110,6 +110,10 @@ namespace OsgAnimatSim
 		class OsgOrganism;
 		class OsgStructure;
         class OsgLine;
+        class OsgHinge;
+        class OsgHingeLimit;
+        class OsgPrismatic;
+        class OsgPrismaticLimit;
 	}
 
 	namespace Visualization
@@ -144,6 +148,10 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgJoint.h"
 #include "OsgLight.h"
 #include "OsgLine.h"
+#include "OsgHinge.h"
+#include "OsgHingeLimit.h"
+#include "OsgPrismatic.h"
+#include "OsgPrismaticLimit.h"
 
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
