@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{6194F479-3E8C-0246-AB20-8D113E048EDE}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{7B6BD16D-B594-9647-9909-A9091ABF287C}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{9A1B793B-0B45-684F-8A13-6242DACE371E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
