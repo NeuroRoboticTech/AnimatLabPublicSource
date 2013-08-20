@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9A1B793B-0B45-684F-8A13-6242DACE371E}</ProjectGuid>
+    <ProjectGuid>{EC344E16-E604-5B4E-B315-CA1BA793E761}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -61,8 +61,13 @@
         <Lib>boostVx_regex</Lib>
         <Lib>boostVx_serialization</Lib>
         <Lib>boostVx_system</Lib>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_vc10D</Lib>
         <Lib>AnimatSim_vc10D</Lib>
+        <Lib>OsgAnimatSim_vc10D</Lib>
+        <Lib>VortexAnimatSim_vc10D</Lib>
         <Lib>OpenThreadsd</Lib>
         <Lib>osgAnimationd</Lib>
         <Lib>osgd</Lib>
@@ -136,8 +141,13 @@
         <Lib>boostVx_regex</Lib>
         <Lib>boostVx_serialization</Lib>
         <Lib>boostVx_system</Lib>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_vc10</Lib>
         <Lib>AnimatSim_vc10</Lib>
+        <Lib>OsgAnimatSim_vc10</Lib>
+        <Lib>VortexAnimatSim_vc10</Lib>
         <Lib>OpenThreads</Lib>
         <Lib>osgAnimation</Lib>
         <Lib>osg</Lib>

@@ -122,7 +122,10 @@
 				"boostVx_filesystem", 
 				"boostVx_regex", 
 				"boostVx_serialization", 
-				"boostVx_system" }
+				"boostVx_system",
+				"boost_system", 
+				"boost_filesystem",
+				"boost_unit_test_framework" }
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG" }
@@ -131,6 +134,8 @@
 			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10D", 
 					"AnimatSim_vc10D",
+					"OsgAnimatSim_vc10D",
+					"VortexAnimatSim_vc10D",
 					"OpenThreadsd", 
 					"osgAnimationd", 
 					"osgd", 
@@ -156,6 +161,8 @@
 			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10",
 					"AnimatSim_vc10", 
+					"OsgAnimatSim_vc10", 
+					"VortexAnimatSim_vc10", 
 					"OpenThreads",
 					"osgAnimation",
 					"osg",

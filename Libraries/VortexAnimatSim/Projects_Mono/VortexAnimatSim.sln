@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{EC217EAD-FCEA-7642-8486-0C513A48874A}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{9A1B793B-0B45-684F-8A13-6242DACE371E}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{EC344E16-E604-5B4E-B315-CA1BA793E761}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{AB6EC6EE-4443-6C43-AC79-474C3B0851B2}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{9A1B793B-0B45-684F-8A13-6242DACE371E}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
