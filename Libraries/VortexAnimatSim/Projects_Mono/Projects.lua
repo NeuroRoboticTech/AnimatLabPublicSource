@@ -105,8 +105,6 @@
 				  "../../../Vortex_5_1/lib",
 				  "../../../Vortex_5_1/3rdparty/boost-1.45.0/lib",
 				  "../../../../../3rdParty/boost_1_54_0/lib" }
-		targetdir ("../../../../bin")
-		targetname ("Vortex_UnitTests")
 		links { "Vx51", 
 				"VxController51", 
 				"VxControllerPersistence51", 
@@ -129,6 +127,8 @@
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG" }
 			flags   { "Symbols", "SEH" }
+			targetdir ("Debug")
+			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10D", 
 					"AnimatSim_vc10D",
 					"OpenThreadsd", 
@@ -147,10 +147,13 @@
 					"osgViewerd", 
 					"osgVolumed", 
 					"osgWidgetd" }
+			postbuildcommands { "cp Debug/Vortex_UnitTests ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL" }
 			flags   { "Optimize", "SEH" }
+			targetdir ("Release")
+			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10",
 					"AnimatSim_vc10", 
 					"OpenThreads",
@@ -169,5 +172,6 @@
 					"osgViewer",
 					"osgVolume",
 					"osgWidget" }					
+			postbuildcommands { "cp Debug/Vortex_UnitTests ../../../unit_test_bin" }
 
 								
