@@ -7,7 +7,11 @@
 	#pragma comment(lib, "VortexAnimatSim_vc10.lib")
 #endif
 
-#define VORTEX_PORT __declspec( dllimport )
+#ifdef WIN32
+	#define VORTEX_PORT __declspec( dllimport )
+#else
+	#define VORTEX_PORT
+#endif
 
 #include "StdUtils.h"
 #include "AnimatSim.h"
@@ -77,12 +81,12 @@ namespace VortexAnimatSim
 		class VsMotorizedJoint;
 		class VsLine;
 		class VsMaterialType;
-        class VsConstraintRelaxation;
-        class VsConstraintFriction;
+        	class VsConstraintRelaxation;
+        	class VsConstraintFriction;
 		class VsOrganism;
 		class VsRigidBody;
 		class VsStructure;
-        class VsMatrixUtil;
+        	class VsMatrixUtil;
 
 		namespace Bodies
 		{
