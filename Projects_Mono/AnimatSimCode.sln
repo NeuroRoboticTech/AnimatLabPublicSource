@@ -17,11 +17,11 @@ Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "..\Libr
 EndProject
 Project("{2857B73E-F847-4B02-9238-064979017E93}") = "OsgAnimatSim", "..\Libraries\OsgAnimatSim\Projects_Mono\OsgAnimatSim.cproj", "{23CD7C45-B19A-A248-987F-F815A52E4208}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "..\Libraries\VortexAnimatSim\Projects_Mono\VortexAnimatSim.cproj", "{6194F479-3E8C-0246-AB20-8D113E048EDE}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "..\Libraries\VortexAnimatSim\Projects_Mono\VortexAnimatSim.cproj", "{EC217EAD-FCEA-7642-8486-0C513A48874A}"
 EndProject
 Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "..\Applications\AnimatSimulator\Projects_Mono\AnimatSimulator.cproj", "{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "..\Libraries\VortexAnimatSim\Projects_Mono\Vortex_UnitTests.cproj", "{7B6BD16D-B594-9647-9909-A9091ABF287C}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "..\Libraries\VortexAnimatSim\Projects_Mono\Vortex_UnitTests.cproj", "{EC344E16-E604-5B4E-B315-CA1BA793E761}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +53,6 @@ Global
 		{4F1BC425-7531-0C47-B18E-9FE8013F77AD}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{4F1BC425-7531-0C47-B18E-9FE8013F77AD}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{4F1BC425-7531-0C47-B18E-9FE8013F77AD}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{6194F479-3E8C-0246-AB20-8D113E048EDE}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{7B6BD16D-B594-9647-9909-A9091ABF287C}.Release|AnyCPU.Build.0 = Release|Any CPU
 		{9A1081B4-7A94-054A-9C10-BA15970B390C}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
 		{9A1081B4-7A94-054A-9C10-BA15970B390C}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{9A1081B4-7A94-054A-9C10-BA15970B390C}.Release|AnyCPU.ActiveCfg = Release|Any CPU
@@ -73,9 +65,17 @@ Global
 		{E220C2AD-E8FF-4A4B-86EE-5528B49DA14A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{E220C2AD-E8FF-4A4B-86EE-5528B49DA14A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{E220C2AD-E8FF-4A4B-86EE-5528B49DA14A}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EC217EAD-FCEA-7642-8486-0C513A48874A}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EC344E16-E604-5B4E-B315-CA1BA793E761}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\Libraries\BootstrapLoader\Projects_Mono\BootstrapLoader.cproj
+		StartupItem = ..\Libraries\VortexAnimatSim\Projects_Mono\Vortex_UnitTests.cproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
