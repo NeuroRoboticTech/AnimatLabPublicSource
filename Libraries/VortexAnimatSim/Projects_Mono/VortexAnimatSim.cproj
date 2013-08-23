@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EC217EAD-FCEA-7642-8486-0C513A48874A}</ProjectGuid>
+    <ProjectGuid>{04C05AED-9884-EB4B-B300-7BBA317491AB}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -164,9 +164,6 @@
     <None Include="..\StdAfx.h">
       <Link>StdAfx.h</Link>
     </None>
-    <None Include="..\VsAttachment.h">
-      <Link>VsAttachment.h</Link>
-    </None>
     <None Include="..\VsBallSocket.h">
       <Link>VsBallSocket.h</Link>
     </None>
@@ -203,9 +200,6 @@
     <None Include="..\VsForceStimulus.h">
       <Link>VsForceStimulus.h</Link>
     </None>
-    <None Include="..\VsFreeJoint.h">
-      <Link>VsFreeJoint.h</Link>
-    </None>
     <None Include="..\VsHinge.h">
       <Link>VsHinge.h</Link>
     </None>
@@ -241,12 +235,6 @@
     </None>
     <None Include="..\VsMotorizedJoint.h">
       <Link>VsMotorizedJoint.h</Link>
-    </None>
-    <None Include="..\VsMouth.h">
-      <Link>VsMouth.h</Link>
-    </None>
-    <None Include="..\VsOdorSensor.h">
-      <Link>VsOdorSensor.h</Link>
     </None>
     <None Include="..\VsOsgGeometry.h">
       <Link>VsOsgGeometry.h</Link>
@@ -295,9 +283,6 @@
     <Compile Include="..\VortexAnimatSim.cpp">
       <Link>VortexAnimatSim.cpp</Link>
     </Compile>
-    <Compile Include="..\VsAttachment.cpp">
-      <Link>VsAttachment.cpp</Link>
-    </Compile>
     <Compile Include="..\VsBallSocket.cpp">
       <Link>VsBallSocket.cpp</Link>
     </Compile>
@@ -334,9 +319,6 @@
     <Compile Include="..\VsForceStimulus.cpp">
       <Link>VsForceStimulus.cpp</Link>
     </Compile>
-    <Compile Include="..\VsFreeJoint.cpp">
-      <Link>VsFreeJoint.cpp</Link>
-    </Compile>
     <Compile Include="..\VsHinge.cpp">
       <Link>VsHinge.cpp</Link>
     </Compile>
@@ -372,12 +354,6 @@
     </Compile>
     <Compile Include="..\VsMotorizedJoint.cpp">
       <Link>VsMotorizedJoint.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsMouth.cpp">
-      <Link>VsMouth.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsOdorSensor.cpp">
-      <Link>VsOdorSensor.cpp</Link>
     </Compile>
     <Compile Include="..\VsOsgGeometry.cpp">
       <Link>VsOsgGeometry.cpp</Link>
