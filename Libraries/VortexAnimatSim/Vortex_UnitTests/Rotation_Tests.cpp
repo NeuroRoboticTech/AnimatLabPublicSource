@@ -259,29 +259,29 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
     //SetMatrixUtil(&osgUtil);
     SetMatrixUtil(&vsUtil);
 
-    float fltDiv = osg::PI/100;
+    float fltDiv = osg::PI/20;
     float fltStart = -osg::PI*2;
     float fltEnd = osg::PI*2;
 
-    for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
-        for(float fltYRot = -((osg::PI/2)-0.001); fltYRot<((osg::PI/2)-0.001); fltYRot+=fltDiv)
-            for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
-            {
-                osg::Matrix osgMT;
-                vRot.Set(fltXRot, fltYRot, fltZRot);
+    //for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+    //    for(float fltYRot = -((osg::PI/2)-0.001); fltYRot<((osg::PI/2)-0.001); fltYRot+=fltDiv)
+    //        for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+    //        {
+    //            osg::Matrix osgMT;
+    //            vRot.Set(fltXRot, fltYRot, fltZRot);
 
-                osgMT = SetupMatrix(vPos, vRot);
+    //            osgMT = SetupMatrix(vPos, vRot);
 
 
-                CStdFPoint vOld = EulerRotationFromMatrix(osgMT);
-                CStdFPoint vNew = ExtractEulerXYZ(osgMT);
-                
-                int i=5;
-                if(!vOld.Equal(vNew, 1e-4))
-                    i=6;
+    //            CStdFPoint vOld = EulerRotationFromMatrix(osgMT);
+    //            CStdFPoint vNew = ExtractEulerXYZ(osgMT);
+    //            
+    //            int i=5;
+    //            if(!vOld.Equal(vNew, 1e-4))
+    //                i=6;
 
                 //BOOST_ASSERT(vOld == vNew);
-            }
+    //        }
 }
 
 BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
@@ -350,6 +350,15 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
 //		[1]	1.5000000000000000	double
 //		[2]	0.00000000000000000	double
 //		[3]	1.0000000000000000	double
+
+BOOST_AUTO_TEST_CASE( Dynamic_Loading )
+{
+	Simulator *lpSim = Simulator::CreateSimulator("", "/home/dcofer/Projects/Experiments/SingleJointGround/SingleJoint_StandaloneD.asim");
+	 
+	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSim->CreateObject("", "RigidBody", "Box"));
+	if(lpBody)
+		delete lpBody;
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()
