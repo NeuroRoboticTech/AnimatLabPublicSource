@@ -92,19 +92,21 @@
 		kind     "ConsoleApp"
 		files  { "../Vortex_UnitTests/*.h",
 				 "../Vortex_UnitTests/*.cpp"}
-		includedirs { "../../../../include", 
-					  "../../../Vortex_5_1/include",
-					  "../../../Vortex_5_1/3rdparty/osg-2.8.3/include",
-					  "../../../StdUtils",
-					  "../../../AnimatSim",
-					  "../../../OsgAnimatSim",
-					  "../../../VortexAnimatSim",
-					  "../../../../../3rdParty/boost_1_54_0"}	  
-		libdirs { "../../../../bin",
-				  "../../../Vortex_5_1/3rdparty/osg-2.8.3/lib",
-				  "../../../Vortex_5_1/lib",
-				  "../../../Vortex_5_1/3rdparty/boost-1.45.0/lib",
-				  "../../../../../3rdParty/boost_1_54_0/lib" }
+		targetdir ("../../../../bin")
+		targetname ("Vortex_UnitTests")				
+		includedirs { "../include", 
+					  "../Libraries/Vortex_5_1/include",
+					  "../Libraries/Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../Libraries/StdUtils",
+					  "../Libraries/AnimatSim",
+					  "../Libraries/OsgAnimatSim",
+					  "../Libraries/VortexAnimatSim",
+					  "../../3rdParty/boost_1_54_0"}	  
+		libdirs { ".",
+				  "../Libraries/Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../Libraries/Vortex_5_1/lib",
+				  "../Libraries/Vortex_5_1/3rdparty/boost-1.45.0/lib",
+				  "../../3rdParty/boost_1_54_0/lib" }
 		links { "Vx51", 
 				"VxController51", 
 				"VxControllerPersistence51", 
@@ -130,8 +132,6 @@
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG" }
 			flags   { "Symbols", "SEH" }
-			targetdir ("Debug")
-			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10D", 
 					"AnimatSim_vc10D",
 					"OsgAnimatSim_vc10D",
@@ -152,13 +152,10 @@
 					"osgViewerd", 
 					"osgVolumed", 
 					"osgWidgetd" }
-			postbuildcommands { "cp Debug/Vortex_UnitTests ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL" }
 			flags   { "Optimize", "SEH" }
-			targetdir ("Release")
-			targetname ("Vortex_UnitTests")
 			links { "StdUtils_vc10",
 					"AnimatSim_vc10", 
 					"OsgAnimatSim_vc10", 
@@ -179,6 +176,5 @@
 					"osgViewer",
 					"osgVolume",
 					"osgWidget" }					
-			postbuildcommands { "cp Debug/Vortex_UnitTests ../../../unit_test_bin" }
 
 								

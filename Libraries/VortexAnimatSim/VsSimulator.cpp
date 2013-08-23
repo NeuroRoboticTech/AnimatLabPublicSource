@@ -42,6 +42,9 @@ VsSimulator::VsSimulator()
     m_lpMatrixUtil = new OsgMatrixUtil;
     //m_lpMatrixUtil = new VsMatrixUtil;
     SetMatrixUtil(m_lpMatrixUtil);
+
+	if(!m_lpAnimatClassFactory) 
+		m_lpAnimatClassFactory = new VsClassFactory;
 }
 
 VsSimulator::~VsSimulator()

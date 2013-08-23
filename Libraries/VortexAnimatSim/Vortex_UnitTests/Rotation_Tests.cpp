@@ -353,11 +353,20 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
 
 BOOST_AUTO_TEST_CASE( Dynamic_Loading )
 {
-	Simulator *lpSim = Simulator::CreateSimulator("", "/home/dcofer/Projects/Experiments/SingleJointGround/SingleJoint_StandaloneD.asim");
+    string strExePath = Std_ExecutablePath();
+    string strExecutablePath, strExeFile;
+	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
+
+    string strProjFile = strExecutablePath + "../Libraries/VortexAnimatSim/Vortex_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
+
+	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
 	 
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSim->CreateObject("", "RigidBody", "Box"));
 	if(lpBody)
 		delete lpBody;
+
+    if(lpSim)
+        delete lpSim;
 }
 
 

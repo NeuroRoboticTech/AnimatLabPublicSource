@@ -3209,9 +3209,21 @@ bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 **/
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile)
 {
-	boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
-	strFile = path.filename().string();
-	strPath = Std_Replace(path.string(), strFile, "");
+    try 
+    {
+	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
+	    strFile = path.filename().string();
+	    strPath = Std_Replace(path.string(), strFile, "");
+    } 
+    catch(const boost::filesystem::filesystem_error& e)
+    {
+       if(e.code() == boost::system::errc::permission_denied)
+           std::cout << "Search permission is denied for one of the directories "
+                     << "in the path prefix of " << "\n";
+       else
+           std::cout << "is_directory("  << ") failed with "
+                     << e.code().message() << '\n';
+    }
 }
 
 /**

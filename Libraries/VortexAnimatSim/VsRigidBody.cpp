@@ -365,7 +365,7 @@ void VsRigidBody::DeletePhysics()
 		m_vxPart = NULL;
 		m_vxGeometry = NULL;
 	}
-	else if(m_lpThisRB->HasStaticJoint())
+	else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
 		RemoveStaticPart();
 }
 

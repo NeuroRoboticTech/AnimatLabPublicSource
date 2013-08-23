@@ -364,7 +364,10 @@ void RigidBody::IsCollisionObject(bool bVal) {m_bIsCollisionObject = bVal;}
 **/
 bool RigidBody::IsRoot()
 {
-	return (m_lpStructure->Body() == this);
+    if(m_lpStructure)
+    	return (m_lpStructure->Body() == this);
+    else
+        return false;
 }
 
 /**
