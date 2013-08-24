@@ -40,21 +40,22 @@ void BlConstraintFriction::SetFrictionProperties()
         BlJoint *lpJoint = dynamic_cast<BlJoint *>(m_lpNode);
         if(lpJoint)
         {
-            Vx::VxConstraint *vxConstraint = lpJoint->Constraint();
+             //FIX PHYSICS
+         //   Vx::VxConstraint *vxConstraint = lpJoint->Constraint();
 
-            if(vxConstraint)
-	        {
-                VxConstraintFriction *vxCFriction = vxConstraint->getCoordinateFriction(0);
+         //   if(vxConstraint)
+	        //{
+         //       VxConstraintFriction *vxCFriction = vxConstraint->getCoordinateFriction(0);
 
-                if(vxCFriction)
-                {
-                    vxCFriction->setEnabled(m_bEnabled);
-                    vxCFriction->setCoefficient(m_fltCoefficient);
-                    vxCFriction->setMaxForce(m_fltMaxForce);
-                    vxCFriction->setProportional(m_bProportional);
-                    vxCFriction->setStaticFrictionScale(m_fltStaticFrictionScale);
-                }
-	        }
+         //       if(vxCFriction)
+         //       {
+         //           vxCFriction->setEnabled(m_bEnabled);
+         //           vxCFriction->setCoefficient(m_fltCoefficient);
+         //           vxCFriction->setMaxForce(m_fltMaxForce);
+         //           vxCFriction->setProportional(m_bProportional);
+         //           vxCFriction->setStaticFrictionScale(m_fltStaticFrictionScale);
+         //       }
+	        //}
 
         }
     }

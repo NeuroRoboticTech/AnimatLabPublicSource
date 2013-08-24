@@ -54,8 +54,9 @@ void BlPlane::CreateGraphicsGeometry()
 
 void BlPlane::CreatePhysicsGeometry()
 {
-	if(IsCollisionObject())
-		m_vxGeometry = new VxPlane();
+    //FIX PHYSICS
+  //  if(IsCollisionObject())
+		//m_vxGeometry = new VxPlane();
 }
 
 void BlPlane::CreateParts()
@@ -72,9 +73,11 @@ void BlPlane::CreateParts()
 
 void BlPlane::ResizePhysicsGeometry()
 {
-	if(m_vxGeometry)
-		m_vxGeometry = new VxPlane();
+    //FIX PHYSICS
+  //  if(m_vxGeometry)
+		//m_vxGeometry = new VxPlane();
 }
+
 //Planes can never have fluid interactions/dynamics.
 void BlPlane::Physics_FluidDataChanged()
 {}

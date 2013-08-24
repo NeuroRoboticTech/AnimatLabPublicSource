@@ -68,7 +68,8 @@ void BlLine::CreateGraphicsGeometry()
 
 void BlLine::CreatePhysicsGeometry()
 {
-	m_vxGeometry = NULL;
+    //FIX PHYSICS
+	//m_vxGeometry = NULL;
 }
 
 void BlLine::CreateParts()

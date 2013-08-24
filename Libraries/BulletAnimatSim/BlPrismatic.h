@@ -16,7 +16,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlPrismatic : public BlMotorizedJoint, public AnimatSim::Environment::Joints::Prismatic, public OsgAnimatSim::Environment::Joints::OsgPrismatic     
 			{
 			protected:
-				Vx::VxPrismatic *m_vxPrismatic;
+                //FIX PHYSICS
+				//Vx::VxPrismatic *m_vxPrismatic;
 
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();

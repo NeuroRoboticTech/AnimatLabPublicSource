@@ -11,9 +11,7 @@
 #include "BlMotorizedJoint.h"
 #include "BlRigidBody.h"
 #include "BlPlane.h"
-#include "BlPlaneTest.h"
 #include "BlBox.h"
-#include "BlBoxTest.h"
 #include "BlCylinder.h"
 #include "BlCone.h" 
 #include "BlSphere.h"
@@ -73,8 +71,6 @@ try
 
 	if(strType == "BOX")
 		lpPart = new BlBox;
-	else if(strType == "BOXTEST")
-		lpPart = new BlBoxTest;
 	else if(strType == "BOXCONTACTSENSOR")
 	{
 		lpPart = new BlBox;
@@ -93,8 +89,6 @@ try
 		lpPart = new BlSphere;
 	else if(strType == "PLANE")
 		lpPart = new BlPlane;
-	else if(strType == "PLANETEST")
-		lpPart = new BlPlaneTest;
 	else if(strType == "ATTACHMENT")
 		lpPart = new OsgAnimatSim::Environment::Bodies::OsgAttachment;
 	else if(strType == "LINEARHILLMUSCLE")

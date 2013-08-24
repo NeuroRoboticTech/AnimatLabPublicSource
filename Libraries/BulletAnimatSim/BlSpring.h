@@ -10,23 +10,24 @@ namespace BulletAnimatSim
 		namespace Bodies
 		{
 
-			class BULLET_PORT AnimatVxSpring : public Vx::VxSpring
-			{
-			public:
-				AnimatVxSpring() : Vx::VxSpring() {};
-				AnimatVxSpring(Vx::VxPart* part1, Vx::VxPart* part2, Vx::VxReal naturalLength, Vx::VxReal stiffness, Vx::VxReal damping)
-					 : Vx::VxSpring(part1, part2, naturalLength,stiffness, damping) {};
-				virtual ~AnimatVxSpring() {};
-				
-				void EnableBodies()
-				{Vx::VxSpring::enableBodies();}
-			};
+            //FIX PHYSICS
+			//class BULLET_PORT AnimatVxSpring : public Vx::VxSpring
+			//{
+			//public:
+			//	AnimatVxSpring() : Vx::VxSpring() {};
+			//	AnimatVxSpring(Vx::VxPart* part1, Vx::VxPart* part2, Vx::VxReal naturalLength, Vx::VxReal stiffness, Vx::VxReal damping)
+			//		 : Vx::VxSpring(part1, part2, naturalLength,stiffness, damping) {};
+			//	virtual ~AnimatVxSpring() {};
+			//	
+			//	void EnableBodies()
+			//	{Vx::VxSpring::enableBodies();}
+			//};
 
 			class BULLET_PORT BlSpring : public AnimatSim::Environment::Bodies::Spring, public BlLine     
 			{
 			protected:
-				//Vx::VxSpring *m_vxSpring;
-				AnimatVxSpring *m_vxSpring;
+                //FIX PHYSICS
+				//AnimatVxSpring *m_vxSpring;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();

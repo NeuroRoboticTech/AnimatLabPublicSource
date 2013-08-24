@@ -11,7 +11,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlPrismaticLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::Joints::OsgPrismaticLimit
 			{
 			protected:
-				Vx::VxPrismatic *m_vxPrismatic;
+                //FIX PHYSICS
+				//Vx::VxPrismatic *m_vxPrismatic;
 
 				virtual void SetLimitValues();
 
@@ -19,7 +20,8 @@ namespace BulletAnimatSim
 				BlPrismaticLimit();
 				virtual ~BlPrismaticLimit();
 
-				virtual void PrismaticRef(Vx::VxPrismatic *vxPrismatic);
+                //FIX PHYSICS
+				//virtual void PrismaticRef(Vx::VxPrismatic *vxPrismatic);
 
 				virtual void Alpha(float fltA);
 				virtual void SetLimitPos();

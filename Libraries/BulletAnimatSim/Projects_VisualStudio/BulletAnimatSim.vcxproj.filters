@@ -3,7 +3,6 @@
 	<ItemGroup>
 		<ClInclude Include="..\BlBallSocket.h" />
 		<ClInclude Include="..\BlBox.h" />
-		<ClInclude Include="..\BlBoxTest.h" />
 		<ClInclude Include="..\BlClassFactory.h" />
 		<ClInclude Include="..\BlCone.h" />
 		<ClInclude Include="..\BlConstraintFriction.h" />
@@ -27,7 +26,6 @@
 		<ClInclude Include="..\BlMotorVelocityStimulus.h" />
 		<ClInclude Include="..\BlOsgGeometry.h" />
 		<ClInclude Include="..\BlPlane.h" />
-		<ClInclude Include="..\BlPlaneTest.h" />
 		<ClInclude Include="..\BlPrismatic.h" />
 		<ClInclude Include="..\BlPrismaticLimit.h" />
 		<ClInclude Include="..\BlRigidBody.h" />
@@ -43,7 +41,6 @@
 	<ItemGroup>
 		<ClCompile Include="..\BlBallSocket.cpp" />
 		<ClCompile Include="..\BlBox.cpp" />
-		<ClCompile Include="..\BlBoxTest.cpp" />
 		<ClCompile Include="..\BlClassFactory.cpp" />
 		<ClCompile Include="..\BlCone.cpp" />
 		<ClCompile Include="..\BlConstraintFriction.cpp" />
@@ -67,7 +64,6 @@
 		<ClCompile Include="..\BlMotorVelocityStimulus.cpp" />
 		<ClCompile Include="..\BlOsgGeometry.cpp" />
 		<ClCompile Include="..\BlPlane.cpp" />
-		<ClCompile Include="..\BlPlaneTest.cpp" />
 		<ClCompile Include="..\BlPrismatic.cpp" />
 		<ClCompile Include="..\BlPrismaticLimit.cpp" />
 		<ClCompile Include="..\BlRigidBody.cpp" />

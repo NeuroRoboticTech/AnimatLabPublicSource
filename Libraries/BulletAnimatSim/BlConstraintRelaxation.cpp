@@ -40,10 +40,11 @@ void BlConstraintRelaxation::SetRelaxationProperties()
         BlJoint *lpJoint = dynamic_cast<BlJoint *>(m_lpNode);
         if(lpJoint)
         {
-            Vx::VxConstraint *vxConstraint = lpJoint->Constraint();
+            //FIX PHYSICS
+            //Vx::VxConstraint *vxConstraint = lpJoint->Constraint();
 
-            if(vxConstraint)
-               vxConstraint->setRelaxationParameters(m_iCoordinateID, m_fltStiffness, m_fltDamping, m_fltLoss, m_bEnabled);
+            //if(vxConstraint)
+            //   vxConstraint->setRelaxationParameters(m_iCoordinateID, m_fltStiffness, m_fltDamping, m_fltLoss, m_bEnabled);
         }
     }
 }

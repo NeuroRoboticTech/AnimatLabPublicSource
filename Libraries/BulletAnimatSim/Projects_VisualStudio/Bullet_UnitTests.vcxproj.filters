@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup>
 		<Filter Include="Bullet_UnitTests">
-			<UniqueIdentifier>{D20C3C25-0F3E-784B-BF5F-74F25E73D6F5}</UniqueIdentifier>
+			<UniqueIdentifier>{A419D8B7-A9BB-2740-9C77-50E0CE0B68E5}</UniqueIdentifier>
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>

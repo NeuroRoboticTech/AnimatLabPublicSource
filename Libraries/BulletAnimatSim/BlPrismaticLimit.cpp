@@ -15,7 +15,8 @@ namespace BulletAnimatSim
 
 BlPrismaticLimit::BlPrismaticLimit()
 {
-	m_vxPrismatic = NULL;
+    //FIX PHYSICS
+	//m_vxPrismatic = NULL;
     OsgPrismaticLimit::ConstraintLimit(this);
 }
 
@@ -23,10 +24,11 @@ BlPrismaticLimit::~BlPrismaticLimit()
 {
 }
 
-void BlPrismaticLimit::PrismaticRef(Vx::VxPrismatic *vxPrismatic)
-{
-	m_vxPrismatic = vxPrismatic;
-}
+//FIX PHYSICS
+//void BlPrismaticLimit::PrismaticRef(Vx::VxPrismatic *vxPrismatic)
+//{
+//	m_vxPrismatic = vxPrismatic;
+//}
 
 void BlPrismaticLimit::Alpha(float fltA)
 {
@@ -49,13 +51,14 @@ void BlPrismaticLimit::SetLimitPos()
 
 void BlPrismaticLimit::SetLimitValues()
 {
-	if(m_vxPrismatic)
-	{
-		if(m_bIsLowerLimit)
-			m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-		else
-			m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	}
+    //FIX PHYSICS
+	//if(m_vxPrismatic)
+	//{
+	//	if(m_bIsLowerLimit)
+	//		m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//	else
+	//		m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//}
 }
 
 void BlPrismaticLimit::DeleteGraphics()

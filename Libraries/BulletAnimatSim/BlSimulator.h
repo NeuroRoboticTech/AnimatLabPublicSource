@@ -16,12 +16,13 @@ namespace BulletAnimatSim
 	{
 	protected:
 		//Vortex Universe
-		VxUniverse *m_uUniverse;
-		
-		//Vortex Frame
-		VxFrame *m_vxFrame;		
+        //FIX PHYSICS
+		//VxUniverse *m_uUniverse;
+		//
+		////Vortex Frame
+		//VxFrame *m_vxFrame;		
 
-		BlIntersectionEvent m_vsIntersect;
+		//BlIntersectionEvent m_vsIntersect;
 
 		double m_dblTotalVortexStepTime;
 		long m_lStepVortexTimeCount;
@@ -40,13 +41,15 @@ namespace BulletAnimatSim
 		BlSimulator();
 		virtual ~BlSimulator();
 
-		Vx::VxUniverse* Universe();		
-		Vx::VxFrame* Frame();
+        //FIX PHYSICS
+		//Vx::VxUniverse* Universe();		
+		//Vx::VxFrame* Frame();
 
 #pragma region CreateMethods
 
-		virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
-		virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
+        //FIX PHYSICS
+		//virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
+		//virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
 		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
 		virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture);
 

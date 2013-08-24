@@ -24,7 +24,8 @@ namespace BulletAnimatSim
 BlSpring::BlSpring()
 {
 	SetThisPointers();
-	m_vxSpring = NULL;
+    //FIX PHYSICS
+	//m_vxSpring = NULL;
 }
 
 BlSpring::~BlSpring()
@@ -41,22 +42,25 @@ BlSpring::~BlSpring()
 void BlSpring::NaturalLength(float fltVal, bool bUseScaling)
 {
 	Spring::NaturalLength(fltVal, bUseScaling);
-	if(m_vxSpring)
-		m_vxSpring->setNaturalLength(m_fltNaturalLength);
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//	m_vxSpring->setNaturalLength(m_fltNaturalLength);
 }
 
 void BlSpring::Stiffness(float fltVal, bool bUseScaling)
 {
 	Spring::Stiffness(fltVal, bUseScaling);
-	if(m_vxSpring)
-		m_vxSpring->setStiffness(m_fltStiffness);
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//	m_vxSpring->setStiffness(m_fltStiffness);
 }
 
 void BlSpring::Damping(float fltVal, bool bUseScaling)
 {
 	Spring::Damping(fltVal, bUseScaling);
-	if(m_vxSpring)
-		m_vxSpring->setDamping(m_fltDamping);
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//	m_vxSpring->setDamping(m_fltDamping);
 }
 
 void BlSpring::InitializeAttachments()
@@ -73,22 +77,24 @@ void BlSpring::Physics_Resize()
 
 void BlSpring::DeletePhysics()
 {
-	if(!m_vxSpring)
-		return;
+    //FIX PHYSICS
+	//if(!m_vxSpring)
+	//	return;
 
-	if(GetBlSimulator() && GetBlSimulator()->Universe())
-	{
-		GetBlSimulator()->Universe()->removeConstraint(m_vxSpring);
-		delete m_vxSpring;
-	}
+	//if(GetBlSimulator() && GetBlSimulator()->Universe())
+	//{
+	//	GetBlSimulator()->Universe()->removeConstraint(m_vxSpring);
+	//	delete m_vxSpring;
+	//}
 
-	m_vxSpring = NULL;
+	//m_vxSpring = NULL;
 }
 
 void BlSpring::SetupPhysics()
 {
-	if(m_vxSpring)
-		DeletePhysics();
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//	DeletePhysics();
 
 	if(m_aryAttachmentPoints.GetSize() == 2)
 	{
@@ -110,16 +116,17 @@ void BlSpring::SetupPhysics()
 			return;
 		}
 
-		m_vxSpring = new AnimatVxSpring(lpVsPrimary->Part(), lpVsSecondary->Part(), m_fltNaturalLength, m_fltStiffness, m_fltDamping); // attached to the reference frame.
+        //FIX PHYSICS
+		//m_vxSpring = new AnimatVxSpring(lpVsPrimary->Part(), lpVsSecondary->Part(), m_fltNaturalLength, m_fltStiffness, m_fltDamping); // attached to the reference frame.
 
-		CStdFPoint vPrimPos = lpPrimaryAttachment->AbsolutePosition();
-		CStdFPoint vSecPos = lpSecondaryAttachment->AbsolutePosition();
-		
-	    m_vxSpring->setPartAttachmentPosition(0, vPrimPos.x, vPrimPos.y, vPrimPos.z);
-	    m_vxSpring->setPartAttachmentPosition(1, vSecPos.x, vSecPos.y, vSecPos.z);
+		//CStdFPoint vPrimPos = lpPrimaryAttachment->AbsolutePosition();
+		//CStdFPoint vSecPos = lpSecondaryAttachment->AbsolutePosition();
+		//
+	 //   m_vxSpring->setPartAttachmentPosition(0, vPrimPos.x, vPrimPos.y, vPrimPos.z);
+	 //   m_vxSpring->setPartAttachmentPosition(1, vSecPos.x, vSecPos.y, vSecPos.z);
 
-		m_vxSpring->enable(m_bEnabled);
-		GetBlSimulator()->Universe()->addConstraint(m_vxSpring);
+		//m_vxSpring->enable(m_bEnabled);
+		//GetBlSimulator()->Universe()->addConstraint(m_vxSpring);
 	}
 	else
 		Enabled(false);
@@ -137,26 +144,28 @@ void BlSpring::Enabled(bool bVal)
 {
 	Spring::Enabled(bVal);
 
-	if(m_vxSpring)
-	{
-		m_vxSpring->enable(m_bEnabled);
-		m_vxSpring->EnableBodies();
-	}
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//{
+	//	m_vxSpring->enable(m_bEnabled);
+	//	m_vxSpring->EnableBodies();
+	//}
 }
 
 void BlSpring::Physics_CollectData()
 {
-	if(m_vxSpring)
-	{
-		m_fltLength = CalculateLength();
-		if(m_bEnabled)
-			m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
-		else
-			m_fltDisplacement = 0;
+    //FIX PHYSICS
+	//if(m_vxSpring)
+	//{
+	//	m_fltLength = CalculateLength();
+	//	if(m_bEnabled)
+	//		m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
+	//	else
+	//		m_fltDisplacement = 0;
 
-		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement;
-		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
-	}
+	//	m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement;
+	//	m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
+	//}
 }
 
 void BlSpring::ResetSimulation()

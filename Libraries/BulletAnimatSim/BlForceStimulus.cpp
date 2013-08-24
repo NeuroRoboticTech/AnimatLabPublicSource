@@ -189,78 +189,79 @@ void BlForceStimulus::StepSimulation()
 		//the physics step count is equal to the step interval.
 		if(m_lpSim->PhysicsStepCount() == m_lpSim->PhysicsStepInterval())
 		{
-			VxReal3 fltF, fltP;
+            //FIX PHYSICS
+			//VxReal3 fltF, fltP;
 
-			//Why do we multiply by the mass units here? The reason is that we have to try and keep the 
-			//length and mass values in a range around 1 for the simulator to be able to function appropriately.
-			//So say we are uing grams and centimeters. This means that if we have a 1cm^3 box that weights 1 gram
-			//it will come in with a density of 1 g.cm^3 and we will set its density to 1. But the simulator treats this
-			//as 1 Kg and not 1g. So forces/torques and so on are scaled incorrectly. We must scale the force to be applied
-			//so it is acting against kilograms instead of grams. So a 1N force would be 1000N to produce the same effect.
-			if(m_lpForceXEval || m_lpForceYEval || m_lpForceZEval)
-			{
-				m_fltForceX = m_fltForceY = m_fltForceZ = 0;
-				m_fltForceReportX = m_fltForceReportY = m_fltForceReportZ = 0;
+			////Why do we multiply by the mass units here? The reason is that we have to try and keep the 
+			////length and mass values in a range around 1 for the simulator to be able to function appropriately.
+			////So say we are uing grams and centimeters. This means that if we have a 1cm^3 box that weights 1 gram
+			////it will come in with a density of 1 g.cm^3 and we will set its density to 1. But the simulator treats this
+			////as 1 Kg and not 1g. So forces/torques and so on are scaled incorrectly. We must scale the force to be applied
+			////so it is acting against kilograms instead of grams. So a 1N force would be 1000N to produce the same effect.
+			//if(m_lpForceXEval || m_lpForceYEval || m_lpForceZEval)
+			//{
+			//	m_fltForceX = m_fltForceY = m_fltForceZ = 0;
+			//	m_fltForceReportX = m_fltForceReportY = m_fltForceReportZ = 0;
 
-				if(m_lpForceXEval)
-				{
-					m_lpForceXEval->SetVariable("t", m_lpSim->Time());
-					m_fltForceReportX = m_lpForceXEval->Solve();
-					m_fltForceX = m_fltForceReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpForceXEval)
+			//	{
+			//		m_lpForceXEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltForceReportX = m_lpForceXEval->Solve();
+			//		m_fltForceX = m_fltForceReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				if(m_lpForceYEval)
-				{
-					m_lpForceYEval->SetVariable("t", m_lpSim->Time());
-					m_fltForceReportY = m_lpForceYEval->Solve();
-					m_fltForceY = m_fltForceReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpForceYEval)
+			//	{
+			//		m_lpForceYEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltForceReportY = m_lpForceYEval->Solve();
+			//		m_fltForceY = m_fltForceReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				if(m_lpForceZEval)
-				{
-					m_lpForceZEval->SetVariable("t", m_lpSim->Time());
-					m_fltForceReportZ = m_lpForceZEval->Solve();
-					m_fltForceZ = m_fltForceReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpForceZEval)
+			//	{
+			//		m_lpForceZEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltForceReportZ = m_lpForceZEval->Solve();
+			//		m_fltForceZ = m_fltForceReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
-				fltP[0] = m_oRelativePosition.x; fltP[1] = m_oRelativePosition.y; fltP[2] = m_oRelativePosition.z;
+			//	fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
+			//	fltP[0] = m_oRelativePosition.x; fltP[1] = m_oRelativePosition.y; fltP[2] = m_oRelativePosition.z;
 
-				if(m_lpVsBody->Part() && (m_fltForceX || m_fltForceY || m_fltForceZ))
-					m_lpVsBody->Part()->addForceAtLocalPosition(fltF, fltP);
-			}
+			//	if(m_lpVsBody->Part() && (m_fltForceX || m_fltForceY || m_fltForceZ))
+			//		m_lpVsBody->Part()->addForceAtLocalPosition(fltF, fltP);
+			//}
 
-			if(m_lpTorqueXEval || m_lpTorqueYEval || m_lpTorqueZEval)
-			{
-				m_fltTorqueX = m_fltTorqueY = m_fltTorqueZ = 0;
-				m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
+			//if(m_lpTorqueXEval || m_lpTorqueYEval || m_lpTorqueZEval)
+			//{
+			//	m_fltTorqueX = m_fltTorqueY = m_fltTorqueZ = 0;
+			//	m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
 
-				if(m_lpTorqueXEval)
-				{
-					m_lpTorqueXEval->SetVariable("t", m_lpSim->Time());
-					m_fltTorqueReportX = m_lpTorqueXEval->Solve();
-					m_fltTorqueX = m_fltTorqueReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpTorqueXEval)
+			//	{
+			//		m_lpTorqueXEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltTorqueReportX = m_lpTorqueXEval->Solve();
+			//		m_fltTorqueX = m_fltTorqueReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				if(m_lpTorqueYEval)
-				{
-					m_lpTorqueYEval->SetVariable("t", m_lpSim->Time());
-					m_fltTorqueReportY = m_lpTorqueYEval->Solve();
-					m_fltTorqueY = m_fltTorqueReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpTorqueYEval)
+			//	{
+			//		m_lpTorqueYEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltTorqueReportY = m_lpTorqueYEval->Solve();
+			//		m_fltTorqueY = m_fltTorqueReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				if(m_lpTorqueZEval)
-				{
-					m_lpTorqueZEval->SetVariable("t", m_lpSim->Time());
-					m_fltTorqueReportZ = m_lpTorqueZEval->Solve();
-					m_fltTorqueZ = m_fltTorqueReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-				}
+			//	if(m_lpTorqueZEval)
+			//	{
+			//		m_lpTorqueZEval->SetVariable("t", m_lpSim->Time());
+			//		m_fltTorqueReportZ = m_lpTorqueZEval->Solve();
+			//		m_fltTorqueZ = m_fltTorqueReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
+			//	}
 
-				fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
+			//	fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
 
-				if(m_lpVsBody->Part() && (m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ))
-					m_lpVsBody->Part()->addTorque (fltF);
-			}
+			//	if(m_lpVsBody->Part() && (m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ))
+			//		m_lpVsBody->Part()->addTorque (fltF);
+			//}
 		}
 	}
 	catch(...)
@@ -272,8 +273,9 @@ void BlForceStimulus::StepSimulation()
 void BlForceStimulus::Deactivate()
 {
 	AnimatSim::ExternalStimuli::ExternalStimulus::Deactivate();
-	if(m_lpVsBody->Part())
-		m_lpVsBody->Part()->wakeDynamics();
+    //FIX PHYSICS
+	//if(m_lpVsBody->Part())
+	//	m_lpVsBody->Part()->wakeDynamics();
 }
 
 float *BlForceStimulus::GetDataPointer(const string &strDataType)

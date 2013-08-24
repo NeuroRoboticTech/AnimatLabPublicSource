@@ -21,14 +21,14 @@ namespace BulletAnimatSim
 
 BlSimulator::BlSimulator()
 {
-	m_uUniverse = NULL;
+    //FIX PHYSICS
+	//m_uUniverse = NULL;
+	//m_vxFrame = NULL;
 	m_grpScene = NULL;	
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new OsgSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
 	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
-	m_uUniverse = NULL;
-	m_vxFrame = NULL;
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
 	m_dblTotalStepTime= 0;
@@ -62,7 +62,8 @@ try
 
 	//Set this to NULL so all of the DeletePhysics calls will not try and remove
 	//entities from the universe when shutting down.
-	m_uUniverse = NULL;
+    //FIX PHYSICS
+	//m_uUniverse = NULL;
 
 	Reset();
 }
@@ -70,11 +71,12 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
-VxUniverse *BlSimulator::Universe()
-{return m_uUniverse;}
-
-Vx::VxFrame* BlSimulator::Frame()
-{return m_vxFrame;}
+//FIX PHYSICS
+//VxUniverse *BlSimulator::Universe()
+//{return m_uUniverse;}
+//
+//Vx::VxFrame* BlSimulator::Frame()
+//{return m_vxFrame;}
 
 #pragma region MutatorOverrides
 
@@ -124,31 +126,34 @@ void BlSimulator::PhysicsTimeStep(float fltVal)
 {
 	OsgSimulator::PhysicsTimeStep(fltVal);
 
-	if(m_vxFrame)
-	{
-		m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
-		SetSimulationStabilityParams();
-	}
+    //FIX PHYSICS
+	//if(m_vxFrame)
+	//{
+	//	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
+	//	SetSimulationStabilityParams();
+	//}
 }
 
 void BlSimulator::Gravity(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::Gravity(fltVal, bUseScaling);
 
-	if(m_uUniverse)
-		m_uUniverse->setGravity(0, m_fltGravity, 0);
+    //FIX PHYSICS
+	//if(m_uUniverse)
+	//	m_uUniverse->setGravity(0, m_fltGravity, 0);
 }
 
 int BlSimulator::GetMaterialID(string strID)
 {
-	if(m_vxFrame)
-	{
-		VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
-		
-		if(lpMat)
-			return lpMat->getMaterialID(strID.c_str());
-		return -1;
-	}
+    //FIX PHYSICS
+	//if(m_vxFrame)
+	//{
+	//	VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
+	//	
+	//	if(lpMat)
+	//		return lpMat->getMaterialID(strID.c_str());
+	//	return -1;
+	//}
 
 	return -1;
 }
@@ -166,8 +171,9 @@ void BlSimulator::Reset()
 {
 	OsgSimulator::Reset();
 
-	if(m_vxFrame)
-		m_vxFrame->release(); 
+    //FIX PHYSICS
+	//if(m_vxFrame)
+	//	m_vxFrame->release(); 
 
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
@@ -177,11 +183,12 @@ void BlSimulator::ResetSimulation()
 {
 	OsgSimulator::ResetSimulation();
 
-	if(m_uUniverse)
-	{
-		m_uUniverse->resetDynamics();
-		m_uUniverse->resetContacts();
-	}
+    //FIX PHYSICS
+	//if(m_uUniverse)
+	//{
+	//	m_uUniverse->resetDynamics();
+	//	m_uUniverse->resetContacts();
+	//}
 	m_bSimRunning = false;
 }
 
@@ -243,49 +250,50 @@ void BlSimulator::InitializeVortexViewer(int argc, const char **argv)
 
 void BlSimulator::SetSimulationStabilityParams()
 {
-	if(m_uUniverse)
-	{
-	/*	if(m_bCalcCriticalSimParams)
-		{*/
-			//VxReal halflife = 5;
-			//m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
-			//m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
-			//m_uUniverse->setCriticalConstraintParameters(0, halflife);
-		/*}
-		else
-		{
-			m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
-			m_uUniverse->getSolverParameters(0)->setConstraintLinearDamping(m_fltLinearDamping);
-			m_uUniverse->getSolverParameters(0)->setConstraintLinearKineticLoss(m_fltLinearKineticLoss);
-			m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
-			m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
-			m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
-		}*/
-		 
-		//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
-		//sp->setConstraintLinearKineticLoss(0.0006);
-		//sp->setConstraintLinearKineticLoss(0.0006);
-		//sp->setConstraintLinearCompliance(1e-5);
-		//sp->setConstraintAngularCompliance(1e-5);
-		//sp->setConstraintLinearDamping(1e4);
-		//sp->setConstraintAngularDamping(1e4);
+    //FIX PHYSICS
+	//if(m_uUniverse)
+	//{
+	///*	if(m_bCalcCriticalSimParams)
+	//	{*/
+	//		//VxReal halflife = 5;
+	//		//m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
+	//		//m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
+	//		//m_uUniverse->setCriticalConstraintParameters(0, halflife);
+	//	/*}
+	//	else
+	//	{
+	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
+	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearDamping(m_fltLinearDamping);
+	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearKineticLoss(m_fltLinearKineticLoss);
+	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
+	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
+	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
+	//	}*/
+	//	 
+	//	//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
+	//	//sp->setConstraintLinearKineticLoss(0.0006);
+	//	//sp->setConstraintLinearKineticLoss(0.0006);
+	//	//sp->setConstraintLinearCompliance(1e-5);
+	//	//sp->setConstraintAngularCompliance(1e-5);
+	//	//sp->setConstraintLinearDamping(1e4);
+	//	//sp->setConstraintAngularDamping(1e4);
 
-		VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
-		sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*m_fltStabilityScale);
-		sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*m_fltStabilityScale);
-		sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/m_fltStabilityScale);
-		sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/m_fltStabilityScale);
-		sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*m_fltStabilityScale);
-		sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*m_fltStabilityScale);
+	//	VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
+	//	sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*m_fltStabilityScale);
+	//	sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*m_fltStabilityScale);
+	//	sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/m_fltStabilityScale);
+	//	sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/m_fltStabilityScale);
+	//	sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*m_fltStabilityScale);
+	//	sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*m_fltStabilityScale);
 
-		TRACE_DETAIL("Reset simulation stability params\r\n");
-		TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
-		TRACE_DETAIL("Angular Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularDamping()) + "\r\n");
-		TRACE_DETAIL("Angular Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss()) + "\r\n");
-		TRACE_DETAIL("Linear Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance()) + "\r\n");
-		TRACE_DETAIL("Linear Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping()) + "\r\n");
-		TRACE_DETAIL("Linear Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss()) + "\r\n");
-	}
+	//	TRACE_DETAIL("Reset simulation stability params\r\n");
+	//	TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
+	//	TRACE_DETAIL("Angular Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularDamping()) + "\r\n");
+	//	TRACE_DETAIL("Angular Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss()) + "\r\n");
+	//	TRACE_DETAIL("Linear Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance()) + "\r\n");
+	//	TRACE_DETAIL("Linear Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping()) + "\r\n");
+	//	TRACE_DETAIL("Linear Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss()) + "\r\n");
+	//}
 }
 
 //This function initializes the Vortex related
@@ -298,40 +306,42 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
 	int iCollisionCount = iObjectCount*40;
 
 	//create the frame
-	m_vxFrame = VxFrame::instance();
-	m_uUniverse = new Vx::VxUniverse(iObjectCount, iCollisionCount);
-	m_uUniverse->setGravity(0, m_fltGravity, 0);
-	//m_uUniverse->setGravity(0, 0, m_fltGravity);
-	m_vxFrame->addUniverse(m_uUniverse);
+    //FIX PHYSICS
+	//m_vxFrame = VxFrame::instance();
+	//m_uUniverse = new Vx::VxUniverse(iObjectCount, iCollisionCount);
+	//m_uUniverse->setGravity(0, m_fltGravity, 0);
+	////m_uUniverse->setGravity(0, 0, m_fltGravity);
+	//m_vxFrame->addUniverse(m_uUniverse);
 
-	//set the frame timestep
-	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
+	////set the frame timestep
+	//m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
 
-	VxFrameRegisterAllInteractions(m_vxFrame);
+	//VxFrameRegisterAllInteractions(m_vxFrame);
 
-	SetSimulationStabilityParams();
+	//SetSimulationStabilityParams();
 
-    // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
+ //   // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
+ //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
+ //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 
 }
 
-Vx::VxTriangleMesh *BlSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
-{
-	Vx::VxTriangleMesh *vxMesh = NULL;
-	vxMesh = VxTriangleMesh::createFromNode(osgNode);
-
-	return vxMesh;
-}
-
-Vx::VxConvexMesh *BlSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
-{
-	Vx::VxConvexMesh *vxMesh = NULL;
-	vxMesh = VxConvexMesh::createFromNode(osgNode); 
-
-	return vxMesh;
-}
+//FIX PHYSICS
+//Vx::VxTriangleMesh *BlSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
+//{
+//	Vx::VxTriangleMesh *vxMesh = NULL;
+//	vxMesh = VxTriangleMesh::createFromNode(osgNode);
+//
+//	return vxMesh;
+//}
+//
+//Vx::VxConvexMesh *BlSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
+//{
+//	Vx::VxConvexMesh *vxMesh = NULL;
+//	vxMesh = VxConvexMesh::createFromNode(osgNode); 
+//
+//	return vxMesh;
+//}
 
 /**
 \brief	Generates a collision mesh file.
@@ -361,11 +371,14 @@ void BlSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	if(!osgNode.valid())
 		THROW_PARAM_ERROR(Bl_Err_lErrorLoadingMesh, Bl_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
 
-	//Now create a convex mesh with the physics engine using the loaded mesh.
-	Vx::VxConvexMesh *vxMesh = VxConvexMesh::createFromNode(osgNode.get()); 
+    //FIX PHYSICS
+	////Now create a convex mesh with the physics engine using the loaded mesh.
+	//Vx::VxConvexMesh *vxMesh = VxConvexMesh::createFromNode(osgNode.get()); 
 
-	//Now use that convexmesh geometry to create a new osg node.
-	osg::ref_ptr<osg::Geometry> osgGeom = CreateOsgFromVxConvexMesh(vxMesh);
+	////Now use that convexmesh geometry to create a new osg node.
+	//osg::ref_ptr<osg::Geometry> osgGeom = CreateOsgFromVxConvexMesh(vxMesh);
+    osg::ref_ptr<osg::Geometry> osgGeom;     //FIX PHYSICS
+
 	osg::ref_ptr<osg::Geode> osgNewNode = new osg::Geode;
 	osgNewNode->addDrawable(osgGeom.get());
 
@@ -439,14 +452,15 @@ void BlSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 	vPos.Set(vL.x(), vL.y(), vL.z());
 	vPos.ClearNearZero();
 		
+    //FIX PHYSICS
 	//Now lets get the euler angle rotation
-	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(osgFinal, vxTM);
-	Vx::VxTransform vTrans(vxTM);
-	Vx::VxReal3 vEuler;
-	vTrans.getRotationEulerAngles(vEuler);
-	vRot.Set(vEuler[0], vEuler[1] ,vEuler[2]);
-	vRot.ClearNearZero();
+	//Vx::VxReal44 vxTM;
+	//VxOSG::copyOsgMatrix_to_VxReal44(osgFinal, vxTM);
+	//Vx::VxTransform vTrans(vxTM);
+	//Vx::VxReal3 vEuler;
+	//vTrans.getRotationEulerAngles(vEuler);
+	//vRot.Set(vEuler[0], vEuler[1] ,vEuler[2]);
+	//vRot.ClearNearZero();
 }
 
 void BlSimulator::Initialize(int argc, const char **argv)
@@ -470,7 +484,8 @@ void BlSimulator::StepSimulation()
 			OsgSimulator::StepSimulation();
 
 			unsigned long long lStart = GetTimerTick();
-			m_vxFrame->step();
+            //FIX PHYSICS
+			//m_vxFrame->step();
 			double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;
 
@@ -518,8 +533,9 @@ void BlSimulator::StepSimulation()
 
 void BlSimulator::SimulateEnd()
 {
-	m_vxFrame->release();
-	m_vxFrame = NULL;
+    //FIX PHYSICS
+	//m_vxFrame->release();
+	//m_vxFrame = NULL;
 }
 
 

@@ -37,7 +37,8 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The vortex hinge class.
-				Vx::VxHinge *m_vxHinge;
+                //FIX PHYSICS
+				//Vx::VxHinge *m_vxHinge;
 
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;

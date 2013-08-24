@@ -126,30 +126,32 @@ void BlMeshBase::CreatePhysicsGeometry()
 {
 	if(m_lpThisRB->IsCollisionObject())
 	{
-		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
-			m_vxGeometry = GetBlSimulator()->CreateConvexMeshFromOsg(m_osgMeshNode.get()); 
-		else
-			m_vxGeometry = GetBlSimulator()->CreatTriangleMeshFromOsg(m_osgMeshNode.get()); 
+        //FIX PHYSICS
+		//if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
+		//	m_vxGeometry = GetBlSimulator()->CreateConvexMeshFromOsg(m_osgMeshNode.get()); 
+		//else
+		//	m_vxGeometry = GetBlSimulator()->CreatTriangleMeshFromOsg(m_osgMeshNode.get()); 
 
-		if(!m_vxGeometry)
-			THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
+		//if(!m_vxGeometry)
+		//	THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 	}
 }
 
 
 void BlMeshBase::ResizePhysicsGeometry()
 {
-	if(m_vxGeometry && m_vxCollisionGeometry && m_vxSensor)
-	{
-		if(!m_vxSensor->removeCollisionGeometry(m_vxCollisionGeometry))
-			THROW_PARAM_ERROR(Bl_Err_lRemovingCollisionGeometry, Bl_Err_strRemovingCollisionGeometry, "ID: ", m_lpThisAB->ID());
+    //FIX PHYSICS
+	//if(m_vxGeometry && m_vxCollisionGeometry && m_vxSensor)
+	//{
+	//	if(!m_vxSensor->removeCollisionGeometry(m_vxCollisionGeometry))
+	//		THROW_PARAM_ERROR(Bl_Err_lRemovingCollisionGeometry, Bl_Err_strRemovingCollisionGeometry, "ID: ", m_lpThisAB->ID());
 
-		delete m_vxCollisionGeometry;
-		m_vxCollisionGeometry = NULL;
+	//	delete m_vxCollisionGeometry;
+	//	m_vxCollisionGeometry = NULL;
 
-		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
-	}
+	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+	//	CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+	//}
 }
 
 void BlMeshBase::Physics_Resize()
@@ -181,16 +183,17 @@ void BlMeshBase::Physics_Resize()
 		}
 	}
 
-	if(m_vxGeometry)
-	{
-		ResizePhysicsGeometry();
+    //FIX PHYSICS
+	//if(m_vxGeometry)
+	//{
+	//	ResizePhysicsGeometry();
 
-		//We need to reset the density in order for it to recompute the mass and volume.
-		Physics_SetDensity(m_lpThisRB->Density());
+	//	//We need to reset the density in order for it to recompute the mass and volume.
+	//	Physics_SetDensity(m_lpThisRB->Density());
 
-		//Now get base values, including mass and volume
-		GetBaseValues();
-	}
+	//	//Now get base values, including mass and volume
+	//	GetBaseValues();
+	//}
 }
 
 

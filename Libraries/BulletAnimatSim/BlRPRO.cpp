@@ -27,7 +27,8 @@ namespace BulletAnimatSim
 BlRPRO::BlRPRO()
 {
 	SetThisPointers();
-	m_vxSocket = NULL;
+    //FIX PHYSICS
+	//m_vxSocket = NULL;
 }
 
 /**
@@ -50,70 +51,72 @@ BlRPRO::~BlRPRO()
 
 void BlRPRO::DeletePhysics()
 {
-	if(!m_vxSocket)
-		return;
+    //FIX PHYSICS
+	//if(!m_vxSocket)
+	//	return;
 
-	if(GetBlSimulator() && GetBlSimulator()->Universe())
-	{
-		GetBlSimulator()->Universe()->removeConstraint(m_vxSocket);
-		delete m_vxSocket;
+	//if(GetBlSimulator() && GetBlSimulator()->Universe())
+	//{
+	//	GetBlSimulator()->Universe()->removeConstraint(m_vxSocket);
+	//	delete m_vxSocket;
 
-		if(m_lpChild && m_lpParent)
-			m_lpChild->EnableCollision(m_lpParent);
-	}
+	//	if(m_lpChild && m_lpParent)
+	//		m_lpChild->EnableCollision(m_lpParent);
+	//}
 
-	m_vxSocket = NULL;
-	m_vxJoint = NULL;
+	//m_vxSocket = NULL;
+	//m_vxJoint = NULL;
 }
 
 void BlRPRO::SetupPhysics()
 {
-	if(m_vxSocket)
-		DeletePhysics();
+    //FIX PHYSICS
+	//if(m_vxSocket)
+	//	DeletePhysics();
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	//if(!m_lpParent)
+	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	//if(!m_lpChild)
+	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	//if(!lpVsParent)
+	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	//if(!lpVsChild)
+	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	
-	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
-	Vx::VxTransform vTrans(vMT);
+	//CStdFPoint vGlobal = this->GetOSGWorldCoords();
+	//
+	//Vx::VxReal44 vMT;
+	//VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
+	//Vx::VxTransform vTrans(vMT);
 
-    VxVector3 vPos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
+ //   VxVector3 vPos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
 
-	m_vxSocket = new VxRPRO();
-	m_vxSocket->setName(m_strID.c_str());
-	m_vxSocket->setParts(lpVsParent->Part(), lpVsChild->Part());
-	m_vxSocket->setPosition(vPos);
+	//m_vxSocket = new VxRPRO();
+	//m_vxSocket->setName(m_strID.c_str());
+	//m_vxSocket->setParts(lpVsParent->Part(), lpVsChild->Part());
+	//m_vxSocket->setPosition(vPos);
 
-	VxReal3 aryStrength;
-	aryStrength[0] = aryStrength[1] = aryStrength[2] = VX_INFINITY;
+	//VxReal3 aryStrength;
+	//aryStrength[0] = aryStrength[1] = aryStrength[2] = VX_INFINITY;
 
-	Vx::VxQuaternion q;
-	m_vxSocket->setRelativeQuaternionFromPart();
+	//Vx::VxQuaternion q;
+	//m_vxSocket->setRelativeQuaternionFromPart();
 
-	m_vxSocket->setLinearStrength(aryStrength);
-	m_vxSocket->setAngularStrength(aryStrength);
+	//m_vxSocket->setLinearStrength(aryStrength);
+	//m_vxSocket->setAngularStrength(aryStrength);
 
-	GetBlSimulator()->Universe()->addConstraint(m_vxSocket);
+	//GetBlSimulator()->Universe()->addConstraint(m_vxSocket);
 
-	//Disable collisions between this object and its parent
-	m_lpChild->DisableCollision(m_lpParent);
+	////Disable collisions between this object and its parent
+	//m_lpChild->DisableCollision(m_lpParent);
 
-	m_vxJoint = m_vxSocket;
-	m_iCoordID = -1; //Not used fo
+	//m_vxJoint = m_vxSocket;
+	//m_iCoordID = -1; //Not used fo
 }
 
 void BlRPRO::CreateJoint()

@@ -47,8 +47,9 @@ void BlCylinder::CreateGraphicsGeometry()
 
 void BlCylinder::CreatePhysicsGeometry()
 {
-	if(IsCollisionObject())
-		m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
+     //FIX PHYSICS
+	//if(IsCollisionObject())
+	//	m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
 }
 
 void BlCylinder::CreateParts()
@@ -71,16 +72,17 @@ void BlCylinder::CreateJoints()
 
 void BlCylinder::ResizePhysicsGeometry()
 {
-	if(m_vxGeometry)
-	{
-		VxCylinder *vxCylinder = dynamic_cast<VxCylinder *>(m_vxGeometry);
+    //FIX PHYSICS
+	//if(m_vxGeometry)
+	//{
+		//VxCylinder *vxCylinder = dynamic_cast<VxCylinder *>(m_vxGeometry);
 
-		if(!vxCylinder)
-			THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-		
-		vxCylinder->setRadius(m_fltRadius);
-		vxCylinder->setHeight(m_fltHeight);
-	}
+		//if(!vxCylinder)
+		//	THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
+		//
+		//vxCylinder->setRadius(m_fltRadius);
+		//vxCylinder->setHeight(m_fltHeight);
+	//}
 }
 
 		}		//Bodies

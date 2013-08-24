@@ -16,7 +16,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlFluidPlane : public AnimatSim::Environment::Bodies::FluidPlane, public BlRigidBody
 			{
 			protected:
-				VxPlanarFluidState *m_vxFluidPlane;
+                //FIX PHYSICS
+				//VxPlanarFluidState *m_vxFluidPlane;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();

@@ -50,12 +50,13 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlRigidBody : public OsgRigidBody
 		{
 		protected:
+            //FIX PHYSICS
 			//The physics part that this body is
-			VxCollisionSensor *m_vxSensor;
-			VxPart *m_vxPart;
-			VxGeometry *m_vxGeometry;
-			VxCollisionGeometry *m_vxCollisionGeometry;
-			VxNode m_vxGraphicNode;
+			//VxCollisionSensor *m_vxSensor;
+			//VxPart *m_vxPart;
+			//VxGeometry *m_vxGeometry;
+			//VxCollisionGeometry *m_vxCollisionGeometry;
+			//VxNode m_vxGraphicNode;
             BlSimulator *m_lpVsSim;
 
 			virtual void ProcessContacts();
@@ -71,21 +72,24 @@ namespace BulletAnimatSim
 			virtual void ResetStaticCollisionGeom();
 			virtual void SetFollowEntity(OsgRigidBody *lpEntity);
 
-            virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
-            virtual void WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos);
+            //FIX PHYSICS
+            //virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
+            //virtual void WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos);
 
         public:
 			BlRigidBody();
 			virtual ~BlRigidBody();
 
-			Vx::VxCollisionSensor* Sensor();	
-			Vx::VxPart* Part();	
-			Vx::VxNode GraphicsNode();
-			Vx::VxCollisionGeometry *CollisionGeometry();
-			virtual void CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry);
+            //FIX PHYSICS
+            //Vx::VxCollisionSensor* Sensor();	
+			//Vx::VxPart* Part();	
+			//Vx::VxNode GraphicsNode();
+			//Vx::VxCollisionGeometry *CollisionGeometry();
+			//virtual void CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry);
 
 			virtual BlSimulator *GetBlSimulator();
-			virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
+            //FIX PHYSICS
+			//virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 			virtual void SetBody();
 			
             virtual bool Physics_IsDefined();

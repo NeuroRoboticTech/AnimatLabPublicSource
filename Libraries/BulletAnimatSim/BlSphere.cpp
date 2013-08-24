@@ -43,8 +43,9 @@ void BlSphere::CreateGraphicsGeometry()
 
 void BlSphere::CreatePhysicsGeometry()
 {
-	if(IsCollisionObject())
-		m_vxGeometry = new VxSphere(m_fltRadius);
+    //FIX PHYSICS
+	//if(IsCollisionObject())
+	//	m_vxGeometry = new VxSphere(m_fltRadius);
 }
 
 void BlSphere::CreateParts()
@@ -67,15 +68,16 @@ void BlSphere::CreateJoints()
 
 void BlSphere::ResizePhysicsGeometry()
 {
-	if(m_vxGeometry)
-	{
-		VxSphere *vxSphere = dynamic_cast<VxSphere *>(m_vxGeometry);
+    //FIX PHYSICS
+	//if(m_vxGeometry)
+	//{
+	//	VxSphere *vxSphere = dynamic_cast<VxSphere *>(m_vxGeometry);
 
-		if(!vxSphere)
-			THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-		
-		vxSphere->setRadius(m_fltRadius);
-	}
+	//	if(!vxSphere)
+	//		THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
+	//	
+	//	vxSphere->setRadius(m_fltRadius);
+	//}
 }
 
 		}		//Bodies

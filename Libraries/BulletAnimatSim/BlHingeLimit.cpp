@@ -15,7 +15,8 @@ namespace BulletAnimatSim
 
 BlHingeLimit::BlHingeLimit()
 {
-	m_vxHinge = NULL;
+    //FIX PHYSICS
+	//m_vxHinge = NULL;
     OsgHingeLimit::ConstraintLimit(this);
 }
 
@@ -23,10 +24,11 @@ BlHingeLimit::~BlHingeLimit()
 {
 }
 
-void BlHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
-{
-	m_vxHinge = vxHinge;
-}
+//FIX PHYSICS
+//void BlHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
+//{
+//	m_vxHinge = vxHinge;
+//}
 
 void BlHingeLimit::Alpha(float fltA)
 {
@@ -48,13 +50,14 @@ void BlHingeLimit::SetLimitPos()
 
 void BlHingeLimit::SetLimitValues()
 {
-	if(m_vxHinge)
-	{
-		if(m_bIsLowerLimit)
-			m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-		else
-			m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	}
+    //FIX PHYSICS
+	//if(m_vxHinge)
+	//{
+	//	if(m_bIsLowerLimit)
+	//		m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//	else
+	//		m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//}
 }
 
 void BlHingeLimit::DeleteGraphics()

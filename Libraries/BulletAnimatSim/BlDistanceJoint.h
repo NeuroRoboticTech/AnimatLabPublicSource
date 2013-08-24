@@ -17,7 +17,8 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The vortex socket class.
-				Vx::VxDistanceJoint *m_vxDistance;
+                 //FIX PHYSICS
+				//Vx::VxDistanceJoint *m_vxDistance;
 
 				virtual void SetupGraphics();
 				virtual void SetupPhysics();

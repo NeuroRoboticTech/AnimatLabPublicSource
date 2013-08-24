@@ -85,17 +85,17 @@ osg::Matrix NewSetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 
 osg::Matrix OldSetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 {
-	Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
-	Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
-	Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
+	//Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
+	//Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
+	//Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
 
 	osg::Matrix osgLocalMatrix;
-	VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
+	//VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
 
-    Vx::VxQuaternion vQuat(vTrans);
-    
-    osg::Quat q(vQuat[0], vQuat[1], vQuat[2], vQuat[3]);
-    osg::Matrix matT = NewSetupMatrix1(localPos, q);
+ //   Vx::VxQuaternion vQuat(vTrans);
+ //   
+ //   osg::Quat q(vQuat[0], vQuat[1], vQuat[2], vQuat[3]);
+ //   osg::Matrix matT = NewSetupMatrix1(localPos, q);
 
 	return osgLocalMatrix;
 }
@@ -103,31 +103,31 @@ osg::Matrix OldSetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 
 osg::Quat OldSetupMatrixQuat(CStdFPoint &localPos, CStdFPoint &localRot)
 {
-	Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
-	Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
-	Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
+	//Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
+	//Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
+	//Vx::VxTransform vTrans = Vx::VxTransform::createFromTranslationAndEulerAngles(vLoc, vRot);
 
-	osg::Matrix osgLocalMatrix;
-	VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
+	//osg::Matrix osgLocalMatrix;
+	//VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
 
-    Vx::VxQuaternion vQuat(vTrans);
+ //   Vx::VxQuaternion vQuat(vTrans);
 
-    Vx::VxQuaternion vQuat2;
-    vQuat2.fromEulerXYZ(localRot.x, localRot.y, localRot.z);
+ //   Vx::VxQuaternion vQuat2;
+ //   vQuat2.fromEulerXYZ(localRot.x, localRot.y, localRot.z);
 
-    osg::Quat q(vQuat2[0], vQuat2[1], vQuat2[2], vQuat2[3]);
+    osg::Quat q; //(vQuat2[0], vQuat2[1], vQuat2[2], vQuat2[3]);
 	return q;
 }
 
 CStdFPoint OldEulerRotationFromMatrix(osg::Matrix osgMT)
 {
 	//Now lets get the euler angle rotation
-	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
-	Vx::VxTransform vTrans(vxTM);
-	Vx::VxReal3 vEuler;
-	vTrans.getRotationEulerAngles(vEuler);
-	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
+	//Vx::VxReal44 vxTM;
+	//VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
+	//Vx::VxTransform vTrans(vxTM);
+	//Vx::VxReal3 vEuler;
+	//vTrans.getRotationEulerAngles(vEuler);
+	CStdFPoint vRot; //(vEuler[0], vEuler[1] ,vEuler[2]);
 
 	vRot.ClearNearZero();
     return vRot;
@@ -254,10 +254,10 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
     CStdFPoint vPos(0, 0, 0);
 
     //OsgMatrixUtil osgUtil;
-    BlMatrixUtil vsUtil;
+    //BlMatrixUtil vsUtil;
 
-    //SetMatrixUtil(&osgUtil);
-    SetMatrixUtil(&vsUtil);
+    ////SetMatrixUtil(&osgUtil);
+    //SetMatrixUtil(&vsUtil);
 
     float fltDiv = osg::PI/20;
     float fltStart = -osg::PI*2;
@@ -301,12 +301,12 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
         
 
     OsgMatrixUtil osgUtil;
-    BlMatrixUtil vsUtil;
+    //BlMatrixUtil vsUtil;
 
     SetMatrixUtil(&osgUtil);
     CStdFPoint vOsgRot = EulerRotationFromMatrix(osgMT);  
 
-    SetMatrixUtil(&vsUtil);
+    //SetMatrixUtil(&vsUtil);
     CStdFPoint vVsRot = EulerRotationFromMatrix(osgMT);  
 
     CStdFPoint vtRot = ExtractEulerXYZ(osgMT);

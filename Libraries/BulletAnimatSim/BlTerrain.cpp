@@ -27,7 +27,8 @@ BlTerrain::BlTerrain()
 	SetThisPointers();
 	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
-	m_vxHeightField = NULL;
+    //FIX PHYSICS
+	//m_vxHeightField = NULL;
 }
 
 BlTerrain::~BlTerrain()
@@ -113,17 +114,18 @@ void BlTerrain::LoadMeshNode()
 
 void BlTerrain::CreatePhysicsGeometry()
 {
-	m_vxGeometry = NULL;
-	if(m_osgHeightField)
-	{
-		m_vxHeightField = CreateVxHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
-		m_vxGeometry = m_vxHeightField;
-	}
+    //FIX PHYSICS
+	//m_vxGeometry = NULL;
+	//if(m_osgHeightField)
+	//{
+	//	m_vxHeightField = CreateVxHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
+	//	m_vxGeometry = m_vxHeightField;
+	//}
 
-	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
+	//m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
-	if(!m_vxGeometry)
-		THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
+	//if(!m_vxGeometry)
+	//	THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 }
 
 void BlTerrain::CreateParts()

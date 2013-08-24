@@ -11,8 +11,9 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlMaterialType : public AnimatSim::Environment::MaterialType
 		{
 		protected:
-			VxMaterialTable *m_vxMaterialTable;
-            VxMaterial *m_vxMaterial;
+            //FIX PHYSICS
+			//VxMaterialTable *m_vxMaterialTable;
+   //         VxMaterial *m_vxMaterial;
 
 			virtual void SetMaterialProperties();
 			virtual void RegisterMaterialType();

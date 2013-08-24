@@ -43,8 +43,9 @@ void BlBox::CreateGraphicsGeometry()
 
 void BlBox::CreatePhysicsGeometry()
 {
-	if(IsCollisionObject())
-		m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
+ //FIX PHYSICS
+	//if(IsCollisionObject())
+	//	m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
 }
 
 void BlBox::CreateParts()
@@ -67,15 +68,16 @@ void BlBox::CreateJoints()
 
 void BlBox::ResizePhysicsGeometry()
 {
-	if(m_vxGeometry)
-	{
-		VxBox *vxBox = dynamic_cast<VxBox *>(m_vxGeometry);
+ //FIX PHYSICS
+	//if(m_vxGeometry)
+	//{
+	//	VxBox *vxBox = dynamic_cast<VxBox *>(m_vxGeometry);
 
-		if(!vxBox)
-			THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-		
-		vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
-	}
+	//	if(!vxBox)
+	//		THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
+	//	
+	//	vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
+	//}
 }
 
 

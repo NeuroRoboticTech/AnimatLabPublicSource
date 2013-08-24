@@ -29,15 +29,16 @@ namespace BulletAnimatSim
 BlHinge::BlHinge()
 {
 	SetThisPointers();
-	m_vxHinge = NULL;
+    //FIX PHYSICS
+	//m_vxHinge = NULL;
 	m_fltRotationDeg = 0;
 
 	m_lpUpperLimit = new BlHingeLimit();
 	m_lpLowerLimit = new BlHingeLimit();
 	m_lpPosFlap = new BlHingeLimit();
 
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, false);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, false);
+	m_lpUpperLimit->LimitPos(0.25*osg::PI, false);
+	m_lpLowerLimit->LimitPos(-0.25*osg::PI, false);
 	m_lpPosFlap->LimitPos(Hinge::JointPosition(), false);
 	m_lpPosFlap->IsShowPosition(true);
 
@@ -71,8 +72,9 @@ void BlHinge::EnableLimits(bool bVal)
 {
 	Hinge::EnableLimits(bVal);
 
-	if(m_vxHinge)
-		m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
+    //FIX PHYSICS
+	//if(m_vxHinge)
+	//	m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
 
 	if(m_bEnableLimits)
 	{
@@ -135,8 +137,8 @@ void BlHinge::SetupGraphics()
 	if(m_osgParent.valid())
 	{
 		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
+		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
+		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
 		
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
@@ -166,80 +168,82 @@ void BlHinge::SetupGraphics()
 
 void BlHinge::DeletePhysics()
 {
-	if(!m_vxHinge)
-		return;
+    //FIX PHYSICS
+	//if(!m_vxHinge)
+	//	return;
 
-	if(GetBlSimulator() && GetBlSimulator()->Universe())
-	{
-		GetBlSimulator()->Universe()->removeConstraint(m_vxHinge);
-		delete m_vxHinge;
-		
-		if(m_lpChild && m_lpParent)
-			m_lpChild->EnableCollision(m_lpParent);
-	}
+	//if(GetBlSimulator() && GetBlSimulator()->Universe())
+	//{
+	//	GetBlSimulator()->Universe()->removeConstraint(m_vxHinge);
+	//	delete m_vxHinge;
+	//	
+	//	if(m_lpChild && m_lpParent)
+	//		m_lpChild->EnableCollision(m_lpParent);
+	//}
 
-	m_vxHinge = NULL;
-	m_vxJoint = NULL;
+	//m_vxHinge = NULL;
+	//m_vxJoint = NULL;
 }
 
 void BlHinge::SetupPhysics()
 {
-	if(m_vxHinge)
-		DeletePhysics();
+    //FIX PHYSICS
+	//if(m_vxHinge)
+	//	DeletePhysics();
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	//if(!m_lpParent)
+	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	//if(!m_lpChild)
+	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	//if(!lpVsParent)
+	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	//if(!lpVsChild)
+	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	
-	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
-	Vx::VxTransform vTrans(vMT);
-	Vx::VxReal3 vxRot;
-	vTrans.getRotationEulerAngles(vxRot);
+	//CStdFPoint vGlobal = this->GetOSGWorldCoords();
+	//
+	//Vx::VxReal44 vMT;
+	//VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
+	//Vx::VxTransform vTrans(vMT);
+	//Vx::VxReal3 vxRot;
+	//vTrans.getRotationEulerAngles(vxRot);
 
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
+	//CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
-    VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+ //   VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
+	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	//VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
 
-	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	m_vxHinge->setName(m_strID.c_str());
+	//m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
+	//m_vxHinge->setName(m_strID.c_str());
 
-	GetBlSimulator()->Universe()->addConstraint(m_vxHinge);
+	//GetBlSimulator()->Universe()->addConstraint(m_vxHinge);
 
-	//Disable collisions between this object and its parent
-	m_lpChild->DisableCollision(m_lpParent);
+	////Disable collisions between this object and its parent
+	//m_lpChild->DisableCollision(m_lpParent);
 
-	BlHingeLimit *lpUpperLimit = dynamic_cast<BlHingeLimit *>(m_lpUpperLimit);
-	BlHingeLimit *lpLowerLimit = dynamic_cast<BlHingeLimit *>(m_lpLowerLimit);
+	//BlHingeLimit *lpUpperLimit = dynamic_cast<BlHingeLimit *>(m_lpUpperLimit);
+	//BlHingeLimit *lpLowerLimit = dynamic_cast<BlHingeLimit *>(m_lpLowerLimit);
 
-	lpUpperLimit->HingeRef(m_vxHinge);
-	lpLowerLimit->HingeRef(m_vxHinge);
+	//lpUpperLimit->HingeRef(m_vxHinge);
+	//lpLowerLimit->HingeRef(m_vxHinge);
 
-	//Re-enable the limits once we have initialized the joint
-	EnableLimits(m_bEnableLimits);
+	////Re-enable the limits once we have initialized the joint
+	//EnableLimits(m_bEnableLimits);
 
-	m_vxJoint = m_vxHinge;
-	m_iCoordID = m_vxHinge->kAngularCoordinate;
+	//m_vxJoint = m_vxHinge;
+	//m_iCoordID = m_vxHinge->kAngularCoordinate;
 
-	//If the motor is enabled then it will start out with a velocity of	zero.
-	EnableMotor(m_bEnableMotorInit);
+	////If the motor is enabled then it will start out with a velocity of	zero.
+	//EnableMotor(m_bEnableMotorInit);
 
-    Hinge::Initialize();
-    BlJoint::Initialize();
+ //   Hinge::Initialize();
+ //   BlJoint::Initialize();
 }
 
 void BlHinge::CreateJoint()
@@ -316,7 +320,7 @@ void BlHinge::StepSimulation()
 void BlHinge::UpdateData()
 {
 	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/VX_PI)*180);
+	m_fltRotationDeg = ((m_fltPosition/osg::PI)*180);
 }
 
 		}		//Joints
