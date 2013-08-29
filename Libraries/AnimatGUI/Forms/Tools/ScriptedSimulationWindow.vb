@@ -640,7 +640,7 @@ Namespace Forms
 
             End Sub
 
-            Public Overridable Function GenerateSimWindowXml() As String
+            Public Overridable Function GenerateSimWindowMgrXml() As String
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 oXml.AddElement("WindowMgr")
@@ -1022,7 +1022,7 @@ Namespace Forms
                             End If
                         End If
 
-                        Dim strWinXml As String = GenerateSimWindowXml()
+                        Dim strWinXml As String = GenerateSimWindowMgrXml()
                         Util.Application.SimulationInterface.AddWindow(Me.Handle, "ScriptedSimWindow", strWinXml)
                         InitializeSimulationReferences()
 

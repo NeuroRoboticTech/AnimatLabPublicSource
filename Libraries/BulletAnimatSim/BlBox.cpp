@@ -52,27 +52,29 @@ void BlBox::CreatePhysicsGeometry()
 
 void BlBox::CreateDynamicPart()
 {
-    BlSimulator *lpSim = GetBlSimulator();
+    BlRigidBody::CreateDynamicPart();
 
-	if(lpSim && m_lpThisRB && m_lpThisAB)
-	{
-        osg::ref_ptr< osgbDynamics::CreationRecord > cr = new osgbDynamics::CreationRecord;
-        cr->_sceneGraph = m_osgMT.get();
-        cr->_shapeType = BOX_SHAPE_PROXYTYPE;
-        cr->_mass = 1.f;
-        cr->_restitution = 1.f;
-        //cr->_parentTransform = m_osgMT->getMatrix();
-        m_btPart = osgbDynamics::createRigidBody( cr.get(), m_btCollisionShape );
-        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
+ //   BlSimulator *lpSim = GetBlSimulator();
 
-        m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
-        m_osgbMotion->setCenterOfMass(osg::Vec3(0, 0, 0));
-        m_btCollisionShape = m_btPart->getCollisionShape();
+	//if(lpSim && m_lpThisRB && m_lpThisAB)
+	//{
+ //       osg::ref_ptr< osgbDynamics::CreationRecord > cr = new osgbDynamics::CreationRecord;
+ //       cr->_sceneGraph = m_osgMT.get();
+ //       cr->_shapeType = BOX_SHAPE_PROXYTYPE;
+ //       cr->_mass = 1.f;
+ //       cr->_restitution = 1.f;
+ //       //cr->_parentTransform = m_osgMT->getMatrix();
+ //       m_btPart = osgbDynamics::createRigidBody( cr.get(), m_btCollisionShape );
+ //       lpSim->DynamicsWorld()->addRigidBody( m_btPart );
 
-  //      m_osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( m_btCollisionShape );
-  //      m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
-		//m_osgNodeGroup->addChild(m_osgDebugNode.get());	
-	}
+ //       m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
+ //       m_osgbMotion->setCenterOfMass(osg::Vec3(0, 0, 0));
+ //       m_btCollisionShape = m_btPart->getCollisionShape();
+
+ // //      m_osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( m_btCollisionShape );
+ // //      m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
+	//	//m_osgNodeGroup->addChild(m_osgDebugNode.get());	
+	//}
 }
 
 void BlBox::CreateParts()

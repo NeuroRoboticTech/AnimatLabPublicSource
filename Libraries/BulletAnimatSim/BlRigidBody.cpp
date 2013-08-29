@@ -254,22 +254,57 @@ void BlRigidBody::CreateDynamicPart()
 {
     BlSimulator *lpSim = GetBlSimulator();
 
-	if(lpSim && m_lpThisRB && m_lpThisAB)
+	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape)
 	{
+        btScalar mass( m_lpThisRB->GetMassValue() );
+	    btVector3 localInertia( 0, 0, 0 );
+        const bool isDynamic = ( mass != 0.f );
+	    if( isDynamic )
+		    m_btCollisionShape->calculateLocalInertia( mass, localInertia );
+
+        // Create MotionState to control OSG subgraph visual reprentation transform
+        // from a Bullet world transform. To do this, the MotionState need the address
+        // of the Transform node (must be either AbsoluteModelTransform or
+        // MatrixTransform), center of mass, scale vector, and the parent (or initial)
+        // transform (usually the non-scaled OSG local-to-world matrix obtained from
+        // the parent node path).
         m_osgbMotion = new osgbDynamics::MotionState();
         m_osgbMotion->setTransform( m_osgMT.get() );
-        m_osgbMotion->setParentTransform( m_osgMT->getMatrix() );
 
-        btScalar mass( m_lpThisRB->GetMassValue() );
-        btVector3 inertia( 0, 0, 0 );
-        m_btCollisionShape->calculateLocalInertia(mass, inertia);
-        btRigidBody::btRigidBodyConstructionInfo rb( mass, m_osgbMotion, m_btCollisionShape, inertia );
-        
-        //Populate material properties here.
-        //rb.m_friction = 
+        //I am not sure why, but I have to have this here. If I do not then the positioning of the
+        //of the physics/osg parts are incorrect.
+        osg::Vec3 com = m_osgMT->getBound().center();
+        m_osgbMotion->setCenterOfMass( com );
 
-        m_btPart = new btRigidBody( rb );
+        m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
+        m_osgbMotion->setParentTransform( osg::Matrix::identity() ); // m_osgMT->getMatrix() );
+
+        // Finally, create rigid body.
+        btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
+        rbInfo.m_friction = btScalar( 1 );
+        rbInfo.m_restitution = btScalar( 1 );
+        rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
+        rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
+
+        m_btPart = new btRigidBody( rbInfo );
         m_btPart->setUserPointer((void *) m_lpThisRB);
+
+        // Last thing to do: Position the rigid body in the world coordinate system. The
+        // MotionState has the initial (parent) transform, and also knows how to account
+        // for center of mass and scaling. Get the world transform from the MotionState,
+        // then set it on the rigid body, which in turn sets the world transform on the
+        // MotionState, which in turn transforms the OSG subgraph visual representation.
+        btTransform wt;
+        m_osgbMotion->getWorldTransform( wt );
+        m_btPart->setWorldTransform( wt );
+
+        //This must be done AFTER the setWorldTransform
+		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
+        else
+            com = osg::Vec3(0, 0, 0);
+        m_osgbMotion->setCenterOfMass( com );
 
 		//if this body is frozen; freeze it
         if(m_lpThisRB->Freeze())
@@ -291,27 +326,6 @@ void BlRigidBody::CreateDynamicPart()
 		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
            
         GetBaseValues();
-
-		//string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-		//m_vxCollisionGeometry->setName(strName.c_str());
-		//m_vxSensor->setFastMoving(true);
-
-		////if this body is frozen; freeze it
-		//m_vxSensor->freeze(m_lpThisRB->Freeze());
-
-		////if the center of mass isn't the graphical center then set the offset relative to position and orientation
-		//if(m_vxPart)
-		//{
-		//	CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-		//	if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-		//		m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
-
-		//	if(m_lpThisRB->LinearVelocityDamping() > 0)
-		//		m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
-
-		//	if(m_lpThisRB->AngularVelocityDamping() > 0)
-		//		m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
-		//}
 	}
 }
 

@@ -65,6 +65,7 @@ Namespace Framework
         Protected Shared m_bExportStimsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
+        Protected Shared m_bExportWindowsToFile As Boolean = False 'Determines if windows are saved to a file or kept in memory for sim.
         Protected Shared m_strVersionNumber As String = "2.0.7"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
@@ -229,6 +230,15 @@ Namespace Framework
             End Get
             Set(ByVal Value As Boolean)
                 m_bExportChartsToFile = Value
+            End Set
+        End Property
+
+        Public Shared Property ExportWindowsToFile() As Boolean
+            Get
+                Return m_bExportWindowsToFile
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bExportWindowsToFile = Value
             End Set
         End Property
 

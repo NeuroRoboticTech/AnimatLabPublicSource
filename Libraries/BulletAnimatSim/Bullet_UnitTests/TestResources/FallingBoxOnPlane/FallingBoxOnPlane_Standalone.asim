@@ -1,6 +1,6 @@
 <Simulation>
 <ProjectPath/>
-<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -174,7 +174,7 @@
 <EnableFluids>False</EnableFluids>
 <Density>1000</Density>
 <COM x="0" y="0" z="0"/>
-<Freeze>False</Freeze>
+<Freeze>True</Freeze>
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
 <FoodSource>False</FoodSource>
 <FoodQuantity>100</FoodQuantity>
@@ -270,37 +270,40 @@
 </DataColumns>
 </DataChart>
 </DataCharts>
-	<WindowMgr>
-		<Hud>
-			<Type>Hud</Type>
-			<HudItems>
-				<HudItem>
-					<ModuleName/>
-					<Type>HudText</Type>
-					<Name>5b409627-59fd-411e-94b2-d8668998e0b6</Name>
-					<ID>5b409627-59fd-411e-94b2-d8668998e0b6</ID>
-					<Type>HudText</Type>
-					<CharSize>30</CharSize>
-					<Text>Time: %3.3f</Text>
-					<DisplayTargetID>Simulator</DisplayTargetID>
-					<DisplayDataType>Time</DisplayDataType>
-					<UpdateTargetID>Simulator</UpdateTargetID>
-					<UpdateDataType>RealTime</UpdateDataType>
-					<UpdateInterval>1</UpdateInterval>
-					<Position x="10" y="10"/>
-					<Color Red="1" Green="1" Blue="1" Alpha="1"/>
-				</HudItem>
-			</HudItems>
-		</Hud>
-		<Windows>
-			<Window>
-				<Position x="100" y="100"/>
-				<Size x="680" y="400"/>
-				<Type>Default</Type>
-				<LookAtStructureID>be99a1ad-c9f0-4a68-aa58-8112f41a1d5b</LookAtStructureID>
-				<LookAtBodyID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</LookAtBodyID>
-				<TrackCamera>True</TrackCamera>
-			</Window>
-		</Windows>
-	</WindowMgr>
+<WindowMgr>
+<Hud>
+<Type>Hud</Type>
+<HudItems>
+<HudItem>
+<ModuleName/>
+<Type>HudText</Type>
+<Name>705cfebb-84a0-4c97-be02-a31745566457</Name>
+<ID>705cfebb-84a0-4c97-be02-a31745566457</ID>
+<Type>HudText</Type>
+<CharSize>30</CharSize>
+<Text>Time: %3.3f</Text>
+<DisplayTargetID>Simulator</DisplayTargetID>
+<DisplayDataType>Time</DisplayDataType>
+<UpdateTargetID>Simulator</UpdateTargetID>
+<UpdateDataType>RealTime</UpdateDataType>
+<UpdateInterval>1</UpdateInterval>
+<Position x="10" y="10"/>
+<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+</HudItem>
+</HudItems>
+</Hud>
+<Windows>
+<Window>
+<Name>Structure_1 Body</Name>
+<ID>118ea7b3-3e9c-46a8-b3ad-c926d9e6b10b</ID>
+<Type>Basic</Type>
+<StandAlone>True</StandAlone>
+<TrackCamera>True</TrackCamera>
+<LookAtStructureID>f8a04939-2b6b-431b-a00d-ab5f926ceae0</LookAtStructureID>
+<LookAtBodyID>f96f9d06-dc16-4b92-bf4f-81349649e9e8</LookAtBodyID>
+<Position x="500" y="500" z="0"/>
+<Size x="640" y="480" z="0"/>
+</Window>
+</Windows>
+</WindowMgr>
 </Simulation>

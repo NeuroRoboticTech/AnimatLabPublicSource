@@ -1133,6 +1133,21 @@ Namespace DataObjects
 
             oXml.OutOfElem()    'Outof Hud Items element
             oXml.OutOfElem()    'Outof Hud element
+
+            If Util.ExportWindowsToFile Then
+                oXml.AddChildElement("Windows")
+                oXml.IntoElem()  'Into Windows element
+
+                For Each animatForm As Form In Util.Application.ChildForms
+                    If Util.IsTypeOf(animatForm.GetType(), "AnimatGUI.Forms.SimulationWindow", False) Then
+                        Dim simWindow As AnimatGUI.Forms.SimulationWindow = DirectCast(animatForm, AnimatGUI.Forms.SimulationWindow)
+                        simWindow.GenerateSimWindowXml(oXml)
+                    End If
+                Next
+
+                oXml.OutOfElem()    'Outof Windows element
+            End If
+
             oXml.OutOfElem()    'Outof WindowMgr element
         End Sub
 

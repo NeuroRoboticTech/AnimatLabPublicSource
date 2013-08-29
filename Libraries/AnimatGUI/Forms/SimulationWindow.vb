@@ -431,10 +431,17 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Function GenerateSimWindowXml() As String
+        Public Overridable Function GenerateSimWindowMgrXml() As String
             Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             oXml.AddElement("WindowMgr")
+            GenerateSimWindowXml(oXml)
+
+            Return oXml.Serialize()
+        End Function
+
+        Public Overridable Sub GenerateSimWindowXml(ByRef oXml As ManagedAnimatInterfaces.IStdXml)
+
             oXml.AddChildElement("Window")
 
             oXml.IntoElem()
@@ -454,10 +461,13 @@ Namespace Forms
                 oXml.AddChildElement("LookAtBodyID", m_doBodyPart.ID)
             End If
 
-            oXml.OutOfElem()
+            If Util.ExportWindowsToFile Then
+                Util.SaveVector(oXml, "Position", New Vec3i(Nothing, 100, 100, 0))
+                Util.SaveVector(oXml, "Size", New Vec3i(Nothing, 640, 480, 0))
+            End If
 
-            Return oXml.Serialize()
-        End Function
+            oXml.OutOfElem()
+        End Sub
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
@@ -535,7 +545,7 @@ Namespace Forms
                         End If
                     End If
 
-                    Dim strWinXml As String = GenerateSimWindowXml()
+                    Dim strWinXml As String = GenerateSimWindowMgrXml()
                     Util.Application.SimulationInterface.AddWindow(Me.Handle, "Basic", strWinXml)
                     InitializeSimulationReferences()
 

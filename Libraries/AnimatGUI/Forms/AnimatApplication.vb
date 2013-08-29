@@ -3167,7 +3167,7 @@ Namespace Forms
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
+        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean) As ManagedAnimatInterfaces.IStdXml
 
             Try
                 Me.AppIsBusy = True
@@ -3177,6 +3177,7 @@ Namespace Forms
                 Util.ExportChartsToFile = bSaveChartsToFile
                 Util.ExportChartsInStandAloneSim = bIncludeCharts
                 Util.ExportStimsInStandAloneSim = bIncludeStims
+                Util.ExportWindowsToFile = bIncludeWindows
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
@@ -3191,6 +3192,7 @@ Namespace Forms
                 Util.ExportForStandAloneSim = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
+                Util.ExportWindowsToFile = False
                 Me.AppIsBusy = False
             End Try
 
@@ -3327,6 +3329,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = True
                 Util.ExportStimsInStandAloneSim = True
                 Util.ExportChartsToFile = True
+                Util.ExportWindowsToFile = True
 
                 Util.Simulation.SaveSimulationXml(strFilename)
 
@@ -3345,6 +3348,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
                 Util.ExportChartsToFile = False
+                Util.ExportWindowsToFile = False
                 Me.AppIsBusy = False
             End Try
         End Sub
@@ -3370,6 +3374,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = True
                 Util.ExportStimsInStandAloneSim = True
                 Util.ExportChartsToFile = True
+                Util.ExportWindowsToFile = True
 
                 Util.Simulation.SaveSimulationXml(strFilename)
 
@@ -3388,6 +3393,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
                 Util.ExportChartsToFile = False
+                Util.ExportWindowsToFile = False
                 Me.AppIsBusy = False
             End Try
 
@@ -5637,7 +5643,7 @@ Namespace Forms
         End Sub
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
-            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False)
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False)
             strXml = oXml.Serialize()
         End Sub
 
