@@ -215,7 +215,8 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
-	m_grpScene = new osg::Group;	
+	m_grpScene = new osg::MatrixTransform;
+    m_grpScene->setMatrix(osg::Matrix::identity());
     m_grpScene->setName("World");
 
 	//Add the mouse spring lines to the scene

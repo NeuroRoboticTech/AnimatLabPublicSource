@@ -357,13 +357,31 @@ BOOST_AUTO_TEST_CASE( Dynamic_Loading )
     string strExecutablePath, strExeFile;
 	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
 
-    string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Vortex_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
+    string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
 
 	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
 	 
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSim->CreateObject("", "RigidBody", "Box"));
 	if(lpBody)
 		delete lpBody;
+
+    if(lpSim)
+        delete lpSim;
+}
+
+BOOST_AUTO_TEST_CASE( Falling_Shapes_Sim )
+{
+    string strExePath = Std_ExecutablePath();
+    string strExecutablePath, strExeFile;
+	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
+
+    string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/FallingBodies/FallingBodies_StandaloneD.asim";
+
+	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
+	 
+	lpSim->Load();
+	lpSim->Initialize(0, 0);
+	lpSim->Simulate();
 
     if(lpSim)
         delete lpSim;

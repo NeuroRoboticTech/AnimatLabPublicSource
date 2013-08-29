@@ -50,13 +50,10 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlRigidBody : public OsgRigidBody
 		{
 		protected:
-            //FIX PHYSICS
-			//The physics part that this body is
-			//VxCollisionSensor *m_vxSensor;
-			//VxPart *m_vxPart;
-			//VxGeometry *m_vxGeometry;
-			//VxCollisionGeometry *m_vxCollisionGeometry;
-			//VxNode m_vxGraphicNode;
+            btCollisionShape *m_btCollisionShape;
+            btRigidBody *m_btPart;
+            osgbDynamics::MotionState *m_osgbMotion;
+
             BlSimulator *m_lpVsSim;
 
 			virtual void ProcessContacts();
@@ -80,12 +77,9 @@ namespace BulletAnimatSim
 			BlRigidBody();
 			virtual ~BlRigidBody();
 
-            //FIX PHYSICS
-            //Vx::VxCollisionSensor* Sensor();	
-			//Vx::VxPart* Part();	
-			//Vx::VxNode GraphicsNode();
-			//Vx::VxCollisionGeometry *CollisionGeometry();
-			//virtual void CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry);
+            btCollisionShape *CollisionShape() {return m_btCollisionShape;};
+            btRigidBody *Part() {return m_btPart;};
+            osgbDynamics::MotionState *MotionState() {return m_osgbMotion;};
 
 			virtual BlSimulator *GetBlSimulator();
             //FIX PHYSICS

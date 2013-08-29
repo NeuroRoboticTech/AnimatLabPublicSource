@@ -20,7 +20,9 @@ namespace BulletAnimatSim
 				virtual void CreatePhysicsGeometry();
 				virtual void ResizePhysicsGeometry();
 
-			public:
+                virtual void CreateDynamicPart();
+
+            public:
 				BlPlane();
 				virtual ~BlPlane();
 

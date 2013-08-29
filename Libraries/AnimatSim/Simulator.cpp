@@ -3038,6 +3038,9 @@ try
 	//_getcwd( strBuffer, 2000 );
 	//Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
  
+    if(!Std_FileExists(strSimulationFile))
+		THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strSimulationFile);
+
 	Std_SplitPathAndFile(strSimulationFile, strProjectPath, strProjectFile);
 
 	if(!Std_IsFullPath(strSimulationFile))

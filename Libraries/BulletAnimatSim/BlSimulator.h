@@ -15,13 +15,13 @@ namespace BulletAnimatSim
 	class BULLET_PORT BlSimulator : public OsgSimulator
 	{
 	protected:
-		//Vortex Universe
-        //FIX PHYSICS
-		//VxUniverse *m_uUniverse;
-		//
-		////Vortex Frame
-		//VxFrame *m_vxFrame;		
+        btDefaultCollisionConfiguration *m_lpCollisionConfiguration;
+        btCollisionDispatcher *m_lpDispatcher;
+        btConstraintSolver *m_lpSolver;
+        btBroadphaseInterface *m_lpBroadPhase;
+        btDiscreteDynamicsWorld *m_lpDynamicsWorld;
 
+        //FIX PHYSICS
 		//BlIntersectionEvent m_vsIntersect;
 
 		double m_dblTotalVortexStepTime;
@@ -41,9 +41,11 @@ namespace BulletAnimatSim
 		BlSimulator();
 		virtual ~BlSimulator();
 
-        //FIX PHYSICS
-		//Vx::VxUniverse* Universe();		
-		//Vx::VxFrame* Frame();
+        btDefaultCollisionConfiguration *CollisionConfig() {return m_lpCollisionConfiguration;};
+        btCollisionDispatcher *Dispatcher() {return m_lpDispatcher;};
+        btConstraintSolver *Solver() {return m_lpSolver;};
+        btBroadphaseInterface *BroadPhase() {return m_lpBroadPhase;}
+        btDiscreteDynamicsWorld *DynamicsWorld() {return m_lpDynamicsWorld;};
 
 #pragma region CreateMethods
 

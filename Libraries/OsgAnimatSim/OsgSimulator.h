@@ -22,7 +22,7 @@ namespace OsgAnimatSim
 		OsgSimulationWindowMgr *m_vsWinMgr;
 
 		//osg group node for the main scene
-		osg::ref_ptr<osg::Group> m_grpScene;
+		osg::ref_ptr<osg::MatrixTransform> m_grpScene;
 
 		//Command manager for gripper manipulators in the scene.
 		osg::ref_ptr<osgManipulator::CommandManager> m_osgCmdMgr;
@@ -51,7 +51,7 @@ namespace OsgAnimatSim
 		virtual ~OsgSimulator();
 
 		OsgMovableItem *TrackBody();
-		osg::Group *OSGRoot() {return m_grpScene.get();};
+		osg::MatrixTransform *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
 		OsgMeshMgr *MeshMgr() 
 		{

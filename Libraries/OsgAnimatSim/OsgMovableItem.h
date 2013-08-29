@@ -27,6 +27,7 @@ namespace OsgAnimatSim
 			osg::ref_ptr<osg::Group> m_osgRoot;
 			osg::ref_ptr<osg::Node> m_osgNode;
 			osg::ref_ptr<osg::Group> m_osgNodeGroup;
+			osg::ref_ptr<osg::Node> m_osgDebugNode;
 
 			osg::ref_ptr<osg::CullFace> m_osgCull;
 			osg::ref_ptr<osg::Texture2D> m_osgTexture;

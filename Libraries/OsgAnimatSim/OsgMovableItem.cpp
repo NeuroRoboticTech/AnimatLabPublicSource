@@ -492,7 +492,7 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
 		m_osgNodeGroup->addChild(m_osgNode.get());		
 		m_osgNodeGroup->setName(strName + "_NodeGroup");
 		
-		m_osgMT->addChild(m_osgNodeGroup.get());
+ 		m_osgMT->addChild(m_osgNodeGroup.get());
 	
 		CreateSelectedGraphics(strName);
 	}

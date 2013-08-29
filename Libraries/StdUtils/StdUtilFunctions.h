@@ -329,6 +329,7 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds);
 bool STD_UTILS_PORT Std_IsFullPath(string strPath);
 void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile);
 bool STD_UTILS_PORT Std_DirectoryExists(string strPath);
+bool STD_UTILS_PORT Std_FileExists(string strFullPath);
 string STD_UTILS_PORT Std_ExecutablePath();
 
 void STD_UTILS_PORT Std_SetFileTime(string strFilename);

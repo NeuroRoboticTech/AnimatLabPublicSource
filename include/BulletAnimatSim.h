@@ -16,9 +16,28 @@
 #include "StdUtils.h"
 #include "AnimatSim.h"
 
-
 #include "OsgAnimatSim.h"
 #include "BulletAnimatSimConstants.h"
+
+#include <osgbDynamics/MotionState.h>
+#include <osgbDynamics/CreationRecord.h>
+#include <osgbDynamics/RigidBody.h>
+#include <osgbCollision/CollisionShapes.h>
+#include <osgbCollision/RefBulletObject.h>
+#include <osgbDynamics/GroundPlane.h>
+#include <osgbCollision/GLDebugDrawer.h>
+#include <osgbCollision/Utils.h>
+#include <osgbInteraction/DragHandler.h>
+#include <osgbInteraction/LaunchHandler.h>
+#include <osgbInteraction/SaveRestoreHandler.h>
+
+#include <osgwTools/InsertRemove.h>
+#include <osgwTools/FindNamedNode.h>
+#include <osgwTools/GeometryOperation.h>
+#include <osgwTools/GeometryModifier.h>
+#include <osgwTools/Shapes.h>
+
+#include <btBulletDynamicsCommon.h>
 
 //Simulation Objects
 namespace BulletAnimatSim

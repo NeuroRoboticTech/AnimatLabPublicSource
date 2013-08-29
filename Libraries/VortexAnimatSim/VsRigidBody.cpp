@@ -458,7 +458,7 @@ void VsRigidBody::Physics_CollectData()
 
 	if(m_vxSensor)
 	{
-		UpdateWorldMatrix();
+		//UpdateWorldMatrix();
 
 		//Update the world matrix for this part
 		Vx::VxReal44 vxMT;
@@ -471,6 +471,10 @@ void VsRigidBody::Physics_CollectData()
 
 		m_vxSensor->getOrientationEulerAngles(vData);
 		m_lpThisMI->ReportRotation(vData[0], vData[1], vData[2]);
+
+        //OsgWorldCoordinateNodeVisitor* ncv = new OsgWorldCoordinateNodeVisitor();
+        //m_osgMT->accept(*ncv);
+        //osg::Matrix mat = ncv->MatrixTransform();
 	}
 	else
 	{

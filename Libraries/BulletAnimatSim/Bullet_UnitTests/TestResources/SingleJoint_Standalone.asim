@@ -1,6 +1,6 @@
 <Simulation>
 <ProjectPath/>
-<AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>
+<AnimatModule>BulletAnimatSim_VC10.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>

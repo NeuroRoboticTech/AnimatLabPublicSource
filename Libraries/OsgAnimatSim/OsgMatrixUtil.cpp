@@ -311,7 +311,13 @@ osg::Matrix OsgMatrixUtil::SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRo
 //    return vRot;
 //}
 
-CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix (osg::Matrix osgMT)
+
+CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix(osg::Matrix osgMT)
+{
+    return EulerRotationFromMatrix_Static(osgMT);
+}
+
+CStdFPoint OsgMatrixUtil::EulerRotationFromMatrix_Static (osg::Matrix osgMT)
 {
     //We need to transpose the matrix that osg provides for us in 
     //order to do the following calculations.

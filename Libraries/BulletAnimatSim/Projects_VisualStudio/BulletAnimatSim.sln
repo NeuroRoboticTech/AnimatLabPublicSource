@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim", "BulletAnimatSim.vcxproj", "{712ABAE4-ABF4-6243-AD1E-88E53218190C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim", "BulletAnimatSim.vcxproj", "{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet_UnitTests", "Bullet_UnitTests.vcxproj", "{71965951-D2FB-8F4A-ADD7-E3EF36015294}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet_UnitTests", "Bullet_UnitTests.vcxproj", "{9DDC63C3-C50C-3E44-BC76-4E69EB82F5B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64} = {CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +14,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{712ABAE4-ABF4-6243-AD1E-88E53218190C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{712ABAE4-ABF4-6243-AD1E-88E53218190C}.Debug|Win32.Build.0 = Debug|Win32
-		{712ABAE4-ABF4-6243-AD1E-88E53218190C}.Release|Win32.ActiveCfg = Release|Win32
-		{712ABAE4-ABF4-6243-AD1E-88E53218190C}.Release|Win32.Build.0 = Release|Win32
-		{71965951-D2FB-8F4A-ADD7-E3EF36015294}.Debug|Win32.ActiveCfg = Debug|Win32
-		{71965951-D2FB-8F4A-ADD7-E3EF36015294}.Debug|Win32.Build.0 = Debug|Win32
-		{71965951-D2FB-8F4A-ADD7-E3EF36015294}.Release|Win32.ActiveCfg = Release|Win32
-		{71965951-D2FB-8F4A-ADD7-E3EF36015294}.Release|Win32.Build.0 = Release|Win32
+		{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}.Debug|Win32.Build.0 = Debug|Win32
+		{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}.Release|Win32.ActiveCfg = Release|Win32
+		{CFF8AF51-EB52-CC4D-99B2-B5B92848CC64}.Release|Win32.Build.0 = Release|Win32
+		{9DDC63C3-C50C-3E44-BC76-4E69EB82F5B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DDC63C3-C50C-3E44-BC76-4E69EB82F5B1}.Debug|Win32.Build.0 = Debug|Win32
+		{9DDC63C3-C50C-3E44-BC76-4E69EB82F5B1}.Release|Win32.ActiveCfg = Release|Win32
+		{9DDC63C3-C50C-3E44-BC76-4E69EB82F5B1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

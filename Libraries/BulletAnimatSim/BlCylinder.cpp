@@ -47,9 +47,11 @@ void BlCylinder::CreateGraphicsGeometry()
 
 void BlCylinder::CreatePhysicsGeometry()
 {
-     //FIX PHYSICS
-	//if(IsCollisionObject())
-	//	m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
+	if(IsCollisionObject())
+    {
+        m_fltMass = 0; //m_fltDensity * osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
+        m_btCollisionShape= osgbCollision::btCylinderCollisionShapeFromOSG( m_osgNode.get(), osgbCollision::Y );
+    }
 }
 
 void BlCylinder::CreateParts()

@@ -18,11 +18,10 @@ namespace BulletAnimatSim
 
 BlRigidBody::BlRigidBody()
 {
-    //FIX PHYSICS
-	//m_vxSensor = NULL;
-	//m_vxPart = NULL;
-	//m_vxGeometry = NULL;
-	//m_vxCollisionGeometry = NULL;
+    m_btCollisionShape = NULL;
+    m_btPart = NULL;
+    m_osgbMotion = NULL;
+
     m_lpVsSim = NULL;
 }
 
@@ -37,48 +36,19 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BlRigidBody\r\n", "", -1, false, true);}
 }
 
-//FIX PHYSICS
-//Vx::VxCollisionSensor* BlRigidBody::Sensor()
-//{
-//	return m_vxSensor;
-//}
-//
-//Vx::VxPart* BlRigidBody::Part()
-//{
-//	return m_vxPart;
-//}
-//
-//Vx::VxNode BlRigidBody::GraphicsNode()
-//{
-//	return m_vxGraphicNode;
-//}
-//
-//Vx::VxCollisionGeometry *BlRigidBody::CollisionGeometry()
-//{
-//	return m_vxCollisionGeometry;
-//}
-//
-//void BlRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
-//{
-//	m_vxCollisionGeometry = vxGeometry;
-//	Physics_FluidDataChanged();
-//}
-
 bool BlRigidBody::Physics_IsDefined()
 {
-    //FIX PHYSICS
-    //if(m_vxSensor && m_vxGeometry)
-    //    return true;
-    //else
+    if(m_btPart && m_btCollisionShape)
+        return true;
+    else
         return false;
 }
 
 bool BlRigidBody::Physics_IsGeometryDefined()
 {
-    //FIX PHYSICS
-    //if(m_vxGeometry)
-    //    return true;
-    //else
+    if(m_btCollisionShape)
+        return true;
+    else
         return false;
 }
 
@@ -97,15 +67,16 @@ bool BlRigidBody::Physics_IsGeometryDefined()
 
 CStdFPoint BlRigidBody::Physics_GetCurrentPosition()
 {
-    //FIX PHYSICS
-	//if(m_vxSensor && m_lpThisMI)
-	//{
-	//	Vx::VxReal3Ptr vPos = NULL;
-	//	m_vxSensor->getPosition(vPos);
-	//	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
-	//	return m_lpThisMI->AbsolutePosition();
-	//}
-	//else
+	if(m_osgbMotion && m_lpThisMI)
+	{
+        btTransform trans;
+        m_osgbMotion->getWorldTransform(trans);
+ 
+        btVector3 vPos = trans.getOrigin();
+        m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
+		return m_lpThisMI->AbsolutePosition();
+	}
+	else
 	{
 		CStdFPoint vPos;
 		return vPos;
@@ -141,9 +112,13 @@ void BlRigidBody::Physics_UpdateNode()
 
 void BlRigidBody::Physics_SetFreeze(bool bVal)
 {
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//	m_vxSensor->freeze(bVal);
+    if(m_lpThisRB && m_btPart)
+    {
+        if(m_lpThisRB->Freeze())
+            m_btPart->setActivationState(0);
+        else
+            m_btPart->setActivationState(ACTIVE_TAG);
+    }
 }
 
 void BlRigidBody::Physics_SetDensity(float fltVal)
@@ -277,66 +252,73 @@ void BlRigidBody::SetFollowEntity(OsgRigidBody *lpEntity)
 
 void BlRigidBody::CreateDynamicPart()
 {
-    //FIX PHYSICS
-	//if(m_lpThisRB && m_lpThisAB)
-	//{
-	//	// Create the physics object.
-	//	m_vxPart = new VxPart;
-	//	m_vxSensor = m_vxPart;
-	//	m_vxSensor->setUserData((void*) m_lpThisRB);
-	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+    BlSimulator *lpSim = GetBlSimulator();
 
-	//	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-	//	m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
-	//	CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+	if(lpSim && m_lpThisRB && m_lpThisAB)
+	{
+        m_osgbMotion = new osgbDynamics::MotionState();
+        m_osgbMotion->setTransform( m_osgMT.get() );
+        m_osgbMotion->setParentTransform( m_osgMT->getMatrix() );
 
- //       GetBaseValues();
+        btScalar mass( m_lpThisRB->GetMassValue() );
+        btVector3 inertia( 0, 0, 0 );
+        m_btCollisionShape->calculateLocalInertia(mass, inertia);
+        btRigidBody::btRigidBodyConstructionInfo rb( mass, m_osgbMotion, m_btCollisionShape, inertia );
+        
+        //Populate material properties here.
+        //rb.m_friction = 
 
-	//	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-	//	m_vxCollisionGeometry->setName(strName.c_str());
-	//	m_vxSensor->setFastMoving(true);
+        m_btPart = new btRigidBody( rb );
+        m_btPart->setUserPointer((void *) m_lpThisRB);
 
-	//	//if this body is frozen; freeze it
-	//	m_vxSensor->freeze(m_lpThisRB->Freeze());
+		//if this body is frozen; freeze it
+        if(m_lpThisRB->Freeze())
+            m_btPart->setActivationState(0);
+        else
+            m_btPart->setActivationState(ACTIVE_TAG);
 
-	//	//if the center of mass isn't the graphical center then set the offset relative to position and orientation
-	//	if(m_vxPart)
-	//	{
-	//		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-	//		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-	//			m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
 
-	//		if(m_lpThisRB->LinearVelocityDamping() > 0)
-	//			m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
+        //FIX PHYSICS
+		// Create the physics object.
+		//m_vxPart = new VxPart;
+		//m_vxSensor = m_vxPart;
+		//m_vxSensor->setUserData((void*) m_lpThisRB);
+		//int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
-	//		if(m_lpThisRB->AngularVelocityDamping() > 0)
-	//			m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
-	//	}
-	//}
+		//m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
+		//m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
+		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+           
+        GetBaseValues();
+
+		//string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		//m_vxCollisionGeometry->setName(strName.c_str());
+		//m_vxSensor->setFastMoving(true);
+
+		////if this body is frozen; freeze it
+		//m_vxSensor->freeze(m_lpThisRB->Freeze());
+
+		////if the center of mass isn't the graphical center then set the offset relative to position and orientation
+		//if(m_vxPart)
+		//{
+		//	CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+		//	if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+		//		m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
+
+		//	if(m_lpThisRB->LinearVelocityDamping() > 0)
+		//		m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
+
+		//	if(m_lpThisRB->AngularVelocityDamping() > 0)
+		//		m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
+		//}
+	}
 }
 
 void BlRigidBody::CreateStaticPart()
 {
-    //FIX PHYSICS
-	//if(m_lpThisRB && m_lpThisAB)
-	//{
-	//	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
-
-	//	Vx::VxReal44 vOffset;
-	//	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-	//	if(lpVsParent)
-	//	{
-	//		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-	//		if(vxSensor)
-	//		{
-	//			CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-	//			string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-	//			m_vxCollisionGeometry->setName(strName.c_str());
-	//		}
-	//	}
-	//}
+    //Parts are created the same way, but the mass should be 0 in this case.
+    CreateDynamicPart();
 }
 
 void BlRigidBody::RemoveStaticPart()
@@ -479,69 +461,71 @@ void BlRigidBody::Physics_CollectData()
 {
 	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-    //FIX PHYSICS
-	//Vx::VxReal3 vData;
+    btVector3 vData;
 
-	//if(m_vxSensor)
-	//{
-	//	UpdateWorldMatrix();
+	if(m_osgbMotion)
+	{
+		//Update the world matrix for this part
+        btTransform trans;
+        m_osgbMotion->getWorldTransform(trans);
+        m_osgWorldMatrix = osgbCollision::asOsgMatrix(trans);
 
-	//	//Update the world matrix for this part
-	//	Vx::VxReal44 vxMT;
-	//	m_vxSensor->getTransform(vxMT);
-	//	VxOSG::copyVxReal44_to_OsgMatrix(m_osgWorldMatrix, vxMT);
+		//Then update the absolute position and rotation.
+        btVector3 vPos = trans.getOrigin();
+		m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 
-	//	//Then update the absolute position and rotation.
-	//	m_vxSensor->getPosition(vData);
-	//	m_lpThisMI->AbsolutePosition(vData[0], vData[1], vData[2]);
+        CStdFPoint vRot = OsgMatrixUtil::EulerRotationFromMatrix_Static(m_osgWorldMatrix);
+		m_lpThisMI->ReportRotation(vRot[0], vRot[1], vRot[2]);
 
-	//	m_vxSensor->getOrientationEulerAngles(vData);
-	//	m_lpThisMI->ReportRotation(vData[0], vData[1], vData[2]);
-	//}
-	//else
-	//{
-	//	//If we are here then we did not have a physics component, just and OSG one.
-	//	Physics_UpdateAbsolutePosition();
+        OsgWorldCoordinateNodeVisitor* ncv = new OsgWorldCoordinateNodeVisitor();
+        m_osgMT->accept(*ncv);
+        osg::Matrix mat = ncv->MatrixTransform();
+    }
+	else
+	{
+		//If we are here then we did not have a physics component, just and OSG one.
+		Physics_UpdateAbsolutePosition();
 
-	//	//TODO: Get Rotation
-	//	//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
-	//}
+		//TODO: Get Rotation
+		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
+	}
 
-	//if(m_bCollectExtraData && m_vxPart)
-	//{
-	//	m_vxPart->getLinearVelocity(vData);
-	//	m_vLinearVelocity[0] = vData[0] * fDisUnits;
-	//	m_vLinearVelocity[1] = vData[1] * fDisUnits;
-	//	m_vLinearVelocity[2] = vData[2] * fDisUnits;
+	if(m_bCollectExtraData && m_btPart)
+	{
+		vData = m_btPart->getLinearVelocity();
+		m_vLinearVelocity[0] = vData[0] * fDisUnits;
+		m_vLinearVelocity[1] = vData[1] * fDisUnits;
+		m_vLinearVelocity[2] = vData[2] * fDisUnits;
 
-	//	m_vxPart->getAngularVelocity(vData);
-	//	m_vAngularVelocity[0] = vData[0];
-	//	m_vAngularVelocity[1] = vData[1];
-	//	m_vAngularVelocity[2] = vData[2];
+		vData = m_btPart->getAngularVelocity();
+		m_vAngularVelocity[0] = vData[0];
+		m_vAngularVelocity[1] = vData[1];
+		m_vAngularVelocity[2] = vData[2];
 
-	//	Vx::VxReal3 vData2;
-	//	m_vxPart->getLastForceAndTorque(vData, vData2);
- //       float fltRatio = fMassUnits * fDisUnits;
-	//	m_vForce[0] = vData[0] * fltRatio;
-	//	m_vForce[1] = vData[1] * fltRatio;
-	//	m_vForce[2] = vData[2] * fltRatio;
+		vData = m_btPart->getTotalForce();
+        float fltRatio = fMassUnits * fDisUnits;
+		m_vForce[0] = vData[0] * fltRatio;
+		m_vForce[1] = vData[1] * fltRatio;
+		m_vForce[2] = vData[2] * fltRatio;
 
- //       fltRatio = fMassUnits * fDisUnits * fDisUnits;
-	//	m_vTorque[0] = vData2[0] * fltRatio;
-	//	m_vTorque[1] = vData2[1] * fltRatio;
-	//	m_vTorque[2] = vData2[2] * fltRatio;
+		vData = m_btPart->getTotalTorque();
+        fltRatio = fMassUnits * fDisUnits * fDisUnits;
+		m_vTorque[0] = vData[0] * fltRatio;
+		m_vTorque[1] = vData[1] * fltRatio;
+		m_vTorque[2] = vData[2] * fltRatio;
 
-	//	Vx::VxReal3 vAccel;
-	//	m_vxPart->getLinearAcceleration(vAccel);
-	//	m_vLinearAcceleration[0] = vAccel[0] * fDisUnits;
-	//	m_vLinearAcceleration[1] = vAccel[1] * fDisUnits;
-	//	m_vLinearAcceleration[2] = vAccel[2] * fDisUnits;
+        //FIX PHYSICS
+		//Vx::VxReal3 vAccel;
+		//m_vxPart->getLinearAcceleration(vAccel);
+		//m_vLinearAcceleration[0] = vAccel[0] * fDisUnits;
+		//m_vLinearAcceleration[1] = vAccel[1] * fDisUnits;
+		//m_vLinearAcceleration[2] = vAccel[2] * fDisUnits;
 
-	//	m_vxPart->getAngularAcceleration(vAccel);
-	//	m_vAngularAcceleration[0] = vAccel[0];
-	//	m_vAngularAcceleration[1] = vAccel[1];
-	//	m_vAngularAcceleration[2] = vAccel[2];
-	//}
+		//m_vxPart->getAngularAcceleration(vAccel);
+		//m_vAngularAcceleration[0] = vAccel[0];
+		//m_vAngularAcceleration[1] = vAccel[1];
+		//m_vAngularAcceleration[2] = vAccel[2];
+	}
 
 	if(m_lpThisRB->GetContactSensor()) 
 		ProcessContacts();

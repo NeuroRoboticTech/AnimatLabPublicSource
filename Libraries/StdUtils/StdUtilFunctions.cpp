@@ -1800,7 +1800,7 @@ string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, string strP
 
 		if(bFound)
 		{
-			strFound = strParam;
+			strFound = Std_Trim(argv[iParam]);
 			bRetrieved = true;
 		}
 
@@ -3241,6 +3241,35 @@ bool STD_UTILS_PORT Std_DirectoryExists(string strPath)
 	boost::filesystem::path p = boost::filesystem::path(strPath);
 	return boost::filesystem::is_directory(p);
 }
+
+/**
+\brief	Finds if a given file exists.
+
+\author	dcofer
+\date	8/29/2013
+
+\param	strFullPath	   	Full pathname of the string full file. 
+
+**/
+bool STD_UTILS_PORT Std_FileExists(string strFullPath)
+{
+    try 
+    {
+	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
+        return true;
+    } 
+    catch(const boost::filesystem::filesystem_error& e)
+    {
+       if(e.code() == boost::system::errc::permission_denied)
+           std::cout << "Search permission is denied for one of the directories "
+                     << "in the path prefix of " << "\n";
+       else
+           std::cout << "is_directory("  << ") failed with "
+                     << e.code().message() << '\n';
+       return false;
+    }
+}
+
 
 /**
 \brief	Finds the name and path of the current executable.

@@ -1901,6 +1901,19 @@ float RigidBody::GetMass()
 }
 
 /**
+\brief	Simply returns the m_fltMasss value. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The mass. 
+**/
+float RigidBody::GetMassValue()
+{
+	return m_fltMass;
+}
+
+/**
 \brief	Gets the volume of this part. 
 
 \author	dcofer

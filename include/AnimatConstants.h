@@ -463,6 +463,9 @@
 #define Al_Err_lInvalidFrictionType -4076
 #define Al_Err_strInvalidFrictionType "An invalid constraint friction type was specified."
 
+#define Al_Err_lSimFileNotFound -4077
+#define Al_Err_strSimFileNotFound "The specified simulation file was not found."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

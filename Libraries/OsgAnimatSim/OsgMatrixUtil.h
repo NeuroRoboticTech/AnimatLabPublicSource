@@ -38,6 +38,8 @@ namespace OsgAnimatSim
       virtual osg::Matrix SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
       virtual CStdFPoint EulerRotationFromMatrix(osg::Matrix osgMT);
 
+      static CStdFPoint EulerRotationFromMatrix_Static(osg::Matrix osgMT);
+
       ///Prints a matrix
       static void Print( const osg::Matrix& matrix );
       ///Prints a vector

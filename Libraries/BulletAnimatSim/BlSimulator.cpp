@@ -21,9 +21,12 @@ namespace BulletAnimatSim
 
 BlSimulator::BlSimulator()
 {
-    //FIX PHYSICS
-	//m_uUniverse = NULL;
-	//m_vxFrame = NULL;
+    m_lpCollisionConfiguration = NULL;
+    m_lpDispatcher = NULL;
+    m_lpSolver = NULL;
+    m_lpBroadPhase = NULL;
+    m_lpDynamicsWorld = NULL;
+
 	m_grpScene = NULL;	
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new OsgSimulationWindowMgr;
@@ -60,23 +63,11 @@ try
 
 	m_bShuttingDown = true;
 
-	//Set this to NULL so all of the DeletePhysics calls will not try and remove
-	//entities from the universe when shutting down.
-    //FIX PHYSICS
-	//m_uUniverse = NULL;
-
 	Reset();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
-
-//FIX PHYSICS
-//VxUniverse *BlSimulator::Universe()
-//{return m_uUniverse;}
-//
-//Vx::VxFrame* BlSimulator::Frame()
-//{return m_vxFrame;}
 
 #pragma region MutatorOverrides
 
@@ -138,9 +129,8 @@ void BlSimulator::Gravity(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::Gravity(fltVal, bUseScaling);
 
-    //FIX PHYSICS
-	//if(m_uUniverse)
-	//	m_uUniverse->setGravity(0, m_fltGravity, 0);
+	if(m_lpDynamicsWorld)
+        m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
 }
 
 int BlSimulator::GetMaterialID(string strID)
@@ -171,9 +161,35 @@ void BlSimulator::Reset()
 {
 	OsgSimulator::Reset();
 
-    //FIX PHYSICS
-	//if(m_vxFrame)
-	//	m_vxFrame->release(); 
+    if(m_lpDynamicsWorld)
+    {
+        delete m_lpDynamicsWorld;
+        m_lpDynamicsWorld = NULL;
+    }
+	
+    if(m_lpSolver)
+    {
+    	delete m_lpSolver;
+        m_lpSolver = NULL;
+    }
+	
+    if(m_lpBroadPhase)
+    {
+    	delete m_lpBroadPhase;
+        m_lpBroadPhase = NULL;
+    }
+	
+    if(m_lpDispatcher)
+    {
+    	delete m_lpDispatcher;
+        m_lpDispatcher = NULL;
+    }
+
+    if(m_lpCollisionConfiguration)
+    {
+    	delete m_lpCollisionConfiguration;
+        m_lpCollisionConfiguration = NULL;
+    }
 
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
@@ -222,7 +238,8 @@ void BlSimulator::InitializeVortexViewer(int argc, const char **argv)
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
-	m_grpScene = new osg::Group;	
+	m_grpScene = new osg::MatrixTransform;
+    m_grpScene->setMatrix(osg::Matrix::identity());
     m_grpScene->setName("World");
 
 	//Add the mouse spring lines to the scene
@@ -305,21 +322,23 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
 	int iObjectCount = 100 + m_iPhysicsBodyCount;
 	int iCollisionCount = iObjectCount*40;
 
+    m_lpCollisionConfiguration = new btDefaultCollisionConfiguration();
+    m_lpDispatcher = new btCollisionDispatcher( m_lpCollisionConfiguration );
+    m_lpSolver = new btSequentialImpulseConstraintSolver;
+
+    btVector3 worldAabbMin( -10000, -10000, -10000 );
+    btVector3 worldAabbMax( 10000, 10000, 10000 );
+    m_lpBroadPhase = new btAxisSweep3( worldAabbMin, worldAabbMax, 1000 );
+
+    m_lpDynamicsWorld = new btDiscreteDynamicsWorld( m_lpDispatcher, m_lpBroadPhase, m_lpSolver, m_lpCollisionConfiguration );
+    m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
+
 	//create the frame
     //FIX PHYSICS
-	//m_vxFrame = VxFrame::instance();
-	//m_uUniverse = new Vx::VxUniverse(iObjectCount, iCollisionCount);
-	//m_uUniverse->setGravity(0, m_fltGravity, 0);
-	////m_uUniverse->setGravity(0, 0, m_fltGravity);
-	//m_vxFrame->addUniverse(m_uUniverse);
-
 	////set the frame timestep
 	//m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
-
 	//VxFrameRegisterAllInteractions(m_vxFrame);
-
 	//SetSimulationStabilityParams();
-
  //   // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
  //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
  //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
@@ -484,9 +503,10 @@ void BlSimulator::StepSimulation()
 			OsgSimulator::StepSimulation();
 
 			unsigned long long lStart = GetTimerTick();
-            //FIX PHYSICS
-			//m_vxFrame->step();
-			double dblVal = TimerDiff_s(lStart, GetTimerTick());
+
+            m_lpDynamicsWorld->stepSimulation(m_fltPhysicsTimeStep, 1, m_fltPhysicsTimeStep);
+
+            double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;
 
 			if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
@@ -533,9 +553,7 @@ void BlSimulator::StepSimulation()
 
 void BlSimulator::SimulateEnd()
 {
-    //FIX PHYSICS
-	//m_vxFrame->release();
-	//m_vxFrame = NULL;
+    Reset();
 }
 
 

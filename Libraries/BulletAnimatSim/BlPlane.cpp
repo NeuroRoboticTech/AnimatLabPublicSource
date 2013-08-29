@@ -54,9 +54,8 @@ void BlPlane::CreateGraphicsGeometry()
 
 void BlPlane::CreatePhysicsGeometry()
 {
-    //FIX PHYSICS
-  //  if(IsCollisionObject())
-		//m_vxGeometry = new VxPlane();
+    if(IsCollisionObject())
+        m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), 0);
 }
 
 void BlPlane::CreateParts()
@@ -71,11 +70,33 @@ void BlPlane::CreateParts()
 	BlRigidBody::SetBody();
 }
 
+void BlPlane::CreateDynamicPart()
+{
+    BlSimulator *lpSim = GetBlSimulator();
+
+	if(lpSim && m_lpThisRB && m_lpThisAB)
+	{
+        //m_osgDebugNode = osgbDynamics::generateGroundPlane( osg::Vec4( 0, 1, 0, 0 ), lpSim->DynamicsWorld());
+        //m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
+		//m_osgNodeGroup->addChild(m_osgDebugNode.get());	
+
+       // GetBlSimulator()->OSGRoot()->addChild(m_osgDebugNode.get());
+       // m_osgNodeGroup->removeChild(m_osgNode.get());
+
+        //m_btCollisionShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
+        btRigidBody::btRigidBodyConstructionInfo rbInfo( 0., NULL, m_btCollisionShape, btVector3(0,0,0) );
+        m_btPart = new btRigidBody(rbInfo);
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
+
+        m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
+        //m_btCollisionShape = m_btPart->getCollisionShape();
+	}
+}
+
 void BlPlane::ResizePhysicsGeometry()
 {
-    //FIX PHYSICS
-  //  if(m_vxGeometry)
-		//m_vxGeometry = new VxPlane();
+    if(IsCollisionObject())
+        m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), 0);
 }
 
 //Planes can never have fluid interactions/dynamics.

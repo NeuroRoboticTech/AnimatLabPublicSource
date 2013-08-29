@@ -22,36 +22,5 @@ void OsgWorldCoordinateNodeVisitor::apply(osg::Node &node)
 	}
 }
 
-    //  {
-    //     if (!done)
-    //     {
-    //        if ( 0 == node.getNumParents() ) // no parents
-    //        {
-				//
-				//osg::NodePath np = this->getNodePath();
-
-				////while(np.size() > 1)
-				////	np.erase(np.begin());
-
-				////int iVal = np.size();
-				////np.erase(np.begin());
-				////np.erase(np.begin());
-				////np.erase(np.begin());
-				////np.erase(np.begin());
-    //           wcMatrix.set( osg::computeLocalToWorld(np) );
-    //           done = true;
-    //        }
-    //        traverse(node);
-    //     }
-    //  }
-
-//
-//osg::Vec3 OsgWorldCoordinateNodeVisitor::getWorldCoordinates()
-//{
-//	osg::Vec3 v3Coords = m_osgWCMatrix->getTrans();
-//
-//	return v3Coords;
-//}
-
 	}// end Visualization
 }//end OsgAnimatSim

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ShowAllFiles>true</ShowAllFiles>
     <LocalDebuggerCommand Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\PerformanceTests\DonAnimalTest\DonAnimalTest_StandaloneD.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\VortexAnimatSim\Vortex_UnitTests\TestResources\FallingBoxOnPlane\FallingBoxOnPlane_StandaloneD.asim"</LocalDebuggerCommandArguments>
     <DebuggerFlavor Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

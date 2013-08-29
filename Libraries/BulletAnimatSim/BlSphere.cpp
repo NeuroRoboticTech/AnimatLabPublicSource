@@ -43,9 +43,11 @@ void BlSphere::CreateGraphicsGeometry()
 
 void BlSphere::CreatePhysicsGeometry()
 {
-    //FIX PHYSICS
-	//if(IsCollisionObject())
-	//	m_vxGeometry = new VxSphere(m_fltRadius);
+	if(IsCollisionObject())
+    {
+        m_fltMass = 0; //m_fltDensity * 4/3 * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
+        m_btCollisionShape= osgbCollision::btSphereCollisionShapeFromOSG( m_osgNode.get() );
+    }
 }
 
 void BlSphere::CreateParts()
