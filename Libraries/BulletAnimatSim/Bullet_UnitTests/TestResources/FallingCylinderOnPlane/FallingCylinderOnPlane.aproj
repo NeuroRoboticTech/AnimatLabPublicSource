@@ -1,10 +1,10 @@
 <Project>
-<ProjectName>FallingBoxOnPlane</ProjectName>
-<SimulationFile>FallingBoxOnPlane.asim</SimulationFile>
+<ProjectName>FallingCylinderOnPlane</ProjectName>
+<SimulationFile>FallingCyinderOnPlane.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingBoxOnPlane\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingCylinderOnPlane\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -98,7 +98,7 @@
 <Type>Basic</Type>
 <RigidBody>
 <Name>Root</Name>
-<ID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</ID>
+<ID>82449703-a701-40f1-b8bc-b846d5593360</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -119,13 +119,13 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
-<X Value="20" Scale="None" Actual="20"/>
-<Y Value="25" Scale="None" Actual="25"/>
-<Z Value="15" Scale="None" Actual="15"/>
+<X Value="45" Scale="None" Actual="45"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Type>Box</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<Type>Cylinder</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Cylinder</PartType>
 <IsContactSensor>False</IsContactSensor>
 <IsCollisionObject>True</IsCollisionObject>
 <BuoyancyCenter>
@@ -150,12 +150,9 @@
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
 <Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
-<Length Value="5" Scale="None" Actual="5"/>
-<Width Value="1" Scale="None" Actual="1"/>
+<Radius Value="1" Scale="None" Actual="1"/>
 <Height Value="1" Scale="None" Actual="1"/>
-<LengthSections>1</LengthSections>
-<WidthSections>1</WidthSections>
-<HeightSections>1</HeightSections>
+<Sides>30</Sides>
 </RigidBody>
 <CollisionExclusionPairs/>
 <NervousSystem>
@@ -390,8 +387,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>9a4866e6-9a70-4b7f-8f59-01724751a7d2</Name>
-<ID>9a4866e6-9a70-4b7f-8f59-01724751a7d2</ID>
+<Name>b1d45989-cf76-4dd8-8b29-33c006470ae1</Name>
+<ID>b1d45989-cf76-4dd8-8b29-33c006470ae1</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -485,7 +482,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/30/2013 10:34:06"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/30/2013 10:03:08"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

@@ -1,10 +1,10 @@
 <Project>
-<ProjectName>FallingBoxOnPlane</ProjectName>
-<SimulationFile>FallingBoxOnPlane.asim</SimulationFile>
+<ProjectName>FallingConeOnPlane</ProjectName>
+<SimulationFile>FallingConeOnPlane.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingBoxOnPlane\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingConeOnPlane\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -98,7 +98,7 @@
 <Type>Basic</Type>
 <RigidBody>
 <Name>Root</Name>
-<ID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</ID>
+<ID>75591064-0095-41c1-b2ca-43430039d1e6</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -120,12 +120,12 @@
 </LocalPosition>
 <Rotation>
 <X Value="20" Scale="None" Actual="20"/>
-<Y Value="25" Scale="None" Actual="25"/>
-<Z Value="15" Scale="None" Actual="15"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="20" Scale="None" Actual="20"/>
 </Rotation>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Type>Box</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<Type>Cone</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Cone</PartType>
 <IsContactSensor>False</IsContactSensor>
 <IsCollisionObject>True</IsCollisionObject>
 <BuoyancyCenter>
@@ -150,12 +150,10 @@
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
 <Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
-<Length Value="5" Scale="None" Actual="5"/>
-<Width Value="1" Scale="None" Actual="1"/>
-<Height Value="1" Scale="None" Actual="1"/>
-<LengthSections>1</LengthSections>
-<WidthSections>1</WidthSections>
-<HeightSections>1</HeightSections>
+<LowerRadius Value="0.5" Scale="None" Actual="0.5"/>
+<UpperRadius Value="1" Scale="None" Actual="1"/>
+<Height Value="2" Scale="None" Actual="2"/>
+<Sides>30</Sides>
 </RigidBody>
 <CollisionExclusionPairs/>
 <NervousSystem>
@@ -390,8 +388,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>9a4866e6-9a70-4b7f-8f59-01724751a7d2</Name>
-<ID>9a4866e6-9a70-4b7f-8f59-01724751a7d2</ID>
+<Name>cf004ac4-a13b-4931-b851-5af099b3a1b9</Name>
+<ID>cf004ac4-a13b-4931-b851-5af099b3a1b9</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -485,7 +483,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/30/2013 10:34:06"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/30/2013 16:55:09"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -586,7 +584,7 @@
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="202, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
@@ -600,7 +598,7 @@
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
       &lt;Content Name="Workspace" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Position Size="202, 150" Location="150, 150" /&gt;
       &lt;Best Count="2"&gt;
         &lt;Item Name="Workspace" /&gt;
         &lt;Item Name="Properties" /&gt;
@@ -634,7 +632,7 @@
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="202, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
@@ -648,7 +646,7 @@
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
-      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Position Size="202, 150" Location="150, 150" /&gt;
       &lt;Best Count="1"&gt;
         &lt;Item Name="Properties" /&gt;
       &lt;/Best&gt;

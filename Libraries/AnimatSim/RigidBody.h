@@ -169,6 +169,10 @@ namespace AnimatSim
 			/// true to enable fluid interactions.
 			bool m_bEnableFluids;
 
+            /// Determines whether a debug graphics of the rigid body is shown or not.
+            /// This will show the exact placement of the rigid body in the physics engine.
+            bool m_bDisplayDebugCollisionGraphic;
+
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
 
@@ -272,6 +276,9 @@ namespace AnimatSim
 			virtual void EnableFluids(bool bVal);
 
 			virtual bool HasCollisionGeometry();
+
+            virtual bool DisplayDebugCollisionGraphic() {return m_bDisplayDebugCollisionGraphic;}
+            virtual void DisplayDebugCollisionGraphic(bool bVal) {m_bDisplayDebugCollisionGraphic = bVal;}
 
 #pragma endregion
 

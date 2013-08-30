@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "BlOsgGeometry.h"
 #include "BlJoint.h"
 #include "BlRigidBody.h"
 #include "BlCone.h"
@@ -44,13 +45,9 @@ void BlCone::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 	{
-		//For the moment build a test node to generate the mesh from.
-		osg::ref_ptr<osg::Geometry> osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
-		osg::ref_ptr<osg::Geode> osgNode = new osg::Geode;
-		osgNode->addDrawable(m_osgGeometry.get());
-
-         //FIX PHYSICS
-		//m_vxGeometry = VxConvexMesh::createFromNode(osgNode.get());
+        m_fltMass = 1; //NEED TO FIX
+        m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true);
+        m_bDisplayDebugCollisionGraphic = true;
 	}
 }
 

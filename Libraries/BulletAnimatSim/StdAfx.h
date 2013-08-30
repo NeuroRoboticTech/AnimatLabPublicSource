@@ -43,6 +43,7 @@
 #include <osgwTools/Shapes.h>
 
 #include <btBulletDynamicsCommon.h>
+#include "BulletCollision/CollisionShapes/btShapeHull.h"
 
 //Simulation Objects
 namespace BulletAnimatSim

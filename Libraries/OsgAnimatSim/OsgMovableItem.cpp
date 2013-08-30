@@ -236,15 +236,16 @@ void OsgMovableItem::CreateGeometry()
 	osgGroup->addDrawable(m_osgGeometry.get());
 	osgGroup->setName(m_lpThisAB->Name() + "_Node");
 
-	//If ther is a geometry rotation then apply it first, otherwise
-	//just use the node straight out.
-	if(m_osgGeometryRotationMT.valid())
-	{
-		m_osgGeometryRotationMT->addChild(osgGroup);
-		m_osgNode = m_osgGeometryRotationMT.get();
-	}
-	else
-		m_osgNode = osgGroup;
+	//If they have not defined a geometry rotation matrix then lets add one that
+    //has no rotation so we can have a consistent node graph.
+	if(!m_osgGeometryRotationMT.valid())
+    {
+    	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0);
+        GeometryRotationMatrix(SetupMatrix(vPos, vRot));
+    }
+
+	m_osgGeometryRotationMT->addChild(osgGroup);
+	m_osgNode = m_osgGeometryRotationMT.get();
 
 	CreatePhysicsGeometry();
 }

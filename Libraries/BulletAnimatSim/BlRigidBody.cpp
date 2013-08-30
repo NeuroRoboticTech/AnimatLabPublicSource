@@ -262,6 +262,9 @@ void BlRigidBody::CreateDynamicPart()
 	    if( isDynamic )
 		    m_btCollisionShape->calculateLocalInertia( mass, localInertia );
 
+        //Keep a copy of the matrix transform for osgMT so I can reset it back later
+        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+
         // Create MotionState to control OSG subgraph visual reprentation transform
         // from a Bullet world transform. To do this, the MotionState need the address
         // of the Transform node (must be either AbsoluteModelTransform or
@@ -271,13 +274,16 @@ void BlRigidBody::CreateDynamicPart()
         m_osgbMotion = new osgbDynamics::MotionState();
         m_osgbMotion->setTransform( m_osgMT.get() );
 
-        //I am not sure why, but I have to have this here. If I do not then the positioning of the
-        //of the physics/osg parts are incorrect.
-        osg::Vec3 com = m_osgMT->getBound().center();
+        osg::Vec3 com;
+		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
+        else
+            com = osg::Vec3(0, 0, 0);
         m_osgbMotion->setCenterOfMass( com );
 
         m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
-        m_osgbMotion->setParentTransform( osg::Matrix::identity() ); // m_osgMT->getMatrix() );
+        m_osgbMotion->setParentTransform( osg::Matrix::identity() );
 
         // Finally, create rigid body.
         btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
@@ -294,17 +300,9 @@ void BlRigidBody::CreateDynamicPart()
         // for center of mass and scaling. Get the world transform from the MotionState,
         // then set it on the rigid body, which in turn sets the world transform on the
         // MotionState, which in turn transforms the OSG subgraph visual representation.
-        btTransform wt;
-        m_osgbMotion->getWorldTransform( wt );
+        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
+        m_osgbMotion->setWorldTransform( wt );
         m_btPart->setWorldTransform( wt );
-
-        //This must be done AFTER the setWorldTransform
-		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
-        else
-            com = osg::Vec3(0, 0, 0);
-        m_osgbMotion->setCenterOfMass( com );
 
 		//if this body is frozen; freeze it
         if(m_lpThisRB->Freeze())
@@ -325,6 +323,13 @@ void BlRigidBody::CreateDynamicPart()
 		//m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
 		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
            
+        if(m_lpThisRB->DisplayDebugCollisionGraphic())
+        {
+            m_osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( m_btCollisionShape );
+            m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
+	        m_osgNodeGroup->addChild(m_osgDebugNode.get());	
+        }
+
         GetBaseValues();
 	}
 }

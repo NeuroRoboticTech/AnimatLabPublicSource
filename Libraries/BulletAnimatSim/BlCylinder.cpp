@@ -49,8 +49,8 @@ void BlCylinder::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
     {
-        m_fltMass = 0; //m_fltDensity * osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
-        m_btCollisionShape= osgbCollision::btCylinderCollisionShapeFromOSG( m_osgNode.get(), osgbCollision::Y );
+        m_fltMass = m_fltDensity * osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
+        m_btCollisionShape = new btCylinderShapeZ( btVector3( m_fltRadius, m_fltRadius, (m_fltHeight/2.0f) ) );
     }
 }
 

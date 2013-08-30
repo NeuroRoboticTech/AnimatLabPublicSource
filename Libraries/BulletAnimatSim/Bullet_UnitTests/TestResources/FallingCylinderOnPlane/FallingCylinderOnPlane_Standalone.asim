@@ -78,7 +78,7 @@
 <Type>Basic</Type>
 <RigidBody>
 <Name>Root</Name>
-<ID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</ID>
+<ID>82449703-a701-40f1-b8bc-b846d5593360</ID>
 <Description/>
 <GraphicsAlpha>0.5</GraphicsAlpha>
 <CollisionsAlpha>1</CollisionsAlpha>
@@ -92,10 +92,10 @@
 <Shininess>64</Shininess>
 <Texture/>
 <Position x="0" y="0" z="0"/>
-<Rotation x="0.34907" y="0.2618" z="0.43633"/>
+<Rotation x="0.7854" y="0" z="0"/>
 <DraggerSize>-1</DraggerSize>
-<Type>Box</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<Type>Cylinder</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Cylinder</PartType>
 <IsContactSensor>False</IsContactSensor>
 <IsCollisionObject>True</IsCollisionObject>
 <BuoyancyCenter x="0" y="0" z="0"/>
@@ -112,12 +112,9 @@
 <MaxFoodQuantity>10000</MaxFoodQuantity>
 <FoodReplenishRate>1</FoodReplenishRate>
 <FoodEnergyContent>1000</FoodEnergyContent>
-<Length>1</Length>
-<Width>1</Width>
+<Radius>1</Radius>
 <Height>1</Height>
-<LengthSections>1</LengthSections>
-<WidthSections>1</WidthSections>
-<HeightSections>1</HeightSections>
+<Sides>30</Sides>
 </RigidBody>
 <CollisionExclusionPairs/>
 <NervousSystem>
@@ -258,16 +255,7 @@
 <StartTime>0</StartTime>
 <EndTime>2</EndTime>
 <CollectInterval>0.0005</CollectInterval>
-<DataColumns>
-<DataColumn>
-<ModuleName/>
-<Type>DataColumn</Type>
-<ID>bd30fd2b-9c21-4f8a-9254-2ad6e017a678</ID>
-<ColumnName>BoxYPos</ColumnName>
-<DataType>WorldPositionY</DataType>
-<TargetID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</TargetID>
-</DataColumn>
-</DataColumns>
+<DataColumns/>
 </DataChart>
 </DataCharts>
 <WindowMgr>
@@ -277,8 +265,8 @@
 <HudItem>
 <ModuleName/>
 <Type>HudText</Type>
-<Name>0283afb9-9d01-49f1-9201-eb4b2a64f804</Name>
-<ID>0283afb9-9d01-49f1-9201-eb4b2a64f804</ID>
+<Name>b1d45989-cf76-4dd8-8b29-33c006470ae1</Name>
+<ID>b1d45989-cf76-4dd8-8b29-33c006470ae1</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>

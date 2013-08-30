@@ -77,6 +77,8 @@ RigidBody::RigidBody()
 	m_fltReportVolume = 0;
 
 	m_strMaterialID = "DEFAULTMATERIAL";
+
+    m_bDisplayDebugCollisionGraphic = false;
 }
 
 /**

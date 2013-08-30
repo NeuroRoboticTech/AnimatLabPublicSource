@@ -87,6 +87,22 @@ namespace BulletAnimatSim
 //    return osgGeom;
 //}
 
+    btConvexHullShape BULLET_PORT *OsgMeshToConvexHull(osg::Node *lpNode, bool bOptimize)
+    {
+        btConvexHullShape *originalConvexShape =  osgbCollision::btConvexHullCollisionShapeFromOSG(lpNode);
+
+	    //create a hull approximation
+	    btShapeHull* hull = new btShapeHull(originalConvexShape);
+	    btScalar margin = originalConvexShape->getMargin();
+	    hull->buildHull(margin);
+	    btConvexHullShape* simplifiedConvexShape = new btConvexHullShape((const btScalar *) hull->getVertexPointer(),hull->numVertices());
+
+        if(originalConvexShape)
+            delete originalConvexShape;
+
+        return simplifiedConvexShape;
+    }
+
 
 #pragma endregion
 

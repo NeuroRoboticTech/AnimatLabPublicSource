@@ -18,26 +18,7 @@
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
 <Name>Y Axis 1</Name>
 <WorkingAxis>0</WorkingAxis>
-<DataColumns>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>BoxYPos</Name>
-<ID>bd30fd2b-9c21-4f8a-9254-2ad6e017a678</ID>
-<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>AnimatGUI.DataObjects.Physical.Bodies.Box</DataItemClassName>
-<StructureID>be99a1ad-c9f0-4a68-aa58-8112f41a1d5b</StructureID>
-<DataItemID>e5dc9886-3ff8-4dcf-890b-efbb9bec7401</DataItemID>
-<SelectedDataType>WorldPositionY</SelectedDataType>
-<DataSubSet>0</DataSubSet>
-<PrevDataSubset>0</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-65536</LineColor>
-</DataColumn>
-</DataColumns>
+<DataColumns/>
 </Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
