@@ -30,7 +30,14 @@ BlRigidBody::~BlRigidBody()
 
 try
 {
-	//int i= 5;
+    if(m_btCollisionShape)
+        {delete m_btCollisionShape; m_btCollisionShape = NULL;}
+
+    if(m_osgbMotion)
+        {delete m_osgbMotion; m_osgbMotion = NULL;}
+
+    if(m_btPart)
+        {delete m_btPart; m_btPart = NULL;}
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BlRigidBody\r\n", "", -1, false, true);}

@@ -20,6 +20,9 @@ namespace BulletAnimatSim
         btConstraintSolver *m_lpSolver;
         btBroadphaseInterface *m_lpBroadPhase;
         btDiscreteDynamicsWorld *m_lpDynamicsWorld;
+        osgbCollision::GLDebugDrawer m_dbgDraw;
+
+        bool m_bDrawDebug;
 
         //FIX PHYSICS
 		//BlIntersectionEvent m_vsIntersect;

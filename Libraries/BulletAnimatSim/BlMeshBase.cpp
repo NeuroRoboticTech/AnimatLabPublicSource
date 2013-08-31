@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "BlOsgGeometry.h"
 #include "BlJoint.h"
 #include "BlMotorizedJoint.h"
 #include "BlRigidBody.h"
@@ -126,14 +127,13 @@ void BlMeshBase::CreatePhysicsGeometry()
 {
 	if(m_lpThisRB->IsCollisionObject())
 	{
-        //FIX PHYSICS
-		//if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
-		//	m_vxGeometry = GetBlSimulator()->CreateConvexMeshFromOsg(m_osgMeshNode.get()); 
-		//else
-		//	m_vxGeometry = GetBlSimulator()->CreatTriangleMeshFromOsg(m_osgMeshNode.get()); 
+		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
+            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true);
+		else
+            m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
 
-		//if(!m_vxGeometry)
-		//	THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
+		if(!m_btCollisionShape)
+			THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 	}
 }
 

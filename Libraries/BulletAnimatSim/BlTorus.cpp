@@ -48,13 +48,9 @@ void BlTorus::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 	{
-		//For the moment build a test node to generate the mesh from.
-		osg::ref_ptr<osg::Geometry> osgGeometry = CreateTorusGeometry(m_fltInsideRadius, m_fltOutsideRadius, m_iSides, m_iRings);
-		osg::ref_ptr<osg::Geode> osgNode = new osg::Geode;
-		osgNode->addDrawable(m_osgGeometry.get());
-
-        //FIX PHYSICS
-		//m_vxGeometry = GetBlSimulator()->CreatTriangleMeshFromOsg(osgNode.get());
+        m_fltMass = 1; //NEED TO FIX
+        m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgNode.get());
+        m_bDisplayDebugCollisionGraphic = true;
 	}
 }
 

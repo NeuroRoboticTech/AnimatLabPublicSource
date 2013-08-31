@@ -12,8 +12,7 @@ namespace BulletAnimatSim
 			{
 			protected:
 				osg::HeightField *m_osgHeightField;
-                //FIX PHYSICS
-				//Vx::VxHeightField *m_vxHeightField;
+				btHeightfieldTerrainShape *m_btHeightField;
 
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();

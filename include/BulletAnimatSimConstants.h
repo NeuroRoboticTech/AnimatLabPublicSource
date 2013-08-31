@@ -111,5 +111,8 @@
 #define Bl_Err_lUnableToAddWaypoint -4041
 #define Bl_Err_strUnableToAddWaypoint "Inavlid waypoint defined. Time overlaps with another waypoint."
 
+#define Bl_Err_lTriangleCollisionMeshNotAllowed -4042
+#define Bl_Err_strTriangleCollisionMeshNotAllowed "Dynamic triangle mesh collision objects are not allowed."
+
 #endif // __BL_ERROR_CONSTANTS_H__
 

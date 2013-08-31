@@ -114,18 +114,18 @@ void BlTerrain::LoadMeshNode()
 
 void BlTerrain::CreatePhysicsGeometry()
 {
-    //FIX PHYSICS
-	//m_vxGeometry = NULL;
-	//if(m_osgHeightField)
-	//{
-	//	m_vxHeightField = CreateVxHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
-	//	m_vxGeometry = m_vxHeightField;
-	//}
+	if(m_osgHeightField)
+	{
+        //FIX THIS Does not work yet. 
+        m_fltMass = 0;
+		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
+		m_btCollisionShape = m_btHeightField;
+	}
 
-	//m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
+	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
-	//if(!m_vxGeometry)
-	//	THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
+	if(!m_btHeightField)
+		THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 }
 
 void BlTerrain::CreateParts()

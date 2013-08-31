@@ -44,6 +44,7 @@
 
 #include <btBulletDynamicsCommon.h>
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 //Simulation Objects
 namespace BulletAnimatSim

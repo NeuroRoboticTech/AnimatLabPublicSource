@@ -5,6 +5,7 @@
 **/
 
 #include "StdAfx.h"
+#include "BlOsgGeometry.h"
 #include "BlJoint.h"
 #include "BlRigidBody.h"
 #include "BlEllipsoid.h"
@@ -48,13 +49,9 @@ void BlEllipsoid::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 	{
-		//For the moment build a test node to generate the mesh from.
-		osg::ref_ptr<osg::Geometry> osgGeometry = CreateEllipsoidGeometry(m_iLatSegments, m_iLongSegments, m_fltMajorRadius, m_fltMinorRadius);
-		osg::ref_ptr<osg::Geode> osgNode = new osg::Geode;
-		osgNode->addDrawable(m_osgGeometry.get());
-
-        //FIX PHYSICS
-		//m_vxGeometry = GetBlSimulator()->CreateConvexMeshFromOsg(osgNode.get());
+        m_fltMass = 1; //NEED TO FIX
+        m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true);
+        m_bDisplayDebugCollisionGraphic = true;
 	}
 }
 

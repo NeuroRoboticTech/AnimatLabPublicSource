@@ -48,6 +48,8 @@ BlSimulator::BlSimulator()
 
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
+
+    m_bDrawDebug = false;
 }
 
 BlSimulator::~BlSimulator()
@@ -333,6 +335,12 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
     m_lpDynamicsWorld = new btDiscreteDynamicsWorld( m_lpDispatcher, m_lpBroadPhase, m_lpSolver, m_lpCollisionConfiguration );
     m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
 
+    if(m_bDrawDebug)
+    {
+        this->OSGRoot()->addChild(m_dbgDraw.getSceneGraph());
+        m_lpDynamicsWorld->setDebugDrawer( &m_dbgDraw );
+    }
+
 	//create the frame
     //FIX PHYSICS
 	////set the frame timestep
@@ -504,7 +512,16 @@ void BlSimulator::StepSimulation()
 
 			unsigned long long lStart = GetTimerTick();
 
+            if( m_bDrawDebug )
+                m_dbgDraw.BeginDraw();
+
             m_lpDynamicsWorld->stepSimulation(m_fltPhysicsTimeStep, 1, m_fltPhysicsTimeStep);
+
+            if( m_bDrawDebug )
+            {
+                m_lpDynamicsWorld->debugDrawWorld();
+                m_dbgDraw.EndDraw();
+            }
 
             double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;
