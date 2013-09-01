@@ -28,8 +28,7 @@ namespace BulletAnimatSim
 BlPrismatic::BlPrismatic()
 {
 	SetThisPointers();
-    //FIX PHYSICS
-	//m_vxPrismatic = NULL;
+	m_btPrismatic = NULL;
 
 	m_lpUpperLimit = new BlPrismaticLimit();
 	m_lpLowerLimit = new BlPrismaticLimit();
@@ -71,15 +70,25 @@ void BlPrismatic::EnableLimits(bool bVal)
 {
 	Prismatic::EnableLimits(bVal);
 
-    //FIX PHYSICS
-	//if(m_vxPrismatic)
-	//	m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);	
-
 	if(m_bEnableLimits)
 	{
 		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
 		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
 	}
+}
+
+void BlPrismatic::SetLimitValues()
+{
+    if(m_btPrismatic)
+    {
+        m_bJointLocked = false;
+        m_btPrismatic->setLowerLinLimit((btScalar) m_lpLowerLimit->LimitPos());
+        m_btPrismatic->setUpperLinLimit((btScalar) m_lpUpperLimit->LimitPos());
+
+        //Disable rotation about the axis for the prismatic joint.
+        m_btPrismatic->setLowerAngLimit(0);
+        m_btPrismatic->setUpperAngLimit(0);
+    }
 }
 
 void BlPrismatic::JointPosition(float fltPos)
@@ -163,81 +172,71 @@ void BlPrismatic::SetupGraphics()
 void BlPrismatic::DeletePhysics()
 {
     //FIX PHYSICS
-	//if(!m_vxPrismatic)
+	//if(!m_btPrismatic)
 	//	return;
 
 	//if(GetBlSimulator() && GetBlSimulator()->Universe())
 	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_vxPrismatic);
-	//	delete m_vxPrismatic;
+	//	GetBlSimulator()->Universe()->removeConstraint(m_btPrismatic);
+	//	delete m_btPrismatic;
 
 	//	if(m_lpChild && m_lpParent)
 	//		m_lpChild->EnableCollision(m_lpParent);
 	//}
 
-	//m_vxPrismatic = NULL;
+	//m_btPrismatic = NULL;
 	//m_vxJoint = NULL;
 }
 
 void BlPrismatic::SetupPhysics()
 {
-    //FIX PHYSICS
- //   if(m_vxPrismatic)
-	//	DeletePhysics();
+    if(m_btPrismatic)
+		DeletePhysics();
 
-	//if(!m_lpParent)
-	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	if(!m_lpParent)
+		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	//if(!m_lpChild)
-	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	if(!m_lpChild)
+		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	//if(!lpVsParent)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!lpVsParent)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	//if(!lpVsChild)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!lpVsChild)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	//
-	//Vx::VxReal44 vMT;
-	//VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
-	//Vx::VxTransform vTrans(vMT);
-	//Vx::VxReal3 vxRot;
-	//vTrans.getRotationEulerAngles(vxRot);
+    //Need to calculate the matrix transform for the joint relative to the child also.
+    osg::Matrix jointMT = this->GetOSGWorldMatrix();
+    osg::Matrix parentMT = lpVsParent->GetOSGWorldMatrix();
+    osg::Matrix osgJointRelParent = jointMT * osg::Matrix::inverse(parentMT);
 
-	//CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]);
+    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
+    btTransform tmJointRelChild = osgbCollision::asBtTransform(m_osgMT->getMatrix());
 
- //   VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	//VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	m_btPrismatic = new btSliderConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
 
-	//m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	//m_vxPrismatic->setName(m_strID.c_str());
+    GetBlSimulator()->DynamicsWorld()->addConstraint(m_btPrismatic, true);
+    m_btPrismatic->setDbgDrawSize(btScalar(5.f));
 
-	//GetBlSimulator()->Universe()->addConstraint(m_vxPrismatic);
+    //There is a bug in the slider code where the LinPos is not initialized correctly until after the first time the 
+    //limits are tested. I am calling this here manually to clear that variable.
+    m_btPrismatic->testLinLimits();
 
-	////Disable collisions between this object and its parent
-	//m_lpChild->DisableCollision(m_lpParent);
+	BlPrismaticLimit *lpUpperLimit = dynamic_cast<BlPrismaticLimit *>(m_lpUpperLimit);
+	BlPrismaticLimit *lpLowerLimit = dynamic_cast<BlPrismaticLimit *>(m_lpLowerLimit);
 
-	//BlPrismaticLimit *lpUpperLimit = dynamic_cast<BlPrismaticLimit *>(m_lpUpperLimit);
-	//BlPrismaticLimit *lpLowerLimit = dynamic_cast<BlPrismaticLimit *>(m_lpLowerLimit);
+	//Re-enable the limits once we have initialized the joint
+	EnableLimits(m_bEnableLimits);
 
-	//lpUpperLimit->PrismaticRef(m_vxPrismatic);
-	//lpLowerLimit->PrismaticRef(m_vxPrismatic);
+	m_btJoint = m_btPrismatic;
 
-	////Re-enable the limits once we have initialized the joint
-	//EnableLimits(m_bEnableLimits);
+	//If the motor is enabled then it will start out with a velocity of	zero.
+	EnableMotor(m_bEnableMotorInit);
 
-	//m_vxJoint = m_vxPrismatic;
-	//m_iCoordID = m_vxPrismatic->kLinearCoordinate;
-
-	////If the motor is enabled then it will start out with a velocity of	zero.
-	//EnableMotor(m_bEnableMotorInit);
-
- //   Prismatic::Initialize();
- //   BlJoint::Initialize();
+    Prismatic::Initialize();
+    BlJoint::Initialize();
 }
 
 void BlPrismatic::CreateJoint()
@@ -308,6 +307,58 @@ void BlPrismatic::StepSimulation()
 	UpdateData();
 	SetVelocityToDesired();
 }
+
+
+
+void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
+{
+    if (m_btPrismatic)
+	{ 		
+		if(bOn)
+		{
+            m_bJointLocked = true;
+            m_btPrismatic->setLowerLinLimit(fltPosition);
+            m_btPrismatic->setUpperLinLimit(fltPosition);
+		}
+		else if (m_bMotorOn)
+			Physics_EnableMotor(true, 0, fltMaxLockForce);
+		else
+            SetLimitValues();
+	}
+}
+
+void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
+{
+    if (m_btPrismatic)
+	{   
+		if(bOn)
+        {
+            SetLimitValues();
+			m_btPrismatic->setPoweredLinMotor(true);
+            m_btPrismatic->setMaxLinMotorForce(fltMaxForce);
+            m_btPrismatic->setTargetLinMotorVelocity(fltDesiredVelocity);
+        }
+		else
+			m_btPrismatic->setPoweredLinMotor(false);
+
+		m_bMotorOn = bOn;
+	}
+}
+
+void BlPrismatic::Physics_MaxForce(float fltVal)
+{
+    if(m_btPrismatic)
+        m_btPrismatic->setMaxLinMotorForce(fltVal);
+}
+
+float BlPrismatic::GetCurrentBtPosition()
+{
+    if(m_btPrismatic)
+        return m_btPrismatic->getLinearPos();
+    else
+        return 0;
+}
+
 
 		}		//Joints
 	}			// Environment

@@ -41,7 +41,9 @@ namespace BulletAnimatSim
 
             virtual bool Physics_IsDefined();
 			virtual void Physics_ResetSimulation();
-            virtual void Physics_CollectData() {};  //FIX Physics
+            virtual void Physics_CollectData();
+            
+            virtual float GetCurrentBtPosition() {return 0;};
 
 			virtual btTypedConstraint* Constraint() {return m_btJoint;};
 		};

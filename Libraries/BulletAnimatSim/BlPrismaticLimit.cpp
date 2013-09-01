@@ -4,6 +4,7 @@
 #include "BlMotorizedJoint.h"
 #include "BlRigidBody.h"
 #include "BlPrismaticLimit.h"
+#include "BlPrismatic.h"
 #include "BlSimulator.h"
 
 namespace BulletAnimatSim
@@ -15,20 +16,12 @@ namespace BulletAnimatSim
 
 BlPrismaticLimit::BlPrismaticLimit()
 {
-    //FIX PHYSICS
-	//m_vxPrismatic = NULL;
     OsgPrismaticLimit::ConstraintLimit(this);
 }
 
 BlPrismaticLimit::~BlPrismaticLimit()
 {
 }
-
-//FIX PHYSICS
-//void BlPrismaticLimit::PrismaticRef(Vx::VxPrismatic *vxPrismatic)
-//{
-//	m_vxPrismatic = vxPrismatic;
-//}
 
 void BlPrismaticLimit::Alpha(float fltA)
 {
@@ -51,14 +44,10 @@ void BlPrismaticLimit::SetLimitPos()
 
 void BlPrismaticLimit::SetLimitValues()
 {
-    //FIX PHYSICS
-	//if(m_vxPrismatic)
-	//{
-	//	if(m_bIsLowerLimit)
-	//		m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//	else
-	//		m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//}
+	BlPrismatic *lpPrismatic = dynamic_cast<BlPrismatic *>(m_lpJoint);
+
+    if(lpPrismatic)
+        lpPrismatic->SetLimitValues();
 }
 
 void BlPrismaticLimit::DeleteGraphics()

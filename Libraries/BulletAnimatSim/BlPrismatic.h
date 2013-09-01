@@ -16,8 +16,7 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlPrismatic : public BlMotorizedJoint, public AnimatSim::Environment::Joints::Prismatic, public OsgAnimatSim::Environment::Joints::OsgPrismatic     
 			{
 			protected:
-                //FIX PHYSICS
-				//Vx::VxPrismatic *m_vxPrismatic;
+				btSliderConstraint *m_btPrismatic;
 
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
@@ -25,13 +24,17 @@ namespace BulletAnimatSim
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
 
-			public:
+                virtual float GetCurrentBtPosition();
+
+            public:
 				BlPrismatic();
 				virtual ~BlPrismatic();
 
 				virtual void JointPosition(float fltPos);
 
 				virtual void SetAlpha();
+
+                virtual void SetLimitValues();
 
 #pragma region DataAccesMethods
 
@@ -44,7 +47,11 @@ namespace BulletAnimatSim
 				virtual void EnableLimits(bool bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();
-			};
+
+                virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
+                virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce);
+                virtual void Physics_MaxForce(float fltVal);
+            };
 
 		}		//Joints
 	}			// Environment

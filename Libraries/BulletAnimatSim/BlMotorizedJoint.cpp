@@ -56,5 +56,43 @@ void BlMotorizedJoint::CalculateServoVelocity()
 		m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
 }
 
+void BlMotorizedJoint::Physics_SetVelocityToDesired()
+{
+	if(m_lpThisMotorJoint->EnableMotor())
+	{			
+		if(m_lpThisMotorJoint->ServoMotor())
+			CalculateServoVelocity();
+		
+		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
+		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
+		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+
+		if(fltDesiredVel>fltMaxVel)
+			fltDesiredVel = fltMaxVel;
+
+		if(fltDesiredVel < -fltMaxVel)
+			fltDesiredVel = -fltMaxVel;
+
+		float fltSetVelocity = fltDesiredVel;
+
+		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
+		m_lpThisMotorJoint->DesiredVelocity(0);
+
+        float fltJointVel = m_lpThisJoint->JointVelocity();
+
+		//Only do anything if the velocity value has changed
+        if(m_btJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
+		{
+			if(fabs(fltSetVelocity) > 1e-4 && m_btJoint)
+				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce);
+            else if(!m_bJointLocked)
+                Physics_EnableLock(true, GetCurrentBtPosition(), fltMaxForce);
+		}
+
+		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+	}
+}
+
+
 	}			// Environment
 }				//BulletAnimatSim

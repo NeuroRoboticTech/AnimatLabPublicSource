@@ -60,34 +60,34 @@ void BlJoint::UpdatePosition()
 	//UpdateWorldMatrix();
 	//m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 }
-//
-//void BlJoint::Physics_CollectData()
-//{
-//	if(m_lpThisJoint && m_btJoint)
-//	{
-//		UpdatePosition();
-//
-//		//Only attempt to make these calls if the coordinate ID is a valid number.
-//		if(m_iCoordID >= 0)
-//		{
-//			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-//			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-//
-//			if(m_btJoint->isAngular(m_iCoordID) == true)
-//			{
-//				m_lpThisJoint->JointPosition(m_btJoint); 
-//				m_lpThisJoint->JointVelocity(m_btJoint->getCoordinateVelocity (m_iCoordID));
-//				m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
-//			}
-//			else
-//			{
-//				m_lpThisJoint->JointPosition(m_btJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
-//				m_lpThisJoint->JointVelocity(m_btJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
-//				m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
-//			}
-//		}
-//	}
-//}
+
+void BlJoint::Physics_CollectData()
+{
+	if(m_lpThisJoint && m_btJoint && m_lpThisJoint->GetSimulator())
+	{
+		UpdatePosition();
+
+		float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+		float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
+        float fltCurrentJointPos = GetCurrentBtPosition();
+
+		if(!m_lpThisJoint->UsesRadians())
+		{
+            fltCurrentJointPos * fltDistanceUnits;
+			//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
+		}
+
+        float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/(m_lpThisJoint->GetSimulator()->PhysicsTimeStep());
+
+        m_fltPrevJointPos = fltCurrentJointPos;
+		m_lpThisJoint->JointPosition(fltCurrentJointPos); 
+		m_lpThisJoint->JointVelocity(fltJointVel);
+
+        //FIX PHYSICS
+		//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
+    }
+}
 
 void BlJoint::Physics_ResetSimulation()
 {
