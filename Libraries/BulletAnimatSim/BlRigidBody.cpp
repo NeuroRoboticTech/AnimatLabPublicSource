@@ -263,7 +263,11 @@ void BlRigidBody::CreateDynamicPart()
 
 	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape)
 	{
-        btScalar mass( m_lpThisRB->GetMassValue() );
+        float fltMass = 0;
+        if(!m_lpThisRB->Freeze())
+            fltMass = m_lpThisRB->GetMassValue();
+
+        btScalar mass(fltMass);
 	    btVector3 localInertia( 0, 0, 0 );
         const bool isDynamic = ( mass != 0.f );
 	    if( isDynamic )

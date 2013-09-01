@@ -3,6 +3,7 @@
 #include "BlJoint.h"
 #include "BlMotorizedJoint.h"
 #include "BlRigidBody.h"
+#include "BlHinge.h"
 #include "BlHingeLimit.h"
 #include "BlSimulator.h"
 
@@ -15,20 +16,12 @@ namespace BulletAnimatSim
 
 BlHingeLimit::BlHingeLimit()
 {
-    //FIX PHYSICS
-	//m_vxHinge = NULL;
     OsgHingeLimit::ConstraintLimit(this);
 }
 
 BlHingeLimit::~BlHingeLimit()
 {
 }
-
-//FIX PHYSICS
-//void BlHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
-//{
-//	m_vxHinge = vxHinge;
-//}
 
 void BlHingeLimit::Alpha(float fltA)
 {
@@ -50,14 +43,10 @@ void BlHingeLimit::SetLimitPos()
 
 void BlHingeLimit::SetLimitValues()
 {
-    //FIX PHYSICS
-	//if(m_vxHinge)
-	//{
-	//	if(m_bIsLowerLimit)
-	//		m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//	else
-	//		m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltLimitPos, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//}
+	BlHinge *lpHinge = dynamic_cast<BlHinge *>(m_lpJoint);
+
+    if(lpHinge)
+        lpHinge->SetLimitValues();
 }
 
 void BlHingeLimit::DeleteGraphics()

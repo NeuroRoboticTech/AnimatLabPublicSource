@@ -27,9 +27,7 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlJoint : public OsgJoint
 		{
 		protected:
-            //FIX PHYSICS
-			//Vx::VxConstraint *m_vxJoint;
-			//Vx::VxConstraint::CoordinateID m_iCoordID;
+			btTypedConstraint *m_btJoint;
             BlSimulator *m_lpVsSim;
 
 			void UpdatePosition();
@@ -44,9 +42,7 @@ namespace BulletAnimatSim
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
 
-            //FIX PHYSICS
-			//virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
-			//virtual Vx::VxConstraint::CoordinateID CoordinateID() {return m_iCoordID;};
+			virtual btTypedConstraint* Constraint() {return m_btJoint;};
 		};
 
 	}			// Environment

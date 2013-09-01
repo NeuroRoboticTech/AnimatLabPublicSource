@@ -11,18 +11,12 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlHingeLimit : public AnimatSim::Environment::ConstraintLimit, public OsgAnimatSim::Environment::Joints::OsgHingeLimit
 			{
 			protected:
-                //FIX PHYSICS
-				//Vx::VxHinge *m_vxHinge;
-
 				virtual void SetLimitValues();
                 virtual CStdColor GetLimitColor() {return m_vColor;};
 
 			public:
 				BlHingeLimit();
 				virtual ~BlHingeLimit();
-
-                //FIX PHYSICS
-				//virtual void HingeRef(Vx::VxHinge *vxHinge);
 
 				virtual void Alpha(float fltA);
 				virtual void SetLimitPos();

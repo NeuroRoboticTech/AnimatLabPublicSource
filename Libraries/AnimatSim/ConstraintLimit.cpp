@@ -93,8 +93,8 @@ void ConstraintLimit::Damping(float fltVal, bool bUseScaling)
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
-		//fltVal = fltVal/m_lpSim->DisplayMassUnits();
-	m_fltDamping = fltVal;
+
+    m_fltDamping = fltVal;
 	SetLimitValues();
 }
 

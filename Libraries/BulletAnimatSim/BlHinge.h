@@ -36,9 +36,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlHinge : public BlMotorizedJoint, public AnimatSim::Environment::Joints::Hinge, public OsgAnimatSim::Environment::Joints::OsgHinge     
 			{
 			protected:
-				/// The vortex hinge class.
-                //FIX PHYSICS
-				//Vx::VxHinge *m_vxHinge;
+				/// The bullet hinge class.
+				btHingeConstraint *m_btHinge;
 
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;
@@ -57,6 +56,8 @@ namespace BulletAnimatSim
 				virtual void JointPosition(float fltPos);
 
 				virtual void SetAlpha();
+
+                virtual void SetLimitValues();
 
 #pragma region DataAccesMethods
 
