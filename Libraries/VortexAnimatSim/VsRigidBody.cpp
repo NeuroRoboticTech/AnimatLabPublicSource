@@ -62,6 +62,12 @@ void VsRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
 	Physics_FluidDataChanged();
 }
 
+void VsRigidBody::Physics_WakeDynamics()
+{
+    if(m_vxPart)
+        m_vxPart->wakeDynamics();
+}
+
 bool VsRigidBody::Physics_IsDefined()
 {
     if(m_vxSensor && m_vxGeometry)

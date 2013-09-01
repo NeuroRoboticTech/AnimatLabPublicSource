@@ -1,18 +1,18 @@
 
 #pragma once
 
-namespace BulletAnimatSim
+namespace AnimatSim
 {
 
 	/**
-	\namespace	BulletAnimatSim::ExternalStimuli
+	\namespace	AnimatSim::ExternalStimuli
 
 	\brief	Classes that produce external stimuli. 
 	**/
 	namespace ExternalStimuli
 	{
 
-		class BULLET_PORT BlForceStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
+		class ANIMAT_PORT ForceStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			Structure *m_lpStructure;
@@ -20,7 +20,6 @@ namespace BulletAnimatSim
 
 			string m_strBodyID;
 			RigidBody *m_lpBody;
-			BlRigidBody *m_lpVsBody;
 
 			CStdFPoint m_oRelativePosition;
 
@@ -59,8 +58,8 @@ namespace BulletAnimatSim
 			CStdPostFixEval *SetupEquation(string strEquation);
 
 		public:
-			BlForceStimulus();
-			virtual ~BlForceStimulus();
+			ForceStimulus();
+			virtual ~ForceStimulus();
 
 			float RelativePositionX() {return m_oRelativePosition.x;};
 			float RelativePositionY() {return m_oRelativePosition.y;};
@@ -101,4 +100,4 @@ namespace BulletAnimatSim
 		};
 
 	}			//ExternalStimuli
-}				//BulletAnimatSim
+}				//AnimatSim

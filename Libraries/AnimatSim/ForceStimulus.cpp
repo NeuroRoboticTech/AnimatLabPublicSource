@@ -1,17 +1,47 @@
-// VsForceStimulus.cpp: implementation of the VsForceStimulus class.
+// ForceStimulus.cpp: implementation of the ForceStimulus class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "IMovableItemCallback.h"
+#include "ISimGUICallback.h"
+#include "AnimatBase.h"
 
-#include "VsJoint.h"
-#include "VsMotorizedJoint.h"
-#include "VsRigidBody.h"
-#include "VsSimulator.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "Gain.h"
+#include "Node.h"
+#include "IPhysicsMovableItem.h"
+#include "IPhysicsBody.h"
+#include "BoundingBox.h"
+#include "MovableItem.h"
+#include "BodyPart.h"
+#include "Joint.h"
+#include "MotorizedJoint.h"
+#include "ReceptiveField.h"
+#include "ContactSensor.h"
+#include "RigidBody.h"
+#include "Structure.h"
+#include "NeuralModule.h"
+#include "Adapter.h"
+#include "NervousSystem.h"
+#include "Organism.h"
+#include "ActivatedItem.h"
+#include "ActivatedItemMgr.h"
+#include "DataChartMgr.h"
+#include "ExternalStimulus.h"
+#include "ExternalStimuliMgr.h"
+#include "KeyFrame.h"
+#include "SimulationRecorder.h"
+#include "OdorType.h"
+#include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
+#include "Simulator.h"
 
-#include "VsForceStimulus.h"
+#include "ForceStimulus.h"
 
-namespace VortexAnimatSim
+namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
@@ -20,11 +50,10 @@ namespace VortexAnimatSim
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-VsForceStimulus::VsForceStimulus()
+ForceStimulus::ForceStimulus()
 {
 	m_lpStructure = NULL;
 	m_lpBody = NULL;
-	m_lpVsBody = NULL;
 
 	m_lpForceXEval = NULL;
 	m_lpForceYEval = NULL;
@@ -51,14 +80,13 @@ VsForceStimulus::VsForceStimulus()
 	m_fltTorqueReportZ = 0;
 }
 
-VsForceStimulus::~VsForceStimulus()
+ForceStimulus::~ForceStimulus()
 {
 
 try
 {
 	m_lpStructure = NULL;
 	m_lpBody = NULL;
-	m_lpVsBody = NULL;
 
 	if(m_lpForceXEval) delete m_lpForceXEval;
 	if(m_lpForceYEval) delete m_lpForceYEval;
@@ -69,10 +97,10 @@ try
 	if(m_lpTorqueZEval) delete m_lpTorqueZEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, false, true);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ForceStimulus\r\n", "", -1, false, true);}
 }
 
-CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
+CStdPostFixEval *ForceStimulus::SetupEquation(string strEquation)
 {
 	CStdPostFixEval *lpEquation = NULL;
 
@@ -87,25 +115,25 @@ CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
 }
 
 
-void VsForceStimulus::RelativePositionX(float fltVal)
+void ForceStimulus::RelativePositionX(float fltVal)
 {
 	Simulator *m_lpSim = GetSimulator();
 	m_oRelativePosition.x = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
-void VsForceStimulus::RelativePositionY(float fltVal)
+void ForceStimulus::RelativePositionY(float fltVal)
 {
 	Simulator *m_lpSim = GetSimulator();
 	m_oRelativePosition.y = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
-void VsForceStimulus::RelativePositionZ(float fltVal)
+void ForceStimulus::RelativePositionZ(float fltVal)
 {
 	Simulator *m_lpSim = GetSimulator();
 	m_oRelativePosition.z = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
-void VsForceStimulus::ForceXEquation(string strVal)
+void ForceStimulus::ForceXEquation(string strVal)
 {
 	if(m_lpForceXEval) 
 	{delete m_lpForceXEval; m_lpForceXEval = NULL;}
@@ -114,7 +142,7 @@ void VsForceStimulus::ForceXEquation(string strVal)
 	m_lpForceXEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::ForceYEquation(string strVal)
+void ForceStimulus::ForceYEquation(string strVal)
 {
 	if(m_lpForceYEval) 
 	{delete m_lpForceYEval; m_lpForceYEval = NULL;}
@@ -123,7 +151,7 @@ void VsForceStimulus::ForceYEquation(string strVal)
 	m_lpForceYEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::ForceZEquation(string strVal)
+void ForceStimulus::ForceZEquation(string strVal)
 {
 	if(m_lpForceZEval) 
 	{delete m_lpForceZEval; m_lpForceZEval = NULL;}
@@ -132,7 +160,7 @@ void VsForceStimulus::ForceZEquation(string strVal)
 	m_lpForceZEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueXEquation(string strVal)
+void ForceStimulus::TorqueXEquation(string strVal)
 {
 	if(m_lpTorqueXEval) 
 	{delete m_lpTorqueXEval; m_lpTorqueXEval = NULL;}
@@ -141,7 +169,7 @@ void VsForceStimulus::TorqueXEquation(string strVal)
 	m_lpTorqueXEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueYEquation(string strVal)
+void ForceStimulus::TorqueYEquation(string strVal)
 {
 	if(m_lpTorqueYEval) 
 	{delete m_lpTorqueYEval; m_lpTorqueYEval = NULL;}
@@ -150,7 +178,7 @@ void VsForceStimulus::TorqueYEquation(string strVal)
 	m_lpTorqueYEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueZEquation(string strVal)
+void ForceStimulus::TorqueZEquation(string strVal)
 {
 	if(m_lpTorqueZEval) 
 	{delete m_lpTorqueZEval; m_lpTorqueZEval = NULL;}
@@ -159,17 +187,16 @@ void VsForceStimulus::TorqueZEquation(string strVal)
 	m_lpTorqueZEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::Initialize()
+void ForceStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
 	m_lpStructure = m_lpSim->FindStructureFromAll(m_strStructureID);
 	m_lpBody = m_lpStructure->FindRigidBody(m_strBodyID);
-	m_lpVsBody = dynamic_cast<VsRigidBody *>(m_lpBody);
 }
 
-void VsForceStimulus::ResetSimulation()
+void ForceStimulus::ResetSimulation()
 {
 	ExternalStimulus::ResetSimulation();
 
@@ -179,7 +206,7 @@ void VsForceStimulus::ResetSimulation()
 	m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
 }
 
-void VsForceStimulus::StepSimulation()
+void ForceStimulus::StepSimulation()
 {
 	try
 	{
@@ -189,7 +216,6 @@ void VsForceStimulus::StepSimulation()
 		//the physics step count is equal to the step interval.
 		if(m_lpSim->PhysicsStepCount() == m_lpSim->PhysicsStepInterval())
 		{
-			VxReal3 fltF, fltP;
 
 			//Why do we multiply by the mass units here? The reason is that we have to try and keep the 
 			//length and mass values in a range around 1 for the simulator to be able to function appropriately.
@@ -223,11 +249,9 @@ void VsForceStimulus::StepSimulation()
 					m_fltForceZ = m_fltForceReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
-				fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
-				fltP[0] = m_oRelativePosition.x; fltP[1] = m_oRelativePosition.y; fltP[2] = m_oRelativePosition.z;
-
-				if(m_lpVsBody->Part() && (m_fltForceX || m_fltForceY || m_fltForceZ))
-					m_lpVsBody->Part()->addForceAtLocalPosition(fltF, fltP);
+				if(m_lpBody && (m_fltForceX || m_fltForceY || m_fltForceZ))
+					m_lpBody->AddForce(m_oRelativePosition.x, m_oRelativePosition.y, m_oRelativePosition.z,
+                                       m_fltForceX, m_fltForceY, m_fltForceZ, false);
 			}
 
 			if(m_lpTorqueXEval || m_lpTorqueYEval || m_lpTorqueZEval)
@@ -256,10 +280,8 @@ void VsForceStimulus::StepSimulation()
 					m_fltTorqueZ = m_fltTorqueReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
-				fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
-
-				if(m_lpVsBody->Part() && (m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ))
-					m_lpVsBody->Part()->addTorque (fltF);
+				if(m_lpBody && (m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ))
+					m_lpBody->AddTorque(m_fltTorqueX, m_fltTorqueY, m_fltTorqueZ, false);
 			}
 		}
 	}
@@ -269,14 +291,14 @@ void VsForceStimulus::StepSimulation()
 	}
 }
 
-void VsForceStimulus::Deactivate()
+void ForceStimulus::Deactivate()
 {
 	AnimatSim::ExternalStimuli::ExternalStimulus::Deactivate();
-	if(m_lpVsBody->Part())
-		m_lpVsBody->Part()->wakeDynamics();
+	if(m_lpBody)
+		m_lpBody->WakeDynamics();
 }
 
-float *VsForceStimulus::GetDataPointer(const string &strDataType)
+float *ForceStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -299,7 +321,7 @@ float *VsForceStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool VsForceStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ForceStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -367,7 +389,7 @@ bool VsForceStimulus::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void VsForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 
@@ -399,7 +421,7 @@ void VsForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<str
 	aryTypes.Add("Float");
 }
 
-void VsForceStimulus::Load(CStdXml &oXml)
+void ForceStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);
 
@@ -433,7 +455,7 @@ void VsForceStimulus::Load(CStdXml &oXml)
 }
 
 	}			//ExternalStimuli
-}				//VortexAnimatSim
+}				//AnimatSim
 
 
 

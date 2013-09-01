@@ -133,7 +133,6 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClInclude Include="..\BlDistanceJoint.h" />
     <ClInclude Include="..\BlEllipsoid.h" />
     <ClInclude Include="..\BlFluidPlane.h" />
-    <ClInclude Include="..\BlForceStimulus.h" />
     <ClInclude Include="..\BlHinge.h" />
     <ClInclude Include="..\BlHingeLimit.h" />
     <ClInclude Include="..\BlIntersectionEvent.h" />
@@ -179,8 +178,6 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClCompile Include="..\BlEllipsoid.cpp">
     </ClCompile>
     <ClCompile Include="..\BlFluidPlane.cpp">
-    </ClCompile>
-    <ClCompile Include="..\BlForceStimulus.cpp">
     </ClCompile>
     <ClCompile Include="..\BlHinge.cpp">
     </ClCompile>

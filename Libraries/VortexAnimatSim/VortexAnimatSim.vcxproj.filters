@@ -36,9 +36,6 @@
     <ClCompile Include="VsCylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsForceStimulus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsHinge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsCylinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VsForceStimulus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsHinge.h">

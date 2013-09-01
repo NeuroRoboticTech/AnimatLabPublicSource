@@ -68,8 +68,9 @@ void BlLine::CreateGraphicsGeometry()
 
 void BlLine::CreatePhysicsGeometry()
 {
-    //FIX PHYSICS
-	//m_vxGeometry = NULL;
+    m_btCollisionShape = NULL;
+    m_btPart = NULL;
+    m_osgbMotion = NULL;
 }
 
 void BlLine::CreateParts()

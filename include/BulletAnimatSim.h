@@ -92,8 +92,6 @@ namespace BulletAnimatSim
 
 	namespace ExternalStimuli
 	{
-		class BlForceStimulus;
-		class BlMotorVelocityStimulus;
 	}
 
 	namespace Visualization
@@ -145,7 +143,6 @@ using namespace BulletAnimatSim::Visualization;
 
 #include "BlMaterialType.h"
 
-#include "BlForceStimulus.h"
 #include "BlIntersectionEvent.h"
 
 

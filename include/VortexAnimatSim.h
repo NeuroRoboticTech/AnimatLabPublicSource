@@ -120,9 +120,6 @@ namespace VortexAnimatSim
 
 	namespace ExternalStimuli
 	{
-		class VsForceStimulus;
-		class VsInverseMuscleCurrent;
-		class VsMotorVelocityStimulus;
 	}
 
 	namespace Recording
@@ -188,7 +185,6 @@ using namespace Vx;
 
 #include "VsMaterialType.h"
 
-#include "VsForceStimulus.h"
 #include "VsIntersectionEvent.h"
 
 

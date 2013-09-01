@@ -191,6 +191,13 @@ void  BlRigidBody::Physics_FluidDataChanged()
 	//}
 }
 
+void BlRigidBody::Physics_WakeDynamics()
+{
+    //FIX PHYSICS
+    //if(m_vxPart)
+    //    m_vxPart->wakeDynamics();
+}
+
 void BlRigidBody::GetBaseValues()
 {
     //FIX PHYSICS

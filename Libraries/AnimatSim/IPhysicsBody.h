@@ -32,6 +32,7 @@ namespace AnimatSim
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() = 0;
 			virtual void Physics_FluidDataChanged() = 0;
 			virtual bool Physics_HasCollisionGeometry() = 0;
+            virtual void Physics_WakeDynamics() = 0;
 		};
 
 	}

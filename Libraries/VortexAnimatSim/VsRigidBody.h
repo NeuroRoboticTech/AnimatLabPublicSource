@@ -101,6 +101,7 @@ namespace VortexAnimatSim
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz);
 			virtual void Physics_UpdateNode();
 			virtual void Physics_FluidDataChanged();
+            virtual void Physics_WakeDynamics();
 
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);

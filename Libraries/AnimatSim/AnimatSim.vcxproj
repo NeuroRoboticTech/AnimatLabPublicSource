@@ -202,6 +202,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="ExternalStimulus.cpp" />
     <ClCompile Include="FileChart.cpp" />
     <ClCompile Include="FluidPlane.cpp" />
+    <ClCompile Include="ForceStimulus.cpp" />
     <ClCompile Include="Gain.cpp" />
     <ClCompile Include="Hinge.cpp" />
     <ClCompile Include="Hud.cpp" />
@@ -298,6 +299,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="ExternalStimulus.h" />
     <ClInclude Include="FileChart.h" />
     <ClInclude Include="FluidPlane.h" />
+    <ClInclude Include="ForceStimulus.h" />
     <ClInclude Include="Gain.h" />
     <ClInclude Include="Hinge.h" />
     <ClInclude Include="Hud.h" />

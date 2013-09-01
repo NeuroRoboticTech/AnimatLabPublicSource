@@ -134,6 +134,7 @@ namespace AnimatSim
 		class InverseMuscleCurrent;
 		class PropertyControlStimulus;
         class MotorVelocityStimulus;
+        class ForceStimulus;
 	}
 
 	namespace Gains
@@ -246,6 +247,7 @@ using namespace AnimatSim::Recording;
 #include "InverseMuscleCurrent.h"
 #include "PropertyControlStimulus.h"
 #include "MotorVelocityStimulus.h"
+#include "ForceStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
 #include "MaterialType.h"

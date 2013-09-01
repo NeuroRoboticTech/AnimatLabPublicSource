@@ -188,7 +188,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsDistanceJoint.cpp" />
     <ClCompile Include="VsEllipsoid.cpp" />
     <ClCompile Include="VsFluidPlane.cpp" />
-    <ClCompile Include="VsForceStimulus.cpp" />
     <ClCompile Include="VsHinge.cpp" />
     <ClCompile Include="VsHingeLimit.cpp" />
     <ClCompile Include="VsIntersectionEvent.cpp" />
@@ -227,7 +226,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsDistanceJoint.h" />
     <ClInclude Include="VsEllipsoid.h" />
     <ClInclude Include="VsFluidPlane.h" />
-    <ClInclude Include="VsForceStimulus.h" />
     <ClInclude Include="VsHinge.h" />
     <ClInclude Include="VsHingeLimit.h" />
     <ClInclude Include="VsIntersectionEvent.h" />

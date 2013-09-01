@@ -27,7 +27,7 @@ namespace BulletAnimatSim
 BlBallSocket::BlBallSocket()
 {
 	SetThisPointers();
-	//m_vxSocket = NULL; //FIX PHYSICS
+	m_btSocket = NULL;
 }
 
 /**
@@ -51,66 +51,55 @@ BlBallSocket::~BlBallSocket()
 void BlBallSocket::DeletePhysics()
 {
     //FIX PHYSICS
-	//if(!m_vxSocket)
+	//if(!m_btSocket)
 	//	return;
 
 	//if(GetBlSimulator() && GetBlSimulator()->Universe())
 	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_vxSocket);
-	//	delete m_vxSocket;
+	//	GetBlSimulator()->Universe()->removeConstraint(m_btSocket);
+	//	delete m_btSocket;
 
 	//	if(m_lpChild && m_lpParent)
 	//		m_lpChild->EnableCollision(m_lpParent);
 	//}
 
-	//m_vxSocket = NULL;
+	//m_btSocket = NULL;
 	//m_vxJoint = NULL;
 }
 
 void BlBallSocket::SetupPhysics()
 {
- //FIX PHYSICS
- //   if(m_vxSocket)
-	//	DeletePhysics();
+    if(m_btSocket)
+		DeletePhysics();
 
-	//if(!m_lpParent)
-	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	if(!m_lpParent)
+		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	//if(!m_lpChild)
-	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	if(!m_lpChild)
+		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	//if(!lpVsParent)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!lpVsParent)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	//if(!lpVsChild)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!lpVsChild)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	//
-	//Vx::VxReal44 vMT;
-	//VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(), vMT);
-	//Vx::VxTransform vTrans(vMT);
-	//Vx::VxReal3 vxRot;
-	//vTrans.getRotationEulerAngles(vxRot);
+    //Need to calculate the matrix transform for the joint relative to the child also.
+    osg::Matrix jointMT = this->GetOSGWorldMatrix();
+    osg::Matrix parentMT = lpVsParent->GetOSGWorldMatrix();
+    osg::Matrix osgJointRelParent = jointMT * osg::Matrix::inverse(parentMT);
 
-	//CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
+    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
+    btTransform tmJointRelChild = osgbCollision::asBtTransform(m_osgMT->getMatrix());
 
- //   VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	//VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	m_btSocket = new btConeTwistConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild); 
 
-	//m_vxSocket = new VxBallAndSocket(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	//m_vxSocket->setName(m_strID.c_str());
+    GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
+    m_btSocket->setDbgDrawSize(btScalar(5.f));
 
-	//GetBlSimulator()->Universe()->addConstraint(m_vxSocket);
-
-	////Disable collisions between this object and its parent
-	//m_lpChild->DisableCollision(m_lpParent);
-
-	//m_vxJoint = m_vxSocket;
-	//m_iCoordID = -1; //Not used fo
+	m_btJoint = m_btSocket;
 }
 
 void BlBallSocket::CreateJoint()

@@ -66,7 +66,6 @@ osg::Vec3d OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
 	osg::Matrix osgMT = SetupMatrix(vMatrixPos, vLocalRot);
 
 	osg::Vec3 vNorm = vPosN * osgMT;
-	//VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
 
 	return vNorm;
 }

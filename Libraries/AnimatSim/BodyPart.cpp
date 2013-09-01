@@ -146,6 +146,12 @@ void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float
 		m_lpCallback->AddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
 }
 
+void BodyPart::WakeDynamics()
+{
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_WakeDynamics();
+}
+
 #pragma region DataAccesMethods
 
 void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)

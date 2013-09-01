@@ -29,9 +29,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlBallSocket : public BlJoint, public AnimatSim::Environment::Joints::BallSocket     
 			{
 			protected:
-				/// The vortex socket class.
-                //FIX PHYSICS
-				//Vx::VxBallAndSocket *m_vxSocket;
+				/// The bullet socket class.
+				btConeTwistConstraint *m_btSocket;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();

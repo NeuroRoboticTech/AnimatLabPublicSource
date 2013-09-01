@@ -40,8 +40,6 @@
 
 #include "VsMaterialType.h"
 
-#include "VsForceStimulus.h"
-
 namespace VortexAnimatSim
 {
 
@@ -500,7 +498,7 @@ try
 	if(strType == "MOTORVELOCITY")
 		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
 	else if(strType == "FORCEINPUT")
-		lpStimulus = new VsForceStimulus;
+		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
 	else if(strType == "NODEINPUT")
 		lpStimulus = new ExternalInputStimulus;
 	else if(strType == "RIGIDBODYINPUT")

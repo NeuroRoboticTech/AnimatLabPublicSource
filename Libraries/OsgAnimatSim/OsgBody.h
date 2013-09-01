@@ -42,6 +42,7 @@ namespace OsgAnimatSim
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) {};
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() {};
 			virtual void Physics_FluidDataChanged() {};
+            virtual void Physics_WakeDynamics() {};
 			virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};
