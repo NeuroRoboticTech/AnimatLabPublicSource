@@ -1,17 +1,17 @@
 /**
-\file	BlMotorVelocityStimulus.h
+\file	MotorVelocityStimulus.h
 
 \brief	Declares the vs motor velocity stimulus class.
 **/
 
 #pragma once
 
-namespace BulletAnimatSim
+namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
 
-		class BULLET_PORT BlMotorVelocityStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
+		class ANIMAT_PORT MotorVelocityStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			string m_strStructureID;
@@ -30,8 +30,8 @@ namespace BulletAnimatSim
 			float m_fltVelocityReport;
 
 		public:
-			BlMotorVelocityStimulus();
-			virtual ~BlMotorVelocityStimulus();
+			MotorVelocityStimulus();
+			virtual ~MotorVelocityStimulus();
 
 			string StructureID() {return m_strStructureID;};
 			void StructureID(string strVal) {m_strStructureID = strVal;};
@@ -61,4 +61,4 @@ namespace BulletAnimatSim
 		};
 
 	}			//ExternalStimuli
-}				//BulletAnimatSim
+}				//AnimatSim

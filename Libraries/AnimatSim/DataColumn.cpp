@@ -358,6 +358,7 @@ void DataColumn::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into DataColumn Element
 
+	m_strName = oXml.GetChildString("ColumnName", m_strName);
 	TargetID(oXml.GetChildString("TargetID"));
 	DataType(oXml.GetChildString("DataType"));
 	AppendSpaces(oXml.GetChildInt("AppendSpaces", m_iAppendSpaces));

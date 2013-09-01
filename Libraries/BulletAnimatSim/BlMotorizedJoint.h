@@ -11,6 +11,7 @@ namespace BulletAnimatSim
 		protected:
 			MotorizedJoint *m_lpThisMotorJoint;
 			bool m_bMotorOn;
+            bool m_bJointLocked;
 
 			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
@@ -19,10 +20,11 @@ namespace BulletAnimatSim
 			BlMotorizedJoint();
 			virtual ~BlMotorizedJoint();
 
-			virtual void Physics_SetVelocityToDesired();
-			virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
-			virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce);
-			virtual void Physics_MaxForce(float fltVal);
+            //FIX PHYSICS
+            virtual void Physics_SetVelocityToDesired() {};
+            virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce) {};
+            virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce) {};
+            virtual void Physics_MaxForce(float fltVal) {};
 		};
 
 	}			// Environment

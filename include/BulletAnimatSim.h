@@ -145,7 +145,6 @@ using namespace BulletAnimatSim::Visualization;
 
 #include "BlMaterialType.h"
 
-#include "BlMotorVelocityStimulus.h"
 #include "BlForceStimulus.h"
 #include "BlIntersectionEvent.h"
 

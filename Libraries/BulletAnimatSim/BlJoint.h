@@ -29,6 +29,7 @@ namespace BulletAnimatSim
 		protected:
 			btTypedConstraint *m_btJoint;
             BlSimulator *m_lpVsSim;
+            float m_fltPrevJointPos;
 
 			void UpdatePosition();
 
@@ -40,7 +41,7 @@ namespace BulletAnimatSim
 
             virtual bool Physics_IsDefined();
 			virtual void Physics_ResetSimulation();
-			virtual void Physics_CollectData();
+            virtual void Physics_CollectData() {};  //FIX Physics
 
 			virtual btTypedConstraint* Constraint() {return m_btJoint;};
 		};

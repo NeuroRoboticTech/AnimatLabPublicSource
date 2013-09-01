@@ -19,13 +19,13 @@ namespace BulletAnimatSim
 
 BlJoint::BlJoint()
 {
-    //FIX PHYSICS
-	//m_vxJoint = NULL;
-	//m_iCoordID = -1; //-1 if not used.
+	m_btJoint = NULL;
 
     m_lpVsParent = NULL;
 	m_lpVsChild = NULL;
     m_lpVsSim = NULL;
+
+    m_fltPrevJointPos = 0;
 }
 
 BlJoint::~BlJoint()
@@ -45,10 +45,9 @@ BlSimulator *BlJoint::GetBlSimulator()
 
 bool BlJoint::Physics_IsDefined()
 {
-    //FIX PHYSICS
-    //if(m_vxJoint)
-    //    return true;
-    //else
+    if(m_btJoint)
+        return true;
+    else
         return false;
 }
 
@@ -56,47 +55,46 @@ void BlJoint::UpdatePosition()
 {	
     //FIX PHYSICS
 	//Vx::VxReal3 vPos;
-	//m_vxJoint->getPartAttachmentPosition(0, vPos);
+	//m_btJoint->getPartAttachmentPosition(0, vPos);
 
 	//UpdateWorldMatrix();
 	//m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 }
-
-void BlJoint::Physics_CollectData()
-{
-    //FIX PHYSICS
-	//if(m_lpThisJoint && m_vxJoint)
-	//{
-	//	UpdatePosition();
-
-	//	//Only attempt to make these calls if the coordinate ID is a valid number.
-	//	if(m_iCoordID >= 0)
-	//	{
-	//		float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-	//		float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-
-	//		if(m_vxJoint->isAngular(m_iCoordID) == true)
-	//		{
-	//			m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID)); 
-	//			m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity (m_iCoordID));
-	//			m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
-	//		}
-	//		else
-	//		{
-	//			m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
-	//			m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
-	//			m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
-	//		}
-	//	}
-	//}
-}
+//
+//void BlJoint::Physics_CollectData()
+//{
+//	if(m_lpThisJoint && m_btJoint)
+//	{
+//		UpdatePosition();
+//
+//		//Only attempt to make these calls if the coordinate ID is a valid number.
+//		if(m_iCoordID >= 0)
+//		{
+//			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+//			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+//
+//			if(m_btJoint->isAngular(m_iCoordID) == true)
+//			{
+//				m_lpThisJoint->JointPosition(m_btJoint); 
+//				m_lpThisJoint->JointVelocity(m_btJoint->getCoordinateVelocity (m_iCoordID));
+//				m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
+//			}
+//			else
+//			{
+//				m_lpThisJoint->JointPosition(m_btJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
+//				m_lpThisJoint->JointVelocity(m_btJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
+//				m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
+//			}
+//		}
+//	}
+//}
 
 void BlJoint::Physics_ResetSimulation()
 {
     //FIX PHYSICS
- //   if(m_vxJoint)
+ //   if(m_btJoint)
 	//{
-	//	m_vxJoint->resetDynamics();
+	//	m_btJoint->resetDynamics();
 	//	UpdatePosition();
  //       OsgJoint::Physics_ResetSimulation();
 	//}

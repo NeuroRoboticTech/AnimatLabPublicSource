@@ -124,7 +124,7 @@
 <Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
 <Shininess>64</Shininess>
 <Texture/>
-<Position x="0.4" y="-0.4" z="-0.6"/>
+<Position x="0" y="-0.75" z="0"/>
 <Rotation x="0" y="0" z="0"/>
 <DraggerSize>-1</DraggerSize>
 <Type>Sphere</Type>
@@ -155,8 +155,8 @@
 <Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
 <Shininess>64</Shininess>
 <Texture/>
-<Position x="-0.4" y="0.4" z="0.6"/>
-<Rotation x="0" y="0" z="0.75695"/>
+<Position x="0" y="0.75" z="0"/>
+<Rotation x="0" y="0" z="0"/>
 <DraggerSize>0.3</DraggerSize>
 <Type>Hinge</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
@@ -326,7 +326,50 @@
 </Light>
 </Lights>
 </Environment>
-<ExternalStimuli/>
+<ExternalStimuli>
+<Stimulus>
+<ID>aa5deaca-5e00-45cc-81d5-f6370fece630</ID>
+<Name>Stimulus_2</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ModuleName/>
+<Type>MotorVelocity</Type>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<JointID>25dfcd7d-2eb3-410a-b330-c31b681351d3</JointID>
+<StartTime>2</StartTime>
+<EndTime>3</EndTime>
+<Velocity>-0.4</Velocity>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<ID>ef819287-c7a0-436d-9273-77e840a38a0e</ID>
+<Name>Stimulus_1</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ModuleName/>
+<Type>MotorVelocity</Type>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<JointID>25dfcd7d-2eb3-410a-b330-c31b681351d3</JointID>
+<StartTime>0</StartTime>
+<EndTime>1</EndTime>
+<Velocity>0.2</Velocity>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<ID>29373b08-6b05-4889-9464-aba1fece9c41</ID>
+<Name>Stimulus_1</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ModuleName/>
+<Type>MotorVelocity</Type>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<JointID>25dfcd7d-2eb3-410a-b330-c31b681351d3</JointID>
+<StartTime>4</StartTime>
+<EndTime>5</EndTime>
+<Velocity>0</Velocity>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
+</Stimulus>
+</ExternalStimuli>
 <DataCharts>
 <DataChart>
 <ID>86c52e86-9e87-4e6b-b22d-e48ac14925d2</ID>
@@ -337,7 +380,7 @@
 <CollectTimeWindow>-1</CollectTimeWindow>
 <AlwaysActive>False</AlwaysActive>
 <StartTime>0</StartTime>
-<EndTime>2</EndTime>
+<EndTime>8</EndTime>
 <CollectInterval>0.0005</CollectInterval>
 <DataColumns>
 <DataColumn>
@@ -364,6 +407,22 @@
 <DataType>WorldPositionX</DataType>
 <TargetID>31d0b11f-fc22-4a79-a153-e81201452dc7</TargetID>
 </DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>9f4b6411-0794-454a-bf2a-e2a215589e78</ID>
+<ColumnName>Rotation</ColumnName>
+<DataType>JointRotationDeg</DataType>
+<TargetID>25dfcd7d-2eb3-410a-b330-c31b681351d3</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>967ca2a4-5971-48cd-b8b2-96fb32089cf2</ID>
+<ColumnName>Velocity</ColumnName>
+<DataType>JointActualVelocity</DataType>
+<TargetID>25dfcd7d-2eb3-410a-b330-c31b681351d3</TargetID>
+</DataColumn>
 </DataColumns>
 </DataChart>
 </DataCharts>
@@ -374,8 +433,8 @@
 <HudItem>
 <ModuleName/>
 <Type>HudText</Type>
-<Name>d34d7a6c-e2d6-4cdd-b588-b1eedb39471c</Name>
-<ID>d34d7a6c-e2d6-4cdd-b588-b1eedb39471c</ID>
+<Name>f7354064-cc8d-487e-8269-dc7a91d107c4</Name>
+<ID>f7354064-cc8d-487e-8269-dc7a91d107c4</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>

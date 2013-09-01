@@ -70,7 +70,13 @@ namespace BulletAnimatSim
 				virtual void EnableLimits(bool bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();
-			};
+
+			    virtual void Physics_SetVelocityToDesired();
+			    virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
+			    virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce);
+			    virtual void Physics_MaxForce(float fltVal);
+                virtual void Physics_CollectData();
+            };
 
 		}		//Joints
 	}			// Environment

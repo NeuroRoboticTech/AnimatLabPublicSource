@@ -169,9 +169,9 @@
 <Shininess>64</Shininess>
 <Texture/>
 <LocalPosition>
-<X Value="40" Scale="centi" Actual="0.4"/>
-<Y Value="-40" Scale="centi" Actual="-0.4"/>
-<Z Value="-60" Scale="centi" Actual="-0.6"/>
+<X Value="0" Scale="centi" Actual="0"/>
+<Y Value="-75" Scale="centi" Actual="-0.75"/>
+<Z Value="0" Scale="centi" Actual="0"/>
 </LocalPosition>
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
@@ -222,14 +222,14 @@
 <Shininess>64</Shininess>
 <Texture/>
 <LocalPosition>
-<X Value="-40" Scale="centi" Actual="-0.4"/>
-<Y Value="40" Scale="centi" Actual="0.4"/>
-<Z Value="60" Scale="centi" Actual="0.6"/>
+<X Value="0" Scale="centi" Actual="0"/>
+<Y Value="75" Scale="centi" Actual="0.75"/>
+<Z Value="0" Scale="centi" Actual="0"/>
 </LocalPosition>
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
-<Z Value="43.37" Scale="None" Actual="43.37"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
 <DraggerSize Value="0.3" Scale="None" Actual="0.3"/>
 <Type>Hinge</Type>
@@ -421,11 +421,63 @@
 <ToolFormID>86c52e86-9e87-4e6b-b22d-e48ac14925d2</ToolFormID>
 </ToolHolder>
 </ToolViewers>
-<Stimuli/>
+<Stimuli>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Stimulus_2</Name>
+<ID>aa5deaca-5e00-45cc-81d5-f6370fece630</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="3" Scale="None" Actual="3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<PartID>25dfcd7d-2eb3-410a-b330-c31b681351d3</PartID>
+<Velocity Value="-0.4" Scale="None" Actual="-0.4"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Stimulus_1</Name>
+<ID>ef819287-c7a0-436d-9273-77e840a38a0e</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<PartID>25dfcd7d-2eb3-410a-b330-c31b681351d3</PartID>
+<Velocity Value="0.2" Scale="None" Actual="0.2"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Stimulus_1</Name>
+<ID>29373b08-6b05-4889-9464-aba1fece9c41</ID>
+<StartTime Value="4" Scale="None" Actual="4"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
+<PartID>25dfcd7d-2eb3-410a-b330-c31b681351d3</PartID>
+<Velocity Value="0" Scale="None" Actual="0"/>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
+</Stimulus>
+</Stimuli>
 <HudItems>
 <HudItem>
-<Name>d34d7a6c-e2d6-4cdd-b588-b1eedb39471c</Name>
-<ID>d34d7a6c-e2d6-4cdd-b588-b1eedb39471c</ID>
+<Name>f7354064-cc8d-487e-8269-dc7a91d107c4</Name>
+<ID>f7354064-cc8d-487e-8269-dc7a91d107c4</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -519,7 +571,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/31/2013 21:26:21"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/01/2013 11:23:53"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

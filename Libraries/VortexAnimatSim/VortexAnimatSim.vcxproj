@@ -200,7 +200,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsMesh.cpp" />
     <ClCompile Include="VsMeshBase.cpp" />
     <ClCompile Include="VsMotorizedJoint.cpp" />
-    <ClCompile Include="VsMotorVelocityStimulus.cpp" />
     <ClCompile Include="VsOsgGeometry.cpp" />
     <ClCompile Include="VsPlane.cpp" />
     <ClCompile Include="VsPlaneTest.cpp" />
@@ -240,7 +239,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsMesh.h" />
     <ClInclude Include="VsMeshBase.h" />
     <ClInclude Include="VsMotorizedJoint.h" />
-    <ClInclude Include="VsMotorVelocityStimulus.h" />
     <ClInclude Include="VsOsgGeometry.h" />
     <ClInclude Include="VsPlane.h" />
     <ClInclude Include="VsPlaneTest.h" />

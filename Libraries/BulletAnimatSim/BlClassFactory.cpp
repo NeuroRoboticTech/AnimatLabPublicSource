@@ -38,9 +38,7 @@
 
 #include "BlMaterialType.h"
 
-#include "BlMotorVelocityStimulus.h"
 #include "BlForceStimulus.h"
-//#include "VsInverseMuscleCurrent.h"
 
 namespace BulletAnimatSim
 {
@@ -494,7 +492,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "MOTORVELOCITY")
-		lpStimulus = new BlMotorVelocityStimulus;
+		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new BlForceStimulus;
 	else if(strType == "NODEINPUT")

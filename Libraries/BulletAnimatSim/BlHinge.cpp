@@ -230,9 +230,8 @@ void BlHinge::SetupPhysics()
 
 	m_btJoint = m_btHinge;
 
-    //FIX PHYSICS
-	////If the motor is enabled then it will start out with a velocity of	zero.
-	//EnableMotor(m_bEnableMotorInit);
+	//If the motor is enabled then it will start out with a velocity of	zero.
+	EnableMotor(m_bEnableMotorInit);
 
     Hinge::Initialize();
     BlJoint::Initialize();
@@ -248,6 +247,7 @@ void BlHinge::SetLimitValues()
 {
     if(m_btHinge)
     {
+        m_bJointLocked = false;
         float fltLower = m_btHinge->getLowerLimit();
         float fltUpper = m_btHinge->getUpperLimit();
         m_btHinge->setLimit((btScalar) m_lpLowerLimit->LimitPos(), (btScalar) m_lpUpperLimit->LimitPos());
@@ -323,6 +323,105 @@ void BlHinge::UpdateData()
 {
 	Hinge::UpdateData();
 	m_fltRotationDeg = ((m_fltPosition/osg::PI)*180);
+}
+
+void BlHinge::Physics_SetVelocityToDesired()
+{
+	if(m_lpThisMotorJoint->EnableMotor())
+	{			
+		if(m_lpThisMotorJoint->ServoMotor())
+			CalculateServoVelocity();
+		
+		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
+		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
+		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+
+		if(fltDesiredVel>fltMaxVel)
+			fltDesiredVel = fltMaxVel;
+
+		if(fltDesiredVel < -fltMaxVel)
+			fltDesiredVel = -fltMaxVel;
+
+		float fltSetVelocity = fltDesiredVel;
+
+		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
+		m_lpThisMotorJoint->DesiredVelocity(0);
+
+        float fltJointVel = m_lpThisJoint->JointVelocity();
+
+		//Only do anything if the velocity value has changed
+        if(m_btJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
+		{
+			if(fabs(fltSetVelocity) > 1e-4 && m_btJoint)
+				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce);
+            else if(!m_bJointLocked)
+                Physics_EnableLock(true, m_btHinge->getHingeAngle(), fltMaxForce);
+		}
+
+		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+	}
+}
+
+void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
+{
+    if (m_btHinge)
+	{ 		
+		if(bOn)
+		{
+            m_bJointLocked = true;
+            m_btHinge->setLimit(fltPosition, fltPosition);
+		}
+		else if (m_bMotorOn)
+			Physics_EnableMotor(true, 0, fltMaxLockForce);
+		else
+            SetLimitValues();
+	}
+}
+
+void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
+{
+    if (m_btHinge)
+	{   
+		if(bOn)
+        {
+            SetLimitValues();
+			m_btHinge->enableAngularMotor(true, fltDesiredVelocity, fltMaxForce);
+        }
+		else
+			m_btHinge->enableAngularMotor(false, fltDesiredVelocity, fltMaxForce);
+
+		m_bMotorOn = bOn;
+	}
+}
+
+void BlHinge::Physics_MaxForce(float fltVal)
+{
+    if(m_btHinge && m_bMotorOn)
+    {
+	    float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
+	    float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+
+        m_btHinge->enableAngularMotor(true, fltDesiredVel, fltMaxForce);
+    }
+}
+
+
+void BlHinge::Physics_CollectData()
+{
+	if(m_lpThisJoint && m_btJoint)
+	{
+		UpdatePosition();
+
+        float fltCurrentJointPos = m_btHinge->getHingeAngle();
+        float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/m_lpSim->PhysicsTimeStep();
+
+        m_fltPrevJointPos = fltCurrentJointPos;
+		m_lpThisJoint->JointPosition(fltCurrentJointPos); 
+		m_lpThisJoint->JointVelocity(fltJointVel);
+
+        //FIX PHYSICS
+		//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
+	}
 }
 
 		}		//Joints

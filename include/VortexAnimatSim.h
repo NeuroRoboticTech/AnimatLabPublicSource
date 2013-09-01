@@ -187,12 +187,7 @@ using namespace Vx;
 #include "VsSimulator.h"
 
 #include "VsMaterialType.h"
-//
-//#include "VsVideoKeyFrame.h"
-//#include "VsSnapshotKeyFrame.h"
-//#include "VsSimulationRecorder.h"
 
-#include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
 #include "VsIntersectionEvent.h"
 

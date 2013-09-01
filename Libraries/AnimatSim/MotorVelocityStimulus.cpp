@@ -1,19 +1,51 @@
 /**
-\file	VsMotorVelocityStimulus.cpp
+\file	MotorVelocityStimulus.cpp
 
 \brief	Implements the vs motor velocity stimulus class.
 **/
 
 #include "StdAfx.h"
 
-#include "VsJoint.h"
-#include "VsMotorizedJoint.h"
-#include "VsRigidBody.h"
-#include "VsSimulator.h"
+#include "StdAfx.h"
+#include "IMovableItemCallback.h"
+#include "ISimGUICallback.h"
+#include "AnimatBase.h"
 
-#include "VsMotorVelocityStimulus.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "Gain.h"
+#include "Node.h"
+#include "IPhysicsMovableItem.h"
+#include "IPhysicsBody.h"
+#include "BoundingBox.h"
+#include "MovableItem.h"
+#include "BodyPart.h"
+#include "Joint.h"
+#include "MotorizedJoint.h"
+#include "ReceptiveField.h"
+#include "ContactSensor.h"
+#include "RigidBody.h"
+#include "Structure.h"
+#include "NeuralModule.h"
+#include "Adapter.h"
+#include "NervousSystem.h"
+#include "Organism.h"
+#include "ActivatedItem.h"
+#include "ActivatedItemMgr.h"
+#include "DataChartMgr.h"
+#include "ExternalStimulus.h"
+#include "ExternalStimuliMgr.h"
+#include "KeyFrame.h"
+#include "SimulationRecorder.h"
+#include "OdorType.h"
+#include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
+#include "Simulator.h"
 
-namespace VortexAnimatSim
+#include "MotorVelocityStimulus.h"
+
+namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
@@ -23,7 +55,7 @@ namespace VortexAnimatSim
 \author	dcofer
 \date	4/3/2011
 **/
-VsMotorVelocityStimulus::VsMotorVelocityStimulus()
+MotorVelocityStimulus::MotorVelocityStimulus()
 {
 	m_lpJoint = NULL;
 	m_lpEval = NULL;
@@ -40,7 +72,7 @@ VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 \author	dcofer
 \date	4/3/2011
 **/
-VsMotorVelocityStimulus::~VsMotorVelocityStimulus()
+MotorVelocityStimulus::~MotorVelocityStimulus()
 {
 
 try
@@ -49,7 +81,7 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, false, true);}
+{Std_TraceMsg(0, "Caught Error in desctructor of MotorVelocityStimulus\r\n", "", -1, false, true);}
 }
 
 /**
@@ -60,7 +92,7 @@ catch(...)
 
 \param	strVal	The post-fix velocity equation string. 
 **/
-void VsMotorVelocityStimulus::VelocityEquation(string strVal)
+void MotorVelocityStimulus::VelocityEquation(string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -75,7 +107,7 @@ void VsMotorVelocityStimulus::VelocityEquation(string strVal)
 	m_lpEval->Equation(m_strVelocityEquation);
 }
 
-void VsMotorVelocityStimulus::ResetSimulation()
+void MotorVelocityStimulus::ResetSimulation()
 {
 	ExternalStimulus::ResetSimulation();
 
@@ -83,7 +115,7 @@ void VsMotorVelocityStimulus::ResetSimulation()
 	m_fltVelocityReport = 0;
 }
 
-void VsMotorVelocityStimulus::Initialize()
+void MotorVelocityStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
@@ -96,7 +128,7 @@ void VsMotorVelocityStimulus::Initialize()
 	m_lpVelocity = m_lpJoint->GetDataPointer("JOINTACTUALVELOCITY");
 }
 
-void VsMotorVelocityStimulus::Activate()
+void MotorVelocityStimulus::Activate()
 {
 	ExternalStimulus::Activate();
 
@@ -108,7 +140,7 @@ void VsMotorVelocityStimulus::Activate()
 }
 
 
-void VsMotorVelocityStimulus::StepSimulation()
+void MotorVelocityStimulus::StepSimulation()
 {
 	//float fltVel=0;
 
@@ -147,7 +179,7 @@ void VsMotorVelocityStimulus::StepSimulation()
 }
 
 
-void VsMotorVelocityStimulus::Deactivate()
+void MotorVelocityStimulus::Deactivate()
 {
 	ExternalStimulus::Deactivate();
 
@@ -159,7 +191,7 @@ void VsMotorVelocityStimulus::Deactivate()
 	}
 }
 
-float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
+float *MotorVelocityStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -172,7 +204,7 @@ float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool MotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -198,7 +230,7 @@ bool VsMotorVelocityStimulus::SetData(const string &strDataType, const string &s
 	return false;
 }
 
-void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 
@@ -212,7 +244,7 @@ void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdA
 	aryTypes.Add("Boolean");
 }
 
-void VsMotorVelocityStimulus::Load(CStdXml &oXml)
+void MotorVelocityStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);
 
@@ -233,7 +265,7 @@ void VsMotorVelocityStimulus::Load(CStdXml &oXml)
 }
 
 	}			//ExternalStimuli
-}				//VortexAnimatSim
+}				//AnimatSim
 
 
 

@@ -19,6 +19,7 @@ BlMotorizedJoint::BlMotorizedJoint()
 {
 	m_lpThisMotorJoint = NULL;
 	m_bMotorOn = false;
+    m_bJointLocked = false;
 }
 
 BlMotorizedJoint::~BlMotorizedJoint()
@@ -40,9 +41,8 @@ void BlMotorizedJoint::SetThisPointers()
 //It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
 void BlMotorizedJoint::CalculateServoVelocity()
 {
-    //FIX PHYSICS
-	//if(!m_vxJoint)
-	//	return;
+	if(!m_btJoint)
+		return;
 
 	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredVelocity());
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
@@ -54,97 +54,6 @@ void BlMotorizedJoint::CalculateServoVelocity()
 	}
 	else
 		m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
-}
-
-
-void BlMotorizedJoint::Physics_SetVelocityToDesired()
-{
-	if(m_lpThisMotorJoint->EnableMotor())
-	{			
-		if(m_lpThisMotorJoint->ServoMotor())
-			CalculateServoVelocity();
-		
-		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
-		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
-		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
-
-		if(fltDesiredVel>fltMaxVel)
-			fltDesiredVel = fltMaxVel;
-
-		if(fltDesiredVel < -fltMaxVel)
-			fltDesiredVel = -fltMaxVel;
-
-		float fltSetVelocity = fltDesiredVel;
-
-		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
-		m_lpThisMotorJoint->DesiredVelocity(0);
-
-		//Only do anything if the velocity value has changed
-        //FIX PHYSICS
-  //      if(m_vxJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
-		//{
-		//	if(fabs(fltSetVelocity) > 1e-4 && m_vxJoint)
-		//	{
-		//		if(m_vxJoint->getControl(m_iCoordID) == Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
-		//			Physics_EnableMotor(true, fltSetVelocity, fltMaxForce);
-		//		else
-		//			m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
-		//	}
-		//	else
-		//	{ 
-		//		if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
-		//			m_lpThisMotorJoint->EnableLock(true, m_vxJoint->getCoordinateCurrentPosition(m_iCoordID), fltMaxForce);
-		//	}
-		//}
-
-		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
-	}
-}
-
-void BlMotorizedJoint::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
-{
-    //FIX PHYSICS
- //   if (m_vxJoint)
-	//{ 		
-	//	if(bOn)
-	//	{
-	//		//set the lock parameters
-	//		m_vxJoint->setLockParameters(m_iCoordID, fltPosition, fltMaxLockForce);
-	//		//turn on the lock (disabling motorized or free mode)
-	//		m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlLocked);
-	//	}
-	//	else if (m_bMotorOn)
-	//		Physics_EnableMotor(true, 0, fltMaxLockForce);
-	//	else
-	//		m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlFree);
-	//}
-}
-
-void BlMotorizedJoint::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
-{
-    //FIX PHYSICS
- //   if (m_vxJoint)
-	//{   
-	//	if(bOn)
-	//	{
-	//		if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlMotorized)
-	//			m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlMotorized);
-
-	//		m_vxJoint->setMotorMaximumForce(m_iCoordID, fltMaxForce);
-	//		m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltDesiredVelocity);
-	//	}
-	//	else
-	//		m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlFree);
-
-	//	m_bMotorOn = bOn;
-	//}
-}
-
-void BlMotorizedJoint::Physics_MaxForce(float fltVal)
-{
-    //FIX PHYSICS
-  //  if(m_vxJoint)
-		//m_vxJoint->setMotorMaximumForce(m_iCoordID, fltVal);
 }
 
 	}			// Environment

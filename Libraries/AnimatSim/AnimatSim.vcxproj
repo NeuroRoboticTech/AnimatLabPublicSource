@@ -228,6 +228,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="MemoryChart.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MotorizedJoint.cpp" />
+    <ClCompile Include="MotorVelocityStimulus.cpp" />
     <ClCompile Include="Mouth.cpp" />
     <ClCompile Include="MovableItem.cpp" />
     <ClCompile Include="MuscleBase.cpp" />
@@ -323,6 +324,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="MemoryChart.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MotorizedJoint.h" />
+    <ClInclude Include="MotorVelocityStimulus.h" />
     <ClInclude Include="Mouth.h" />
     <ClInclude Include="MovableItem.h" />
     <ClInclude Include="MuscleBase.h" />
