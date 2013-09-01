@@ -29,8 +29,7 @@ namespace BulletAnimatSim
 BlUniversal::BlUniversal()
 {
 	SetThisPointers();
-    //FIX PHYSICS
-	//m_vxSocket = NULL;
+ 	m_btSocket = NULL;
 }
 
 /**
@@ -53,67 +52,51 @@ BlUniversal::~BlUniversal()
 void BlUniversal::DeletePhysics()
 {
     //FIX PHYSICS
-	//if(!m_vxSocket)
+	//if(!m_btSocket)
 	//	return;
 
 	//if(GetBlSimulator() && GetBlSimulator()->Universe())
 	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_vxSocket);
-	//	delete m_vxSocket;
+	//	GetBlSimulator()->Universe()->removeConstraint(m_btSocket);
+	//	delete m_btSocket;
 
 	//	if(m_lpChild && m_lpParent)
 	//		m_lpChild->EnableCollision(m_lpParent);
 	//}
 
-	//m_vxSocket = NULL;
+	//m_btSocket = NULL;
 	//m_vxJoint = NULL;
 }
 
 void BlUniversal::SetupPhysics()
 {
-    //FIX PHYSICS
-	//if(m_vxSocket)
-	//	DeletePhysics();
+	if(m_btSocket)
+		DeletePhysics();
 
-	//if(!m_lpParent)
-	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	if(!m_lpParent)
+		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	//if(!m_lpChild)
-	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	if(!m_lpChild)
+		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	//if(!lpVsParent)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!lpVsParent)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	//if(!lpVsChild)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!lpVsChild)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//CStdFPoint vGlobal = this->GetOSGWorldCoords();
-	//
-	//Vx::VxReal44 vMT;
-	//VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
-	//Vx::VxTransform vTrans(vMT);
-	//Vx::VxReal3 vxRot;
-	//vTrans.getRotationEulerAngles(vxRot);
+	CStdFPoint vGlobal = this->GetOSGWorldCoords();
+    btVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
+	btVector3 axis1(1, 0, 0), axis2(0, 0, 1);
 
-	//CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
+	m_btSocket = new btUniversalConstraint(*lpVsParent->Part(), *lpVsChild->Part(), pos, axis1, axis2); 
 
- //   VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	//VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+    GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
+    m_btSocket->setDbgDrawSize(btScalar(5.f));
 
-	////m_vxSocket = new VxUniversal(lpVsParent->Part(), lpVsChild->Part(), pos.v, VxVector3(1, 0, 0), VxVector3(0, 1, 0)); 
-	//m_vxSocket = new VxHomokinetic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-	//m_vxSocket->setName(m_strID.c_str());
-
-	//GetBlSimulator()->Universe()->addConstraint(m_vxSocket);
-
-	////Disable collisions between this object and its parent
-	//m_lpChild->DisableCollision(m_lpParent);
-
-	//m_vxJoint = m_vxSocket;
-	//m_iCoordID = -1; //Not used fo
+	m_btJoint = m_btSocket;
 }
 
 void BlUniversal::CreateJoint()

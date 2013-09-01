@@ -644,52 +644,50 @@ void BlRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 
 void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
-    //FIX PHYSICS
-	//if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
-	//{
-	//	VxReal3 fltF, fltP;
-	//	if(bScaleUnits)
-	//	{
-	//		fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//		fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//		fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//	}
-	//	else
-	//	{
-	//		fltF[0] = fltFx;
-	//		fltF[1] = fltFy;
-	//		fltF[2] = fltFz;
-	//	}
+	if(m_btPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
+	{
+		btVector3 fltF, fltP;
+		if(bScaleUnits)
+		{
+			fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+		}
+		else
+		{
+			fltF[0] = fltFx;
+			fltF[1] = fltFy;
+			fltF[2] = fltFz;
+		}
 
-	//	fltP[0] = fltPx;
-	//	fltP[1] = fltPy;
-	//	fltP[2] = fltPz;
+		fltP[0] = fltPx;
+		fltP[1] = fltPy;
+		fltP[2] = fltPz;
 
-	//	m_vxPart->addForceAtPosition(fltF, fltP);
-	//}
+        m_btPart->applyForce(fltF, fltP);
+	}
 }
 
 void BlRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits)
 {
-    //FIX PHYSICS
-	//if(m_vxPart && (fltTx || fltTy || fltTz))
-	//{
-	//	VxReal3 fltT;
-	//	if(bScaleUnits)
-	//	{
-	//		fltT[0] = fltTx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//		fltT[1] = fltTy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//		fltT[2] = fltTz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
-	//	}
-	//	else
-	//	{
-	//		fltT[0] = fltTx;
-	//		fltT[1] = fltTy;
-	//		fltT[2] = fltTz;
-	//	}
+	if(m_btPart && (fltTx || fltTy || fltTz))
+	{
+		btVector3 fltT;
+		if(bScaleUnits)
+		{
+			fltT[0] = fltTx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltT[1] = fltTy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltT[2] = fltTz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+		}
+		else
+		{
+			fltT[0] = fltTx;
+			fltT[1] = fltTy;
+			fltT[2] = fltTz;
+		}
 
-	//	m_vxPart->addTorque(fltT);  
-	//}
+		m_btPart->applyTorque(fltT);  
+	}
 }
 
 CStdFPoint BlRigidBody::Physics_GetVelocityAtPoint(float x, float y, float z)
@@ -730,10 +728,9 @@ float BlRigidBody::Physics_GetMass()
 
 bool BlRigidBody::Physics_HasCollisionGeometry()
 {
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//	return true;
-	//else
+	if(m_btCollisionShape)
+		return true;
+	else
 		return false;
 }
 
