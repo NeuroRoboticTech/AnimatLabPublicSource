@@ -21,7 +21,7 @@ namespace OsgAnimatSim
 
 			osg::Matrix m_osgWorldMatrix;
 
-			osg::ref_ptr<osg::Group> m_osgParent;
+			osg::ref_ptr<osg::MatrixTransform> m_osgParent;
 			osg::ref_ptr<osgManipulator::Selection> m_osgMT;
 			osg::ref_ptr<osg::Geometry> m_osgGeometry;
 			osg::ref_ptr<osg::Group> m_osgRoot;
@@ -87,7 +87,7 @@ namespace OsgAnimatSim
 
             virtual OsgSimulator *GetOsgSimulator();
 			virtual OsgMovableItem *VsParent();
-			virtual osg::Group *ParentOSG() = 0;
+			virtual osg::MatrixTransform *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};
 			virtual osg::Matrix LocalMatrix() {return m_osgLocalMatrix;};

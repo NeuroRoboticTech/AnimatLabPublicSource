@@ -59,7 +59,7 @@ void OsgLight::SetThisPointers()
 		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpThisLI, " + m_lpThisAB->Name());
 }
 
-osg::Group *OsgLight::ParentOSG()
+osg::MatrixTransform *OsgLight::ParentOSG()
 {
 	return GetOsgSimulator()->OSGRoot();
 }

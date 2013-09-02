@@ -70,7 +70,7 @@ osg::Vec3d OsgJoint::NormalizeAxis(CStdFPoint vLocalRot)
 	return vNorm;
 }
 
-osg::Group *OsgJoint::ParentOSG()
+osg::MatrixTransform *OsgJoint::ParentOSG()
 {
 	if(m_lpVsParent)
 		return m_lpVsParent->GetMatrixTransform();
@@ -78,7 +78,7 @@ osg::Group *OsgJoint::ParentOSG()
 	return NULL;
 }
 
-osg::Group *OsgJoint::ChildOSG()
+osg::MatrixTransform *OsgJoint::ChildOSG()
 {
 	if(m_lpVsChild)
 		return m_lpVsChild->GetMatrixTransform();

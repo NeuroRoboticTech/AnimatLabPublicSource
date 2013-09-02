@@ -7,7 +7,7 @@
 	<SetSimEnd>False</SetSimEnd>
 	<APIFile/>
 	<SimEndTime>1</SimEndTime>
-	<PlaybackControlMode>2</PlaybackControlMode>
+	<PlaybackControlMode>0</PlaybackControlMode>
 	<PresetPlaybackTimeStep>0.1</PresetPlaybackTimeStep>
 	<Environment>
 		<PhysicsTimeStep>0.0005</PhysicsTimeStep>

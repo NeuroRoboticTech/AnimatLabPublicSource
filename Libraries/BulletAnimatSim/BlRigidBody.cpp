@@ -371,6 +371,91 @@ void BlRigidBody::RemoveStaticPart()
 	}
 }
 
+void BlRigidBody::SetupGraphics()
+{
+	m_osgParent = ParentOSG();
+
+	if(m_osgParent.valid())
+	{
+		BuildLocalMatrix();
+
+		SetColor(*m_lpThisMI->Ambient(), *m_lpThisMI->Diffuse(), *m_lpThisMI->Specular(), m_lpThisMI->Shininess());
+		SetTexture(m_lpThisMI->Texture());
+		SetCulling();
+		SetVisible(m_lpThisMI->IsVisible());
+
+		//Add it to the scene graph.
+        GetBlSimulator()->OSGRoot()->addChild(m_osgRoot.get());
+		//m_osgParent->addChild(m_osgRoot.get());
+
+		//Set the position with the world coordinates.
+		Physics_UpdateAbsolutePosition();
+
+		//We need to set the UserData on the OSG side so we can do picking.
+		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
+		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
+		osgVisitor->traverse(*m_osgMT);
+	}
+}
+
+void BlRigidBody::UpdateWorldMatrix()
+{
+    if(m_osgMT.valid())
+    	m_osgWorldMatrix = m_osgMT->getMatrix();
+}
+
+void  BlRigidBody::BuildLocalMatrix()
+{
+	//build the local matrix
+	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
+	{
+		if(m_lpThisRB->IsRoot())
+			BlRigidBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+		else
+			BlRigidBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+	}
+}
+
+void BlRigidBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+{
+	if(!m_osgMT.valid())
+	{
+		m_osgMT = new osgManipulator::Selection;
+		m_osgMT->setName(strName + "_MT");
+	}
+
+	if(!m_osgRoot.valid())
+	{
+		m_osgRoot = new osg::Group;
+		m_osgRoot->setName(strName + "_Root");
+	}
+
+	if(!m_osgRoot->containsNode(m_osgMT.get()))
+		m_osgRoot->addChild(m_osgMT.get());
+
+	osg::Matrix mtGlobal = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
+
+
+	LocalMatrix(mtGlobal);
+
+	//set the matrix to the matrix transform node
+	m_osgMT->setMatrix(m_osgLocalMatrix);	
+
+	//First create the node group. The reason for this is so that we can add other decorated groups on to this node.
+	//This is used to add the selected overlays.
+	if(!m_osgNodeGroup.valid() && m_osgNode.valid())
+	{
+		m_osgNodeGroup = new osg::Group();
+		m_osgNodeGroup->addChild(m_osgNode.get());		
+		m_osgNodeGroup->setName(strName + "_NodeGroup");
+		
+ 		m_osgMT->addChild(m_osgNodeGroup.get());
+	
+		CreateSelectedGraphics(strName);
+	}
+}
+
+
 void BlRigidBody::ResetStaticCollisionGeom()
 {
 	if(m_osgMT.valid() && m_lpThisRB && m_lpThisRB->Parent())

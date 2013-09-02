@@ -89,7 +89,7 @@ namespace OsgAnimatSim
 			OsgRigidBody();
 			virtual ~OsgRigidBody();
 
-			virtual osg::Group *ParentOSG();
+			virtual osg::MatrixTransform *ParentOSG();
 
 			virtual void SetupPhysics();
 

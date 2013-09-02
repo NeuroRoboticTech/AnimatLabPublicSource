@@ -76,8 +76,8 @@ namespace OsgAnimatSim
 			OsgJoint();
 			virtual ~OsgJoint();
 
-			virtual osg::Group *ParentOSG();
-			virtual osg::Group *ChildOSG();
+			virtual osg::MatrixTransform *ParentOSG();
+			virtual osg::MatrixTransform *ChildOSG();
 
 			virtual void SetAlpha();
 

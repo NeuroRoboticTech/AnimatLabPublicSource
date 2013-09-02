@@ -52,7 +52,7 @@ namespace OsgAnimatSim
 			virtual void Diffuse(CStdColor &aryColor);
 			virtual void Specular(CStdColor &aryColor);
 
-			virtual osg::Group *ParentOSG();
+			virtual osg::MatrixTransform *ParentOSG();
 			virtual void Create();
 			virtual void ResetSimulation();
 			virtual void Physics_Resize();

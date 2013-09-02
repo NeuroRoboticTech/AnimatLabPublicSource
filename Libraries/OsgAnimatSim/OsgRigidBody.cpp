@@ -213,7 +213,7 @@ by moving the root body.
 
 \return	Pointer to the OSG group node of the parent.
 **/
-osg::Group *OsgRigidBody::ParentOSG()
+osg::MatrixTransform *OsgRigidBody::ParentOSG()
 {
 	OsgMovableItem *lpItem = NULL;
 

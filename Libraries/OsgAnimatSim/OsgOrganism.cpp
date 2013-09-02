@@ -56,7 +56,7 @@ void OsgOrganism::SetThisPointers()
 		THROW_TEXT_ERROR(Osg_Err_lThisPointerNotDefined, Osg_Err_strThisPointerNotDefined, "m_lpThisOG, " + m_lpThisAB->Name());
 }
 
-osg::Group *OsgOrganism::ParentOSG()
+osg::MatrixTransform *OsgOrganism::ParentOSG()
 {
 	return GetOsgSimulator()->OSGRoot();
 }

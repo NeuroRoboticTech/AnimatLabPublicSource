@@ -189,6 +189,14 @@ void BlHinge::DeletePhysics()
 	//m_vxJoint = NULL;
 }
 
+void BlHinge::Physics_UpdateAbsolutePosition()
+{
+	//If we are here then we did not have a physics component, just and OSG one.
+	CStdFPoint vPos = OsgMovableItem::GetOSGWorldCoords();
+	vPos.ClearNearZero();
+	m_lpThisMI->AbsolutePosition(vPos.x, vPos.y, vPos.z);
+}
+
 void BlHinge::SetupPhysics()
 {
 	if(m_btHinge)
@@ -208,7 +216,7 @@ void BlHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	CStdFPoint vHingePos = m_lpThisJoint->AbsolutePosition();
+	CStdFPoint vHingePos = lpVsChild->GetOSGWorldCoords() + m_lpThisJoint->Position();
 	CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
 	CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
 

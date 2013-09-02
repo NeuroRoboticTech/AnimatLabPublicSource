@@ -58,7 +58,8 @@ namespace BulletAnimatSim
 
 			virtual void ProcessContacts();
 
-			virtual void DeletePhysics();
+            virtual void SetupGraphics();
+            virtual void DeletePhysics();
 			virtual void CreateSensorPart();
 			virtual void CreateStaticPart();
 			virtual void CreateDynamicPart();
@@ -72,6 +73,8 @@ namespace BulletAnimatSim
             //FIX PHYSICS
             //virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
             //virtual void WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos);
+
+            virtual void UpdateWorldMatrix();
 
         public:
 			BlRigidBody();
@@ -106,6 +109,9 @@ namespace BulletAnimatSim
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
 			virtual bool Physics_HasCollisionGeometry();
+
+            virtual void  BuildLocalMatrix();
+            virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
 		};
 
 	}			// Environment

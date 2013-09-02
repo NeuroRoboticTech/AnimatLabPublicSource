@@ -35,7 +35,7 @@ namespace OsgAnimatSim
 
 			virtual void Body(RigidBody *lpBody);
 
-			virtual osg::Group *ParentOSG();
+			virtual osg::MatrixTransform *ParentOSG();
 			virtual void Create();
 			virtual void ResetSimulation();
 			virtual void Physics_Resize() {};
