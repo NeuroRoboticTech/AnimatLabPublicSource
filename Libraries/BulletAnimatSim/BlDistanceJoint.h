@@ -16,9 +16,8 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlDistanceJoint : public BulletAnimatSim::Environment::BlJoint, public AnimatSim::Environment::Joint     
 			{
 			protected:
-				/// The vortex socket class.
-                 //FIX PHYSICS
-				//Vx::VxDistanceJoint *m_vxDistance;
+				/// The bullet socket class.
+				btGeneric6DofConstraint *m_btDistance;
 
 				virtual void SetupGraphics();
 				virtual void SetupPhysics();

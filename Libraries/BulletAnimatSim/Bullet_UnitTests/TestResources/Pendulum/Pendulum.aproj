@@ -12,8 +12,8 @@
 <SetSimEnd>False</SetSimEnd>
 <APIFile/>
 <SimEndTime Value="1" Scale="None" Actual="1"/>
-<PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
-<PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
+<PlaybackControlMode>UsePresetValue</PlaybackControlMode>
+<PresetPlaybackTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <Environment>
 <PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
@@ -69,6 +69,98 @@
 <Organisms/>
 <Structures>
 <Structure>
+<Name>Structure_2</Name>
+<ID>0677a975-5a94-4cce-9bf3-4d20ca4d2207</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>aad958d6-9a92-4183-8229-bda3855556a5</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>0</Joints>
+<RecFields>0</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Diffuse Red="1" Green="0.501961" Blue="0.501961" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="-90" Scale="None" Actual="-90"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Plane</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<FoodSource>False</FoodSource>
+<Size>
+<X Value="0.1" Scale="Kilo" Actual="100"/>
+<Y Value="0.1" Scale="Kilo" Actual="100"/>
+</Size>
+<WidthSegments>1</WidthSegments>
+<LengthSegments>1</LengthSegments>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>
+<Structure>
 <Name>Structure_1</Name>
 <ID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</ID>
 <Description/>
@@ -87,7 +179,7 @@
 <Texture/>
 <LocalPosition>
 <X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
+<Y Value="5" Scale="None" Actual="5"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
@@ -149,7 +241,7 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </COM>
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
-<Freeze>True</Freeze>
+<Freeze>False</Freeze>
 <ChildBodies>
 <RigidBody>
 <Name>Body_1</Name>
@@ -476,8 +568,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>f7354064-cc8d-487e-8269-dc7a91d107c4</Name>
-<ID>f7354064-cc8d-487e-8269-dc7a91d107c4</ID>
+<Name>0fca86dc-47bc-4efd-aa07-4d0ce56e0f6e</Name>
+<ID>0fca86dc-47bc-4efd-aa07-4d0ce56e0f6e</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -571,7 +663,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/01/2013 11:23:53"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/02/2013 06:43:16"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -1004,7 +1096,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="3" Space="100"&gt;
-      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;d67fdf95-5588-49a6-b376-3d2153a67987&lt;/ID&gt;
@@ -1019,7 +1111,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;86c52e86-9e87-4e6b-b22d-e48ac14925d2&lt;/ID&gt;

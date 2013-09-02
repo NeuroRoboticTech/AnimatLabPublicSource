@@ -24,8 +24,7 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The vortex socket class.
-                //FIX PHYSICS
-				//Vx::VxRPRO *m_vxSocket;
+				btGeneric6DofConstraint *m_btSocket;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();

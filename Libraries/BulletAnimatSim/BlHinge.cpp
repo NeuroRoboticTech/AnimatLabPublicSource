@@ -217,12 +217,16 @@ void BlHinge::SetupPhysics()
 
     btVector3 vParentRelPos((btScalar) vRelativeToParent.x, (btScalar) vRelativeToParent.y, (btScalar)  vRelativeToParent.z); 
     btVector3 vChildRelPos((btScalar) vRelativeToChild.x, (btScalar) vRelativeToChild.y, (btScalar)  vRelativeToChild.z); 
+    //btVector3 vParentRelPos((btScalar) vHingePos.x, (btScalar) vHingePos.y, (btScalar)  vHingePos.z); 
+   // btVector3 vChildRelPos((btScalar) vChildPos.x, (btScalar) vChildPos.y, (btScalar)  vChildPos.z); 
 
     CStdFPoint vLocalRot = EulerRotationFromMatrix(this->GetOSGWorldMatrix());
 	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	btVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
-
-	m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), vParentRelPos, vChildRelPos, axis, axis); 
+	//btVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	btVector3 axis1((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	btVector3 axis2(1, 0, 0);
+   
+	m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), vParentRelPos, vChildRelPos, axis1, axis2); 
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 
 	GetBlSimulator()->DynamicsWorld()->addConstraint(m_btHinge, true);

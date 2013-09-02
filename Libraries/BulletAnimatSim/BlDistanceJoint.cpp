@@ -28,8 +28,7 @@ namespace BulletAnimatSim
 BlDistanceJoint::BlDistanceJoint()
 {
 	SetThisPointers();
-    //FIX PHYSICS
-	//m_vxDistance = NULL;
+	m_btDistance = NULL;
 }
 
 /**
@@ -64,56 +63,58 @@ void BlDistanceJoint::SetupGraphics()
 void BlDistanceJoint::DeletePhysics()
 {
      //FIX PHYSICS
-	//if(!m_vxDistance)
+	//if(!m_btDistance)
 	//	return;
 
 	//if(GetBlSimulator() && GetBlSimulator()->Universe())
 	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_vxDistance);
-	//	delete m_vxDistance;
+	//	GetBlSimulator()->Universe()->removeConstraint(m_btDistance);
+	//	delete m_btDistance;
 
 	//	if(m_lpChild && m_lpParent)
 	//		m_lpChild->EnableCollision(m_lpParent);
 	//}
 
-	//m_vxDistance = NULL;
+	//m_btDistance = NULL;
 	//m_vxJoint = NULL;
 }
 
 void BlDistanceJoint::SetupPhysics()
 {
     //FIX PHYSICS
-	//if(m_vxDistance)
-	//	DeletePhysics();
+	if(m_btDistance)
+		DeletePhysics();
 
-	//if(!m_lpParent)
-	//	THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	if(!m_lpParent)
+		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	//if(!m_lpChild)
-	//	THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+	if(!m_lpChild)
+		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	//BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	//if(!lpVsParent)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!lpVsParent)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	//if(!lpVsChild)
-	//	THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!lpVsChild)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
-	//CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
-	//float fltDistance = Std_CalculateDistance(vParentPos, vChildPos);
+    //Need to calculate the matrix transform for the joint relative to the child also.
+    osg::Matrix jointMT = this->GetOSGWorldMatrix();
+    osg::Matrix parentMT = lpVsParent->GetOSGWorldMatrix();
+    osg::Matrix osgJointRelParent = jointMT * osg::Matrix::inverse(parentMT);
 
-	//m_vxDistance = new VxDistanceJoint(lpVsParent->Part(), lpVsChild->Part(), fltDistance);
-	//m_vxDistance->setName(m_strID.c_str());
+    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
+    btTransform tmJointRelChild = osgbCollision::asBtTransform(m_osgMT->getMatrix());
 
-	//GetBlSimulator()->Universe()->addConstraint(m_vxDistance);
+	m_btDistance = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, true); 
 
-	////Disable collisions between this object and its parent
-	//m_lpChild->DisableCollision(m_lpParent);
+    GetBlSimulator()->DynamicsWorld()->addConstraint(m_btDistance, true);
+    m_btDistance->setDbgDrawSize(btScalar(5.f));
 
-	//m_vxJoint = m_vxDistance;
-	//m_iCoordID = -1; //Not used fo
+    //m_btDistance->set
+
+	m_btJoint = m_btDistance;
 }
 
 void BlDistanceJoint::CreateJoint()
