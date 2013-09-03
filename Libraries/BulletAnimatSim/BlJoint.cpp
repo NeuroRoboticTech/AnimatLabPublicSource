@@ -74,7 +74,7 @@ void BlJoint::Physics_CollectData()
 
 		if(!m_lpThisJoint->UsesRadians())
 		{
-            fltCurrentJointPos * fltDistanceUnits;
+            fltCurrentJointPos *= fltDistanceUnits;
 			//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
 		}
 

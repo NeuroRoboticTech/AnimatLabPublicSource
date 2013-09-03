@@ -248,6 +248,14 @@ void OsgRigidBody::SetupPhysics()
 	}
 }
 
+bool OsgRigidBody::AddOsgNodeToParent()
+{
+	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor())
+        return true;
+    else
+        return false;
+}
+
 float *OsgRigidBody::Physics_GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);

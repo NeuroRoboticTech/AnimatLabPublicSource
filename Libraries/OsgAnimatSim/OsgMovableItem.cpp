@@ -263,8 +263,13 @@ void OsgMovableItem::SetupGraphics()
 		SetCulling();
 		SetVisible(m_lpThisMI->IsVisible());
 
-		//Add it to the scene graph.
-		m_osgParent->addChild(m_osgRoot.get());
+		//Add it to the scene graph after checking if we add it to the
+        //parent node or the osg root node. For dynamic rigid bodies we add
+        //to the root node, for sensors, graphics, and joints we add to parent.
+        if(AddOsgNodeToParent())
+    		m_osgParent->addChild(m_osgRoot.get());
+        else
+            GetOsgSimulator()->OSGRoot()->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
 		Physics_UpdateAbsolutePosition();
@@ -324,10 +329,18 @@ osg::Matrix OsgMovableItem::GetParentWorldMatrix()
 
 void OsgMovableItem::UpdateWorldMatrix()
 {
-	osg::Matrix osgParentMatrix = GetParentWorldMatrix();
+    if(AddOsgNodeToParent())
+    {
+	    osg::Matrix osgParentMatrix = GetParentWorldMatrix();
 
-	//Multiply the two matrices together to get the new world location.
-	m_osgWorldMatrix = m_osgFinalMatrix * osgParentMatrix;
+	    //Multiply the two matrices together to get the new world location.
+	    m_osgWorldMatrix = m_osgFinalMatrix * osgParentMatrix;
+    }
+    else
+    {
+        if(m_osgMT.valid())
+    	    m_osgWorldMatrix = m_osgMT->getMatrix();
+    }
 }
 
 CStdFPoint OsgMovableItem::GetOSGWorldCoords()
@@ -480,10 +493,18 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
 	if(!m_osgRoot->containsNode(m_osgMT.get()))
 		m_osgRoot->addChild(m_osgMT.get());
 
-	LocalMatrix(SetupMatrix(localPos, localRot));
+    osg::Matrix localMT;
+    if(AddOsgNodeToParent())
+        localMT = SetupMatrix(localPos, localRot);
+    else
+        localMT = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
+
+	LocalMatrix(localMT);
 
 	//set the matrix to the matrix transform node
-	m_osgMT->setMatrix(m_osgLocalMatrix);	
+	m_osgMT->setMatrix(m_osgLocalMatrix);
+
+    UpdateWorldMatrix();
 
 	//First create the node group. The reason for this is so that we can add other decorated groups on to this node.
 	//This is used to add the selected overlays.

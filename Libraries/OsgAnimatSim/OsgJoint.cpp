@@ -197,7 +197,6 @@ void OsgJoint::SetupGraphics()
 
 	//The parent osg object for the joint is actually the child rigid body object.
 	m_osgParent = ParentOSG();
-	osg::ref_ptr<osg::Group> osgChild = ChildOSG();
 
 	if(m_osgParent.valid())
 	{
@@ -244,18 +243,22 @@ void OsgJoint::SetBody()
 {
 }
 
-void OsgJoint::LocalMatrix(osg::Matrix osgLocalMT)
+osg::Matrix OsgJoint::GetChildWorldMatrix()
 {
-	m_osgLocalMatrix = osgLocalMT;
-	m_osgFinalMatrix = m_osgLocalMatrix * m_osgChildOffsetMatrix;
-	UpdateWorldMatrix();
+	if(m_lpVsChild)
+		return m_lpVsChild->GetWorldMatrix();
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
 }
 
-void OsgJoint::ChildOffsetMatrix(osg::Matrix osgMT)
+void OsgJoint::UpdateWorldMatrix()
 {
-	m_osgChildOffsetMatrix = osgMT;
-	m_osgFinalMatrix = m_osgLocalMatrix * m_osgChildOffsetMatrix;
-	m_osgChildOffsetMT->setMatrix(m_osgChildOffsetMatrix);
+	osg::Matrix osgParentMatrix = GetChildWorldMatrix();
+
+	//Multiply the two matrices together to get the new world location.
+	m_osgWorldMatrix = m_osgFinalMatrix * osgParentMatrix;
 }
 
 void OsgJoint::UpdatePositionAndRotationFromMatrix()
@@ -272,10 +275,12 @@ void OsgJoint::Physics_UpdateMatrix()
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
+
+    //FIX PHYSICS
 	//Now lets get the localmatrix from the child object and use that for our offsetmatrix
-	OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
-	if(lpVsChild)
-		ChildOffsetMatrix(lpVsChild->LocalMatrix());
+	//OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
+	//if(lpVsChild)
+	//	ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
 	//If we are here then we did not have a physics component, just and OSG one.
 	Physics_UpdateAbsolutePosition();
@@ -294,30 +299,30 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 		m_osgMT->setName(strName + "_MT");
 	}
 
-	if(!m_osgChildOffsetMT.valid())
-	{
-		m_osgChildOffsetMT = new osg::MatrixTransform;
-		m_osgChildOffsetMT->setName(strName + "ChildOffsetMT");
-		m_osgChildOffsetMT->addChild(m_osgMT.get());
-	}
-
 	if(!m_osgRoot.valid())
 	{
 		m_osgRoot = new osg::Group;
 		m_osgRoot->setName(strName + "_Root");
-		m_osgRoot->addChild(m_osgChildOffsetMT.get());
 	}
 
-	LocalMatrix(SetupMatrix(localPos, localRot));
+	if(!m_osgRoot->containsNode(m_osgMT.get()))
+		m_osgRoot->addChild(m_osgMT.get());
+
+    //We must add the osg graphics to the parent osg node /because if we do not then the joint will move 
+    //when the child moves, and that is not correct. However, the joint is really attached relative to the 
+    //child. So we need to calculate the local transform needed relative to the parent.
+    osg::Matrix mtParent = GetParentWorldMatrix();
+    osg::Matrix mtChild = GetChildWorldMatrix();
+    osg::Matrix mtLocal = SetupMatrix(localPos, localRot);
+
+    osg::Matrix mtJointMTFromChild = mtChild * mtLocal;
+    osg::Matrix mtLocalRelToParent = mtJointMTFromChild * osg::Matrix::inverse(mtParent);
+
+	LocalMatrix(mtLocalRelToParent);
 
 	//set the matrix to the matrix transform node
 	m_osgMT->setMatrix(m_osgLocalMatrix);	
 	m_osgMT->setName(strName.c_str());
-
-	//Now lets get the localmatrix from the child object and use that for our offsetmatrix
-	OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
-	if(lpVsChild)
-		ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
 	//First create the node group. The reason for this is so that we can add other decorated groups on to this node.
 	//This is used to add the selected overlays.
@@ -332,39 +337,39 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 		CreateSelectedGraphics(strName);
 	}
 }
-
-bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
-{
-	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
-
-	if(lpParent)
-	{
-		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-		fltWorldZ *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-
-		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
-		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
-
-		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
-
-		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
-
-		//Get the parent object.
-		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
-
-		osg::Matrix osgCalc = osgWorldPos * osgInverse;
-
-		osg::Vec3 vCoord = osgCalc.getTrans();
-		vLocalPos.Set(vCoord[0] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
-				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
-				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
-		
-		return true;
-	}
-
-	return false;
-}
+//
+//bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+//{
+//	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
+//
+//	if(lpParent)
+//	{
+//		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+//		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+//		fltWorldZ *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+//
+//		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
+//		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
+//
+//		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
+//
+//		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
+//
+//		//Get the parent object.
+//		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
+//
+//		osg::Matrix osgCalc = osgWorldPos * osgInverse;
+//
+//		osg::Vec3 vCoord = osgCalc.getTrans();
+//		vLocalPos.Set(vCoord[0] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+//				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+//				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
+//		
+//		return true;
+//	}
+//
+//	return false;
+//}
 
 bool OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
 {

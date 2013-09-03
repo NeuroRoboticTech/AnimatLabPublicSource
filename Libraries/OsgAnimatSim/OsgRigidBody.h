@@ -92,6 +92,7 @@ namespace OsgAnimatSim
 			virtual osg::MatrixTransform *ParentOSG();
 
 			virtual void SetupPhysics();
+            virtual bool AddOsgNodeToParent();
 
 			virtual void Initialize();
 			virtual void BuildLocalMatrix();

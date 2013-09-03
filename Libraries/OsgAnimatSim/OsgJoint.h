@@ -27,13 +27,6 @@ namespace OsgAnimatSim
 		{
 		protected:
 
-			//This is the offset from the child to the parent. We must add the osg graphics to the parent osg node
-			//because if we do not then the joint will move when the child moves, and that is not correct. However, 
-			//the joint is really attached relative to the child. So I am adding this extra matrix transform that is
-			//the same as the child body to make up for the fact that we have to attach to the parent osg node.
-			osg::Matrix m_osgChildOffsetMatrix;
-			osg::ref_ptr< osg::MatrixTransform> m_osgChildOffsetMT;
-
 #pragma region DefaultBallGraphicsItems
 
 			//Graphics objects for the default joint drawing code
@@ -68,9 +61,7 @@ namespace OsgAnimatSim
 			virtual void SetupPhysics();
 			virtual osg::Vec3d NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
-
-			virtual void LocalMatrix(osg::Matrix osgLocalMT);
-			virtual void ChildOffsetMatrix(osg::Matrix osgMT);
+			virtual void UpdateWorldMatrix();
 
 		public:
 			OsgJoint();
@@ -78,6 +69,7 @@ namespace OsgAnimatSim
 
 			virtual osg::MatrixTransform *ParentOSG();
 			virtual osg::MatrixTransform *ChildOSG();
+            virtual osg::Matrix GetChildWorldMatrix();
 
 			virtual void SetAlpha();
 
@@ -103,7 +95,7 @@ namespace OsgAnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits) {};
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint v; return v;};
 			virtual float Physics_GetMass() {return 0;};
-			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			//virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 		};
 

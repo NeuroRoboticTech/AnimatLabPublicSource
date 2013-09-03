@@ -132,43 +132,43 @@ void BlHinge::CreateJointGraphics()
     OsgHinge::CreateHingeGraphics(CylinderHeight(), CylinderRadius(), FlapWidth(), 
                                   m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 }
-
-void BlHinge::SetupGraphics()
-{
-	//The parent osg object for the joint is actually the child rigid body object.
-	m_osgParent = ParentOSG();
-
-	if(m_osgParent.valid())
-	{
-		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
-		
-		m_osgJointMT = new osg::MatrixTransform();
-		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
-
-        CreateJointGraphics();
-
-		m_osgNode = m_osgJointMT.get();
-
-		BuildLocalMatrix();
-
-		SetAlpha();
-		SetCulling();
-		SetVisible(m_lpThisMI->IsVisible());
-
-		//Add it to the scene graph.
-		m_osgParent->addChild(m_osgRoot.get());
-
-		//Set the position with the world coordinates.
-		Physics_UpdateAbsolutePosition();
-
-		//We need to set the UserData on the OSG side so we can do picking.
-		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
-		osgVisitor->traverse(*m_osgMT);
-	}
-}
+//
+//void BlHinge::SetupGraphics()
+//{
+//	//The parent osg object for the joint is actually the child rigid body object.
+//	m_osgParent = ParentOSG();
+//
+//	if(m_osgParent.valid())
+//	{
+//		//Add the parts to the group node.
+//		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
+//		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
+//		
+//		m_osgJointMT = new osg::MatrixTransform();
+//		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
+//
+//        CreateJointGraphics();
+//
+//		m_osgNode = m_osgJointMT.get();
+//
+//		BuildLocalMatrix();
+//
+//		SetAlpha();
+//		SetCulling();
+//		SetVisible(m_lpThisMI->IsVisible());
+//
+//		//Add it to the scene graph.
+//		m_osgParent->addChild(m_osgRoot.get());
+//
+//		//Set the position with the world coordinates.
+//		Physics_UpdateAbsolutePosition();
+//
+//		//We need to set the UserData on the OSG side so we can do picking.
+//		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
+//		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
+//		osgVisitor->traverse(*m_osgMT);
+//	}
+//}
 
 void BlHinge::DeletePhysics()
 {

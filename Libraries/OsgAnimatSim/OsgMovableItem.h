@@ -135,10 +135,9 @@ namespace OsgAnimatSim
 			virtual void SetMaterialAlpha(osg::Material *osgMat, osg::StateSet *ss, float fltAlpha);
 			virtual void SetVisible(bool bVisible);
 			virtual void SetVisible(osg::Node *osgNode, bool bVisible);
-			//virtual osg::Vec3 FindPointOnSurface(osg::Vec3 vDirection);
 
-			//virtual void Initialize() = 0;
-			virtual void CreateItem();
+            virtual void CreateItem();
+            virtual bool AddOsgNodeToParent() {return true;};
 
 			virtual osg::Matrix GetWorldMatrix();
 			virtual osg::Matrix GetParentWorldMatrix();
