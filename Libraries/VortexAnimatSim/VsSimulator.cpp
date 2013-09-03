@@ -2,14 +2,24 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include <stdarg.h>
-#include "VsOsgGeometry.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
+#include "VsOrganism.h"
+#include "VsStructure.h"
 #include "VsClassFactory.h"
 #include "VsSimulator.h"
+
+//#include "VsSimulationRecorder.h"
+#include "VsMouseSpring.h"
+#include "VsLight.h"
+#include "VsCameraManipulator.h"
+#include "VsDragger.h"
+#include "MeshMinVertexDistanceVisitor.h"
 
 namespace VortexAnimatSim
 {
@@ -24,7 +34,7 @@ VsSimulator::VsSimulator()
 	m_uUniverse = NULL;
 	m_grpScene = NULL;	
 	m_vsWinMgr = NULL;
-	m_vsWinMgr = new OsgSimulationWindowMgr;
+	m_vsWinMgr = new VsSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
 	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
 	m_uUniverse = NULL;
@@ -37,14 +47,6 @@ VsSimulator::VsSimulator()
 	m_lStepVortexTimeCount = 0;
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
-
-    //Setup the global matrix util.
-    m_lpMatrixUtil = new OsgMatrixUtil;
-    //m_lpMatrixUtil = new VsMatrixUtil;
-    SetMatrixUtil(m_lpMatrixUtil);
-
-	if(!m_lpAnimatClassFactory) 
-		m_lpAnimatClassFactory = new VsClassFactory;
 }
 
 VsSimulator::~VsSimulator()
@@ -76,53 +78,62 @@ VxUniverse *VsSimulator::Universe()
 Vx::VxFrame* VsSimulator::Frame()
 {return m_vxFrame;}
 
+void VsSimulator::AlphaThreshold(float fltValue)
+{
+	Simulator::AlphaThreshold(fltValue);
+
+	if(m_osgAlphafunc)
+		    m_osgAlphafunc->setFunction(osg::AlphaFunc::GEQUAL, m_fltAlphaThreshold);
+}
+
+
 #pragma region MutatorOverrides
 
 void VsSimulator::StabilityScale(float fltVal)
 {
-	OsgSimulator::StabilityScale(fltVal);
+	Simulator::StabilityScale(fltVal);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::LinearCompliance(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::LinearCompliance(fltVal, bUseScaling);
+	Simulator::LinearCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularCompliance(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::AngularCompliance(fltVal, bUseScaling);
+	Simulator::AngularCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::LinearDamping(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::LinearDamping(fltVal, bUseScaling);
+	Simulator::LinearDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularDamping(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::AngularDamping(fltVal, bUseScaling);
+	Simulator::AngularDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::LinearKineticLoss(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::LinearKineticLoss(fltVal, bUseScaling);
+	Simulator::LinearKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularKineticLoss(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::AngularKineticLoss(fltVal, bUseScaling);
+	Simulator::AngularKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
 void VsSimulator::PhysicsTimeStep(float fltVal)
 {
-	OsgSimulator::PhysicsTimeStep(fltVal);
+	Simulator::PhysicsTimeStep(fltVal);
 
 	if(m_vxFrame)
 	{
@@ -133,7 +144,7 @@ void VsSimulator::PhysicsTimeStep(float fltVal)
 
 void VsSimulator::Gravity(float fltVal, bool bUseScaling)
 {
-	OsgSimulator::Gravity(fltVal, bUseScaling);
+	Simulator::Gravity(fltVal, bUseScaling);
 
 	if(m_uUniverse)
 		m_uUniverse->setGravity(0, m_fltGravity, 0);
@@ -164,24 +175,52 @@ SimulationRecorder *VsSimulator::CreateSimulationRecorder()
 
 void VsSimulator::Reset()
 {
-	OsgSimulator::Reset();
+	Simulator::Reset();
 
 	if(m_vxFrame)
 		m_vxFrame->release(); 
 
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new VsClassFactory;
+
+	if(m_osgCmdMgr.valid())
+		m_osgCmdMgr.release();
+
+	if(m_lpMeshMgr)
+	{
+		delete m_lpMeshMgr;
+		m_lpMeshMgr = NULL;
+	}
+
 }
 
 void VsSimulator::ResetSimulation()
 {
-	OsgSimulator::ResetSimulation();
+	Simulator::ResetSimulation();
 
 	if(m_uUniverse)
 	{
 		m_uUniverse->resetDynamics();
 		m_uUniverse->resetContacts();
 	}
+	m_bSimRunning = false;
+}
+
+void VsSimulator::ToggleSimulation()
+{
+	if(m_bPaused)
+		SimStarting();
+	else
+		SimPausing();
+
+	m_bPaused = !m_bPaused;
+}
+
+void VsSimulator::StopSimulation()
+{
+	SimStopping();
+	if(!m_bPaused)
+		ToggleSimulation();
 	m_bSimRunning = false;
 }
 
@@ -215,12 +254,11 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
-	m_grpScene = new osg::MatrixTransform;
-    m_grpScene->setMatrix(osg::Matrix::identity());
+	m_grpScene = new osg::Group;	
     m_grpScene->setName("World");
 
 	//Add the mouse spring lines to the scene
-	m_grpScene->addChild(m_lpMouseSpring->GetNode());
+	m_grpScene->addChild(VsMouseSpring::GetInstance()->GetNode());
 
 	//Create the windows, cameras, and Huds
 	m_vsWinMgr->Initialize();
@@ -326,6 +364,27 @@ Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
 	return vxMesh;
 }
 
+osg::NotifySeverity VsSimulator::ConvertTraceLevelToOSG()
+{
+	int iLevel = Std_GetTraceLevel();
+
+	switch (iLevel)
+	{
+	case 0:
+		return osg::NotifySeverity::FATAL;
+	case 10:
+		return osg::NotifySeverity::WARN;
+	case 20:
+		return osg::NotifySeverity::INFO;
+	case 30:
+		return osg::NotifySeverity::DEBUG_INFO;
+	case 40:
+		return osg::NotifySeverity::DEBUG_FP;
+	default:
+		return osg::NotifySeverity::WARN;
+	}
+}
+
 Vx::VxConvexMesh *VsSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
 {
 	Vx::VxConvexMesh *vxMesh = NULL;
@@ -423,6 +482,14 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 }
 
 
+//
+//float VsSimulator::FindMinMeshVertexDistance(osg::Node *osgNode)
+//{
+//	MeshMinVertexDistanceVisitor ncv;
+//	osgNode->accept(ncv);
+//	return ncv.MinVertexDistance();
+//}
+
 void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
 {
 	osg::Matrix osgMT(aryTransform[0][0], aryTransform[0][1], aryTransform[0][2], aryTransform[0][3], 
@@ -450,11 +517,47 @@ void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 	vRot.ClearNearZero();
 }
 
+//Timer Methods
+unsigned long long VsSimulator::GetTimerTick()
+{
+	m_lLastTickTaken = osg::Timer::instance()->tick();
+	return m_lLastTickTaken;
+}
+
+double VsSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_n(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_u(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_m(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_s(lStart, lEnd);}
+
+void VsSimulator::MicroSleep(unsigned int iMicroTime)
+{OpenThreads::Thread::microSleep(iMicroTime);}
+
+void VsSimulator::WriteToConsole(string strMessage)
+{
+	osg::notify(osg::NOTICE) << strMessage << std::endl;
+}
+
 void VsSimulator::Initialize(int argc, const char **argv)
 {
 	InitializeVortex(argc, argv);
 
-    OsgSimulator::Initialize(argc, argv);
+	InitializeStructures();
+
+	m_oDataChartMgr.Initialize();
+	m_oExternalStimuliMgr.Initialize();
+	if(m_lpSimRecorder) m_lpSimRecorder->Initialize();
+
+	//realize the osg viewer
+	m_vsWinMgr->Realize();
+
+	m_bInitialized = true;
 }
 
 void VsSimulator::StepSimulation()
@@ -468,7 +571,7 @@ void VsSimulator::StepSimulation()
 		//step the frame and update the windows
 		if (!m_bPaused)	
 		{
-			OsgSimulator::StepSimulation();
+			Simulator::StepSimulation();
 
 			unsigned long long lStart = GetTimerTick();
 			m_vxFrame->step();
@@ -516,12 +619,123 @@ void VsSimulator::StepSimulation()
 
 }
 
+void VsSimulator::UpdateSimulationWindows()
+{
+	m_bStopSimulation = !m_vsWinMgr->Update();
+}
+
 
 void VsSimulator::SimulateEnd()
 {
 	m_vxFrame->release();
 	m_vxFrame = NULL;
 }
+
+void VsSimulator::ShutdownSimulation()
+{
+	SimStopping();
+	m_bForceSimulationStop = true;
+}
+
+bool VsSimulator::PauseSimulation()
+{
+	SimPausing();
+	m_bPaused = true;
+	return true;
+}
+
+bool VsSimulator::StartSimulation()
+{
+	m_lStartSimTick = GetTimerTick();
+
+	SimStarting();
+	m_bSimRunning = true;
+	m_bPaused = false;
+	return true;
+}
+
+float *VsSimulator::GetDataPointer(const string &strDataType)
+{
+	float *lpData=NULL;
+	string strType = Std_CheckString(strDataType);
+
+	//if(strType == "FRAMEDT")
+	//	lpData = &m_fltFrameDt;
+	//else
+	//{
+		lpData = Simulator::GetDataPointer(strDataType);
+		if(!lpData)
+			THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
+	//}
+
+	return lpData;
+}
+
+void VsSimulator::SnapshotStopFrame()
+{
+	if(m_lpSimStopPoint) delete m_lpSimStopPoint;
+	m_lpSimStopPoint = dynamic_cast<KeyFrame *>(CreateObject("AnimatLab", "KeyFrame", "Snapshot"));
+	if(!m_lpSimStopPoint)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "KeyFrame");
+
+	m_lpSimStopPoint->StartSlice(m_lTimeSlice);
+	m_lpSimStopPoint->EndSlice(m_lTimeSlice);
+	m_lpSimStopPoint->Activate();
+}
+
+VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
+{
+	if(!lpSim)
+		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
+
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+
+	if(!lpVsSim)
+		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
+
+	return lpVsSim;
+}
+
+void VsSimulator::Save(string strFile) 
+{
+	string strOsgFile = strFile + ".osg";
+	string strVxFile = strFile + ".vxf";
+	std::string strUcon = strFile + ".ucon";
+
+	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
+	try
+	{
+		VxPersistence::saveFrame(strVxFile.c_str(), VxPersistence::kStandard);
+	}
+	catch(std::exception ex)
+	{
+		int i= 5;
+	}
+	catch(...)
+	{
+		int i= 5;
+	}
+
+	m_uUniverse->printContent(strUcon.c_str());
+
+	osgDB::writeNodeFile(*OSGRoot(), strOsgFile.c_str());
+}
+
+
+/*
+VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
+{
+	if(!lpSim)
+		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
+
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+
+	if(!lpVsSim)
+		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
+
+	return lpVsSim;
+}
+*/
 
 
 /*

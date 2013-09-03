@@ -7,6 +7,8 @@
 
 #include "VsConstraintRelaxation.h"
 #include "VsConstraintFriction.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
@@ -19,7 +21,9 @@
 #include "VsSphere.h"
 #include "VsTorus.h"
 #include "VsEllipsoid.h"
-#include "VsFluidPlane.h"
+#include "VsMouth.h"
+#include "VsOdorSensor.h"
+#include "VsFluidPlane.H"
 #include "VsMeshBase.h"
 #include "VsMesh.h"
 #include "VsTerrain.h"
@@ -29,16 +33,36 @@
 #include "VsBallSocket.h"
 #include "VsRPRO.h"
 #include "VsUniversal.h"
+#include "VsFreeJoint.h"
 #include "VsDistanceJoint.h"
+
+#include "VsAttachment.h"
 
 #include "VsLine.h"
 #include "VsLinearHillMuscle.h"
 #include "VsLinearHillStretchReceptor.h"
 #include "VsSpring.h"
 
+#include "VsOrganism.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 
 #include "VsMaterialType.h"
+
+//#include "VsVideoKeyFrame.h"
+//#include "VsSnapshotKeyFrame.h"
+
+#include "VsMotorVelocityStimulus.h"
+#include "VsForceStimulus.h"
+//#include "VsInverseMuscleCurrent.h"
+
+#include "VsHudText.h"
+#include "VsHud.h"
+#include "VsSimulationWindow.h"
+#include "VsScriptedSimulationWindow.h"
+#include "VsDragger.h"
+
+#include "VsLight.h"
 
 namespace VortexAnimatSim
 {
@@ -92,7 +116,7 @@ try
 	else if(strType == "PLANETEST")
 		lpPart = new VsPlaneTest;
 	else if(strType == "ATTACHMENT")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgAttachment;
+		lpPart = new VsAttachment;
 	else if(strType == "LINEARHILLMUSCLE")
 		lpPart = new VsLinearHillMuscle;
 	else if(strType == "LINEARHILLSTRETCHRECEPTOR")
@@ -104,9 +128,9 @@ try
 	else if(strType == "ELLIPSOID")
 		lpPart = new VsEllipsoid;
 	else if(strType == "MOUTH")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgMouth;
+		lpPart = new VsMouth;
 	else if(strType == "ODORSENSOR")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgOdorSensor;
+		lpPart = new VsOdorSensor;
 	else if(strType == "FLUIDPLANE")
 		lpPart = new VsFluidPlane;
 	else if(strType == "TERRAIN")
@@ -164,7 +188,7 @@ try
 	else if(strType == "UNIVERSAL")
 		lpJoint = new VsUniversal;
 	else if(strType == "FREEJOINT")
-		lpJoint = new OsgAnimatSim::Environment::Joints::OsgFreeJoint;
+		lpJoint = new VsFreeJoint;
 	else if(strType == "DISTANCE")
 		lpJoint = new VsDistanceJoint;
 	else
@@ -203,11 +227,11 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC")
-		lpStructure = new OsgOrganism;
+		lpStructure = new VsOrganism;
 	else if(strType == "ORGANISM")
-		lpStructure = new OsgOrganism;
+		lpStructure = new VsOrganism;
 	else if(strType == "STRUCTURE")
-		lpStructure = new OsgStructure;
+		lpStructure = new VsStructure;
 	else
 	{
 		lpStructure = NULL;
@@ -369,6 +393,12 @@ try
 
 	if(strType == "DATACOLUMN")
 		lpColumn = new DataColumn;
+	//else if(strType == "RIGIDBODYDATA")
+	//	lpColumn = new RigidBodyDataColumn;
+	//else if(strType == "JOINTDATA")
+	//	lpColumn = new JointDataColumn;
+	//else if(strType == "STIMULUSDATA")
+	//	lpColumn = new StimulusDataColumn;
 	else
 	{
 		lpColumn = NULL;
@@ -496,9 +526,9 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "MOTORVELOCITY")
-		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
+		lpStimulus = new VsMotorVelocityStimulus;
 	else if(strType == "FORCEINPUT")
-		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
+		lpStimulus = new VsForceStimulus;
 	else if(strType == "NODEINPUT")
 		lpStimulus = new ExternalInputStimulus;
 	else if(strType == "RIGIDBODYINPUT")
@@ -552,7 +582,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUDTEXT")
-		lpItem = new OsgHudText;
+		lpItem = new VsHudText;
 	else
 	{
 		lpItem = NULL;
@@ -589,7 +619,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HUD")
-		lpHud = new OsgHud;
+		lpHud = new VsHud;
 	else
 	{
 		lpHud = NULL;
@@ -663,9 +693,9 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC" || strType == "DEFAULT")
-		lpItem = new OsgSimulationWindow;
+		lpItem = new VsSimulationWindow;
 	else if(strType == "SCRIPTEDSIMWINDOW")
-		lpItem = new OsgScriptedSimulationWindow;
+		lpItem = new VsScriptedSimulationWindow;
 	else
 	{
 		lpItem = NULL;
@@ -702,7 +732,7 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "LIGHT")
-		lpItem = new OsgLight;
+		lpItem = new VsLight;
 	else
 	{
 		lpItem = NULL;
@@ -911,21 +941,13 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 
 }			//VortexAnimatSim
 
-#ifdef _WINDOWS
-	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
-#else
-	extern "C" IStdClassFactory* GetStdClassFactory() 
-#endif
+extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
 {
 	IStdClassFactory *lpFactory = new VsClassFactory;
 	return lpFactory;
 }
 
-#ifdef _WINDOWS
-	extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
-#else
-	extern "C" int BootstrapRunLibrary(int argc, const char **argv) 
-#endif
+extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
 {
 	Simulator *lpSim = NULL;
 
@@ -944,7 +966,7 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(lpSim) delete lpSim;
-	printf("Error occurred: %s\n", oError.m_strError.c_str()) ;
+	printf("Error occurred: %s\n", oError.m_strError) ;
 	return (int) oError.m_lError;
 }
 catch(...)

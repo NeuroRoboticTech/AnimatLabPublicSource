@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{F15F64CC-3062-A146-997F-A6F254FFF7EC}</ProjectGuid>
+		<ProjectGuid>{20409EE8-9CD8-3343-BAF1-AAB355296612}</ProjectGuid>
 		<RootNamespace>VortexAnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -40,12 +40,12 @@
 	<PropertyGroup>
 		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
 		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\Debug\VortexAnimatSim\</IntDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\Debug\</IntDir>
 		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VortexAnimatSim_vc10D</TargetName>
 		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
 		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
 		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\Release\VortexAnimatSim\</IntDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\Release\</IntDir>
 		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VortexAnimatSim_vc10</TargetName>
 		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
 		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
@@ -53,7 +53,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -66,7 +66,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>libVx51d.lib;libVxController51d.lib;libVxControllerPersistence51d.lib;libVxGraphics51d.lib;libVxPersistence51d.lib;libVxPs51d.lib;libVxPsExtraOSG51d.lib;libVxVehicle51d.lib;libVxVehiclePersistence51d.lib;libVxExtra51d.lib;libVxExtraOSG51d.lib;libVxVehicleExtra51d.lib;libVxVehicleExtraOSG51d.lib;libVxOSG51d-2.8.3.lib;libboostVx_filesystem-vc100-mt-gd.lib;libboostVx_regex-vc100-mt-gd.lib;libboostVx_serialization-vc100-mt-gd.lib;libboostVx_system-vc100-mt-gd.lib;OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -85,7 +85,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -98,7 +98,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\Vortex_5_1\include;..\..\Vortex_5_1\3rdparty\osg-2.8.3\include;..\..\Vortex_5_1\3rdparty\sdl-1.2.14\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>libVx51.lib;libVxController51.lib;libVxControllerPersistence51.lib;libVxGraphics51.lib;libVxPersistence51.lib;libVxPs51.lib;libVxPsExtraOSG51.lib;libVxVehicle51.lib;libVxVehiclePersistence51.lib;libVxExtra51.lib;libVxExtraOSG51.lib;libVxVehicleExtra51.lib;libVxVehicleExtraOSG51.lib;libVxOSG51-2.8.3.lib;libboostVx_filesystem-vc100-mt.lib;libboostVx_regex-vc100-mt.lib;libboostVx_serialization-vc100-mt.lib;libboostVx_system-vc100-mt.lib;OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -116,61 +116,99 @@
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemGroup>
+		<ClInclude Include="..\MeshMinVertexDistanceVisitor.h" />
+		<ClInclude Include="..\OsgGeometry.h" />
+		<ClInclude Include="..\OsgLinearPath.h" />
+		<ClInclude Include="..\OsgTrackballManipulator.h" />
 		<ClInclude Include="..\StdAfx.h" />
 		<ClInclude Include="..\VsAttachment.h" />
+		<ClInclude Include="..\VsAutoTransform.h" />
 		<ClInclude Include="..\VsBallSocket.h" />
+		<ClInclude Include="..\VsBody.h" />
 		<ClInclude Include="..\VsBox.h" />
 		<ClInclude Include="..\VsBoxTest.h" />
+		<ClInclude Include="..\VsCameraManipulator.h" />
 		<ClInclude Include="..\VsClassFactory.h" />
 		<ClInclude Include="..\VsCone.h" />
 		<ClInclude Include="..\VsConstraintFriction.h" />
 		<ClInclude Include="..\VsConstraintRelaxation.h" />
 		<ClInclude Include="..\VsCylinder.h" />
 		<ClInclude Include="..\VsDistanceJoint.h" />
+		<ClInclude Include="..\VsDragger.h" />
+		<ClInclude Include="..\VsDraggerHandler.h" />
 		<ClInclude Include="..\VsEllipsoid.h" />
 		<ClInclude Include="..\VsFluidPlane.h" />
 		<ClInclude Include="..\VsForceStimulus.h" />
 		<ClInclude Include="..\VsFreeJoint.h" />
 		<ClInclude Include="..\VsHinge.h" />
 		<ClInclude Include="..\VsHingeLimit.h" />
+		<ClInclude Include="..\VsHud.h" />
+		<ClInclude Include="..\VsHudText.h" />
 		<ClInclude Include="..\VsIntersectionEvent.h" />
 		<ClInclude Include="..\VsJoint.h" />
+		<ClInclude Include="..\VsLight.h" />
 		<ClInclude Include="..\VsLine.h" />
 		<ClInclude Include="..\VsLinearHillMuscle.h" />
 		<ClInclude Include="..\VsLinearHillStretchReceptor.h" />
 		<ClInclude Include="..\VsMaterialType.h" />
 		<ClInclude Include="..\VsMesh.h" />
 		<ClInclude Include="..\VsMeshBase.h" />
+		<ClInclude Include="..\VsMeshMgr.h" />
 		<ClInclude Include="..\VsMotorizedJoint.h" />
 		<ClInclude Include="..\VsMotorVelocityStimulus.h" />
+		<ClInclude Include="..\VsMouseSpring.h" />
 		<ClInclude Include="..\VsMouth.h" />
+		<ClInclude Include="..\VsMovableItem.h" />
 		<ClInclude Include="..\VsOdorSensor.h" />
-		<ClInclude Include="..\VsOsgGeometry.h" />
+		<ClInclude Include="..\VsOrganism.h" />
+		<ClInclude Include="..\VsOsgUserData.h" />
+		<ClInclude Include="..\VsOsgUserDataVisitor.h" />
 		<ClInclude Include="..\VsPlane.h" />
 		<ClInclude Include="..\VsPlaneTest.h" />
 		<ClInclude Include="..\VsPrismatic.h" />
 		<ClInclude Include="..\VsPrismaticLimit.h" />
 		<ClInclude Include="..\VsRigidBody.h" />
 		<ClInclude Include="..\VsRPRO.h" />
+		<ClInclude Include="..\VsScriptedSimulationWindow.h" />
+		<ClInclude Include="..\VsSimulationWindow.h" />
+		<ClInclude Include="..\VsSimulationWindowMgr.h" />
 		<ClInclude Include="..\VsSimulator.h" />
 		<ClInclude Include="..\VsSphere.h" />
 		<ClInclude Include="..\VsSpring.h" />
+		<ClInclude Include="..\VsStructure.h" />
 		<ClInclude Include="..\VsTerrain.h" />
 		<ClInclude Include="..\VsTorus.h" />
+		<ClInclude Include="..\VsTrackballDragger.h" />
+		<ClInclude Include="..\VsTranslateAxisDragger.h" />
 		<ClInclude Include="..\VsUniversal.h" />
+		<ClInclude Include="..\WorldCoordinateNodeVisitor.h" />
 	</ItemGroup>
 	<ItemGroup>
+		<ClCompile Include="..\MeshMinVertexDistanceVisitor.cpp">
+		</ClCompile>
+		<ClCompile Include="..\OsgGeometry.cpp">
+		</ClCompile>
+		<ClCompile Include="..\OsgLinearPath.cpp">
+		</ClCompile>
+		<ClCompile Include="..\OsgTrackballManipulator.cpp">
+		</ClCompile>
 		<ClCompile Include="..\StdAfx.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VortexAnimatSim.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsAttachment.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsAutoTransform.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsBallSocket.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsBody.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsBox.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsBoxTest.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsCameraManipulator.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsClassFactory.cpp">
 		</ClCompile>
@@ -184,6 +222,10 @@
 		</ClCompile>
 		<ClCompile Include="..\VsDistanceJoint.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsDragger.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsDraggerHandler.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsEllipsoid.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsFluidPlane.cpp">
@@ -196,9 +238,15 @@
 		</ClCompile>
 		<ClCompile Include="..\VsHingeLimit.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsHud.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsHudText.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsIntersectionEvent.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsJoint.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsLight.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsLine.cpp">
 		</ClCompile>
@@ -212,15 +260,25 @@
 		</ClCompile>
 		<ClCompile Include="..\VsMeshBase.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsMeshMgr.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsMotorizedJoint.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsMotorVelocityStimulus.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsMouseSpring.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsMouth.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsMovableItem.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsOdorSensor.cpp">
 		</ClCompile>
-		<ClCompile Include="..\VsOsgGeometry.cpp">
+		<ClCompile Include="..\VsOrganism.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsOsgUserData.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsOsgUserDataVisitor.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsPlane.cpp">
 		</ClCompile>
@@ -234,17 +292,31 @@
 		</ClCompile>
 		<ClCompile Include="..\VsRPRO.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsScriptedSimulationWindow.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsSimulationWindow.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsSimulationWindowMgr.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsSimulator.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsSphere.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsSpring.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsStructure.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsTerrain.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VsTorus.cpp">
 		</ClCompile>
+		<ClCompile Include="..\VsTrackballDragger.cpp">
+		</ClCompile>
+		<ClCompile Include="..\VsTranslateAxisDragger.cpp">
+		</ClCompile>
 		<ClCompile Include="..\VsUniversal.cpp">
+		</ClCompile>
+		<ClCompile Include="..\WorldCoordinateNodeVisitor.cpp">
 		</ClCompile>
 	</ItemGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

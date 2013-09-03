@@ -5,11 +5,14 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsRPRO.h"
 #include "VsSimulator.h"
+#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {

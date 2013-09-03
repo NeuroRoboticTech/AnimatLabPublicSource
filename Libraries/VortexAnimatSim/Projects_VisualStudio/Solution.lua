@@ -1,4 +1,4 @@
 -- A solution contains projects, and defines the available configurations
-solution "VortexAnimatSim"
+solution "VortexAnimatSimSim"
 	configurations { "Debug", "Release" }
 	dofile "Projects.lua"

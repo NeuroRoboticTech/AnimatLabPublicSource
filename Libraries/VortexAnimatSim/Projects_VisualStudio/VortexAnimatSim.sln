@@ -1,18 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{F15F64CC-3062-A146-997F-A6F254FFF7EC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D89130C9-37B7-5947-9B57-7073DB5983EF} = {D89130C9-37B7-5947-9B57-7073DB5983EF}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{20409EE8-9CD8-3343-BAF1-AAB355296612}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vortex_UnitTests", "Vortex_UnitTests.vcxproj", "{9322B286-3472-204D-BC3B-68457685E452}"
 	ProjectSection(ProjectDependencies) = postProject
-		{D89130C9-37B7-5947-9B57-7073DB5983EF} = {D89130C9-37B7-5947-9B57-7073DB5983EF}
-		{F15F64CC-3062-A146-997F-A6F254FFF7EC} = {F15F64CC-3062-A146-997F-A6F254FFF7EC}
+		{20409EE8-9CD8-3343-BAF1-AAB355296612} = {20409EE8-9CD8-3343-BAF1-AAB355296612}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim", "..\..\OsgAnimatSim\Projects_VisualStudio\OsgAnimatSim.vcxproj", "{D89130C9-37B7-5947-9B57-7073DB5983EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,18 +14,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F15F64CC-3062-A146-997F-A6F254FFF7EC}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F15F64CC-3062-A146-997F-A6F254FFF7EC}.Debug|Win32.Build.0 = Debug|Win32
-		{F15F64CC-3062-A146-997F-A6F254FFF7EC}.Release|Win32.ActiveCfg = Release|Win32
-		{F15F64CC-3062-A146-997F-A6F254FFF7EC}.Release|Win32.Build.0 = Release|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Debug|Win32.ActiveCfg = Debug|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Debug|Win32.Build.0 = Debug|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Release|Win32.ActiveCfg = Release|Win32
+		{20409EE8-9CD8-3343-BAF1-AAB355296612}.Release|Win32.Build.0 = Release|Win32
 		{9322B286-3472-204D-BC3B-68457685E452}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9322B286-3472-204D-BC3B-68457685E452}.Debug|Win32.Build.0 = Debug|Win32
 		{9322B286-3472-204D-BC3B-68457685E452}.Release|Win32.ActiveCfg = Release|Win32
 		{9322B286-3472-204D-BC3B-68457685E452}.Release|Win32.Build.0 = Release|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Debug|Win32.Build.0 = Debug|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Release|Win32.ActiveCfg = Release|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{04C05AED-9884-EB4B-B300-7BBA317491AB}"
-EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Vortex_UnitTests", "Vortex_UnitTests.cproj", "{910FDBE0-26F5-BA49-B259-3978D8110C29}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "VortexAnimatSim", "VortexAnimatSim.cproj", "{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04C05AED-9884-EB4B-B300-7BBA317491AB}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{04C05AED-9884-EB4B-B300-7BBA317491AB}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{04C05AED-9884-EB4B-B300-7BBA317491AB}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{04C05AED-9884-EB4B-B300-7BBA317491AB}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{910FDBE0-26F5-BA49-B259-3978D8110C29}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{910FDBE0-26F5-BA49-B259-3978D8110C29}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{910FDBE0-26F5-BA49-B259-3978D8110C29}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{910FDBE0-26F5-BA49-B259-3978D8110C29}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

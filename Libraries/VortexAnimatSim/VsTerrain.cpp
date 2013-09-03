@@ -3,13 +3,15 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "VsOsgGeometry.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsMeshBase.h"
 #include "VsTerrain.h"
 #include "VsSimulator.h"
+#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -120,7 +122,7 @@ void VsTerrain::CreatePhysicsGeometry()
 		m_vxGeometry = m_vxHeightField;
 	}
 
-	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
+	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
 
 	if(!m_vxGeometry)
 		THROW_TEXT_ERROR(Vs_Err_lCreatingGeometry, Vs_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));

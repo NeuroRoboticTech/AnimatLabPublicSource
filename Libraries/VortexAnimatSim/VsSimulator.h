@@ -1,8 +1,13 @@
 
 #pragma once
 
+#include "VsMeshMgr.h"
 #include "VsMaterialType.h"
+#include "VsHud.h"
 #include "VsIntersectionEvent.h"
+#include "VsMouseSpring.h"
+#include "VsCameraManipulator.h"
+#include "VsSimulationWindowMgr.h"
 
 /**
 \namespace	VortexAnimatSim
@@ -12,21 +17,37 @@
 namespace VortexAnimatSim
 {
 
-	class VORTEX_PORT VsSimulator : public OsgSimulator
+	class VORTEX_PORT VsSimulator : public AnimatSim::Simulator  
 	{
 	protected:
+		VsSimulationWindowMgr *m_vsWinMgr;
+
+		//osg group node for the main scene
+		osg::ref_ptr<osg::Group> m_grpScene;
+
+		//Command manager for gripper manipulators in the scene.
+		osg::ref_ptr<osgManipulator::CommandManager> m_osgCmdMgr;
+
 		//Vortex Universe
 		VxUniverse *m_uUniverse;
 		
 		//Vortex Frame
 		VxFrame *m_vxFrame;		
+		
+		osg::AlphaFunc *m_osgAlphafunc;
 
 		VsIntersectionEvent m_vsIntersect;
 
 		double m_dblTotalVortexStepTime;
 		long m_lStepVortexTimeCount;
 
+		double m_dblTotalStepTime;
+		long m_lStepTimeCount;
+
+		VsMeshMgr *m_lpMeshMgr;
+
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
+		virtual void SnapshotStopFrame();
 
 		//helper functions
 		void InitializeVortex(int argc, const char **argv);
@@ -35,6 +56,12 @@ namespace VortexAnimatSim
 		
 		virtual void StepSimulation();
 		virtual void SimulateEnd();
+
+		virtual void UpdateSimulationWindows();
+
+		osg::NotifySeverity ConvertTraceLevelToOSG();
+
+		osg::ref_ptr<osg::Node> m_Spline;
 	
 	public:
 		VsSimulator();
@@ -42,6 +69,16 @@ namespace VortexAnimatSim
 
 		Vx::VxUniverse* Universe();		
 		Vx::VxFrame* Frame();
+		VsRigidBody *TrackBody();
+		osg::Group *OSGRoot() {return m_grpScene.get();};
+		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
+		VsMeshMgr *MeshMgr() 
+		{
+			if(!m_lpMeshMgr)
+				m_lpMeshMgr = new VsMeshMgr();
+
+			return m_lpMeshMgr;
+		};
 
 #pragma region CreateMethods
 
@@ -72,11 +109,34 @@ namespace VortexAnimatSim
 
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
 
+		//Timer Methods
+		virtual unsigned long long GetTimerTick();
+		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
+		virtual void MicroSleep(unsigned int iMicroTime);
+
+		virtual void WriteToConsole(string strMessage);
+
 #pragma endregion
+
+		virtual void AlphaThreshold(float fltValue);
+
+		virtual float *GetDataPointer(const string &strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 
 		virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
+
 		virtual void Initialize(int argc, const char **argv);
+		virtual void ShutdownSimulation();
+		virtual void ToggleSimulation();
+		virtual void StopSimulation();
+		virtual bool StartSimulation();
+		virtual bool PauseSimulation();
+		virtual void Save(string strFile);
+
+		static VsSimulator *ConvertSimulator(Simulator *lpSim);
 	};
 
 }			//VortexAnimatSim

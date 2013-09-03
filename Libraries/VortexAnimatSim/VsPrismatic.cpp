@@ -5,12 +5,18 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsPrismaticLimit.h"
 #include "VsRigidBody.h"
 #include "VsPrismatic.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
+#include "VsOsgUserData.h"
+#include "VsOsgUserDataVisitor.h"
+#include "VsDragger.h"
 
 namespace VortexAnimatSim
 {
@@ -99,11 +105,20 @@ void VsPrismatic::SetAlpha()
 
 void VsPrismatic::DeleteJointGraphics()
 {
-	OsgPrismaticLimit *lpUpperLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpUpperLimit);
-	OsgPrismaticLimit *lpLowerLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpLowerLimit);
-	OsgPrismaticLimit *lpPosFlap = dynamic_cast<OsgPrismaticLimit *>(m_lpPosFlap);
+	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
+	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
+	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
 
-    OsgPrismatic::DeletePrismaticGraphics(m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
+    if(m_osgJointMT.valid())
+    {
+		if(lpUpperLimit && lpUpperLimit->BoxMT()) m_osgJointMT->removeChild(lpUpperLimit->BoxMT());
+		if(lpUpperLimit && lpUpperLimit->CylinderMT()) m_osgJointMT->removeChild(lpUpperLimit->CylinderMT());
+
+        if(lpLowerLimit && lpLowerLimit->BoxMT()) m_osgJointMT->removeChild(lpLowerLimit->BoxMT());
+		if(lpLowerLimit && lpLowerLimit->CylinderMT()) m_osgJointMT->removeChild(lpLowerLimit->CylinderMT());
+
+		if(lpPosFlap && lpPosFlap->BoxMT()) m_osgJointMT->removeChild(lpPosFlap->BoxMT());
+    }
 
     if(m_lpUpperLimit) m_lpUpperLimit->DeleteGraphics();
     if(m_lpLowerLimit) m_lpLowerLimit->DeleteGraphics();
@@ -112,14 +127,23 @@ void VsPrismatic::DeleteJointGraphics()
 
 void VsPrismatic::CreateJointGraphics()
 {
-	OsgPrismaticLimit *lpUpperLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpUpperLimit);
-	OsgPrismaticLimit *lpLowerLimit = dynamic_cast<OsgPrismaticLimit *>(m_lpLowerLimit);
-	OsgPrismaticLimit *lpPosFlap = dynamic_cast<OsgPrismaticLimit *>(m_lpPosFlap);
+	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
+	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
+	VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
 
-	m_lpPosFlap->LimitPos(Prismatic::JointPosition());
-	OsgPrismatic::CreatePrismaticGraphics(BoxSize(), CylinderRadius(), 
-                                          m_osgJointMT, lpUpperLimit, 
-                                          lpLowerLimit, lpPosFlap);
+	lpPosFlap->LimitPos(Prismatic::JointPosition());
+
+	lpUpperLimit->SetupGraphics();
+	lpLowerLimit->SetupGraphics();
+	lpPosFlap->SetupGraphics();
+
+	m_osgJointMT->addChild(lpUpperLimit->BoxMT());
+	m_osgJointMT->addChild(lpUpperLimit->CylinderMT());
+
+	m_osgJointMT->addChild(lpLowerLimit->BoxMT());
+	m_osgJointMT->addChild(lpLowerLimit->CylinderMT());
+
+	m_osgJointMT->addChild(lpPosFlap->BoxMT());
 }
 
 void VsPrismatic::SetupGraphics()
@@ -153,7 +177,7 @@ void VsPrismatic::SetupGraphics()
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
+		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
 		osgVisitor->traverse(*m_osgMT);
 	}
 }
@@ -206,8 +230,7 @@ void VsPrismatic::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]);
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	VxVector3 axis = NormalizeAxis(vLocalRot);
 
 	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxPrismatic->setName(m_strID.c_str());

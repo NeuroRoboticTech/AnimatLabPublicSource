@@ -5,11 +5,17 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
+#include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSphere.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
+#include "VsOsgUserData.h"
+#include "VsOsgUserDataVisitor.h"
+#include "VsDragger.h"
 #include "VsUniversal.h"
 
 
@@ -97,8 +103,7 @@ void VsUniversal::SetupPhysics()
 	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	VxVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	VxVector3 axis = NormalizeAxis(vLocalRot);
 
 	//m_vxSocket = new VxUniversal(lpVsParent->Part(), lpVsChild->Part(), pos.v, VxVector3(1, 0, 0), VxVector3(0, 1, 0)); 
 	m_vxSocket = new VxHomokinetic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
