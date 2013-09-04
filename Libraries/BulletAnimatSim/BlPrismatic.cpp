@@ -207,7 +207,7 @@ void BlPrismatic::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-    //Need to calculate the matrix transform for the joint relative to the child also.
+    //Get the matrices for the joint relative to the child and parent.
     osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
     osg::Matrix osgJointRelChild = SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation());
 
