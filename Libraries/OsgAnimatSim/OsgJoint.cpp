@@ -253,14 +253,6 @@ osg::Matrix OsgJoint::GetChildWorldMatrix()
 	return osgMatrix;
 }
 
-void OsgJoint::UpdateWorldMatrix()
-{
-	osg::Matrix osgParentMatrix = GetChildWorldMatrix();
-
-	//Multiply the two matrices together to get the new world location.
-	m_osgWorldMatrix = m_osgFinalMatrix * osgParentMatrix;
-}
-
 void OsgJoint::UpdatePositionAndRotationFromMatrix()
 {
 	OsgBody::UpdatePositionAndRotationFromMatrix();
@@ -315,7 +307,7 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
     osg::Matrix mtChild = GetChildWorldMatrix();
     osg::Matrix mtLocal = SetupMatrix(localPos, localRot);
 
-    osg::Matrix mtJointMTFromChild = mtChild * mtLocal;
+    osg::Matrix mtJointMTFromChild = mtLocal * mtChild;
     osg::Matrix mtLocalRelToParent = mtJointMTFromChild * osg::Matrix::inverse(mtParent);
 
 	LocalMatrix(mtLocalRelToParent);

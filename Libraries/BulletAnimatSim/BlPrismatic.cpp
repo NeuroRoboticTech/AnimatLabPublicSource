@@ -208,12 +208,11 @@ void BlPrismatic::SetupPhysics()
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
     //Need to calculate the matrix transform for the joint relative to the child also.
-    osg::Matrix jointMT = this->GetOSGWorldMatrix();
-    osg::Matrix parentMT = lpVsParent->GetOSGWorldMatrix();
-    osg::Matrix osgJointRelParent = jointMT * osg::Matrix::inverse(parentMT);
+    osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
+    osg::Matrix osgJointRelChild = SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation());
 
     btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
-    btTransform tmJointRelChild = osgbCollision::asBtTransform(m_osgMT->getMatrix());
+    btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
 
 	m_btPrismatic = new btSliderConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
 

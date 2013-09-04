@@ -61,7 +61,6 @@ namespace OsgAnimatSim
 			virtual void SetupPhysics();
 			virtual osg::Vec3d NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
-			virtual void UpdateWorldMatrix();
 
 		public:
 			OsgJoint();
