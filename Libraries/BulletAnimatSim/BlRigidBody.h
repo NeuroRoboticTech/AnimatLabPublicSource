@@ -51,6 +51,7 @@ namespace BulletAnimatSim
 		{
 		protected:
             btCollisionShape *m_btCollisionShape;
+            btCollisionObject *m_btCollisionObject;
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
 

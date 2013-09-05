@@ -19,6 +19,7 @@ namespace BulletAnimatSim
 BlRigidBody::BlRigidBody()
 {
     m_btCollisionShape = NULL;
+    m_btCollisionObject = NULL;
     m_btPart = NULL;
     m_osgbMotion = NULL;
 
@@ -35,6 +36,9 @@ try
 
     if(m_osgbMotion)
         {delete m_osgbMotion; m_osgbMotion = NULL;}
+
+    if(m_btCollisionObject)
+        {delete m_btCollisionObject; m_btCollisionObject = NULL;}
 
     if(m_btPart)
         {delete m_btPart; m_btPart = NULL;}
@@ -217,30 +221,20 @@ void BlRigidBody::GetBaseValues()
 
 void BlRigidBody::CreateSensorPart()
 {
-	if(m_lpThisRB && m_lpThisAB)
+    BlSimulator *lpSim = GetBlSimulator();
+
+	if(m_lpThisRB && m_lpThisAB && m_btCollisionShape)
 	{
 		BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
 
-        //FIX PHYSICS
-		//m_vxSensor = new VxCollisionSensor;
-		//m_vxPart = NULL;
-		//m_vxSensor->setUserData((void*) m_lpThisRB);
+        m_btCollisionObject = new btCollisionObject;
+        m_btCollisionObject->setCollisionShape( m_btCollisionShape );
+        m_btCollisionObject->setCollisionFlags( btCollisionObject::CF_KINEMATIC_OBJECT );
+        m_btCollisionObject->setWorldTransform( osgbCollision::asBtTransform( GetOSGWorldMatrix() ) );
+        m_btCollisionObject->setUserPointer((void *) m_lpThisRB);
 
-		//m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
-		//string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-		//m_vxCollisionGeometry->setName(strName.c_str());
-
-		//m_vxSensor->setControl(VxEntity::kControlNode);
-
-		////For some reason attempting to disable collisions between a sensor and its parent part does not work.
-		////I put some code in the checking to prevent this from being counted.
-
-		//if(lpVsParent)
-		//	SetFollowEntity(lpVsParent);
-		//else
-		//	m_vxSensor->freeze(m_lpThisRB->Freeze());
-	}
+        lpSim->DynamicsWorld()->addCollisionObject( m_btCollisionObject );
+    }
 }
 
 void BlRigidBody::SetFollowEntity(OsgRigidBody *lpEntity)
@@ -370,91 +364,6 @@ void BlRigidBody::RemoveStaticPart()
 		//	vxSensor->removeCollisionGeometry(m_vxCollisionGeometry);
 	}
 }
-//
-//void BlRigidBody::SetupGraphics()
-//{
-//	m_osgParent = ParentOSG();
-//
-//	if(m_osgParent.valid())
-//	{
-//		BuildLocalMatrix();
-//
-//		SetColor(*m_lpThisMI->Ambient(), *m_lpThisMI->Diffuse(), *m_lpThisMI->Specular(), m_lpThisMI->Shininess());
-//		SetTexture(m_lpThisMI->Texture());
-//		SetCulling();
-//		SetVisible(m_lpThisMI->IsVisible());
-//
-//		//Add it to the scene graph.
-//        GetBlSimulator()->OSGRoot()->addChild(m_osgRoot.get());
-//		//m_osgParent->addChild(m_osgRoot.get());
-//
-//		//Set the position with the world coordinates.
-//		Physics_UpdateAbsolutePosition();
-//
-//		//We need to set the UserData on the OSG side so we can do picking.
-//		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-//		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
-//		osgVisitor->traverse(*m_osgMT);
-//	}
-//}
-//
-//void BlRigidBody::UpdateWorldMatrix()
-//{
-//    if(m_osgMT.valid())
-//    	m_osgWorldMatrix = m_osgMT->getMatrix();
-//}
-//
-//void  BlRigidBody::BuildLocalMatrix()
-//{
-//	//build the local matrix
-//	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
-//	{
-//		if(m_lpThisRB->IsRoot())
-//			BlRigidBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
-//		else
-//			BlRigidBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
-//	}
-//}
-//
-//void BlRigidBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
-//{
-//	if(!m_osgMT.valid())
-//	{
-//		m_osgMT = new osgManipulator::Selection;
-//		m_osgMT->setName(strName + "_MT");
-//	}
-//
-//	if(!m_osgRoot.valid())
-//	{
-//		m_osgRoot = new osg::Group;
-//		m_osgRoot->setName(strName + "_Root");
-//	}
-//
-//	if(!m_osgRoot->containsNode(m_osgMT.get()))
-//		m_osgRoot->addChild(m_osgMT.get());
-//
-//	osg::Matrix mtGlobal = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
-//
-//
-//	LocalMatrix(mtGlobal);
-//
-//	//set the matrix to the matrix transform node
-//	m_osgMT->setMatrix(m_osgLocalMatrix);	
-//
-//	//First create the node group. The reason for this is so that we can add other decorated groups on to this node.
-//	//This is used to add the selected overlays.
-//	if(!m_osgNodeGroup.valid() && m_osgNode.valid())
-//	{
-//		m_osgNodeGroup = new osg::Group();
-//		m_osgNodeGroup->addChild(m_osgNode.get());		
-//		m_osgNodeGroup->setName(strName + "_NodeGroup");
-//		
-// 		m_osgMT->addChild(m_osgNodeGroup.get());
-//	
-//		CreateSelectedGraphics(strName);
-//	}
-//}
-
 
 void BlRigidBody::ResetStaticCollisionGeom()
 {
@@ -603,8 +512,11 @@ void BlRigidBody::Physics_CollectData()
         m_osgMT->accept(*ncv);
         osg::Matrix mat = ncv->MatrixTransform();
     }
-	else
-	{
+	else 
+    {
+        if(m_btCollisionShape)
+            m_btCollisionObject->setWorldTransform( osgbCollision::asBtTransform( GetOSGWorldMatrix(true) ) );
+
 		//If we are here then we did not have a physics component, just and OSG one.
 		Physics_UpdateAbsolutePosition();
 

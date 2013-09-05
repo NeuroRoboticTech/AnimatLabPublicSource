@@ -325,7 +325,7 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
 	int iCollisionCount = iObjectCount*40;
 
     m_lpCollisionConfiguration = new btDefaultCollisionConfiguration();
-    m_lpDispatcher = new btCollisionDispatcher( m_lpCollisionConfiguration );
+    m_lpDispatcher = new BlAnimatCollisionDispatcher( m_lpCollisionConfiguration, this );
     m_lpSolver = new btSequentialImpulseConstraintSolver;
 
     btVector3 worldAabbMin( -10000, -10000, -10000 );

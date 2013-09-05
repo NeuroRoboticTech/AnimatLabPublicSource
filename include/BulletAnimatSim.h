@@ -143,7 +143,5 @@ using namespace BulletAnimatSim::Visualization;
 
 #include "BlMaterialType.h"
 
-#include "BlIntersectionEvent.h"
-
 
 #endif // __BULLET_ANIMAT_LIB_DLL_H__

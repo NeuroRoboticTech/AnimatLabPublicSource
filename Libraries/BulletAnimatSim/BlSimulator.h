@@ -2,7 +2,7 @@
 #pragma once
 
 #include "BlMaterialType.h"
-#include "BlIntersectionEvent.h"
+#include "BlAnimatCollisionDispatcher.h"
 
 /**
 \namespace	BulletAnimatSim
@@ -16,7 +16,7 @@ namespace BulletAnimatSim
 	{
 	protected:
         btDefaultCollisionConfiguration *m_lpCollisionConfiguration;
-        btCollisionDispatcher *m_lpDispatcher;
+        BlAnimatCollisionDispatcher *m_lpDispatcher;
         btConstraintSolver *m_lpSolver;
         btBroadphaseInterface *m_lpBroadPhase;
         btDiscreteDynamicsWorld *m_lpDynamicsWorld;

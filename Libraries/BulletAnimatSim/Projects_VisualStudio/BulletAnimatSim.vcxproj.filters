@@ -13,7 +13,6 @@
     <ClInclude Include="..\BlFluidPlane.h" />
     <ClInclude Include="..\BlHinge.h" />
     <ClInclude Include="..\BlHingeLimit.h" />
-    <ClInclude Include="..\BlIntersectionEvent.h" />
     <ClInclude Include="..\BlJoint.h" />
     <ClInclude Include="..\BlLine.h" />
     <ClInclude Include="..\BlLinearHillMuscle.h" />
@@ -35,6 +34,7 @@
     <ClInclude Include="..\BlTorus.h" />
     <ClInclude Include="..\BlUniversal.h" />
     <ClInclude Include="..\StdAfx.h" />
+    <ClInclude Include="..\BlAnimatCollisionDispatcher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BlBallSocket.cpp" />
@@ -49,7 +49,6 @@
     <ClCompile Include="..\BlFluidPlane.cpp" />
     <ClCompile Include="..\BlHinge.cpp" />
     <ClCompile Include="..\BlHingeLimit.cpp" />
-    <ClCompile Include="..\BlIntersectionEvent.cpp" />
     <ClCompile Include="..\BlJoint.cpp" />
     <ClCompile Include="..\BlLine.cpp" />
     <ClCompile Include="..\BlLinearHillMuscle.cpp" />
@@ -72,5 +71,6 @@
     <ClCompile Include="..\BlUniversal.cpp" />
     <ClCompile Include="..\BulletAnimatSim.cpp" />
     <ClCompile Include="..\StdAfx.cpp" />
+    <ClCompile Include="..\BlAnimatCollisionDispatcher.cpp" />
   </ItemGroup>
 </Project>
