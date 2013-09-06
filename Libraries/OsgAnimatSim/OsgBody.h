@@ -43,7 +43,10 @@ namespace OsgAnimatSim
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() {};
 			virtual void Physics_FluidDataChanged() {};
             virtual void Physics_WakeDynamics() {};
+            virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) {};
+            virtual void Physics_ContactSensorRemoved() {};
 			virtual void SetBody() = 0;
+
 
 			virtual void Physics_UpdateNode() {};
 			virtual bool Physics_HasCollisionGeometry() {return false;};

@@ -34,7 +34,6 @@
     <ClInclude Include="..\BlTorus.h" />
     <ClInclude Include="..\BlUniversal.h" />
     <ClInclude Include="..\StdAfx.h" />
-    <ClInclude Include="..\BlAnimatCollisionDispatcher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BlBallSocket.cpp" />
@@ -71,6 +70,5 @@
     <ClCompile Include="..\BlUniversal.cpp" />
     <ClCompile Include="..\BulletAnimatSim.cpp" />
     <ClCompile Include="..\StdAfx.cpp" />
-    <ClCompile Include="..\BlAnimatCollisionDispatcher.cpp" />
   </ItemGroup>
 </Project>

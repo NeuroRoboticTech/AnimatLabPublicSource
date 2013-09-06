@@ -33,6 +33,8 @@ namespace AnimatSim
 			virtual void Physics_FluidDataChanged() = 0;
 			virtual bool Physics_HasCollisionGeometry() = 0;
             virtual void Physics_WakeDynamics() = 0;
+            virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) = 0;
+            virtual void Physics_ContactSensorRemoved() = 0;
 		};
 
 	}

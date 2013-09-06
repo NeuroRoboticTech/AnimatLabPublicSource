@@ -915,6 +915,27 @@ void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 		m_fltSurfaceContactCount--;
 }
 
+
+/**
+\brief	Direclty sets the surface contact count for when this part is contacting another rigid body part
+
+\details If this item is setup to be a contact sensor then when the physics engine detects when a
+collision between two objects stops, and it will provide this back to us. We then call this
+method to update the number of contacts that this object is undergoing. This value can then be
+used to detect whether, and how many, contacts are currently happening. 
+
+\author	dcofer
+\date	9/5/2013
+
+\param [in]	iCount	The number of surface contacts. Must be 0 or larger. 
+**/
+void RigidBody::SetSurfaceContactCount(int iCount)
+{
+    if(iCount >= 0)
+        m_fltSurfaceContactCount = iCount;
+}
+
+
 /**
 \brief	This item is eating the specified amount of food. 
 
@@ -1475,6 +1496,9 @@ void RigidBody::AddContactSensor(string strXml)
 	oXml.FindChildElement("ContactSensor");
 
 	LoadContactSensor(oXml);
+
+	if(m_lpPhysicsBody && m_lpContactSensor)
+		m_lpPhysicsBody->Physics_ContactSensorAdded(m_lpContactSensor);
 }
 
 /**
@@ -1493,6 +1517,9 @@ void RigidBody::RemoveContactSensor(string strID, bool bThrowError)
 	{
 		delete m_lpContactSensor;
 		m_lpContactSensor = NULL;
+
+	    if(m_lpPhysicsBody)
+		    m_lpPhysicsBody->Physics_ContactSensorRemoved();
 	}
 }
 

@@ -55,7 +55,11 @@ void BlPlane::CreateGraphicsGeometry()
 void BlPlane::CreatePhysicsGeometry()
 {
     if(IsCollisionObject())
-        m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), 0);
+    {
+        m_fltMass = 0;  //Plane is always a static object.
+        CStdFPoint vPos = m_lpThisRB->Position();
+        m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), vPos.y);
+    }
 }
 
 void BlPlane::CreateParts()
@@ -76,22 +80,17 @@ void BlPlane::CreateDynamicPart()
 
 	if(lpSim && m_lpThisRB && m_lpThisAB)
 	{
-        //m_osgDebugNode = osgbDynamics::generateGroundPlane( osg::Vec4( 0, 1, 0, 0 ), lpSim->DynamicsWorld());
-        //m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
-		//m_osgNodeGroup->addChild(m_osgDebugNode.get());	
-
-       // GetBlSimulator()->OSGRoot()->addChild(m_osgDebugNode.get());
-       // m_osgNodeGroup->removeChild(m_osgNode.get());
-
         //m_btCollisionShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
         btRigidBody::btRigidBodyConstructionInfo rbInfo( 0., NULL, m_btCollisionShape, btVector3(0,0,0) );
         m_btPart = new btRigidBody(rbInfo);
-        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
+        m_btPart->setUserPointer((void *) this);
+
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
 
         m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
-        //m_btCollisionShape = m_btPart->getCollisionShape();
 	}
 }
+
 
 void BlPlane::ResizePhysicsGeometry()
 {

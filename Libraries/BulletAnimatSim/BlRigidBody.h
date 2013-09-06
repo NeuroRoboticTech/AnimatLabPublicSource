@@ -9,6 +9,24 @@ namespace BulletAnimatSim
 	namespace Environment
 	{
 
+            class BULLET_PORT BlContactPoint
+            {
+            public:
+                btManifoldPoint *m_lpCP;
+                BlRigidBody *m_lpContacted;
+                bool m_bIsBodyA;
+
+                BlContactPoint(btManifoldPoint *lpCP, BlRigidBody *lpContacted, bool bIsBodyA)
+                {
+                    m_lpCP = lpCP;
+                    m_lpContacted = lpContacted;
+                    m_bIsBodyA = bIsBodyA;
+                }
+
+                virtual ~BlContactPoint() {};
+
+            };
+
 		/*! \brief 
 			A common class for all rigid body data specific to vortex.
 
@@ -72,17 +90,19 @@ namespace BulletAnimatSim
 
             //FIX PHYSICS
             //virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
-            //virtual void WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos);
 
         public:
 			BlRigidBody();
 			virtual ~BlRigidBody();
+
+            CStdPtrArray<BlContactPoint> m_aryContactPoints;
 
             btCollisionShape *CollisionShape() {return m_btCollisionShape;};
             btRigidBody *Part() {return m_btPart;};
             osgbDynamics::MotionState *MotionState() {return m_osgbMotion;};
 
 			virtual BlSimulator *GetBlSimulator();
+
             //FIX PHYSICS
 			//virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 			virtual void SetBody();
@@ -101,6 +121,8 @@ namespace BulletAnimatSim
 			virtual void Physics_UpdateNode();
 			virtual void Physics_FluidDataChanged();
             virtual void Physics_WakeDynamics();
+            virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor);
+            virtual void Physics_ContactSensorRemoved();
 
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);

@@ -38,6 +38,8 @@ namespace VortexAnimatSim
             virtual bool Physics_IsDefined() {return false;};
             virtual bool Physics_IsGeometryDefined() {return false;};
             virtual void Physics_WakeDynamics() {};
+            virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) {};
+            virtual void Physics_ContactSensorRemoved() {};
             virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};

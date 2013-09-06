@@ -114,5 +114,14 @@
 #define Bl_Err_lTriangleCollisionMeshNotAllowed -4042
 #define Bl_Err_strTriangleCollisionMeshNotAllowed "Dynamic triangle mesh collision objects are not allowed."
 
+enum AnimatCollisionTypes {
+    NOTHING                 = 0,    // things that don't collide
+    RIGID_BODY              = 1<<1, // regular rigid body party
+    CONTACT_SENSOR          = 1<<2,  // contact sensor part type
+    RECEPTIVE_FIELD_SENSOR  = 1<<3  // receptive field part type 
+};
+
+#define ALL_COLLISIONS (RIGID_BODY | CONTACT_SENSOR | RECEPTIVE_FIELD_SENSOR)
+
 #endif // __BL_ERROR_CONSTANTS_H__
 

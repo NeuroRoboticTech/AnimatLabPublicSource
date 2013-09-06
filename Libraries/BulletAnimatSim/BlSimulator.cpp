@@ -210,6 +210,60 @@ void BlSimulator::ResetSimulation()
 	m_bSimRunning = false;
 }
 
+/////MyContactCallback is just an example to show how to get access to the child shape that collided
+//bool AnimatContactCallback (
+//    btManifoldPoint& cp,
+//    const btCollisionObject* colObj0,
+//    int partId0,
+//    int index0,
+//    const btCollisionObject* colObj1,
+//    int partId1,
+//    int index1)
+//{
+//
+//	//if (colObj0->getRootCollisionShape()->getShapeType()==COMPOUND_SHAPE_PROXYTYPE)
+//	//{
+//	//	btCompoundShape* compound = (btCompoundShape*)colObj0->getRootCollisionShape();
+//	//	btCollisionShape* childShape;
+//	//	childShape = compound->getChildShape(index0);
+//	//}
+//
+//	//if (colObj1->getRootCollisionShape()->getShapeType()==COMPOUND_SHAPE_PROXYTYPE)
+//	//{
+//	//	btCompoundShape* compound = (btCompoundShape*)colObj1->getRootCollisionShape();
+//	//	btCollisionShape* childShape;
+//	//	childShape = compound->getChildShape(index1);
+//	//}
+//
+//	return true;
+//}
+
+bool AnimatContactCallback(btManifoldPoint& cp, void* body0, void* body1)
+{
+    btCollisionObject *lpBtBody1 = (btCollisionObject *) body0;
+    btCollisionObject *lpBtBody2 = (btCollisionObject *) body1;
+
+    //Only process these if they both exist and one of them has custom material callback flag set.
+    if( lpBtBody1 && lpBtBody2 &&
+        ( (lpBtBody1->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK) ||
+         (lpBtBody2->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)) )
+    {
+        BlRigidBody *lpBody1 = (BlRigidBody *) lpBtBody1->getUserPointer();
+        BlRigidBody *lpBody2 = (BlRigidBody *) lpBtBody2->getUserPointer();
+
+        if(lpBody1 && lpBody2)
+        {
+            if(lpBtBody1->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)
+                lpBody1->m_aryContactPoints.Add(new BlContactPoint(&cp, lpBody2, true));
+
+            if(lpBtBody2->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)
+                lpBody2->m_aryContactPoints.Add(new BlContactPoint(&cp, lpBody1, false));
+        }
+    }
+
+    return true;
+}
+
 void BlSimulator::InitializeVortexViewer(int argc, const char **argv)
 {
     osg::ArgumentParser arguments(&argc, (char **) argv);
@@ -325,7 +379,7 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
 	int iCollisionCount = iObjectCount*40;
 
     m_lpCollisionConfiguration = new btDefaultCollisionConfiguration();
-    m_lpDispatcher = new BlAnimatCollisionDispatcher( m_lpCollisionConfiguration, this );
+    m_lpDispatcher = new btCollisionDispatcher( m_lpCollisionConfiguration);
     m_lpSolver = new btSequentialImpulseConstraintSolver;
 
     btVector3 worldAabbMin( -10000, -10000, -10000 );
@@ -340,6 +394,9 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
         this->OSGRoot()->addChild(m_dbgDraw.getSceneGraph());
         m_lpDynamicsWorld->setDebugDrawer( &m_dbgDraw );
     }
+
+	//gContactAddedCallback = &AnimatContactCallback;
+    gContactProcessedCallback = &AnimatContactCallback;
 
 	//create the frame
     //FIX PHYSICS

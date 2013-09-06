@@ -31,6 +31,8 @@ BlRigidBody::~BlRigidBody()
 
 try
 {
+    m_aryContactPoints.Clear();
+
     if(m_btCollisionShape)
         {delete m_btCollisionShape; m_btCollisionShape = NULL;}
 
@@ -231,9 +233,12 @@ void BlRigidBody::CreateSensorPart()
         m_btCollisionObject->setCollisionShape( m_btCollisionShape );
         m_btCollisionObject->setCollisionFlags( btCollisionObject::CF_KINEMATIC_OBJECT );
         m_btCollisionObject->setWorldTransform( osgbCollision::asBtTransform( GetOSGWorldMatrix() ) );
-        m_btCollisionObject->setUserPointer((void *) m_lpThisRB);
+        m_btCollisionObject->setUserPointer((void *) this);
 
-        lpSim->DynamicsWorld()->addCollisionObject( m_btCollisionObject );
+        lpSim->DynamicsWorld()->addCollisionObject( m_btCollisionObject, AnimatCollisionTypes::CONTACT_SENSOR, ALL_COLLISIONS );
+
+        int iFlags = m_btCollisionObject->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
+        m_btCollisionObject->setCollisionFlags(iFlags);
     }
 }
 
@@ -305,7 +310,7 @@ void BlRigidBody::CreateDynamicPart()
         rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
         m_btPart = new btRigidBody( rbInfo );
-        m_btPart->setUserPointer((void *) m_lpThisRB);
+        m_btPart->setUserPointer((void *) this);
 
         // Last thing to do: Position the rigid body in the world coordinate system. The
         // MotionState has the initial (parent) transform, and also knows how to account
@@ -322,7 +327,14 @@ void BlRigidBody::CreateDynamicPart()
         else
             m_btPart->setActivationState(ACTIVE_TAG);
 
-        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
+        //If this part has a receptive field then turn on the custom callbacks.
+        if(m_lpThisRB->GetContactSensor())
+        {
+            int iFlags = m_btPart->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
+            m_btPart->setCollisionFlags(iFlags);
+        }
+
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
 
         //FIX PHYSICS
 		// Create the physics object.
@@ -428,65 +440,80 @@ void BlRigidBody::SetBody()
 //		return 0;
 //}
 
-void BlRigidBody::ProcessContacts()
+void BlRigidBody::Physics_ContactSensorAdded(ContactSensor *lpSensor)
 {
-	ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
-	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-
-    //FIX PHYSICS
-	//if(m_vxPart && lpSensor)
-	//{
-	//	lpSensor->ClearCurrents();
-
-	//	Vx::VxPart::DynamicsContactIterator itd = m_vxPart->dynamicsContactBegin();
- //       VxPart *p[2];
-	//	int iPartIdx=0;
-	//	VxReal3 vWorldPos;
-	//	StdVector3 vBodyPos;
-	//	VxReal3 vForce;
-	//	float fltForceMag = 0;
-
-	//	//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
-	//	//	fltForceMag = 0;
-
-	//	int iCount=0;
-	//	for(; itd != m_vxPart->dynamicsContactEnd(); ++itd, iCount++)
-	//	{
-	//		VxDynamicsContact *vxDyn = *itd;
-	//		vxDyn->getPartPair(p, p+1);
-
-	//		vxDyn->getPosition(vWorldPos);
-	//		WorldToBodyCoords(vWorldPos, vBodyPos);
-
-	//		iPartIdx = GetPartIndex(p[0], p[1]);
-	//		vxDyn->getForce(iPartIdx, vForce);
-	//		fltForceMag = V3_MAG(vForce) * (fMassUnits * fDisUnits);
-
-	//		if(fltForceMag > 0)
-	//			lpSensor->ProcessContact(vBodyPos, fltForceMag);
-	//	}
-	//}
+    if(m_btPart)
+    {
+        int iFlags = m_btPart->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
+        m_btPart->setCollisionFlags(iFlags);
+    }
 }
 
-//FIX PHYSICS
-//void BlRigidBody::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
-//{
-//	osg::Vec3f vWorldPos;
-//	osg::Vec3f vLocal;
-//
-//	vLocalPos[0] = vWorld[0]; vLocalPos[1] = vWorld[1]; vLocalPos[2] = vWorld[2];
-//	vWorldPos[0] = vWorld[0]; vWorldPos[1] = vWorld[1]; vWorldPos[2] = vWorld[2];
-//
-//	if(m_osgNode.valid())
-//	{
-//	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
-//	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
-//	  vLocal = vWorldPos * worldToLocal;
-//	}
-//
-//	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];
-//} 
+void BlRigidBody::Physics_ContactSensorRemoved()
+{
+    if(m_btPart)
+    {
+        int iFlags = m_btPart->getCollisionFlags() & ~btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
+        m_btPart->setCollisionFlags(iFlags);
+    }
+}
+
+void BlRigidBody::ProcessContacts()
+{
+    ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
+
+    if(lpSensor)
+        lpSensor->ClearCurrents();
+
+    //If this is a contact sensor then we do not care about processing the force and position.
+    //We only care about the contact number.
+    if(m_lpThisRB->IsContactSensor())
+        m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
+    else if(m_aryContactPoints.size() > 0 && m_btPart && lpSensor)
+    {
+		int iPartIdx=0;
+		StdVector3 vBodyPos;
+		float fltForceMag = 0;
+	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
+		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
+		//	fltForceMag = 0;
+
+		int iCount=m_aryContactPoints.size();
+		for(int iIdx=0; iIdx<iCount; iIdx++)
+		{
+            BlContactPoint *lpContactPoint = m_aryContactPoints[iIdx];
+
+            if(lpContactPoint && lpContactPoint->m_lpCP)
+            {
+                lpContactPoint->m_lpCP->m_localPointB;
+
+                if(lpContactPoint->m_bIsBodyA)
+                {
+                    vBodyPos[0] = lpContactPoint->m_lpCP->m_localPointA[0];
+                    vBodyPos[1] = lpContactPoint->m_lpCP->m_localPointA[1];
+                    vBodyPos[2] = lpContactPoint->m_lpCP->m_localPointA[2];
+                }
+                else
+                {
+                    vBodyPos[0] = lpContactPoint->m_lpCP->m_localPointB[0];
+                    vBodyPos[1] = lpContactPoint->m_lpCP->m_localPointB[1];
+                    vBodyPos[2] = lpContactPoint->m_lpCP->m_localPointB[2];
+                }
+
+			    fltForceMag = lpContactPoint->m_lpCP->m_appliedImpulse * (fMassUnits * fDisUnits);
+
+			    if(fltForceMag > 0)
+				    lpSensor->ProcessContact(vBodyPos, fltForceMag);
+            }
+		}
+
+    }
+
+    //Clear the contact points for the next simulation step.
+    m_aryContactPoints.Clear();
+}
 
 void BlRigidBody::Physics_CollectData()
 {
@@ -514,7 +541,7 @@ void BlRigidBody::Physics_CollectData()
     }
 	else 
     {
-        if(m_btCollisionShape)
+        if(m_btCollisionObject)
             m_btCollisionObject->setWorldTransform( osgbCollision::asBtTransform( GetOSGWorldMatrix(true) ) );
 
 		//If we are here then we did not have a physics component, just and OSG one.
@@ -561,7 +588,7 @@ void BlRigidBody::Physics_CollectData()
 		//m_vAngularAcceleration[2] = vAccel[2];
 	}
 
-	if(m_lpThisRB->GetContactSensor()) 
+	if(m_lpThisRB->GetContactSensor() || m_lpThisRB->IsContactSensor()) 
 		ProcessContacts();
 }
 

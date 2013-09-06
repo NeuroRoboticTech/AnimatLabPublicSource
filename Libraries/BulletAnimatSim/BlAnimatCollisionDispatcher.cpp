@@ -16,6 +16,7 @@ BlAnimatCollisionDispatcher::BlAnimatCollisionDispatcher(btCollisionConfiguratio
         btCollisionDispatcher(collisionConfiguration),
         m_lpSim(lpSim)
 {
+    setNearCallback(AnimatNearCallback);
 }
 
 BlAnimatCollisionDispatcher::~BlAnimatCollisionDispatcher()
@@ -54,6 +55,51 @@ bool	BlAnimatCollisionDispatcher::needsCollision(btCollisionObject* body0,btColl
 		needsCollision = false;
 	
 	return needsCollision ;
+
+}
+
+bool BlAnimatCollisionDispatcher::IsContactObject(btCollisionObject* body0, btCollisionObject* body1)
+{
+    if( ((body0->getCollisionFlags() & AnimatCollisionTypes::CONTACT_SENSOR) || (body1->getCollisionFlags() & AnimatCollisionTypes::CONTACT_SENSOR)) ||
+        ((body0->getCollisionFlags() & AnimatCollisionTypes::RECEPTIVE_FIELD_SENSOR) || (body1->getCollisionFlags() & AnimatCollisionTypes::RECEPTIVE_FIELD_SENSOR)) )
+        return true;
+
+    return false;
+}
+
+
+//by default, Bullet will use this near callback
+void BlAnimatCollisionDispatcher::AnimatNearCallback(btBroadphasePair& collisionPair, btCollisionDispatcher& dispatcher, const btDispatcherInfo& dispatchInfo)
+{
+		btCollisionObject* colObj0 = (btCollisionObject*)collisionPair.m_pProxy0->m_clientObject;
+		btCollisionObject* colObj1 = (btCollisionObject*)collisionPair.m_pProxy1->m_clientObject;
+
+		if (dispatcher.needsCollision(colObj0,colObj1))
+		{
+			//dispatcher will keep algorithms persistent in the collision pair
+			if (!collisionPair.m_algorithm)
+			{
+				collisionPair.m_algorithm = dispatcher.findAlgorithm(colObj0,colObj1);
+			}
+
+			if (collisionPair.m_algorithm)
+			{
+				btManifoldResult contactPointResult(colObj0,colObj1);
+				
+				if (dispatchInfo.m_dispatchFunc == 		btDispatcherInfo::DISPATCH_DISCRETE)
+				{
+					//discrete collision detection query
+					collisionPair.m_algorithm->processCollision(colObj0,colObj1,dispatchInfo,&contactPointResult);
+				} else
+				{
+					//continuous collision detection query, time of impact (toi)
+					btScalar toi = collisionPair.m_algorithm->calculateTimeOfImpact(colObj0,colObj1,dispatchInfo,&contactPointResult);
+					if (dispatchInfo.m_timeOfImpact > toi)
+						dispatchInfo.m_timeOfImpact = toi;
+
+				}
+			}
+		}
 
 }
 
