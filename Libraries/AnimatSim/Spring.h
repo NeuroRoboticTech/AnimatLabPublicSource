@@ -43,6 +43,9 @@ namespace AnimatSim
 				/// The damping of the spring
 				float m_fltDamping;
 
+				/// The damping of the spring
+				float m_fltDampingNotScaled;
+
 				/// The current displacement of the spring from its natural length
 				float m_fltDisplacement;
 
@@ -51,6 +54,17 @@ namespace AnimatSim
 
 				/// The current energy contained in the spring
 				float m_fltEnergy;
+
+                ///The velocity of the spring length change
+                float m_fltVelocity;
+
+                /**
+				\brief	Calculates the tension. 
+				
+				\author	dcofer
+				\date	3/10/2011
+				**/
+				virtual void CalculateTension();
 
 			public:
 				Spring();
@@ -120,11 +134,13 @@ namespace AnimatSim
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
 				virtual void Damping(float fltVal, bool bUseScaling = true);
-				
+
 				virtual float Displacement();
 				virtual float Tension();
 				virtual float Energy();
+				virtual float Velocity();
 
+				virtual void ResetSimulation();
 				virtual void CreateParts();
 				virtual float *GetDataPointer(const string &strDataType);
 				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);

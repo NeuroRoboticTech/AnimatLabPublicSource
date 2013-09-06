@@ -65,19 +65,6 @@ bool BlRigidBody::Physics_IsGeometryDefined()
         return false;
 }
 
-//FIX PHYSICS
-//Vx::VxEntity::EntityControlTypeEnum BlRigidBody::ConvertControlType()
-//{
-//    if(m_eControlType == ControlAnimated)
-//        return Vx::VxEntity::EntityControlTypeEnum::kControlAnimated;
-//    else if(m_eControlType == ControlNode)
-//        return Vx::VxEntity::EntityControlTypeEnum::kControlNode;
-//    else if(m_eControlType == ControlDynamic)
-//        return Vx::VxEntity::EntityControlTypeEnum::kControlDynamic;
-//    else
-//        return Vx::VxEntity::EntityControlTypeEnum::kControlStatic;
-//}
-
 CStdFPoint BlRigidBody::Physics_GetCurrentPosition()
 {
 	if(m_osgbMotion && m_lpThisMI)
@@ -240,27 +227,6 @@ void BlRigidBody::CreateSensorPart()
         int iFlags = m_btCollisionObject->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
         m_btCollisionObject->setCollisionFlags(iFlags);
     }
-}
-
-void BlRigidBody::SetFollowEntity(OsgRigidBody *lpEntity)
-{
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//{
- //       BlRigidBody *lpVsEntity = dynamic_cast<BlRigidBody *>(lpEntity);
-
- //       if(lpVsEntity)
- //       {
-	//	    m_vxSensor->setFastMoving(true);
-	//	    Vx::VxReal44 vOffset;
-	//	    VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	//	    Vx::VxTransform vTM(vOffset);
-
-	//	    Vx::VxCollisionSensor *vxSensor = lpVsEntity->Sensor();
-	//	    if(vxSensor)
-	//		    m_vxSensor->followEntity(vxSensor, true, &vTM);
- //       }
-	//}
 }
 
 void BlRigidBody::CreateDynamicPart()

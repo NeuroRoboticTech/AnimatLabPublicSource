@@ -225,10 +225,6 @@ osg::MatrixTransform *OsgRigidBody::ParentOSG()
 
 void OsgRigidBody::ResetSensorCollisionGeom()
 {
-	OsgRigidBody *lpVsParent = dynamic_cast<OsgRigidBody *>(m_lpThisRB->Parent());
-
-	if(lpVsParent)
-		SetFollowEntity(lpVsParent);
 }
 
 void OsgRigidBody::SetupPhysics()

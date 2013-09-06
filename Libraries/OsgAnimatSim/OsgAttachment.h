@@ -26,7 +26,6 @@ protected:
 	virtual void CreateStaticPart() {};
 	virtual void CreateDynamicPart() {};
 	virtual void RemoveStaticPart() {};
-    virtual void SetFollowEntity(OsgRigidBody *lpEntity) {};
     virtual void GetBaseValues() {};
 
 public:

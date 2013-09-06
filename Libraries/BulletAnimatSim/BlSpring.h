@@ -10,40 +10,13 @@ namespace BulletAnimatSim
 		namespace Bodies
 		{
 
-            //FIX PHYSICS
-			//class BULLET_PORT AnimatVxSpring : public Vx::VxSpring
-			//{
-			//public:
-			//	AnimatVxSpring() : Vx::VxSpring() {};
-			//	AnimatVxSpring(Vx::VxPart* part1, Vx::VxPart* part2, Vx::VxReal naturalLength, Vx::VxReal stiffness, Vx::VxReal damping)
-			//		 : Vx::VxSpring(part1, part2, naturalLength,stiffness, damping) {};
-			//	virtual ~AnimatVxSpring() {};
-			//	
-			//	void EnableBodies()
-			//	{Vx::VxSpring::enableBodies();}
-			//};
-
 			class BULLET_PORT BlSpring : public AnimatSim::Environment::Bodies::Spring, public BlLine     
 			{
 			protected:
-                //FIX PHYSICS
-				//AnimatVxSpring *m_vxSpring;
-
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
-				virtual void InitializeAttachments();
 
 			public:
 				BlSpring();
 				virtual ~BlSpring();
-
-				virtual void Enabled(bool bVal);
-				virtual void NaturalLength(float fltVal, bool bUseScaling = true);
-				virtual void Stiffness(float fltVal, bool bUseScaling = true);
-				virtual void Damping(float fltVal, bool bUseScaling = true);
-
-				virtual void Physics_CollectData();
-				virtual void Physics_Resize();
 
 				virtual void CreateJoints();
 				virtual void ResetSimulation();

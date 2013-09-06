@@ -86,10 +86,6 @@ namespace BulletAnimatSim
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void GetBaseValues();
 			virtual void ResetStaticCollisionGeom();
-			virtual void SetFollowEntity(OsgRigidBody *lpEntity);
-
-            //FIX PHYSICS
-            //virtual Vx::VxEntity::EntityControlTypeEnum ConvertControlType();
 
         public:
 			BlRigidBody();

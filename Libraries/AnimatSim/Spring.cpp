@@ -55,9 +55,11 @@ Spring::Spring()
 	m_fltStiffness = 5000;
 	m_fltStiffnessNotScaled = m_fltStiffness;
 	m_fltDamping = 1000;
+    m_fltDampingNotScaled = m_fltDamping;
 	m_fltDisplacement = 0;
 	m_fltTension = 0;
 	m_fltEnergy = 0;
+    m_fltVelocity = 0;
 }
 
 /**
@@ -112,6 +114,7 @@ void Spring::Damping(float fltVal, bool bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "Spring.Damping", true);
 
+    m_fltDampingNotScaled = fltVal;
 	if(bUseScaling)
 		m_fltDamping = fltVal/m_lpSim->DisplayMassUnits();
 	else
@@ -148,9 +151,49 @@ float Spring::Tension() {return m_fltTension;}
 **/
 float Spring::Energy() {return m_fltEnergy;}
 
+
+/**
+\brief	Gets the velocity of the length change of the spring. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	velocity in the spring. 
+**/
+float Spring::Velocity() {return m_fltVelocity;}
+
+
 // There are no parts or joints to create for muscle attachment points.
 void Spring::CreateParts()
 {
+}
+
+void Spring::ResetSimulation()
+{
+    LineBase::ResetSimulation();
+    CalculateTension();
+}
+
+void Spring::CalculateTension()
+{
+	if(m_bEnabled)
+	{
+        m_fltPrevLength = m_fltLength;
+		m_fltLength = CalculateLength();
+		m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
+
+    	m_fltVelocity = (m_fltLength-m_fltPrevLength)/m_lpSim->PhysicsTimeStep();
+
+		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement + m_fltVelocity*m_fltDamping;
+		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
+	}
+    else
+    {
+		m_fltDisplacement = 0;
+		m_fltTension = 0;
+		m_fltEnergy = 0;
+        m_fltVelocity = 0;
+    }
 }
 
 void Spring::AddExternalNodeInput(float fltInput)
@@ -186,6 +229,9 @@ float *Spring::GetDataPointer(const string &strDataType)
 
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
+
+	if(strType == "VELOCITY")
+		return &m_fltVelocity;
 
 	return LineBase::GetDataPointer(strDataType);
 }

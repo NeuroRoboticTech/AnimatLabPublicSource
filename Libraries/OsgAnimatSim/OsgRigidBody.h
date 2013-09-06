@@ -79,7 +79,6 @@ namespace OsgAnimatSim
 
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void ResetSensorCollisionGeom();
-			virtual void SetFollowEntity(OsgRigidBody *lpEntity) = 0;
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();
