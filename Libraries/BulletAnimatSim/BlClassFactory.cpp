@@ -929,6 +929,7 @@ try
 
 	lpSim->Load();
 	lpSim->Initialize(argc, argv);
+    lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);
 	lpSim->Simulate();
 
 	if(lpSim) delete lpSim;

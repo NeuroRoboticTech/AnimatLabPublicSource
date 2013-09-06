@@ -12,7 +12,7 @@
 <Environment>
 <PhysicsTimeStep>0.0001</PhysicsTimeStep>
 <Gravity>-9.81</Gravity>
-<MouseSpringStiffness>0.5</MouseSpringStiffness>
+<MouseSpringStiffness>100</MouseSpringStiffness>
 <MouseSpringDamping>200</MouseSpringDamping>
 <StabilityScale>1</StabilityScale>
 <RecFieldSelRadius>0.005</RecFieldSelRadius>
