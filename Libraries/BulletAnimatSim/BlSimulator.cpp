@@ -248,16 +248,16 @@ bool AnimatContactCallback(btManifoldPoint& cp, void* body0, void* body1)
         ( (lpBtBody1->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK) ||
          (lpBtBody2->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)) )
     {
-        BlRigidBody *lpBody1 = (BlRigidBody *) lpBtBody1->getUserPointer();
-        BlRigidBody *lpBody2 = (BlRigidBody *) lpBtBody2->getUserPointer();
+        BlBulletData *lpData1 = (BlBulletData *) lpBtBody1->getUserPointer();
+        BlBulletData *lpData2 = (BlBulletData *) lpBtBody2->getUserPointer();
 
-        if(lpBody1 && lpBody2)
+        if(lpData1 && lpData1->m_lpBody && lpData2 && lpData2->m_lpBody)
         {
             if(lpBtBody1->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)
-                lpBody1->m_aryContactPoints.Add(new BlContactPoint(&cp, lpBody2, true));
+                lpData1->m_lpBody->m_aryContactPoints.Add(new BlContactPoint(&cp, lpData2->m_lpBody, true));
 
             if(lpBtBody2->getCollisionFlags() & btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK)
-                lpBody2->m_aryContactPoints.Add(new BlContactPoint(&cp, lpBody1, false));
+                lpData2->m_lpBody->m_aryContactPoints.Add(new BlContactPoint(&cp, lpData1->m_lpBody, false));
         }
     }
 
@@ -379,7 +379,7 @@ void BlSimulator::InitializeVortex(int argc, const char **argv)
 	int iCollisionCount = iObjectCount*40;
 
     m_lpCollisionConfiguration = new btDefaultCollisionConfiguration();
-    m_lpDispatcher = new btCollisionDispatcher( m_lpCollisionConfiguration);
+    m_lpDispatcher = new BlAnimatCollisionDispatcher(m_lpCollisionConfiguration, this);
     m_lpSolver = new btSequentialImpulseConstraintSolver;
 
     btVector3 worldAabbMin( -10000, -10000, -10000 );

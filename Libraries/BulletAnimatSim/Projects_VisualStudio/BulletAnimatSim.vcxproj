@@ -123,6 +123,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\BlAnimatCollisionDispatcher.h" />
     <ClInclude Include="..\BlBallSocket.h" />
     <ClInclude Include="..\BlBox.h" />
     <ClInclude Include="..\BlClassFactory.h" />
@@ -158,6 +159,7 @@ Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
     <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\BlAnimatCollisionDispatcher.cpp" />
     <ClCompile Include="..\BlBallSocket.cpp">
     </ClCompile>
     <ClCompile Include="..\BlBox.cpp">

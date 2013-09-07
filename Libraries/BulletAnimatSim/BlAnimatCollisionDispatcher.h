@@ -16,10 +16,10 @@ namespace BulletAnimatSim
 		BlAnimatCollisionDispatcher(btCollisionConfiguration* collisionConfiguration, BlSimulator *lpSim);
 		virtual ~BlAnimatCollisionDispatcher();
 
-        static bool IsContactObject(btCollisionObject* body0,btCollisionObject* body1);
+        //static bool IsContactObject(btCollisionObject* body0,btCollisionObject* body1);
 
         virtual bool	needsCollision(btCollisionObject* body0,btCollisionObject* body1);
-    	static void  AnimatNearCallback(btBroadphasePair& collisionPair, btCollisionDispatcher& dispatcher, const btDispatcherInfo& dispatchInfo);
+    	//static void  AnimatNearCallback(btBroadphasePair& collisionPair, btCollisionDispatcher& dispatcher, const btDispatcherInfo& dispatchInfo);
     };
 
 }				//BulletAnimatSim

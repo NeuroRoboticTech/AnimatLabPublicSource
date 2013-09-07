@@ -83,7 +83,10 @@ void BlPlane::CreateDynamicPart()
         //m_btCollisionShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
         btRigidBody::btRigidBodyConstructionInfo rbInfo( 0., NULL, m_btCollisionShape, btVector3(0,0,0) );
         m_btPart = new btRigidBody(rbInfo);
-        m_btPart->setUserPointer((void *) this);
+
+        if(!m_lpBulletData)
+            m_lpBulletData = new BlBulletData(this, false);
+        m_btPart->setUserPointer((void *) m_lpBulletData);
 
         lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
 

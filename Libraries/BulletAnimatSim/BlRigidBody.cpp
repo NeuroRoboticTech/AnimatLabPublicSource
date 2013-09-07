@@ -22,6 +22,7 @@ BlRigidBody::BlRigidBody()
     m_btCollisionObject = NULL;
     m_btPart = NULL;
     m_osgbMotion = NULL;
+    m_lpBulletData = NULL;
 
     m_lpVsSim = NULL;
 }
@@ -44,6 +45,10 @@ try
 
     if(m_btPart)
         {delete m_btPart; m_btPart = NULL;}
+
+    if(m_lpBulletData)
+        {delete m_lpBulletData; m_lpBulletData = NULL;}
+
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BlRigidBody\r\n", "", -1, false, true);}
@@ -220,7 +225,11 @@ void BlRigidBody::CreateSensorPart()
         m_btCollisionObject->setCollisionShape( m_btCollisionShape );
         m_btCollisionObject->setCollisionFlags( btCollisionObject::CF_KINEMATIC_OBJECT );
         m_btCollisionObject->setWorldTransform( osgbCollision::asBtTransform( GetOSGWorldMatrix() ) );
-        m_btCollisionObject->setUserPointer((void *) this);
+
+        if(!m_lpBulletData)
+            m_lpBulletData = new BlBulletData(this, false);
+
+        m_btCollisionObject->setUserPointer((void *) m_lpBulletData);
 
         lpSim->DynamicsWorld()->addCollisionObject( m_btCollisionObject, AnimatCollisionTypes::CONTACT_SENSOR, ALL_COLLISIONS );
 
@@ -276,7 +285,11 @@ void BlRigidBody::CreateDynamicPart()
         rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
         m_btPart = new btRigidBody( rbInfo );
-        m_btPart->setUserPointer((void *) this);
+
+        if(!m_lpBulletData)
+            m_lpBulletData = new BlBulletData(this, false);
+
+        m_btPart->setUserPointer((void *) m_lpBulletData);
 
         // Last thing to do: Position the rigid body in the world coordinate system. The
         // MotionState has the initial (parent) transform, and also knows how to account
@@ -397,14 +410,15 @@ void BlRigidBody::SetBody()
 	//}
 }
 
-//FIX PHYSICS
-//int BlRigidBody::GetPartIndex(VxPart *vxP0, VxPart *vxP1)
-//{
-//	if(m_vxPart == vxP1)
-//		return 1;
-//	else 
-//		return 0;
-//}
+
+bool BlRigidBody::NeedCollision(BlRigidBody *lpTest)
+{
+    //If we find this objects rigid body in the list of collision exclusions then we want to skip this collision.
+    if(m_lpThisRB->FindCollisionExclusionBody(lpTest->m_lpThisRB, false))
+        return false;
+    else
+        return true;
+}
 
 void BlRigidBody::Physics_ContactSensorAdded(ContactSensor *lpSensor)
 {
@@ -588,48 +602,14 @@ void BlRigidBody::Physics_ResetSimulation()
 
 void BlRigidBody::Physics_EnableCollision(RigidBody *lpBody)
 {
-	if(!lpBody)
-		THROW_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined);
-
-	BlRigidBody *lpVsBody = dynamic_cast<BlRigidBody *>(lpBody);
-
-	if(!lpVsBody)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastBodyToDesiredType, Al_Err_strUnableToCastBodyToDesiredType, "Type", "BlRigidBody");
-
-	BlSimulator *lpVsSim = dynamic_cast<BlSimulator *>(m_lpThisAB->GetSimulator());
-
-	if(!lpVsSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	//If collisions between the two objects is enabled then disable it.
-    //FIX PHYSICS
-	//if(lpVsSim->Universe()->getPairIntersectEnabled(m_vxCollisionGeometry, lpVsBody->CollisionGeometry()) == false)
-	//	lpVsSim->Universe()->enablePairIntersect(m_vxPart, lpVsBody->Sensor());
+    if(m_lpBulletData && m_lpThisRB->GetExclusionCollisionSet()->size() == 0)
+        m_lpBulletData->m_bExclusionProcessing = false;
 }
 
 void BlRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 {
-	if(!lpBody)
-		THROW_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined);
-
-	BlRigidBody *lpVsBody = dynamic_cast<BlRigidBody *>(lpBody);
-
-	if(!lpVsBody)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastBodyToDesiredType, Al_Err_strUnableToCastBodyToDesiredType, "Type", "BlRigidBody");
-
-	BlSimulator *lpVsSim = dynamic_cast<BlSimulator *>(m_lpThisAB->GetSimulator());
-
-	if(!lpVsSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	//If collisions between the two objects is enabled then disable it.
-    //FIX PHYSICS
-	//Vx::VxUniverse *lpUniv = lpVsSim->Universe();
-	//if(!m_vxCollisionGeometry || !lpVsBody->CollisionGeometry())
-	//	THROW_PARAM_ERROR(Bl_Err_lCollisionGeomNotDefined, Bl_Err_strCollisionGeomNotDefined, "ID", m_lpThisAB->ID());
-
-	//if(lpUniv->getPairIntersectEnabled(m_vxCollisionGeometry, lpVsBody->CollisionGeometry()) == true)
-	//	lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
+    if(m_lpBulletData && m_lpThisRB->GetExclusionCollisionSet()->size() > 0)
+        m_lpBulletData->m_bExclusionProcessing = true;
 }
 
 void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)

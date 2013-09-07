@@ -173,6 +173,9 @@ namespace AnimatSim
             /// This will show the exact placement of the rigid body in the physics engine.
             bool m_bDisplayDebugCollisionGraphic;
 
+            ///This is the list of other  parts that this part is excluded from colliding with.
+            unordered_set<RigidBody *> m_aryExcludeCollisionSet;
+
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
 
@@ -279,6 +282,9 @@ namespace AnimatSim
 
             virtual bool DisplayDebugCollisionGraphic() {return m_bDisplayDebugCollisionGraphic;}
             virtual void DisplayDebugCollisionGraphic(bool bVal) {m_bDisplayDebugCollisionGraphic = bVal;}
+
+            virtual unordered_set<RigidBody *> *GetExclusionCollisionSet() {return &m_aryExcludeCollisionSet;};
+            virtual bool FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError = true);
 
 #pragma endregion
 

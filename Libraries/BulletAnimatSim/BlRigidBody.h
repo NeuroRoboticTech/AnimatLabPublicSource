@@ -27,6 +27,22 @@ namespace BulletAnimatSim
 
             };
 
+            class BULLET_PORT BlBulletData
+            {
+            public:
+                BlRigidBody *m_lpBody;
+                bool m_bExclusionProcessing;
+
+                BlBulletData(BlRigidBody *lpBody, bool bExclusionProcessing)
+                {
+                    m_lpBody = lpBody;
+                    m_bExclusionProcessing = bExclusionProcessing;
+                }
+
+                virtual ~BlBulletData() {};
+
+            };
+
 		/*! \brief 
 			A common class for all rigid body data specific to vortex.
 
@@ -73,6 +89,10 @@ namespace BulletAnimatSim
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
 
+            //This is the data that is provided to the bullet body part user pointer.
+            //We can access this when all we have is a bullet pointer to a part.
+            BlBulletData *m_lpBulletData;
+
             BlSimulator *m_lpVsSim;
 
 			virtual void ProcessContacts();
@@ -99,10 +119,10 @@ namespace BulletAnimatSim
 
 			virtual BlSimulator *GetBlSimulator();
 
-            //FIX PHYSICS
-			//virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 			virtual void SetBody();
 			
+            virtual bool NeedCollision(BlRigidBody *lpTest);
+
             virtual bool Physics_IsDefined();
             virtual bool Physics_IsGeometryDefined();
 			virtual void Physics_ResetSimulation();

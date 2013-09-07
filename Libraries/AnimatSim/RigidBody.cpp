@@ -970,8 +970,20 @@ method does nothing by default.
 **/
 void RigidBody::EnableCollision(RigidBody *lpBody)
 {
+    if(!lpBody)
+        THROW_TEXT_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "EnableCollision");
+
+    if(FindCollisionExclusionBody(lpBody, false))
+        m_aryExcludeCollisionSet.erase(lpBody);
+
+    if(lpBody->FindCollisionExclusionBody(this, false))
+        lpBody->m_aryExcludeCollisionSet.erase(lpBody);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_EnableCollision(lpBody);
+
+	if(lpBody->m_lpPhysicsBody)
+		lpBody->m_lpPhysicsBody->Physics_EnableCollision(lpBody);
 }
 
 /**
@@ -989,8 +1001,45 @@ method does nothing by default.
 **/
 void RigidBody::DisableCollision(RigidBody *lpBody)
 {
+    if(!lpBody)
+        THROW_TEXT_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "DisableCollision");
+
+    if(!FindCollisionExclusionBody(lpBody, false))
+        m_aryExcludeCollisionSet.insert(lpBody);
+
+    if(!lpBody->FindCollisionExclusionBody(this, false))
+        lpBody->m_aryExcludeCollisionSet.insert(this);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_DisableCollision(lpBody);
+
+	if(lpBody->m_lpPhysicsBody)
+		lpBody->m_lpPhysicsBody->Physics_DisableCollision(lpBody);
+}
+
+/**
+\brief	Searches the exclusion collision list to see if the specified part is already present.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lpBody	Body part to find in the exclusion list. 
+\param	bThrowError  	true to throw error if there is a problem. 
+
+\return	index of found body part, or -1 if not found
+\exception If bThrowError=True and no part is found it throws an exception.
+**/
+bool RigidBody::FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError)
+{
+    unordered_set<RigidBody *>::iterator oPos;
+    oPos = m_aryExcludeCollisionSet.find(lpBody);
+
+	if(oPos != m_aryExcludeCollisionSet.end())
+		return true;
+	else if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lItemNotFound, Al_Err_strItemNotFound, "Exclusion List Body Part: " + lpBody->ID());
+
+	return false;
 }
 
 /**
