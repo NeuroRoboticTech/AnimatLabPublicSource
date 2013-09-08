@@ -231,6 +231,7 @@ namespace AnimatSim
 			
 			virtual bool IsRoot();
 			virtual bool HasStaticJoint();
+            virtual bool HasStaticChildren();
 
 			virtual bool IsFoodSource();
 			virtual void IsFoodSource(bool bVal);

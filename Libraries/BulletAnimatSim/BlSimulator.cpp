@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
@@ -264,7 +264,7 @@ bool AnimatContactCallback(btManifoldPoint& cp, void* body0, void* body1)
     return true;
 }
 
-void BlSimulator::InitializeVortexViewer(int argc, const char **argv)
+void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
 {
     osg::ArgumentParser arguments(&argc, (char **) argv);
 
@@ -371,9 +371,9 @@ void BlSimulator::SetSimulationStabilityParams()
 
 //This function initializes the Vortex related
 //classes and the vortex viewer.
-void BlSimulator::InitializeVortex(int argc, const char **argv)
+void BlSimulator::InitializeBullet(int argc, const char **argv)
 {
-	InitializeVortexViewer(argc, argv);
+	InitializeBulletViewer(argc, argv);
 
 	int iObjectCount = 100 + m_iPhysicsBodyCount;
 	int iCollisionCount = iObjectCount*40;
@@ -549,7 +549,7 @@ void BlSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 
 void BlSimulator::Initialize(int argc, const char **argv)
 {
-	InitializeVortex(argc, argv);
+	InitializeBullet(argc, argv);
 
     OsgSimulator::Initialize(argc, argv);
 }

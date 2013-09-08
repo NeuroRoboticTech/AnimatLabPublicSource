@@ -71,7 +71,6 @@ void BlPlane::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Plane::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlPlane::CreateDynamicPart()

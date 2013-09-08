@@ -18,11 +18,13 @@ namespace BulletAnimatSim
 
 BlRigidBody::BlRigidBody()
 {
+    m_btCompoundShape = NULL;
     m_btCollisionShape = NULL;
     m_btCollisionObject = NULL;
     m_btPart = NULL;
     m_osgbMotion = NULL;
     m_lpBulletData = NULL;
+    m_fltStaticMasses = 0;
 
     m_lpVsSim = NULL;
 }
@@ -33,22 +35,7 @@ BlRigidBody::~BlRigidBody()
 try
 {
     m_aryContactPoints.Clear();
-
-    if(m_btCollisionShape)
-        {delete m_btCollisionShape; m_btCollisionShape = NULL;}
-
-    if(m_osgbMotion)
-        {delete m_osgbMotion; m_osgbMotion = NULL;}
-
-    if(m_btCollisionObject)
-        {delete m_btCollisionObject; m_btCollisionObject = NULL;}
-
-    if(m_btPart)
-        {delete m_btPart; m_btPart = NULL;}
-
-    if(m_lpBulletData)
-        {delete m_lpBulletData; m_lpBulletData = NULL;}
-
+    //Cleanup of all BlRigidBody objects is taken care of in the DeletePhysics call
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BlRigidBody\r\n", "", -1, false, true);}
@@ -107,9 +94,8 @@ void BlRigidBody::Physics_UpdateNode()
 			ResetSensorCollisionGeom();
 		else if(m_lpThisRB->HasStaticJoint())
 			ResetStaticCollisionGeom(); //If this body uses a static joint then we need to reset the offest matrix for its collision geometry.
-        //FIX PHYSICS
-   //     else if(m_vxSensor)
-			//m_vxSensor->updateFromNode();
+        else if(m_btPart)
+			ResetDynamicCollisionGeom();
 	}
 
 	Physics_UpdateAbsolutePosition();
@@ -240,10 +226,10 @@ void BlRigidBody::CreateSensorPart()
 
 void BlRigidBody::CreateDynamicPart()
 {
-    BlSimulator *lpSim = GetBlSimulator();
+	if(m_lpThisRB && m_lpThisAB && m_btCollisionShape)
+    {
+        BlSimulator *lpSim = GetBlSimulator();
 
-	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape)
-	{
         float fltMass = 0;
         if(!m_lpThisRB->Freeze())
             fltMass = m_lpThisRB->GetMassValue();
@@ -267,9 +253,9 @@ void BlRigidBody::CreateDynamicPart()
         m_osgbMotion->setTransform( m_osgMT.get() );
 
         osg::Vec3 com;
-		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
+	    CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+	    if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+		    com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
         else
             com = osg::Vec3(0, 0, 0);
         m_osgbMotion->setCenterOfMass( com );
@@ -300,7 +286,7 @@ void BlRigidBody::CreateDynamicPart()
         m_osgbMotion->setWorldTransform( wt );
         m_btPart->setWorldTransform( wt );
 
-		//if this body is frozen; freeze it
+	    //if this body is frozen; freeze it
         if(m_lpThisRB->Freeze())
             m_btPart->setActivationState(0);
         else
@@ -316,15 +302,15 @@ void BlRigidBody::CreateDynamicPart()
         lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
 
         //FIX PHYSICS
-		// Create the physics object.
-		//m_vxPart = new VxPart;
-		//m_vxSensor = m_vxPart;
-		//m_vxSensor->setUserData((void*) m_lpThisRB);
-		//int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+	    // Create the physics object.
+	    //m_vxPart = new VxPart;
+	    //m_vxSensor = m_vxPart;
+	    //m_vxSensor->setUserData((void*) m_lpThisRB);
+	    //int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
-		//m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-		//m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
-		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+	    //m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
+	    //m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
+	    //CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
            
         if(m_lpThisRB->DisplayDebugCollisionGraphic())
         {
@@ -334,13 +320,64 @@ void BlRigidBody::CreateDynamicPart()
         }
 
         GetBaseValues();
-	}
+    }
+}
+
+void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild)
+{
+    if(m_btPart && lpChild && lpChild->m_btCollisionShape)
+    {
+ /*       if(!m_bt
+
+        float fltChildMass = 0;
+        if(!m_lpThisRB->Freeze())
+            fltChildMass = lpChild->m_lpThisRB->GetMassValue();
+
+        m_fltStaticMasses += fltChildMass;
+        btVector3 localInertia( 0, 0, 0 );
+        
+        
+
+        btParentPart->setMassProps(0, localInertia);
+	    btParentPart->updateInertiaTensor();
+
+        
+        lpVsParent->DeleteDynamicPart();
+        lpVsParent->AddStaticPartShape(this);
+        lpVsParent->*/
+    }
+
+}
+
+void BlRigidBody::RemoveStaticGeometry(BlRigidBody *lpChild)
+{
 }
 
 void BlRigidBody::CreateStaticPart()
 {
-    //Parts are created the same way, but the mass should be 0 in this case.
-    CreateDynamicPart();
+	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
+
+    if(m_lpThisRB && m_lpThisAB && lpVsParent && lpVsParent->Part())
+        lpVsParent->AddStaticGeometry(this);
+	//if(m_lpThisRB && m_lpThisAB)
+	//{
+	//	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+
+	//	Vx::VxReal44 vOffset;
+	//	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+
+	//	if(lpVsParent)
+	//	{
+	//		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+	//		if(vxSensor)
+	//		{
+	//			CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
+	//			string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+	//			m_vxCollisionGeometry->setName(strName.c_str());
+	//		}
+	//	}
+	//}
 }
 
 void BlRigidBody::RemoveStaticPart()
@@ -375,41 +412,83 @@ void BlRigidBody::ResetStaticCollisionGeom()
 	}
 }
 
+void BlRigidBody::ResetSensorCollisionGeom()
+{
+    if(m_osgMT.valid() && m_osgbMotion && m_btCollisionObject)
+    {
+        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
+        m_osgbMotion->setWorldTransform( wt );
+        m_btCollisionObject->setWorldTransform( wt );
+    }
+}
+
+void BlRigidBody::ResetDynamicCollisionGeom()
+{
+    if(m_osgMT.valid() && m_osgbMotion && m_btPart)
+    {
+        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
+        m_osgbMotion->setWorldTransform( wt );
+        m_btPart->setWorldTransform( wt );
+    }
+}
+
+void BlRigidBody::DeleteDynamicPart()
+{
+    if(m_btPart)
+    {
+        GetBlSimulator()->DynamicsWorld()->removeRigidBody(m_btPart);
+        delete m_btPart;
+        m_btPart = NULL;
+
+        if(m_osgbMotion)
+            {delete m_osgbMotion; m_osgbMotion = NULL;}
+
+        if(m_lpBulletData)
+            {delete m_lpBulletData; m_lpBulletData = NULL;}
+    }
+}
+
+void BlRigidBody::DeleteSensorPart()
+{
+    if(m_btCollisionObject)
+    {
+        GetBlSimulator()->DynamicsWorld()->removeCollisionObject(m_btCollisionObject);
+        delete m_btCollisionObject;
+        m_btCollisionObject = NULL;
+
+        if(m_lpBulletData)
+            {delete m_lpBulletData; m_lpBulletData = NULL;}
+    }
+}
+
+void BlRigidBody::DeleteCollisionGeometry()
+{
+    if(m_btCompoundShape)
+    {
+        int iCount = m_btCompoundShape->getNumChildShapes();
+        for(int iIdx=0; iIdx<iCount; iIdx++)
+            m_btCompoundShape->removeChildShapeByIndex(0);
+        delete m_btCompoundShape;
+        m_btCompoundShape = NULL;
+    }
+
+    if(m_btCollisionShape)
+        {delete m_btCollisionShape; m_btCollisionShape = NULL;}
+}
+
 void BlRigidBody::DeletePhysics()
 {
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//{
-	//	if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//	{
-	//		GetBlSimulator()->Universe()->removeEntity(m_vxSensor);
-	//		delete m_vxSensor;
-	//	}
-
-	//	m_vxSensor = NULL;
-	//	m_vxPart = NULL;
-	//	m_vxGeometry = NULL;
-	//}
-	//else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
-	//	RemoveStaticPart();
+	if(m_btPart)
+	{
+        DeleteDynamicPart();
+        DeleteSensorPart();
+        DeleteCollisionGeometry();
+	}
+	else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
+		RemoveStaticPart();
 }
-
-void BlRigidBody::SetBody()
-{
-    //FIX PHYSICS
-	//if(m_vxSensor && m_lpThisAB)
-	//{
-	//	BlSimulator *lpVsSim = dynamic_cast<BlSimulator *>(m_lpThisAB->GetSimulator());
-
-	//	osg::MatrixTransform *lpMT = dynamic_cast<osg::MatrixTransform *>(m_osgMT.get());
-	//	m_vxSensor->setNode(lpMT);               // Connect to the node.
-
-	//	// Add the part to the universe.
-	//	if(lpVsSim && lpVsSim->Universe())
-	//		lpVsSim->Universe()->addEntity(m_vxSensor);
-	//}
-}
-
 
 bool BlRigidBody::NeedCollision(BlRigidBody *lpTest)
 {

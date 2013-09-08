@@ -98,7 +98,7 @@ Namespace DataObjects
 
         Public ReadOnly Property AnimatModule() As String
             Get
-                Return "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return Util.Application.SimPhysicsSystem & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 

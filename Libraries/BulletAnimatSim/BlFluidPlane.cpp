@@ -66,7 +66,6 @@ void BlFluidPlane::CreateParts()
 
 	BlRigidBody::CreateItem();
 	FluidPlane::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlFluidPlane::ResizePhysicsGeometry()

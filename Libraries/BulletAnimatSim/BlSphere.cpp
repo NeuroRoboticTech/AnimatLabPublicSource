@@ -56,7 +56,6 @@ void BlSphere::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Sphere::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlSphere::CreateJoints()

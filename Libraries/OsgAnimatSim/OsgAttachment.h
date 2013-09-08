@@ -40,7 +40,6 @@ public:
     virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint vVel; return vVel;};
     virtual float Physics_GetMass() {return 0;};
     virtual bool Physics_IsDefined() {return m_bPhsyicsDefined;};
-    virtual void SetBody() {};
 
 	virtual void CreateParts();
 };

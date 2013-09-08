@@ -60,7 +60,6 @@ void BlCylinder::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Cylinder::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlCylinder::CreateJoints()

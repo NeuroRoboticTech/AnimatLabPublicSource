@@ -134,7 +134,6 @@ void BlTerrain::CreateParts()
 
 	BlMeshBase::CreateItem();
 	Terrain::CreateParts();
-	BlMeshBase::SetBody();
 }
 
 void BlTerrain::CreateJoints()

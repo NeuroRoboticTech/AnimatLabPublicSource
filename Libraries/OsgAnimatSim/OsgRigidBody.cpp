@@ -223,10 +223,6 @@ osg::MatrixTransform *OsgRigidBody::ParentOSG()
 		return GetOsgSimulator()->OSGRoot();
 }
 
-void OsgRigidBody::ResetSensorCollisionGeom()
-{
-}
-
 void OsgRigidBody::SetupPhysics()
 {
 	//If no geometry is defined then this part does not have a physics representation.

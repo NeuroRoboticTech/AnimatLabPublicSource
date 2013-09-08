@@ -388,6 +388,29 @@ bool RigidBody::HasStaticJoint()
 }
 
 /**
+\brief	Query if this rigid body has any static children. 
+
+\description This looks through all of the immediate children of this part to see if they 
+have a static joint. If they do it returns true, if not it returns false. It does not look
+beyond its immediate children because static parts cannot be nested. They must be placed on
+a non-static part.
+
+\author	dcofer
+\date	9/7/2013
+
+\return	true if has static children, false if not. 
+**/
+bool RigidBody::HasStaticChildren()
+{
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryChildParts[iIndex]->HasStaticJoint())
+            return true;
+
+    return false;
+}
+
+/**
 \brief	Query if this object is food source. 
 
 \author	dcofer

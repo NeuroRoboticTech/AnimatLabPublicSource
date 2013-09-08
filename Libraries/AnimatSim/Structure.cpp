@@ -234,7 +234,8 @@ void Structure::ResetSimulation()
 	if(m_lpBody)
 	{
 		m_lpBody->ResetSimulation();
-		
+		m_lpBody->UpdatePhysicsPosFromGraphics();
+
 		UpdateData();
 
 		//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items

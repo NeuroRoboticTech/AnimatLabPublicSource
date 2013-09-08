@@ -86,8 +86,11 @@ namespace BulletAnimatSim
 		protected:
             btCollisionShape *m_btCollisionShape;
             btCollisionObject *m_btCollisionObject;
+            btCompoundShape *m_btCompoundShape;
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
+
+            float m_fltStaticMasses;
 
             //This is the data that is provided to the bullet body part user pointer.
             //We can access this when all we have is a bullet pointer to a part.
@@ -97,15 +100,25 @@ namespace BulletAnimatSim
 
 			virtual void ProcessContacts();
 
+            virtual void DeleteDynamicPart();
+            virtual void DeleteSensorPart();
+            virtual void DeleteCollisionGeometry();
             virtual void DeletePhysics();
+
 			virtual void CreateSensorPart();
 			virtual void CreateStaticPart();
 			virtual void CreateDynamicPart();
 			virtual void RemoveStaticPart();
 
+            virtual void AddStaticGeometry(BlRigidBody *lpChild);
+            virtual void RemoveStaticGeometry(BlRigidBody *lpChild);
+
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void GetBaseValues();
+
 			virtual void ResetStaticCollisionGeom();
+			virtual void ResetSensorCollisionGeom();
+			virtual void ResetDynamicCollisionGeom();
 
         public:
 			BlRigidBody();
@@ -113,13 +126,12 @@ namespace BulletAnimatSim
 
             CStdPtrArray<BlContactPoint> m_aryContactPoints;
 
+            btCompoundShape *CompoundShape() {return m_btCompoundShape;};
             btCollisionShape *CollisionShape() {return m_btCollisionShape;};
             btRigidBody *Part() {return m_btPart;};
             osgbDynamics::MotionState *MotionState() {return m_osgbMotion;};
 
 			virtual BlSimulator *GetBlSimulator();
-
-			virtual void SetBody();
 			
             virtual bool NeedCollision(BlRigidBody *lpTest);
 

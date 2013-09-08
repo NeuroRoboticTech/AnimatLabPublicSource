@@ -60,7 +60,6 @@ void BlTorus::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Torus::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlTorus::CreateJoints()

@@ -1284,6 +1284,13 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property SimPhysicsSystem() As String
+            Get
+                'Return "Vortex"
+                Return "Bullet"
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property SimVCVersion() As String
             Get
                 Return m_strSimVCVersion

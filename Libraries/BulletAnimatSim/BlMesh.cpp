@@ -43,7 +43,6 @@ void BlMesh::CreateParts()
 
 	BlMeshBase::CreateItem();
 	Mesh::CreateParts();
-	BlMeshBase::SetBody();
 }
 
 void BlMesh::CreateJoints()

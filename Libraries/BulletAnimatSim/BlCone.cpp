@@ -57,7 +57,6 @@ void BlCone::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Cone::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlCone::CreateJoints()

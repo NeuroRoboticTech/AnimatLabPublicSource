@@ -56,7 +56,6 @@ void BlBox::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Box::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlBox::CreateJoints()

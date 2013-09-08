@@ -78,7 +78,6 @@ void BlLine::CreateParts()
 	CreateGeometry();
 
 	BlRigidBody::CreateItem();
-	BlRigidBody::SetBody();
 }
 
 void BlLine::StepSimulation(float fltTension)

@@ -61,7 +61,6 @@ void BlEllipsoid::CreateParts()
 
 	BlRigidBody::CreateItem();
 	Ellipsoid::CreateParts();
-	BlRigidBody::SetBody();
 }
 
 void BlEllipsoid::CreateJoints()

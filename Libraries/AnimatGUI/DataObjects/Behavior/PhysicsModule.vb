@@ -24,7 +24,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return Util.Application.SimPhysicsSystem & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 

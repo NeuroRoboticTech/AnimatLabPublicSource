@@ -239,10 +239,6 @@ void OsgJoint::Initialize()
 {
 }
 
-void OsgJoint::SetBody()
-{
-}
-
 osg::Matrix OsgJoint::GetChildWorldMatrix()
 {
 	if(m_lpVsChild)

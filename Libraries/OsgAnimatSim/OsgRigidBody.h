@@ -78,7 +78,6 @@ namespace OsgAnimatSim
 			virtual void RemoveStaticPart() = 0;
 
 			virtual void UpdatePositionAndRotationFromMatrix();
-			virtual void ResetSensorCollisionGeom();
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();

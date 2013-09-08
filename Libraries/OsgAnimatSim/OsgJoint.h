@@ -73,7 +73,6 @@ namespace OsgAnimatSim
 			virtual void SetAlpha();
 
 			virtual void Initialize();
-			virtual void SetBody();
 			virtual bool Physics_SetData(const string &strDataType, const string &strValue);
 			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 

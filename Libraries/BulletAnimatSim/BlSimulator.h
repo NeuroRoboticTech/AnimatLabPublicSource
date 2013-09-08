@@ -33,8 +33,8 @@ namespace BulletAnimatSim
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 
 		//helper functions
-		void InitializeVortex(int argc, const char **argv);
-		void InitializeVortexViewer(int argc, const char **argv);
+		void InitializeBullet(int argc, const char **argv);
+		void InitializeBulletViewer(int argc, const char **argv);
 		void SetSimulationStabilityParams();
 		
 		virtual void StepSimulation();
