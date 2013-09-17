@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>Vortex_UnitTests</OutputName>
@@ -88,7 +88,7 @@
     </Libs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>WIN32 NDEBUG _WINDOWS _USRDLL</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>Vortex_UnitTests</OutputName>

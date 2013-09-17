@@ -137,23 +137,6 @@ void BlMeshBase::CreatePhysicsGeometry()
 	}
 }
 
-
-void BlMeshBase::ResizePhysicsGeometry()
-{
-    //FIX PHYSICS
-	//if(m_vxGeometry && m_vxCollisionGeometry && m_vxSensor)
-	//{
-	//	if(!m_vxSensor->removeCollisionGeometry(m_vxCollisionGeometry))
-	//		THROW_PARAM_ERROR(Bl_Err_lRemovingCollisionGeometry, Bl_Err_strRemovingCollisionGeometry, "ID: ", m_lpThisAB->ID());
-
-	//	delete m_vxCollisionGeometry;
-	//	m_vxCollisionGeometry = NULL;
-
-	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-	//	CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
-	//}
-}
-
 void BlMeshBase::Physics_Resize()
 {
 	//First lets get rid of the current current geometry and then put new geometry in place.

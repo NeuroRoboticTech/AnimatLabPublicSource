@@ -44,10 +44,7 @@ namespace BulletAnimatSim
 
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
-				//virtual void SetupGraphics();
 				virtual void UpdateData();
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
 
                 virtual float GetCurrentBtPosition();
 
@@ -60,6 +57,8 @@ namespace BulletAnimatSim
 				virtual void SetAlpha();
 
                 virtual void SetLimitValues();
+
+				virtual void SetupPhysics();
 
 #pragma region DataAccesMethods
 

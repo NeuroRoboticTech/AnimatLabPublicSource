@@ -48,28 +48,9 @@ BlBallSocket::~BlBallSocket()
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlBallSocket\r\n", "", -1, false, true);}
 }
 
-void BlBallSocket::DeletePhysics()
-{
-    //FIX PHYSICS
-	//if(!m_btSocket)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_btSocket);
-	//	delete m_btSocket;
-
-	//	if(m_lpChild && m_lpParent)
-	//		m_lpChild->EnableCollision(m_lpParent);
-	//}
-
-	//m_btSocket = NULL;
-	//m_vxJoint = NULL;
-}
-
 void BlBallSocket::SetupPhysics()
 {
-    if(m_btSocket)
+    if(m_btJoint)
 		DeletePhysics();
 
 	if(!m_lpParent)

@@ -32,12 +32,8 @@ namespace OsgAnimatSim
 
 			virtual void SetThisPointers();
 			virtual void CreateGraphicsGeometry();
-			virtual void SetupGraphics();
-			virtual void DeleteGraphics();
-			virtual void SetupPhysics() {};
-			virtual void DeletePhysics() {};
 
-			virtual void SetupLighting();
+            virtual void SetupLighting();
 			virtual void SetAttenuation();
 			virtual int GetGlLight();
 
@@ -53,7 +49,13 @@ namespace OsgAnimatSim
 			virtual void Specular(CStdColor &aryColor);
 
 			virtual osg::MatrixTransform *ParentOSG();
-			virtual void Create();
+
+			virtual void SetupGraphics();
+			virtual void DeleteGraphics();
+			virtual void SetupPhysics() {};
+			virtual void DeletePhysics() {};
+
+            virtual void Create();
 			virtual void ResetSimulation();
 			virtual void Physics_Resize();
 			virtual void Physics_SetColor();

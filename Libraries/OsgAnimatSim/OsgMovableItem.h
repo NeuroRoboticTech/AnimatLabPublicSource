@@ -59,10 +59,6 @@ namespace OsgAnimatSim
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 			virtual void GeometryRotationMatrix(osg::Matrix osgGeometryMT);
 
-			virtual void SetupGraphics();
-			virtual void SetupPhysics() = 0;
-			virtual void DeleteGraphics();
-			virtual void DeletePhysics() = 0;
 			virtual void CreateSelectedGraphics(string strName);
 			virtual void CreateDragger(string strName);
 			virtual void CreateSelectedVertex(string strName);
@@ -104,6 +100,11 @@ namespace OsgAnimatSim
 			virtual CStdFPoint GetOSGWorldCoords();
 			virtual osg::Matrix GetOSGWorldMatrix(bool bUpdate = false);
 			//virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
+
+			virtual void SetupGraphics();
+			virtual void SetupPhysics() = 0;
+			virtual void DeleteGraphics();
+			virtual void DeletePhysics() = 0;
 
 			virtual void EndGripDrag();
 

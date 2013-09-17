@@ -5,7 +5,7 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../include",
-					  "../../Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
 					  "../../../../3rdParty/OsgWorks_2_0/include",
 					  "../../../../3rdParty/Bullet-2.78/src",
 					  "../../../../3rdParty/OsgBullet_2_0/include",
@@ -14,7 +14,7 @@
 					  "../../OsgAnimatSim"}	  
 		libdirs { "../../../lib",
 				  "$(OutDir)",
-				  "../../Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
 				  "../../../../3rdParty/OsgWorks_2_0/lib",
 				  "../../../../3rdParty/Bullet-2.78/lib",
 				  "../../../../3rdParty/OsgBullet_2_0/lib" }
@@ -103,7 +103,7 @@
 		files  { "../Bullet_UnitTests/*.h",
 				 "../Bullet_UnitTests/*.cpp"}
 		includedirs { "../../../include",
-					  "../../Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
 					  "../../../../3rdParty/OsgWorks_2_0/include",
 					  "../../../../3rdParty/Bullet-2.78/src",
 					  "../../../../3rdParty/OsgBullet_2_0/include",
@@ -114,7 +114,7 @@
 					  "../../../../3rdParty/boost_1_54_0"}	  
 		libdirs { "../../../lib",
 				  "$(OutDir)",
-				  "../../Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
 				  "../../../../3rdParty/OsgWorks_2_0/lib",
 				  "../../../../3rdParty/Bullet-2.78/lib",
 				  "../../../../3rdParty/OsgBullet_2_0/lib", 

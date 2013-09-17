@@ -71,21 +71,6 @@ void BlCylinder::CreateJoints()
 	BlRigidBody::Initialize();
 }
 
-void BlCylinder::ResizePhysicsGeometry()
-{
-    //FIX PHYSICS
-	//if(m_vxGeometry)
-	//{
-		//VxCylinder *vxCylinder = dynamic_cast<VxCylinder *>(m_vxGeometry);
-
-		//if(!vxCylinder)
-		//	THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-		//
-		//vxCylinder->setRadius(m_fltRadius);
-		//vxCylinder->setHeight(m_fltHeight);
-	//}
-}
-
 		}		//Bodies
 	}			// Environment
 }				//BulletAnimatSim

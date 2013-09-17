@@ -5,15 +5,15 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../Vortex_5_1/include",
-					  "../../../Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../../3rdParty/Vortex_5_1/include",
+					  "../../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
 					  "../../../StdUtils", 
 					  "../../../AnimatSim",
 					  "../../../OsgAnimatSim" }
 		libdirs { "../../../../bin", 
-				  "../../../Vortex_5_1/3rdparty/osg-2.8.3/lib",
-				  "../../../Vortex_5_1/lib",
-				  "../../../Vortex_5_1/3rdparty/boost-1.45.0/lib" }
+				  "../../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../../../../../3rdParty/Vortex_5_1/lib",
+				  "../../../../../3rdParty/Vortex_5_1/3rdparty/boost-1.45.0/lib" }
 		links { "dl", 
 				"Vx51", 
 				"VxController51", 
@@ -95,17 +95,17 @@
 		targetdir ("../../../../bin")
 		targetname ("Vortex_UnitTests")				
 		includedirs { "../include", 
-					  "../Libraries/Vortex_5_1/include",
-					  "../Libraries/Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../3rdParty/Vortex_5_1/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
 					  "../Libraries/StdUtils",
 					  "../Libraries/AnimatSim",
 					  "../Libraries/OsgAnimatSim",
 					  "../Libraries/VortexAnimatSim",
 					  "../../3rdParty/boost_1_54_0"}	  
 		libdirs { ".",
-				  "../Libraries/Vortex_5_1/3rdparty/osg-2.8.3/lib",
-				  "../Libraries/Vortex_5_1/lib",
-				  "../Libraries/Vortex_5_1/3rdparty/boost-1.45.0/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../../../../3rdParty/Vortex_5_1/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/boost-1.45.0/lib",
 				  "../../3rdParty/boost_1_54_0/lib" }
 		links { "Vx51", 
 				"VxController51", 

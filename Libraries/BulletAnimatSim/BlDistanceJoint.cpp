@@ -60,29 +60,10 @@ void BlDistanceJoint::SetupGraphics()
 {
 }
 
-void BlDistanceJoint::DeletePhysics()
-{
-     //FIX PHYSICS
-	//if(!m_btDistance)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_btDistance);
-	//	delete m_btDistance;
-
-	//	if(m_lpChild && m_lpParent)
-	//		m_lpChild->EnableCollision(m_lpParent);
-	//}
-
-	//m_btDistance = NULL;
-	//m_vxJoint = NULL;
-}
-
 void BlDistanceJoint::SetupPhysics()
 {
     //FIX PHYSICS
-	if(m_btDistance)
+	if(m_btJoint)
 		DeletePhysics();
 
 	if(!m_lpParent)

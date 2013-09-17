@@ -51,6 +51,20 @@ bool BlJoint::Physics_IsDefined()
         return false;
 }
 
+void BlJoint::DeletePhysics()
+{
+	if(!m_btJoint)
+		return;
+
+	if(GetBlSimulator() && GetBlSimulator()->DynamicsWorld())
+	{
+		GetBlSimulator()->DynamicsWorld()->removeConstraint(m_btJoint);
+		delete m_btJoint;
+	}
+
+	m_btJoint = NULL;
+}
+
 void BlJoint::UpdatePosition()
 {	
     //FIX PHYSICS

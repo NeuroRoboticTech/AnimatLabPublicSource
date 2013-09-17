@@ -79,7 +79,7 @@ void BlPrismatic::EnableLimits(bool bVal)
 
 void BlPrismatic::SetLimitValues()
 {
-    if(m_btPrismatic)
+    if(m_btJoint && m_btPrismatic)
     {
         m_bJointLocked = false;
         m_btPrismatic->setLowerLinLimit((btScalar) m_lpLowerLimit->LimitPos());
@@ -132,65 +132,10 @@ void BlPrismatic::CreateJointGraphics()
                                           m_osgJointMT, lpUpperLimit, 
                                           lpLowerLimit, lpPosFlap);
 }
-//
-//void BlPrismatic::SetupGraphics()
-//{
-//	//The parent osg object for the joint is actually the child rigid body object.
-//	m_osgParent = ParentOSG();
-//
-//	if(m_osgParent.valid())
-//	{
-//		//Add the parts to the group node.
-//		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
-//		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
-//		m_osgJointMT = new osg::MatrixTransform();
-//		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
-//
-//        CreateJointGraphics();
-//
-//		m_osgNode = m_osgJointMT.get();
-//
-//		BuildLocalMatrix();
-//
-//		SetAlpha();
-//		SetCulling();
-//		SetVisible(m_lpThisMI->IsVisible());
-//
-//		//Add it to the scene graph.
-//		m_osgParent->addChild(m_osgRoot.get());
-//
-//		//Set the position with the world coordinates.
-//		Physics_UpdateAbsolutePosition();
-//
-//		//We need to set the UserData on the OSG side so we can do picking.
-//		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-//		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
-//		osgVisitor->traverse(*m_osgMT);
-//	}
-//}
-
-void BlPrismatic::DeletePhysics()
-{
-    //FIX PHYSICS
-	//if(!m_btPrismatic)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_btPrismatic);
-	//	delete m_btPrismatic;
-
-	//	if(m_lpChild && m_lpParent)
-	//		m_lpChild->EnableCollision(m_lpParent);
-	//}
-
-	//m_btPrismatic = NULL;
-	//m_vxJoint = NULL;
-}
 
 void BlPrismatic::SetupPhysics()
 {
-    if(m_btPrismatic)
+    if(m_btJoint)
 		DeletePhysics();
 
 	if(!m_lpParent)
@@ -311,7 +256,7 @@ void BlPrismatic::StepSimulation()
 
 void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
-    if (m_btPrismatic)
+    if (m_btJoint && m_btPrismatic)
 	{ 		
 		if(bOn)
 		{
@@ -328,11 +273,13 @@ void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLo
 
 void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
 {
-    if (m_btPrismatic)
+    if (m_btJoint && m_btPrismatic)
 	{   
 		if(bOn)
         {
-            SetLimitValues();
+            if(!m_bMotorOn)
+                SetLimitValues();
+
 			m_btPrismatic->setPoweredLinMotor(true);
             m_btPrismatic->setMaxLinMotorForce(fltMaxForce);
             m_btPrismatic->setTargetLinMotorVelocity(fltDesiredVelocity);
@@ -346,13 +293,13 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 
 void BlPrismatic::Physics_MaxForce(float fltVal)
 {
-    if(m_btPrismatic)
+    if(m_btJoint && m_btPrismatic)
         m_btPrismatic->setMaxLinMotorForce(fltVal);
 }
 
 float BlPrismatic::GetCurrentBtPosition()
 {
-    if(m_btPrismatic)
+    if(m_btJoint && m_btPrismatic)
         return m_btPrismatic->getLinearPos();
     else
         return 0;

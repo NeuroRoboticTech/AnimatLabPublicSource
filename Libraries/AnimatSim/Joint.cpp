@@ -588,6 +588,14 @@ float Joint::JointForce() {return m_fltForce;}
 **/
 void Joint::JointForce(float fltForce) {m_fltForce = fltForce;}
 
+void Joint::WakeDynamics()
+{
+    if(m_lpParent)
+        m_lpParent->WakeDynamics();
+
+    if(m_lpChild)
+        m_lpChild->WakeDynamics();
+}
 
 /**
 \brief	Creates the joint.

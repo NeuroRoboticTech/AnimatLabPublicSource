@@ -26,12 +26,11 @@ namespace BulletAnimatSim
 				/// The vortex socket class.
 				btGeneric6DofConstraint *m_btSocket;
 
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
-
 			public:
 				BlRPRO();
 				virtual ~BlRPRO();
+
+				virtual void SetupPhysics();
 
 #pragma region DataAccesMethods
 

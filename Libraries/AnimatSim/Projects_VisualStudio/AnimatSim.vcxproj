@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{40E11318-BB58-9D48-91CB-8EAF5139A770}</ProjectGuid>
+		<ProjectGuid>{240EAAEE-A7AA-484F-AF2E-C78B449066AA}</ProjectGuid>
 		<RootNamespace>AnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -147,6 +147,7 @@
 		<ClInclude Include="..\ExternalStimulus.h" />
 		<ClInclude Include="..\FileChart.h" />
 		<ClInclude Include="..\FluidPlane.h" />
+		<ClInclude Include="..\ForceStimulus.h" />
 		<ClInclude Include="..\Gain.h" />
 		<ClInclude Include="..\Hinge.h" />
 		<ClInclude Include="..\Hud.h" />
@@ -173,6 +174,7 @@
 		<ClInclude Include="..\MemoryChart.h" />
 		<ClInclude Include="..\Mesh.h" />
 		<ClInclude Include="..\MotorizedJoint.h" />
+		<ClInclude Include="..\MotorVelocityStimulus.h" />
 		<ClInclude Include="..\Mouth.h" />
 		<ClInclude Include="..\MovableItem.h" />
 		<ClInclude Include="..\MuscleBase.h" />
@@ -275,6 +277,8 @@
 		</ClCompile>
 		<ClCompile Include="..\FluidPlane.cpp">
 		</ClCompile>
+		<ClCompile Include="..\ForceStimulus.cpp">
+		</ClCompile>
 		<ClCompile Include="..\Gain.cpp">
 		</ClCompile>
 		<ClCompile Include="..\Hinge.cpp">
@@ -326,6 +330,8 @@
 		<ClCompile Include="..\Mesh.cpp">
 		</ClCompile>
 		<ClCompile Include="..\MotorizedJoint.cpp">
+		</ClCompile>
+		<ClCompile Include="..\MotorVelocityStimulus.cpp">
 		</ClCompile>
 		<ClCompile Include="..\Mouth.cpp">
 		</ClCompile>

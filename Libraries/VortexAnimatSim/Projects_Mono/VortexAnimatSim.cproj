@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{88D98F71-F6F6-7D4D-9F5E-9EC73E7015A5}</ProjectGuid>
+    <ProjectGuid>{BE7F6820-8026-B342-ABAF-FB0B2C327501}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -216,6 +216,9 @@
     <None Include="..\VsOrganism.h">
       <Link>VsOrganism.h</Link>
     </None>
+    <None Include="..\VsOsgGeometry.h">
+      <Link>VsOsgGeometry.h</Link>
+    </None>
     <None Include="..\VsOsgUserData.h">
       <Link>VsOsgUserData.h</Link>
     </None>
@@ -418,6 +421,9 @@
     </Compile>
     <Compile Include="..\VsOrganism.cpp">
       <Link>VsOrganism.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsOsgGeometry.cpp">
+      <Link>VsOsgGeometry.cpp</Link>
     </Compile>
     <Compile Include="..\VsOsgUserData.cpp">
       <Link>VsOsgUserData.cpp</Link>

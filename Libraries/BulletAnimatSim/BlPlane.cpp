@@ -96,8 +96,6 @@ void BlPlane::CreateDynamicPart()
 
 void BlPlane::ResizePhysicsGeometry()
 {
-    if(IsCollisionObject())
-        m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), 0);
 }
 
 //Planes can never have fluid interactions/dynamics.

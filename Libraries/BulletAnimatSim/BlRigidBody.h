@@ -120,6 +120,10 @@ namespace BulletAnimatSim
 			virtual void ResetSensorCollisionGeom();
 			virtual void ResetDynamicCollisionGeom();
 
+            virtual void DeleteAttachedJointPhysics();
+            virtual void RecreateAttachedJointPhysics();
+			virtual void ResizePhysicsGeometry();
+
         public:
 			BlRigidBody();
 			virtual ~BlRigidBody();
@@ -157,6 +161,8 @@ namespace BulletAnimatSim
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
 			virtual bool Physics_HasCollisionGeometry();
+
+            friend class BlJoint;
 		};
 
 	}			// Environment

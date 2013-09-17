@@ -114,9 +114,7 @@ void BlRigidBody::Physics_SetFreeze(bool bVal)
 
 void BlRigidBody::Physics_SetDensity(float fltVal)
 {
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//	m_vxCollisionGeometry->setRelativeDensity(fltVal);
+    ResizePhysicsGeometry();
 }
 
 void BlRigidBody::Physics_SetMaterialID(string strID)
@@ -133,12 +131,8 @@ void BlRigidBody::Physics_SetMaterialID(string strID)
 
 void BlRigidBody::Physics_SetVelocityDamping(float fltLinear, float fltAngular)
 {
-    //FIX PHYSICS
-	//if(m_vxPart && fltLinear > 0)
-	//	m_vxPart->setLinearVelocityDamping(fltLinear);
-
-	//if(m_vxPart && fltAngular > 0)
-	//	m_vxPart->setAngularVelocityDamping(fltAngular);
+	if(m_btPart && fltLinear > 0 && fltAngular > 0)
+        m_btPart->setDamping(fltLinear, fltAngular);
 }
 
 void BlRigidBody::Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz)
@@ -177,9 +171,16 @@ void  BlRigidBody::Physics_FluidDataChanged()
 
 void BlRigidBody::Physics_WakeDynamics()
 {
-    //FIX PHYSICS
-    //if(m_vxPart)
-    //    m_vxPart->wakeDynamics();
+    if(m_btPart)
+    {
+        int istate = m_btPart->getActivationState();
+
+        if(m_lpThisRB->Freeze())
+            m_btPart->setActivationState(0);
+        else
+            m_btPart->activate(true);
+            //m_btPart->setActivationState(ACTIVE_TAG);
+    }
 }
 
 void BlRigidBody::GetBaseValues()
@@ -287,10 +288,7 @@ void BlRigidBody::CreateDynamicPart()
         m_btPart->setWorldTransform( wt );
 
 	    //if this body is frozen; freeze it
-        if(m_lpThisRB->Freeze())
-            m_btPart->setActivationState(0);
-        else
-            m_btPart->setActivationState(ACTIVE_TAG);
+        Physics_WakeDynamics();
 
         //If this part has a receptive field then turn on the custom callbacks.
         if(m_lpThisRB->GetContactSensor())
@@ -482,12 +480,74 @@ void BlRigidBody::DeletePhysics()
 {
 	if(m_btPart)
 	{
+        //First delete all physics associated with this part.
+        //We need to delete all the constrains attached to this part, and then the part itself.
+        DeleteAttachedJointPhysics();
+
+        //Then delete this part
         DeleteDynamicPart();
         DeleteSensorPart();
+
+        //Then delete collision geometry.
         DeleteCollisionGeometry();
 	}
 	else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
 		RemoveStaticPart();
+}
+
+void BlRigidBody::DeleteAttachedJointPhysics()
+{
+	BlJoint *lpVsJoint = dynamic_cast<BlJoint *>(m_lpThisRB->JointToParent());
+
+    if(lpVsJoint)
+        lpVsJoint->DeletePhysics();
+
+    int iCount = m_lpThisRB->ChildParts()->GetSize();
+    for(int iIdx=0; iIdx<iCount; iIdx++)
+    {
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIdx);
+        if(lpChild)
+        {
+        	BlJoint *lpVsChildJoint = dynamic_cast<BlJoint *>(lpChild->JointToParent());
+            if(lpVsChildJoint)
+                lpVsChildJoint->DeletePhysics();
+        }
+    }
+}
+
+void BlRigidBody::RecreateAttachedJointPhysics()
+{
+	BlJoint *lpVsJoint = dynamic_cast<BlJoint *>(m_lpThisRB->JointToParent());
+
+    if(lpVsJoint)
+        lpVsJoint->SetupPhysics();
+
+    int iCount = m_lpThisRB->ChildParts()->GetSize();
+    for(int iIdx=0; iIdx<iCount; iIdx++)
+    {
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIdx);
+        if(lpChild)
+        {
+        	BlJoint *lpVsChildJoint = dynamic_cast<BlJoint *>(lpChild->JointToParent());
+            if(lpVsChildJoint)
+                lpVsChildJoint->SetupPhysics();
+        }
+    }
+}
+
+void BlRigidBody::ResizePhysicsGeometry()
+{
+    //Then delete the physics for this part
+    DeletePhysics();
+
+    //Now recreate the collision geometry for this part.
+    CreatePhysicsGeometry();
+
+    //Now recreate the part itself.
+    SetupPhysics();
+
+    //Then recreate all the attached joints.
+    RecreateAttachedJointPhysics();
 }
 
 bool BlRigidBody::NeedCollision(BlRigidBody *lpTest)
@@ -655,20 +715,17 @@ void BlRigidBody::Physics_ResetSimulation()
 {
 	OsgRigidBody::Physics_ResetSimulation();
 
-    //FIX PHYSICS
-	//if(m_vxSensor)
-	//{
-	//	//Reset the dynamics of the part and make it match the new scenegraph position
-	//	m_vxSensor->updateFromNode();
+    if(m_btPart)
+    {
+        m_btPart->clearForces();
+        btVector3 zeroVector(0,0,0);
+        m_btPart->setLinearVelocity(zeroVector);
+        m_btPart->setAngularVelocity(zeroVector);
+    }
 
-	//	if(m_vxPart)
-	//	{
-	//		m_vxPart->resetDynamics();
-	//		m_vxPart->wakeDynamics();
-	//	}
-	//}
+    Physics_WakeDynamics();
 
-	for(int i=0; i<3; i++)
+    for(int i=0; i<3; i++)
 	{
 		m_vTorque[i] = 0;
 		m_vForce[i] = 0;

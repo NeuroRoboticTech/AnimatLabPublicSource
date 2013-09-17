@@ -11,9 +11,6 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlLine : public BlRigidBody, public OsgLine
 		{
 		protected:
-
-			virtual void SetupGraphics();
-
 			//Remove the texture and culling options for the line.
 			virtual void SetTexture(string strTexture) {};
 			virtual void SetCulling() {};
@@ -25,6 +22,8 @@ namespace BulletAnimatSim
 		public:
 			BlLine();
 			virtual ~BlLine();
+
+			virtual void SetupGraphics();
 
 			virtual void Initialize() {};
 			virtual void ResetSimulation();

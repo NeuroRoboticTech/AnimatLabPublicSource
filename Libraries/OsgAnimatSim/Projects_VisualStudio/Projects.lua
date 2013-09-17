@@ -5,11 +5,11 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../include",
-					  "../../Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
 					  "../../StdUtils",
 					  "../../AnimatSim"}	  
 		libdirs { "../../../lib",
-				  "../../Vortex_5_1/3rdparty/osg-2.8.3/lib" }
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib" }
 		
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "OSGANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }

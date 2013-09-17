@@ -32,12 +32,11 @@ namespace BulletAnimatSim
 				/// The bullet socket class.
 				btConeTwistConstraint *m_btSocket;
 
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
-
-			public:
+            	public:
 				BlBallSocket();
 				virtual ~BlBallSocket();
+
+				virtual void SetupPhysics();
 
 #pragma region DataAccesMethods
 

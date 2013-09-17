@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9FC5C570-04D9-3F4A-BC71-BCC89EFAC3A6}</ProjectGuid>
+    <ProjectGuid>{6C6797F3-8658-1C48-A6C8-584C05292E4B}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,13 +22,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -54,13 +54,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../StdUtils</Include>
+        <Include>..\..\..\..\include</Include>
+        <Include>..\..\..\StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -176,6 +176,9 @@
     <None Include="..\FluidPlane.h">
       <Link>FluidPlane.h</Link>
     </None>
+    <None Include="..\ForceStimulus.h">
+      <Link>ForceStimulus.h</Link>
+    </None>
     <None Include="..\Gain.h">
       <Link>Gain.h</Link>
     </None>
@@ -250,6 +253,9 @@
     </None>
     <None Include="..\Mesh.h">
       <Link>Mesh.h</Link>
+    </None>
+    <None Include="..\MotorVelocityStimulus.h">
+      <Link>MotorVelocityStimulus.h</Link>
     </None>
     <None Include="..\MotorizedJoint.h">
       <Link>MotorizedJoint.h</Link>
@@ -457,6 +463,9 @@
     <Compile Include="..\FluidPlane.cpp">
       <Link>FluidPlane.cpp</Link>
     </Compile>
+    <Compile Include="..\ForceStimulus.cpp">
+      <Link>ForceStimulus.cpp</Link>
+    </Compile>
     <Compile Include="..\Gain.cpp">
       <Link>Gain.cpp</Link>
     </Compile>
@@ -531,6 +540,9 @@
     </Compile>
     <Compile Include="..\Mesh.cpp">
       <Link>Mesh.cpp</Link>
+    </Compile>
+    <Compile Include="..\MotorVelocityStimulus.cpp">
+      <Link>MotorVelocityStimulus.cpp</Link>
     </Compile>
     <Compile Include="..\MotorizedJoint.cpp">
       <Link>MotorizedJoint.cpp</Link>

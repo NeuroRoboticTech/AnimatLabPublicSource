@@ -22,7 +22,6 @@ namespace BulletAnimatSim
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
 				virtual void LoadMeshNode();
-				virtual void ResizePhysicsGeometry();
 				virtual void CreateDefaultMesh();
 
 			public:

@@ -132,62 +132,7 @@ void BlHinge::CreateJointGraphics()
     OsgHinge::CreateHingeGraphics(CylinderHeight(), CylinderRadius(), FlapWidth(), 
                                   m_osgJointMT, lpUpperLimit, lpLowerLimit, lpPosFlap);
 }
-//
-//void BlHinge::SetupGraphics()
-//{
-//	//The parent osg object for the joint is actually the child rigid body object.
-//	m_osgParent = ParentOSG();
-//
-//	if(m_osgParent.valid())
-//	{
-//		//Add the parts to the group node.
-//		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
-//		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
-//		
-//		m_osgJointMT = new osg::MatrixTransform();
-//		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
-//
-//        CreateJointGraphics();
-//
-//		m_osgNode = m_osgJointMT.get();
-//
-//		BuildLocalMatrix();
-//
-//		SetAlpha();
-//		SetCulling();
-//		SetVisible(m_lpThisMI->IsVisible());
-//
-//		//Add it to the scene graph.
-//		m_osgParent->addChild(m_osgRoot.get());
-//
-//		//Set the position with the world coordinates.
-//		Physics_UpdateAbsolutePosition();
-//
-//		//We need to set the UserData on the OSG side so we can do picking.
-//		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-//		osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
-//		osgVisitor->traverse(*m_osgMT);
-//	}
-//}
 
-void BlHinge::DeletePhysics()
-{
-    //FIX PHYSICS
-	//if(!m_btHinge)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_btHinge);
-	//	delete m_btHinge;
-	//	
-	//	if(m_lpChild && m_lpParent)
-	//		m_lpChild->EnableCollision(m_lpParent);
-	//}
-
-	//m_btHinge = NULL;
-	//m_vxJoint = NULL;
-}
 
 void BlHinge::Physics_UpdateAbsolutePosition()
 {
@@ -199,7 +144,7 @@ void BlHinge::Physics_UpdateAbsolutePosition()
 
 void BlHinge::SetupPhysics()
 {
-	if(m_btHinge)
+	if(m_btJoint)
 		DeletePhysics();
 
 	if(!m_lpParent)
@@ -334,7 +279,7 @@ void BlHinge::UpdateData()
 
 void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
-    if (m_btHinge)
+    if (m_btJoint && m_btHinge)
 	{ 		
 		if(bOn)
 		{
@@ -350,15 +295,25 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 
 void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
 {
-    if (m_btHinge)
+    if (m_btJoint && m_btHinge)
 	{   
 		if(bOn)
         {
-            SetLimitValues();
+            if(!m_bMotorOn)
+            {
+                SetLimitValues();
+                m_lpThisJoint->WakeDynamics();
+            }
+
 			m_btHinge->enableAngularMotor(true, fltDesiredVelocity, fltMaxForce);
         }
 		else
-			m_btHinge->enableAngularMotor(false, fltDesiredVelocity, fltMaxForce);
+        {
+            if(m_bMotorOn)
+                m_lpThisJoint->WakeDynamics();
+
+            m_btHinge->enableAngularMotor(false, fltDesiredVelocity, fltMaxForce);
+        }
 
 		m_bMotorOn = bOn;
 	}
@@ -366,7 +321,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 
 void BlHinge::Physics_MaxForce(float fltVal)
 {
-    if(m_btHinge)
+    if(m_btJoint && m_btHinge)
         m_btHinge->setMaxMotorImpulse(fltVal);
 }
 //
@@ -391,7 +346,7 @@ void BlHinge::Physics_MaxForce(float fltVal)
 
 float BlHinge::GetCurrentBtPosition()
 {
-    if(m_btHinge)
+    if(m_btJoint && m_btHinge)
         return m_btHinge->getHingeAngle();
     else
         return 0;

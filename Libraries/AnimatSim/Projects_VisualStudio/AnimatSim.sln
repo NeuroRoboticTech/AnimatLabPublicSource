@@ -1,19 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "..\..\StdUtils\Projects_VisualStudio\StdUtils.vcxproj", "{90F957AF-0223-E846-9E5F-EFD535209880}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdClassFactoryTester", "..\..\StdUtils\Projects_VisualStudio\StdClassFactoryTester.vcxproj", "{6C51817A-0D45-744B-A03C-3B545E1F351F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{90F957AF-0223-E846-9E5F-EFD535209880} = {90F957AF-0223-E846-9E5F-EFD535209880}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils_UnitTests", "..\..\StdUtils\Projects_VisualStudio\StdUtils_UnitTests.vcxproj", "{64C4BB9A-4EDE-474F-B010-AF3879B090EE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{90F957AF-0223-E846-9E5F-EFD535209880} = {90F957AF-0223-E846-9E5F-EFD535209880}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{835902F5-C6B5-594E-9F70-7077D3106D9E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{64234DBB-BECA-6E45-B155-00261497101A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,22 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90F957AF-0223-E846-9E5F-EFD535209880}.Debug|Win32.ActiveCfg = Debug|Win32
-		{90F957AF-0223-E846-9E5F-EFD535209880}.Debug|Win32.Build.0 = Debug|Win32
-		{90F957AF-0223-E846-9E5F-EFD535209880}.Release|Win32.ActiveCfg = Release|Win32
-		{90F957AF-0223-E846-9E5F-EFD535209880}.Release|Win32.Build.0 = Release|Win32
-		{6C51817A-0D45-744B-A03C-3B545E1F351F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6C51817A-0D45-744B-A03C-3B545E1F351F}.Debug|Win32.Build.0 = Debug|Win32
-		{6C51817A-0D45-744B-A03C-3B545E1F351F}.Release|Win32.ActiveCfg = Release|Win32
-		{6C51817A-0D45-744B-A03C-3B545E1F351F}.Release|Win32.Build.0 = Release|Win32
-		{64C4BB9A-4EDE-474F-B010-AF3879B090EE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{64C4BB9A-4EDE-474F-B010-AF3879B090EE}.Debug|Win32.Build.0 = Debug|Win32
-		{64C4BB9A-4EDE-474F-B010-AF3879B090EE}.Release|Win32.ActiveCfg = Release|Win32
-		{64C4BB9A-4EDE-474F-B010-AF3879B090EE}.Release|Win32.Build.0 = Release|Win32
-		{835902F5-C6B5-594E-9F70-7077D3106D9E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{835902F5-C6B5-594E-9F70-7077D3106D9E}.Debug|Win32.Build.0 = Debug|Win32
-		{835902F5-C6B5-594E-9F70-7077D3106D9E}.Release|Win32.ActiveCfg = Release|Win32
-		{835902F5-C6B5-594E-9F70-7077D3106D9E}.Release|Win32.Build.0 = Release|Win32
+		{64234DBB-BECA-6E45-B155-00261497101A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64234DBB-BECA-6E45-B155-00261497101A}.Debug|Win32.Build.0 = Debug|Win32
+		{64234DBB-BECA-6E45-B155-00261497101A}.Release|Win32.ActiveCfg = Release|Win32
+		{64234DBB-BECA-6E45-B155-00261497101A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

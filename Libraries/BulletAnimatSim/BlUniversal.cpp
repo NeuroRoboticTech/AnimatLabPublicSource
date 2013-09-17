@@ -70,7 +70,7 @@ void BlUniversal::DeletePhysics()
 
 void BlUniversal::SetupPhysics()
 {
-	if(m_btSocket)
+	if(m_btJoint)
 		DeletePhysics();
 
 	if(!m_lpParent)

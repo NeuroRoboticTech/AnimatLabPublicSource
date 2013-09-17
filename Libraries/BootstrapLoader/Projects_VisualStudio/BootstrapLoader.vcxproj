@@ -11,7 +11,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{F796E368-F2C4-5F41-9407-67BDA2D633C1}</ProjectGuid>
+		<ProjectGuid>{397F2654-01D6-7845-8DBD-979C6BDC140F}</ProjectGuid>
 		<RootNamespace>BootstrapLoader</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

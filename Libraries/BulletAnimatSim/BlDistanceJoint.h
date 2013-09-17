@@ -19,13 +19,12 @@ namespace BulletAnimatSim
 				/// The bullet socket class.
 				btGeneric6DofConstraint *m_btDistance;
 
-				virtual void SetupGraphics();
-				virtual void SetupPhysics();
-				virtual void DeletePhysics();
-
 			public:
 				BlDistanceJoint();
 				virtual ~BlDistanceJoint();
+
+				virtual void SetupGraphics();
+				virtual void SetupPhysics();
 
 #pragma region DataAccesMethods
 

@@ -67,20 +67,6 @@ void BlBox::CreateJoints()
 	BlRigidBody::Initialize();
 }
 
-void BlBox::ResizePhysicsGeometry()
-{
- //FIX PHYSICS
-	//if(m_vxGeometry)
-	//{
-	//	VxBox *vxBox = dynamic_cast<VxBox *>(m_vxGeometry);
-
-	//	if(!vxBox)
-	//		THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-	//	
-	//	vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
-	//}
-}
-
 
 		}		//Bodies
 	}			// Environment

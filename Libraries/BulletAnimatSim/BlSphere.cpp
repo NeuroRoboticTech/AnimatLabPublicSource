@@ -67,20 +67,6 @@ void BlSphere::CreateJoints()
 	BlRigidBody::Initialize();
 }
 
-void BlSphere::ResizePhysicsGeometry()
-{
-    //FIX PHYSICS
-	//if(m_vxGeometry)
-	//{
-	//	VxSphere *vxSphere = dynamic_cast<VxSphere *>(m_vxGeometry);
-
-	//	if(!vxSphere)
-	//		THROW_TEXT_ERROR(Bl_Err_lGeometryMismatch, Bl_Err_strGeometryMismatch, m_lpThisAB->Name());
-	//	
-	//	vxSphere->setRadius(m_fltRadius);
-	//}
-}
-
 		}		//Bodies
 	}			// Environment
 }				//BulletAnimatSim

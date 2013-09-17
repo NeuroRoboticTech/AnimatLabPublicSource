@@ -1,6 +1,6 @@
 echo "Generating AnimatLabSimCode Mono Solution"
 
-premake4m --os=linux --file=AnimatLabSimCode.lua monodevelop
+..\bin\premake4m --os=linux --file=AnimatLabSimCode.lua monodevelop
 
 cd ..\Libraries\BootstrapLoader\Projects_Mono
 @call GenerateSolution.bat

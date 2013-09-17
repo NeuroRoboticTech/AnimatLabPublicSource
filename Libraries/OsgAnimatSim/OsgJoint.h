@@ -56,9 +56,6 @@ namespace OsgAnimatSim
             virtual void ResetDraggerOnResize();
             virtual void DeleteJointGraphics();
             virtual void CreateJointGraphics();
-			virtual void SetupGraphics();
-            virtual void DeleteGraphics();
-			virtual void SetupPhysics();
 			virtual osg::Vec3d NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
 
@@ -71,6 +68,10 @@ namespace OsgAnimatSim
             virtual osg::Matrix GetChildWorldMatrix();
 
 			virtual void SetAlpha();
+
+			virtual void SetupGraphics();
+            virtual void DeleteGraphics();
+			virtual void SetupPhysics();
 
 			virtual void Initialize();
 			virtual bool Physics_SetData(const string &strDataType, const string &strValue);

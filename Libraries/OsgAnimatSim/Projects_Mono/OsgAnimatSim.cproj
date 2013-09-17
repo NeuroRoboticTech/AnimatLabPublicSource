@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{23CD7C45-B19A-A248-987F-F815A52E4208}</ProjectGuid>
+    <ProjectGuid>{402EC85F-B5C1-0644-A9EB-320B862FBE85}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -23,7 +23,7 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
+        <Include>..\..\..\..\..\3rdParty\Vortex_5_1\3rdparty\osg-2.8.3\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
@@ -31,7 +31,7 @@
     <LibPaths>
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
-        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+        <LibPath>..\..\..\..\..\3rdParty\Vortex_5_1\3rdparty\osg-2.8.3\lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -75,7 +75,7 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>../../../Vortex_5_1/3rdparty/osg-2.8.3/include</Include>
+        <Include>..\..\..\..\..\3rdParty\Vortex_5_1\3rdparty\osg-2.8.3\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
@@ -83,7 +83,7 @@
     <LibPaths>
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
-        <LibPath>../../../Vortex_5_1/3rdparty/osg-2.8.3/lib</LibPath>
+        <LibPath>..\..\..\..\..\3rdParty\Vortex_5_1\3rdparty\osg-2.8.3\lib</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -117,6 +117,9 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\OsgAttachment.h">
+      <Link>OsgAttachment.h</Link>
+    </None>
     <None Include="..\OsgBody.h">
       <Link>OsgBody.h</Link>
     </None>
@@ -128,6 +131,9 @@
     </None>
     <None Include="..\OsgDraggerHandler.h">
       <Link>OsgDraggerHandler.h</Link>
+    </None>
+    <None Include="..\OsgFreeJoint.h">
+      <Link>OsgFreeJoint.h</Link>
     </None>
     <None Include="..\OsgGeometry.h">
       <Link>OsgGeometry.h</Link>
@@ -168,8 +174,14 @@
     <None Include="..\OsgMouseSpring.h">
       <Link>OsgMouseSpring.h</Link>
     </None>
+    <None Include="..\OsgMouth.h">
+      <Link>OsgMouth.h</Link>
+    </None>
     <None Include="..\OsgMovableItem.h">
       <Link>OsgMovableItem.h</Link>
+    </None>
+    <None Include="..\OsgOdorSensor.h">
+      <Link>OsgOdorSensor.h</Link>
     </None>
     <None Include="..\OsgOrganism.h">
       <Link>OsgOrganism.h</Link>
@@ -224,6 +236,9 @@
     <Compile Include="..\OsgAnimatSim.cpp">
       <Link>OsgAnimatSim.cpp</Link>
     </Compile>
+    <Compile Include="..\OsgAttachment.cpp">
+      <Link>OsgAttachment.cpp</Link>
+    </Compile>
     <Compile Include="..\OsgBody.cpp">
       <Link>OsgBody.cpp</Link>
     </Compile>
@@ -235,6 +250,9 @@
     </Compile>
     <Compile Include="..\OsgDraggerHandler.cpp">
       <Link>OsgDraggerHandler.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgFreeJoint.cpp">
+      <Link>OsgFreeJoint.cpp</Link>
     </Compile>
     <Compile Include="..\OsgGeometry.cpp">
       <Link>OsgGeometry.cpp</Link>
@@ -275,8 +293,14 @@
     <Compile Include="..\OsgMouseSpring.cpp">
       <Link>OsgMouseSpring.cpp</Link>
     </Compile>
+    <Compile Include="..\OsgMouth.cpp">
+      <Link>OsgMouth.cpp</Link>
+    </Compile>
     <Compile Include="..\OsgMovableItem.cpp">
       <Link>OsgMovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgOdorSensor.cpp">
+      <Link>OsgOdorSensor.cpp</Link>
     </Compile>
     <Compile Include="..\OsgOrganism.cpp">
       <Link>OsgOrganism.cpp</Link>

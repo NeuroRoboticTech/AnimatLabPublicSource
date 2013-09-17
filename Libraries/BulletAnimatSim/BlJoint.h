@@ -39,6 +39,8 @@ namespace BulletAnimatSim
 			BlJoint();
 			virtual ~BlJoint();
 
+			virtual void DeletePhysics();
+
             virtual bool Physics_IsDefined();
 			virtual void Physics_ResetSimulation();
             virtual void Physics_CollectData();

@@ -139,7 +139,9 @@ namespace AnimatSim
 			virtual float JointForce();
 			virtual void JointForce(float fltForce);
 
-			virtual void CreateJoint();
+            virtual void WakeDynamics();
+
+            virtual void CreateJoint();
 			virtual void UpdatePhysicsPosFromGraphics();
             virtual void Initialize();
 

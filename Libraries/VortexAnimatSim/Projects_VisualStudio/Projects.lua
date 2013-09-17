@@ -5,17 +5,17 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../include", 
-					  "../../Vortex_5_1/include",
-					  "../../Vortex_5_1/3rdparty/osg-2.8.3/include",
-					  "../../Vortex_5_1/3rdparty/sdl-1.2.14/include",
+					  "../../../../3rdParty/Vortex_5_1/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
+					  "../../../../3rdParty/Vortex_5_1/3rdparty/sdl-1.2.14/include",
 					  "../../StdUtils",
 					  "../../AnimatSim"}	  
 		libdirs { "../../../lib",
 				  "$(OutDir)",
-				  "../../Vortex_5_1/3rdparty/osg-2.8.3/lib",
-				  "../../Vortex_5_1/lib",
-				  "../../Vortex_5_1/3rdparty/boost-1.45.0/lib",
-				  "../../Vortex_5_1/3rdparty/sdl-1.2.14/lib" }
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
+				  "../../../../3rdParty/Vortex_5_1/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/boost-1.45.0/lib",
+				  "../../../../3rdParty/Vortex_5_1/3rdparty/sdl-1.2.14/lib" }
 		
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "VORTEXANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }

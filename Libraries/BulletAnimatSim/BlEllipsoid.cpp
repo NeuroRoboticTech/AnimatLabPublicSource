@@ -72,23 +72,6 @@ void BlEllipsoid::CreateJoints()
 	BlRigidBody::Initialize();
 }
 
-void BlEllipsoid::ResizePhysicsGeometry()
-{
-    //FIX PHYSICS
-	//if(m_vxGeometry && m_vxCollisionGeometry && m_vxSensor)
-	//{
-	//	if(!m_vxSensor->removeCollisionGeometry(m_vxCollisionGeometry))
-	//		THROW_PARAM_ERROR(Bl_Err_lRemovingCollisionGeometry, Bl_Err_strRemovingCollisionGeometry, "ID: ", m_strID);
-
-	//	delete m_vxCollisionGeometry;
-	//	m_vxCollisionGeometry = NULL;
-
-	//	CreatePhysicsGeometry();
-	//	int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
-	//	CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
-	//}
-}
-
 		}		//Bodies
 	}			// Environment
 }				//BulletAnimatSim

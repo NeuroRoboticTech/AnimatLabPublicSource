@@ -1,5 +1,5 @@
 echo "Generating AnimatLabSimCode Visual Studio Solution"
-premake4 --os=windows --file=AnimatLabSimCode.lua vs2010
+..\bin\premake4 --os=windows --file=AnimatLabSimCode.lua vs2010
 
 cd ..\Libraries\BootstrapLoader\Projects_VisualStudio
 @call GenerateSolution.bat
