@@ -22,13 +22,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\StdUtils</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -54,13 +54,13 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>..\..\..\..\include</Include>
-        <Include>..\..\..\StdUtils</Include>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>

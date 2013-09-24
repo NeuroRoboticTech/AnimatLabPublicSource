@@ -5,11 +5,9 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/include",
-					  "../../../StdUtils", 
-					  "../../../AnimatSim" }
-		libdirs { "../../../../bin", 
-				  "../../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib" }
+ 			      "../../../StdUtils", 
+			      "../../../AnimatSim" }
+		libdirs { "../../../../bin" }
 		links { "dl"}
 	  
 		configuration { "Debug", "linux" }
@@ -18,26 +16,26 @@
 			targetdir ("Debug")
 			targetname ("OsgAnimatSim_vc10D")
 			links { "StdUtils_vc10D", 
-					"AnimatSim_vc10D",
-					"OpenThreadsd", 
-					"osgAnimationd", 
-					"osgd", 
-					"osgDBd", 
-					"osgFXd", 
-					"osgGAd", 
-					"osgManipulatord", 
-					"osgParticled", 
-					"osgShadowd", 
-					"osgSimd", 
-					"osgTerraind", 
-					"osgTextd", 
-					"osgUtild", 
-					"osgViewerd", 
-					"osgVolumed", 
-					"osgWidgetd" }
+				"AnimatSim_vc10D",
+				"OpenThreadsd", 
+				"osgAnimationd", 
+				"osgd", 
+				"osgDBd", 
+				"osgFXd", 
+				"osgGAd", 
+				"osgManipulatord", 
+				"osgParticled", 
+				"osgShadowd", 
+				"osgSimd", 
+				"osgTerraind", 
+				"osgTextd", 
+				"osgUtild", 
+				"osgViewerd", 
+				"osgVolumed", 
+				"osgWidgetd" }
 
 			postbuildcommands { "cp Debug/libOsgAnimatSim_vc10D.so ../../../bin",
-						"cp Debug/libOsgAnimatSim_vc10D.so ../../../unit_test_bin" }
+					    "cp Debug/libOsgAnimatSim_vc10D.so ../../../unit_test_bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "OSGANIMATLIBRARY_EXPORTS" }
@@ -45,22 +43,22 @@
 			targetdir ("Release")
 			targetname ("OsgAnimatSim_vc10")
 			links { "StdUtils_vc10",
-					"AnimatSim_vc10", 
-					"OpenThreads",
-					"osgAnimation",
-					"osg",
-					"osgDB",
-					"osgFX",
-					"osgGA",
-					"osgManipulator",
-					"osgParticle",
-					"osgShadow",
-					"osgSim",
-					"osgTerrain",
-					"osgText",
-					"osgUtil",
-					"osgViewer",
-					"osgVolume",
-					"osgWidget" }
+				"AnimatSim_vc10", 
+				"OpenThreads",
+				"osgAnimation",
+				"osg",
+				"osgDB",
+				"osgFX",
+				"osgGA",
+				"osgManipulator",
+				"osgParticle",
+				"osgShadow",
+				"osgSim",
+				"osgTerrain",
+				"osgText",
+				"osgUtil",
+				"osgViewer",
+				"osgVolume",
+				"osgWidget" }
 			postbuildcommands { "cp Release/libOsgAnimatSim_vc10.so ../../../bin", 
-						"cp Release/libOsgAnimatSim_vc10.so ../../../unit_test_bin" }
+					    "cp Release/libOsgAnimatSim_vc10.so ../../../unit_test_bin" }

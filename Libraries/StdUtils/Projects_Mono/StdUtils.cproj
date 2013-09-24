@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils_vc10D.so</OutputName>
@@ -23,14 +24,8 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>../../../../../3rdParty/boost_1_54_0</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../../3rdParty/boost_1_54_0/lib/static</LibPath>
-      </LibPaths>
-    </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>
@@ -47,7 +42,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils_vc10.so</OutputName>
@@ -57,14 +53,8 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>../../../../../3rdParty/boost_1_54_0</Include>
       </Includes>
     </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../../3rdParty/boost_1_54_0/lib/static</LibPath>
-      </LibPaths>
-    </LibPaths>
     <Libs>
       <Libs>
         <Lib>dl</Lib>

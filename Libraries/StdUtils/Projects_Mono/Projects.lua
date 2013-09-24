@@ -4,9 +4,7 @@
 		kind     "SharedLib"
 		files  { "../*.h",
 				 "../*.cpp"}
-		includedirs { "../../../../include", 
-					  "../../../../../3rdParty/boost_1_54_0" }
-		libdirs { "../../../../../3rdParty/boost_1_54_0/lib/static" }
+		includedirs { "../../../../include" }
 		links { "dl", 
 				"boost_system", 
 				"boost_filesystem",
@@ -57,10 +55,8 @@
 		files  { "../StdUtils_UnitTests/*.h",
 				 "../StdUtils_UnitTests/*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdUtils", 
-					  "../../../../../3rdParty/boost_1_54_0" }	  
-		libdirs { "../../../../bin", 
-				  "../../../../../3rdParty/boost_1_54_0/lib/static" }
+			      "../../../StdUtils" }	  
+		libdirs { "../../../../bin" }
 		links { "boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework" }
