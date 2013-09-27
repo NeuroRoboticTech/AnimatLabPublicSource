@@ -74,7 +74,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ExternalInputStimulus\r\n", "", -1, false, true);}
 }
 
-string ExternalInputStimulus::Type() {return "ExternalInput";}
+std::string ExternalInputStimulus::Type() {return "ExternalInput";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be stimulated. 
@@ -84,7 +84,7 @@ string ExternalInputStimulus::Type() {return "ExternalInput";}
 
 \return	GUID ID of the node. 
 **/
-string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
+std::string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the target node to stimulate. 
@@ -94,7 +94,7 @@ string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void ExternalInputStimulus::TargetNodeID(string strID)
+void ExternalInputStimulus::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -129,7 +129,7 @@ void ExternalInputStimulus::Input(float fltVal) {m_fltInput = fltVal;}
 
 \return	Post-fix input equation string. 
 **/
-string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
+std::string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
 
 /**
 \brief	Sets the post-fix input equation string. 
@@ -139,7 +139,7 @@ string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
 
 \param	strVal	The new equation string. 
 **/
-void ExternalInputStimulus::InputEquation(string strVal)
+void ExternalInputStimulus::InputEquation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -185,10 +185,10 @@ void ExternalInputStimulus::Deactivate()
 	ExternalStimulus::Deactivate();
 }
 
-float *ExternalInputStimulus::GetDataPointer(const string &strDataType)
+float *ExternalInputStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "INPUT")
 		lpData = &m_fltInput;
@@ -198,9 +198,9 @@ float *ExternalInputStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool ExternalInputStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ExternalInputStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -218,7 +218,7 @@ bool ExternalInputStimulus::SetData(const string &strDataType, const string &str
 	return false;
 }
 
-void ExternalInputStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ExternalInputStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

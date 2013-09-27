@@ -24,36 +24,36 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the source RigidBody.
-			string m_strSourceBodyID;
+			std::string m_strSourceBodyID;
 
 			/// The name of the target NeuralModule.
-			string m_strTargetModule;
+			std::string m_strTargetModule;
 
 			/// The array of ReceptiveFieldPair objects.
 			CStdPtrArray<ReceptiveFieldPair> m_aryFieldPairs; 
 
 			ReceptiveFieldPair *LoadFieldPair(CStdXml &oXml);
 
-			virtual void AddFieldPair(string strXml, bool bDoNotInit);
-			virtual void RemoveFieldPair(string strID, bool bThrowError = true);
-			virtual int FindFieldPairListPos(string strID, bool bThrowError = true);
+			virtual void AddFieldPair(std::string strXml, bool bDoNotInit);
+			virtual void RemoveFieldPair(std::string strID, bool bThrowError = true);
+			virtual int FindFieldPairListPos(std::string strID, bool bThrowError = true);
 
 		public:
 			ContactAdapter();
 			virtual ~ContactAdapter();
 
-			virtual string SourceBodyID();
-			virtual void SourceBodyID(string strID);
+			virtual std::string SourceBodyID();
+			virtual void SourceBodyID(std::string strID);
 
-			virtual string SourceModule();
+			virtual std::string SourceModule();
 
-			virtual string TargetModule();
-			virtual void TargetModule(string strModule);
+			virtual std::string TargetModule();
+			virtual void TargetModule(std::string strModule);
 			
 #pragma region DataAccesMethods
 
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

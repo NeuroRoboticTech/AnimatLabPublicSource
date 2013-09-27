@@ -37,7 +37,7 @@ namespace AnimatSim
 		
 		\param	strError	The error.
 		**/
-		virtual void HandleNonCriticalError(string strError) = 0;
+		virtual void HandleNonCriticalError(std::string strError) = 0;
 
 		/**
 		\brief	Handle critical-errors in the GUI. A critical error will report the error and then shut the
@@ -48,7 +48,7 @@ namespace AnimatSim
 		
 		\param	strError	The error.
 		**/
-		virtual void HandleCriticalError(string strError) = 0;
+		virtual void HandleCriticalError(std::string strError) = 0;
 
 	};
 }

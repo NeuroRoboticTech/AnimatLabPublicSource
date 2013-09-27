@@ -29,7 +29,7 @@ namespace AnimatSim
 				Stomach *m_lpStomach;
 
 				/// Identifier for the stomach
-				string m_strStomachID;
+				std::string m_strStomachID;
 
 				/// The eating rate. This is determined by neural input to this object. A neuron is connected to
 				/// this item through an adapter. The input value that comes in from the adapter via AddExternalNodeInput
@@ -42,7 +42,7 @@ namespace AnimatSim
 				/// The current distance between the food and the mouth.
 				float m_fltFoodDistance;
 
-				virtual void SetStomachPointer(string strID);
+				virtual void SetStomachPointer(std::string strID);
 
 			public:
 				Mouth();
@@ -71,15 +71,15 @@ namespace AnimatSim
 				**/
 				virtual void MinFoodRadius(float fltVal, bool bUseScaling = true);
 
-				virtual void StomachID(string strID);
-				virtual string StomachID();
+				virtual void StomachID(std::string strID);
+				virtual std::string StomachID();
 
 				//Node Overrides
 				virtual void Initialize();
 				virtual void AddExternalNodeInput(float fltInput);
-				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-				virtual float *GetDataPointer(const string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+				virtual float *GetDataPointer(const std::string &strDataType);
 				virtual void StepSimulation();
 				virtual void ResetSimulation();
 				virtual void Load(CStdXml &oXml);

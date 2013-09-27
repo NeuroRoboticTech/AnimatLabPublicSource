@@ -275,14 +275,14 @@ void Light::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralMo
 	m_lpMovableSim = lpSim;
 }
 
-float *Light::GetDataPointer(const string &strDataType)
+float *Light::GetDataPointer(const std::string &strDataType)
 {
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-bool Light::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Light::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -339,7 +339,7 @@ bool Light::SetData(const string &strDataType, const string &strValue, bool bThr
 	return false;
 }
 
-void Light::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Light::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 	MovableItem::QueryProperties(aryNames, aryTypes);

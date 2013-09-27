@@ -130,9 +130,9 @@ void Link::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lNodeNotDefined, Al_Err_strNodeNotDefined, "Link: ", m_strID);
 }
 
-bool Link::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Link::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -150,7 +150,7 @@ bool Link::SetData(const string &strDataType, const string &strValue, bool bThro
 	return false;
 }
 
-void Link::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Link::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

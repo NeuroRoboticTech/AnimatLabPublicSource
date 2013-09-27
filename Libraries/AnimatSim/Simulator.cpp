@@ -238,7 +238,7 @@ catch(...)
 
 \return	Project path.
 **/
-string Simulator::ProjectPath() {return m_strProjectPath;}
+std::string Simulator::ProjectPath() {return m_strProjectPath;}
 
 /**
 \brief	Sets the project path.
@@ -248,7 +248,7 @@ string Simulator::ProjectPath() {return m_strProjectPath;}
 
 \param	strPath	Full pathname of the project file. 
 **/
-void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
+void Simulator::ProjectPath(std::string strPath) {m_strProjectPath = strPath;}
 
 /**
 \brief	Gets the directory path to the executable.
@@ -258,7 +258,7 @@ void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
 
 \return	Path to the executable.
 **/
-string Simulator::ExecutablePath() {return m_strExecutablePath;}
+std::string Simulator::ExecutablePath() {return m_strExecutablePath;}
 
 /**
 \brief	Sets the Executable path.
@@ -268,7 +268,7 @@ string Simulator::ExecutablePath() {return m_strExecutablePath;}
 
 \param	strPath	Full pathname to the executable file. 
 **/
-void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
+void Simulator::ExecutablePath(std::string strPath) {m_strExecutablePath = strPath;}
 
 /**
 \brief	Gets the simulation filename.
@@ -278,7 +278,7 @@ void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
 
 \return	Simulation filename.
 **/
-string Simulator::SimulationFile() {return m_strSimulationFile;}
+std::string Simulator::SimulationFile() {return m_strSimulationFile;}
 
 /**
 \brief	Sets the simulation filename.
@@ -288,7 +288,7 @@ string Simulator::SimulationFile() {return m_strSimulationFile;}
 
 \param	strFile	The simulation filename. 
 **/
-void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
+void Simulator::SimulationFile(std::string strFile) {m_strSimulationFile = strFile;}
 
 /**
 \brief	Gets whether the Simulation is paused.
@@ -341,7 +341,7 @@ void Simulator::Initialized(bool bVal) {m_bInitialized = bVal;}
 
 \return	Pointer to list of objects.
 **/
-CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
+CStdMap<std::string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
 
 /**
 \brief	Gets the data chart manager.
@@ -432,7 +432,7 @@ void Simulator::VisualSelectionMode(int iVal)
 	m_iSelectionMode = iVal;
 	
 	//Go through and call VisualSelectionModeChanged for all objects.
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -1249,7 +1249,7 @@ void Simulator::SimulateHydrodynamics(bool bVal)
 
 \return	The material identifier.
 **/
-int Simulator::GetMaterialID(string strID) {return -1;} 
+int Simulator::GetMaterialID(std::string strID) {return -1;} 
 
 /**
 \brief	Query if this object is physics being updated on this time slice.
@@ -1313,7 +1313,7 @@ void Simulator::BackgroundColor(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-void Simulator::BackgroundColor(string strXml)
+void Simulator::BackgroundColor(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -1339,7 +1339,7 @@ void Simulator::RecFieldSelRadius(float fltValue, bool bUseScaling, bool bUpdate
 
 	if(bUpdateAllBodies)
 	{
-		CStdMap<string, AnimatBase *>::iterator oPos;
+		CStdMap<std::string, AnimatBase *>::iterator oPos;
 		AnimatBase *lpBase = NULL;
 		for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 		{
@@ -1470,7 +1470,7 @@ scaled by the same values.
 
 \param	strUnits	The string identifer of the distance units to use. 
 **/
-void Simulator::DistanceUnits(string strUnits)
+void Simulator::DistanceUnits(std::string strUnits)
 {
 	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -1523,9 +1523,9 @@ scaled by the same values.
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string identifer of the mass units to use. 
+\param	strUnits	The std::string identifer of the mass units to use. 
 **/
-void Simulator::MassUnits(string strUnits)
+void Simulator::MassUnits(std::string strUnits)
 {
 	m_fltMassUnits = ConvertMassUnits(strUnits);
 	m_fltInverseMassUnits = 1/m_fltMassUnits;
@@ -1694,7 +1694,7 @@ void Simulator::InitializeStructures()
 	// the sim, and events will change it for the rest of them afterwards, so the values should be correct. 
 	PhysicsTimeStep(m_fltPhysicsTimeStep);
 
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -1714,7 +1714,7 @@ void Simulator::InitializeStructures()
 
 		//First lets check if there is already an existing video file with that same
 		//name. If there is then get rid of it.
-		string strVideoFile = m_strProjectPath + m_strVideoFilename;
+		std::string strVideoFile = m_strProjectPath + m_strVideoFilename;
 		struct stat f__stat;
 		bool bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
 		if(bFileExists)
@@ -1732,7 +1732,7 @@ void Simulator::InitializeStructures()
 void Simulator::NotifyTimeStepModified()
 {
 	//Go through and call TimeStepModified for all objects.
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -1997,7 +1997,7 @@ void Simulator::ResetSimulation()
 
 	InitializeRandomNumbers();
 
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -2025,7 +2025,7 @@ void Simulator::ResetSimulation()
 float Simulator::MinTimeStep()
 {
 	m_fltTimeStep = m_fltPhysicsTimeStep;
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -2276,7 +2276,7 @@ void Simulator::ProcessSimulationStep()
 	catch(CStdErrorInfo oError)
 	{
 		//A critical simulation error has occurred if we catch an exception here. We need to shut the app down.
-		string strError = "An error occurred while stepping the simulation.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while stepping the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
 	}
 	catch(...)
@@ -2326,7 +2326,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimStarting()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2347,7 +2347,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimPausing()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2368,7 +2368,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimStopping()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2378,7 +2378,7 @@ void Simulator::SimStopping()
 	}
 }
 
-void Simulator::HandleCriticalError(string strError)
+void Simulator::HandleCriticalError(std::string strError)
 {
 	this->ShutdownSimulation();
 	if(m_lpSimCallback)
@@ -2386,7 +2386,7 @@ void Simulator::HandleCriticalError(string strError)
 
 }
 
-void Simulator::HandleNonCriticalError(string strError)
+void Simulator::HandleNonCriticalError(std::string strError)
 {
 	this->ResetSimulation();
 	if(m_lpSimCallback)
@@ -2526,9 +2526,9 @@ void Simulator::CheckEndSimulationTime()
 \author	dcofer
 \date	3/28/2011
 
-\param	strFileName	The string to load. 
+\param	strFileName	The std::string to load. 
 **/
-void Simulator::Load(string strFileName)
+void Simulator::Load(std::string strFileName)
 {
 	CStdXml oXml;
 
@@ -2558,9 +2558,9 @@ void Simulator::Load(string strFileName)
 \author	dcofer
 \date	3/28/2011
 
-\param	strFilename	The string to save. 
+\param	strFilename	The std::string to save. 
 **/
-void Simulator::Save(string strFilename) {};
+void Simulator::Save(std::string strFilename) {};
 
 
 void Simulator::Load(CStdXml &oXml)
@@ -2614,7 +2614,7 @@ void Simulator::Load(CStdXml &oXml)
 \return	Pointer to the class factory.
 \exception Throws an exception if there is an error creating the class factory.
 **/
-IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
+IStdClassFactory *Simulator::LoadClassFactory(std::string strModuleName)
 {
 	IStdClassFactory *lpFactory=NULL;
 
@@ -2806,8 +2806,8 @@ catch(...)
 Organism *Simulator::LoadOrganism(CStdXml &oXml)
 {
 	Organism *lpOrganism = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -2889,7 +2889,7 @@ catch(...)
 \param	strFile				   	The string file. 
 \param [in,out]	strAnimatModule	The string animat module. 
 **/
-void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
+void Simulator::LoadAnimatModuleName(std::string strFile, std::string &strAnimatModule)
 {
 	CStdXml oXml;
 
@@ -2914,7 +2914,7 @@ void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 \param [in,out]	oXml		   	The xml. 
 \param [in,out]	strAnimatModule	The string animat module. 
 **/
-void Simulator::LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule)
+void Simulator::LoadAnimatModuleName(CStdXml &oXml, std::string &strAnimatModule)
 {
 	oXml.FindElement("Simulation");
 	oXml.FindChildElement("");
@@ -2944,7 +2944,7 @@ by simply specifying the name of the dll and the class we want.
 
 \return	Pointer to the created object.
 **/
-CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, bool bThrowError)
+CStdSerialize *Simulator::CreateObject(std::string strModule, std::string strClassName, std::string strType, bool bThrowError)
 {
 	strModule = Std_CheckString(strModule);
 	
@@ -2989,9 +2989,9 @@ CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, st
 **/
 Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 {	
-	string strExecutablePath, strExeFile;
+	std::string strExecutablePath, strExeFile;
 
-    string strBuffer = Std_ExecutablePath();
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//Set the log file prefix
@@ -3000,8 +3000,8 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 	else
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
 
-	string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
-	string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
+	std::string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
+	std::string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
 
 	if(Std_IsBlank(strProject))
 		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
@@ -3022,17 +3022,17 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, string strSimulationFile)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strSimulationFile)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-	string strProjectPath, strProjectFile;
-	string strExecutablePath, strExeFile;
+	std::string strProjectPath, strProjectFile;
+	std::string strExecutablePath, strExeFile;
 
 try
 { 
-    string strBuffer = Std_ExecutablePath();
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//_getcwd( strBuffer, 2000 );
@@ -3098,17 +3098,17 @@ catch(...)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, CStdXml &oXml)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, CStdXml &oXml)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-	string strProjectPath, strProjectFile;
-	string strExecutablePath, strExeFile;
+	std::string strProjectPath, strProjectFile;
+	std::string strExecutablePath, strExeFile;
 
 try
 { 
-    string strBuffer = Std_ExecutablePath();
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	if(Std_IsBlank(strAnimatModule))
@@ -3161,7 +3161,7 @@ catch(...)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strProjectPath, std::string strExecutablePath)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
@@ -3221,10 +3221,10 @@ catch(...)
 \return	null if it fails and bThrowError=false, else the found neural module factory.
 \exception If bThrowError=True and no factory is found it throws an exception.
 **/
-IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, bool bThrowError)
+IStdClassFactory *Simulator::FindNeuralModuleFactory(std::string strModuleName, bool bThrowError)
 {
 	IStdClassFactory *lpFactory = NULL;
-	CStdMap<string, IStdClassFactory *>::iterator oPos;
+	CStdMap<std::string, IStdClassFactory *>::iterator oPos;
 	oPos = m_aryNeuralModuleFactories.find(Std_CheckString(strModuleName));
 
 	if(oPos != m_aryNeuralModuleFactories.end())
@@ -3249,10 +3249,10 @@ IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, bool 
 \return	null if it fails, else the found organism.
 \exception If bThrowError=True and no organism is found it throws an exception.
 **/
-Organism *Simulator::FindOrganism(string strOrganismID, bool bThrowError)
+Organism *Simulator::FindOrganism(std::string strOrganismID, bool bThrowError)
 {
 	Organism *lpOrganism = NULL;
-	CStdPtrMap<string, Organism>::iterator oPos;
+	CStdPtrMap<std::string, Organism>::iterator oPos;
 	oPos = m_aryOrganisms.find(Std_CheckString(strOrganismID));
 
 	if(oPos != m_aryOrganisms.end())
@@ -3279,10 +3279,10 @@ Organism *Simulator::FindOrganism(string strOrganismID, bool bThrowError)
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructure(string strStructureID, bool bThrowError)
+Structure *Simulator::FindStructure(std::string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
+	CStdPtrMap<std::string, Structure>::iterator oPos;
 	oPos = m_aryStructures.find(Std_CheckString(strStructureID));
 
 	if(oPos != m_aryStructures.end())
@@ -3305,10 +3305,10 @@ Structure *Simulator::FindStructure(string strStructureID, bool bThrowError)
 \return	null if it fails, else the found odor type.
 \exception If bThrowError=True and no odor type is found it throws an exception.
 **/
-OdorType *Simulator::FindOdorType(string strOdorID, bool bThrowError)
+OdorType *Simulator::FindOdorType(std::string strOdorID, bool bThrowError)
 {
 	OdorType *lpOdorType = NULL;
-	CStdPtrMap<string, OdorType>::iterator oPos;
+	CStdPtrMap<std::string, OdorType>::iterator oPos;
 	oPos = m_aryOdorTypes.find(Std_CheckString(strOdorID));
 
 	if(oPos != m_aryOdorTypes.end())
@@ -3334,10 +3334,10 @@ OdorType *Simulator::FindOdorType(string strOdorID, bool bThrowError)
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructureFromAll(string strStructureID, bool bThrowError)
+Structure *Simulator::FindStructureFromAll(std::string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
+	CStdPtrMap<std::string, Structure>::iterator oPos;
 	oPos = m_aryAllStructures.find(Std_CheckString(strStructureID));
 
 	if(oPos != m_aryAllStructures.end())
@@ -3368,7 +3368,7 @@ specified StructureID.
 
 \exception	If	bThrowError=True and no structure or joint is found it throws an exception. 
 **/
-Joint *Simulator::FindJoint(string strStructureID, string strJointID, bool bThrowError)
+Joint *Simulator::FindJoint(std::string strStructureID, std::string strJointID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3397,7 +3397,7 @@ specified StructureID.
 \return	null if it fails, else the found structure.
 \exception	If	bThrowError=True and no structure or body is found it throws an exception. 
 **/
-RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, bool bThrowError)
+RigidBody *Simulator::FindRigidBody(std::string strStructureID, std::string strBodyID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3422,10 +3422,10 @@ and tries to find one with a matching ID.
 \return	null if it fails, else the found by identifier.
 \exception	If	bThrowError=True and no objects is found it throws an exception. 
 **/
-AnimatBase *Simulator::FindByID(string strID, bool bThrowError)
+AnimatBase *Simulator::FindByID(std::string strID, bool bThrowError)
 {
 	AnimatBase *lpFind = NULL;
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	oPos = m_aryObjectList.find(Std_CheckString(strID));
 
 	if(oPos != m_aryObjectList.end())
@@ -3515,7 +3515,7 @@ void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
 \param	strModuleName   	Name of the dll module. 
 \param [in,out]	lpModule	Pointer to thea module to add. 
 **/
-void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule)
+void Simulator::AddNeuralModuleFactory(std::string strModuleName, NeuralModule *lpModule)
 {
 	if(!lpModule->ClassFactory())
 		THROW_PARAM_ERROR(Al_Err_lModuleClassFactoryNotDefined, Al_Err_strModuleClassFactoryNotDefined, "ModuleName", strModuleName);
@@ -3525,7 +3525,7 @@ void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpMod
 }
 
 
-int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError)
+int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError)
 {
 	int iCount = aryAdapters.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -3549,7 +3549,7 @@ int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string str
 **/
 void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->SourceModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
@@ -3580,7 +3580,7 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->SourceModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
@@ -3612,7 +3612,7 @@ void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->TargetModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
@@ -3646,7 +3646,7 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->TargetModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
@@ -3748,7 +3748,7 @@ void Simulator::AddOrganism(Organism *lpOrganism)
 
 \param	strXml	The xml packet to load. 
 **/
-void Simulator::AddOrganism(string strXml)
+void Simulator::AddOrganism(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3770,7 +3770,7 @@ void Simulator::AddOrganism(string strXml)
 \param	strID	   	GUID ID of the organism to remove. 
 \param	bThrowError	true to throw error if the organism is not found. 
 **/
-void Simulator::RemoveOrganism(string strID, bool bThrowError)
+void Simulator::RemoveOrganism(std::string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryOrganisms.Remove(strID);
@@ -3803,7 +3803,7 @@ void Simulator::AddStructure(Structure *lpStructure)
 
 \param	strXml	The xml packet to load. 
 **/
-void Simulator::AddStructure(string strXml)
+void Simulator::AddStructure(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3826,7 +3826,7 @@ void Simulator::AddStructure(string strXml)
 \param	strID	   	Identifier for the structure. 
 \param	bThrowError	true to throw error if the structure is not found. 
 **/
-void Simulator::RemoveStructure(string strID, bool bThrowError)
+void Simulator::RemoveStructure(std::string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryStructures.Remove(strID);
@@ -3856,7 +3856,7 @@ void Simulator::AddOdorType(OdorType *lpOdorType)
 	}
 }
 
-void Simulator::AddOdorType(string strXml, bool bDoNotInit)
+void Simulator::AddOdorType(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3869,7 +3869,7 @@ void Simulator::AddOdorType(string strXml, bool bDoNotInit)
 		lpType->Initialize();
 }
 
-void Simulator::RemoveOdorType(string strID, bool bThrowError)
+void Simulator::RemoveOdorType(std::string strID, bool bThrowError)
 {
 	m_aryOdorTypes.Remove(strID);
 }
@@ -3883,10 +3883,10 @@ void  Simulator::IncrementPhysicsBodyCount()
 
 #pragma region DataAccesMethods
 
-float *Simulator::GetDataPointer(const string &strDataType)
+float *Simulator::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "TIME")
 		lpData = &m_fltTime;
@@ -3922,9 +3922,9 @@ float *Simulator::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool Simulator::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Simulator::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "VISUALSELECTIONMODE")
 	{
@@ -4098,7 +4098,7 @@ bool Simulator::SetData(const string &strDataType, const string &strValue, bool 
 	return false;
 }
 
-void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Simulator::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -4199,9 +4199,9 @@ void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-bool Simulator::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Simulator::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
 		return m_oExternalStimuliMgr.AddStimulus(strXml);
@@ -4240,9 +4240,9 @@ bool Simulator::AddItem(const string &strItemType, const string &strXml, bool bT
 	return false;
 }
 
-bool Simulator::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Simulator::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
 		return m_oExternalStimuliMgr.RemoveStimulus(strID);
@@ -4289,7 +4289,7 @@ bool Simulator::RemoveItem(const string &strItemType, const string &strID, bool 
 
 \param	strKeyFrameID	GUID ID for the string key frame. 
 **/
-void Simulator::EnableVideoPlayback(string strKeyFrameID)
+void Simulator::EnableVideoPlayback(std::string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4371,7 +4371,7 @@ void Simulator::StepVideoPlayback(int iFrameCount)
 
 \param	strPath	Full pathname of the string file. 
 **/
-void Simulator::SaveVideo(string strPath)
+void Simulator::SaveVideo(std::string strPath)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4392,7 +4392,7 @@ void Simulator::SaveVideo(string strPath)
 
 \return	.
 **/
-string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
+std::string Simulator::AddKeyFrame(std::string strType, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4409,7 +4409,7 @@ string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
 
 \param	strID	GUID ID for the key frame. 
 **/
-void Simulator::RemoveKeyFrame(string strID)
+void Simulator::RemoveKeyFrame(std::string strID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4429,7 +4429,7 @@ void Simulator::RemoveKeyFrame(string strID)
 
 \return	.
 **/
-string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
+std::string Simulator::MoveKeyFrame(std::string strID, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4454,7 +4454,7 @@ string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
 
 \param	strKeyFrameID	GUID ID for the key frame. 
 **/
-void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
+void Simulator::MoveSimulationToKeyFrame(std::string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4479,7 +4479,7 @@ void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
 long Simulator::CalculateSnapshotByteSize()
 {
 	long lByteSize = 0;
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4501,7 +4501,7 @@ long Simulator::CalculateSnapshotByteSize()
 **/
 void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4521,7 +4521,7 @@ void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 **/
 void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4574,7 +4574,7 @@ void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair
 
 void Simulator::EnableCollision(RigidBody *lpBody)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4614,7 +4614,7 @@ void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPai
 
 void Simulator::DisableCollision(RigidBody *lpBody)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4640,7 +4640,7 @@ to the distance units chosen by the user.
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertDistanceUnits(string strUnits)
+float Simulator::ConvertDistanceUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4683,7 +4683,7 @@ to the denominator distance units chosen by the user.
 
 \return	.
 **/
-float Simulator::ConvertDenominatorDistanceUnits(string strUnits)
+float Simulator::ConvertDenominatorDistanceUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4726,7 +4726,7 @@ to the mass units chosen by the user.
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertMassUnits(string strUnits)
+float Simulator::ConvertMassUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4771,7 +4771,7 @@ set the units to be grams and had a 1 Kg mass then they would have 1000 grams/1 
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertDisplayMassUnits(string strUnits)
+float Simulator::ConvertDisplayMassUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 

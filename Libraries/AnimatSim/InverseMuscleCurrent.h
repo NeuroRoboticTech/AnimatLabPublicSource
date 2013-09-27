@@ -12,12 +12,12 @@ namespace AnimatSim
 		class ANIMAT_PORT InverseMuscleCurrent  : public ExternalStimulus
 		{
 		protected:
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 			Node *m_lpTargetNode; 
 
 			float *m_lpExternalCurrent;
 
-			string m_strMuscleID;
+			std::string m_strMuscleID;
 			LinearHillMuscle *m_lpMuscle;
 
 			float m_fltCurrent;
@@ -35,12 +35,12 @@ namespace AnimatSim
 			float m_fltRestPotential;
 			float m_fltConductance;
 
-			string m_strMuscleLengthData;
+			std::string m_strMuscleLengthData;
 			CStdArray<float> m_aryTime;
 			CStdArray<float> m_aryLength;
 			CStdArray<float> m_aryVelocity;
 
-			void LoadMuscleData(string strFilename);
+			void LoadMuscleData(std::string strFilename);
 
 		public:
 			InverseMuscleCurrent();
@@ -52,25 +52,25 @@ namespace AnimatSim
 			virtual void Conductance(float fltG);
 			virtual float Conductance();
 
-			virtual void TargetNodeID(string strID);
-			virtual string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
+			virtual std::string TargetNodeID();
 			virtual Node *TargetNode();
 
-			virtual void MuscleID(string strID);
-			virtual string MuscleID();
+			virtual void MuscleID(std::string strID);
+			virtual std::string MuscleID();
 			virtual LinearHillMuscle *Muscle();
 
-			virtual void MuscleLengthData(string strFilename);
-			virtual string MuscleLengthData();
+			virtual void MuscleLengthData(std::string strFilename);
+			virtual std::string MuscleLengthData();
 
 			virtual void Load(CStdXml &oXml);
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 			//ActiveItem overrides
-			virtual string Type() {return "InverseMuscleCurrent";};
+			virtual std::string Type() {return "InverseMuscleCurrent";};
 			virtual void Initialize();  
 			virtual void Activate();
 			virtual void ResetSimulation();  

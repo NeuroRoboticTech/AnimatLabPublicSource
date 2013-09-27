@@ -173,7 +173,7 @@ void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
 **/
 float Gain::UpperOutput() {return m_fltUpperOutput;}
 
-bool Gain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Gain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -215,7 +215,7 @@ bool Gain::SetData(const string &strDataType, const string &strValue, bool bThro
 	return false;
 }
 
-void Gain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Gain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -279,7 +279,7 @@ void Gain::Load(CStdXml &oXml)
 \return	Pointer to the loaded gain. 
 \exception Throws an exception if there is a problem during the load.
 **/
-Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
+Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, std::string strName, CStdXml &oXml)
 {
 	Gain *lpGain = NULL;
 
@@ -287,8 +287,8 @@ Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
 	{
 		//Now lets load this Current Graph object.
 		oXml.IntoChildElement(strName);
-		string strModuleName = oXml.GetChildString("ModuleName", "");
-		string strType = oXml.GetChildString("Type");
+		std::string strModuleName = oXml.GetChildString("ModuleName", "");
+		std::string strType = oXml.GetChildString("Type");
 		oXml.OutOfElem(); //OutOf Gain Element
 
 		Gain *lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));

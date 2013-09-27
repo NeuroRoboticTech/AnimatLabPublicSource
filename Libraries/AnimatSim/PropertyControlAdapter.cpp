@@ -84,7 +84,7 @@ catch(...)
 
 \return	nothing.
 **/
-void PropertyControlAdapter::PropertyName(string strPropName)
+void PropertyControlAdapter::PropertyName(std::string strPropName)
 {
 	//Reset the property name so we can get the property type setup correctly.
 	//If it is not set then we need to assume that they will set it later.
@@ -117,7 +117,7 @@ void PropertyControlAdapter::PropertyName(string strPropName)
 
 \return	Name of property that will be set.
 **/
-string PropertyControlAdapter::PropertyName() 
+std::string PropertyControlAdapter::PropertyName() 
 {return m_strPropertyName;}
 
 /**
@@ -209,9 +209,9 @@ float PropertyControlAdapter::FinalValue()
 **/
 AnimatBase *PropertyControlAdapter::TargetObject() {return m_lpTargetObject;}
 
-bool PropertyControlAdapter::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool PropertyControlAdapter::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Adapter::SetData(strDataType, strValue, false))
 		return true;
@@ -247,7 +247,7 @@ bool PropertyControlAdapter::SetData(const string &strDataType, const string &st
 	return false;
 }
 
-void PropertyControlAdapter::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PropertyControlAdapter::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Adapter::QueryProperties(aryNames, aryTypes);
 
@@ -351,7 +351,7 @@ void PropertyControlAdapter::StepSimulation()
 	}
 }
 
-void PropertyControlAdapter::SetDestinationID(string strXml)
+void PropertyControlAdapter::SetDestinationID(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);

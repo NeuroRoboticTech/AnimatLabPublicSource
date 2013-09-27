@@ -116,9 +116,9 @@ void PhysicsNeuralModule::Initialize()
 
 #pragma region DataAccesMethods
 
-bool PhysicsNeuralModule::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool PhysicsNeuralModule::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(NeuralModule::SetData(strDataType, strValue, false))
 		return true;
@@ -136,7 +136,7 @@ bool PhysicsNeuralModule::SetData(const string &strDataType, const string &strVa
 	return false;
 }
 
-void PhysicsNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PhysicsNeuralModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	NeuralModule::QueryProperties(aryNames, aryTypes);
 
@@ -144,7 +144,7 @@ void PhysicsNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray
 	aryTypes.Add("Float");
 }
 
-void PhysicsNeuralModule::AddAdapter(string strXml, bool bDoNotInit)
+void PhysicsNeuralModule::AddAdapter(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -156,16 +156,16 @@ void PhysicsNeuralModule::AddAdapter(string strXml, bool bDoNotInit)
 		lpAdapter->Initialize();
 }
 
-void PhysicsNeuralModule::RemoveAdapter(string strID)
+void PhysicsNeuralModule::RemoveAdapter(std::string strID)
 {
 	int iIdx = FindAdapterListPos(strID);
 	m_aryAdapters[iIdx]->DetachAdaptersFromSimulation();
 	m_aryAdapters.RemoveAt(iIdx);
 }
 
-int PhysicsNeuralModule::FindAdapterListPos(string strID, bool bThrowError)
+int PhysicsNeuralModule::FindAdapterListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryAdapters.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -178,9 +178,9 @@ int PhysicsNeuralModule::FindAdapterListPos(string strID, bool bThrowError)
 	return -1;
 }
 
-bool PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool PhysicsNeuralModule::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "ADAPTER")
 	{
@@ -204,9 +204,9 @@ bool PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXm
 	return false;
 }
 
-bool PhysicsNeuralModule::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool PhysicsNeuralModule::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "ADAPTER")
 	{
@@ -311,7 +311,7 @@ data.
 Adapter *PhysicsNeuralModule::LoadAdapter(CStdXml &oXml)
 {
 	Adapter *lpAdapter = NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

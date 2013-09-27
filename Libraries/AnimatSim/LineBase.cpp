@@ -144,7 +144,7 @@ then initializes the list again to find those points for the line.
 
 \param	strXml		 	The xml to load.
 **/
-void LineBase::AttachmentPoints(string strXml)
+void LineBase::AttachmentPoints(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -192,7 +192,7 @@ float LineBase::CalculateLength()
 	return (fltLength * m_lpSim->DistanceUnits());
 }
 
-void LineBase::AttachedPartMovedOrRotated(string strID)
+void LineBase::AttachedPartMovedOrRotated(std::string strID)
 {
 	//Redraw the line.
 	Resize();
@@ -216,9 +216,9 @@ void LineBase::AfterResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *LineBase::GetDataPointer(const string &strDataType)
+float *LineBase::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -232,7 +232,7 @@ float *LineBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool LineBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool LineBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(RigidBody::SetData(strDataType, strValue, false))
 		return true;
@@ -262,7 +262,7 @@ bool LineBase::SetData(const string &strDataType, const string &strValue, bool b
 	return false;
 }
 
-void LineBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LineBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	RigidBody::QueryProperties(aryNames, aryTypes);
 
@@ -292,7 +292,7 @@ void LineBase::InitializeAttachments()
 {
 	m_aryAttachmentPoints.Clear();
 
-	string strID;
+	std::string strID;
 	Attachment *lpAttachment=NULL;
 	int iCount = m_aryAttachmentPointIDs.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -358,7 +358,7 @@ void LineBase::LoadAttachments(CStdXml &oXml)
 	{
 		oXml.IntoElem();
 		int iCount = oXml.NumberOfChildren();
-		string strID;
+		std::string strID;
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);

@@ -124,12 +124,12 @@ namespace AnimatSim
 			**/
 			virtual float CalculateGain(float fltInput) = 0;
 
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 			virtual void Load(CStdXml &oXml);
 		};
 
-		Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml);
+		Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, std::string strName, CStdXml &oXml);
 
 	}			//Gains
 }				//AnimatSim

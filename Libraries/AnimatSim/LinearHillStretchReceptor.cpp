@@ -181,9 +181,9 @@ void LinearHillStretchReceptor::ResetSimulation()
 	m_fltIIRate = 0;
 }
 
-float *LinearHillStretchReceptor::GetDataPointer(const string &strDataType)
+float *LinearHillStretchReceptor::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -199,7 +199,7 @@ float *LinearHillStretchReceptor::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool LinearHillStretchReceptor::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool LinearHillStretchReceptor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(LinearHillMuscle::SetData(strDataType, strValue, false))
 		return true;
@@ -229,7 +229,7 @@ bool LinearHillStretchReceptor::SetData(const string &strDataType, const string 
 	return false;
 }
 
-void LinearHillStretchReceptor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LinearHillStretchReceptor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	LinearHillMuscle::QueryProperties(aryNames, aryTypes);
 

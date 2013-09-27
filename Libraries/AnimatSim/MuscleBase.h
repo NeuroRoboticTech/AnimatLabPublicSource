@@ -73,10 +73,10 @@ namespace AnimatSim
 				virtual void Enabled(bool bVal);
 
 				virtual SigmoidGain *StimTension();
-				virtual void StimTension(string strXml);
+				virtual void StimTension(std::string strXml);
 
 				virtual LengthTensionGain *LengthTension();
-				virtual void LengthTension(string strXml);
+				virtual void LengthTension(std::string strXml);
 
 				/**
 				\brief	Calculates the activation needed for a given tension value. 
@@ -98,9 +98,9 @@ namespace AnimatSim
 
 				virtual void ResetSimulation();
 
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual float *GetDataPointer(const std::string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 				virtual void Load(CStdXml &oXml);
 			};

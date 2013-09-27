@@ -49,9 +49,9 @@ namespace AnimatSim
 #pragma endregion
 
 #pragma region DataAccesMethods
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
 			virtual void Initialize();

@@ -70,7 +70,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of FileChart\r\n", "", -1, false, true);}
 }
 
-string FileChart::Type() {return "FileChart";}
+std::string FileChart::Type() {return "FileChart";}
 
 /**
 \brief	Gets the output filename.
@@ -80,7 +80,7 @@ string FileChart::Type() {return "FileChart";}
 
 \return	Output file name.
 **/
-string FileChart::OutputFilename() {return m_strOutputFilename;}
+std::string FileChart::OutputFilename() {return m_strOutputFilename;}
 
 /**
 \brief	Sets the Output filename.
@@ -90,7 +90,7 @@ string FileChart::OutputFilename() {return m_strOutputFilename;}
 
 \param	strVal	The new name. 
 **/
-void FileChart::OutputFilename(string strVal) 
+void FileChart::OutputFilename(std::string strVal) 
 {
 	if(Std_IsBlank(strVal)) 
 		THROW_ERROR(Al_Err_lFilenameBlank, Al_Err_strFilenameBlank);

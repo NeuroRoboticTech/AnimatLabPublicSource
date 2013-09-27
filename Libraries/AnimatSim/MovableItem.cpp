@@ -216,7 +216,7 @@ reset the local position using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(string strXml, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
+void MovableItem::Position(std::string strXml, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -423,7 +423,7 @@ by the GUI to reset the rotation using an xml data packet.
 \author	dcofer
 \date	3/2/2011
 
-\param	strXml				The xml string used to load the rotation. 
+\param	strXml				The xml std::string used to load the rotation. 
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->RotationChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
@@ -431,7 +431,7 @@ by the GUI to reset the rotation using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(string strXml, bool bFireChangeEvent, bool bUpdateMatrix)
+void MovableItem::Rotation(std::string strXml, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -723,7 +723,7 @@ void MovableItem::Ambient(float *aryColor)
 \param	strXml	The color data in an xml data packet
 **/
 
-void MovableItem::Ambient(string strXml)
+void MovableItem::Ambient(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -776,7 +776,7 @@ void MovableItem::Diffuse(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-void MovableItem::Diffuse(string strXml)
+void MovableItem::Diffuse(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -829,7 +829,7 @@ void MovableItem::Specular(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-void MovableItem::Specular(string strXml)
+void MovableItem::Specular(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -870,7 +870,7 @@ void MovableItem::Shininess(float fltVal)
 
 \return	Texture filename. 
 **/
-string MovableItem::Texture() {return m_strTexture;}
+std::string MovableItem::Texture() {return m_strTexture;}
 
 /**
 \brief	Sets the Texture filename. 
@@ -880,7 +880,7 @@ string MovableItem::Texture() {return m_strTexture;}
 
 \param	strValue	The texture filename. 
 **/
-void MovableItem::Texture(string strValue)
+void MovableItem::Texture(std::string strValue)
 {
 	m_strTexture = strValue;
 	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_TextureChanged();
@@ -1189,9 +1189,9 @@ bool MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY,
 
 #pragma region DataAccesMethods
 
-float *MovableItem::GetDataPointer(const string &strDataType)
+float *MovableItem::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "WORLDPOSITIONX")
 		return &m_oReportWorldPosition.x;
@@ -1226,7 +1226,7 @@ float *MovableItem::GetDataPointer(const string &strDataType)
 	return 0;
 }
 
-bool MovableItem::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool MovableItem::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(strDataType == "POSITION")
 	{
@@ -1439,7 +1439,7 @@ bool MovableItem::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void MovableItem::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MovableItem::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	aryNames.Add("Position");
 	aryTypes.Add("Xml");

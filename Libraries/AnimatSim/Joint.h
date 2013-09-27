@@ -81,7 +81,7 @@ namespace AnimatSim
             ///The friction for this joint
             ConstraintFriction *m_lpFriction;
 
-            ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, string strName);
+            ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, std::string strName);
             ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
 
 		public:
@@ -98,31 +98,31 @@ namespace AnimatSim
 
             virtual ConstraintRelaxation *Relaxation1();
             virtual void Relaxation1(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation1(string strXml);
+			virtual void Relaxation1(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation2();
             virtual void Relaxation2(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation2(string strXml);
+			virtual void Relaxation2(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation3();
             virtual void Relaxation3(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation3(string strXml);
+			virtual void Relaxation3(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation4();
             virtual void Relaxation4(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation4(string strXml);
+			virtual void Relaxation4(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation5();
             virtual void Relaxation5(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation5(string strXml);
+			virtual void Relaxation5(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation6();
             virtual void Relaxation6(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation6(string strXml);
+			virtual void Relaxation6(std::string strXml);
 
             virtual ConstraintFriction *Friction();
             virtual void Friction(ConstraintFriction *lpFriction);
-			virtual void Friction(string strXml);
+			virtual void Friction(std::string strXml);
 
 			virtual float GetPositionWithinLimits(float fltPos);
 			virtual float GetLimitRange();
@@ -145,9 +145,9 @@ namespace AnimatSim
 			virtual void UpdatePhysicsPosFromGraphics();
             virtual void Initialize();
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 			virtual void AddExternalNodeInput(float fltInput);
 			virtual void ResetSimulation();

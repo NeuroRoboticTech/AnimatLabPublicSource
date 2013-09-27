@@ -88,7 +88,7 @@ namespace AnimatSim
 			float m_fltShininess;
 
 			///An optional texture to apply to the rigid body.
-			string m_strTexture;
+			std::string m_strTexture;
 
 			/// The relative position of the selected vertex
 			CStdFPoint m_vSelectedVertex;
@@ -123,7 +123,7 @@ namespace AnimatSim
 			virtual CStdFPoint Position();
 			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 			virtual void Position(float fltX, float fltY, float fltZ, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
-			virtual void Position(string strXml, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Position(std::string strXml, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint AbsolutePosition();
 			virtual void AbsolutePosition(CStdFPoint &oPoint);
@@ -143,7 +143,7 @@ namespace AnimatSim
 			virtual CStdFPoint Rotation();
 			virtual void Rotation(CStdFPoint &oPoint, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 			virtual void Rotation(float fltX, float fltY, float fltZ, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
-			virtual void Rotation(string strXml, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Rotation(std::string strXml, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint ReportRotation();
 			virtual void ReportRotation(CStdFPoint &oPoint);
@@ -173,23 +173,23 @@ namespace AnimatSim
 			virtual CStdColor *Ambient();
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Ambient(float *aryColor);
-			virtual void Ambient(string strXml);
+			virtual void Ambient(std::string strXml);
 
 			virtual CStdColor *Diffuse();
 			virtual void Diffuse(CStdColor &aryColor);
 			virtual void Diffuse(float *aryColor);
-			virtual void Diffuse(string strXml);
+			virtual void Diffuse(std::string strXml);
 
 			virtual CStdColor *Specular();
 			virtual void Specular(CStdColor &aryColor);
 			virtual void Specular(float *aryColor);
-			virtual void Specular(string strXml);
+			virtual void Specular(std::string strXml);
 
 			virtual float Shininess();
 			virtual void Shininess(float fltVal);
 
-			virtual string Texture();
-			virtual void Texture(string strValue);
+			virtual std::string Texture();
+			virtual void Texture(std::string strValue);
 	
 			virtual CStdFPoint SelectedVertex();
 			virtual void SelectedVertex(CStdFPoint &vPoint, bool bFireChangeEvent = false, bool bUpdatePhysics = true);
@@ -219,9 +219,9 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 #pragma endregion
 

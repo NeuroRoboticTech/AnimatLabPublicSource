@@ -211,9 +211,9 @@ void Spring::AddExternalNodeInput(float fltInput)
 }
 
 
-float *Spring::GetDataPointer(const string &strDataType)
+float *Spring::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "SPRINGLENGTH")
 		return &m_fltLength;
@@ -236,7 +236,7 @@ float *Spring::GetDataPointer(const string &strDataType)
 	return LineBase::GetDataPointer(strDataType);
 }
 
-bool Spring::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Spring::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
@@ -266,7 +266,7 @@ bool Spring::SetData(const string &strDataType, const string &strValue, bool bTh
 	return false;
 }
 
-void Spring::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Spring::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	LineBase::QueryProperties(aryNames, aryTypes);
 

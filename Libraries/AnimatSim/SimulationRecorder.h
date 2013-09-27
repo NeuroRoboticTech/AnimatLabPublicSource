@@ -39,7 +39,7 @@ namespace AnimatSim
 			virtual ~SimulationRecorder();
 
 			virtual void Add(ActivatedItem *lpItem);
-			virtual KeyFrame *Add(string strType, long lStart, long lEnd);
+			virtual KeyFrame *Add(std::string strType, long lStart, long lEnd);
 
 			virtual void Load(CStdXml &oXml);
 		};

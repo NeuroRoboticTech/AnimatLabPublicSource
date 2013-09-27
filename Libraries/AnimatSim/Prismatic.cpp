@@ -163,9 +163,9 @@ float Prismatic::GetLimitRange()
 		return -1;
 }
 
-bool Prismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Prismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(MotorizedJoint::SetData(strType, strValue, false))
 		return true;

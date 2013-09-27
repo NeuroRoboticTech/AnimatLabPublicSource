@@ -239,7 +239,7 @@ void ContactSensor::DumpVertices(CStdPtrArray<ReceptiveField> &aryFields)
 	}
 }
 
-void ContactSensor::AddReceptiveField(string strXml)
+void ContactSensor::AddReceptiveField(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -249,15 +249,15 @@ void ContactSensor::AddReceptiveField(string strXml)
 	LoadReceptiveField(oXml);
 }
 
-void ContactSensor::RemoveReceptiveField(string strID, bool bThrowError)
+void ContactSensor::RemoveReceptiveField(std::string strID, bool bThrowError)
 {
 	int iPos = FindReceptiveFieldListPos(strID, bThrowError);
 	m_aryFields.RemoveAt(iPos);
 }
 
-int ContactSensor::FindReceptiveFieldListPos(string strID, bool bThrowError)
+int ContactSensor::FindReceptiveFieldListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryFields.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -320,9 +320,9 @@ void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 	}
 }
 
-bool ContactSensor::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool ContactSensor::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RECEPTIVEFIELD")
 	{
@@ -337,9 +337,9 @@ bool ContactSensor::AddItem(const string &strItemType, const string &strXml, boo
 	return false;
 }
 
-bool ContactSensor::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool ContactSensor::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RECEPTIVEFIELD")
 	{
@@ -362,8 +362,8 @@ void ContactSensor::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into Adapter Element
 
 	oXml.IntoChildElement("FieldGain");
-	string strModuleName = oXml.GetChildString("ModuleName", "");
-	string strType = oXml.GetChildString("Type");
+	std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	std::string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
 	m_lpFieldGain = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));

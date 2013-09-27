@@ -148,7 +148,7 @@ namespace AnimatSim
 
 			virtual void Color(float fltR, float fltG, float fltB, float fltA);
 			virtual CStdColor *Color();
-			virtual void Color(string strXml);
+			virtual void Color(std::string strXml);
 
 			/**
 			\brief	Sets the alpha color value for this constraint.
@@ -179,10 +179,10 @@ namespace AnimatSim
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, bool bVerify);
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual void Load(CStdXml &oXml, string strName);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void Load(CStdXml &oXml, std::string strName);
 
 			/**
 			\brief	Sets up the graphics for the constraint.

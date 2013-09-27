@@ -63,7 +63,7 @@ SimulationWindow::~SimulationWindow(void)
 
 \param	strID	GUID ID of the structure. 
 **/
-void SimulationWindow::LookAtStructureID(string strID) 
+void SimulationWindow::LookAtStructureID(std::string strID) 
 {
     if(Std_IsBlank(strID))
         m_bTrackCamera = false;
@@ -82,7 +82,7 @@ void SimulationWindow::LookAtStructureID(string strID)
 
 \return	GUID ID.
 **/
-string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
+std::string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
 
 /**
 \brief	Sets the RigidBody GUID ID to look at within the specified structure.
@@ -92,7 +92,7 @@ string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
 
 \param	strID	GUID ID. 
 **/
-void SimulationWindow::LookAtBodyID(string strID) 
+void SimulationWindow::LookAtBodyID(std::string strID) 
 {
     m_strLookAtBodyID = strID;
 	SetupTrackCamera(false);
@@ -106,7 +106,7 @@ void SimulationWindow::LookAtBodyID(string strID)
 
 \return	GUID ID.
 **/
-string SimulationWindow::LookAtBodyID() {return m_strLookAtBodyID;}
+std::string SimulationWindow::LookAtBodyID() {return m_strLookAtBodyID;}
 
 /**
 \brief	Sets whether camera tracking should be used.
@@ -174,10 +174,10 @@ void SimulationWindow::StandAlone(bool bVal) {m_bStandAlone = bVal;}
 
 #pragma region DataAccesMethods
 
-float *SimulationWindow::GetDataPointer(const string &strDataType)
+float *SimulationWindow::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	//if(strType == "TIME")
 	//	lpData = &m_fltTime;
@@ -187,9 +187,9 @@ float *SimulationWindow::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool SimulationWindow::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool SimulationWindow::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -219,7 +219,7 @@ bool SimulationWindow::SetData(const string &strDataType, const string &strValue
 	return false;
 }
 
-void SimulationWindow::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void SimulationWindow::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -245,7 +245,7 @@ void SimulationWindow::QueryProperties(CStdArray<string> &aryNames, CStdArray<st
 \param	strLookAtStructureID	Identifier for the string look at structure. 
 \param	strLookAtBodyID			Identifier for the string look at body. 
 **/
-void SimulationWindow::SetupTrackCamera(bool bTrackCamera, string strLookAtStructureID, string strLookAtBodyID)
+void SimulationWindow::SetupTrackCamera(bool bTrackCamera, std::string strLookAtStructureID, std::string strLookAtBodyID)
 {
 	m_bTrackCamera = bTrackCamera;
 	m_strLookAtStructureID = strLookAtStructureID;
@@ -300,7 +300,7 @@ void SimulationWindow::OnGetFocus()
 void SimulationWindow::OnLoseFocus()
 {}
 
-void SimulationWindow::Load(string strXml)
+void SimulationWindow::Load(std::string strXml)
 {
 	//If it is blank then skip the loading.
 	if(Std_IsBlank(strXml))

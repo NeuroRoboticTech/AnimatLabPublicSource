@@ -59,7 +59,7 @@ namespace AnimatSim
 
 				virtual bool UsesRadians() {return false;};
 
-				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 				virtual void AddExternalNodeInput(float fltInput);
 
 				virtual void Load(CStdXml &oXml);

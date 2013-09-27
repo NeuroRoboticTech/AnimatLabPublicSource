@@ -203,7 +203,7 @@ SigmoidGain *MuscleBase::StimTension() {return &m_gainStimTension;}
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void MuscleBase::StimTension(string strXml)
+void MuscleBase::StimTension(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -221,7 +221,7 @@ LengthTensionGain *MuscleBase::LengthTension() {return &m_gainLengthTension;}
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void MuscleBase::LengthTension(string strXml)
+void MuscleBase::LengthTension(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -264,9 +264,9 @@ void MuscleBase::VerifySystemPointers()
 	m_gainLengthTension.VerifySystemPointers();
 }
 
-float *MuscleBase::GetDataPointer(const string &strDataType)
+float *MuscleBase::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -282,7 +282,7 @@ float *MuscleBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool MuscleBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool MuscleBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
@@ -312,7 +312,7 @@ bool MuscleBase::SetData(const string &strDataType, const string &strValue, bool
 	return false;
 }
 
-void MuscleBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MuscleBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	LineBase::QueryProperties(aryNames, aryTypes);
 

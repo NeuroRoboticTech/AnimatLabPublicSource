@@ -71,7 +71,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, false, true);}
 }
 
-string EnablerStimulus::Type() {return "EnablerInput";}
+std::string EnablerStimulus::Type() {return "EnablerInput";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be enabled. 
@@ -81,7 +81,7 @@ string EnablerStimulus::Type() {return "EnablerInput";}
 
 \return	GUID ID of the node. 
 **/
-string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
+std::string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the target node to enable. 
@@ -91,7 +91,7 @@ string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void EnablerStimulus::TargetNodeID(string strID)
+void EnablerStimulus::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -151,9 +151,9 @@ void EnablerStimulus::Deactivate()
 		m_lpNode->Enabled(true);
 }
 
-bool EnablerStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool EnablerStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -171,7 +171,7 @@ bool EnablerStimulus::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void EnablerStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void EnablerStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

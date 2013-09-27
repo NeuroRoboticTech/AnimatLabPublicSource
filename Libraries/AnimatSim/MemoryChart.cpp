@@ -73,7 +73,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, false, true);}
 }
 
-string MemoryChart::Type() {return "MemoryChart";}
+std::string MemoryChart::Type() {return "MemoryChart";}
 
 bool MemoryChart::Lock()
 {

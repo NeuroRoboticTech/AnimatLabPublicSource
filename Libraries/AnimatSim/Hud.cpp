@@ -120,7 +120,7 @@ void Hud::Load(CStdXml &oXml)
 HudItem *Hud::LoadHudItem(CStdXml &oXml)
 {
 	HudItem *lpItem=NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

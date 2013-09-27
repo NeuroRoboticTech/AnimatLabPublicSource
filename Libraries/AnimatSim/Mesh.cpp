@@ -72,7 +72,7 @@ Mesh::~Mesh()
 
 \return	mesh filename.
 **/
-string Mesh::MeshFile() {return m_strMeshFile;}
+std::string Mesh::MeshFile() {return m_strMeshFile;}
 
 /**
 \brief	Sets the mesh filename.
@@ -83,7 +83,7 @@ string Mesh::MeshFile() {return m_strMeshFile;}
 
 \param	strFile	The filename.
 **/
-void Mesh::MeshFile(string strFile) 
+void Mesh::MeshFile(std::string strFile) 
 {
 	m_strMeshFile = strFile;
 	Resize();
@@ -99,7 +99,7 @@ void Mesh::MeshFile(string strFile)
 
 \return	collision mesh type.
 **/
-string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
+std::string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 
 /**
 \brief	Sets the collision mesh type.
@@ -111,9 +111,9 @@ string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 
 \param	strType	Type of the mesh.
 **/
-void Mesh::CollisionMeshType(string strType)
+void Mesh::CollisionMeshType(std::string strType)
 {
-	string strUpType = Std_CheckString(strType);
+	std::string strUpType = Std_CheckString(strType);
 	if(strUpType != "TRIANGULAR" && strUpType != "CONVEX" && strUpType != "TERRAIN")
 		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
 
@@ -132,7 +132,7 @@ void Mesh::CollisionMeshType(string strType)
 
 \return	mesh filename.
 **/
-string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
+std::string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
 
 /**
 \brief	Sets the convex mesh filename.
@@ -143,7 +143,7 @@ string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
 
 \param	strFile	The filename.
 **/
-void Mesh::ConvexMeshFile(string strFile) 
+void Mesh::ConvexMeshFile(std::string strFile) 
 {
 	m_strConvexMeshFile = strFile;
 	Resize();
@@ -215,7 +215,7 @@ scale of the mesh using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(string strXml, bool bUpdateMatrix)
+void Mesh::Scale(std::string strXml, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -228,7 +228,7 @@ void Mesh::Scale(string strXml, bool bUpdateMatrix)
 }
 
 
-void Mesh::SetMeshFile(string strXml)
+void Mesh::SetMeshFile(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -240,9 +240,9 @@ void Mesh::SetMeshFile(string strXml)
 	CollisionMeshType(oXml.GetChildString("MeshType"));
 }
 
-bool Mesh::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Mesh::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(RigidBody::SetData(strType, strValue, false))
 		return true;
@@ -302,7 +302,7 @@ bool Mesh::SetData(const string &strDataType, const string &strValue, bool bThro
 	return false;
 }
 
-void Mesh::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Mesh::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	RigidBody::QueryProperties(aryNames, aryTypes);
 

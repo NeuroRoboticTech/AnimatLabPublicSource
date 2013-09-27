@@ -73,7 +73,7 @@ DataChartMgr::~DataChartMgr()
 
 \return	Pointer to the found DataColumn, NULL if not found and bThrowError = false.
 **/
-DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnName, bool bThrowError)
+DataColumn *DataChartMgr::FindDataColumn(std::string strChartKey, std::string strColumnName, bool bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
 	if(!lpChart) return NULL;
@@ -92,7 +92,7 @@ DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnNam
 \param	strColumnName	Name of the DataColumn we are deleting. 
 \param	bThrowError  	If no column is found and this is true, then an exception is thrown, otherwise NULL is returned. 
 **/
-void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, bool bThrowError)
+void DataChartMgr::RemoveDataColumn(std::string strChartKey, std::string strColumnName, bool bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
 	if(!lpChart) return;
@@ -109,7 +109,7 @@ void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, bo
 \param	strChartKey  	GUID ID to the chart that contains the column of interest. 
 \param [in,out]	lpColumn	Pointer to the DataColumn to add. 
 **/
-void DataChartMgr::AddDataColumn(string strChartKey, DataColumn *lpColumn)
+void DataChartMgr::AddDataColumn(std::string strChartKey, DataColumn *lpColumn)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey));
 	lpChart->AddColumn(lpColumn);	
@@ -127,7 +127,7 @@ void DataChartMgr::AddDataColumn(string strChartKey, DataColumn *lpColumn)
 
 \return	true if it succeeds, false if it fails.
 **/
-bool DataChartMgr::AddDataChart(string strXml)
+bool DataChartMgr::AddDataChart(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -148,7 +148,7 @@ bool DataChartMgr::AddDataChart(string strXml)
 
 \return	true if it succeeds, false if it fails.
 **/
-bool DataChartMgr::RemoveDataChart(string strID)
+bool DataChartMgr::RemoveDataChart(std::string strID)
 {
 	Remove(strID);
 	ReInitialize();
@@ -190,7 +190,7 @@ void DataChartMgr::Load(CStdXml &oXml)
 DataChart *DataChartMgr::LoadDataChart(CStdXml &oXml)
 {
 	DataChart *lpChart = NULL;
-	string strModuleName, strType, strFilename;
+	std::string strModuleName, strType, strFilename;
 
 try
 {

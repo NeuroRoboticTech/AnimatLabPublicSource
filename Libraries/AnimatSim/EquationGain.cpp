@@ -55,7 +55,7 @@ catch(...)
 
 \return	Gain equation string. 
 **/
-string EquationGain::GainEquation() {return m_strGainEquation;}
+std::string EquationGain::GainEquation() {return m_strGainEquation;}
 
 /**
 \brief	Sets the gain equation. 
@@ -65,7 +65,7 @@ string EquationGain::GainEquation() {return m_strGainEquation;}
 
 \param	strEquation	The post fix gain equation string. 
 **/
-void EquationGain::GainEquation(string strEquation)
+void EquationGain::GainEquation(std::string strEquation)
 {
 	CStdPostFixEval *lpEval = new CStdPostFixEval;
 
@@ -102,7 +102,7 @@ float EquationGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-bool EquationGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool EquationGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -120,7 +120,7 @@ bool EquationGain::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void EquationGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void EquationGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

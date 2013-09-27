@@ -251,9 +251,9 @@ void Stomach::StepSimulation()
 	}
 }
 
-bool Stomach::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Stomach::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(RigidBody::SetData(strType, strValue, false))
 		return true;
@@ -289,7 +289,7 @@ bool Stomach::SetData(const string &strDataType, const string &strValue, bool bT
 	return false;
 }
 
-void Stomach::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Stomach::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	RigidBody::QueryProperties(aryNames, aryTypes);
 
@@ -306,9 +306,9 @@ void Stomach::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 	aryTypes.Add("Float");
 }
 
-float *Stomach::GetDataPointer(const string &strDataType)
+float *Stomach::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "ENERGYLEVEL")
 		return &m_fltEnergyLevel;

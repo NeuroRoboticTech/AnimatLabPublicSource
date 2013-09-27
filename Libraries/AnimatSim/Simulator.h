@@ -34,30 +34,30 @@ namespace AnimatSim
 #pragma region ProjectVariables
 
 			///The directory path where the simulation configuration files are located.
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			///The directory path where the executable is located.
-			string m_strExecutablePath;
+			std::string m_strExecutablePath;
 
 			///The name of the Animat Simulation (ASIM) file.
-			string m_strSimulationFile;
+			std::string m_strSimulationFile;
 
 			///A list of all Organisms in this simulation. This is not a reference list
 			///It is an actual list that destroys its objects when the list is destroyed.
-			CStdPtrMap<string, Organism> m_aryOrganisms;
+			CStdPtrMap<std::string, Organism> m_aryOrganisms;
 
 			///A list of structures in this simulation that are not organisms. 
 			///This is not a reference list. It is an actual list that destroys
 			///its objects when the list is destroyed.
-			CStdPtrMap<string, Structure> m_aryStructures;
+			CStdPtrMap<std::string, Structure> m_aryStructures;
 
 			///A list of all structures, both regular structures and organisms. This is
 			///a reference list.
-			CStdMap<string, Structure *> m_aryAllStructures;
+			CStdMap<std::string, Structure *> m_aryAllStructures;
 
 			///A list of all odors in this simulation. This is not a reference list
 			///It is an actual list that destroys its objects when the list is destroyed.
-			CStdPtrMap<string, OdorType> m_aryOdorTypes;
+			CStdPtrMap<std::string, OdorType> m_aryOdorTypes;
 
 			/// An Array of RigidBody parts that also act as food sources within the environment.
 			CStdArray<RigidBody *> m_aryFoodSources;
@@ -65,7 +65,7 @@ namespace AnimatSim
 			///A list of class factories for neural modules that have been loaded by any organisms in the
 			///environment. Each factory is only added to the list once even if the 
 			///the same module is loaded seperately for each organism. 
-			CStdMap<string, IStdClassFactory *> m_aryNeuralModuleFactories;
+			CStdMap<std::string, IStdClassFactory *> m_aryNeuralModuleFactories;
 
 			///This is a copy of the class factory associated with the animat module. 
 			///This is the default class factory that is used if no specific module name
@@ -75,7 +75,7 @@ namespace AnimatSim
 			IStdClassFactory *m_lpAnimatClassFactory;
 
 			///A list of all animatbase objects in the simulation. 
-			CStdMap<string, AnimatBase *> m_aryObjectList;
+			CStdMap<std::string, AnimatBase *> m_aryObjectList;
 
 			/// Array of source physics adapters
 			CStdArray<Adapter *> m_arySourcePhysicsAdapters;
@@ -383,7 +383,7 @@ namespace AnimatSim
 			bool m_bRecordVideo;
 
 			/// Filename of the video file
-			string m_strVideoFilename;
+			std::string m_strVideoFilename;
 
 			/// Time of the video record frame
 			float m_fltVideoRecordFrameTime;
@@ -418,10 +418,10 @@ namespace AnimatSim
 			//These variables are just used on and off. They are defined here so we do not have to keep redefining them.
 
 			/// An organism iterator
-			CStdMap<string, Organism *>::iterator m_oOrganismIterator;
+			CStdMap<std::string, Organism *>::iterator m_oOrganismIterator;
 
 			/// A structure iterator
-			CStdMap<string, Structure *>::iterator m_oStructureIterator;
+			CStdMap<std::string, Structure *>::iterator m_oStructureIterator;
 
 			/// The pointer to a selected organism
 			Organism *m_lpSelOrganism;
@@ -442,8 +442,8 @@ namespace AnimatSim
 			Organism *LoadOrganism(CStdXml &oXml);
 			OdorType *LoadOdorType(CStdXml &oXml);
 
-			static void LoadAnimatModuleName(string strFile, string &strAnimatModule);
-			static void LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule);
+			static void LoadAnimatModuleName(std::string strFile, std::string &strAnimatModule);
+			static void LoadAnimatModuleName(CStdXml &oXml, std::string &strAnimatModule);
 
 #pragma endregion
 
@@ -469,8 +469,8 @@ namespace AnimatSim
 			\param [in,out]	lpOrganism	Pointer to an organism. 
 			**/
 			virtual void AddOrganism(Organism *lpOrganism);
-			virtual void AddOrganism(string strXml);
-			virtual void RemoveOrganism(string strID, bool bThrowError = true);
+			virtual void AddOrganism(std::string strXml);
+			virtual void RemoveOrganism(std::string strID, bool bThrowError = true);
 
 			/**
 			\brief	Adds a new "static" structure to the list of structures for this simulation.
@@ -481,24 +481,24 @@ namespace AnimatSim
 			\param [in,out]	lpStructure	Pointer to the structure to add. 
 			**/
 			virtual void AddStructure(Structure *lpStructure);
-			virtual void AddStructure(string strXml);
-			virtual void RemoveStructure(string strID, bool bThrowError = true);
+			virtual void AddStructure(std::string strXml);
+			virtual void RemoveStructure(std::string strID, bool bThrowError = true);
 
-			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError = true);
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError = true);
 			virtual int FindFoodSourceIndex(RigidBody *lpFood);
 			
 			virtual void AddOdorType(OdorType *lpOdorType);
-			virtual void AddOdorType(string strXml, bool bDoNotInit);
-			virtual void RemoveOdorType(string strID, bool bThrowError = true);
+			virtual void AddOdorType(std::string strXml, bool bDoNotInit);
+			virtual void RemoveOdorType(std::string strID, bool bThrowError = true);
 			
 #pragma endregion
 
 #pragma region UnitScaleMethods
 
-			float ConvertDistanceUnits(string strUnits);
-			float ConvertDenominatorDistanceUnits(string strUnits);
-			float ConvertMassUnits(string strUnits);
-			float ConvertDisplayMassUnits(string strUnits);
+			float ConvertDistanceUnits(std::string strUnits);
+			float ConvertDenominatorDistanceUnits(std::string strUnits);
+			float ConvertMassUnits(std::string strUnits);
+			float ConvertDisplayMassUnits(std::string strUnits);
 
 #pragma endregion
 
@@ -534,8 +534,8 @@ namespace AnimatSim
 			
 			virtual void GenerateAutoSeed();
 
-			virtual void HandleCriticalError(string strError);
-			virtual void HandleNonCriticalError(string strError);
+			virtual void HandleCriticalError(std::string strError);
+			virtual void HandleNonCriticalError(std::string strError);
 
 			virtual void UpdateSimulationWindows() = 0;
 
@@ -589,14 +589,14 @@ namespace AnimatSim
 			
 #pragma region ProjectVariables
 
-			virtual string ProjectPath();
-			virtual void ProjectPath(string strPath);
+			virtual std::string ProjectPath();
+			virtual void ProjectPath(std::string strPath);
 
-			virtual string ExecutablePath();
-			virtual void ExecutablePath(string strPath);
+			virtual std::string ExecutablePath();
+			virtual void ExecutablePath(std::string strPath);
 
-			virtual string SimulationFile();
-			virtual void SimulationFile(string strFile);
+			virtual std::string SimulationFile();
+			virtual void SimulationFile(std::string strFile);
 
 			virtual bool Paused();
 			virtual void Paused(bool bVal);
@@ -604,7 +604,7 @@ namespace AnimatSim
 			virtual bool Initialized();
 			virtual void Initialized(bool bVal);
 
-			virtual CStdMap<string, AnimatBase *> *ObjectList();
+			virtual CStdMap<std::string, AnimatBase *> *ObjectList();
 			
 			virtual DataChartMgr *GetDataChartMgr();
 			virtual ExternalStimuliMgr *GetExternalStimuliMgr();
@@ -708,14 +708,14 @@ namespace AnimatSim
 			virtual bool SimulateHydrodynamics();
 			virtual void SimulateHydrodynamics(bool bVal);
 
-			virtual int GetMaterialID(string strID);
+			virtual int GetMaterialID(std::string strID);
 
 			virtual bool IsPhysicsBeingUpdated();	
 			
 			virtual CStdColor *BackgroundColor();
 			virtual void BackgroundColor(CStdColor &aryColor);
 			virtual void BackgroundColor(float *aryColor);
-			virtual void BackgroundColor(string strXml);
+			virtual void BackgroundColor(std::string strXml);
 
 			virtual float AlphaThreshold();
 			virtual void AlphaThreshold(float fltValue);
@@ -742,12 +742,12 @@ namespace AnimatSim
 
 #pragma region UnitScalingVariables
 			
-			virtual void DistanceUnits(string strUnits);
+			virtual void DistanceUnits(std::string strUnits);
 			virtual float DistanceUnits();
 			virtual float InverseDistanceUnits();
 			virtual float DenominatorDistanceUnits();
 
-			virtual void MassUnits(string strUnits);
+			virtual void MassUnits(std::string strUnits);
 			virtual float MassUnits();
 			virtual float InverseMassUnits();
 			virtual float DisplayMassUnits();
@@ -767,7 +767,7 @@ namespace AnimatSim
 		virtual void MicroSleep(unsigned int iMicroTime) = 0;
 		virtual void MicroWait(unsigned int iMicroTime);
 
-		virtual void WriteToConsole(string strMessage) = 0;
+		virtual void WriteToConsole(std::string strMessage) = 0;
 
 #pragma endregion
 
@@ -926,11 +926,11 @@ namespace AnimatSim
 			
 #pragma region LoadMethods
 
-			virtual void Load(string strFileName = "");
+			virtual void Load(std::string strFileName = "");
 			virtual void Load(CStdXml &oXml);
-			virtual void Save(string strFilename);
+			virtual void Save(std::string strFilename);
 
-			static IStdClassFactory *LoadClassFactory(string strModuleName);
+			static IStdClassFactory *LoadClassFactory(std::string strModuleName);
 
 			virtual void IncrementPhysicsBodyCount();
 
@@ -938,28 +938,28 @@ namespace AnimatSim
 		 			
 #pragma region CreateMethods
 
-			virtual CStdSerialize *CreateObject(string strModule, string strClassName, string strType, bool bThrowError = true);
-			static Simulator *CreateSimulator(string strAnimatModule, string strSimulationFile);
-			static Simulator *CreateSimulator(string strAnimatModule, CStdXml &oXml);
-			static Simulator *CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath);
+			virtual CStdSerialize *CreateObject(std::string strModule, std::string strClassName, std::string strType, bool bThrowError = true);
+			static Simulator *CreateSimulator(std::string strAnimatModule, std::string strSimulationFile);
+			static Simulator *CreateSimulator(std::string strAnimatModule, CStdXml &oXml);
+			static Simulator *CreateSimulator(std::string strAnimatModule, std::string strProjectPath, std::string strExecutablePath);
 			static Simulator *CreateSimulator(int argc, const char **argv);
-			virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ) = 0;
-			virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture) = 0;
+			virtual void GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ) = 0;
+			virtual void ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture) = 0;
 
 #pragma endregion
 		 
 	
 #pragma region FindMethods
 
-			virtual IStdClassFactory *FindNeuralModuleFactory(string strModuleName, bool bThrowError = false);
-			virtual Organism *FindOrganism(string strOrganismID, bool bThrowError = true);
-			virtual Structure *FindStructure(string strStructureID, bool bThrowError = true);
-			virtual Structure *FindStructureFromAll(string strStructureID, bool bThrowError = true);
-			virtual Joint *FindJoint(string strStructureID, string strJointID, bool bThrowError = true);
-			virtual RigidBody *FindRigidBody(string strStructureID, string strBodyID, bool bThrowError = true);
-			virtual OdorType *FindOdorType(string strOdorID, bool bThrowError = true);
+			virtual IStdClassFactory *FindNeuralModuleFactory(std::string strModuleName, bool bThrowError = false);
+			virtual Organism *FindOrganism(std::string strOrganismID, bool bThrowError = true);
+			virtual Structure *FindStructure(std::string strStructureID, bool bThrowError = true);
+			virtual Structure *FindStructureFromAll(std::string strStructureID, bool bThrowError = true);
+			virtual Joint *FindJoint(std::string strStructureID, std::string strJointID, bool bThrowError = true);
+			virtual RigidBody *FindRigidBody(std::string strStructureID, std::string strBodyID, bool bThrowError = true);
+			virtual OdorType *FindOdorType(std::string strOdorID, bool bThrowError = true);
 			virtual void FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius, CStdArray<RigidBody *> &arySources, CStdArray<float> &aryDistances);
-			virtual AnimatBase *FindByID(string strID, bool bThrowError = true);
+			virtual AnimatBase *FindByID(std::string strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -967,7 +967,7 @@ namespace AnimatSim
 
 			virtual void AddToObjectList(AnimatBase *lpItem);
 			virtual void RemoveFromObjectList(AnimatBase *lpItem);
-			virtual void AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule);
+			virtual void AddNeuralModuleFactory(std::string strModuleName, NeuralModule *lpModule);
 
 			virtual void AddFoodSource(RigidBody *lpFood);
 			virtual void RemoveFoodSource(RigidBody *lpFood);
@@ -981,27 +981,27 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 
 #pragma region RecorderMethods
 
-			virtual void EnableVideoPlayback(string strKeyFrameID);
+			virtual void EnableVideoPlayback(std::string strKeyFrameID);
 			virtual void DisableVideoPlayback();
 			virtual void StartVideoPlayback();
 			virtual void StopVideoPlayback();
 			virtual void StepVideoPlayback(int iFrameCount = 1);
-			virtual void SaveVideo(string strPath);
+			virtual void SaveVideo(std::string strPath);
 
-			virtual string AddKeyFrame(string strType, long lStart, long lEnd);
-			virtual void RemoveKeyFrame(string strID);
-			virtual string MoveKeyFrame(string strID, long lStart, long lEnd);
-			virtual void MoveSimulationToKeyFrame(string strKeyFrameID);
+			virtual std::string AddKeyFrame(std::string strType, long lStart, long lEnd);
+			virtual void RemoveKeyFrame(std::string strID);
+			virtual std::string MoveKeyFrame(std::string strID, long lStart, long lEnd);
+			virtual void MoveSimulationToKeyFrame(std::string strKeyFrameID);
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 

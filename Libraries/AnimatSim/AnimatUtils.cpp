@@ -54,12 +54,12 @@ namespace AnimatSim
 	//}
 
 
-	string ANIMAT_PORT GetFilePath(string strProjectPath, string strFilename)
+	std::string ANIMAT_PORT GetFilePath(std::string strProjectPath, std::string strFilename)
 	{
 		//If they specify a full path name here then we will use that.
 		//but if it is only a file name then we assume that the file
 		//is located in the project path.
-		string strPath;
+		std::string strPath;
 		if(!Std_IsFullPath(strFilename))
 			strPath = strProjectPath + strFilename;
 		else
@@ -68,7 +68,7 @@ namespace AnimatSim
 		return strPath;
 	}
 
-	//float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, string strName, bool bThrowError = true, float fltDefault = 0)
+	//float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, std::string strName, bool bThrowError = true, float fltDefault = 0)
 	//{
 	//	float fltValue = fltDefault;
 

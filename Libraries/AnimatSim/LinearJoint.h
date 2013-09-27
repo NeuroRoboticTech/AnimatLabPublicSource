@@ -30,7 +30,7 @@ namespace AnimatSim
 				LinearJoint();
 				virtual ~LinearJoint();
 
-				virtual void LinearType(string strType);
+				virtual void LinearType(std::string strType);
 				virtual void LinearType(int iType);
 				virtual int LinearType();
 
@@ -42,8 +42,8 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-				virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 #pragma endregion
 

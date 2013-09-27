@@ -69,7 +69,7 @@ public:
 	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, bool bThrowError = true);
 
 	virtual void ResetSimulation();
-	virtual SimulationWindow *AddSimulationWindow(string strModule, string strType, bool bInit, HWND win, string strHudXml);
+	virtual SimulationWindow *AddSimulationWindow(std::string strModule, std::string strType, bool bInit, HWND win, std::string strHudXml);
 	virtual void RemoveSimulationWindow(HWND win);
 	virtual void CloseAllWindows();
 	virtual void Load(CStdXml &oXml);

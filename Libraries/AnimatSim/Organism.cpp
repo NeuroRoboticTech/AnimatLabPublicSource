@@ -133,9 +133,9 @@ void Organism::MinTimeStep(float &fltMin)
 
 #pragma region DataAccesMethods
 
-bool Organism::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Organism::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Structure::SetData(strDataType, strValue, false))
 		return true;
@@ -153,9 +153,9 @@ bool Organism::SetData(const string &strDataType, const string &strValue, bool b
 	return false;
 }
 
-bool Organism::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Organism::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(Structure::AddItem(strItemType, strXml, false))
 		return true;
@@ -182,9 +182,9 @@ bool Organism::AddItem(const string &strItemType, const string &strXml, bool bTh
 	return false;
 }
 
-bool Organism::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Organism::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 	
 	if(Structure::RemoveItem(strItemType, strID, false))
 		return true;

@@ -122,7 +122,7 @@ namespace AnimatSim
 			float m_fltAngularVelocityDamping;
 
 			/// The array odor sources attached to this part.
-			CStdPtrMap<string, Odor> m_aryOdorSources;
+			CStdPtrMap<std::string, Odor> m_aryOdorSources;
 			
 			///Tells if this body is considered a food source.
 			bool m_bFoodSource;  
@@ -149,7 +149,7 @@ namespace AnimatSim
 			long m_lEatTime;
 
 			/// Identifier for the material type this part will use.
-			string m_strMaterialID;
+			std::string m_strMaterialID;
 
 			//Hyrdrodynamic properties
 			///This is the relative position to the center of the buoyancy in the body.
@@ -174,25 +174,25 @@ namespace AnimatSim
             bool m_bDisplayDebugCollisionGraphic;
 
             ///This is the list of other  parts that this part is excluded from colliding with.
-            unordered_set<RigidBody *> m_aryExcludeCollisionSet;
+            std::unordered_set<RigidBody *> m_aryExcludeCollisionSet;
 
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
 
 			virtual void LoadPosition(CStdXml &oXml);
 
-			virtual void AddRigidBody(string strXml);
-			virtual void RemoveRigidBody(string strID, bool bThrowError = true);
-			virtual int FindChildListPos(string strID, bool bThrowError = true);
+			virtual void AddRigidBody(std::string strXml);
+			virtual void RemoveRigidBody(std::string strID, bool bThrowError = true);
+			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
-			virtual void AddContactSensor(string strXml);
-			virtual void RemoveContactSensor(string strID, bool bThrowError = true);
+			virtual void AddContactSensor(std::string strXml);
+			virtual void RemoveContactSensor(std::string strID, bool bThrowError = true);
 			virtual void LoadContactSensor(CStdXml &oXml);
 
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
-			virtual void AddOdor(string strXml, bool bDoNotInit);
-			virtual void RemoveOdor(string strID, bool bThrowError = true);
+			virtual void AddOdor(std::string strXml, bool bDoNotInit);
+			virtual void RemoveOdor(std::string strID, bool bThrowError = true);
 
 		public:
 			RigidBody();
@@ -208,7 +208,7 @@ namespace AnimatSim
 			virtual CStdFPoint CenterOfMass();
 			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling = true);
 			virtual void CenterOfMass(float fltX, float fltY, float fltZ, bool bUseScaling = true);
-			virtual void CenterOfMass(string strXml, bool bUseScaling = true);
+			virtual void CenterOfMass(std::string strXml, bool bUseScaling = true);
 
 			virtual CStdPtrArray<RigidBody>* ChildParts();
 
@@ -257,13 +257,13 @@ namespace AnimatSim
 			virtual float AngularVelocityDamping();
 			virtual void AngularVelocityDamping(float fltVal, bool bUseScaling = true);
 
-			virtual string MaterialID();
-			virtual void MaterialID(string strID);
+			virtual std::string MaterialID();
+			virtual void MaterialID(std::string strID);
 
 			virtual CStdFPoint BuoyancyCenter();
 			virtual void BuoyancyCenter(CStdFPoint &oPoint, bool bUseScaling = true);
 			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, bool bUseScaling = true);
-			virtual void BuoyancyCenter(string strXml, bool bUseScaling = true);
+			virtual void BuoyancyCenter(std::string strXml, bool bUseScaling = true);
 
 			virtual float BuoyancyScale();
 			virtual void BuoyancyScale(float fltVal);
@@ -271,7 +271,7 @@ namespace AnimatSim
 			virtual CStdFPoint Drag();
 			virtual void Drag(CStdFPoint &oPoint);
 			virtual void Drag(float fltX, float fltY, float fltZ);
-			virtual void Drag(string strXml);
+			virtual void Drag(std::string strXml);
 
 			virtual float Magnus();
 			virtual void Magnus(float fltVal);
@@ -284,7 +284,7 @@ namespace AnimatSim
             virtual bool DisplayDebugCollisionGraphic() {return m_bDisplayDebugCollisionGraphic;}
             virtual void DisplayDebugCollisionGraphic(bool bVal) {m_bDisplayDebugCollisionGraphic = bVal;}
 
-            virtual unordered_set<RigidBody *> *GetExclusionCollisionSet() {return &m_aryExcludeCollisionSet;};
+            virtual std::unordered_set<RigidBody *> *GetExclusionCollisionSet() {return &m_aryExcludeCollisionSet;};
             virtual bool FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError = true);
 
 #pragma endregion
@@ -313,11 +313,11 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

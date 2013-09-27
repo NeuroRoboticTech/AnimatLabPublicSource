@@ -940,9 +940,9 @@ void MaterialType::CreateDefaultUnits()
     m_fltMaxAdhesive *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 }
 
-bool MaterialType::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool MaterialType::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -1098,7 +1098,7 @@ bool MaterialType::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void MaterialType::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MaterialType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

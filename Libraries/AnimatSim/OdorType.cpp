@@ -106,10 +106,10 @@ void OdorType::DiffusionConstant(float fltVal, bool bUseScaling)
 
 \return	null if Odor is not found and bThrowError=False, else the found odor source.
 **/
-Odor *OdorType::FindOdorSource(string strOdorID, bool bThrowError)
+Odor *OdorType::FindOdorSource(std::string strOdorID, bool bThrowError)
 {
 	Odor *lpOdor = NULL;
-	CStdMap<string, Odor *>::iterator oPos;
+	CStdMap<std::string, Odor *>::iterator oPos;
 	oPos = m_aryOdorSources.find(Std_CheckString(strOdorID));
 
 	if(oPos != m_aryOdorSources.end())
@@ -153,7 +153,7 @@ sensor. This is the total odor strength for the sensor.
 float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 {
 	//Loop through each of the associated odors and calculate the value for each one.
-	CStdMap<string, Odor *>::iterator oIterator;
+	CStdMap<std::string, Odor *>::iterator oIterator;
 	Odor *lpOdor = NULL;
 	float fltVal = 0;
 
@@ -168,9 +168,9 @@ float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-bool OdorType::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool OdorType::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -188,7 +188,7 @@ bool OdorType::SetData(const string &strDataType, const string &strValue, bool b
 	return false;
 }
 
-void OdorType::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OdorType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

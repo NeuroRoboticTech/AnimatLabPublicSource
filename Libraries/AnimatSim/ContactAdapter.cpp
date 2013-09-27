@@ -79,7 +79,7 @@ catch(...)
 
 \return	GUID ID.
 **/
-string ContactAdapter::SourceBodyID() {return m_strSourceBodyID;};
+std::string ContactAdapter::SourceBodyID() {return m_strSourceBodyID;};
 
 /**
 \brief	Sets the GUID ID of the source RigidBody.
@@ -89,17 +89,17 @@ string ContactAdapter::SourceBodyID() {return m_strSourceBodyID;};
 
 \param	strID	GUID ID. 
 **/
-void ContactAdapter::SourceBodyID(string strID)
+void ContactAdapter::SourceBodyID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
 	m_strSourceBodyID = strID;
 }
 
-string ContactAdapter::SourceModule()
+std::string ContactAdapter::SourceModule()
 {return "AnimatLab";}
 
-string ContactAdapter::TargetModule()
+std::string ContactAdapter::TargetModule()
 {return m_strTargetModule;}
 
 /**
@@ -110,7 +110,7 @@ string ContactAdapter::TargetModule()
 
 \param	strModule	The new Target Neuralmodule. 
 **/
-void ContactAdapter::TargetModule(string strModule)
+void ContactAdapter::TargetModule(std::string strModule)
 {
 	if(Std_IsBlank(strModule)) 
 		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, " Target Module");
@@ -118,7 +118,7 @@ void ContactAdapter::TargetModule(string strModule)
 }
 
 
-void ContactAdapter::AddFieldPair(string strXml, bool bDoNotInit)
+void ContactAdapter::AddFieldPair(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -130,15 +130,15 @@ void ContactAdapter::AddFieldPair(string strXml, bool bDoNotInit)
 		lpPair->Initialize();
 }
 
-void ContactAdapter::RemoveFieldPair(string strID, bool bThrowError)
+void ContactAdapter::RemoveFieldPair(std::string strID, bool bThrowError)
 {
 	int iPos = FindFieldPairListPos(strID, bThrowError);
 	m_aryFieldPairs.RemoveAt(iPos);
 }
 
-int ContactAdapter::FindFieldPairListPos(string strID, bool bThrowError)
+int ContactAdapter::FindFieldPairListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryFieldPairs.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -171,9 +171,9 @@ void ContactAdapter::Initialize()
 	}
 }
 
-bool ContactAdapter::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool ContactAdapter::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "FIELDPAIR")
 	{
@@ -188,9 +188,9 @@ bool ContactAdapter::AddItem(const string &strItemType, const string &strXml, bo
 	return false;
 }
 
-bool ContactAdapter::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool ContactAdapter::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "FIELDPAIR")
 	{

@@ -25,19 +25,19 @@ namespace AnimatSim
 		{
 		protected:
 			/// Filename of the output file
-			string m_strOutputFilename;
+			std::string m_strOutputFilename;
 
 			/// The file stream
-			ofstream oStream;
+			std::ofstream oStream;
 
 		public:
 			FileChart();
 			virtual ~FileChart();
 
-			virtual string Type();
+			virtual std::string Type();
 
-			virtual string OutputFilename();
-			virtual void OutputFilename(string strVal);
+			virtual std::string OutputFilename();
+			virtual void OutputFilename(std::string strVal);
 
 			virtual void ResetSimulation();
 			virtual void Initialize();

@@ -90,7 +90,7 @@ void SimulationRecorder::Add(ActivatedItem *lpItem)
 
 \return	Pointer to the new keyframe.
 **/
-KeyFrame *SimulationRecorder::Add(string strType, long lStart, long lEnd)
+KeyFrame *SimulationRecorder::Add(std::string strType, long lStart, long lEnd)
 {
 	KeyFrame *lpFrame = NULL;
 
@@ -158,7 +158,7 @@ void SimulationRecorder::Load(CStdXml &oXml)
 KeyFrame *SimulationRecorder::LoadKeyFrame(CStdXml &oXml)
 {
 	KeyFrame *lpFrame = NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

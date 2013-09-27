@@ -312,7 +312,7 @@ void Structure::AddJoint(Joint *lpJoint)
 \param	strID	ID of the joint to remove
 \exception If ID is not found.
 **/
-void Structure::RemoveJoint(string strID)
+void Structure::RemoveJoint(std::string strID)
 {
 	try
 	{
@@ -369,7 +369,7 @@ void Structure::AddRigidBody(RigidBody *lpBody)
 \param	strID	ID of the body to remove
 \exception If ID is not found.
 **/
-void Structure::RemoveRigidBody(string strID)
+void Structure::RemoveRigidBody(std::string strID)
 {
 	try
 	{
@@ -400,10 +400,10 @@ exception is thrown. If this is false and the ID is not found then NULL is retur
 
 \return	null if it fails and bThrowError is false, else the pointer to the found joint. 
 **/
-Joint *Structure::FindJoint(string strJointID, bool bThrowError)
+Joint *Structure::FindJoint(std::string strJointID, bool bThrowError)
 {
 	Joint *lpJoint = NULL;
-	CStdMap<string, Joint *>::iterator oPos;
+	CStdMap<std::string, Joint *>::iterator oPos;
 	oPos = m_aryJoints.find(Std_CheckString(strJointID));
 
 	if(oPos != m_aryJoints.end())
@@ -432,10 +432,10 @@ exception is thrown. If this is false and the ID is not found then NULL is retur
 
 \return	null if it fails and bThrowError is false, else the pointer to the found rigid body. 
 **/
-RigidBody *Structure::FindRigidBody(string strBodyID, bool bThrowError)
+RigidBody *Structure::FindRigidBody(std::string strBodyID, bool bThrowError)
 {
 	RigidBody *lpBody = NULL;
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	oPos = m_aryRigidBodies.find(Std_CheckString(strBodyID));
 
 	if(oPos != m_aryRigidBodies.end())
@@ -458,7 +458,7 @@ RigidBody *Structure::FindRigidBody(string strBodyID, bool bThrowError)
 
 \return	null if it fails and bThrowError=false, else the found node. 
 **/
-Node *Structure::FindNode(string strID, bool bThrowError)
+Node *Structure::FindNode(std::string strID, bool bThrowError)
 {
 	Node *lpNode = FindRigidBody(strID, false);
 
@@ -484,10 +484,10 @@ void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Neur
 	m_lpMovableSim = lpSim;
 }
 
-float *Structure::GetDataPointer(const string &strDataType)
+float *Structure::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	lpData = MovableItem::GetDataPointer(strDataType);
 	if(lpData)
@@ -498,9 +498,9 @@ float *Structure::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool Structure::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Structure::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -515,15 +515,15 @@ bool Structure::SetData(const string &strDataType, const string &strValue, bool 
 	return false;
 }
 
-void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Structure::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 	MovableItem::QueryProperties(aryNames, aryTypes);
 }
 
-bool Structure::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Structure::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
@@ -538,9 +538,9 @@ bool Structure::AddItem(const string &strItemType, const string &strXml, bool bT
 	return false;
 }
 
-bool Structure::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Structure::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
@@ -567,7 +567,7 @@ body part. It then initializes it and calls CreateParts, and CreateJoints.
 
 \param	strXml	The xml configuration data packet. 
 **/
-void Structure::AddRoot(string strXml)
+void Structure::AddRoot(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -598,7 +598,7 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void Structure::RemoveRoot(string strID, bool bThrowError)
+void Structure::RemoveRoot(std::string strID, bool bThrowError)
 {
 	if(m_lpBody && m_lpBody->ID() == strID)
 	{
@@ -620,7 +620,7 @@ void Structure::RemoveRoot(string strID, bool bThrowError)
 \param	strJointID	GUID ID of the joint. 
 \param	bVal		Enable/disable value. 
 **/
-void Structure::EnableMotor(string strJointID, bool bVal)
+void Structure::EnableMotor(std::string strJointID, bool bVal)
 {
 	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
 	if(lpJoint)
@@ -642,7 +642,7 @@ The velocity will only have any effect if the motor for that joint has been enab
 \param	strJointID	The ID of the joint.
 \param	fltInput	The velocity to set this joint to use.
 **/
-void Structure::SetMotorInput(string strJointID, float fltInput)
+void Structure::SetMotorInput(std::string strJointID, float fltInput)
 {
 	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
 	if(lpJoint)
@@ -664,7 +664,7 @@ rigid bodies in the structure.
 **/
 void Structure::EnableCollision(RigidBody *lpCollisionBody)
 {
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
@@ -687,7 +687,7 @@ rigid bodies in the structure.
 **/
 void Structure::DisableCollision(RigidBody *lpCollisionBody)
 {
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
@@ -771,7 +771,7 @@ void Structure::Load(CStdXml &oXml)
 \param	strID1	GUID ID of the first rigid body in the pair. 
 \param	strID2	GUID ID of the second rigid body in the pair. 
 **/
-void Structure::AddCollisionPair(string strID1, string strID2)
+void Structure::AddCollisionPair(std::string strID1, std::string strID2)
 {
 	CollisionPair *lpPair = new CollisionPair();
 	lpPair->m_strPart1ID = strID1;
@@ -791,7 +791,7 @@ void Structure::AddCollisionPair(string strID1, string strID2)
 void Structure::LoadCollisionPair(CStdXml &oXml)
 {
 	CollisionPair *lpPair = NULL;
-	string strID1, strID2;
+	std::string strID1, strID2;
 
 try
 {
@@ -834,8 +834,8 @@ file.
 
 void Structure::LoadLayout(CStdXml &oXml)
 {
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 
@@ -879,8 +879,8 @@ void Structure::LoadLayout(CStdXml &oXml)
 **/
 RigidBody *Structure::LoadRoot(CStdXml &oXml)
 {
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {

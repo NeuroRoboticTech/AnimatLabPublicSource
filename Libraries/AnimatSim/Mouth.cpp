@@ -101,7 +101,7 @@ void Mouth::MinFoodRadius(float fltVal, bool bUseScaling)
 
 \param	strID	Identifier for the stomach.
 **/
-void Mouth::StomachID(string strID)
+void Mouth::StomachID(std::string strID)
 {
 	SetStomachPointer(strID);
 	m_strStomachID = strID;
@@ -115,7 +115,7 @@ void Mouth::StomachID(string strID)
 
 \return	ID.
 **/
-string Mouth::StomachID() {return m_strStomachID;}
+std::string Mouth::StomachID() {return m_strStomachID;}
 
 /**
 \brief	Sets the stomach pointer.
@@ -125,7 +125,7 @@ string Mouth::StomachID() {return m_strStomachID;}
 
 \param	strID	Identifier for the stomach.
 **/
-void Mouth::SetStomachPointer(string strID)
+void Mouth::SetStomachPointer(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		m_lpStomach = NULL;
@@ -205,9 +205,9 @@ void Mouth::StepSimulation()
 	}
 }
 
-bool Mouth::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Mouth::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Sensor::SetData(strType, strValue, false))
 		return true;
@@ -231,7 +231,7 @@ bool Mouth::SetData(const string &strDataType, const string &strValue, bool bThr
 	return false;
 }
 
-void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Mouth::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Sensor::QueryProperties(aryNames, aryTypes);
 
@@ -242,9 +242,9 @@ void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryT
 	aryTypes.Add("Float");
 }
 
-float *Mouth::GetDataPointer(const string &strDataType)
+float *Mouth::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "EATINGRATE")
 		return &m_fltEatingRate;

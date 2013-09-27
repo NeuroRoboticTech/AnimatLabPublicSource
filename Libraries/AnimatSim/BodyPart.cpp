@@ -160,12 +160,12 @@ void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Neura
 	m_lpMovableSim = lpSim;
 }
 
-float *BodyPart::GetDataPointer(const string &strDataType)
+float *BodyPart::GetDataPointer(const std::string &strDataType)
 {
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-bool BodyPart::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BodyPart::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Node::SetData(strDataType, strValue, false))
 		return true;
@@ -180,7 +180,7 @@ bool BodyPart::SetData(const string &strDataType, const string &strValue, bool b
 	return false;
 }
 
-void BodyPart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BodyPart::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Node::QueryProperties(aryNames, aryTypes);
 	MovableItem::QueryProperties(aryNames, aryTypes);

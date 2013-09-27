@@ -154,7 +154,7 @@ CStdColor *ConstraintLimit::Color() {return &m_vColor;}
 
 \param	strXml	The xml packet to use when loading the new color info. 
 **/
-void ConstraintLimit::Color(string strXml)
+void ConstraintLimit::Color(std::string strXml)
 {
 	m_vColor.Load(strXml, "Color");
 }
@@ -265,9 +265,9 @@ void ConstraintLimit::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *ConstraintLimit::GetDataPointer(const string &strDataType)
+float *ConstraintLimit::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "LIMITPOS")
 		return &m_fltLimitPos;
@@ -277,9 +277,9 @@ float *ConstraintLimit::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool ConstraintLimit::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ConstraintLimit::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -322,7 +322,7 @@ bool ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ConstraintLimit::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -356,7 +356,7 @@ void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<str
 \param [in,out]	oXml	The xml packet to load. 
 \param	strName			Name of the xml element to load in. 
 **/
-void ConstraintLimit::Load(CStdXml &oXml, string strName)
+void ConstraintLimit::Load(CStdXml &oXml, std::string strName)
 {
 	oXml.FindChildElement(strName);
 

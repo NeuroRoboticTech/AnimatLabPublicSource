@@ -83,7 +83,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, false, true);}
 }
 
-string VoltageClamp::Type() {return "VoltageClamp";}
+std::string VoltageClamp::Type() {return "VoltageClamp";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be enabled. 
@@ -93,7 +93,7 @@ string VoltageClamp::Type() {return "VoltageClamp";}
 
 \return	GUID ID of the node. 
 **/
-string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
+std::string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the target node to enable. 
@@ -103,7 +103,7 @@ string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void VoltageClamp::TargetNodeID(string strID)
+void VoltageClamp::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -184,10 +184,10 @@ void VoltageClamp::ResetSimulation()
 	m_fltActiveCurrent = 0;
 }
 
-float *VoltageClamp::GetDataPointer(const string &strDataType)
+float *VoltageClamp::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "CLAMPCURRENT")
 		lpData = &m_fltActiveCurrent;
@@ -197,9 +197,9 @@ float *VoltageClamp::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool VoltageClamp::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VoltageClamp::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -217,7 +217,7 @@ bool VoltageClamp::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void VoltageClamp::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VoltageClamp::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

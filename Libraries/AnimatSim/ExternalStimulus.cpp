@@ -64,9 +64,9 @@ ExternalStimulus::~ExternalStimulus()
 {
 }
 
-bool ExternalStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ExternalStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(ActivatedItem::SetData(strDataType, strValue, bThrowError))
 	{
@@ -86,7 +86,7 @@ bool ExternalStimulus::SetData(const string &strDataType, const string &strValue
 	return false;
 }
 
-void ExternalStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ExternalStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ActivatedItem::QueryProperties(aryNames, aryTypes);
 

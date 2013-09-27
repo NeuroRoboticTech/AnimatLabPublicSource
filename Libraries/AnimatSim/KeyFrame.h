@@ -15,10 +15,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// Full pathname of the string project file
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			/// Filename of the string configuration file
-			string m_strConfigFilename;
+			std::string m_strConfigFilename;
 
 			/// Zero-based index of the collect interval
 			short m_iCollectInterval;
@@ -102,7 +102,7 @@ namespace AnimatSim
 			
 			\param	strPath	Full pathname of the string file. 
 			**/
-			virtual void SaveVideo(string strPath) = 0;
+			virtual void SaveVideo(std::string strPath) = 0;
 
 			/**
 			\brief	Makes the current frame.

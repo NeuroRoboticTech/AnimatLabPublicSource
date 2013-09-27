@@ -192,7 +192,7 @@ void Joint::Relaxation1(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation1(string strXml)
+void Joint::Relaxation1(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -238,7 +238,7 @@ void Joint::Relaxation2(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation2(string strXml)
+void Joint::Relaxation2(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -284,7 +284,7 @@ void Joint::Relaxation3(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation3(string strXml)
+void Joint::Relaxation3(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -330,7 +330,7 @@ void Joint::Relaxation4(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation4(string strXml)
+void Joint::Relaxation4(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -376,7 +376,7 @@ void Joint::Relaxation5(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation5(string strXml)
+void Joint::Relaxation5(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -422,7 +422,7 @@ void Joint::Relaxation6(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation6(string strXml)
+void Joint::Relaxation6(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -468,7 +468,7 @@ void Joint::Friction(ConstraintFriction *lpRelax)
 
 \param	strXml				The xml string with the data to load in the friction. 
 **/
-void Joint::Friction(string strXml)
+void Joint::Friction(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -629,9 +629,9 @@ void Joint::StepSimulation()
 }
 
 
-float *Joint::GetDataPointer(const string &strDataType)
+float *Joint::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -648,9 +648,9 @@ float *Joint::GetDataPointer(const string &strDataType)
 	return BodyPart::GetDataPointer(strDataType);
 }
 
-bool Joint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Joint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(BodyPart::SetData(strType, strValue, false))
 		return true;
@@ -709,7 +709,7 @@ bool Joint::SetData(const string &strDataType, const string &strValue, bool bThr
 	return false;
 }
 
-void Joint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Joint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BodyPart::QueryProperties(aryNames, aryTypes);
 
@@ -827,11 +827,11 @@ void Joint::Load(CStdXml &oXml)
 \exception Throws an exception if there is a problem creating or loading the relaxation.
 
 **/
-ConstraintRelaxation *Joint::LoadConstraintRelaxation(CStdXml &oXml, string strName)
+ConstraintRelaxation *Joint::LoadConstraintRelaxation(CStdXml &oXml, std::string strName)
 {
 	ConstraintRelaxation *lpConstraintRelaxation = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -880,8 +880,8 @@ catch(...)
 ConstraintFriction *Joint::LoadConstraintFriction(CStdXml &oXml)
 {
 	ConstraintFriction *lpConstraintFriction = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {

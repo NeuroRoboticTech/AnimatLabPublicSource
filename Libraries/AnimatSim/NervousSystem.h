@@ -32,7 +32,7 @@ namespace AnimatSim
 			Organism *m_lpOrganism;
 
 			/// The array of neural modules used within this nervous system.
-			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
+			CStdPtrMap<std::string, NeuralModule> m_aryNeuralModules;
 			
 			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
@@ -44,9 +44,9 @@ namespace AnimatSim
 			NervousSystem();
 			virtual ~NervousSystem();
 
-			virtual NeuralModule *FindNeuralModule(string strModuleName, bool bThrowError = true);
-			virtual void AddNeuralModule(string strXml);
-			virtual void RemoveNeuralModule(string strID);
+			virtual NeuralModule *FindNeuralModule(std::string strModuleName, bool bThrowError = true);
+			virtual void AddNeuralModule(std::string strXml);
+			virtual void RemoveNeuralModule(std::string strID);
 
 			virtual void Kill(bool bState = true);
 			virtual void ResetSimulation();

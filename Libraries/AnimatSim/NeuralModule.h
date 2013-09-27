@@ -44,10 +44,10 @@ namespace AnimatSim
 			short m_iTimeStepCount;
 
 			/// Full pathname of the string project file for this module.
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			/// The string neural network file name
-			string m_strNeuralNetworkFile;
+			std::string m_strNeuralNetworkFile;
 
 			/// The pointer to the class factory for this module
 			IStdClassFactory *m_lpClassFactory;
@@ -61,7 +61,7 @@ namespace AnimatSim
 			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
-			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError = true);
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError = true);
 
 		public:
 			NeuralModule();
@@ -75,7 +75,7 @@ namespace AnimatSim
 			
 			\return	Module name.
 			**/
-			virtual string ModuleName() = 0;
+			virtual std::string ModuleName() = 0;
 
 			virtual short TimeStepInterval();
 			virtual void TimeStepInterval(short iVal);
@@ -162,7 +162,7 @@ namespace AnimatSim
 			**/
 			virtual void RemoveTargetAdapter(Adapter *lpAdapter);
 
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual float *GetDataPointer(const std::string &strDataType);
 
 			virtual void Initialize();
 			virtual bool NeedToStep(bool bIncrement);

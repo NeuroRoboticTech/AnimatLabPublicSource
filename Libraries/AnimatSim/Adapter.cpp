@@ -84,7 +84,7 @@ catch(...)
 
 \return	Source NeuralModule name.
 **/
-string Adapter::SourceModule() {return m_strSourceModule;}
+std::string Adapter::SourceModule() {return m_strSourceModule;}
 
 /**
 \brief	Sets the Source NeuralModule name.
@@ -94,7 +94,7 @@ string Adapter::SourceModule() {return m_strSourceModule;}
 
 \param	strName	Name of the source NeuralModule. 
 **/
-void Adapter::SourceModule(string strName)
+void Adapter::SourceModule(std::string strName)
 {
 	if(Std_IsBlank(strName)) 
 		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Source Module. ID: " + strName);
@@ -109,7 +109,7 @@ void Adapter::SourceModule(string strName)
 
 \return	GUID ID of the source node.
 **/
-string Adapter::SourceID() {return m_strSourceID;}
+std::string Adapter::SourceID() {return m_strSourceID;}
 
 /**
 \brief	Sets the GUID ID of the Source node.
@@ -119,7 +119,7 @@ string Adapter::SourceID() {return m_strSourceID;}
 
 \param	strID	GUID ID for the source node. 
 **/
-void Adapter::SourceID(string strID)
+void Adapter::SourceID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source ID");
@@ -134,7 +134,7 @@ void Adapter::SourceID(string strID)
 
 \return	Source data type.
 **/
-string Adapter::SourceDataType() {return m_strSourceDataType;}
+std::string Adapter::SourceDataType() {return m_strSourceDataType;}
 
 /**
 \brief	Sets the source data type.
@@ -144,7 +144,7 @@ string Adapter::SourceDataType() {return m_strSourceDataType;}
 
 \param	strType	Source DataType. 
 **/
-void Adapter::SourceDataType(string strType)
+void Adapter::SourceDataType(std::string strType)
 {
 	if(Std_IsBlank(strType)) 
 		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source DataType");
@@ -169,7 +169,7 @@ Node *Adapter::SourceNode() {return m_lpSourceNode;}
 
 \return	Target NeuralModule name.
 **/
-string Adapter::TargetModule() {return m_strTargetModule;}
+std::string Adapter::TargetModule() {return m_strTargetModule;}
 
 /**
 \brief	Sets the target NeuralModule name.
@@ -179,7 +179,7 @@ string Adapter::TargetModule() {return m_strTargetModule;}
 
 \param	strName	Name of the target NeuralModule. 
 **/
-void Adapter::TargetModule(string strName)
+void Adapter::TargetModule(std::string strName)
 {
 	if(Std_IsBlank(strName)) 
 		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Target Module. ID: " + strName);
@@ -194,7 +194,7 @@ void Adapter::TargetModule(string strName)
 
 \return	GUID ID of the target node.
 **/
-string Adapter::TargetID() {return m_strTargetID;}
+std::string Adapter::TargetID() {return m_strTargetID;}
 
 
 /**
@@ -205,7 +205,7 @@ string Adapter::TargetID() {return m_strTargetID;}
 
 \param	strID	GUID ID for the target node. 
 **/
-void Adapter::TargetID(string strID)
+void Adapter::TargetID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target ID");
@@ -220,7 +220,7 @@ void Adapter::TargetID(string strID)
 
 \return	Target data type.
 **/
-string Adapter::TargetDataType() {return m_strTargetDataType;}
+std::string Adapter::TargetDataType() {return m_strTargetDataType;}
 
 /**
 \brief	Sets the target data type.
@@ -230,7 +230,7 @@ string Adapter::TargetDataType() {return m_strTargetDataType;}
 
 \param	strType	Target DataType. 
 **/
-void Adapter::TargetDataType(string strType)
+void Adapter::TargetDataType(std::string strType)
 {
 	if(Std_IsBlank(strType)) 
 		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target DataType");
@@ -283,9 +283,9 @@ void Adapter::AddExternalNodeInput(float fltInput)
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
 }
 
-float *Adapter::GetDataPointer(const string &strDataType)
+float *Adapter::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -303,7 +303,7 @@ float *Adapter::GetDataPointer(const string &strDataType)
 
 \param	strXml	The xml data packet for loading the gain. 
 **/
-void Adapter::AddGain(string strXml)
+void Adapter::AddGain(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -313,7 +313,7 @@ void Adapter::AddGain(string strXml)
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 }
 
-void Adapter::SetOriginID(string strXml)
+void Adapter::SetOriginID(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -336,7 +336,7 @@ void Adapter::SetOriginID(string strXml)
 	Initialize();
 }
 
-void Adapter::SetDestinationID(string strXml)
+void Adapter::SetDestinationID(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -358,9 +358,9 @@ void Adapter::SetDestinationID(string strXml)
 	Initialize();
 }
 
-bool Adapter::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Adapter::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Node::SetData(strDataType, strValue, false))
 		return true;
@@ -390,7 +390,7 @@ bool Adapter::SetData(const string &strDataType, const string &strValue, bool bT
 	return false;
 }
 
-void Adapter::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Adapter::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Node::QueryProperties(aryNames, aryTypes);
 

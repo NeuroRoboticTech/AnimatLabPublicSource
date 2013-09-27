@@ -114,9 +114,9 @@ catch(...)
 
 \return	Stimulus type string descriptor. 
 **/
-string CurrentStimulus::Type() {return "CurrentStimulus";}
+std::string CurrentStimulus::Type() {return "CurrentStimulus";}
 
-void CurrentStimulus::Type(string strType)
+void CurrentStimulus::Type(std::string strType)
 {
 	m_strType = Std_ToUpper(Std_Trim(strType));
 	if(m_strType == "TONIC")
@@ -315,7 +315,7 @@ void CurrentStimulus::BurstOffDuration(float fltVal)
 
 \return	. 
 **/
-string CurrentStimulus::TargetNodeID() {return m_strTargetNodeID;}
+std::string CurrentStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the node that will be stimulated. 
@@ -325,7 +325,7 @@ string CurrentStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	Identifier for the string. 
 **/
-void CurrentStimulus::TargetNodeID(string strID)
+void CurrentStimulus::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		THROW_PARAM_ERROR(Al_Err_lInvalidCurrentType, Al_Err_strInvalidCurrentType, "ID", strID);
@@ -341,7 +341,7 @@ If one is specified then that equation is used during the cycle on times.
 
 \return	. 
 **/
-string CurrentStimulus::CurrentEquation() {return m_strCurrentEquation;}
+std::string CurrentStimulus::CurrentEquation() {return m_strCurrentEquation;}
 
 /**
 \brief	Sets the postfix current equation to use. If this is blank then the 
@@ -353,7 +353,7 @@ used during the cycle on periods.
 
 \param	strEquation	The post-fix string equation. 
 **/
-void CurrentStimulus::CurrentEquation(string strEquation)
+void CurrentStimulus::CurrentEquation(std::string strEquation)
 {
 	m_strCurrentEquation = strEquation;
 
@@ -517,10 +517,10 @@ void CurrentStimulus::ResetSimulation()
 	m_fltActiveCurrent = m_fltInitialActiveCurrent;
 }
 
-float *CurrentStimulus::GetDataPointer(const string &strDataType)
+float *CurrentStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "ACTIVECURRENT")
 		lpData = &m_fltActiveCurrent;
@@ -530,9 +530,9 @@ float *CurrentStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool CurrentStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool CurrentStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -592,7 +592,7 @@ bool CurrentStimulus::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void CurrentStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void CurrentStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

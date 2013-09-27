@@ -43,9 +43,9 @@ namespace AnimatSim
 
 			void DumpVertices(CStdPtrArray<ReceptiveField> &aryFields);
 
-			virtual void AddReceptiveField(string strXml);
-			virtual void RemoveReceptiveField(string strID, bool bThrowError = true);
-			virtual int FindReceptiveFieldListPos(string strID, bool bThrowError = true);
+			virtual void AddReceptiveField(std::string strXml);
+			virtual void RemoveReceptiveField(std::string strID, bool bThrowError = true);
+			virtual int FindReceptiveFieldListPos(std::string strID, bool bThrowError = true);
 
 		public:
 			ContactSensor();
@@ -63,8 +63,8 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

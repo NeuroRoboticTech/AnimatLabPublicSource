@@ -72,7 +72,7 @@ OdorSensor::~OdorSensor()
 
 \param	strID	Identifier for the odor type.
 **/
-void OdorSensor::OdorTypeID(string strID)
+void OdorSensor::OdorTypeID(std::string strID)
 {
 	SetOdorTypePointer(strID);
 	m_strOdorTypeID = strID;
@@ -86,7 +86,7 @@ void OdorSensor::OdorTypeID(string strID)
 
 \return	ID.
 **/
-string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
+std::string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
 
 /**
 \brief	Sets the odor type pointer.
@@ -96,7 +96,7 @@ string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
 
 \param	strID	Identifier for the odor type.
 **/
-void OdorSensor::SetOdorTypePointer(string strID)
+void OdorSensor::SetOdorTypePointer(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		m_lpOdorType = NULL;
@@ -113,9 +113,9 @@ void OdorSensor::ResetSimulation()
 	m_fltOdorValue = 0;
 }
 
-bool OdorSensor::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool OdorSensor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Sensor::SetData(strType, strValue, false))
 		return true;
@@ -133,7 +133,7 @@ bool OdorSensor::SetData(const string &strDataType, const string &strValue, bool
 	return false;
 }
 
-void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OdorSensor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Sensor::QueryProperties(aryNames, aryTypes);
 
@@ -141,9 +141,9 @@ void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 	aryTypes.Add("String");
 }
 
-float *OdorSensor::GetDataPointer(const string &strDataType)
+float *OdorSensor::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "ODORVALUE")
 		return &m_fltOdorValue;

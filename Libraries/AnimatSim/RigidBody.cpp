@@ -195,7 +195,7 @@ reset the local position using an xml data packet. If COM is (0,0,0) then it is 
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::CenterOfMass(string strXml, bool bUseScaling)
+void RigidBody::CenterOfMass(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -638,7 +638,7 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 
 \return	. 
 **/
-string RigidBody::MaterialID() {return m_strMaterialID;}
+std::string RigidBody::MaterialID() {return m_strMaterialID;}
 
 /**
 \brief	Sets the Material ID for this part. 
@@ -653,7 +653,7 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 
 \param	strID	ID of the material to use. 
 **/
-void RigidBody::MaterialID(string strID) 
+void RigidBody::MaterialID(std::string strID) 
 {
 	m_strMaterialID = Std_ToUpper(strID);
 
@@ -721,7 +721,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::BuoyancyCenter(string strXml, bool bUseScaling)
+void RigidBody::BuoyancyCenter(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -813,7 +813,7 @@ reset the local position using an xml data packet.
 
 \param	strXml				The xml string with the data to load in the position. 
 **/
-void RigidBody::Drag(string strXml)
+void RigidBody::Drag(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1054,7 +1054,7 @@ void RigidBody::DisableCollision(RigidBody *lpBody)
 **/
 bool RigidBody::FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError)
 {
-    unordered_set<RigidBody *>::iterator oPos;
+    std::unordered_set<RigidBody *>::iterator oPos;
     oPos = m_aryExcludeCollisionSet.find(lpBody);
 
 	if(oPos != m_aryExcludeCollisionSet.end())
@@ -1216,9 +1216,9 @@ void RigidBody::StepSimulation()
 
 #pragma region DataAccesMethods
 
-float *RigidBody::GetDataPointer(const string &strDataType)
+float *RigidBody::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "FOODQUANTITY")
 		return &m_fltFoodQuantity;
@@ -1251,9 +1251,9 @@ float *RigidBody::GetDataPointer(const string &strDataType)
 }
 
 
-bool RigidBody::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool RigidBody::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(BodyPart::SetData(strType, strValue, false))
 		return true;
@@ -1367,7 +1367,7 @@ bool RigidBody::SetData(const string &strDataType, const string &strValue, bool 
 	return false;
 }
 
-void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void RigidBody::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BodyPart::QueryProperties(aryNames, aryTypes);
 
@@ -1423,9 +1423,9 @@ void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("String");
 }
 
-bool RigidBody::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool RigidBody::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
@@ -1452,9 +1452,9 @@ bool RigidBody::AddItem(const string &strItemType, const string &strXml, bool bT
 	return false;
 }
 
-bool RigidBody::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool RigidBody::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
@@ -1489,7 +1489,7 @@ bool RigidBody::RemoveItem(const string &strItemType, const string &strID, bool 
 
 \param	strXml	The xml data packet for loading the body. 
 **/
-void RigidBody::AddRigidBody(string strXml)
+void RigidBody::AddRigidBody(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1517,7 +1517,7 @@ void RigidBody::AddRigidBody(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void RigidBody::RemoveRigidBody(string strID, bool bThrowError)
+void RigidBody::RemoveRigidBody(std::string strID, bool bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
 	m_aryChildParts.RemoveAt(iPos);
@@ -1537,9 +1537,9 @@ void RigidBody::RemoveRigidBody(string strID, bool bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int RigidBody::FindChildListPos(string strID, bool bThrowError)
+int RigidBody::FindChildListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1560,7 +1560,7 @@ int RigidBody::FindChildListPos(string strID, bool bThrowError)
 
 \param	strXml	The xml data packet for loading the body. 
 **/
-void RigidBody::AddContactSensor(string strXml)
+void RigidBody::AddContactSensor(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1583,7 +1583,7 @@ void RigidBody::AddContactSensor(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void RigidBody::RemoveContactSensor(string strID, bool bThrowError)
+void RigidBody::RemoveContactSensor(std::string strID, bool bThrowError)
 {
 	if(m_lpContactSensor)
 	{
@@ -1747,12 +1747,12 @@ void RigidBody::LoadContactSensor(CStdXml &oXml)
 RigidBody *RigidBody::LoadRigidBody(CStdXml &oXml)
 {
 	RigidBody *lpChild = NULL;
-	string strType;
+	std::string strType;
 
 try
 {
 	oXml.IntoElem(); //Into Child Element
-	string strModule = oXml.GetChildString("ModuleName", "");
+	std::string strModule = oXml.GetChildString("ModuleName", "");
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
@@ -1797,13 +1797,13 @@ catch(...)
 
 Joint *RigidBody::LoadJoint(CStdXml &oXml)
 {
-	string strType;
+	std::string strType;
 
 try
 {
 	oXml.IntoChildElement("Joint"); //Into Joint Element
-	string strModule = oXml.GetChildString("ModuleName", "");
-	string strJointType = oXml.GetChildString("Type");
+	std::string strModule = oXml.GetChildString("ModuleName", "");
+	std::string strJointType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Joint Element
 
 	m_lpJointToParent = dynamic_cast<Joint *>(m_lpSim->CreateObject(strModule, "Joint", strJointType));
@@ -1863,7 +1863,7 @@ void RigidBody::AddOdor(Odor *lpOdor)
 }
 
 
-void RigidBody::AddOdor(string strXml, bool bDoNotInit)
+void RigidBody::AddOdor(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1876,7 +1876,7 @@ void RigidBody::AddOdor(string strXml, bool bDoNotInit)
 		lpOdor->Initialize();
 }
 
-void RigidBody::RemoveOdor(string strID, bool bThrowError)
+void RigidBody::RemoveOdor(std::string strID, bool bThrowError)
 {
 	m_aryOdorSources.Remove(strID);
 }

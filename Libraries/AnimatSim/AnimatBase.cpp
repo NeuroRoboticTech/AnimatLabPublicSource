@@ -140,7 +140,7 @@ Node *AnimatBase::GetNode() {return m_lpNode;}
 		
 \return	string ID GUID. 
 **/
-string AnimatBase::ID() {return m_strID;}
+std::string AnimatBase::ID() {return m_strID;}
 
 /**
 \brief	Sets the unique GUID ID of the object.
@@ -152,7 +152,7 @@ string AnimatBase::ID() {return m_strID;}
 
 \param	strID	new ID string value. 
 **/
-void AnimatBase::ID(string strID) 
+void AnimatBase::ID(std::string strID) 
 {
 	if(Std_IsBlank(strID))
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
@@ -168,7 +168,7 @@ void AnimatBase::ID(string strID)
 
 \return	string name. 
 **/
-string AnimatBase::Name() {return m_strName;}
+std::string AnimatBase::Name() {return m_strName;}
 
 /**
 \brief	Sets the name of the object. Blank is acceptable. 
@@ -178,7 +178,7 @@ string AnimatBase::Name() {return m_strName;}
 
 \param	strValue	The name value. 
 **/
-void AnimatBase::Name(string strValue) {m_strName = strValue;}
+void AnimatBase::Name(std::string strValue) {m_strName = strValue;}
 
 /**
 \brief	returns the string type name of this object.
@@ -194,7 +194,7 @@ not mandatory and can be used how the class developer requires.
 
 \return	string of assigned class type. 
 **/
-string AnimatBase::Type() {return m_strType;}
+std::string AnimatBase::Type() {return m_strType;}
 
 /**
 \brief	Sets the class type for this object. 
@@ -204,7 +204,7 @@ string AnimatBase::Type() {return m_strType;}
 
 \param	strValue	The string value. 
 **/
-void AnimatBase::Type(string strValue) {m_strType = strValue;}
+void AnimatBase::Type(std::string strValue) {m_strType = strValue;}
 
 /**
 \brief	Tells if this items is selected or not.
@@ -297,7 +297,7 @@ array.
 \return	float pointer of the data item. If not found then it throws an exception. 
 \exception	If	DataType is not found. 
 **/
-float *AnimatBase::GetDataPointer(const string &strDataType)
+float *AnimatBase::GetDataPointer(const std::string &strDataType)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
@@ -328,7 +328,7 @@ developers responsibilty to know what type of data is needed and to process it a
 
 \return	true if it succeeds, false if it fails. 
 **/
-bool AnimatBase::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool AnimatBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(strDataType == "NAME")
 	{
@@ -363,7 +363,7 @@ are Boolean, Float, Integer, and Xml.
 
 \return	Nothing. 
 **/
-void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void AnimatBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	aryNames.Add("Name");
 	aryTypes.Add("String");
@@ -381,12 +381,12 @@ void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 
 \return	True if a property with that exact name is found. Capilalization is not important. 
 **/
-bool AnimatBase::HasProperty(const string &strName)
+bool AnimatBase::HasProperty(const std::string &strName)
 {
-	CStdArray<string> aryNames, aryTypes;
+	CStdArray<std::string> aryNames, aryTypes;
 	QueryProperties(aryNames, aryTypes);
 
-	string strCheck = Std_CheckString(strName);
+	std::string strCheck = Std_CheckString(strName);
 	int iCount = aryNames.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		if(Std_CheckString(aryNames[iIdx]) == strCheck)
@@ -396,17 +396,17 @@ bool AnimatBase::HasProperty(const string &strName)
 }
 
 
-AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const string &strName)
+AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const std::string &strName)
 {
-	CStdArray<string> aryNames, aryTypes;
+	CStdArray<std::string> aryNames, aryTypes;
 	QueryProperties(aryNames, aryTypes);
 
-	string strCheck = Std_CheckString(strName);
+	std::string strCheck = Std_CheckString(strName);
 	int iCount = aryNames.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		if(Std_CheckString(aryNames[iIdx]) == strCheck)
 		{
-			string strType = Std_CheckString(aryTypes[iIdx]);
+			std::string strType = Std_CheckString(aryTypes[iIdx]);
 			if(strType == "BOOLEAN")
 				return AnimatBase::AnimatPropertyType::Boolean;
 			else if(strType == "INTEGER")
@@ -444,7 +444,7 @@ needed initialization and adds it to the parent.
 
 \return	true if it succeeds, false if it fails. 
 **/
-bool AnimatBase::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool AnimatBase::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
@@ -469,7 +469,7 @@ part, etc.. The ID is then used to delete that specific item.
 
 \return	true if it succeeds, false if it fails. 
 **/
-bool AnimatBase::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool AnimatBase::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)

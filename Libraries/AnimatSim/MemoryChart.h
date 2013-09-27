@@ -34,7 +34,7 @@ namespace AnimatSim
 			MemoryChart();
 			virtual ~MemoryChart();
 
-			virtual string Type();
+			virtual std::string Type();
 
 			virtual bool Lock();
 			virtual void Unlock();

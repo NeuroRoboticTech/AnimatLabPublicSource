@@ -63,9 +63,9 @@ LinearJoint::~LinearJoint()
 
 }
 
-void LinearJoint::LinearType(string strType)
+void LinearJoint::LinearType(std::string strType)
 {
-	string strTP = Std_ToUpper(Std_Trim(strType));
+	std::string strTP = Std_ToUpper(Std_Trim(strType));
 
 	if(strTP == "LINEAR1D")
 		LinearType(0);
@@ -95,9 +95,9 @@ float  LinearJoint::CylinderHeight()  {return m_fltSize;}
 
 #pragma region DataAccesMethods
 
-bool LinearJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool LinearJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Joint::SetData(strType, strValue, false))
 		return true;
@@ -115,7 +115,7 @@ bool LinearJoint::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void LinearJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LinearJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Joint::QueryProperties(aryNames, aryTypes);
 

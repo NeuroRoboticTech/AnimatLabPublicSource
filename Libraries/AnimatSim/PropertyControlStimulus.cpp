@@ -79,7 +79,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlStimulus\r\n", "", -1, false, true);}
 }
 
-string PropertyControlStimulus::Type() {return "PropertyControlStimulus";}
+std::string PropertyControlStimulus::Type() {return "PropertyControlStimulus";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be enabled. 
@@ -89,7 +89,7 @@ string PropertyControlStimulus::Type() {return "PropertyControlStimulus";}
 
 \return	GUID ID of the node. 
 **/
-string PropertyControlStimulus::TargetID() {return m_strTargetID;}
+std::string PropertyControlStimulus::TargetID() {return m_strTargetID;}
 
 /**
 \brief	Sets the GUID ID of the target node to enable. 
@@ -99,7 +99,7 @@ string PropertyControlStimulus::TargetID() {return m_strTargetID;}
 
 \param	strID	GUID ID. 
 **/
-void PropertyControlStimulus::TargetID(string strID)
+void PropertyControlStimulus::TargetID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -122,7 +122,7 @@ void PropertyControlStimulus::TargetID(string strID)
 
 \param	strVal	The post-fix velocity equation string. 
 **/
-void PropertyControlStimulus::Equation(string strVal)
+void PropertyControlStimulus::Equation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -144,7 +144,7 @@ void PropertyControlStimulus::Equation(string strVal)
 
 \return	nothing.
 **/
-void PropertyControlStimulus::PropertyName(string strPropName)
+void PropertyControlStimulus::PropertyName(std::string strPropName)
 {
 	//Reset the property name so we can get the property type setup correctly.
 	//If it is not set then we need to assume that they will set it later.
@@ -177,7 +177,7 @@ void PropertyControlStimulus::PropertyName(string strPropName)
 
 \return	Name of property that will be set.
 **/
-string PropertyControlStimulus::PropertyName() 
+std::string PropertyControlStimulus::PropertyName() 
 {return m_strPropertyName;}
 
 /**
@@ -361,9 +361,9 @@ void PropertyControlStimulus::Deactivate()
 	}
 }
 
-bool PropertyControlStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool PropertyControlStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -411,7 +411,7 @@ bool PropertyControlStimulus::SetData(const string &strDataType, const string &s
 	return false;
 }
 
-void PropertyControlStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PropertyControlStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

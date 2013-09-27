@@ -49,13 +49,13 @@ namespace AnimatSim
 		Node *m_lpNode; 
 
 		///The unique Id for this object. 
-		string m_strID;  
+		std::string m_strID;  
 
 		///The type for this object. Examples are Box, Plane, Neuron, etc.. 
-		string m_strType;  
+		std::string m_strType;  
 
 		///The name for this object. 
-		string m_strName;  
+		std::string m_strName;  
 
 		///Tells whether the object is selected or not
 		bool m_bSelected;
@@ -69,14 +69,14 @@ namespace AnimatSim
 		virtual NeuralModule *GetNeuralModule();
 		virtual Node *GetNode();
 
-		virtual string ID() ;
-		virtual void ID(string strValue);
+		virtual std::string ID() ;
+		virtual void ID(std::string strValue);
 
-		virtual string Name();
-		virtual void Name(string strValue);
+		virtual std::string Name();
+		virtual void Name(std::string strValue);
 
-		virtual string Type();
-		virtual void Type(string strValue);
+		virtual std::string Type();
+		virtual void Type(std::string strValue);
 
 		virtual bool Selected();
 		virtual void Selected(bool bValue, bool bSelectMultiple);
@@ -117,13 +117,13 @@ namespace AnimatSim
 		**/
 		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 		virtual void VerifySystemPointers();
-		virtual float *GetDataPointer(const string &strDataType);
-		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual bool HasProperty(const string &strName);
-		virtual AnimatPropertyType PropertyType(const string &strName);
-		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+		virtual float *GetDataPointer(const std::string &strDataType);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+		virtual bool HasProperty(const std::string &strName);
+		virtual AnimatPropertyType PropertyType(const std::string &strName);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

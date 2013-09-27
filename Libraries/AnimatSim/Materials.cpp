@@ -69,7 +69,7 @@ void Materials::Reset()
 
 \param	strXml	The xml data packet for loading the type. 
 **/
-void Materials::AddMaterialType(string strXml, bool bDoNotInit)
+void Materials::AddMaterialType(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -94,7 +94,7 @@ void Materials::AddMaterialType(string strXml, bool bDoNotInit)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void Materials::RemoveMaterialType(string strID, bool bThrowError)
+void Materials::RemoveMaterialType(std::string strID, bool bThrowError)
 {
 	int iPos = FindTypeListPos(strID, bThrowError);
 	m_aryMaterialTypes.RemoveAt(iPos);
@@ -114,9 +114,9 @@ void Materials::RemoveMaterialType(string strID, bool bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int Materials::FindTypeListPos(string strID, bool bThrowError)
+int Materials::FindTypeListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryMaterialTypes.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -146,9 +146,9 @@ void Materials::Initialize()
 	}
 }
 
-bool Materials::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Materials::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "MATERIALTYPE")
 	{
@@ -163,9 +163,9 @@ bool Materials::AddItem(const string &strItemType, const string &strXml, bool bT
 	return false;
 }
 
-bool Materials::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Materials::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "MATERIALTYPE")
 	{
@@ -201,7 +201,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 	oXml.FindChildElement("MaterialTypes");
 	oXml.IntoElem(); //Into MaterialsTypes Element
 
-	string strMaterial;
+	std::string strMaterial;
 	MaterialType *lpItem = NULL;
 	bool bDefaultFound = false;
 	int iCount = oXml.NumberOfChildren();
@@ -242,7 +242,7 @@ void Materials::Load(CStdXml &oXml)
 MaterialType *Materials::LoadMaterialType(CStdXml &oXml)
 {
 	MaterialType *lpItem=NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

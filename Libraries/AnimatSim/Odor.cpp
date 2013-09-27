@@ -110,7 +110,7 @@ void Odor::Enabled(bool bVal)
 
 \param	strType	OdorType ID. 
 **/
-void Odor::SetOdorType(string strType)
+void Odor::SetOdorType(std::string strType)
 {
 	//Now lets find the odor type for this odor and add this one to it.
 	m_lpOdorType = m_lpSim->FindOdorType(strType);
@@ -209,9 +209,9 @@ float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-bool Odor::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Odor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -241,7 +241,7 @@ bool Odor::SetData(const string &strDataType, const string &strValue, bool bThro
 	return false;
 }
 
-void Odor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Odor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

@@ -35,12 +35,12 @@ namespace AnimatSim
 		///The ID of the structure that the camera should look at initially. If this
 		///is blank or missing then the camera looks in its default direction. If 
 		///m_bTrackCamera is true then it will follow the structure identfied here.
-		string m_strLookAtStructureID;
+		std::string m_strLookAtStructureID;
 
 		///The ID of the body item within the structure that the camera should look at initially. If this
 		///is blank or missing then the camera looks in its default direction. If 
 		///m_bTrackCamera is true then it will follow the structure identfied here.
-		string m_strLookAtBodyID;
+		std::string m_strLookAtBodyID;
 
 		///If this is true then the camera will update its position and orientation so
 		///that it stays focues on the structure specified by the m_strLookAtID element.
@@ -61,11 +61,11 @@ namespace AnimatSim
 		SimulationWindow(HWND win);
 		~SimulationWindow(void);
 
-		virtual void LookAtStructureID(string strID);
-		virtual string LookAtStructureID();
+		virtual void LookAtStructureID(std::string strID);
+		virtual std::string LookAtStructureID();
 
-		virtual void LookAtBodyID(string strID);
-		virtual string LookAtBodyID();
+		virtual void LookAtBodyID(std::string strID);
+		virtual std::string LookAtBodyID();
 
 		virtual void UsingTrackCamera(bool bVal);
 		virtual bool UsingTrackCamera();
@@ -85,7 +85,7 @@ namespace AnimatSim
 		\date	3/24/2011
 		**/
 		virtual void SetupTrackCamera(bool bResetEyePos) = 0;
-		virtual void SetupTrackCamera(bool bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
+		virtual void SetupTrackCamera(bool bTrackCamera, std::string strLookAtStructureID, std::string strLookAtBodyID);
 		virtual void SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos);
 		virtual void SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);
@@ -94,9 +94,9 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 #pragma endregion
 
@@ -126,7 +126,7 @@ namespace AnimatSim
 		
 		\param	strXml	The xml string to load. 
 		**/
-		virtual void Load(string strXml);
+		virtual void Load(std::string strXml);
 
 		/**
 		\brief	Called by the GUI when this window gets the focus.

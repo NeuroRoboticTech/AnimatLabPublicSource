@@ -136,7 +136,7 @@ float PolynomialGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }	
 
-bool PolynomialGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool PolynomialGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -172,7 +172,7 @@ bool PolynomialGain::SetData(const string &strDataType, const string &strValue, 
 	return false;
 }
 
-void PolynomialGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PolynomialGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

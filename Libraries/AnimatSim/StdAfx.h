@@ -28,10 +28,7 @@
 //	#define STD_TRACE_DETAIL
 //#endif
 
-//#include "NeuralLibrary.h"
 #include "StdUtils.h"
-using namespace std;
-
 #include "AnimatConstants.h"
 #include "AnimatUtils.h"
 

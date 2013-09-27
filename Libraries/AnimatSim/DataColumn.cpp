@@ -78,7 +78,7 @@ DataColumn::~DataColumn()
 int DataColumn::ColumnCount()
 {return 1;}
 
-void DataColumn::Name(string strValue) 
+void DataColumn::Name(std::string strValue) 
 {
 	if(Std_IsBlank(strValue)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: ColumnName");
@@ -93,7 +93,7 @@ void DataColumn::Name(string strValue)
 
 \return	name of the data type to collect.
 **/
-string DataColumn::DataType() {return m_strDataType;}
+std::string DataColumn::DataType() {return m_strDataType;}
 
 /**
 \brief	Sets the Data type of the variable we are collecting. This is the value passed into GetDataPointer.
@@ -103,7 +103,7 @@ string DataColumn::DataType() {return m_strDataType;}
 
 \param	strType	Data Type of the data to collect. 
 **/
-void DataColumn::DataType(string strType)
+void DataColumn::DataType(std::string strType)
 {
 	if(Std_IsBlank(strType)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: DataType");
@@ -119,7 +119,7 @@ void DataColumn::DataType(string strType)
 
 \return	ID of item to chart.
 **/
-string DataColumn::TargetID() {return m_strTargetID;}
+std::string DataColumn::TargetID() {return m_strTargetID;}
 
 /**
 \brief	Sets the GUID ID of teh item to chart.
@@ -129,7 +129,7 @@ string DataColumn::TargetID() {return m_strTargetID;}
 
 \param	strID	ID of the item to chart. 
 **/
-void DataColumn::TargetID(string strID)
+void DataColumn::TargetID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: TargetID");
@@ -258,9 +258,9 @@ void DataColumn::ReInitialize()
 		Initialize();
 }
 
-bool DataColumn::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool DataColumn::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -285,7 +285,7 @@ bool DataColumn::SetData(const string &strDataType, const string &strValue, bool
 	return false;
 }
 
-void DataColumn::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void DataColumn::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -304,7 +304,7 @@ void DataColumn::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 
 \param [in,out]	oStream	The file stream. 
 **/
-void DataColumn::SaveColumnNames(ofstream &oStream)
+void DataColumn::SaveColumnNames(std::ofstream &oStream)
 {
 	oStream << m_strName;
 

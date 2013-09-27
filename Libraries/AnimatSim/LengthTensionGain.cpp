@@ -155,7 +155,7 @@ float LengthTensionGain::SeRestLength() {return m_fltSeRestLength;}
 **/
 float LengthTensionGain::MinPeLength() {return m_fltMinPeLength;}
 
-bool LengthTensionGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool LengthTensionGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -191,7 +191,7 @@ bool LengthTensionGain::SetData(const string &strDataType, const string &strValu
 	return false;
 }
 
-void LengthTensionGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LengthTensionGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

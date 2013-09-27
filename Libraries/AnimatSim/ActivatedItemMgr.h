@@ -37,17 +37,17 @@ namespace AnimatSim
 		/// This allows us to easily find any ActivatedItem based on its ID. The pointers in this 
 		/// list are a duplicate of the ones in m_aryItems. They are <b>NOT</b> deleted when the list
 		/// is destroyed.
-		CStdPtrMap<string, ActivatedItem> m_aryItemsMap;
+		CStdPtrMap<std::string, ActivatedItem> m_aryItemsMap;
 
 	public:
 		ActivatedItemMgr();
 		virtual ~ActivatedItemMgr();
 
 		virtual void Add(ActivatedItem *lpItem);
-		virtual void Remove(string strID, bool bThrowError = true);
-		virtual ActivatedItem *Find(string strID, int &iIndex, bool bThrowError);
-		virtual ActivatedItem *Find(string strID, bool bThrowError = true);
-		virtual int FindListPos(string strID, bool bThrowError = true);
+		virtual void Remove(std::string strID, bool bThrowError = true);
+		virtual ActivatedItem *Find(std::string strID, int &iIndex, bool bThrowError);
+		virtual ActivatedItem *Find(std::string strID, bool bThrowError = true);
+		virtual int FindListPos(std::string strID, bool bThrowError = true);
 
 		virtual void Reset();
 		virtual void Initialize();

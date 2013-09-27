@@ -76,7 +76,7 @@ ExternalStimuliMgr::~ExternalStimuliMgr()
 
 \return	true if it succeeds, false if it fails. 
 **/
-bool ExternalStimuliMgr::AddStimulus(string strXml)
+bool ExternalStimuliMgr::AddStimulus(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -98,13 +98,13 @@ bool ExternalStimuliMgr::AddStimulus(string strXml)
 
 \return	true if it succeeds, false if it fails. 
 **/
-bool ExternalStimuliMgr::RemoveStimulus(string strID)
+bool ExternalStimuliMgr::RemoveStimulus(std::string strID)
 {
 	Remove(strID);
 	return true;
 }
 /*
-void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
+void ExternalStimuliMgr::Load(std::string strProjectPath, std::string strFileName)
 {
 	CStdXml oXml;
 
@@ -156,7 +156,7 @@ void ExternalStimuliMgr::Load(CStdXml &oXml)
 ExternalStimulus *ExternalStimuliMgr::LoadExternalStimuli(CStdXml &oXml)
 {
 	ExternalStimulus *lpStimulus = NULL;
-	string strModuleName, strType, strFilename;
+	std::string strModuleName, strType, strFilename;
 
 try
 {

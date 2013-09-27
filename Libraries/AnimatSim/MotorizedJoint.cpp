@@ -360,9 +360,9 @@ void MotorizedJoint::ResetSimulation()
 	EnableMotor(m_bEnableMotorInit);
 }
 
-bool MotorizedJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool MotorizedJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Joint::SetData(strType, strValue, false))
 		return true;
@@ -404,7 +404,7 @@ bool MotorizedJoint::SetData(const string &strDataType, const string &strValue, 
 	return false;
 }
 
-void MotorizedJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MotorizedJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Joint::QueryProperties(aryNames, aryTypes);
 

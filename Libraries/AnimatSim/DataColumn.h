@@ -25,10 +25,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the target object that contains the variable we will be collecting.
-			string m_strTargetID;
+			std::string m_strTargetID;
 
 			/// The Data type of the variable we will be collecting. This is passed into the GetDataPointer method of the object.
-			string m_strDataType;
+			std::string m_strDataType;
 
 			/// Pointer to the parent DataChart.
 			DataChart *m_lpChart;
@@ -60,13 +60,13 @@ namespace AnimatSim
 
 			virtual int ColumnCount();
 
-			virtual void Name(string strValue);
+			virtual void Name(std::string strValue);
 
-			virtual string DataType();
-			virtual void DataType(string strType);
+			virtual std::string DataType();
+			virtual void DataType(std::string strType);
 
-			virtual string TargetID();
-			virtual void TargetID(string strID);
+			virtual std::string TargetID();
+			virtual void TargetID(std::string strID);
 
 			virtual int AppendSpaces();
 			virtual void AppendSpaces(int iSpaces);
@@ -101,11 +101,11 @@ namespace AnimatSim
 			virtual void ReInitialize();
 			virtual void StepSimulation();
 			virtual bool operator<(DataColumn *lpColumn);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 			virtual void Load(CStdXml &oXml);
-			virtual void SaveColumnNames(ofstream &oStream);
+			virtual void SaveColumnNames(std::ofstream &oStream);
 		};
 
 		bool LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);

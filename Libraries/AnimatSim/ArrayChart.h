@@ -26,7 +26,7 @@ namespace AnimatSim
 			ArrayChart();
 			virtual ~ArrayChart();
 
-			virtual string Type();
+			virtual std::string Type();
 			virtual void CurrentRow(long iVal);
 
 			virtual void Initialize();

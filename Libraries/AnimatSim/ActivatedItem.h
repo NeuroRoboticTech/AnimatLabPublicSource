@@ -130,7 +130,7 @@ namespace AnimatSim
 		virtual void Deactivate();
 		virtual void TimeStepModified();
 
-		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 		virtual bool Overlaps(ActivatedItem *lpItem);
 		virtual void Load(CStdXml &oXml);
 	};

@@ -96,7 +96,7 @@ void SimulationWindowMgr::Initialize()
 
 \return	Pointer to the created SimulationWindow.
 **/
-SimulationWindow *SimulationWindowMgr::AddSimulationWindow(string strModule, string strType, bool bInit, HWND win, string strXml)
+SimulationWindow *SimulationWindowMgr::AddSimulationWindow(std::string strModule, std::string strType, bool bInit, HWND win, std::string strXml)
 {
 	SimulationWindow *lpWin=NULL;
 
@@ -340,8 +340,8 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 		{
 			//Create and load the HUD manager
 			oXml.IntoElem();
-			string strModuleName = oXml.GetChildString("ModuleName", "");
-			string strType = oXml.GetChildString("Type");
+			std::string strModuleName = oXml.GetChildString("ModuleName", "");
+			std::string strType = oXml.GetChildString("Type");
 			oXml.OutOfElem();
 
 			m_lpHudMgr = dynamic_cast<Hud *>(m_lpSim->CreateObject(strModuleName, "Hud", strType));
@@ -367,7 +367,7 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 SimulationWindow *SimulationWindowMgr::LoadSimulationWindow(CStdXml &oXml)
 {
 	SimulationWindow *lpWin=NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

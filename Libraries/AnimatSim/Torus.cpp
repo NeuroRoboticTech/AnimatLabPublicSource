@@ -144,9 +144,9 @@ void Torus::Rings(int iVal)
 **/
 int Torus::Rings() {return m_iRings;}
 
-bool Torus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Torus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(RigidBody::SetData(strType, strValue, false))
 		return true;
@@ -182,7 +182,7 @@ bool Torus::SetData(const string &strDataType, const string &strValue, bool bThr
 	return false;
 }
 
-void Torus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Torus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	RigidBody::QueryProperties(aryNames, aryTypes);
 

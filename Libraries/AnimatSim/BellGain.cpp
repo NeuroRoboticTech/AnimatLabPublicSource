@@ -145,7 +145,7 @@ float BellGain::CalculateGain(float fltInput)
 	return fltVal;
 }
 
-bool BellGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BellGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -181,7 +181,7 @@ bool BellGain::SetData(const string &strDataType, const string &strValue, bool b
 	return false;
 }
 
-void BellGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BellGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

@@ -20,9 +20,9 @@ namespace AnimatSim
 		{
 		protected:
 			/// Identifier for the field to use with this field pair.
-			string m_strFieldID;
+			std::string m_strFieldID;
 			/// GUID ID of the  target neuron where current will be injected.
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 
 			/// Pointer to the ReceptiveField associated with this pairing.
 			ReceptiveField *m_lpField;
@@ -30,11 +30,11 @@ namespace AnimatSim
 			ReceptiveFieldPair();
 			virtual ~ReceptiveFieldPair();
 
-			virtual void FieldID(string strID);
-			virtual string FieldID();
+			virtual void FieldID(std::string strID);
+			virtual std::string FieldID();
 
-			virtual void TargetNodeID(string strID);
-			virtual string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
+			virtual std::string TargetNodeID();
 
 			virtual ReceptiveField *Field();
 

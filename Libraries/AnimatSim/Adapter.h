@@ -31,13 +31,13 @@ namespace AnimatSim
 		{
 		protected:
 			/// Name of the source NeuralModule
-			string m_strSourceModule;
+			std::string m_strSourceModule;
 
 			/// GUID ID of the source node.
-			string m_strSourceID;
+			std::string m_strSourceID;
 
 			/// DateType of the source variable that will be converted. This is retrieved using the GetDataPointer method.
-			string m_strSourceDataType;
+			std::string m_strSourceDataType;
 
 			/// Pointer to the source node
 			Node *m_lpSourceNode;
@@ -46,13 +46,13 @@ namespace AnimatSim
 			float *m_lpSourceData;
 
 			/// Name of the target NeuralModule
-			string m_strTargetModule;
+			std::string m_strTargetModule;
 
 			/// GUID ID of the target node.
-			string m_strTargetID;
+			std::string m_strTargetID;
 
 			/// DateType of the target variable that will be converted. This is retrieved using the GetDataPointer method.
-			string m_strTargetDataType;
+			std::string m_strTargetDataType;
 
 			/// Pointer to the target node
 			Node *m_lpTargetNode;
@@ -60,33 +60,33 @@ namespace AnimatSim
 			/// Pointer to the Gain that will be used to convert the source value into the target value.
 			Gain *m_lpGain;
 
-			virtual void AddGain(string strXml);
-			virtual void SetOriginID(string strXml);
-			virtual void SetDestinationID(string strXml);
+			virtual void AddGain(std::string strXml);
+			virtual void SetOriginID(std::string strXml);
+			virtual void SetDestinationID(std::string strXml);
 
 		public:
 			Adapter();
 			virtual ~Adapter();
 
-			virtual string SourceModule();
-			virtual void SourceModule(string strName);
+			virtual std::string SourceModule();
+			virtual void SourceModule(std::string strName);
 
-			virtual string SourceID();
-			virtual void SourceID(string strID);
+			virtual std::string SourceID();
+			virtual void SourceID(std::string strID);
 
-			virtual string SourceDataType();
-			virtual void SourceDataType(string strType);
+			virtual std::string SourceDataType();
+			virtual void SourceDataType(std::string strType);
 
 			virtual Node *SourceNode();
 
-			virtual string TargetModule();
-			virtual void TargetModule(string strName);
+			virtual std::string TargetModule();
+			virtual void TargetModule(std::string strName);
 
-			virtual string TargetID();
-			virtual void TargetID(string strID);
+			virtual std::string TargetID();
+			virtual void TargetID(std::string strID);
 
-			virtual string TargetDataType();
-			virtual void TargetDataType(string strType);
+			virtual std::string TargetDataType();
+			virtual void TargetDataType(std::string strType);
 
 			virtual Node *TargetNode();
 
@@ -97,9 +97,9 @@ namespace AnimatSim
 
 			virtual void Initialize();
 			virtual void AddExternalNodeInput(float fltInput);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual void ResetSimulation() {};
 			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);

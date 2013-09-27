@@ -32,8 +32,8 @@ namespace AnimatSim
 			Light *LoadLight(CStdXml &oXml);
 
 			virtual void SetupLights();
-			virtual void AddLight(string strXml);
-			virtual void RemoveLight(string strID, bool bThrowError = true);
+			virtual void AddLight(std::string strXml);
+			virtual void RemoveLight(std::string strID, bool bThrowError = true);
 
 		public:
 			LightManager(void);
@@ -55,9 +55,9 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
-			virtual int FindChildListPos(string strID, bool bThrowError = true);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
+			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
 #pragma endregion
 

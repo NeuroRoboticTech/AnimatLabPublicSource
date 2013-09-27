@@ -106,7 +106,7 @@ bool DataChart::operator<(ActivatedItem *lpItem)
 	return false;
 }
 
-string DataChart::Type() {return "DataChart";}
+std::string DataChart::Type() {return "DataChart";}
 
 void DataChart::StartTime(float fltVal, bool bReInit) 
 {
@@ -322,7 +322,7 @@ void DataChart::CollectTimeWindow(float fltVal, bool bReInit)
 
 \return	project path.
 **/
-string DataChart::ProjectPath() {return m_strProjectPath;}
+std::string DataChart::ProjectPath() {return m_strProjectPath;}
 
 /**
 \brief	Sets the Project path.
@@ -332,7 +332,7 @@ string DataChart::ProjectPath() {return m_strProjectPath;}
 
 \param	strVal	The new value. 
 **/
-void DataChart::ProjectPath(string strVal) {m_strProjectPath = strVal;}
+void DataChart::ProjectPath(std::string strVal) {m_strProjectPath = strVal;}
 
 /**
 \brief	Gets the column count.
@@ -524,7 +524,7 @@ long DataChart::CalculateChartColumnCount()
 
 \param	strXml	The xml packet to load for the data column. 
 **/
-void DataChart::AddColumn(string strXml, bool bDoNotInit)
+void DataChart::AddColumn(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -568,7 +568,7 @@ void DataChart::AddColumn(DataColumn *lpColumn)
 \param	strID	GUID ID of the DataColumn to remove.
 \param	bThrowError	If true and the ID is not found then it throws an error, otherwise it does nothing.
 **/
-void DataChart::RemoveColumn(string strID, bool bThrowError)
+void DataChart::RemoveColumn(std::string strID, bool bThrowError)
 {
 	int iIndex=0;
 	DataColumn *lpColumn = FindColumn(strID, iIndex, bThrowError);
@@ -589,10 +589,10 @@ void DataChart::RemoveColumn(string strID, bool bThrowError)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-DataColumn *DataChart::FindColumn(string strID, bool bThrowError)
+DataColumn *DataChart::FindColumn(std::string strID, bool bThrowError)
 {
 	DataColumn *lpColumn = NULL;
-	CStdMap<string, DataColumn *>::iterator oPos;
+	CStdMap<std::string, DataColumn *>::iterator oPos;
 	oPos = m_aryColumnsMap.find(Std_CheckString(strID));
 
 	if(oPos != m_aryColumnsMap.end())
@@ -615,7 +615,7 @@ DataColumn *DataChart::FindColumn(string strID, bool bThrowError)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-DataColumn *DataChart::FindColumn(string strID, int &iIndex, bool bThrowError)
+DataColumn *DataChart::FindColumn(std::string strID, int &iIndex, bool bThrowError)
 {
 	int iCount = m_aryDataColumns.GetSize();
 	DataColumn *lpColumn = NULL;
@@ -636,9 +636,9 @@ DataColumn *DataChart::FindColumn(string strID, int &iIndex, bool bThrowError)
 
 #pragma region DataAccesMethods
 
-bool DataChart::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool DataChart::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(ActivatedItem::SetData(strDataType, strValue, false))
 		return true;
@@ -680,7 +680,7 @@ bool DataChart::SetData(const string &strDataType, const string &strValue, bool 
 	return false;
 }
 
-void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void DataChart::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ActivatedItem::QueryProperties(aryNames, aryTypes);
 
@@ -700,9 +700,9 @@ void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-bool DataChart::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool DataChart::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "DATACOLUMN")
 	{
@@ -717,9 +717,9 @@ bool DataChart::AddItem(const string &strItemType, const string &strXml, bool bT
 	return false;
 }
 
-bool DataChart::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool DataChart::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "DATACOLUMN")
 	{
@@ -792,7 +792,7 @@ void DataChart::AddData(int iColumn, int iRow, float fltVal)
 \param	strProjectPath	Full pathname of the string project file. 
 \param	strConfigFile 	The string configuration file. 
 **/
-void DataChart::Load(string strProjectPath, string strConfigFile)
+void DataChart::Load(std::string strProjectPath, std::string strConfigFile)
 {
 	CStdXml oXml;
 
@@ -869,7 +869,7 @@ void DataChart::Load(CStdXml &oXml)
 DataColumn *DataChart::LoadDataColumn(CStdXml &oXml)
 {
 	DataColumn *lpColumn=NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {

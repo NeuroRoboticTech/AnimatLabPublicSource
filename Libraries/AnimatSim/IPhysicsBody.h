@@ -18,7 +18,7 @@ namespace AnimatSim
             virtual bool Physics_IsGeometryDefined() = 0;
 			virtual void Physics_SetFreeze(bool bVal) = 0;
 			virtual void Physics_SetDensity(float fltVal) = 0;
-			virtual void Physics_SetMaterialID(string strID) = 0;
+			virtual void Physics_SetMaterialID(std::string strID) = 0;
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) = 0;
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) = 0;
 

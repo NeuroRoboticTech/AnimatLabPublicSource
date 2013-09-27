@@ -141,9 +141,9 @@ bool Terrain::AllowRotateDragY() {return false;}
 
 bool Terrain::AllowRotateDragZ() {return false;}
 
-bool Terrain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Terrain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Mesh::SetData(strType, strValue, false))
 		return true;
@@ -185,7 +185,7 @@ bool Terrain::SetData(const string &strDataType, const string &strValue, bool bT
 	return false;
 }
 
-void Terrain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Terrain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Mesh::QueryProperties(aryNames, aryTypes);
 

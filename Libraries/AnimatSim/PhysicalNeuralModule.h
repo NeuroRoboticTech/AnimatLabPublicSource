@@ -42,11 +42,11 @@ namespace AnimatSim
 		
 			\return	module name.
 			**/
-			virtual string ModuleName() {return "PhysicsNeuralModule";};
+			virtual std::string ModuleName() {return "PhysicsNeuralModule";};
 
-			virtual void AddAdapter(string strXml, bool bDoNotInit);
-			virtual void RemoveAdapter(string strID);
-			virtual int FindAdapterListPos(string strID, bool bThrowError = true);
+			virtual void AddAdapter(std::string strXml, bool bDoNotInit);
+			virtual void RemoveAdapter(std::string strID);
+			virtual int FindAdapterListPos(std::string strID, bool bThrowError = true);
 
 			virtual void Kill(bool bState = true);
 			virtual void Initialize();
@@ -54,10 +54,10 @@ namespace AnimatSim
 			virtual void Load(CStdXml &oXml);
 
 	#pragma region DataAccesMethods
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 	#pragma endregion
 
 	#pragma region SnapshotMethods

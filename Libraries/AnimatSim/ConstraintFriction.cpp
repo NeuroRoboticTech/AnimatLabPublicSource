@@ -255,9 +255,9 @@ void ConstraintFriction::CreateDefaultUnits()
 	m_fltLoss *= m_lpSim->MassUnits();  //Slip units are s/Kg
 }
 
-bool ConstraintFriction::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ConstraintFriction::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -305,7 +305,7 @@ bool ConstraintFriction::SetData(const string &strDataType, const string &strVal
 	return false;
 }
 
-void ConstraintFriction::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ConstraintFriction::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

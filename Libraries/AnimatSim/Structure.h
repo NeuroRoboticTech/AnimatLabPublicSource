@@ -34,9 +34,9 @@ namespace AnimatSim
 		{
 		public:
 			/// GUID ID of the first part of the collision pair.
-			string m_strPart1ID;
+			std::string m_strPart1ID;
 			/// GUID ID of the second part of the collision pair.
-			string m_strPart2ID;
+			std::string m_strPart2ID;
 
 			/**
 			\brief	Default constructor.
@@ -87,14 +87,14 @@ namespace AnimatSim
 			///destroyed by this list. It is used primarily for finding
 			///rigid bodies and ensuring that only unique ID's are used
 			///for the rigid bodies.
-			CStdMap<string, RigidBody *> m_aryRigidBodies;
+			CStdMap<std::string, RigidBody *> m_aryRigidBodies;
 
 			///A list of joints contained within this structure.
 			///The objects in this list are references only. They are not
 			///destroyed by this list. It is used primarily for finding
 			///joints and ensuring that only unique ID's are used
 			///for the joints.
-			CStdMap<string, Joint *> m_aryJoints;
+			CStdMap<std::string, Joint *> m_aryJoints;
 
 			///This is the list of other body part ID's to exclude from collision tests.
 			CStdPtrArray<CollisionPair> m_aryExcludeCollisionList;
@@ -112,8 +112,8 @@ namespace AnimatSim
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
 
-			virtual void AddRoot(string strXml);
-			virtual void RemoveRoot(string strID, bool bThrowError = true);
+			virtual void AddRoot(std::string strXml);
+			virtual void RemoveRoot(std::string strID, bool bThrowError = true);
 			
 			virtual void UpdateData();
 
@@ -141,7 +141,7 @@ namespace AnimatSim
 			virtual bool AllowRotateDragZ();
 
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
-			virtual void AddCollisionPair(string strID1, string strID2);
+			virtual void AddCollisionPair(std::string strID1, std::string strID2);
 
 			virtual void MinTimeStep(float &fltMin);
 
@@ -150,17 +150,17 @@ namespace AnimatSim
 			virtual void ResetSimulation();
 
 			void AddJoint(Joint *lpJoint);
-			void RemoveJoint(string strID);
+			void RemoveJoint(std::string strID);
 			void AddRigidBody(RigidBody *lpBody);
-			void RemoveRigidBody(string strID);
+			void RemoveRigidBody(std::string strID);
 
-			virtual Joint *FindJoint(string strJointID, bool bThrowError = true);
-			virtual RigidBody *FindRigidBody(string strBodyID, bool bThrowError = true);
-			virtual Node *FindNode(string strID, bool bThrowError = true);
-			//virtual AnimatBase *FindCollisionPair(string strID, bool bThrowError = true);
+			virtual Joint *FindJoint(std::string strJointID, bool bThrowError = true);
+			virtual RigidBody *FindRigidBody(std::string strBodyID, bool bThrowError = true);
+			virtual Node *FindNode(std::string strID, bool bThrowError = true);
+			//virtual AnimatBase *FindCollisionPair(std::string strID, bool bThrowError = true);
 
-			virtual void EnableMotor(string strJointID, bool bVal);
-			virtual void SetMotorInput(string strJointID, float fltInput);
+			virtual void EnableMotor(std::string strJointID, bool bVal);
+			virtual void SetMotorInput(std::string strJointID, float fltInput);
 
 			virtual void EnableCollision(RigidBody *lpCollisionBody);
 			virtual void DisableCollision(RigidBody *lpCollisionBody);
@@ -171,11 +171,11 @@ namespace AnimatSim
 #pragma region DataAccesMethods
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

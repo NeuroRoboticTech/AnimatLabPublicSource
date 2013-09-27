@@ -258,7 +258,7 @@ void NeuralModule::ResetStepCounter()
 	m_iTimeStepCount = 0;
 }
 
-int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, bool bThrowError)
+int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError)
 {
 	int iCount = aryAdapters.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -324,9 +324,9 @@ void NeuralModule::VerifySystemPointers()
 }
 
 
-float *NeuralModule::GetDataPointer(const string &strDataType)
+float *NeuralModule::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "TIMESTEP")
 		return &m_fltTimeStep;

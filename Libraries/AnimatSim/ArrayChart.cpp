@@ -70,7 +70,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, false, true);}
 }
 
-string ArrayChart::Type() {return "ArrayChart";}
+std::string ArrayChart::Type() {return "ArrayChart";}
 
 /**
 \brief	Sets the Current row.

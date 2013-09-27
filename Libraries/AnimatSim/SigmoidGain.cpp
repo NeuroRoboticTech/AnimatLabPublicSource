@@ -136,7 +136,7 @@ float SigmoidGain::CalculateGain(float fltInput)
 }
 
 
-bool SigmoidGain::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool SigmoidGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -172,7 +172,7 @@ bool SigmoidGain::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void SigmoidGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void SigmoidGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

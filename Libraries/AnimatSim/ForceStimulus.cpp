@@ -100,7 +100,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ForceStimulus\r\n", "", -1, false, true);}
 }
 
-CStdPostFixEval *ForceStimulus::SetupEquation(string strEquation)
+CStdPostFixEval *ForceStimulus::SetupEquation(std::string strEquation)
 {
 	CStdPostFixEval *lpEquation = NULL;
 
@@ -133,7 +133,7 @@ void ForceStimulus::RelativePositionZ(float fltVal)
 	m_oRelativePosition.z = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
-void ForceStimulus::ForceXEquation(string strVal)
+void ForceStimulus::ForceXEquation(std::string strVal)
 {
 	if(m_lpForceXEval) 
 	{delete m_lpForceXEval; m_lpForceXEval = NULL;}
@@ -142,7 +142,7 @@ void ForceStimulus::ForceXEquation(string strVal)
 	m_lpForceXEval = SetupEquation(strVal);
 }
 
-void ForceStimulus::ForceYEquation(string strVal)
+void ForceStimulus::ForceYEquation(std::string strVal)
 {
 	if(m_lpForceYEval) 
 	{delete m_lpForceYEval; m_lpForceYEval = NULL;}
@@ -151,7 +151,7 @@ void ForceStimulus::ForceYEquation(string strVal)
 	m_lpForceYEval = SetupEquation(strVal);
 }
 
-void ForceStimulus::ForceZEquation(string strVal)
+void ForceStimulus::ForceZEquation(std::string strVal)
 {
 	if(m_lpForceZEval) 
 	{delete m_lpForceZEval; m_lpForceZEval = NULL;}
@@ -160,7 +160,7 @@ void ForceStimulus::ForceZEquation(string strVal)
 	m_lpForceZEval = SetupEquation(strVal);
 }
 
-void ForceStimulus::TorqueXEquation(string strVal)
+void ForceStimulus::TorqueXEquation(std::string strVal)
 {
 	if(m_lpTorqueXEval) 
 	{delete m_lpTorqueXEval; m_lpTorqueXEval = NULL;}
@@ -169,7 +169,7 @@ void ForceStimulus::TorqueXEquation(string strVal)
 	m_lpTorqueXEval = SetupEquation(strVal);
 }
 
-void ForceStimulus::TorqueYEquation(string strVal)
+void ForceStimulus::TorqueYEquation(std::string strVal)
 {
 	if(m_lpTorqueYEval) 
 	{delete m_lpTorqueYEval; m_lpTorqueYEval = NULL;}
@@ -178,7 +178,7 @@ void ForceStimulus::TorqueYEquation(string strVal)
 	m_lpTorqueYEval = SetupEquation(strVal);
 }
 
-void ForceStimulus::TorqueZEquation(string strVal)
+void ForceStimulus::TorqueZEquation(std::string strVal)
 {
 	if(m_lpTorqueZEval) 
 	{delete m_lpTorqueZEval; m_lpTorqueZEval = NULL;}
@@ -298,10 +298,10 @@ void ForceStimulus::Deactivate()
 		m_lpBody->WakeDynamics();
 }
 
-float *ForceStimulus::GetDataPointer(const string &strDataType)
+float *ForceStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "FORCEX")
 		lpData = &m_fltForceReportX;
@@ -321,9 +321,9 @@ float *ForceStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool ForceStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ForceStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -389,7 +389,7 @@ bool ForceStimulus::SetData(const string &strDataType, const string &strValue, b
 	return false;
 }
 
-void ForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ForceStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

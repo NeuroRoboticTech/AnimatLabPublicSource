@@ -153,7 +153,7 @@ void Plane::Size(CStdFPoint ptPoint, bool bUseScaling)
 	Resize();
 }
 
-void Plane::Size(string strXml, bool bUseScaling)
+void Plane::Size(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -227,9 +227,9 @@ void Plane::LengthSegments(int iVal)
 	Resize();
 }
 
-bool Plane::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Plane::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(RigidBody::SetData(strType, strValue, false))
 		return true;
@@ -259,7 +259,7 @@ bool Plane::SetData(const string &strDataType, const string &strValue, bool bThr
 	return false;
 }
 
-void Plane::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Plane::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	RigidBody::QueryProperties(aryNames, aryTypes);
 

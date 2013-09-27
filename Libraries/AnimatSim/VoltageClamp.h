@@ -15,7 +15,7 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the node that will be clamped.
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 
 			/// Pointer to the external current data variable within the node to clamp.
 			/// We will be adding our reverse currents here to clamp the voltage to a given level.
@@ -43,10 +43,10 @@ namespace AnimatSim
 			VoltageClamp();
 			virtual ~VoltageClamp();
 
-			virtual string Type();
+			virtual std::string Type();
 			
-			virtual string TargetNodeID();
-			virtual void TargetNodeID(string strID);
+			virtual std::string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
 
 			virtual float Vtarget();
 			virtual void Vtarget(float fltVal);
@@ -59,9 +59,9 @@ namespace AnimatSim
 			virtual void ResetSimulation();  
 			virtual void StepSimulation();
 			virtual void Deactivate();
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 		};
 
 	}			//ExternalStimuli

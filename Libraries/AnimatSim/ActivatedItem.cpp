@@ -537,9 +537,9 @@ bool ActivatedItem::NeedToStep()
 	}
 }
 
-bool ActivatedItem::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ActivatedItem::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
