@@ -420,7 +420,7 @@ void PostureControlStimulus::Initialize()
 
 
 	//Lets get the data pointers for the positions of our body parts.
-	string strPosData, strLinVelData;
+	std::string strPosData, strLinVelData;
 	for(int i=0; i<3; i++)
 	{
 		if(i==0)
@@ -1208,10 +1208,10 @@ void PostureControlStimulus::DeactivateMotor(Simulator *m_lpSim, MotorizedJoint 
 	lpJoint->EnableMotor(FALSE);
 }
 
-float *PostureControlStimulus::GetDataPointer(string strDataType)
+float *PostureControlStimulus::GetDataPointer(std::string strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "LEFTBETAD")
 		lpData = &m_fltLeftBetaD;
@@ -1374,7 +1374,7 @@ void PostureControlStimulus::ResetSimulation()
 	Initialize();
 }
 
-BOOL PostureControlStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PostureControlStimulus::SetData(std::string strDataType, std::string strValue, BOOL bThrowError)
 {
 	return FALSE;
 }

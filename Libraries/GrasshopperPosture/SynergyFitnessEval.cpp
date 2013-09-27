@@ -161,7 +161,7 @@ void SynergyFitnessEval::Initialize()
 	m_lpfltRightPtfTension = m_lpRightPtf->GetDataPointer("Tension");
 	m_lpfltRightSolTension = m_lpRightSol->GetDataPointer("Tension");
 
-	string strPosData, strLinVelData;
+	std::string strPosData, strLinVelData;
 	for(int i=0; i<3; i++)
 	{
 		if(i==0)
@@ -327,8 +327,8 @@ void SynergyFitnessEval::Deactivate(Simulator *lpSim)
 	EvaluatePostureFitness();
 
 	//And save the fitness value out for processing.
-	ofstream oStream;
-	string strFile = AnimatSim::GetFilePath(lpSim->ProjectPath(), "Fitness.txt");
+	std::ofstream oStream;
+	std::string strFile = AnimatSim::GetFilePath(lpSim->ProjectPath(), "Fitness.txt");
 	oStream.open(strFile.c_str());
 	oStream << m_fltFitness << "\n";
 	oStream.close();
@@ -336,10 +336,10 @@ void SynergyFitnessEval::Deactivate(Simulator *lpSim)
 }
 
 
-float *SynergyFitnessEval::GetDataPointer(string strDataType)
+float *SynergyFitnessEval::GetDataPointer(std::string strDataType)
 {
 	float *lpData=NULL;
-	//string strType = Std_CheckString(strDataType);
+	//std::string strType = Std_CheckString(strDataType);
 
 	//if(strType == "LEFTBETAD")
 	//	lpData = &m_fltLeftBetaD;

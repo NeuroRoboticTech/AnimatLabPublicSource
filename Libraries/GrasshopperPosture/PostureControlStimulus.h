@@ -18,85 +18,85 @@ namespace GrasshopperPosture
 		{
 		protected:
 			Organism *m_lpOrganism;
-			string m_strStructureID;
+			std::string m_strStructureID;
 
 			//IDs for body parts that will be needed to perform calculations.
-			string m_strThoraxID;
-			string m_strAb1ID;
-			string m_strLeftTendonLockID;
-			string m_strRightTendonLockID;
+			std::string m_strThoraxID;
+			std::string m_strAb1ID;
+			std::string m_strLeftTendonLockID;
+			std::string m_strRightTendonLockID;
 
-			string m_strHeadAxisRefID;
-			string m_strTailAxisRefID;
-			string m_strCOMRefID;
-			string m_strRollAxisRefID;
-			string m_strPronotumFrontRefID;
-			string m_strPronotumRearRefID;
+			std::string m_strHeadAxisRefID;
+			std::string m_strTailAxisRefID;
+			std::string m_strCOMRefID;
+			std::string m_strRollAxisRefID;
+			std::string m_strPronotumFrontRefID;
+			std::string m_strPronotumRearRefID;
 
-			string m_strLeftThoraxCoxaBetaID;
-			string m_strLeftSemilunarBetaID;
-			string m_strLeftTibiaBetaID;
-			string m_strRightThoraxCoxaBetaID;
-			string m_strRightSemilunarBetaID;
-			string m_strRightTibiaBetaID;
+			std::string m_strLeftThoraxCoxaBetaID;
+			std::string m_strLeftSemilunarBetaID;
+			std::string m_strLeftTibiaBetaID;
+			std::string m_strRightThoraxCoxaBetaID;
+			std::string m_strRightSemilunarBetaID;
+			std::string m_strRightTibiaBetaID;
 
-			string m_strLeftFrontFemurID;
-			string m_strLeftFrontTibiaID;
-			string m_strLeftMiddleFemurID;
-			string m_strLeftMiddleTibiaID;
+			std::string m_strLeftFrontFemurID;
+			std::string m_strLeftFrontTibiaID;
+			std::string m_strLeftMiddleFemurID;
+			std::string m_strLeftMiddleTibiaID;
 
 			//Joints of the left front leg.
-			string m_strLeftFrontCoxaFemurID;
-			string m_strLeftFrontFemurTibiaID;
-			string m_strLeftFrontTibiaTarsusID;
+			std::string m_strLeftFrontCoxaFemurID;
+			std::string m_strLeftFrontFemurTibiaID;
+			std::string m_strLeftFrontTibiaTarsusID;
 
 			//Joints of the left Middle leg.
-			string m_strLeftMiddleCoxaFemurID;
-			string m_strLeftMiddleFemurTibiaID;
-			string m_strLeftMiddleTibiaTarsusID;
+			std::string m_strLeftMiddleCoxaFemurID;
+			std::string m_strLeftMiddleFemurTibiaID;
+			std::string m_strLeftMiddleTibiaTarsusID;
 
 			//Joints of the left rear leg.
-			string m_strLeftRearThoracicCoxaID;
-			string m_strLeftRearCoxaFemurID;
-			string m_strLeftSemilunarJointID;
-			string m_strLeftRearFemurTibiaID;
-			string m_strLeftRearTibiaTarsusID;
+			std::string m_strLeftRearThoracicCoxaID;
+			std::string m_strLeftRearCoxaFemurID;
+			std::string m_strLeftSemilunarJointID;
+			std::string m_strLeftRearFemurTibiaID;
+			std::string m_strLeftRearTibiaTarsusID;
 
 			//Joints of the Right front leg.
-			string m_strRightFrontCoxaFemurID;
-			string m_strRightFrontFemurTibiaID;
-			string m_strRightFrontTibiaTarsusID;
+			std::string m_strRightFrontCoxaFemurID;
+			std::string m_strRightFrontFemurTibiaID;
+			std::string m_strRightFrontTibiaTarsusID;
 
 			//Joints of the Right middle leg.
-			string m_strRightMiddleCoxaFemurID;
-			string m_strRightMiddleFemurTibiaID;
-			string m_strRightMiddleTibiaTarsusID;
+			std::string m_strRightMiddleCoxaFemurID;
+			std::string m_strRightMiddleFemurTibiaID;
+			std::string m_strRightMiddleTibiaTarsusID;
 
 			//Joints of the Right rear leg.
-			string m_strRightRearThoracicCoxaID;
-			string m_strRightRearCoxaFemurID;
-			string m_strRightSemilunarJointID;
-			string m_strRightRearFemurTibiaID;
-			string m_strRightRearTibiaTarsusID;
+			std::string m_strRightRearThoracicCoxaID;
+			std::string m_strRightRearCoxaFemurID;
+			std::string m_strRightSemilunarJointID;
+			std::string m_strRightRearFemurTibiaID;
+			std::string m_strRightRearTibiaTarsusID;
 
 			//Foot Down sensors for the front-middle legs.
-			string m_strLeftMiddleFootDownID;
-			string m_strLeftFrontFootDownID;
-			string m_strRightMiddleFootDownID;
-			string m_strRightFrontFootDownID;
+			std::string m_strLeftMiddleFootDownID;
+			std::string m_strLeftFrontFootDownID;
+			std::string m_strRightMiddleFootDownID;
+			std::string m_strRightFrontFootDownID;
 
 			//Rear Tarsus Down Sensors
-			string m_strLeftRearTarsusDownID;
-			string m_strRightRearTarsusDownID;
+			std::string m_strLeftRearTarsusDownID;
+			std::string m_strRightRearTarsusDownID;
 
 			//Abdomen Joints.
-			string m_strAb1JointID;
-			string m_strAb2JointID;
-			string m_strAb3JointID;
-			string m_strAb4JointID;
+			std::string m_strAb1JointID;
+			std::string m_strAb2JointID;
+			std::string m_strAb3JointID;
+			std::string m_strAb4JointID;
 			
 			//Ab control neurons
-			string m_strDorsalAbNeuronID;
+			std::string m_strDorsalAbNeuronID;
 			//long m_lVentralAbNeuronID;
 
 			//Body parts that will be needed to perform calculations
@@ -413,11 +413,11 @@ namespace GrasshopperPosture
 
 			virtual void Load(CStdXml &oXml);
 
-			virtual float *GetDataPointer(string strDataType);
-			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual float *GetDataPointer(std::string strDataType);
+			virtual BOOL SetData(std::string strDataType, std::string strValue, BOOL bThrowError = TRUE);
 
 			//ActiveItem overrides
-			virtual string Type() {return "GrasshopperPosture";};
+			virtual std::string Type() {return "GrasshopperPosture";};
 			virtual void Initialize();
 			virtual void Activate();
 			virtual void ResetSimulation();  

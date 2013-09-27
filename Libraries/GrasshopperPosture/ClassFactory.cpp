@@ -29,7 +29,7 @@ ClassFactory::~ClassFactory()
 
 // ************* External Stimulus Type Conversion functions ******************************
 
-ExternalStimulus *ClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
+ExternalStimulus *ClassFactory::CreateExternalStimulus(std::string strType, BOOL bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -70,7 +70,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *ClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
+CStdSerialize *ClassFactory::CreateObject(std::string strClassType, std::string strObjectType, BOOL bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 
