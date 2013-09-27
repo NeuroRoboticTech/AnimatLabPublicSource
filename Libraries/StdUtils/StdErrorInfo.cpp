@@ -32,7 +32,7 @@ CStdErrorInfo::CStdErrorInfo()
 \param	strSourceFile	The source filename. 
 \param	lSourceLine  	Source line number. 
 **/
-CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile, long lSourceLine)
+CStdErrorInfo::CStdErrorInfo(long lError, std::string strError, std::string strSourceFile, long lSourceLine)
 {
 	m_lError = lError;
 	m_strError = strError;
@@ -65,9 +65,9 @@ catch(...)
 
 \return	.
 **/
-string CStdErrorInfo::Log()
+std::string CStdErrorInfo::Log()
 {
-	string strText;
+	std::string strText;
 
 	strText = "\r\nErrorNum: " + STR(m_lError) + "\r\n" + 
 						"ErrorMsg: " + STR(m_strError) + "\r\n" +
@@ -84,9 +84,9 @@ string CStdErrorInfo::Log()
 	return strText;
 }
 
-string CStdErrorInfo::StackTrace()
+std::string CStdErrorInfo::StackTrace()
 {
-	string strOut = "Source file: " + m_strSourceFile + "\r\nSource Line: " + STR(m_lSourceLine) + "\r\nStack Trace: \r\n";
+	std::string strOut = "Source file: " + m_strSourceFile + "\r\nSource Line: " + STR(m_lSourceLine) + "\r\nStack Trace: \r\n";
 	int iCount = m_aryCallChain.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		strOut += m_aryCallChain[iIdx];

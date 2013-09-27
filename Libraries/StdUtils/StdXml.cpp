@@ -70,11 +70,11 @@ bool CStdXml::OutOfElem()
 
 \return	.
 **/
-string CStdXml::FullTagPath(bool bAddChildName)
+std::string CStdXml::FullTagPath(bool bAddChildName)
 {
 	int iSize = m_aryTagStack.size(), iIndex;
-	string strTagPath, strVal;
-	deque<string> aryTemp;
+	std::string strTagPath, strVal;
+	std::deque<std::string> aryTemp;
 
 try
 {
@@ -119,9 +119,9 @@ catch(...)
 
 \return	.
 **/
-string CStdXml::ValueErrorString(string strValue)
+std::string CStdXml::ValueErrorString(std::string strValue)
 {
-	string strError;
+	std::string strError;
 	strError = "  Element: " + FullTagPath() + "  Value: " + strValue;
 	return strError;
 }
@@ -148,7 +148,7 @@ void CStdXml::ClearTagStack()
 
 \return	xml document string.
 **/
-string CStdXml::Serialize()
+std::string CStdXml::Serialize()
 {return GetDoc();}
 
 /**
@@ -159,7 +159,7 @@ string CStdXml::Serialize()
 
 \param [in,out]	strXml	The string xml. 
 **/
-void CStdXml::Deserialize(string &strXml)
+void CStdXml::Deserialize(std::string &strXml)
 {
 	if(!SetDoc(strXml.c_str()))
 		THROW_ERROR(Std_Err_lDeserializingXml, Std_Err_strDeserializingXml);
@@ -176,7 +176,7 @@ void CStdXml::Deserialize(string &strXml)
 
 \return	true if it succeeds, false if it fails.
 **/
-bool CStdXml::FindElement(string strElementName, bool bThrowError)
+bool CStdXml::FindElement(std::string strElementName, bool bThrowError)
 {
 	if(CMarkupSTL::FindElem(strElementName.c_str()))
 	{
@@ -253,7 +253,7 @@ bool CStdXml::FindChildByIndex(int iIndex, bool bThrowError)
 
 \return	true if it succeeds, false if it fails.
 **/
-bool CStdXml::FindChildElement(string strElementName, bool bThrowError)
+bool CStdXml::FindChildElement(std::string strElementName, bool bThrowError)
 {
 	ResetChildPos();
 	if(CMarkupSTL::FindChildElem(strElementName.c_str()))
@@ -275,7 +275,7 @@ bool CStdXml::FindChildElement(string strElementName, bool bThrowError)
 
 \return	true if it succeeds, false if it fails.
 **/
-bool CStdXml::IntoChildElement(string strElementName, bool bThrowError)
+bool CStdXml::IntoChildElement(std::string strElementName, bool bThrowError)
 {
 	if(FindChildElement(strElementName, bThrowError))
 		return IntoElem();
@@ -291,7 +291,7 @@ bool CStdXml::IntoChildElement(string strElementName, bool bThrowError)
 
 \return	The child string.
 **/
-string CStdXml::GetChildString()
+std::string CStdXml::GetChildString()
 {return GetChildData();}
 
 /**
@@ -304,7 +304,7 @@ string CStdXml::GetChildString()
 
 \return	The child string.
 **/
-string CStdXml::GetChildString(string strElementName)
+std::string CStdXml::GetChildString(std::string strElementName)
 {
 	FindChildElement(strElementName);
 	return GetChildData();
@@ -321,9 +321,9 @@ string CStdXml::GetChildString(string strElementName)
 
 \return	The child string.
 **/
-string CStdXml::GetChildString(string strElementName, string strDefault)
+std::string CStdXml::GetChildString(std::string strElementName, std::string strDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	if(FindChildElement(strElementName, false))
 		strVal = GetChildData();
@@ -343,7 +343,7 @@ string CStdXml::GetChildString(string strElementName, string strDefault)
 **/
 long CStdXml::GetChildLong()
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildData();
 	strVal = Std_Trim(strVal);
@@ -368,9 +368,9 @@ long CStdXml::GetChildLong()
 
 \return	The child long value.
 **/
-long CStdXml::GetChildLong(string strElementName)
+long CStdXml::GetChildLong(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 
 	FindChildElement(strElementName);
 	strVal = GetChildData();
@@ -397,9 +397,9 @@ long CStdXml::GetChildLong(string strElementName)
 
 \return	The child long value.
 **/
-long CStdXml::GetChildLong(string strElementName, long lDefault)
+long CStdXml::GetChildLong(std::string strElementName, long lDefault)
 {
-	string strVal;
+	std::string strVal;
 	long lVal=0;
 
 	if(FindChildElement(strElementName, false))
@@ -428,7 +428,7 @@ long CStdXml::GetChildLong(string strElementName, long lDefault)
 **/
 int CStdXml::GetChildInt()
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildData();
 	strVal = Std_Trim(strVal);
@@ -453,9 +453,9 @@ int CStdXml::GetChildInt()
 
 \return	The child integer value.
 **/
-int CStdXml::GetChildInt(string strElementName)
+int CStdXml::GetChildInt(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 
 	FindChildElement(strElementName);
 	strVal = GetChildData();
@@ -482,9 +482,9 @@ int CStdXml::GetChildInt(string strElementName)
 
 \return	The child integer value.
 **/
-int CStdXml::GetChildInt(string strElementName, int iDefault)
+int CStdXml::GetChildInt(std::string strElementName, int iDefault)
 {
-	string strVal;
+	std::string strVal;
 	int iVal=0;
 
 	if(FindChildElement(strElementName, false))
@@ -513,7 +513,7 @@ int CStdXml::GetChildInt(string strElementName, int iDefault)
 **/
 double CStdXml::GetChildDouble()
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildData();
 	strVal = Std_Trim(strVal);
@@ -535,9 +535,9 @@ double CStdXml::GetChildDouble()
 
 \return	The child double value.
 **/
-double CStdXml::GetChildDouble(string strElementName)
+double CStdXml::GetChildDouble(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 
 	FindChildElement(strElementName);
 	strVal = GetChildData();
@@ -561,9 +561,9 @@ double CStdXml::GetChildDouble(string strElementName)
 
 \return	The child double value.
 **/
-double CStdXml::GetChildDouble(string strElementName, double dblDefault)
+double CStdXml::GetChildDouble(std::string strElementName, double dblDefault)
 {
-	string strVal;
+	std::string strVal;
 	double dblVal=0;
 
 	if(FindChildElement(strElementName, false))
@@ -592,7 +592,7 @@ double CStdXml::GetChildDouble(string strElementName, double dblDefault)
 **/
 float CStdXml::GetChildFloat()
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildData();
 	strVal = Std_Trim(strVal);
@@ -614,9 +614,9 @@ float CStdXml::GetChildFloat()
 
 \return	The child float value.
 **/
-float CStdXml::GetChildFloat(string strElementName)
+float CStdXml::GetChildFloat(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 
 	FindChildElement(strElementName);
 	strVal = GetChildData();
@@ -640,9 +640,9 @@ float CStdXml::GetChildFloat(string strElementName)
 
 \return	The child float value.
 **/
-float CStdXml::GetChildFloat(string strElementName, float fltDefault)
+float CStdXml::GetChildFloat(std::string strElementName, float fltDefault)
 {
-	string strVal;
+	std::string strVal;
 	float fltVal=0;
 
 	if(FindChildElement(strElementName, false))
@@ -671,7 +671,7 @@ float CStdXml::GetChildFloat(string strElementName, float fltDefault)
 **/
 bool CStdXml::GetChildBool()
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildData();
 	strVal = Std_CheckString(strVal);
@@ -696,9 +696,9 @@ bool CStdXml::GetChildBool()
 
 \return	The child bool value.
 **/
-bool CStdXml::GetChildBool(string strElementName)
+bool CStdXml::GetChildBool(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 
 	FindChildElement(strElementName);
 	strVal = GetChildData();
@@ -725,9 +725,9 @@ bool CStdXml::GetChildBool(string strElementName)
 
 \return	The child bool value.
 **/
-bool CStdXml::GetChildBool(string strElementName, bool bDefault)
+bool CStdXml::GetChildBool(std::string strElementName, bool bDefault)
 {
-	string strVal;
+	std::string strVal;
 	bool bVal=false;
 
 	if(FindChildElement(strElementName, false))
@@ -767,7 +767,7 @@ bool CStdXml::GetChildBool(string strElementName, bool bDefault)
 \param	strElementName	Name of the new element. 
 \param	strData		  	Data to add. 
 **/
-void CStdXml::AddElement(string strElementName, string strData)
+void CStdXml::AddElement(std::string strElementName, std::string strData)
 {
 	if(!AddElem(strElementName.c_str(), strData.c_str()))
 		THROW_PARAM_ERROR(Std_Err_lAddingElement, Std_Err_strAddingElement, "Element", (FullTagPath(false) + "\\" + strElementName));
@@ -782,7 +782,7 @@ void CStdXml::AddElement(string strElementName, string strData)
 \param	strElementName	Name of the new element. 
 \param	strData		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, string strVal)
+void CStdXml::AddChildElement(std::string strElementName, std::string strVal)
 {
 	if(!AddChildElem(strElementName.c_str(), strVal.c_str()))
 		THROW_PARAM_ERROR(Std_Err_lAddingElement, Std_Err_strAddingElement, "Element", (FullTagPath(false) + "\\" + strElementName));
@@ -796,9 +796,9 @@ void CStdXml::AddChildElement(string strElementName, string strVal)
 
 \param	strElementName	Name of the new element. 
 **/
-void CStdXml::AddChildElement(string strElementName)
+void CStdXml::AddChildElement(std::string strElementName)
 {
-	string strVal;
+	std::string strVal;
 	AddChildElement(strElementName, strVal);
 }
 
@@ -811,9 +811,9 @@ void CStdXml::AddChildElement(string strElementName)
 \param	strElementName	Name of the new element. 
 \param	cVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, char cVal)
+void CStdXml::AddChildElement(std::string strElementName, char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 
 	oStream << iVal; 
@@ -829,9 +829,9 @@ void CStdXml::AddChildElement(string strElementName, char cVal)
 \param	strElementName	Name of the new element. 
 \param	cVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, unsigned char cVal)
+void CStdXml::AddChildElement(std::string strElementName, unsigned char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 	
 	oStream << iVal; 
@@ -847,9 +847,9 @@ void CStdXml::AddChildElement(string strElementName, unsigned char cVal)
 \param	strElementName	Name of the new element. 
 \param	lVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, long lVal)
+void CStdXml::AddChildElement(std::string strElementName, long lVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << lVal; 
 	AddChildElement(strElementName, oStream.str());
@@ -864,9 +864,9 @@ void CStdXml::AddChildElement(string strElementName, long lVal)
 \param	strElementName	Name of the new element. 
 \param	iVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, int iVal)
+void CStdXml::AddChildElement(std::string strElementName, int iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << iVal; 
 	AddChildElement(strElementName, oStream.str());
@@ -881,9 +881,9 @@ void CStdXml::AddChildElement(string strElementName, int iVal)
 \param	strElementName	Name of the new element. 
 \param	dblVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, double dblVal)
+void CStdXml::AddChildElement(std::string strElementName, double dblVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << dblVal; 
 	AddChildElement(strElementName, oStream.str());
@@ -898,9 +898,9 @@ void CStdXml::AddChildElement(string strElementName, double dblVal)
 \param	strElementName	Name of the new element. 
 \param	fltVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, float fltVal)
+void CStdXml::AddChildElement(std::string strElementName, float fltVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << fltVal; 
 	AddChildElement(strElementName, oStream.str());
@@ -915,9 +915,9 @@ void CStdXml::AddChildElement(string strElementName, float fltVal)
 \param	strElementName	Name of the new element. 
 \param	bVal		  	Data to add. 
 **/
-void CStdXml::AddChildElement(string strElementName, bool bVal)
+void CStdXml::AddChildElement(std::string strElementName, bool bVal)
 {
-	string strVal;
+	std::string strVal;
 
 	if(bVal)
 		strVal = "True";
@@ -936,7 +936,7 @@ void CStdXml::AddChildElement(string strElementName, bool bVal)
 \param	strElementName	Name of the string element. 
 \param	strCData	  	Information within the CDATA section. 
 **/
-void CStdXml::AddChildCData(string strElementName, string strCData)
+void CStdXml::AddChildCData(std::string strElementName, std::string strCData)
 {
 	AddChildElement(strElementName);
 	IntoElem();
@@ -957,9 +957,9 @@ void CStdXml::AddChildCData(string strElementName, string strCData)
 
 \return	The attribute string.
 **/
-string CStdXml::GetAttribString(string strAttribName, bool bCanBeBlank, bool bThrowError, string strDefault)
+std::string CStdXml::GetAttribString(std::string strAttribName, bool bCanBeBlank, bool bThrowError, std::string strDefault)
 {
-	string strVal = GetAttrib(strAttribName.c_str());
+	std::string strVal = GetAttrib(strAttribName.c_str());
 
 	if(Std_IsBlank(strVal) && !bCanBeBlank)
 	{
@@ -984,9 +984,9 @@ string CStdXml::GetAttribString(string strAttribName, bool bCanBeBlank, bool bTh
 
 \return	The attribute long.
 **/
-long CStdXml::GetAttribLong(string strAttribName, bool bThrowError, long lDefault)
+long CStdXml::GetAttribLong(std::string strAttribName, bool bThrowError, long lDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1021,9 +1021,9 @@ long CStdXml::GetAttribLong(string strAttribName, bool bThrowError, long lDefaul
 
 \return	The attribute int.
 **/
-int CStdXml::GetAttribInt(string strAttribName, bool bThrowError, int iDefault)
+int CStdXml::GetAttribInt(std::string strAttribName, bool bThrowError, int iDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1058,9 +1058,9 @@ int CStdXml::GetAttribInt(string strAttribName, bool bThrowError, int iDefault)
 
 \return	The attribute double.
 **/
-double CStdXml::GetAttribDouble(string strAttribName, bool bThrowError, double dblDefault)
+double CStdXml::GetAttribDouble(std::string strAttribName, bool bThrowError, double dblDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1092,9 +1092,9 @@ double CStdXml::GetAttribDouble(string strAttribName, bool bThrowError, double d
 
 \return	The attribute float.
 **/
-float CStdXml::GetAttribFloat(string strAttribName, bool bThrowError, float fltDefault)
+float CStdXml::GetAttribFloat(std::string strAttribName, bool bThrowError, float fltDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1126,9 +1126,9 @@ float CStdXml::GetAttribFloat(string strAttribName, bool bThrowError, float fltD
 
 \return	The attribute bool.
 **/
-bool CStdXml::GetAttribBool(string strAttribName, bool bThrowError, bool bDefault)
+bool CStdXml::GetAttribBool(std::string strAttribName, bool bThrowError, bool bDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetAttrib(strAttribName.c_str());
 	strVal = Std_CheckString(strVal);
@@ -1160,7 +1160,7 @@ bool CStdXml::GetAttribBool(string strAttribName, bool bThrowError, bool bDefaul
 \param	strAttribName	Name of the string attribute. 
 \param	strData		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, string strData)
+void CStdXml::SetAttrib(std::string strAttribName, std::string strData)
 {
 	if(!CMarkupSTL::SetAttrib(strAttribName.c_str(), strData.c_str()))
 		THROW_PARAM_ERROR(Std_Err_lSettingAttrib, Std_Err_strSettingAttrib, "Attrib", (FullTagPath(false) + "\\" + strAttribName));
@@ -1175,9 +1175,9 @@ void CStdXml::SetAttrib(string strAttribName, string strData)
 \param	strAttribName	Name of the string attribute. 
 \param	cVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, char cVal)
+void CStdXml::SetAttrib(std::string strAttribName, char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 
 	oStream << iVal; 
@@ -1193,9 +1193,9 @@ void CStdXml::SetAttrib(string strAttribName, char cVal)
 \param	strAttribName	Name of the string attribute. 
 \param	cVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, unsigned char cVal)
+void CStdXml::SetAttrib(std::string strAttribName, unsigned char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 	
 	oStream << iVal; 
@@ -1211,9 +1211,9 @@ void CStdXml::SetAttrib(string strAttribName, unsigned char cVal)
 \param	strAttribName	Name of the string attribute. 
 \param	lVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, long lVal)
+void CStdXml::SetAttrib(std::string strAttribName, long lVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << lVal; 
 	SetAttrib(strAttribName, oStream.str());
@@ -1228,9 +1228,9 @@ void CStdXml::SetAttrib(string strAttribName, long lVal)
 \param	strAttribName	Name of the string attribute. 
 \param	iVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, int iVal)
+void CStdXml::SetAttrib(std::string strAttribName, int iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << iVal; 
 	SetAttrib(strAttribName, oStream.str());
@@ -1245,9 +1245,9 @@ void CStdXml::SetAttrib(string strAttribName, int iVal)
 \param	strAttribName	Name of the string attribute. 
 \param	dblVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, double dblVal)
+void CStdXml::SetAttrib(std::string strAttribName, double dblVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << dblVal; 
 	SetAttrib(strAttribName, oStream.str());
@@ -1262,9 +1262,9 @@ void CStdXml::SetAttrib(string strAttribName, double dblVal)
 \param	strAttribName	Name of the string attribute. 
 \param	fltVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, float fltVal)
+void CStdXml::SetAttrib(std::string strAttribName, float fltVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << fltVal; 
 	SetAttrib(strAttribName, oStream.str());
@@ -1279,9 +1279,9 @@ void CStdXml::SetAttrib(string strAttribName, float fltVal)
 \param	strAttribName	Name of the string attribute. 
 \param	bVal		 	Data in the attribute. 
 **/
-void CStdXml::SetAttrib(string strAttribName, bool bVal)
+void CStdXml::SetAttrib(std::string strAttribName, bool bVal)
 {
-	string strVal;
+	std::string strVal;
 
 	if(bVal)
 		strVal = "True";
@@ -1304,9 +1304,9 @@ void CStdXml::SetAttrib(string strAttribName, bool bVal)
 
 \return	The child attribute string.
 **/
-string CStdXml::GetChildAttribString(string strAttribName, bool bCanBeBlank, bool bThrowError, string strDefault)
+std::string CStdXml::GetChildAttribString(std::string strAttribName, bool bCanBeBlank, bool bThrowError, std::string strDefault)
 {
-	string strVal = GetChildAttrib(strAttribName.c_str());
+	std::string strVal = GetChildAttrib(strAttribName.c_str());
 
 	if(Std_IsBlank(strVal) && !bCanBeBlank)
 	{
@@ -1331,9 +1331,9 @@ string CStdXml::GetChildAttribString(string strAttribName, bool bCanBeBlank, boo
 
 \return	The child attribute long.
 **/
-long CStdXml::GetChildAttribLong(string strAttribName, bool bThrowError, long lDefault)
+long CStdXml::GetChildAttribLong(std::string strAttribName, bool bThrowError, long lDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1366,9 +1366,9 @@ long CStdXml::GetChildAttribLong(string strAttribName, bool bThrowError, long lD
 
 \return	The child attribute int.
 **/
-int CStdXml::GetChildAttribInt(string strAttribName, bool bThrowError, int iDefault)
+int CStdXml::GetChildAttribInt(std::string strAttribName, bool bThrowError, int iDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1401,9 +1401,9 @@ int CStdXml::GetChildAttribInt(string strAttribName, bool bThrowError, int iDefa
 
 \return	The child attribute double.
 **/
-double CStdXml::GetChildAttribDouble(string strAttribName, bool bThrowError, double dblDefault)
+double CStdXml::GetChildAttribDouble(std::string strAttribName, bool bThrowError, double dblDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1433,9 +1433,9 @@ double CStdXml::GetChildAttribDouble(string strAttribName, bool bThrowError, dou
 
 \return	The child attribute float.
 **/
-float CStdXml::GetChildAttribFloat(string strAttribName, bool bThrowError, float fltDefault)
+float CStdXml::GetChildAttribFloat(std::string strAttribName, bool bThrowError, float fltDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildAttrib(strAttribName.c_str());
 	strVal = Std_Trim(strVal);
@@ -1465,9 +1465,9 @@ float CStdXml::GetChildAttribFloat(string strAttribName, bool bThrowError, float
 
 \return	The child attribute bool.
 **/
-bool CStdXml::GetChildAttribBool(string strAttribName, bool bThrowError, bool bDefault)
+bool CStdXml::GetChildAttribBool(std::string strAttribName, bool bThrowError, bool bDefault)
 {
-	string strVal;
+	std::string strVal;
 
 	strVal = GetChildAttrib(strAttribName.c_str());
 	strVal = Std_CheckString(strVal);
@@ -1497,7 +1497,7 @@ bool CStdXml::GetChildAttribBool(string strAttribName, bool bThrowError, bool bD
 \param	strAttribName	Name of the string attribute. 
 \param	strVal		 	The string value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, string strVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, std::string strVal)
 {
 	if(!CMarkupSTL::SetChildAttrib(strAttribName.c_str(), strVal.c_str()))
 		THROW_PARAM_ERROR(Std_Err_lSettingAttrib, Std_Err_strSettingAttrib, "Attrib", (FullTagPath(false) + "\\" + strAttribName));
@@ -1512,9 +1512,9 @@ void CStdXml::SetChildAttrib(string strAttribName, string strVal)
 \param	strAttribName	Name of the string attribute. 
 \param	cVal		 	The value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, char cVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 
 	oStream << iVal; 
@@ -1530,9 +1530,9 @@ void CStdXml::SetChildAttrib(string strAttribName, char cVal)
 \param	strAttribName	Name of the string attribute. 
 \param	cVal		 	The value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, unsigned char cVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, unsigned char cVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	int iVal = (int) cVal;
 	
 	oStream << iVal; 
@@ -1548,9 +1548,9 @@ void CStdXml::SetChildAttrib(string strAttribName, unsigned char cVal)
 \param	strAttribName	Name of the string attribute. 
 \param	lVal		 	The value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, long lVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, long lVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << lVal; 
 	SetChildAttrib(strAttribName, oStream.str());
@@ -1565,9 +1565,9 @@ void CStdXml::SetChildAttrib(string strAttribName, long lVal)
 \param	strAttribName	Name of the string attribute. 
 \param	iVal		 	The value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, int iVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, int iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << iVal; 
 	SetChildAttrib(strAttribName, oStream.str());
@@ -1582,9 +1582,9 @@ void CStdXml::SetChildAttrib(string strAttribName, int iVal)
 \param	strAttribName	Name of the string attribute. 
 \param	dblVal		 	The double value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, double dblVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, double dblVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << dblVal; 
 	SetChildAttrib(strAttribName, oStream.str());
@@ -1599,9 +1599,9 @@ void CStdXml::SetChildAttrib(string strAttribName, double dblVal)
 \param	strAttribName	Name of the string attribute. 
 \param	fltVal		 	The float value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, float fltVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, float fltVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	
 	oStream << fltVal; 
 	SetChildAttrib(strAttribName, oStream.str());
@@ -1616,9 +1616,9 @@ void CStdXml::SetChildAttrib(string strAttribName, float fltVal)
 \param	strAttribName	Name of the string attribute. 
 \param	bVal		 	The bool value. 
 **/
-void CStdXml::SetChildAttrib(string strAttribName, bool bVal)
+void CStdXml::SetChildAttrib(std::string strAttribName, bool bVal)
 {
-	string strVal;
+	std::string strVal;
 
 	if(bVal)
 		strVal = "True";
@@ -1636,7 +1636,7 @@ void CStdXml::SetChildAttrib(string strAttribName, bool bVal)
 
 \param [in,out]	strDoc	The string document. 
 **/
-void CStdXml::AddChildDoc(string &strDoc)
+void CStdXml::AddChildDoc(std::string &strDoc)
 {
 
 	if(!AddChildSubDoc(strDoc.c_str()))
@@ -1651,7 +1651,7 @@ void CStdXml::AddChildDoc(string &strDoc)
 
 \return	The child document.
 **/
-string CStdXml::GetChildDoc()
+std::string CStdXml::GetChildDoc()
 {
 	return GetChildSubDoc();
 }
@@ -1664,9 +1664,9 @@ string CStdXml::GetChildDoc()
 
 \return	The parent tag name.
 **/
-string CStdXml::GetParentTagName()
+std::string CStdXml::GetParentTagName()
 {
-	string strTagName;
+	std::string strTagName;
 
 	OutOfElem();
 	strTagName = GetTagName();
@@ -1682,7 +1682,7 @@ string CStdXml::GetParentTagName()
 
 \param	strFilename	The name of the file to load. 
 **/
-void CStdXml::Load(string strFilename)
+void CStdXml::Load(std::string strFilename)
 {
 	if(Std_IsBlank(strFilename))
 		THROW_ERROR(Std_Err_lFilenameBlank, Std_Err_strFilenameBlank);
@@ -1691,7 +1691,7 @@ void CStdXml::Load(string strFilename)
 	{
 		if(!Std_IsBlank(m_strError))
 		{
-			string strError = STR("\nFilename: ") + strFilename + STR("\nReason: ") + m_strError;
+			std::string strError = STR("\nFilename: ") + strFilename + STR("\nReason: ") + m_strError;
 			THROW_TEXT_ERROR(Std_Err_lOpeningFile, Std_Err_strOpeningFile, strError);
 		}
 		else
@@ -1708,7 +1708,7 @@ void CStdXml::Load(string strFilename)
 
 \param	strFilename	The name of the file to save. 
 **/
-void CStdXml::Save(string strFilename)
+void CStdXml::Save(std::string strFilename)
 {
 	if(Std_IsBlank(strFilename))
 		THROW_ERROR(Std_Err_lFilenameBlank, Std_Err_strFilenameBlank);

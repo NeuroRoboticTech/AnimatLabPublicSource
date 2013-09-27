@@ -20,102 +20,102 @@ class STD_UTILS_PORT CStdXml : public CMarkupSTL
 {
 protected:
 	/// Stack of tags
-	stack<string> m_aryTagStack;
+	std::stack<std::string> m_aryTagStack;
 
 	virtual void ClearTagStack();
-	virtual string ValueErrorString(string strValue);
+	virtual std::string ValueErrorString(std::string strValue);
 
 public:
 	CStdXml();
 	virtual ~CStdXml();
 
-	virtual string Serialize();
-	virtual void Deserialize(string &strXml);
+	virtual std::string Serialize();
+	virtual void Deserialize(std::string &strXml);
 
 	virtual bool IntoElem();
 	virtual bool OutOfElem();
-	virtual string FullTagPath(bool bAddChildName = true);
+	virtual std::string FullTagPath(bool bAddChildName = true);
 
 	virtual int NumberOfChildren();
-	virtual bool FindElement(string strElementName, bool fThrowError = true);
+	virtual bool FindElement(std::string strElementName, bool fThrowError = true);
 	virtual bool FindChildByIndex(int iIndex, bool bThrowError = true);
-	virtual bool FindChildElement(string strElementName, bool fThrowError = true);
+	virtual bool FindChildElement(std::string strElementName, bool fThrowError = true);
 
-	virtual bool IntoChildElement(string strElementName, bool bThrowError = true);
+	virtual bool IntoChildElement(std::string strElementName, bool bThrowError = true);
 
-	virtual string GetChildString(string strElementName);
-	virtual string GetChildString(string strElementName, string strDefault);
-	virtual string GetChildString();
-	virtual long GetChildLong(string strElementName);
-	virtual long GetChildLong(string strElementName, long lDefault);
+	virtual std::string GetChildString(std::string strElementName);
+	virtual std::string GetChildString(std::string strElementName, std::string strDefault);
+	virtual std::string GetChildString();
+	virtual long GetChildLong(std::string strElementName);
+	virtual long GetChildLong(std::string strElementName, long lDefault);
 	virtual long GetChildLong();
-	virtual int GetChildInt(string strElementName);
-	virtual int GetChildInt(string strElementName, int iDefault);
+	virtual int GetChildInt(std::string strElementName);
+	virtual int GetChildInt(std::string strElementName, int iDefault);
 	virtual int GetChildInt();
-	virtual double GetChildDouble(string strElementName);
-	virtual double GetChildDouble(string strElementName, double dblDefault);
+	virtual double GetChildDouble(std::string strElementName);
+	virtual double GetChildDouble(std::string strElementName, double dblDefault);
 	virtual double GetChildDouble();
-	virtual float GetChildFloat(string strElementName);
-	virtual float GetChildFloat(string strElementName, float fltDefault);
+	virtual float GetChildFloat(std::string strElementName);
+	virtual float GetChildFloat(std::string strElementName, float fltDefault);
 	virtual float GetChildFloat();
-	virtual bool GetChildBool(string strElementName);
-	virtual bool GetChildBool(string strElementName, bool bDefault);
+	virtual bool GetChildBool(std::string strElementName);
+	virtual bool GetChildBool(std::string strElementName, bool bDefault);
 	virtual bool GetChildBool();
 
-	virtual void AddElement(string strElementName, string strData = "");
-	//virtual bool RemoveElement(string strElementName, bool bThrowError = true);
+	virtual void AddElement(std::string strElementName, std::string strData = "");
+	//virtual bool RemoveElement(std::string strElementName, bool bThrowError = true);
 	
 	//Had to name the functions different here because bool was conflicting with int.
-	virtual void AddChildElement(string strElementName);
-	virtual void AddChildElement(string strElementName, string strVal);
-	virtual void AddChildElement(string strElementName, char cVal);
-	virtual void AddChildElement(string strElementName, unsigned char cVal);
-	virtual void AddChildElement(string strElementName, long lVal);
-	virtual void AddChildElement(string strElementName, int iVal);
-	virtual void AddChildElement(string strElementName, double dblVal);
-	virtual void AddChildElement(string strElementName, float fltVal);
-	virtual void AddChildElement(string strElementName, bool bVal);
+	virtual void AddChildElement(std::string strElementName);
+	virtual void AddChildElement(std::string strElementName, std::string strVal);
+	virtual void AddChildElement(std::string strElementName, char cVal);
+	virtual void AddChildElement(std::string strElementName, unsigned char cVal);
+	virtual void AddChildElement(std::string strElementName, long lVal);
+	virtual void AddChildElement(std::string strElementName, int iVal);
+	virtual void AddChildElement(std::string strElementName, double dblVal);
+	virtual void AddChildElement(std::string strElementName, float fltVal);
+	virtual void AddChildElement(std::string strElementName, bool bVal);
 
-	virtual void AddChildCData(string strElementName, string strCData);
+	virtual void AddChildCData(std::string strElementName, std::string strCData);
 
-	virtual string GetAttribString(string strAttribName, bool bCanBeBlank = false, bool bThrowError = true, string strDefault = "");
-	virtual long GetAttribLong(string strAttribName, bool bThrowError = true, long lDefault = 0);
-	virtual int GetAttribInt(string strAttribName, bool bThrowError = true, int iDefault = 0);
-	virtual double GetAttribDouble(string strAttribName, bool bThrowError = true, double dblDefault = 0);
-	virtual float GetAttribFloat(string strAttribName, bool bThrowError = true, float fltDefault = 0);
-	virtual bool GetAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
+	virtual std::string GetAttribString(std::string strAttribName, bool bCanBeBlank = false, bool bThrowError = true, std::string strDefault = "");
+	virtual long GetAttribLong(std::string strAttribName, bool bThrowError = true, long lDefault = 0);
+	virtual int GetAttribInt(std::string strAttribName, bool bThrowError = true, int iDefault = 0);
+	virtual double GetAttribDouble(std::string strAttribName, bool bThrowError = true, double dblDefault = 0);
+	virtual float GetAttribFloat(std::string strAttribName, bool bThrowError = true, float fltDefault = 0);
+	virtual bool GetAttribBool(std::string strAttribName, bool bThrowError = true, bool bDefault = false);
 
-	virtual void SetAttrib(string strAttribName, string strVal);
-	virtual void SetAttrib(string strAttribName, char cVal);
-	virtual void SetAttrib(string strAttribName, unsigned char cVal);
-	virtual void SetAttrib(string strAttribName, long lVal);
-	virtual void SetAttrib(string strAttribName, int iVal);
-	virtual void SetAttrib(string strAttribName, double dblVal);
-	virtual void SetAttrib(string strAttribName, float fltVal);
-	virtual void SetAttrib(string strAttribName, bool bVal);
+	virtual void SetAttrib(std::string strAttribName, std::string strVal);
+	virtual void SetAttrib(std::string strAttribName, char cVal);
+	virtual void SetAttrib(std::string strAttribName, unsigned char cVal);
+	virtual void SetAttrib(std::string strAttribName, long lVal);
+	virtual void SetAttrib(std::string strAttribName, int iVal);
+	virtual void SetAttrib(std::string strAttribName, double dblVal);
+	virtual void SetAttrib(std::string strAttribName, float fltVal);
+	virtual void SetAttrib(std::string strAttribName, bool bVal);
 
-	virtual string GetChildAttribString(string strAttribName, bool bCanBeBlank = false, bool bThrowError = true, string strDefault = "");
-	virtual long GetChildAttribLong(string strAttribName, bool bThrowError = true, long lDefault = 0);
-	virtual int GetChildAttribInt(string strAttribName, bool bThrowError = true, int iDefault = 0);
-	virtual double GetChildAttribDouble(string strAttribName, bool bThrowError = true, double dblDefault = 0);
-	virtual float GetChildAttribFloat(string strAttribName, bool bThrowError = true, float fltDefault = 0);
-	virtual bool GetChildAttribBool(string strAttribName, bool bThrowError = true, bool bDefault = false);
+	virtual std::string GetChildAttribString(std::string strAttribName, bool bCanBeBlank = false, bool bThrowError = true, std::string strDefault = "");
+	virtual long GetChildAttribLong(std::string strAttribName, bool bThrowError = true, long lDefault = 0);
+	virtual int GetChildAttribInt(std::string strAttribName, bool bThrowError = true, int iDefault = 0);
+	virtual double GetChildAttribDouble(std::string strAttribName, bool bThrowError = true, double dblDefault = 0);
+	virtual float GetChildAttribFloat(std::string strAttribName, bool bThrowError = true, float fltDefault = 0);
+	virtual bool GetChildAttribBool(std::string strAttribName, bool bThrowError = true, bool bDefault = false);
 
-	virtual void SetChildAttrib(string strAttribName, string strVal);
-	virtual void SetChildAttrib(string strAttribName, char cVal);
-	virtual void SetChildAttrib(string strAttribName, unsigned char cVal);
-	virtual void SetChildAttrib(string strAttribName, long lVal);
-	virtual void SetChildAttrib(string strAttribName, int iVal);
-	virtual void SetChildAttrib(string strAttribName, double dblVal);
-	virtual void SetChildAttrib(string strAttribName, float fltVal);
-	virtual void SetChildAttrib(string strAttribName, bool bVal);
+	virtual void SetChildAttrib(std::string strAttribName, std::string strVal);
+	virtual void SetChildAttrib(std::string strAttribName, char cVal);
+	virtual void SetChildAttrib(std::string strAttribName, unsigned char cVal);
+	virtual void SetChildAttrib(std::string strAttribName, long lVal);
+	virtual void SetChildAttrib(std::string strAttribName, int iVal);
+	virtual void SetChildAttrib(std::string strAttribName, double dblVal);
+	virtual void SetChildAttrib(std::string strAttribName, float fltVal);
+	virtual void SetChildAttrib(std::string strAttribName, bool bVal);
 
-	virtual void AddChildDoc(string &strDoc);	
-	virtual string GetChildDoc();
-	virtual string GetParentTagName();
+	virtual void AddChildDoc(std::string &strDoc);	
+	virtual std::string GetChildDoc();
+	virtual std::string GetParentTagName();
 
-	virtual void Load(string strFilename);
-	virtual void Save(string strFilename);
+	virtual void Load(std::string strFilename);
+	virtual void Save(std::string strFilename);
 };
 
 }				//StdUtils

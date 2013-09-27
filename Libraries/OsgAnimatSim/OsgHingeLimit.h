@@ -23,7 +23,7 @@ namespace OsgAnimatSim
 			    OsgHingeLimit();
 			    virtual ~OsgHingeLimit();
             
-                virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
+                virtual void SetConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
 
 			    virtual void LimitAlpha(float fltA);
                 virtual void SetLimitPos(float fltHeight);

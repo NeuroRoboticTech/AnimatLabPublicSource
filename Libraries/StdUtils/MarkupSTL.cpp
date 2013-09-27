@@ -167,10 +167,10 @@ bool CMarkupSTL::FindChildElem( const char* szName )
 	return false;
 }
 
-string CMarkupSTL::GetTagName() const
+std::string CMarkupSTL::GetTagName() const
 {
 	// Return the tag name at the current main position
-	string strTagName;
+	std::string strTagName;
 
 	if ( m_iPos )
 		strTagName = x_GetTagName( m_iPos );
@@ -206,7 +206,7 @@ bool CMarkupSTL::OutOfElem()
 	return false;
 }
 
-string CMarkupSTL::GetAttribName( int n ) const
+std::string CMarkupSTL::GetAttribName( int n ) const
 {
 	// Return nth attribute name of main position
 	if ( ! m_iPos || m_nNodeType != MNT_ELEMENT )
@@ -243,7 +243,7 @@ bool CMarkupSTL::RestorePos( const char* szPosName )
 	// Restore element position if found in saved position map
 	if ( szPosName )
 	{
-		string strPosName = szPosName;
+		std::string strPosName = szPosName;
 		mapSavedPosT::const_iterator iterSavePos = m_mapSavedPos.find( strPosName );
 		if ( iterSavePos != m_mapSavedPos.end() )
 		{
@@ -268,7 +268,7 @@ bool CMarkupSTL::GetOffsets( int& nStart, int& nEnd ) const
 	return false;
 }
 
-string CMarkupSTL::GetChildSubDoc() const
+std::string CMarkupSTL::GetChildSubDoc() const
 {
 	if ( m_iPosChild )
 	{
@@ -366,7 +366,7 @@ int CMarkupSTL::x_ParseElem( int iPosParent )
 	// Loop past ignored tags
 	TokenPos token( m_strDoc.c_str() );
 	token.nNext = m_aPos[iPosParent].nEndL;
-	string strName;
+	std::string strName;
 	while ( strName.empty() )
 	{
 		// Look for left angle bracket of start tag
@@ -547,7 +547,7 @@ bool CMarkupSTL::x_FindToken( CMarkupSTL::TokenPos& token )
 	return true;
 }
 
-string CMarkupSTL::x_GetToken( const CMarkupSTL::TokenPos& token ) const
+std::string CMarkupSTL::x_GetToken( const CMarkupSTL::TokenPos& token ) const
 {
 	// The token contains indexes into the document identifying a small substring
 	// Build the substring from those indexes and return it
@@ -687,7 +687,7 @@ int CMarkupSTL::x_ParseNode( CMarkupSTL::TokenPos& token )
 	return nTypeFound;
 }
 
-string CMarkupSTL::x_GetTagName( int iPos ) const
+std::string CMarkupSTL::x_GetTagName( int iPos ) const
 {
 	// Return the tag name at specified element
 	TokenPos token( m_strDoc.c_str() );
@@ -738,7 +738,7 @@ bool CMarkupSTL::x_FindAttrib( CMarkupSTL::TokenPos& token, const char* szAttrib
 	return false;
 }
 
-string CMarkupSTL::x_GetAttrib( int iPos, const char* szAttrib ) const
+std::string CMarkupSTL::x_GetAttrib( int iPos, const char* szAttrib ) const
 {
 	// Return the value of the attrib at specified element
 	if ( ! iPos || m_nNodeType != MNT_ELEMENT )
@@ -768,7 +768,7 @@ bool CMarkupSTL::x_SetAttrib( int iPos, const char* szAttrib, const char* szValu
 	TokenPos token( m_strDoc.c_str() );
 	token.nNext = m_aPos[iPos].nStartL + 1;
 	int nInsertAt, nReplace = 0;
-	string strInsert;
+	std::string strInsert;
 	if ( x_FindAttrib( token, szAttrib ) )
 	{
 		// Decision: for empty value leaving attrib="" instead of removing attrib
@@ -780,7 +780,7 @@ bool CMarkupSTL::x_SetAttrib( int iPos, const char* szAttrib, const char* szValu
 	else
 	{
 		// Insert string name value pair
-		string strFormat;
+		std::string strFormat;
 		strFormat = " ";
 		strFormat += szAttrib;
 		strFormat += "=\"";
@@ -801,7 +801,7 @@ bool CMarkupSTL::x_SetAttrib( int iPos, const char* szAttrib, const char* szValu
 	return true;
 }
 
-bool CMarkupSTL::x_CreateNode( string& strNode, int nNodeType, const char* szText )
+bool CMarkupSTL::x_CreateNode( std::string& strNode, int nNodeType, const char* szText )
 {
 	// Set strNode based on nNodeType and szText
 	// Return false if szText would jeopardize well-formed document
@@ -823,7 +823,7 @@ bool CMarkupSTL::x_SetData( int iPos, const char* szData, int nCDATA )
 {
 	// Set data at specified position
 	// if nCDATA==1, set content of element to a CDATA Section
-	string strInsert;
+	std::string strInsert;
 
 	// Set data in iPos element
 	if ( ! iPos || m_aPos[iPos].iElemChild )
@@ -845,10 +845,10 @@ bool CMarkupSTL::x_SetData( int iPos, const char* szData, int nCDATA )
 		nReplace = 1;
 
 		// Pre-adjust since <NAME/> becomes <NAME>data</NAME>
-		string strTagName = x_GetTagName( iPos );
+		std::string strTagName = x_GetTagName( iPos );
 		m_aPos[iPos].nStartR -= 1;
 		m_aPos[iPos].nEndL -= (1 + strTagName.size());
-		string strFormat;
+		std::string strFormat;
 		strFormat = ">";
 		strFormat += strInsert;
 		strFormat += "</";
@@ -868,7 +868,7 @@ bool CMarkupSTL::x_SetData( int iPos, const char* szData, int nCDATA )
 	return true;
 }
 
-string CMarkupSTL::x_GetData( int iPos ) const
+std::string CMarkupSTL::x_GetData( int iPos ) const
 {
 	// Return a string representing data between start and end tag
 	// Return empty string if there are any children elements
@@ -882,7 +882,7 @@ string CMarkupSTL::x_GetData( int iPos ) const
 				&& strncmp( &token.szDoc[token.nL+1], "![CDATA[", 8 ) == 0 )
 		{
 			int nEndCDATA = m_strDoc.find( "]]>", token.nNext );
-			if ( nEndCDATA != string::npos && nEndCDATA < m_aPos[iPos].nEndL )
+			if ( nEndCDATA != std::string::npos && nEndCDATA < m_aPos[iPos].nEndL )
 			{
 				return m_strDoc.substr( token.nL+9, nEndCDATA-token.nL-9 );
 			}
@@ -892,7 +892,7 @@ string CMarkupSTL::x_GetData( int iPos ) const
 	return "";
 }
 
-string CMarkupSTL::x_TextToDoc( const char* szText, bool bAttrib ) const
+std::string CMarkupSTL::x_TextToDoc( const char* szText, bool bAttrib ) const
 {
 	//
 	// &lt;   less than
@@ -907,7 +907,7 @@ string CMarkupSTL::x_TextToDoc( const char* szText, bool bAttrib ) const
 	static char* szaReplace[] = { "&lt;","&amp;","&gt;","&apos;","&quot;" };
 	const char* pFind = bAttrib?"<&>\'\"":"<&>";
 	const char* pSource = szText;
-	string strResult;
+	std::string strResult;
 	int nLen = strlen( szText );
 	strResult.reserve( nLen + nLen / 10 );
 	char cSource = *pSource;
@@ -928,7 +928,7 @@ string CMarkupSTL::x_TextToDoc( const char* szText, bool bAttrib ) const
 	return strResult;
 }
 
-string CMarkupSTL::x_TextFromDoc( int nLeft, int nRight ) const
+std::string CMarkupSTL::x_TextFromDoc( int nLeft, int nRight ) const
 {
 	//
 	// Conveniently the result is always the same or shorter in length
@@ -936,7 +936,7 @@ string CMarkupSTL::x_TextFromDoc( int nLeft, int nRight ) const
 	static char* szaCode[] = { "lt;","amp;","gt;","apos;","quot;" };
 	static int anCodeLen[] = { 3,4,3,5,5 };
 	static char* szSymbol = "<&>\'\"";
-	string strResult;
+	std::string strResult;
 	strResult.reserve( nRight - nLeft + 1 );
 	const char* pSource = m_strDoc.c_str();
 	int nChar = nLeft;
@@ -965,7 +965,7 @@ string CMarkupSTL::x_TextFromDoc( int nLeft, int nRight ) const
 	return strResult;
 }
 
-void CMarkupSTL::x_DocChange( int nLeft, int nReplace, const string& strInsert )
+void CMarkupSTL::x_DocChange( int nLeft, int nReplace, const std::string& strInsert )
 {
 	// Insert strInsert int m_strDoc at nLeft replacing nReplace chars
 	//
@@ -1172,7 +1172,7 @@ bool CMarkupSTL::x_AddElem( const char* szName, const char* szValue, bool bInser
 	}
 
 	// Create string for insert
-	string strInsert;
+	std::string strInsert;
 	int nLenName = strlen(szName);
 	int nLenValue = szValue? strlen(szValue) : 0;
 	if ( ! nLenValue )
@@ -1188,7 +1188,7 @@ bool CMarkupSTL::x_AddElem( const char* szName, const char* szValue, bool bInser
 	else
 	{
 		// <NAME>value</NAME>
-		string strValue = x_TextToDoc( szValue );
+		std::string strValue = x_TextToDoc( szValue );
 		nLenValue = strValue.size();
 		strInsert = "<";
 		strInsert += szName;
@@ -1206,8 +1206,8 @@ bool CMarkupSTL::x_AddElem( const char* szName, const char* szValue, bool bInser
 	int nReplace = 0, nLeft = m_aPos[iPos].nStartL;
 	if ( bEmptyParent )
 	{
-		string strParentTagName = x_GetTagName(iPosParent);
-		string strFormat;
+		std::string strParentTagName = x_GetTagName(iPosParent);
+		std::string strFormat;
 		strFormat = ">\r\n";
 		strFormat += strInsert;
 		strFormat += "</";
@@ -1273,16 +1273,16 @@ bool CMarkupSTL::x_AddSubDoc( const char* szSubDoc, bool bInsert, bool bAddChild
 		token.nNext = 0;
 		nNodeType = x_ParseNode( token );
 	}
-	string strInsert = token.szDoc;
+	std::string strInsert = token.szDoc;
 
 	// Insert subdocument
 	m_aPos[iPosParent].nEndL = nOffset;
 	int nReplace = 0, nLeft = nOffset;
-	string strParentTagName;
+	std::string strParentTagName;
 	if ( bEmptyParent )
 	{
 		strParentTagName = x_GetTagName(iPosParent);
-		string strFormat;
+		std::string strFormat;
 		strFormat = ">\r\n";
 		strFormat += strInsert;
 		strFormat += "</";
@@ -1300,7 +1300,7 @@ bool CMarkupSTL::x_AddSubDoc( const char* szSubDoc, bool bInsert, bool bAddChild
 	if ( iPos <= 0 )
 	{
 		// Abort because not well-formed
-		string strRevert = bEmptyParent?"/":"";
+		std::string strRevert = bEmptyParent?"/":"";
 		x_DocChange( nLeft, strInsert.size(), strRevert );
 		m_iPosFree = iPosFreeBeforeAdd;
 		return false;
@@ -1369,7 +1369,7 @@ int CMarkupSTL::x_RemoveElem( int iPos )
 	if ( ! x_FindToken(token) || token.szDoc[token.nL] == '<' )
 		nAfterEnd = token.nL;
 	int nLen = nAfterEnd - m_aPos[iPos].nStartL;
-	x_DocChange( m_aPos[iPos].nStartL, nLen, string() );
+	x_DocChange( m_aPos[iPos].nStartL, nLen, std::string() );
 	x_Adjust( iPos, - nLen, true );
 	return iPosPrev;
 }

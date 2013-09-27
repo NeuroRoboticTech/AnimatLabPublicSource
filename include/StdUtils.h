@@ -75,7 +75,7 @@
 #include <algorithm>
 #include <string.h>
 //#include <vfw.h>
-using namespace std;
+//using namespace std;
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
@@ -100,23 +100,23 @@ namespace StdUtils
 	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__, "")
 #endif
 	
-	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, unsigned char iVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, unsigned short iVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, int iVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, long lVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, float fltVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, double dblVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strValueName, string strVal);
-	void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																		 string strText);
+	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, std::string strSourceFile, long lSourceLine);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, unsigned char iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, unsigned short iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, int iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, long lVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, float fltVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, double dblVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, std::string strVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strText);
 }
 
 #include "tree.hh"

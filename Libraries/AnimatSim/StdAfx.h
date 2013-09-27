@@ -30,6 +30,8 @@
 
 //#include "NeuralLibrary.h"
 #include "StdUtils.h"
+using namespace std;
+
 #include "AnimatConstants.h"
 #include "AnimatUtils.h"
 

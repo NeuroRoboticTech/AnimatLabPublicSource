@@ -537,7 +537,7 @@ float CStdColor::operator[](const int iIndex)
 \param	strParamName	Name of the string parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdColor::Load(CStdXml &oXml, string strParamName, bool bThrowError)
+void CStdColor::Load(CStdXml &oXml, std::string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -560,10 +560,10 @@ void CStdColor::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 \date	5/3/2011
 
 \param	strXml			The xml used to load data. 
-\param	strParamName	Name of the string parameter. 
+\param	strParamName	Name of the std::string parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdColor::Load(string strXml, string strParamName, bool bThrowError)
+void CStdColor::Load(std::string strXml, std::string strParamName, bool bThrowError)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);

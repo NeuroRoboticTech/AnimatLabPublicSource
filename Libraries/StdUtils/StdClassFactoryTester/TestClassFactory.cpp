@@ -24,7 +24,7 @@ TestClassFactory::~TestClassFactory()
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *TestClassFactory::CreateObject(string strClassType, string strObjectType, bool bThrowError)
+CStdSerialize *TestClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 

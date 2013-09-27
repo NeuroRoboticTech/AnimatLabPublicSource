@@ -204,8 +204,8 @@ public:
 	void Clear();
 	double Evaluate(double dblX);
 
-	virtual void Load(CStdXml &oXml, string strParamName, bool bThrowError = false);
-	virtual void Save(CStdXml &oXml, string strParamName);
+	virtual void Load(CStdXml &oXml, std::string strParamName, bool bThrowError = false);
+	virtual void Save(CStdXml &oXml, std::string strParamName);
 };
 
 }				//StdUtils

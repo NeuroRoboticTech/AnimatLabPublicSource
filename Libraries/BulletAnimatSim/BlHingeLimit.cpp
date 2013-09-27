@@ -16,7 +16,7 @@ namespace BulletAnimatSim
 
 BlHingeLimit::BlHingeLimit()
 {
-    OsgHingeLimit::ConstraintLimit(this);
+    OsgHingeLimit::SetConstraintLimit(this);
 }
 
 BlHingeLimit::~BlHingeLimit()

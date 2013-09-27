@@ -11,18 +11,18 @@ class XYTraceHelper
 {
 	// friend functions of this class
 	friend void SetTraceFilePrefix(LPCTSTR strFilePrefix);
-	friend string GetTraceFilePrefix();
+	friend std::string GetTraceFilePrefix();
 	friend void SetTraceLevel(const int nLevel);
 	friend int GetTraceLevel();
 	friend void Std_Log(const int nLevel, bool bPrintHeader, LPCTSTR strFormat, ...);
 	friend void Std_ResetLog();
 
 	// internal data members
-	string m_strFilename;
+	std::string m_strFilename;
 	HANDLE	m_hFile;
 	int m_nLevel;
 	long m_nThreadId;
-	string m_strTraceFilePrefix;
+	std::string m_strTraceFilePrefix;
 	SYSTEMTIME m_timeStart;
 
 	// close the current trace file
@@ -36,7 +36,7 @@ class XYTraceHelper
 	{
 		// construct the new trace file path
 		TCHAR strFilePath[1001];
-		string strPrefix;
+		std::string strPrefix;
 		SYSTEMTIME sysTime;
 		::GetLocalTime(&sysTime);
 
@@ -144,7 +144,7 @@ void SetTraceFilePrefix(LPCTSTR strFilePrefix)
 	theHelper.Unlock();
 }
 
-string GetTraceFilePrefix()
+std::string GetTraceFilePrefix()
 {
 	return theHelper.m_strTraceFilePrefix;
 }
@@ -162,7 +162,7 @@ void SetTraceLevel(const int nLevel)
 int GetTraceLevel()
 {return theHelper.GetTraceLevel();}
 
-string GetLevel(const int nLevel)
+std::string GetLevel(const int nLevel)
 {
 	switch ( nLevel )
 	{
@@ -241,7 +241,7 @@ void STD_UTILS_PORT Std_Log(const int nLevel, bool bPrintHeader, LPCTSTR strForm
 			theHelper.OpenTraceFile();
 		}
 		
-		string strLevel = GetLevel(nLevel);
+		std::string strLevel = GetLevel(nLevel);
 
 		// write the trace message
 		if(hFile)

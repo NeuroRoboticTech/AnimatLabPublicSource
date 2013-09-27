@@ -69,7 +69,9 @@ void BlBallSocket::SetupPhysics()
 
     //Get the matrices for the joint relative to the child and parent.
     osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
-    osg::Matrix osgJointRelChild = SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation());
+    CStdFPoint vPos = m_lpThisMI->Position();
+    CStdFPoint vRot = m_lpThisMI->Rotation();
+    osg::Matrix osgJointRelChild = SetupMatrix(vPos, vRot);
 
     btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
     btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);

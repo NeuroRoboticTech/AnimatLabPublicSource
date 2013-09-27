@@ -4,7 +4,7 @@
 
 template <class T>
 // the linked list class
-class CStdPtrArray : public vector<T*>
+class CStdPtrArray : public std::vector<T*>
 {
 
 public:
@@ -25,7 +25,7 @@ public:
 			this->at(i) = NULL;
 		}
 
-		vector<T*>::clear();
+		std::vector<T*>::clear();
 	};
 
 	virtual void RemoveAll() {this->clear();};
@@ -53,12 +53,12 @@ public:
 			*oPos = NULL;
 		}
 
-		vector<T*>::erase(oPos);
+		std::vector<T*>::erase(oPos);
 	}
 
-	virtual void erase(typename vector<T*>::iterator oBegin, typename vector<T*>::iterator oEnd)
+	virtual void erase(typename std::vector<T*>::iterator oBegin, typename std::vector<T*>::iterator oEnd)
 	{
-		typename vector<T*>::iterator oPos;
+		typename std::vector<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(*oPos) 
@@ -66,7 +66,7 @@ public:
 			*oPos = NULL;
 		}
 
-		vector<T*>::erase(oBegin, oEnd);
+		std::vector<T*>::erase(oBegin, oEnd);
 	}
 
 
@@ -114,7 +114,7 @@ void CopyPtrArray(CStdPtrArray<T> &oSource, CStdPtrArray<T> &oDest)
 
 template <class T>
 // the linked list class
-class CStdArray : public vector<T>
+class CStdArray : public std::vector<T>
 {
 
 public:
@@ -135,7 +135,7 @@ public:
 		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(typename vector<T>::iterator oPos)
+	virtual void RemoveAt(typename std::vector<T>::iterator oPos)
 	{this->erase(oPos);}
 
 	virtual void SetSize(long lSize)
@@ -162,7 +162,7 @@ public:
 
 template <class T>
 // the linked list class
-class CStdPtrDeque : public deque<T*>
+class CStdPtrDeque : public std::deque<T*>
 {
 
 public:
@@ -196,7 +196,7 @@ public:
 			this->at(i) = NULL;
 		}
 
-		deque<T*>::clear();
+		std::deque<T*>::clear();
 	};
 
 	virtual void RemoveAll() {this->clear();};
@@ -211,10 +211,10 @@ public:
 		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(typename deque<T*>::iterator oPos)
+	virtual void RemoveAt(typename std::deque<T*>::iterator oPos)
 	{this->erase(oPos);}
 
-	virtual void erase(typename deque<T*>::iterator oPos)
+	virtual void erase(typename std::deque<T*>::iterator oPos)
 	{
 		if(oPos!=this->end())
 		{
@@ -223,12 +223,12 @@ public:
 			*oPos = NULL;
 		}
 
-		deque<T*>::erase(oPos);
+		std::deque<T*>::erase(oPos);
 	}
 
-	virtual void erase(typename deque<T*>::iterator oBegin, typename deque<T*>::iterator oEnd)
+	virtual void erase(typename std::deque<T*>::iterator oBegin, typename std::deque<T*>::iterator oEnd)
 	{
-		typename deque<T*>::iterator oPos;
+		typename std::deque<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(*oPos) 
@@ -236,7 +236,7 @@ public:
 			*oPos = NULL;
 		}
 
-		deque<T*>::erase(oBegin, oEnd);
+		std::deque<T*>::erase(oBegin, oEnd);
 	}
 
 
@@ -260,7 +260,7 @@ public:
 
 template <class T>
 // the linked list class
-class CStdDeque : public deque<T>
+class CStdDeque : public std::deque<T>
 {
 
 public:
@@ -297,7 +297,7 @@ public:
 		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(typename deque<T>::iterator oPos)
+	virtual void RemoveAt(typename std::deque<T>::iterator oPos)
 	{this->erase(oPos);}
 
 
@@ -321,7 +321,7 @@ public:
 
 template <class T>
 // the Stack class
-class CStdPtrStack : public stack<T*>
+class CStdPtrStack : public std::stack<T*>
 {
 public:
 	virtual ~CStdPtrStack() {this->clear();};
@@ -373,7 +373,7 @@ public:
 
 template <class T>
 // the Stack class
-class CStdStack : public stack<T>
+class CStdStack : public std::stack<T>
 {
 public:
 	virtual ~CStdStack() {this->clear();};
@@ -410,7 +410,7 @@ public:
 
 template <class Key, class T>
 // the linked list class
-class CStdPtrMap : public map<Key, T*>
+class CStdPtrMap : public std::map<Key, T*>
 {
 
 public:
@@ -418,7 +418,7 @@ public:
 
 	virtual void Add(Key oKey, T *lpVal)
 	{
-		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end())
 			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
@@ -429,7 +429,7 @@ public:
 
 	virtual void Remove(const Key &oKey)
 	{
-		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos==this->end())
 			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
@@ -443,29 +443,29 @@ public:
 	virtual void clear()
 	{	
 		//Lets go through and delete all the non null pointers.
-		typename map<Key, T*>::iterator oPos;
+		typename std::map<Key, T*>::iterator oPos;
 		for(oPos=this->begin(); oPos!=this->end(); ++oPos)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
 		
-		map<Key, T*>::clear();
+		std::map<Key, T*>::clear();
 	};
 
-	virtual typename map<Key, T*>::size_type erase(const Key &oKey)
+	virtual typename std::map<Key, T*>::size_type erase(const Key &oKey)
 	{	
-		typename map<Key, T*>::iterator oPos = this->find(oKey);
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end() && oPos->second)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
-		return map<Key, T*>::erase(oKey);
+		return std::map<Key, T*>::erase(oKey);
 	}
 
 /*
-	virtual void erase(map<Key, T*>::iterator oPos)
+	virtual void erase(std::map<Key, T*>::iterator oPos)
 	{
 		if(oPos!=end() && oPos->second)
 		{
@@ -473,19 +473,19 @@ public:
 			oPos->second = NULL;
 		}
 
-		map<Key, T*>::erase(oPos);
+		std::map<Key, T*>::erase(oPos);
 	}
 
-	virtual void erase(map<Key, T*>::iterator oBegin, map<Key, T*>::iterator oEnd)
+	virtual void erase(std::map<Key, T*>::iterator oBegin, std::map<Key, T*>::iterator oEnd)
 	{
-		map<Key, T*>::iterator oPos;
+		std::map<Key, T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
 
-		map<Key, T*>::erase(oBegin, oEnd);
+		std::map<Key, T*>::erase(oBegin, oEnd);
 	}
 	*/
 };
@@ -498,7 +498,7 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 
 	oDest.RemoveAll();
 
-	typename map<Key, T*>::iterator oPos;
+	typename std::map<Key, T*>::iterator oPos;
 	for(oPos=oSource.begin(); oPos!=oSource.end(); ++oPos)
 	{
 		if(oPos->second) 
@@ -513,7 +513,7 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 
 template <class Key, class T>
 // the linked list class
-class CStdMap : public map<Key, T>
+class CStdMap : public std::map<Key, T>
 {
 
 public:
@@ -521,7 +521,7 @@ public:
 
 	virtual void Add(Key oKey, T oVal)
 	{
-		typename map<Key, T>::iterator oPos = this->find(oKey);
+		typename std::map<Key, T>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end())
 			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
@@ -530,12 +530,12 @@ public:
 
 	virtual void RemoveAll() {this->clear();};
 
-	virtual void RemoveAt(typename map<Key, T>::iterator it)
+	virtual void RemoveAt(typename std::map<Key, T>::iterator it)
 	{this->erase(it);};
 
 	virtual void Remove(const Key &oKey)
 	{
-		typename map<Key, T>::iterator oPos = this->find(oKey);
+		typename std::map<Key, T>::iterator oPos = this->find(oKey);
 		if(oPos==this->end())
 			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
@@ -820,10 +820,10 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 #define CStdFPoint CStdPoint<float>
 #define CStdDPoint CStdPoint<double>
 
-#define IntVector vector<int>
-#define LongVector vector<long>
-#define FloatVector vector<float>
-#define DoubleVector vector<float>
+#define IntVector std::vector<int>
+#define LongVector std::vector<long>
+#define FloatVector std::vector<float>
+#define DoubleVector std::vector<float>
 
 #ifdef NOTDEFINEDNOW
 	template<typename T>

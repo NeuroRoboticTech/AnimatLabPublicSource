@@ -11,5 +11,5 @@ public:
 	TestClassFactory();
 	virtual ~TestClassFactory();
 
-	virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, bool bThrowError = true);
+	virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 };

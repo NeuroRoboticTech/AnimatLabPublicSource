@@ -58,14 +58,14 @@ void ptr_print_subtree_bracketed(const tree<T>& t, typename tree<T>::iterator iR
 template<class T>
 void print_tree_bracketed(const tree<T>& t) 
 {
-	ostringstream str;
+	std::ostringstream str;
 	print_tree_bracketed(t, str);
 	str << std::endl << std::endl;
 
 #ifdef WIN32
 	OutputDebugString(str.str().c_str());
 #else
-    cout << str.str();
+    std::cout << str.str();
 #endif
 }
 
@@ -86,14 +86,14 @@ void print_tree_bracketed(const tree<T>& t, std::ostream& str)
 template<class T>
 void ptr_print_tree_bracketed(const tree<T>& t) 
 {
-	ostringstream str;
+	std::ostringstream str;
 	ptr_print_tree_bracketed(t, str);
 	str << std::endl << std::endl;
 
 #ifdef WIN32
 	OutputDebugString(str.str().c_str());
 #else
-    cout << str.str();
+    std::cout << str.str();
 #endif
 }
 

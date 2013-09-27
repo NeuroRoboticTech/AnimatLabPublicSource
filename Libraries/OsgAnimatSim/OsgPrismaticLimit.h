@@ -31,7 +31,7 @@ namespace OsgAnimatSim
 			    virtual void LimitAlpha(float fltA);
 			    virtual void SetLimitPos(float fltRadius);
 
-                virtual void ConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
+                virtual void SetConstraintLimit(ConstraintLimit *lpLimit) {m_lpThisLimit = lpLimit;};
 
 			    osg::Geometry *BoxGeometry();
 			    osg::MatrixTransform *BoxMT();

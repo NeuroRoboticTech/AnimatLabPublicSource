@@ -16,7 +16,7 @@ CStdSerialize *TestObject::Clone()
 	return NULL;
 }
 
-void TestObject::Trace(ostream &oOs)
+void TestObject::Trace(std::ostream &oOs)
 {
 }
 

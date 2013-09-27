@@ -5,8 +5,8 @@ BOOST_AUTO_TEST_SUITE( Tree_Suite )
 
 BOOST_AUTO_TEST_CASE( test_case1 )
 {
-   tree<string> tr;
-   tree<string>::iterator top, one, two, loc, banana, three;
+   tree<std::string> tr;
+   tree<std::string>::iterator top, one, two, loc, banana, three;
 
 	top=tr.begin();
 	one=tr.insert(top, "one");

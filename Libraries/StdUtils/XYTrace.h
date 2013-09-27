@@ -21,7 +21,7 @@ enum TraceLevel
 };
 
 extern void SetTraceFilePrefix(LPCTSTR strFilePrefix);
-extern string GetTraceFilePrefix();
+extern std::string GetTraceFilePrefix();
 extern void SetTraceLevel(const int nLevel);
 extern int GetTraceLevel();
 //extern void Std_Log(const int nLevel, LPCTSTR strFormat, ...);

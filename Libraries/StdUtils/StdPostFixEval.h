@@ -20,10 +20,10 @@ class STD_UTILS_PORT CStdPostFixEval
 {
 protected:
 	/// The post-fix equation
-	string m_strEquation;
+	std::string m_strEquation;
 
 	/// internal array used to store the equation parts.
-	CStdArray<string> m_aryPostFix;
+	CStdArray<std::string> m_aryPostFix;
 
 	/// Array of variables
 	CStdPtrArray<CStdVariable> m_aryVariables;
@@ -34,22 +34,22 @@ protected:
 	/// The double solution value
 	double m_dblSolution;
 
-	void SavePostFixInArray(string &strEqu);
+	void SavePostFixInArray(std::string &strEqu);
 	void GetParams(double &dblLeft, double &dblRight, int iNumParams);
-	CStdVariable *FindVariable(string strVarName);
-	void FillInVariables(CStdArray<string> &aryPostFix);
+	CStdVariable *FindVariable(std::string strVarName);
+	void FillInVariables(CStdArray<std::string> &aryPostFix);
 
 public:
 	CStdPostFixEval();
 	virtual ~CStdPostFixEval();
 
-	void AddVariable(string strVarName);
-	void SetVariable(string strVarName, double dblVal);
+	void AddVariable(std::string strVarName);
+	void SetVariable(std::string strVarName, double dblVal);
 
 	double Solution();
 
-	void Equation(string strVal);
-	string Equation();
+	void Equation(std::string strVal);
+	std::string Equation();
 
 	double Solve();
 };

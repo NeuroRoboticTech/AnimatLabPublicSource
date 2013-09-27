@@ -102,7 +102,7 @@ protected:
 #endif
 
 	std::string m_strDoc;
-	string m_strError;
+	std::string m_strError;
 
 	struct ElemPos
 	{

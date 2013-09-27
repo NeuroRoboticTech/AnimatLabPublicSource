@@ -104,8 +104,8 @@ public:
 	void Normalize();
 	void ClearNearZero(float fltTolerance = 1e-5f);
 	float operator[](const int iIndex);
-	void Load(CStdXml &oXml, string strParamName, bool bThrowError = true);
-	void Load(string strXml, string strParamName, bool bThrowError = true);
+	void Load(CStdXml &oXml, std::string strParamName, bool bThrowError = true);
+	void Load(std::string strXml, std::string strParamName, bool bThrowError = true);
 
 };
 

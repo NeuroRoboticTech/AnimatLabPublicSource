@@ -17,7 +17,7 @@ void STD_UTILS_PORT RelayError(CStdErrorInfo oInfo)
 {throw oInfo;}
 
 
-void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, string strValueName, long lVal)
+void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string strError, std::string strValueName, long lVal)
 {
 	ostringstream oStream;
 
@@ -26,7 +26,7 @@ void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, s
 	ThrowError(lError, strSource, strError, oStream.str());
 }
 
-void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, string strValueName, double dblVal)
+void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string strError, std::string strValueName, double dblVal)
 {
 	ostringstream oStream;
 
@@ -35,14 +35,14 @@ void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, s
 	ThrowError(lError, strSource, strError, oStream.str());
 }
 
-void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, string strValueName, string strVal)
+void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string strError, std::string strValueName, std::string strVal)
 {
 	strVal = strError + "  " + strValueName + ": " + strVal;
 
 	ThrowError(lError, strSource, strVal);
 }
 
-void STD_UTILS_PORT ThrowError(long lError, string strSource, string strError, string strAddToError)
+void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string strError, std::string strAddToError)
 {
 	CStdErrorInfo oInfo;
 
@@ -66,7 +66,7 @@ int g_iAppID = 1000;
 
 \return	ID.
 **/
-string STD_UTILS_PORT Std_CreateAppID()
+std::string STD_UTILS_PORT Std_CreateAppID()
 {
 	//Need to make this threadsafe at somet point.
 	
@@ -84,11 +84,11 @@ string STD_UTILS_PORT Std_CreateAppID()
 \param	strSourceFile	The string source file. 
 \param	lSourceLine  	Source line. 
 **/
-void AddToErrorCallChain(CStdErrorInfo &oInfo, string strSourceFile, long lSourceLine)
+void AddToErrorCallChain(CStdErrorInfo &oInfo, std::string strSourceFile, long lSourceLine)
 {
 	if(lSourceLine > 0)
 	{
-		ostringstream oStream;
+		std::ostringstream oStream;
 		oStream << strSourceFile << " (" << lSourceLine << ")"; 
 		oInfo.m_aryCallChain.Add(oStream.str());
 	}
@@ -108,7 +108,7 @@ void AddToErrorCallChain(CStdErrorInfo &oInfo, string strSourceFile, long lSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, long lSourceLine)
+void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, std::string strSourceFile, long lSourceLine)
 {
 	AddToErrorCallChain(oInfo, strSourceFile, lSourceLine);
 	throw oInfo;
@@ -129,10 +129,10 @@ void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, string strSourceFile, lo
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, unsigned char iVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, unsigned char iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << (int) iVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -152,10 +152,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, unsigned short iVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, unsigned short iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << iVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -175,10 +175,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, int iVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, int iVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << iVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -198,10 +198,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, long lVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, long lVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << lVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -221,10 +221,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, float fltVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, float fltVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << fltVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -244,10 +244,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, double dblVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, double dblVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << dblVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -267,10 +267,10 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strValueName, string strVal)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strValueName, std::string strVal)
 {
-	ostringstream oStream;
+	std::ostringstream oStream;
 	oStream << "   (" << strValueName << ": " << strVal << ")"; 
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
@@ -291,8 +291,8 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourceFile, long lSourceLine, 
-																	 string strText)
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																	 std::string strText)
 {
 	CStdErrorInfo oInfo;
 
@@ -318,7 +318,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, string strError, string strSourc
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strVal)
 {return strVal;}
 
 /**
@@ -331,14 +331,14 @@ string STD_UTILS_PORT Std_ToStr(string strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(const char *strVal)
+std::string STD_UTILS_PORT Std_ToStr(const char *strVal)
 {
-	string strV = strVal;
+	std::string strV = strVal;
 	return strV;
 }
 
 /**
-\brief	Converts a value to a string
+\brief	Converts a value to a std::string
 
 \author	dcofer
 \date	5/3/2011
@@ -347,7 +347,7 @@ string STD_UTILS_PORT Std_ToStr(const char *strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(unsigned char iVal)
+std::string STD_UTILS_PORT Std_ToStr(unsigned char iVal)
 {
 	std::ostringstream buf; 
 	buf << iVal ;
@@ -365,7 +365,7 @@ string STD_UTILS_PORT Std_ToStr(unsigned char iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
+std::string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
 {
 	std::ostringstream buf; 
 	buf << iVal ;
@@ -374,7 +374,7 @@ string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
 }
 
 /**
-\brief	Converts a value to a string
+\brief	Converts a value to a std::string
 
 \author	dcofer
 \date	5/3/2011
@@ -383,7 +383,7 @@ string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(int iVal)
+std::string STD_UTILS_PORT Std_ToStr(int iVal)
 {
 	std::ostringstream buf; 
 	buf << iVal ;
@@ -401,7 +401,7 @@ string STD_UTILS_PORT Std_ToStr(int iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(long lVal)
+std::string STD_UTILS_PORT Std_ToStr(long lVal)
 {
 	std::ostringstream buf; 
 	buf << lVal ;
@@ -419,7 +419,7 @@ string STD_UTILS_PORT Std_ToStr(long lVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(float fltVal)
+std::string STD_UTILS_PORT Std_ToStr(float fltVal)
 {
 	std::ostringstream buf; 
 	buf << fltVal ;
@@ -437,7 +437,7 @@ string STD_UTILS_PORT Std_ToStr(float fltVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(double dblVal)
+std::string STD_UTILS_PORT Std_ToStr(double dblVal)
 {
 	std::ostringstream buf; 
 	buf << dblVal ;
@@ -455,7 +455,7 @@ string STD_UTILS_PORT Std_ToStr(double dblVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(bool bVal)
+std::string STD_UTILS_PORT Std_ToStr(bool bVal)
 {	
 	if(bVal)
 		return "True";
@@ -474,7 +474,7 @@ string STD_UTILS_PORT Std_ToStr(bool bVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, unsigned char iVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned char iVal)
 {return Std_Format(strFormat.c_str(), iVal);}
 
 /**
@@ -488,7 +488,7 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, unsigned char iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, unsigned short iVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned short iVal)
 {return Std_Format(strFormat.c_str(), iVal);}
 
 /**
@@ -502,7 +502,7 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, unsigned short iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, int iVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, int iVal)
 {return Std_Format(strFormat.c_str(), iVal);}
 
 /**
@@ -516,7 +516,7 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, int iVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, long lVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, long lVal)
 {return Std_Format(strFormat.c_str(), lVal);}
 
 /**
@@ -530,7 +530,7 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, long lVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, float fltVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, float fltVal)
 {return Std_Format(strFormat.c_str(), fltVal);}
 
 /**
@@ -544,7 +544,7 @@ string STD_UTILS_PORT Std_ToStr(string strFormat, float fltVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToStr(string strFormat, double dblVal)
+std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, double dblVal)
 {return Std_Format(strFormat.c_str(), dblVal);}
 
 /**
@@ -575,9 +575,9 @@ bool STD_UTILS_PORT Std_ToBool(int iVal)
 
 \return	.
 **/
-bool STD_UTILS_PORT Std_ToBool(string strVal)
+bool STD_UTILS_PORT Std_ToBool(std::string strVal)
 {
-	string strV = Std_ToUpper(Std_Trim(strVal));
+	std::string strV = Std_ToUpper(Std_Trim(strVal));
 
 	if(strV == "TRUE" || strV == "1")
 		return true;
@@ -595,7 +595,7 @@ bool STD_UTILS_PORT Std_ToBool(string strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_NullStr(string strFormat)
+std::string STD_UTILS_PORT Std_NullStr(std::string strFormat)
 {
 	if(strFormat.length())
 		return ("'" + strFormat + "'");
@@ -615,7 +615,7 @@ string STD_UTILS_PORT Std_NullStr(string strFormat)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
+std::string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
 {
 	// len will hold the required length of converted string
 	int len = WideCharToMultiByte(CP_ACP, 0, strData, -1, 0, 0, 0, 0);
@@ -624,7 +624,7 @@ string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
 	// do the conversion
 	WideCharToMultiByte(CP_ACP, 0, strData, -1, result, len, 0, 0);
 
-	string strVal = result;
+	std::string strVal = result;
 	if(result) 
 		delete[] result;
 
@@ -641,7 +641,7 @@ string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
 
 \return	.
 **/
-LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData)
+LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(std::string strData)
 {
 	// len will hold the required length of converted string
 	int len = MultiByteToWideChar(CP_ACP, 0, strData.c_str(), -1, 0, 0);
@@ -664,7 +664,7 @@ LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(string strData)
 
 \return	.
 **/
-int STD_UTILS_PORT Std_VariantTypeToConst(string strType)
+int STD_UTILS_PORT Std_VariantTypeToConst(std::string strType)
 {
 
 	strType = Std_Trim(Std_ToUpper(strType));
@@ -711,7 +711,7 @@ int STD_UTILS_PORT Std_VariantTypeToConst(string strType)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ConstToVariantType(int iType)
+std::string STD_UTILS_PORT Std_ConstToVariantType(int iType)
 {
 	switch(iType)
 	{
@@ -759,21 +759,21 @@ string STD_UTILS_PORT Std_ConstToVariantType(int iType)
 
 \return	.
 **/
-int STD_UTILS_PORT  Std_Split(const string& input, const string& delimiter, CStdArray<string> &results)
+int STD_UTILS_PORT  Std_Split(const std::string& input, const std::string& delimiter, CStdArray<std::string> &results)
 {
 	int iPos = 0;
 	int newPos = -1;
 	int sizeS2 = delimiter.size();
 	int isize = input.size();
 
-	vector<int> positions;
+	std::vector<int> positions;
 	results.RemoveAll();
 
 	newPos = input.find (delimiter, 0);
 
 	if( newPos < 0 ) 
 	{ 
-		string strInput = input;
+		std::string strInput = input;
 
 		if(!Std_IsBlank(input))
 		{
@@ -797,7 +797,7 @@ int STD_UTILS_PORT  Std_Split(const string& input, const string& delimiter, CStd
 
 	for( int i=0; i <= positions.size(); i++ )
 	{
-		string s;
+		std::string s;
 		if( i == 0 ) 
 			{s = input.substr( i, positions[i] ); }
 		else
@@ -835,9 +835,9 @@ int STD_UTILS_PORT  Std_Split(const string& input, const string& delimiter, CStd
 
 \return	.
 **/
-string STD_UTILS_PORT Std_Combine(CStdArray<string> &aryParts, string strDelimiter)
+std::string STD_UTILS_PORT Std_Combine(CStdArray<std::string> &aryParts, std::string strDelimiter)
 {
-	string strCombined;
+	std::string strCombined;
 	int iCount = aryParts.GetSize();
 	for(int iPart=0; iPart<iCount; iPart++)
 	{
@@ -858,7 +858,7 @@ string STD_UTILS_PORT Std_Combine(CStdArray<string> &aryParts, string strDelimit
 
 \return	.
 **/
-string STD_UTILS_PORT Std_Trim(string strVal)
+std::string STD_UTILS_PORT Std_Trim(std::string strVal)
 {
 	return Std_TrimLeft(Std_TrimRight(strVal));
 }
@@ -886,7 +886,7 @@ bool NotSpace(char c)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_TrimLeft(string strVal)
+std::string STD_UTILS_PORT Std_TrimLeft(std::string strVal)
 {
 	strVal.erase(strVal.begin(), std::find_if(strVal.begin(), strVal.end(), NotSpace));
 	return strVal;
@@ -902,7 +902,7 @@ string STD_UTILS_PORT Std_TrimLeft(string strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_TrimRight(string strVal)
+std::string STD_UTILS_PORT Std_TrimRight(std::string strVal)
 {
 	// NOTE:  When comparing reverse_iterators here (MYRITER), I avoid using
 	// operator!=.  This is because namespace rel_ops also has a template
@@ -910,7 +910,7 @@ string STD_UTILS_PORT Std_TrimRight(string strVal)
 	// for reverse_iterator in the header <utility>.
 	// Thanks to John James for alerting me to this.
 
-	string::reverse_iterator it = std::find_if(strVal.rbegin(), strVal.rend(), NotSpace);
+	std::string::reverse_iterator it = std::find_if(strVal.rbegin(), strVal.rend(), NotSpace);
 	if ( !(strVal.rend() == it) )
 		strVal.erase(strVal.rend() - it);
 
@@ -928,7 +928,7 @@ string STD_UTILS_PORT Std_TrimRight(string strVal)
 
 \return	.
 **/
-bool STD_UTILS_PORT Std_IsNumeric(string strVal)
+bool STD_UTILS_PORT Std_IsNumeric(std::string strVal)
 {
 	int iPos = strVal.find_first_not_of("0123456789.+-eE");
 	if(iPos == -1)
@@ -947,7 +947,7 @@ bool STD_UTILS_PORT Std_IsNumeric(string strVal)
 
 \return	.
 **/
-bool STD_UTILS_PORT Std_IsIntegerType(string strVal)
+bool STD_UTILS_PORT Std_IsIntegerType(std::string strVal)
 {
 	int iPos = strVal.find_first_not_of("0123456789+-");
 	if(iPos == -1)
@@ -967,7 +967,7 @@ bool STD_UTILS_PORT Std_IsIntegerType(string strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_Left(string strVal, int iCount)
+std::string STD_UTILS_PORT Std_Left(std::string strVal, int iCount)
 {
 	iCount = SSMAX(0, SSMIN(iCount, static_cast<int>(strVal.length())));
 	return strVal.substr(0, iCount); 
@@ -984,7 +984,7 @@ string STD_UTILS_PORT Std_Left(string strVal, int iCount)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_Right(string strVal, int iCount)
+std::string STD_UTILS_PORT Std_Right(std::string strVal, int iCount)
 {
 	iCount = SSMAX(0, SSMIN(iCount, static_cast<int>(strVal.length())));
 	return strVal.substr(strVal.length()-iCount);
@@ -1000,7 +1000,7 @@ string STD_UTILS_PORT Std_Right(string strVal, int iCount)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToUpper(string strVal)
+std::string STD_UTILS_PORT Std_ToUpper(std::string strVal)
 {
 	std::transform(strVal.begin(), strVal.end(), strVal.begin(), (int(*)(int))std::toupper);
 	return strVal;
@@ -1016,7 +1016,7 @@ string STD_UTILS_PORT Std_ToUpper(string strVal)
 
 \return	.
 **/
-string STD_UTILS_PORT Std_ToLower(string strVal)
+std::string STD_UTILS_PORT Std_ToLower(std::string strVal)
 {
 	std::transform(strVal.begin(), strVal.end(), strVal.begin(), (int(*)(int))std::tolower);
 	return strVal;
@@ -1034,10 +1034,10 @@ string STD_UTILS_PORT Std_ToLower(string strVal)
 
 \return	new string.
 **/
-string STD_UTILS_PORT Std_Replace(string strVal, string strFind, string strReplace)
+std::string STD_UTILS_PORT Std_Replace(std::string strVal, std::string strFind, std::string strReplace)
 {
 	int i = strVal.find(strFind, 0);
-	while(i != string::npos)
+	while(i != std::string::npos)
 	{
 		strVal.replace(i, strFind.size(), strReplace);
 		i = strVal.find(strFind, 0);
@@ -1055,7 +1055,7 @@ string STD_UTILS_PORT Std_Replace(string strVal, string strFind, string strRepla
 
 \return	.
 **/
-string STD_UTILS_PORT Std_Format(const char* szFormat,...)
+std::string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 {
 #ifdef WIN32
 	std::vector<CHAR> _buffer(8096);
@@ -1064,7 +1064,7 @@ string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 	int ret = _vsnprintf(&_buffer[0],8096,szFormat,argList);
 
 	va_end(argList);
-	string strVal;
+	std::string strVal;
 
 	strVal.assign(&_buffer[0],ret);
 	return strVal;
@@ -1104,7 +1104,7 @@ long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned c
 
 \return	.
 **/
-long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, string strParamName, bool bThrowError, long lDefault)
+long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, std::string strParamName, bool bThrowError, long lDefault)
 {
 	long lVal=0;
 
@@ -1139,7 +1139,7 @@ long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, string strParamName, bool bThrowE
 \param	bThrowError 	true to throw error if there is a problem. 
 
 **/
-void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, string strParamName, float *aryColor, bool bThrowError)
+void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, std::string strParamName, float *aryColor, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -1178,7 +1178,7 @@ void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, string strParamName, float *ary
 \param	bThrowError			true to throw error. 
 
 **/
-void STD_UTILS_PORT Std_LoadColor(string strXml, string strParamName, float *aryColor, bool bThrowError)
+void STD_UTILS_PORT Std_LoadColor(std::string strXml, std::string strParamName, float *aryColor, bool bThrowError)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1306,7 +1306,7 @@ double STD_UTILS_PORT Std_DRand( double low, double high )
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_InValidRange(int iMinVal, int iMaxVal, int iVal, bool bThrowError, string strParamName)
+bool STD_UTILS_PORT Std_InValidRange(int iMinVal, int iMaxVal, int iVal, bool bThrowError, std::string strParamName)
 {
 
 	if( (iVal>=iMinVal) && (iVal<=iMaxVal) )
@@ -1345,7 +1345,7 @@ bool STD_UTILS_PORT Std_InValidRange(int iMinVal, int iMaxVal, int iVal, bool bT
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_InValidRange(long lMinVal, long lMaxVal, long lVal, bool bThrowError, string strParamName)
+bool STD_UTILS_PORT Std_InValidRange(long lMinVal, long lMaxVal, long lVal, bool bThrowError, std::string strParamName)
 {
 
 	if( (lVal>=lMinVal) && (lVal<=lMaxVal) )
@@ -1384,7 +1384,7 @@ bool STD_UTILS_PORT Std_InValidRange(long lMinVal, long lMaxVal, long lVal, bool
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_InValidRange(float fltMinVal, float fltMaxVal, float fltVal, bool bThrowError, string strParamName)
+bool STD_UTILS_PORT Std_InValidRange(float fltMinVal, float fltMaxVal, float fltVal, bool bThrowError, std::string strParamName)
 {
 
 	if( (fltVal>=fltMinVal) && (fltVal<=fltMaxVal) )
@@ -1423,7 +1423,7 @@ bool STD_UTILS_PORT Std_InValidRange(float fltMinVal, float fltMaxVal, float flt
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_InValidRange(double dblMinVal, double dblMaxVal, double dblVal, bool bThrowError, string strParamName)
+bool STD_UTILS_PORT Std_InValidRange(double dblMinVal, double dblMaxVal, double dblVal, bool bThrowError, std::string strParamName)
 {
 
 	if( (dblVal>=dblMinVal) && (dblVal<=dblMaxVal) )
@@ -1462,7 +1462,7 @@ bool STD_UTILS_PORT Std_InValidRange(double dblMinVal, double dblMaxVal, double 
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsBelowMax(int iMaxVal, int iVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsBelowMax(int iMaxVal, int iVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && iVal<iMaxVal) || (bInclusiveLimit && iVal<=iMaxVal) )
@@ -1500,7 +1500,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(int iMaxVal, int iVal, bool bThrowError, stri
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsBelowMax(long lMaxVal, long lVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsBelowMax(long lMaxVal, long lVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && lVal<lMaxVal) || (bInclusiveLimit && lVal<=lMaxVal) )
@@ -1538,7 +1538,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(long lMaxVal, long lVal, bool bThrowError, st
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsBelowMax(float fltMaxVal, float fltVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsBelowMax(float fltMaxVal, float fltVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && fltVal<fltMaxVal) || (bInclusiveLimit && fltVal<=fltMaxVal) )
@@ -1576,7 +1576,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(float fltMaxVal, float fltVal, bool bThrowErr
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsBelowMax(double dblMaxVal, double dblVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsBelowMax(double dblMaxVal, double dblVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && dblVal<dblMaxVal) || (bInclusiveLimit && dblVal<=dblMaxVal) )
@@ -1614,7 +1614,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(double dblMaxVal, double dblVal, bool bThrowE
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsAboveMin(int iMinVal, int iVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsAboveMin(int iMinVal, int iVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && iVal>iMinVal) || (bInclusiveLimit && iVal>=iMinVal) )
@@ -1652,7 +1652,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(int iMinVal, int iVal, bool bThrowError, stri
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsAboveMin(long lMinVal, long lVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsAboveMin(long lMinVal, long lVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && lVal>lMinVal) || (bInclusiveLimit && lVal>=lMinVal) )
@@ -1690,7 +1690,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(long lMinVal, long lVal, bool bThrowError, st
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsAboveMin(float fltMinVal, float fltVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsAboveMin(float fltMinVal, float fltVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && fltVal>fltMinVal) || (bInclusiveLimit && fltVal>=fltMinVal) )
@@ -1728,7 +1728,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(float fltMinVal, float fltVal, bool bThrowErr
 
 \return	true if valid, false else.
 **/
-bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowError, string strParamName, bool bInclusiveLimit)
+bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowError, std::string strParamName, bool bInclusiveLimit)
 {
 
 	if( (!bInclusiveLimit && dblVal>dblMinVal) || (bInclusiveLimit && dblVal>=dblMinVal) )
@@ -1762,9 +1762,9 @@ bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowE
 
 \return	new string.
 **/
-string STD_UTILS_PORT Std_CheckString(string strVal)
+std::string STD_UTILS_PORT Std_CheckString(std::string strVal)
 {
-	string strTemp = strVal;
+	std::string strTemp = strVal;
 	strTemp = Std_ToUpper(Std_Trim(strTemp));
 	return strTemp;
 }
@@ -1779,9 +1779,9 @@ string STD_UTILS_PORT Std_CheckString(string strVal)
 
 \return	true if blank, false else.
 **/
-bool STD_UTILS_PORT Std_IsBlank(string strVal)
+bool STD_UTILS_PORT Std_IsBlank(std::string strVal)
 {
-	string strTemp = Std_Trim(strVal);
+	std::string strTemp = Std_Trim(strVal);
 	if(!strTemp.length())
 		return true;
 	else
@@ -1789,11 +1789,11 @@ bool STD_UTILS_PORT Std_IsBlank(string strVal)
 }
 
 
-string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, string strParamName, bool bThrowError)
+std::string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, std::string strParamName, bool bThrowError)
 {
 	int iParam=0;
 	bool bRetrieved=false, bFound = false;
-	string strParam="", strFound ="";
+	std::string strParam="", strFound ="";
 	while(!bRetrieved && iParam<argc)
 	{
 		strParam = Std_ToUpper(Std_Trim(argv[iParam]));
@@ -1870,9 +1870,9 @@ unsigned long bit_put (unsigned long x, int i, unsigned long v)
 
 \return	hex string.
 **/
-string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes) 
+std::string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes) 
 {
-	string strHex;
+	std::string strHex;
 	Std_ByteArrayToHexString(aryBytes, strHex);
 	return strHex;
 }
@@ -1887,9 +1887,9 @@ string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryByte
 \param [in,out]	strHex  	The string hexadecimal. 
 
 **/
-void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes, string &strHex) 
+void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes, std::string &strHex) 
 {
-	string strByte;
+	std::string strByte;
 	int iByte, iByteLength;
 
 	strHex = "";
@@ -1912,7 +1912,7 @@ void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes,
 \param	strHex				The hexadecimal string. 
 \param [in,out]	aryBytes	The array of bytes. 
 **/
-void STD_UTILS_PORT Std_HexStringToByteArray(string strHex, CStdArray<unsigned char> &aryBytes) 
+void STD_UTILS_PORT Std_HexStringToByteArray(std::string strHex, CStdArray<unsigned char> &aryBytes) 
 {
 	int iLength, iByteSize, iNibble0, iNibble1, iByte;
 	unsigned char cVal;
@@ -1944,7 +1944,7 @@ void STD_UTILS_PORT Std_HexStringToByteArray(string strHex, CStdArray<unsigned c
 
 \return	Byte array
 **/
-unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(string strHex, long &lArraySize) 
+unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(std::string strHex, long &lArraySize) 
 {
 	int iLength, iByteSize, iNibble0, iNibble1, iByte;
 	unsigned char cVal;
@@ -1977,7 +1977,7 @@ unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(string strHex, long &lArr
 
 \return	byte.
 **/
-unsigned char STD_UTILS_PORT Std_HexToByte(string strVal) 
+unsigned char STD_UTILS_PORT Std_HexToByte(std::string strVal) 
 {
 	unsigned char cVal;
 
@@ -2011,7 +2011,7 @@ unsigned char STD_UTILS_PORT Std_HexCharToByte(char cVal)
 		return ((cVal - 'A') + 0x0A);
 
 	//if we get here then it is an invalid character sequence.
-	string strVal;
+	std::string strVal;
 	strVal = cVal;
 	THROW_PARAM_ERROR(Std_Err_lInvalidHexChar, Std_Err_strInvalidHexChar, "HexValue", strVal);
 	return 0;
@@ -2937,13 +2937,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	void STD_UTILS_PORT Std_SetLogLevel(const int iLevel)
 	{g_iTraceLevel = iLevel;}
 
-	void STD_UTILS_PORT Std_LogMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bPrintHeader)
+	void STD_UTILS_PORT Std_LogMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bPrintHeader)
 	{
 		//if(g_iTraceLevel==0 || iLevel>g_iTraceLevel)
 		if(iLevel>g_iTraceLevel)
 			return;
 
-		string strFinalMessage;
+		std::string strFinalMessage;
 
 		if(iSourceLine>=0)
 			strFinalMessage = STR(strSourceFile) + " (" + STR(iSourceLine) + ") \r\n" + STR(strMessage) + "\r\n";
@@ -2953,9 +2953,9 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 		STLOG_WRITE(strFinalMessage.c_str()); 
 	}
 
-	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
+	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
 	{
-		string strTemp = strMessage + "\r\n";
+		std::string strTemp = strMessage + "\r\n";
 
 	#ifdef STD_TRACE_TO_DEBUGGER
 		wchar_t *sMessage = Std_ConvertFromANSI(strTemp);
@@ -3019,7 +3019,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	\param	strFilePrefix	The string file prefix. 
 
 	**/
-	void STD_UTILS_PORT Std_SetLogFilePrefix(string strFilePrefix)
+	void STD_UTILS_PORT Std_SetLogFilePrefix(std::string strFilePrefix)
 	{
 #ifdef WIN32
 		if(GetTraceFilePrefix() != strFilePrefix)
@@ -3035,7 +3035,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	
 	\return	prefix.
 	**/
-	string STD_UTILS_PORT Std_GetLogFilePrefix()
+	std::string STD_UTILS_PORT Std_GetLogFilePrefix()
 	{
 #ifdef WIN32
 		return GetTraceFilePrefix();
@@ -3073,13 +3073,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	\param	bPrintHeader 	true to print header. 
 
 	**/
-	void STD_UTILS_PORT Std_LogMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bPrintHeader)
+	void STD_UTILS_PORT Std_LogMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bPrintHeader)
 	{
 #ifdef WIN32
 		if(GetTraceLevel()==0 || iLevel>GetTraceLevel())
 			return;
 
-		string strFinalMessage;
+		std::string strFinalMessage;
 
 		if(iSourceLine>=0)
 			strFinalMessage = STR(strSourceFile) + " (" + STR(iSourceLine) + ") \r\n" + STR(strMessage) + "\r\n";
@@ -3104,13 +3104,13 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	\param	bPrintHeader 	true to print header. 
 
 	**/
-	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
+	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
 	{
 #ifdef WIN32
 		int iLogLevel = GetTraceLevel();
 		if(iLogLevel==0||iLevel>iLogLevel) return;
 
-		string strTemp = strMessage + "\r\n";
+		std::string strTemp = strMessage + "\r\n";
 
 		#ifdef STD_TRACE_TO_DEBUGGER
 			OutputDebugString(strTemp.c_str());
@@ -3185,10 +3185,10 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds)
 
 \return	True if full path name.
 **/
-bool STD_UTILS_PORT Std_IsFullPath(string strPath)
+bool STD_UTILS_PORT Std_IsFullPath(std::string strPath)
 {
 	return boost::filesystem::path(strPath).has_root_path();
-	//CStdArray<string> aryParts;
+	//CStdArray<std::string> aryParts;
 	//int iCount = Std_Split(strPath, ":", aryParts);
 	//if(iCount>1)
 	//	return true;
@@ -3207,7 +3207,7 @@ bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 \param [in,out]	strFile	Filename. 
 
 **/
-void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, string &strFile)
+void STD_UTILS_PORT Std_SplitPathAndFile(std::string strFullPath, std::string &strPath, std::string &strFile)
 {
     try 
     {
@@ -3236,7 +3236,7 @@ void STD_UTILS_PORT Std_SplitPathAndFile(string strFullPath, string &strPath, st
 
 \return	.
 **/
-bool STD_UTILS_PORT Std_DirectoryExists(string strPath)
+bool STD_UTILS_PORT Std_DirectoryExists(std::string strPath)
 {
 	boost::filesystem::path p = boost::filesystem::path(strPath);
 	return boost::filesystem::is_directory(p);
@@ -3251,7 +3251,7 @@ bool STD_UTILS_PORT Std_DirectoryExists(string strPath)
 \param	strFullPath	   	Full pathname of the string full file. 
 
 **/
-bool STD_UTILS_PORT Std_FileExists(string strFullPath)
+bool STD_UTILS_PORT Std_FileExists(std::string strFullPath)
 {
     try 
     {
@@ -3279,9 +3279,9 @@ bool STD_UTILS_PORT Std_FileExists(string strFullPath)
 
 \return	Path to the current executable.
 **/
-string STD_UTILS_PORT Std_ExecutablePath()
+std::string STD_UTILS_PORT Std_ExecutablePath()
 {
-    string strPath = "";
+    std::string strPath = "";
 	char strBuffer[2000];
 
 #ifdef WIN32
@@ -3300,7 +3300,7 @@ string STD_UTILS_PORT Std_ExecutablePath()
 
 #ifdef WIN32
 
-void Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
+void Std_SetFileTime(std::string strFilename, SYSTEMTIME newTime)
 {
 	// Create a FILETIME struct and convert our new SYSTEMTIME
 	// over to the FILETIME struct for use in SetFileTime below
@@ -3317,7 +3317,7 @@ void Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
 	CloseHandle(filename);
 }
 
-void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+void STD_UTILS_PORT Std_SetFileTime(std::string strFilename)
 {
 	// Create a systemtime struct
 	SYSTEMTIME thesystemtime;
@@ -3332,7 +3332,7 @@ void STD_UTILS_PORT Std_SetFileTime(string strFilename)
 #else
 
 //NEED TO TEST
-void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+void STD_UTILS_PORT Std_SetFileTime(std::string strFilename)
 {
     utime(strFilename.c_str(), NULL);
 }

@@ -40,7 +40,7 @@ IStdClassFactory::~IStdClassFactory()
 
 \return	Pointer to the loaded module, exception if not found.
 **/
-IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
+IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 {
 	TRACE_DEBUG("Loading Module: " + strModuleName);
 
@@ -81,15 +81,15 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 
 \return	Pointer to the loaded module, exception if not found.
 **/
-IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
+IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 {
 	TRACE_DEBUG("Loading Module: " + strModuleName);
 
 	if(Std_IsBlank(strModuleName))
 		THROW_ERROR(Std_Err_lModuleNameIsBlank, Std_Err_strModuleNameIsBlank);
 
-	string strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
-	//string strModRenamed = "/home/me/Projects/AnimatLabPublicSource/unit_test_bin/libStdClassFactoryTester.so";
+	std::string strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
+	//std::string strModRenamed = "/home/me/Projects/AnimatLabPublicSource/unit_test_bin/libStdClassFactoryTester.so";
 	
 	void *hMod = NULL;
 

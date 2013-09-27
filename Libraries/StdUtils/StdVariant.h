@@ -77,7 +77,7 @@ protected:
 	unsigned int *m_lpUInt;				
 
 	/// StdVtString	string.
-	string *m_lpString;						
+	std::string *m_lpString;						
 
 public:
 	CStdVariant();
@@ -85,7 +85,7 @@ public:
 
 	void Reset();
 	int VariantType();
-	string VariantTypeName();
+	std::string VariantTypeName();
 
 	short GetShort(bool bConvert = true);
 	short *GetShortPtr();
@@ -142,18 +142,18 @@ public:
 	void SetValue(unsigned int Val);
 	void SetPtr(unsigned int *lpVal);
 
-	string GetString(bool bConvert = true);
-	string GetNumericString();
-	string *GetStringPtr();
-	void SetValue(string Val);
-	void SetPtr(string *lpVal);
+	std::string GetString(bool bConvert = true);
+	std::string GetNumericString();
+	std::string *GetStringPtr();
+	void SetValue(std::string Val);
+	void SetPtr(std::string *lpVal);
 
 	void Copy(CStdVariant &oVar);
 	void operator=(CStdVariant &oVar);
 
 	//CStdSerialize overloads
 	virtual CStdSerialize *Clone();
-	virtual void Trace(ostream &oOs);
+	virtual void Trace(std::ostream &oOs);
 	virtual void Load(CStdXml &oXml);
 	virtual void Save(CStdXml &oXml);
 };

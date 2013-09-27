@@ -23,22 +23,22 @@ public:
 	long m_lError;
 
 	/// The error message
-	string m_strError;
+	std::string m_strError;
 
 	/// The source line code line where the error occurred.
 	long m_lSourceLine;
 
 	/// The source file name where the error occurred.
-	string m_strSourceFile;
+	std::string m_strSourceFile;
 
 	/// The call chain of the errorr.
-	CStdArray<string> m_aryCallChain;
+	CStdArray<std::string> m_aryCallChain;
 
 	CStdErrorInfo();
-	CStdErrorInfo(long lError, string strError, string strSourceFile, long lSourceLine);
+	CStdErrorInfo(long lError, std::string strError, std::string strSourceFile, long lSourceLine);
 	~CStdErrorInfo() throw();
 
-	virtual string Log();
+	virtual std::string Log();
 
 	/**
 	\brief	Gets the error message.
@@ -46,7 +46,7 @@ public:
 	\author	dcofer
 	\date	5/3/2011
 	
-	\return	string error message.
+	\return	std::string error message.
 	**/
 	virtual const char* what() const throw() {return m_strError.c_str();};
 
@@ -56,9 +56,9 @@ public:
 	\author	dcofer
 	\date	7/5/2011
 	
-	\return	stack trace string of the error.
+	\return	stack trace std::string of the error.
 	**/
-	virtual string StackTrace();
+	virtual std::string StackTrace();
 
 };
 

@@ -1623,7 +1623,7 @@ public:
 	
 	\return	The output stream.
 	**/
-	ostream& operator<<(ostream& output) {return output;};
+	std::ostream& operator<<(std::ostream& output) {return output;};
 
 };
 

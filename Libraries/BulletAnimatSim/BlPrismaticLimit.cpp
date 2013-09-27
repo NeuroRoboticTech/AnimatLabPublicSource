@@ -16,7 +16,7 @@ namespace BulletAnimatSim
 
 BlPrismaticLimit::BlPrismaticLimit()
 {
-    OsgPrismaticLimit::ConstraintLimit(this);
+    OsgPrismaticLimit::SetConstraintLimit(this);
 }
 
 BlPrismaticLimit::~BlPrismaticLimit()

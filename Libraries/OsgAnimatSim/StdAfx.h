@@ -87,7 +87,7 @@
 #include <osgManipulator/AntiSquish>
 
 #include "OsgWorldCoordinateNodeVisitor.h"
-
+        
 using namespace osgGA;
 
 #include <OpenThreads/Thread>

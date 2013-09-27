@@ -227,7 +227,7 @@ double CStdLookupTable::Evaluate(double dblX)
 \param	strParamName	Name of the xml parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
+void CStdLookupTable::Load(CStdXml &oXml, std::string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -261,7 +261,7 @@ void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 \param [in,out]	oXml	The xml to save. 
 \param	strParamName	Name of the xml parameter. 
 **/
-void CStdLookupTable::Save(CStdXml &oXml, string strParamName)
+void CStdLookupTable::Save(CStdXml &oXml, std::string strParamName)
 {
 }
 

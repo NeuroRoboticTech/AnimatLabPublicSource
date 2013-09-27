@@ -7,7 +7,8 @@
 		includedirs { "../../../../include", 
 			      "../../../StdUtils", 
 		   	      "../../../AnimatSim",
-			      "../../../OsgAnimatSim" }
+			      "../../../OsgAnimatSim",
+			      "/usr/local/include/bullet" }
 		libdirs { "../../../../bin" }
 		links { "dl" }
 	  
@@ -94,6 +95,7 @@
 			      "../Libraries/AnimatSim",
 			      "../Libraries/OsgAnimatSim",
 			      "../Libraries/BulletAnimatSim",
+			      "/usr/local/include/bullet",
 			      "../../3rdParty/boost_1_54_0"}	  
 		libdirs { ".",
 			  "../../../../bin" }
