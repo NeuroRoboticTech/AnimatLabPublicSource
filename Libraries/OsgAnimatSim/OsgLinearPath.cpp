@@ -454,7 +454,7 @@ void OsgLinearPath::LineColor(float *aryColor)
 \param	strXml	The color data in an xml data packet
 **/
 
-void OsgLinearPath::LineColor(string strXml)
+void OsgLinearPath::LineColor(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "LineColor");
@@ -469,7 +469,7 @@ void OsgLinearPath::LineColor(string strXml)
 
 \return	GUID ID of the part.
 **/
-string OsgLinearPath::PartID() {return m_strPartID;}
+std::string OsgLinearPath::PartID() {return m_strPartID;}
 
 /**
 \brief	Sets the GUID ID of the part this camera will track while on this path.
@@ -479,7 +479,7 @@ string OsgLinearPath::PartID() {return m_strPartID;}
 
 \param	strID	GUID ID for the part. 
 **/
-void OsgLinearPath::PartID(string strID)
+void OsgLinearPath::PartID(std::string strID)
 {
 	m_strPartID = strID;
 }
@@ -612,9 +612,9 @@ void OsgLinearPath::ResetSimulation()
 }
 
 
-bool OsgLinearPath::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool OsgLinearPath::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -697,7 +697,7 @@ bool OsgLinearPath::SetData(const string &strDataType, const string &strValue, b
 	return false;
 }
 
-void OsgLinearPath::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OsgLinearPath::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -738,7 +738,7 @@ void OsgLinearPath::QueryProperties(CStdArray<string> &aryNames, CStdArray<strin
 
 \param	strXml	The xml data packet for loading the waypoint. 
 **/
-void OsgLinearPath::AddWaypoint(string strXml)
+void OsgLinearPath::AddWaypoint(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -761,7 +761,7 @@ void OsgLinearPath::AddWaypoint(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void OsgLinearPath::RemoveWaypoint(string strID, bool bThrowError)
+void OsgLinearPath::RemoveWaypoint(std::string strID, bool bThrowError)
 {
 	int iPos = FindWaypointPos(strID, bThrowError);
 	m_ControlPoints.erase(m_ControlPoints.begin()+iPos);
@@ -781,9 +781,9 @@ void OsgLinearPath::RemoveWaypoint(string strID, bool bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int OsgLinearPath::FindWaypointPos(string strID, bool bThrowError)
+int OsgLinearPath::FindWaypointPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_ControlPoints.size();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -796,9 +796,9 @@ int OsgLinearPath::FindWaypointPos(string strID, bool bThrowError)
 	return -1;
 }
 
-bool OsgLinearPath::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool OsgLinearPath::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "WAYPOINT")
 	{
@@ -813,9 +813,9 @@ bool OsgLinearPath::AddItem(const string &strItemType, const string &strXml, boo
 	return false;
 }
 
-bool OsgLinearPath::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool OsgLinearPath::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "WAYPOINT")
 	{
@@ -985,7 +985,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void ControlPoint::Position(string strXml, bool bUseScaling)
+void ControlPoint::Position(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1008,9 +1008,9 @@ void ControlPoint::Time(double dblVal)
 		m_lpParentSpline->RedrawCurve();
 }
 
-bool ControlPoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ControlPoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
@@ -1053,7 +1053,7 @@ bool ControlPoint::SetData(const string &strDataType, const string &strValue, bo
 }
 
 
-void ControlPoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ControlPoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

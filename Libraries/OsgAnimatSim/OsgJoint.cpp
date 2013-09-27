@@ -279,7 +279,7 @@ void  OsgJoint::BuildLocalMatrix()
 	OsgBody::BuildLocalMatrix();
 }
 
-void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -359,7 +359,7 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string
 //	return false;
 //}
 
-bool OsgJoint::Physics_SetData(const string &strDataType, const string &strValue)
+bool OsgJoint::Physics_SetData(const std::string &strDataType, const std::string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
@@ -371,7 +371,7 @@ bool OsgJoint::Physics_SetData(const string &strDataType, const string &strValue
 	return false;
 }
 
-void OsgJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OsgJoint::Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 }
 

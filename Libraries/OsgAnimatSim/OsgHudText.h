@@ -20,7 +20,7 @@ namespace OsgAnimatSim
 
 		public:
 			OsgHudText();
-			OsgHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval);
+			OsgHudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval);
 			virtual ~OsgHudText();
 
 			virtual void ResetSimulation();

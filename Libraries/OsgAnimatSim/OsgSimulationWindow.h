@@ -45,7 +45,7 @@ class ANIMAT_OSG_PORT OsgSimulationWindow : public AnimatSim::SimulationWindow
 		virtual void SetCameraPositionAndLookAt(osg::Vec3d vCameraPos, osg::Vec3d vTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);
 
-		virtual float *GetDataPointer(const string &strDataType);
+		virtual float *GetDataPointer(const std::string &strDataType);
 
 		virtual void UpdateBackgroundColor();
 

@@ -76,7 +76,7 @@ void OsgFreeJoint::CreateJoint()
 #pragma region DataAccesMethods
 
 
-bool OsgFreeJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool OsgFreeJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(OsgJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -91,7 +91,7 @@ bool OsgFreeJoint::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void OsgFreeJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OsgFreeJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	OsgJoint::Physics_QueryProperties(aryNames, aryTypes);
 	BallSocket::QueryProperties(aryNames, aryTypes);

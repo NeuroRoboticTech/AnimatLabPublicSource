@@ -45,7 +45,7 @@ OsgHudText::OsgHudText()
 \param	strTargetID		  	Identifier for the string target.
 \param	strDataType		  	Type of the string data.
 **/
-OsgHudText::OsgHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval)
+OsgHudText::OsgHudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval)
 {
 	m_aryColor.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
 	m_ptPosition = ptPosition;

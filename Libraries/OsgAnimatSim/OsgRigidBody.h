@@ -94,7 +94,7 @@ namespace OsgAnimatSim
 
 			virtual void Initialize();
 			virtual void BuildLocalMatrix();
-			virtual float *Physics_GetDataPointer(const string &strDataType);
+			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_SetColor();
 			virtual void Physics_TextureChanged();

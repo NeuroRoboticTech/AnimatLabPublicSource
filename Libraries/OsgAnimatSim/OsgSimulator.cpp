@@ -153,7 +153,7 @@ double OsgSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long l
 void OsgSimulator::MicroSleep(unsigned int iMicroTime)
 {OpenThreads::Thread::microSleep(iMicroTime);}
 
-void OsgSimulator::WriteToConsole(string strMessage)
+void OsgSimulator::WriteToConsole(std::string strMessage)
 {
 	osg::notify(osg::NOTICE) << strMessage << std::endl;
 }
@@ -198,10 +198,10 @@ bool OsgSimulator::StartSimulation()
 	return true;
 }
 
-float *OsgSimulator::GetDataPointer(const string &strDataType)
+float *OsgSimulator::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	//if(strType == "FRAMEDT")
 	//	lpData = &m_fltFrameDt;
@@ -240,9 +240,9 @@ OsgSimulator *OsgSimulator::ConvertSimulator(Simulator *lpSim)
 	return lpVsSim;
 }
 
-void OsgSimulator::Save(string strFile) 
+void OsgSimulator::Save(std::string strFile) 
 {
-	string strOsgFile = strFile + ".osg";
+	std::string strOsgFile = strFile + ".osg";
 
 	osgDB::writeNodeFile(*OSGRoot(), strOsgFile.c_str());
 }

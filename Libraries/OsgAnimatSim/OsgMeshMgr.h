@@ -18,19 +18,19 @@ namespace OsgAnimatSim
 	class ANIMAT_OSG_PORT OsgMeshMgr   
 	{
 	protected:
-		CStdMap<string, pair<string, osg::ref_ptr<osg::Node>> > m_aryMeshes;
+		CStdMap<std::string, std::pair<std::string, osg::ref_ptr<osg::Node>> > m_aryMeshes;
 
-		string FileCreateTime(string strFilename);
-		osg::Node *AddMesh(string strFilename);
+		std::string FileCreateTime(std::string strFilename);
+		osg::Node *AddMesh(std::string strFilename);
 
 	public:
 		OsgMeshMgr();
 		virtual ~OsgMeshMgr();
 
-		osg::Node *LoadMesh(string strFilename);
-		void ReleaseMesh(string strFilename);
-		bool ContainesMesh(string strFilename);
-		bool FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError = true);
+		osg::Node *LoadMesh(std::string strFilename);
+		void ReleaseMesh(std::string strFilename);
+		bool ContainesMesh(std::string strFilename);
+		bool FindMesh(std::string strFilename, std::pair<std::string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError = true);
 	};
 
 }				//OsgAnimatSim

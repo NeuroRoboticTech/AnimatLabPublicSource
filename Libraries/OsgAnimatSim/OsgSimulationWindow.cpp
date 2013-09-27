@@ -321,10 +321,10 @@ void OsgSimulationWindow::OnLoseFocus()
 {
 }
 
-float *OsgSimulationWindow::GetDataPointer(const string &strDataType)
+float *OsgSimulationWindow::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	GetCameraPosition();
 

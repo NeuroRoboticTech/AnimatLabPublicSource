@@ -70,7 +70,7 @@ public:
 	virtual osg::Vec3d Position();
 	virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true);
 	virtual void Position(float fltX, float fltY, float fltZ, bool bUseScaling = true);
-	virtual void Position(string strXml, bool bUseScaling = true);
+	virtual void Position(std::string strXml, bool bUseScaling = true);
 
 	virtual double Time();
 	virtual void Time(double dblVal);
@@ -78,8 +78,8 @@ public:
 	virtual OsgLinearPath *ParentSpline() {return m_lpParentSpline;}; 
 	virtual void ParentSpline(OsgLinearPath *lpParentSpline) {m_lpParentSpline = lpParentSpline;};
 
-	virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-	virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+	virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+	virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 
@@ -153,10 +153,10 @@ public:
 	virtual CStdColor *LineColor();
 	virtual void LineColor(CStdColor &aryColor);
 	virtual void LineColor(float *aryColor);
-	virtual void LineColor(string strXml);
+	virtual void LineColor(std::string strXml);
 	
-	virtual string PartID();
-	virtual void PartID(string strID);
+	virtual std::string PartID();
+	virtual void PartID(std::string strID);
 
 	virtual double StartTime();
 	virtual void StartTime(double dblTime, bool bSortPaths = true);
@@ -178,10 +178,10 @@ public:
 	virtual void SimStarting();
 	virtual void ResetSimulation();
 
-	virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-	virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-	virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-	virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+	virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+	virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+	virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+	virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 	virtual void Initialize();
 	virtual void Load(StdUtils::CStdXml &oXml);
 
@@ -208,9 +208,9 @@ protected:
 
 	osg::ref_ptr<ControlPoint> LoadWaypoint(CStdXml &oXml);
 
-	virtual void AddWaypoint(string strXml);
-	virtual void RemoveWaypoint(string strID, bool bThrowError = true);
-	virtual int FindWaypointPos(string strID, bool bThrowError = true);
+	virtual void AddWaypoint(std::string strXml);
+	virtual void RemoveWaypoint(std::string strID, bool bThrowError = true);
+	virtual int FindWaypointPos(std::string strID, bool bThrowError = true);
 	virtual void MakeVisible(bool bVal);
 
 protected:

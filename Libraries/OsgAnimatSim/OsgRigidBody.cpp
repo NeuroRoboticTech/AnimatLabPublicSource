@@ -248,9 +248,9 @@ bool OsgRigidBody::AddOsgNodeToParent()
         return false;
 }
 
-float *OsgRigidBody::Physics_GetDataPointer(const string &strDataType)
+float *OsgRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
 
 	if(strType == "BODYTORQUEX")

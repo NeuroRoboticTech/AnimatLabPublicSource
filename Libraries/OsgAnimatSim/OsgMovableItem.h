@@ -59,11 +59,11 @@ namespace OsgAnimatSim
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 			virtual void GeometryRotationMatrix(osg::Matrix osgGeometryMT);
 
-			virtual void CreateSelectedGraphics(string strName);
-			virtual void CreateDragger(string strName);
-			virtual void CreateSelectedVertex(string strName);
+			virtual void CreateSelectedGraphics(std::string strName);
+			virtual void CreateDragger(std::string strName);
+			virtual void CreateSelectedVertex(std::string strName);
 			virtual void DeleteSelectedVertex();
-			virtual void AttachedPartMovedOrRotated(string strID);
+			virtual void AttachedPartMovedOrRotated(std::string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 
@@ -108,7 +108,7 @@ namespace OsgAnimatSim
 
 			virtual void EndGripDrag();
 
-			virtual string Physics_ID();
+			virtual std::string Physics_ID();
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_ResetGraphicsAndPhysics();
 			virtual void Physics_PositionChanged();
@@ -122,14 +122,14 @@ namespace OsgAnimatSim
 			virtual void Physics_CollectData();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_AfterResetSimulation() {};
-			virtual float *Physics_GetDataPointer(const string &strDataType);
+			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
 			virtual void Physics_ResizeDragHandler(float fltRadius);
 
-			virtual void SetTexture(string strTexture);
+			virtual void SetTexture(std::string strTexture);
 			virtual void SetCulling();
 			virtual void SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
 			virtual void SetAlpha();
@@ -147,7 +147,7 @@ namespace OsgAnimatSim
 			virtual osg::MatrixTransform* GetCameraMatrixTransform();
 
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
 		};
 
 	}			// Environment

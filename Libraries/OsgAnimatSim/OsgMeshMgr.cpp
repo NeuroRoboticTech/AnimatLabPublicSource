@@ -36,9 +36,9 @@ OsgMeshMgr::~OsgMeshMgr()
 	{Std_TraceMsg(0, "Caught Error in desctructor of OsgMeshMgr\r\n", "", -1, false, true);}
 }
 
-string OsgMeshMgr::FileCreateTime(string strFilename)
+std::string OsgMeshMgr::FileCreateTime(std::string strFilename)
 {
-    stringstream ss;
+    std::stringstream ss;
 
     //NEED TO TEST
 #ifdef WIN32
@@ -62,16 +62,16 @@ string OsgMeshMgr::FileCreateTime(string strFilename)
     return ss.str();
 }
 
-osg::Node *OsgMeshMgr::LoadMesh(string strFilename)
+osg::Node *OsgMeshMgr::LoadMesh(std::string strFilename)
 {
-	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
+	std::pair<std::string, osg::ref_ptr<osg::Node>> MeshPair;
 	
 	//If not found then load it.
 	if(!FindMesh(strFilename, MeshPair, false))
 		return AddMesh(strFilename);
 	else
 	{
-		string strCreateDate = FileCreateTime(strFilename);
+		std::string strCreateDate = FileCreateTime(strFilename);
 
 		//If the create dates match then use this one.
 		//If they do not then lets reload it.
@@ -85,14 +85,14 @@ osg::Node *OsgMeshMgr::LoadMesh(string strFilename)
 	}
 }
 
-osg::Node *OsgMeshMgr::AddMesh(string strFilename)
+osg::Node *OsgMeshMgr::AddMesh(std::string strFilename)
 {
 	osg::ref_ptr<osg::Node> lpTempMesh = osgDB::readNodeFile(strFilename.c_str());
 
 	if(lpTempMesh)
 	{
-		string strFileCreateTime = FileCreateTime(strFilename);
-		pair<string, osg::ref_ptr<osg::Node>> MeshPair2(strFileCreateTime, lpTempMesh);
+		std::string strFileCreateTime = FileCreateTime(strFilename);
+		std::pair<std::string, osg::ref_ptr<osg::Node>> MeshPair2(strFileCreateTime, lpTempMesh);
 
 		m_aryMeshes.Add(Std_CheckString(strFilename), MeshPair2);
 		return lpTempMesh.get();
@@ -102,10 +102,10 @@ osg::Node *OsgMeshMgr::AddMesh(string strFilename)
 
 }
 
-void OsgMeshMgr::ReleaseMesh(string strFilename)
+void OsgMeshMgr::ReleaseMesh(std::string strFilename)
 {
 	int iIndex=0;
-	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
+	std::pair<std::string, osg::ref_ptr<osg::Node>> MeshPair;
 	if(!FindMesh(strFilename, MeshPair, false)) return;
 	
 	MeshPair.second.release();
@@ -113,9 +113,9 @@ void OsgMeshMgr::ReleaseMesh(string strFilename)
 	m_aryMeshes.Remove(Std_CheckString(strFilename));
 }
 
-bool OsgMeshMgr::ContainesMesh(string strFilename)
+bool OsgMeshMgr::ContainesMesh(std::string strFilename)
 {
-	pair<string, osg::ref_ptr<osg::Node>> MeshPair;
+	std::pair<std::string, osg::ref_ptr<osg::Node>> MeshPair;
 
 	if(FindMesh(strFilename, MeshPair, false))
 		return true;
@@ -134,9 +134,9 @@ bool OsgMeshMgr::ContainesMesh(string strFilename)
 
 \return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
 **/
-bool OsgMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError)
+bool OsgMeshMgr::FindMesh(std::string strFilename, std::pair<std::string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError)
 {
-	CStdMap<string, pair<string, osg::ref_ptr<osg::Node>> >::iterator oPos;
+	CStdMap<std::string, std::pair<std::string, osg::ref_ptr<osg::Node>> >::iterator oPos;
 	oPos = m_aryMeshes.find(Std_CheckString(strFilename));
 
 	if(oPos != m_aryMeshes.end())

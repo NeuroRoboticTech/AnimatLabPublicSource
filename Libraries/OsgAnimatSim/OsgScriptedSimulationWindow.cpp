@@ -97,7 +97,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void OsgScriptedSimulationWindow::DefaultPosition(string strXml, bool bUseScaling)
+void OsgScriptedSimulationWindow::DefaultPosition(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -109,9 +109,9 @@ void OsgScriptedSimulationWindow::DefaultPosition(string strXml, bool bUseScalin
 	DefaultPosition(vPos, bUseScaling);
 }
 		
-string OsgScriptedSimulationWindow::DefaultPartID() {return m_strDefaultPartID;}
+std::string OsgScriptedSimulationWindow::DefaultPartID() {return m_strDefaultPartID;}
 
-void OsgScriptedSimulationWindow::DefaultPartID(string strID)
+void OsgScriptedSimulationWindow::DefaultPartID(std::string strID)
 {
 	m_strDefaultPartID = strID;
 
@@ -124,9 +124,9 @@ void OsgScriptedSimulationWindow::DefaultPartID(string strID)
 	}
 }
 
-bool OsgScriptedSimulationWindow::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool OsgScriptedSimulationWindow::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(OsgSimulationWindow::SetData(strDataType, strValue, false))
 		return true;
@@ -160,7 +160,7 @@ bool OsgScriptedSimulationWindow::SetData(const string &strDataType, const strin
 
 \param	strXml	The xml configuration data packet. 
 **/
-void OsgScriptedSimulationWindow::AddCameraPath(string strXml)
+void OsgScriptedSimulationWindow::AddCameraPath(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -186,14 +186,14 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void OsgScriptedSimulationWindow::RemoveCameraPath(string strID, bool bThrowError)
+void OsgScriptedSimulationWindow::RemoveCameraPath(std::string strID, bool bThrowError)
 {
 	int iIdx = FindCameraPath(strID);
 	m_aryCameraPaths.RemoveAt(iIdx);
 	SortPaths();
 }
 
-int OsgScriptedSimulationWindow::FindCameraPath(string strID, bool bThrowError)
+int OsgScriptedSimulationWindow::FindCameraPath(std::string strID, bool bThrowError)
 {
 	int iCount = m_aryCameraPaths.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -217,9 +217,9 @@ void OsgScriptedSimulationWindow::SortPaths()
 	}
 }
 
-bool OsgScriptedSimulationWindow::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool OsgScriptedSimulationWindow::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
@@ -234,9 +234,9 @@ bool OsgScriptedSimulationWindow::AddItem(const string &strItemType, const strin
 	return false;
 }
 
-bool OsgScriptedSimulationWindow::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool OsgScriptedSimulationWindow::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
@@ -316,7 +316,7 @@ void OsgScriptedSimulationWindow::TrackCamera()
 
 				osg::Vec3d vPos = m_lpCurrentPath->GetInterpPosition();
 
-				//string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
+				//std::string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
 				//OutputDebugString(strMesage.c_str());
 
 				SetCameraPositionAndLookAt(vPos, vTargetPos);			
@@ -342,8 +342,8 @@ void OsgScriptedSimulationWindow::Load(CStdXml &oXml)
 
 	oXml.IntoElem(); //Into Window Element
 
-	string m_strDefaultStructureID;
-	string m_strDefaultPartID;
+	std::string m_strDefaultStructureID;
+	std::string m_strDefaultPartID;
 
 	DefaultPartID(oXml.GetChildString("LookAtBodyID", m_strDefaultPartID));
 

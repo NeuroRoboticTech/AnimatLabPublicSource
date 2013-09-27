@@ -422,7 +422,7 @@ public:
 		if(oPos!=this->end())
 			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		this->insert(make_pair(oKey, lpVal));
+		this->insert(std::make_pair(oKey, lpVal));
 	};
 
 	virtual void RemoveAll() {this->clear();};
@@ -525,7 +525,7 @@ public:
 		if(oPos!=this->end())
 			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		this->insert(make_pair(oKey, oVal));
+		this->insert(std::make_pair(oKey, oVal));
 	};
 
 	virtual void RemoveAll() {this->clear();};

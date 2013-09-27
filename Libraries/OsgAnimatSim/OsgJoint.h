@@ -74,8 +74,8 @@ namespace OsgAnimatSim
 			virtual void SetupPhysics();
 
 			virtual void Initialize();
-			virtual bool Physics_SetData(const string &strDataType, const string &strValue);
-			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool Physics_SetData(const std::string &strDataType, const std::string &strValue);
+			virtual void Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 			//Methods not used by joints.
             virtual bool Physics_IsGeometryDefined() {return true;};
@@ -87,7 +87,7 @@ namespace OsgAnimatSim
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
 			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
 			virtual void Physics_DisableCollision(RigidBody *lpBody) {};
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};

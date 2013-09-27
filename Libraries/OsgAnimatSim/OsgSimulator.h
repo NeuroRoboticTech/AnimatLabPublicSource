@@ -72,13 +72,13 @@ namespace OsgAnimatSim
 		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
 		virtual void MicroSleep(unsigned int iMicroTime);
 
-		virtual void WriteToConsole(string strMessage);
+		virtual void WriteToConsole(std::string strMessage);
 
 #pragma endregion
 
 		virtual void AlphaThreshold(float fltValue);
 
-		virtual float *GetDataPointer(const string &strDataType);
+		virtual float *GetDataPointer(const std::string &strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 
 
@@ -88,7 +88,7 @@ namespace OsgAnimatSim
 		virtual void StopSimulation();
 		virtual bool StartSimulation();
 		virtual bool PauseSimulation();
-		virtual void Save(string strFile);
+		virtual void Save(std::string strFile);
 
 		static OsgSimulator *ConvertSimulator(Simulator *lpSim);
 	};
