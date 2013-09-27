@@ -124,9 +124,9 @@ double NonSpikingChemicalSynapse::PreSynapticSaturationLevel() {return m_dSatura
 
 #pragma region DataAccesMethods
 
-bool NonSpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool NonSpikingChemicalSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -162,7 +162,7 @@ bool NonSpikingChemicalSynapse::SetData(const string &strDataType, const string 
 	return false;
 }
 
-void NonSpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void NonSpikingChemicalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

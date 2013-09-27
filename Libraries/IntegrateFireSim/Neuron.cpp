@@ -1251,7 +1251,7 @@ void Neuron::AddExternalNodeInput(float fltInput)
 
 \return	Pointer to the ion channel.
 **/
-IonChannel *Neuron::FindIonChannel(string strID, bool bThrowError)
+IonChannel *Neuron::FindIonChannel(std::string strID, bool bThrowError)
 {
 	for(int iChannel=0; iChannel<m_iIonChannels; iChannel++)
 		if(m_aryIonChannels[iChannel]->ID() == strID)
@@ -1274,9 +1274,9 @@ IonChannel *Neuron::FindIonChannel(string strID, bool bThrowError)
 
 \return	The found ion channel list position.
 **/
-int Neuron::FindIonChannelListPos(string strID, bool bThrowError)
+int Neuron::FindIonChannelListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryIonChannels.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1363,9 +1363,9 @@ void Neuron::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *Neuron::GetDataPointer(const string &strDataType)
+float *Neuron::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "MEMBRANEVOLTAGE")
 		return &m_fltMemPot;
@@ -1421,9 +1421,9 @@ float *Neuron::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool Neuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Neuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(Node::SetData(strDataType, strValue, false))
 		return true;
@@ -1507,7 +1507,7 @@ bool Neuron::SetData(const string &strDataType, const string &strValue, bool bTh
 	return false;
 }
 
-void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Neuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Node::QueryProperties(aryNames, aryTypes);
 
@@ -1556,7 +1556,7 @@ void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ary
 
 \param	strXml	The xml to load. 
 **/
-void Neuron::AddIonChannel(string strXml, bool bDoNotInit)
+void Neuron::AddIonChannel(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1578,15 +1578,15 @@ void Neuron::AddIonChannel(string strXml, bool bDoNotInit)
 \param	strID	   	GUID ID for the channel to remove. 
 \param	bThrowError	true to throw error if channel is not found. 
 **/
-void Neuron::RemoveIonChannel(string strID, bool bThrowError)
+void Neuron::RemoveIonChannel(std::string strID, bool bThrowError)
 {
 	int iPos = FindIonChannelListPos(strID, bThrowError);
 	m_aryIonChannels.RemoveAt(iPos);
 }
 
-bool Neuron::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Neuron::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "IONCHANNEL")
 	{
@@ -1601,9 +1601,9 @@ bool Neuron::AddItem(const string &strItemType, const string &strXml, bool bThro
 	return false;
 }
 
-bool Neuron::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Neuron::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "IONCHANNEL")
 	{

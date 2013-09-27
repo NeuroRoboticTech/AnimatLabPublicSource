@@ -124,9 +124,9 @@ double ElectricalSynapse::TurnOnSaturate() {return m_dSaturateV;}
 
 #pragma region DataAccesMethods
 
-bool ElectricalSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool ElectricalSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -162,7 +162,7 @@ bool ElectricalSynapse::SetData(const string &strDataType, const string &strValu
 	return false;
 }
 
-void ElectricalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ElectricalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

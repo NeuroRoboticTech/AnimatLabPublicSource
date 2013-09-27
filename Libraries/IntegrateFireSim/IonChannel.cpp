@@ -337,7 +337,7 @@ void IonChannel::Minf(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Minf(string strXml)
+void IonChannel::Minf(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -383,7 +383,7 @@ void IonChannel::Tm(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Tm(string strXml)
+void IonChannel::Tm(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -429,7 +429,7 @@ void IonChannel::Hinf(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Hinf(string strXml)
+void IonChannel::Hinf(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -475,7 +475,7 @@ void IonChannel::Th(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Th(string strXml)
+void IonChannel::Th(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -541,9 +541,9 @@ void IonChannel::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *IonChannel::GetDataPointer(const string &strDataType)
+float *IonChannel::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "G")
 		return &m_fltG;
@@ -578,9 +578,9 @@ float *IonChannel::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool IonChannel::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool IonChannel::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -676,7 +676,7 @@ bool IonChannel::SetData(const string &strDataType, const string &strValue, bool
 	return false;
 }
 
-void IonChannel::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void IonChannel::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
@@ -744,8 +744,8 @@ void IonChannel::Load(CStdXml &oXml)
 
 	//Load Minf
 	oXml.IntoChildElement("Minf");
-	string strModuleName = oXml.GetChildString("ModuleName", "");
-	string strType = oXml.GetChildString("Type");
+	std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	std::string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
 	m_lpMinf = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));

@@ -514,7 +514,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::GetElecSynAt(int i) {return m_aryE
 
 \return	module name.
 **/
-string IntegrateFireNeuralModule::ModuleName() {return "IntegrateFireSim";}
+std::string IntegrateFireNeuralModule::ModuleName() {return "IntegrateFireSim";}
 
 #pragma endregion
 
@@ -650,7 +650,7 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 {
 	Neuron *lpNeuron=NULL;
-	string strType;
+	std::string strType;
 
 	try
 	{
@@ -691,7 +691,7 @@ Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 SynapseType *IntegrateFireNeuralModule::LoadSynapseType(CStdXml &oXml)
 {
 	oXml.IntoElem();
-	string strType = Std_ToUpper(oXml.GetChildString("Type"));
+	std::string strType = Std_ToUpper(oXml.GetChildString("Type"));
 	oXml.OutOfElem();
 
 	SynapseType *lpType = NULL;
@@ -722,7 +722,7 @@ SynapseType *IntegrateFireNeuralModule::LoadSynapseType(CStdXml &oXml)
 SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &oXml, int iIndex)
 {
 	SpikingChemicalSynapse *pSpikingChemSyn=NULL;
-	string strType;
+	std::string strType;
 //
 
 	try
@@ -765,7 +765,7 @@ SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &o
 NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStdXml &oXml, int iIndex)
 {
 	NonSpikingChemicalSynapse *pNonSpikingChemSyn=NULL;
-	string strType;
+	std::string strType;
 //
 
 	try
@@ -808,7 +808,7 @@ NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStd
 ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIndex)
 {
 	ElectricalSynapse  *pElecSyn=NULL;
-	string strType;
+	std::string strType;
 //
 
 	try
@@ -850,7 +850,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIn
 Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 {
 	Connexion *pConnexion=NULL;
-	string strType;
+	std::string strType;
 
 	try
 	{
@@ -1323,9 +1323,9 @@ void IntegrateFireNeuralModule::CalcUpdate()
 
 \return	The found neuron list position.
 **/
-int IntegrateFireNeuralModule::FindNeuronListPos(string strID, bool bThrowError)
+int IntegrateFireNeuralModule::FindNeuronListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1349,9 +1349,9 @@ int IntegrateFireNeuralModule::FindNeuronListPos(string strID, bool bThrowError)
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindSynapseListPos(string strID, bool bThrowError)
+int IntegrateFireNeuralModule::FindSynapseListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryConnexion.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1375,9 +1375,9 @@ int IntegrateFireNeuralModule::FindSynapseListPos(string strID, bool bThrowError
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, bool bThrowError)
+int IntegrateFireNeuralModule::FindSpikingChemListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_arySpikingChemSyn.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1401,9 +1401,9 @@ int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, bool bThrowE
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, bool bThrowError)
+int IntegrateFireNeuralModule::FindNonSpikingChemListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryNonSpikingChemSyn.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1427,9 +1427,9 @@ int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, bool bThr
 
 \return	The found synapse list position.
 **/
-int IntegrateFireNeuralModule::FindElectricalListPos(string strID, bool bThrowError)
+int IntegrateFireNeuralModule::FindElectricalListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryElecSyn.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1444,9 +1444,9 @@ int IntegrateFireNeuralModule::FindElectricalListPos(string strID, bool bThrowEr
 
 #pragma region DataAccesMethods
 
-bool IntegrateFireNeuralModule::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool IntegrateFireNeuralModule::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(NeuralModule::SetData(strDataType, strValue, false))
 		return true;
@@ -1542,7 +1542,7 @@ bool IntegrateFireNeuralModule::SetData(const string &strDataType, const string 
 	return false;
 }
 
-void IntegrateFireNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void IntegrateFireNeuralModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	NeuralModule::QueryProperties(aryNames, aryTypes);
 
@@ -1597,7 +1597,7 @@ void IntegrateFireNeuralModule::QueryProperties(CStdArray<string> &aryNames, CSt
 
 \param	strXml	The string xml to load. 
 **/
-void IntegrateFireNeuralModule::AddNeuron(string strXml, bool bDoNotInit)
+void IntegrateFireNeuralModule::AddNeuron(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1617,7 +1617,7 @@ void IntegrateFireNeuralModule::AddNeuron(string strXml, bool bDoNotInit)
 \param	strID	   	GUID ID for the neuron to remove. 
 \param	bThrowError	true to throw error if no neuron is found. 
 **/
-void IntegrateFireNeuralModule::RemoveNeuron(string strID, bool bThrowError)
+void IntegrateFireNeuralModule::RemoveNeuron(std::string strID, bool bThrowError)
 {
 	int iPos = FindNeuronListPos(strID, bThrowError);
 	m_aryNeurons.RemoveAt(iPos);
@@ -1632,7 +1632,7 @@ void IntegrateFireNeuralModule::RemoveNeuron(string strID, bool bThrowError)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapse(string strXml, bool bDoNotInit)
+void IntegrateFireNeuralModule::AddSynapse(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1651,7 +1651,7 @@ void IntegrateFireNeuralModule::AddSynapse(string strXml, bool bDoNotInit)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapseType(string strXml, bool bDoNotInit)
+void IntegrateFireNeuralModule::AddSynapseType(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1671,7 +1671,7 @@ void IntegrateFireNeuralModule::AddSynapseType(string strXml, bool bDoNotInit)
 \param	strID	   	GUUId for the string. 
 \param	bThrowError	true to throw error. 
 **/
-void IntegrateFireNeuralModule::RemoveSynapse(string strID, bool bThrowError)
+void IntegrateFireNeuralModule::RemoveSynapse(std::string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_aryConnexion.RemoveAt(iPos);
@@ -1687,13 +1687,13 @@ void IntegrateFireNeuralModule::RemoveSynapse(string strID, bool bThrowError)
 \param	strID	   	GUID ID for the synapse type to remove. 
 \param	bThrowError	true to throw error if synapse type was not found. 
 **/
-void IntegrateFireNeuralModule::RemoveSynapseType(string strID, bool bThrowError)
+void IntegrateFireNeuralModule::RemoveSynapseType(std::string strID, bool bThrowError)
 {
 	SynapseType *lpType = dynamic_cast<SynapseType *>(GetSimulator()->FindByID(strID, bThrowError));
 
 	if(lpType)
 	{
-		string strType = Std_ToUpper(lpType->Type());
+		std::string strType = Std_ToUpper(lpType->Type());
 		if(strType == "SPIKINGCHEMICAL")
 		{
 			int iPos = FindSpikingChemListPos(strID, bThrowError);
@@ -1720,9 +1720,9 @@ void IntegrateFireNeuralModule::RemoveSynapseType(string strID, bool bThrowError
 	}
 }
 
-bool IntegrateFireNeuralModule::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool IntegrateFireNeuralModule::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
@@ -1747,9 +1747,9 @@ bool IntegrateFireNeuralModule::AddItem(const string &strItemType, const string 
 	return false;
 }
 
-bool IntegrateFireNeuralModule::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool IntegrateFireNeuralModule::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{

@@ -35,9 +35,9 @@ namespace IntegrateFireSim
 			virtual void Load(CStdXml &oXml);
 
 			virtual void ResetSimulation();
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
 			
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
@@ -50,14 +50,14 @@ namespace IntegrateFireSim
 			void Delay(double dVal);
 			double Delay();
 
-			string SynapseTypeID();
-			void SynapseTypeID(string strID);
+			std::string SynapseTypeID();
+			void SynapseTypeID(std::string strID);
 
-			string SourceID();
-			void SourceID(string strID);
+			std::string SourceID();
+			void SourceID(std::string strID);
 
-			string TargetID();
-			void TargetID(string strID);
+			std::string TargetID();
+			void TargetID(std::string strID);
 
 			void ResetIDs();
 
@@ -69,13 +69,13 @@ namespace IntegrateFireSim
 
 		// LOADABLE
 			/// GUID ID for the source Neuron.
-			string m_strSourceID;
+			std::string m_strSourceID;
 
 			/// GUID ID for the target Neuron.
-			string m_strTargetID;
+			std::string m_strTargetID;
 
 			/// GUID ID for the synapse type to use.
-			string m_strSynapseTypeID;
+			std::string m_strSynapseTypeID;
 
 			/// Pointer to the synapse type for this connection.
 			SynapseType *m_lpSynType;  

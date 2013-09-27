@@ -55,7 +55,7 @@ float IonChannelSigmoid::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-bool IonChannelSigmoid::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool IonChannelSigmoid::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -115,7 +115,7 @@ bool IonChannelSigmoid::SetData(const string &strDataType, const string &strValu
 	return false;
 }
 
-void IonChannelSigmoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void IonChannelSigmoid::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Gain::QueryProperties(aryNames, aryTypes);
 

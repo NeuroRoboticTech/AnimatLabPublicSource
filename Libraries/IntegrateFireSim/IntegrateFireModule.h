@@ -162,7 +162,7 @@ namespace IntegrateFireSim
 		ElectricalSynapse *GetElecSynAt(int i);
 
 		//NeuralModule Overrides
-		virtual string ModuleName();
+		virtual std::string ModuleName();
 
 #pragma endregion
 
@@ -177,25 +177,25 @@ namespace IntegrateFireSim
 
 
 #pragma region DataAccesMethods
-		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddNeuron(string strXml, bool bDoNotInit);
-		virtual void RemoveNeuron(string strID, bool bThrowError = true);
-		virtual int FindNeuronListPos(string strID, bool bThrowError = true);
+		virtual void AddNeuron(std::string strXml, bool bDoNotInit);
+		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
+		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
 
-		virtual void AddSynapse(string strXml, bool bDoNotInit);
-		virtual void RemoveSynapse(string strID, bool bThrowError = true);
-		virtual int FindSynapseListPos(string strID, bool bThrowError = true);
+		virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
-		virtual void AddSynapseType(string strXml, bool bDoNotInit);
-		virtual void RemoveSynapseType(string strID, bool bThrowError = true);
-		virtual int FindSpikingChemListPos(string strID, bool bThrowError = true);
-		virtual int FindNonSpikingChemListPos(string strID, bool bThrowError = true);
-		virtual int FindElectricalListPos(string strID, bool bThrowError = true);
+		virtual void AddSynapseType(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapseType(std::string strID, bool bThrowError = true);
+		virtual int FindSpikingChemListPos(std::string strID, bool bThrowError = true);
+		virtual int FindNonSpikingChemListPos(std::string strID, bool bThrowError = true);
+		virtual int FindElectricalListPos(std::string strID, bool bThrowError = true);
 
 		virtual void Kill(bool bState = true);
 

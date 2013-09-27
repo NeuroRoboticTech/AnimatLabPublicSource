@@ -151,7 +151,7 @@ double Connexion::Delay() {return m_dDelay;}
 
 \return	synapse type identifier.
 **/
-string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
+std::string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
 
 /**
 \brief	Sets the synapse type identifier.
@@ -161,7 +161,7 @@ string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
 
 \param	strID	Synapse Type ID. 
 **/
-void Connexion::SynapseTypeID(string strID) {m_strSynapseTypeID = strID;}
+void Connexion::SynapseTypeID(std::string strID) {m_strSynapseTypeID = strID;}
 
 /**
 \brief	Gets the source neuron ID.
@@ -171,7 +171,7 @@ void Connexion::SynapseTypeID(string strID) {m_strSynapseTypeID = strID;}
 
 \return	ID.
 **/
-string Connexion::SourceID() {return m_strSourceID;}
+std::string Connexion::SourceID() {return m_strSourceID;}
 
 /**
 \brief	Sets the source neuron ID.
@@ -181,7 +181,7 @@ string Connexion::SourceID() {return m_strSourceID;}
 
 \param	strID	ID.
 **/
-void Connexion::SourceID(string strID) {m_strSourceID = strID;}
+void Connexion::SourceID(std::string strID) {m_strSourceID = strID;}
 
 /**
 \brief	Gets the target neuron ID.
@@ -191,7 +191,7 @@ void Connexion::SourceID(string strID) {m_strSourceID = strID;}
 
 \return	ID.
 **/
-string Connexion::TargetID() {return m_strTargetID;}
+std::string Connexion::TargetID() {return m_strTargetID;}
 
 /**
 \brief	Sets the target neuron ID.
@@ -201,7 +201,7 @@ string Connexion::TargetID() {return m_strTargetID;}
 
 \param	strID	ID. 
 **/
-void Connexion::TargetID(string strID) {m_strTargetID = strID;}
+void Connexion::TargetID(std::string strID) {m_strTargetID = strID;}
 
 /**
 \brief	Resets the IDs of the synapse types.
@@ -706,9 +706,9 @@ void Connexion::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Connexion::GetDataPointer(const string &strDataType)
+float *Connexion::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "CONDUCTANCE")
 		return &m_fltGReport;
@@ -722,9 +722,9 @@ float *Connexion::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool Connexion::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Connexion::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 				
 	if(Link::SetData(strDataType, strValue, false))
 		return true;
@@ -755,7 +755,7 @@ bool Connexion::SetData(const string &strDataType, const string &strValue, bool 
 	return false;
 }
 
-void Connexion::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Connexion::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Link::QueryProperties(aryNames, aryTypes);
 

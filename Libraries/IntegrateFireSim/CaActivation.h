@@ -25,7 +25,7 @@ namespace IntegrateFireSim
 		Neuron *m_lpParent;
 
 		/// Type of the activation
-		string m_strActivationType;
+		std::string m_strActivationType;
 
 	public:
 
@@ -38,11 +38,11 @@ namespace IntegrateFireSim
 		\param [in,out]	lpParent 	Pointer to the parent Neuron. 
 		\param	strActivationType	Type of the  activation. 
 		**/
-		CaActivation(Neuron *lpParent, string strActivationType);
+		CaActivation(Neuron *lpParent, std::string strActivationType);
 		virtual ~CaActivation();
 
-		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 		virtual void Load(CStdXml &oXml);
 	};
 

@@ -18,7 +18,7 @@
 namespace IntegrateFireSim
 {
 
-CaActivation::CaActivation(Neuron *lpParent, string strActivationType)
+CaActivation::CaActivation(Neuron *lpParent, std::string strActivationType)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -37,9 +37,9 @@ CaActivation::~CaActivation()
 {
 }
 
-bool CaActivation::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool CaActivation::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -78,7 +78,7 @@ bool CaActivation::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void CaActivation::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void CaActivation::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

@@ -524,9 +524,9 @@ double SpikingChemicalSynapse::Consolidation() {return m_dConsolidation;}
 #pragma region DataAccesMethods
 
 
-bool SpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool SpikingChemicalSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -634,7 +634,7 @@ bool SpikingChemicalSynapse::SetData(const string &strDataType, const string &st
 	return false;
 }
 
-void SpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void SpikingChemicalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 

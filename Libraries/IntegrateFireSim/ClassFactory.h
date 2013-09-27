@@ -31,7 +31,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual ExternalStimulus *CreateExternalStimulus(string strType, bool bThrowError = true);
+		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a neural module.
@@ -44,7 +44,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual NeuralModule *CreateNeuralModule(string strType, bool bThrowError = true);
+		virtual NeuralModule *CreateNeuralModule(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a data column.
@@ -57,7 +57,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual DataColumn *CreateDataColumn(string strType, bool bThrowError = true);
+		virtual DataColumn *CreateDataColumn(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a gain.
@@ -70,7 +70,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual Gain *CreateGain(string strType, bool bThrowError = true);
+		virtual Gain *CreateGain(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a neuron.
@@ -83,7 +83,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual Neuron *CreateNeuron(string strType, bool bThrowError = true);
+		virtual Neuron *CreateNeuron(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a synapse.
@@ -96,7 +96,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual Connexion *CreateSynapse(string strType, bool bThrowError = true);
+		virtual Connexion *CreateSynapse(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a synapse type.
@@ -109,7 +109,7 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual SynapseType *CreateSynapseType(string strType, bool bThrowError = true);
+		virtual SynapseType *CreateSynapseType(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates an ion channel.
@@ -122,9 +122,9 @@ namespace IntegrateFireSim
 
 		\return	Pointer to the created object.
 		**/
-		virtual IonChannel *CreateIonChannel(string strType, bool bThrowError = true);
+		virtual IonChannel *CreateIonChannel(std::string strType, bool bThrowError = true);
 
-		virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, bool bThrowError = true);
+		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};
 
 }				//IntegrateFireSim
