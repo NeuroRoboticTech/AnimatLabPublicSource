@@ -36,11 +36,11 @@ namespace AnimatGUI
 			float *m_lpRotationZ;
 
 			/// The array of odor sources of this type within the environment.
-			CStdMap<string, float *> *m_aryDataPointers;
+			CStdMap<std::string, float *> *m_aryDataPointers;
 
 			void GetPointers();
 
-			float *FindDataPointer(string strData, bool bThrowError);
+			float *FindDataPointer(std::string strData, bool bThrowError);
 
 		public:
 			DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID);

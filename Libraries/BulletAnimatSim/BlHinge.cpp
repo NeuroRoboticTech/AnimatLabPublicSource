@@ -207,10 +207,10 @@ void BlHinge::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *BlHinge::GetDataPointer(const string &strDataType)
+float *BlHinge::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "JOINTROTATION")
 		return &m_fltPosition;
@@ -241,7 +241,7 @@ float *BlHinge::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool BlHinge::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlHinge::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -256,7 +256,7 @@ bool BlHinge::SetData(const string &strDataType, const string &strValue, bool bT
 	return false;
 }
 
-void BlHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	Hinge::QueryProperties(aryNames, aryTypes);

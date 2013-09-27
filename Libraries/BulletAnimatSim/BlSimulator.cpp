@@ -135,7 +135,7 @@ void BlSimulator::Gravity(float fltVal, bool bUseScaling)
         m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
 }
 
-int BlSimulator::GetMaterialID(string strID)
+int BlSimulator::GetMaterialID(std::string strID)
 {
     //FIX PHYSICS
 	//if(m_vxFrame)
@@ -280,7 +280,7 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
 
 	//Ensure that our exe path is the only place it will attempt to find library files.
 	osgDB::FilePathList aryList = osgDB::getLibraryFilePathList();
-	string strPath = m_strExecutablePath.substr(0, m_strExecutablePath.length()-1);
+	std::string strPath = m_strExecutablePath.substr(0, m_strExecutablePath.length()-1);
 	aryList.clear();
 	aryList.push_front(strPath);
 	osgDB::setLibraryFilePathList(aryList);
@@ -290,7 +290,7 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
     osgDB::getDataFilePathList().push_front("../Resources");
     osgDB::getDataFilePathList().push_front("../../Resources");
 
-	string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
+	std::string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
@@ -442,12 +442,12 @@ we will use this new file instead of the original one.
 \param	strOriginalMeshFile 	The original mesh file. 
 \param	strCollisionMeshFile	The new collision mesh file. 
 **/
-void BlSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
+void BlSimulator::GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
 {
 	//First load the original mesh in.
-	string strPath = this->ProjectPath();
-	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
-	string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
+	std::string strPath = this->ProjectPath();
+	std::string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	std::string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
 
 	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
 
@@ -484,13 +484,13 @@ void BlSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	Std_SetFileTime(strNewFile);
 }
 
-void BlSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)
+void BlSimulator::ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture)
 {
 	//First load the original mesh in.
-	string strPath = this->ProjectPath();
-	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
-	string strNewFile = AnimatSim::GetFilePath(strPath, strNewMeshFile);
-	string strTextFile = "";
+	std::string strPath = this->ProjectPath();
+	std::string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	std::string strNewFile = AnimatSim::GetFilePath(strPath, strNewMeshFile);
+	std::string strTextFile = "";
 	
 	if(!Std_IsBlank(strTexture))
 		strTextFile = AnimatSim::GetFilePath(strPath, strTexture);
@@ -601,7 +601,7 @@ void BlSimulator::StepSimulation()
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
 	}
 

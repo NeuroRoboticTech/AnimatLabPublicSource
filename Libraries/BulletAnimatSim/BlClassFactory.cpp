@@ -57,7 +57,7 @@ BlClassFactory::~BlClassFactory()
 
 // ************* Body Type Conversion functions ******************************
 
-RigidBody *BlClassFactory::CreateRigidBody(string strType, bool bThrowError)
+RigidBody *BlClassFactory::CreateRigidBody(std::string strType, bool bThrowError)
 {
 	RigidBody *lpPart=NULL;
 
@@ -137,7 +137,7 @@ catch(...)
 
 // ************* Body Joint Conversion functions ******************************
 
-Joint *BlClassFactory::CreateJoint(string strType, bool bThrowError)
+Joint *BlClassFactory::CreateJoint(std::string strType, bool bThrowError)
 {
 	Joint *lpJoint=NULL;
 
@@ -188,7 +188,7 @@ catch(...)
 
 // ************* Organism Type Conversion functions ******************************
 
-Structure *BlClassFactory::CreateStructure(string strType, bool bThrowError)
+Structure *BlClassFactory::CreateStructure(std::string strType, bool bThrowError)
 {
 	Structure *lpStructure=NULL;
 
@@ -230,7 +230,7 @@ catch(...)
 
 // ************* Simulator Type Conversion functions ******************************
 
-Simulator *BlClassFactory::CreateSimulator(string strType, bool bThrowError)
+Simulator *BlClassFactory::CreateSimulator(std::string strType, bool bThrowError)
 {
 	Simulator *lpSimulator=NULL;
 
@@ -270,7 +270,7 @@ catch(...)
 
 
 // ************* KeyFrame Type Conversion functions ******************************
-KeyFrame *BlClassFactory::CreateKeyFrame(string strType, bool bThrowError)
+KeyFrame *BlClassFactory::CreateKeyFrame(std::string strType, bool bThrowError)
 {
 	KeyFrame *lpFrame=NULL;
 
@@ -310,7 +310,7 @@ catch(...)
 
 // ************* DataChart Type Conversion functions ******************************
 
-DataChart *BlClassFactory::CreateDataChart(string strType, bool bThrowError)
+DataChart *BlClassFactory::CreateDataChart(std::string strType, bool bThrowError)
 {
 	DataChart *lpChart=NULL;
 
@@ -353,7 +353,7 @@ catch(...)
 
 // ************* DataColumn Type Conversion functions ******************************
 
-DataColumn *BlClassFactory::CreateDataColumn(string strType, bool bThrowError)
+DataColumn *BlClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -391,7 +391,7 @@ catch(...)
 
 // ************* Adapter Type Conversion functions ******************************
 
-Adapter *BlClassFactory::CreateAdapter(string strType, bool bThrowError)
+Adapter *BlClassFactory::CreateAdapter(std::string strType, bool bThrowError)
 {
 	Adapter *lpAdapter=NULL;
 
@@ -437,7 +437,7 @@ catch(...)
 
 // ************* Gain Type Conversion functions ******************************
 
-Gain *BlClassFactory::CreateGain(string strType, bool bThrowError)
+Gain *BlClassFactory::CreateGain(std::string strType, bool bThrowError)
 {
 	Gain *lpGain=NULL;
 
@@ -481,7 +481,7 @@ catch(...)
 
 // ************* External Stimulus Type Conversion functions ******************************
 
-ExternalStimulus *BlClassFactory::CreateExternalStimulus(string strType, bool bThrowError)
+ExternalStimulus *BlClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -537,7 +537,7 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
-HudItem *BlClassFactory::CreateHudItem(string strType, bool bThrowError)
+HudItem *BlClassFactory::CreateHudItem(std::string strType, bool bThrowError)
 {
 	HudItem *lpItem=NULL;
 
@@ -574,7 +574,7 @@ catch(...)
 
 // ************* Hud Type Conversion functions ******************************
 
-Hud *BlClassFactory::CreateHud(string strType, bool bThrowError)
+Hud *BlClassFactory::CreateHud(std::string strType, bool bThrowError)
 {
 	Hud *lpHud=NULL;
 
@@ -611,7 +611,7 @@ catch(...)
 // 
 // ************* Material Type Conversion functions ******************************
 
-MaterialType *BlClassFactory::CreateMaterialItem(string strType, bool bThrowError)
+MaterialType *BlClassFactory::CreateMaterialItem(std::string strType, bool bThrowError)
 {
 	MaterialType *lpItem=NULL;
 
@@ -648,7 +648,7 @@ catch(...)
 
 // ************* Material Type Conversion functions ******************************
 
-SimulationWindow *BlClassFactory::CreateWindowItem(string strType, bool bThrowError)
+SimulationWindow *BlClassFactory::CreateWindowItem(std::string strType, bool bThrowError)
 {
 	SimulationWindow *lpItem=NULL;
 
@@ -687,7 +687,7 @@ catch(...)
 
 // ************* Light Conversion functions ******************************
 
-Light *BlClassFactory::CreateLight(string strType, bool bThrowError)
+Light *BlClassFactory::CreateLight(std::string strType, bool bThrowError)
 {
 	Light *lpItem=NULL;
 
@@ -724,7 +724,7 @@ catch(...)
 
 // ************* External Neural Module Conversion functions ******************************
 
-NeuralModule *BlClassFactory::CreateNeuralModule(string strType, bool bThrowError)
+NeuralModule *BlClassFactory::CreateNeuralModule(std::string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -765,7 +765,7 @@ catch(...)
 
 // ************* Constraint Relaxation Conversion functions ******************************
 
-ConstraintRelaxation *BlClassFactory::CreateConstraintRelaxation(string strType, bool bThrowError)
+ConstraintRelaxation *BlClassFactory::CreateConstraintRelaxation(std::string strType, bool bThrowError)
 {
 	ConstraintRelaxation *lpRelax=NULL;
 
@@ -805,7 +805,7 @@ catch(...)
 
 // ************* Constraint Friction Conversion functions ******************************
 
-ConstraintFriction *BlClassFactory::CreateConstraintFriction(string strType, bool bThrowError)
+ConstraintFriction *BlClassFactory::CreateConstraintFriction(std::string strType, bool bThrowError)
 {
 	ConstraintFriction *lpFriction=NULL;
 
@@ -846,7 +846,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *BlClassFactory::CreateObject(string strClassType, string strObjectType, bool bThrowError)
+CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 

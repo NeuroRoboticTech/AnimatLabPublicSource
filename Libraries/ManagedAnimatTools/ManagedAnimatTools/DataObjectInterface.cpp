@@ -22,7 +22,7 @@ DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInte
 			m_aryDataPointers = NULL;
 			m_Sim = RealSimInt;
 			m_lpSim = RealSimInt->Sim();
-			string strSID = Util::StringToStd(strID);
+			std::string strSID = Util::StringToStd(strID);
 			m_lpBase = m_lpSim->FindByID(strSID);
 			m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
 			m_lpRigidBody = dynamic_cast<RigidBody *>(m_lpBase);
@@ -40,7 +40,7 @@ DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInte
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew System::Exception(strErrorMessage);
 	}
@@ -117,8 +117,8 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 		{
 			if(m_lpSim->WaitForSimulationBlock())
 			{
-				string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
-				string strValue = Util::StringToStd(sValue);
+				std::string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
+				std::string strValue = Util::StringToStd(sValue);
 
 				TRACE_DEBUG("Setting data. Object ID: " + m_lpBase->ID() + ", DataType: " + strDataType + ", Value: " + strValue + "\r\n");
 
@@ -137,7 +137,7 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	catch(CStdErrorInfo oError)
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
-		string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -159,7 +159,7 @@ void DataObjectInterface::QueryProperties(System::Collections::ArrayList ^aryPro
 	{
 		if(m_lpBase)
 		{
-			CStdArray<string> aryNames, aryTypes;
+			CStdArray<std::string> aryNames, aryTypes;
 			m_lpBase->QueryProperties(aryNames, aryTypes);
 
 			aryPropertyNames->Clear();
@@ -178,7 +178,7 @@ void DataObjectInterface::QueryProperties(System::Collections::ArrayList ^aryPro
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to QueryProperties.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to QueryProperties.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -208,7 +208,7 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 	catch(CStdErrorInfo oError)
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
-		string strError = "An error occurred while attempting to select an item.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to select an item.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -228,7 +228,7 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 	{
 		if(m_lpBase) 
 		{
-			string strData = Util::StringToStd(sData);
+			std::string strData = Util::StringToStd(sData);
 
 			TRACE_DEBUG("Getting Data pointer Item. Object ID: " + m_lpBase->ID() + ", Data: " + strData+ "\r\n");
 
@@ -238,7 +238,7 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 				throw gcnew System::Exception("The data pointer is not defined!");
 
 			if(!m_aryDataPointers)
-				m_aryDataPointers = new CStdMap<string, float *>;
+				m_aryDataPointers = new CStdMap<std::string, float *>;
 
 			if(FindDataPointer(strData, false) == NULL)
 				m_aryDataPointers->Add(Std_CheckString(strData), lpData);
@@ -246,7 +246,7 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to get a data pointer.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to get a data pointer.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -259,13 +259,13 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 	}
 }
 
-float *DataObjectInterface::FindDataPointer(string strData, bool bThrowError)
+float *DataObjectInterface::FindDataPointer(std::string strData, bool bThrowError)
 {
 	float *lpData = NULL;
 
 	if(m_aryDataPointers)
 	{
-		CStdMap<string, float *>::iterator oPos;
+		CStdMap<std::string, float *>::iterator oPos;
 	
 		TRACE_DEBUG("FindDataPointer. Object ID: " + m_lpBase->ID() + ", Data: " + strData+ "\r\n");
 
@@ -290,12 +290,12 @@ float DataObjectInterface::GetDataValue(String ^sData)
 
 	try
 	{
-		string strData = Util::StringToStd(sData);
+		std::string strData = Util::StringToStd(sData);
 		float *lpData = NULL;
 
 		TRACE_DEBUG("GetDataValue. Object ID: " + m_lpBase->ID() + ", Data: " + strData + "\r\n");
 
-		CStdMap<string, float *>::iterator oPos;
+		CStdMap<std::string, float *>::iterator oPos;
 		oPos = m_aryDataPointers->find(Std_CheckString(strData));
 
 		if(oPos != m_aryDataPointers->end())
@@ -310,7 +310,7 @@ float DataObjectInterface::GetDataValue(String ^sData)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -332,7 +332,7 @@ float DataObjectInterface::GetDataValueImmediate(String ^sData)
 
 	try
 	{
-		string strData = Util::StringToStd(sData);
+		std::string strData = Util::StringToStd(sData);
 		float *lpData = m_lpBase->GetDataPointer(strData);
 
 		if(!lpData) 
@@ -342,7 +342,7 @@ float DataObjectInterface::GetDataValueImmediate(String ^sData)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -377,7 +377,7 @@ float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to call GetBoundingBoxValue.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to call GetBoundingBoxValue.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -399,7 +399,7 @@ void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double d
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to OrientNewPart.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to OrientNewPart.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -434,7 +434,7 @@ System::Boolean DataObjectInterface::CalculateLocalPosForWorldPos(double dblXWor
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -453,7 +453,7 @@ void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)
 	{
 		if(m_lpBase) 
 		{
-			string strOtherBodyID = Util::StringToStd(sOtherBodyID);
+			std::string strOtherBodyID = Util::StringToStd(sOtherBodyID);
 
 			TRACE_DEBUG("EnableCollisions. Body1 ID: " + m_lpBase->ID() + ", Body2: " + strOtherBodyID + "\r\n");
 
@@ -470,7 +470,7 @@ void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to add a collision exclusion pair.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to add a collision exclusion pair.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
@@ -489,7 +489,7 @@ void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
 	{
 		if(m_lpBase) 
 		{
-			string strOtherBodyID = Util::StringToStd(sOtherBodyID);
+			std::string strOtherBodyID = Util::StringToStd(sOtherBodyID);
 
 			TRACE_DEBUG("DisableCollisions. Body1 ID: " + m_lpBase->ID() + ", Body2: " + strOtherBodyID + "\r\n");
 
@@ -506,7 +506,7 @@ void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while attempting to remove a collision exclusion pair.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while attempting to remove a collision exclusion pair.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}

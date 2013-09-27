@@ -117,7 +117,7 @@ void BlRigidBody::Physics_SetDensity(float fltVal)
     ResizePhysicsGeometry();
 }
 
-void BlRigidBody::Physics_SetMaterialID(string strID)
+void BlRigidBody::Physics_SetMaterialID(std::string strID)
 {
     //FIX PHYSICS
 	//if(m_vxCollisionGeometry && m_lpThisAB)
@@ -371,7 +371,7 @@ void BlRigidBody::CreateStaticPart()
 	//		if(vxSensor)
 	//		{
 	//			CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-	//			string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+	//			std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 	//			m_vxCollisionGeometry->setName(strName.c_str());
 	//		}
 	//	}

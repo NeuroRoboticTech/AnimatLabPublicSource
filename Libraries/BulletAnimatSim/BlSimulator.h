@@ -55,8 +55,8 @@ namespace BulletAnimatSim
         //FIX PHYSICS
 		//virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
 		//virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
-		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
-		virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture);
+		virtual void GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
+		virtual void ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture);
 
 #pragma endregion
 
@@ -72,7 +72,7 @@ namespace BulletAnimatSim
 
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, bool bUseScaling = true);
-		virtual int GetMaterialID(string strID);
+		virtual int GetMaterialID(std::string strID);
 
 #pragma endregion
 		

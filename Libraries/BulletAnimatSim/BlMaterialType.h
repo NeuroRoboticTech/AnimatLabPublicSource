@@ -22,7 +22,7 @@ namespace BulletAnimatSim
 			BlMaterialType();
 			virtual ~BlMaterialType();
 
-			virtual int GetMaterialID(string strName);
+			virtual int GetMaterialID(std::string strName);
 			virtual void Initialize();
 		};
 

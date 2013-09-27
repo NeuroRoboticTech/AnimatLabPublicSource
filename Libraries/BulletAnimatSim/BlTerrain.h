@@ -22,7 +22,7 @@ namespace BulletAnimatSim
 				BlTerrain();
 				virtual ~BlTerrain();
 
-				virtual void SetTexture(string strTexture);
+				virtual void SetTexture(std::string strTexture);
 				virtual void Physics_FluidDataChanged();
 
 				virtual void CreateParts();

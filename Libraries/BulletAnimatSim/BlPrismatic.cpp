@@ -193,10 +193,10 @@ void BlPrismatic::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *BlPrismatic::GetDataPointer(const string &strDataType)
+float *BlPrismatic::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "JOINTROTATION")
 		return &m_fltPosition;
@@ -225,7 +225,7 @@ float *BlPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool BlPrismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlPrismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -240,7 +240,7 @@ bool BlPrismatic::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void BlPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	Prismatic::QueryProperties(aryNames, aryTypes);

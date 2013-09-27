@@ -92,7 +92,7 @@ void BlBallSocket::CreateJoint()
 
 #pragma region DataAccesMethods
 
-bool BlBallSocket::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlBallSocket::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -107,7 +107,7 @@ bool BlBallSocket::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void BlBallSocket::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlBallSocket::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	BallSocket::QueryProperties(aryNames, aryTypes);

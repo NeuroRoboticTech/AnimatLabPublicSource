@@ -21,8 +21,8 @@ public:
 	virtual ~SimGUICallback(void);
 
 	virtual void NeedToStopSimulation();
-	virtual void HandleNonCriticalError(string strError);
-	virtual void HandleCriticalError(string strError);
+	virtual void HandleNonCriticalError(std::string strError);
+	virtual void HandleCriticalError(std::string strError);
 };
 
 	}

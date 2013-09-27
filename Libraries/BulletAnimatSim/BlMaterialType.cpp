@@ -25,7 +25,7 @@ BlMaterialType::~BlMaterialType()
 {
 }
 
-int BlMaterialType::GetMaterialID(string strName)
+int BlMaterialType::GetMaterialID(std::string strName)
 {
     //FIX PHYSICS
  //   if(!m_vxMaterialTable)

@@ -108,7 +108,7 @@ void BlUniversal::CreateJoint()
 #pragma region DataAccesMethods
 
 
-bool BlUniversal::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlUniversal::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -123,7 +123,7 @@ bool BlUniversal::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void BlUniversal::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlUniversal::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	BallSocket::QueryProperties(aryNames, aryTypes);

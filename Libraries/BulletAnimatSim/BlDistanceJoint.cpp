@@ -107,7 +107,7 @@ void BlDistanceJoint::CreateJoint()
 #pragma region DataAccesMethods
 
 
-bool BlDistanceJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlDistanceJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -122,7 +122,7 @@ bool BlDistanceJoint::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void BlDistanceJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlDistanceJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	Joint::QueryProperties(aryNames, aryTypes);

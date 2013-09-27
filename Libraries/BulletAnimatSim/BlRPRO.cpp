@@ -97,7 +97,7 @@ void BlRPRO::CreateJoint()
 
 #pragma region DataAccesMethods
 
-bool BlRPRO::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool BlRPRO::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -112,7 +112,7 @@ bool BlRPRO::SetData(const string &strDataType, const string &strValue, bool bTh
 	return false;
 }
 
-void BlRPRO::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BlRPRO::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
 	RPRO::QueryProperties(aryNames, aryTypes);

@@ -47,13 +47,13 @@ void BlTerrain::CreateGraphicsGeometry()
 	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, false);
 }
 
-void BlTerrain::SetTexture(string strTexture)
+void BlTerrain::SetTexture(std::string strTexture)
 {
 	if(m_osgMeshNode.valid())
 	{
 		if(!Std_IsBlank(strTexture))
 		{
-			string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
+			std::string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
 			osg::ref_ptr<osg::Image> image = osgDB::readImageFile(strFile);
 			if(!image)
 				THROW_PARAM_ERROR(Bl_Err_lTextureLoad, Bl_Err_strTextureLoad, "Image File", strFile);
@@ -97,9 +97,9 @@ void BlTerrain::Physics_FluidDataChanged()
 
 void BlTerrain::LoadMeshNode()
 {
-	string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
-	string strMeshFile = m_lpThisMesh->MeshFile();
-	string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
+	std::string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
+	std::string strMeshFile = m_lpThisMesh->MeshFile();
+	std::string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
 
 	//Get the terrain node loaded in.
 	m_osgBaseMeshNode = CreateHeightField(strFile, m_fltSegmentWidth, m_fltSegmentLength, m_fltMaxHeight, &m_osgHeightField);
