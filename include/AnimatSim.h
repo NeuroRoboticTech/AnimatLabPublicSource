@@ -18,8 +18,6 @@
 #include "StdUtils.h"
 #include "AnimatConstants.h"
 
-using namespace std;
-
 //Simulation Objects
 namespace AnimatSim
 {

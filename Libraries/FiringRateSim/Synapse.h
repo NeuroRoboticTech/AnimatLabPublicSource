@@ -42,7 +42,7 @@ namespace FiringRateSim
 			float m_fltModulation;
 
 			/// GUID ID of the pre-synaptic neruon.
-			string m_strFromID;
+			std::string m_strFromID;
 
 			/// The pointer to pre-synaptic neuron
 			Neuron *m_lpFromNeuron;
@@ -74,16 +74,16 @@ namespace FiringRateSim
 			float *ModulationPointer();
 			virtual float CalculateModulation(FiringRateModule *lpModule);
 			virtual Synapse *GetCompoundSynapse(short iCompoundIndex);
-			virtual int FindSynapseListPos(string strID, bool bThrowError = true);
-			virtual void AddSynapse(string strXml, bool bDoNotInit);
-			virtual void RemoveSynapse(string strID, bool bThrowError = true);
+			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
+			virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+			virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
 			/**

@@ -55,8 +55,8 @@ namespace FiringRateSim
 
 			virtual unsigned char NeuronType();
 
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 			virtual void ResetSimulation();
 
 			virtual void Load(CStdXml &oXml);

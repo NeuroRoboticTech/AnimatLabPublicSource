@@ -40,9 +40,9 @@ ModulatedSynapse::~ModulatedSynapse()
 
 #pragma region DataAccesMethods
 
-float *ModulatedSynapse::GetDataPointer(const string &strDataType)
+float *ModulatedSynapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;

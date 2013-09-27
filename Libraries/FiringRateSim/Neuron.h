@@ -195,13 +195,13 @@ namespace FiringRateSim
 			\param [in,out]	lpSynapse	Pointer to the synapse to add. 
 			**/
 			virtual void AddSynapse(Synapse *lpSynapse);
-			virtual void AddSynapse(string strXml, bool bDoNotInit);
+			virtual void AddSynapse(std::string strXml, bool bDoNotInit);
 			virtual void RemoveSynapse(int iIndex);
-			virtual void RemoveSynapse(string strID, bool bThrowError = true);
+			virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
 			virtual Synapse *GetSynapse(int iIndex);
 			virtual int TotalSynapses();
 			virtual void ClearSynapses();
-			virtual int FindSynapseListPos(string strID, bool bThrowError = true);
+			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
 			virtual void AddExternalNodeInput(float fltInput);
 
@@ -243,11 +243,11 @@ namespace FiringRateSim
 #pragma endregion
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-			virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
 			virtual void Load(CStdXml &oXml);

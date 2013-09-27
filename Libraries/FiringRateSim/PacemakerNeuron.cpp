@@ -338,9 +338,9 @@ long PacemakerNeuron::CalculateSnapshotByteSize()
 
 #pragma region DataAccesMethods
 
-float *PacemakerNeuron::GetDataPointer(const string &strDataType)
+float *PacemakerNeuron::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "STEADYSTATEVOLTAGE")
 		return &m_fltVss;
@@ -354,9 +354,9 @@ float *PacemakerNeuron::GetDataPointer(const string &strDataType)
 	return Neuron::GetDataPointer(strDataType);
 }
 
-bool PacemakerNeuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool PacemakerNeuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Neuron::SetData(strDataType, strValue, false))
 		return true;
@@ -404,7 +404,7 @@ bool PacemakerNeuron::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void PacemakerNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PacemakerNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Neuron::QueryProperties(aryNames, aryTypes);
 

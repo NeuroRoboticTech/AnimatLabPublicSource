@@ -42,7 +42,7 @@ ClassFactory::~ClassFactory()
 
 }
 
-Neuron *ClassFactory::CreateNeuron(string strType, bool bThrowError)
+Neuron *ClassFactory::CreateNeuron(std::string strType, bool bThrowError)
 {
 	Neuron *lpNeuron=NULL;
 
@@ -90,7 +90,7 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-Synapse *ClassFactory::CreateSynapse(string strType, bool bThrowError)
+Synapse *ClassFactory::CreateSynapse(std::string strType, bool bThrowError)
 {
 	Synapse *lpSynapse=NULL;
 
@@ -135,7 +135,7 @@ catch(...)
 // ************* DataColumn Type Conversion functions ******************************
 
 
-DataColumn *ClassFactory::CreateDataColumn(string strType, bool bThrowError)
+DataColumn *ClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -174,7 +174,7 @@ catch(...)
 // ************* External Stimulus Type Conversion functions ******************************
 
 
-ExternalStimulus *ClassFactory::CreateExternalStimulus(string strType, bool bThrowError)
+ExternalStimulus *ClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -217,7 +217,7 @@ catch(...)
 // ************* External Neural Module Conversion functions ******************************
 
 
-NeuralModule *ClassFactory::CreateNeuralModule(string strType, bool bThrowError)
+NeuralModule *ClassFactory::CreateNeuralModule(std::string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -255,7 +255,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *ClassFactory::CreateObject(string strClassType, string strObjectType, bool bThrowError)
+CStdSerialize *ClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 

@@ -527,7 +527,7 @@ void Neuron::AddSynapse(Synapse *lpSynapse)
 
 \param	strXml	The xml of the synapse to add. 
 **/
-void Neuron::AddSynapse(string strXml, bool bDoNotInit)
+void Neuron::AddSynapse(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -563,7 +563,7 @@ void Neuron::RemoveSynapse(int iIndex)
 \param	strID	   	GUID ID for the synapse to remove. 
 \param	bThrowError	true to throw error if synaspe not found. 
 **/
-void Neuron::RemoveSynapse(string strID, bool bThrowError)
+void Neuron::RemoveSynapse(std::string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
@@ -597,9 +597,9 @@ Synapse *Neuron::GetSynapse(int iIndex)
 
 \return	The found synapse list position.
 **/
-int Neuron::FindSynapseListPos(string strID, bool bThrowError)
+int Neuron::FindSynapseListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -841,9 +841,9 @@ void Neuron::AddExternalNodeInput(float fltInput)
 
 #pragma region DataAccesMethods
 
-float *Neuron::GetDataPointer(const string &strDataType)
+float *Neuron::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "INTRINSICCURRENT")
 		return &m_fltIntrinsicI;
@@ -884,9 +884,9 @@ float *Neuron::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool Neuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Neuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
 	if(Node::SetData(strDataType, strValue, false))
 		return true;
@@ -964,7 +964,7 @@ bool Neuron::SetData(const string &strDataType, const string &strValue, bool bTh
 	return false;
 }
 
-void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Neuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Node::QueryProperties(aryNames, aryTypes);
 
@@ -1002,9 +1002,9 @@ void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ary
 	aryTypes.Add("Float");
 }
 
-bool Neuron::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Neuron::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
@@ -1020,9 +1020,9 @@ bool Neuron::AddItem(const string &strItemType, const string &strXml, bool bThro
 	return false;
 }
 
-bool Neuron::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Neuron::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
@@ -1160,7 +1160,7 @@ void Neuron::Load(CStdXml &oXml)
 **/
 Synapse *Neuron::LoadSynapse(CStdXml &oXml)
 {
-	string strType;
+	std::string strType;
 	Synapse *lpSynapse=NULL;
 
 try

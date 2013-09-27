@@ -12,6 +12,6 @@
 
 \return	neural module name.
 **/
-string Nl_NeuralModuleName();
+std::string Nl_NeuralModuleName();
 
 //#pragma comment(linker, "/EXPORT:GetStdClassFactory") 

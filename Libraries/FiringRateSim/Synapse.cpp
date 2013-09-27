@@ -134,7 +134,7 @@ Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 
 \param	strXml	The xml packet to load. 
 **/
-void Synapse::AddSynapse(string strXml, bool bDoNotInit)
+void Synapse::AddSynapse(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -156,7 +156,7 @@ void Synapse::AddSynapse(string strXml, bool bDoNotInit)
 \param	strID	   	GUID ID for the synaspe to remove. 
 \param	bThrowError	true to throw error if synapse is not found. 
 **/
-void Synapse::RemoveSynapse(string strID, bool bThrowError)
+void Synapse::RemoveSynapse(std::string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
@@ -168,14 +168,14 @@ void Synapse::RemoveSynapse(string strID, bool bThrowError)
 \author	dcofer
 \date	3/29/2011
 
-\param	strID	   	Identifier for the string. 
+\param	strID	   	Identifier for the std::string. 
 \param	bThrowError	true to throw error. 
 
 \return	The found synapse list position.
 **/
-int Synapse::FindSynapseListPos(string strID, bool bThrowError)
+int Synapse::FindSynapseListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -250,9 +250,9 @@ void Synapse::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Synapse::GetDataPointer(const string &strDataType)
+float *Synapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "WEIGHT")
 		return &m_fltWeight;
@@ -262,9 +262,9 @@ float *Synapse::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-bool Synapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool Synapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
 	if(Link::SetData(strDataType, strValue, false))
 		return true;
@@ -282,7 +282,7 @@ bool Synapse::SetData(const string &strDataType, const string &strValue, bool bT
 	return false;
 }
 
-void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Synapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Link::QueryProperties(aryNames, aryTypes);
 
@@ -290,9 +290,9 @@ void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 	aryTypes.Add("Float");
 }
 
-bool Synapse::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool Synapse::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
@@ -308,9 +308,9 @@ bool Synapse::AddItem(const string &strItemType, const string &strXml, bool bThr
 	return false;
 }
 
-bool Synapse::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool Synapse::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
@@ -385,7 +385,7 @@ void Synapse::Load(CStdXml &oXml)
 Synapse *Synapse::LoadSynapse(CStdXml &oXml)
 {
 	Synapse *lpSynapse=NULL;
-	string strType;
+	std::string strType;
 
 try
 {

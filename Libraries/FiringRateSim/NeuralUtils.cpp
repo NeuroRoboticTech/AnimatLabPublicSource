@@ -16,7 +16,7 @@
 #include "FiringRateModule.h"
 #include "ClassFactory.h"
 
-string Nl_NeuralModuleName()
+std::string Nl_NeuralModuleName()
 {
 	return "FiringRateSim";
 	//#ifdef _DEBUG

@@ -72,9 +72,9 @@ float GatedSynapse::CalculateModulation(FiringRateModule *lpModule)
 
 #pragma region DataAccesMethods
 
-float *GatedSynapse::GetDataPointer(const string &strDataType)
+float *GatedSynapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;
@@ -82,9 +82,9 @@ float *GatedSynapse::GetDataPointer(const string &strDataType)
 	return Synapse::GetDataPointer(strDataType);
 }
 
-bool GatedSynapse::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool GatedSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Synapse::SetData(strDataType, strValue, false))
 		return true;
@@ -102,7 +102,7 @@ bool GatedSynapse::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void GatedSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void GatedSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Synapse::QueryProperties(aryNames, aryTypes);
 

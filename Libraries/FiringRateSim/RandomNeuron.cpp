@@ -210,7 +210,7 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::CurrentDistribution(string strXml)
+void RandomNeuron::CurrentDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -245,7 +245,7 @@ void RandomNeuron::BurstLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::BurstLengthDistribution(string strXml)
+void RandomNeuron::BurstLengthDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -280,7 +280,7 @@ void RandomNeuron::InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::InterbusrtLengthDistribution(string strXml)
+void RandomNeuron::InterbusrtLengthDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -390,9 +390,9 @@ void RandomNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 #pragma region DataAccesMethods
 
-bool RandomNeuron::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool RandomNeuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(Neuron::SetData(strDataType, strValue, false))
 		return true;
@@ -429,7 +429,7 @@ bool RandomNeuron::SetData(const string &strDataType, const string &strValue, bo
 	return false;
 }
 
-void RandomNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void RandomNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	Neuron::QueryProperties(aryNames, aryTypes);
 

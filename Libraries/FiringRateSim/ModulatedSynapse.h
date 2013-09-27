@@ -29,7 +29,7 @@ namespace FiringRateSim
 			virtual ~ModulatedSynapse();
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual float *GetDataPointer(const std::string &strDataType);
 #pragma endregion
 
 			virtual float CalculateModulation(FiringRateModule *lpModule);

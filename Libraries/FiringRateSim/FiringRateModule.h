@@ -55,7 +55,7 @@ namespace FiringRateSim
 		
 		\return	.
 		**/
-		virtual string ModuleName() {return Nl_NeuralModuleName();};
+		virtual std::string ModuleName() {return Nl_NeuralModuleName();};
 
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
@@ -64,15 +64,15 @@ namespace FiringRateSim
 		virtual void Load(CStdXml &oXml);
 
 #pragma region DataAccesMethods
-		virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual bool AddItem(const string &strItemType, const string &strXml, bool bThrowError = true, bool bDoNotInit = false);
-		virtual bool RemoveItem(const string &strItemType, const string &strID, bool bThrowError = true);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddNeuron(string strXml, bool bDoNotInit = false);
-		virtual void RemoveNeuron(string strID, bool bThrowError = true);
-		virtual int FindNeuronListPos(string strID, bool bThrowError = true);
+		virtual void AddNeuron(std::string strXml, bool bDoNotInit = false);
+		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
+		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
 
 		bool ActiveArray();
 		void ActiveArray(bool bVal);

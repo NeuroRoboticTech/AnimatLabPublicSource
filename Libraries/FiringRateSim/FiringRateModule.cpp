@@ -122,9 +122,9 @@ void FiringRateModule::Kill(bool bState)
 
 \return	The found neuron list position.
 **/
-int FiringRateModule::FindNeuronListPos(string strID, bool bThrowError)
+int FiringRateModule::FindNeuronListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -174,9 +174,9 @@ void FiringRateModule::StepSimulation()
 
 #pragma region DataAccesMethods
 
-bool FiringRateModule::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool FiringRateModule::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(NeuralModule::SetData(strDataType, strValue, false))
 		return true;
@@ -194,7 +194,7 @@ bool FiringRateModule::SetData(const string &strDataType, const string &strValue
 	return false;
 }
 
-void FiringRateModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void FiringRateModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	NeuralModule::QueryProperties(aryNames, aryTypes);
 
@@ -210,7 +210,7 @@ void FiringRateModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<st
 
 \param	strXml	The xml to use when loading the neuron. 
 **/
-void FiringRateModule::AddNeuron(string strXml, bool bDoNotInit)
+void FiringRateModule::AddNeuron(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -231,15 +231,15 @@ void FiringRateModule::AddNeuron(string strXml, bool bDoNotInit)
 \param	strID	   	GUID ID for the neuron. 
 \param	bThrowError	true to throw error if neuron found. 
 **/
-void FiringRateModule::RemoveNeuron(string strID, bool bThrowError)
+void FiringRateModule::RemoveNeuron(std::string strID, bool bThrowError)
 {
 	int iPos = FindNeuronListPos(strID, bThrowError);
 	m_aryNeurons.RemoveAt(iPos);
 }
 
-bool FiringRateModule::AddItem(const string &strItemType, const string &strXml, bool bThrowError, bool bDoNotInit)
+bool FiringRateModule::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
@@ -256,9 +256,9 @@ bool FiringRateModule::AddItem(const string &strItemType, const string &strXml, 
 	return false;
 }
 
-bool FiringRateModule::RemoveItem(const string &strItemType, const string &strID, bool bThrowError)
+bool FiringRateModule::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
@@ -377,7 +377,7 @@ void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 Neuron *FiringRateModule::LoadNeuron(CStdXml &oXml)
 {
 	Neuron *lpNeuron=NULL;
-	string strType;
+	std::string strType;
 
 try
 {
