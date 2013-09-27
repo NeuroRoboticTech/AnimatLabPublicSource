@@ -53,15 +53,15 @@ void VsMeshBase::CreateGraphicsGeometry()
 
 void VsMeshBase::LoadMeshNode()
 {
-	string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
-	string strMeshFile;
+	std::string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
+	std::string strMeshFile;
 	
 	if(m_lpThisRB->IsCollisionObject() && m_lpThisMesh->CollisionMeshType() == "CONVEX")
 		strMeshFile	= m_lpThisMesh->ConvexMeshFile();
 	else
 		strMeshFile	= m_lpThisMesh->MeshFile();
 
-	string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
+	std::string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
 	m_osgBaseMeshNode = GetVsSimulator()->MeshMgr()->LoadMesh(strFile);
 
 	if(!m_osgBaseMeshNode.valid())

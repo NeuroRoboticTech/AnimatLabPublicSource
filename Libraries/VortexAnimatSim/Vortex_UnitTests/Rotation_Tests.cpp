@@ -353,11 +353,11 @@ BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
 
 BOOST_AUTO_TEST_CASE( Dynamic_Loading )
 {
-    string strExePath = Std_ExecutablePath();
-    string strExecutablePath, strExeFile;
+    std::string strExePath = Std_ExecutablePath();
+    std::string strExecutablePath, strExeFile;
 	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
 
-    string strProjFile = strExecutablePath + "../Libraries/VortexAnimatSim/Vortex_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
+    std::string strProjFile = strExecutablePath + "../Libraries/VortexAnimatSim/Vortex_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
 
 	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
 	 

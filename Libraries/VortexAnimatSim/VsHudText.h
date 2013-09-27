@@ -20,7 +20,7 @@ namespace VortexAnimatSim
 
 		public:
 			VsHudText();
-			VsHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval);
+			VsHudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval);
 			virtual ~VsHudText();
 
 			virtual void ResetSimulation();

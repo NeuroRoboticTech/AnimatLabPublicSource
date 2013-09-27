@@ -84,8 +84,8 @@ namespace VortexAnimatSim
 
 		virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
 		virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
-		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
-		virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture);
+		virtual void GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
+		virtual void ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture);
 
 #pragma endregion
 
@@ -101,7 +101,7 @@ namespace VortexAnimatSim
 
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, bool bUseScaling = true);
-		virtual int GetMaterialID(string strID);
+		virtual int GetMaterialID(std::string strID);
 
 #pragma endregion
 		
@@ -117,13 +117,13 @@ namespace VortexAnimatSim
 		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
 		virtual void MicroSleep(unsigned int iMicroTime);
 
-		virtual void WriteToConsole(string strMessage);
+		virtual void WriteToConsole(std::string strMessage);
 
 #pragma endregion
 
 		virtual void AlphaThreshold(float fltValue);
 
-		virtual float *GetDataPointer(const string &strDataType);
+		virtual float *GetDataPointer(const std::string &strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 
 		virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
@@ -134,7 +134,7 @@ namespace VortexAnimatSim
 		virtual void StopSimulation();
 		virtual bool StartSimulation();
 		virtual bool PauseSimulation();
-		virtual void Save(string strFile);
+		virtual void Save(std::string strFile);
 
 		static VsSimulator *ConvertSimulator(Simulator *lpSim);
 	};

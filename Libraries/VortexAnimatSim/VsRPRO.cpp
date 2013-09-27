@@ -127,7 +127,7 @@ void VsRPRO::CreateJoint()
 
 #pragma region DataAccesMethods
 
-bool VsRPRO::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VsRPRO::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -142,7 +142,7 @@ bool VsRPRO::SetData(const string &strDataType, const string &strValue, bool bTh
 	return false;
 }
 
-void VsRPRO::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsRPRO::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
 	RPRO::QueryProperties(aryNames, aryTypes);

@@ -895,7 +895,7 @@ osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 	return osgLocalMatrix;
 }
 
-void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)
+void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, std::string strTexture, osg::StateAttribute::GLMode eTextureMode)
 {
 	if(osgNode)
 	{
@@ -1248,13 +1248,13 @@ osg::Geometry VORTEX_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometr
 }
 
 /*
-osg::Geometry *CreateHeightFieldGeometry(string strFilename,  float fltLeftCorner, float fltUpperCorner, 
+osg::Geometry *CreateHeightFieldGeometry(std::string strFilename,  float fltLeftCorner, float fltUpperCorner, 
 										 float fltSegmentWidth, float fltSegmentLength, 
 										 float fltMinElevation, float fltMaxElevation)
 {
-	string strHeightMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_HeightMap.jpg"
-	string strNormalsMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_NormalsMap.jpg"
-	string strTextureMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_TextureMap.jpg"
+	std::string strHeightMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_HeightMap.jpg"
+	std::string strNormalsMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_NormalsMap.jpg"
+	std::string strTextureMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_TextureMap.jpg"
 
 	//load the images.
 	osg::Image *imgHeight = osgDB::readImageFile(strHeightMap.c_str());

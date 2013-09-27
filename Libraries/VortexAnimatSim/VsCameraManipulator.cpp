@@ -113,7 +113,7 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 			case(GUIEventAdapter::KEYDOWN):
 			{
-				//string strText = "Key Down" + STR(ea.getKey());
+				//std::string strText = "Key Down" + STR(ea.getKey());
 				//OutputDebugString(strText.c_str());
 				if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Shift_L)
 				{
@@ -137,7 +137,7 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 			case(GUIEventAdapter::KEYUP):
 			{
-				//string strText = "Key Up" + STR(ea.getKey());
+				//std::string strText = "Key Up" + STR(ea.getKey());
 				//OutputDebugString(strText.c_str());
 				if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Shift_L)
 				{

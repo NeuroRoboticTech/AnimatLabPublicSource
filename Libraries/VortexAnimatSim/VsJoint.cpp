@@ -333,7 +333,7 @@ void  VsJoint::BuildLocalMatrix()
 	VsBody::BuildLocalMatrix();
 }
 
-void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -427,7 +427,7 @@ void VsJoint::Physics_ResetSimulation()
 }
 
 
-bool VsJoint::Physics_SetData(const string &strDataType, const string &strValue)
+bool VsJoint::Physics_SetData(const std::string &strDataType, const std::string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
@@ -439,7 +439,7 @@ bool VsJoint::Physics_SetData(const string &strDataType, const string &strValue)
 	return false;
 }
 
-void VsJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsJoint::Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 }
 

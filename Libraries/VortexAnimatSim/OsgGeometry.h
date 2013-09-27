@@ -12,7 +12,7 @@ namespace VortexAnimatSim
 		osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
 		osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot);
 		void VORTEX_PORT SetNodeColor(osg::Node *osgNode, CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
-		void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode);
+		void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, std::string strTexture, osg::StateAttribute::GLMode eTextureMode);
 		osg::Geometry VORTEX_PORT *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth);
 		osg::Geometry VORTEX_PORT *CreateConeGeometry(float height, float topradius, float botradius, int sides, bool doSide, bool doTop, bool doBottom);
 		osg::Geometry VORTEX_PORT *CreateSphereGeometry(int latres, int longres, float radius);

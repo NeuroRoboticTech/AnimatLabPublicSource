@@ -61,9 +61,9 @@ catch(...)
 \author	dcofer
 \date	4/3/2011
 
-\param	strVal	The post-fix velocity equation string. 
+\param	strVal	The post-fix velocity equation std::string. 
 **/
-void VsMotorVelocityStimulus::VelocityEquation(string strVal)
+void VsMotorVelocityStimulus::VelocityEquation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -162,10 +162,10 @@ void VsMotorVelocityStimulus::Deactivate()
 	}
 }
 
-float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
+float *VsMotorVelocityStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "VELOCITY")
 		lpData = &m_fltVelocityReport;
@@ -175,9 +175,9 @@ float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-bool VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VsMotorVelocityStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
@@ -201,7 +201,7 @@ bool VsMotorVelocityStimulus::SetData(const string &strDataType, const string &s
 	return false;
 }
 
-void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsMotorVelocityStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 

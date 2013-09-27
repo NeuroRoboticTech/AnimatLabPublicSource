@@ -127,7 +127,7 @@ void VsUniversal::CreateJoint()
 #pragma region DataAccesMethods
 
 
-bool VsUniversal::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VsUniversal::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -142,7 +142,7 @@ bool VsUniversal::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void VsUniversal::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsUniversal::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
 	BallSocket::QueryProperties(aryNames, aryTypes);

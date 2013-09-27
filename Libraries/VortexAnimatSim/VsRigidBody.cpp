@@ -160,7 +160,7 @@ void VsRigidBody::Physics_SetDensity(float fltVal)
 		m_vxCollisionGeometry->setRelativeDensity(fltVal);
 }
 
-void VsRigidBody::Physics_SetMaterialID(string strID)
+void VsRigidBody::Physics_SetMaterialID(std::string strID)
 {
 	if(m_vxCollisionGeometry && m_lpThisAB)
 	{
@@ -394,7 +394,7 @@ void VsRigidBody::CreateSensorPart()
 
 		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
-		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 
 		m_vxSensor->setControl(VxEntity::kControlNode);
@@ -449,7 +449,7 @@ void VsRigidBody::CreateDynamicPart()
 
         GetBaseValues();
 
-		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 		m_vxSensor->setFastMoving(true);
 
@@ -488,7 +488,7 @@ void VsRigidBody::CreateStaticPart()
 			if(vxSensor)
 			{
 				CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-				string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+				std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 				m_vxCollisionGeometry->setName(strName.c_str());
 			}
 		}
@@ -748,9 +748,9 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
-float *VsRigidBody::Physics_GetDataPointer(const string &strDataType)
+float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
 
 	if(strType == "BODYTORQUEX")

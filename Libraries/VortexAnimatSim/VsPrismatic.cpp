@@ -267,10 +267,10 @@ void VsPrismatic::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *VsPrismatic::GetDataPointer(const string &strDataType)
+float *VsPrismatic::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "JOINTROTATION")
 		return &m_fltPosition;
@@ -299,7 +299,7 @@ float *VsPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-bool VsPrismatic::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VsPrismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -314,7 +314,7 @@ bool VsPrismatic::SetData(const string &strDataType, const string &strValue, boo
 	return false;
 }
 
-void VsPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
 	Prismatic::QueryProperties(aryNames, aryTypes);

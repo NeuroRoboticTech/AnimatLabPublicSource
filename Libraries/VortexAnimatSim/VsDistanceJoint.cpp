@@ -126,7 +126,7 @@ void VsDistanceJoint::CreateJoint()
 #pragma region DataAccesMethods
 
 
-bool VsDistanceJoint::SetData(const string &strDataType, const string &strValue, bool bThrowError)
+bool VsDistanceJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
@@ -141,7 +141,7 @@ bool VsDistanceJoint::SetData(const string &strDataType, const string &strValue,
 	return false;
 }
 
-void VsDistanceJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsDistanceJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
 	Joint::QueryProperties(aryNames, aryTypes);

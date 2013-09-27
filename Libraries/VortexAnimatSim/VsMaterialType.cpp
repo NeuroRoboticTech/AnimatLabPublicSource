@@ -24,7 +24,7 @@ VsMaterialType::~VsMaterialType()
 {
 }
 
-int VsMaterialType::GetMaterialID(string strName)
+int VsMaterialType::GetMaterialID(std::string strName)
 {
 	if(!m_vxMaterialTable)
 		THROW_ERROR(Vs_Err_lMaterial_Table_Not_Defined, Vs_Err_strMaterial_Table_Not_Defined);

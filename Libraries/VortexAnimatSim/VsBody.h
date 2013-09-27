@@ -30,7 +30,7 @@ namespace VortexAnimatSim
 
 			virtual void Physics_SetFreeze(bool bVal) {};
 			virtual void Physics_SetDensity(float fltVal) {};
-			virtual void Physics_SetMaterialID(string strID) {};
+			virtual void Physics_SetMaterialID(std::string strID) {};
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) {};
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) {};
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() {};

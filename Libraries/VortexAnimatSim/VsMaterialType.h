@@ -21,7 +21,7 @@ namespace VortexAnimatSim
 			VsMaterialType();
 			virtual ~VsMaterialType();
 
-			virtual int GetMaterialID(string strName);
+			virtual int GetMaterialID(std::string strName);
 			virtual void Initialize();
 		};
 

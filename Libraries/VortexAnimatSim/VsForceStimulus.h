@@ -16,17 +16,17 @@ namespace VortexAnimatSim
 		{
 		protected:
 			Structure *m_lpStructure;
-			string m_strStructureID;
+			std::string m_strStructureID;
 
-			string m_strBodyID;
+			std::string m_strBodyID;
 			RigidBody *m_lpBody;
 			VsRigidBody *m_lpVsBody;
 
 			CStdFPoint m_oRelativePosition;
 
-			string m_strForceXEquation;
-			string m_strForceYEquation;
-			string m_strForceZEquation;
+			std::string m_strForceXEquation;
+			std::string m_strForceYEquation;
+			std::string m_strForceZEquation;
 
 			CStdPostFixEval *m_lpForceXEval;
 			CStdPostFixEval *m_lpForceYEval;
@@ -40,9 +40,9 @@ namespace VortexAnimatSim
 			float m_fltForceReportY;
 			float m_fltForceReportZ;
 
-			string m_strTorqueXEquation;
-			string m_strTorqueYEquation;
-			string m_strTorqueZEquation;
+			std::string m_strTorqueXEquation;
+			std::string m_strTorqueYEquation;
+			std::string m_strTorqueZEquation;
 
 			CStdPostFixEval *m_lpTorqueXEval;
 			CStdPostFixEval *m_lpTorqueYEval;
@@ -56,7 +56,7 @@ namespace VortexAnimatSim
 			float m_fltTorqueReportY;
 			float m_fltTorqueReportZ;
 
-			CStdPostFixEval *SetupEquation(string strEquation);
+			CStdPostFixEval *SetupEquation(std::string strEquation);
 
 		public:
 			VsForceStimulus();
@@ -70,34 +70,34 @@ namespace VortexAnimatSim
 			void RelativePositionY(float fltVal);
 			void RelativePositionZ(float fltVal);
 
-			string ForceXEquation() {return m_strForceXEquation;};
-			string ForceYEquation() {return m_strForceYEquation;};
-			string ForceZEquation() {return m_strForceZEquation;};
+			std::string ForceXEquation() {return m_strForceXEquation;};
+			std::string ForceYEquation() {return m_strForceYEquation;};
+			std::string ForceZEquation() {return m_strForceZEquation;};
 
-			void ForceXEquation(string strVal);
-			void ForceYEquation(string strVal);
-			void ForceZEquation(string strVal);
+			void ForceXEquation(std::string strVal);
+			void ForceYEquation(std::string strVal);
+			void ForceZEquation(std::string strVal);
 
-			string TorqueXEquation() {return m_strTorqueXEquation;};
-			string TorqueYEquation() {return m_strTorqueYEquation;};
-			string TorqueZEquation() {return m_strTorqueZEquation;};
+			std::string TorqueXEquation() {return m_strTorqueXEquation;};
+			std::string TorqueYEquation() {return m_strTorqueYEquation;};
+			std::string TorqueZEquation() {return m_strTorqueZEquation;};
 
-			void TorqueXEquation(string strVal);
-			void TorqueYEquation(string strVal);
-			void TorqueZEquation(string strVal);
+			void TorqueXEquation(std::string strVal);
+			void TorqueYEquation(std::string strVal);
+			void TorqueZEquation(std::string strVal);
 			
 			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
-			virtual string Type() {return "ForceInput";};
+			virtual std::string Type() {return "ForceInput";};
 			virtual void Initialize();
 			virtual void ResetSimulation();  
 			virtual void StepSimulation();
 			virtual void Deactivate();
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual bool SetData(const string &strDataType, const string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 		};
 
 	}			//ExternalStimuli

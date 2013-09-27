@@ -20,7 +20,7 @@ namespace VortexAnimatSim
 			virtual void SetupGraphics();
 
 			//Remove the texture and culling options for the line.
-			virtual void SetTexture(string strTexture) {};
+			virtual void SetTexture(std::string strTexture) {};
 			virtual void SetCulling() {};
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();

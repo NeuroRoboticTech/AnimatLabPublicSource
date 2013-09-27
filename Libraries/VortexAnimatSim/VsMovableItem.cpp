@@ -68,7 +68,7 @@ void VsMovableItem::SetThisPointers()
 	m_lpThisMI->PhysicsMovableItem(this);
 }
 
-string VsMovableItem::Physics_ID()
+std::string VsMovableItem::Physics_ID()
 {
 	if(m_lpThisAB)
 		return m_lpThisAB->ID();
@@ -104,7 +104,7 @@ void VsMovableItem::Physics_Selected(bool bValue, bool bSelectMultiple)
 	}
 }
 
-void VsMovableItem::CreateSelectedGraphics(string strName)
+void VsMovableItem::CreateSelectedGraphics(std::string strName)
 {
 	m_osgSelectedGroup = new osg::Group();
 	m_osgSelectedGroup->setName(strName + "_SelectedGroup");
@@ -135,9 +135,9 @@ void VsMovableItem::CreateSelectedGraphics(string strName)
 	CreateSelectedVertex(strName);
 }
 
-void VsMovableItem::CreateDragger(string strName)
+void VsMovableItem::CreateDragger(std::string strName)
 {
-	string strVers = osgGetSOVersion();  
+	std::string strVers = osgGetSOVersion();  
 
 	if(m_lpThisAB->GetSimulator())
 	{
@@ -162,7 +162,7 @@ void VsMovableItem::CreateDragger(string strName)
 	}
 }
 
-void VsMovableItem::CreateSelectedVertex(string strName)
+void VsMovableItem::CreateSelectedVertex(std::string strName)
 {
 	if(!m_osgSelVertexNode.valid())
 	{
@@ -197,7 +197,7 @@ void VsMovableItem::DeleteSelectedVertex()
 
 #pragma endregion
 
-float *VsMovableItem::Physics_GetDataPointer(const string &strDataType) {return NULL;}
+float *VsMovableItem::Physics_GetDataPointer(const std::string &strDataType) {return NULL;}
 
 void VsMovableItem::LocalMatrix(osg::Matrix osgLocalMT)
 {
@@ -216,7 +216,7 @@ void VsMovableItem::GeometryRotationMatrix(osg::Matrix osgGeometryMT)
 	m_osgGeometryRotationMT->setMatrix(osgGeometryMT);	
 }
 
-void VsMovableItem::AttachedPartMovedOrRotated(string strID)
+void VsMovableItem::AttachedPartMovedOrRotated(std::string strID)
 {
 	Physics_ResetGraphicsAndPhysics();
 }
@@ -520,7 +520,7 @@ void VsMovableItem::BuildLocalMatrix()
 	BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 }
 
-void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -558,9 +558,9 @@ void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, s
 
 void VsMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml) 
 {
-	string strMatrix = oXml.GetChildString("TransformMatrix");
+	std::string strMatrix = oXml.GetChildString("TransformMatrix");
 	
-	CStdArray<string> aryElements;
+	CStdArray<std::string> aryElements;
 	int iCount = Std_Split(strMatrix, ",", aryElements);
 
 	if(iCount != 16)
@@ -650,13 +650,13 @@ float VsMovableItem::Physics_GetBoundingRadius()
 	//return 0.5f;
 }
 
-void VsMovableItem::SetTexture(string strTexture)
+void VsMovableItem::SetTexture(std::string strTexture)
 {
 	if(m_osgNode.valid())
 	{
 		if(!Std_IsBlank(strTexture))
 		{
-			string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
+			std::string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
 			osg::ref_ptr<osg::Image> image = osgDB::readImageFile(strFile);
 			if(!image)
 				THROW_PARAM_ERROR(Vs_Err_lTextureLoad, Vs_Err_strTextureLoad, "Image File", strFile);
