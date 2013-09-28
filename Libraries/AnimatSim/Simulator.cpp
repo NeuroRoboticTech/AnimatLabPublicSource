@@ -2620,7 +2620,13 @@ IStdClassFactory *Simulator::LoadClassFactory(std::string strModuleName)
 
 try
 {
+#ifdef WIN32
 	int iFindDebug = Std_ToLower(strModuleName).find("d.dll");
+#else
+	int iFindDebug = Std_ToLower(strModuleName).find("d.dll");
+	if(iFindDebug == -1 )
+		iFindDebug = Std_ToLower(strModuleName).find("d.so");
+#endif	
 
 #ifdef _DEBUG
 	if(iFindDebug == -1 )

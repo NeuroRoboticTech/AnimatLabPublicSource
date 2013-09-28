@@ -32,6 +32,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
+        <Lib>pthread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>

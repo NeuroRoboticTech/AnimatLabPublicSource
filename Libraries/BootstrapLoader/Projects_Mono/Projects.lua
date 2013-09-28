@@ -6,7 +6,8 @@
 				 "../*.cpp"}
 		includedirs { "../../../../include" }
 		libdirs { "../../../../bin" }
-		links { "dl"}
+		links { "dl", 
+			    "pthread" }
 	  
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "BOOTSTRAPLOADER_EXPORTS"	}

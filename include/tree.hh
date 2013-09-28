@@ -111,7 +111,7 @@ class tree {
 				typedef T*                              pointer;
 				typedef T&                              reference;
 				typedef size_t                          size_type;
-				typedef ptrdiff_t                       difference_type;
+				//typedef ptrdiff_t                       difference_type;
 				typedef std::bidirectional_iterator_tag iterator_category;
 
 				iterator_base();
@@ -2800,7 +2800,7 @@ class ptr_tree {
 				typedef T*                              pointer;
 				typedef T&                              reference;
 				typedef size_t                          size_type;
-				typedef ptrdiff_t                       difference_type;
+				//typedef ptrdiff_t                       difference_type;
 				typedef std::bidirectional_iterator_tag iterator_category;
 
 				iterator_base();

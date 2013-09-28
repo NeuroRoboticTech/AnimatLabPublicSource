@@ -19,6 +19,7 @@
 			targetname ("BulletAnimatSim_vc10D")
 			links { "StdUtils_vc10D", 
 				"AnimatSim_vc10D",
+				"OsgAnimatSim_vc10D",
 				"OpenThreadsd", 
 				"osgAnimationd", 
 				"osgd", 
@@ -54,6 +55,7 @@
 			targetname ("BulletAnimatSim_vc10")
 			links { "StdUtils_vc10",
 				"AnimatSim_vc10", 
+				"OsgAnimatSim_vc10",
 				"OpenThreads",
 				"osgAnimation",
 				"osg",

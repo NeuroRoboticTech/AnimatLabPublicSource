@@ -17,7 +17,8 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulatorD</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -33,19 +34,18 @@
     <Libs>
       <Libs>
         <Lib>BootstrapLoader_vc10D</Lib>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
       </Libs>
     </Libs>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
-      </CustomCommands>
-    </CustomCommands>
+    <Commandlineparameters>-library libBulletAnimatSim_vc10D.so -project "/media/Win7_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/FallingBoxOnPlane/FallingBoxOnPlane_Standalone.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulator</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>

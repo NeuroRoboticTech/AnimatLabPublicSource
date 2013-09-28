@@ -5,7 +5,8 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../../include" }
-		links { "dl", 
+		links { "dl",
+				"pthread",
 				"boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework" }
@@ -33,7 +34,8 @@
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../../include", 
 					  "../../../StdUtils" }	  
-		links {"dl"}
+		links {"dl",
+  		       "pthread" }
 		
 		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "STDCLASSFACTORYTESTER_EXPORTS"	}

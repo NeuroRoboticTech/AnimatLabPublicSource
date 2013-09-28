@@ -8,7 +8,8 @@ bool is_critical( CStdErrorInfo const& ex ) { return ex.m_lError < 0; }
 
 BOOST_AUTO_TEST_CASE( CreateClassFactory )
 {
-	boost::shared_ptr<IStdClassFactory> lpFactory(IStdClassFactory::LoadModule("StdClassFactoryTester.dll"));
+	//boost::shared_ptr<IStdClassFactory> lpFactory(IStdClassFactory::LoadModule("StdClassFactoryTester.dll"));
+	boost::shared_ptr<IStdClassFactory> lpFactory(IStdClassFactory::LoadModule("BulletAnimatSim_vc10D.dll"));
 	
 	BOOST_CHECK( lpFactory != NULL );
 

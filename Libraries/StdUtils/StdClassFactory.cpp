@@ -88,8 +88,10 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 	if(Std_IsBlank(strModuleName))
 		THROW_ERROR(Std_Err_lModuleNameIsBlank, Std_Err_strModuleNameIsBlank);
 
-	std::string strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
-	//std::string strModRenamed = "/home/me/Projects/AnimatLabPublicSource/unit_test_bin/libStdClassFactoryTester.so";
+	//If the module name already has .so in it then do not modfiy it.
+	std::string strModRenamed = strModuleName;
+	if(Std_ToLower(strModuleName).find(".so") == -1)  
+		strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
 	
 	void *hMod = NULL;
 
