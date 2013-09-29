@@ -1,4 +1,0 @@
-osgViewer::View
-{
-    setUpViewOnSingleScreen 0
-}
