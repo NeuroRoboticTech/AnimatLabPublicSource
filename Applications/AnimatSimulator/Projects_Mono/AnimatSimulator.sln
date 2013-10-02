@@ -1,18 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{13BABA77-CAE4-E64B-B3D2-E192708D390D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
+		Debug_Static|AnyCPU = Debug_Static|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{1BDDE8E7-2D9E-D646-A078-A4C3CF6B302B}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

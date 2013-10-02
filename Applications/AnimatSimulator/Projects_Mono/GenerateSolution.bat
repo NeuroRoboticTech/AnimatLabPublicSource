@@ -1,6 +1,6 @@
 echo "Generating AnimatSimulator Mono Solution"
 
-premake4m --os=linux --file=Solution.lua monodevelop
+..\..\..\bin\premake4m --os=linux --file=Solution.lua monodevelop
 
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\..\include</Include>" "<Include>../../../../include</Include>"
 ..\..\..\bin\fart *.cproj "<LibPath>..\..\..\..\bin</LibPath>" "<LibPath>../../../../bin</LibPath>"
