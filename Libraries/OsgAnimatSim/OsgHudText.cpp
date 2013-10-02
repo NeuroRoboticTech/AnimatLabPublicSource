@@ -23,7 +23,7 @@ OsgHudText::OsgHudText()
 	//Default color is white
 	m_aryColor.Set(1, 1, 1, 1);
 	m_ptPosition.Set(10,10, 0); //Default to the lower left corner
-	m_strFont = "fonts/Arial.ttf";
+	m_strFont = "fonts/arial.ttf";
 	m_iCharSize = 30;
 	m_strText = "";
 	m_lpDisplayData = NULL;
