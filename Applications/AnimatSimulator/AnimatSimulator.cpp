@@ -6,7 +6,11 @@ int main(int argc, const char **argv)
 
 try
 { 
+#ifndef ANIMAT_STATIC
 	return BootStrap_RunLibrary(argc, argv);
+#else
+	BulletAnimatSim::RunBootstrap(argc, argv);
+#endif
 }
 catch(char *str)
 {

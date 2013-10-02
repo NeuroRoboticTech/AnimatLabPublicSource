@@ -38,6 +38,54 @@
 
 #include "BlMaterialType.h"
 
+
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+	extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
+{
+	IStdClassFactory *lpFactory = new BlClassFactory;
+	return lpFactory;
+}
+
+#ifdef _WINDOWS
+	extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
+#else
+	extern "C" int BootstrapRunLibrary(int argc, const char **argv) 
+#endif
+{
+	Simulator *lpSim = NULL;
+
+try
+{
+	Simulator *lpSim = Simulator::CreateSimulator(argc, argv);
+
+	lpSim->Load();
+	lpSim->Initialize(argc, argv);
+    lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);
+	lpSim->Simulate();
+
+	if(lpSim) delete lpSim;
+
+	return 0;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpSim) delete lpSim;
+	printf("Error occurred: %s\n", oError.m_strError.c_str()) ;
+	return (int) oError.m_lError;
+}
+catch(...)
+{
+	if(lpSim) delete lpSim;
+  printf("An Unknown Error occurred.\n") ;
+	return -1;
+}
+}
+
+
+
 namespace BulletAnimatSim
 {
 
@@ -902,51 +950,10 @@ CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::strin
 // ************* IStdClassFactory functions ******************************
 
 
+void BULLET_PORT *RunBootstrap(int argc, const char **argv)
+{
+	BootstrapRunLibrary(argc, argv);
+}
+
 
 }			//BulletAnimatSim
-
-#ifdef _WINDOWS
-	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
-#else
-	extern "C" IStdClassFactory* GetStdClassFactory() 
-#endif
-{
-	IStdClassFactory *lpFactory = new BlClassFactory;
-	return lpFactory;
-}
-
-#ifdef _WINDOWS
-	extern "C" __declspec(dllexport) int __cdecl BootstrapRunLibrary(int argc, const char **argv) 
-#else
-	extern "C" int BootstrapRunLibrary(int argc, const char **argv) 
-#endif
-{
-	Simulator *lpSim = NULL;
-
-try
-{
-	Simulator *lpSim = Simulator::CreateSimulator(argc, argv);
-
-	lpSim->Load();
-	lpSim->Initialize(argc, argv);
-    lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);
-	lpSim->Simulate();
-
-	if(lpSim) delete lpSim;
-
-	return 0;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpSim) delete lpSim;
-	printf("Error occurred: %s\n", oError.m_strError.c_str()) ;
-	return (int) oError.m_lError;
-}
-catch(...)
-{
-	if(lpSim) delete lpSim;
-  printf("An Unknown Error occurred.\n") ;
-	return -1;
-}
-}
-

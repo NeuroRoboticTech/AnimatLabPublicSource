@@ -17,7 +17,8 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulatorD</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -42,18 +43,25 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
+    <Commandlineparameters>-Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Static|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG ANIMAT_STATIC</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulatorD</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
+        <Include>../../../../Libraries/StdUtils</Include>
+        <Include>../../../../Libraries/AnimatSim</Include>
+        <Include>../../../../Libraries/OsgAnimatSim</Include>
+        <Include>../../../../Libraries/BulletAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -77,12 +85,14 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
+    <Commandlineparameters>-Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulator</OutputName>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -108,6 +118,7 @@
         <Command type="AfterBuild" command="cp Release/AnimatSimulator ../../../bin" />
       </CustomCommands>
     </CustomCommands>
+    <Commandlineparameters>-Library libBulletAnimatSim_vc10.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\StdAfx.h">

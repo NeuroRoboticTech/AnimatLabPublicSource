@@ -28,7 +28,6 @@
     #include <limits.h>
     #include <unistd.h>
 
-	#define BOOL bool
 	#define DWORD unsigned long
 	#define LPCSTR const char *
 	#define FALSE 0
@@ -60,7 +59,6 @@
 #include <memory.h>
 #include <sys/types.h>
 #include <sys/timeb.h>
-using namespace std;
 
 int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv);
 

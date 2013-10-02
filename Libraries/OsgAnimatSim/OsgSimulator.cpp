@@ -160,6 +160,10 @@ void OsgSimulator::WriteToConsole(std::string strMessage)
 
 void OsgSimulator::Initialize(int argc, const char **argv)
 {
+#ifndef WIN32
+	osgDB::setLibraryFilePathList("/usr/local/lib64/osgPlugins-2.8.3"); 
+#endif
+
 	InitializeStructures();
 
 	m_oDataChartMgr.Initialize();

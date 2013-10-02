@@ -7,3 +7,7 @@
 
 #include "BootstrapLoader.h"
 
+#ifdef ANIMAT_STATIC
+	#include "BulletAnimatSim.h"
+#endif
+

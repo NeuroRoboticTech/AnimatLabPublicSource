@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = true;
+    m_bDrawDebug = false;
 }
 
 BlSimulator::~BlSimulator()
@@ -269,6 +269,7 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
     osg::ArgumentParser arguments(&argc, (char **) argv);
 
 	osg::setNotifyLevel(osg::NotifySeverity::NOTICE);  //ConvertTraceLevelToOSG());
+	//osg::setNotifyLevel(osg::NotifySeverity::DEBUG_INFO);  //ConvertTraceLevelToOSG());
 
 	//osg::notify(osg::NOTICE) << "Setting OSG notice level to '" << Std_GetTraceLevel() << std::endl
 
