@@ -36,6 +36,6 @@ namespace BulletAnimatSim
 		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};
 
-	void BULLET_PORT *RunBootstrap(int argc, const char **argv);
+	void BULLET_PORT RunBootstrap(int argc, const char **argv);
 
 }			//BulletAnimatSim

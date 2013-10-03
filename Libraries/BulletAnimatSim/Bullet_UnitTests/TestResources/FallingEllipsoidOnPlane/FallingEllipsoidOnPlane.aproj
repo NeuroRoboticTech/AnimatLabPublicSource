@@ -5,14 +5,14 @@
 <Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingEllipsoidOnPlane\</ProjectPath>
-<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>False</SetSimEnd>
 <APIFile/>
 <SimEndTime Value="1" Scale="None" Actual="1"/>
-<PlaybackControlMode>UsePresetValue</PlaybackControlMode>
+<PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
 <PresetPlaybackTimeStep Value="3" Scale="milli" Actual="0.003"/>
 <Environment>
 <PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
@@ -150,7 +150,7 @@
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
 <Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
-<MajorRadius Value="100" Scale="centi" Actual="1"/>
+<MajorRadius Value="150" Scale="centi" Actual="1.5"/>
 <MinorRadius Value="30" Scale="centi" Actual="0.3"/>
 <LatitudeSegments>20</LatitudeSegments>
 <LongtitudeSegments>20</LongtitudeSegments>
@@ -388,8 +388,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>c650661f-6b93-4ffa-8409-37d4b8e3f29a</Name>
-<ID>c650661f-6b93-4ffa-8409-37d4b8e3f29a</ID>
+<Name>d9236d66-3b63-422e-854f-91de3b8228bc</Name>
+<ID>d9236d66-3b63-422e-854f-91de3b8228bc</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -467,7 +467,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
@@ -483,7 +483,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="08/30/2013 19:23:24"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/03/2013 07:30:58"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

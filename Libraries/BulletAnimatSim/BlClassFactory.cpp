@@ -950,7 +950,7 @@ CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::strin
 // ************* IStdClassFactory functions ******************************
 
 
-void BULLET_PORT *RunBootstrap(int argc, const char **argv)
+void BULLET_PORT RunBootstrap(int argc, const char **argv)
 {
 	BootstrapRunLibrary(argc, argv);
 }

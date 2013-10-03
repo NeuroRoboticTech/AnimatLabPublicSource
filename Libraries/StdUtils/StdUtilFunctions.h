@@ -109,6 +109,12 @@ std::string STD_UTILS_PORT Std_NullStr(std::string strFormat);
 #define FSTR(f, v) Std_ToStr(f, v)
 #define NULL_STR(s) Std_NullStr(s)
 
+#ifdef WIN32
+    #define STD_MAX max
+#else
+    #define STD_MAX std::max
+#endif
+
 int STD_UTILS_PORT Std_VariantTypeToConst(std::string strType);
 std::string STD_UTILS_PORT Std_ConstToVariantType(int iType);
 
