@@ -280,14 +280,25 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 		if(bOn)
         {
             if(!m_bMotorOn)
+            {
                 SetLimitValues();
+                m_lpThisJoint->WakeDynamics();
+            }
 
 			m_btPrismatic->setPoweredLinMotor(true);
             m_btPrismatic->setMaxLinMotorForce(fltMaxForce);
             m_btPrismatic->setTargetLinMotorVelocity(fltDesiredVelocity);
         }
 		else
+        {
 			m_btPrismatic->setPoweredLinMotor(false);
+
+            if(m_bMotorOn)
+            {
+                m_lpThisJoint->WakeDynamics();
+                SetLimitValues();
+            }
+        }
 
 		m_bMotorOn = bOn;
 	}

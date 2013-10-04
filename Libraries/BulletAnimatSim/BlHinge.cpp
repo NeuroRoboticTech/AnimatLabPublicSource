@@ -309,10 +309,13 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
         }
 		else
         {
-            if(m_bMotorOn)
-                m_lpThisJoint->WakeDynamics();
-
             m_btHinge->enableAngularMotor(false, fltDesiredVelocity, fltMaxForce);
+
+            if(m_bMotorOn)
+            {
+                m_lpThisJoint->WakeDynamics();
+                SetLimitValues();
+            }
         }
 
 		m_bMotorOn = bOn;

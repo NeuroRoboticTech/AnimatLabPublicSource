@@ -529,7 +529,7 @@
 <StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
 <PartID>25dfcd7d-2eb3-410a-b330-c31b681351d3</PartID>
 <Velocity Value="-0.4" Scale="None" Actual="-0.4"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -568,8 +568,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>9b44ca60-e073-4a56-8d7a-03e7af2458f7</Name>
-<ID>9b44ca60-e073-4a56-8d7a-03e7af2458f7</ID>
+<Name>6f4a44bd-2f52-43c4-b3f4-1afb9641717c</Name>
+<ID>6f4a44bd-2f52-43c4-b3f4-1afb9641717c</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -663,7 +663,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/11/2013 15:13:05"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/04/2013 06:29:08"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
