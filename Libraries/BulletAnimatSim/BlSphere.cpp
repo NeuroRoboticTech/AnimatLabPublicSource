@@ -30,7 +30,7 @@ BlSphere::~BlSphere()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlSphere/\r\n", "", -1, false, true);}

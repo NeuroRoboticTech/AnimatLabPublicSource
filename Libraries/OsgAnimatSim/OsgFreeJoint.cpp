@@ -52,13 +52,13 @@ OsgFreeJoint::~OsgFreeJoint()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of OsgFreeJoint/\r\n", "", -1, false, true);}
 }
 
-void OsgFreeJoint::DeletePhysics()
+void OsgFreeJoint::DeletePhysics(bool bIncludeChildren)
 {
 }
 

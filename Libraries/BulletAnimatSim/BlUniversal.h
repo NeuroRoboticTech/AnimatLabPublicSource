@@ -20,7 +20,7 @@ namespace BulletAnimatSim
 				btUniversalConstraint  *m_btSocket;
 
 				virtual void SetupPhysics();
-				virtual void DeletePhysics();
+				virtual void DeletePhysics(bool bIncludeChildren);
 
 			public:
 				BlUniversal();

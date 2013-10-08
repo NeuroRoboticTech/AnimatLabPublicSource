@@ -42,7 +42,7 @@ BlBallSocket::~BlBallSocket()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlBallSocket\r\n", "", -1, false, true);}
@@ -51,7 +51,7 @@ BlBallSocket::~BlBallSocket()
 void BlBallSocket::SetupPhysics()
 {
     if(m_btJoint)
-		DeletePhysics();
+		DeletePhysics(false);
 
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

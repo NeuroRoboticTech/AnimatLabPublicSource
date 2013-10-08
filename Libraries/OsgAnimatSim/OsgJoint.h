@@ -45,6 +45,9 @@ namespace OsgAnimatSim
 			/// The osg joint matrix transform.
 			osg::ref_ptr<osg::MatrixTransform> m_osgJointMT;
 
+            ///Rotational offset needed to make the joint graphics match the physics.
+            CStdFPoint m_vJointGraphicsRotOffset;
+
 #pragma endregion
 
 			Joint *m_lpThisJoint;
@@ -72,6 +75,9 @@ namespace OsgAnimatSim
 			virtual void SetupGraphics();
             virtual void DeleteGraphics();
 			virtual void SetupPhysics();
+
+            virtual void StartGripDrag();
+            virtual void EndGripDrag();
 
 			virtual void Initialize();
 			virtual bool Physics_SetData(const std::string &strDataType, const std::string &strValue);

@@ -47,6 +47,9 @@ BlHinge::BlHinge()
 
 	m_lpLowerLimit->IsLowerLimit(true);
 	m_lpUpperLimit->IsLowerLimit(false);
+
+    //Need to adjust the joint graphics offset. It is different for the hinge joint.
+    m_vJointGraphicsRotOffset.Set(0, 0, osg::PI/2);
 }
 
 /**
@@ -61,7 +64,7 @@ BlHinge::~BlHinge()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlHinge\r\n", "", -1, false, true);}
@@ -145,7 +148,7 @@ void BlHinge::Physics_UpdateAbsolutePosition()
 void BlHinge::SetupPhysics()
 {
 	if(m_btJoint)
-		DeletePhysics();
+		DeletePhysics(false);
 
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -161,25 +164,41 @@ void BlHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	CStdFPoint vHingePos = lpVsChild->GetOSGWorldCoords() + m_lpThisJoint->Position();
-	CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
-	CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
+	//CStdFPoint vHingePos = lpVsChild->GetOSGWorldCoords() + m_lpThisJoint->Position();
+	//CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
+	//CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
 
-    CStdFPoint vRelativeToParent = vHingePos - vParentPos;
-    CStdFPoint vRelativeToChild = vHingePos - vChildPos;
+ //   CStdFPoint vRelativeToParent = vHingePos - vParentPos;
+ //   CStdFPoint vRelativeToChild = vHingePos - vChildPos;
 
-    btVector3 vParentRelPos((btScalar) vRelativeToParent.x, (btScalar) vRelativeToParent.y, (btScalar)  vRelativeToParent.z); 
-    btVector3 vChildRelPos((btScalar) vRelativeToChild.x, (btScalar) vRelativeToChild.y, (btScalar)  vRelativeToChild.z); 
-    //btVector3 vParentRelPos((btScalar) vHingePos.x, (btScalar) vHingePos.y, (btScalar)  vHingePos.z); 
-   // btVector3 vChildRelPos((btScalar) vChildPos.x, (btScalar) vChildPos.y, (btScalar)  vChildPos.z); 
+ //   btVector3 vParentRelPos((btScalar) vRelativeToParent.x, (btScalar) vRelativeToParent.y, (btScalar)  vRelativeToParent.z); 
+ //   btVector3 vChildRelPos((btScalar) vRelativeToChild.x, (btScalar) vRelativeToChild.y, (btScalar)  vRelativeToChild.z); 
+ //   //btVector3 vParentRelPos((btScalar) vHingePos.x, (btScalar) vHingePos.y, (btScalar)  vHingePos.z); 
+ //  // btVector3 vChildRelPos((btScalar) vChildPos.x, (btScalar) vChildPos.y, (btScalar)  vChildPos.z); 
 
-    CStdFPoint vLocalRot = EulerRotationFromMatrix(this->GetOSGWorldMatrix());
-	osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	//btVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
-	btVector3 axis1((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
-	btVector3 axis2(1, 0, 0);
-   
-	m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), vParentRelPos, vChildRelPos, axis1, axis2); 
+ //   CStdFPoint vLocalRot = EulerRotationFromMatrix(this->GetOSGWorldMatrix());
+	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
+	////btVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	//btVector3 axis1((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
+	//btVector3 axis2(1, 0, 0);
+ //  
+	//m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), vParentRelPos, vChildRelPos, axis1, axis2); 
+
+    //this is for testing purposes only. Will need to put this into the conversion system eventually.
+    //CStdFPoint vVortexToBulletRotOffset(-(osg::PI/2), 0, -(osg::PI/2));
+
+
+    //Get the matrices for the joint relative to the child and parent.
+    osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
+    CStdFPoint vPos = m_lpThisMI->Position();
+    CStdFPoint vRot = m_lpThisMI->Rotation();
+    osg::Matrix osgJointRelChild = SetupMatrix(vPos, vRot);
+
+    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
+    btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
+
+	m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
+
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 
 	GetBlSimulator()->DynamicsWorld()->addConstraint(m_btHinge, true);
@@ -201,6 +220,12 @@ void BlHinge::SetupPhysics()
 
 void BlHinge::CreateJoint()
 {
+    //FIX PHYSICS Temporary code to try and make bullet hinge rotation match vortex
+    //CStdFPoint vOffset(0, (osg::PI/2), -(osg::PI/2));
+    //CStdFPoint vOffset(0, 0, 0);
+    //CStdFPoint vNewRot = m_oRotation + vOffset;
+    //Rotation(vNewRot, false, false);
+
 	SetupGraphics();
 	SetupPhysics();
 }

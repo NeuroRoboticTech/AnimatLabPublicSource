@@ -20,7 +20,7 @@ namespace BulletAnimatSim
 				//VxPlanarFluidState *m_vxFluidPlane;
 
 				virtual void SetupPhysics();
-				virtual void DeletePhysics();
+				virtual void DeletePhysics(bool bIncludeChildren);
 
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();

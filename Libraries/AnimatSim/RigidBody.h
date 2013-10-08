@@ -302,6 +302,7 @@ namespace AnimatSim
 			virtual float GetMass();
 			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();
+            virtual void UpdateChildPhysicsPosFromGraphics();
 
 			virtual RigidBody *ParentWithCollisionGeometry();
 
@@ -309,7 +310,9 @@ namespace AnimatSim
 			virtual void DisableCollision(RigidBody *lpBody);
 
 			virtual void CreateParts();
+            virtual void CreateChildParts();
 			virtual void CreateJoints();
+            virtual void CreateChildJoints();
 
 #pragma region DataAccesMethods
 

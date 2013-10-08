@@ -37,7 +37,9 @@ namespace AnimatSim
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) = 0;
 			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos) = 0;
 			virtual void Physics_Resize() = 0;		
-			virtual void Physics_LoadTransformMatrix(CStdXml &oXml) = 0;
+			virtual void Physics_LoadLocalTransformMatrix(CStdXml &oXml) = 0;
+			virtual void Physics_SaveLocalTransformMatrix(CStdXml &oXml) = 0;
+			virtual std::string Physics_GetLocalTransformMatrixString() = 0;
 			virtual void Physics_ResizeDragHandler(float fltRadius) = 0;
 		};
 

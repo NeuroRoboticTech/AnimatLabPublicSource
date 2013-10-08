@@ -96,6 +96,23 @@ bool OsgDraggerHandler::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa)
 	return bHandled;
 }
 
+void OsgDraggerHandler::StartGripDrag()
+{
+	if(m_osgActiveDragger && m_osgActiveDragger->getUserData())
+	{
+		OsgUserData *osgData = dynamic_cast<OsgUserData *>(m_osgActiveDragger->getUserData());
+		if(osgData && osgData->GetMovable())
+		{
+			OsgMovableItem *lpItem = osgData->GetOsgMovable();
+            if(lpItem && m_lpSim)
+            {
+                m_lpSim->InDrag(true);
+    			lpItem->StartGripDrag();
+            }
+		}
+	}
+}
+
 void OsgDraggerHandler::EndGripDrag()
 {
 	if(m_osgActiveDragger && m_osgActiveDragger->getUserData())
@@ -104,7 +121,11 @@ void OsgDraggerHandler::EndGripDrag()
 		if(osgData && osgData->GetMovable())
 		{
 			OsgMovableItem *lpItem = osgData->GetOsgMovable();
-			lpItem->EndGripDrag();
+            if(lpItem && m_lpSim)
+            {
+                m_lpSim->InDrag(false);
+        		lpItem->EndGripDrag();
+            }
 		}
 	}
 }
@@ -152,6 +173,7 @@ void OsgDraggerHandler::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapter&
 
 				dragger->handle(m_osgManipInfo, ea, aa);
 				m_osgActiveDragger = dragger;
+                StartGripDrag();
 				break;
 			}                   
 		}

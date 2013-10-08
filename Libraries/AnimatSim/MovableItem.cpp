@@ -64,6 +64,7 @@ MovableItem::MovableItem(void)
 	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
 	m_fltShininess = 64;
 	m_fltUserDefinedDraggerRadius = -1;
+    m_bIsSelected = false;
 }
 
 /**
@@ -474,6 +475,23 @@ void MovableItem::ReportRotation(CStdFPoint &oPoint) {m_oReportRotation = oPoint
 \param	fltZ	The z coordinate. 
 **/
 void MovableItem::ReportRotation(float fltX, float fltY, float fltZ) {m_oReportRotation.Set(fltX, fltY, fltZ);}
+
+/**
+\brief	Returns a string representation of the transformation matrix of this object. This is primarily used 
+to save off the transform matrix into the project file. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	String of transform matrix for saving. 
+**/
+std::string MovableItem::LocalTransformationMatrixString()
+{
+	if(m_lpPhysicsMovableItem)
+		return m_lpPhysicsMovableItem->Physics_GetLocalTransformMatrixString();
+    else
+        return "";
+}
 
 /**
 \brief	Query if this object is visible. 
@@ -1080,7 +1098,14 @@ bool MovableItem::AllowRotateDragY() {return true;}
 **/
 bool MovableItem::AllowRotateDragZ() {return true;}
 
+/**
+ \brief User defined dragger radius.
 
+ \author    David Cofer
+ \date  10/8/2013
+
+ \param fltRadius   Sets the user defined drag radius.
+ */
 void MovableItem::UserDefinedDraggerRadius(float fltRadius)
 {
 	if(fltRadius <= 0)
@@ -1091,15 +1116,35 @@ void MovableItem::UserDefinedDraggerRadius(float fltRadius)
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_ResizeDragHandler(m_fltUserDefinedDraggerRadius);
 }
-		
 
+/**
+ \brief Gets the user defined dragger radius.
+
+ \author    David Cofer
+ \date  10/8/2013
+
+ \return    .
+ */
 float MovableItem::UserDefinedDraggerRadius()
 {return m_fltUserDefinedDraggerRadius;}
+
+/**
+ \brief Query if this object is selected.
+
+ \author    David Cofer
+ \date  10/8/2013
+
+ \return    true if selected, false if not.
+ */
+bool MovableItem::IsSelected()
+{return m_bIsSelected;}
 
 #pragma endregion
 
 void MovableItem::Selected(bool bValue, bool bSelectMultiple)
 {
+    m_bIsSelected = bValue;
+
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Selected(bValue, bSelectMultiple);
 
@@ -1558,11 +1603,6 @@ void MovableItem::LoadPosition(CStdXml &oXml)
 
 	Std_LoadPoint(oXml, "Position", vTemp);
 	Position(vTemp, true, false, false);	
-
-	//if(!m_lpParent)
-	//	AbsolutePosition(m_oPosition);
-	//else
-	//	AbsolutePosition( m_lpParent->AbsolutePosition() + m_oPosition);
 }
 
 /**
@@ -1586,13 +1626,8 @@ void MovableItem::Load(CStdXml &oXml)
 {
 	oXml.IntoElem();  //Into Element
 	
-	if(oXml.FindChildElement("TransformMatrix", false) && m_lpPhysicsMovableItem)
-		m_lpPhysicsMovableItem->Physics_LoadTransformMatrix(oXml);
-	else
-	{
-		LoadPosition(oXml);
-		LoadRotation(oXml);
-	}
+	LoadPosition(oXml);
+	LoadRotation(oXml);
 
 	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 	GraphicsAlpha(oXml.GetChildFloat("GraphicsAlpha", m_fltGraphicsAlpha));

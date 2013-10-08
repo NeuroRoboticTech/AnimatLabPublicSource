@@ -1154,6 +1154,19 @@ void RigidBody::CreateParts()
 	if(m_bFoodSource)
 		m_fltFoodReplenishRate = (m_fltFoodReplenishRate * m_lpSim->PhysicsTimeStep());
 
+    CreateChildParts();
+}
+
+/**
+\brief	Loops through all the child parts of this rigid body and call CreateParts.
+
+\details This is called by CreateParts method to recursively call CreateParts for all children. 
+
+\author	dcofer
+\date	10/7/2013
+**/
+void RigidBody::CreateChildParts()
+{
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->CreateParts();
@@ -1177,6 +1190,19 @@ create the joints for its children.
 \date	3/2/2011
 **/
 void RigidBody::CreateJoints()
+{
+    CreateChildJoints();
+}
+
+/**
+\brief	Loops through all the child parts of this rigid body and call CreateJoints.
+
+\details This is called by CreateJoints method to recursively call CreateJoints for all children. 
+
+\author	dcofer
+\date	10/7/2013
+**/
+void RigidBody::CreateChildJoints()
 {
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1600,6 +1626,11 @@ void RigidBody::UpdatePhysicsPosFromGraphics()
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_UpdateNode();
 
+    UpdateChildPhysicsPosFromGraphics();
+}
+
+void RigidBody::UpdateChildPhysicsPosFromGraphics()
+{
 	if(m_lpJointToParent)
 		m_lpJointToParent->UpdatePhysicsPosFromGraphics();
 

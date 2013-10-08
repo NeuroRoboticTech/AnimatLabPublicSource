@@ -11,6 +11,9 @@ namespace VortexAnimatSim
 		CStdFPoint VORTEX_PORT QuaterionToEuler(osg::Quat vQuat);
 		osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
 		osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot);
+        osg::Matrix VORTEX_PORT LoadMatrix(CStdXml &oXml, std::string strElementName); 
+        std::string VORTEX_PORT SaveMatrixString(osg::Matrix osgMT);
+        void VORTEX_PORT SaveMatrix(CStdXml &oXml, std::string strElementName, osg::Matrix osgMT); 
 		void VORTEX_PORT SetNodeColor(osg::Node *osgNode, CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
 		void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, std::string strTexture, osg::StateAttribute::GLMode eTextureMode);
 		osg::Geometry VORTEX_PORT *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth);

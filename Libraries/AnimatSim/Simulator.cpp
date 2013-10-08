@@ -167,6 +167,8 @@ Simulator::Simulator()
 
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
+
+    m_bInDrag = false;
 }
 
 /**

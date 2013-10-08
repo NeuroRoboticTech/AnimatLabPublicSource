@@ -32,7 +32,7 @@ BlLinearHillMuscle::~BlLinearHillMuscle()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlLinearHillMuscle\r\n", "", -1, false, true);}

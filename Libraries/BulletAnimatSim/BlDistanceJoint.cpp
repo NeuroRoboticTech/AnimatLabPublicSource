@@ -42,7 +42,7 @@ BlDistanceJoint::~BlDistanceJoint()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlDistanceJoint/\r\n", "", -1, false, true);}
@@ -64,7 +64,7 @@ void BlDistanceJoint::SetupPhysics()
 {
     //FIX PHYSICS
 	if(m_btJoint)
-		DeletePhysics();
+		DeletePhysics(false);
 
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

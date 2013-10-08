@@ -66,7 +66,9 @@ namespace OsgAnimatSim
 			virtual void AttachedPartMovedOrRotated(std::string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
+            virtual osg::Matrix CalculateTransformRelativeToParent(osg::Matrix osgLocalMatrix);
 
+            virtual void InitializeGraphicsGeometry();
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
 			virtual void CreateGeometry();
@@ -104,8 +106,9 @@ namespace OsgAnimatSim
 			virtual void SetupGraphics();
 			virtual void SetupPhysics() = 0;
 			virtual void DeleteGraphics();
-			virtual void DeletePhysics() = 0;
+			virtual void DeletePhysics(bool bIncludeChildren) = 0;
 
+			virtual void StartGripDrag();
 			virtual void EndGripDrag();
 
 			virtual std::string Physics_ID();
@@ -126,7 +129,9 @@ namespace OsgAnimatSim
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
-			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
+			virtual void Physics_LoadLocalTransformMatrix(CStdXml &oXml);
+			virtual void Physics_SaveLocalTransformMatrix(CStdXml &oXml);
+			virtual std::string Physics_GetLocalTransformMatrixString();
 			virtual void Physics_ResizeDragHandler(float fltRadius);
 
 			virtual void SetTexture(std::string strTexture);

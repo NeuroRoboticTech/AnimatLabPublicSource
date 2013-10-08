@@ -19,7 +19,7 @@ namespace OsgAnimatSim
                 bool m_bPhsyicsDefined;
 
 			    virtual void SetupPhysics();
-			    virtual void DeletePhysics();
+			    virtual void DeletePhysics(bool bIncludeChildren);
 
 		    public:
 			    OsgFreeJoint();

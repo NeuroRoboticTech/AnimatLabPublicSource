@@ -122,6 +122,8 @@ namespace AnimatGUI
 			virtual void EnableCollisions(String ^sOtherBodyID);
 			virtual void DisableCollisions(String ^sOtherBodyID);
 
+            virtual String ^GetLocalTransformMatrixString();
+
 		#pragma endregion
 
 

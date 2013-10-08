@@ -895,6 +895,54 @@ osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 	return osgLocalMatrix;
 }
 
+
+osg::Matrix VORTEX_PORT LoadMatrix(CStdXml &oXml, std::string strElementName)
+{
+    std::string strMatrix = oXml.GetChildString(strElementName);
+	
+	CStdArray<std::string> aryElements;
+	int iCount = Std_Split(strMatrix, ",", aryElements);
+
+	if(iCount != 16)
+		THROW_PARAM_ERROR(Al_Err_lMatrixElementCountInvalid, Al_Err_strMatrixElementCountInvalid, "Matrix count", iCount);
+	
+	float aryMT[4][4];
+	int iIndex=0;
+	for(int iX=0; iX<4; iX++)
+		for(int iY=0; iY<4; iY++, iIndex++)
+			aryMT[iX][iY] = atof(aryElements[iIndex].c_str());
+		
+	osg::Matrix osgMT(aryMT[0][0], aryMT[0][1], aryMT[0][2], aryMT[0][3], 
+					  aryMT[1][0], aryMT[1][1], aryMT[1][2], aryMT[1][3], 
+					  aryMT[2][0], aryMT[2][1], aryMT[2][2], aryMT[2][3], 
+					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
+
+    return osgMT;
+}
+
+std::string VORTEX_PORT SaveMatrixString(osg::Matrix osgMT)
+{
+    std::string strMatrix = "";
+	for(int iX=0; iX<4; iX++)
+    {
+		for(int iY=0; iY<4; iY++)
+        {
+            strMatrix += STR(osgMT(iX, iY));
+            if(iY < 3) strMatrix += ",";
+        }
+        if(iX < 3) strMatrix += ",";
+    }
+
+    return strMatrix;
+}
+
+void VORTEX_PORT SaveMatrix(CStdXml &oXml, std::string strElementName, osg::Matrix osgMT)
+{
+    std::string strMatrix = SaveMatrixString(osgMT);
+    oXml.AddChildElement(strElementName, strMatrix);
+}
+
+
 void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, std::string strTexture, osg::StateAttribute::GLMode eTextureMode)
 {
 	if(osgNode)

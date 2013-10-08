@@ -519,6 +519,32 @@ void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
 	}
 }
 
+String ^DataObjectInterface::GetLocalTransformMatrixString()
+{
+	try
+	{
+		if(m_lpMovable)
+		{
+            std::string strMatrix = m_lpMovable->LocalTransformationMatrixString();
+            return gcnew String(strMatrix.c_str());
+		}
+
+		return gcnew String("");
+	}
+	catch(CStdErrorInfo oError)
+	{
+		std::string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
 
 	}
 }

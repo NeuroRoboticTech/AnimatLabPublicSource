@@ -68,10 +68,10 @@ void OsgRigidBody::Physics_UpdateMatrix()
  
 void OsgRigidBody::UpdatePositionAndRotationFromMatrix()
 {
-	OsgBody::UpdatePositionAndRotationFromMatrix();
-
 	if(m_lpThisRB)
 		m_lpThisRB->UpdatePhysicsPosFromGraphics();
+    else
+    	OsgBody::UpdatePositionAndRotationFromMatrix();
 }
 
 void OsgRigidBody::Physics_SetColor()
@@ -84,6 +84,101 @@ void OsgRigidBody::Physics_TextureChanged()
 {
 	if(m_lpThisRB)
 		SetTexture(m_lpThisRB->Texture());
+}
+
+
+
+//The way bullet is operating is making do things a bit wonky for moving them in real time in the editor.
+//Bullet insists that all OSG objects be relative to the world and attached to the root. If I try and use
+//the dragger to move of those then it will only move that part, and not all the child parts, and this looks
+//bad and is definetly different than how it previously worked. To get around this what I am doing is first 
+//deleting the physics fo this part and all child joints. I am deleting all child graphics (but not this ones 
+//graphics or the dragger would not work anymore). I am then recreating the graphics. However, when StartGripDrag
+//is called in the drag handler it sets a sim property InDrag to true. If InDrag is true then the method AddOsgNodeToParent
+//returns true. If this method is false then parts are added directly to root, if not then they are added to the 
+//parent part. So essentially, I am deleting the osg tree node that has everything connected to root, and then recreating
+//it with everything connected to the parent object being dragged. When the grip drag is over I have to reset things
+//back going against root. Annoying.
+void OsgRigidBody::StartGripDrag()
+{
+    //Delete the physics and graphics
+    DeletePhysics(true);
+    DeleteChildGraphics(true);
+
+    //The recreate the graphics with AddOsgNodeToParent returning true for all parts.
+    //This will recreate the graphics with each node attached to its parent instead of
+    //everything connected to the root node like what is required for bullet to work.
+    SetupChildGraphics(true);
+}
+
+
+void OsgRigidBody::EndGripDrag()
+{
+    OsgBody::UpdatePositionAndRotationFromMatrix();
+
+    DeleteChildGraphics(true);
+
+    CreatePhysicsGeometry();
+    SetupPhysics();
+
+    //Completely recreate the child parts and joints
+    if(m_lpThisRB)
+    {
+        //Recreate the child parts.
+        m_lpThisRB->CreateChildParts();
+
+        //Recreate the joint between this part and its parent
+        m_lpThisRB->CreateChildJoints();
+    }
+}
+
+void OsgRigidBody::SetupChildGraphics(bool bRoot)
+{
+    if(!bRoot)
+    {
+        InitializeGraphicsGeometry();
+        SetupGraphics();
+    }
+
+	OsgJoint *lpVsJoint = dynamic_cast<OsgJoint *>(m_lpThisRB->JointToParent());
+
+    if(lpVsJoint)
+        lpVsJoint->SetupGraphics();
+
+    int iCount = m_lpThisRB->ChildParts()->GetSize();
+    for(int iIdx=0; iIdx<iCount; iIdx++)
+    {
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIdx);
+        if(lpChild)
+        {
+        	OsgRigidBody *lpVsChild = dynamic_cast<OsgRigidBody *>(lpChild);
+            if(lpVsChild)
+                lpVsChild->SetupChildGraphics(false);
+        }
+    }
+}
+
+void OsgRigidBody::DeleteChildGraphics(bool bRoot)
+{
+    if(!bRoot)
+        DeleteGraphics();
+
+    OsgJoint *lpVsJoint = dynamic_cast<OsgJoint *>(m_lpThisRB->JointToParent());
+
+    if(lpVsJoint)
+        lpVsJoint->DeleteGraphics();
+
+    int iCount = m_lpThisRB->ChildParts()->GetSize();
+    for(int iIdx=0; iIdx<iCount; iIdx++)
+    {
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIdx);
+        if(lpChild)
+        {
+        	OsgRigidBody *lpVsChild = dynamic_cast<OsgRigidBody *>(lpChild);
+            if(lpVsChild)
+                lpVsChild->DeleteChildGraphics(false);
+        }
+    }
 }
 
 void OsgRigidBody::Physics_Resize()
@@ -242,7 +337,7 @@ void OsgRigidBody::SetupPhysics()
 
 bool OsgRigidBody::AddOsgNodeToParent()
 {
-	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor())
+	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor() || GetOsgSimulator()->InDrag())
         return true;
     else
         return false;

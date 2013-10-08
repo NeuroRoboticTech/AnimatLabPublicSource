@@ -51,7 +51,7 @@ bool BlJoint::Physics_IsDefined()
         return false;
 }
 
-void BlJoint::DeletePhysics()
+void BlJoint::DeletePhysics(bool bIncludeChildren)
 {
 	if(!m_btJoint)
 		return;

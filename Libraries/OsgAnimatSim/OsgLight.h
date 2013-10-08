@@ -53,7 +53,7 @@ namespace OsgAnimatSim
 			virtual void SetupGraphics();
 			virtual void DeleteGraphics();
 			virtual void SetupPhysics() {};
-			virtual void DeletePhysics() {};
+			virtual void DeletePhysics(bool bIncludeChildren) {};
 
             virtual void Create();
 			virtual void ResetSimulation();

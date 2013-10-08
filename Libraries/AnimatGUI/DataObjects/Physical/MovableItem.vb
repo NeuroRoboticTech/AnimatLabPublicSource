@@ -475,6 +475,7 @@ Namespace DataObjects.Physical
                 m_snUserDefinedDraggerRadius.LoadData(oXml, "DraggerSize")
             End If
 
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -502,6 +503,13 @@ Namespace DataObjects.Physical
 
             m_svLocalPosition.SaveData(oXml, "LocalPosition")
             m_svRotation.SaveData(oXml, "Rotation")
+
+            If Not m_doInterface Is Nothing Then
+                Dim strMatrix As String = m_doInterface.GetLocalTransformMatrixString()
+                If strMatrix.Trim.Length > 0 Then
+                    oXml.AddChildElement("LocalMatrix", strMatrix)
+                End If
+            End If
 
             m_snUserDefinedDraggerRadius.SaveData(oXml, "DraggerSize")
 

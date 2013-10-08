@@ -105,6 +105,9 @@ namespace AnimatSim
 			/// User defined drag handle radius. If this is -1 then the user has not set the value and the default is used.
 			float m_fltUserDefinedDraggerRadius;
 
+            ///Keeps track of whether this movable item has been selected or not.
+            bool m_bIsSelected;
+
 			virtual void LoadPosition(CStdXml &oXml);
 			virtual void LoadRotation(CStdXml &oXml);
 
@@ -148,6 +151,8 @@ namespace AnimatSim
 			virtual CStdFPoint ReportRotation();
 			virtual void ReportRotation(CStdFPoint &oPoint);
 			virtual void ReportRotation(float fltX, float fltY, float fltZ);
+
+            virtual std::string LocalTransformationMatrixString();
 
 			virtual bool IsVisible();
 			virtual void IsVisible(bool bVal);
@@ -214,6 +219,8 @@ namespace AnimatSim
 
 			virtual void UserDefinedDraggerRadius(float fltRadius);
 			virtual float UserDefinedDraggerRadius();
+
+            virtual bool IsSelected();
 
 #pragma endregion
 

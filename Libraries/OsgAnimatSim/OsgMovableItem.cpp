@@ -135,6 +135,10 @@ void OsgMovableItem::CreateSelectedGraphics(std::string strName)
 
 	CreateDragger(strName);
 	CreateSelectedVertex(strName);
+
+    //If we are re-creating the graphics for this item and it was already selected then make sure to draw the drag handles.
+    if(m_lpThisMI->IsSelected())
+        Physics_Selected(true, false);
 }
 
 void OsgMovableItem::CreateDragger(std::string strName)
@@ -218,7 +222,7 @@ void OsgMovableItem::GeometryRotationMatrix(osg::Matrix osgGeometryMT)
 
 void OsgMovableItem::AttachedPartMovedOrRotated(std::string strID)
 {
-	Physics_ResetGraphicsAndPhysics();
+	//Physics_ResetGraphicsAndPhysics();
 }
 
 void OsgMovableItem::CreateGraphicsGeometry() {}
@@ -227,7 +231,7 @@ void OsgMovableItem::CreatePhysicsGeometry() {}
 
 void OsgMovableItem::ResizePhysicsGeometry() {}
 
-void OsgMovableItem::CreateGeometry() 
+void OsgMovableItem::InitializeGraphicsGeometry()
 {
 	CreateGraphicsGeometry();
 	m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
@@ -246,7 +250,11 @@ void OsgMovableItem::CreateGeometry()
 
 	m_osgGeometryRotationMT->addChild(osgGroup);
 	m_osgNode = m_osgGeometryRotationMT.get();
+}
 
+void OsgMovableItem::CreateGeometry() 
+{
+    InitializeGraphicsGeometry();
 	CreatePhysicsGeometry();
 }
 
@@ -288,6 +296,9 @@ void OsgMovableItem::DeleteGraphics()
 		if(m_osgParent->containsNode(m_osgRoot.get()))
 			m_osgParent->removeChild(m_osgRoot.get());
 	}
+
+    if(m_osgRoot.valid() && GetOsgSimulator() && GetOsgSimulator()->OSGRoot() && GetOsgSimulator()->OSGRoot()->containsNode(m_osgRoot.get()))
+        GetOsgSimulator()->OSGRoot()->removeChild(m_osgRoot.get());
 
 	if(m_osgSelVertexNode.valid()) m_osgSelVertexNode.release();
 	if(m_osgSelVertexMT.valid()) m_osgSelVertexMT.release();
@@ -417,33 +428,56 @@ osg::MatrixTransform* OsgMovableItem::GetCameraMatrixTransform()
 		return m_osgMT.get();
 }
 
+osg::Matrix OsgMovableItem::CalculateTransformRelativeToParent(osg::Matrix osgLocalMatrix)
+{
+    if(!m_lpParentVsMI || AddOsgNodeToParent())
+        return osgLocalMatrix;
+    else
+    {
+		//Get the parent object.
+		osg::Matrix osgInverse = osg::Matrix::inverse(m_lpParentVsMI->GetWorldMatrix());
+
+		osg::Matrix osgLocal = osgLocalMatrix * osgInverse;
+        return osgLocal;
+    }
+}
+
+
 void OsgMovableItem::UpdatePositionAndRotationFromMatrix()
 {
-	UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
+    UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
 }
 
 void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 {
 	LocalMatrix(osgMT);
 
+    if(m_osgMT.valid())
+        m_osgMT->setMatrix(m_osgLocalMatrix);
+
+    //Calculate the relative matrix from this par to its parent.
+    //Because we are using bullet the LocalMatrix may really be the World matrix instead of local.
+    //I should rename this, but it would require a lot of changes.
+    osg::Matrix osgLocal = CalculateTransformRelativeToParent(m_osgLocalMatrix);
+
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
-	osg::Vec3 vL = osgMT.getTrans();
+	osg::Vec3 vL = osgLocal.getTrans();
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
 	m_lpThisMI->Position(vLocal, false, true, false);
 		
 	//Now lets get the euler angle rotation
-    CStdFPoint vRot = EulerRotationFromMatrix(osgMT);    
+    CStdFPoint vRot = EulerRotationFromMatrix(osgLocal);    
 	m_lpThisMI->Rotation(vRot, true, false);
 
 	if(m_osgDragger.valid())
 		m_osgDragger->SetupMatrix();
 
-	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
-	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
-	if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
-		THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
+	////Test the matrix to make sure they match. I will probably get rid of this code after full testing.
+	//osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
+	//if(!OsgMatricesEqual(osgTest, m_osgLocalMatrix))
+	//	THROW_ERROR(Osg_Err_lUpdateMatricesDoNotMatch, Osg_Err_strUpdateMatricesDoNotMatch);
 }
 
 void OsgMovableItem::Physics_UpdateMatrix()
@@ -497,7 +531,8 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
     if(AddOsgNodeToParent())
         localMT = SetupMatrix(localPos, localRot);
     else
-        localMT = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
+        localMT = SetupMatrix(localPos, localRot) * m_osgParent->getMatrix();
+        //localMT = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
 
 	LocalMatrix(localMT);
 
@@ -520,28 +555,20 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
 	}
 }
 
-void OsgMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml) 
+void OsgMovableItem::Physics_LoadLocalTransformMatrix(CStdXml &oXml) 
 {
-	std::string strMatrix = oXml.GetChildString("TransformMatrix");
-	
-	CStdArray<std::string> aryElements;
-	int iCount = Std_Split(strMatrix, ",", aryElements);
-
-	if(iCount != 16)
-		THROW_PARAM_ERROR(Al_Err_lMatrixElementCountInvalid, Al_Err_strMatrixElementCountInvalid, "Matrix count", iCount);
-	
-	float aryMT[4][4];
-	int iIndex=0;
-	for(int iX=0; iX<4; iX++)
-		for(int iY=0; iY<4; iY++, iIndex++)
-			aryMT[iX][iY] = atof(aryElements[iIndex].c_str());
-		
-	osg::Matrix osgMT(aryMT[0][0], aryMT[0][1], aryMT[0][2], aryMT[0][3], 
-					  aryMT[1][0], aryMT[1][1], aryMT[1][2], aryMT[1][3], 
-					  aryMT[2][0], aryMT[2][1], aryMT[2][2], aryMT[2][3], 
-					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
-	
+    osg::Matrix osgMT = LoadMatrix(oXml, "LocalMatrix");	
 	UpdatePositionAndRotationFromMatrix(osgMT);
+}
+
+void OsgMovableItem::Physics_SaveLocalTransformMatrix(CStdXml &oXml) 
+{
+    SaveMatrix(oXml, "LocalMatrix", m_osgMT->getMatrix());
+}
+
+std::string OsgMovableItem::Physics_GetLocalTransformMatrixString() 
+{
+    return SaveMatrixString(m_osgMT->getMatrix());
 }
 
 void OsgMovableItem::Physics_ResizeDragHandler(float fltRadius)
@@ -792,6 +819,10 @@ void OsgMovableItem::CreateItem()
 	m_lpThisAB->Initialize();
 	SetupGraphics();
 	SetupPhysics();
+}
+
+void OsgMovableItem::StartGripDrag()
+{
 }
 
 void OsgMovableItem::EndGripDrag()

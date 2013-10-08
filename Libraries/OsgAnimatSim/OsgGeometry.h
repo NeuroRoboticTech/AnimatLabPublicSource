@@ -9,6 +9,9 @@ namespace OsgAnimatSim
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot);
 		osg::Matrix ANIMAT_OSG_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot);
         CStdFPoint ANIMAT_OSG_PORT EulerRotationFromMatrix(osg::Matrix osgMT);
+        osg::Matrix ANIMAT_OSG_PORT LoadMatrix(CStdXml &oXml, std::string strElementName); 
+        std::string ANIMAT_OSG_PORT SaveMatrixString(osg::Matrix osgMT);
+        void ANIMAT_OSG_PORT SaveMatrix(CStdXml &oXml, std::string strElementName, osg::Matrix osgMT); 
 
 		void ANIMAT_OSG_PORT ApplyVertexTransform(osg::Node *node, osg::Matrix omat);
 		bool ANIMAT_OSG_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2);

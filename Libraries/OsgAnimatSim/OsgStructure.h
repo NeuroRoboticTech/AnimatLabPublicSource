@@ -30,7 +30,7 @@ namespace OsgAnimatSim
 
 			virtual void SetThisPointers();
 			virtual void SetupPhysics();
-			virtual void DeletePhysics() {};
+			virtual void DeletePhysics(bool bIncludeChildren) {};
 			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:

@@ -114,4 +114,8 @@ Public Class DataObjectInterfaceMock
 
     End Sub
 
+    Public Function GetLocalTransformMatrixString() As String Implements IDataObjectInterface.GetLocalTransformMatrixString
+        Return ""
+    End Function
+
 End Class

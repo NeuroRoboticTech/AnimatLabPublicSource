@@ -30,6 +30,7 @@ OsgJoint::OsgJoint()
 {
 	m_lpVsParent = NULL;
 	m_lpVsChild = NULL;
+    m_vJointGraphicsRotOffset.Set(0, osg::PI/2, 0) ;
 }
 
 OsgJoint::~OsgJoint()
@@ -201,9 +202,8 @@ void OsgJoint::SetupGraphics()
 	if(m_osgParent.valid())
 	{
 		//Add the parts to the group node.
-		CStdFPoint vPos(0, 0, 0), vRot(osg::PI/2, 0, 0); 
-		vPos.Set(0, 0, 0); vRot.Set(0, osg::PI/2, 0); 
-		
+		CStdFPoint vPos(0, 0, 0), vRot = m_vJointGraphicsRotOffset;
+
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
@@ -249,10 +249,42 @@ osg::Matrix OsgJoint::GetChildWorldMatrix()
 	return osgMatrix;
 }
 
+//When moving the joint using the drag handler we need to delete the physics for this joint, and then
+//recreate it using the new position/orientation.
+void OsgJoint::StartGripDrag()
+{
+    //Delete the physics for the joint
+    DeletePhysics(false);
+}
+
+//Now recreate the joint.
+void OsgJoint::EndGripDrag()
+{
+    UpdatePositionAndRotationFromMatrix();
+
+    //It does not seem like we should have to reset the graphics here, just the physics.
+    //However, we must do this in order to properly reconfigure the OSG matrix transforms that
+    //are then used to setup the physics.
+    DeleteGraphics();
+    SetupGraphics();
+
+    //Now we can setup the physics
+    SetupPhysics();
+}
+
 void OsgJoint::UpdatePositionAndRotationFromMatrix()
 {
-	OsgBody::UpdatePositionAndRotationFromMatrix();
-	SetupPhysics();
+    osg::Matrix mtParent = GetParentWorldMatrix();
+    osg::Matrix mtChild = GetChildWorldMatrix();
+    osg::Matrix mtLocal = m_osgMT->getMatrix();
+
+	//Lets get the world location of the new transform matrix. This is relative to the parent body.
+	osg::Matrix mtWorld = mtLocal * mtParent;
+ 
+    //Now calculate the local transform relative to the child for the update
+    osg::Matrix mtJointRelToChild = mtWorld * osg::Matrix::inverse(mtChild);
+
+	OsgBody::UpdatePositionAndRotationFromMatrix(mtJointRelToChild);
 }
 
 void OsgJoint::Physics_UpdateMatrix()

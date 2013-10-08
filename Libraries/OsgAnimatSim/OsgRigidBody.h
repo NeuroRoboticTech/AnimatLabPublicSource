@@ -71,7 +71,9 @@ namespace OsgAnimatSim
 
 			virtual void ProcessContacts() = 0;
             
-			virtual void DeletePhysics() = 0;
+            virtual void SetupChildGraphics(bool bRoot);
+            virtual void DeleteChildGraphics(bool bRoot);
+
 			virtual void CreateSensorPart() = 0;
 			virtual void CreateStaticPart() = 0;
 			virtual void CreateDynamicPart() = 0;
@@ -91,6 +93,9 @@ namespace OsgAnimatSim
 
 			virtual void SetupPhysics();
             virtual bool AddOsgNodeToParent();
+
+            virtual void StartGripDrag();
+            virtual void EndGripDrag();
 
 			virtual void Initialize();
 			virtual void BuildLocalMatrix();

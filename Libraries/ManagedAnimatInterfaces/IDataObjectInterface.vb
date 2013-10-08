@@ -39,6 +39,8 @@ Public Interface IDataObjectInterface
     Sub EnableCollisions(ByVal strOtherBodyID As String)
     Sub DisableCollisions(ByVal strOtherBodyID As String)
 
+    Function GetLocalTransformMatrixString() As String
+
 #End Region
 
 #Region "Events"

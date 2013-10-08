@@ -88,6 +88,8 @@ BlSimulator *BlRigidBody::GetBlSimulator()
 
 void BlRigidBody::Physics_UpdateNode()
 {
+	OsgBody::UpdatePositionAndRotationFromMatrix();
+
 	if(m_lpThisRB)
 	{
 		if(m_lpThisRB->IsContactSensor())
@@ -97,19 +99,11 @@ void BlRigidBody::Physics_UpdateNode()
         else if(m_btPart)
 			ResetDynamicCollisionGeom();
 	}
-
-	Physics_UpdateAbsolutePosition();
 }
 
 void BlRigidBody::Physics_SetFreeze(bool bVal)
 {
-    if(m_lpThisRB && m_btPart)
-    {
-        if(m_lpThisRB->Freeze())
-            m_btPart->setActivationState(0);
-        else
-            m_btPart->setActivationState(ACTIVE_TAG);
-    }
+    ResizePhysicsGeometry();
 }
 
 void BlRigidBody::Physics_SetDensity(float fltVal)
@@ -476,7 +470,7 @@ void BlRigidBody::DeleteCollisionGeometry()
         {delete m_btCollisionShape; m_btCollisionShape = NULL;}
 }
 
-void BlRigidBody::DeletePhysics()
+void BlRigidBody::DeletePhysics(bool bIncludeChildren)
 {
 	if(m_btPart)
 	{
@@ -490,9 +484,27 @@ void BlRigidBody::DeletePhysics()
 
         //Then delete collision geometry.
         DeleteCollisionGeometry();
+
+        if(bIncludeChildren)
+            DeleteChildPhysics();
 	}
 	else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
 		RemoveStaticPart();
+}
+
+void BlRigidBody::DeleteChildPhysics()
+{
+    int iCount = m_lpThisRB->ChildParts()->GetSize();
+    for(int iIdx=0; iIdx<iCount; iIdx++)
+    {
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIdx);
+        if(lpChild)
+        {
+        	OsgRigidBody *lpVsChild = dynamic_cast<OsgRigidBody *>(lpChild);
+            if(lpVsChild)
+                lpVsChild->DeletePhysics(true);
+        }
+    }
 }
 
 void BlRigidBody::DeleteAttachedJointPhysics()
@@ -500,7 +512,7 @@ void BlRigidBody::DeleteAttachedJointPhysics()
 	BlJoint *lpVsJoint = dynamic_cast<BlJoint *>(m_lpThisRB->JointToParent());
 
     if(lpVsJoint)
-        lpVsJoint->DeletePhysics();
+        lpVsJoint->DeletePhysics(false);
 
     int iCount = m_lpThisRB->ChildParts()->GetSize();
     for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -510,7 +522,7 @@ void BlRigidBody::DeleteAttachedJointPhysics()
         {
         	BlJoint *lpVsChildJoint = dynamic_cast<BlJoint *>(lpChild->JointToParent());
             if(lpVsChildJoint)
-                lpVsChildJoint->DeletePhysics();
+                lpVsChildJoint->DeletePhysics(false);
         }
     }
 }
@@ -538,7 +550,7 @@ void BlRigidBody::RecreateAttachedJointPhysics()
 void BlRigidBody::ResizePhysicsGeometry()
 {
     //Then delete the physics for this part
-    DeletePhysics();
+    DeletePhysics(false);
 
     //Now recreate the collision geometry for this part.
     CreatePhysicsGeometry();

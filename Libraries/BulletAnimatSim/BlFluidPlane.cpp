@@ -42,7 +42,7 @@ BlFluidPlane::~BlFluidPlane()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlFluidPlane/\r\n", "", -1, false, true);}
@@ -127,7 +127,7 @@ void BlFluidPlane::Physics_PositionChanged()
 	UpdateFluidPlaneHeight();
 }
 
-void BlFluidPlane::DeletePhysics()
+void BlFluidPlane::DeletePhysics(bool bIncludeChildren)
 {
     //FIX PHYSICS
 	//if(!m_vxFluidPlane)
@@ -146,7 +146,7 @@ void BlFluidPlane::SetupPhysics()
 {
     //FIX PHYSICS
 	//if(m_vxFluidPlane)
-	//	DeletePhysics();
+	//	DeletePhysics(false);
 
 	//m_vxFluidPlane = new VxPlanarFluidState(m_oAbsPosition.y);
  //   m_vxFluidPlane->setDefaultDensity(m_fltDensity);

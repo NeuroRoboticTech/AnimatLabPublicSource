@@ -30,7 +30,7 @@ BlCylinder::~BlCylinder()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlCylinder\r\n", "", -1, false, true);}

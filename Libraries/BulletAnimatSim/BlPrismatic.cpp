@@ -59,7 +59,7 @@ BlPrismatic::~BlPrismatic()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlPrismatic/\r\n", "", -1, false, true);}
@@ -136,7 +136,7 @@ void BlPrismatic::CreateJointGraphics()
 void BlPrismatic::SetupPhysics()
 {
     if(m_btJoint)
-		DeletePhysics();
+		DeletePhysics(false);
 
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

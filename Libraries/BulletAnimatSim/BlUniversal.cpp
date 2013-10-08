@@ -43,13 +43,13 @@ BlUniversal::~BlUniversal()
 	try
 	{
 		DeleteGraphics();
-		DeletePhysics();
+		DeletePhysics(false);
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlUniversal/\r\n", "", -1, false, true);}
 }
 
-void BlUniversal::DeletePhysics()
+void BlUniversal::DeletePhysics(bool bIncludeChildren)
 {
     //FIX PHYSICS
 	//if(!m_btSocket)
@@ -71,7 +71,7 @@ void BlUniversal::DeletePhysics()
 void BlUniversal::SetupPhysics()
 {
 	if(m_btJoint)
-		DeletePhysics();
+		DeletePhysics(false);
 
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

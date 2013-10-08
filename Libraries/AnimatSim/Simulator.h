@@ -147,6 +147,9 @@ namespace AnimatSim
 			/// True if the simulation is shutting down. This is used by other objects in their destructor to know whether to do certain operations or not.
 			bool m_bShuttingDown;
 
+            /// Tells if we are in the middle of a mouse drag operation to move or rotate a part. 
+            bool m_bInDrag;
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -737,6 +740,9 @@ namespace AnimatSim
 			virtual void DesiredFrameRate(int iVal);
 
 			virtual float RealTime();
+
+            virtual bool InDrag() {return m_bInDrag;};
+            virtual void InDrag(bool bVal) {m_bInDrag = bVal;};
 
 #pragma endregion
 

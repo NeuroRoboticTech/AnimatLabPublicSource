@@ -16,6 +16,7 @@ namespace OsgAnimatSim
 		        osgManipulator::Dragger *m_osgActiveDragger;
 			    osgManipulator::PointerInfo m_osgManipInfo;
 
+				virtual void StartGripDrag();
 				virtual void EndGripDrag();
 
 			protected:

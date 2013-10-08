@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
@@ -598,6 +598,8 @@ void BlSimulator::StepSimulation()
 				osg::notify(osg::NOTICE) << "Sim Time: " << Time() << std::endl;
 			}
 		}
+
+        //PauseSimulation();
 
 	}
 	catch(CStdErrorInfo oError)

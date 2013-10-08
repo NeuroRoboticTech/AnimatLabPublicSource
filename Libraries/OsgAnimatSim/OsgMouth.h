@@ -23,7 +23,7 @@ protected:
 	virtual void ResizePhysicsGeometry();
     
     virtual void ProcessContacts() {};
-	virtual void DeletePhysics() {};
+	virtual void DeletePhysics(bool bIncludeChildren) {};
 	virtual void CreateSensorPart() {};
 	virtual void CreateStaticPart() {};
 	virtual void CreateDynamicPart() {};

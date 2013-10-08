@@ -103,7 +103,7 @@ namespace BulletAnimatSim
             virtual void DeleteDynamicPart();
             virtual void DeleteSensorPart();
             virtual void DeleteCollisionGeometry();
-            virtual void DeletePhysics();
+            virtual void DeletePhysics(bool bIncludeChildren);
 
 			virtual void CreateSensorPart();
 			virtual void CreateStaticPart();
@@ -120,6 +120,7 @@ namespace BulletAnimatSim
 			virtual void ResetSensorCollisionGeom();
 			virtual void ResetDynamicCollisionGeom();
 
+            virtual void DeleteChildPhysics();
             virtual void DeleteAttachedJointPhysics();
             virtual void RecreateAttachedJointPhysics();
 			virtual void ResizePhysicsGeometry();
