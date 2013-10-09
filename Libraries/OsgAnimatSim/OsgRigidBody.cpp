@@ -114,11 +114,14 @@ void OsgRigidBody::StartGripDrag()
 
 void OsgRigidBody::EndGripDrag()
 {
+    //We must recreate the physics geometry here in order for the code that calculates positions to work correctly
+    //because it performs check to make sure it has valid physics geometry.
+    CreatePhysicsGeometry();
+
     OsgBody::UpdatePositionAndRotationFromMatrix();
 
     DeleteChildGraphics(true);
 
-    CreatePhysicsGeometry();
     SetupPhysics();
 
     //Completely recreate the child parts and joints
@@ -126,6 +129,10 @@ void OsgRigidBody::EndGripDrag()
     {
         //Recreate the child parts.
         m_lpThisRB->CreateChildParts();
+
+        //Recreate the joint from this part to its parent if one exists
+	    if(m_lpThisRB->JointToParent())
+		    m_lpThisRB->JointToParent()->CreateJoint();
 
         //Recreate the joint between this part and its parent
         m_lpThisRB->CreateChildJoints();
