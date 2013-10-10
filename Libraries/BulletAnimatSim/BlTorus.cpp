@@ -48,7 +48,9 @@ void BlTorus::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 	{
-        m_fltMass = 1; //NEED TO FIX
+        DeleteCollisionGeometry();
+
+        m_fltMass = 1; //FIX PHYSICS
         m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgNode.get());
         m_bDisplayDebugCollisionGraphic = true;
 	}

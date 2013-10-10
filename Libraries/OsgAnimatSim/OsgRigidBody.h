@@ -75,9 +75,7 @@ namespace OsgAnimatSim
             virtual void DeleteChildGraphics(bool bRoot);
 
 			virtual void CreateSensorPart() = 0;
-			virtual void CreateStaticPart() = 0;
 			virtual void CreateDynamicPart() = 0;
-			virtual void RemoveStaticPart() = 0;
 
 			virtual void UpdatePositionAndRotationFromMatrix();
 

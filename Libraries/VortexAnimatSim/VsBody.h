@@ -40,6 +40,9 @@ namespace VortexAnimatSim
             virtual void Physics_WakeDynamics() {};
             virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) {};
             virtual void Physics_ContactSensorRemoved() {};
+            virtual void Physics_ChildBodyAdded(RigidBody *lpChild) {};
+            virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) {};
+
             virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};

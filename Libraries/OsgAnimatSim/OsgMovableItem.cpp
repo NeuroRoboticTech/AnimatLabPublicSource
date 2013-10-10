@@ -532,7 +532,6 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
         localMT = SetupMatrix(localPos, localRot);
     else
         localMT = SetupMatrix(localPos, localRot) * m_osgParent->getMatrix();
-        //localMT = m_osgParent->getMatrix() * SetupMatrix(localPos, localRot);
 
 	LocalMatrix(localMT);
 

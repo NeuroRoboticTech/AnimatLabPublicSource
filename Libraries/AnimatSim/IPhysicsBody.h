@@ -35,6 +35,9 @@ namespace AnimatSim
             virtual void Physics_WakeDynamics() = 0;
             virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) = 0;
             virtual void Physics_ContactSensorRemoved() = 0;
+
+            virtual void Physics_ChildBodyAdded(RigidBody *lpChild) = 0;
+            virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) = 0;
 		};
 
 	}

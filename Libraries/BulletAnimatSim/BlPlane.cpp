@@ -56,6 +56,8 @@ void BlPlane::CreatePhysicsGeometry()
 {
     if(IsCollisionObject())
     {
+        DeleteCollisionGeometry();
+
         m_fltMass = 0;  //Plane is always a static object.
         CStdFPoint vPos = m_lpThisRB->Position();
         m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), vPos.y);

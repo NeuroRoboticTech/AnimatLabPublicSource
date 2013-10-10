@@ -116,6 +116,8 @@ void BlTerrain::CreatePhysicsGeometry()
 {
 	if(m_osgHeightField)
 	{
+        DeleteCollisionGeometry();
+
         //FIX THIS Does not work yet. 
         m_fltMass = 0;
 		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);

@@ -45,6 +45,8 @@ void BlSphere::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
     {
+        DeleteCollisionGeometry();
+    
         m_fltMass = m_fltDensity * 4/3 * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
         m_btCollisionShape = new btSphereShape( m_fltRadius );
     }

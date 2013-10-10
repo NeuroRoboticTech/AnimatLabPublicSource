@@ -49,7 +49,9 @@ void BlEllipsoid::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 	{
-        m_fltMass = 1; //NEED TO FIX
+        DeleteCollisionGeometry();
+
+        m_fltMass = 1; //FIX PHYSICS
         m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true);
         m_bDisplayDebugCollisionGraphic = true;
 	}

@@ -23,9 +23,7 @@ protected:
     virtual void ProcessContacts() {};
 	virtual void DeletePhysics(bool bIncludeChildren) {};
 	virtual void CreateSensorPart() {};
-	virtual void CreateStaticPart() {};
 	virtual void CreateDynamicPart() {};
-	virtual void RemoveStaticPart() {};
     virtual void GetBaseValues() {};
 
 public:

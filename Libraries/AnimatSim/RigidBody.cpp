@@ -1515,7 +1515,7 @@ bool RigidBody::RemoveItem(const std::string &strItemType, const std::string &st
 
 \param	strXml	The xml data packet for loading the body. 
 **/
-void RigidBody::AddRigidBody(std::string strXml)
+RigidBody *RigidBody::AddRigidBody(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1531,6 +1531,12 @@ void RigidBody::AddRigidBody(std::string strXml)
 
 	//Then create all of the joints between the models.
 	lpBody->CreateJoints();
+
+    //Inform the physics object that we have added a child body.
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_ChildBodyAdded(lpBody);
+
+    return lpBody;
 }
 
 /**
@@ -1546,8 +1552,16 @@ void RigidBody::AddRigidBody(std::string strXml)
 void RigidBody::RemoveRigidBody(std::string strID, bool bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
+
+    RigidBody *lpChild = m_aryChildParts[iPos];
+    bool bHasStaticJoint = bHasStaticJoint = lpChild->HasStaticJoint();
+
 	m_aryChildParts.RemoveAt(iPos);
 	m_lpStructure->RemoveRigidBody(strID);
+
+    //Inform the physics object that we are removing a child body.
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_ChildBodyRemoved(bHasStaticJoint);    
 }
 
 /**

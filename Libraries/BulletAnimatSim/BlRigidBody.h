@@ -85,6 +85,7 @@ namespace BulletAnimatSim
 		{
 		protected:
             btCollisionShape *m_btCollisionShape;
+            btCollisionShape *m_btCompoundChildShape;
             btCollisionObject *m_btCollisionObject;
             btCompoundShape *m_btCompoundShape;
             btRigidBody *m_btPart;
@@ -106,12 +107,11 @@ namespace BulletAnimatSim
             virtual void DeletePhysics(bool bIncludeChildren);
 
 			virtual void CreateSensorPart();
-			virtual void CreateStaticPart();
+            virtual void CreateStaticChildren();
 			virtual void CreateDynamicPart();
-			virtual void RemoveStaticPart();
 
-            virtual void AddStaticGeometry(BlRigidBody *lpChild);
-            virtual void RemoveStaticGeometry(BlRigidBody *lpChild);
+            virtual void AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound);
+            virtual void RemoveStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound);
 
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void GetBaseValues();
@@ -156,6 +156,8 @@ namespace BulletAnimatSim
             virtual void Physics_WakeDynamics();
             virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor);
             virtual void Physics_ContactSensorRemoved();
+            virtual void Physics_ChildBodyAdded(RigidBody *lpChild);
+            virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint);
 
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);

@@ -20,6 +20,7 @@ BlRigidBody::BlRigidBody()
 {
     m_btCompoundShape = NULL;
     m_btCollisionShape = NULL;
+    m_btCompoundChildShape = NULL;
     m_btCollisionObject = NULL;
     m_btPart = NULL;
     m_osgbMotion = NULL;
@@ -225,6 +226,9 @@ void BlRigidBody::CreateDynamicPart()
     {
         BlSimulator *lpSim = GetBlSimulator();
 
+        if(m_lpThisRB->HasStaticChildren())
+            CreateStaticChildren();
+
         float fltMass = 0;
         if(!m_lpThisRB->Freeze())
             fltMass = m_lpThisRB->GetMassValue();
@@ -315,74 +319,58 @@ void BlRigidBody::CreateDynamicPart()
     }
 }
 
-void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild)
+void BlRigidBody::CreateStaticChildren()
 {
-    if(m_btPart && lpChild && lpChild->m_btCollisionShape)
+    //Swap the current collision shape into the compound collision shape so we can
+    //make the collision shape a compound shape.
+    m_btCompoundChildShape = m_btCollisionShape;
+
+    //Now create the new compound shape
+    m_btCompoundShape = new btCompoundShape();
+
+    //Set the collision shape to be the new compound.
+    m_btCollisionShape = m_btCompoundShape;
+
+    //Now add the shape for this body to the compound shape
+	btTransform localTransform;
+    localTransform.setIdentity();
+    m_btCompoundShape->addChildShape(localTransform, m_btCompoundChildShape);
+
+    //Then add all static child shapes
+	int iCount = m_lpThisRB->ChildParts()->GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
     {
- /*       if(!m_bt
-
-        float fltChildMass = 0;
-        if(!m_lpThisRB->Freeze())
-            fltChildMass = lpChild->m_lpThisRB->GetMassValue();
-
-        m_fltStaticMasses += fltChildMass;
-        btVector3 localInertia( 0, 0, 0 );
-        
-        
-
-        btParentPart->setMassProps(0, localInertia);
-	    btParentPart->updateInertiaTensor();
-
-        
-        lpVsParent->DeleteDynamicPart();
-        lpVsParent->AddStaticPartShape(this);
-        lpVsParent->*/
+        RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIndex);
+        BlRigidBody *lpBlChild = dynamic_cast<BlRigidBody *>(lpChild);
+		if(lpChild->HasStaticJoint())
+            lpBlChild->AddStaticGeometry(this, m_btCompoundShape);
     }
-
 }
 
-void BlRigidBody::RemoveStaticGeometry(BlRigidBody *lpChild)
+void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound)
 {
+    if(m_lpThisMI && lpChild && btCompound)
+    {
+       //First create the physics geometry for this part.
+       CreatePhysicsGeometry(); 
+
+		CStdFPoint vPos = m_lpThisMI->Position();
+		CStdFPoint vRot = m_lpThisMI->Rotation();
+		osg::Matrix mt = SetupMatrix(vPos, vRot);
+
+	    btTransform localTransform  = osgbCollision::asBtTransform(mt);
+        btCompound->addChildShape(localTransform, m_btCollisionShape);
+    }
 }
 
-void BlRigidBody::CreateStaticPart()
+void BlRigidBody::RemoveStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound)
 {
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
-
-    if(m_lpThisRB && m_lpThisAB && lpVsParent && lpVsParent->Part())
-        lpVsParent->AddStaticGeometry(this);
-	//if(m_lpThisRB && m_lpThisAB)
-	//{
-	//	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
-
-	//	Vx::VxReal44 vOffset;
-	//	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-	//	if(lpVsParent)
-	//	{
-	//		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-	//		if(vxSensor)
-	//		{
-	//			CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-	//			std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
-	//			m_vxCollisionGeometry->setName(strName.c_str());
-	//		}
-	//	}
-	//}
-}
-
-void BlRigidBody::RemoveStaticPart()
-{
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
-
-	if(lpVsParent)
-	{
-        //FIX PHYSICS
-		//Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-		//if(vxSensor && m_vxCollisionGeometry)
-		//	vxSensor->removeCollisionGeometry(m_vxCollisionGeometry);
-	}
+    if(m_lpThisMI && lpChild && btCompound)
+    {
+       //First create the physics geometry for this part.
+        btCompound->removeChildShape(m_btCollisionShape);
+        DeleteCollisionGeometry();
+    }
 }
 
 void BlRigidBody::ResetStaticCollisionGeom()
@@ -457,6 +445,7 @@ void BlRigidBody::DeleteSensorPart()
 
 void BlRigidBody::DeleteCollisionGeometry()
 {
+    //If we have a compound shape defined then collision shape = compound shape. So only delete once.
     if(m_btCompoundShape)
     {
         int iCount = m_btCompoundShape->getNumChildShapes();
@@ -464,9 +453,10 @@ void BlRigidBody::DeleteCollisionGeometry()
             m_btCompoundShape->removeChildShapeByIndex(0);
         delete m_btCompoundShape;
         m_btCompoundShape = NULL;
+        m_btCollisionShape = NULL;
+        m_btCompoundChildShape = NULL;
     }
-
-    if(m_btCollisionShape)
+    else if(m_btCollisionShape)
         {delete m_btCollisionShape; m_btCollisionShape = NULL;}
 }
 
@@ -488,8 +478,8 @@ void BlRigidBody::DeletePhysics(bool bIncludeChildren)
         if(bIncludeChildren)
             DeleteChildPhysics();
 	}
-	else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
-		RemoveStaticPart();
+	//else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
+	//	RemoveStaticPart();
 }
 
 void BlRigidBody::DeleteChildPhysics()
@@ -587,6 +577,18 @@ void BlRigidBody::Physics_ContactSensorRemoved()
         int iFlags = m_btPart->getCollisionFlags() & ~btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
         m_btPart->setCollisionFlags(iFlags);
     }
+}
+
+void BlRigidBody::Physics_ChildBodyAdded(RigidBody *lpChild)
+{
+    if(lpChild && lpChild->HasStaticJoint())
+        ResizePhysicsGeometry();
+}
+
+void BlRigidBody::Physics_ChildBodyRemoved(bool bHasStaticJoint)
+{
+    if(bHasStaticJoint)
+    ResizePhysicsGeometry();
 }
 
 void BlRigidBody::ProcessContacts()

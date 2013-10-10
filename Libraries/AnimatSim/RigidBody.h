@@ -181,7 +181,7 @@ namespace AnimatSim
 
 			virtual void LoadPosition(CStdXml &oXml);
 
-			virtual void AddRigidBody(std::string strXml);
+			virtual RigidBody *AddRigidBody(std::string strXml);
 			virtual void RemoveRigidBody(std::string strID, bool bThrowError = true);
 			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 

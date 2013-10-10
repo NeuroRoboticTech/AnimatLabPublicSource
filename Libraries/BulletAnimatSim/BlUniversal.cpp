@@ -49,25 +49,6 @@ BlUniversal::~BlUniversal()
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlUniversal/\r\n", "", -1, false, true);}
 }
 
-void BlUniversal::DeletePhysics(bool bIncludeChildren)
-{
-    //FIX PHYSICS
-	//if(!m_btSocket)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeConstraint(m_btSocket);
-	//	delete m_btSocket;
-
-	//	if(m_lpChild && m_lpParent)
-	//		m_lpChild->EnableCollision(m_lpParent);
-	//}
-
-	//m_btSocket = NULL;
-	//m_vxJoint = NULL;
-}
-
 void BlUniversal::SetupPhysics()
 {
 	if(m_btJoint)

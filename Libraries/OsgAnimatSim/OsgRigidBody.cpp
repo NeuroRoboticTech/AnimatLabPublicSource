@@ -114,28 +114,47 @@ void OsgRigidBody::StartGripDrag()
 
 void OsgRigidBody::EndGripDrag()
 {
-    //We must recreate the physics geometry here in order for the code that calculates positions to work correctly
-    //because it performs check to make sure it has valid physics geometry.
-    CreatePhysicsGeometry();
-
-    OsgBody::UpdatePositionAndRotationFromMatrix();
-
-    DeleteChildGraphics(true);
-
-    SetupPhysics();
-
-    //Completely recreate the child parts and joints
-    if(m_lpThisRB)
+    //If this is a static part then we need to call EndGripDrag on its parent part so it can recreate
+    //the entire static part instead of calling it on this one.
+    if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
     {
-        //Recreate the child parts.
-        m_lpThisRB->CreateChildParts();
+        OsgBody::UpdatePositionAndRotationFromMatrix();
 
-        //Recreate the joint from this part to its parent if one exists
-	    if(m_lpThisRB->JointToParent())
-		    m_lpThisRB->JointToParent()->CreateJoint();
+        OsgRigidBody *lpOsgParent = dynamic_cast<OsgRigidBody *>(m_lpThisRB->Parent());
+        if(lpOsgParent)
+        {
+            //If we called StartGripDrag on the parent when the child was started dragging then we would
+            //be deleting the child graphics object during the drag, and that would be bad. So lets call
+            //start on the parent here to delete all the required things, and then end to recreate them.
+            lpOsgParent->StartGripDrag();
+            lpOsgParent->EndGripDrag();
+        }
+    }
+    else
+    {
+        //We must recreate the physics geometry here in order for the code that calculates positions to work correctly
+        //because it performs check to make sure it has valid physics geometry.
+        CreatePhysicsGeometry();
 
-        //Recreate the joint between this part and its parent
-        m_lpThisRB->CreateChildJoints();
+        OsgBody::UpdatePositionAndRotationFromMatrix();
+
+        DeleteChildGraphics(true);
+
+        SetupPhysics();
+
+        //Completely recreate the child parts and joints
+        if(m_lpThisRB)
+        {
+            //Recreate the child parts.
+            m_lpThisRB->CreateChildParts();
+
+            //Recreate the joint from this part to its parent if one exists
+	        if(m_lpThisRB->JointToParent())
+		        m_lpThisRB->JointToParent()->CreateJoint();
+
+            //Recreate the joint between this part and its parent
+            m_lpThisRB->CreateChildJoints();
+        }
     }
 }
 
@@ -336,7 +355,11 @@ void OsgRigidBody::SetupPhysics()
 		if(m_lpThisRB->IsContactSensor())
 			CreateSensorPart();
 		else if(m_lpThisRB->HasStaticJoint())
-			CreateStaticPart();
+        {
+            //Do nothing here because static parts are created in the parent parts CreateDynamicPart method.
+            //The reason is that all the static parts and geometries for a compound shape must already exist
+            // in order to create them in bullet.
+        }
 		else
 			CreateDynamicPart();
 	}
@@ -344,7 +367,7 @@ void OsgRigidBody::SetupPhysics()
 
 bool OsgRigidBody::AddOsgNodeToParent()
 {
-	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor() || GetOsgSimulator()->InDrag())
+	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor() || GetOsgSimulator()->InDrag() || m_lpThisRB->HasStaticJoint())
         return true;
     else
         return false;
