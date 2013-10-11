@@ -151,6 +151,42 @@ only used if the user sets it to something.
 CStdFPoint RigidBody::CenterOfMass() {return m_vCenterOfMass;}
 
 /**
+ \brief Gets the center of mass of this part with any static children added.
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return resultant center of mass of all static parts of this part.
+ */
+CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
+{
+    if(HasStaticChildren())
+    {
+        float fltTotalMass = GetMassValue();
+        CStdFPoint vMass = m_vCenterOfMass * GetMassValue();
+
+	    int iCount = m_aryChildParts.GetSize();
+	    for(int iIndex=0; iIndex<iCount; iIndex++)
+        {
+            RigidBody *lpChild = m_aryChildParts[iIndex];
+		    if(lpChild->HasStaticJoint())
+            {
+                vMass += ( (lpChild->Position() + lpChild->CenterOfMass()) * lpChild->GetMassValue());
+                fltTotalMass += lpChild->GetMassValue();
+            }
+        }
+
+        vMass /= fltTotalMass;
+
+        vMass.ClearNearZero();
+
+        return vMass;
+    }
+    else
+        return m_vCenterOfMass;
+}
+
+/**
 \brief	Sets the user specified center of mass for this part. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.   
 
 \author	dcofer
@@ -408,6 +444,26 @@ bool RigidBody::HasStaticChildren()
             return true;
 
     return false;
+}
+
+/**
+ \brief Gets the mass of all static children.
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return combined mass of static children.
+ */
+
+float RigidBody::StaticChildrenMass()
+{
+    float fltMass = 0;
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryChildParts[iIndex]->HasStaticJoint())
+            fltMass += m_aryChildParts[iIndex]->GetMassValue();
+
+    return fltMass;
 }
 
 /**
@@ -2056,8 +2112,26 @@ float RigidBody::GetMass()
 **/
 float RigidBody::GetMassValue()
 {
-	return m_fltMass;
+   	return m_fltMass;
 }
+
+/**
+ \brief Gets the mass of this part and all static children
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return    The mass value of this part with static children.
+ */
+
+float RigidBody::GetMassValueWithStaticChildren()
+{
+    if(HasStaticChildren())
+        return m_fltMass + StaticChildrenMass();
+    else
+    	return m_fltMass;
+}
+
 
 /**
 \brief	Gets the volume of this part. 

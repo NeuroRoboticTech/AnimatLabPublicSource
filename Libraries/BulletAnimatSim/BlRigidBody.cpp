@@ -226,12 +226,14 @@ void BlRigidBody::CreateDynamicPart()
     {
         BlSimulator *lpSim = GetBlSimulator();
 
+        float fltMass = 0;
+	    CStdFPoint vCom(0, 0, 0); // = m_lpThisRB->CenterOfMassWithStaticChildren();
+
         if(m_lpThisRB->HasStaticChildren())
             CreateStaticChildren();
 
-        float fltMass = 0;
         if(!m_lpThisRB->Freeze())
-            fltMass = m_lpThisRB->GetMassValue();
+            fltMass = m_lpThisRB->GetMassValueWithStaticChildren();
 
         btScalar mass(fltMass);
 	    btVector3 localInertia( 0, 0, 0 );
@@ -251,12 +253,7 @@ void BlRigidBody::CreateDynamicPart()
         m_osgbMotion = new osgbDynamics::MotionState();
         m_osgbMotion->setTransform( m_osgMT.get() );
 
-        osg::Vec3 com;
-	    CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-	    if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-		    com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
-        else
-            com = osg::Vec3(0, 0, 0);
+        osg::Vec3 com(vCom.x, vCom.y, vCom.z);
         m_osgbMotion->setCenterOfMass( com );
 
         m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
@@ -539,17 +536,29 @@ void BlRigidBody::RecreateAttachedJointPhysics()
 
 void BlRigidBody::ResizePhysicsGeometry()
 {
-    //Then delete the physics for this part
-    DeletePhysics(false);
+    if(m_lpThisRB && m_lpThisRB->HasStaticJoint() && m_btCollisionShape)
+    {
+        //If this is a static part then we actually need to call the resize on the parent so it
+        //is all recalculated correctly.
+        // Only attempt to do this if a collision shape is already present for it to resize.
+        BlRigidBody *lpOsgParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
+        if(lpOsgParent)
+            lpOsgParent->ResizePhysicsGeometry();
+    }
+    else
+    {
+        //Then delete the physics for this part
+        DeletePhysics(false);
 
-    //Now recreate the collision geometry for this part.
-    CreatePhysicsGeometry();
+        //Now recreate the collision geometry for this part.
+        CreatePhysicsGeometry();
 
-    //Now recreate the part itself.
-    SetupPhysics();
+        //Now recreate the part itself.
+        SetupPhysics();
 
-    //Then recreate all the attached joints.
-    RecreateAttachedJointPhysics();
+        //Then recreate all the attached joints.
+        RecreateAttachedJointPhysics();
+    }
 }
 
 bool BlRigidBody::NeedCollision(BlRigidBody *lpTest)

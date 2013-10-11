@@ -126,7 +126,9 @@ void OsgRigidBody::EndGripDrag()
             //If we called StartGripDrag on the parent when the child was started dragging then we would
             //be deleting the child graphics object during the drag, and that would be bad. So lets call
             //start on the parent here to delete all the required things, and then end to recreate them.
-            lpOsgParent->StartGripDrag();
+            lpOsgParent->DeletePhysics(true);
+            lpOsgParent->DeleteChildGraphics(true);
+
             lpOsgParent->EndGripDrag();
         }
     }
@@ -157,6 +159,7 @@ void OsgRigidBody::EndGripDrag()
         }
     }
 }
+
 
 void OsgRigidBody::SetupChildGraphics(bool bRoot)
 {

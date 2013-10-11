@@ -206,6 +206,7 @@ namespace AnimatSim
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();
+			virtual CStdFPoint CenterOfMassWithStaticChildren();
 			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling = true);
 			virtual void CenterOfMass(float fltX, float fltY, float fltZ, bool bUseScaling = true);
 			virtual void CenterOfMass(std::string strXml, bool bUseScaling = true);
@@ -232,6 +233,7 @@ namespace AnimatSim
 			virtual bool IsRoot();
 			virtual bool HasStaticJoint();
             virtual bool HasStaticChildren();
+            virtual float StaticChildrenMass();
 
 			virtual bool IsFoodSource();
 			virtual void IsFoodSource(bool bVal);
@@ -299,6 +301,7 @@ namespace AnimatSim
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMassValue();
+			virtual float GetMassValueWithStaticChildren();
 			virtual float GetMass();
 			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();
