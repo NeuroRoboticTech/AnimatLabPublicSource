@@ -152,7 +152,7 @@ namespace OsgAnimatSim
 			virtual osg::MatrixTransform* GetCameraMatrixTransform();
 
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName);
 		};
 
 	}			// Environment

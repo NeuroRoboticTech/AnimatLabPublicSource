@@ -507,10 +507,10 @@ void OsgMovableItem::Physics_UpdateAbsolutePosition()
 void OsgMovableItem::BuildLocalMatrix()
 {
 	//build the local matrix
-	BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+	BuildLocalMatrix(m_lpThisMI->Position(), CStdFPoint(0, 0, 0), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 }
 
-void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
+void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -528,10 +528,11 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, 
 		m_osgRoot->addChild(m_osgMT.get());
 
     osg::Matrix localMT;
+    CStdFPoint vOffsetPos = localPos; //(localPos - vLocalOffset); 
     if(AddOsgNodeToParent())
-        localMT = SetupMatrix(localPos, localRot);
+        localMT = SetupMatrix(vOffsetPos, localRot);
     else
-        localMT = SetupMatrix(localPos, localRot) * m_osgParent->getMatrix();
+        localMT = SetupMatrix(vOffsetPos, localRot) * m_osgParent->getMatrix();
 
 	LocalMatrix(localMT);
 

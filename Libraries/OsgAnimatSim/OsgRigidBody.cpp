@@ -319,9 +319,9 @@ void  OsgRigidBody::BuildLocalMatrix()
 	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
 	{
 		if(m_lpThisRB->IsRoot())
-			OsgBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+			OsgBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisRB->CenterOfMassWithStaticChildren(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 		else
-			OsgBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+			OsgBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisRB->CenterOfMassWithStaticChildren(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 	}
 }
 

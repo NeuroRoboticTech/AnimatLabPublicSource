@@ -227,7 +227,8 @@ void BlRigidBody::CreateDynamicPart()
         BlSimulator *lpSim = GetBlSimulator();
 
         float fltMass = 0;
-	    CStdFPoint vCom(0, 0, 0); // = m_lpThisRB->CenterOfMassWithStaticChildren();
+	    CStdFPoint vCom(0, 0, 0);
+	    //CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
         if(m_lpThisRB->HasStaticChildren())
             CreateStaticChildren();

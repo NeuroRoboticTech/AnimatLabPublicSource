@@ -93,7 +93,7 @@ namespace OsgAnimatSim
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName);
 			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
 			virtual void Physics_DisableCollision(RigidBody *lpBody) {};
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};

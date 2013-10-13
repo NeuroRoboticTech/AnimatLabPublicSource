@@ -311,7 +311,7 @@ void  OsgJoint::BuildLocalMatrix()
 	OsgBody::BuildLocalMatrix();
 }
 
-void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
+void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
