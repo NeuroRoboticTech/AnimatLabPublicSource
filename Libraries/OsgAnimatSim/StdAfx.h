@@ -148,6 +148,7 @@ namespace OsgAnimatSim
 		class OsgTrackballDragger;
 		class OsgTranslateAxisDragger;
 		class OsgWorldCoordinateNodeVisitor;
+        class OsgPyramid;
 	}
 }
 

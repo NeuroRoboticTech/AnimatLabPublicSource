@@ -50,6 +50,9 @@ namespace AnimatSim
 				virtual float Length();
 				virtual float PrevLength();
 
+                //Line parts are never static joints.
+                virtual bool HasStaticJoint() {return false;};
+
 				virtual bool AllowMouseManipulation();
 				virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 				virtual void AbsolutePosition(CStdFPoint &oPoint);

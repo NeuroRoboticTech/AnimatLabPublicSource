@@ -94,6 +94,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,1.8505,-3.4045,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -123,6 +124,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,1.8505,-3.4045,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -142,6 +144,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="None" Actual="1"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -196,10 +199,6 @@
 </CurrentGain>
 <FieldPairs>
 <Pair>
-<NeuronID>44c1a9d5-ffd2-41eb-83f7-504e62ce990c</NeuronID>
-<Vertex x="-0.5" y="-0.5" z="0.5"/>
-</Pair>
-<Pair>
 <NeuronID>7ec8abcb-3b28-426f-ba81-a4e296116ed8</NeuronID>
 <Vertex x="-0.5" y="-0.5" z="-0.5"/>
 </Pair>
@@ -216,12 +215,16 @@
 <Vertex x="0.5" y="-0.5" z="0.5"/>
 </Pair>
 <Pair>
+<NeuronID>6f0b682f-ac5e-4e2d-b118-f9c77eb1db10</NeuronID>
+<Vertex x="0.5" y="0.5" z="0.5"/>
+</Pair>
+<Pair>
 <NeuronID>b1df0d18-9f29-4dac-aafe-9199c6046cf3</NeuronID>
 <Vertex x="-0.5" y="0.5" z="-0.5"/>
 </Pair>
 <Pair>
-<NeuronID>6f0b682f-ac5e-4e2d-b118-f9c77eb1db10</NeuronID>
-<Vertex x="0.5" y="0.5" z="0.5"/>
+<NeuronID>44c1a9d5-ffd2-41eb-83f7-504e62ce990c</NeuronID>
+<Vertex x="-0.5" y="-0.5" z="0.5"/>
 </Pair>
 <Pair>
 <NeuronID>0bc898dd-1c8e-4a21-8a6c-2be708adb938</NeuronID>
@@ -249,7 +252,7 @@
 <ID>384f659a-b18a-4e90-b6d3-e639bd948b60</ID>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.PhysicsModule</ClassName>
-<TimeStep Value="2.5" Scale="milli" Actual="0.0025"/>
+<TimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
 </Node>
 </NeuralModules>
 <Node>
@@ -862,6 +865,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,3,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -891,6 +895,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,0.699499,0.714634,0,0,-0.714634,0.699499,0,0,3,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -910,6 +915,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="None" Actual="1"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -945,6 +951,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,2,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -964,6 +971,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="None" Actual="1"/>
+<Mass Value="0" Scale="None" Actual="0"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -1017,6 +1025,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -1046,6 +1055,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,-0,0,0,-0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -1065,6 +1075,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="None" Actual="1"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -1111,6 +1122,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-10,20,-10,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -1147,6 +1159,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,10,20,10,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -1170,8 +1183,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>97c09803-d920-4a59-ace1-ce1240dcf545</Name>
-<ID>97c09803-d920-4a59-ace1-ce1240dcf545</ID>
+<Name>1a6e9bad-a460-4c14-a104-1db62d1298eb</Name>
+<ID>1a6e9bad-a460-4c14-a104-1db62d1298eb</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -1249,7 +1262,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
@@ -1265,7 +1278,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/06/2013 06:38:56"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/16/2013 06:22:52"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -1704,7 +1717,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="3" Unique="3" Space="100"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;fde2c352-4307-4281-b141-aeae472ff8d4&lt;/ID&gt;
@@ -1719,7 +1732,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;ea47504b-4fce-4bf9-bb67-f549fc8cd5f3&lt;/ID&gt;

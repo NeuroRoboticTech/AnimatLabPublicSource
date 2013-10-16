@@ -144,6 +144,7 @@ namespace OsgAnimatSim
 		class OsgTrackballDragger;
 		class OsgTranslateAxisDragger;
 		class OsgWorldCoordinateNodeVisitor;
+        class OsgPyramid;
 	}
 }
 
@@ -170,6 +171,7 @@ using namespace OsgAnimatSim::Visualization;
 #include "OsgAttachment.h"
 #include "OsgMouth.h"
 #include "OsgOdorSensor.h"
+#include "OsgPyramid.h"
 
 #include "OsgOrganism.h"
 #include "OsgStructure.h"

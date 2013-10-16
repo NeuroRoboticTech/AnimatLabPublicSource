@@ -445,7 +445,8 @@ osg::Matrix OsgMovableItem::CalculateTransformRelativeToParent(osg::Matrix osgLo
 
 void OsgMovableItem::UpdatePositionAndRotationFromMatrix()
 {
-    UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
+    if(m_osgMT.valid())
+        UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
 }
 
 void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)

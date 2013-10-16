@@ -130,7 +130,7 @@ void BlMeshBase::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
 		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
-            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true);
+            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, -1);
 		else
             m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
 

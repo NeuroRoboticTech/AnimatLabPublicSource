@@ -5,7 +5,7 @@
 <Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingEllipsoidOnPlane\</ProjectPath>
-<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -94,6 +94,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,10,10,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -123,6 +124,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="10" Scale="None" Actual="10"/>
 </Rotation>
+<LocalMatrix>0.984808,0.163173,0.0593909,0,-0.173645,0.925416,0.336828,0,0,-0.342024,0.939691,0,0,10,10,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Ellipsoid</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Ellipsoid</PartType>
@@ -142,6 +144,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
+<Mass Value="2.69" Scale="Kilo" Actual="2690"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -235,6 +238,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -264,6 +268,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,-0,0,0,-0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -283,6 +288,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -329,6 +335,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-1,5,-1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -365,6 +372,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,1,5,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -388,8 +396,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>d9236d66-3b63-422e-854f-91de3b8228bc</Name>
-<ID>d9236d66-3b63-422e-854f-91de3b8228bc</ID>
+<Name>3a4058a3-38ab-496b-b941-b38310af5c0d</Name>
+<ID>3a4058a3-38ab-496b-b941-b38310af5c0d</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -483,7 +491,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/03/2013 07:30:58"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/16/2013 06:23:39"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

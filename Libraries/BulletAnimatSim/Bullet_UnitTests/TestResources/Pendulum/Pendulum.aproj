@@ -5,7 +5,7 @@
 <Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Pendulum\</ProjectPath>
-<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -95,6 +95,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -124,6 +125,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,-0,0,0,-0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -143,6 +145,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -187,6 +190,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,5,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -216,6 +220,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,5,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -235,6 +240,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1000" Scale="Kilo" Actual="1e+006"/>
+<Mass Value="3.375" Scale="Kilo" Actual="3375"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -270,6 +276,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,-0.75,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Sphere</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Sphere</PartType>
@@ -289,6 +296,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="100" Scale="Kilo" Actual="100000"/>
+<Mass Value="0.419" Scale="Kilo" Actual="419"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -323,6 +331,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0.75,0,1</LocalMatrix>
 <DraggerSize Value="0.3" Scale="None" Actual="0.3"/>
 <Type>Hinge</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
@@ -457,6 +466,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-1,2,-1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -493,6 +503,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,1,2,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -568,8 +579,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>6f4a44bd-2f52-43c4-b3f4-1afb9641717c</Name>
-<ID>6f4a44bd-2f52-43c4-b3f4-1afb9641717c</ID>
+<Name>306aa17c-e1bc-4a86-89f4-7352fb5ceb61</Name>
+<ID>306aa17c-e1bc-4a86-89f4-7352fb5ceb61</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -663,7 +674,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/04/2013 06:29:08"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/16/2013 06:27:05"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

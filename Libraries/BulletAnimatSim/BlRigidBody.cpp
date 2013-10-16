@@ -839,21 +839,10 @@ CStdFPoint BlRigidBody::Physics_GetVelocityAtPoint(float x, float y, float z)
 
 float BlRigidBody::Physics_GetMass()
 {
-	float fltMass = 0;
+    if(m_lpThisRB)
+        return m_lpThisRB->Mass();
 
-    //If thi spart is frozen then we will get mass values of 0. So we need to
-    //temporarilly unfreeze it to get the mass and volume, then refreeze it.
-    //FIX PHYSICS
- //   if(m_lpThisRB && m_vxSensor && m_lpThisRB->Freeze())
- //       m_vxSensor->freeze(false);
-
-	//if(m_vxPart)
-	//	fltMass = m_vxPart->getMass();
-
- //   if(m_lpThisRB && m_vxSensor && m_lpThisRB->Freeze())
- //       m_vxSensor->freeze(true);
-
-	return fltMass;
+	return 0;
 }
 
 bool BlRigidBody::Physics_HasCollisionGeometry()

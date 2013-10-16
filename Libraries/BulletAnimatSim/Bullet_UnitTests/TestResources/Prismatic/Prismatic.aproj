@@ -95,6 +95,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -124,6 +125,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -143,6 +145,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -178,6 +181,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,-5,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -197,6 +201,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -231,6 +236,7 @@
 <Y Value="90" Scale="None" Actual="90"/>
 <Z Value="10" Scale="None" Actual="10"/>
 </Rotation>
+<LocalMatrix>-0.000200559,0.173645,-0.984808,0,3.53634e-005,0.984808,0.173645,0,1,0,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Prismatic</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Prismatic</PartType>
@@ -368,6 +374,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,1,2,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -404,6 +411,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-1,2,-1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -462,8 +470,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>bd73f1ae-ef19-4ee9-aba2-fb76a95c9c34</Name>
-<ID>bd73f1ae-ef19-4ee9-aba2-fb76a95c9c34</ID>
+<Name>e4d1eaf9-4214-48d7-a596-3e4de62a045f</Name>
+<ID>e4d1eaf9-4214-48d7-a596-3e4de62a045f</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -541,9 +549,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 <Form>
 <ID>f6d75a59-de30-46d8-bf56-f76c13bc613c</ID>
@@ -557,7 +565,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/01/2013 14:05:29"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/16/2013 06:27:15"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

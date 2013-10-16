@@ -50,10 +50,10 @@ void BlEllipsoid::CreatePhysicsGeometry()
 	if(IsCollisionObject())
 	{
         DeleteCollisionGeometry();
-
-        m_fltMass = 1; //FIX PHYSICS
-        m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true);
-        m_bDisplayDebugCollisionGraphic = true;
+        
+        m_fltVolume = (4/3.0)*osg::PI*m_fltMajorRadius*m_fltMajorRadius*m_fltMinorRadius;
+        m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true, -1);
+        //m_bDisplayDebugCollisionGraphic = true;
 	}
 }
 

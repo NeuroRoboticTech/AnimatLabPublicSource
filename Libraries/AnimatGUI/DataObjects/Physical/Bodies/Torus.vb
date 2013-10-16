@@ -64,7 +64,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("OutsideRadius", value.ActualValue.ToString, True)
                 m_snOuterRadius.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -83,7 +83,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("InsideRadius", value.ActualValue.ToString, True)
                 m_snInnerRadius.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -98,7 +98,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Sides", value.ToString, True)
                 m_iSides = value
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -113,7 +113,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Rings", value.ToString, True)
                 m_iRings = value
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 

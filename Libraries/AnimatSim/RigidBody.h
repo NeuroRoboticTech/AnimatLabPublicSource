@@ -78,13 +78,16 @@ namespace AnimatSim
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
-			//The mass of the object
+			///The mass of the object
 			float m_fltMass;
 
-			//The mass of the object to report to GUI
+			///The mass of the object to report to GUI
 			float m_fltReportMass;
 
-			//The volume of the object to report to GUI.
+            /// The volume for the rigid body
+            float m_fltVolume;
+
+			///The volume of the object to report to GUI.
 			float m_fltReportVolume;
 
 			///A list of child parts that are connected to this part through
@@ -221,6 +224,12 @@ namespace AnimatSim
 			virtual float Density();
 			virtual void Density(float fltVal, bool bUseScaling = true);
 
+			virtual float Mass();
+			virtual void Mass(float fltVal, bool bUseScaling = true);
+
+			virtual float Volume();
+			virtual void Volume(float fltVal, bool bUseScaling = true);
+
 			virtual bool Freeze();
 			virtual void Freeze(bool bVal);
 
@@ -300,7 +309,6 @@ namespace AnimatSim
 			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
-			virtual float GetMassValue();
 			virtual float GetMassValueWithStaticChildren();
 			virtual float GetMass();
 			virtual float GetVolume();

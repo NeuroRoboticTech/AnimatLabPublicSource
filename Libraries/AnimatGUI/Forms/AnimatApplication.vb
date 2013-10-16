@@ -1297,6 +1297,15 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property UseMassForRigidBodyDefinitions() As Boolean
+            Get
+                If SimPhysicsSystem = "Bullet" Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Get
+        End Property
 #End Region
 
         Public Overridable ReadOnly Property ConsoleApp() As Boolean

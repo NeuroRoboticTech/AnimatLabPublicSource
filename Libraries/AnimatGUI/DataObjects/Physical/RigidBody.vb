@@ -157,7 +157,27 @@ Namespace DataObjects.Physical
                 Me.SetSimData("Density", Value.ToString, True)
                 m_snDensity.CopyData(Value)
 
-                UpdateMassAndVolume()
+                'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
+                'what we are using as a key param based on application settings.
+                If Not Util.Application.UseMassForRigidBodyDefinitions Then
+                    UpdateMassVolumeDensity()
+                Else
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+
+                    If m_snVolume.ActualValue > 0 Then
+                        Dim fltMass As Single = CSng(Value.ActualValue * m_snVolume.ActualValue)
+
+                        'FIX ME (Is this correct for the mass??
+                        'Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
+                        Dim snNewVal As New ScaledNumber(Me, "Mass", 1, ScaledNumber.enumNumericScale.Kilo, "g", "g")
+                        snNewVal.ActualValue = fltMass
+
+                        Me.Mass = snNewVal
+                    Else
+                        Throw New System.Exception("The volume has not been defined yet.")
+                    End If
+                End If
+
             End Set
         End Property
 
@@ -170,18 +190,23 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The mass can not be less than or equal to zero.")
                 End If
 
-                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
-
-                If m_snVolume.ActualValue > 0 Then
-                    'Dim fltMassKg As Single = CSng(Value.ActualValue / 1000) 'The mass we get in here will ALWAYS be in grams. Must convert to Kg
-                    Dim fltDensityGramsPerMeterCube As Single = CSng(Value.ActualValue / m_snVolume.ActualValue)
-                    Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
-
-                    Dim snNewVal As New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
-                    snNewVal.ActualValue = fltDensityGramPerDistUnitCube
-                    Me.Density = snNewVal
+                'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
+                'what we are using as a key param based on application settings.
+                If Util.Application.UseMassForRigidBodyDefinitions Then
+                    UpdateMassVolumeDensity()
                 Else
-                    Throw New System.Exception("The volume has not been defined yet.")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+
+                    If m_snVolume.ActualValue > 0 Then
+                        Dim fltDensityGramsPerMeterCube As Single = CSng(Value.ActualValue / m_snVolume.ActualValue)
+                        Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
+
+                        Dim snNewVal As New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
+                        snNewVal.ActualValue = fltDensityGramPerDistUnitCube
+                        Me.Density = snNewVal
+                    Else
+                        Throw New System.Exception("The volume has not been defined yet.")
+                    End If
                 End If
 
             End Set
@@ -530,9 +555,15 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub UpdateMassAndVolume()
-            m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
-            m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+        Protected Overridable Sub UpdateMassVolumeDensity()
+
+            If Util.Application.SimPhysicsSystem = "Bullet" Then
+                m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
+                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+            Else
+                m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+            End If
 
             Util.ProjectProperties.RefreshProperties()
         End Sub
@@ -1096,6 +1127,8 @@ Namespace DataObjects.Physical
             Me.Name = doExisting.Name
             Me.ID = doExisting.ID
             Me.Density = doExisting.Density
+            Me.Mass = doExisting.Mass
+            Me.m_snVolume.ActualValue = doExisting.m_snVolume.ActualValue
             Me.Ambient = doExisting.Ambient
             Me.Diffuse = doExisting.Diffuse
             Me.Specular = doExisting.Specular
@@ -1206,6 +1239,9 @@ Namespace DataObjects.Physical
             m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
             m_snDensity.LoadData(oXml, "Density")
+            If oXml.FindChildElement("Mass", False) Then
+                m_snMass.LoadData(oXml, "Mass")
+            End If
 
             m_svCOM.LoadData(oXml, "COM", False)
 
@@ -1299,6 +1335,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveData(oXml, "Density")
+            m_snMass.SaveData(oXml, "Mass")
             m_svCOM.SaveData(oXml, "COM")
 
             If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
@@ -1368,6 +1405,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
+            m_snMass.SaveSimulationXml(oXml, Me, "Mass")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
 
             oXml.AddChildElement("Freeze", m_bFreeze)
@@ -1635,12 +1673,15 @@ Namespace DataObjects.Physical
                                           ByVal fltDistanceChange As Single)
 
             Dim iDistDiff As Integer = CInt(Util.Environment.DisplayDistanceUnits) - CInt(Util.Environment.DisplayDistanceUnits(ePrevDistance))
-            Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
 
-            Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
-            Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
-            Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
-            Me.Density = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
+            If Not Util.Application.UseMassForRigidBodyDefinitions Then
+                Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
+
+                Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
+                Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
+                Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
+                Me.Density = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
+            End If
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)

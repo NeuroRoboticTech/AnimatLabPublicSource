@@ -29,6 +29,7 @@
 #include <osgbDynamics/RigidBody.h>
 #include <osgbCollision/CollisionShapes.h>
 #include <osgbCollision/RefBulletObject.h>
+#include <osgbCollision/CollectVerticesVisitor.h>
 #include <osgbDynamics/GroundPlane.h>
 #include <osgbCollision/GLDebugDrawer.h>
 #include <osgbCollision/Utils.h>
@@ -45,6 +46,7 @@
 #include <btBulletDynamicsCommon.h>
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "LinearMath/btGeometryUtil.h"
 
 //Simulation Objects
 namespace BulletAnimatSim

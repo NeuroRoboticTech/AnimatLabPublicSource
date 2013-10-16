@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "BlOsgGeometry.h"
 #include "BlJoint.h"
 #include "BlMotorizedJoint.h"
 #include "BlRigidBody.h"
@@ -40,6 +41,7 @@ BlMesh::~BlMesh()
 void BlMesh::CreateParts()
 {
 	CreateGeometry();
+    m_fltVolume = OsgConvexHullVolume(m_osgMeshNode.get());
 
 	BlMeshBase::CreateItem();
 	Mesh::CreateParts();

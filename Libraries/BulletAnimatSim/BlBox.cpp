@@ -47,7 +47,7 @@ void BlBox::CreatePhysicsGeometry()
     {
         DeleteCollisionGeometry();
 
-        m_fltMass = m_fltDensity * m_fltLength * m_fltWidth * m_fltHeight;
+        m_fltVolume = m_fltLength * m_fltWidth * m_fltHeight;
         m_btCollisionShape = new btBoxShape( btVector3( (m_fltLength/2.0f), (m_fltHeight/2.0f), (m_fltWidth/2.0f) ) );
     }
 }

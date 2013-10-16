@@ -72,6 +72,9 @@ namespace AnimatSim
 					virtual void CreateParts();
 					virtual void CreateJoints();
 
+                    //Sensor parts are never static joints.
+                    virtual bool HasStaticJoint() {return false;};
+
 					virtual void Initialize();
 					virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 					virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);

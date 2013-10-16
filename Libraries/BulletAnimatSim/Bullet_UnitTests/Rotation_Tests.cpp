@@ -388,4 +388,39 @@ BOOST_AUTO_TEST_CASE( Falling_Shapes_Sim )
 }
 
 
+BOOST_AUTO_TEST_CASE( VolumeOfBox )
+{
+    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateBoxGeometry(2, 2, 2, 1, 1, 1);
+    osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateConeGeometry(3, 2, 2, 15, true, true, true);
+    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateSphereGeometry(15, 15, 1);
+
+	osg::ref_ptr<osg::Geode> osgGeode = new osg::Geode;
+
+    osgGeode->addDrawable(osgBox.get());
+
+    btConvexHullShape *btHull = OsgMeshToConvexHull(osgGeode.get(), true, 0);
+
+    //osg::ref_ptr<osg::Node> osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( btHull );
+
+    //osgDB::writeNodeFile(*(osgDebugNode.get()), "C:\\Temp\\Test.osg");
+
+    float fltVolume = OsgConvexHullVolume(osgGeode.get());
+    fltVolume = fltVolume + 1;
+}
+
+BOOST_AUTO_TEST_CASE( PyramidVolume )
+{
+    osg::Vec3d v1(0,0,0); 
+    osg::Vec3d v2(1,0,0);
+    osg::Vec3d v3(1,2,0);
+    osg::Vec3d vCenterPoint(0.5,1.5,1);
+
+    OsgAnimatSim::Visualization::OsgPyramid p(vCenterPoint, v1, v2, v3);
+
+    float fltHeight = p.Height();
+    float fltArea = p.BaseArea();
+    float fltVolume = p.Volume();
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()

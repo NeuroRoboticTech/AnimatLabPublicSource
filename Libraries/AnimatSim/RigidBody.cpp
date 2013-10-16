@@ -162,8 +162,8 @@ CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
 {
     if(HasStaticChildren())
     {
-        float fltTotalMass = GetMassValue();
-        CStdFPoint vMass = m_vCenterOfMass * GetMassValue();
+        float fltTotalMass = Mass();
+        CStdFPoint vMass = m_vCenterOfMass * Mass();
 
 	    int iCount = m_aryChildParts.GetSize();
 	    for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -171,8 +171,8 @@ CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
             RigidBody *lpChild = m_aryChildParts[iIndex];
 		    if(lpChild->HasStaticJoint())
             {
-                vMass += ( (lpChild->Position() + lpChild->CenterOfMass()) * lpChild->GetMassValue());
-                fltTotalMass += lpChild->GetMassValue();
+                vMass += ( (lpChild->Position() + lpChild->CenterOfMass()) * lpChild->Mass());
+                fltTotalMass += lpChild->Mass();
             }
         }
 
@@ -318,6 +318,36 @@ void RigidBody::Density(float fltVal, bool bUseScaling)
 		m_lpPhysicsBody->Physics_SetDensity(m_fltDensity);
 };
 
+
+float RigidBody::Mass() {return m_fltMass;}
+
+void RigidBody::Mass(float fltVal, bool bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "Mass", true);
+
+	m_fltMass = fltVal;
+	if(bUseScaling)
+		m_fltMass /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_SetMass(m_fltMass);
+}
+
+
+float RigidBody::Volume() {return m_fltVolume;}
+
+void RigidBody::Volume(float fltVal, bool bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "Volume");
+
+	m_fltVolume = fltVal;
+	//if(bUseScaling)
+	//	m_fltMass /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+
+	m_fltReportVolume = m_fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);
+}
+
+
 /**
 \brief	Tells if this part is frozen or not
 
@@ -418,7 +448,7 @@ bool RigidBody::IsRoot()
 **/
 bool RigidBody::HasStaticJoint()
 {
-	if(!IsRoot() && !JointToParent())
+	if(!IsRoot() && !IsContactSensor() && !JointToParent())
 		return true;
 	return false;
 }
@@ -461,7 +491,7 @@ float RigidBody::StaticChildrenMass()
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryChildParts[iIndex]->HasStaticJoint())
-            fltMass += m_aryChildParts[iIndex]->GetMassValue();
+            fltMass += m_aryChildParts[iIndex]->Mass();
 
     return fltMass;
 }
@@ -1751,6 +1781,7 @@ void RigidBody::Load(CStdXml &oXml)
 		CenterOfMass(0, 0, 0, true);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
+	Mass(oXml.GetChildFloat("Mass", m_fltMass));
 
 	MaterialID(oXml.GetChildString("MaterialTypeID", m_strMaterialID));
 	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
@@ -2102,18 +2133,6 @@ float RigidBody::GetMass()
 	return m_fltMass;
 }
 
-/**
-\brief	Simply returns the m_fltMasss value. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	The mass. 
-**/
-float RigidBody::GetMassValue()
-{
-   	return m_fltMass;
-}
 
 /**
  \brief Gets the mass of this part and all static children

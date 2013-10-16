@@ -50,9 +50,9 @@ void BlTorus::CreatePhysicsGeometry()
 	{
         DeleteCollisionGeometry();
 
-        m_fltMass = 1; //FIX PHYSICS
+        m_fltVolume = 2*osg::PI*osg::PI*m_fltOutsideRadius*m_fltOutsideRadius*m_fltInsideRadius;
         m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgNode.get());
-        m_bDisplayDebugCollisionGraphic = true;
+        //m_bDisplayDebugCollisionGraphic = true;
 	}
 }
 

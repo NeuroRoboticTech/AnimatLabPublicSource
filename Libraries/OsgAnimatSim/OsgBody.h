@@ -37,6 +37,7 @@ namespace OsgAnimatSim
 
 			virtual void Physics_SetFreeze(bool bVal) {};
 			virtual void Physics_SetDensity(float fltVal) {};
+            virtual void Physics_SetMass(float fltVal) {};
 			virtual void Physics_SetMaterialID(std::string strID) {};
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) {};
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) {};
@@ -47,6 +48,7 @@ namespace OsgAnimatSim
             virtual void Physics_ContactSensorRemoved() {};
             virtual void Physics_ChildBodyAdded(RigidBody *lpChild) {};
             virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) {};
+            virtual float Physics_GetMass() {return 0;};
 
 			virtual void Physics_UpdateNode() {};
 			virtual bool Physics_HasCollisionGeometry() {return false;};

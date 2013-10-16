@@ -47,9 +47,10 @@ void BlCone::CreatePhysicsGeometry()
 	{
         DeleteCollisionGeometry();
 
-        m_fltMass = 1; //FIX PHYSICS
-        m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true);
-        m_bDisplayDebugCollisionGraphic = true;
+        m_fltVolume = (1/3.0)*osg::PI*((m_fltLowerRadius*m_fltLowerRadius + m_fltLowerRadius*m_fltUpperRadius + m_fltUpperRadius*m_fltUpperRadius)/m_fltHeight);
+        btConvexHullShape *btHull = OsgMeshToConvexHull(m_osgNode.get(), true, -1);
+        m_btCollisionShape = btHull;
+        //m_bDisplayDebugCollisionGraphic = false;
 	}
 }
 
