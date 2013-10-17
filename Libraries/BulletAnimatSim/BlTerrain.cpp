@@ -27,8 +27,6 @@ BlTerrain::BlTerrain()
 	SetThisPointers();
 	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
-    //FIX PHYSICS
-	//m_vxHeightField = NULL;
 }
 
 BlTerrain::~BlTerrain()
@@ -103,13 +101,14 @@ void BlTerrain::LoadMeshNode()
 
 	//Get the terrain node loaded in.
 	m_osgBaseMeshNode = CreateHeightField(strFile, m_fltSegmentWidth, m_fltSegmentLength, m_fltMaxHeight, &m_osgHeightField);
-	SetTexture(m_lpThisRB->Texture());
 
 	osg::Matrix osgScaleMatrix = osg::Matrix::identity();
 	m_osgMeshNode = new osg::MatrixTransform(osgScaleMatrix);
 
 	m_osgMeshNode->addChild(m_osgBaseMeshNode.get());
 	m_osgMeshNode->setName(m_lpThisAB->Name() + "_MeshNode");
+
+	SetTexture(m_lpThisRB->Texture());
 }
 
 void BlTerrain::CreatePhysicsGeometry()
@@ -118,7 +117,7 @@ void BlTerrain::CreatePhysicsGeometry()
 	{
         DeleteCollisionGeometry();
 
-        //FIX THIS Does not work yet. 
+        //Mass of a terrain is always zero because it is always static.
         m_fltMass = 0;
 		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
 		m_btCollisionShape = m_btHeightField;
