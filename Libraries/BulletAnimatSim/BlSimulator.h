@@ -52,9 +52,6 @@ namespace BulletAnimatSim
 
 #pragma region CreateMethods
 
-        //FIX PHYSICS
-		//virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
-		//virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
 		virtual void GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
 		virtual void ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture);
 

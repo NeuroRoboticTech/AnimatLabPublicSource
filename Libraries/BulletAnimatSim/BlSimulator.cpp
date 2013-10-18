@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = true;
+    m_bDrawDebug = false;
 }
 
 BlSimulator::~BlSimulator()
@@ -411,23 +411,6 @@ void BlSimulator::InitializeBullet(int argc, const char **argv)
 
 }
 
-//FIX PHYSICS
-//Vx::VxTriangleMesh *BlSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
-//{
-//	Vx::VxTriangleMesh *vxMesh = NULL;
-//	vxMesh = VxTriangleMesh::createFromNode(osgNode);
-//
-//	return vxMesh;
-//}
-//
-//Vx::VxConvexMesh *BlSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
-//{
-//	Vx::VxConvexMesh *vxMesh = NULL;
-//	vxMesh = VxConvexMesh::createFromNode(osgNode); 
-//
-//	return vxMesh;
-//}
-
 /**
 \brief	Generates a collision mesh file.
 
@@ -455,22 +438,23 @@ void BlSimulator::GenerateCollisionMeshFile(std::string strOriginalMeshFile, std
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())
 		THROW_PARAM_ERROR(Bl_Err_lErrorLoadingMesh, Bl_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
+     
+	//Now create a convex mesh with the physics engine using the loaded mesh.
+	btConvexHullShape *btHull = OsgConvexShrunkenHullCollisionShape(osgNode.get()); 
+      
+    if(!btHull)
+		THROW_PARAM_ERROR(Bl_Err_lConvertingMeshToConvexHull, Bl_Err_strConvertingMeshToConvexHull, "Original Mesh file", strOriginalMeshFile);
 
-    //FIX PHYSICS
-	////Now create a convex mesh with the physics engine using the loaded mesh.
-	//Vx::VxConvexMesh *vxMesh = VxConvexMesh::createFromNode(osgNode.get()); 
-
-	////Now use that convexmesh geometry to create a new osg node.
-	//osg::ref_ptr<osg::Geometry> osgGeom = CreateOsgFromVxConvexMesh(vxMesh);
-    osg::ref_ptr<osg::Geometry> osgGeom;     //FIX PHYSICS
-
-	osg::ref_ptr<osg::Geode> osgNewNode = new osg::Geode;
-	osgNewNode->addDrawable(osgGeom.get());
+	//Now use that convexmesh geometry to create a new osg node.
+    osg::ref_ptr<osg::Node> osgNewNode = osgbCollision::osgNodeFromBtCollisionShape( btHull );
 
 	osg::Matrix osgScale = osg::Matrix::scale(fltScaleX, fltScaleY, fltScaleZ);
 	osg::ref_ptr<osg::MatrixTransform> osgScaleMT = new osg::MatrixTransform(osgScale);
 	osgScaleMT->addChild(osgNewNode.get());
 	osgScaleMT->setDataVariance(osg::Object::STATIC);
+
+    delete btHull;
+    btHull = NULL;
 
 	// Now do some OSG voodoo, which should spread the transform downward
 	//  through the loaded model, and delete the transform.

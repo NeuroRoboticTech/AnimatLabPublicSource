@@ -122,6 +122,7 @@ namespace AnimatGUI
 			System::Threading::Thread ^m_newThread;
 			System::String ^m_strErrorMessage;
 			ManagedAnimatInterfaces::ILogger ^m_lpLogger;
+            bool m_bCriticalError;
 
 #pragma region SimulationThreading
 

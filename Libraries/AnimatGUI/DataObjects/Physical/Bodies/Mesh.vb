@@ -240,7 +240,7 @@ Namespace DataObjects.Physical.Bodies
 
                 If m_eMeshType = enumMeshType.Convex Then
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Convex Mesh File", m_strConvexMeshFile.GetType(), "ConvexMeshFile", _
-                                                "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile))
+                                                "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile, True))
                 End If
             End If
 

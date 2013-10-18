@@ -794,6 +794,7 @@ void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
 		fltP[1] = fltPy;
 		fltP[2] = fltPz;
 
+        Physics_WakeDynamics();
         m_btPart->applyForce(fltF, fltP);
 	}
 }

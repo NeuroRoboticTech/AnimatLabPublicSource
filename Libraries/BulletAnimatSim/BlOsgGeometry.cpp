@@ -43,6 +43,9 @@ namespace BulletAnimatSim
     btConvexHullShape BULLET_PORT *OsgMeshToConvexHull(osg::Node *lpNode, bool bOptimize, float fltMargin)
     {
         btConvexHullShape *originalConvexShape =  osgbCollision::btConvexHullCollisionShapeFromOSG(lpNode);
+        
+        if(fltMargin >= 0)
+            originalConvexShape->setMargin(fltMargin);
 
         btConvexHullShape* simplifiedConvexShape = NULL;
         if(bOptimize)

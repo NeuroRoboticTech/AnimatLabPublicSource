@@ -448,7 +448,7 @@ bool RigidBody::IsRoot()
 **/
 bool RigidBody::HasStaticJoint()
 {
-	if(!IsRoot() && !IsContactSensor() && !JointToParent())
+	if(!IsRoot() && !IsContactSensor() && IsCollisionObject() && !JointToParent())
 		return true;
 	return false;
 }

@@ -130,7 +130,7 @@ void BlMeshBase::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
 		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
-            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, -1);
+            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, 0);
 		else
             m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
 
@@ -152,33 +152,9 @@ void BlMeshBase::Physics_Resize()
 		m_osgGeometry.release();
 		m_osgMeshNode.release();
 		m_osgBaseMeshNode.release();
-
-		//Create a new box geometry with the new sizes.
-		CreateGeometry();
-
-		//Now lets re-adjust the gripper size.
-		if(m_osgDragger.valid())
-			m_osgDragger->SetupMatrix();
-
-		//Reset the user data for the new parts.
-		if(m_osgNodeGroup.valid())
-		{
-			osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
-			osgVisitor->traverse(*m_osgNodeGroup);
-		}
 	}
 
-    //FIX PHYSICS
-	//if(m_vxGeometry)
-	//{
-	//	ResizePhysicsGeometry();
-
-	//	//We need to reset the density in order for it to recompute the mass and volume.
-	//	Physics_SetDensity(m_lpThisRB->Density());
-
-	//	//Now get base values, including mass and volume
-	//	GetBaseValues();
-	//}
+    BlRigidBody::Physics_Resize();
 }
 
 

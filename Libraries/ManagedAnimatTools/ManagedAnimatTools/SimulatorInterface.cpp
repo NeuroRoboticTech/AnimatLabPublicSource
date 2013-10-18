@@ -18,6 +18,7 @@ namespace AnimatGUI
 			m_bPaused = true;
 			m_bIsLoaded = false;
 			m_bSimOpen = false;
+            m_bCriticalError = false;
 		}
 
 		SimulatorInterface::~SimulatorInterface()
@@ -61,6 +62,7 @@ namespace AnimatGUI
 			{
 				try
 				{
+                    m_bCriticalError = true;
 					HandleCriticalError(strError);
 				}
 				catch(...)
@@ -219,7 +221,7 @@ namespace AnimatGUI
 
 					//Lets block here until the the m_bSimOpen = True. This will mean that the sim has been created, loaded, and initialized.
 					int iCount = 0;
-					while(!m_bSimOpen)
+					while(!m_bSimOpen && !m_bCriticalError)
 					{
 						Sleep(10);
 						if(iCount > 1e6)
@@ -1487,7 +1489,7 @@ namespace AnimatGUI
 					{
 						std::string strError = "A critical error occured while running the simulator. The application is shutting down.\nError: " + oError.m_strError;
 						m_strErrorMessage = gcnew String(strError.c_str());
-						//this->FireHandleCriticalErrorEvent(m_strErrorMessage);
+						this->FireHandleCriticalErrorEvent(m_strErrorMessage);
 						if(iHandle)
 						{
 							IntPtr iptr(iHandle);

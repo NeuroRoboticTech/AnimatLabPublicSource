@@ -41,7 +41,12 @@ BlMesh::~BlMesh()
 void BlMesh::CreateParts()
 {
 	CreateGeometry();
-    m_fltVolume = OsgConvexHullVolume(m_osgMeshNode.get());
+    
+    //If this is a collision object then calculate the convex hull volume.
+    if(m_lpThisRB->IsCollisionObject())
+        m_fltVolume = OsgConvexHullVolume(m_osgMeshNode.get());
+    else
+        m_fltVolume = 0;
 
 	BlMeshBase::CreateItem();
 	Mesh::CreateParts();

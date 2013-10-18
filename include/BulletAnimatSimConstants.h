@@ -114,6 +114,9 @@
 #define Bl_Err_lTriangleCollisionMeshNotAllowed -4042
 #define Bl_Err_strTriangleCollisionMeshNotAllowed "Dynamic triangle mesh collision objects are not allowed."
 
+#define Bl_Err_lConvertingMeshToConvexHull -4043
+#define Bl_Err_strConvertingMeshToConvexHull "Error converting a mesh to a convex hull."
+
 enum AnimatCollisionTypes {
     NOTHING                 = 0,    // things that don't collide
     RIGID_BODY              = 1<<1, // regular rigid body party
