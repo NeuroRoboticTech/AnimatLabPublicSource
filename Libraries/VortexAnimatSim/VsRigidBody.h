@@ -150,6 +150,7 @@ namespace VortexAnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
+            virtual float Physics_GetDensity();
 			virtual bool Physics_HasCollisionGeometry();
 		};
 

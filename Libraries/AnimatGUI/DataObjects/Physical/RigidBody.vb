@@ -154,12 +154,11 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The density can not be less than or equal to zero.")
                 End If
 
-                Me.SetSimData("Density", Value.ToString, True)
-                m_snDensity.CopyData(Value)
-
                 'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
                 'what we are using as a key param based on application settings.
                 If Not Util.Application.UseMassForRigidBodyDefinitions Then
+                    Me.SetSimData("Density", Value.ToString, True)
+                    m_snDensity.CopyData(Value)
                     UpdateMassVolumeDensity()
                 Else
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
@@ -193,6 +192,8 @@ Namespace DataObjects.Physical
                 'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
                 'what we are using as a key param based on application settings.
                 If Util.Application.UseMassForRigidBodyDefinitions Then
+                    Me.SetSimData("Mass", Value.ToString, True)
+                    m_snMass.CopyData(Value)
                     UpdateMassVolumeDensity()
                 Else
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
@@ -557,15 +558,17 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub UpdateMassVolumeDensity()
 
-            If Util.Application.SimPhysicsSystem = "Bullet" Then
-                m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
+            If Util.Application.UseMassForRigidBodyDefinitions Then
+                m_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
                 m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
             Else
                 m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
                 m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
             End If
 
-            Util.ProjectProperties.RefreshProperties()
+            If Not Util.ProjectProperties Is Nothing Then
+                Util.ProjectProperties.RefreshProperties()
+            End If
         End Sub
 
         Public Overrides Sub InitAfterAppStart()
@@ -1187,8 +1190,7 @@ Namespace DataObjects.Physical
                     AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
                     AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
 
-                    m_snMass.ActualValue = m_doInterface.GetDataValueImmediate("Mass")
-                    m_snVolume.ActualValue = m_doInterface.GetDataValueImmediate("Volume")
+                    UpdateMassVolumeDensity()
                 End If
 
                 If Not m_JointToParent Is Nothing Then

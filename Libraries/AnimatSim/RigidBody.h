@@ -78,6 +78,9 @@ namespace AnimatSim
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
+            /// The density value reported to the GUI
+            float m_fltReportDensity;
+
 			///The mass of the object
 			float m_fltMass;
 
@@ -310,6 +313,7 @@ namespace AnimatSim
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMassValueWithStaticChildren();
+			virtual float GetDensity();
 			virtual float GetMass();
 			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();

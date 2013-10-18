@@ -107,9 +107,29 @@ void BlRigidBody::Physics_SetFreeze(bool bVal)
     ResizePhysicsGeometry();
 }
 
-void BlRigidBody::Physics_SetDensity(float fltVal)
+void BlRigidBody::Physics_SetMass(float fltVal)
 {
     ResizePhysicsGeometry();
+}
+
+float BlRigidBody::Physics_GetMass()
+{
+    if(m_lpThisRB)
+        return m_lpThisRB->Mass();
+
+	return 0;
+}
+
+float BlRigidBody::Physics_GetDensity()
+{
+    if(m_lpThisRB)
+    {
+        float fltVolume = m_lpThisRB->Volume();
+        if(fltVolume > 0)
+            return m_lpThisRB->Mass()/fltVolume;
+    }
+
+    return 0;
 }
 
 void BlRigidBody::Physics_SetMaterialID(std::string strID)
@@ -837,14 +857,6 @@ CStdFPoint BlRigidBody::Physics_GetVelocityAtPoint(float x, float y, float z)
 
 	return linVel;
 }	
-
-float BlRigidBody::Physics_GetMass()
-{
-    if(m_lpThisRB)
-        return m_lpThisRB->Mass();
-
-	return 0;
-}
 
 bool BlRigidBody::Physics_HasCollisionGeometry()
 {

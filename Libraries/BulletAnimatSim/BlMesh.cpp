@@ -38,6 +38,25 @@ BlMesh::~BlMesh()
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlMesh/\r\n", "", -1, false, true);}
 }
 
+/**
+ \brief Freezes this object. In Bullet triangular meshes are not allowed to be dynamic, so I
+ am overriding this method to always return true if mesh type is not convex. If it is convex 
+ then it returns the Mesh::Freeze value.
+
+ \author    David Cofer
+ \date  10/18/2013
+
+ \return    true if it Frozen or if it is other than convex, false if it is convex and not frozen.
+ */
+
+bool BlMesh::Freeze()
+{
+    if(m_strCollisionMeshType == "CONVEX")
+        return Mesh::Freeze();
+    else
+        return true;
+}
+
 void BlMesh::CreateParts()
 {
 	CreateGeometry();

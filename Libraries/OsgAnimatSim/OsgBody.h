@@ -49,6 +49,7 @@ namespace OsgAnimatSim
             virtual void Physics_ChildBodyAdded(RigidBody *lpChild) {};
             virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) {};
             virtual float Physics_GetMass() {return 0;};
+            virtual float Physics_GetDensity() {return 0;};
 
 			virtual void Physics_UpdateNode() {};
 			virtual bool Physics_HasCollisionGeometry() {return false;};

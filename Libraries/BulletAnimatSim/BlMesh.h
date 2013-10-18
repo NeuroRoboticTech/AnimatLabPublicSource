@@ -17,6 +17,8 @@ namespace BulletAnimatSim
 				BlMesh();
 				virtual ~BlMesh();
 
+    			virtual bool Freeze();
+
 				//Override the set color method so we can disable it. We do not want to set the color for
 				//a mesh. Let the color be set in the mesh file.
 				//virtual void SetColor(float *vAmbient, float *vDiffuse, float *vSpecular, float fltShininess) {};

@@ -115,6 +115,7 @@ namespace VortexAnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits) {};
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint v; return v;};
 			virtual float Physics_GetMass() {return 0;};
+            virtual float Physics_GetDensity() {return 0;};
 			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 		};

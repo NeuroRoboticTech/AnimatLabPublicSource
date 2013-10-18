@@ -50,6 +50,7 @@ RigidBody::RigidBody()
 	m_lpParent = NULL;
 	m_lpStructure = NULL;
 	m_fltDensity = 1.0;
+    m_fltReportDensity = m_fltDensity;
 
 	m_lpJointToParent = NULL;
 	m_bFreeze = false;
@@ -314,6 +315,9 @@ void RigidBody::Density(float fltVal, bool bUseScaling)
 		m_fltDensity *=  pow(m_lpSim->DenominatorDistanceUnits(), 3); //Perform a conversion if necessary because we may be using different units in the denominator.
 	}
 
+    m_fltReportDensity = m_fltDensity * m_lpSim->DisplayMassUnits();
+    m_fltReportDensity /= pow(m_lpSim->DenominatorDistanceUnits(), 3);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_SetDensity(m_fltDensity);
 };
@@ -328,6 +332,8 @@ void RigidBody::Mass(float fltVal, bool bUseScaling)
 	m_fltMass = fltVal;
 	if(bUseScaling)
 		m_fltMass /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+
+    m_fltReportMass = m_fltMass * m_lpSim->DisplayMassUnits();
 
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_SetMass(m_fltMass);
@@ -1340,6 +1346,11 @@ float *RigidBody::GetDataPointer(const std::string &strDataType)
 		return &m_fltEnabled;
 	if(strType == "CONTACTCOUNT")
 		return &m_fltSurfaceContactCount;
+	if(strType == "DENSITY")
+	{
+		GetDensity();
+		return &m_fltReportDensity;
+	}
 	if(strType == "MASS")
 	{
 		GetMass();
@@ -1379,6 +1390,12 @@ bool RigidBody::SetData(const std::string &strDataType, const std::string &strVa
 	if(strType == "DENSITY")
 	{
 		Density((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MASS")
+	{
+		Mass((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -1487,6 +1504,9 @@ void RigidBody::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std:
 	aryTypes.Add("Boolean");
 
 	aryNames.Add("Density");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Mass");
 	aryTypes.Add("Float");
 
 	aryNames.Add("CenterOfMass");
@@ -2133,6 +2153,24 @@ float RigidBody::GetMass()
 	return m_fltMass;
 }
 
+/**
+\brief	Gets the density of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The density. 
+**/
+float RigidBody::GetDensity()
+{
+	if(m_lpPhysicsBody)
+		m_fltDensity = m_lpPhysicsBody->Physics_GetDensity();
+
+    m_fltReportDensity = m_fltDensity * m_lpSim->DisplayMassUnits();
+    m_fltReportDensity /= pow(m_lpSim->DenominatorDistanceUnits(), 3);
+
+	return m_fltDensity;
+}
 
 /**
  \brief Gets the mass of this part and all static children

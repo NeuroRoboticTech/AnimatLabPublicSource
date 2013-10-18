@@ -147,7 +147,7 @@ namespace BulletAnimatSim
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
 			virtual void Physics_SetFreeze(bool bVal);
-			virtual void Physics_SetDensity(float fltVal);
+			virtual void Physics_SetMass(float fltVal);
 			virtual void Physics_SetMaterialID(std::string strID);
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular);
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz);
@@ -163,6 +163,7 @@ namespace BulletAnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
+			virtual float Physics_GetDensity();
 			virtual bool Physics_HasCollisionGeometry();
 
             friend class BlJoint;

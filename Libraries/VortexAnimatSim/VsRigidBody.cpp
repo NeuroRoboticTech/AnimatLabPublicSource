@@ -895,6 +895,14 @@ float VsRigidBody::Physics_GetMass()
 	return fltMass;
 }
 
+float VsRigidBody::Physics_GetDensity()
+{
+    if(m_lpThisRB)
+        return m_lpThisRB->Density();
+    else
+        return 0;
+}
+
 bool VsRigidBody::Physics_HasCollisionGeometry()
 {
 	if(m_vxSensor)
