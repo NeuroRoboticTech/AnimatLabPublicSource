@@ -1306,6 +1306,17 @@ Namespace Forms
                 End If
             End Get
         End Property
+
+        Public Overridable ReadOnly Property AllowDynamicTriangleMesh() As Boolean
+            Get
+                If SimPhysicsSystem = "Bullet" Then
+                    Return False
+                Else
+                    Return True
+                End If
+            End Get
+        End Property
+
 #End Region
 
         Public Overridable ReadOnly Property ConsoleApp() As Boolean

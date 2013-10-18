@@ -91,6 +91,12 @@ Namespace DataObjects.Physical.Bodies
                     m_strMeshFile = value
 
                     UpdateMassVolumeDensity()
+
+                    'If dynamic triangle meshes are not allowed disable it here.
+                    If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then
+                        Me.Freeze = True
+                    End If
+
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -126,6 +132,12 @@ Namespace DataObjects.Physical.Bodies
                     m_eMeshType = value
 
                     UpdateMassVolumeDensity()
+
+                    'If dynamic triangle meshes are not allowed disable it here.
+                    If Not Util.Application.AllowDynamicTriangleMesh AndAlso value = enumMeshType.Triangular Then
+                        Me.Freeze = True
+                    End If
+
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -146,6 +158,20 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Framework.ScaledVector3)
                 SetScale(value)
+            End Set
+        End Property
+
+        Public Overrides Property Freeze() As Boolean
+            Get
+                Return m_bFreeze
+            End Get
+            Set(ByVal Value As Boolean)
+                If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular AndAlso Value = False Then
+                    Throw New System.Exception("Dynamic triangular meshes are not allowed for this physics engine.")
+                End If
+
+                Me.SetSimData("Freeze", Value.ToString, True)
+                m_bFreeze = Value
             End Set
         End Property
 
@@ -248,6 +274,13 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Scale", pbNumberBag.GetType(), "Scale", _
                                         "Part Properties", "Sets the scale of this body part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+
+            'Make freeze readonly if the type is triangular mesh and dynamic meshes are not allowed for this physics engine.
+            If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then '
+                If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
+                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze, True))
+            End If
 
         End Sub
 

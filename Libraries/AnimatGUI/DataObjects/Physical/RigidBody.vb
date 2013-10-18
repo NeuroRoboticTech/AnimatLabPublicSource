@@ -558,12 +558,14 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub UpdateMassVolumeDensity()
 
-            If Util.Application.UseMassForRigidBodyDefinitions Then
-                m_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
-                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
-            Else
-                m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
-                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+            If Not Me.SimInterface Is Nothing Then
+                If Util.Application.UseMassForRigidBodyDefinitions Then
+                    m_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                Else
+                    m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                End If
             End If
 
             If Not Util.ProjectProperties Is Nothing Then
