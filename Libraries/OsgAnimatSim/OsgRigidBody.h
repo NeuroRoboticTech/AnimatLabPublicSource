@@ -58,8 +58,6 @@ namespace OsgAnimatSim
 			bool m_bCollectExtraData;
 			CStdFPoint m_vPos;
 
-			//float m_vPosition[3];
-			//float m_vRotation[3];
 			float m_vLinearVelocity[3];
 			float m_vAngularVelocity[3];
 			float m_vLinearAcceleration[3];

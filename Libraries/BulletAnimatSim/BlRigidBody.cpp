@@ -194,25 +194,24 @@ void BlRigidBody::Physics_WakeDynamics()
             m_btPart->setActivationState(0);
         else
             m_btPart->activate(true);
-            //m_btPart->setActivationState(ACTIVE_TAG);
     }
 }
 
 void BlRigidBody::GetBaseValues()
 {
-    //FIX PHYSICS
-	//if(m_vxPart && m_lpThisRB)
-	//{
-	//	//Fluid Density is in the units being used. So if the user set 1 g/cm^3 
-	//	//and the units were grams and decimeters then density would be 1000 g/dm^3
+	if(m_btPart && m_lpThisRB)
+	{
+		//Fluid Density is in the units being used. So if the user set 1 g/cm^3 
+		//and the units were grams and decimeters then density would be 1000 g/dm^3
 
-	//	//Recalculate the mass and volume
-	//	m_lpThisRB->GetMass();
-	//	m_lpThisRB->GetVolume();
+		//Recalculate the mass and volume
+		m_lpThisRB->GetDensity();
+		m_lpThisRB->GetVolume();
 
-	//	//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
-	//	//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
-	//}
+        //Fix Physics
+		//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
+		//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
+	}
 }
 
 void BlRigidBody::CreateSensorPart()
@@ -496,8 +495,6 @@ void BlRigidBody::DeletePhysics(bool bIncludeChildren)
         if(bIncludeChildren)
             DeleteChildPhysics();
 	}
-	//else if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
-	//	RemoveStaticPart();
 }
 
 void BlRigidBody::DeleteChildPhysics()
@@ -682,6 +679,7 @@ void BlRigidBody::Physics_CollectData()
 {
 	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+    OsgSimulator *lpSim = GetOsgSimulator();
     btVector3 vData;
 
 	if(m_osgbMotion)
@@ -714,8 +712,20 @@ void BlRigidBody::Physics_CollectData()
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
 	}
 
-	if(m_bCollectExtraData && m_btPart)
+	if(m_bCollectExtraData && m_btPart && lpSim)
 	{
+        float m_vPrevLinearVelocity[3];
+        float m_vPrevAngularVelocity[3];
+
+        //Store off the previoius linear and angular velocities for calculation of accelerations
+        m_vPrevLinearVelocity[0] = m_vLinearVelocity[0];
+        m_vPrevLinearVelocity[1] = m_vLinearVelocity[1];
+        m_vPrevLinearVelocity[2] = m_vLinearVelocity[2];
+
+        m_vPrevAngularVelocity[0] = m_vAngularVelocity[0];
+        m_vPrevAngularVelocity[1] = m_vAngularVelocity[1];
+        m_vPrevAngularVelocity[2] = m_vAngularVelocity[2];
+
 		vData = m_btPart->getLinearVelocity();
 		m_vLinearVelocity[0] = vData[0] * fDisUnits;
 		m_vLinearVelocity[1] = vData[1] * fDisUnits;
@@ -738,17 +748,19 @@ void BlRigidBody::Physics_CollectData()
 		m_vTorque[1] = vData[1] * fltRatio;
 		m_vTorque[2] = vData[2] * fltRatio;
 
-        //FIX PHYSICS
-		//Vx::VxReal3 vAccel;
-		//m_vxPart->getLinearAcceleration(vAccel);
-		//m_vLinearAcceleration[0] = vAccel[0] * fDisUnits;
-		//m_vLinearAcceleration[1] = vAccel[1] * fDisUnits;
-		//m_vLinearAcceleration[2] = vAccel[2] * fDisUnits;
+        float fltDt = lpSim->PhysicsTimeStep();
 
-		//m_vxPart->getAngularAcceleration(vAccel);
-		//m_vAngularAcceleration[0] = vAccel[0];
-		//m_vAngularAcceleration[1] = vAccel[1];
-		//m_vAngularAcceleration[2] = vAccel[2];
+        if(fltDt > 0)
+        {
+            //Bullet has no methods to directly get these accelerations, so we need to calculate them ourselves
+		    m_vLinearAcceleration[0] = (m_vLinearVelocity[0] - m_vPrevLinearVelocity[0])/fltDt;
+		    m_vLinearAcceleration[1] = (m_vLinearVelocity[1] - m_vPrevLinearVelocity[1])/fltDt;
+		    m_vLinearAcceleration[2] = (m_vLinearVelocity[2] - m_vPrevLinearVelocity[2])/fltDt;
+
+		    m_vAngularAcceleration[0] = (m_vAngularVelocity[0] - m_vPrevAngularVelocity[0])/fltDt;
+		    m_vAngularAcceleration[1] = (m_vAngularVelocity[1] - m_vPrevAngularVelocity[1])/fltDt;
+		    m_vAngularAcceleration[2] = (m_vAngularVelocity[2] - m_vPrevAngularVelocity[2])/fltDt;
+        }
 	}
 
 	if(m_lpThisRB->GetContactSensor() || m_lpThisRB->IsContactSensor()) 
@@ -844,17 +856,16 @@ void BlRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, b
 CStdFPoint BlRigidBody::Physics_GetVelocityAtPoint(float x, float y, float z)
 {
 	CStdFPoint linVel(0,0,0);
-    //FIX PHYSICS
-	//Vx::VxReal3 vxLinVel = {0,0,0};
-	//Vx::VxReal3 vxPoint = {x,y,z};
+	btVector3 vLinVel(0,0,0);
+	btVector3 vPoint(x,y,z);
 
 	//if this is a contact sensor then return nothing.
-	//if(m_vxPart)
-	//{
-	//	m_vxPart->getVelocityAtPoint(vxPoint,  vxLinVel);
-	//	linVel.Set(vxLinVel[0], vxLinVel[1], vxLinVel[2]);
-	//}
-
+	if(m_btPart)
+	{
+		vLinVel = m_btPart->getVelocityInLocalPoint(vPoint);
+		linVel.Set(vLinVel[0], vLinVel[1], vLinVel[2]);
+	}
+    
 	return linVel;
 }	
 
