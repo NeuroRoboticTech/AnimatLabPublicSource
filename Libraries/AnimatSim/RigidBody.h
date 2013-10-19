@@ -167,7 +167,16 @@ namespace AnimatSim
 			float m_fltBuoyancyScale;
 
 			///This is the drag coefficients for the three axises for the body.
-			CStdFPoint m_vDrag;
+			CStdFPoint m_vLinearDrag;
+
+			///This is the drag coefficients for the three axises for the body.
+			CStdFPoint m_vAngularDrag;
+
+            /// The maximum hyrdodynamic force that can be applied
+            float m_fltMaxHydroForce;
+
+            /// The maximum hyrdodynamic torque that can be applied
+            float m_fltMaxHydroTorque;
 
 			///The Magnus coefficient for the body. This is defaulted to zero because it almost always negligble for most body parts.
 			float m_fltMagnus;
@@ -282,10 +291,21 @@ namespace AnimatSim
 			virtual float BuoyancyScale();
 			virtual void BuoyancyScale(float fltVal);
 
-			virtual CStdFPoint Drag();
-			virtual void Drag(CStdFPoint &oPoint);
-			virtual void Drag(float fltX, float fltY, float fltZ);
-			virtual void Drag(std::string strXml);
+			virtual CStdFPoint LinearDrag();
+			virtual void LinearDrag(CStdFPoint &oPoint);
+			virtual void LinearDrag(float fltX, float fltY, float fltZ);
+			virtual void LinearDrag(std::string strXml);
+
+			virtual CStdFPoint AngularDrag();
+			virtual void AngularDrag(CStdFPoint &oPoint);
+			virtual void AngularDrag(float fltX, float fltY, float fltZ);
+			virtual void AngularDrag(std::string strXml);
+
+			virtual float MaxHydroForce();
+			virtual void MaxHydroForce(float fltVal, bool bUseScaling = true);
+
+			virtual float MaxHydroTorque();
+			virtual void MaxHydroTorque(float fltVal, bool bUseScaling = true);
 
 			virtual float Magnus();
 			virtual void Magnus(float fltVal);

@@ -69,6 +69,8 @@ RigidBody::RigidBody()
 	m_fltFoodReplenishRate = 0;
 	m_fltFoodEnergyContent = 0;
 
+    m_fltMaxHydroForce = 1000;
+    m_fltMaxHydroTorque = 1000;
 	m_fltBuoyancyScale = 1;
 	m_fltMagnus = 0;
 	m_bEnableFluids = false;
@@ -855,33 +857,33 @@ void RigidBody::BuoyancyScale(float fltVal)
 }
 
 /**
-\brief	Gets the drag coefficients for the three axises for the body.
+\brief	Gets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
 
-\return	returns m_vDrag. 
+\return	returns m_vLinearDrag. 
 **/
-CStdFPoint RigidBody::Drag() {return m_vDrag;}
+CStdFPoint RigidBody::LinearDrag() {return m_vLinearDrag;}
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body.
+\brief	Sets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
 
 \param [in,out]	oPoint	The new point to use to set the drag.
 **/
-void RigidBody::Drag(CStdFPoint &oPoint) 
+void RigidBody::LinearDrag(CStdFPoint &oPoint) 
 {
-	m_vDrag = oPoint;
+	m_vLinearDrag = oPoint;
 
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_FluidDataChanged();
 }
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body.
+\brief	Sets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
@@ -890,14 +892,14 @@ void RigidBody::Drag(CStdFPoint &oPoint)
 \param	fltY				The y coordinate. 
 \param	fltZ				The z coordinate. 
 **/
-void RigidBody::Drag(float fltX, float fltY, float fltZ) 
+void RigidBody::LinearDrag(float fltX, float fltY, float fltZ) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
-	Drag(vPos);
+	LinearDrag(vPos);
 }
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body. This method is primarily used by the GUI to
+\brief	Sets the linear drag coefficients for the three axises for the body. This method is primarily used by the GUI to
 reset the local position using an xml data packet. 
 
 \author	dcofer
@@ -905,16 +907,137 @@ reset the local position using an xml data packet.
 
 \param	strXml				The xml string with the data to load in the position. 
 **/
-void RigidBody::Drag(std::string strXml)
+void RigidBody::LinearDrag(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
-	oXml.FindChildElement("Drag");
+	oXml.FindChildElement("LinearDrag");
 	
 	CStdFPoint vPos;
-	Std_LoadPoint(oXml, "Drag", vPos);
-	Drag(vPos);
+	Std_LoadPoint(oXml, "LinearDrag", vPos);
+	LinearDrag(vPos);
+}
+
+/**
+\brief	Gets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_vLinearDrag. 
+**/
+CStdFPoint RigidBody::AngularDrag() {return m_vAngularDrag;}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new point to use to set the drag.
+**/
+void RigidBody::AngularDrag(CStdFPoint &oPoint) 
+{
+	m_vAngularDrag = oPoint;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+**/
+void RigidBody::AngularDrag(float fltX, float fltY, float fltZ) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	AngularDrag(vPos);
+}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body. This method is primarily used by the GUI to
+reset the local position using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+**/
+void RigidBody::AngularDrag(std::string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("AngularDrag");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "AngularDrag", vPos);
+	AngularDrag(vPos);
+}
+
+/**
+\brief	Gets the maximum linear hydrodynamic force that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	max hydrodyanmic force that can be applied.
+**/
+float RigidBody::MaxHydroForce() {return m_fltMaxHydroForce;}
+
+/**
+\brief	Sets the maximum linear hydrodynamic force that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void RigidBody::MaxHydroForce(float fltVal, bool bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxHydroForce", true);
+
+	if(bUseScaling)
+		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
+
+	m_fltMaxHydroForce = fltVal;
+}
+
+/**
+\brief	Gets the maximum angular hydrodynamic torque that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	max hydrodyanmic torque that can be applied.
+**/
+float RigidBody::MaxHydroTorque() {return m_fltMaxHydroTorque;}
+
+/**
+\brief	Sets the maximum angular hydrodynamic torque that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void RigidBody::MaxHydroTorque(float fltVal, bool bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxHydroTorque", true);
+
+	if(bUseScaling)
+		fltVal *= ( m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits());
+
+	m_fltMaxHydroTorque = fltVal;
 }
 
 /**
@@ -1447,27 +1570,63 @@ bool RigidBody::SetData(const std::string &strDataType, const std::string &strVa
 		return true;
 	}
 
-	if(strDataType == "DRAG")
+	if(strDataType == "LINEARDRAG")
 	{
-		Drag(strValue);
+		LinearDrag(strValue);
 		return true;
 	}
 
-	if(strDataType == "DRAG.X")
+	if(strDataType == "LINEARDRAG.X")
 	{
-		Drag(atof(strValue.c_str()), m_vDrag.y, m_vDrag.z);
+		LinearDrag(atof(strValue.c_str()), m_vLinearDrag.y, m_vLinearDrag.z);
 		return true;
 	}
 
-	if(strDataType == "DRAG.Y")
+	if(strDataType == "LINEARDRAG.Y")
 	{
-		Drag(m_vDrag.x, atof(strValue.c_str()), m_vDrag.z);
+		LinearDrag(m_vLinearDrag.x, atof(strValue.c_str()), m_vLinearDrag.z);
 		return true;
 	}
 
-	if(strDataType == "DRAG.Z")
+	if(strDataType == "LINEARDRAG.Z")
 	{
-		Drag(m_vDrag.x, m_vDrag.y, atof(strValue.c_str()));
+		LinearDrag(m_vLinearDrag.x, m_vLinearDrag.y, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG")
+	{
+		AngularDrag(strValue);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.X")
+	{
+		AngularDrag(atof(strValue.c_str()), m_vAngularDrag.y, m_vAngularDrag.z);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.Y")
+	{
+		AngularDrag(m_vAngularDrag.x, atof(strValue.c_str()), m_vAngularDrag.z);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.Z")
+	{
+		AngularDrag(m_vAngularDrag.x, m_vAngularDrag.y, atof(strValue.c_str()));
+		return true;
+	}
+    
+	if(strType == "MAXHYDROFORCE")
+	{
+		MaxHydroForce((float) atof(strValue.c_str()));
+		return true;
+	}
+    
+	if(strType == "MAXHYDROTORQUE")
+	{
+		MaxHydroTorque((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -1533,16 +1692,34 @@ void RigidBody::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std:
 	aryNames.Add("BuoyancyScale");
 	aryTypes.Add("Float");
 
-	aryNames.Add("Drag");
+	aryNames.Add("LinearDrag");
 	aryTypes.Add("Xml");
 
-	aryNames.Add("Drag.X");
+	aryNames.Add("LinearDrag.X");
 	aryTypes.Add("Float");
 
-	aryNames.Add("Drag.Y");
+	aryNames.Add("LinearDrag.Y");
 	aryTypes.Add("Float");
 
-	aryNames.Add("Drag.Z");
+	aryNames.Add("LinearDrag.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularDrag");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("AngularDrag.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularDrag.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularDrag.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxHydroForce");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxHydroTorque");
 	aryTypes.Add("Float");
 
 	aryNames.Add("Magnus");
@@ -1822,8 +1999,14 @@ void RigidBody::Load(CStdXml &oXml)
 	BuoyancyCenter(vPoint);
 
 	vPoint.Set(0, 0, 0);
-	Std_LoadPoint(oXml, "Drag", vPoint, false);
-	Drag(vPoint);
+	Std_LoadPoint(oXml, "LinearDrag", vPoint, false);
+	LinearDrag(vPoint);
+
+	Std_LoadPoint(oXml, "AngularDrag", vPoint, false);
+	AngularDrag(vPoint);
+
+    MaxHydroForce(oXml.GetChildFloat("MaxHydroForce", m_fltMaxHydroForce));
+    MaxHydroTorque(oXml.GetChildFloat("MaxHydroTorque", m_fltMaxHydroTorque));
 
 	BuoyancyScale(oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale));
 	Magnus(oXml.GetChildFloat("Magnus", m_fltMagnus));

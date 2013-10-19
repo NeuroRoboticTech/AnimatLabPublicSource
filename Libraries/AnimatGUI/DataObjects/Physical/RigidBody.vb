@@ -37,7 +37,10 @@ Namespace DataObjects.Physical
 
         Protected m_svBuoyancyCenter As ScaledVector3
         Protected m_fltBuoyancyScale As Single = 1
-        Protected m_svDrag As ScaledVector3
+        Protected m_svLinearDrag As ScaledVector3
+        Protected m_svAngularDrag As ScaledVector3
+        Protected m_snMaxHydroForce As ScaledNumber
+        Protected m_snMaxHydroTorque As ScaledNumber
         Protected m_fltMagnus As Single = 0
         Protected m_bEnableFluids As Boolean = False
 
@@ -243,16 +246,53 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property Drag() As Framework.ScaledVector3
+        Public Overridable Property LinarDrag() As Framework.ScaledVector3
             Get
-                Return m_svDrag
+                Return m_svLinearDrag
             End Get
             Set(ByVal value As Framework.ScaledVector3)
-                Me.SetSimData("Drag", value.GetSimulationXml("Drag"), True)
-                m_svDrag.CopyData(value)
+                Me.SetSimData("LinearDrag", value.GetSimulationXml("LinearDrag"), True)
+                m_svLinearDrag.CopyData(value)
             End Set
         End Property
 
+        Public Overridable Property AngularDrag() As Framework.ScaledVector3
+            Get
+                Return m_svAngularDrag
+            End Get
+            Set(ByVal value As Framework.ScaledVector3)
+                Me.SetSimData("AngularDrag", value.GetSimulationXml("AngularDrag"), True)
+                m_svAngularDrag.CopyData(value)
+            End Set
+        End Property
+
+        Public Overridable Property MaxHydroForce() As ScaledNumber
+            Get
+                Return m_snMaxHydroForce
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The maximum hydrodynamic force can not be less than zero.")
+                End If
+                Me.SetSimData("MaxHydroForce", Value.ToString, True)
+
+                m_snMaxHydroForce.CopyData(Value)
+            End Set
+        End Property
+
+        Public Overridable Property MaxHydroTorque() As ScaledNumber
+            Get
+                Return m_snMaxHydroTorque
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The maximum hydrodynamic torque can not be less than zero.")
+                End If
+                Me.SetSimData("MaxHydroTorque", Value.ToString, True)
+
+                m_snMaxHydroTorque.CopyData(Value)
+            End Set
+        End Property
 
         Public Overridable Property Magnus() As Single
             Get
@@ -522,8 +562,13 @@ Namespace DataObjects.Physical
 
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")
-            m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
-            m_svDrag.CopyData(1, 1, 1, True)
+            m_svLinearDrag = New ScaledVector3(Me, "LinearDrag", "Linear drag coefficients of this part.", "", "")
+            m_svLinearDrag.CopyData(1, 1, 1, True)
+            m_svAngularDrag = New ScaledVector3(Me, "AngularDrag", "Angular drag coefficients of this part.", "", "")
+            m_svAngularDrag.CopyData(1, 1, 1, True)
+
+            m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 1000, ScaledNumber.enumNumericScale.None, "Netwons", "N")
+            m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 1000, ScaledNumber.enumNumericScale.None, "Netwon-Meters", "Nm")
 
             If Not Util.Simulation Is Nothing AndAlso Not Util.Simulation.Environment Is Nothing AndAlso Not Util.Simulation.Environment.MaterialTypes Is Nothing AndAlso _
                 Util.Simulation.Environment.MaterialTypes.ContainsKey("DEFAULTMATERIAL") Then
@@ -534,7 +579,8 @@ Namespace DataObjects.Physical
 
             AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
             AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
-            AddHandler m_svDrag.ValueChanged, AddressOf Me.OnDragValueChanged
+            AddHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            AddHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
 
             If Not Util.Environment Is Nothing Then
                 m_snDensity = Util.Environment.DefaultDensity
@@ -584,7 +630,10 @@ Namespace DataObjects.Physical
             m_aryChildBodies.ClearIsDirty()
             m_aryOdorSources.ClearIsDirty()
             m_svBuoyancyCenter.ClearIsDirty()
-            m_svDrag.ClearIsDirty()
+            m_svLinearDrag.ClearIsDirty()
+            m_svAngularDrag.ClearIsDirty()
+            m_snMaxHydroForce.ClearIsDirty()
+            m_snMaxHydroTorque.ClearIsDirty()
             m_svCOM.ClearIsDirty()
             m_snDensity.ClearIsDirty()
             m_snMass.ClearIsDirty()
@@ -880,13 +929,36 @@ Namespace DataObjects.Physical
                                        "applied to the buoyancy force which accounts for the fact that a given volume might actually have holes " & _
                                        "or concavity in it which would affect the buoyancy force on the object.", m_fltBuoyancyScale))
 
-                    pbNumberBag = m_svDrag.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "Drag", _
-                                                "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+                    If Util.Application.SimPhysicsSystem = "Vortex" Then
+                        pbNumberBag = m_svLinearDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "LinearDrag", _
+                                                    "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Magnus", m_fltMagnus.GetType(), "Magnus", _
-                                     "Hydrodynamics", "The Magnus coefficient for the body.", m_fltMagnus))
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Magnus", m_fltMagnus.GetType(), "Magnus", _
+                                         "Hydrodynamics", "The Magnus coefficient for the body.", m_fltMagnus))
+                    Else
+                        pbNumberBag = m_svLinearDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Drag", pbNumberBag.GetType(), "LinearDrag", _
+                                                    "Hydrodynamics", "This is the linear drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+
+                        pbNumberBag = m_svAngularDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Drag", pbNumberBag.GetType(), "AngularDrag", _
+                                                    "Hydrodynamics", "This is the angular drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+
+                        pbNumberBag = m_snMaxHydroForce.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Force", pbNumberBag.GetType(), "MaxHydroForce", _
+                                                    "Hydrodynamics", "Sets the maximum hydrodynamic force that can be applied to this part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                        pbNumberBag = m_snMaxHydroTorque.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Torque", pbNumberBag.GetType(), "MaxHydroTorque", _
+                                                    "Hydrodynamics", "Sets the maximum hydrodynamic torque that can be applied to this part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                    End If
+
 
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Fluids", m_bEnableFluids.GetType(), "EnableFluids", _
                                      "Hydrodynamics", "Enables fluid interactions for this specific body.", m_bEnableFluids))
@@ -1015,7 +1087,10 @@ Namespace DataObjects.Physical
 
             m_svBuoyancyCenter = DirectCast(doOrigPart.m_svBuoyancyCenter.Clone(Me, bCutData, doRoot), ScaledVector3)
             m_fltBuoyancyScale = doOrigPart.m_fltBuoyancyScale
-            m_svDrag = DirectCast(doOrigPart.m_svDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_svLinearDrag = DirectCast(doOrigPart.m_svLinearDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_svAngularDrag = DirectCast(doOrigPart.m_svAngularDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_snMaxHydroForce = DirectCast(doOrigPart.m_snMaxHydroForce.Clone(doOrigPart.m_snMaxHydroForce.Parent, bCutData, doRoot), ScaledNumber)
+            m_snMaxHydroTorque = DirectCast(doOrigPart.m_snMaxHydroTorque.Clone(doOrigPart.m_snMaxHydroTorque.Parent, bCutData, doRoot), ScaledNumber)
             m_fltMagnus = doOrigPart.m_fltMagnus
             m_bEnableFluids = doOrigPart.m_bEnableFluids
 
@@ -1140,7 +1215,10 @@ Namespace DataObjects.Physical
             Me.Shininess = doExisting.Shininess
             Me.m_svBuoyancyCenter = doExisting.m_svBuoyancyCenter
             Me.m_fltBuoyancyScale = doExisting.m_fltBuoyancyScale
-            Me.m_svDrag = doExisting.m_svDrag
+            Me.m_svLinearDrag = doExisting.m_svLinearDrag
+            Me.m_svAngularDrag = doExisting.m_svAngularDrag
+            Me.m_snMaxHydroForce = doExisting.m_snMaxHydroForce
+            Me.m_snMaxHydroTorque = doExisting.m_snMaxHydroTorque
             Me.m_fltMagnus = doExisting.m_fltMagnus
             Me.m_bEnableFluids = doExisting.m_bEnableFluids
             Me.Description = doExisting.Description
@@ -1251,7 +1329,16 @@ Namespace DataObjects.Physical
 
             m_svBuoyancyCenter.LoadData(oXml, "BuoyancyCenter", False)
             m_fltBuoyancyScale = oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.LoadData(oXml, "Drag", False)
+
+            If oXml.FindChildElement("Drag", False) Then
+                m_svLinearDrag.LoadData(oXml, "Drag", False)
+            Else
+                m_svLinearDrag.LoadData(oXml, "LinearDrag", False)
+                m_svLinearDrag.LoadData(oXml, "AngularDrag", False)
+                m_snMaxHydroForce.LoadData(oXml, "MaxHydroForce", False)
+                m_snMaxHydroTorque.LoadData(oXml, "MaxHydroTorque", False)
+            End If
+
             m_fltMagnus = oXml.GetChildFloat("Magnus", m_fltMagnus)
             m_bEnableFluids = oXml.GetChildBool("EnableFluids", m_bEnableFluids)
 
@@ -1334,7 +1421,10 @@ Namespace DataObjects.Physical
 
             m_svBuoyancyCenter.SaveData(oXml, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.SaveData(oXml, "Drag")
+            m_svLinearDrag.SaveData(oXml, "LinearDrag")
+            m_svAngularDrag.SaveData(oXml, "AngularDrag")
+            m_snMaxHydroForce.SaveData(oXml, "MaxHydroForce")
+            m_snMaxHydroTorque.SaveData(oXml, "MaxHydroTorque")
             oXml.AddChildElement("Magnus", m_fltMagnus)
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
@@ -1404,7 +1494,10 @@ Namespace DataObjects.Physical
 
             m_svBuoyancyCenter.SaveSimulationXml(oXml, Me, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.SaveSimulationXml(oXml, Me, "Drag")
+            m_svLinearDrag.SaveSimulationXml(oXml, Me, "LinearDrag")
+            m_svAngularDrag.SaveSimulationXml(oXml, Me, "AngularDrag")
+            m_snMaxHydroForce.SaveSimulationXml(oXml, Me, "MaxHydroForce")
+            m_snMaxHydroTorque.SaveSimulationXml(oXml, Me, "MaxHydroTorque")
             oXml.AddChildElement("Magnus", m_fltMagnus)
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
@@ -1943,9 +2036,18 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnDragValueChanged()
+        Protected Overridable Sub OnLinearDragValueChanged()
             Try
-                Me.SetSimData("Drag", m_svDrag.GetSimulationXml("Drag"), True)
+                Me.SetSimData("LinearDrag", m_svLinearDrag.GetSimulationXml("LinearDrag"), True)
+                Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnAngularDragValueChanged()
+            Try
+                Me.SetSimData("AngularDrag", m_svLinearDrag.GetSimulationXml("AngularDrag"), True)
                 Util.ProjectProperties.RefreshProperties()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

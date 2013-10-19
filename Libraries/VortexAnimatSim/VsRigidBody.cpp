@@ -285,7 +285,7 @@ void  VsRigidBody::Physics_FluidDataChanged()
 		CStdFPoint vpCenter = m_lpThisRB->BuoyancyCenter();
 		Vx::VxReal3 vCenter = {vpCenter.x, vpCenter.y, vpCenter.z};
 
-		CStdFPoint vpDrag = m_lpThisRB->Drag();
+		CStdFPoint vpDrag = m_lpThisRB->LinearDrag();
 		Vx::VxReal3 vDrag = {vpDrag.x, vpDrag.y, vpDrag.z};
 
 		float fltScale = m_lpThisRB->BuoyancyScale();
