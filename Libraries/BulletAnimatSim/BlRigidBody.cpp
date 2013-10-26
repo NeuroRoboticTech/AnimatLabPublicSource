@@ -201,7 +201,7 @@ void BlRigidBody::Physics_WakeDynamics()
 
         if(m_lpThisRB->Freeze())
             m_btPart->setActivationState(0);
-        else
+        else if(!m_btPart->isActive())
             m_btPart->activate(true);
     }
 }
@@ -919,7 +919,7 @@ void BlRigidBody::Physics_StepHydrodynamicSimulation()
 
         if(lpPlane)
         {
-            m_fltBuoyancy = -(lpPlane->Density() * m_lpThisRB->Volume() * lpSim->Gravity());
+            m_fltBuoyancy = -(lpPlane->Density() * m_lpThisRB->Volume() * lpSim->Gravity() * m_lpThisRB->BuoyancyScale());
             m_fltReportBuoyancy = m_fltBuoyancy * lpSim->MassUnits() * lpSim->DistanceUnits();
 
 		    btVector3 vbtLinVel = m_btPart->getLinearVelocity();
@@ -953,8 +953,9 @@ void BlRigidBody::Physics_StepHydrodynamicSimulation()
                 m_vAngularDragTorque[i] = vAngularDragTorque[i] * lpSim->MassUnits() * lpSim->DistanceUnits() * lpSim->DistanceUnits();
             }
 
-            Physics_AddBodyForce(0, 0, 0, vLinearDragForce.x, (vLinearDragForce.y+m_fltBuoyancy), vLinearDragForce.z, false);
-            //Physics_AddBodyTorque(vAngularDragTorque.x, vAngularDragTorque.y, vAngularDragTorque.z, false);
+	        Physics_WakeDynamics();
+			m_btPart->applyCentralForce(btVector3(vLinearDragForce.x, (vLinearDragForce.y+m_fltBuoyancy),  vLinearDragForce.z));
+			m_btPart->applyTorque(btVector3(vAngularDragTorque.x, vAngularDragTorque.y, vAngularDragTorque.z));
         }
         else
         {

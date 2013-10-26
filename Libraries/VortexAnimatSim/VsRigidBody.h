@@ -84,6 +84,10 @@ namespace VortexAnimatSim
 			float m_vForce[3];
 			float m_vTorque[3];
 
+			///Used to send back 0 for variables that are supported in other physics
+			///engines but not in this one.
+			float m_fltBlank;
+
 			virtual void SetThisPointers();
 
 			virtual void ProcessContacts();

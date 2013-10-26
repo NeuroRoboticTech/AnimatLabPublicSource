@@ -29,6 +29,7 @@ VsRigidBody::VsRigidBody()
 	m_vxPart = NULL;
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
+	m_fltBlank = 0;
 
 	for(int i=0; i<3; i++)
 	{
@@ -752,6 +753,27 @@ float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
+
+	if(strType == "BODYBUOYANCY")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGFORCEX")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGFORCEY")
+		return (&m_fltBlank);
+
+    if(strType == "BODYDRAGFORCEZ")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGTORQUEX")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGTORQUEY")
+		return (&m_fltBlank);
+
+    if(strType == "BODYDRAGTORQUEZ")
+		return (&m_fltBlank);
 
 	if(strType == "BODYTORQUEX")
 		{m_bCollectExtraData = true; return (&m_vTorque[0]);}

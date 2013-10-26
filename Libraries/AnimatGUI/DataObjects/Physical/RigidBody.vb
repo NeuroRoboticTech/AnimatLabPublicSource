@@ -567,10 +567,10 @@ Namespace DataObjects.Physical
             m_svLinearDrag = New ScaledVector3(Me, "LinearDrag", "Linear drag coefficients of this part.", "", "")
             m_svLinearDrag.CopyData(1, 1, 1, True)
             m_svAngularDrag = New ScaledVector3(Me, "AngularDrag", "Angular drag coefficients of this part.", "", "")
-            m_svAngularDrag.CopyData(1, 1, 1, True)
+            m_svAngularDrag.CopyData(0.05, 0.05, 0.05, True)
 
-            m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 1000, ScaledNumber.enumNumericScale.None, "Netwons", "N")
-            m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 1000, ScaledNumber.enumNumericScale.None, "Netwon-Meters", "Nm")
+            m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 50, ScaledNumber.enumNumericScale.None, "Netwons", "N")
+            m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 20, ScaledNumber.enumNumericScale.None, "Netwon-Meters", "Nm")
 
             If Not Util.Simulation Is Nothing AndAlso Not Util.Simulation.Environment Is Nothing AndAlso Not Util.Simulation.Environment.MaterialTypes Is Nothing AndAlso _
                 Util.Simulation.Environment.MaterialTypes.ContainsKey("DEFAULTMATERIAL") Then
@@ -1336,7 +1336,7 @@ Namespace DataObjects.Physical
                 m_svLinearDrag.LoadData(oXml, "Drag", False)
             Else
                 m_svLinearDrag.LoadData(oXml, "LinearDrag", False)
-                m_svLinearDrag.LoadData(oXml, "AngularDrag", False)
+                m_svAngularDrag.LoadData(oXml, "AngularDrag", False)
                 m_snMaxHydroForce.LoadData(oXml, "MaxHydroForce", False)
                 m_snMaxHydroTorque.LoadData(oXml, "MaxHydroTorque", False)
             End If
@@ -2049,7 +2049,7 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub OnAngularDragValueChanged()
             Try
-                Me.SetSimData("AngularDrag", m_svLinearDrag.GetSimulationXml("AngularDrag"), True)
+                Me.SetSimData("AngularDrag", m_svAngularDrag.GetSimulationXml("AngularDrag"), True)
                 Util.ProjectProperties.RefreshProperties()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
