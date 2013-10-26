@@ -27,6 +27,15 @@ BlRigidBody::BlRigidBody()
     m_lpBulletData = NULL;
     m_fltStaticMasses = 0;
 
+    m_fltBuoyancy = 0;
+    m_fltReportBuoyancy = 0;
+
+    for(int iIdx=0; iIdx<3; iIdx++)
+    {
+        m_vLinearDragForce[iIdx] = 0;
+        m_vAngularDragTorque[iIdx] = 0;
+    }
+
     m_lpVsSim = NULL;
 }
 
@@ -333,6 +342,7 @@ void BlRigidBody::CreateDynamicPart()
         }
 
         GetBaseValues();
+        CalculateRotatedAreas();
     }
 }
 
@@ -577,6 +587,27 @@ void BlRigidBody::ResizePhysicsGeometry()
         //Then recreate all the attached joints.
         RecreateAttachedJointPhysics();
     }
+}
+
+/**
+ \brief Rotates the axis area values by the amount that this part is rotated by. This is used by the hydrodynamics to 
+ calculate the drag. To do that we need to know what the surface area is in the direction of movement. We calculate the
+ area for each axis in world coordinates, but the part can be rotated at will, so we need to do the same rotation to 
+ find the actual area in world axis coordinates to use.
+
+ \author    David Cofer
+ \date  10/20/2013
+ */
+void BlRigidBody::CalculateRotatedAreas()
+{
+    //Get the world matrix for this part and then reset its translation to 0 so we only have rotations.
+    osg::Matrix rotMT = GetWorldMatrix();
+    rotMT.setTrans(osg::Vec3d(0, 0, 0));
+
+    osg::Vec4d vArea(m_vArea.x, m_vArea.y, m_vArea.z, 0);
+    osg::Vec4d vRotatedArea = rotMT * vArea;
+
+    m_vRotatedArea.Set(fabs(vRotatedArea[0]), fabs(vRotatedArea[1]), fabs(vRotatedArea[2]));
 }
 
 bool BlRigidBody::NeedCollision(BlRigidBody *lpTest)
@@ -875,6 +906,97 @@ bool BlRigidBody::Physics_HasCollisionGeometry()
 		return true;
 	else
 		return false;
+}
+
+void BlRigidBody::Physics_StepHydrodynamicSimulation()
+{
+    Simulator *lpSim = GetSimulator();
+    BlSimulator *lpBlSim = GetBlSimulator();
+    if(m_btPart && lpSim && lpBlSim && m_lpThisRB && !m_lpThisRB->Freeze())
+    {
+        float fltDepth = m_lpThisRB->AbsolutePosition().y;
+        FluidPlane *lpPlane = lpBlSim->FindFluidPlaneForDepth(fltDepth);
+
+        if(lpPlane)
+        {
+            m_fltBuoyancy = -(lpPlane->Density() * m_lpThisRB->Volume() * lpSim->Gravity());
+            m_fltReportBuoyancy = m_fltBuoyancy * lpSim->MassUnits() * lpSim->DistanceUnits();
+
+		    btVector3 vbtLinVel = m_btPart->getLinearVelocity();
+		    btVector3 vbtAngVel = m_btPart->getAngularVelocity();
+
+            CStdFPoint vLinearVel(vbtLinVel[0], vbtLinVel[1], vbtLinVel[2]);
+            CStdFPoint vAngularVel(vbtAngVel[0], vbtAngVel[1], vbtAngVel[2]);
+            CStdFPoint vSignLinear(Std_Sign(vbtLinVel[0], 1), Std_Sign(vbtLinVel[1], 1), Std_Sign(vbtLinVel[2], 1));
+            CStdFPoint vSignAngular(Std_Sign(vAngularVel[0], 1), Std_Sign(vAngularVel[1], 1), Std_Sign(vAngularVel[2], 1));
+
+            CalculateRotatedAreas();
+
+            CStdFPoint vLinearDragForce = (m_lpThisRB->LinearDrag() * m_vRotatedArea * vLinearVel * vLinearVel * vSignLinear) * (lpPlane->Density() * -0.5);
+            CStdFPoint vAngularDragTorque = (m_lpThisRB->AngularDrag() * m_vRotatedArea * vAngularVel * vAngularVel * vSignAngular) * (lpPlane->Density() * -0.5);
+
+            for(int i=0; i<3; i++)
+            {
+                if(vLinearDragForce[i] > m_lpThisRB->MaxHydroForce())
+                    vLinearDragForce[i] = m_lpThisRB->MaxHydroForce();
+
+                if(vLinearDragForce[i] < -m_lpThisRB->MaxHydroForce())
+                    vLinearDragForce[i] = -m_lpThisRB->MaxHydroForce();
+
+                if(m_vAngularDragTorque[i] > m_lpThisRB->MaxHydroTorque())
+                    vAngularDragTorque[i] = m_lpThisRB->MaxHydroTorque();
+
+                if(m_vAngularDragTorque[i] < -m_lpThisRB->MaxHydroTorque())
+                    vAngularDragTorque[i] = -m_lpThisRB->MaxHydroTorque();
+
+                m_vLinearDragForce[i] = vLinearDragForce[i] * lpSim->MassUnits() * lpSim->DistanceUnits();
+                m_vAngularDragTorque[i] = vAngularDragTorque[i] * lpSim->MassUnits() * lpSim->DistanceUnits() * lpSim->DistanceUnits();
+            }
+
+            Physics_AddBodyForce(0, 0, 0, vLinearDragForce.x, (vLinearDragForce.y+m_fltBuoyancy), vLinearDragForce.z, false);
+            //Physics_AddBodyTorque(vAngularDragTorque.x, vAngularDragTorque.y, vAngularDragTorque.z, false);
+        }
+        else
+        {
+            m_fltBuoyancy = 0;
+            m_fltReportBuoyancy = 0;
+            for(int iIdx=0; iIdx<3; iIdx++)
+            {
+                m_vLinearDragForce[iIdx] = 0;
+                m_vAngularDragTorque[iIdx] = 0;
+            }
+        }
+    }
+
+}
+
+float *BlRigidBody::Physics_GetDataPointer(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
+
+	if(strType == "BODYBUOYANCY")
+		return (&m_fltReportBuoyancy);
+
+	if(strType == "BODYDRAGFORCEX")
+		return (&m_vLinearDragForce[0]);
+
+	if(strType == "BODYDRAGFORCEY")
+		return (&m_vLinearDragForce[1]);
+
+    if(strType == "BODYDRAGFORCEZ")
+		return (&m_vLinearDragForce[2]);
+
+	if(strType == "BODYDRAGTORQUEX")
+		return (&m_vAngularDragTorque[0]);
+
+	if(strType == "BODYDRAGTORQUEY")
+		return (&m_vAngularDragTorque[1]);
+
+    if(strType == "BODYDRAGTORQUEZ")
+		return (&m_vAngularDragTorque[2]);
+
+	return OsgRigidBody::Physics_GetDataPointer(strDataType);
 }
 
 	}			// Environment

@@ -93,6 +93,26 @@ namespace BulletAnimatSim
 
             float m_fltStaticMasses;
 
+			///The area of this rigid body in the each axis direction. This is used to calculate the
+			///drag force in this direction.
+			CStdFPoint m_vArea;
+
+            /// The area for this part after being rotated like the part is. This basically tells the 
+            ///  area that is in the direction that the part is moving.
+            CStdFPoint m_vRotatedArea;
+
+            /// The buoyancy force applied to this part
+            float m_fltBuoyancy;
+
+            /// The buoyancy force reported to the GUI
+            float m_fltReportBuoyancy;
+            
+			///This is the drag forces applied to this body.
+			float m_vLinearDragForce[3];
+
+			///This is the drag forces applied to this body.
+			float m_vAngularDragTorque[3];
+
             //This is the data that is provided to the bullet body part user pointer.
             //We can access this when all we have is a bullet pointer to a part.
             BlBulletData *m_lpBulletData;
@@ -124,6 +144,9 @@ namespace BulletAnimatSim
             virtual void DeleteAttachedJointPhysics();
             virtual void RecreateAttachedJointPhysics();
 			virtual void ResizePhysicsGeometry();
+
+            virtual void CalculateVolumeAndAreas() {};
+            virtual void CalculateRotatedAreas();
 
         public:
 			BlRigidBody();
@@ -165,6 +188,8 @@ namespace BulletAnimatSim
 			virtual float Physics_GetMass();
 			virtual float Physics_GetDensity();
 			virtual bool Physics_HasCollisionGeometry();
+            virtual void Physics_StepHydrodynamicSimulation();
+			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 
             friend class BlJoint;
 		};

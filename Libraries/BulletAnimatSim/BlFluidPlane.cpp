@@ -27,8 +27,6 @@ namespace BulletAnimatSim
 BlFluidPlane::BlFluidPlane()
 {
 	SetThisPointers();
-    //FIX PHYSICS
-	//m_vxFluidPlane = NULL;
 }
 
 /**
@@ -46,6 +44,12 @@ BlFluidPlane::~BlFluidPlane()
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlFluidPlane/\r\n", "", -1, false, true);}
+}
+
+float BlFluidPlane::Height()
+{
+    CStdFPoint vPos = GetOSGWorldCoords();
+    return vPos.y;
 }
 
 void BlFluidPlane::CreateGraphicsGeometry()
@@ -76,43 +80,12 @@ void BlFluidPlane::ResizePhysicsGeometry()
 void BlFluidPlane::Physics_FluidDataChanged()
 {}
 
-void BlFluidPlane::SetGravity()
-{
-    //FIX PHYSICS
-	//if(m_vxFluidPlane)
-	//	m_vxFluidPlane->setGravity(VxVector3(0, m_lpSim->Gravity(), 0));
-}
-
-void BlFluidPlane::Velocity(CStdFPoint &oPoint, bool bUseScaling)
-{
-	FluidPlane::Velocity(oPoint, bUseScaling);
-
-    //FIX PHYSICS
-	//if(m_vxFluidPlane)
-	//    m_vxFluidPlane->setDefaultVelocity(VxVector3(m_vVelocity.x, m_vVelocity.y, m_vVelocity.z));
-}
-
-void BlFluidPlane::Physics_SetDensity(float fltVal)
-{
-    //FIX PHYSICS
-	//if(m_vxFluidPlane)
-	//    m_vxFluidPlane->setDefaultDensity(fltVal);
-}
-
 void BlFluidPlane::UpdateFluidPlaneHeight()
 {
-    //FIX PHYSICS
-	//if(m_vxFluidPlane)
-	//{
-	//	CStdFPoint vPos;
-	//	
-	//	if(m_lpThisRB->IsRoot())
-	//		vPos = m_lpThisAB->GetStructure()->Position();
-	//	else
-	//		vPos = m_lpThisRB->AbsolutePosition();
-
-	//	m_vxFluidPlane->setLevel(vPos.y);
-	//}
+    BlSimulator *lpSim = GetBlSimulator();
+    //Remove this fluid plane from the simulation.
+    if(lpSim)
+        lpSim->SortFluidPlanes();
 }
 
 void BlFluidPlane::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
@@ -129,32 +102,20 @@ void BlFluidPlane::Physics_PositionChanged()
 
 void BlFluidPlane::DeletePhysics(bool bIncludeChildren)
 {
-    //FIX PHYSICS
-	//if(!m_vxFluidPlane)
-	//	return;
-
-	//if(GetBlSimulator() && GetBlSimulator()->Universe())
-	//{
-	//	GetBlSimulator()->Universe()->removeFluidState(m_vxFluidPlane);
-	//	delete m_vxFluidPlane;
-	//}
-
-	//m_vxFluidPlane = NULL;
+    //Remove this fluid plane from the simulation.
+    BlSimulator *lpSim = GetBlSimulator();
+    if(lpSim)
+        lpSim->RemoveFluidPlane(this);
 }
 
 void BlFluidPlane::SetupPhysics()
 {
-    //FIX PHYSICS
-	//if(m_vxFluidPlane)
-	//	DeletePhysics(false);
-
-	//m_vxFluidPlane = new VxPlanarFluidState(m_oAbsPosition.y);
- //   m_vxFluidPlane->setDefaultDensity(m_fltDensity);
- //   m_vxFluidPlane->setDefaultVelocity(VxVector3(m_vVelocity.x, m_vVelocity.y, m_vVelocity.z));
-	//m_vxFluidPlane->setGravity(VxVector3(0, m_lpSim->Gravity(), 0));
-	//m_vxFluidPlane->setName(m_lpThisAB->ID().c_str());
-	//GetBlSimulator()->Universe()->addFluidState(m_vxFluidPlane);
+    //Add this fluid plane to the simulation.
+    BlSimulator *lpSim = GetBlSimulator();
+    if(lpSim)
+        lpSim->AddFluidPlane(this);
 }
+
 
 		}		//Bodies
 	}			// Environment

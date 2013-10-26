@@ -111,8 +111,10 @@ std::string STD_UTILS_PORT Std_NullStr(std::string strFormat);
 
 #ifdef WIN32
     #define STD_MAX max
+    #define STD_MIN min
 #else
     #define STD_MAX std::max
+    #define STD_MIN std::min
 #endif
 
 int STD_UTILS_PORT Std_VariantTypeToConst(std::string strType);
@@ -138,6 +140,7 @@ long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned c
 //void STD_UTILS_PORT Std_LoadColor(std::string strXml, std::string strParamName, float *aryColor, bool bThrowError = true);
 
 int STD_UTILS_PORT Std_Sign(float fltVal);
+int STD_UTILS_PORT Std_Sign(float fltVal, float fltDefault);
 void STD_UTILS_PORT Std_SRand(unsigned long lSeed);
 int STD_UTILS_PORT Std_IRand( int low, int high );
 long STD_UTILS_PORT Std_LRand( long low, long high );

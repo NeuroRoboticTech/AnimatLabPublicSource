@@ -61,14 +61,31 @@ void BlMesh::CreateParts()
 {
 	CreateGeometry();
     
-    //If this is a collision object then calculate the convex hull volume.
-    if(m_lpThisRB->IsCollisionObject())
-        m_fltVolume = OsgConvexHullVolume(m_osgMeshNode.get());
-    else
-        m_fltVolume = 0;
+    CalculateVolumeAndAreas();
 
 	BlMeshBase::CreateItem();
 	Mesh::CreateParts();
+}
+
+
+void BlMesh::CalculateVolumeAndAreas()
+{
+    //If this is a collision object then calculate the convex hull volume.
+    if(m_lpThisRB->IsCollisionObject())
+    {
+        m_fltVolume = OsgConvexHullVolume(m_osgMeshNode.get());
+
+        //We are going to approximate the areas for each axis using the bounding box. I realize this is not 
+        //horribly accurate, but it will do for now.
+        BoundingBox box = Physics_GetBoundingBox();
+        m_vArea.x = box.Height() * box.Width();
+        m_vArea.y = box.Length() * box.Width();
+        m_vArea.z = box.Length() * box.Height();        
+    }
+    else
+    {
+        m_fltVolume = 0;
+    }
 }
 
 void BlMesh::CreateJoints()

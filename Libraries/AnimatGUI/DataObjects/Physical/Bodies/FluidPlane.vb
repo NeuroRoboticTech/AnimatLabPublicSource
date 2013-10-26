@@ -56,6 +56,24 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overrides Property Density() As ScaledNumber
+            Get
+                Return m_snDensity
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The density can not be less than or equal to zero.")
+                End If
+
+                'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
+                'what we are using as a key param based on application settings.
+                Me.SetSimData("Density", Value.ToString, True)
+                m_snDensity.CopyData(Value)
+                UpdateMassVolumeDensity()
+
+            End Set
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -145,6 +163,24 @@ Namespace DataObjects.Physical.Bodies
                                         "Part Properties", "Sets the density of this body part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+        End Sub
+
+        Protected Overrides Sub UpdateMassVolumeDensity()
+
+            If Not Me.SimInterface Is Nothing Then
+                If Util.Application.UseMassForRigidBodyDefinitions Then
+                    'Do not reset density for fluid planes here.
+                    'm_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                Else
+                    m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                End If
+            End If
+
+            If Not Util.ProjectProperties Is Nothing Then
+                Util.ProjectProperties.RefreshProperties()
+            End If
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)

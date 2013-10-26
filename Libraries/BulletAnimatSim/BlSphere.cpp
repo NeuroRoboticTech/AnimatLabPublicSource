@@ -47,9 +47,15 @@ void BlSphere::CreatePhysicsGeometry()
     {
         DeleteCollisionGeometry();
     
-        m_fltVolume = (4/3.0) * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
+        CalculateVolumeAndAreas();
         m_btCollisionShape = new btSphereShape( m_fltRadius );
     }
+}
+
+void BlSphere::CalculateVolumeAndAreas()
+{
+    m_fltVolume = (4/3.0) * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
+    m_vArea.x = m_vArea.y = m_vArea.z = osg::PI * m_fltRadius * m_fltRadius;
 }
 
 void BlSphere::CreateParts()

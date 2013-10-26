@@ -179,7 +179,8 @@ CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
             }
         }
 
-        vMass /= fltTotalMass;
+        if(fltTotalMass)
+            vMass /= fltTotalMass;
 
         vMass.ClearNearZero();
 
@@ -308,7 +309,7 @@ float RigidBody::Density() {return m_fltDensity;}
 **/
 void RigidBody::Density(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, true, "Density");
+	Std_IsAboveMin((float) 0, fltVal, true, "Density", true);
 
 	m_fltDensity = fltVal;
 	if(bUseScaling)
@@ -1441,6 +1442,9 @@ void RigidBody::StepSimulation()
 			m_fltFoodEaten = 0;
 	}
 
+    if(m_lpPhysicsBody && m_lpSim->SimulateHydrodynamics() && m_bEnableFluids)
+        m_lpPhysicsBody->Physics_StepHydrodynamicSimulation();
+
 	//Must update the data before calling step sim on children because they may depend on 
 	//some of the data that is collected, like the world matrix for this object.
 	UpdateData();
@@ -1453,7 +1457,6 @@ void RigidBody::StepSimulation()
 		m_lpJointToParent->StepSimulation();
 
 }
-
 
 #pragma region DataAccesMethods
 

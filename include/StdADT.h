@@ -638,6 +638,38 @@ public:
 		return oNewPoint;
 	};
 
+	CStdPoint<T> operator*(const CStdPoint<T> &oPoint)
+	{
+		CStdPoint<T> oNewPoint;
+
+		oNewPoint.x = x * oPoint.x;
+		oNewPoint.y = y * oPoint.y;
+		oNewPoint.z = z * oPoint.z;
+		return oNewPoint;
+	};
+
+	CStdPoint<T> operator/(const CStdPoint<T> &oPoint)
+	{
+		CStdPoint<T> oNewPoint;
+
+        if(oPoint.x)
+    		oNewPoint.x = x / oPoint.x;
+        else
+            oNewPoint.x = 0;
+
+        if(oPoint.y)
+    		oNewPoint.y = y * oPoint.y;
+        else
+            oNewPoint.y = 0;
+
+        if(oPoint.z)
+    		oNewPoint.z = z * oPoint.z;
+        else
+            oNewPoint.z = 0;
+
+		return oNewPoint;
+	};
+
 	void operator+=(const float fltVal)
 	{
 		x+=fltVal;
@@ -747,7 +779,7 @@ public:
 			z = 0;
 	}
 
-	T operator[](const int iIndex)
+	T &operator[](const int iIndex)
 	{
 		switch(iIndex)
 		{
@@ -760,7 +792,7 @@ public:
 		default:
 			StdUtils::Std_ThrowError(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, __FILE__, __LINE__, "");
 		}
-		return 0;
+		return z;
 	};
 };
 

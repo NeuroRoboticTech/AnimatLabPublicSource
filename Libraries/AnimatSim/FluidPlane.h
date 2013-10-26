@@ -43,6 +43,8 @@ namespace AnimatSim
 				virtual bool AllowRotateDragY();
 				virtual bool AllowRotateDragZ();
 
+                virtual float Height() {return 0;};
+
 				virtual CStdFPoint Velocity();
 				virtual void Velocity(CStdFPoint &oPoint, bool bUseScaling = true);
 				virtual void Velocity(float fltX, float fltY, float fltZ, bool bUseScaling = true);

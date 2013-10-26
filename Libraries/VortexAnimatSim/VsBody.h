@@ -43,6 +43,7 @@ namespace VortexAnimatSim
             virtual void Physics_ContactSensorRemoved() {};
             virtual void Physics_ChildBodyAdded(RigidBody *lpChild) {};
             virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) {};
+            virtual void Physics_StepHydrodynamicSimulation() {};
 
             virtual void SetBody() = 0;
 

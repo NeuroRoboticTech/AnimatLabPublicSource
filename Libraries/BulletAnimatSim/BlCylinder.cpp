@@ -51,9 +51,18 @@ void BlCylinder::CreatePhysicsGeometry()
     {
         DeleteCollisionGeometry();
 
-        m_fltVolume = osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
+        CalculateVolumeAndAreas();
         m_btCollisionShape = new btCylinderShapeZ( btVector3( m_fltRadius, m_fltRadius, (m_fltHeight/2.0f) ) );
     }
+}
+
+void BlCylinder::CalculateVolumeAndAreas()
+{
+    m_fltVolume = osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
+
+    m_vArea.x = (2*m_fltRadius)*m_fltHeight;
+    m_vArea.y = (2*m_fltRadius)*m_fltHeight;
+    m_vArea.z = osg::PI * m_fltRadius * m_fltRadius;
 }
 
 void BlCylinder::CreateParts()

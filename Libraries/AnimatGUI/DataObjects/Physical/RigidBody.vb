@@ -246,7 +246,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property LinarDrag() As Framework.ScaledVector3
+        Public Overridable Property LinearDrag() As Framework.ScaledVector3
             Get
                 Return m_svLinearDrag
             End Get
@@ -536,6 +536,8 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAngularAccelerationX", "Angular Acceleration X Axis", "rad/s^2", "rad/s^2", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAngularAccelerationY", "Angular Acceleration Y Axis", "rad/s^2", "rad/s^2", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAngularAccelerationZ", "Angular Acceleration Z Axis", "rad/s^2", "rad/s^2", -5, 5))
+
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyBuoyancy", "Buoyancy", "Newtons", "N", -100, 100))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragForceX", "Drag Force X Axis", "Newtons", "N", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragForceY", "Drag Force Y Axis", "Newtons", "N", -100, 100))

@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
@@ -195,6 +195,8 @@ void BlSimulator::Reset()
 
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
+
+    m_aryFluidPlanes.clear();
 }
 
 void BlSimulator::ResetSimulation()
@@ -617,17 +619,68 @@ void BlSimulator::SimulateEnd()
     Reset();
 }
 
-
-/*
-__declspec( dllexport ) void RunSimulator(void)
+bool BlSimulator::HasFluidPlane(FluidPlane *lpPlane)
 {
-	BlSimulator oSim;
-	oSim.ProjectPath("C:\\Projects\\bin\\Experiments\\Robot\\");
+  std::list<FluidPlane *>::iterator it;
+  for (it=m_aryFluidPlanes.begin(); it!=m_aryFluidPlanes.end(); ++it)
+     if(*it == lpPlane)
+        return true;
 
-	oSim.Load("Robot.asim");
-	oSim.Initialize(0, NULL);
-	oSim.Simulate();
+  return false;
 }
-*/
+
+bool compare_fluid_planes (FluidPlane *first, FluidPlane *second)
+{
+  if(first && second)
+      return (first->Height() < second->Height());
+
+  return false;
+}
+
+void BlSimulator::AddFluidPlane(FluidPlane *lpPlane)
+{
+    if(!HasFluidPlane(lpPlane))
+    {
+        m_aryFluidPlanes.push_back(lpPlane);
+        m_aryFluidPlanes.sort(compare_fluid_planes);
+    }
+}
+
+void BlSimulator::RemoveFluidPlane(FluidPlane *lpPlane)
+{
+    if(HasFluidPlane(lpPlane))
+    {
+        m_aryFluidPlanes.remove(lpPlane);
+        m_aryFluidPlanes.sort(compare_fluid_planes);
+    }
+}
+
+void BlSimulator::SortFluidPlanes()
+{
+    m_aryFluidPlanes.sort(compare_fluid_planes);
+}
+
+/**
+ \brief Searches the fluid planes starting at the lowest height and working its
+ way up to find the first one that depth is under. This is the density we will use
+ for hydrodynamics.
+
+ \author    David Cofer
+ \date  10/20/2013
+
+ \param fltDepth    Depth to search for with the fluid plane.
+
+ \return    null if it fails, else the found fluid plane for depth.
+ */
+
+FluidPlane *BlSimulator::FindFluidPlaneForDepth(float fltDepth)
+{
+    std::list<FluidPlane *>::iterator it;
+    for (it=m_aryFluidPlanes.begin(); it!=m_aryFluidPlanes.end(); ++it)
+        if(fltDepth <= (*it)->Height())
+        return (*it);
+
+    return NULL;
+}
 
 }			//BulletAnimatSim

@@ -12,6 +12,7 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlMesh : public AnimatSim::Environment::Bodies::Mesh, public BlMeshBase
 			{
 			protected:
+                virtual void CalculateVolumeAndAreas();
 
 			public:
 				BlMesh();

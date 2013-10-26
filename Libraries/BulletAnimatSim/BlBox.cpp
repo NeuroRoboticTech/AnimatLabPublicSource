@@ -38,7 +38,7 @@ BlBox::~BlBox()
 
 void BlBox::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
+    m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
 }
 
 void BlBox::CreatePhysicsGeometry()
@@ -47,9 +47,17 @@ void BlBox::CreatePhysicsGeometry()
     {
         DeleteCollisionGeometry();
 
-        m_fltVolume = m_fltLength * m_fltWidth * m_fltHeight;
+        CalculateVolumeAndAreas();
         m_btCollisionShape = new btBoxShape( btVector3( (m_fltLength/2.0f), (m_fltHeight/2.0f), (m_fltWidth/2.0f) ) );
     }
+}
+
+void BlBox::CalculateVolumeAndAreas()
+{
+    m_fltVolume = m_fltLength * m_fltHeight * m_fltWidth;
+    m_vArea.x = m_fltHeight * m_fltWidth;
+    m_vArea.y = m_fltLength * m_fltWidth;
+    m_vArea.z = m_fltLength * m_fltHeight;
 }
 
 void BlBox::CreateParts()

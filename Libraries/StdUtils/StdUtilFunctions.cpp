@@ -1208,6 +1208,26 @@ int STD_UTILS_PORT Std_Sign(float fltVal)
 		return 1;
 }
 
+/**
+ \brief Determines the sign of a number. If the number is 0 then it uses the default value supplied
+
+ \author    David Cofer
+ \date  10/20/2013
+
+ \param fltVal  The value.
+
+ \return  sign of thenumber  .
+ */
+int STD_UTILS_PORT Std_Sign(float fltVal, float fltDefault)
+{
+	if(fltVal<0) 
+		return -1; 
+	else if(fltVal==0)
+		return fltDefault;
+	else
+		return 1;
+}
+
 void init_genrand(unsigned long s);
 unsigned long genrand_int32(void);
 long genrand_int31(void);

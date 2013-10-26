@@ -16,6 +16,7 @@ namespace BulletAnimatSim
 
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
+                virtual void CalculateVolumeAndAreas();
 
 			public:
 				BlSphere();

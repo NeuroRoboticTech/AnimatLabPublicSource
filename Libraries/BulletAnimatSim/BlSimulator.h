@@ -22,6 +22,8 @@ namespace BulletAnimatSim
         btDiscreteDynamicsWorld *m_lpDynamicsWorld;
         osgbCollision::GLDebugDrawer m_dbgDraw;
 
+        std::list<FluidPlane *> m_aryFluidPlanes;
+
         bool m_bDrawDebug;
 
         //FIX PHYSICS
@@ -76,6 +78,16 @@ namespace BulletAnimatSim
 #pragma region HelperMethods
 
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
+        
+#pragma endregion
+
+#pragma region FluidMethods
+
+        virtual void AddFluidPlane(FluidPlane *lpPlane);
+        virtual void RemoveFluidPlane(FluidPlane *lpPlane);
+        virtual bool HasFluidPlane(FluidPlane *lpPlane);
+        virtual void SortFluidPlanes();
+        virtual FluidPlane *FindFluidPlaneForDepth(float fltDepth);
 
 #pragma endregion
 
