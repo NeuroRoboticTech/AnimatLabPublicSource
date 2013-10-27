@@ -667,7 +667,7 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "BASIC" || strType == "DEFAULT")
+	if(strType == "BASIC" || strType == "DEFAULT" || strType == "BULLET")
 		lpItem = new BlMaterialType;
 	else
 	{

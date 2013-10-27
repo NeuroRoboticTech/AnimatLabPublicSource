@@ -683,7 +683,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Function AddMaterialType() As MaterialType
-            Dim doType As New DataObjects.Physical.MaterialType(Util.Environment)
+            Dim doType As MaterialType = MaterialType.CreateMaterialType(Me, False, Nothing)
             doType.Name = "Material_" & (Me.MaterialTypes.Count + 1)
             Me.MaterialTypes.Add(doType.ID, doType, True)
 
@@ -1354,14 +1354,9 @@ Namespace DataObjects.Physical
         End Sub
 
         Protected Overridable Sub AddDefaultMaterialType(ByVal bCallSimMethods As Boolean)
-            Dim doMat As New DataObjects.Physical.MaterialType(Me)
+            Dim doMat As MaterialType = MaterialType.CreateMaterialType(Me, False, Nothing)
             doMat.ID = "DEFAULTMATERIAL"
             doMat.Name = "Default"
-
-            If Not Util.Environment Is Nothing Then
-                doMat.Compliance.ActualValue = 0.000001 * Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
-                doMat.Damping.ActualValue = 50000000 / Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
-            End If
 
             m_aryMaterialTypes.Add(doMat.ID, doMat, bCallSimMethods)
         End Sub
@@ -1381,7 +1376,7 @@ Namespace DataObjects.Physical
                     iCount = oXml.NumberOfChildren() - 1
                     For iIndex As Integer = 0 To iCount
                         oXml.FindChildByIndex(iIndex)
-                        doType = New DataObjects.Physical.MaterialType(Me)
+                        doType = MaterialType.CreateMaterialType(Me, False, Nothing)
                         doType.LoadData(oXml)
                         m_aryMaterialTypes.Add(doType.ID, doType, False)
                     Next

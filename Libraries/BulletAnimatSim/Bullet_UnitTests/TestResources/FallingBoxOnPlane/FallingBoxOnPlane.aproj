@@ -4,7 +4,7 @@
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingBoxOnPlane\</ProjectPath>
+<ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingBoxOnPlane\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -120,11 +120,11 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
-<X Value="20" Scale="None" Actual="20"/>
-<Y Value="25" Scale="None" Actual="25"/>
-<Z Value="15" Scale="None" Actual="15"/>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>0.875427,0.38283,-0.295074,0,-0.234571,0.870261,0.433155,0,0.422616,-0.309979,0.85165,0,0,10,10,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,10,10,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -136,11 +136,18 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
@@ -282,14 +289,21 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
+<Density Value="0" Scale="None" Actual="0"/>
 <Mass Value="0" Scale="None" Actual="0"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
@@ -398,8 +412,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>5cdf4151-597b-432e-88a7-927463795c57</Name>
-<ID>5cdf4151-597b-432e-88a7-927463795c57</ID>
+<Name>1293c936-f572-42e7-bcc3-4282009619a5</Name>
+<ID>1293c936-f572-42e7-bcc3-4282009619a5</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -477,7 +491,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
@@ -493,7 +507,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/18/2013 07:33:48"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/27/2013 06:42:30"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

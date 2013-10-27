@@ -2413,6 +2413,12 @@ Namespace Forms
                                 If Not doConv Is Nothing Then
                                     m_aryProjectMigrations.Add(doConv.ConvertFrom, doConv)
                                 End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.MaterialType), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.MaterialType")
+                                Dim doConv As DataObjects.Physical.MaterialType = CreateMaterialType(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    doConv.RegisterMaterialType()
+                                End If
                             End If
                         Next
 
@@ -2608,6 +2614,22 @@ Namespace Forms
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
                     Util.ShowMessage("CreateProjectMigration: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateMaterialType(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Physical.MaterialType
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Physical.MaterialType = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Physical.MaterialType)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateMaterialType: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try

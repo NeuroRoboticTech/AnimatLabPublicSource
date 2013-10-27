@@ -291,7 +291,7 @@ void BlRigidBody::CreateDynamicPart()
         // Finally, create rigid body.
         btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
         rbInfo.m_friction = btScalar( 1 );
-        rbInfo.m_restitution = btScalar( 1 );
+        //rbInfo.m_restitution = btScalar( 1 );
         rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
         rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 

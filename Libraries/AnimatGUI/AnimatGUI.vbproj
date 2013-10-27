@@ -455,6 +455,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Physical\MaterialType.vb" />
+    <Compile Include="DataObjects\Physical\MaterialTypeBullet.vb" />
+    <Compile Include="DataObjects\Physical\MaterialTypeVortex.vb" />
     <Compile Include="DataObjects\Physical\MovableItem.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
       <SubType>Code</SubType>
