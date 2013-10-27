@@ -71,7 +71,6 @@ namespace BulletAnimatSim
 
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, bool bUseScaling = true);
-		virtual int GetMaterialID(std::string strID);
 
 #pragma endregion
 		

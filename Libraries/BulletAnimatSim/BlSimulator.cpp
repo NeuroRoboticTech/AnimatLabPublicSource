@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = true;
+    m_bDrawDebug = false;
 }
 
 BlSimulator::~BlSimulator()
@@ -133,21 +133,6 @@ void BlSimulator::Gravity(float fltVal, bool bUseScaling)
 
 	if(m_lpDynamicsWorld)
         m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
-}
-
-int BlSimulator::GetMaterialID(std::string strID)
-{
-    //FIX PHYSICS
-	//if(m_vxFrame)
-	//{
-	//	VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
-	//	
-	//	if(lpMat)
-	//		return lpMat->getMaterialID(strID.c_str());
-	//	return -1;
-	//}
-
-	return -1;
 }
 
 #pragma endregion

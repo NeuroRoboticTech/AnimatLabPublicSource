@@ -3,6 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "BlJoint.h"
+#include "BlRigidBody.h"
 #include "BlSimulator.h"
 
 namespace BulletAnimatSim
@@ -16,38 +18,239 @@ namespace BulletAnimatSim
 
 BlMaterialType::BlMaterialType()
 {
-    //FIX PHYSICS
-    //m_vxMaterialTable = NULL;
-    //m_vxMaterial = NULL;
+	m_fltFrictionLinearPrimary = 1;
+	m_fltFrictionAngularPrimary = 0;
+	m_fltRestitution = 0;
 }
 
 BlMaterialType::~BlMaterialType()
 {
 }
 
+/**
+\brief	Gets the primary friction coefficient.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	friction coefficient.
+**/
+float BlMaterialType::FrictionLinearPrimary() {return m_fltFrictionLinearPrimary;}
+
+/**
+\brief	Sets the primary linear friction coefficient.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	   	The new value. 
+**/
+void BlMaterialType::FrictionLinearPrimary(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionLinearPrimary", true);
+	
+	m_fltFrictionLinearPrimary = fltVal;
+	SetMaterialProperties();
+}
+
+/**
+\brief	Gets the angular primary friction coefficient.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	friction coefficient.
+**/
+float BlMaterialType::FrictionAngularPrimary() {return m_fltFrictionAngularPrimary;}
+
+/**
+\brief	Sets the angular primary friction coefficient.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	   	The new value. 
+**/
+void BlMaterialType::FrictionAngularPrimary(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "FrictionAngularPrimary", true);
+	
+	m_fltFrictionAngularPrimary = fltVal;
+	SetMaterialProperties();
+}
+
+/**
+\brief	Gets the restitution for collisions between RigidBodies with these two materials.
+
+\details When a collision occurs between two rigid bodies, the impulse corresponding to the force is equal to the
+total change in momentum that each body undergoes. This change of momentum is affected by the degree
+of resilience of each body, that is, the extent to which energy is diffused.<br>
+The coefficient of restitution is a parameter representing the degree of resilience of a particular material pair.
+To make simulations more efficient, it is best to set a restitution threshold as well. Impacts that measure less
+than the threshold will be ignored, to avoid jitter in the simulation. Small impulses do not add to the realism
+of most simulations.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	Restitution value.
+**/
+float BlMaterialType::Restitution() {return m_fltRestitution;}
+
+/**
+\brief	Sets the restitution for collisions between RigidBodies with these two materials.
+
+\details When a collision occurs between two rigid bodies, the impulse corresponding to the force is equal to the
+total change in momentum that each body undergoes. This change of momentum is affected by the degree
+of resilience of each body, that is, the extent to which energy is diffused.<br>
+The coefficient of restitution is a parameter representing the degree of resilience of a particular material pair.
+To make simulations more efficient, it is best to set a restitution threshold as well. Impacts that measure less
+than the threshold will be ignored, to avoid jitter in the simulation. Small impulses do not add to the realism
+of most simulations.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+**/
+void BlMaterialType::Restitution(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "Restitution");
+	m_fltRestitution = fltVal;
+	SetMaterialProperties();
+}
+
+/**
+\brief	This takes the default values defined in the constructor and scales them according to
+the distance and mass units to be acceptable values.
+
+\author	dcofer
+\date	3/23/2011
+**/
+void BlMaterialType::CreateDefaultUnits()
+{
+	m_fltFrictionLinearPrimary = 1;
+	m_fltFrictionAngularPrimary = 0;
+	m_fltRestitution = 0;
+}
+
+bool BlMaterialType::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	if(MaterialType::SetData(strType, strValue, false))
+		return true;
+
+	if(strType == "FRICTIONLINEARPRIMARY")
+	{
+		FrictionLinearPrimary((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "FRICTIONANGULARPRIMARY")
+	{
+		FrictionAngularPrimary((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "RESTITUTION")
+	{
+		Restitution((float) atof(strValue.c_str()));
+		return true;
+	}
+	
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return false;
+}
+
+void BlMaterialType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+{
+	MaterialType::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("FrictionLinearPrimary");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FrictionAngularPrimary");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Restitution");
+	aryTypes.Add("Float");
+}
+
+void BlMaterialType::Load(CStdXml &oXml)
+{
+	MaterialType::Load(oXml);
+
+	oXml.IntoElem();  //Into MaterialType Element
+
+	FrictionLinearPrimary(oXml.GetChildFloat("FrictionLinearPrimary", m_fltFrictionLinearPrimary));
+	FrictionAngularPrimary(oXml.GetChildFloat("FrictionAngularPrimary", m_fltFrictionAngularPrimary));
+	Restitution(oXml.GetChildFloat("Restitution", m_fltRestitution));
+
+    oXml.OutOfElem(); //OutOf MaterialType Element
+
+}
+
+/**
+ \brief	Associates a rigid body with this material type. This is used when you change something about this material type.
+ It loops through all associated rigid bodies and informs them.
+
+ \author	Dcofer
+ \date	10/27/2013
+
+ \param [in,out]	lpBody	If non-null, the pointer to a body.
+ */
+void BlMaterialType::AddRigidBodyAssociation(RigidBody *lpBody)
+{
+	if(lpBody)
+	{
+		//If we do not already have this body in the list then add it.
+		if(!FindBodyByID(lpBody->ID(), false))
+			m_aryBodies.Add(lpBody->ID(), lpBody);
+	}
+}
+
+/**
+ \brief	Removes the rigid body association described by lpBody from this material.
+
+ \author	Dcofer
+ \date	10/27/2013
+
+ \param [in,out]	lpBody	If non-null, the pointer to a body.
+ */
+void BlMaterialType::RemoveRigidBodyAssociation(RigidBody *lpBody)
+{
+	if(lpBody)
+	{
+		if(FindBodyByID(lpBody->ID(), false))
+			m_aryBodies.Remove(lpBody->ID());
+	}
+}
+
+RigidBody *BlMaterialType::FindBodyByID(std::string strID, bool bThrowError)
+{
+	RigidBody *lpFind = NULL;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
+	oPos = m_aryBodies.find(Std_CheckString(strID));
+
+	if(oPos != m_aryBodies.end())
+		lpFind =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lIDNotFound, Al_Err_strIDNotFound, "ID", strID);
+
+	return lpFind;
+}
+
 int BlMaterialType::GetMaterialID(std::string strName)
 {
-    //FIX PHYSICS
- //   if(!m_vxMaterialTable)
-	//	THROW_ERROR(Bl_Err_lMaterial_Table_Not_Defined, Bl_Err_strMaterial_Table_Not_Defined);
-
-	//return m_vxMaterialTable->getMaterialID(strName.c_str());
-    return 0;
+    return -1;
 }
 
 void BlMaterialType::RegisterMaterialType()
 {
-    //FIX PHYSICS
-    //if(!m_vxMaterial)
-    //{
-	   // BlSimulator *lpVsSim = dynamic_cast<BlSimulator *>(m_lpSim);
-	   // if(!lpVsSim)
-		  //  THROW_ERROR(Bl_Err_lUnableToConvertToBlSimulator, Bl_Err_strUnableToConvertToBlSimulator);
-	
-    //    m_vxMaterialTable = lpVsSim->Frame()->getMaterialTable();
-
-	   // m_vxMaterial = m_vxMaterialTable->registerMaterial(m_strID.c_str());
-    //}
 }
 
 void BlMaterialType::Initialize()
@@ -60,62 +263,17 @@ void BlMaterialType::Initialize()
 
 void BlMaterialType::SetMaterialProperties()
 {
-    //FIX PHYSICS
-	//if(m_lpSim && m_vxMaterial)
-	//{
- //       m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisLinear, VxContactMaterial::kFrictionModelScaledBox);
+	CStdMap<std::string, RigidBody *>::iterator oPos;
+	RigidBody *lpBody = NULL;
+	BlRigidBody *lpBlBody = NULL;
+	for(oPos=m_aryBodies.begin(); oPos!=m_aryBodies.end(); ++oPos)
+	{
+		lpBody = oPos->second;
+		lpBlBody = dynamic_cast<BlRigidBody *>(lpBody);
 
- //       m_vxMaterial->setFrictionCoefficient(VxContactMaterial::kFrictionAxisLinearPrimary, m_fltFrictionLinearPrimary);
- //       m_vxMaterial->setBoxFrictionForce(VxContactMaterial::kFrictionAxisLinearPrimary, m_fltFrictionLinearPrimaryMax);
-
- //       m_vxMaterial->setFrictionCoefficient(VxContactMaterial::kFrictionAxisLinearSecondary, m_fltFrictionLinearSecondary);
- //       m_vxMaterial->setBoxFrictionForce(VxContactMaterial::kFrictionAxisLinearSecondary, m_fltFrictionLinearSecondaryMax);
-
- //       if(m_fltFrictionAngularNormal > 0)
- //       {
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularNormal, VxContactMaterial::kFrictionModelScaledBox);
- //           m_vxMaterial->setFrictionCoefficient(VxContactMaterial::kFrictionAxisAngularNormal, m_fltFrictionAngularNormal);
- //           m_vxMaterial->setBoxFrictionForce(VxContactMaterial::kFrictionAxisAngularNormal, m_fltFrictionAngularNormalMax);
- //       }
- //       else
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularNormal, VxContactMaterial::kFrictionModelNeutral);
-
- //       if(m_fltFrictionAngularPrimary > 0)
- //       {
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularPrimary, VxContactMaterial::kFrictionModelScaledBox);
- //           m_vxMaterial->setFrictionCoefficient(VxContactMaterial::kFrictionAxisAngularPrimary, m_fltFrictionAngularPrimary);
- //           m_vxMaterial->setBoxFrictionForce(VxContactMaterial::kFrictionAxisAngularPrimary, m_fltFrictionAngularPrimaryMax);
- //       }
- //       else
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularPrimary, VxContactMaterial::kFrictionModelNeutral);
-
- //       if(m_fltFrictionAngularSecondary > 0)
- //       {
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularSecondary, VxContactMaterial::kFrictionModelScaledBox);
- //           m_vxMaterial->setFrictionCoefficient(VxContactMaterial::kFrictionAxisAngularSecondary, m_fltFrictionAngularSecondary);
- //           m_vxMaterial->setBoxFrictionForce(VxContactMaterial::kFrictionAxisAngularSecondary, m_fltFrictionAngularSecondaryMax);
- //       }
- //       else
- //           m_vxMaterial->setFrictionModel(VxContactMaterial::kFrictionAxisAngularSecondary, VxContactMaterial::kFrictionModelNeutral);
-
- //       m_vxMaterial->setCompliance(m_fltCompliance);
-	//    m_vxMaterial->setDamping(m_fltDamping);
-	//    m_vxMaterial->setRestitution(m_fltRestitution);
-
- //       m_vxMaterial->setSlip(VxContactMaterial::kFrictionAxisLinearPrimary, m_fltSlipLinearPrimary);
- //       m_vxMaterial->setSlip(VxContactMaterial::kFrictionAxisLinearSecondary, m_fltSlipLinearSecondary);
- //       m_vxMaterial->setSlip(VxContactMaterial::kFrictionAxisAngularNormal, m_fltSlipAngularNormal);
- //       m_vxMaterial->setSlip(VxContactMaterial::kFrictionAxisAngularPrimary, m_fltSlipAngularPrimary);
- //       m_vxMaterial->setSlip(VxContactMaterial::kFrictionAxisAngularSecondary, m_fltSlipAngularSecondary);
-
- //       m_vxMaterial->setSlide(VxContactMaterial::kFrictionAxisLinearPrimary, m_fltSlideLinearPrimary);
- //       m_vxMaterial->setSlide(VxContactMaterial::kFrictionAxisLinearSecondary, m_fltSlideLinearSecondary);
- //       m_vxMaterial->setSlide(VxContactMaterial::kFrictionAxisAngularNormal, m_fltSlideAngularNormal);
- //       m_vxMaterial->setSlide(VxContactMaterial::kFrictionAxisAngularPrimary, m_fltSlideAngularPrimary);
- //       m_vxMaterial->setSlide(VxContactMaterial::kFrictionAxisAngularSecondary, m_fltSlideAngularSecondary);
-
-	//    m_vxMaterial->setAdhesiveForce(m_fltMaxAdhesive);
-	//}
+		if(lpBlBody)
+			lpBlBody->MaterialTypeModified();
+	}
 }
 
 	}			// Visualization

@@ -4,10 +4,13 @@
 
 #pragma once
 
+#include "BlMaterialType.h"
+
 namespace BulletAnimatSim
 {
 	namespace Environment
 	{
+		
 
             class BULLET_PORT BlContactPoint
             {
@@ -119,6 +122,9 @@ namespace BulletAnimatSim
 
             BlSimulator *m_lpVsSim;
 
+			/// The pointer to the material for this body
+			BlMaterialType *m_lpMaterial;
+
 			virtual void ProcessContacts();
 
             virtual void DeleteDynamicPart();
@@ -158,6 +164,7 @@ namespace BulletAnimatSim
             btCollisionShape *CollisionShape() {return m_btCollisionShape;};
             btRigidBody *Part() {return m_btPart;};
             osgbDynamics::MotionState *MotionState() {return m_osgbMotion;};
+			BlMaterialType *Material() {return m_lpMaterial;};
 
 			virtual BlSimulator *GetBlSimulator();
 			
@@ -190,6 +197,8 @@ namespace BulletAnimatSim
 			virtual bool Physics_HasCollisionGeometry();
             virtual void Physics_StepHydrodynamicSimulation();
 			virtual float *Physics_GetDataPointer(const std::string &strDataType);
+
+			virtual void MaterialTypeModified();
 
             friend class BlJoint;
 		};

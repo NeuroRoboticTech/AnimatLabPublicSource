@@ -36,6 +36,7 @@ BlRigidBody::BlRigidBody()
         m_vAngularDragTorque[iIdx] = 0;
     }
 
+	m_lpMaterial = NULL;
     m_lpVsSim = NULL;
 }
 
@@ -143,14 +144,30 @@ float BlRigidBody::Physics_GetDensity()
 
 void BlRigidBody::Physics_SetMaterialID(std::string strID)
 {
-    //FIX PHYSICS
-	//if(m_vxCollisionGeometry && m_lpThisAB)
-	//{
-	//	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(strID);
-	//
-	//	if(iMaterialID >= 0)
-	//		m_vxCollisionGeometry->setMaterialID(iMaterialID);
-	//}
+	//First remove this rigid body from any previously associated material.
+	if(m_lpMaterial)
+	{
+		m_lpMaterial->RemoveRigidBodyAssociation(m_lpThisRB);
+		m_lpMaterial = NULL;
+	}
+
+	m_lpMaterial = dynamic_cast<BlMaterialType *>(m_lpThisAB->GetSimulator()->FindByID(strID));
+
+	if(!m_lpMaterial)
+		THROW_PARAM_ERROR(Bl_Err_lConvertingMaterialType, Bl_Err_strConvertingMaterialType, "ID", strID);
+
+	m_lpMaterial->AddRigidBodyAssociation(m_lpThisRB);
+
+	MaterialTypeModified();
+}
+
+void BlRigidBody::MaterialTypeModified()
+{
+	if(m_btPart && m_lpMaterial)
+	{
+		m_btPart->setFriction(m_lpMaterial->FrictionLinearPrimary());
+		m_btPart->setRestitution(m_lpMaterial->Restitution());
+	}
 }
 
 void BlRigidBody::Physics_SetVelocityDamping(float fltLinear, float fltAngular)
@@ -171,26 +188,6 @@ void BlRigidBody::Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz)
 
 void  BlRigidBody::Physics_FluidDataChanged()
 {
-    //FIX PHYSICS
-	//if(m_vxCollisionGeometry && m_lpThisRB)
-	//{
-	//	CStdFPoint vpCenter = m_lpThisRB->BuoyancyCenter();
-	//	Vx::VxReal3 vCenter = {vpCenter.x, vpCenter.y, vpCenter.z};
-
-	//	CStdFPoint vpDrag = m_lpThisRB->Drag();
-	//	Vx::VxReal3 vDrag = {vpDrag.x, vpDrag.y, vpDrag.z};
-
-	//	float fltScale = m_lpThisRB->BuoyancyScale();
-	//	float fltMagnus = m_lpThisRB->Magnus();
-	//	bool bEnabled = m_lpThisRB->EnableFluids();
-
-	//	m_vxCollisionGeometry->setFluidInteractionData(vCenter, vDrag, fltScale, fltMagnus);
-
-	//	if(bEnabled)
-	//		m_vxCollisionGeometry->setDefaultFluidInteractionForceFn();
-	//	else
-	//		m_vxCollisionGeometry->setFluidInteractionForceFn(NULL);
-	//}
 }
 
 void BlRigidBody::Physics_WakeDynamics()
@@ -210,16 +207,9 @@ void BlRigidBody::GetBaseValues()
 {
 	if(m_btPart && m_lpThisRB)
 	{
-		//Fluid Density is in the units being used. So if the user set 1 g/cm^3 
-		//and the units were grams and decimeters then density would be 1000 g/dm^3
-
 		//Recalculate the mass and volume
 		m_lpThisRB->GetDensity();
 		m_lpThisRB->GetVolume();
-
-        //Fix Physics
-		//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
-		//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
 	}
 }
 
@@ -290,8 +280,13 @@ void BlRigidBody::CreateDynamicPart()
 
         // Finally, create rigid body.
         btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
-        rbInfo.m_friction = btScalar( 1 );
-        //rbInfo.m_restitution = btScalar( 1 );
+
+		if(m_lpMaterial)
+		{
+			rbInfo.m_friction = m_lpMaterial->FrictionLinearPrimary();
+			rbInfo.m_restitution = m_lpMaterial->Restitution();
+		}
+
         rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
         rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
@@ -322,17 +317,6 @@ void BlRigidBody::CreateDynamicPart()
         }
 
         lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
-
-        //FIX PHYSICS
-	    // Create the physics object.
-	    //m_vxPart = new VxPart;
-	    //m_vxSensor = m_vxPart;
-	    //m_vxSensor->setUserData((void*) m_lpThisRB);
-	    //int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-	    //m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-	    //m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
-	    //CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
            
         if(m_lpThisRB->DisplayDebugCollisionGraphic())
         {
@@ -668,6 +652,7 @@ void BlRigidBody::ProcessContacts()
 	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
+		//Testing code
 		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
 		//	fltForceMag = 0;
 
@@ -739,8 +724,8 @@ void BlRigidBody::Physics_CollectData()
 		//If we are here then we did not have a physics component, just and OSG one.
 		Physics_UpdateAbsolutePosition();
 
-		//TODO: Get Rotation
-		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
+        CStdFPoint vRot = OsgMatrixUtil::EulerRotationFromMatrix_Static(m_osgWorldMatrix);
+		m_lpThisMI->ReportRotation(vRot[0], vRot[1], vRot[2]);
 	}
 
 	if(m_bCollectExtraData && m_btPart && lpSim)

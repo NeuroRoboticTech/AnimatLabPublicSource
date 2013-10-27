@@ -117,6 +117,9 @@
 #define Bl_Err_lConvertingMeshToConvexHull -4043
 #define Bl_Err_strConvertingMeshToConvexHull "Error converting a mesh to a convex hull."
 
+#define Bl_Err_lConvertingMaterialType -4044
+#define Bl_Err_strConvertingMaterialType "Error converting a material type to bullet material type."
+
 enum AnimatCollisionTypes {
     NOTHING                 = 0,    // things that don't collide
     RIGID_BODY              = 1<<1, // regular rigid body party
