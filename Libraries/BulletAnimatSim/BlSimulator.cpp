@@ -115,18 +115,6 @@ void BlSimulator::AngularKineticLoss(float fltVal, bool bUseScaling)
 	SetSimulationStabilityParams();
 }
 
-void BlSimulator::PhysicsTimeStep(float fltVal)
-{
-	OsgSimulator::PhysicsTimeStep(fltVal);
-
-    //FIX PHYSICS
-	//if(m_vxFrame)
-	//{
-	//	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
-	//	SetSimulationStabilityParams();
-	//}
-}
-
 void BlSimulator::Gravity(float fltVal, bool bUseScaling)
 {
 	OsgSimulator::Gravity(fltVal, bUseScaling);
@@ -188,12 +176,6 @@ void BlSimulator::ResetSimulation()
 {
 	OsgSimulator::ResetSimulation();
 
-    //FIX PHYSICS
-	//if(m_uUniverse)
-	//{
-	//	m_uUniverse->resetDynamics();
-	//	m_uUniverse->resetContacts();
-	//}
 	m_bSimRunning = false;
 }
 
@@ -385,17 +367,6 @@ void BlSimulator::InitializeBullet(int argc, const char **argv)
 
 	//gContactAddedCallback = &AnimatContactCallback;
     gContactProcessedCallback = &AnimatContactCallback;
-
-	//create the frame
-    //FIX PHYSICS
-	////set the frame timestep
-	//m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
-	//VxFrameRegisterAllInteractions(m_vxFrame);
-	//SetSimulationStabilityParams();
- //   // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
- //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
- //   m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
-
 }
 
 /**
@@ -528,6 +499,7 @@ void BlSimulator::Initialize(int argc, const char **argv)
 
 void BlSimulator::StepSimulation()
 {
+	//Test Code
 	//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
 	//	m_timePeriod.StartTimer();
 

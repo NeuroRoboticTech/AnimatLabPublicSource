@@ -26,9 +26,6 @@ namespace BulletAnimatSim
 
         bool m_bDrawDebug;
 
-        //FIX PHYSICS
-		//BlIntersectionEvent m_vsIntersect;
-
 		double m_dblTotalVortexStepTime;
 		long m_lStepVortexTimeCount;
 
@@ -69,7 +66,6 @@ namespace BulletAnimatSim
 		virtual void LinearKineticLoss(float fltVal, bool bUseScaling = true);
 		virtual void AngularKineticLoss(float fltVal, bool bUseScaling = true);
 
-		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, bool bUseScaling = true);
 
 #pragma endregion
