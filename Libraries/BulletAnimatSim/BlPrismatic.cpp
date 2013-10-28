@@ -173,10 +173,10 @@ void BlPrismatic::SetupPhysics()
 	BlPrismaticLimit *lpUpperLimit = dynamic_cast<BlPrismaticLimit *>(m_lpUpperLimit);
 	BlPrismaticLimit *lpLowerLimit = dynamic_cast<BlPrismaticLimit *>(m_lpLowerLimit);
 
+	m_btJoint = m_btPrismatic;
+
 	//Re-enable the limits once we have initialized the joint
 	EnableLimits(m_bEnableLimits);
-
-	m_btJoint = m_btPrismatic;
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	EnableMotor(m_bEnableMotorInit);

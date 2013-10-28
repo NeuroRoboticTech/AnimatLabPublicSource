@@ -4,8 +4,8 @@
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Prismatic\</ProjectPath>
-<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+<ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Prismatic\</ProjectPath>
+<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -37,33 +37,12 @@
 <MaterialTypes>
 <MaterialType>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>
+<ClassName>AnimatGUI.DataObjects.Physical.MaterialTypeBullet</ClassName>
 <ID>DEFAULTMATERIAL</ID>
 <Name>Default</Name>
 <FrictionLinearPrimary Value="1" Scale="None" Actual="1"/>
-<FrictionLinearSecondary Value="1" Scale="None" Actual="1"/>
-<FrictionAngularNormal Value="0" Scale="None" Actual="0"/>
 <FrictionAngularPrimary Value="0" Scale="None" Actual="0"/>
-<FrictionAngularSecondary Value="0" Scale="None" Actual="0"/>
-<FrictionLinearPrimaryMax Value="10" Scale="None" Actual="10"/>
-<FrictionLinearSecondaryMax Value="10" Scale="None" Actual="10"/>
-<FrictionAngularNormalMax Value="10" Scale="None" Actual="10"/>
-<FrictionAngularPrimaryMax Value="10" Scale="None" Actual="10"/>
-<FrictionAngularSecondaryMax Value="10" Scale="None" Actual="10"/>
-<Compliance Value="1" Scale="nano" Actual="1e-009"/>
-<Damping Value="50" Scale="Giga" Actual="5e+010"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<SlipLinearPrimary Value="0" Scale="None" Actual="0"/>
-<SlipLinearSecondary Value="0" Scale="None" Actual="0"/>
-<SlipAngularNormal Value="0" Scale="None" Actual="0"/>
-<SlipAngularPrimary Value="0" Scale="None" Actual="0"/>
-<SlipAngularSecondary Value="0" Scale="None" Actual="0"/>
-<SlideLinearPrimary Value="0" Scale="None" Actual="0"/>
-<SlideLinearSecondary Value="0" Scale="None" Actual="0"/>
-<SlideAngularNormal Value="0" Scale="None" Actual="0"/>
-<SlideAngularPrimary Value="0" Scale="None" Actual="0"/>
-<SlideAngularSecondary Value="0" Scale="None" Actual="0"/>
-<MaximumAdhesion Value="0" Scale="None" Actual="0"/>
 </MaterialType>
 </MaterialTypes>
 <Organisms/>
@@ -95,7 +74,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -125,7 +104,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -137,11 +116,18 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
@@ -181,7 +167,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,-5,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,-5,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -193,11 +179,18 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1" Scale="Kilo" Actual="1000"/>
@@ -233,10 +226,10 @@
 </LocalPosition>
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
-<Y Value="90" Scale="None" Actual="90"/>
-<Z Value="10" Scale="None" Actual="10"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="90" Scale="None" Actual="90"/>
 </Rotation>
-<LocalMatrix>-0.000200559,0.173645,-0.984808,0,3.53634e-005,0.984808,0.173645,0,1,0,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>-0.000203653,1,0,0,-1,-0.000203653,0,0,0,0,1,0,0,0,-5,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Prismatic</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Prismatic</PartType>
@@ -374,7 +367,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,1,2,1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,2,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -411,7 +404,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-1,2,-1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,2,-1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -442,7 +435,7 @@
 <EndTime Value="3" Scale="None" Actual="3"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <StructureID>5d357e1c-cd5a-447e-a2fb-8d0d04a0702e</StructureID>
@@ -456,7 +449,7 @@
 <Name>Stimulus_1</Name>
 <ID>084df45f-df94-4ba1-b4f3-abdd3a4d929c</ID>
 <StartTime Value="0.1" Scale="None" Actual="0.1"/>
-<EndTime Value="1" Scale="None" Actual="1"/>
+<EndTime Value="2" Scale="None" Actual="2"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
@@ -464,14 +457,14 @@
 <Equation>0</Equation>
 <StructureID>5d357e1c-cd5a-447e-a2fb-8d0d04a0702e</StructureID>
 <PartID>3ee09e04-c4d7-40b9-a939-56f363156a66</PartID>
-<Velocity Value="1" Scale="None" Actual="1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<Velocity Value="-1" Scale="None" Actual="-1"/>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
 </Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>e4d1eaf9-4214-48d7-a596-3e4de62a045f</Name>
-<ID>e4d1eaf9-4214-48d7-a596-3e4de62a045f</ID>
+<Name>63d4ca6e-fa93-4509-b126-6fde289541d0</Name>
+<ID>63d4ca6e-fa93-4509-b126-6fde289541d0</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -549,9 +542,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <ID>f6d75a59-de30-46d8-bf56-f76c13bc613c</ID>
@@ -565,7 +558,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/16/2013 06:27:15"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/27/2013 14:14:16"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

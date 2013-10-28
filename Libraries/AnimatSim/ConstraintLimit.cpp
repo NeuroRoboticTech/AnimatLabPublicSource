@@ -82,7 +82,9 @@ void ConstraintLimit::LimitPos(float fltVal, bool bUseScaling, bool bOverrideSam
 	else
 		m_fltLimitPos = fltVal;
 
-	SetLimitPos();
+	//Do not want to call this repeatedly if we are the flap limit.
+	if(!m_bIsShowPosition)
+		SetLimitPos();
 }
 
 float ConstraintLimit::Damping() {return m_fltDamping;};
