@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
