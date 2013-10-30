@@ -1640,6 +1640,46 @@ Namespace Framework
             Return obj
         End Function
 
+        Public Shared Sub GetParentObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String, ByRef oRoot As Object, ByRef doRoot As DataObject, ByRef strRootPropName As String)
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+
+            If aryPropPath.Count > 1 Then
+                Dim iIdx As Integer = 0
+                Dim piAutomationPropInfo As PropertyInfo
+                For Each strPropName As String In aryPropPath
+                    piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                    If piAutomationPropInfo Is Nothing Then
+                        Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                    End If
+
+                    iIdx = iIdx + 1
+                    'Dont get the obj on the last one.
+                    If iIdx < aryPropPath.Length Then
+                        oObj = piAutomationPropInfo.GetValue(oObj, Nothing)
+                    Else
+                        oRoot = oObj
+                        If Util.IsTypeOf(oObj.GetType(), GetType(DataObject), False) Then
+                            doRoot = DirectCast(oObj, DataObject)
+                        Else
+                            doRoot = Nothing
+                        End If
+                        strRootPropName = strPropName
+                    End If
+                Next
+            Else
+                oRoot = oObj
+                If Util.IsTypeOf(oObj.GetType(), GetType(DataObject), False) Then
+                    doRoot = DirectCast(oObj, DataObject)
+                Else
+                    doRoot = Nothing
+                End If
+                strRootPropName = strPropertyName
+            End If
+
+        End Sub
+
         Public Shared Sub LoadClassModuleName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                               ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
 

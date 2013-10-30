@@ -182,11 +182,13 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "JointPosition"
 
-            m_doRelaxation1 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
-            m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
-            m_doRelaxation3 = New ConstraintRelaxation(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
-            m_doRelaxation4 = New ConstraintRelaxation(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
-            m_doRelaxation5 = New ConstraintRelaxation(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5)
+            If Util.Application.AllowConstraintRelaxation Then
+                m_doRelaxation1 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
+                m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
+                m_doRelaxation3 = New ConstraintRelaxation(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
+                m_doRelaxation4 = New ConstraintRelaxation(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
+                m_doRelaxation5 = New ConstraintRelaxation(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5)
+            End If
 
             m_doFriction = New ConstraintFriction(Me)
 
@@ -262,15 +264,20 @@ Namespace DataObjects.Physical.Joints
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
 
-            pbNumberBag = m_doLowerLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Limit", pbNumberBag.GetType(), "LowerLimit", _
-                                        "Constraints", "Sets the values for the minimum angle constraint.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+            If Util.Application.ShowSeparateConstraintLimits Then
+                pbNumberBag = m_doLowerLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Limit", pbNumberBag.GetType(), "LowerLimit", _
+                                            "Constraints", "Sets the values for the minimum angle constraint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
 
-            pbNumberBag = m_doUpperLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Upper Limit", pbNumberBag.GetType(), "UpperLimit", _
-                                        "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+                pbNumberBag = m_doUpperLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Upper Limit", pbNumberBag.GetType(), "UpperLimit", _
+                                            "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+            Else
+                m_doLowerLimit.BuildProperties(propTable, False, "Lower", "LowerLimit.")
+                m_doUpperLimit.BuildProperties(propTable, True, "Upper", "UpperLimit.")
+            End If
 
             pbNumberBag = m_snMaxForce.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Force", pbNumberBag.GetType(), "MaxForce", _

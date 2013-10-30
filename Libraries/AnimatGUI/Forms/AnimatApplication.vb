@@ -1317,6 +1317,26 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property ShowSeparateConstraintLimits() As Boolean
+            Get
+                If SimPhysicsSystem = "Bullet" Then
+                    Return False
+                Else
+                    Return True
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property AllowConstraintRelaxation() As Boolean
+            Get
+                If SimPhysicsSystem = "Bullet" Then
+                    Return False
+                Else
+                    Return True
+                End If
+            End Get
+        End Property
+
 #End Region
 
         Public Overridable ReadOnly Property ConsoleApp() As Boolean

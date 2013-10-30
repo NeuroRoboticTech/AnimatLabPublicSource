@@ -35,6 +35,8 @@ namespace BulletAnimatSim
 
 				virtual void SetupPhysics();
 
+                virtual void TimeStepModified();
+
 #pragma region DataAccesMethods
 
 				virtual float *GetDataPointer(const std::string &strDataType);

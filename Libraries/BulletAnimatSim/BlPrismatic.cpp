@@ -70,25 +70,46 @@ void BlPrismatic::EnableLimits(bool bVal)
 {
 	Prismatic::EnableLimits(bVal);
 
-	if(m_bEnableLimits)
-	{
-		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
-		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
-	}
+    SetLimitValues();
 }
 
 void BlPrismatic::SetLimitValues()
 {
-    if(m_btJoint && m_btPrismatic)
+    if(m_lpSim && m_btJoint && m_btPrismatic)
     {
-        m_bJointLocked = false;
-        m_btPrismatic->setLowerLinLimit((btScalar) m_lpLowerLimit->LimitPos());
-        m_btPrismatic->setUpperLinLimit((btScalar) m_lpUpperLimit->LimitPos());
+        if(m_bEnableLimits)
+        {
+            m_bJointLocked = false;
+            m_btPrismatic->setLowerLinLimit((btScalar) m_lpLowerLimit->LimitPos());
+            m_btPrismatic->setUpperLinLimit((btScalar) m_lpUpperLimit->LimitPos());
 
-        //Disable rotation about the axis for the prismatic joint.
-        m_btPrismatic->setLowerAngLimit(0);
-        m_btPrismatic->setUpperAngLimit(0);
+            //Disable rotation about the axis for the prismatic joint.
+            m_btPrismatic->setLowerAngLimit(0);
+            m_btPrismatic->setUpperAngLimit(0);
+
+            float fltKp = m_lpUpperLimit->Stiffness();
+            float fltKd = m_lpUpperLimit->Damping();
+            float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            
+            float fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
+            float fltCfm = 1/((fltH*fltKp) + fltKd);
+
+            m_btPrismatic->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, -1);
+            m_btPrismatic->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, -1);
+        }
+        else
+        {
+            //To disable limits in bullet we need the lower limit to be bigger than the upper limit
+            m_bJointLocked = false;
+            m_btPrismatic->setLowerLinLimit(1);
+            m_btPrismatic->setUpperLinLimit(-1);
+        }
     }
+}
+
+void BlPrismatic::TimeStepModified()
+{
+    SetLimitValues();
 }
 
 void BlPrismatic::JointPosition(float fltPos)

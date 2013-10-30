@@ -405,46 +405,48 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint Type", Me.Type.GetType(), "Type", _
                                         "Part Properties", "Type of joint.", Me.Type, True))
 
-            If Not m_doRelaxation1 Is Nothing Then
-                pbNumberBag = m_doRelaxation1.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation1.Name, pbNumberBag.GetType(), "Relaxation1", _
-                                            "Relaxation Properties", m_doRelaxation1.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
-            End If
+            If Util.Application.AllowConstraintRelaxation Then
+                If Not m_doRelaxation1 Is Nothing Then
+                    pbNumberBag = m_doRelaxation1.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation1.Name, pbNumberBag.GetType(), "Relaxation1", _
+                                                "Relaxation Properties", m_doRelaxation1.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
 
-            If Not m_doRelaxation2 Is Nothing Then
-                pbNumberBag = m_doRelaxation2.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation2.Name, pbNumberBag.GetType(), "Relaxation2", _
-                                            "Relaxation Properties", m_doRelaxation2.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
-            End If
+                If Not m_doRelaxation2 Is Nothing Then
+                    pbNumberBag = m_doRelaxation2.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation2.Name, pbNumberBag.GetType(), "Relaxation2", _
+                                                "Relaxation Properties", m_doRelaxation2.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
 
-            If Not m_doRelaxation3 Is Nothing Then
-                pbNumberBag = m_doRelaxation3.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation3.Name, pbNumberBag.GetType(), "Relaxation3", _
-                                            "Relaxation Properties", m_doRelaxation3.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
-            End If
+                If Not m_doRelaxation3 Is Nothing Then
+                    pbNumberBag = m_doRelaxation3.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation3.Name, pbNumberBag.GetType(), "Relaxation3", _
+                                                "Relaxation Properties", m_doRelaxation3.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
 
-            If Not m_doRelaxation4 Is Nothing Then
-                pbNumberBag = m_doRelaxation4.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation4.Name, pbNumberBag.GetType(), "Relaxation4", _
-                                            "Relaxation Properties", m_doRelaxation4.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
-            End If
+                If Not m_doRelaxation4 Is Nothing Then
+                    pbNumberBag = m_doRelaxation4.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation4.Name, pbNumberBag.GetType(), "Relaxation4", _
+                                                "Relaxation Properties", m_doRelaxation4.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
 
-            If Not m_doRelaxation5 Is Nothing Then
-                pbNumberBag = m_doRelaxation5.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation5.Name, pbNumberBag.GetType(), "Relaxation5", _
-                                            "Relaxation Properties", m_doRelaxation5.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
-            End If
+                If Not m_doRelaxation5 Is Nothing Then
+                    pbNumberBag = m_doRelaxation5.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation5.Name, pbNumberBag.GetType(), "Relaxation5", _
+                                                "Relaxation Properties", m_doRelaxation5.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
 
-            If Not m_doRelaxation6 Is Nothing Then
-                pbNumberBag = m_doRelaxation6.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation6.Name, pbNumberBag.GetType(), "Relaxation6", _
-                                            "Relaxation Properties", m_doRelaxation6.Description, pbNumberBag, _
-                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+                If Not m_doRelaxation6 Is Nothing Then
+                    pbNumberBag = m_doRelaxation6.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation6.Name, pbNumberBag.GetType(), "Relaxation6", _
+                                                "Relaxation Properties", m_doRelaxation6.Description, pbNumberBag, _
+                                                "", GetType(ConstraintRelaxationPropBagConverter)))
+                End If
             End If
 
             If Not m_doFriction Is Nothing Then
@@ -453,7 +455,6 @@ Namespace DataObjects.Physical
                                             "Part Properties", "Sets the friction parameters for this joint.", pbNumberBag, _
                                             "", GetType(ConstraintFrictionPropBagConverter)))
             End If
-
 
         End Sub
 
@@ -502,24 +503,27 @@ Namespace DataObjects.Physical
             m_snSize.LoadData(oXml, "Size")
             m_bEnableLimts = oXml.GetChildBool("EnableLimits", m_bEnableLimts)
 
-            If Not m_doRelaxation1 Is Nothing Then
-                m_doRelaxation1.LoadData(oXml, "Relaxation1")
+            If Util.Application.AllowConstraintRelaxation Then
+                If Not m_doRelaxation1 Is Nothing AndAlso oXml.FindChildElement("Relaxation1", False) Then
+                    m_doRelaxation1.LoadData(oXml, "Relaxation1")
+                End If
+                If Not m_doRelaxation2 Is Nothing AndAlso oXml.FindChildElement("Relaxation2", False) Then
+                    m_doRelaxation2.LoadData(oXml, "Relaxation2")
+                End If
+                If Not m_doRelaxation3 Is Nothing AndAlso oXml.FindChildElement("Relaxation3", False) Then
+                    m_doRelaxation3.LoadData(oXml, "Relaxation3")
+                End If
+                If Not m_doRelaxation4 Is Nothing AndAlso oXml.FindChildElement("Relaxation4", False) Then
+                    m_doRelaxation4.LoadData(oXml, "Relaxation4")
+                End If
+                If Not m_doRelaxation5 Is Nothing AndAlso oXml.FindChildElement("Relaxation5", False) Then
+                    m_doRelaxation5.LoadData(oXml, "Relaxation5")
+                End If
+                If Not m_doRelaxation6 Is Nothing AndAlso oXml.FindChildElement("Relaxation6", False) Then
+                    m_doRelaxation5.LoadData(oXml, "Relaxation6")
+                End If
             End If
-            If Not m_doRelaxation2 Is Nothing Then
-                m_doRelaxation2.LoadData(oXml, "Relaxation2")
-            End If
-            If Not m_doRelaxation3 Is Nothing Then
-                m_doRelaxation3.LoadData(oXml, "Relaxation3")
-            End If
-            If Not m_doRelaxation4 Is Nothing Then
-                m_doRelaxation4.LoadData(oXml, "Relaxation4")
-            End If
-            If Not m_doRelaxation5 Is Nothing Then
-                m_doRelaxation5.LoadData(oXml, "Relaxation5")
-            End If
-            If Not m_doRelaxation6 Is Nothing Then
-                m_doRelaxation5.LoadData(oXml, "Relaxation6")
-            End If
+
             If Not m_doFriction Is Nothing AndAlso oXml.FindChildElement("Friction", False) Then
                 m_doFriction.LoadData(oXml)
             End If
@@ -537,24 +541,27 @@ Namespace DataObjects.Physical
             m_snSize.SaveData(oXml, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Not m_doRelaxation1 Is Nothing Then
-                m_doRelaxation1.SaveData(oXml, "Relaxation1")
+            If Util.Application.AllowConstraintRelaxation Then
+                If Not m_doRelaxation1 Is Nothing Then
+                    m_doRelaxation1.SaveData(oXml, "Relaxation1")
+                End If
+                If Not m_doRelaxation2 Is Nothing Then
+                    m_doRelaxation2.SaveData(oXml, "Relaxation2")
+                End If
+                If Not m_doRelaxation3 Is Nothing Then
+                    m_doRelaxation3.SaveData(oXml, "Relaxation3")
+                End If
+                If Not m_doRelaxation4 Is Nothing Then
+                    m_doRelaxation4.SaveData(oXml, "Relaxation4")
+                End If
+                If Not m_doRelaxation5 Is Nothing Then
+                    m_doRelaxation5.SaveData(oXml, "Relaxation5")
+                End If
+                If Not m_doRelaxation6 Is Nothing Then
+                    m_doRelaxation6.SaveData(oXml, "Relaxation6")
+                End If
             End If
-            If Not m_doRelaxation2 Is Nothing Then
-                m_doRelaxation2.SaveData(oXml, "Relaxation2")
-            End If
-            If Not m_doRelaxation3 Is Nothing Then
-                m_doRelaxation3.SaveData(oXml, "Relaxation3")
-            End If
-            If Not m_doRelaxation4 Is Nothing Then
-                m_doRelaxation4.SaveData(oXml, "Relaxation4")
-            End If
-            If Not m_doRelaxation5 Is Nothing Then
-                m_doRelaxation5.SaveData(oXml, "Relaxation5")
-            End If
-            If Not m_doRelaxation6 Is Nothing Then
-                m_doRelaxation6.SaveData(oXml, "Relaxation6")
-            End If
+
             If Not m_doFriction Is Nothing Then
                 m_doFriction.SaveData(oXml)
             End If
@@ -571,24 +578,27 @@ Namespace DataObjects.Physical
             m_snSize.SaveSimulationXml(oXml, Me, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Not m_doRelaxation1 Is Nothing Then
-                m_doRelaxation1.SaveSimulationXml(oXml, Me, "Relaxation1")
+            If Util.Application.AllowConstraintRelaxation Then
+                If Not m_doRelaxation1 Is Nothing Then
+                    m_doRelaxation1.SaveSimulationXml(oXml, Me, "Relaxation1")
+                End If
+                If Not m_doRelaxation2 Is Nothing Then
+                    m_doRelaxation2.SaveSimulationXml(oXml, Me, "Relaxation2")
+                End If
+                If Not m_doRelaxation3 Is Nothing Then
+                    m_doRelaxation3.SaveSimulationXml(oXml, Me, "Relaxation3")
+                End If
+                If Not m_doRelaxation4 Is Nothing Then
+                    m_doRelaxation4.SaveSimulationXml(oXml, Me, "Relaxation4")
+                End If
+                If Not m_doRelaxation5 Is Nothing Then
+                    m_doRelaxation5.SaveSimulationXml(oXml, Me, "Relaxation5")
+                End If
+                If Not m_doRelaxation6 Is Nothing Then
+                    m_doRelaxation6.SaveSimulationXml(oXml, Me, "Relaxation6")
+                End If
             End If
-            If Not m_doRelaxation2 Is Nothing Then
-                m_doRelaxation2.SaveSimulationXml(oXml, Me, "Relaxation2")
-            End If
-            If Not m_doRelaxation3 Is Nothing Then
-                m_doRelaxation3.SaveSimulationXml(oXml, Me, "Relaxation3")
-            End If
-            If Not m_doRelaxation4 Is Nothing Then
-                m_doRelaxation4.SaveSimulationXml(oXml, Me, "Relaxation4")
-            End If
-            If Not m_doRelaxation5 Is Nothing Then
-                m_doRelaxation5.SaveSimulationXml(oXml, Me, "Relaxation5")
-            End If
-            If Not m_doRelaxation6 Is Nothing Then
-                m_doRelaxation6.SaveSimulationXml(oXml, Me, "Relaxation6")
-            End If
+
             If Not m_doFriction Is Nothing Then
                 m_doFriction.SaveSimulationXml(oXml, Me)
             End If

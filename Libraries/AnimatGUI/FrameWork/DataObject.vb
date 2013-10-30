@@ -396,10 +396,17 @@ Namespace Framework
 
         Protected Overridable Sub Properties_GetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
             Try
-                Dim propInfo As System.Reflection.PropertyInfo = Me.GetType().GetProperty(e.Property.PropertyName)
+                'Sometimes we may want to have the property name actually be a string of properties like this.a.b
+                'This method parses that string and finds the correct object to get the value from.
+                Dim oRoot As Object = Nothing
+                Dim doRoot As DataObject = Nothing
+                Dim strPropName As String = ""
+                Util.GetParentObjectProperty(Me, e.Property.PropertyName, oRoot, doRoot, strPropName)
+
+                Dim propInfo As System.Reflection.PropertyInfo = oRoot.GetType().GetProperty(strPropName)
                 If Not propInfo Is Nothing Then
                     If propInfo.CanRead Then
-                        e.Value = propInfo.GetValue(Me, Nothing)
+                        e.Value = propInfo.GetValue(oRoot, Nothing)
                     Else
                         Throw New System.Exception("The property '" & propInfo.Name & "' is write only.")
                     End If
@@ -430,11 +437,11 @@ Namespace Framework
             End Try
         End Sub
 
-        Protected Overridable Function GetOriginalValueForHistory(ByVal propInfo As System.Reflection.PropertyInfo) As Object
+        Protected Overridable Function GetOriginalValueForHistory(ByVal oRoot As Object, ByVal propInfo As System.Reflection.PropertyInfo) As Object
             Dim origValue As Object
 
             If propInfo.CanRead AndAlso Util.ModificationHistory.AllowAddHistory Then
-                Dim tempValue As Object = propInfo.GetValue(Me, Nothing)
+                Dim tempValue As Object = propInfo.GetValue(oRoot, Nothing)
 
                 If Not tempValue Is Nothing AndAlso TypeOf tempValue Is AnimatGUI.Framework.DataObject Then
                     Dim doTemp As AnimatGUI.Framework.DataObject = DirectCast(tempValue, AnimatGUI.Framework.DataObject)
@@ -482,23 +489,31 @@ Namespace Framework
         Public Overridable Sub Properties_SetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
             Dim origValue As Object
             Dim propInfo As System.Reflection.PropertyInfo
+            'Sometimes we may want to have the property name actually be a string of properties like this.a.b
+            'This method parses that string and finds the correct object to get the value from.
+            Dim oRoot As Object = Nothing
+            Dim doRoot As DataObject = Nothing
+            Dim strPropName As String = ""
 
             Try
-                propInfo = Me.GetType().GetProperty(e.Property.PropertyName)
+                Util.GetParentObjectProperty(Me, e.Property.PropertyName, oRoot, doRoot, strPropName)
+                If doRoot Is Nothing Then doRoot = Me
+
+                propInfo = oRoot.GetType().GetProperty(strPropName)
 
                 If Not propInfo Is Nothing Then
                     If propInfo.CanWrite Then
                         Dim lModificationCount As Long = Util.ModificationHistory.ModificationCount
-                        origValue = GetOriginalValueForHistory(propInfo)
+                        origValue = GetOriginalValueForHistory(oRoot, propInfo)
 
-                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & Me.ID & _
-                                           ", Object Name: " & Me.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
-                                           propInfo.GetValue(Me, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
+                                           ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
+                                           propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
 
-                        SignalBeforePropertyChanged(Me, propInfo)
+                        SignalBeforePropertyChanged(doRoot, propInfo)
 
                         m_bSetValueInProgress = True
-                        propInfo.SetValue(Me, e.Value, Nothing)
+                        propInfo.SetValue(oRoot, e.Value, Nothing)
                         m_bSetValueInProgress = False
                         Me.IsDirty = True
 
@@ -507,7 +522,7 @@ Namespace Framework
                         'be saved correctly.
                         Util.Application.IsDirty = True
 
-                        SignalAfterPropertyChanged(Me, propInfo)
+                        SignalAfterPropertyChanged(doRoot, propInfo)
 
                         'Only add the history for this propchange if the property did not already add it itself.
                         If lModificationCount = Util.ModificationHistory.ModificationCount AndAlso Util.ModificationHistory.AllowAddHistory Then
@@ -534,7 +549,11 @@ Namespace Framework
                 'If we got an error while trying to set the value to a new value then we need to change back the
                 'value that is currently displayed to the previous value.
                 Try
-                    e.Value = Me.GetType().GetProperty(e.Property.PropertyName).GetValue(Me, Nothing)
+                    If Not oRoot Is Nothing Then
+                        e.Value = oRoot.GetType().GetProperty(strPropName).GetValue(oRoot, Nothing)
+                    Else
+                        e.Value = Me.GetType().GetProperty(e.Property.PropertyName).GetValue(Me, Nothing)
+                    End If
                 Catch InnerEx As System.Exception
                     'If we could not fix it then do nothing
                 End Try
