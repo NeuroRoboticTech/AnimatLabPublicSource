@@ -11,7 +11,7 @@ namespace BulletAnimatSim
 		class BULLET_PORT BlConstraintFriction : public AnimatSim::Environment::ConstraintFriction
 		{
 		protected:
-			virtual void SetFrictionProperties();
+            virtual void SetFrictionProperties();
 
 		public:
 			BlConstraintFriction();

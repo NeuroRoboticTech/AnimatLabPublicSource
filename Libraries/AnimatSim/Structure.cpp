@@ -582,6 +582,9 @@ void Structure::AddRoot(std::string strXml)
 
 	//Then create all of the joints between the models.
 	m_lpBody->CreateJoints();
+
+    if(m_lpSim && m_lpBody)
+        m_lpSim->NotifyRigidBodyAdded(m_lpBody->ID());
 }
 
 /**
@@ -604,6 +607,9 @@ void Structure::RemoveRoot(std::string strID, bool bThrowError)
 	{
 		delete m_lpBody;
 		m_lpBody = NULL;
+
+        if(m_lpSim && m_lpBody)
+            m_lpSim->NotifyRigidBodyRemoved(strID);
 	}
 	else
 		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);

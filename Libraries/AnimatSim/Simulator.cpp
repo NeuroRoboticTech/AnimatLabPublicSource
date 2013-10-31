@@ -1744,6 +1744,31 @@ void Simulator::NotifyTimeStepModified()
 	}
 }
 
+
+void Simulator::NotifyRigidBodyAdded(std::string strID)
+{
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase)
+			lpBase->RigidBodyAdded(strID);
+	}
+}
+
+void Simulator::NotifyRigidBodyRemoved(std::string strID)
+{
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase)
+			lpBase->RigidBodyRemoved(strID);
+	}
+}
+
 /**
 \brief	Blocks the simulation from stepping.
 

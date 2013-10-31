@@ -238,6 +238,7 @@ namespace AnimatSim
 
 			virtual float Mass();
 			virtual void Mass(float fltVal, bool bUseScaling = true);
+            virtual float MassWithChildren();
 
 			virtual float Volume();
 			virtual void Volume(float fltVal, bool bUseScaling = true);

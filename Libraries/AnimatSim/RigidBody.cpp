@@ -342,6 +342,18 @@ void RigidBody::Mass(float fltVal, bool bUseScaling)
 		m_lpPhysicsBody->Physics_SetMass(m_fltMass);
 }
 
+float RigidBody::MassWithChildren()
+{
+    float fltTotalMass = Mass();
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+    {
+        RigidBody *lpChild = m_aryChildParts[iIndex];
+            fltTotalMass += lpChild->MassWithChildren();
+    }
+
+    return fltTotalMass;
+}
 
 float RigidBody::Volume() {return m_fltVolume;}
 
@@ -1822,6 +1834,9 @@ RigidBody *RigidBody::AddRigidBody(std::string strXml)
     if(m_lpPhysicsBody)
         m_lpPhysicsBody->Physics_ChildBodyAdded(lpBody);
 
+    if(m_lpSim && lpBody)
+        m_lpSim->NotifyRigidBodyAdded(lpBody->ID());
+
     return lpBody;
 }
 
@@ -1848,7 +1863,11 @@ void RigidBody::RemoveRigidBody(std::string strID, bool bThrowError)
     //Inform the physics object that we are removing a child body.
     if(m_lpPhysicsBody)
         m_lpPhysicsBody->Physics_ChildBodyRemoved(bHasStaticJoint);    
+
+    if(m_lpSim)
+        m_lpSim->NotifyRigidBodyRemoved(strID);
 }
+
 
 /**
 \brief	Finds the array index for the child part with the specified ID

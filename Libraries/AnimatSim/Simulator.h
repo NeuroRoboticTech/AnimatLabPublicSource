@@ -774,6 +774,9 @@ namespace AnimatSim
 		virtual void MicroWait(unsigned int iMicroTime);
 
 		virtual void WriteToConsole(std::string strMessage) = 0;
+        
+        virtual void NotifyRigidBodyAdded(std::string strID);
+        virtual void NotifyRigidBodyRemoved(std::string strID);
 
 #pragma endregion
 

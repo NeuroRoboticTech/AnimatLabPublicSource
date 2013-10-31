@@ -125,6 +125,9 @@ namespace AnimatSim
 		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
 		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
+        virtual void RigidBodyAdded(std::string strID) {};
+        virtual void RigidBodyRemoved(std::string strID) {};
+
 #pragma endregion
 
 #pragma region SimulationMethods
