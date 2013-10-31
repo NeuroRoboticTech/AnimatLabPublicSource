@@ -343,16 +343,17 @@ void BlPrismatic::TurnMotorOff()
 {
     if(m_btPrismatic)
     {
-        if(m_lpFriction && m_lpFriction->Enabled())
-        {
-            //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
-            //that were specified in vortex engine. This way I get similar behavior between the two.
-            float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
-            m_btPrismatic->setMaxLinMotorForce(maxMotorImpulse);
-            m_btPrismatic->setTargetLinMotorVelocity(0);
-    	    m_btPrismatic->setPoweredLinMotor(true);
-        }
-        else
+        //FIX PHYSICS (Need to fix bullet so this will work.)
+        //if(m_lpFriction && m_lpFriction->Enabled())
+        //{
+        //    //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
+        //    //that were specified in vortex engine. This way I get similar behavior between the two.
+        //    float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
+        //    m_btPrismatic->setMaxLinMotorForce(maxMotorImpulse);
+        //    m_btPrismatic->setTargetLinMotorVelocity(0);
+    	   // m_btPrismatic->setPoweredLinMotor(true);
+        //}
+        //else
     	    m_btPrismatic->setPoweredLinMotor(false);
     }
 }
