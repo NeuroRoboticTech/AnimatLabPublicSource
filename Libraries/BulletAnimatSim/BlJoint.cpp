@@ -25,6 +25,7 @@ BlJoint::BlJoint()
 	m_lpVsChild = NULL;
     m_lpVsSim = NULL;
 
+    m_fltPrevBtJointPos = 0;
     m_fltPrevJointPos = 0;
 }
 
@@ -65,53 +66,54 @@ void BlJoint::DeletePhysics(bool bIncludeChildren)
 	m_btJoint = NULL;
 }
 
-void BlJoint::UpdatePosition()
-{	
-    //FIX PHYSICS
-	//Vx::VxReal3 vPos;
-	//m_btJoint->getPartAttachmentPosition(0, vPos);
-
-	//UpdateWorldMatrix();
-	//m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
-}
-
 void BlJoint::Physics_CollectData()
 {
 	if(m_lpThisJoint && m_btJoint && m_lpThisJoint->GetSimulator())
 	{
-		UpdatePosition();
-
 		float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 		float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
         float fltCurrentJointPos = GetCurrentBtPosition();
 
+        if(GetSimulator()->Time() > 5.64)
+            fltCurrentJointPos = fltCurrentJointPos;
+
+        //If this joint uses radians then at the +/- PI boundaries the sign can flip. 
+        //So we need to keep an internal representation of its position and update this with a delta of the change in position
+        // that the physics engine is telling us. This allows the joint position to roll-over past 2PI so we have a steady velocity
+        // and position without discontinuties. It also allows us to see how many times the joint has finished a complete revolution.
+        if(m_lpThisJoint->UsesRadians())
+        {
+            int iPrevPosSign = Std_Sign(m_fltPrevBtJointPos);
+            float fltDelta = 0;
+            if(Std_Sign(fltCurrentJointPos) != iPrevPosSign && fabs(fltCurrentJointPos - m_fltPrevBtJointPos) > 0.1)
+                fltDelta = fltCurrentJointPos - (-m_fltPrevBtJointPos);
+            else
+                fltDelta = fltCurrentJointPos - m_fltPrevBtJointPos;
+
+           fltCurrentJointPos =  m_lpThisJoint->JointPosition() + fltDelta;
+        }
+
 		if(!m_lpThisJoint->UsesRadians())
-		{
             fltCurrentJointPos *= fltDistanceUnits;
-			//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
-		}
 
         float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/(m_lpThisJoint->GetSimulator()->PhysicsTimeStep());
 
+        m_fltPrevBtJointPos = GetCurrentBtPosition();
         m_fltPrevJointPos = fltCurrentJointPos;
 		m_lpThisJoint->JointPosition(fltCurrentJointPos); 
 		m_lpThisJoint->JointVelocity(fltJointVel);
-
-        //FIX PHYSICS
-		//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
     }
 }
 
 void BlJoint::Physics_ResetSimulation()
 {
-    //FIX PHYSICS
- //   if(m_btJoint)
-	//{
-	//	m_btJoint->resetDynamics();
-	//	UpdatePosition();
- //       OsgJoint::Physics_ResetSimulation();
-	//}
+    if(m_btJoint)
+	{
+        m_fltPrevBtJointPos = 0;
+        m_fltPrevJointPos = 0;
+        OsgJoint::Physics_ResetSimulation();
+	}
 }
 
     }			// Environment

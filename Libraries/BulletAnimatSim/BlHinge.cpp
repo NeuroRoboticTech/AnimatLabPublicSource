@@ -349,15 +349,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
         }
 		else
         {
-            if(m_lpFriction && m_lpFriction->Enabled())
-            {
-                float	targetVelocity = 0.f;
-                float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;
-                m_btHinge->enableAngularMotor(true, targetVelocity, maxMotorImpulse);
-            }
-            else
-                m_btHinge->enableAngularMotor(false, fltDesiredVelocity, fltMaxForce);
-
+            TurnMotorOff();
 
             if(m_bMotorOn)
             {
@@ -375,25 +367,6 @@ void BlHinge::Physics_MaxForce(float fltVal)
     if(m_btJoint && m_btHinge)
         m_btHinge->setMaxMotorImpulse(fltVal);
 }
-//
-//
-//void BlHinge::Physics_CollectData()
-//{
-//	if(m_lpThisJoint && m_btJoint)
-//	{
-//		UpdatePosition();
-//
-//        float fltCurrentJointPos = m_btHinge->getHingeAngle();
-//        float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/m_lpSim->PhysicsTimeStep();
-//
-//        m_fltPrevJointPos = fltCurrentJointPos;
-//		m_lpThisJoint->JointPosition(fltCurrentJointPos); 
-//		m_lpThisJoint->JointVelocity(fltJointVel);
-//
-//        //FIX PHYSICS
-//		//m_lpThisJoint->JointForce(m_btJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
-//	}
-//}
 
 float BlHinge::GetCurrentBtPosition()
 {
@@ -401,6 +374,28 @@ float BlHinge::GetCurrentBtPosition()
         return m_btHinge->getHingeAngle();
     else
         return 0;
+}
+
+void BlHinge::TurnMotorOff()
+{
+    if(m_btHinge)
+    {
+        if(m_lpFriction && m_lpFriction->Enabled())
+        {
+            //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
+            //that were specified in vortex engine. This way I get similar behavior between the two.
+            float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
+            m_btHinge->enableAngularMotor(true, 0, maxMotorImpulse);
+        }
+        else
+            m_btHinge->enableAngularMotor(false, m_fltDesiredVelocity, m_fltMaxForce);
+    }
+}
+
+void BlHinge::SetConstraintFriction()
+{
+    if(m_btHinge && !m_bJointLocked && !m_bMotorOn && m_bEnabled)
+        TurnMotorOff();
 }
 
 

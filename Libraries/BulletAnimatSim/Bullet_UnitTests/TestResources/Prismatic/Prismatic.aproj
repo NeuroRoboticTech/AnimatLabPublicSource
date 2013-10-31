@@ -4,7 +4,7 @@
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Prismatic\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Prismatic\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -227,64 +227,14 @@
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
-<Z Value="90" Scale="None" Actual="90"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>-0.000203653,1,0,0,-1,-0.000203653,0,0,0,0,1,0,0,0,-5,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,-5,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Prismatic</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Prismatic</PartType>
 <Size Value="20" Scale="milli" Actual="0.02"/>
 <EnableLimits>True</EnableLimits>
-<Relaxation1>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>d89db7f4-eb31-4633-9a93-f3dbe096e29b</ID>
-<Enabled>False</Enabled>
-<CoordinateID>0</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="5" Scale="Kilo" Actual="5000"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-</Relaxation1>
-<Relaxation2>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>8edaa4fe-5f8c-462f-816b-d5e3d471d45a</ID>
-<Enabled>False</Enabled>
-<CoordinateID>1</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="5" Scale="Kilo" Actual="5000"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-</Relaxation2>
-<Relaxation3>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>cf6e3f1d-adf4-4817-849c-7ab3f90c02f3</ID>
-<Enabled>False</Enabled>
-<CoordinateID>2</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="5" Scale="Kilo" Actual="5000"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-</Relaxation3>
-<Relaxation4>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>a1bcb11c-cbf8-432c-af6e-ae0bbacfd081</ID>
-<Enabled>False</Enabled>
-<CoordinateID>3</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="5" Scale="Kilo" Actual="5000"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-</Relaxation4>
-<Relaxation5>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
-<ID>63126ceb-a934-40a9-8fcb-cb56f53c0be8</ID>
-<Enabled>False</Enabled>
-<CoordinateID>4</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="5" Scale="Kilo" Actual="5000"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-</Relaxation5>
 <Friction>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
@@ -292,7 +242,7 @@
 <Name/>
 <Enabled>True</Enabled>
 <Proportional>True</Proportional>
-<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<Coefficient Value="0.002" Scale="None" Actual="0.002"/>
 <MaxForce Value="10" Scale="None" Actual="10"/>
 <Loss Value="0" Scale="None" Actual="0"/>
 <StaticFrictionScale Value="1" Scale="None" Actual="1"/>
@@ -300,7 +250,7 @@
 <LowerLimit>
 <Name>8d72cd78-4494-43d9-b5d7-65134ffcc517</Name>
 <ID>8d72cd78-4494-43d9-b5d7-65134ffcc517</ID>
-<LimitPos Value="-3" Scale="None" Actual="-3"/>
+<LimitPos Value="-10" Scale="None" Actual="-10"/>
 <Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
 <Stiffness Value="1" Scale="Kilo" Actual="1000"/>
@@ -308,7 +258,7 @@
 <UpperLimit>
 <Name>d91cfd14-78b9-4070-bcf7-0d87c9262230</Name>
 <ID>d91cfd14-78b9-4070-bcf7-0d87c9262230</ID>
-<LimitPos Value="3" Scale="None" Actual="3"/>
+<LimitPos Value="10" Scale="None" Actual="10"/>
 <Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
 <Stiffness Value="1" Scale="Kilo" Actual="1000"/>
@@ -452,7 +402,7 @@
 <EndTime Value="2" Scale="None" Actual="2"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <StructureID>5d357e1c-cd5a-447e-a2fb-8d0d04a0702e</StructureID>
@@ -460,11 +410,35 @@
 <Velocity Value="-1" Scale="None" Actual="-1"/>
 <DisableMotorWhenDone>True</DisableMotorWhenDone>
 </Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.Force</ClassName>
+<Name>Stimulus_1</Name>
+<ID>269b6078-8b07-45b4-a09e-cd1fd2a4e01e</ID>
+<StartTime Value="0.5" Scale="None" Actual="0.5"/>
+<EndTime Value="0.6" Scale="None" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>5d357e1c-cd5a-447e-a2fb-8d0d04a0702e</StructureID>
+<PartID>8d9d8af6-a1ff-4861-bb2d-9983261e85ed</PartID>
+<PositionX Value="0" Scale="None" Actual="0"/>
+<PositionY Value="0" Scale="None" Actual="0"/>
+<PositionZ Value="0" Scale="None" Actual="0"/>
+<ForceX Value="100" Scale="None" Actual="100"/>
+<ForceY Value="0" Scale="None" Actual="0"/>
+<ForceZ Value="0" Scale="None" Actual="0"/>
+<TorqueX Value="0" Scale="None" Actual="0"/>
+<TorqueY Value="0" Scale="None" Actual="0"/>
+<TorqueZ Value="0" Scale="None" Actual="0"/>
+</Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>63d4ca6e-fa93-4509-b126-6fde289541d0</Name>
-<ID>63d4ca6e-fa93-4509-b126-6fde289541d0</ID>
+<Name>6b1620c5-7e85-4106-8739-9e7d8e8881bd</Name>
+<ID>6b1620c5-7e85-4106-8739-9e7d8e8881bd</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -542,9 +516,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 <Form>
 <ID>f6d75a59-de30-46d8-bf56-f76c13bc613c</ID>
@@ -558,7 +532,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/27/2013 14:14:16"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/31/2013 07:09:05"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -991,7 +965,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="3" Space="100"&gt;
-      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;18f4fcc9-bd4f-4ac7-a3f2-c08212e9b146&lt;/ID&gt;
@@ -1006,7 +980,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;c3fe5f8c-0199-4f79-9d26-6a1b99a6a631&lt;/ID&gt;

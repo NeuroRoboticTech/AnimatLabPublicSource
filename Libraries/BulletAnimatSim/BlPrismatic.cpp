@@ -312,7 +312,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
         }
 		else
         {
-			m_btPrismatic->setPoweredLinMotor(false);
+            TurnMotorOff();
 
             if(m_bMotorOn)
             {
@@ -337,6 +337,30 @@ float BlPrismatic::GetCurrentBtPosition()
         return m_btPrismatic->getLinearPos();
     else
         return 0;
+}
+
+void BlPrismatic::TurnMotorOff()
+{
+    if(m_btPrismatic)
+    {
+        if(m_lpFriction && m_lpFriction->Enabled())
+        {
+            //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
+            //that were specified in vortex engine. This way I get similar behavior between the two.
+            float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
+            m_btPrismatic->setMaxLinMotorForce(maxMotorImpulse);
+            m_btPrismatic->setTargetLinMotorVelocity(0);
+    	    m_btPrismatic->setPoweredLinMotor(true);
+        }
+        else
+    	    m_btPrismatic->setPoweredLinMotor(false);
+    }
+}
+
+void BlPrismatic::SetConstraintFriction()
+{
+    if(m_btPrismatic && !m_bJointLocked && !m_bMotorOn && m_bEnabled)
+        TurnMotorOff();
 }
 
 

@@ -23,6 +23,8 @@ namespace BulletAnimatSim
 
                 virtual float GetCurrentBtPosition();
 
+                virtual void TurnMotorOff();
+
             public:
 				BlPrismatic();
 				virtual ~BlPrismatic();
@@ -52,6 +54,8 @@ namespace BulletAnimatSim
                 virtual void Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
                 virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce);
                 virtual void Physics_MaxForce(float fltVal);
+
+                virtual void SetConstraintFriction();
             };
 
 		}		//Joints
