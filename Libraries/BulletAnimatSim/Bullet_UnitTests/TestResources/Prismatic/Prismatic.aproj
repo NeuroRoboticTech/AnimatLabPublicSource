@@ -17,7 +17,7 @@
 <Environment>
 <PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
-<MouseSpringStiffness Value="0.5" Scale="None" Actual="0.5"/>
+<MouseSpringStiffness Value="50" Scale="None" Actual="50"/>
 <MouseSpringDamping Value="200" Scale="None" Actual="200"/>
 <StabilityScale>1</StabilityScale>
 <LinearCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
@@ -193,8 +193,8 @@
 <MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
-<Mass Value="1" Scale="Kilo" Actual="1000"/>
+<Density Value="1.49" Scale="Kilo" Actual="1490"/>
+<Mass Value="1.49" Scale="Kilo" Actual="1490"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -221,7 +221,7 @@
 <Texture/>
 <LocalPosition>
 <X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="centi" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
@@ -259,9 +259,9 @@
 <Name>d91cfd14-78b9-4070-bcf7-0d87c9262230</Name>
 <ID>d91cfd14-78b9-4070-bcf7-0d87c9262230</ID>
 <LimitPos Value="10" Scale="None" Actual="10"/>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="10" Scale="None" Actual="10"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="1" Scale="Kilo" Actual="1000"/>
+<Stiffness Value="10" Scale="Kilo" Actual="10000"/>
 </UpperLimit>
 <MaxForce Value="100" Scale="None" Actual="100"/>
 <MaxVelocity Value="100" Scale="None" Actual="100"/>
@@ -437,8 +437,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>6b1620c5-7e85-4106-8739-9e7d8e8881bd</Name>
-<ID>6b1620c5-7e85-4106-8739-9e7d8e8881bd</ID>
+<Name>963ce3b6-69c5-4685-bd63-7416d39b6883</Name>
+<ID>963ce3b6-69c5-4685-bd63-7416d39b6883</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -516,9 +516,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>2</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <ID>f6d75a59-de30-46d8-bf56-f76c13bc613c</ID>
@@ -532,7 +532,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/31/2013 07:09:05"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/08/2013 08:52:58"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -965,7 +965,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="3" Space="100"&gt;
-      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;18f4fcc9-bd4f-4ac7-a3f2-c08212e9b146&lt;/ID&gt;
@@ -980,7 +980,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;c3fe5f8c-0199-4f79-9d26-6a1b99a6a631&lt;/ID&gt;

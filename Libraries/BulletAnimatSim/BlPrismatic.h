@@ -16,7 +16,7 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlPrismatic : public BlMotorizedJoint, public AnimatSim::Environment::Joints::Prismatic, public OsgAnimatSim::Environment::Joints::OsgPrismatic     
 			{
 			protected:
-				btSliderConstraint *m_btPrismatic;
+                btGeneric6DofConstraint *m_btPrismatic;
 
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
