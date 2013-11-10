@@ -46,7 +46,8 @@ void BlPrismaticLimit::SetLimitValues()
 {
 	BlPrismatic *lpPrismatic = dynamic_cast<BlPrismatic *>(m_lpJoint);
 
-    if(lpPrismatic)
+	//Do not want to call this repeatedly if we are the flap limit.
+    if(lpPrismatic && !m_bIsShowPosition)
         lpPrismatic->SetLimitValues();
 }
 

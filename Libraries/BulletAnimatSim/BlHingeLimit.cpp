@@ -45,7 +45,8 @@ void BlHingeLimit::SetLimitValues()
 {
 	BlHinge *lpHinge = dynamic_cast<BlHinge *>(m_lpJoint);
 
-    if(lpHinge)
+	//Do not want to call this repeatedly if we are the flap limit.
+    if(lpHinge && !m_bIsShowPosition)
         lpHinge->SetLimitValues();
 }
 

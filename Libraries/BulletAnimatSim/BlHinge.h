@@ -37,7 +37,8 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The bullet hinge class.
-				btHingeConstraint *m_btHinge;
+                btGeneric6DofConstraint *m_btHinge;
+				//btHingeConstraint *m_btHinge;
 
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;

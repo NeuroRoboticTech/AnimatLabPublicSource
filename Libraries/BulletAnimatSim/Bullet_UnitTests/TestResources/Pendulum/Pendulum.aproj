@@ -5,7 +5,7 @@
 <Version>3</Version>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Pendulum\</ProjectPath>
-<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -37,12 +37,33 @@
 <MaterialTypes>
 <MaterialType>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.MaterialTypeBullet</ClassName>
+<ClassName>AnimatGUI.DataObjects.Physical.MaterialTypeVortex</ClassName>
 <ID>DEFAULTMATERIAL</ID>
 <Name>Default</Name>
 <FrictionLinearPrimary Value="1" Scale="None" Actual="1"/>
+<FrictionLinearSecondary Value="1" Scale="None" Actual="1"/>
+<FrictionAngularNormal Value="0" Scale="None" Actual="0"/>
 <FrictionAngularPrimary Value="0" Scale="None" Actual="0"/>
+<FrictionAngularSecondary Value="0" Scale="None" Actual="0"/>
+<FrictionLinearPrimaryMax Value="10" Scale="None" Actual="10"/>
+<FrictionLinearSecondaryMax Value="10" Scale="None" Actual="10"/>
+<FrictionAngularNormalMax Value="10" Scale="None" Actual="10"/>
+<FrictionAngularPrimaryMax Value="10" Scale="None" Actual="10"/>
+<FrictionAngularSecondaryMax Value="10" Scale="None" Actual="10"/>
+<Compliance Value="0.1" Scale="micro" Actual="1e-007"/>
+<Damping Value="5000" Scale="Kilo" Actual="5e+006"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
+<SlipLinearPrimary Value="0" Scale="None" Actual="0"/>
+<SlipLinearSecondary Value="0" Scale="None" Actual="0"/>
+<SlipAngularNormal Value="0" Scale="None" Actual="0"/>
+<SlipAngularPrimary Value="0" Scale="None" Actual="0"/>
+<SlipAngularSecondary Value="0" Scale="None" Actual="0"/>
+<SlideLinearPrimary Value="0" Scale="None" Actual="0"/>
+<SlideLinearSecondary Value="0" Scale="None" Actual="0"/>
+<SlideAngularNormal Value="0" Scale="None" Actual="0"/>
+<SlideAngularPrimary Value="0" Scale="None" Actual="0"/>
+<SlideAngularSecondary Value="0" Scale="None" Actual="0"/>
+<MaximumAdhesion Value="0" Scale="None" Actual="0"/>
 </MaterialType>
 </MaterialTypes>
 <Organisms/>
@@ -74,7 +95,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -104,7 +125,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>1,-0,0,0,-0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -176,7 +197,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,5,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,5,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -206,7 +227,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-35.638" Scale="centi" Actual="-0.35638"/>
 </Rotation>
-<LocalMatrix>0.999981,-0.00622003,0,0,0.00622003,0.999981,0,0,0,0,1,0,0,5,0,1</LocalMatrix>
+<LocalMatrix>0.999981,-0.00621996,-0,0,0.00621996,0.999981,0,0,0,-0,1,0,0,5,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -269,7 +290,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>0.999981,-0.00622003,0,0,0.00622003,0.999981,0,0,0,0,1,0,-0.00466502,4.25001,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,-0.75,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Sphere</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Sphere</PartType>
@@ -296,7 +317,7 @@
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
 <Density Value="1.194" Scale="Mega" Actual="1.194e+006"/>
-<Mass Value="5" Scale="Kilo" Actual="5000"/>
+<Mass Value="5.001" Scale="Kilo" Actual="5001"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -313,7 +334,7 @@
 <Collisions>50</Collisions>
 <Joints>0</Joints>
 <RecFields>50</RecFields>
-<Simulation>50</Simulation>
+<Simulation>0</Simulation>
 </Transparencies>
 <IsVisible>True</IsVisible>
 <Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
@@ -329,14 +350,64 @@
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
-<Z Value="-90" Scale="None" Actual="-90"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0,0.75,0,1</LocalMatrix>
 <DraggerSize Value="0.3" Scale="None" Actual="0.3"/>
 <Type>Hinge</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
 <Size Value="20" Scale="milli" Actual="0.02"/>
-<EnableLimits>False</EnableLimits>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
+<ID>e6783ceb-0b89-4a05-825a-f9bf44cd5eb6</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
+<ID>4b232b33-fa63-404b-9102-7b12eed39ed2</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
+<ID>86f5cb3a-dd4c-4741-a58f-8516240c75a1</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
+<ID>5a70cb4a-b848-4d81-a131-0774cceba0e1</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxation</ClassName>
+<ID>9e8d4ade-fb7e-4966-aa2b-8e2a4f0cf9fb</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+</Relaxation5>
 <Friction>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
@@ -416,7 +487,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,2,-1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-1,2,-1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -453,7 +524,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,2,1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,1,2,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -507,7 +578,7 @@
 <StructureID>5f961bc9-8a57-4b5e-b48f-e224985fafdd</StructureID>
 <PartID>25dfcd7d-2eb3-410a-b330-c31b681351d3</PartID>
 <Velocity Value="0.2" Scale="None" Actual="0.2"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -543,9 +614,9 @@
 <PositionX Value="0" Scale="None" Actual="0"/>
 <PositionY Value="0" Scale="None" Actual="0"/>
 <PositionZ Value="0" Scale="None" Actual="0"/>
-<ForceX Value="20" Scale="None" Actual="20"/>
+<ForceX Value="0" Scale="None" Actual="0"/>
 <ForceY Value="0" Scale="None" Actual="0"/>
-<ForceZ Value="0" Scale="None" Actual="0"/>
+<ForceZ Value="20" Scale="None" Actual="20"/>
 <TorqueX Value="0" Scale="None" Actual="0"/>
 <TorqueY Value="0" Scale="None" Actual="0"/>
 <TorqueZ Value="0" Scale="None" Actual="0"/>
@@ -553,8 +624,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>a32a1251-9f0b-4401-aa4d-768d0744137a</Name>
-<ID>a32a1251-9f0b-4401-aa4d-768d0744137a</ID>
+<Name>4dba8c4e-abe8-4393-a39e-675135b0dbaf</Name>
+<ID>4dba8c4e-abe8-4393-a39e-675135b0dbaf</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -648,7 +719,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/31/2013 07:00:23"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/10/2013 10:10:36"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -1081,7 +1152,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="3" Space="100"&gt;
-      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;d67fdf95-5588-49a6-b376-3d2153a67987&lt;/ID&gt;
@@ -1096,7 +1167,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;86c52e86-9e87-4e6b-b22d-e48ac14925d2&lt;/ID&gt;

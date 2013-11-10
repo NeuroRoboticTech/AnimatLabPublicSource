@@ -47,9 +47,6 @@ BlHinge::BlHinge()
 
 	m_lpLowerLimit->IsLowerLimit(true);
 	m_lpUpperLimit->IsLowerLimit(false);
-
-    //Need to adjust the joint graphics offset. It is different for the hinge joint.
-    m_vJointGraphicsRotOffset.Set(0, 0, osg::PI/2);
 }
 
 /**
@@ -84,23 +81,35 @@ void BlHinge::SetLimitValues()
         if(m_bEnableLimits)
         {
             m_bJointLocked = false;
-            m_btHinge->setLimit((btScalar) m_lpLowerLimit->LimitPos(), (btScalar) m_lpUpperLimit->LimitPos());
 
-            float fltKp = m_lpUpperLimit->Stiffness();
-            float fltKd = m_lpUpperLimit->Damping();
-            float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            m_btHinge->setLinearLowerLimit(btVector3(0, 0, 0));
+            m_btHinge->setLinearUpperLimit(btVector3(0, 0, 0));
+
+            //Disable rotation about the axis for the prismatic joint.
+		    m_btHinge->setAngularLowerLimit(btVector3(m_lpLowerLimit->LimitPos(),0,0));
+		    m_btHinge->setAngularUpperLimit(btVector3(m_lpUpperLimit->LimitPos(),0,0));
+
+            //float fltKp = m_lpUpperLimit->Stiffness();
+            //float fltKd = m_lpUpperLimit->Damping();
+            //float fltH = m_lpSim->PhysicsTimeStep()*1000;
             
-            float fltErp = 0.9; //(fltH*fltKp)/((fltH*fltKp) + fltKd);
-            float fltCfm = 0.1; //1/((fltH*fltKp) + fltKd);
+            //float fltErp = 0.9; //(fltH*fltKp)/((fltH*fltKp) + fltKd);
+            //float fltCfm = 0.1; //1/((fltH*fltKp) + fltKd);
 
-            m_btHinge->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, -1);
-            m_btHinge->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, -1);
+            //m_btHinge->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, -1);
+            //m_btHinge->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, -1);
         }
         else
         {
             //To disable limits in bullet we need the lower limit to be bigger than the upper limit
             m_bJointLocked = false;
-            m_btHinge->setLimit(1, -1);
+
+            m_btHinge->setLinearLowerLimit(btVector3(0, 0, 0));
+            m_btHinge->setLinearUpperLimit(btVector3(0, 0, 0));
+
+            //Disable rotation about the axis for the prismatic joint.
+		    m_btHinge->setAngularLowerLimit(btVector3(1,0,0));
+		    m_btHinge->setAngularUpperLimit(btVector3(-1,0,0));
         }
     }
 }
@@ -179,30 +188,6 @@ void BlHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	//CStdFPoint vHingePos = lpVsChild->GetOSGWorldCoords() + m_lpThisJoint->Position();
-	//CStdFPoint vParentPos = m_lpParent->AbsolutePosition();
-	//CStdFPoint vChildPos = m_lpChild->AbsolutePosition();
-
- //   CStdFPoint vRelativeToParent = vHingePos - vParentPos;
- //   CStdFPoint vRelativeToChild = vHingePos - vChildPos;
-
- //   btVector3 vParentRelPos((btScalar) vRelativeToParent.x, (btScalar) vRelativeToParent.y, (btScalar)  vRelativeToParent.z); 
- //   btVector3 vChildRelPos((btScalar) vRelativeToChild.x, (btScalar) vRelativeToChild.y, (btScalar)  vRelativeToChild.z); 
- //   //btVector3 vParentRelPos((btScalar) vHingePos.x, (btScalar) vHingePos.y, (btScalar)  vHingePos.z); 
- //  // btVector3 vChildRelPos((btScalar) vChildPos.x, (btScalar) vChildPos.y, (btScalar)  vChildPos.z); 
-
- //   CStdFPoint vLocalRot = EulerRotationFromMatrix(this->GetOSGWorldMatrix());
-	//osg::Vec3d vNormAxis = NormalizeAxis(vLocalRot);
-	////btVector3 axis((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
-	//btVector3 axis1((double) vNormAxis[0], (double) vNormAxis[1], (double) vNormAxis[2]);
-	//btVector3 axis2(1, 0, 0);
- //  
-	//m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), vParentRelPos, vChildRelPos, axis1, axis2); 
-
-    //this is for testing purposes only. Will need to put this into the conversion system eventually.
-    //CStdFPoint vVortexToBulletRotOffset(-(osg::PI/2), 0, -(osg::PI/2));
-
-
     //Get the matrices for the joint relative to the child and parent.
     osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
     CStdFPoint vPos = m_lpThisMI->Position();
@@ -212,7 +197,8 @@ void BlHinge::SetupPhysics()
     btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
     btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
 
-	m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
+	//m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
+	m_btHinge = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
 
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 
@@ -235,12 +221,6 @@ void BlHinge::SetupPhysics()
 
 void BlHinge::CreateJoint()
 {
-    //FIX PHYSICS Temporary code to try and make bullet hinge rotation match vortex
-    //CStdFPoint vOffset(0, (osg::PI/2), -(osg::PI/2));
-    //CStdFPoint vOffset(0, 0, 0);
-    //CStdFPoint vNewRot = m_oRotation + vOffset;
-    //Rotation(vNewRot, false, false);
-
 	SetupGraphics();
 	SetupPhysics();
 }
@@ -324,7 +304,9 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 		if(bOn)
 		{
             m_bJointLocked = true;
-            m_btHinge->setLimit(fltPosition, fltPosition);
+
+		    m_btHinge->setAngularLowerLimit(btVector3(fltPosition,0,0));
+		    m_btHinge->setAngularUpperLimit(btVector3(fltPosition,0,0));
 		}
 		else if (m_bMotorOn)
 			Physics_EnableMotor(true, 0, fltMaxLockForce);
@@ -345,7 +327,9 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
                 m_lpThisJoint->WakeDynamics();
             }
 
-			m_btHinge->enableAngularMotor(true, fltDesiredVelocity, fltMaxForce);
+		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
+		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
+		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = fltMaxForce;
         }
 		else
         {
@@ -365,13 +349,13 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 void BlHinge::Physics_MaxForce(float fltVal)
 {
     if(m_btJoint && m_btHinge)
-        m_btHinge->setMaxMotorImpulse(fltVal);
+        m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = fltVal;
 }
 
 float BlHinge::GetCurrentBtPosition()
 {
     if(m_btJoint && m_btHinge)
-        return m_btHinge->getHingeAngle();
+        return m_btHinge->getRotationalLimitMotor(0)->m_currentPosition;
     else
         return 0;
 }
@@ -385,10 +369,12 @@ void BlHinge::TurnMotorOff()
             //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
             //that were specified in vortex engine. This way I get similar behavior between the two.
             float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
-            m_btHinge->enableAngularMotor(true, 0, maxMotorImpulse);
+		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
+		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
+		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = maxMotorImpulse;
         }
         else
-            m_btHinge->enableAngularMotor(false, m_fltDesiredVelocity, m_fltMaxForce);
+		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
     }
 }
 
