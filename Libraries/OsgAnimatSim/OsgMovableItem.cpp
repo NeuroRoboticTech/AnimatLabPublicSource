@@ -487,8 +487,21 @@ void OsgMovableItem::Physics_UpdateMatrix()
 	{
 		CStdFPoint vPos = m_lpThisMI->Position();
 		CStdFPoint vRot = m_lpThisMI->Rotation();
+        
+        if(!AddOsgNodeToParent())
+        {
+	        osg::Matrix osgParentMatrix = GetParentWorldMatrix();
+            osg::Matrix osgLocal = SetupMatrix(vPos, vRot);
+	        osg::Matrix osgWorldMT = osgLocal * osgParentMatrix;
+
+            osg::Vec3d vWorldPos = osgWorldMT.getTrans();
+            vPos.Set(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
+            vRot = EulerRotationFromMatrix(osgWorldMT);
+        }
+
 		LocalMatrix(SetupMatrix(vPos, vRot));
 		m_osgMT->setMatrix(m_osgLocalMatrix);
+        UpdateWorldMatrix();
 
 		if(m_osgDragger.valid())
 			m_osgDragger->SetupMatrix();

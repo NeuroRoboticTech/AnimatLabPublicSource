@@ -60,10 +60,9 @@ void OsgRigidBody::SetThisPointers()
 
 void OsgRigidBody::Physics_UpdateMatrix()
 {
-	OsgBody::Physics_UpdateMatrix();
-
-	if(m_lpThisRB)
-		m_lpThisRB->UpdatePhysicsPosFromGraphics();
+    OsgMovableItem::Physics_UpdateMatrix();
+    StartGripDrag();
+    EndGripDrag();
 }
  
 void OsgRigidBody::UpdatePositionAndRotationFromMatrix()
