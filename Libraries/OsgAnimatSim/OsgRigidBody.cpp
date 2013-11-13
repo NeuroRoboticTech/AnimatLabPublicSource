@@ -157,6 +157,14 @@ void OsgRigidBody::EndGripDrag()
             m_lpThisRB->CreateChildJoints();
         }
     }
+
+    if(m_lpThisRB && m_lpThisRB->IsRoot())
+    {
+        OsgMovableItem *lpOsgStruct = dynamic_cast<OsgMovableItem *>(m_lpThisRB->GetStructure());
+        if(lpOsgStruct)
+            lpOsgStruct->FinalMatrix(m_osgFinalMatrix);
+        Physics_UpdateAbsolutePosition();
+    }
 }
 
 

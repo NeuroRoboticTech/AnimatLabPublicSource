@@ -86,8 +86,15 @@ void OsgStructure::UpdatePositionAndRotationFromMatrix()
 	OsgMovableItem::UpdatePositionAndRotationFromMatrix();
 
 	if(m_lpOsgBody)
+    {
 		m_lpOsgBody->EndGripDrag();
+
+        //Get the new world matrix from the root body and update our world position.
+        m_osgFinalMatrix = m_lpOsgBody->FinalMatrix();
+        Physics_UpdateAbsolutePosition();
+    }
 }
+
 
 	}			// Environment
 }				//OsgAnimatSim

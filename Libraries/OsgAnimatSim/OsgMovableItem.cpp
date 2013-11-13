@@ -78,6 +78,13 @@ std::string OsgMovableItem::Physics_ID()
 		return "";
 }
 
+void OsgMovableItem::FinalMatrix(osg::Matrix vFinal)
+{
+    m_osgFinalMatrix = vFinal;
+    UpdateWorldMatrix();
+    Physics_UpdateAbsolutePosition();
+}
+
 #pragma region Selection-Code
 
 void OsgMovableItem::Physics_Selected(bool bValue, bool bSelectMultiple)  

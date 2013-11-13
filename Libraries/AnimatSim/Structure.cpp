@@ -119,8 +119,13 @@ void Structure::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeE
 	MovableItem::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 
 	///When we change the position of the structure we need to let the rigid body know that.
-	if(bUpdateMatrix && m_lpBody && m_lpBody->PhysicsMovableItem())
-		m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
+	if(m_lpBody && m_lpBody->PhysicsMovableItem())
+    {
+	    if(bUpdateMatrix)
+		    m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
+        else
+            m_lpBody->Callback()->PositionChanged();
+    }
 }
 
 /**

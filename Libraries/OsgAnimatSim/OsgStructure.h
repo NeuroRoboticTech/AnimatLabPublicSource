@@ -43,7 +43,7 @@ namespace OsgAnimatSim
 			virtual void Create();
 			virtual void ResetSimulation();
 			virtual void Physics_Resize() {};
-		};
+        };
 
 	}			// Environment
 }				//OsgAnimatSim

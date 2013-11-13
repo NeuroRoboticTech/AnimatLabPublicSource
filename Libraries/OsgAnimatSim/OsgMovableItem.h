@@ -90,6 +90,7 @@ namespace OsgAnimatSim
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};
 			virtual osg::Matrix LocalMatrix() {return m_osgLocalMatrix;};
 			virtual osg::Matrix FinalMatrix() {return m_osgFinalMatrix;};
+            virtual void FinalMatrix(osg::Matrix vFinal);
 
 			virtual void Physics_SetParent(MovableItem *lpParent)
 			{
