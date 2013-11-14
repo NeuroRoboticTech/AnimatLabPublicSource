@@ -1000,6 +1000,16 @@ osg::Geode ANIMAT_OSG_PORT *CreateCircle( int plane, int segments, float radius,
     return geode;
 }
 
+//To make a half-torus we need to to chance the following line
+//    ringDelta = 2.f * osg::PI / rings;
+// to be
+//    ringDelta = osg::PI / rings;
+// and to make the other half of the torus we need to change the followign lines
+//        cosTheta = cos(theta);
+//        sinTheta = sin(theta);
+// to be
+//        -cosTheta = cos(theta);
+//        -sinTheta = sin(theta);
 osg::Geometry ANIMAT_OSG_PORT *CreateTorusGeometry(float innerRadius, 
                                 float outerRadius, 
                                 int sides,
