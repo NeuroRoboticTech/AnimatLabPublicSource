@@ -384,7 +384,7 @@ bool VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWor
 {
 	VsMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
-	if(lpParent)
+	if(lpParent && m_lpVsChild)
 	{
 		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
 		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
@@ -393,12 +393,8 @@ bool VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWor
 		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
 		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
 
-		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
-
-		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
-
 		//Get the parent object.
-		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
+		osg::Matrix osgInverse = osg::Matrix::inverse(m_lpVsChild->GetWorldMatrix());
 
 		osg::Matrix osgCalc = osgWorldPos * osgInverse;
 

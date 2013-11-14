@@ -357,39 +357,33 @@ void OsgJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CS
 		CreateSelectedGraphics(strName);
 	}
 }
-//
-//bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
-//{
-//	OsgMovableItem *lpParent = m_lpThisVsMI->VsParent();
-//
-//	if(lpParent)
-//	{
-//		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-//		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-//		fltWorldZ *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-//
-//		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
-//		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
-//
-//		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
-//
-//		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
-//
-//		//Get the parent object.
-//		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
-//
-//		osg::Matrix osgCalc = osgWorldPos * osgInverse;
-//
-//		osg::Vec3 vCoord = osgCalc.getTrans();
-//		vLocalPos.Set(vCoord[0] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
-//				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
-//				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
-//		
-//		return true;
-//	}
-//
-//	return false;
-//}
+
+bool OsgJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+{
+	if(m_lpVsParent && m_lpVsChild)
+	{
+		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+		fltWorldZ *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+
+		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
+		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
+
+		//Get the parent object.
+		osg::Matrix osgInverse = osg::Matrix::inverse(m_lpVsChild->GetWorldMatrix());
+
+		osg::Matrix osgCalc = osgWorldPos * osgInverse;
+
+		osg::Vec3 vCoord = osgCalc.getTrans();
+		vLocalPos.Set(vCoord[0] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
+		
+		return true;
+	}
+
+	return false;
+}
 
 bool OsgJoint::Physics_SetData(const std::string &strDataType, const std::string &strValue)
 {
