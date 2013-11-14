@@ -81,6 +81,8 @@ namespace OsgAnimatSim
 			virtual void HideSelectedVertex();
             virtual void GetBaseValues() = 0;
 
+			virtual void CreateGeometry();
+
 		public:
 			OsgRigidBody();
 			virtual ~OsgRigidBody();

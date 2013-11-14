@@ -354,6 +354,16 @@ osg::MatrixTransform *OsgRigidBody::ParentOSG()
 		return GetOsgSimulator()->OSGRoot();
 }
 
+void OsgRigidBody::CreateGeometry() 
+{
+    InitializeGraphicsGeometry();
+
+    //Do not try to create the physics geometry here if we have a static joint because it will have already been 
+    //created in the parent object.
+    if(m_lpThisRB && !m_lpThisRB->HasStaticJoint())
+    	CreatePhysicsGeometry();
+}
+
 void OsgRigidBody::SetupPhysics()
 {
 	//If no geometry is defined then this part does not have a physics representation.
