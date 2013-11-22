@@ -20,7 +20,6 @@ BlRigidBody::BlRigidBody()
 {
     m_btCompoundShape = NULL;
     m_btCollisionShape = NULL;
-    m_btCompoundChildShape = NULL;
     m_btCollisionObject = NULL;
     m_btPart = NULL;
     m_osgbMotion = NULL;
@@ -343,7 +342,8 @@ void BlRigidBody::SetupOffsetCOM(const CStdFPoint &vCom)
 {
     //Swap the current collision shape into the compound collision shape so we can
     //make the collision shape a compound shape.
-    m_btCompoundChildShape = m_btCollisionShape;
+    btCollisionShape *btChildShape = m_btCollisionShape;
+    m_aryCompoundChildShapes.Add(m_btCollisionShape);
 
     //Now create the new compound shape
     m_btCompoundShape = new btCompoundShape();
@@ -355,14 +355,15 @@ void BlRigidBody::SetupOffsetCOM(const CStdFPoint &vCom)
 	btTransform localTransform;
     localTransform.setIdentity();
     localTransform.setOrigin(btVector3(-vCom.x, -vCom.y, -vCom.z));
-    m_btCompoundShape->addChildShape(localTransform, m_btCompoundChildShape);
+    m_btCompoundShape->addChildShape(localTransform, btChildShape);
 }
 
 void BlRigidBody::CreateStaticChildren(const CStdFPoint &vCom)
 {
     //Swap the current collision shape into the compound collision shape so we can
     //make the collision shape a compound shape.
-    m_btCompoundChildShape = m_btCollisionShape;
+    btCollisionShape *btChildShape = m_btCollisionShape;
+    m_aryCompoundChildShapes.Add(m_btCollisionShape);
 
     //Now create the new compound shape
     m_btCompoundShape = new btCompoundShape();
@@ -374,7 +375,7 @@ void BlRigidBody::CreateStaticChildren(const CStdFPoint &vCom)
 	btTransform localTransform;
     localTransform.setIdentity();
     localTransform.setOrigin(btVector3(-vCom.x, -vCom.y, -vCom.z));
-    m_btCompoundShape->addChildShape(localTransform, m_btCompoundChildShape);
+    m_btCompoundShape->addChildShape(localTransform, btChildShape);
 
     //Then add all static child shapes
 	int iCount = m_lpThisRB->ChildParts()->GetSize();
@@ -481,10 +482,12 @@ void BlRigidBody::DeleteCollisionGeometry()
         int iCount = m_btCompoundShape->getNumChildShapes();
         for(int iIdx=0; iIdx<iCount; iIdx++)
             m_btCompoundShape->removeChildShapeByIndex(0);
+
+        m_aryCompoundChildShapes.RemoveAll();
+
         delete m_btCompoundShape;
         m_btCompoundShape = NULL;
         m_btCollisionShape = NULL;
-        m_btCompoundChildShape = NULL;
     }
     else if(m_btCollisionShape)
         {delete m_btCollisionShape; m_btCollisionShape = NULL;}

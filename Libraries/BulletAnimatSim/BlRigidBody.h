@@ -88,9 +88,10 @@ namespace BulletAnimatSim
 		{
 		protected:
             btCollisionShape *m_btCollisionShape;
-            btCollisionShape *m_btCompoundChildShape;
             btCollisionObject *m_btCollisionObject;
             btCompoundShape *m_btCompoundShape;
+            CStdPtrArray<btCollisionShape> m_aryCompoundChildShapes;
+
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
             BroadphaseNativeTypes m_eBodyType;
