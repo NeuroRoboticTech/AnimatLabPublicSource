@@ -293,50 +293,7 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
 
 void BlSimulator::SetSimulationStabilityParams()
 {
-    //FIX PHYSICS
-	//if(m_uUniverse)
-	//{
-	///*	if(m_bCalcCriticalSimParams)
-	//	{*/
-	//		//VxReal halflife = 5;
-	//		//m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
-	//		//m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
-	//		//m_uUniverse->setCriticalConstraintParameters(0, halflife);
-	//	/*}
-	//	else
-	//	{
-	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
-	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearDamping(m_fltLinearDamping);
-	//		m_uUniverse->getSolverParameters(0)->setConstraintLinearKineticLoss(m_fltLinearKineticLoss);
-	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
-	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
-	//		m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
-	//	}*/
-	//	 
-	//	//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
-	//	//sp->setConstraintLinearKineticLoss(0.0006);
-	//	//sp->setConstraintLinearKineticLoss(0.0006);
-	//	//sp->setConstraintLinearCompliance(1e-5);
-	//	//sp->setConstraintAngularCompliance(1e-5);
-	//	//sp->setConstraintLinearDamping(1e4);
-	//	//sp->setConstraintAngularDamping(1e4);
 
-	//	VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
-	//	sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*m_fltStabilityScale);
-	//	sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*m_fltStabilityScale);
-	//	sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/m_fltStabilityScale);
-	//	sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/m_fltStabilityScale);
-	//	sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*m_fltStabilityScale);
-	//	sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*m_fltStabilityScale);
-
-	//	TRACE_DETAIL("Reset simulation stability params\r\n");
-	//	TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
-	//	TRACE_DETAIL("Angular Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularDamping()) + "\r\n");
-	//	TRACE_DETAIL("Angular Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss()) + "\r\n");
-	//	TRACE_DETAIL("Linear Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance()) + "\r\n");
-	//	TRACE_DETAIL("Linear Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping()) + "\r\n");
-	//	TRACE_DETAIL("Linear Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss()) + "\r\n");
-	//}
 }
 
 //This function initializes the Vortex related
@@ -478,16 +435,8 @@ void BlSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 	osg::Vec3 vL = osgFinal.getTrans();
 	vPos.Set(vL.x(), vL.y(), vL.z());
 	vPos.ClearNearZero();
-		
-    //FIX PHYSICS
-	//Now lets get the euler angle rotation
-	//Vx::VxReal44 vxTM;
-	//VxOSG::copyOsgMatrix_to_VxReal44(osgFinal, vxTM);
-	//Vx::VxTransform vTrans(vxTM);
-	//Vx::VxReal3 vEuler;
-	//vTrans.getRotationEulerAngles(vEuler);
-	//vRot.Set(vEuler[0], vEuler[1] ,vEuler[2]);
-	//vRot.ClearNearZero();
+
+    vRot = EulerRotationFromMatrix(osgFinal);
 }
 
 void BlSimulator::Initialize(int argc, const char **argv)

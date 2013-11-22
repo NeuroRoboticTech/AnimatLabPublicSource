@@ -49,6 +49,18 @@ Namespace DataObjects.Physical.Bodies
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowUserAdd() As Boolean
+            Get
+                'Torus is not currently supported in the bullet physics engine.
+                If Util.Application.SimPhysicsSystem = "Bullet" Then
+                    Return False
+                Else
+                    Return True
+                End If
+            End Get
+        End Property
+
         Public Overridable Property OuterRadius() As AnimatGUI.Framework.ScaledNumber
             Get
                 Return m_snOuterRadius

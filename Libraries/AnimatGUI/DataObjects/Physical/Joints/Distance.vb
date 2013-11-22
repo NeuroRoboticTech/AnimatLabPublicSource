@@ -44,6 +44,18 @@ Namespace DataObjects.Physical.Joints
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowUserAdd() As Boolean
+            Get
+                'Distance joint is not currently supported in the bullet physics engine.
+                If Util.Application.SimPhysicsSystem = "Bullet" Then
+                    Return False
+                Else
+                    Return True
+                End If
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)

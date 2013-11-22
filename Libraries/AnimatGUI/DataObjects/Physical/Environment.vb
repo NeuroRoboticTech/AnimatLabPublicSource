@@ -1058,8 +1058,10 @@ Namespace DataObjects.Physical
                                         "Mouse Spring Settings", "Sets the damping of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stability Scale", m_fltStabilityScale.GetType(), "StabilityScale", _
-                                        "World Stability", "Scales the stability parameters linearly using this scale factor.", m_fltStabilityScale))
+            If Util.Application.SimPhysicsSystem = "Vortex" Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stability Scale", m_fltStabilityScale.GetType(), "StabilityScale", _
+                                            "World Stability", "Scales the stability parameters linearly using this scale factor.", m_fltStabilityScale))
+            End If
 
             'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Calc Sim Params", Me.CalculateCriticalSimulationParams.GetType(), "CalculateCriticalSimulationParams", _
             '                            "World Stability", "Determines if the critical simulation params are automatically calculated or are specified manually.", Me.CalculateCriticalSimulationParams))

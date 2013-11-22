@@ -315,14 +315,7 @@ void OsgJoint::Physics_UpdateMatrix()
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
-
-    //FIX PHYSICS
-	//Now lets get the localmatrix from the child object and use that for our offsetmatrix
-	//OsgBody *lpVsChild = dynamic_cast<OsgBody *>(m_lpThisJoint->Child());
-	//if(lpVsChild)
-	//	ChildOffsetMatrix(lpVsChild->LocalMatrix());
-
-	//If we are here then we did not have a physics component, just and OSG one.
+    //If we are here then we did not have a physics component, just and OSG one.
 	Physics_UpdateAbsolutePosition();
 }
 

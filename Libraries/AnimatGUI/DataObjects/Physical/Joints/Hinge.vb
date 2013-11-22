@@ -254,7 +254,7 @@ Namespace DataObjects.Physical.Joints
                                             "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
             Else
                 m_doLowerLimit.BuildProperties(propTable, False, "Lower", "LowerLimit.")
-                m_doUpperLimit.BuildProperties(propTable, True, "Upper", "UpperLimit.")
+                m_doUpperLimit.BuildProperties(propTable, False, "Upper", "UpperLimit.")  'Note: We need to change includeotherprops to True when constraint stiff/damping supported again.
             End If
 
             pbNumberBag = m_snMaxForce.Properties
