@@ -3,6 +3,7 @@
 <SimulationFile>Fluids.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Fluids\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>

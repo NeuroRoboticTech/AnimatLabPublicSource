@@ -3,6 +3,7 @@
 <SimulationFile>Terrain.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Terrain\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>

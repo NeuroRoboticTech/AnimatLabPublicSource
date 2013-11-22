@@ -591,6 +591,12 @@
     <Compile Include="Forms\ConfirmRelabel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ConvertPhysics.Designer.vb">
+      <DependentUpon>ConvertPhysics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConvertPhysics.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ErrorDisplay.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -855,6 +861,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfirmRelabel.resx">
       <DependentUpon>ConfirmRelabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConvertPhysics.resx">
+      <DependentUpon>ConvertPhysics.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorDisplay.resx">
       <DependentUpon>ErrorDisplay.vb</DependentUpon>

@@ -3,6 +3,7 @@
 <SimulationFile>FallingEllipsoidOnPlane.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingEllipsoidOnPlane\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>

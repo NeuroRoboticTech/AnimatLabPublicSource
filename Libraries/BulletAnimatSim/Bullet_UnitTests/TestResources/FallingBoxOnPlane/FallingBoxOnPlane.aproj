@@ -3,6 +3,7 @@
 <SimulationFile>FallingBoxOnPlane.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingBoxOnPlane\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>

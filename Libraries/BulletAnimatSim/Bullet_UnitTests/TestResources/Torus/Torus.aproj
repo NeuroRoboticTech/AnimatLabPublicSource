@@ -3,6 +3,7 @@
 <SimulationFile>Torus.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Vortex</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Torus\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>

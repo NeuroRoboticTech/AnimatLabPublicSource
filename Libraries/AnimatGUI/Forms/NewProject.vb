@@ -48,15 +48,19 @@ Namespace Forms
         Friend WithEvents btnOk As System.Windows.Forms.Button
         Friend WithEvents lblLocation As System.Windows.Forms.Label
         Friend WithEvents txtLocation As System.Windows.Forms.TextBox
+        Friend WithEvents cboPhysicsEngine As System.Windows.Forms.ComboBox
+        Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents btnBrowseLocation As System.Windows.Forms.Button
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.lblProjectName = New System.Windows.Forms.Label
-            Me.lblLocation = New System.Windows.Forms.Label
-            Me.txtProjectName = New System.Windows.Forms.TextBox
-            Me.txtLocation = New System.Windows.Forms.TextBox
-            Me.btnBrowseLocation = New System.Windows.Forms.Button
-            Me.btnCancel = New System.Windows.Forms.Button
-            Me.btnOk = New System.Windows.Forms.Button
+            Me.lblProjectName = New System.Windows.Forms.Label()
+            Me.lblLocation = New System.Windows.Forms.Label()
+            Me.txtProjectName = New System.Windows.Forms.TextBox()
+            Me.txtLocation = New System.Windows.Forms.TextBox()
+            Me.btnBrowseLocation = New System.Windows.Forms.Button()
+            Me.btnCancel = New System.Windows.Forms.Button()
+            Me.btnOk = New System.Windows.Forms.Button()
+            Me.cboPhysicsEngine = New System.Windows.Forms.ComboBox()
+            Me.Label1 = New System.Windows.Forms.Label()
             Me.SuspendLayout()
             '
             'lblProjectName
@@ -104,7 +108,7 @@ Namespace Forms
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(160, 144)
+            Me.btnCancel.Location = New System.Drawing.Point(160, 154)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 13
@@ -113,16 +117,37 @@ Namespace Forms
             'btnOk
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.btnOk.Location = New System.Drawing.Point(88, 144)
+            Me.btnOk.Location = New System.Drawing.Point(88, 154)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 12
             Me.btnOk.Text = "Ok"
             '
+            'cboPhysicsEngine
+            '
+            Me.cboPhysicsEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboPhysicsEngine.FormattingEnabled = True
+            Me.cboPhysicsEngine.Items.AddRange(New Object() {"Bullet", "Vortex"})
+            Me.cboPhysicsEngine.Location = New System.Drawing.Point(8, 116)
+            Me.cboPhysicsEngine.Name = "cboPhysicsEngine"
+            Me.cboPhysicsEngine.Size = New System.Drawing.Size(288, 21)
+            Me.cboPhysicsEngine.TabIndex = 14
+            '
+            'Label1
+            '
+            Me.Label1.Location = New System.Drawing.Point(8, 99)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(280, 16)
+            Me.Label1.TabIndex = 15
+            Me.Label1.Text = "Physics Engine"
+            Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopCenter
+            '
             'NewProject
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(312, 176)
+            Me.ClientSize = New System.Drawing.Size(312, 186)
+            Me.Controls.Add(Me.Label1)
+            Me.Controls.Add(Me.cboPhysicsEngine)
             Me.Controls.Add(Me.btnCancel)
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.btnBrowseLocation)
@@ -142,6 +167,21 @@ Namespace Forms
 #End Region
 
 #Region " Attributes "
+
+        Protected m_bAllowUserToChoosePhysicsSystem As Boolean = True
+
+#End Region
+
+#Region " Properties "
+
+        Public Property AllowUserToChoosePhysicsSystem() As Boolean
+            Get
+                Return m_bAllowUserToChoosePhysicsSystem
+            End Get
+            Set(ByVal value As Boolean)
+                m_bAllowUserToChoosePhysicsSystem = value
+            End Set
+        End Property
 
 #End Region
 
@@ -236,6 +276,13 @@ Namespace Forms
                 m_btnCancel = Me.btnCancel
 
                 txtLocation.Text = Util.Application.DefaultNewFolder
+
+                If Not m_bAllowUserToChoosePhysicsSystem Then
+                    cboPhysicsEngine.Enabled = False
+                    cboPhysicsEngine.SelectedText = Util.Application.SimPhysicsSystem
+                Else
+                    cboPhysicsEngine.SelectedIndex = 0
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

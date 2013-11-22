@@ -210,6 +210,12 @@ Namespace DataObjects
             End Get
         End Property
 
+        Public Overridable ReadOnly Property SimPhysicsSystem() As String
+            Get
+                Return Util.Application.SimPhysicsSystem
+            End Get
+        End Property
+
         Public Overridable Property SetSimulationEnd() As Boolean
             Get
                 Return m_bSetSimEnd
@@ -809,6 +815,9 @@ Namespace DataObjects
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics", SimPhysicsSystem.GetType(), "SimPhysicsSystem", _
+                                        "Settings", "The physics system for this simulation.", SimPhysicsSystem, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("API File", m_strAPI_File.GetType(), "APIFile", _
                                         "Settings", "APIFile", m_strAPI_File))

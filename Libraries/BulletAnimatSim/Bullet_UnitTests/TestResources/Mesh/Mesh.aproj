@@ -3,9 +3,10 @@
 <SimulationFile>Mesh.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Mesh\</ProjectPath>
-<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -37,7 +38,7 @@
 <MaterialTypes>
 <MaterialType>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>
+<ClassName>AnimatGUI.DataObjects.Physical.MaterialTypeVortex</ClassName>
 <ID>DEFAULTMATERIAL</ID>
 <Name>Default</Name>
 <FrictionLinearPrimary Value="1" Scale="None" Actual="1"/>
@@ -50,8 +51,8 @@
 <FrictionAngularNormalMax Value="10" Scale="None" Actual="10"/>
 <FrictionAngularPrimaryMax Value="10" Scale="None" Actual="10"/>
 <FrictionAngularSecondaryMax Value="10" Scale="None" Actual="10"/>
-<Compliance Value="1" Scale="nano" Actual="1e-009"/>
-<Damping Value="50" Scale="Giga" Actual="5e+010"/>
+<Compliance Value="0.1" Scale="micro" Actual="1e-007"/>
+<Damping Value="5000" Scale="Kilo" Actual="5e+006"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
 <SlipLinearPrimary Value="0" Scale="None" Actual="0"/>
 <SlipLinearSecondary Value="0" Scale="None" Actual="0"/>
@@ -217,15 +218,22 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
-<Mass Value="95.456" Scale="None" Actual="95.456"/>
+<Density Value="1.23" Scale="Kilo" Actual="1230"/>
+<Mass Value="0.117" Scale="Kilo" Actual="117"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -273,14 +281,21 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
+<Density Value="0" Scale="None" Actual="0"/>
 <Mass Value="0" Scale="None" Actual="0"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
@@ -431,14 +446,21 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </BuoyancyCenter>
 <BuoyancyScale>1</BuoyancyScale>
-<Drag>
+<LinearDrag>
 <X Value="1" Scale="None" Actual="1"/>
 <Y Value="1" Scale="None" Actual="1"/>
 <Z Value="1" Scale="None" Actual="1"/>
-</Drag>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
+<Density Value="0" Scale="None" Actual="0"/>
 <Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
@@ -547,8 +569,8 @@
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>df584d99-f5dd-41fc-8a1e-9b40ed73d9a7</Name>
-<ID>df584d99-f5dd-41fc-8a1e-9b40ed73d9a7</ID>
+<Name>a04c1de4-4b6c-4061-974b-7ae4b77947a3</Name>
+<ID>a04c1de4-4b6c-4061-974b-7ae4b77947a3</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -626,9 +648,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>2</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <ID>7abf38bb-25f1-43aa-8ee2-ff1433efcc9b</ID>
@@ -642,7 +664,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/18/2013 06:30:35"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/22/2013 11:39:40"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -1075,7 +1097,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="3" Space="100"&gt;
-      &lt;Page Title="Organism_4 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_4 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;46a44cf3-05cf-4498-b2e4-766d540e6972&lt;/ID&gt;
@@ -1090,7 +1112,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;f0de0cdf-0724-42fc-995a-ba9706ff3dbc&lt;/ID&gt;

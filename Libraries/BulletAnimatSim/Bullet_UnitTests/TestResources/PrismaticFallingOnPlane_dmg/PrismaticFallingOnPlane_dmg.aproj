@@ -3,6 +3,7 @@
 <SimulationFile>PrismaticFallingOnPlane_dmg.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\PrismaticFallingOnPlane_dmg\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
