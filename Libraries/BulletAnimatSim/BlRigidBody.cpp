@@ -258,7 +258,6 @@ void BlRigidBody::CreateDynamicPart()
         BlSimulator *lpSim = GetBlSimulator();
 
         float fltMass = 0;
-	    //CStdFPoint vCom(0, 0, 0);
 	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
         if(m_lpThisRB->HasStaticChildren())
@@ -416,21 +415,6 @@ void BlRigidBody::RemoveStaticGeometry(BlRigidBody *lpChild, btCompoundShape *bt
 
 void BlRigidBody::ResetStaticCollisionGeom()
 {
-	if(m_osgMT.valid() && m_lpThisRB && m_lpThisRB->Parent())
-	{
-		BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
-
-		if(lpVsParent)
-		{
-            //FIX PHYSICS
-			//Vx::VxReal44 vOffset;
-			//VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-
-			//Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-			//if(vxSensor && m_vxCollisionGeometry)
-			//	m_vxCollisionGeometry->setRelativeTransform(vOffset);
-		}
-	}
 }
 
 void BlRigidBody::ResetSensorCollisionGeom()
