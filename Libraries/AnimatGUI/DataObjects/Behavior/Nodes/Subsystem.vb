@@ -431,6 +431,22 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+            MyBase.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+            Next
+
+        End Sub
+
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)

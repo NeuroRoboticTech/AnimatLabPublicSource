@@ -54,7 +54,7 @@
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(163, 121)
+            Me.btnCancel.Location = New System.Drawing.Point(163, 127)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 17
@@ -64,7 +64,7 @@
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.btnOk.Location = New System.Drawing.Point(91, 121)
+            Me.btnOk.Location = New System.Drawing.Point(91, 127)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 16
@@ -93,7 +93,7 @@
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(320, 153)
+            Me.ClientSize = New System.Drawing.Size(320, 159)
             Me.Controls.Add(Me.lblSaveMessage)
             Me.Controls.Add(Me.lblCurrentPhysics)
             Me.Controls.Add(Me.lblNewPhysics)

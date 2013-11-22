@@ -798,6 +798,10 @@ Namespace Framework
             Return 0
         End Function
 
+        Public Overridable Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+
+        End Sub
+
 #Region " Copy Methods "
 
         Public Overridable Sub BeforeCopy(ByVal arySelectedItems As ArrayList)

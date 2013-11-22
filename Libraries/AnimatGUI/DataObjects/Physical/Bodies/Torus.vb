@@ -251,6 +251,15 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+            MyBase.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+
+            If strConvertTo = "Bullet" Then
+                aryErrors.Add("Torus body parts are not currently supported with the Bullet physics engine. Please change this to a different part type before a conversion can happen.")
+            End If
+
+        End Sub
+
     End Class
 
 

@@ -168,6 +168,18 @@ Namespace Collections
             Next
         End Sub
 
+        Public Overridable Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me
+                If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+                End If
+            Next
+
+        End Sub
+
         Public Overridable Sub DumpListInfo()
 
             'Debug.WriteLine("")

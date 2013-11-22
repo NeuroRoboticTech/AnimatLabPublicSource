@@ -5728,10 +5728,26 @@ Namespace Forms
 
                 Dim frmConvert As New Forms.ConvertPhysics()
                 If frmConvert.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                    m_strSimPhysicsSystem = frmConvert.cboPhysicsEngine.SelectedItem.ToString()
 
-                    SaveProject(Me.ProjectPath & Me.ProjectFile)
-                    LoadProject(Me.ProjectPath & Me.ProjectFile)
+                    Dim strConvertTo As String = frmConvert.cboPhysicsEngine.SelectedItem.ToString()
+
+                    Dim aryErrors As New ArrayList
+                    Util.Environment.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+
+                    If aryErrors.Count <= 0 Then
+                        m_strSimPhysicsSystem = strConvertTo
+
+                        SaveProject(Me.ProjectPath & Me.ProjectFile)
+                        LoadProject(Me.ProjectPath & Me.ProjectFile)
+                    Else
+                        Dim strErrors As String
+                        For Each strError As String In aryErrors
+                            strErrors = strErrors & strError & vbCrLf
+                        Next
+
+                        Util.ShowMessage("Cannot convert this project from the " & Util.Application.SimPhysicsSystem & " physics engine to use the " & strConvertTo & _
+                                                   " Physics engine due to the following errors:" & vbCrLf & vbCrLf & strErrors, "Error converting physics engine", MessageBoxButtons.OK)
+                    End If
                 End If
 
             Catch ex As System.Exception

@@ -195,6 +195,18 @@ Namespace Collections
             Next
         End Sub
 
+        Public Overridable Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me
+                If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+                End If
+            Next
+
+        End Sub
+
         Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
             Dim doVal As AnimatGUI.Framework.DataObject
             For Each deEntry As DictionaryEntry In Me

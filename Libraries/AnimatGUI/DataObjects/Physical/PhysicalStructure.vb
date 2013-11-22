@@ -458,6 +458,14 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
+        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+
+            If Not m_dbRoot Is Nothing Then
+                m_dbRoot.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+            End If
+
+        End Sub
+
         Public Overrides Function FindDragObject(ByVal strStructureName As String, ByVal strDataItemID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.DragObject
             Dim oStructure As Object = Util.Environment.FindStructureFromAll(strStructureName, bThrowError)
 

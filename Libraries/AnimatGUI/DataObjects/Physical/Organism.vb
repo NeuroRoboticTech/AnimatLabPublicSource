@@ -310,6 +310,18 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
+
+            If Not m_dbRoot Is Nothing Then
+                m_dbRoot.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+            End If
+
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+            End If
+
+        End Sub
+
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
