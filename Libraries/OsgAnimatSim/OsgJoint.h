@@ -69,6 +69,8 @@ namespace OsgAnimatSim
 			virtual osg::MatrixTransform *ParentOSG();
 			virtual osg::MatrixTransform *ChildOSG();
             virtual osg::Matrix GetChildWorldMatrix();
+            virtual osg::Matrix GetChildPhysicsWorldMatrix();
+            virtual osg::Matrix GetChildComMatrix(bool bInvert = false);
 
 			virtual void SetAlpha();
 

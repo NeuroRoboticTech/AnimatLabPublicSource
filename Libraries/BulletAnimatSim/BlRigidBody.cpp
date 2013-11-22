@@ -26,6 +26,7 @@ BlRigidBody::BlRigidBody()
     m_osgbMotion = NULL;
     m_lpBulletData = NULL;
     m_fltStaticMasses = 0;
+    m_eBodyType = BOX_SHAPE_PROXYTYPE;
 
     m_fltBuoyancy = 0;
     m_fltReportBuoyancy = 0;
@@ -72,10 +73,10 @@ CStdFPoint BlRigidBody::Physics_GetCurrentPosition()
 {
 	if(m_osgbMotion && m_lpThisMI)
 	{
-        btTransform trans;
-        m_osgbMotion->getWorldTransform(trans);
- 
-        btVector3 vPos = trans.getOrigin();
+        m_osgWorldMatrix = m_osgMT->getMatrix();
+
+		//Then update the absolute position and rotation.
+        osg::Vec3d vPos = m_osgWorldMatrix.getTrans();
         m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 		return m_lpThisMI->AbsolutePosition();
 	}
@@ -84,6 +85,23 @@ CStdFPoint BlRigidBody::Physics_GetCurrentPosition()
 		CStdFPoint vPos;
 		return vPos;
 	}
+}
+
+osg::Matrix BlRigidBody::GetPhysicsWorldMatrix()
+{
+    if(m_osgbMotion)
+    {
+        btTransform trans;
+        m_osgbMotion->getWorldTransform(trans);
+        osg::Matrix osgMT = osgbCollision::asOsgMatrix(trans);
+        return osgMT;
+    }
+    else
+    {
+	    osg::Matrix osgMatrix;
+	    osgMatrix.makeIdentity();
+	    return osgMatrix;
+    }
 }
 
 BlSimulator *BlRigidBody::GetBlSimulator()
@@ -178,12 +196,7 @@ void BlRigidBody::Physics_SetVelocityDamping(float fltLinear, float fltAngular)
 
 void BlRigidBody::Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz)
 {
-    //FIX PHYSICS
-	//if(m_vxPart)
-	//{
-	//	if(fltTx != 0 || fltTy != 0 || fltTz != 0)
-	//		m_vxPart->setCOMOffset(fltTx, fltTy, fltTz);
-	//}
+    ResetPhyiscsAndChildJoints();
 }
 
 void  BlRigidBody::Physics_FluidDataChanged()
@@ -245,66 +258,50 @@ void BlRigidBody::CreateDynamicPart()
         BlSimulator *lpSim = GetBlSimulator();
 
         float fltMass = 0;
-	    CStdFPoint vCom(0, 0, 0);
-	    //CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
+	    //CStdFPoint vCom(0, 0, 0);
+	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
         if(m_lpThisRB->HasStaticChildren())
-            CreateStaticChildren();
+            CreateStaticChildren(vCom);
+        else if(vCom != CStdFPoint(0, 0, 0))
+            SetupOffsetCOM(vCom);
 
+        osg::ref_ptr< osgbDynamics::CreationRecord > cr = new osgbDynamics::CreationRecord;
+
+        //If we have set the center of mass to something other than 0, or if this is a mesh type, then set the COM on the creation record.
+        //If this is a mesh then we need to explicitly set this to 0, otherwise it will try and set the COM based on the bounding box and that
+        // will cause it to be offset from what it should be.
+        if( (vCom != CStdFPoint(0, 0, 0)) ||  (m_eBodyType == CONVEX_HULL_SHAPE_PROXYTYPE) || (m_eBodyType == TRIANGLE_MESH_SHAPE_PROXYTYPE) )
+            cr->setCenterOfMass(osg::Vec3(vCom.x, vCom.y, vCom.z) );
+        cr->_sceneGraph = m_osgMT.get();
+        cr->_shapeType = m_eBodyType;
+        cr->_parentTransform = m_osgMT->getMatrix();
+  
         if(!m_lpThisRB->Freeze())
-            fltMass = m_lpThisRB->GetMassValueWithStaticChildren();
+            cr->_mass = m_lpThisRB->GetMassValueWithStaticChildren();
+        else
+            cr->_mass = 0;
 
-        btScalar mass(fltMass);
-	    btVector3 localInertia( 0, 0, 0 );
-        const bool isDynamic = ( mass != 0.f );
-	    if( isDynamic )
-		    m_btCollisionShape->calculateLocalInertia( mass, localInertia );
+		cr->_friction = m_lpMaterial->FrictionLinearPrimary();
+		cr->_restitution = m_lpMaterial->Restitution();
 
-        //Keep a copy of the matrix transform for osgMT so I can reset it back later
-        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+        m_osgMT->setMatrix(osg::Matrix::identity());
 
-        // Create MotionState to control OSG subgraph visual reprentation transform
-        // from a Bullet world transform. To do this, the MotionState need the address
-        // of the Transform node (must be either AbsoluteModelTransform or
-        // MatrixTransform), center of mass, scale vector, and the parent (or initial)
-        // transform (usually the non-scaled OSG local-to-world matrix obtained from
-        // the parent node path).
-        m_osgbMotion = new osgbDynamics::MotionState();
-        m_osgbMotion->setTransform( m_osgMT.get() );
+        m_btPart = osgbDynamics::createRigidBody( cr.get(), m_btCollisionShape );
 
-        osg::Vec3 com(vCom.x, vCom.y, vCom.z);
-        m_osgbMotion->setCenterOfMass( com );
+        m_btPart->setAngularVelocity( btVector3( 0., 0, 0. ) );
 
-        m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
-        m_osgbMotion->setParentTransform( osg::Matrix::identity() );
+        m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
+        m_btCollisionShape = m_btPart->getCollisionShape();
 
-        // Finally, create rigid body.
-        btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
 
-		if(m_lpMaterial)
-		{
-			rbInfo.m_friction = m_lpMaterial->FrictionLinearPrimary();
-			rbInfo.m_restitution = m_lpMaterial->Restitution();
-		}
-
-        rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
-        rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
-
-        m_btPart = new btRigidBody( rbInfo );
+  ////      rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
+  ////      rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
         if(!m_lpBulletData)
             m_lpBulletData = new BlBulletData(this, false);
 
         m_btPart->setUserPointer((void *) m_lpBulletData);
-
-        // Last thing to do: Position the rigid body in the world coordinate system. The
-        // MotionState has the initial (parent) transform, and also knows how to account
-        // for center of mass and scaling. Get the world transform from the MotionState,
-        // then set it on the rigid body, which in turn sets the world transform on the
-        // MotionState, which in turn transforms the OSG subgraph visual representation.
-        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
-        m_osgbMotion->setWorldTransform( wt );
-        m_btPart->setWorldTransform( wt );
 
 	    //if this body is frozen; freeze it
         Physics_WakeDynamics();
@@ -330,7 +327,20 @@ void BlRigidBody::CreateDynamicPart()
     }
 }
 
-void BlRigidBody::CreateStaticChildren()
+/**
+ \brief Changes this body to use a btCompoundShape and adds the btCollision shape offset from -COM.
+
+ \description The reason it does this is because by default bullet always has the center of mass at the center of the
+ object. However, if the user has specified a different COM then we need to move it away from that. The way to do ths is
+ create a new compound shape and add our actual collision shape offset in the negative com direction. Then the motion state
+ will match up this new collision part with the graphics correctly.
+
+ \author    David Cofer
+ \date  11/17/2013
+
+ \param vCom    The com vector that will be used for the offset. Do not add a negative to it. This will be done in the method.
+ */
+void BlRigidBody::SetupOffsetCOM(const CStdFPoint &vCom)
 {
     //Swap the current collision shape into the compound collision shape so we can
     //make the collision shape a compound shape.
@@ -345,6 +355,26 @@ void BlRigidBody::CreateStaticChildren()
     //Now add the shape for this body to the compound shape
 	btTransform localTransform;
     localTransform.setIdentity();
+    localTransform.setOrigin(btVector3(-vCom.x, -vCom.y, -vCom.z));
+    m_btCompoundShape->addChildShape(localTransform, m_btCompoundChildShape);
+}
+
+void BlRigidBody::CreateStaticChildren(const CStdFPoint &vCom)
+{
+    //Swap the current collision shape into the compound collision shape so we can
+    //make the collision shape a compound shape.
+    m_btCompoundChildShape = m_btCollisionShape;
+
+    //Now create the new compound shape
+    m_btCompoundShape = new btCompoundShape();
+
+    //Set the collision shape to be the new compound.
+    m_btCollisionShape = m_btCompoundShape;
+
+    //Now add the shape for this body to the compound shape
+	btTransform localTransform;
+    localTransform.setIdentity();
+    localTransform.setOrigin(btVector3(-vCom.x, -vCom.y, -vCom.z));
     m_btCompoundShape->addChildShape(localTransform, m_btCompoundChildShape);
 
     //Then add all static child shapes
@@ -354,18 +384,18 @@ void BlRigidBody::CreateStaticChildren()
         RigidBody *lpChild = m_lpThisRB->ChildParts()->at(iIndex);
         BlRigidBody *lpBlChild = dynamic_cast<BlRigidBody *>(lpChild);
 		if(lpChild->HasStaticJoint())
-            lpBlChild->AddStaticGeometry(this, m_btCompoundShape);
+            lpBlChild->AddStaticGeometry(this, m_btCompoundShape, vCom);
     }
 }
 
-void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound)
+void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound, const CStdFPoint &vCom)
 {
     if(m_lpThisMI && lpChild && btCompound)
     {
        //First create the physics geometry for this part.
        CreatePhysicsGeometry(); 
 
-		CStdFPoint vPos = m_lpThisMI->Position();
+		CStdFPoint vPos = m_lpThisMI->Position() - vCom;
 		CStdFPoint vRot = m_lpThisMI->Rotation();
 		osg::Matrix mt = SetupMatrix(vPos, vRot);
 
@@ -418,7 +448,12 @@ void BlRigidBody::ResetDynamicCollisionGeom()
 {
     if(m_osgMT.valid() && m_osgbMotion && m_btPart)
     {
-        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+        //We must take into consideration the COM when resetting the world transform.
+        osg::Vec3d vCom = m_osgbMotion->getCenterOfMass();
+        osg::Matrixd osgMtCom = osg::Matrixd::translate(vCom);
+        osg::Matrixd osgMTBase = m_osgMT->getMatrix();
+        osg::Matrixd osgMTmat = osgMTBase * osgMtCom;
+
         btTransform wt = osgbCollision::asBtTransform(osgMTmat);
         m_osgbMotion->setWorldTransform( wt );
         m_btPart->setWorldTransform( wt );
@@ -707,14 +742,12 @@ void BlRigidBody::Physics_CollectData()
 
 		//Then update the absolute position and rotation.
         btVector3 vPos = trans.getOrigin();
-		m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
+        osg::Vec3 vCom = m_osgbMotion->getCenterOfMass();
+
+ 		m_lpThisMI->AbsolutePosition((vPos.x()-vCom.x()), (vPos.y()-vCom.y()), (vPos.z()-vCom.z()));
 
         CStdFPoint vRot = OsgMatrixUtil::EulerRotationFromMatrix_Static(m_osgWorldMatrix);
 		m_lpThisMI->ReportRotation(vRot[0], vRot[1], vRot[2]);
-
-        OsgWorldCoordinateNodeVisitor* ncv = new OsgWorldCoordinateNodeVisitor();
-        m_osgMT->accept(*ncv);
-        osg::Matrix mat = ncv->MatrixTransform();
     }
 	else 
     {

@@ -1074,6 +1074,12 @@ Namespace DataObjects.Physical
                 m_JointToParent = Nothing
             End If
 
+            'Remove the old change handlers.
+            If Not m_svCOM Is Nothing Then RemoveHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
+            If Not m_svBuoyancyCenter Is Nothing Then RemoveHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
+            If Not m_svLinearDrag Is Nothing Then RemoveHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            If Not m_svAngularDrag Is Nothing Then RemoveHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
+
             m_bFreeze = doOrigPart.m_bFreeze
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
@@ -1103,6 +1109,12 @@ Namespace DataObjects.Physical
             m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate.Clone(doOrigPart.m_snFoodReplenishRate.Parent, bCutData, doRoot), ScaledNumber)
             m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent.Clone(doOrigPart.m_snFoodEnergyContent.Parent, bCutData, doRoot), ScaledNumber)
             m_svCOM = DirectCast(doOrigPart.m_svCOM.Clone(Me, bCutData, doRoot), ScaledVector3)
+
+            'Add new change handlers.
+            AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
+            AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
+            AddHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            AddHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
 
             Me.MaterialType = DirectCast(doOrigPart.m_thMaterialType.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedMaterialType)
 

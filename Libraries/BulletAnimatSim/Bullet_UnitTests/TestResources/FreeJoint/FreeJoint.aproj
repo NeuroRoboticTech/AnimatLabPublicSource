@@ -1,10 +1,10 @@
 <Project>
-<ProjectName>FallingCylinderOnPlane</ProjectName>
-<SimulationFile>FallingCyinderOnPlane.asim</SimulationFile>
+<ProjectName>FreeJoint</ProjectName>
+<SimulationFile>FreeJoint.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FallingCylinderOnPlane\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\FreeJoint\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -12,8 +12,8 @@
 <SetSimEnd>False</SetSimEnd>
 <APIFile/>
 <SimEndTime Value="1" Scale="None" Actual="1"/>
-<PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
-<PresetPlaybackTimeStep Value="3" Scale="milli" Actual="0.003"/>
+<PlaybackControlMode>FastestPossible</PlaybackControlMode>
+<PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
 <Environment>
 <PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
@@ -48,7 +48,7 @@
 <Organisms>
 <Organism>
 <Name>Organism_1</Name>
-<ID>be99a1ad-c9f0-4a68-aa58-8112f41a1d5b</ID>
+<ID>8fe5a95c-e95a-4853-88fb-697b29d7589e</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -65,20 +65,20 @@
 <Texture/>
 <LocalPosition>
 <X Value="0" Scale="None" Actual="0"/>
-<Y Value="9.8" Scale="None" Actual="9.8"/>
-<Z Value="10" Scale="None" Actual="10"/>
+<Y Value="3" Scale="None" Actual="3"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,9.8,10,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,3,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
 <Name>Root</Name>
-<ID>82449703-a701-40f1-b8bc-b846d5593360</ID>
+<ID>abb21a64-7af4-47ac-b941-25482af3f74f</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -95,18 +95,18 @@
 <Texture/>
 <LocalPosition>
 <X Value="0" Scale="None" Actual="0"/>
-<Y Value="10" Scale="None" Actual="10"/>
-<Z Value="10" Scale="None" Actual="10"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
 </LocalPosition>
 <Rotation>
-<X Value="45" Scale="None" Actual="45"/>
+<X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,0.707106,0.707108,0,0,-0.707108,0.707106,0,0,9.8,10,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,3,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Type>Cylinder</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Bodies.Cylinder</PartType>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
 <IsContactSensor>False</IsContactSensor>
 <IsCollisionObject>True</IsCollisionObject>
 <BuoyancyCenter>
@@ -129,8 +129,8 @@
 <MaxHydroTorque Value="20" Scale="None" Actual="20"/>
 <Magnus>0</Magnus>
 <EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
-<Mass Value="3.142" Scale="Kilo" Actual="3142"/>
+<Density Value="0.667" Scale="Kilo" Actual="667"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
 <COM>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -138,10 +138,119 @@
 </COM>
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
 <Freeze>False</Freeze>
+<ChildBodies>
+<RigidBody>
+<Name>Body_1</Name>
+<ID>9609c05c-1e95-4e76-b7cc-4a7b0f1334f3</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="3" Scale="None" Actual="3"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,3,3,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1.389" Scale="Kilo" Actual="1389"/>
+<Mass Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>Joint_1</Name>
+<ID>69d76f96-d4c8-4834-8e7e-6fab0719a77d</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="10" Scale="centi" Actual="0.1"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0.1,3,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
 <FoodSource>False</FoodSource>
-<Radius Value="1" Scale="None" Actual="1"/>
+<Length Value="4" Scale="None" Actual="4"/>
+<Width Value="0.6" Scale="None" Actual="0.6"/>
+<Height Value="0.3" Scale="None" Actual="0.3"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="3" Scale="None" Actual="3"/>
+<Width Value="0.5" Scale="None" Actual="0.5"/>
 <Height Value="1" Scale="None" Actual="1"/>
-<Sides>30</Sides>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
 </RigidBody>
 <CollisionExclusionPairs/>
 <NervousSystem>
@@ -149,7 +258,7 @@
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>
-<ID>f316a8dc-142b-4488-ba85-ce8504aa8ac0</ID>
+<ID>2cd25c03-8e16-44c7-9496-701d7d39f050</ID>
 <Alignment>CenterMiddle</Alignment>
 <AutoSize>None</AutoSize>
 <BackMode>Transparent</BackMode>
@@ -198,7 +307,7 @@
 <Structures>
 <Structure>
 <Name>Structure_1</Name>
-<ID>f8a04939-2b6b-431b-a00d-ab5f926ceae0</ID>
+<ID>7cff26c5-831a-4545-8607-3c4dfa743f8e</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -228,7 +337,7 @@
 <Type>Basic</Type>
 <RigidBody>
 <Name>Root</Name>
-<ID>f96f9d06-dc16-4b92-bf4f-81349649e9e8</ID>
+<ID>4ba4ab20-5f61-48c6-ae08-2459b41bcd44</ID>
 <Description/>
 <Transparencies>
 <Graphics>0</Graphics>
@@ -238,11 +347,11 @@
 <Simulation>0</Simulation>
 </Transparencies>
 <IsVisible>True</IsVisible>
-<Ambient Red="0.803922" Green="0.360784" Blue="0.360784" Alpha="1"/>
-<Diffuse Red="0" Green="0" Blue="0" Alpha="1"/>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
 <Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
 <Shininess>64</Shininess>
-<Texture/>
+<Texture>checkerboard.bmp</Texture>
 <LocalPosition>
 <X Value="0" Scale="None" Actual="0"/>
 <Y Value="0" Scale="None" Actual="0"/>
@@ -287,7 +396,7 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </COM>
 <MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
-<Freeze>True</Freeze>
+<Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
 <Size>
 <X Value="0.1" Scale="Kilo" Actual="100"/>
@@ -301,45 +410,8 @@
 </Structures>
 <Lights>
 <Light>
-<Name>Light_2</Name>
-<ID>06431ced-de9b-452a-812d-aba50981ae0a</ID>
-<Description/>
-<Transparencies>
-<Graphics>50</Graphics>
-<Collisions>50</Collisions>
-<Joints>50</Joints>
-<RecFields>50</RecFields>
-<Simulation>100</Simulation>
-</Transparencies>
-<IsVisible>True</IsVisible>
-<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
-<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
-<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
-<Shininess>64</Shininess>
-<Texture/>
-<LocalPosition>
-<X Value="-1" Scale="None" Actual="-1"/>
-<Y Value="5" Scale="None" Actual="5"/>
-<Z Value="-1" Scale="None" Actual="-1"/>
-</LocalPosition>
-<Rotation>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,5,-1,1</LocalMatrix>
-<DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Enabled>True</Enabled>
-<Radius Value="50" Scale="milli" Actual="0.05"/>
-<ConstantAttenuation>0</ConstantAttenuation>
-<LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
-<QuadraticAttenuationDistance Value="75" Scale="None" Actual="75"/>
-<LatitudeSegments>10</LatitudeSegments>
-<LongtitudeSegments>10</LongtitudeSegments>
-</Light>
-<Light>
 <Name>Light_1</Name>
-<ID>7d17dd4b-4b77-4b23-af23-d8014a36dc9f</ID>
+<ID>1653b1ae-8a07-4eaa-b5a6-067f27a1a415</ID>
 <Description/>
 <Transparencies>
 <Graphics>50</Graphics>
@@ -356,7 +428,7 @@
 <Texture/>
 <LocalPosition>
 <X Value="1" Scale="None" Actual="1"/>
-<Y Value="5" Scale="None" Actual="5"/>
+<Y Value="2" Scale="None" Actual="2"/>
 <Z Value="1" Scale="None" Actual="1"/>
 </LocalPosition>
 <Rotation>
@@ -364,7 +436,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,5,1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,2,1,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -374,22 +446,51 @@
 <LatitudeSegments>10</LatitudeSegments>
 <LongtitudeSegments>10</LongtitudeSegments>
 </Light>
+<Light>
+<Name>Light_2</Name>
+<ID>ad375a40-b760-4ee9-9d38-441992cd4188</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-1" Scale="None" Actual="-1"/>
+<Y Value="2" Scale="None" Actual="2"/>
+<Z Value="-1" Scale="None" Actual="-1"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,2,-1,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Enabled>True</Enabled>
+<Radius Value="50" Scale="milli" Actual="0.05"/>
+<ConstantAttenuation>0</ConstantAttenuation>
+<LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
+<QuadraticAttenuationDistance Value="75" Scale="None" Actual="75"/>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
 </Lights>
 </Environment>
-<ToolViewers>
-<ToolHolder>
-<ID>d72cf6dc-73ba-479c-b614-3916b9ba53a5</ID>
-<Name>DataTool_1</Name>
-<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>c2475ac9-f625-4dcf-ae02-2147a819976c</ToolFormID>
-</ToolHolder>
-</ToolViewers>
+<ToolViewers/>
 <Stimuli/>
 <HudItems>
 <HudItem>
-<Name>0772e820-bad5-43a7-a20c-8cc759518c6f</Name>
-<ID>0772e820-bad5-43a7-a20c-8cc759518c6f</ID>
+<Name>14ec4bfd-0efc-421c-8c0d-5413bfbb5ddf</Name>
+<ID>14ec4bfd-0efc-421c-8c0d-5413bfbb5ddf</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -405,7 +506,7 @@
 </Simulation>
 <DockingForms>
 <Form>
-<ID>a40b45d1-fc24-4306-848a-362358972909</ID>
+<ID>77199650-9252-408d-bbbb-1c8c05f7c7fe</ID>
 <Title>Receptive Field Current</Title>
 <TabPageName>Receptive Field Current</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -413,7 +514,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>c82098e4-07f1-4710-906b-5bb15f9efb21</ID>
+<ID>dcbdd6f6-7450-41ab-b578-f7eb0f2c4ac0</ID>
 <Title>Receptive Field Gain</Title>
 <TabPageName>Receptive Field Gain</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -421,7 +522,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>ea9bc121-a339-4cf7-87c4-114228ed9d83</ID>
+<ID>ec0e728f-ac07-4080-a4c7-4ed0cd641a8a</ID>
 <Title>Receptive Field Pairs</Title>
 <TabPageName>Receptive Field Pairs</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -429,7 +530,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>d4bd4dbb-d276-4f69-aa98-9bad5fbf3b77</ID>
+<ID>9203d8b1-720a-4f7f-9992-bec200fef1a1</ID>
 <Title>Toolbox</Title>
 <TabPageName>Toolbox</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -437,7 +538,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>34210c63-f5b4-4e02-974d-f9072c84a201</ID>
+<ID>54b55c7f-54c1-4434-aaad-d2018cdff6de</ID>
 <Title>Properties</Title>
 <TabPageName>Properties</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -445,7 +546,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>8a0be082-eaca-41a6-a147-878f82243b47</ID>
+<ID>cf13c64a-7faf-4165-ba3c-f960c900f50c</ID>
 <Title>Workspace</Title>
 <TabPageName>Workspace</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -453,7 +554,7 @@
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
-<ID>55ac94a6-ca6f-491f-87e2-cde1159a849c</ID>
+<ID>2d3a39c1-159f-412f-8027-b42b56319fe4</ID>
 <Title>Simulation Controller</Title>
 <TabPageName>Simulation Controller</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -472,7 +573,7 @@
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
 <Form>
-<ID>a95ffcc9-fb07-4049-9d24-77ce4ea498db</ID>
+<ID>00403e19-a424-4849-b544-cc6031ddaf42</ID>
 <Title>Errors</Title>
 <TabPageName>Errors</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -483,7 +584,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/16/2013 18:36:19"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/22/2013 06:35:18"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -912,34 +1013,21 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="6"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
-    &lt;Leaf Count="2" Unique="3" Space="100"&gt;
+    &lt;Leaf Count="1" Unique="6" Space="100"&gt;
       &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
-&lt;ID&gt;118ea7b3-3e9c-46a8-b3ad-c926d9e6b10b&lt;/ID&gt;
-&lt;Title&gt;Structure_1 Body&lt;/Title&gt;
+&lt;ID&gt;8694014c-f2b6-4307-98e4-5f7fbb47fc90&lt;/ID&gt;
+&lt;Title&gt;Organism_1 Body&lt;/Title&gt;
 &lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
 &lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
 &lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
-&lt;StructureID&gt;be99a1ad-c9f0-4a68-aa58-8112f41a1d5b&lt;/StructureID&gt;
-&lt;BodyPartID&gt;82449703-a701-40f1-b8bc-b846d5593360&lt;/BodyPartID&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;c2475ac9-f625-4dcf-ae02-2147a819976c&lt;/ID&gt;
-&lt;Title&gt;DataTool_1&lt;/Title&gt;
-&lt;TabPageName&gt;DataTool_1&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;DataTool_1.aform&lt;/ExternalFile&gt;
+&lt;StructureID&gt;8fe5a95c-e95a-4853-88fb-697b29d7589e&lt;/StructureID&gt;
+&lt;BodyPartID&gt;abb21a64-7af4-47ac-b941-25482af3f74f&lt;/BodyPartID&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;

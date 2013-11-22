@@ -73,6 +73,7 @@ namespace OsgAnimatSim
 			virtual void CreatePhysicsGeometry();
 			virtual void CreateGeometry();
 			virtual void ResizePhysicsGeometry();
+            virtual void ResetPhyiscsAndChildJoints();
 
 			virtual void UpdateWorldMatrix();
 
@@ -147,12 +148,18 @@ namespace OsgAnimatSim
             virtual bool AddOsgNodeToParent() {return true;};
 
 			virtual osg::Matrix GetWorldMatrix();
-			virtual osg::Matrix GetParentWorldMatrix();
+            virtual osg::Matrix GetPhysicsWorldMatrix() {return GetWorldMatrix();};
+            virtual osg::Matrix GetComMatrix(bool bInvert = false);
+
+            virtual osg::Matrix GetParentWorldMatrix();
+            virtual osg::Matrix GetParentPhysicsWorldMatrix();
+            virtual osg::Matrix GetParentComMatrix(bool bInvert = false);
 
 			virtual osg::MatrixTransform* GetMatrixTransform();
 			virtual osg::MatrixTransform* GetCameraMatrixTransform();
 
 			virtual void BuildLocalMatrix();
+			virtual void BuildLocalMatrix(CStdFPoint vLocalOffset);
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName);
 		};
 

@@ -93,6 +93,7 @@ namespace BulletAnimatSim
             btCompoundShape *m_btCompoundShape;
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
+            BroadphaseNativeTypes m_eBodyType;
 
             float m_fltStaticMasses;
 
@@ -133,10 +134,11 @@ namespace BulletAnimatSim
             virtual void DeletePhysics(bool bIncludeChildren);
 
 			virtual void CreateSensorPart();
-            virtual void CreateStaticChildren();
+            virtual void CreateStaticChildren(const CStdFPoint &vCom);
 			virtual void CreateDynamicPart();
+            virtual void SetupOffsetCOM(const CStdFPoint &vCom);
 
-            virtual void AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound);
+            virtual void AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound, const CStdFPoint &vCom);
             virtual void RemoveStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound);
 
 			CStdFPoint Physics_GetCurrentPosition();
@@ -197,6 +199,8 @@ namespace BulletAnimatSim
 			virtual bool Physics_HasCollisionGeometry();
             virtual void Physics_StepHydrodynamicSimulation();
 			virtual float *Physics_GetDataPointer(const std::string &strDataType);
+
+            virtual osg::Matrix GetPhysicsWorldMatrix();
 
 			virtual void MaterialTypeModified();
 

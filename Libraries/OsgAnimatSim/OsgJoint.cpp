@@ -249,6 +249,26 @@ osg::Matrix OsgJoint::GetChildWorldMatrix()
 	return osgMatrix;
 }
 
+osg::Matrix OsgJoint::GetChildPhysicsWorldMatrix()
+{
+	if(m_lpVsChild)
+		return m_lpVsChild->GetPhysicsWorldMatrix();
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
+osg::Matrix OsgJoint::GetChildComMatrix(bool bInvert)
+{
+	if(m_lpVsChild)
+		return m_lpVsChild->GetComMatrix(bInvert);
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
 //When moving the joint using the drag handler we need to delete the physics for this joint, and then
 //recreate it using the new position/orientation.
 void OsgJoint::StartGripDrag()
@@ -306,6 +326,16 @@ void OsgJoint::Physics_UpdateMatrix()
 	Physics_UpdateAbsolutePosition();
 }
 
+/**
+ \brief Builds the local matrix.
+
+ \description This method appears to not be needed here. It is just a pass through. However, 
+ if it is not here then the code will not compile because it tries to match to the other overload
+ for some reason. Not sure why, but it does.
+
+ \author    David Cofer
+ \date  11/18/2013
+ */
 void  OsgJoint::BuildLocalMatrix()
 {
 	OsgBody::BuildLocalMatrix();

@@ -238,6 +238,12 @@ void OsgMovableItem::CreatePhysicsGeometry() {}
 
 void OsgMovableItem::ResizePhysicsGeometry() {}
 
+void OsgMovableItem::ResetPhyiscsAndChildJoints()
+{
+    StartGripDrag();
+    EndGripDrag();
+}
+
 void OsgMovableItem::InitializeGraphicsGeometry()
 {
 	CreateGraphicsGeometry();
@@ -335,10 +341,37 @@ osg::Matrix OsgMovableItem::GetWorldMatrix()
 	return m_osgWorldMatrix;
 }
 
+osg::Matrix OsgMovableItem::GetComMatrix(bool bInvert)
+{
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
 osg::Matrix OsgMovableItem::GetParentWorldMatrix()
 {
 	if(m_lpParentVsMI)
 		return m_lpParentVsMI->GetWorldMatrix();
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
+osg::Matrix OsgMovableItem::GetParentPhysicsWorldMatrix()
+{
+	if(m_lpParentVsMI)
+		return m_lpParentVsMI->GetPhysicsWorldMatrix();
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
+osg::Matrix OsgMovableItem::GetParentComMatrix(bool bInvert)
+{
+	if(m_lpParentVsMI)
+		return m_lpParentVsMI->GetComMatrix(bInvert);
 	
 	osg::Matrix osgMatrix;
 	osgMatrix.makeIdentity();
@@ -531,6 +564,12 @@ void OsgMovableItem::BuildLocalMatrix()
 	BuildLocalMatrix(m_lpThisMI->Position(), CStdFPoint(0, 0, 0), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 }
 
+void OsgMovableItem::BuildLocalMatrix(CStdFPoint vLocalOffset)
+{
+	//build the local matrix
+	BuildLocalMatrix(m_lpThisMI->Position(), vLocalOffset, m_lpThisMI->Rotation(), m_lpThisAB->Name());
+}
+
 void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffset, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
@@ -549,7 +588,7 @@ void OsgMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint vLocalOffs
 		m_osgRoot->addChild(m_osgMT.get());
 
     osg::Matrix localMT;
-    CStdFPoint vOffsetPos = localPos; //(localPos - vLocalOffset); 
+    CStdFPoint vOffsetPos = (localPos - vLocalOffset); //localPos;
     if(AddOsgNodeToParent())
         localMT = SetupMatrix(vOffsetPos, localRot);
     else

@@ -48,6 +48,7 @@ void BlBox::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
         CalculateVolumeAndAreas();
+        m_eBodyType = BOX_SHAPE_PROXYTYPE;
         m_btCollisionShape = new btBoxShape( btVector3( (m_fltLength/2.0f), (m_fltHeight/2.0f), (m_fltWidth/2.0f) ) );
     }
 }

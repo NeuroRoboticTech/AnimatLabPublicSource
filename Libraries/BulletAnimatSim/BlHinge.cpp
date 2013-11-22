@@ -188,17 +188,25 @@ void BlHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-    //Get the matrices for the joint relative to the child and parent.
-    osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
-    CStdFPoint vPos = m_lpThisMI->Position();
-    CStdFPoint vRot = m_lpThisMI->Rotation();
-    osg::Matrix osgJointRelChild = SetupMatrix(vPos, vRot);
+    //osg::Matrix mtParent = GetParentPhysicsWorldMatrix();
+    //osg::Matrix mtChild = GetChildWorldMatrix();
+    //CStdFPoint vPos1 = m_lpThisMI->Position();
+    //CStdFPoint vRot1 = m_lpThisMI->Rotation();
+    //osg::Matrix osgJointRelChild = SetupMatrix(vPos1, vRot1);
 
-    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
-    btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
+    //osg::Matrix mtJointMTFromChild = osgJointRelChild * mtChild;
+    //osg::Matrix mtLocalRelToParent = mtJointMTFromChild * osg::Matrix::inverse(mtParent);
 
-	//m_btHinge = new btHingeConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
-	m_btHinge = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
+    //osg::Matrix mtChildCom = GetChildComMatrix(true);
+    //osg::Matrix mtJointRelChild = osgJointRelChild * mtChildCom;
+
+    //btTransform tmJointRelParent = osgbCollision::asBtTransform(mtLocalRelToParent);
+    //btTransform tmJointRelChild = osgbCollision::asBtTransform(mtJointRelChild);
+
+    btTransform mtJointRelParent, mtJointRelChild;
+    CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
+
+    m_btHinge = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 

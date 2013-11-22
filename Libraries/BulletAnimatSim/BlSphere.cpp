@@ -48,6 +48,7 @@ void BlSphere::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
     
         CalculateVolumeAndAreas();
+        m_eBodyType = SPHERE_SHAPE_PROXYTYPE;
         m_btCollisionShape = new btSphereShape( m_fltRadius );
     }
 }

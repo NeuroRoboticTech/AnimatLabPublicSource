@@ -104,6 +104,7 @@ namespace OsgAnimatSim
 			virtual void Physics_Resize();
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos);
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex();
+            virtual osg::Matrix GetComMatrix(bool bInvert = false);
 		};
 
 	}			// Environment

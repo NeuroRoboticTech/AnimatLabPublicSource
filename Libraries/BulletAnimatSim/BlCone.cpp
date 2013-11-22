@@ -49,6 +49,7 @@ void BlCone::CreatePhysicsGeometry()
 
         CalculateVolumeAndAreas();
 
+        m_eBodyType = CONVEX_HULL_SHAPE_PROXYTYPE;
         btConvexHullShape *btHull = OsgMeshToConvexHull(m_osgNode.get(), true, -1);
         m_btCollisionShape = btHull;
         //m_bDisplayDebugCollisionGraphic = false;

@@ -130,9 +130,15 @@ void BlMeshBase::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
 		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
+        {
+            m_eBodyType = CONVEX_HULL_SHAPE_PROXYTYPE;
             m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, 0);
+        }
 		else
+        {
+            m_eBodyType = TRIANGLE_MESH_SHAPE_PROXYTYPE;
             m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
+        }
 
 		if(!m_btCollisionShape)
 			THROW_TEXT_ERROR(Bl_Err_lCreatingGeometry, Bl_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));

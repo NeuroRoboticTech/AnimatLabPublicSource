@@ -326,9 +326,9 @@ void  OsgRigidBody::BuildLocalMatrix()
 	if(m_lpThisRB && m_lpThisMI && m_lpThisAB)
 	{
 		if(m_lpThisRB->IsRoot())
-			OsgBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisRB->CenterOfMassWithStaticChildren(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+			OsgBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), CStdFPoint(0, 0, 0), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 		else
-			OsgBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisRB->CenterOfMassWithStaticChildren(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+			OsgBody::BuildLocalMatrix(m_lpThisMI->Position(), CStdFPoint(0, 0, 0), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 	}
 }
 
@@ -354,6 +354,22 @@ osg::MatrixTransform *OsgRigidBody::ParentOSG()
 		return GetOsgSimulator()->OSGRoot();
 }
 
+osg::Matrix OsgRigidBody::GetComMatrix(bool bInvert)
+{
+    if(m_lpThisRB)
+    {
+        CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
+
+        if(bInvert)
+            vCom *= -1;
+
+        osg::Matrixd mat = osg::Matrixd::identity();
+        return mat.translate(vCom.x, vCom.y, vCom.z);
+    }
+    else
+        return OsgBody::GetComMatrix();
+}
+
 void OsgRigidBody::CreateGeometry() 
 {
     InitializeGraphicsGeometry();
@@ -368,7 +384,7 @@ void OsgRigidBody::SetupPhysics()
 {
 	//If no geometry is defined then this part does not have a physics representation.
 	//it is purely an osg node attached to other parts. An example of this is an attachment point or a sensor.
-	if(Physics_IsGeometryDefined() && m_lpThisRB)
+	if(m_lpThisRB && m_lpThisRB->IsCollisionObject())
 	{
 		//If the parent is not null and the joint is null then that means we need to statically link this part to 
 		//its parent. So we do not create a physics part, we just get a link to its parents part.
@@ -387,7 +403,7 @@ void OsgRigidBody::SetupPhysics()
 
 bool OsgRigidBody::AddOsgNodeToParent()
 {
-	if(!Physics_IsGeometryDefined() || !m_lpThisRB || m_lpThisRB->IsContactSensor() || GetOsgSimulator()->InDrag() || m_lpThisRB->HasStaticJoint())
+	if(!m_lpThisRB || !m_lpThisRB->IsCollisionObject() || m_lpThisRB->IsContactSensor() || GetOsgSimulator()->InDrag() || m_lpThisRB->HasStaticJoint())
         return true;
     else
         return false;

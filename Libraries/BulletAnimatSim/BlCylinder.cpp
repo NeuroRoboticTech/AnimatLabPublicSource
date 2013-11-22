@@ -52,6 +52,7 @@ void BlCylinder::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
         CalculateVolumeAndAreas();
+        m_eBodyType = CYLINDER_SHAPE_PROXYTYPE;
         m_btCollisionShape = new btCylinderShapeZ( btVector3( m_fltRadius, m_fltRadius, (m_fltHeight/2.0f) ) );
     }
 }

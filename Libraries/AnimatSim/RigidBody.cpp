@@ -204,6 +204,9 @@ void RigidBody::CenterOfMass(CStdFPoint &vPoint, bool bUseScaling)
 		m_vCenterOfMass = vPoint * m_lpMovableSim->InverseDistanceUnits();
 	else
 		m_vCenterOfMass = vPoint;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_SetCenterOfMass(m_vCenterOfMass.x, m_vCenterOfMass.y, m_vCenterOfMass.z);
 }
 
 /**

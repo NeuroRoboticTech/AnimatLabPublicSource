@@ -51,6 +51,7 @@ void BlEllipsoid::CreatePhysicsGeometry()
 	{
         DeleteCollisionGeometry();
         
+        m_eBodyType = CONVEX_HULL_SHAPE_PROXYTYPE;
         CalculateVolumeAndAreas();
         m_btCollisionShape = OsgMeshToConvexHull(m_osgNode.get(), true, -1);
         //m_bDisplayDebugCollisionGraphic = true;

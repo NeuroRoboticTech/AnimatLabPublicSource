@@ -116,5 +116,24 @@ void BlJoint::Physics_ResetSimulation()
 	}
 }
 
+void BlJoint::CalculateRelativeJointMatrices(btTransform &mtJointRelToParent, btTransform &mtJointRelToChild)
+{
+    osg::Matrix mtParent = GetParentPhysicsWorldMatrix();
+    osg::Matrix mtChild = GetChildWorldMatrix();
+    CStdFPoint vPos1 = m_lpThisMI->Position();
+    CStdFPoint vRot1 = m_lpThisMI->Rotation();
+    osg::Matrix osgJointRelChild = SetupMatrix(vPos1, vRot1);
+
+    osg::Matrix mtJointMTFromChild = osgJointRelChild * mtChild;
+    osg::Matrix mtLocalRelToParent = mtJointMTFromChild * osg::Matrix::inverse(mtParent);
+
+    osg::Matrix mtChildCom = GetChildComMatrix(true);
+    osg::Matrix mtJointRelChild = osgJointRelChild * mtChildCom;
+
+    mtJointRelToParent = osgbCollision::asBtTransform(mtLocalRelToParent);
+    mtJointRelToChild = osgbCollision::asBtTransform(mtJointRelChild);
+}
+
+
     }			// Environment
 }				//BulletAnimatSim
