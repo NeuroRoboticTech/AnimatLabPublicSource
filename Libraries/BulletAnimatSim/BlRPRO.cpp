@@ -67,17 +67,11 @@ void BlRPRO::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-    //Get the matrices for the joint relative to the child and parent.
-    osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
-    CStdFPoint vPos = m_lpThisMI->Position();
-    CStdFPoint vRot = m_lpThisMI->Rotation();
-    osg::Matrix osgJointRelChild = SetupMatrix(vPos, vRot);
-    
-    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
-    btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
+    btTransform mtJointRelParent, mtJointRelChild;
+    CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
     //All limits are turned off by default.
-	m_btSocket = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, true); 
+	m_btSocket = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, true); 
     m_btSocket->setLinearLowerLimit(btVector3(0, 0, 0));
     m_btSocket->setLinearUpperLimit(btVector3(0, 0, 0));
     m_btSocket->setAngularLowerLimit(btVector3(0, 0, 0));

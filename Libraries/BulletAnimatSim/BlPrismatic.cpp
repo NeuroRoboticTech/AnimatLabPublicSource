@@ -174,16 +174,10 @@ void BlPrismatic::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-    //Get the matrices for the joint relative to the child and parent.
-    osg::Matrix osgJointRelParent = m_osgMT->getMatrix();
-    CStdFPoint vPos = m_lpThisMI->Position();
-    CStdFPoint vRot = m_lpThisMI->Rotation();
-    osg::Matrix osgJointRelChild = SetupMatrix(vPos, vRot);
+    btTransform mtJointRelParent, mtJointRelChild;
+    CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
-    btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
-    btTransform tmJointRelChild = osgbCollision::asBtTransform(osgJointRelChild);
-
-	m_btPrismatic = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, false); 
+	m_btPrismatic = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btPrismatic, true);
     m_btPrismatic->setDbgDrawSize(btScalar(5.f));
