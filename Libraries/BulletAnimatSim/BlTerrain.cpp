@@ -120,6 +120,7 @@ void BlTerrain::CreatePhysicsGeometry()
         //Mass of a terrain is always zero because it is always static.
         m_fltMass = 0;
 		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
+        m_eBodyType = TERRAIN_SHAPE_PROXYTYPE;
 		m_btCollisionShape = m_btHeightField;
 	}
 

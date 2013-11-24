@@ -18,7 +18,7 @@ namespace BulletAnimatSim
 
         //static bool IsContactObject(btCollisionObject* body0,btCollisionObject* body1);
 
-        virtual bool	needsCollision(btCollisionObject* body0,btCollisionObject* body1);
+        virtual bool	needsCollision(const btCollisionObject* body0, const btCollisionObject* body1);
     	//static void  AnimatNearCallback(btBroadphasePair& collisionPair, btCollisionDispatcher& dispatcher, const btDispatcherInfo& dispatchInfo);
     };
 

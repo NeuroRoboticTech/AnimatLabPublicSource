@@ -49,7 +49,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = true;
+    m_bDrawDebug = false;
 }
 
 BlSimulator::~BlSimulator()
@@ -235,7 +235,7 @@ bool AnimatContactCallback(btManifoldPoint& cp, void* body0, void* body1)
 
 void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
 {
-    osg::ArgumentParser arguments(&argc, (char **) argv);
+    //osg::ArgumentParser arguments(&argc, (char **) argv);
 
 	osg::setNotifyLevel(osg::NotifySeverity::NOTICE);  //ConvertTraceLevelToOSG());
 	//osg::setNotifyLevel(osg::NotifySeverity::DEBUG_INFO);  //ConvertTraceLevelToOSG());
@@ -243,10 +243,10 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
 	//osg::notify(osg::NOTICE) << "Setting OSG notice level to '" << Std_GetTraceLevel() << std::endl
 
     // set up the usage document, in case we need to print out how to use this program.
-    arguments.getApplicationUsage()->setApplicationName(arguments.getApplicationName());
-    arguments.getApplicationUsage()->setDescription(arguments.getApplicationName()+" is the standard OpenSceneGraph example which loads and visualises 3d models.");
-    arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options] filename ...");
-    arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
+    //arguments.getApplicationUsage()->setApplicationName(arguments.getApplicationName());
+    //arguments.getApplicationUsage()->setDescription(arguments.getApplicationName()+" is the standard OpenSceneGraph example which loads and visualises 3d models.");
+    //arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options] filename ...");
+    //arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
 
 	//Ensure that our exe path is the only place it will attempt to find library files.
 	osgDB::FilePathList aryList = osgDB::getLibraryFilePathList();

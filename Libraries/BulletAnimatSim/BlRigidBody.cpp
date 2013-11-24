@@ -269,7 +269,9 @@ void BlRigidBody::CreateDynamicPart()
         //If we have set the center of mass to something other than 0, or if this is a mesh type, then set the COM on the creation record.
         //If this is a mesh then we need to explicitly set this to 0, otherwise it will try and set the COM based on the bounding box and that
         // will cause it to be offset from what it should be.
-        if( (vCom != CStdFPoint(0, 0, 0)) ||  (m_eBodyType == CONVEX_HULL_SHAPE_PROXYTYPE) || (m_eBodyType == TRIANGLE_MESH_SHAPE_PROXYTYPE) )
+        if( (vCom != CStdFPoint(0, 0, 0)) ||  (m_eBodyType == CONVEX_HULL_SHAPE_PROXYTYPE) || 
+            (m_eBodyType == TRIANGLE_MESH_SHAPE_PROXYTYPE) || (m_eBodyType == STATIC_PLANE_PROXYTYPE) || 
+            (m_eBodyType == TERRAIN_SHAPE_PROXYTYPE) )
             cr->setCenterOfMass(osg::Vec3(vCom.x, vCom.y, vCom.z) );
         cr->_sceneGraph = m_osgMT.get();
         cr->_shapeType = m_eBodyType;

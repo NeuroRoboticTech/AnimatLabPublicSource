@@ -32,7 +32,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BlAnimatCollisionDispatcher\r\n", "", -1, false, true);}
 }
 
-bool	BlAnimatCollisionDispatcher::needsCollision(btCollisionObject* body0,btCollisionObject* body1)
+bool	BlAnimatCollisionDispatcher::needsCollision(const btCollisionObject* body0, const btCollisionObject* body1)
 {
 	btAssert(body0);
 	btAssert(body1);

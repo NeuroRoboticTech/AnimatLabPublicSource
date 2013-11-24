@@ -60,6 +60,7 @@ void BlPlane::CreatePhysicsGeometry()
 
         m_fltMass = 0;  //Plane is always a static object.
         CStdFPoint vPos = m_lpThisRB->Position();
+        m_eBodyType = STATIC_PLANE_PROXYTYPE;
         m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), vPos.y);
     }
 }
