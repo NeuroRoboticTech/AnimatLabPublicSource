@@ -84,6 +84,13 @@ void BlPlane::CreateDynamicPart()
 	{
         //m_btCollisionShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
         btRigidBody::btRigidBodyConstructionInfo rbInfo( 0., NULL, m_btCollisionShape, btVector3(0,0,0) );
+
+		rbInfo.m_friction = m_lpMaterial->FrictionLinearPrimary();
+        rbInfo.m_rollingFriction = m_lpMaterial->FrictionAngularPrimaryConverted();
+		rbInfo.m_restitution = m_lpMaterial->Restitution();
+        rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
+        rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
+
         m_btPart = new btRigidBody(rbInfo);
 
         if(!m_lpBulletData)

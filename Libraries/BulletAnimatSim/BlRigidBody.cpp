@@ -183,6 +183,7 @@ void BlRigidBody::MaterialTypeModified()
 	if(m_btPart && m_lpMaterial)
 	{
 		m_btPart->setFriction(m_lpMaterial->FrictionLinearPrimary());
+        m_btPart->setRollingFriction(m_lpMaterial->FrictionAngularPrimaryConverted());
 		m_btPart->setRestitution(m_lpMaterial->Restitution());
 	}
 }
@@ -283,20 +284,25 @@ void BlRigidBody::CreateDynamicPart()
             cr->_mass = 0;
 
 		cr->_friction = m_lpMaterial->FrictionLinearPrimary();
+        cr->_rollingFriction = m_lpMaterial->FrictionAngularPrimaryConverted();
 		cr->_restitution = m_lpMaterial->Restitution();
+        cr->_linearDamping = m_lpThisRB->LinearVelocityDamping();
+        cr->_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
         m_osgMT->setMatrix(osg::Matrix::identity());
 
         m_btPart = osgbDynamics::createRigidBody( cr.get(), m_btCollisionShape );
 
+        if(m_lpMaterial->FrictionAngularPrimary() > 0)
+    		m_btPart->setAnisotropicFriction(m_btCollisionShape->getAnisotropicRollingFrictionDirection(),btCollisionObject::CF_ANISOTROPIC_ROLLING_FRICTION);
+
+        m_btPart->setLinearVelocity( btVector3( 0., 0, 0. ) );
         m_btPart->setAngularVelocity( btVector3( 0., 0, 0. ) );
 
         m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
         m_btCollisionShape = m_btPart->getCollisionShape();
 
 
-  ////      rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
-  ////      rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
         if(!m_lpBulletData)
             m_lpBulletData = new BlBulletData(this, false);

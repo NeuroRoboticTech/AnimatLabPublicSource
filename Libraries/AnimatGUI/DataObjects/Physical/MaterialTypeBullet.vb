@@ -78,7 +78,7 @@ Namespace DataObjects.Physical
             MyBase.New(doParent)
 
             m_snFrictionLinearPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionLinearPrimary", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
-            m_snFrictionAngularPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionAngularPrimary", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
+            m_snFrictionAngularPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionAngularPrimary", 0.01, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None)
 
         End Sub

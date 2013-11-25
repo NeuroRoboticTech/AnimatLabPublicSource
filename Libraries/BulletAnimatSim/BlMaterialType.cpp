@@ -63,6 +63,7 @@ void BlMaterialType::FrictionLinearPrimary(float fltVal)
 **/
 float BlMaterialType::FrictionAngularPrimary() {return m_fltFrictionAngularPrimary;}
 
+
 /**
 \brief	Sets the angular primary friction coefficient.
 
@@ -77,6 +78,26 @@ void BlMaterialType::FrictionAngularPrimary(float fltVal)
 	
 	m_fltFrictionAngularPrimary = fltVal;
 	SetMaterialProperties();
+}
+
+/**
+\brief	Gets the angular primary friction coefficient converted to match vortex values.
+
+\description We need the angular friction value defined and used to match the results from the
+vortex simulation as closely as possible. These two systems use different methods to implement 
+rolling friction, so they will never match exactly. However, I wanted them to produce at least similar
+results. I compared output for a sim that had a cylinder rolling on a plane and getting pushed and 
+found how far it rolled in vortex. I then determined the friction required to make the value match in
+bullet and came up with the conversion factor below. 
+
+\author	dcofer
+\date	3/23/2011
+
+\return	friction coefficient.
+**/
+float BlMaterialType::FrictionAngularPrimaryConverted() 
+{
+    return m_fltFrictionAngularPrimary*6.3;
 }
 
 /**

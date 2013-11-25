@@ -37,6 +37,7 @@ namespace BulletAnimatSim
 
 			virtual float FrictionAngularPrimary();
 			virtual void FrictionAngularPrimary(float fltVal);
+            virtual float FrictionAngularPrimaryConverted();
 
 			virtual float Restitution();
 			virtual void Restitution(float fltVal);
