@@ -281,7 +281,7 @@ Namespace Forms
                     cboPhysicsEngine.Enabled = False
                     cboPhysicsEngine.SelectedText = Util.Application.SimPhysicsSystem
                 Else
-                    cboPhysicsEngine.SelectedIndex = 0
+                    cboPhysicsEngine.SelectedIndex = 1  '0
                 End If
 
             Catch ex As System.Exception
