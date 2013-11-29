@@ -372,8 +372,8 @@ Namespace UITests
 
                         'Change the box size and check again.
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Width", "1 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Height", "1 "})
 
                         dblDensity = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Density.ActualValue"), Double)
                         dblVolume = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Volume.ActualValue"), Double)
@@ -383,18 +383,18 @@ Namespace UITests
                             Throw New System.Exception("Invalid box mass settings. Mass: " & dblMass & ", Density: " & dblDensity & ", Volume: " & dblVolume)
                         End If
 
-                        'Change the box density
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
+                        ''Change the box density
+                        'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
+                        'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
+                        'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Length", "1 "})
 
-                        dblDensity = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Density.ActualValue"), Double)
-                        dblVolume = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Volume.ActualValue"), Double)
-                        dblMass = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Mass.ActualValue"), Double)
+                        'dblDensity = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Density.ActualValue"), Double)
+                        'dblVolume = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Volume.ActualValue"), Double)
+                        'dblMass = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_Box\Box", "Mass.ActualValue"), Double)
 
-                        If dblDensity <> 10 OrElse dblVolume <> 1 OrElse dblMass <> 10 Then
-                            Throw New System.Exception("Invalid box mass settings. Mass: " & dblMass & ", Density: " & dblDensity & ", Volume: " & dblVolume)
-                        End If
+                        'If dblDensity <> 10 OrElse dblVolume <> 1 OrElse dblMass <> 10 Then
+                        '    Throw New System.Exception("Invalid box mass settings. Mass: " & dblMass & ", Density: " & dblDensity & ", Volume: " & dblVolume)
+                        'End If
 
                     End Sub
 
