@@ -32,6 +32,9 @@ Namespace DataObjects
 
             Protected m_arySubsystemIDs As New ArrayList
 
+            'Keeps track of each mesh name as it is used so we do not duplicate any.
+            Protected m_aryUsedMeshNames As New ArrayList
+
             Public Overrides ReadOnly Property ConvertFrom As Integer
                 Get
                     Return 1
@@ -650,12 +653,15 @@ Namespace DataObjects
 
                 Dim strMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "MeshFile", False, "")
                 Dim strExt As String = Util.GetFileExtension(strMeshFileOld)
-                Dim strMeshFile As String = strMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strBaseMeshName As String = strMeshFileOld.Replace("." & strExt, "")
                 Dim strCollisionMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshFile", False, "")
                 strExt = Util.GetFileExtension(strCollisionMeshFileOld)
-                Dim strCollisionMeshFile As String = strCollisionMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strBaseColliosionMeshName As String = strCollisionMeshFileOld.Replace("." & strExt, "")
                 Dim strCollisionMeshType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshType", False, "Convex")
                 Dim strTexture As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Texture", False, "")
+
+                Dim strMeshFile As String = EnsureUniqueMeshName(strBaseMeshName) & ".osg"
+                Dim strCollisionMeshFile As String = EnsureUniqueMeshName(strBaseColliosionMeshName) & ".osg"
 
                 If strCollisionMeshType = "Regular" Then
                     strCollisionMeshType = "Triangular"
@@ -708,6 +714,22 @@ Namespace DataObjects
                 ''If File.Exists(m_strProjectPath & "\" & strConvexMeshFile) Then File.Delete(m_strProjectPath & "\" & strConvexMeshFile)
 
             End Sub
+
+            Protected Function EnsureUniqueMeshName(ByVal strBaseMeshName As String, Optional ByVal iIndex As Integer = 0) As String
+
+                Dim strTestName As String = strBaseMeshName
+                If iIndex > 0 Then
+                    strTestName = strTestName & iIndex
+                End If
+
+                If m_aryUsedMeshNames.Contains(strTestName) Then
+                    Return EnsureUniqueMeshName(strBaseMeshName, iIndex + 1)
+                Else
+                    m_aryUsedMeshNames.Add(strTestName)
+                    Return strTestName
+                End If
+
+            End Function
 
             Protected Sub ConvertV1MeshFile(ByVal strOldFile As String, ByVal strNewFile As String, ByVal strTexture As String)
 
