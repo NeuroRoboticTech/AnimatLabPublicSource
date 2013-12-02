@@ -91,7 +91,7 @@ Namespace DataObjects
                 Return aryReplaceText
             End Function
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
                 m_iSimInterface.CreateStandAloneSim("VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
@@ -101,6 +101,9 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsClassName", False)
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
                 m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
+
+                m_xnProjectXml.RemoveNode(xnProject, "Physics", False)
+                m_xnProjectXml.AddNodeValue(xnProject, "Physics", strPhysics)
 
                 m_xnProjectXml.RemoveNode(xnProject, "DockingForms", False)
                 m_xnProjectXml.RemoveNode(xnProject, "ChildForms", False)
@@ -1539,6 +1542,29 @@ Namespace DataObjects
                         m_aryGainIDs.Add(strID)
                     End If
                 End If
+
+                'If this neural node has ion channels then loop through them and check their IDs.
+                'The old version of AnimatLab had a bug in it that would duplicate IDs of Ion channels
+                ' when they were copied. We need to check for this here and replace any duplicate IDs
+                Dim xnIonChannels As XmlNode = m_xnProjectXml.GetNode(xnNode, "IonChannels", False)
+                If Not xnIonChannels Is Nothing Then
+                    For Each xnIon As XmlNode In xnIonChannels
+                        ModifyIonChannel(xnNode, xnIon)
+                    Next
+                End If
+
+            End Sub
+
+            Protected Sub ModifyIonChannel(ByVal xnNode As XmlNode, ByVal xnIon As XmlNode)
+
+                Dim strID As String = m_xnProjectXml.GetSingleNodeValue(xnIon, "ID", False, "")
+
+                If m_hashIonChannels.ContainsKey(strID) Then
+                    strID = System.Guid.NewGuid.ToString
+                    m_xnProjectXml.UpdateSingleNodeValue(xnIon, "ID", strID)
+                End If
+
+                m_hashIonChannels.Add(strID, xnIon)
 
             End Sub
 

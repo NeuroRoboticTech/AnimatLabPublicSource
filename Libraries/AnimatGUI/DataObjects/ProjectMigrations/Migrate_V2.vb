@@ -31,9 +31,12 @@ Namespace DataObjects
                 MyBase.New()
             End Sub
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
 
                 m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
+
+                m_xnProjectXml.RemoveNode(xnProject, "Physics", False)
+                m_xnProjectXml.AddNodeValue(xnProject, "Physics", strPhysics)
 
                 Dim xnSimNode As XmlNode = m_xnProjectXml.GetNode(xnProject, "Simulation")
                 Dim xmlEnv As XmlNode = m_xnProjectXml.GetNode(xnSimNode, "Environment")

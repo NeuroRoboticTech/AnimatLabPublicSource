@@ -141,7 +141,7 @@ Namespace Framework
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
-            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime, m_bCreateStructure)
+            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime, m_bCreateStructure, m_strPhysicsEngine)
         End Sub
 
         Protected Overridable Sub StartExistingProject()
@@ -423,14 +423,18 @@ Namespace Framework
             Debug.WriteLine("Set structure names. Struct Group: '" & m_strStructureGroup & "', Struct1 Name: '" & m_strStruct1Name & "'")
         End Sub
 
-        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean)
+        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean, ByVal strPhysics As String)
 
-            Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & ", CreateStructure: " & bCreateStructure)
+            Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & ", CreateStructure: " & bCreateStructure & ", Physics: " & strPhysics)
 
             OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton", False, 200, False, False})
 
             'Set params and hit ok button
             ExecuteActiveDialogMethod("SetProjectParams", New Object() {strProjectName, m_strRootFolder & strProjectPath})
+
+            'Set Physics Method
+            ExecuteIndirectActiveDialogMethod("SetPhysics", New Object() {strPhysics}, , , True)
+
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             WaitForProjectToOpen()

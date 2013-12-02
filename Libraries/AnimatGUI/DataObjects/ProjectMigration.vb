@@ -34,6 +34,7 @@ Namespace DataObjects
 
         Protected m_hashRigidBodies As New Hashtable
         Protected m_hashJoints As New Hashtable
+        Protected m_hashIonChannels As New Hashtable
 
         Public MustOverride ReadOnly Property ConvertFrom() As Integer
         Public MustOverride ReadOnly Property ConvertTo() As Integer
@@ -48,7 +49,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Sub ConvertFiles(ByVal strProjectFile As String)
+        Public Overridable Sub ConvertFiles(ByVal strProjectFile As String, ByVal strPhysics As String)
 
             Dim strProjectFilename As String
             Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
@@ -64,7 +65,7 @@ Namespace DataObjects
             BackupFiles()
 
             For Each strProjFile As String In m_aryAPROJ_Files
-                ConvertProject(strProjFile)
+                ConvertProject(strProjFile, strPhysics)
             Next
 
             RemoveOldFiles()
@@ -134,18 +135,18 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub ConvertProject(ByVal strProjFile As String)
+        Protected Overridable Sub ConvertProject(ByVal strProjFile As String, ByVal strPhysics As String)
 
             m_xnProjectXml.Load(strProjFile)
 
             Dim xnProjectNode As XmlNode = m_xnProjectXml.GetRootNode("Project")
 
-            ConvertProjectNode(xnProjectNode)
+            ConvertProjectNode(xnProjectNode, strPhysics)
 
             m_xnProjectXml.Save(strProjFile)
         End Sub
 
-        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
 
         End Sub
 

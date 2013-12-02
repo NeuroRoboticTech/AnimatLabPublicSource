@@ -68,6 +68,8 @@ void BlJoint::DeletePhysics(bool bIncludeChildren)
 
 void BlJoint::Physics_CollectData()
 {
+    OsgJoint::Physics_CollectData();
+
 	if(m_lpThisJoint && m_btJoint && m_lpThisJoint->GetSimulator())
 	{
 		float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
@@ -75,8 +77,8 @@ void BlJoint::Physics_CollectData()
 
         float fltCurrentJointPos = GetCurrentBtPosition();
 
-        if(GetSimulator()->Time() > 5.64)
-            fltCurrentJointPos = fltCurrentJointPos;
+        //if(GetSimulator()->Time() > 5.64)
+        //    fltCurrentJointPos = fltCurrentJointPos;
 
         //If this joint uses radians then at the +/- PI boundaries the sign can flip. 
         //So we need to keep an internal representation of its position and update this with a delta of the change in position

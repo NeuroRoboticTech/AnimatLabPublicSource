@@ -3358,10 +3358,15 @@ Namespace Forms
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Attempted to load an old project version file: '" & strFilename & "', Old Version: " & exOldVersion.OldVersion)
                 Me.CloseProject(False)
 
-                If Util.ShowMessage("The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
-                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. ", _
-                                 "Convert Project", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion)
+                Dim frmConvert As New ConvertPhysics
+                frmConvert.lblSaveMessage.Text = "The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
+                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. "
+                frmConvert.Text = "Convert Project"
+                frmConvert.lblCurrentPhysics.Visible = False
+                frmConvert.lblNewPhysics.Text = "Please choose the physics engine for the conversion"
+                frmConvert.ShowAllPhysicsOptions = True
+                If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
+                    RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion, frmConvert.cboPhysicsEngine.SelectedItem.ToString)
                 Else
                     Throw exOldVersion
                 End If
@@ -5510,7 +5515,7 @@ Namespace Forms
             m_doSimulation.NotifySimTimeStepChanged()
         End Sub
 
-        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal iOldVersion As Integer)
+        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strPhysics As String)
 
         Public Overridable Sub SignalBeforeAddNode(ByVal doNode As DataObjects.Behavior.Node)
             RaiseEvent BeforeAddNode(doNode)
@@ -5727,7 +5732,7 @@ Namespace Forms
             Try
 
                 Dim frmConvert As New Forms.ConvertPhysics()
-                If frmConvert.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
 
                     Dim strConvertTo As String = frmConvert.cboPhysicsEngine.SelectedItem.ToString()
 
@@ -6750,7 +6755,7 @@ Namespace Forms
 
 #Region "File Conversion Event Handlers"
 
-        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer) Handles Me.ConvertFileVersion
+        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strPhysics As String) Handles Me.ConvertFileVersion
             Try
                 Me.AppIsBusy = True
 
@@ -6759,7 +6764,7 @@ Namespace Forms
 
                 'Keep running the file converter until we convert all the way up to the latest version.
                 While iVersion < iCurrentVersion
-                    iVersion = ConvertProjectVersion(strProjectFile, iVersion)
+                    iVersion = ConvertProjectVersion(strProjectFile, iVersion, strPhysics)
                 End While
 
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
@@ -6778,7 +6783,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer) As Integer
+        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer, ByVal strPhysics As String) As Integer
 
             'Find a converter that will convert this file type to a newer version.
             If Not m_aryProjectMigrations.ContainsKey(iVersion) Then
@@ -6787,7 +6792,7 @@ Namespace Forms
 
             Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion), DataObjects.ProjectMigration)
 
-            doConv.ConvertFiles(strProjectFile)
+            doConv.ConvertFiles(strProjectFile, strPhysics)
 
             Return doConv.ConvertTo
         End Function

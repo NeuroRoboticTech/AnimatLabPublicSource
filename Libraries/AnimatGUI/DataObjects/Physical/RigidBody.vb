@@ -167,10 +167,10 @@ Namespace DataObjects.Physical
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
 
                     If m_snVolume.ActualValue > 0 Then
-                        Dim fltMass As Single = CSng(Value.ActualValue * m_snVolume.ActualValue)
+                        Dim fltMass As Double = CSng(Value.ActualValue * m_snVolume.ActualValue)
 
-                        'FIX ME (Is this correct for the mass??
-                        'Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
+                        'Value above uses the display units value, while volume is always in m^3. We need to do a conversion to get them to match correctly.
+                        fltMass = fltMass / (Util.Environment.DisplayDistanceUnitValue ^ 3)
                         Dim snNewVal As New ScaledNumber(Me, "Mass", 1, ScaledNumber.enumNumericScale.Kilo, "g", "g")
                         snNewVal.ActualValue = fltMass
 

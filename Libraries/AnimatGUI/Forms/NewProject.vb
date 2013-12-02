@@ -187,6 +187,24 @@ Namespace Forms
 
 #Region " Methods "
 
+#Region "Automation Methods"
+
+        Public Sub SetPhysics(ByVal strPhysics As String)
+
+            Dim iIdx As Integer = 0
+            For Each strItem As String In cboPhysicsEngine.Items
+                If strItem = strPhysics Then
+                    cboPhysicsEngine.SelectedIndex = iIdx
+                    Return
+                End If
+
+                iIdx = iIdx + 1
+            Next
+
+        End Sub
+
+#End Region
+
 #End Region
 
 #Region " Events "
