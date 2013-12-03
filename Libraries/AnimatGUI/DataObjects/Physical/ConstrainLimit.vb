@@ -199,7 +199,43 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
-            BuildProperties(propTable, True, "", "")
+
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
+            pbNumberBag = m_snLimitPos.Properties
+            If m_bAngleLimit Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angle", pbNumberBag.GetType(), "LimitPos", _
+                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " angle rotation that is allowed for this joint in degrees.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            Else
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "LimitPos", _
+                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " position that is allowed for this joint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
+
+            pbNumberBag = m_snDamping.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), "Damping", _
+                                        "Constraints", "The damping term for this limit. If the stiffness and damping " & _
+                                        "of an individual limit are both zero, it is effectively deactivated. This is the damping " & _
+                                        "of the virtual spring used when the joint reaches its limit. It is not frictional damping " & _
+                                        "for the motion around the joint.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snRestitution.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), "Restitution", _
+                                        "Constraints", "The coefficient of restitution is the ratio of rebound velocity to " & _
+                                        "impact velocity when the joint reaches the low or high stop. This is used if the limit stiffness " & _
+                                        "is greater than zero. Restitution must be in the range zero to one inclusive.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snStiffness.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stiffness", pbNumberBag.GetType(), "Stiffness", _
+                                        "Constraints", "The spring constant is used for restitution force when a limited " & _
+                                        "joint reaches one of its stops. This limit property must be zero or positive. " & _
+                                        "If the stiffness and damping of an individual limit are both zero, it is effectively deactivated.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+
+
         End Sub
 
         Public Overridable Overloads Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable, ByVal bIncludeOtherProps As Boolean, ByVal strSetName As String, ByVal strExtraPropName As String)
