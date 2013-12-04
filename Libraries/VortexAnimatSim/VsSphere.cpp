@@ -47,10 +47,19 @@ void VsSphere::CreateGraphicsGeometry()
 	m_osgGeometry = CreateSphereGeometry(LatitudeSegments(), LongtitudeSegments(), m_fltRadius);
 }
 
+void VsSphere::CalculateEstimatedMassAndVolume()
+{
+    float fltVolume = (4/3.0) * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
+    m_fltEstimatedVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);;
+    m_fltEstimatedMass = (m_fltDensity * fltVolume) * m_lpSim->DisplayMassUnits();
+}
+
 void VsSphere::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxSphere(m_fltRadius);
+
+    CalculateEstimatedMassAndVolume();
 }
 
 void VsSphere::CreateParts()
@@ -81,6 +90,8 @@ void VsSphere::ResizePhysicsGeometry()
 			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
 		
 		vxSphere->setRadius(m_fltRadius);
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

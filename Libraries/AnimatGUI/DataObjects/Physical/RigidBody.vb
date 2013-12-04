@@ -334,6 +334,30 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable ReadOnly Property HasStaticJoint() As Boolean
+            Get
+                If Not Me.JointToParent Is Nothing AndAlso Util.IsTypeOf(Me.JointToParent.GetType(), GetType(Joints.StaticJoint), False) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property HasStaticChild() As Boolean
+            Get
+                Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
+                For Each deEntry As DictionaryEntry In m_aryChildBodies
+                    dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
+                    If dbChild.HasStaticJoint Then
+                        Return True
+                    End If
+                Next
+
+                Return False
+            End Get
+        End Property
+
         Public Overridable Property IsRoot() As Boolean
             Get
                 Return m_bIsRoot
@@ -613,6 +637,16 @@ Namespace DataObjects.Physical
                 Else
                     m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                End If
+            End If
+
+            'If this is a static joint then update the parent body mass volume density as well.
+            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso Me.HasStaticJoint Then
+                If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody), False) Then
+                    Dim doParentBody As RigidBody = DirectCast(Me.Parent, RigidBody)
+                    If Not doParentBody Is Nothing Then
+                        doParentBody.UpdateMassVolumeDensity()
+                    End If
                 End If
             End If
 
@@ -987,15 +1021,18 @@ Namespace DataObjects.Physical
                                                 "Mass Properties", "Sets the density of this body part.", pbNumberBag, _
                                                 "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                    pbNumberBag = m_snMass.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
-                                                "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                    If Util.Application.UseMassForRigidBodyDefinitions OrElse Not Me.HasStaticJoint Then
+                        pbNumberBag = m_snMass.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
+                                                    "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                    pbNumberBag = m_snVolume.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
-                                                "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                        pbNumberBag = m_snVolume.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
+                                                    "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+
+                    End If
                 End If
 
                 'Center Of Mass
@@ -1458,7 +1495,19 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveData(oXml, "Density")
-            m_snMass.SaveData(oXml, "Mass")
+
+            'If we are using density (IE: Vortex) and this body either has static children or is a static child then we 
+            'need to get the estimated mass and save that out instead of the mass shown. The reason is that the mass for
+            'static children for vortex is shown as 0 and added to the mass of the parent. If we try and convert this project
+            'then it will load up in bullet incorrectly with a mass of 0, so we use the estimated masses.
+            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild) Then
+                Dim snMass As ScaledNumber = DirectCast(m_snMass.Clone(m_snMass.Parent, False, Me), ScaledNumber)
+                snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("EstimatedMass")
+                snMass.SaveData(oXml, "Mass")
+            Else
+                m_snMass.SaveData(oXml, "Mass")
+            End If
+
             m_svCOM.SaveData(oXml, "COM")
 
             If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then

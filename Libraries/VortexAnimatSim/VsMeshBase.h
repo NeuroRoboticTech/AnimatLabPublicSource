@@ -30,6 +30,7 @@ namespace VortexAnimatSim
 				virtual void LoadMeshNode();
 				virtual void ResizePhysicsGeometry();
 				virtual void CreateDefaultMesh();
+                virtual void CalculateEstimatedMassAndVolume();
 
 			public:
 				VsMeshBase();

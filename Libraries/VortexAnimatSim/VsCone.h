@@ -23,6 +23,7 @@ namespace VortexAnimatSim
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
 				virtual void ResizePhysicsGeometry();
+                virtual void CalculateEstimatedMassAndVolume();
 
 			public:
 				VsCone();

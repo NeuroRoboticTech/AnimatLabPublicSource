@@ -84,6 +84,15 @@ namespace VortexAnimatSim
 			float m_vForce[3];
 			float m_vTorque[3];
 
+            /// Static parts do not have their mass/volume computed for them by vortex. This presents a problem when
+            /// trying to convert them to another physics engine like bullet that uses mass instead. When we are saving
+            /// out the mass of the part then we need to be able to get some reliable estimate of what it is if it is static.
+            /// We use these estimations for that purpose.
+            float m_fltEstimatedMass;
+
+            /// The estimated volume. See m_fltEstimatedMass desciption.
+            float m_fltEstimatedVolume;
+
 			///Used to send back 0 for variables that are supported in other physics
 			///engines but not in this one.
 			float m_fltBlank;
@@ -107,6 +116,8 @@ namespace VortexAnimatSim
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();
+
+            virtual void CalculateEstimatedMassAndVolume() {};
 
 		public:
 			VsRigidBody();

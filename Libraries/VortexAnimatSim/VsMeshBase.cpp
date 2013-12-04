@@ -126,6 +126,18 @@ void VsMeshBase::CreateGeometry()
 	osgNodeGroup->addChild(m_osgMeshNode.get());
 }
 
+void VsMeshBase::CalculateEstimatedMassAndVolume()
+{
+    if(m_lpThisRB)
+    {
+        AnimatSim::BoundingBox bb = m_lpThisRB->GetBoundingBox();
+        
+        float fltVolume = (bb.Width() * bb.Height() * bb.Length());
+        m_fltEstimatedVolume = fltVolume*pow(m_lpThisRB->GetSimulator()->DistanceUnits(), (float) 3.0);
+        m_fltEstimatedMass = (m_lpThisRB->Density() * fltVolume) * m_lpThisRB->GetSimulator()->DisplayMassUnits();
+    }
+}
+
 void VsMeshBase::CreatePhysicsGeometry()
 {
 	if(m_lpThisRB->IsCollisionObject())
@@ -138,6 +150,8 @@ void VsMeshBase::CreatePhysicsGeometry()
 		if(!m_vxGeometry)
 			THROW_TEXT_ERROR(Vs_Err_lCreatingGeometry, Vs_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 	}
+
+    CalculateEstimatedMassAndVolume();
 }
 
 
@@ -153,6 +167,8 @@ void VsMeshBase::ResizePhysicsGeometry()
 
 		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

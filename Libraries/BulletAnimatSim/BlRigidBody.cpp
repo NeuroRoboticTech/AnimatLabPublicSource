@@ -218,7 +218,7 @@ void BlRigidBody::Physics_WakeDynamics()
 
 void BlRigidBody::GetBaseValues()
 {
-	if(m_btPart && m_lpThisRB)
+	if(m_lpThisRB)
 	{
 		//Recalculate the mass and volume
 		m_lpThisRB->GetDensity();
@@ -409,6 +409,8 @@ void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCom
 
 	    btTransform localTransform  = osgbCollision::asBtTransform(mt);
         btCompound->addChildShape(localTransform, m_btCollisionShape);
+
+        GetBaseValues();
     }
 }
 

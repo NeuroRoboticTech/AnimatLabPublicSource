@@ -41,6 +41,13 @@ VsCone::~VsCone()
 	{Std_TraceMsg(0, "Caught Error in desctructor of VsCone\r\n", "", -1, false, true);}
 }
 
+void VsCone::CalculateEstimatedMassAndVolume()
+{
+    float fltVolume = (1/3.0)*osg::PI*((m_fltLowerRadius*m_fltLowerRadius + m_fltLowerRadius*m_fltUpperRadius + m_fltUpperRadius*m_fltUpperRadius)/m_fltHeight);
+    m_fltEstimatedVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);;
+    m_fltEstimatedMass = (m_fltDensity * fltVolume) * m_lpSim->DisplayMassUnits();
+}
+
 void VsCone::CreateGraphicsGeometry()
 {
 	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
@@ -57,6 +64,8 @@ void VsCone::CreatePhysicsGeometry()
 
 		m_vxGeometry = VxConvexMesh::createFromNode(osgNode.get());
 	}
+
+    CalculateEstimatedMassAndVolume();
 }
 
 void VsCone::CreateParts()
@@ -90,6 +99,8 @@ void VsCone::ResizePhysicsGeometry()
 		CreatePhysicsGeometry();
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

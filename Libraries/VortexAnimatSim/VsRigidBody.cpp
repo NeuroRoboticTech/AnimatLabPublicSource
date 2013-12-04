@@ -31,6 +31,9 @@ VsRigidBody::VsRigidBody()
 	m_vxCollisionGeometry = NULL;
 	m_fltBlank = 0;
 
+    m_fltEstimatedMass = 0;
+    m_fltEstimatedVolume = 0;
+
 	for(int i=0; i<3; i++)
 	{
 		m_vTorque[i] = 0;
@@ -157,8 +160,17 @@ void VsRigidBody::Physics_SetFreeze(bool bVal)
 
 void VsRigidBody::Physics_SetDensity(float fltVal)
 {
-	if(m_vxSensor)
+	if(m_vxCollisionGeometry)
 		m_vxCollisionGeometry->setRelativeDensity(fltVal);
+
+    //If this is a static joint then resize the parent so it gets the
+    //volume and mass reclaculated correctly.
+    if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
+    {
+        VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+        if(lpVsParent)
+            lpVsParent->GetBaseValues();
+    }
 }
 
 void VsRigidBody::Physics_SetMaterialID(std::string strID)
@@ -831,6 +843,12 @@ float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 
 	if(strType == "BODYANGULARACCELERATIONZ")
 		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[2]);}
+    
+	if(strType == "ESTIMATEDMASS")
+	    return &m_fltEstimatedMass;
+    
+	if(strType == "ESTIMATEDVOLUME")
+	    return &m_fltEstimatedVolume;
 
 	return NULL;
 }
