@@ -51,24 +51,33 @@ Namespace DataObjects
 
         Public Overridable Sub ConvertFiles(ByVal strProjectFile As String, ByVal strPhysics As String)
 
-            Dim strProjectFilename As String
-            Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
-            m_strProjectName = strProjectFilename.Replace(".aproj", "")
+            Try
+                Util.Application.AppIsBusy = True
 
-            'Remove the last \ if it is there.
-            If m_strProjectPath(m_strProjectPath.Length - 1) = "\" Then m_strProjectPath = m_strProjectPath.Remove(m_strProjectPath.Length - 1, 1)
+                Dim strProjectFilename As String
+                Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
+                m_strProjectName = strProjectFilename.Replace(".aproj", "")
 
-            If File.Exists(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj") Then
-                File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
-            End If
+                'Remove the last \ if it is there.
+                If m_strProjectPath(m_strProjectPath.Length - 1) = "\" Then m_strProjectPath = m_strProjectPath.Remove(m_strProjectPath.Length - 1, 1)
 
-            BackupFiles()
+                If File.Exists(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj") Then
+                    File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
+                End If
 
-            For Each strProjFile As String In m_aryAPROJ_Files
-                ConvertProject(strProjFile, strPhysics)
-            Next
+                BackupFiles()
 
-            RemoveOldFiles()
+                For Each strProjFile As String In m_aryAPROJ_Files
+                    Util.Application.AppStatusText = "Converting " & strProjectFile
+                    ConvertProject(strProjFile, strPhysics)
+                Next
+
+                RemoveOldFiles()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
 
         End Sub
 

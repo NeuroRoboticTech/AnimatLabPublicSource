@@ -395,7 +395,7 @@ void BlSimulator::ConvertV1MeshFile(std::string strOriginalMeshFile, std::string
 	if(!Std_IsBlank(strTexture))
 		strTextFile = AnimatSim::GetFilePath(strPath, strTexture);
 
-	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
+	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
 
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())
@@ -403,15 +403,6 @@ void BlSimulator::ConvertV1MeshFile(std::string strOriginalMeshFile, std::string
 
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
 	ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));
-
-	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
-	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
-	////CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	//CStdFPoint vPos(0, 0, 0), vRot( 0, 0, 0);
-	//m_osgRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-
-	//m_osgRotateMT->addChild(osgNode.get());
-
 	AddNodeTexture(osgNode.get(), strTextFile, GL_TEXTURE_2D);
 
 	//Now save out the new collision mesh.

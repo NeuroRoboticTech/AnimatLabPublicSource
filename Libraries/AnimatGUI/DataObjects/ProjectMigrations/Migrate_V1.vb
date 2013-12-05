@@ -148,6 +148,8 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySimNode(ByVal xnSimulation As XmlNode)
 
+                Util.Application.AppStatusText = "Converting simulation nodes"
+
                 m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
@@ -236,6 +238,9 @@ Namespace DataObjects
                 m_xnMouth = Nothing
                 m_xnStomach = Nothing
 
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnStructure, "Name", False)
+                Util.Application.AppStatusText = "Converting organism/structure " & strName & " body"
+
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
                 m_xnProjectXml.RemoveNode(xnStructure, "Reference", False)
@@ -281,6 +286,9 @@ Namespace DataObjects
                 If Not m_xnProjectXml.GetNode(xnRigidBody, "Converter", False) Is Nothing Then
                     Return
                 End If
+
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Name", False)
+                Util.Application.AppStatusText = "Converting body part " & strName
 
                 m_xnProjectXml.AddTransparency(xnRigidBody, 0, 0, 50, 50, 0)
 
@@ -1093,6 +1101,8 @@ Namespace DataObjects
 
             Protected Overridable Sub AddLight(ByVal xnEnvironment As XmlNode)
 
+                Util.Application.AppStatusText = "Adding lights"
+
                 Dim fltDistY As Single = 20 * m_fltDistanceUnits
                 Dim fltDistXZ As Single = 10 * m_fltDistanceUnits
                 Dim fltAttenuation As Single = 750 * m_fltDistanceUnits
@@ -1172,6 +1182,8 @@ Namespace DataObjects
 
             Protected Overridable Sub AddDefaultMaterial(ByVal xnEnvironment As XmlNode)
 
+                Util.Application.AppStatusText = "Adding default materials"
+
                 Dim strXml As String = "<MaterialType>" & vbCrLf & _
                             "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & vbCrLf & _
                             "<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>" & vbCrLf & _
@@ -1209,6 +1221,8 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySurface(ByVal strType As String, ByVal xnEnvironment As XmlNode, ByVal xnStructs As XmlNode, ByVal aryReplaceText As Hashtable, ByVal bIsFluidPlane As Boolean)
 
+                Util.Application.AppStatusText = "Modifying " & strType & " surface"
+
                 Dim xnGround As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, strType & "Surface", False)
                 If Not xnGround Is Nothing Then
 
@@ -1224,6 +1238,9 @@ Namespace DataObjects
 #Region "Modify Nervous System"
 
             Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
+
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnOrganism, "Name", False)
+                Util.Application.AppStatusText = "Converting organism " & strName & " nervous system"
 
                 m_arySubsystemIDs.Clear()
 
@@ -1478,6 +1495,9 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySubSystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnSubSystem As XmlNode)
 
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnBodyFile, "PageName", False)
+                Util.Application.AppStatusText = "Converting neural subsystem " & strName
+
                 Dim strSubSystemID As String = m_xnProjectXml.GetSingleNodeValue(xnSubSystem, "SubsystemID")
                 m_arySubsystemIDs.Add(strSubSystemID.ToLower)
 
@@ -1622,6 +1642,8 @@ Namespace DataObjects
 #Region "Stimuli Modifiers"
 
             Protected Overridable Sub ModifyStimuli(ByVal xnProjectNode As XmlNode, ByVal xnSimNode As XmlNode)
+
+                Util.Application.AppStatusText = "Converting stimuli"
 
                 Dim xnStimuli As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "Stimuli")
 
