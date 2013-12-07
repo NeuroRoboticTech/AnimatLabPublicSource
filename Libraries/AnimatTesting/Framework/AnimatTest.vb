@@ -49,7 +49,7 @@ Namespace Framework
         Protected m_dblChartEndTime As Double = 8
         Protected m_bIgnoreSimAndCompare As Boolean = False
         Protected m_strOldProjectFolder As String
-        Protected m_strPhysicsEngine As String = "Bullet" '"Vortex"
+        Protected m_strPhysicsEngine As String = "Vortex"
 
 #End Region
 

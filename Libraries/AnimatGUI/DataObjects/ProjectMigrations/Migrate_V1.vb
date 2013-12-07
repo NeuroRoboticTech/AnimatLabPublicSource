@@ -97,7 +97,7 @@ Namespace DataObjects
             Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
-                m_iSimInterface.CreateStandAloneSim("VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
+                m_iSimInterface.CreateStandAloneSim("VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
                                                     Application.ExecutablePath)
                 m_iSimInterface.SetProjectPath(m_strProjectPath & "\")
 
@@ -784,7 +784,7 @@ Namespace DataObjects
                                         "<Specular Red=""0.25098"" Green=""0.25098"" Blue=""0.25098"" Alpha=""1""/>" & vbCrLf & _
                                         "<Shininess>64</Shininess>" & vbCrLf & _
                                         "<Texture/>" & _
-                                        "<ModuleName>VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
+                                        "<ModuleName>VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
                                         "<LocalPosition>" & vbCrLf & _
                                         "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
                                         "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
@@ -865,7 +865,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 m_xnStomach = xnRigidBody
 

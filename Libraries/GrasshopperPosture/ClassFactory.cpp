@@ -74,8 +74,7 @@ CStdSerialize *ClassFactory::CreateObject(std::string strClassType, std::string 
 {
 	CStdSerialize *lpObject=NULL;
 
-	//strClassType = Std_ToUpper(Std_Trim(strClassType));
-	strClassType = Std_ToUpper(strClassType);
+	strClassType = Std_ToUpper(Std_Trim(strClassType));
 
 	if(strClassType == "EXTERNALSTIMULUS")
 		lpObject = CreateExternalStimulus(strObjectType, bThrowError);
