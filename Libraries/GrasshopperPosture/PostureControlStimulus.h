@@ -265,7 +265,7 @@ namespace GrasshopperPosture
 			float *m_lpfltAb1Torque;
 
 			float *m_lpbRearFootDown;
-			BOOL m_bRelockCFJoint;
+			bool m_bRelockCFJoint;
 
 			//Keeps track of the beta angles
 			float m_fltLeftBetaD;
@@ -316,17 +316,17 @@ namespace GrasshopperPosture
 			//When the left rear tibia rotates enough to engage the tendon lock then TendonLockEnabled is set to true.
 			//After this happens, then when the tendon lock is disabled we use this as the signal that a jump is imminent
 			//and set TendonLockDisabled to true. This lets the control system know it should disable all of the motors.
-			BOOL m_bTendonLockEnabled;
-			BOOL m_bTendonLockDisabled;
-			BOOL m_bMotorsDisabled;
+			bool m_bTendonLockEnabled;
+			bool m_bTendonLockDisabled;
+			bool m_bMotorsDisabled;
 			float m_fltTendonDisabledTime;
 			float m_bTendonLockEnabledTime;
-			BOOL m_bRearCoxaFemurEnabled;
-			BOOL m_bActiveInFlightMotor;
-			BOOL RearFemurTibiaDisabled;
-			BOOL m_bMoveTarsusStarted;
+			bool m_bRearCoxaFemurEnabled;
+			bool m_bActiveInFlightMotor;
+			bool RearFemurTibiaDisabled;
+			bool m_bMoveTarsusStarted;
 			int m_iTarsusCounter;
-			BOOL m_bTumblingSetup;
+			bool m_bTumblingSetup;
 
 			float m_fltDesiredBeta;
 			float m_fltDesiredPitch;
@@ -334,23 +334,23 @@ namespace GrasshopperPosture
 			float m_fltGain;
 			float m_fltPitchPointOffset;
 
-			BOOL m_bChangePitch;
-			BOOL m_bChangeBeta;
-			BOOL m_bActivateAbFlexMotor;
+			bool m_bChangePitch;
+			bool m_bChangeBeta;
+			bool m_bActivateAbFlexMotor;
 
 			float m_fltAbDelay;
 			float m_fltAbPropGain;
 			AnimatSim::DelayLine m_PitchDelay;
-			BOOL m_bEnableAbControl;
-			BOOL m_bLockAbJump;
+			bool m_bEnableAbControl;
+			bool m_bLockAbJump;
 			float m_fltAbPeriod;
 			//float m_fltAbStart;
 			float m_fltAbVel;
 			float m_fltAbPitchDiff;
 			float m_fltAbMagnitude;
 			float m_fltLegPeriod;
-			BOOL m_bSetAbMag;  //Tells if we have set the leg magnitude yet.
-			BOOL m_bDeactivateAbMag;
+			bool m_bSetAbMag;  //Tells if we have set the leg magnitude yet.
+			bool m_bDeactivateAbMag;
 			float m_fltAbMag;
 			float m_fltRightCFMag;
 			float m_fltAbStart;
@@ -414,7 +414,7 @@ namespace GrasshopperPosture
 			virtual void Load(CStdXml &oXml);
 
 			virtual float *GetDataPointer(std::string strDataType);
-			virtual BOOL SetData(std::string strDataType, std::string strValue, BOOL bThrowError = TRUE);
+			virtual bool SetData(std::string strDataType, std::string strValue, bool bThrowError = true);
 
 			//ActiveItem overrides
 			virtual std::string Type() {return "GrasshopperPosture";};

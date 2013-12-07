@@ -18,9 +18,9 @@ namespace GrasshopperPosture
 		ClassFactory();
 		virtual ~ClassFactory();
 
-		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, BOOL bThrowError = TRUE);
+		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, bool bThrowError = true);
 
-		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, BOOL bThrowError = TRUE);
+		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};
 
 }				//FastNeuralNet

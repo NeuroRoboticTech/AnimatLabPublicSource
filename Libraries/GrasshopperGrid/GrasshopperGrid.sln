@@ -1,6 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GrasshopperGrid", "GrasshopperGrid.vbproj", "{0096A4AF-EE77-40A4-9E9B-B4EC2E9C853D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{15601622-1CE1-4A14-8E15-B7C94AF405C6} = {15601622-1CE1-4A14-8E15-B7C94AF405C6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GrasshopperPosture", "..\GrasshopperPosture\GrasshopperPosture.vcxproj", "{15601622-1CE1-4A14-8E15-B7C94AF405C6}"
 EndProject

@@ -197,7 +197,7 @@ void SynergyFitnessEval::Activate()
 
 void SynergyFitnessEval::StepSimulation()
 {
-	if(lpSim->Time() < 1)
+	if(m_lpSim->Time() < 1)
 	{
 		//Before 1 lets get the current position of the torso in world coords.
 		m_vDesiredTorsoPos[0] = *m_vTorsoPos[0];
@@ -267,9 +267,9 @@ void SynergyFitnessEval::EvaluatePostureFitness()
 	if(fltY > 0)
 		m_fltTorsoOrientationRad = atan(fltX/fltY);
 	else
-		m_fltTorsoOrientationRad = (PI/2) - atan(fltX/fltY);
+		m_fltTorsoOrientationRad = (MY_PI/2) - atan(fltX/fltY);
 
-	m_fltTorsoOrientationDeg = fabs((m_fltTorsoOrientationRad*180)/PI); 
+	m_fltTorsoOrientationDeg = fabs((m_fltTorsoOrientationRad*180)/MY_PI); 
 
 
 	//Calculate total joint error.
