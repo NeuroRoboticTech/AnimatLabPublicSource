@@ -199,6 +199,9 @@ Namespace UITests
                     'Converted project should always ask to be converted.
                     OpenDialogAndWait("Convert Project", Nothing, Nothing)
 
+                    'Set Physics Method
+                    ExecuteIndirectActiveDialogMethod("SetPhysics", New Object() {m_strPhysicsEngine}, , , True)
+
                     'Click 'Ok' button
                     ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , , True)
 

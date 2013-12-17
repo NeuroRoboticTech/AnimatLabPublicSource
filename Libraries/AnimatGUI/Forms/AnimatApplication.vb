@@ -1036,6 +1036,7 @@ Namespace Forms
             Me.ConvertPhysicsEngineToolStripMenuItem.Name = "ConvertPhysicsEngineToolStripMenuItem"
             Me.ConvertPhysicsEngineToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.ConvertPhysicsEngineToolStripMenuItem.Text = "Convert Physics Engine"
+            Me.ConvertPhysicsEngineToolStripMenuItem.Enabled = False
             '
             'AnimatApplication
             '
@@ -1211,7 +1212,7 @@ Namespace Forms
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
-        Protected m_strSimPhysicsSystem As String = "Bullet"
+        Protected m_strSimPhysicsSystem As String = "Vortex" '"Bullet"
 
 #End Region
 

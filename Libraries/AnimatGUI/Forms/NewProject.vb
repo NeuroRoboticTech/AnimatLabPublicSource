@@ -127,7 +127,7 @@ Namespace Forms
             '
             Me.cboPhysicsEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboPhysicsEngine.FormattingEnabled = True
-            Me.cboPhysicsEngine.Items.AddRange(New Object() {"Bullet", "Vortex"})
+            Me.cboPhysicsEngine.Items.AddRange(New Object() {"Vortex"})  '"Bullet"
             Me.cboPhysicsEngine.Location = New System.Drawing.Point(8, 116)
             Me.cboPhysicsEngine.Name = "cboPhysicsEngine"
             Me.cboPhysicsEngine.Size = New System.Drawing.Size(288, 21)
@@ -299,7 +299,7 @@ Namespace Forms
                     cboPhysicsEngine.Enabled = False
                     cboPhysicsEngine.SelectedText = Util.Application.SimPhysicsSystem
                 Else
-                    cboPhysicsEngine.SelectedIndex = 1  '0
+                    cboPhysicsEngine.SelectedIndex = 0
                 End If
 
             Catch ex As System.Exception
