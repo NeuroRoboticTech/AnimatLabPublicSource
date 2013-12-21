@@ -5671,7 +5671,6 @@ Namespace Forms
                 frmSave.txtLocation.Text = Util.RemoveStringSections(Me.ProjectPath, "\", 1)
                 frmSave.Text = "Save Project As .."
                 frmSave.AllowUserToChoosePhysicsSystem = False
-                frmSave.Size = New Size(318, 168)
 
                 If frmSave.ShowDialog = DialogResult.OK Then
                     'Copy the current project directory
@@ -6223,6 +6222,9 @@ Namespace Forms
                         aryItems.Add(doItem)
                     End If
                 Next
+
+                'First lets deselect all of the items in the selected list and select the sim object by default since we cannot delete it.
+                Util.Simulation.SelectItem(False)
 
                 aryItems.Sort(New DeleteSortComparer)
 

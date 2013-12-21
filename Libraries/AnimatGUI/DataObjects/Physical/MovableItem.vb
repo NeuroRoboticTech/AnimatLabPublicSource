@@ -708,10 +708,12 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub SelectionChangedHandler(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
             Try
-                If bSelected Then
-                    Me.SelectItem(bSelectMultiple)
-                Else
-                    Me.DeselectItem()
+                If Not m_tnWorkspaceNode Is Nothing Then
+                    If bSelected Then
+                        Me.SelectItem(bSelectMultiple)
+                    Else
+                        Me.DeselectItem()
+                    End If
                 End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
