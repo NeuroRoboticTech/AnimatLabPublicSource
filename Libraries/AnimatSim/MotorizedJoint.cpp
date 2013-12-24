@@ -111,7 +111,7 @@ Velocity for its current load.
 void MotorizedJoint::EnableMotor(bool bVal)
 {
 	if(m_lpPhysicsMotorJoint)
-		m_lpPhysicsMotorJoint->Physics_EnableMotor(bVal, m_fltDesiredVelocity, m_fltMaxForce);
+		m_lpPhysicsMotorJoint->Physics_EnableMotor(bVal, m_fltDesiredVelocity, m_fltMaxForce, true);
 	m_bEnableMotor = bVal;
 
 	//If the sim is running then we do not set the history flag. Only set it if changed while the sim is not running.

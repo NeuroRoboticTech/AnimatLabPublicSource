@@ -30,6 +30,7 @@ public:
 	OsgAttachment();
 	virtual ~OsgAttachment();
 
+    virtual bool AddOsgNodeToParent() {return true;};
     virtual bool Physics_IsGeometryDefined() {return false;};
     virtual void Physics_EnableCollision(RigidBody *lpBody) {};
     virtual void Physics_DisableCollision(RigidBody *lpBody) {};

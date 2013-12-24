@@ -419,9 +419,9 @@ void LinearHillMuscle::AfterResetSimulation()
 
 void LinearHillMuscle::CalculateTension()
 {
-	//int i=0;
-	//if(lpSim->Time() >= 0.419)
-	//	i=6;
+	int i=0;
+    if(m_lpSim->Time() >= 1.5)
+		i=6;
 
 	//Store the previous muscle length
 	m_fltPrevLength = m_fltLength;

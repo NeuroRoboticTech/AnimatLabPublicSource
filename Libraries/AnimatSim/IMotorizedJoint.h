@@ -28,8 +28,9 @@ namespace AnimatSim
 			\param	bOn				  	true to enable. 
 			\param	fltDesiredVelocity	The desired motor velocity. 
 			\param	fltMaxForce		  	The maximum motor force. 
+            \param  bForceWakeup        force a call to wakup the joint.
 			**/
-			virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce) = 0;
+			virtual void Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce, bool bForceWakeup) = 0;
 	
 			/**
 			\brief	Sets the maximum forces allowed by the motorized joint.

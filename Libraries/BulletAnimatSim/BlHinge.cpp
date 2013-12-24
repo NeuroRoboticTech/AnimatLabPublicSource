@@ -302,19 +302,19 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 		    m_btHinge->setAngularUpperLimit(btVector3(fltPosition,0,0));
 		}
 		else if (m_bMotorOn)
-			Physics_EnableMotor(true, 0, fltMaxLockForce);
+			Physics_EnableMotor(true, 0, fltMaxLockForce, false);
 		else
             SetLimitValues();
 	}
 }
 
-void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
+void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce, bool bForceWakeup)
 {
     if (m_btJoint && m_btHinge)
 	{   
 		if(bOn)
         {
-            if(!m_bMotorOn)
+            if(!m_bMotorOn || bForceWakeup)
             {
                 SetLimitValues();
                 m_lpThisJoint->WakeDynamics();
@@ -328,7 +328,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
         {
             TurnMotorOff();
 
-            if(m_bMotorOn)
+            if(m_bMotorOn || bForceWakeup)
             {
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();
@@ -375,6 +375,12 @@ void BlHinge::SetConstraintFriction()
 {
     if(m_btHinge && !m_bJointLocked && !m_bMotorOn && m_bEnabled)
         TurnMotorOff();
+}
+
+void BlHinge::ResetSimulation()
+{
+    m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;
+    m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
 }
 
 

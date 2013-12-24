@@ -280,20 +280,20 @@ void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLo
 		    m_btPrismatic->setLinearUpperLimit(btVector3(fltPosition, 0, 0));
 		}
 		else if (m_bMotorOn)
-			Physics_EnableMotor(true, 0, fltMaxLockForce);
+			Physics_EnableMotor(true, 0, fltMaxLockForce, false);
 		else
             SetLimitValues();
 	}
 }
 
-void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce)
+void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce, bool bForceWakeup)
 {
     if (m_btJoint && m_btPrismatic)
 	{   
 		if(bOn)
         {
-            if(!m_bMotorOn)
-            {
+            if(!m_bMotorOn || bForceWakeup)
+            {    
                 SetLimitValues();
                 m_lpThisJoint->WakeDynamics();
             }
@@ -306,7 +306,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
         {
             TurnMotorOff();
 
-            if(m_bMotorOn)
+            if(m_bMotorOn || bForceWakeup)
             {
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();
@@ -358,6 +358,12 @@ void BlPrismatic::SetConstraintFriction()
         TurnMotorOff();
 }
 
+void BlPrismatic::ResetSimulation()
+{
+    m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
+    m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
+    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
+}
 
 		}		//Joints
 	}			// Environment

@@ -84,7 +84,7 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
         if(m_btJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
 		{
 			if(fabs(fltSetVelocity) > 1e-4 && m_btJoint)
-				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce);
+				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
             else if(!m_bJointLocked)
                 Physics_EnableLock(true, GetCurrentBtPosition(), fltMaxForce);
 		}
