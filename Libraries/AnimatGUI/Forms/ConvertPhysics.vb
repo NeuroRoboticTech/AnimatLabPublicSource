@@ -48,6 +48,7 @@ Namespace Forms
                 iIdx = iIdx + 1
             Next
 
+            Throw New System.Exception("Specified physics system '" & strPhysics & "' not found.")
         End Sub
 
 #End Region
@@ -71,7 +72,7 @@ Namespace Forms
                         cboPhysicsEngine.Items.Add("Bullet")
                     End If
                 Else
-                    'cboPhysicsEngine.Items.Add("Bullet")
+                    cboPhysicsEngine.Items.Add("Bullet")
                     cboPhysicsEngine.Items.Add("Vortex")
                 End If
 
