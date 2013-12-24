@@ -54,7 +54,7 @@ Namespace UITests
                         aryMaxErrors.Add("Len", 0.003)
                         aryMaxErrors.Add("default", 0.04)
 
-                        m_bIgnoreSimAndCompare = True
+                        'm_bIgnoreSimAndCompare = True
 
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
@@ -278,7 +278,7 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Delete_Muscle1_")
 
-                        m_bIgnoreSimAndCompare = False
+                        'm_bIgnoreSimAndCompare = False
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
 
