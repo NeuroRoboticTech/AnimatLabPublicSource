@@ -797,13 +797,22 @@ float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 		{m_bCollectExtraData = true; return (&m_vTorque[2]);}
 
 	if(strType == "BODYFORCEX")
-		{m_bCollectExtraData = true; return (&m_vForce[0]);}
+	{
+        m_bCollectExtraData = true; 
+        return (&m_vForce[0]);
+    }
 
 	if(strType == "BODYFORCEY")
-		{m_bCollectExtraData = true; return (&m_vForce[1]);}
+	{
+        m_bCollectExtraData = true; 
+        return (&m_vForce[1]);
+    }
 
 	if(strType == "BODYFORCEZ")
-		{m_bCollectExtraData = true; return (&m_vForce[2]);}
+	{
+        m_bCollectExtraData = true; 
+        return (&m_vForce[2]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYX")
 		{m_bCollectExtraData = true; return (&m_vLinearVelocity[0]);}

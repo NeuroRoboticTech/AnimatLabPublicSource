@@ -62,20 +62,26 @@ Namespace UITests
                         m_strStructureGroup = "Organisms"
                         m_strStruct1Name = "Organism_1"
 
+                        '
+
+                        Dim aryIgnoreRows As New ArrayList
+                        aryIgnoreRows.Add(New Point(25000, 25150))
+                        aryIgnoreRows.Add(New Point(40000, 40160))
+
                         m_aryWindowsToOpen.Clear()
                         m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
 
                         'Load and convert the project.
-                        TestConversionProject("AfterConversion_", aryMaxErrors)
+                        TestConversionProject("AfterConversion_", aryMaxErrors, , aryIgnoreRows)
 
                         VerifyPropertyValue("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle", "Length.ActualValue", 0.5)
 
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_", , aryIgnoreRows)
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MV_Stim_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MV_Stim_", , aryIgnoreRows)
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "EndTime", "5.075"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "Velocity", "-10 c"})

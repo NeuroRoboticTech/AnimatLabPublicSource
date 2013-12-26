@@ -165,8 +165,12 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 {
 	if(bEnabled)
 	{
-		//Dont bother with this unless there is actually tension developed by the muscle.
-		if(fltTension > 1e-5)
+        //int iTest = 0;
+		//if(m_lpLineBase->GetSimulator()->Time() >= 2.5)
+		//	iTest = iTest;
+
+        //Dont bother with this unless there is actually tension developed by the muscle.
+		if(fabs(fltTension) > 1e-5)
 		{
 			CStdArray<Attachment *> *aryAttachments = m_lpLineBase->AttachmentPoints();
 			int iCount = aryAttachments->GetSize();
@@ -174,9 +178,6 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 			CStdFPoint oPrimPos, oPrimPlusPos, oSecPos, oSecMinusPos;
 			CStdFPoint oPrimForce, oSecForce;
 			RigidBody *lpAttach1Parent, *lpAttach2Parent;
-
-			if(m_lpLineBase->GetSimulator()->Time() >= 0.99)
-				iCount = iCount;
 
 			//Go through each set of muscle attachments and add the tension force pointing towards the other
 			//attachment point at each connector.

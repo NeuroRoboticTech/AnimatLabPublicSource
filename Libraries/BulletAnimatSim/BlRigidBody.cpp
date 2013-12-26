@@ -868,9 +868,12 @@ void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
 			fltF[2] = fltFz;
 		}
 
-		fltP[0] = fltPx;
-		fltP[1] = fltPy;
-		fltP[2] = fltPz;
+        //Bullet force application position is relative to the center of mass of the part.
+        btVector3 vCOM = m_btPart->getCenterOfMassPosition();
+
+		fltP[0] = vCOM[0] - fltPx;
+		fltP[1] = vCOM[1] - fltPy;
+		fltP[2] = vCOM[2] - fltPz;
 
         Physics_WakeDynamics();
         m_btPart->applyForce(fltF, fltP);

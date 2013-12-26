@@ -171,6 +171,10 @@ void Spring::CreateParts()
 void Spring::ResetSimulation()
 {
     LineBase::ResetSimulation();
+
+    m_fltLength = CalculateLength();
+    m_fltPrevLength = m_fltLength;
+
     CalculateTension();
 }
 
