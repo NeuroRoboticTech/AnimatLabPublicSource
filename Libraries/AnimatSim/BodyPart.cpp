@@ -73,6 +73,25 @@ void BodyPart::UpdateData()
 }
 
 /**
+ \brief UpdateData is called during this body parts sim update call, and before any of its child updates because those children may need import
+ information like this parts position. However, there are a number of pieces of information that are not critical to the part itself, but that a user
+ may have asked for. I do not want to collect that info for every part if it is not needed. So instead, if a user asks for it then this part is added
+ to a list on the simulation. After all parts have been updated for a simulation step then we loop through the list of just the necessary parts
+ and call UpdateExtraData to collect this additional data. It is important that this be done after all parts have stepped becasue some of this data
+ will only be correct at the end. An example of this is force applied to a part. Forces can be added by any child parts, so it is only at the end
+ that these values are valid.
+
+ \author    David Cofer
+ \date  12/29/2013
+ */
+void BodyPart::UpdateExtraData()
+{
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_CollectExtraData();
+}
+
+
+/**
 \brief	Gets the physics body interface pointer. This is an interface reference to the Vs version
 of this object. It will allow us to call methods directly in the Vs (OSG) version of the object
 directly without having to overload a bunch of methods in each box, sphere, etc.. 

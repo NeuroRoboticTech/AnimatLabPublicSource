@@ -83,8 +83,15 @@ namespace AnimatSim
 			/// Array of target physics adapters. 
 			CStdArray<Adapter *> m_aryTargetPhysicsAdapters;
 
+            /// Array of parts that need extra data collected from them. Each part will
+            /// have its UpdateExtraData method called after all parts have been stepped.
+            CStdArray<BodyPart *> m_aryExtraDataParts;
+
 			/// Number of target adapters
 			int m_iTargetAdapterCount;
+
+            /// Number of parts that require extra data to be collected
+            int m_iExtraDataCount;
 
 			/// Manager for data charts
 			DataChartMgr m_oDataChartMgr;
@@ -489,11 +496,12 @@ namespace AnimatSim
 
 			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError = true);
 			virtual int FindFoodSourceIndex(RigidBody *lpFood);
-			
+            virtual int FindExtraDataIndex(BodyPart *lpPart);
+
 			virtual void AddOdorType(OdorType *lpOdorType);
 			virtual void AddOdorType(std::string strXml, bool bDoNotInit);
 			virtual void RemoveOdorType(std::string strID, bool bThrowError = true);
-			
+
 #pragma endregion
 
 #pragma region UnitScaleMethods
@@ -985,6 +993,9 @@ namespace AnimatSim
 			virtual void RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
+
+            virtual void AddToExtractExtraData(BodyPart *lpPart);
+            virtual void RemoveFromExtractExtraData(BodyPart *lpPart);
 
 #pragma endregion
 

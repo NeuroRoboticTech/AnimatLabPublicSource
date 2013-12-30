@@ -219,9 +219,12 @@ try
 	m_arySourcePhysicsAdapters.RemoveAll();
 	m_aryTargetPhysicsAdapters.RemoveAll();
 	m_iTargetAdapterCount = 0;
+    m_iExtraDataCount = 0;
 
 	m_aryOdorTypes.RemoveAll();
 	m_aryFoodSources.RemoveAll();	
+
+    m_aryExtraDataParts.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
@@ -1997,9 +2000,12 @@ void Simulator::Reset()
 	m_arySourcePhysicsAdapters.RemoveAll();
 	m_aryTargetPhysicsAdapters.RemoveAll();
 	m_iTargetAdapterCount = 0;
+    m_iExtraDataCount = 0;
 
 	m_aryOdorTypes.RemoveAll();
 	m_aryFoodSources.RemoveAll();
+
+    m_aryExtraDataParts.RemoveAll();
 
 	//Reference pointers only
 	m_lpSelOrganism = NULL;
@@ -2136,6 +2142,7 @@ void Simulator::StepNeuralEngine()
 	m_fltTotalNeuralStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
+
 /**
 \brief	Calls StepPhysicsEngine of all structures.
 
@@ -2158,6 +2165,11 @@ void Simulator::StepPhysicsEngine()
 	//to the physics engine. Examples are motorized joints and muscles.
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
 		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation();
+
+	//Now lets look thorugh all of the parts that have been tagged as needing to gather extra data
+    //and make the call to allow them to do that.
+	for(int iIndex=0; iIndex<m_iExtraDataCount; iIndex++)
+		m_aryExtraDataParts[iIndex]->UpdateExtraData();
 
 	if(m_bRecordVideo)
 		RecordVideoFrame();
@@ -3749,6 +3761,32 @@ int Simulator::FindFoodSourceIndex(RigidBody *lpFood)
 	int iCount = m_aryFoodSources.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		if(m_aryFoodSources[iIdx] == lpFood)
+			return iIdx;
+
+	return -1;
+}
+
+void Simulator::AddToExtractExtraData(BodyPart *lpPart)
+{
+	int iIndex = FindExtraDataIndex(lpPart);
+	if(iIndex < 0)
+		m_aryExtraDataParts.Add(lpPart);
+    m_iExtraDataCount = m_aryExtraDataParts.GetSize();
+}
+
+void Simulator::RemoveFromExtractExtraData(BodyPart *lpPart)
+{
+	int iIndex = FindExtraDataIndex(lpPart);
+	if(iIndex < 0)
+		m_aryExtraDataParts.RemoveAt(iIndex);
+    m_iExtraDataCount = m_aryExtraDataParts.GetSize();
+}
+
+int Simulator::FindExtraDataIndex(BodyPart *lpPart)
+{
+	int iCount = m_aryExtraDataParts.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(m_aryExtraDataParts[iIdx] == lpPart)
 			return iIdx;
 
 	return -1;

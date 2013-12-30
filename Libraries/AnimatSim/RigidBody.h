@@ -209,6 +209,8 @@ namespace AnimatSim
 			virtual void AddOdor(std::string strXml, bool bDoNotInit);
 			virtual void RemoveOdor(std::string strID, bool bThrowError = true);
 
+			virtual void Mass(float fltVal, bool bUseScaling, bool bPhysicsCallback);
+
 		public:
 			RigidBody();
 			virtual ~RigidBody();

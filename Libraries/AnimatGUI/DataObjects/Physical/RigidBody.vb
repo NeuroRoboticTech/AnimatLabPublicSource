@@ -632,6 +632,11 @@ Namespace DataObjects.Physical
 
             If Not Me.SimInterface Is Nothing Then
                 If Util.Application.UseMassForRigidBodyDefinitions Then
+                    'If the mass was loaded in as less than zero then we need to get it again from the simulation.
+                    If m_snMass.ActualValue < 0 Then
+                        m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                    End If
+
                     m_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
                 Else
@@ -1389,6 +1394,11 @@ Namespace DataObjects.Physical
             m_snDensity.LoadData(oXml, "Density")
             If oXml.FindChildElement("Mass", False) Then
                 m_snMass.LoadData(oXml, "Mass")
+            ElseIf Util.Application.UseMassForRigidBodyDefinitions Then
+                'If we could not load the mass in and we need that for the definition then lets save
+                'that here temporarrily as -1 to let the sim know this is invalid and needs to be calculated
+                'directly. Then we will reload it from the simulation later.
+                m_snMass.ActualValue = -1
             End If
 
             m_svCOM.LoadData(oXml, "COM", False)

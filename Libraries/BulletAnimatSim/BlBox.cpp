@@ -59,6 +59,12 @@ void BlBox::CalculateVolumeAndAreas()
     m_vArea.x = m_fltHeight * m_fltWidth;
     m_vArea.y = m_fltLength * m_fltWidth;
     m_vArea.z = m_fltLength * m_fltHeight;
+
+    if(m_fltMass < 0)
+    {
+        float fltMass = m_fltVolume * m_fltDensity;
+        Mass(fltMass, false, false);
+    }
 }
 
 void BlBox::CreateParts()

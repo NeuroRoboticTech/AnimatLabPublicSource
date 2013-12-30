@@ -725,8 +725,6 @@ void BlRigidBody::ProcessContacts()
 
 void BlRigidBody::Physics_CollectData()
 {
-	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
     OsgSimulator *lpSim = GetOsgSimulator();
     btVector3 vData;
 
@@ -758,7 +756,19 @@ void BlRigidBody::Physics_CollectData()
 		m_lpThisMI->ReportRotation(vRot[0], vRot[1], vRot[2]);
 	}
 
-	if(m_bCollectExtraData && m_btPart && lpSim)
+
+	if(m_lpThisRB->GetContactSensor() || m_lpThisRB->IsContactSensor()) 
+		ProcessContacts();
+}
+
+void BlRigidBody::Physics_CollectExtraData()
+{
+	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+    OsgSimulator *lpSim = GetOsgSimulator();
+    btVector3 vData;
+
+	if(m_btPart && lpSim)
 	{
         float m_vPrevLinearVelocity[3];
         float m_vPrevAngularVelocity[3];
@@ -808,9 +818,6 @@ void BlRigidBody::Physics_CollectData()
 		    m_vAngularAcceleration[2] = (m_vAngularVelocity[2] - m_vPrevAngularVelocity[2])/fltDt;
         }
 	}
-
-	if(m_lpThisRB->GetContactSensor() || m_lpThisRB->IsContactSensor()) 
-		ProcessContacts();
 }
 
 void BlRigidBody::Physics_ResetSimulation()
@@ -871,9 +878,9 @@ void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
         //Bullet force application position is relative to the center of mass of the part.
         btVector3 vCOM = m_btPart->getCenterOfMassPosition();
 
-		fltP[0] = vCOM[0] - fltPx;
-		fltP[1] = vCOM[1] - fltPy;
-		fltP[2] = vCOM[2] - fltPz;
+		fltP[0] = fltPx; //vCOM[0] - fltPx;
+		fltP[1] = fltPy; //vCOM[1] - fltPy;
+		fltP[2] = fltPz; //vCOM[2] - fltPz;
 
         Physics_WakeDynamics();
         m_btPart->applyForce(fltF, fltP);

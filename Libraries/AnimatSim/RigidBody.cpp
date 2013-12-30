@@ -333,6 +333,11 @@ float RigidBody::Mass() {return m_fltMass;}
 
 void RigidBody::Mass(float fltVal, bool bUseScaling)
 {
+    Mass(fltVal, bUseScaling, true);
+}
+
+void RigidBody::Mass(float fltVal, bool bUseScaling, bool bPhysicsCallback)
+{
 	Std_IsAboveMin((float) 0, fltVal, true, "Mass", true);
 
 	m_fltMass = fltVal;
@@ -341,7 +346,7 @@ void RigidBody::Mass(float fltVal, bool bUseScaling)
 
     m_fltReportMass = m_fltMass * m_lpSim->DisplayMassUnits();
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsBody && bPhysicsCallback)
 		m_lpPhysicsBody->Physics_SetMass(m_fltMass);
 }
 
@@ -2003,7 +2008,12 @@ void RigidBody::Load(CStdXml &oXml)
 		CenterOfMass(0, 0, 0, true);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
-	Mass(oXml.GetChildFloat("Mass", m_fltMass));
+
+    //Get Mass first and only set it if it is >= 0. If it is less than this
+    //Then we need to calculate it during initialization instead of using the loaded value.
+    m_fltMass = oXml.GetChildFloat("Mass", m_fltMass);
+    if(m_fltMass >= 0)
+        Mass(m_fltMass);
 
 	MaterialID(oXml.GetChildString("MaterialTypeID", m_strMaterialID));
 	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));

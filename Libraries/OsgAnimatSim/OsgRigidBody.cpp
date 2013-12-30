@@ -24,8 +24,6 @@ namespace OsgAnimatSim
 
 OsgRigidBody::OsgRigidBody()
 {
-	m_bCollectExtraData = false;
-
 	for(int i=0; i<3; i++)
 	{
 		m_vTorque[i] = 0;
@@ -415,70 +413,115 @@ float *OsgRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
 
 	if(strType == "BODYTORQUEX")
-		{m_bCollectExtraData = true; return (&m_vTorque[0]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[0]);
+    }
 
 	if(strType == "BODYTORQUEY")
-		{m_bCollectExtraData = true; return (&m_vTorque[1]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[1]);
+    }
 
 	if(strType == "BODYTORQUEZ")
-		{m_bCollectExtraData = true; return (&m_vTorque[2]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[2]);
+    }
 
 	if(strType == "BODYFORCEX")
 	{
-        m_bCollectExtraData = true; 
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[0]);
     }
 
 	if(strType == "BODYFORCEY")
 	{
-        m_bCollectExtraData = true; 
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[1]);
     }
 
 	if(strType == "BODYFORCEZ")
 	{
-        m_bCollectExtraData = true; 
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[2]);
     }
 
 	if(strType == "BODYLINEARVELOCITYX")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[0]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[0]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYY")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[1]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[1]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYZ")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[2]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[2]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYX")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[0]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[0]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYY")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[1]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[1]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYZ")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[2]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[2]);
+    }
 
 	//if(strType == "BODYBUOYANCY")
 	//	{m_bCollectExtraData = true; return (&m_fltReportBuoyancy);}
 
 	if(strType == "BODYLINEARACCELERATIONX")
-		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[0]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[0]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONY")
-		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[1]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[1]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONZ")
-		return (&m_vLinearAcceleration[2]);
+    {
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[2]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONX")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[0]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[0]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONY")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[1]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[1]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONZ")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[2]);}
+	{
+        GetOsgSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[2]);
+    }
 
 	return NULL;
 }

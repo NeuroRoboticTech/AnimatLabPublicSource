@@ -179,6 +179,7 @@ namespace BulletAnimatSim
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
+            virtual void Physics_CollectExtraData();
 			virtual void Physics_SetFreeze(bool bVal);
 			virtual void Physics_SetMass(float fltVal);
 			virtual void Physics_SetMaterialID(std::string strID);

@@ -55,9 +55,7 @@ namespace OsgAnimatSim
 			//We need these arrays to store body data that could potentially be charted.
 			//this may be scaled so we need to store it in here instead of just using the
 			//body data directly from the physics engine.
-			bool m_bCollectExtraData;
 			CStdFPoint m_vPos;
-
 			float m_vLinearVelocity[3];
 			float m_vAngularVelocity[3];
 			float m_vLinearAcceleration[3];

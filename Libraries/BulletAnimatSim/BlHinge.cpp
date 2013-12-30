@@ -205,8 +205,11 @@ void BlHinge::SetupPhysics()
 
 	m_btJoint = m_btHinge;
 
+    //Init the current position.
+    m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;
+
 	//If the motor is enabled then it will start out with a velocity of	zero.
-	EnableMotor(m_bEnableMotorInit);
+    EnableMotor(m_bEnableMotorInit);
 
     Hinge::Initialize();
     BlJoint::Initialize();

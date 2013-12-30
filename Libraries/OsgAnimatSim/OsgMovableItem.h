@@ -125,6 +125,7 @@ namespace OsgAnimatSim
 			virtual void Physics_SetColor() {};
 			virtual void Physics_TextureChanged() {};
 			virtual void Physics_CollectData();
+            virtual void Physics_CollectExtraData() {};
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_AfterResetSimulation() {};
 			virtual float *Physics_GetDataPointer(const std::string &strDataType);

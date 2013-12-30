@@ -25,6 +25,7 @@ namespace AnimatSim
 			virtual void Physics_RotationChanged() = 0;
 			virtual void Physics_UpdateAbsolutePosition() = 0;
 			virtual void Physics_CollectData() = 0;
+            virtual void Physics_CollectExtraData() = 0;
 			virtual void Physics_ResetSimulation() = 0;
 			virtual void Physics_AfterResetSimulation() = 0;
 			virtual float *Physics_GetDataPointer(const std::string &strDataType) = 0;

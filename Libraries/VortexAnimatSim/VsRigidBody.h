@@ -72,9 +72,7 @@ namespace VortexAnimatSim
 			//We need these arrays to store body data that could potentially be charted.
 			//this may be scaled so we need to store it in here instead of just using the
 			//body data directly from the physics engine.
-			bool m_bCollectExtraData;
 			CStdFPoint m_vPos;
-
 			//float m_vPosition[3];
 			//float m_vRotation[3];
 			float m_vLinearVelocity[3];
@@ -142,6 +140,7 @@ namespace VortexAnimatSim
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
+            virtual void Physics_CollectExtraData();
 			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_SetFreeze(bool bVal);

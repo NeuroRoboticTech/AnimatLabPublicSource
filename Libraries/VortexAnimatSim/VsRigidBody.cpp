@@ -24,7 +24,6 @@ namespace VortexAnimatSim
 
 VsRigidBody::VsRigidBody()
 {
-	m_bCollectExtraData = false;
 	m_vxSensor = NULL;
 	m_vxPart = NULL;
 	m_vxGeometry = NULL;
@@ -621,8 +620,6 @@ void VsRigidBody::ProcessContacts()
 
 void VsRigidBody::Physics_CollectData()
 {
-	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 	Vx::VxReal3 vData;
 
 	if(m_vxSensor)
@@ -650,7 +647,18 @@ void VsRigidBody::Physics_CollectData()
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
 	}
 
-	if(m_bCollectExtraData && m_vxPart)
+
+    if(m_lpThisRB->GetContactSensor()) 
+		ProcessContacts();
+}
+
+void VsRigidBody::Physics_CollectExtraData()
+{
+	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+	Vx::VxReal3 vData;
+
+    if(m_vxPart)
 	{
 		m_vxPart->getLinearVelocity(vData);
 		m_vLinearVelocity[0] = vData[0] * fDisUnits;
@@ -686,9 +694,8 @@ void VsRigidBody::Physics_CollectData()
 		m_vAngularAcceleration[2] = vAccel[2];
 	}
 
-	if(m_lpThisRB->GetContactSensor()) 
-		ProcessContacts();
 }
+
 
 void VsRigidBody::Physics_ResetSimulation()
 {
@@ -788,70 +795,115 @@ float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 		return (&m_fltBlank);
 
 	if(strType == "BODYTORQUEX")
-		{m_bCollectExtraData = true; return (&m_vTorque[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[0]);
+    }
 
 	if(strType == "BODYTORQUEY")
-		{m_bCollectExtraData = true; return (&m_vTorque[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[1]);
+    }
 
 	if(strType == "BODYTORQUEZ")
-		{m_bCollectExtraData = true; return (&m_vTorque[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[2]);
+    }
 
 	if(strType == "BODYFORCEX")
 	{
-        m_bCollectExtraData = true; 
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[0]);
     }
 
 	if(strType == "BODYFORCEY")
 	{
-        m_bCollectExtraData = true; 
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[1]);
     }
 
 	if(strType == "BODYFORCEZ")
 	{
-        m_bCollectExtraData = true; 
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
         return (&m_vForce[2]);
     }
 
 	if(strType == "BODYLINEARVELOCITYX")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[0]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYY")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[1]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYZ")
-		{m_bCollectExtraData = true; return (&m_vLinearVelocity[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[2]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYX")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[0]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYY")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[1]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYZ")
-		{m_bCollectExtraData = true; return (&m_vAngularVelocity[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[2]);
+    }
 
 	//if(strType == "BODYBUOYANCY")
 	//	{m_bCollectExtraData = true; return (&m_fltReportBuoyancy);}
 
 	if(strType == "BODYLINEARACCELERATIONX")
-		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[0]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONY")
-		{m_bCollectExtraData = true; return (&m_vLinearAcceleration[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[1]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONZ")
-		return (&m_vLinearAcceleration[2]);
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[2]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONX")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[0]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONY")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[1]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONZ")
-		{m_bCollectExtraData = true; return (&m_vAngularAcceleration[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[2]);
+    }
     
 	if(strType == "ESTIMATEDMASS")
 	    return &m_fltEstimatedMass;
