@@ -292,7 +292,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 	{   
 		if(bOn)
         {
-            if(!m_bMotorOn || bForceWakeup)
+            if(!m_bMotorOn || bForceWakeup || m_bJointLocked)
             {    
                 SetLimitValues();
                 m_lpThisJoint->WakeDynamics();
@@ -306,7 +306,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
         {
             TurnMotorOff();
 
-            if(m_bMotorOn || bForceWakeup)
+            if(m_bMotorOn || bForceWakeup || m_bJointLocked)
             {
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();
