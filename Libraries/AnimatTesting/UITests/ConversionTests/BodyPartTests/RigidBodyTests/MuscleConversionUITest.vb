@@ -146,7 +146,7 @@ Namespace UITests
                         'RunSimulationWaitToEnd()
                         'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TopAttach_0_3_-10_")
 
-                        aryMaxErrors("Top_Tension") = 0.1
+                        aryMaxErrors("Top_Tension") = 0.26
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.X", "0"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.Y", "0 c"})
