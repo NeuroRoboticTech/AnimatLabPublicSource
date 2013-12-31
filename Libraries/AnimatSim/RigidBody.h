@@ -210,6 +210,8 @@ namespace AnimatSim
 			virtual void RemoveOdor(std::string strID, bool bThrowError = true);
 
 			virtual void Mass(float fltVal, bool bUseScaling, bool bPhysicsCallback);
+			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling, bool bPhysicsCallback);
+			virtual void Freeze(bool bVal, bool bPhysicsCallback);
 
 		public:
 			RigidBody();

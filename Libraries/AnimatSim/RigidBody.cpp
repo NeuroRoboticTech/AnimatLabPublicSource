@@ -200,14 +200,20 @@ CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
 **/
 void RigidBody::CenterOfMass(CStdFPoint &vPoint, bool bUseScaling)
 {
+	CenterOfMass(vPoint, bUseScaling, true);
+}
+
+void RigidBody::CenterOfMass(CStdFPoint &vPoint, bool bUseScaling, bool bPhysicsCallback)
+{
 	if(bUseScaling)
 		m_vCenterOfMass = vPoint * m_lpMovableSim->InverseDistanceUnits();
 	else
 		m_vCenterOfMass = vPoint;
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsBody && bPhysicsCallback)
 		m_lpPhysicsBody->Physics_SetCenterOfMass(m_vCenterOfMass.x, m_vCenterOfMass.y, m_vCenterOfMass.z);
 }
+
 
 /**
 \brief	Sets the center of mass position. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.  
@@ -405,9 +411,14 @@ and other forces will not act on it.
 **/
 void RigidBody::Freeze(bool bVal)
 {
+	Freeze(bVal, true);
+}
+
+void RigidBody::Freeze(bool bVal, bool bPhysicsCallback)
+{
 	m_bFreeze = bVal;
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsBody && bPhysicsCallback)
 		m_lpPhysicsBody->Physics_SetFreeze(bVal);
 }
 
@@ -1999,13 +2010,14 @@ void RigidBody::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
+	vPoint.Set(0, 0, 0);
 	if(oXml.FindChildElement("COM", false))
 	{
 		Std_LoadPoint(oXml, "COM", vPoint);
-		CenterOfMass(vPoint, true);
+		CenterOfMass(vPoint, true, false);
 	}
 	else
-		CenterOfMass(0, 0, 0, true);
+		CenterOfMass(vPoint, true, false);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
@@ -2013,10 +2025,10 @@ void RigidBody::Load(CStdXml &oXml)
     //Then we need to calculate it during initialization instead of using the loaded value.
     m_fltMass = oXml.GetChildFloat("Mass", m_fltMass);
     if(m_fltMass >= 0)
-        Mass(m_fltMass);
+        Mass(m_fltMass, true, false);
 
 	MaterialID(oXml.GetChildString("MaterialTypeID", m_strMaterialID));
-	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
+	Freeze(oXml.GetChildBool("Freeze", m_bFreeze), false);
 	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
 	IsCollisionObject(oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject));
 
