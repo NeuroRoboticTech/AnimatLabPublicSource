@@ -47,14 +47,12 @@ Namespace UITests
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("MV", 0.002)
                         aryMaxErrors.Add("MN", 0.002)
-                        aryMaxErrors.Add("Tension", 0.3)
+                        aryMaxErrors.Add("Tension", 0.4)
                         aryMaxErrors.Add("Muscle2", 0.3)
                         aryMaxErrors.Add("Length", 0.04)
                         aryMaxErrors.Add("A", 0.3)
                         aryMaxErrors.Add("Len", 0.003)
                         aryMaxErrors.Add("default", 0.04)
-
-                        'm_bIgnoreSimAndCompare = True
 
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
@@ -102,8 +100,12 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Relax", "Enabled", "False"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim1", "Enabled", "True"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim2", "Enabled", "True"})
+
+                        m_bIgnoreSimAndCompare = True
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_")
+                        m_bIgnoreSimAndCompare = False
+
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Enabled", "False"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1", "EnableMotor", "True"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim1", "Enabled", "False"})
