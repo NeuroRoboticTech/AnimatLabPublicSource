@@ -208,8 +208,8 @@ void VsLine::StepSimulation(float fltTension)
 			CStdFPoint oPrimForce, oSecForce;
 			RigidBody *lpAttach1Parent, *lpAttach2Parent;
 
-			if(m_lpThisBP->GetSimulator()->Time() >= 0.99)
-				iCount = iCount;
+			//if(m_lpThisBP->GetSimulator()->Time() >= 0.99)
+			//	iCount = iCount;
 
 			//Go through each set of muscle attachments and add the tension force pointing towards the other
 			//attachment point at each connector.
