@@ -78,6 +78,9 @@ namespace AnimatSim
 				virtual bool KillOrganism();
 				virtual void KillOrganism(bool bVal);
 
+				//Stomach parts are never static joints.
+				virtual bool HasStaticJoint() {return false;};
+
 				virtual void CreateParts();
 
 				//Node Overrides
