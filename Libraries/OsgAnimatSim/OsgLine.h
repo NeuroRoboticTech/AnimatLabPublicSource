@@ -21,6 +21,8 @@ namespace OsgAnimatSim
             virtual void SetThisLinePointers();
 			virtual int BuildLines(osg::Geometry *linesGeom);
 
+            virtual CStdFPoint GetOffsetFromParentCOM(RigidBody *lpParent, const CStdFPoint &vPos);
+
 		public:
 			OsgLine();
 			virtual ~OsgLine();

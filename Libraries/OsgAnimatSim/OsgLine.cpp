@@ -150,7 +150,6 @@ void OsgLine::DrawLine()
 	}
 }
 
-
 void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)
 {
 	oPrimPos = lpPrim->AbsolutePosition();
@@ -159,6 +158,18 @@ void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float 
 	oPrimForce = oSecPos - oPrimPos;
 	oPrimForce.Normalize();
 	oPrimForce *= fltTension;
+}
+
+CStdFPoint OsgLine::GetOffsetFromParentCOM(RigidBody *lpParent, const CStdFPoint &vPos)
+{
+    CStdFPoint vParentPos = lpParent->AbsolutePosition();
+    CStdFPoint vCOM;
+
+    if(lpParent->HasStaticChildren())
+        vCOM = lpParent->CenterOfMassWithStaticChildren();
+
+    CStdFPoint vRelPos = vParentPos - vCOM - vPos;
+    return vRelPos;
 }
 
 void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
@@ -191,8 +202,11 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
 				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-				lpAttach1Parent->AddForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
-				lpAttach2Parent->AddForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
+                CStdFPoint vPrimPosRel = GetOffsetFromParentCOM(lpAttach1Parent, oPrimPos);
+                CStdFPoint vSecPosRel = GetOffsetFromParentCOM(lpAttach2Parent, oSecPos);
+
+				lpAttach1Parent->AddForce(vPrimPosRel.x, vPrimPosRel.y, vPrimPosRel.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
+				lpAttach2Parent->AddForce(vSecPosRel.x, vSecPosRel.y, vSecPosRel.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
 
 				lpAttach1 = lpAttach2;
 			}
