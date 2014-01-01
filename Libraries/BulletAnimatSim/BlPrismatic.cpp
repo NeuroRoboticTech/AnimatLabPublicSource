@@ -175,7 +175,8 @@ void BlPrismatic::SetupPhysics()
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
     btTransform mtJointRelParent, mtJointRelChild;
-    CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
+	CStdFPoint vRot(0, 0, osg::PI);
+    CalculateRelativeJointMatrices(vRot, mtJointRelParent, mtJointRelChild);
 
 	m_btPrismatic = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
@@ -299,7 +300,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
             }
 
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
-		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = fltDesiredVelocity;
+		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = -fltDesiredVelocity;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = fltMaxForce;
         }
 		else

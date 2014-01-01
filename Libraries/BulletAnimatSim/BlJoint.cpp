@@ -120,10 +120,16 @@ void BlJoint::Physics_ResetSimulation()
 
 void BlJoint::CalculateRelativeJointMatrices(btTransform &mtJointRelToParent, btTransform &mtJointRelToChild)
 {
+	CStdFPoint vRot(0, 0, 0);
+	CalculateRelativeJointMatrices(vRot, mtJointRelToParent,mtJointRelToChild);
+}
+
+void BlJoint::CalculateRelativeJointMatrices(CStdFPoint vAdditionalRot, btTransform &mtJointRelToParent, btTransform &mtJointRelToChild)
+{
     osg::Matrix mtParent = GetParentPhysicsWorldMatrix();
     osg::Matrix mtChild = GetChildWorldMatrix();
     CStdFPoint vPos1 = m_lpThisMI->Position();
-    CStdFPoint vRot1 = m_lpThisMI->Rotation();
+    CStdFPoint vRot1 = m_lpThisMI->Rotation() + vAdditionalRot;
     osg::Matrix osgJointRelChild = SetupMatrix(vPos1, vRot1);
 
     osg::Matrix mtJointMTFromChild = osgJointRelChild * mtChild;

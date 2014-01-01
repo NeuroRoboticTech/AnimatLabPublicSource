@@ -35,6 +35,7 @@ namespace BulletAnimatSim
 			virtual BlSimulator *GetBlSimulator();
 
             virtual void CalculateRelativeJointMatrices(btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
+            virtual void CalculateRelativeJointMatrices(CStdFPoint vAdditionalRot, btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
 
 		public:
 			BlJoint();
