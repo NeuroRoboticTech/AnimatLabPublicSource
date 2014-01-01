@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -79,6 +79,12 @@
 <ToolHolder>
 <ID>d483ec9f-28f6-4181-bf81-85c51d3d39f9</ID>
 <Name>BodyData</Name>
+<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>ebc9fdcc-4e1a-42d3-be8f-0bc1cac2bb51</ID>
+<Name>Joint</Name>
 <BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>

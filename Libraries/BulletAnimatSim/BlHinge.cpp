@@ -382,6 +382,8 @@ void BlHinge::SetConstraintFriction()
 
 void BlHinge::ResetSimulation()
 {
+	Hinge::ResetSimulation();
+
     m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;
     m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
 }

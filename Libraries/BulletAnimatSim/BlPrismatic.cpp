@@ -360,6 +360,8 @@ void BlPrismatic::SetConstraintFriction()
 
 void BlPrismatic::ResetSimulation()
 {
+	Prismatic::ResetSimulation();
+
     m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);

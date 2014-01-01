@@ -1,5 +1,5 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\OdorMouthAndEating\</ProjectPath>
+<ProjectPath>F:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\OdorMouthAndEating\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
