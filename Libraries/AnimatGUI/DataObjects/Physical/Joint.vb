@@ -485,12 +485,14 @@ Namespace DataObjects.Physical
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             MyBase.InitializeSimulationReferences(bShowError)
 
-            If Not m_doRelaxation1 Is Nothing Then m_doRelaxation1.InitializeSimulationReferences(bShowError)
-            If Not m_doRelaxation2 Is Nothing Then m_doRelaxation2.InitializeSimulationReferences(bShowError)
-            If Not m_doRelaxation3 Is Nothing Then m_doRelaxation3.InitializeSimulationReferences(bShowError)
-            If Not m_doRelaxation4 Is Nothing Then m_doRelaxation4.InitializeSimulationReferences(bShowError)
-            If Not m_doRelaxation5 Is Nothing Then m_doRelaxation5.InitializeSimulationReferences(bShowError)
-            If Not m_doRelaxation6 Is Nothing Then m_doRelaxation6.InitializeSimulationReferences(bShowError)
+            If Util.Application.AllowConstraintRelaxation Then
+                If Not m_doRelaxation1 Is Nothing Then m_doRelaxation1.InitializeSimulationReferences(bShowError)
+                If Not m_doRelaxation2 Is Nothing Then m_doRelaxation2.InitializeSimulationReferences(bShowError)
+                If Not m_doRelaxation3 Is Nothing Then m_doRelaxation3.InitializeSimulationReferences(bShowError)
+                If Not m_doRelaxation4 Is Nothing Then m_doRelaxation4.InitializeSimulationReferences(bShowError)
+                If Not m_doRelaxation5 Is Nothing Then m_doRelaxation5.InitializeSimulationReferences(bShowError)
+                If Not m_doRelaxation6 Is Nothing Then m_doRelaxation6.InitializeSimulationReferences(bShowError)
+            End If
             If Not m_doFriction Is Nothing Then m_doFriction.InitializeSimulationReferences(bShowError)
         End Sub
 
