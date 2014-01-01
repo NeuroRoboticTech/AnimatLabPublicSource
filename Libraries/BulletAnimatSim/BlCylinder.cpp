@@ -64,6 +64,12 @@ void BlCylinder::CalculateVolumeAndAreas()
     m_vArea.x = (2*m_fltRadius)*m_fltHeight;
     m_vArea.y = (2*m_fltRadius)*m_fltHeight;
     m_vArea.z = osg::PI * m_fltRadius * m_fltRadius;
+
+    if(m_fltMass < 0)
+    {
+        float fltMass = m_fltVolume * m_fltDensity;
+        Mass(fltMass, false, false);
+    }
 }
 
 void BlCylinder::CreateParts()

@@ -62,6 +62,12 @@ void BlEllipsoid::CalculateVolumeAndAreas()
 {
     m_fltVolume = (4/3.0)*osg::PI*m_fltMajorRadius*m_fltMajorRadius*m_fltMinorRadius;
     m_vArea.x = m_vArea.y = m_vArea.z = osg::PI * m_fltMajorRadius * m_fltMinorRadius;
+
+    if(m_fltMass < 0)
+    {
+        float fltMass = m_fltVolume * m_fltDensity;
+        Mass(fltMass, false, false);
+    }
 }
 
 void BlEllipsoid::CreateParts()

@@ -57,6 +57,12 @@ void BlSphere::CalculateVolumeAndAreas()
 {
     m_fltVolume = (4/3.0) * osg::PI * m_fltRadius * m_fltRadius * m_fltRadius;
     m_vArea.x = m_vArea.y = m_vArea.z = osg::PI * m_fltRadius * m_fltRadius;
+
+    if(m_fltMass < 0)
+    {
+        float fltMass = m_fltVolume * m_fltDensity;
+        Mass(fltMass, false, false);
+    }
 }
 
 void BlSphere::CreateParts()

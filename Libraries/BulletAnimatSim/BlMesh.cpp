@@ -86,6 +86,13 @@ void BlMesh::CalculateVolumeAndAreas()
     {
         m_fltVolume = 0;
     }
+
+
+    if(m_fltMass < 0)
+    {
+        float fltMass = m_fltVolume * m_fltDensity;
+        Mass(fltMass, false, false);
+    }
 }
 
 void BlMesh::CreateJoints()
