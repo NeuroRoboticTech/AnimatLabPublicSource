@@ -173,6 +173,12 @@ Namespace Framework
             End If
         End Sub
 
+        Protected Overridable Function SetPhysicsEngine(ByVal dataRow As System.Data.DataRow) As Boolean
+            m_strPhysicsEngine = dataRow("Physics").ToString
+            Debug.WriteLine("Testing physics engine '" & m_strPhysicsEngine & "'")
+            Return CBool(dataRow("Enabled"))
+        End Function
+
         Protected Overridable Sub WaitWhileBusy(Optional ByVal bSkipWaiting As Boolean = False, Optional ByVal bErrorOk As Boolean = False)
             If bSkipWaiting Then Return
 

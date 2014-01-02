@@ -1512,9 +1512,7 @@ Namespace UITests
                 DeploymentItem("TestCases.accdb")>
                 Public Sub Test_Adapters()
 
-                    m_strPhysicsEngine = TestContext.DataRow("Physics").ToString
-                    Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
-                    If Not bEnabled Then Return
+                    If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)

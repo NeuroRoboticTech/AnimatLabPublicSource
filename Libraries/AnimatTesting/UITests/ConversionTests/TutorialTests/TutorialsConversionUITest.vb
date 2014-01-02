@@ -249,9 +249,7 @@ Namespace UITests
                             DataAccessMethod.Sequential), _
                  DeploymentItem("TestCases.accdb")>
                 Public Sub Tutorial_Motors()
-                    m_strPhysicsEngine = TestContext.DataRow("Physics").ToString
-                    Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
-                    If Not bEnabled Then Return
+                    If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
@@ -685,12 +683,18 @@ Namespace UITests
 
                 End Sub
 
-                <TestMethod()>
+                <TestMethod(), _
+                 DataSource("System.Data.OleDb", _
+                            "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                            "PhysicsEngines", _
+                            DataAccessMethod.Sequential), _
+                 DeploymentItem("TestCases.accdb")>
                 Public Sub Tutorial_MotorVelocity()
+                    If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("Rotation", 0.01)
+                    aryMaxErrors.Add("Rotation", 0.025)
 
                     m_strProjectName = "MotorVelocity"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\StimulusTutorials"
