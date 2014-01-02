@@ -20,6 +20,8 @@ namespace BulletAnimatSim
 			BlMotorizedJoint();
 			virtual ~BlMotorizedJoint();
 
+			virtual bool JointIsLocked() = 0;
+
 		    virtual void Physics_SetVelocityToDesired();
         };
 

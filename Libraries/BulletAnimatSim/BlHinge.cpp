@@ -292,6 +292,16 @@ void BlHinge::UpdateData()
 	m_fltRotationDeg = ((m_fltPosition/osg::PI)*180);
 }
 
+bool BlHinge::JointIsLocked()
+{
+	btVector3 vLower, vUpper;
+	m_btHinge->getAngularLowerLimit(vLower);
+	m_btHinge->getAngularUpperLimit(vUpper);
+	if( (vLower[0] == vUpper[0]) || (vLower[0] > vUpper[0]) )
+		return true;
+	else
+		return false;
+}
 
 void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
@@ -317,11 +327,14 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 	{   
 		if(bOn)
         {
-            if(!m_bMotorOn || bForceWakeup || m_bJointLocked)
-            {
+			//I had to cut this if statement out. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
+			// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
+			// doing this every single time I set the motor velocity.
+            //if(!m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked() || fabs(m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0]) < 1e-4)
+            //{
                 SetLimitValues();
                 m_lpThisJoint->WakeDynamics();
-            }
+            //}
 
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
@@ -331,7 +344,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
         {
             TurnMotorOff();
 
-            if(m_bMotorOn || bForceWakeup || m_bJointLocked)
+            if(m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
             {
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();

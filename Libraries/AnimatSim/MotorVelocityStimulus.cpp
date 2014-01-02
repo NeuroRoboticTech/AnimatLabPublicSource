@@ -132,6 +132,10 @@ void MotorVelocityStimulus::Activate()
 {
 	ExternalStimulus::Activate();
 
+	//int iTest = 0;
+	//if(m_lpSim->Time() >= 5)
+	//	iTest = iTest;
+		
 	if(m_bEnabled)
 	{
 		m_lpJoint->EnableMotor(true);
@@ -143,6 +147,9 @@ void MotorVelocityStimulus::Activate()
 void MotorVelocityStimulus::StepSimulation()
 {
 	//float fltVel=0;
+	//int iTest = 0;
+	//if(m_lpSim->Time() >= 5.75)
+	//	iTest = iTest;
 
 	try
 	{

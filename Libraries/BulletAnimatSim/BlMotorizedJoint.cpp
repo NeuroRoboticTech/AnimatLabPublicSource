@@ -80,8 +80,13 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 
         float fltJointVel = m_lpThisJoint->JointVelocity();
 
+		if(!m_lpThisJoint->UsesRadians())
+			fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
+
+		float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
+
 		//Only do anything if the velocity value has changed
-        if(m_btJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
+        if(m_btJoint && fltVelDiff > 1e-4)
 		{
 			if(fabs(fltSetVelocity) > 1e-4 && m_btJoint)
 				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
