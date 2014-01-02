@@ -62,14 +62,20 @@ Namespace UITests
 
                 End Sub
 
-                <TestMethod()>
+                <TestMethod(), _
+                 DataSource("System.Data.OleDb", _
+                            "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                            "PhysicsEngines", _
+                            DataAccessMethod.Sequential), _
+                 DeploymentItem("TestCases.accdb")>
                 Public Sub Tutorial_Muscle()
+                    If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
                     aryMaxErrors.Add("MV", 0.000001)
-                    aryMaxErrors.Add("Tension", 0.3)
-                    aryMaxErrors.Add("Length", 0.0005)
+                    aryMaxErrors.Add("Tension", 0.6)
+                    aryMaxErrors.Add("Length", 0.002)
                     aryMaxErrors.Add("MN", 0.005)
                     aryMaxErrors.Add("A", 0.005)
 
