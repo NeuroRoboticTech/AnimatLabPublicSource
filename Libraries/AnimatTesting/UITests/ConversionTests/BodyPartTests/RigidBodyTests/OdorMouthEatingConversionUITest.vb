@@ -45,7 +45,7 @@ Namespace UITests
                     <TestMethod(), _
                     DataSource("System.Data.OleDb", _
                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
-                               "OdorMouthEating", _
+                               "PhysicsEngines", _
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_OdorMouthEating()
@@ -54,13 +54,13 @@ Namespace UITests
                         If Not bEnabled Then Return
 
                         Dim aryMaxErrors As New Hashtable
-                        aryMaxErrors.Add("Time", CSng(TestContext.DataRow("TimeError")))
-                        aryMaxErrors.Add("OdorSensor", CSng(TestContext.DataRow("OdorSensorError")))
-                        aryMaxErrors.Add("Mouth", CSng(TestContext.DataRow("MouthError")))
-                        aryMaxErrors.Add("Eat", CSng(TestContext.DataRow("EatError")))
-                        aryMaxErrors.Add("Food_Near", CSng(TestContext.DataRow("FoodNearError")))
-                        aryMaxErrors.Add("Energy", CSng(TestContext.DataRow("EnergyError")))
-                        aryMaxErrors.Add("default", CSng(TestContext.DataRow("DefaultError")))
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("OdorSensor", 50)
+                        aryMaxErrors.Add("Mouth", 0.001)
+                        aryMaxErrors.Add("Eat", 0.05)
+                        aryMaxErrors.Add("Food_Near", 0.05)
+                        aryMaxErrors.Add("Energy", 110)
+                        aryMaxErrors.Add("default", 0.05)
 
                         m_strProjectName = "OdorMouthAndEating"
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
@@ -72,26 +72,18 @@ Namespace UITests
                         m_aryWindowsToOpen.Clear()
                         m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
 
-                        Dim aryIgnoreRows As ArrayList = Nothing
-
-                        'The bullet motorized joint lags ever so slightly and this error accumulates, so only look at the first half of the data for bullet.
-                        If m_strPhysicsEngine = "Bullet" Then
-                            aryIgnoreRows = New ArrayList
-                            aryIgnoreRows.Add(New Point(6252, 12502))
-                        End If
-
                         'Load and convert the project.
-                        TestConversionProject("AfterConversion_", aryMaxErrors, , aryIgnoreRows)
+                        TestConversionProject("AfterConversion_", aryMaxErrors)
 
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "False"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "True"})
 
@@ -105,61 +97,61 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Gain.XOffset", "5000"})
 
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "WorldPosition.Y", "-31 c"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "MinimumFoodRadius", "6.1 c"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "2000 "})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BaseCons_2000_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BaseCons_2000_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "20 k"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnergyLevel_20k_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnergyLevel_20k_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "1 "})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "MaxEnergyLevel", "24 k"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxEnergy_24k_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxEnergy_24k_")
 
-                        aryMaxErrors("OdorSensor") = CSng(TestContext.DataRow("OdorSensorError2"))
+                        aryMaxErrors("OdorSensor") = 1500
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "5000 "})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "5 k"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
 
                         'Make sure it gets reset after a kill correctly.
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
 
-                        aryMaxErrors("OdorSensor") = CSng(TestContext.DataRow("OdorSensorError"))
+                        aryMaxErrors("OdorSensor") = 50
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "500 "})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "10 k"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "0"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "0"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NoFood_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NoFood_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "0"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "1000"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodReplinish_1k_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodReplinish_1k_")
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodSource", "False"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Food_Disabled_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Food_Disabled_")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodSource", "True"})
 
-                        aryMaxErrors("OdorSensor") = CSng(TestContext.DataRow("OdorSensorError3"))
-                        aryMaxErrors("Eat") = CSng(TestContext.DataRow("EatError")) * 5
-                        aryMaxErrors("Food_Near") = CSng(TestContext.DataRow("FoodNearError")) * 5
+                        aryMaxErrors("OdorSensor") = 400
+                        aryMaxErrors("Eat") = 0.25
+                        aryMaxErrors("Food_Near") = 0.25
 
                         ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "OdorSources"}, 500)
                         ExecuteActiveDialogMethod("Automation_SelectOdorSource", New Object() {"TestOdor"})
@@ -168,7 +160,7 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "100"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "0"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_", , aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_")
 
                         'Test cut/copy/paste.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)

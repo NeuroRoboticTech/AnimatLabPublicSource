@@ -3497,26 +3497,27 @@ Namespace Forms
             m_bAutomation_ExportedChartData = bRetVal
         End Sub
 
-        Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
+        Public Overridable Sub CopyChartData(ByVal strPhysicsEngine As String, Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CopyChartData(strPath, strPrefix)
+                    frmChart.CopyChartData(strPhysicsEngine, strPath, strPrefix)
                 End If
             Next
         End Sub
 
-        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
+        Public Overridable Sub CompareExportedDataCharts(ByVal strPhysicsEngine As String, ByVal strPrefix As String, ByVal strTemplatePath As String, _
+                                                         ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CompareExportedData(strPrefix, strTemplatePath, aryMaxErrors, iMaxRows, aryIgnoreRows)
+                    frmChart.CompareExportedData(strPhysicsEngine, strPrefix, strTemplatePath, aryMaxErrors, iMaxRows, aryIgnoreRows)
                 End If
             Next
 

@@ -39,8 +39,16 @@ Namespace UITests
 
 #Region "Methods"
 
-            <TestMethod()>
+            <TestMethod(), _
+             DataSource("System.Data.OleDb", _
+                        "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                        "PhysicsEngines", _
+                        DataAccessMethod.Sequential), _
+             DeploymentItem("TestCases.accdb")>
             Public Sub Test_DeleteNodesBeforeOpenChart()
+                m_strPhysicsEngine = TestContext.DataRow("Physics").ToString
+                Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
+                If Not bEnabled Then Return
 
                 Dim aryMaxErrors As New Hashtable
                 aryMaxErrors.Add("Time", 0.001)
