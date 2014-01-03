@@ -20,6 +20,8 @@ Namespace UITests
 
                     <TestMethod()>
                     Public Sub Test_Distance()
+                        'This test is only valid for the vortex physics engine
+                        m_strPhysicsEngine = "Vortex"
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)

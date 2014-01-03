@@ -48,7 +48,11 @@ Namespace UITests
 
                         'Wait for the collision mesh dialog to show, fill it in and hit ok
                         OpenDialogAndWait("Select Mesh", Nothing, Nothing)
-                        ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Triangular"})
+                        If m_strPhysicsEngine = "Vortex" Then
+                            ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Triangular"})
+                        Else
+                            ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Convex"})
+                        End If
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Wait for the graphics mesh to show and hit ok.

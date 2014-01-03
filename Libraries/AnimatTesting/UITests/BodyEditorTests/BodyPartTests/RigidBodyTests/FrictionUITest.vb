@@ -297,6 +297,7 @@ Namespace UITests
                                 DataAccessMethod.Sequential), _
                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_MassVolumeDensity()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)

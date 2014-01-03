@@ -3777,7 +3777,7 @@ void Simulator::AddToExtractExtraData(BodyPart *lpPart)
 void Simulator::RemoveFromExtractExtraData(BodyPart *lpPart)
 {
 	int iIndex = FindExtraDataIndex(lpPart);
-	if(iIndex < 0)
+	if(iIndex >= 0)
 		m_aryExtraDataParts.RemoveAt(iIndex);
     m_iExtraDataCount = m_aryExtraDataParts.GetSize();
 }

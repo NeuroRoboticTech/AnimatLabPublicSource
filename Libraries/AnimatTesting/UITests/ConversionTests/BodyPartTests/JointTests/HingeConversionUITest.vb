@@ -49,6 +49,8 @@ Namespace UITests
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_HingeJointRotations()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim dblJointRotX As Double = CDbl(TestContext.DataRow("X"))
                         Dim dblJointRotY As Double = CDbl(TestContext.DataRow("Y"))

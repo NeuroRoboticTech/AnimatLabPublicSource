@@ -20,6 +20,9 @@ Namespace UITests
 
                     <TestMethod()>
                     Public Sub Test_Torus()
+                        'This test is only valid for the vortex physics engine
+                        m_strPhysicsEngine = "Vortex"
+
                         TestPart()
                     End Sub
 
