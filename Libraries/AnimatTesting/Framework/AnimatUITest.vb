@@ -267,7 +267,7 @@ Namespace Framework
 
             'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
             If m_bGenerateTempates Then
-                ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
+                ExecuteMethod("CopyChartData", New Object() {m_strPhysicsEngine, strTestDataPath, strPrefix})
             Else
                 ExecuteMethod("CompareExportedDataCharts", New Object() {m_strPhysicsEngine, strPrefix, strTestDataPath, aryMaxErrors, iMaxRows, aryIgnoreRows})
             End If
