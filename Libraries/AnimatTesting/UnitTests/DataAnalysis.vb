@@ -53,7 +53,7 @@ Namespace UnitTests
 
         <TestMethod()> _
         Public Sub Test_CriticalPoints()
-            Dim strDataFile As String = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\data.txt"
+            Dim strDataFile As String = m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\data.txt"
             Dim iColumn As Integer = 0
             Dim iStartIdx As Integer = -1
             Dim iEndIdx As Integer = -1
@@ -78,7 +78,7 @@ Namespace UnitTests
             'Assert.AreEqual(oPoint.Value, 0.0)
             'Assert.AreEqual(oPoint.Idx, 100)
 
-            oAnalysis.SaveData("C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\X3_Analysis.txt")
+            oAnalysis.SaveData(m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\X3_Analysis.txt")
 
             Dim strXml As String = oAnalysis.SaveXml()
             Dim oAnal2 As DataAnalyzer = DataAnalyzer.LoadXml(strXml)
@@ -113,15 +113,15 @@ Namespace UnitTests
             Assert.AreEqual(oPoint.Value, -0.99992)
             Assert.AreEqual(oPoint.Idx, 94)
 
-            oAnalysis.SaveData("C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\Sin_Analysis.txt")
+            oAnalysis.SaveData(m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\Sin_Analysis.txt")
 
         End Sub
 
         <TestMethod()> _
         Public Sub Test_Compare()
-            Dim strDataFile As String = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\data1.txt"
-            Dim strX3Template As String = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\X3_Analysis.txt"
-            Dim strSinTemplate As String = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\Sin_Analysis.txt"
+            Dim strDataFile As String = m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\data1.txt"
+            Dim strX3Template As String = m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\X3_Analysis.txt"
+            Dim strSinTemplate As String = m_strRootFolder & "\Libraries\AnimatTesting\TestData\UnitTests\DataAnalyzer\Sin_Analysis.txt"
             Dim iColumn As Integer = 0
             Dim iStartIdx As Integer = -1
             Dim iEndIdx As Integer = -1
