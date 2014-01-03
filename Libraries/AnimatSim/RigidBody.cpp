@@ -108,6 +108,9 @@ try
 
 	if(m_lpContactSensor) delete m_lpContactSensor;
 	m_aryChildParts.RemoveAll();
+
+    //Remove this from the list of extra data parts if it is on it.
+    m_lpSim->RemoveFromExtractExtraData(this);
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, false, true);}
