@@ -501,16 +501,20 @@ void OsgMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
     //I should rename this, but it would require a lot of changes.
     osg::Matrix osgLocal = CalculateTransformRelativeToParent(m_osgLocalMatrix);
 
+    //If we are int he middle of a reset then do not fire the change events.
+    /// We are just manually resetting the sim positions back to their original values.
+    bool bFirePosChangeEvents = !m_lpThisAB->GetSimulator()->IsResetting();
+
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
 	osg::Vec3 vL = osgLocal.getTrans();
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
-	m_lpThisMI->Position(vLocal, false, true, false);
+	m_lpThisMI->Position(vLocal, false, bFirePosChangeEvents, false);
 		
 	//Now lets get the euler angle rotation
     CStdFPoint vRot = EulerRotationFromMatrix(osgLocal);    
-	m_lpThisMI->Rotation(vRot, true, false);
+	m_lpThisMI->Rotation(vRot, bFirePosChangeEvents, false);
 
 	if(m_osgDragger.valid())
 		m_osgDragger->SetupMatrix();

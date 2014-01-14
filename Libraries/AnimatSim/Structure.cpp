@@ -123,7 +123,7 @@ void Structure::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeE
     {
 	    if(bUpdateMatrix)
 		    m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
-        else
+        else if(bFireChangeEvent)
             m_lpBody->Callback()->PositionChanged();
     }
 }

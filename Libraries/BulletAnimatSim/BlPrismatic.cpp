@@ -166,19 +166,22 @@ void BlPrismatic::SetupPhysics()
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!m_lpBlParent)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!m_lpBlChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
 
     btTransform mtJointRelParent, mtJointRelChild;
 	CStdFPoint vRot(0, 0, osg::PI);
     CalculateRelativeJointMatrices(vRot, mtJointRelParent, mtJointRelChild);
 
-	m_btPrismatic = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, false); 
+	m_btPrismatic = new btGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btPrismatic, true);
     m_btPrismatic->setDbgDrawSize(btScalar(5.f));
@@ -193,6 +196,14 @@ void BlPrismatic::SetupPhysics()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	EnableMotor(m_bEnableMotorInit);
+
+    //Turn off sleeping thresholds for parent and child of prismatic joints to prevent the parts from
+    //falling asleep. If it does the joint motor has a tendency to not work.
+    if(m_lpBlParent && m_lpBlParent->Part())
+        m_lpBlParent->Part()->setSleepingThresholds(0, 0);
+
+    if(m_lpBlChild && m_lpBlChild->Part())
+        m_lpBlChild->Part()->setSleepingThresholds(0, 0);
 
     Prismatic::Initialize();
     BlJoint::Initialize();

@@ -95,6 +95,7 @@ namespace StdUtils
 	class CStdXml;
 	class CStdCriticalSection;
 	class CStdErrorInfo;
+    class CStdPID;
 
 #ifndef THROW_ERROR
 	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__, "")
@@ -139,6 +140,7 @@ namespace StdUtils
 #include "StdFixed.h"
 #include "StdColor.h"
 #include "StdCriticalSection.h"
+#include "StdPID.h"
 
 using namespace StdUtils;
 

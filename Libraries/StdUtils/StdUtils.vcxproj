@@ -180,6 +180,7 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClCompile Include="StdFixed.cpp" />
     <ClCompile Include="StdFont.cpp" />
     <ClCompile Include="StdLookupTable.cpp" />
+    <ClCompile Include="StdPID.cpp" />
     <ClCompile Include="StdPostFixEval.cpp" />
     <ClCompile Include="StdSerialize.cpp" />
     <ClCompile Include="StdUtilFunctions.cpp" />
@@ -202,6 +203,7 @@ Copy $(TargetPATH) StdUtils_UnitTests\Release\$(TargetName)$(TargetExt)</Command
     <ClInclude Include="StdFont.h" />
     <ClInclude Include="StdIncludes.h" />
     <ClInclude Include="StdLookupTable.h" />
+    <ClInclude Include="StdPID.h" />
     <ClInclude Include="StdPostFixEval.h" />
     <ClInclude Include="StdSerialize.h" />
     <ClInclude Include="StdUtilFunctions.h" />

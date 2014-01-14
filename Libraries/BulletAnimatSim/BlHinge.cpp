@@ -20,6 +20,37 @@ namespace BulletAnimatSim
 		namespace Joints
 		{
 
+btAnimatbtGeneric6DofConstraint::btAnimatbtGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB ,bool useLinearReferenceFrameA) : 
+        btGeneric6DofConstraint(rbA, rbB, frameInA, frameInB, useLinearReferenceFrameA)
+{
+}
+
+btAnimatbtGeneric6DofConstraint::btAnimatbtGeneric6DofConstraint(btRigidBody& rbB, const btTransform& frameInB, bool useLinearReferenceFrameB) : 
+        btGeneric6DofConstraint(rbB, frameInB, useLinearReferenceFrameB)
+{
+}
+
+void btAnimatbtGeneric6DofConstraint::ApplyMotorForces(btScalar	timeStep)
+{
+    // angular
+    btVector3 angular_axis;
+    btScalar angularJacDiagABInv;
+    int i=0;
+    //for (int i=0;i<3;i++)
+    //{
+        if (m_angularLimits[i].needApplyTorques())
+        {
+
+			// get axis
+			angular_axis = getAxis(i);
+
+			angularJacDiagABInv = btScalar(1.) / m_jacAng[i].getDiagonal();
+
+			m_angularLimits[i].solveAngularLimits(timeStep,angular_axis,angularJacDiagABInv, &m_rbA,&m_rbB);
+        }
+    //}
+}
+
 /**
 \brief	Default constructor.
 
@@ -47,6 +78,8 @@ BlHinge::BlHinge()
 
 	m_lpLowerLimit->IsLowerLimit(true);
 	m_lpUpperLimit->IsLowerLimit(false);
+
+    m_lpPID = new CStdPID(0, 0.4, 0.4, 0.4, true, false, false, 0, 0, 0, 0);
 }
 
 /**
@@ -60,6 +93,12 @@ BlHinge::~BlHinge()
 	//ConstraintLimits are deleted in the base objects.
 	try
 	{
+        if(m_lpPID)
+        {
+            delete m_lpPID;
+            m_lpPID = NULL;
+        }
+
 		DeleteGraphics();
 		DeletePhysics(false);
 	}
@@ -180,18 +219,21 @@ void BlHinge::SetupPhysics()
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!m_lpBlParent)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!m_lpBlChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
 
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
-    m_btHinge = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, false); 
+    m_btHinge = new btAnimatbtGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 
@@ -210,6 +252,14 @@ void BlHinge::SetupPhysics()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
     EnableMotor(m_bEnableMotorInit);
+
+    //Turn off sleeping thresholds for parent and child of hinge joints to prevent the parts from
+    //falling asleep. If it does the joint motor has a tendency to not work.
+    if(m_lpBlParent && m_lpBlParent->Part())
+        m_lpBlParent->Part()->setSleepingThresholds(0, 0);
+
+    if(m_lpBlChild && m_lpBlChild->Part())
+        m_lpBlChild->Part()->setSleepingThresholds(0, 0);
 
     Hinge::Initialize();
     BlJoint::Initialize();
@@ -284,6 +334,7 @@ void BlHinge::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
+    ApplyMotorAssist();
 }
 
 void BlHinge::UpdateData()
@@ -401,6 +452,19 @@ void BlHinge::ResetSimulation()
     m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
 }
 
+void BlHinge::ApplyMotorAssist()
+{
+    //Need to add later.
+    //If the motor is on and moving then nullify the torque acting on it.
+    //if(m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild)
+    //{
+       // m_lpPID->Setpoint(SetVelocity());
+        //m_fltVelocity
+        
+        //m_btParent->applyTorque(vInvParentTorque);
+        //m_btChild->applyTorque(vInvChildTorque);
+    //}
+}
 
 		}		//Joints
 	}			// Environment

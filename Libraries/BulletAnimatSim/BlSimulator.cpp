@@ -456,7 +456,7 @@ void BlSimulator::StepSimulation()
             if( m_bDrawDebug )
                 m_dbgDraw.BeginDraw();
 
-            m_lpDynamicsWorld->stepSimulation(m_fltPhysicsTimeStep, 1, m_fltPhysicsTimeStep);
+            m_lpDynamicsWorld->stepSimulation(m_fltPhysicsTimeStep, m_iPhysicsSubsteps, m_fltPhysicsSubstepTime);
 
             if( m_bDrawDebug )
             {

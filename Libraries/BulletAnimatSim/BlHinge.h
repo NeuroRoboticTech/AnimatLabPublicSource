@@ -18,6 +18,16 @@ namespace BulletAnimatSim
 		**/
 		namespace Joints
 		{
+
+            class BULLET_PORT btAnimatbtGeneric6DofConstraint : public btGeneric6DofConstraint
+            {
+            public:
+                btAnimatbtGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB ,bool useLinearReferenceFrameA);
+                btAnimatbtGeneric6DofConstraint(btRigidBody& rbB, const btTransform& frameInB, bool useLinearReferenceFrameB);
+
+                virtual void ApplyMotorForces(btScalar	timeStep);
+            };
+
 			/**
 			\brief	Vortex hinge joint class.
 
@@ -37,15 +47,18 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The bullet hinge class.
-                btGeneric6DofConstraint *m_btHinge;
+                btAnimatbtGeneric6DofConstraint *m_btHinge;
 				//btHingeConstraint *m_btHinge;
 
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;
 
+                CStdPID *m_lpPID;
+
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void UpdateData();
+                virtual void ApplyMotorAssist();
 
                 virtual float GetCurrentBtPosition();
 

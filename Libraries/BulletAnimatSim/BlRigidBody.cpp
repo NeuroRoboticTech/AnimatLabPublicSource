@@ -248,6 +248,10 @@ void BlRigidBody::CreateSensorPart()
 
         int iFlags = m_btCollisionObject->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
         m_btCollisionObject->setCollisionFlags(iFlags);
+
+        //Disable collisions between this sensor part and its parent manually. For some reason this is not
+        //done automatically by bullet like it is for two dynamic parts.
+        m_lpThisRB->DisableCollision(m_lpThisRB->Parent());
     }
 }
 
@@ -259,6 +263,9 @@ void BlRigidBody::CreateDynamicPart()
 
         float fltMass = 0;
 	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
+
+        //if(Std_ToLower(m_lpThisRB->ID()) == "e1aa3ea3-346a-48a6-a177-a9cfa1d2c598")  //Testing only
+        //    fltMass = 0;
 
         if(m_lpThisRB->HasStaticChildren())
             CreateStaticChildren(vCom);
@@ -301,8 +308,6 @@ void BlRigidBody::CreateDynamicPart()
 
         m_osgbMotion = dynamic_cast<osgbDynamics::MotionState *>(m_btPart->getMotionState());
         m_btCollisionShape = m_btPart->getCollisionShape();
-
-
 
         if(!m_lpBulletData)
             m_lpBulletData = new BlBulletData(this, false);

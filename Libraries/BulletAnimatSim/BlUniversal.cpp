@@ -60,19 +60,22 @@ void BlUniversal::SetupPhysics()
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!m_lpBlParent)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!m_lpBlChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
 
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
     btVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
 	btVector3 axis1(1, 0, 0), axis2(0, 0, 1);
 
-	m_btSocket = new btUniversalConstraint(*lpVsParent->Part(), *lpVsChild->Part(), pos, axis1, axis2); 
+	m_btSocket = new btUniversalConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), pos, axis1, axis2); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
     m_btSocket->setDbgDrawSize(btScalar(5.f));

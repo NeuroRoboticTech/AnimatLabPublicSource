@@ -67,12 +67,6 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
 		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
 
-		if(fltDesiredVel>fltMaxVel)
-			fltDesiredVel = fltMaxVel;
-
-		if(fltDesiredVel < -fltMaxVel)
-			fltDesiredVel = -fltMaxVel;
-
 		float fltSetVelocity = fltDesiredVel;
 
 		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);

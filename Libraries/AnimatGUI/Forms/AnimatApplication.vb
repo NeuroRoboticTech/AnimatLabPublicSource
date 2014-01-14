@@ -1314,6 +1314,16 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property AllowPhysicsSubsteps() As Boolean
+            Get
+                If SimPhysicsSystem = "Bullet" Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property ShowSeparateConstraintLimits() As Boolean
             Get
                 If SimPhysicsSystem = "Bullet" Then

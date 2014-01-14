@@ -64,6 +64,8 @@ Simulator::Simulator()
 	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
+    m_iPhysicsSubsteps = 1;
+    m_fltPhysicsSubstepTime = (float) 0.01;
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lEndSimTimeSlice = -1;
@@ -169,6 +171,7 @@ Simulator::Simulator()
 	m_lStepTimeCount = 0;
 
     m_bInDrag = false;
+    m_bIsResetting = false;
 }
 
 /**
@@ -494,6 +497,14 @@ ISimGUICallback *Simulator::SimCallback() {return m_lpSimCallback;}
 \param [in,out]	lpCallback	Pointer to a callback. 
 **/
 void Simulator::SimCallBack(ISimGUICallback *lpCallback) {m_lpSimCallback = lpCallback;}
+
+/**
+ \brief Returns true if the simulation is in the process of resetting. False otherwise.
+
+ \author    David Cofer
+ \date  1/14/2014
+ */
+bool Simulator::IsResetting() {return m_bIsResetting;}
 
 #pragma endregion
 
@@ -1095,6 +1106,9 @@ void Simulator::PhysicsTimeStep(float fltVal)
 
 	//Now reset the m_fltTimeStep of the sim.
 	if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
+
+    //Reset the physics substep time if required.
+     m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
 }
 
 /**
@@ -1119,6 +1133,45 @@ started. We use this to know how many more slices to go until the physics engine
 \return	Physisc step count variable.
 **/
 long Simulator::PhysicsStepCount() {return m_iPhysicsStepCount;}
+
+/**
+ \brief  This is used only for the bullet physics engine. It allows the user to specify how many substeps should
+         be made for the physics time step specified. This allows you to keep the overall physics time step you
+         wanted but subdivide it more finely if that is required. However, The larger this number the slower 
+         your simulation will run.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \param iVal    New substeps greater than 0.
+ */
+void Simulator::PhysicsSubsteps(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, true, "PhysicsSubsteps");
+    
+    m_iPhysicsSubsteps = iVal;
+    m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
+}
+
+/**
+ \brief Gets the physics substeps.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \return physics substep count.
+ */
+int Simulator::PhysicsSubsteps() {return m_iPhysicsSubsteps;}
+
+/**
+ \brief Gets the physics substep time.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \return  gets the time size of the substep: TimeStep/iPhysicsSubteps.
+ */
+float Simulator::PhysicsSubstepTime() {return m_fltPhysicsSubstepTime;}
 
 /**
 \brief	Gets the gravity value.
@@ -1894,6 +1947,8 @@ void Simulator::Reset()
 	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
+    m_iPhysicsSubsteps = 1;
+    m_fltPhysicsSubstepTime = (float) 0.01;
 	m_iPhysicsStepCount = 0;
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
@@ -2020,6 +2075,7 @@ void Simulator::Reset()
 **/
 void Simulator::ResetSimulation()
 {
+    m_bIsResetting = true;
 	m_fltTime = 0;
 	m_lTimeSlice = 0;
 	m_lPhysicsSliceCount = 0;
@@ -2053,6 +2109,8 @@ void Simulator::ResetSimulation()
 	
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
+
+    m_bIsResetting = false;
 }
 
 float Simulator::MinTimeStep()
@@ -2720,6 +2778,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
 	m_fltPhysicsTimeStep = oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep);
+
+    m_iPhysicsSubsteps = oXml.GetChildInt("PhysicSubsteps", 1);
 
 	SimulateHydrodynamics(oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics));
 
@@ -3963,6 +4023,8 @@ float *Simulator::GetDataPointer(const std::string &strDataType)
 		lpData = &m_fltTime;
 	else if(strType == "PHYSICSTIMESTEP")
 		lpData = &m_fltPhysicsTimeStep;
+	else if(strType == "PHYSICSSUBSTEPTIME")
+		lpData = &m_fltPhysicsSubstepTime;
 	else if(strType == "SIMULATIONREALTIMETOSTEP")
 		lpData = &m_fltSimulationRealTimeToStep;
 	else if(strType == "PLAYBACKADDITIONREALTIMETOSTEP")
@@ -4025,6 +4087,11 @@ bool Simulator::SetData(const std::string &strDataType, const std::string &strVa
 	else if(strType == "PHYSICSTIMESTEP")
 	{
 		PhysicsTimeStep((float) atof(strValue.c_str()));
+		return true;
+	}
+	else if(strType == "PHYSICSSUBSTEPS")
+	{
+		PhysicsSubsteps((int) atoi(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "SIMULATEHYDRODYNAMICS")

@@ -157,6 +157,9 @@ namespace AnimatSim
             /// Tells if we are in the middle of a mouse drag operation to move or rotate a part. 
             bool m_bInDrag;
 
+            /// True if we are in the process of resetting the simulation. False otherwise.
+            bool m_bIsResetting;
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -218,6 +221,16 @@ namespace AnimatSim
 			///This is the minimum integration time step taken for all neural modules and the physics engine.
 			float m_fltTimeStep;
 			double m_dblTimeStep;
+
+            ///This is used only for the bullet physics engine. It allows the user to specify how many substeps should
+            /// be made for the physics time step specified. This allows you to keep the overall physics time step you
+            /// wanted but subdivide it more finely if that is required. However, The larger this number the slower 
+            /// your simulation will run.
+            int m_iPhysicsSubsteps;
+
+            /// This keeps track of the substep time to use based on the number of substeps specified.
+            /// This is PhysicsTimeStep/iPhysicsSubteps
+            float m_fltPhysicsSubstepTime;
 
 			///The current time slice. This a long value.
 			long m_lTimeSlice;
@@ -633,6 +646,8 @@ namespace AnimatSim
 			virtual	ISimGUICallback *SimCallback();
 			virtual void SimCallBack(ISimGUICallback *lpCallback);
 
+            virtual bool IsResetting();
+
 #pragma endregion
 
 #pragma region EnvironmentVariables
@@ -706,6 +721,10 @@ namespace AnimatSim
 			virtual void PhysicsTimeStep(float fltVal);
 			virtual float PhysicsTimeStep();
 			virtual long PhysicsStepCount();
+
+            virtual void PhysicsSubsteps(int iVal);
+            virtual int PhysicsSubsteps();
+            virtual float PhysicsSubstepTime();
 
 			virtual float Gravity();
 			virtual void Gravity(float fltVal, bool bUseScaling = true);

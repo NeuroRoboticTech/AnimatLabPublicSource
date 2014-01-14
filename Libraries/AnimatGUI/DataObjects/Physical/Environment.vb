@@ -41,6 +41,8 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_snPhysicsTimeStep As ScaledNumber
+        Protected m_iPhysicsSubsteps As Integer = 1
+
         Protected m_snGravity As ScaledNumber
 
         Protected m_snMouseSpringStiffness As ScaledNumber
@@ -156,6 +158,23 @@ Namespace DataObjects.Physical
                 Util.Application.SignalTimeStepChanged(Me)
             End Set
         End Property
+
+        Public Property PhysicsSubsteps() As Integer
+            Get
+                Return m_iPhysicsSubsteps
+            End Get
+            Set(ByVal Value As Integer)
+                If Value <= 0 Then
+                    Throw New System.Exception("You can not set the physics substep value to be less than or equal to zero!")
+                ElseIf Value >= 5000 Then
+                    Throw New System.Exception("You can not set the physics substep value to be greater than or equal to 5000!")
+                End If
+
+                Me.SetSimData("PhysicsSubsteps", CStr(Value), True)
+                m_iPhysicsSubsteps = Value
+            End Set
+        End Property
+
 
         Public Property Gravity() As ScaledNumber
             Get
@@ -1017,6 +1036,11 @@ Namespace DataObjects.Physical
                                         "Settings", "This is the increment that is taken between each time step of the physics simulator. ", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+            If Util.Application.AllowPhysicsSubsteps Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Substeps", Me.PhysicsSubsteps.GetType(), "PhysicsSubsteps", _
+                                            "Settings", "Allows you to specify the number of substeps that the physics engine will iterate through between each physics step.", Me.PhysicsSubsteps))
+            End If
+
             pbNumberBag = m_snGravity.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Gravity", pbNumberBag.GetType(), "Gravity", _
                                         "Settings", "Sets the gravity for the simulation. This is applied along the y axis. Gravity is always specified in " & _
@@ -1231,6 +1255,7 @@ Namespace DataObjects.Physical
             oXml.IntoChildElement("Environment") 'Into Environment Element
 
             m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
+            m_iPhysicsSubsteps = oXml.GetChildInt("PhysicsSubsteps", 1)
             m_snGravity.LoadData(oXml, "Gravity")
             m_snMouseSpringStiffness.LoadData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.LoadData(oXml, "MouseSpringDamping")
@@ -1412,6 +1437,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem()
 
             m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
+            oXml.AddChildElement("PhysicsSubsteps", m_iPhysicsSubsteps)
             m_snGravity.SaveData(oXml, "Gravity")
             m_snMouseSpringStiffness.SaveData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.SaveData(oXml, "MouseSpringDamping")
@@ -1508,6 +1534,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem()
 
             oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
+            oXml.AddChildElement("PhysicsSubsteps", m_iPhysicsSubsteps)
             oXml.AddChildElement("Gravity", m_snGravity.ActualValue)
             oXml.AddChildElement("MouseSpringStiffness", m_snMouseSpringStiffness.ActualValue)
             oXml.AddChildElement("MouseSpringDamping", m_snMouseSpringDamping.ActualValue)

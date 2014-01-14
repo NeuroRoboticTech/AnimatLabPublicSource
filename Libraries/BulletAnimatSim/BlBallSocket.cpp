@@ -59,18 +59,21 @@ void BlBallSocket::SetupPhysics()
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!m_lpBlParent)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!m_lpBlChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
 
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
-	m_btSocket = new btConeTwistConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild); 
+	m_btSocket = new btConeTwistConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
     m_btSocket->setDbgDrawSize(btScalar(5.f));

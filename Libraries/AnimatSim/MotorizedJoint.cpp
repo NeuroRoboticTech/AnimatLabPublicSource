@@ -276,7 +276,18 @@ void MotorizedJoint::SetVelocity(float fltVal)
 
 \return	Desired velocity.
 **/
-float MotorizedJoint::DesiredVelocity() {return m_fltDesiredVelocity;}
+float MotorizedJoint::DesiredVelocity() 
+{
+    float fltDesiredVel = m_fltDesiredVelocity;
+
+	if(fltDesiredVel>m_fltMaxVelocity)
+		fltDesiredVel = m_fltMaxVelocity;
+
+	if(fltDesiredVel < -m_fltMaxVelocity)
+		fltDesiredVel = -m_fltMaxVelocity;
+
+    return fltDesiredVel;
+}
 
 /**
 \brief	Sets the desired velocity.

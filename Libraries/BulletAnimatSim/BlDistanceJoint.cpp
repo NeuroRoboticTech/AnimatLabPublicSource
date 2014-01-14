@@ -72,23 +72,26 @@ void BlDistanceJoint::SetupPhysics()
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
+	if(!m_lpBlParent)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
 
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
+	if(!m_lpBlChild)
 		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
 
     //Need to calculate the matrix transform for the joint relative to the child also.
     osg::Matrix jointMT = this->GetOSGWorldMatrix();
-    osg::Matrix parentMT = lpVsParent->GetOSGWorldMatrix();
+    osg::Matrix parentMT = m_lpBlParent->GetOSGWorldMatrix();
     osg::Matrix osgJointRelParent = jointMT * osg::Matrix::inverse(parentMT);
 
     btTransform tmJointRelParent = osgbCollision::asBtTransform(osgJointRelParent);
     btTransform tmJointRelChild = osgbCollision::asBtTransform(m_osgMT->getMatrix());
 
-	m_btDistance = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), tmJointRelParent, tmJointRelChild, true); 
+	m_btDistance = new btGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), tmJointRelParent, tmJointRelChild, true); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btDistance, true);
     m_btDistance->setDbgDrawSize(btScalar(5.f));

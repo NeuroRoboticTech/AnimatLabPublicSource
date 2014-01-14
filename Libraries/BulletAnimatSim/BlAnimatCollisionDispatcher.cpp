@@ -37,8 +37,6 @@ bool	BlAnimatCollisionDispatcher::needsCollision(const btCollisionObject* body0,
 	btAssert(body0);
 	btAssert(body1);
 
-	bool needsCollision = true;
-
 #ifdef BT_DEBUG
 	if (!(m_dispatcherFlags & btCollisionDispatcher::CD_STATIC_STATIC_REPORTED))
 	{
@@ -52,15 +50,18 @@ bool	BlAnimatCollisionDispatcher::needsCollision(const btCollisionObject* body0,
 #endif //BT_DEBUG
 
 	if ((!body0->isActive()) && (!body1->isActive()))
-		needsCollision = false;
+		return false;
 	else if (!body0->checkCollideWith(body1))
-		needsCollision = false;
+		return false;
 	
     BlBulletData *lpData1 = (BlBulletData *) body0->getUserPointer();
     BlBulletData *lpData2 = (BlBulletData *) body1->getUserPointer();
 
     if(lpData1 && lpData2)
     {
+        //if(lpData1->m_bExclusionProcessing || lpData2->m_bExclusionProcessing)  //Testing only
+        //    lpData1 = lpData1;
+
         if(lpData1->m_bExclusionProcessing && lpData1->m_lpBody && lpData2->m_lpBody && !lpData1->m_lpBody->NeedCollision(lpData2->m_lpBody))
            return false;
 
@@ -68,7 +69,7 @@ bool	BlAnimatCollisionDispatcher::needsCollision(const btCollisionObject* body0,
            return false;
     }
 
-	return needsCollision ;
+	return true ;
 
 }
 //

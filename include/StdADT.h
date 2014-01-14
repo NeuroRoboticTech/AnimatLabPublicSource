@@ -162,6 +162,37 @@ public:
 
 template <class T>
 // the linked list class
+class CStdCircularArray : public CStdArray<T>
+{
+protected:
+    int m_iCurrentPos;
+
+public:
+	CStdCircularArray() 
+    {
+        m_iCurrentPos = 0;
+    };
+
+	virtual ~CStdCircularArray() {};
+
+    virtual int CurrentPos() {return m_iCurrentPos;}
+
+    virtual void AddEnd(T newNum)
+    {
+        (*this)[m_iCurrentPos] = newNum;
+	    m_iCurrentPos++;
+	    m_iCurrentPos%=this->GetSize();
+    }
+
+    T GetAt(int iPos)
+    {
+        return (*this)[(m_iCurrentPos+iPos)%this->GetSize()];
+    }
+};
+
+
+template <class T>
+// the linked list class
 class CStdPtrDeque : public std::deque<T*>
 {
 

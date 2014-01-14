@@ -24,6 +24,10 @@ BlJoint::BlJoint()
     m_lpVsParent = NULL;
 	m_lpVsChild = NULL;
     m_lpVsSim = NULL;
+    m_lpBlParent = NULL;
+    m_lpBlChild = NULL;
+    m_btParent = NULL;
+    m_btChild = NULL;
 
     m_fltPrevBtJointPos = 0;
     m_fltPrevJointPos = 0;

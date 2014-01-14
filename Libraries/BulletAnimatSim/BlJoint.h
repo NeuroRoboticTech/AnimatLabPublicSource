@@ -32,6 +32,12 @@ namespace BulletAnimatSim
             float m_fltPrevBtJointPos;
             float m_fltPrevJointPos;
 
+            BlRigidBody *m_lpBlParent;
+            BlRigidBody *m_lpBlChild;
+
+            btRigidBody *m_btParent;
+            btRigidBody *m_btChild;
+
 			virtual BlSimulator *GetBlSimulator();
 
             virtual void CalculateRelativeJointMatrices(btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
@@ -40,6 +46,12 @@ namespace BulletAnimatSim
 		public:
 			BlJoint();
 			virtual ~BlJoint();
+
+            virtual BlRigidBody *GetBlParent() {return m_lpBlParent;};
+            virtual BlRigidBody *GetBlChild() {return m_lpBlChild;};
+
+            virtual btRigidBody *GetBtParent() {return m_btParent;};
+            virtual btRigidBody *GetBtChild() {return m_btChild;};
 
 			virtual void DeletePhysics(bool bIncludeChildren);
 

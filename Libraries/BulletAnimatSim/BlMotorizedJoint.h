@@ -15,6 +15,7 @@ namespace BulletAnimatSim
 
 			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
+            virtual void ApplyMotorAssist() {};
 
 		public:
 			BlMotorizedJoint();
