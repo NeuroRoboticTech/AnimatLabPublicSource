@@ -246,7 +246,7 @@ void BlRigidBody::CreateSensorPart()
 
         lpSim->DynamicsWorld()->addCollisionObject( m_btCollisionObject, AnimatCollisionTypes::CONTACT_SENSOR, ALL_COLLISIONS );
 
-        int iFlags = m_btCollisionObject->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK;
+        int iFlags = m_btCollisionObject->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK | btCollisionObject::CF_NO_CONTACT_RESPONSE;
         m_btCollisionObject->setCollisionFlags(iFlags);
 
         //Disable collisions between this sensor part and its parent manually. For some reason this is not
