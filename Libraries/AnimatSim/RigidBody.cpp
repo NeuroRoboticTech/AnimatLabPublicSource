@@ -111,6 +111,12 @@ try
 
     //Remove this from the list of extra data parts if it is on it.
     m_lpSim->RemoveFromExtractExtraData(this);
+
+    //If we are not shutting down then we need to remove any references to this object
+    //that are located in other parts collision exclusion lists. If we are shutting down
+    // then it does not matter, so skip it to prevent potential exceptions.
+    if(!m_lpSim->ShuttingDown())
+        RemoveCollisionExclusions();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, false, true);}
@@ -1313,6 +1319,29 @@ bool RigidBody::FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lItemNotFound, Al_Err_strItemNotFound, "Exclusion List Body Part: " + lpBody->ID());
 
 	return false;
+}
+
+/**
+ \brief Called by the desctructor. It removes this object from all other collision exclusion lists.
+ This prevents any attempt to reference this deleted object while looping through collision exclusions.
+
+ \author    David Cofer
+ \date  1/14/2014
+ */
+void RigidBody::RemoveCollisionExclusions()
+{
+    for (std::unordered_set<RigidBody *>::iterator itr = m_aryExcludeCollisionSet.begin(); itr != m_aryExcludeCollisionSet.end(); ++itr) 
+    {
+        RigidBody *lpBody = *(itr);
+
+       if(lpBody->FindCollisionExclusionBody(this, false))
+       {
+           lpBody->m_aryExcludeCollisionSet.erase(this);   
+
+           if(lpBody->m_lpPhysicsBody)
+		        lpBody->m_lpPhysicsBody->Physics_DisableCollision(this);
+       }
+    }
 }
 
 /**

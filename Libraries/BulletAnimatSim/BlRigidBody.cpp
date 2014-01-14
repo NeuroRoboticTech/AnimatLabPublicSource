@@ -510,7 +510,7 @@ void BlRigidBody::DeleteCollisionGeometry()
 
 void BlRigidBody::DeletePhysics(bool bIncludeChildren)
 {
-	if(m_btPart)
+	if(m_btPart || m_btCollisionObject)
 	{
         //First delete all physics associated with this part.
         //We need to delete all the constrains attached to this part, and then the part itself.

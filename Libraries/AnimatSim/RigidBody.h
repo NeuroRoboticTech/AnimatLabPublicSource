@@ -213,6 +213,8 @@ namespace AnimatSim
 			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling, bool bPhysicsCallback);
 			virtual void Freeze(bool bVal, bool bPhysicsCallback);
 
+            virtual void RemoveCollisionExclusions();
+
 		public:
 			RigidBody();
 			virtual ~RigidBody();

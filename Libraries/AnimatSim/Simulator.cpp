@@ -1943,6 +1943,7 @@ This will destroy all organisms and strcutres defined within the simulation
 **/
 void Simulator::Reset()
 {
+	m_bShuttingDown = true;
 	m_fltTime = 0;
 	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
@@ -2065,6 +2066,7 @@ void Simulator::Reset()
 	//Reference pointers only
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
+	m_bShuttingDown = false;
 }
 
 /**
