@@ -1250,13 +1250,13 @@ void RigidBody::EnableCollision(RigidBody *lpBody)
         m_aryExcludeCollisionSet.erase(lpBody);
 
     if(lpBody->FindCollisionExclusionBody(this, false))
-        lpBody->m_aryExcludeCollisionSet.erase(lpBody);
+        lpBody->m_aryExcludeCollisionSet.erase(this);
 
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_EnableCollision(lpBody);
 
 	if(lpBody->m_lpPhysicsBody)
-		lpBody->m_lpPhysicsBody->Physics_EnableCollision(lpBody);
+		lpBody->m_lpPhysicsBody->Physics_EnableCollision(this);
 }
 
 /**
@@ -1287,7 +1287,7 @@ void RigidBody::DisableCollision(RigidBody *lpBody)
 		m_lpPhysicsBody->Physics_DisableCollision(lpBody);
 
 	if(lpBody->m_lpPhysicsBody)
-		lpBody->m_lpPhysicsBody->Physics_DisableCollision(lpBody);
+		lpBody->m_lpPhysicsBody->Physics_DisableCollision(this);
 }
 
 /**
