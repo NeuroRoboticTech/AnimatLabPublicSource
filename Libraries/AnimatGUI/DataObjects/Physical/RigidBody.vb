@@ -1510,7 +1510,7 @@ Namespace DataObjects.Physical
             'need to get the estimated mass and save that out instead of the mass shown. The reason is that the mass for
             'static children for vortex is shown as 0 and added to the mass of the parent. If we try and convert this project
             'then it will load up in bullet incorrectly with a mass of 0, so we use the estimated masses.
-            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild) Then
+            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild OrElse Me.Mass.ActualValue = 0) Then
                 Dim snMass As ScaledNumber = DirectCast(m_snMass.Clone(m_snMass.Parent, False, Me), ScaledNumber)
                 snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("EstimatedMass")
                 snMass.SaveData(oXml, "Mass")
@@ -1726,7 +1726,7 @@ Namespace DataObjects.Physical
 
                 'Now, if it needs a joint then select the joint type to use
                 If rbNew.UsesAJoint Then
-                    If Not rbNew.SelectJointType(vPos, vNorm) Then
+                    If Not rbNew.SelectJointType(Me, vPos, vNorm) Then
                         Return False
                     End If
                 End If
@@ -1786,13 +1786,14 @@ Namespace DataObjects.Physical
             'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.AddBodyPartEvent(doStruct.BodyEditor, doStruct, Me, rbChildBody))
         End Sub
 
-        Protected Overridable Function SelectJointType(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Protected Overridable Function SelectJointType(ByVal doParent As RigidBody, ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
 
             'First Select the new rigid body part type
             Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
             frmSelectParts.PartType = GetType(Physical.Joint)
             frmSelectParts.IsRoot = False
             frmSelectParts.ParentBody = Me
+            frmSelectParts.ChildBody = doParent
 
             If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 

@@ -184,6 +184,7 @@ Namespace Forms.BodyPlan
         Protected m_bHasDynamics As Boolean = True
         Protected m_bDefaultAddGraphics As Boolean = True
         Protected m_rbParentBody As DataObjects.Physical.RigidBody
+        Protected m_rbChildBody As DataObjects.Physical.RigidBody
 
 #End Region
 
@@ -222,6 +223,15 @@ Namespace Forms.BodyPlan
             End Get
             Set(ByVal value As DataObjects.Physical.RigidBody)
                 m_rbParentBody = value
+            End Set
+        End Property
+
+        Public Property ChildBody() As DataObjects.Physical.RigidBody
+            Get
+                Return m_rbChildBody
+            End Get
+            Set(ByVal value As DataObjects.Physical.RigidBody)
+                m_rbChildBody = value
             End Set
         End Property
 
@@ -264,23 +274,27 @@ Namespace Forms.BodyPlan
                     If Util.IsTypeOf(doPart.GetType(), m_tpPartType, False) AndAlso Not doPart.GetType().IsAbstract AndAlso doPart.AllowUserAdd Then
                         If Not m_bIsRigidBody OrElse (m_bIsRigidBody AndAlso Not m_bIsRoot) OrElse (m_bIsRigidBody AndAlso m_bIsRoot AndAlso doPart.HasDynamics) Then
                             If m_rbParentBody Is Nothing OrElse Util.Application.CanAddPartAsChild(m_rbParentBody.GetType, doPart.GetType) Then
-                                If Not doPart.ButtonImage Is Nothing Then
-                                    m_mgrIconImages.AddImage(doPart.ButtonImageName, doPart.ButtonImage)
-                                    If doPart.ButtonImage.Width > iMaxWidth Then iMaxWidth = doPart.ButtonImage.Width
-                                    If doPart.ButtonImage.Height > iMaxHeight Then iMaxHeight = doPart.ButtonImage.Height
+                                If Util.IsTypeOf(m_tpPartType, GetType(Physical.RigidBody)) OrElse (Util.IsTypeOf(m_tpPartType, GetType(Physical.Joint)) AndAlso _
+                                                                                                    Not m_rbChildBody Is Nothing AndAlso _
+                                                                                                    Util.Application.CanAddPartAsChild(m_rbChildBody.GetType, doPart.GetType)) Then
+                                    If Not doPart.ButtonImage Is Nothing Then
+                                        m_mgrIconImages.AddImage(doPart.ButtonImageName, doPart.ButtonImage)
+                                        If doPart.ButtonImage.Width > iMaxWidth Then iMaxWidth = doPart.ButtonImage.Width
+                                        If doPart.ButtonImage.Height > iMaxHeight Then iMaxHeight = doPart.ButtonImage.Height
+                                    End If
+
+                                    Dim liItem As New ListViewItem
+                                    liItem.Text = doPart.BodyPartName
+
+                                    If Not doPart.ButtonImage Is Nothing Then
+                                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.ButtonImageName)
+                                    Else
+                                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
+                                    End If
+
+                                    liItem.Tag = doPart
+                                    aryList.Add(liItem)
                                 End If
-
-                                Dim liItem As New ListViewItem
-                                liItem.Text = doPart.BodyPartName
-
-                                If Not doPart.ButtonImage Is Nothing Then
-                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.ButtonImageName)
-                                Else
-                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
-                                End If
-
-                                liItem.Tag = doPart
-                                aryList.Add(liItem)
                             End If
                         End If
                     End If
