@@ -470,6 +470,9 @@
     <Compile Include="DataObjects\Physical\PhysicalStructure.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Physical\PhysicsEngine.vb" />
+    <Compile Include="DataObjects\Physical\PhysicsEngines\BulletPhysicsEngine.vb" />
+    <Compile Include="DataObjects\Physical\PhysicsEngines\VortexPhysicsEngine.vb" />
     <Compile Include="DataObjects\Physical\ReceptiveField.vb" />
     <Compile Include="DataObjects\Physical\ReceptiveFieldPair.vb">
       <SubType>Code</SubType>
