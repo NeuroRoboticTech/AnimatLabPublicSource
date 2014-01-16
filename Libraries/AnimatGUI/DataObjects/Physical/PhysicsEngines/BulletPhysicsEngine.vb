@@ -59,6 +59,12 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property UseHydrodynamicsMagnus() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

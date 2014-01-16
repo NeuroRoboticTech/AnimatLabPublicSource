@@ -39,8 +39,8 @@ Namespace Forms
         Public Sub SetPhysics(ByVal strPhysics As String)
 
             Dim iIdx As Integer = 0
-            For Each strItem As String In cboPhysicsEngine.Items
-                If strItem = strPhysics Then
+            For Each doEngine As DataObjects.Physical.PhysicsEngine In cboPhysicsEngine.Items
+                If doEngine.Name = strPhysics Then
                     cboPhysicsEngine.SelectedIndex = iIdx
                     Return
                 End If
@@ -62,20 +62,14 @@ Namespace Forms
                 m_btnOk = Me.btnOk
                 m_btnCancel = Me.btnCancel
 
-                lblCurrentPhysics.Text = "Current Physics Engine: " & Util.Application.SimPhysicsSystem
+                lblCurrentPhysics.Text = "Current Physics Engine: " & Util.Application.Physics.Name
 
                 cboPhysicsEngine.Items.Clear()
-                If Not m_bShowAllPhysicsOptions Then
-                    If Util.Application.SimPhysicsSystem = "Bullet" Then
-                        cboPhysicsEngine.Items.Add("Vortex")
-                    Else
-                        cboPhysicsEngine.Items.Add("Bullet")
+                For Each doEngine As DataObjects.Physical.PhysicsEngine In Util.Application.PhysicsEngines
+                    If Util.Application.Physics.Name <> doEngine.Name OrElse (Util.Application.Physics.Name = doEngine.Name AndAlso m_bShowAllPhysicsOptions) Then
+                        cboPhysicsEngine.Items.Add(doEngine)
                     End If
-                Else
-                    cboPhysicsEngine.Items.Add("Bullet")
-                    cboPhysicsEngine.Items.Add("Vortex")
-                End If
-
+                Next
                 cboPhysicsEngine.SelectedIndex = 0
 
             Catch ex As System.Exception

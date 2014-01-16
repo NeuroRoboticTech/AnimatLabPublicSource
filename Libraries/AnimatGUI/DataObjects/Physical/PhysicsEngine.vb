@@ -25,6 +25,7 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property AllowPhysicsSubsteps() As Boolean
         Public MustOverride ReadOnly Property ShowSeparateConstraintLimits() As Boolean
         Public MustOverride ReadOnly Property AllowConstraintRelaxation() As Boolean
+        Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
 
 #End Region
 

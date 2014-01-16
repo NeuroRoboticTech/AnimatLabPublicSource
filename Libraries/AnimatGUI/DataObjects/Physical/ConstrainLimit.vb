@@ -265,7 +265,7 @@ Namespace DataObjects.Physical
                                             "for the motion around the joint.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                If Util.Application.ShowSeparateConstraintLimits Then
+                If Util.Application.Physics.ShowSeparateConstraintLimits Then
                     'If we are not showing constraint limits separately then we do not show restitution.
                     pbNumberBag = m_snRestitution.Properties
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), strExtraPropName & "Restitution", _

@@ -405,7 +405,7 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint Type", Me.Type.GetType(), "Type", _
                                         "Part Properties", "Type of joint.", Me.Type, True))
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 If Not m_doRelaxation1 Is Nothing Then
                     pbNumberBag = m_doRelaxation1.Properties
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation1.Name, pbNumberBag.GetType(), "Relaxation1", _
@@ -485,7 +485,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             MyBase.InitializeSimulationReferences(bShowError)
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 If Not m_doRelaxation1 Is Nothing Then m_doRelaxation1.InitializeSimulationReferences(bShowError)
                 If Not m_doRelaxation2 Is Nothing Then m_doRelaxation2.InitializeSimulationReferences(bShowError)
                 If Not m_doRelaxation3 Is Nothing Then m_doRelaxation3.InitializeSimulationReferences(bShowError)
@@ -505,7 +505,7 @@ Namespace DataObjects.Physical
             m_snSize.LoadData(oXml, "Size")
             m_bEnableLimts = oXml.GetChildBool("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 If Not m_doRelaxation1 Is Nothing AndAlso oXml.FindChildElement("Relaxation1", False) Then
                     m_doRelaxation1.LoadData(oXml, "Relaxation1")
                 End If
@@ -543,7 +543,7 @@ Namespace DataObjects.Physical
             m_snSize.SaveData(oXml, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 If Not m_doRelaxation1 Is Nothing Then
                     m_doRelaxation1.SaveData(oXml, "Relaxation1")
                 End If
@@ -580,7 +580,7 @@ Namespace DataObjects.Physical
             m_snSize.SaveSimulationXml(oXml, Me, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 If Not m_doRelaxation1 Is Nothing Then
                     m_doRelaxation1.SaveSimulationXml(oXml, Me, "Relaxation1")
                 End If

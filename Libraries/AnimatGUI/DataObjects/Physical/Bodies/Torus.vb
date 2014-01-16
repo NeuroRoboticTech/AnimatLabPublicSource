@@ -53,7 +53,7 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides ReadOnly Property AllowUserAdd() As Boolean
             Get
                 'Torus is not currently supported in the bullet physics engine.
-                If Util.Application.SimPhysicsSystem = "Bullet" Then
+                If Util.Application.Physics.Name = "Bullet" Then
                     Return False
                 Else
                     Return True

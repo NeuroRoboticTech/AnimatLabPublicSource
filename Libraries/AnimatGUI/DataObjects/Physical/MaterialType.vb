@@ -44,11 +44,11 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Shared Function CreateMaterialType(ByRef doParent As AnimatGUI.Framework.DataObject, ByVal bCut As Boolean, ByRef doRoot As AnimatGUI.Framework.DataObject) As MaterialType
-            If m_aryMaterialTypesPerPhysics.ContainsKey(Util.Application.SimPhysicsSystem) Then
-                Dim oMatType As MaterialType = DirectCast(m_aryMaterialTypesPerPhysics.Item(Util.Application.SimPhysicsSystem), MaterialType)
+            If m_aryMaterialTypesPerPhysics.ContainsKey(Util.Application.Physics.Name) Then
+                Dim oMatType As MaterialType = DirectCast(m_aryMaterialTypesPerPhysics.Item(Util.Application.Physics.Name), MaterialType)
                 Return DirectCast(oMatType.Clone(doParent, bCut, doRoot), MaterialType)
             Else
-                Throw New System.Exception("No material type for the physics engine '" & Util.Application.SimPhysicsSystem & "' has been registered.")
+                Throw New System.Exception("No material type for the physics engine '" & Util.Application.Physics.Name & "' has been registered.")
             End If
         End Function
 

@@ -48,7 +48,7 @@ Namespace DataObjects.Physical.Joints
         Public Overrides ReadOnly Property AllowUserAdd() As Boolean
             Get
                 'Distance joint is not currently supported in the bullet physics engine.
-                If Util.Application.SimPhysicsSystem = "Bullet" Then
+                If Util.Application.Physics.Name = "Bullet" Then
                     Return False
                 Else
                     Return True
@@ -67,7 +67,7 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "WorldPositionX"
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 m_doRelaxation1 = New ConstraintRelaxation(Me, "Distance Displacement", "Sets the relaxation for the distance constraint.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
             End If
 

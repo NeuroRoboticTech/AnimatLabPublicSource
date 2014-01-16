@@ -168,7 +168,7 @@ Namespace DataObjects.Physical.Bodies
         Protected Overrides Sub UpdateMassVolumeDensity()
 
             If Not Me.SimInterface Is Nothing Then
-                If Util.Application.UseMassForRigidBodyDefinitions Then
+                If Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                     'Do not reset density for fluid planes here.
                     'm_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
                     m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")

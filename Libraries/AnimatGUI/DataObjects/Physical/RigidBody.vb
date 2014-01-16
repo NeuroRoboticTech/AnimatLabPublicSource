@@ -159,7 +159,7 @@ Namespace DataObjects.Physical
 
                 'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
                 'what we are using as a key param based on application settings.
-                If Not Util.Application.UseMassForRigidBodyDefinitions Then
+                If Not Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                     Me.SetSimData("Density", Value.ToString, True)
                     m_snDensity.CopyData(Value)
                     UpdateMassVolumeDensity()
@@ -194,7 +194,7 @@ Namespace DataObjects.Physical
 
                 'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
                 'what we are using as a key param based on application settings.
-                If Util.Application.UseMassForRigidBodyDefinitions Then
+                If Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                     Me.SetSimData("Mass", Value.ToString, True)
                     m_snMass.CopyData(Value)
                     UpdateMassVolumeDensity()
@@ -631,7 +631,7 @@ Namespace DataObjects.Physical
         Protected Overridable Sub UpdateMassVolumeDensity()
 
             If Not Me.SimInterface Is Nothing Then
-                If Util.Application.UseMassForRigidBodyDefinitions Then
+                If Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                     'If the mass was loaded in as less than zero then we need to get it again from the simulation.
                     If m_snMass.ActualValue < 0 Then
                         m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
@@ -646,7 +646,7 @@ Namespace DataObjects.Physical
             End If
 
             'If this is a static joint then update the parent body mass volume density as well.
-            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso Me.HasStaticJoint Then
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions AndAlso Me.HasStaticJoint Then
                 If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody), False) Then
                     Dim doParentBody As RigidBody = DirectCast(Me.Parent, RigidBody)
                     If Not doParentBody Is Nothing Then
@@ -985,7 +985,7 @@ Namespace DataObjects.Physical
                                        "applied to the buoyancy force which accounts for the fact that a given volume might actually have holes " & _
                                        "or concavity in it which would affect the buoyancy force on the object.", m_fltBuoyancyScale))
 
-                    If Util.Application.SimPhysicsSystem = "Vortex" Then
+                    If Util.Application.Physics.UseHydrodynamicsMagnus Then
                         pbNumberBag = m_svLinearDrag.Properties
                         propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "LinearDrag", _
                                                     "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
@@ -1026,7 +1026,7 @@ Namespace DataObjects.Physical
                                                 "Mass Properties", "Sets the density of this body part.", pbNumberBag, _
                                                 "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                    If Util.Application.UseMassForRigidBodyDefinitions OrElse Not Me.HasStaticJoint Then
+                    If Util.Application.Physics.UseMassForRigidBodyDefinitions OrElse Not Me.HasStaticJoint Then
                         pbNumberBag = m_snMass.Properties
                         propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
                                                     "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
@@ -1394,7 +1394,7 @@ Namespace DataObjects.Physical
             m_snDensity.LoadData(oXml, "Density")
             If oXml.FindChildElement("Mass", False) Then
                 m_snMass.LoadData(oXml, "Mass")
-            ElseIf Util.Application.UseMassForRigidBodyDefinitions Then
+            ElseIf Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                 'If we could not load the mass in and we need that for the definition then lets save
                 'that here temporarrily as -1 to let the sim know this is invalid and needs to be calculated
                 'directly. Then we will reload it from the simulation later.
@@ -1510,7 +1510,7 @@ Namespace DataObjects.Physical
             'need to get the estimated mass and save that out instead of the mass shown. The reason is that the mass for
             'static children for vortex is shown as 0 and added to the mass of the parent. If we try and convert this project
             'then it will load up in bullet incorrectly with a mass of 0, so we use the estimated masses.
-            If Not Util.Application.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild OrElse Me.Mass.ActualValue = 0) Then
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild OrElse Me.Mass.ActualValue = 0) Then
                 Dim snMass As ScaledNumber = DirectCast(m_snMass.Clone(m_snMass.Parent, False, Me), ScaledNumber)
                 snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("EstimatedMass")
                 snMass.SaveData(oXml, "Mass")
@@ -1860,7 +1860,7 @@ Namespace DataObjects.Physical
 
             Dim iDistDiff As Integer = CInt(Util.Environment.DisplayDistanceUnits) - CInt(Util.Environment.DisplayDistanceUnits(ePrevDistance))
 
-            If Not Util.Application.UseMassForRigidBodyDefinitions Then
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions Then
                 Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
 
                 Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)

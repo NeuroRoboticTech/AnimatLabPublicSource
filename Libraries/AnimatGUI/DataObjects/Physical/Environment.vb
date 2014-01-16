@@ -1036,7 +1036,7 @@ Namespace DataObjects.Physical
                                         "Settings", "This is the increment that is taken between each time step of the physics simulator. ", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            If Util.Application.AllowPhysicsSubsteps Then
+            If Util.Application.Physics.AllowPhysicsSubsteps Then
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Substeps", Me.PhysicsSubsteps.GetType(), "PhysicsSubsteps", _
                                             "Settings", "Allows you to specify the number of substeps that the physics engine will iterate through between each physics step.", Me.PhysicsSubsteps))
             End If
@@ -1092,7 +1092,7 @@ Namespace DataObjects.Physical
                                         "Mouse Spring Settings", "Sets the damping of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            If Util.Application.SimPhysicsSystem = "Vortex" Then
+            If Util.Application.Physics.AllowPhysicsSubsteps <> True Then
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stability Scale", m_fltStabilityScale.GetType(), "StabilityScale", _
                                             "World Stability", "Scales the stability parameters linearly using this scale factor.", m_fltStabilityScale))
             End If

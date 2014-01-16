@@ -168,6 +168,7 @@ Namespace DataObjects.Physical.Bodies
 
             Util.Application.AddPartTypeExclusion(Me.GetType, Me.GetType)
             Util.Application.AddPartTypeExclusion(Me.GetType, GetType(Plane))
+            Util.Application.AddPartTypeExclusion(Me.GetType, GetType(Joints.StaticJoint))
 
             ''A plane can only be added to a terrain or plane type.
             'For Each bpBody As BodyPart In Util.Application.BodyPartTypes

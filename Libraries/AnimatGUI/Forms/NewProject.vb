@@ -127,7 +127,6 @@ Namespace Forms
             '
             Me.cboPhysicsEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboPhysicsEngine.FormattingEnabled = True
-            Me.cboPhysicsEngine.Items.AddRange(New Object() {"Vortex", "Bullet"})
             Me.cboPhysicsEngine.Location = New System.Drawing.Point(8, 116)
             Me.cboPhysicsEngine.Name = "cboPhysicsEngine"
             Me.cboPhysicsEngine.Size = New System.Drawing.Size(288, 21)
@@ -192,8 +191,8 @@ Namespace Forms
         Public Sub SetPhysics(ByVal strPhysics As String)
 
             Dim iIdx As Integer = 0
-            For Each strItem As String In cboPhysicsEngine.Items
-                If strItem = strPhysics Then
+            For Each doEngine As DataObjects.Physical.PhysicsEngine In cboPhysicsEngine.Items
+                If doEngine.Name = strPhysics Then
                     cboPhysicsEngine.SelectedIndex = iIdx
                     Return
                 End If
@@ -295,10 +294,23 @@ Namespace Forms
 
                 txtLocation.Text = Util.Application.DefaultNewFolder
 
-                If Not m_bAllowUserToChoosePhysicsSystem Then
-                    cboPhysicsEngine.Enabled = False
-                    cboPhysicsEngine.SelectedText = Util.Application.SimPhysicsSystem
+                cboPhysicsEngine.Items.Clear()
+                If m_bAllowUserToChoosePhysicsSystem Then
+                    Dim iIdx As Integer = 0
+                    Dim iSelIdx As Integer = 0
+                    For Each doEngine As DataObjects.Physical.PhysicsEngine In Util.Application.PhysicsEngines
+                        cboPhysicsEngine.Items.Add(doEngine)
+                        If doEngine.Name = Util.Application.Physics.Name Then
+                            iSelIdx = iIdx
+                        End If
+                        iIdx = iIdx + 1
+                    Next
+
+                    cboPhysicsEngine.Enabled = True
+                    cboPhysicsEngine.SelectedIndex = iSelIdx
                 Else
+                    cboPhysicsEngine.Enabled = False
+                    cboPhysicsEngine.Items.Add(Util.Application.Physics)
                     cboPhysicsEngine.SelectedIndex = 0
                 End If
 

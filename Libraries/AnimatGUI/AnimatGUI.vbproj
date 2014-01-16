@@ -233,6 +233,7 @@
     <Compile Include="Collections\Macros.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\PhysicsEngines.vb" />
     <Compile Include="Collections\ReceptiveFieldPairs.vb" />
     <Compile Include="Collections\ReceptiveFields.vb" />
     <Compile Include="Collections\RigidBodies.vb">

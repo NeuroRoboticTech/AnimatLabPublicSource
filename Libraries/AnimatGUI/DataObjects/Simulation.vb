@@ -98,7 +98,7 @@ Namespace DataObjects
 
         Public ReadOnly Property AnimatModule() As String
             Get
-                Return Util.Application.SimPhysicsSystem & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return Util.Application.Physics.Name & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 
@@ -212,7 +212,7 @@ Namespace DataObjects
 
         Public Overridable ReadOnly Property SimPhysicsSystem() As String
             Get
-                Return Util.Application.SimPhysicsSystem
+                Return Util.Application.Physics.Name
             End Get
         End Property
 

@@ -93,7 +93,7 @@ Namespace DataObjects.Physical.Bodies
                     UpdateMassVolumeDensity()
 
                     'If dynamic triangle meshes are not allowed disable it here.
-                    If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then
+                    If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then
                         Me.Freeze = True
                     End If
 
@@ -134,7 +134,7 @@ Namespace DataObjects.Physical.Bodies
                     UpdateMassVolumeDensity()
 
                     'If dynamic triangle meshes are not allowed disable it here.
-                    If Not Util.Application.AllowDynamicTriangleMesh AndAlso value = enumMeshType.Triangular Then
+                    If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso value = enumMeshType.Triangular Then
                         Me.Freeze = True
                     End If
 
@@ -166,7 +166,7 @@ Namespace DataObjects.Physical.Bodies
                 Return m_bFreeze
             End Get
             Set(ByVal Value As Boolean)
-                If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular AndAlso Value = False Then
+                If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular AndAlso Value = False Then
                     Throw New System.Exception("Dynamic triangular meshes are not allowed for this physics engine.")
                 End If
 
@@ -276,7 +276,7 @@ Namespace DataObjects.Physical.Bodies
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
             'Make freeze readonly if the type is triangular mesh and dynamic meshes are not allowed for this physics engine.
-            If Not Util.Application.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then '
+            If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then '
                 If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
                                  "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze, True))

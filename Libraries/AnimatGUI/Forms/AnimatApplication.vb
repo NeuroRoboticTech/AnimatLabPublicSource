@@ -17,6 +17,7 @@ Imports AnimatGUI.Framework
 Imports System.Reflection
 Imports System.Configuration
 Imports System.Runtime.InteropServices
+Imports System.Xml
 
 Namespace Forms
 
@@ -1036,7 +1037,7 @@ Namespace Forms
             Me.ConvertPhysicsEngineToolStripMenuItem.Name = "ConvertPhysicsEngineToolStripMenuItem"
             Me.ConvertPhysicsEngineToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.ConvertPhysicsEngineToolStripMenuItem.Text = "Convert Physics Engine"
-            Me.ConvertPhysicsEngineToolStripMenuItem.Enabled = False
+            Me.ConvertPhysicsEngineToolStripMenuItem.Enabled = True
             '
             'AnimatApplication
             '
@@ -1126,6 +1127,7 @@ Namespace Forms
         Protected m_aryMacros As New Collections.Macros(Nothing)
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
         Protected m_aryProjectMigrations As New Hashtable()
+        Protected m_aryPhysicsEngines As New Collections.PhysicsEngines(Nothing)
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1212,7 +1214,7 @@ Namespace Forms
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
-        Protected m_strSimPhysicsSystem As String = "Vortex" '"Bullet"
+        Protected m_doPhysics As DataObjects.Physical.PhysicsEngine = New DataObjects.Physical.PhysicsEngines.VortexPhysicsEngine(Nothing)
 
 #End Region
 
@@ -1282,65 +1284,15 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property SimPhysicsSystem() As String
+        Public Overridable ReadOnly Property Physics() As DataObjects.Physical.PhysicsEngine
             Get
-                Return m_strSimPhysicsSystem
+                Return m_doPhysics
             End Get
         End Property
 
         Public Overridable ReadOnly Property SimVCVersion() As String
             Get
                 Return m_strSimVCVersion
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property UseMassForRigidBodyDefinitions() As Boolean
-            Get
-                If SimPhysicsSystem = "Bullet" Then
-                    Return True
-                Else
-                    Return False
-                End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property AllowDynamicTriangleMesh() As Boolean
-            Get
-                If SimPhysicsSystem = "Bullet" Then
-                    Return False
-                Else
-                    Return True
-                End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property AllowPhysicsSubsteps() As Boolean
-            Get
-                If SimPhysicsSystem = "Bullet" Then
-                    Return True
-                Else
-                    Return False
-                End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property ShowSeparateConstraintLimits() As Boolean
-            Get
-                If SimPhysicsSystem = "Bullet" Then
-                    Return False
-                Else
-                    Return True
-                End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property AllowConstraintRelaxation() As Boolean
-            Get
-                If SimPhysicsSystem = "Bullet" Then
-                    Return False
-                Else
-                    Return True
-                End If
             End Get
         End Property
 
@@ -1647,6 +1599,12 @@ Namespace Forms
         Public Overridable ReadOnly Property ToolPlugins() As Collections.Tools
             Get
                 Return m_aryToolPlugins
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property PhysicsEngines() As Collections.PhysicsEngines
+            Get
+                Return m_aryPhysicsEngines
             End Get
         End Property
 
@@ -2270,6 +2228,7 @@ Namespace Forms
                 m_aryGainTypes.Clear()
                 m_aryMacros.Clear()
                 m_aryExternalStimuli.Clear()
+                m_aryPhysicsEngines.Clear()
 
                 Util.DisableDirtyFlags = True
 
@@ -2441,10 +2400,17 @@ Namespace Forms
                                     m_aryProjectMigrations.Add(doConv.ConvertFrom, doConv)
                                 End If
                             ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.MaterialType), True) Then
-                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.MaterialType")
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.MaterialType")
                                 Dim doConv As DataObjects.Physical.MaterialType = CreateMaterialType(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
                                     doConv.RegisterMaterialType()
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.PhysicsEngine), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.PhysicsEngine")
+                                Dim doConv As DataObjects.Physical.PhysicsEngine = CreatePhysicsEngine(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryPhysicsEngines.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
                                 End If
                             End If
                         Next
@@ -2661,6 +2627,38 @@ Namespace Forms
                 End If
             End Try
 
+        End Function
+
+        Protected Overridable Function CreatePhysicsEngine(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Physical.PhysicsEngine
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Physical.PhysicsEngine = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Physical.PhysicsEngine)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreatePhysicsEngine: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreatePhysicsEngine(ByVal strName As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.Physical.PhysicsEngine
+
+            For Each doEngine As DataObjects.Physical.PhysicsEngine In m_aryPhysicsEngines
+                If doEngine.Name.ToUpper = strName.ToUpper Then
+                    Dim doRetEngine As DataObjects.Physical.PhysicsEngine = DirectCast(doEngine.Clone(Nothing, False, Nothing), DataObjects.Physical.PhysicsEngine)
+                    Return doRetEngine
+                End If
+            Next
+
+            If bThrowException Then
+                Throw New System.Exception("No physics engine with the name '" & strName & "' was found in the plug-in modules.")
+            End If
+
+            Return Nothing
         End Function
 
         Protected Overridable Sub CreateBehavioralPanels()
@@ -3563,7 +3561,7 @@ Namespace Forms
                     Me.Logger.TraceLevel = eLogLevel
                 End If
 
-                m_strSimPhysicsSystem = oXml.GetChildString("Physics", "Vortex")
+                m_doPhysics = CreatePhysicsEngine(oXml.GetChildString("Physics", "Vortex"))
 
                 Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
                 If m_strSimulationFile.Trim.Length > 0 Then
@@ -3715,7 +3713,7 @@ Namespace Forms
                 oXml.AddChildElement("SimulationFile", Me.SimulationFile)
                 oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
                 oXml.AddChildElement("Version", Me.XmlVersion)
-                oXml.AddChildElement("Physics", Me.SimPhysicsSystem)
+                oXml.AddChildElement("Physics", Me.Physics.Name)
 
                 m_doSimulation.SaveData(oXml)
 
@@ -3794,15 +3792,6 @@ Namespace Forms
 
             m_aryDeleteAfterLoad.Clear()
         End Sub
-
-        Protected Overridable Function CheckValidPhysicsEngine(ByVal strPhysics As String) As String
-
-            If strPhysics = "Bullet" OrElse strPhysics = "Vortex" Then
-                Return strPhysics
-            Else
-                Throw New System.Exception("Invalid physics engine specified: " & strPhysics)
-            End If
-        End Function
 
 #End Region
 
@@ -5605,7 +5594,11 @@ Namespace Forms
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
                     Me.Title = "AnimatLab " & Me.ProjectName & " Project"
 
-                    m_strSimPhysicsSystem = CheckValidPhysicsEngine(frmNewProject.cboPhysicsEngine.SelectedItem.ToString)
+                    m_doPhysics = DirectCast(frmNewProject.cboPhysicsEngine.SelectedItem, DataObjects.Physical.PhysicsEngine)
+
+                    If m_doPhysics Is Nothing Then
+                        Throw New System.Exception("No physics engine defined in new project dialog.")
+                    End If
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
 
@@ -5751,9 +5744,8 @@ Namespace Forms
                     Util.Environment.CanConvertPhysicsEngine(strConvertTo, aryErrors)
 
                     If aryErrors.Count <= 0 Then
-                        m_strSimPhysicsSystem = strConvertTo
-
                         SaveProject(Me.ProjectPath & Me.ProjectFile)
+                        ConvertPhysicsEngineNode(strConvertTo)
                         LoadProject(Me.ProjectPath & Me.ProjectFile)
                     Else
                         Dim strErrors As String
@@ -5761,7 +5753,7 @@ Namespace Forms
                             strErrors = strErrors & strError & vbCrLf
                         Next
 
-                        Util.ShowMessage("Cannot convert this project from the " & Util.Application.SimPhysicsSystem & " physics engine to use the " & strConvertTo & _
+                        Util.ShowMessage("Cannot convert this project from the " & Util.Application.Physics.Name & " physics engine to use the " & strConvertTo & _
                                                    " Physics engine due to the following errors:" & vbCrLf & vbCrLf & strErrors, "Error converting physics engine", MessageBoxButtons.OK)
                     End If
                 End If
@@ -5769,6 +5761,21 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Sub ConvertPhysicsEngineNode(ByVal strConvertTo As String)
+
+            Dim strProjectFile As String = Me.ProjectPath & Me.ProjectFile
+            Dim xnProjectXml As New Framework.XmlDom
+
+            xnProjectXml.Load(strProjectFile)
+
+            Dim xnProjectNode As XmlNode = xnProjectXml.GetRootNode("Project")
+
+            xnProjectXml.RemoveNode(xnProjectNode, "Physics", False)
+            xnProjectXml.AddNodeValue(xnProjectNode, "Physics", strConvertTo)
+
+            xnProjectXml.Save(strProjectFile)
         End Sub
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
@@ -7121,7 +7128,7 @@ Namespace Forms
 #End Region
 
 
- 
+
     End Class
 
 End Namespace

@@ -62,7 +62,7 @@ Namespace DataObjects.Physical.Joints
             MyBase.New(doParent)
             m_strDescription = ""
 
-            If Util.Application.AllowConstraintRelaxation Then
+            If Util.Application.Physics.AllowConstraintRelaxation Then
                 m_doRelaxation1 = New ConstraintRelaxation(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
                 m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
                 m_doRelaxation3 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
