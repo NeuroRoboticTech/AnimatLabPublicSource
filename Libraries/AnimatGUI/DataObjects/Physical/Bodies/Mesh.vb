@@ -419,15 +419,6 @@ Namespace DataObjects.Physical.Bodies
             Return oXml.Serialize()
         End Function
 
-        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
-            MyBase.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-
-            If strConvertTo = "Bullet" AndAlso Me.IsCollisionObject AndAlso Me.MeshType = enumMeshType.Triangular AndAlso Not Me.Freeze Then
-                aryErrors.Add("Dynamic triangle mesh types are not supported with the Bullet physics engine. Please freeze this part type, or convert it to be convex.")
-            End If
-
-        End Sub
-
 #Region " Events "
 
         Protected Overridable Sub OnScaleValueChanged()

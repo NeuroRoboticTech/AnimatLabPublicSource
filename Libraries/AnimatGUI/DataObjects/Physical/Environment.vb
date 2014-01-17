@@ -1015,16 +1015,6 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
-
-            m_aryOrganisms.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            m_aryStructures.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            m_aryOdorTypes.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            m_aryLights.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            m_aryMaterialTypes.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-
-        End Sub
-
 #End Region
 
 #Region " DataObject Methods "

@@ -36,8 +36,8 @@ Namespace DataObjects
         Protected m_hashJoints As New Hashtable
         Protected m_hashIonChannels As New Hashtable
 
-        Public MustOverride ReadOnly Property ConvertFrom() As Integer
-        Public MustOverride ReadOnly Property ConvertTo() As Integer
+        Public MustOverride ReadOnly Property ConvertFrom() As String
+        Public MustOverride ReadOnly Property ConvertTo() As String
 
         Sub New()
 
@@ -49,7 +49,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Sub ConvertFiles(ByVal strProjectFile As String, ByVal strPhysics As String)
+        Public Overridable Function ConvertFiles(ByVal strProjectFile As String, ByVal strPhysics As String) As Boolean
 
             Try
                 Util.Application.AppIsBusy = True
@@ -65,7 +65,9 @@ Namespace DataObjects
                     File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
                 End If
 
-                BackupFiles()
+                If Not BackupFiles() Then
+                    Return False
+                End If
 
                 For Each strProjFile As String In m_aryAPROJ_Files
                     Util.Application.AppStatusText = "Converting " & strProjectFile
@@ -73,15 +75,17 @@ Namespace DataObjects
                 Next
 
                 RemoveOldFiles()
+
+                Return True
             Catch ex As Exception
                 Throw ex
             Finally
                 Util.Application.AppIsBusy = False
             End Try
 
-        End Sub
+        End Function
 
-        Protected Sub BackupFiles()
+        Protected Overridable Function BackupFiles() As Boolean
 
             If Not Directory.Exists(m_strProjectPath) Then
                 Throw New System.Exception("The specified project directory does not exist: '" & m_strProjectPath & "'.")
@@ -101,10 +105,56 @@ Namespace DataObjects
             m_aryARNN_Files = Directory.GetFiles(m_strProjectPath, "*.arnn")
             m_aryAFORM_Files = Directory.GetFiles(m_strProjectPath, "*.aform")
 
-            'Copy all files in the current directory to the new one.
-            Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup", False)
+            Dim strBackupIndex As String
 
-        End Sub
+            If Not FindBackupIndex(m_strProjectPath, strBackupIndex) Then
+                Return False
+            End If
+
+            'Copy all files in the current directory to the new one.
+            Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup" & strBackupIndex, False)
+
+            Return True
+        End Function
+
+        Protected Overridable Function FindBackupIndex(ByVal strProjectPath As String, ByRef strBackupIndex As String) As Boolean
+
+            Dim strBackupPath As String = strProjectPath & "\Backup"
+            strBackupIndex = ""
+
+            If Directory.Exists(strBackupPath) Then
+                Dim eResult As System.Windows.Forms.DialogResult = Util.ShowMessage("A backup directory already exists for this project. Would you like to remove that directory and replace it? If not a new backup directory will be created.", _
+                                 "Duplicate Backup Directory", MessageBoxButtons.YesNoCancel)
+                If eResult = DialogResult.Cancel Then
+                    Return False
+                End If
+
+                If eResult = DialogResult.Yes Then
+                    System.IO.Directory.Delete(strBackupPath, True)
+
+                    If Directory.Exists(strBackupPath) Then
+                        Throw New System.Exception("Failed to delete the backup directory '" & strBackupPath & "'")
+                    Else
+                        strBackupIndex = ""
+                        Return True
+                    End If
+                End If
+
+                Dim bFound As Boolean = False
+                Dim iBackupIdx As Integer = 1
+                While Not bFound
+                    strBackupIndex = iBackupIdx.ToString()
+                    strBackupPath = strProjectPath & "\Backup" & strBackupIndex
+
+                    If Not Directory.Exists(strBackupPath) Then
+                        bFound = True
+                    End If
+                End While
+
+            End If
+
+            Return True
+        End Function
 
         Protected Sub CopyFiles(ByVal aryFiles() As String)
 

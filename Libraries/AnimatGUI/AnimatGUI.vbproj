@@ -487,6 +487,7 @@
     <Compile Include="DataObjects\ProjectMigration.vb" />
     <Compile Include="DataObjects\ProjectMigrations\Migrate_V1.vb" />
     <Compile Include="DataObjects\ProjectMigrations\Migrate_V2.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_VortexToBullet.vb" />
     <Compile Include="DataObjects\Simulation.vb">
       <SubType>Code</SubType>
     </Compile>

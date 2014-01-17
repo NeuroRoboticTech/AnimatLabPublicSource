@@ -99,14 +99,6 @@ Namespace DataObjects.Physical.Joints
 
         End Sub
 
-        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
-            MyBase.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-
-            If strConvertTo = "Bullet" Then
-                aryErrors.Add("Distance joints are not currently supported with the Bullet physics engine. Please change this joint to a different type before a conversion can happen.")
-            End If
-        End Sub
-
     End Class
 
 

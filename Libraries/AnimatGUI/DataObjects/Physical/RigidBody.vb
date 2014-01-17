@@ -787,21 +787,6 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub CanConvertPhysicsEngine(ByVal strConvertTo As String, ByVal aryErrors As ArrayList)
-            MyBase.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-
-            If Not m_JointToParent Is Nothing Then
-                m_JointToParent.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            End If
-
-            Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
-            For Each deEntry As DictionaryEntry In m_aryChildBodies
-                dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                dbChild.CanConvertPhysicsEngine(strConvertTo, aryErrors)
-            Next
-
-        End Sub
-
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)

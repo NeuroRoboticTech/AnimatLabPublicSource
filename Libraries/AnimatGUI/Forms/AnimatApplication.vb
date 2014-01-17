@@ -5738,23 +5738,16 @@ Namespace Forms
                 Dim frmConvert As New Forms.ConvertPhysics()
                 If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
 
+                    'First save the current project.
+                    SaveProject(Me.ProjectFile)
+
                     Dim strConvertTo As String = frmConvert.cboPhysicsEngine.SelectedItem.ToString()
 
-                    Dim aryErrors As New ArrayList
-                    Util.Environment.CanConvertPhysicsEngine(strConvertTo, aryErrors)
+                    Dim doConv As DataObjects.ProjectMigration = FindProjectMigration(Util.Application.Physics.Name, strConvertTo)
 
-                    If aryErrors.Count <= 0 Then
-                        SaveProject(Me.ProjectPath & Me.ProjectFile)
-                        ConvertPhysicsEngineNode(strConvertTo)
+                    If doConv.ConvertFiles(Me.ProjectPath & Me.ProjectFile, strConvertTo) Then
+                        'Now reopen the converted project.
                         LoadProject(Me.ProjectPath & Me.ProjectFile)
-                    Else
-                        Dim strErrors As String
-                        For Each strError As String In aryErrors
-                            strErrors = strErrors & strError & vbCrLf
-                        Next
-
-                        Util.ShowMessage("Cannot convert this project from the " & Util.Application.Physics.Name & " physics engine to use the " & strConvertTo & _
-                                                   " Physics engine due to the following errors:" & vbCrLf & vbCrLf & strErrors, "Error converting physics engine", MessageBoxButtons.OK)
                     End If
                 End If
 
@@ -5763,20 +5756,20 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Sub ConvertPhysicsEngineNode(ByVal strConvertTo As String)
+        Public Overridable Function FindProjectMigration(ByVal strFrom As String, ByVal strTo As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.ProjectMigration
 
-            Dim strProjectFile As String = Me.ProjectPath & Me.ProjectFile
-            Dim xnProjectXml As New Framework.XmlDom
+            For Each deEntry As DictionaryEntry In m_aryProjectMigrations
+                Dim doMigration As DataObjects.ProjectMigration = DirectCast(deEntry.Value, DataObjects.ProjectMigration)
+                If doMigration.ConvertFrom = strFrom AndAlso doMigration.ConvertTo = strTo Then
+                    Return doMigration
+                End If
+            Next
 
-            xnProjectXml.Load(strProjectFile)
-
-            Dim xnProjectNode As XmlNode = xnProjectXml.GetRootNode("Project")
-
-            xnProjectXml.RemoveNode(xnProjectNode, "Physics", False)
-            xnProjectXml.AddNodeValue(xnProjectNode, "Physics", strConvertTo)
-
-            xnProjectXml.Save(strProjectFile)
-        End Sub
+            If bThrowException Then
+                Throw New System.Exception("No project conversion was found to convert from '" & strFrom & "' to '" & strTo & "'")
+            End If
+            Return Nothing
+        End Function
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
             Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False)
@@ -6807,15 +6800,15 @@ Namespace Forms
         Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer, ByVal strPhysics As String) As Integer
 
             'Find a converter that will convert this file type to a newer version.
-            If Not m_aryProjectMigrations.ContainsKey(iVersion) Then
+            If Not m_aryProjectMigrations.ContainsKey(iVersion.ToString()) Then
                 Throw New System.Exception("No file converter was found that can convert a project version '" & iVersion & "'")
             End If
 
-            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion), DataObjects.ProjectMigration)
+            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion.ToString()), DataObjects.ProjectMigration)
 
             doConv.ConvertFiles(strProjectFile, strPhysics)
 
-            Return doConv.ConvertTo
+            Return CInt(doConv.ConvertTo)
         End Function
 
 #End Region

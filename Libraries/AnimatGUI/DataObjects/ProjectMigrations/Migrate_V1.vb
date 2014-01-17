@@ -35,15 +35,15 @@ Namespace DataObjects
             'Keeps track of each mesh name as it is used so we do not duplicate any.
             Protected m_aryUsedMeshNames As New ArrayList
 
-            Public Overrides ReadOnly Property ConvertFrom As Integer
+            Public Overrides ReadOnly Property ConvertFrom As String
                 Get
-                    Return 1
+                    Return "1"
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As Integer
+            Public Overrides ReadOnly Property ConvertTo As String
                 Get
-                    Return 3
+                    Return "3"
                 End Get
             End Property
 

@@ -15,15 +15,15 @@ Namespace DataObjects
         Public Class Migrate_V2
             Inherits ProjectMigration
 
-            Public Overrides ReadOnly Property ConvertFrom As Integer
+            Public Overrides ReadOnly Property ConvertFrom As String
                 Get
-                    Return 2
+                    Return "2"
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As Integer
+            Public Overrides ReadOnly Property ConvertTo As String
                 Get
-                    Return 3
+                    Return "3"
                 End Get
             End Property
 
