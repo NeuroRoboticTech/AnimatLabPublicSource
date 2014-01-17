@@ -12,20 +12,20 @@ Imports AnimatGUI.Framework
 Namespace DataObjects
     Namespace ProjectMigrations
 
-        Public Class Migrate_VortexToBullet
+        Public Class Migrate_BulletToVortex
             Inherits ProjectMigration
 
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
             Public Overrides ReadOnly Property ConvertFrom As String
                 Get
-                    Return "Vortex"
+                    Return "Bullet"
                 End Get
             End Property
 
             Public Overrides ReadOnly Property ConvertTo As String
                 Get
-                    Return "Bullet"
+                    Return "Vortex"
                 End Get
             End Property
 
@@ -58,17 +58,17 @@ Namespace DataObjects
 
                 m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "BulletAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
-                Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
+                'Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
-                Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
-                For Each xnNode As XmlNode In xnOrganisms.ChildNodes
-                    ModifyOrganism(xnNode)
-                Next
+                'Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
+                'For Each xnNode As XmlNode In xnOrganisms.ChildNodes
+                '    ModifyOrganism(xnNode)
+                'Next
 
-                Dim xnStructures As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Structures")
-                For Each xnNode As XmlNode In xnStructures.ChildNodes
-                    ModifyStructure(xnNode, False)
-                Next
+                'Dim xnStructures As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Structures")
+                'For Each xnNode As XmlNode In xnStructures.ChildNodes
+                '    ModifyStructure(xnNode, False)
+                'Next
 
             End Sub
 
@@ -203,7 +203,7 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode)
-             End Sub
+            End Sub
 
             Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode)
             End Sub

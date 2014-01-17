@@ -569,7 +569,10 @@ void VsMovableItem::Physics_SaveLocalTransformMatrix(CStdXml &oXml)
 
 std::string VsMovableItem::Physics_GetLocalTransformMatrixString() 
 {
-    return SaveMatrixString(m_osgMT->getMatrix());
+    if(m_osgMT.valid())
+        return SaveMatrixString(m_osgMT->getMatrix());
+    else
+        return SaveMatrixString(osg::Matrixf::identity());
 }
 
 void VsMovableItem::Physics_ResizeDragHandler(float fltRadius)
