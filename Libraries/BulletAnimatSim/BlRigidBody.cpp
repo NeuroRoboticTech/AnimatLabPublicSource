@@ -264,7 +264,7 @@ void BlRigidBody::CreateDynamicPart()
         float fltMass = 0;
 	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
-        //if(Std_ToLower(m_lpThisRB->ID()) == "e1aa3ea3-346a-48a6-a177-a9cfa1d2c598")  //Testing only
+        //if(Std_ToLower(m_lpThisRB->ID()) == "b67866e6-3851-414a-b77e-d5a434254df5")  //Testing only
         //    fltMass = 0;
 
         if(m_lpThisRB->HasStaticChildren())
@@ -274,13 +274,9 @@ void BlRigidBody::CreateDynamicPart()
 
         osg::ref_ptr< osgbDynamics::CreationRecord > cr = new osgbDynamics::CreationRecord;
 
-        //If we have set the center of mass to something other than 0, or if this is a mesh type, then set the COM on the creation record.
-        //If this is a mesh then we need to explicitly set this to 0, otherwise it will try and set the COM based on the bounding box and that
-        // will cause it to be offset from what it should be.
-        if( (vCom != CStdFPoint(0, 0, 0)) ||  (m_eBodyType == CONVEX_HULL_SHAPE_PROXYTYPE) || 
-            (m_eBodyType == TRIANGLE_MESH_SHAPE_PROXYTYPE) || (m_eBodyType == STATIC_PLANE_PROXYTYPE) || 
-            (m_eBodyType == TERRAIN_SHAPE_PROXYTYPE) )
-            cr->setCenterOfMass(osg::Vec3(vCom.x, vCom.y, vCom.z) );
+        //We should always set the COM even if it is zero. This is to prevent the OsgBullet code from trying to approximate it using bounding boxes.
+        //I want the COM to be where I say it is.
+        cr->setCenterOfMass(osg::Vec3(vCom.x, vCom.y, vCom.z) );
         cr->_sceneGraph = m_osgMT.get();
         cr->_shapeType = m_eBodyType;
         cr->_parentTransform = m_osgMT->getMatrix();
