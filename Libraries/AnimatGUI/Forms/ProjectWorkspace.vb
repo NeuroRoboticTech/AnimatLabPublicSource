@@ -158,9 +158,9 @@ Namespace Forms
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strName)
             If Not tnParent Is Nothing Then
-                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnParent.Nodes.Add(tnNode)
             Else
-                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode)
             End If
 
             tnNode.ImageIndex = Util.Application.WorkspaceImages.GetImageIndex(strImage)
@@ -429,7 +429,7 @@ Namespace Forms
                     Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
                 End If
 
-                ctrlTreeView.Sort()
+                'ctrlTreeView.Sort()
 
                 ctrlTreeView.ExpandAll()
 

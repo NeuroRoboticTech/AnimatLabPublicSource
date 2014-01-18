@@ -1900,7 +1900,7 @@ Namespace Framework
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strText)
             If Not tnParent Is Nothing Then
-                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnParent.Nodes.Add(tnNode)
             End If
 
             If Not mgrImageMgr Is Nothing Then
