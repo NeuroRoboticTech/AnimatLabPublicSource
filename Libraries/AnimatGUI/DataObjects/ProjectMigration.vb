@@ -49,7 +49,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Function ConvertFiles(ByVal strProjectFile As String, ByVal strPhysics As String) As Boolean
+        Public Overridable Function ConvertFiles(ByVal strProjectFile As String, ByRef strPhysics As String, ByVal bSkipBackup As Boolean) As Boolean
 
             Try
                 Util.Application.AppIsBusy = True
@@ -65,7 +65,8 @@ Namespace DataObjects
                     File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
                 End If
 
-                If Not BackupFiles() Then
+                PopulateProjectFiles()
+                If Not bSkipBackup AndAlso Not BackupFiles() Then
                     Return False
                 End If
 
@@ -85,8 +86,7 @@ Namespace DataObjects
 
         End Function
 
-        Protected Overridable Function BackupFiles() As Boolean
-
+        Protected Overridable Sub PopulateProjectFiles()
             If Not Directory.Exists(m_strProjectPath) Then
                 Throw New System.Exception("The specified project directory does not exist: '" & m_strProjectPath & "'.")
             End If
@@ -104,6 +104,9 @@ Namespace DataObjects
             m_aryAFNN_Files = Directory.GetFiles(m_strProjectPath, "*.afnn")
             m_aryARNN_Files = Directory.GetFiles(m_strProjectPath, "*.arnn")
             m_aryAFORM_Files = Directory.GetFiles(m_strProjectPath, "*.aform")
+        End Sub
+
+        Protected Overridable Function BackupFiles() As Boolean
 
             Dim strBackupIndex As String
 
@@ -117,27 +120,31 @@ Namespace DataObjects
             Return True
         End Function
 
+        Protected Overridable Sub RemoveOldBackupFiles(ByVal strPath As String)
+            System.IO.Directory.Delete(strPath, True)
+
+            If Directory.Exists(strPath) Then
+                Throw New System.Exception("Failed to delete the backup directory '" & strPath & "'")
+            End If
+        End Sub
+
         Protected Overridable Function FindBackupIndex(ByVal strProjectPath As String, ByRef strBackupIndex As String) As Boolean
 
             Dim strBackupPath As String = strProjectPath & "\Backup"
             strBackupIndex = ""
 
             If Directory.Exists(strBackupPath) Then
+
                 Dim eResult As System.Windows.Forms.DialogResult = Util.ShowMessage("A backup directory already exists for this project. Would you like to remove that directory and replace it? If not a new backup directory will be created.", _
-                                 "Duplicate Backup Directory", MessageBoxButtons.YesNoCancel)
+                                     "Duplicate Backup Directory", MessageBoxButtons.YesNoCancel)
                 If eResult = DialogResult.Cancel Then
                     Return False
                 End If
 
                 If eResult = DialogResult.Yes Then
-                    System.IO.Directory.Delete(strBackupPath, True)
-
-                    If Directory.Exists(strBackupPath) Then
-                        Throw New System.Exception("Failed to delete the backup directory '" & strBackupPath & "'")
-                    Else
-                        strBackupIndex = ""
-                        Return True
-                    End If
+                    RemoveOldBackupFiles(strBackupPath)
+                    strBackupIndex = ""
+                    Return True
                 End If
 
                 Dim bFound As Boolean = False
@@ -194,7 +201,7 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub ConvertProject(ByVal strProjFile As String, ByVal strPhysics As String)
+        Protected Overridable Sub ConvertProject(ByVal strProjFile As String, ByRef strPhysics As String)
 
             m_xnProjectXml.Load(strProjFile)
 
@@ -205,7 +212,7 @@ Namespace DataObjects
             m_xnProjectXml.Save(strProjFile)
         End Sub
 
-        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
+        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
         End Sub
 

@@ -5754,15 +5754,9 @@ Namespace Forms
 
                 Dim frmConvert As New Forms.ConvertPhysics()
                 If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
-
                     'First save the current project.
                     SaveProject(Me.ProjectFile)
-
-                    Dim strConvertTo As String = frmConvert.cboPhysicsEngine.SelectedItem.ToString()
-
-                    Dim doConv As DataObjects.ProjectMigration = FindProjectMigration(Util.Application.Physics.Name, strConvertTo)
-
-                    If doConv.ConvertFiles(Me.ProjectPath & Me.ProjectFile, strConvertTo) Then
+                    If ConvertPhysicsEngine(Util.Application.Physics.Name, frmConvert.cboPhysicsEngine.Name) Then
                         'Now reopen the converted project.
                         LoadProject(Me.ProjectPath & Me.ProjectFile)
                     End If
@@ -6786,17 +6780,27 @@ Namespace Forms
 
 #Region "File Conversion Event Handlers"
 
-        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strPhysics As String) Handles Me.ConvertFileVersion
+        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strToPhysics As String) Handles Me.ConvertFileVersion
             Try
                 Me.AppIsBusy = True
 
                 Dim iVersion As Integer = iOldVersion
                 Dim iCurrentVersion As Integer = Me.XmlVersion
+                Dim strFilePhysics As String = ""
+                Dim bSkipBackup As Boolean = False
 
                 'Keep running the file converter until we convert all the way up to the latest version.
                 While iVersion < iCurrentVersion
-                    iVersion = ConvertProjectVersion(strProjectFile, iVersion, strPhysics)
+                    iVersion = ConvertProjectVersion(strProjectFile, iVersion, strFilePhysics, bSkipBackup)
+
+                    'Only do the backup the first time the project conversion is run.
+                    bSkipBackup = True
                 End While
+
+                'Also convert the physics engine if required.
+                If strFilePhysics <> strToPhysics Then
+                    ConvertPhysicsEngine(strFilePhysics, strToPhysics)
+                End If
 
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     Me.LoadProject(strProjectFile)
@@ -6814,7 +6818,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer, ByVal strPhysics As String) As Integer
+        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer, ByRef strPhysics As String, ByVal bSkipBackup As Boolean) As Integer
 
             'Find a converter that will convert this file type to a newer version.
             If Not m_aryProjectMigrations.ContainsKey(iVersion.ToString()) Then
@@ -6823,9 +6827,22 @@ Namespace Forms
 
             Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion.ToString()), DataObjects.ProjectMigration)
 
-            doConv.ConvertFiles(strProjectFile, strPhysics)
+            doConv.ConvertFiles(strProjectFile, strPhysics, bSkipBackup)
 
             Return CInt(doConv.ConvertTo)
+        End Function
+
+        Protected Overridable Function ConvertPhysicsEngine(ByVal strOldPhysics As String, ByVal strNewPhysics As String) As Boolean
+
+            Dim strConvertTo As String = strNewPhysics
+
+            Dim doConv As DataObjects.ProjectMigration = FindProjectMigration(strOldPhysics, strConvertTo)
+
+            If doConv.ConvertFiles(Me.ProjectPath & Me.ProjectFile, strConvertTo, True) Then
+                Return True
+            End If
+
+            Return False
         End Function
 
 #End Region

@@ -34,9 +34,16 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
-                m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Physics", strPhysics)
+                Dim strOldPhysics As String = m_xnProjectXml.GetSingleNodeValue(xnProject, "Physics", False, "")
+
+                If strOldPhysics.Trim.Length > 0 Then
+                    m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Physics", "Vortex")
+                Else
+                    m_xnProjectXml.AddNodeValue(xnProject, "Physics", "Vortex")
+                End If
+                strPhysics = "Vortex"
 
                 CreateSimulationNode(xnProject)
 
@@ -138,6 +145,10 @@ Namespace DataObjects
                         ModifyRigidBodyTorus(xnRigidBody)
                     Case "ELLIPSIOD"
                         ModifyRigidBodyEllipsoid(xnRigidBody)
+                    Case "BOXCONTACTSENSOR"
+                        ModifyRigidBodyBox(xnRigidBody)
+                    Case "CYLINDERCONTACTSENSOR"
+                        ModifyRigidBodyCylinder(xnRigidBody)
                     Case Else
                         Throw New System.Exception("Invalid body part type defined. '" & strType & "'")
                 End Select

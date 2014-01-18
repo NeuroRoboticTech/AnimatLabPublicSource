@@ -94,7 +94,7 @@ Namespace DataObjects
                 Return aryReplaceText
             End Function
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByVal strPhysics As String)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
                 m_iSimInterface.CreateStandAloneSim("VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
@@ -105,8 +105,7 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
                 m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
 
-                m_xnProjectXml.RemoveNode(xnProject, "Physics", False)
-                m_xnProjectXml.AddNodeValue(xnProject, "Physics", strPhysics)
+                strPhysics = m_xnProjectXml.GetSingleNodeValue(xnProject, "Physics", False, "Vortex")
 
                 m_xnProjectXml.RemoveNode(xnProject, "DockingForms", False)
                 m_xnProjectXml.RemoveNode(xnProject, "ChildForms", False)
