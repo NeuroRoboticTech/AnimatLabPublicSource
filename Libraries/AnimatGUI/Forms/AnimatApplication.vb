@@ -1868,7 +1868,6 @@ Namespace Forms
             Try
                 Util.DisableDirtyFlags = True
                 Util.Application = Me
-                Me.Title = "AnimatLab"
 
                 m_doSimInterface = CreateSimInterface()
 
@@ -1909,6 +1908,12 @@ Namespace Forms
                 Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectGraphics
 
                 Me.AppStatusText = ""
+
+                If Me.SecurityMgr.IsValidSerialNumber Then
+                    Me.Title = "AnimatLab Pro"
+                Else
+                    Me.Title = "AnimatLab"
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3236,7 +3241,11 @@ Namespace Forms
 
             Me.ClearIsDirty()
 
-            Me.Title = "AnimatLab"
+            If Me.SecurityMgr.IsValidSerialNumber Then
+                Me.Title = "AnimatLab Pro"
+            Else
+                Me.Title = "AnimatLab"
+            End If
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
@@ -3351,7 +3360,9 @@ Namespace Forms
 
                 Me.ClearIsDirty()
 
-                Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+                Dim strPro As String = ""
+                If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
 
@@ -5592,7 +5603,10 @@ Namespace Forms
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+
+                    Dim strPro As String = ""
+                    If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                    Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
                     m_doPhysics = DirectCast(frmNewProject.cboPhysicsEngine.SelectedItem, DataObjects.Physical.PhysicsEngine)
 
@@ -5696,7 +5710,10 @@ Namespace Forms
                     Util.Application.ProjectName = frmSave.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+
+                    Dim strPro As String = ""
+                    If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                    Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
                     Me.AppIsBusy = True
 

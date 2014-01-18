@@ -120,6 +120,11 @@ Namespace Forms
                     Util.ShowMessage("Registratioin successful. Thank you for purchasing AnimatLab Pro!", "Registration Result", MessageBoxButtons.OK)
                     Util.Application.RegisterStripMenuItem.Visible = False
                     Util.Application.toolStripSeparatorHelp2.Visible = False
+
+                    Dim strPro As String = ""
+                    If Util.Application.SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                    Util.Application.Title = "AnimatLab " & strPro & Util.Application.ProjectName & " Project"
+
                     Me.Close()
                 Else
                     Util.ShowMessage(Util.Application.SecurityMgr.ValidationFailureError, "Registration Result", MessageBoxButtons.OK)
