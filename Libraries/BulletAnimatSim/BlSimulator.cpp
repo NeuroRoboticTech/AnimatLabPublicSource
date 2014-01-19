@@ -40,6 +40,7 @@ BlSimulator::BlSimulator()
 	m_lStepVortexTimeCount = 0;
 	m_lpMeshMgr = NULL;
 	m_osgAlphafunc = NULL;
+	m_iSubstepCallbackCount = 0;
 
     //Setup the global matrix util.
     m_lpMatrixUtil = new OsgMatrixUtil;
@@ -49,7 +50,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
@@ -296,6 +297,22 @@ void BlSimulator::SetSimulationStabilityParams()
 
 }
 
+void BlSimulator::BulletStepFinished(btScalar timeStep)
+{
+	m_iSubstepCallbackCount++;
+	if(m_iPhysicsSubsteps == m_iSubstepCallbackCount)
+	{
+		AfterStepSimulation();
+		m_iSubstepCallbackCount = 0;
+	}
+}
+
+void ProcessTickCallback(btDynamicsWorld *world, btScalar timeStep) 
+{
+    BlSimulator *w = static_cast<BlSimulator *>(world->getWorldUserInfo());
+    w->BulletStepFinished(timeStep);
+}
+
 //This function initializes the Vortex related
 //classes and the vortex viewer.
 void BlSimulator::InitializeBullet(int argc, const char **argv)
@@ -315,6 +332,8 @@ void BlSimulator::InitializeBullet(int argc, const char **argv)
 
     m_lpDynamicsWorld = new btDiscreteDynamicsWorld( m_lpDispatcher, m_lpBroadPhase, m_lpSolver, m_lpCollisionConfiguration );
     m_lpDynamicsWorld->setGravity( btVector3( 0, m_fltGravity, 0 ) );
+
+	m_lpDynamicsWorld->setInternalTickCallback(ProcessTickCallback, static_cast<void *>(this));
 
     if(m_bDrawDebug)
     {

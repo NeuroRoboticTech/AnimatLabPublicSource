@@ -548,7 +548,7 @@ Namespace Framework
                 bDone = Not DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
                 Debug.WriteLine("Checking end: " & bDone)
                 iIdx = iIdx + 1
-                If iIdx = 90 Then
+                If iIdx = 200 Then
                     Throw New System.Exception("Timed out waiting for simulation to end.")
                 End If
             End While

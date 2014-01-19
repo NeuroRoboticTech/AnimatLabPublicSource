@@ -541,6 +541,7 @@ namespace AnimatSim
 			virtual void StepExternalStimuli();
 			virtual void StepDataCharts();
 			virtual void StepSimRecorder();
+			virtual void AfterStepSimulation();
 			virtual void Step();
 			virtual void ResetSimulationTimingParams();
 

@@ -29,6 +29,8 @@ namespace BulletAnimatSim
 		double m_dblTotalVortexStepTime;
 		long m_lStepVortexTimeCount;
 
+		int m_iSubstepCallbackCount;
+
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 
 		//helper functions
@@ -85,6 +87,8 @@ namespace BulletAnimatSim
         virtual FluidPlane *FindFluidPlaneForDepth(float fltDepth);
 
 #pragma endregion
+
+		void BulletStepFinished(btScalar timeStep);
 
 		virtual void Reset(); //Resets the entire application back to the default state 
 		virtual void ResetSimulation(); //Resets the current simulation back to time 0.0

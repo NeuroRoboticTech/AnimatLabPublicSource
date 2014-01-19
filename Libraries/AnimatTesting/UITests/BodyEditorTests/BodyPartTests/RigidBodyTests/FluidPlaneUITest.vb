@@ -57,6 +57,10 @@ Namespace UITests
 
 #Region "Methods"
 
+
+                    'There is an odd discrepancy in the way the fluid drag is working in vortex and bullet. I believe the code I wrote in bullet is correct. 
+                    'The vortex code is limiting drag to never be any larger than the gravity force. Not sure why they are doing this because it seems incorrect
+                    ' to me.
                     <TestMethod(), _
                      DataSource("System.Data.OleDb", _
                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
@@ -64,6 +68,7 @@ Namespace UITests
                                 DataAccessMethod.Sequential), _
                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_FluidPlane()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         StartNewProject()
                         CreateAndTestRoot()

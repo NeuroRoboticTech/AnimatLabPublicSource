@@ -49,6 +49,7 @@ Namespace UITests
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_BoxHyrdodynamics()
                         m_strProjectName = TestContext.DataRow("TestName").ToString
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)

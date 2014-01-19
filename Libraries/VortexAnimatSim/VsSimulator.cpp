@@ -570,6 +570,8 @@ void VsSimulator::StepSimulation()
 			double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;
 
+			AfterStepSimulation();
+
 			if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
 			{
 				m_dblTotalVortexStepTime += dblVal;

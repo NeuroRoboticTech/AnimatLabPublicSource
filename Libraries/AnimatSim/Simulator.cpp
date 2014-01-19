@@ -2202,6 +2202,23 @@ void Simulator::StepNeuralEngine()
 	m_fltTotalNeuralStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
+/**
+ \brief	Method called for the base Simulator object to run code after the physics engine has been fully stepped.
+ This is primarily being used to collect extra data if needed after the physics engine has been run. If you 
+ are building your own physics engine you will need to remember to call this after you have stepped it.
+
+ \author	Dcofer
+ \date	1/19/2014
+ */
+void Simulator::AfterStepSimulation()
+{
+	//Now lets look thorugh all of the parts that have been tagged as needing to gather extra data
+    //and make the call to allow them to do that.
+	//This must be done after the physics step simulation is called in order to get any force info
+	// added by the physics engine itself for this time step.
+	for(int iIndex=0; iIndex<m_iExtraDataCount; iIndex++)
+		m_aryExtraDataParts[iIndex]->UpdateExtraData();
+}
 
 /**
 \brief	Calls StepPhysicsEngine of all structures.
@@ -2225,11 +2242,6 @@ void Simulator::StepPhysicsEngine()
 	//to the physics engine. Examples are motorized joints and muscles.
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
 		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation();
-
-	//Now lets look thorugh all of the parts that have been tagged as needing to gather extra data
-    //and make the call to allow them to do that.
-	for(int iIndex=0; iIndex<m_iExtraDataCount; iIndex++)
-		m_aryExtraDataParts[iIndex]->UpdateExtraData();
 
 	if(m_bRecordVideo)
 		RecordVideoFrame();
