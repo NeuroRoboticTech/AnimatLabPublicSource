@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -97,9 +97,9 @@
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
-<ID>8c2d2752-dde9-41ec-990e-4511366b7bd1</ID>
-<Name>DataChart</Name>
-<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
+<ID>43a6c3cf-e3a8-4009-bce7-90b7304139d4</ID>
+<Name>ToolViewer_2</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
@@ -115,9 +115,9 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>43a6c3cf-e3a8-4009-bce7-90b7304139d4</ID>
-<Name>ToolViewer_2</Name>
-<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<ID>8c2d2752-dde9-41ec-990e-4511366b7bd1</ID>
+<Name>DataChart</Name>
+<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>

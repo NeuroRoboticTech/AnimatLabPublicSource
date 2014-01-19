@@ -1158,8 +1158,8 @@
 <YSizeable>True</YSizeable>
 <ZOrder>0</ZOrder>
 <InLinks>
-<ID>b402e855-14ef-4006-a007-4337ad56cc7d</ID>
 <ID>03716263-4e94-4400-81d0-604ef253df19</ID>
+<ID>b402e855-14ef-4006-a007-4337ad56cc7d</ID>
 </InLinks>
 <OutLinks>
 <ID>bec849f3-c1b5-4b9b-9281-deb6634b299e</ID>
@@ -2650,8 +2650,8 @@
 <InLinks>
 <ID>84695d26-a70e-4913-ac3c-92e49ee930e9</ID>
 <ID>c27f6cb3-4cfe-4041-bc42-6cd009384354</ID>
-<ID>fce01f2d-24f1-466a-bac8-9395ab2e5cf1</ID>
 <ID>947b910f-92c1-4b66-b04e-d0fd9f6394dd</ID>
+<ID>fce01f2d-24f1-466a-bac8-9395ab2e5cf1</ID>
 </InLinks>
 <OutLinks>
 <ID>6b5f9293-4945-48ad-83f7-f8d88bf8a140</ID>
@@ -2845,8 +2845,8 @@
 <ZOrder>0</ZOrder>
 <InLinks/>
 <OutLinks>
-<ID>8124532f-f95e-4271-8e2e-9ad12684ae4a</ID>
 <ID>ef2111ff-75a5-4d04-8875-7f792600d286</ID>
+<ID>8124532f-f95e-4271-8e2e-9ad12684ae4a</ID>
 </OutLinks>
 <LinkedBodyPartID>Stomach</LinkedBodyPartID>
 </Node>

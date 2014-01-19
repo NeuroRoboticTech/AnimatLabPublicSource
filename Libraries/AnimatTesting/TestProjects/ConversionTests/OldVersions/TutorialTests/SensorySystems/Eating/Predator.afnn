@@ -215,15 +215,15 @@
 <Synapses>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="1" y="0" z="0"/>
-<Weight>-5e-09</Weight>
+<From x="2" y="0" z="0"/>
+<Weight>5e-09</Weight>
 <CompoundSynapses/>
 <Type>Regular</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="2" y="0" z="0"/>
-<Weight>5e-09</Weight>
+<From x="1" y="0" z="0"/>
+<Weight>-5e-09</Weight>
 <CompoundSynapses/>
 <Type>Regular</Type>
 </Synapse>
