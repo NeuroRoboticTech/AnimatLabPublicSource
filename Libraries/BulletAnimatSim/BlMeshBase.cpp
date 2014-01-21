@@ -158,10 +158,80 @@ void BlMeshBase::Physics_Resize()
 		m_osgGeometry.release();
 		m_osgMeshNode.release();
 		m_osgBaseMeshNode.release();
-	}
 
-    BlRigidBody::Physics_Resize();
+		CreateGeometry();
+
+		//Now lets re-adjust the gripper size.
+		if(m_osgDragger.valid())
+			m_osgDragger->SetupMatrix();
+
+		//Reset the user data for the new parts.
+		if(m_osgNodeGroup.valid())
+		{
+			osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
+			osgVisitor->traverse(*m_osgNodeGroup);
+		}
+
+		if(Physics_IsDefined())
+		{
+			ResizePhysicsGeometry();
+			//Now get base values, including mass and volume
+			GetBaseValues();
+		}
+	}
 }
+
+//void OsgRigidBody::Physics_Resize()
+//{
+//	//First lets get rid of the current current geometry and then put new geometry in place.
+//	if(m_osgNode.valid())
+//	{
+//		osg::Geode *osgGroup = NULL;
+//		if(m_osgGeometryRotationMT.valid())
+//			osgGroup = dynamic_cast<osg::Geode *>(m_osgGeometryRotationMT->getChild(0));
+//		else
+//			osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
+//
+//		if(!osgGroup)
+//			THROW_TEXT_ERROR(Osg_Err_lNodeNotGeode, Osg_Err_strNodeNotGeode, m_lpThisAB->Name());
+//
+//		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
+//			osgGroup->removeDrawable(m_osgGeometry.get());
+//
+//		m_osgGeometry.release();
+//
+//		//Create a new box geometry with the new sizes.
+//		CreateGraphicsGeometry();
+//		if(m_lpThisAB)
+//			m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
+//
+//		//Add it to the geode.
+//		osgGroup->addDrawable(m_osgGeometry.get());
+//
+//		//Now lets re-adjust the gripper size.
+//		if(m_osgDragger.valid())
+//			m_osgDragger->SetupMatrix();
+//
+//		//Reset the user data for the new parts.
+//		if(m_osgNodeGroup.valid())
+//		{
+//			osg::ref_ptr<OsgUserDataVisitor> osgVisitor = new OsgUserDataVisitor(this);
+//			osgVisitor->traverse(*m_osgNodeGroup);
+//		}
+//	}
+//
+//	if(Physics_IsDefined())
+//	{
+//		ResizePhysicsGeometry();
+//
+//		//We need to reset the density in order for it to recompute the mass and volume.
+//		if(m_lpThisRB)
+//			Physics_SetDensity(m_lpThisRB->Density());
+//
+//		//Now get base values, including mass and volume
+//		GetBaseValues();
+//	}
+//}
 
 
 		}		//Bodies

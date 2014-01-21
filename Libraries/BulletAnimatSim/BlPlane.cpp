@@ -59,7 +59,11 @@ void BlPlane::CreatePhysicsGeometry()
         DeleteCollisionGeometry();
 
         m_fltMass = 0;  //Plane is always a static object.
-        CStdFPoint vPos = m_lpThisRB->Position();
+
+		if(m_osgMT.valid())
+			OsgMovableItem::UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
+
+		CStdFPoint vPos = m_lpStructure->Position();
         m_eBodyType = STATIC_PLANE_PROXYTYPE;
         m_btCollisionShape =  new btStaticPlaneShape(btVector3(0,1,0), vPos.y);
     }
@@ -103,10 +107,10 @@ void BlPlane::CreateDynamicPart()
 	}
 }
 
-
-void BlPlane::ResizePhysicsGeometry()
-{
-}
+//
+//void BlPlane::ResizePhysicsGeometry()
+//{
+//}
 
 //Planes can never have fluid interactions/dynamics.
 void BlPlane::Physics_FluidDataChanged()

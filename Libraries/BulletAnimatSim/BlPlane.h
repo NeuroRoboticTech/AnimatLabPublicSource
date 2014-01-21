@@ -18,7 +18,7 @@ namespace BulletAnimatSim
 			protected:
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
-				virtual void ResizePhysicsGeometry();
+				//virtual void ResizePhysicsGeometry();
 
                 virtual void CreateDynamicPart();
 
