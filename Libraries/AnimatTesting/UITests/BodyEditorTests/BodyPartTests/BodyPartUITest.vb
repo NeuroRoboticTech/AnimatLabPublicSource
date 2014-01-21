@@ -651,6 +651,14 @@ Namespace UITests
                     ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\Structures\Structure_2", "Structure_2", "Root"})
                 End Sub
 
+                Protected Overridable Sub SimulateBeforeChildRemoved()
+
+                End Sub
+
+                Protected Overridable Sub SimulateAfterChildRemoved()
+
+                End Sub
+
                 Protected Overridable Sub SimulateAndDeleteParts()
 
                     'Reposition the structure and child part before the simulation
@@ -671,6 +679,8 @@ Namespace UITests
                     'Compare chart data to verify simulation results.
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
 
+                    SimulateBeforeChildRemoved()
+
                     'Now lets remove the child body of the falling part.
                     DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Delete Body Part")
 
@@ -679,6 +689,8 @@ Namespace UITests
 
                     'Compare chart data to verify simulation results.
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS1Child_")
+
+                    SimulateAfterChildRemoved()
 
                     'Now lets remove the plane part of the second structure, and that structure.
                     DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root", "Delete Body Part")

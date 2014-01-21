@@ -115,6 +115,31 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root\Root_Graphics", "Radius", "0.05"})
                     End Sub
 
+                    Protected Overrides Sub SimulateBeforeChildRemoved()
+
+                        'Lets move the plane and verify that it simulates correctly.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "-2 c"})
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterPlaneMoveDown_")
+
+                        'Lets move the plane and verify that it simulates correctly.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "2 c"})
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterPlaneMoveUp_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
+
+                    End Sub
+
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:
