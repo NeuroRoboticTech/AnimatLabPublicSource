@@ -51,6 +51,7 @@ Namespace Framework
 
         Protected m_strTextureFile As String = "Bricks.bmp"
         Protected m_strMeshFile As String = "TestMesh.osg"
+        Protected m_strSecondaryMeshFile As String = "TestMesh2.osg"
 
         Dim m_aryChartColumns() As String
         Dim m_aryChartData(,) As Double

@@ -60,6 +60,20 @@ Namespace UITests
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                     End Sub
 
+                    Protected Overrides Sub SimulateBeforeChildRemoved()
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "MeshFile", m_strRootFolder & "\bin\Resources\" & m_strSecondaryMeshFile})
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "MeshFile", m_strRootFolder & "\bin\Resources\" & m_strMeshFile})
+
+                    End Sub
+
 
 #Region "Additional test attributes"
                     '
