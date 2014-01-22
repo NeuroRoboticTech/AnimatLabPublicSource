@@ -127,6 +127,14 @@ Namespace UITests
 
                 Protected Overridable Sub TestJoint()
 
+                    If Not TestContext.DataRow Is Nothing Then
+                        m_strPhysicsEngine = TestContext.DataRow("Physics").ToString
+                        Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
+                        If Not bEnabled Then Return
+                    Else
+                        m_strPhysicsEngine = "Vortex"
+                    End If
+
                     StartNewProject()
 
                     m_strAddArmPath = "Simulation\Environment\" & m_strStructureGroup & _
