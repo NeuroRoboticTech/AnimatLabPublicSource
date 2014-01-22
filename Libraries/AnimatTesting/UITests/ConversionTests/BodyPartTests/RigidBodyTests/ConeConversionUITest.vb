@@ -48,6 +48,8 @@ Namespace UITests
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_ConeConversion()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         m_strProjectName = TestContext.DataRow("TestName").ToString
 
                         Dim aryMaxErrors As New Hashtable
@@ -99,6 +101,15 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UpperRadius_1cm_")
 
+                    End Sub
+
+                    Protected Overrides Sub AfterConversionBeforeSim()
+                        If m_strPhysicsEngine = "Bullet" AndAlso m_strProjectName = "ConeTest2" Then
+                            'If it is bullet we need to move one of the blocks slightly because there is a larger test zone around the mesh than with vortex.
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Right_Upper_Hinge\Right_Upper_Block", "LocalPosition.X", "32.5 m"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Right_Upper_Hinge\Right_Upper_Block", "LocalPosition.Y", "-10.5 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Right_Upper_Hinge\Right_Upper_Block", "LocalPosition.Z", "69 m"})
+                        End If
                     End Sub
 
 

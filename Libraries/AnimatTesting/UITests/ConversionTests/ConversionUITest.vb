@@ -52,6 +52,10 @@ Namespace UITests
                 TestConversionProject(strDataPrefix, aryMaxErrors, iMaxRows)
             End Sub
 
+            Protected Overridable Sub AfterConversionBeforeSim()
+
+            End Sub
+
             Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, ByVal aryMaxErrors As Hashtable,
                                                             Optional iMaxRows As Integer = -1, Optional ByVal aryIgnoreRows As ArrayList = Nothing)
                 Debug.WriteLine("TestConversionProject. DataPrefix: " & strDataPrefix & ", MaxErrors: " & Util.ParamsToString(aryMaxErrors) & ", MaxRows: " & iMaxRows)
@@ -67,6 +71,8 @@ Namespace UITests
                 Next
 
                 Threading.Thread.Sleep(3000)
+
+                AfterConversionBeforeSim()
 
                 If strDataPrefix.Length > 0 Then
                     'Run the simulation and wait for it to end.
