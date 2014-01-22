@@ -49,6 +49,8 @@ Namespace UITests
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_MeshConversion()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim strBlock1X As String = TestContext.DataRow("Block1X").ToString
                         Dim strBlock1Y As String = TestContext.DataRow("Block1Y").ToString

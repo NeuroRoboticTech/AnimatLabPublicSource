@@ -204,7 +204,7 @@ Namespace DataObjects
             Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode)
 
                 Dim bIsCollision As Boolean = CBool(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "IsCollisionObject"))
-                Dim bFreeze As Boolean = CBool(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Freeze"))
+                Dim bFreeze As Boolean = CBool(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Freeze", False, "False"))
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "MeshType").ToUpper
 
                 If bIsCollision AndAlso strType = "TRIANGULAR" AndAlso Not bFreeze Then
