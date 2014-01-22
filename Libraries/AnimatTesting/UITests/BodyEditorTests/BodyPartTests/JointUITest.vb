@@ -457,6 +457,11 @@ Namespace UITests
                 Protected Overridable Sub TestConstraintLimitsWithForce()
                     Debug.WriteLine("*********** TestConstraintLimitsWithForce **************")
 
+                    If m_strPhysicsEngine = "Bullet" Then
+                        'The joint friction force in bullet is stronger than in vortex, so lets adjust it down a little for the tests
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Friction.Coefficient", "0.5 m"})
+                    End If
+
                     'Add force stimulus to child part. 
                     AddStimulus("Force", m_strStruct1Name, "\Body Plan\Root\Joint_1\Arm", "ArmForce") ', "Stimulus_3"
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 10, 0, 0, 0, 0)
