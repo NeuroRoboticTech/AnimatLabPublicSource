@@ -428,7 +428,7 @@ void BlHinge::TurnMotorOff()
         {
             //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
             //that were specified in vortex engine. This way I get similar behavior between the two.
-            float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f;  
+            float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f*(m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());  
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
 		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = maxMotorImpulse;
