@@ -76,7 +76,7 @@ void CStdPID::FullReset()
     m_aryOldErrors.Add(0);
 }
 
-void CStdPID::Reset()
+void CStdPID::ResetVars()
 {
     m_fltError = 0;
     m_fltSetpoint = 0;

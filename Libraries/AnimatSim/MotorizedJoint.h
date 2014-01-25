@@ -1,10 +1,11 @@
 #pragma once
 
+#include "PidControl.h"
+
 namespace AnimatSim
 {
 	namespace Environment
 	{
-
 
 		class ANIMAT_PORT MotorizedJoint : public Joint
 		{
@@ -100,7 +101,7 @@ namespace AnimatSim
             CStdFPoint m_vMotorAssistTorqueToBReport;
 
             /// The PID controller for the motor assist system.
-            CStdPID *m_lpAssistPid;
+            PidControl *m_lpAssistPid;
 
             virtual void ClearAssistForces();
             virtual void ApplyMotorAssist();

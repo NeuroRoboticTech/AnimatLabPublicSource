@@ -36,6 +36,7 @@ namespace AnimatSim
 	class Hud;
 	class HudItem;
 	class HudText;
+    class PidControl;
 
 	namespace Adapters
 	{

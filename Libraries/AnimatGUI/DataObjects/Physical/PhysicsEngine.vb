@@ -27,6 +27,7 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property AllowConstraintRelaxation() As Boolean
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
+        Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
 
 #End Region
 

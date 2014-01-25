@@ -55,7 +55,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_lpPhysicsMotorJoint = NULL;
     //m_lpAssistPid = NULL;
     m_iAssistCountdown = 3;
-    m_lpAssistPid = new CStdPID(0, 10, 0.2f, 10, true, false, false, 0, 0, 0, 70);
+    m_lpAssistPid = new PidControl(0, 10, 0.2f, 10, true, false, false, 0, 0, 0, 70);
     ClearAssistForces();
 }
 

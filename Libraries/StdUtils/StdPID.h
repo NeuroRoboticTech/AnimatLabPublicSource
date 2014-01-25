@@ -98,7 +98,7 @@ namespace StdUtils
         virtual void RampGradient(float fltVal);
         virtual float RampGradient();
 
-        virtual void Reset();
+        virtual void ResetVars();
         virtual float Calculate(float fltDt, float fltInput);
 
 		//virtual void Load(CStdXml &oXml);
