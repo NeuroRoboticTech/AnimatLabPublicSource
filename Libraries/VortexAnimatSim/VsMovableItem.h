@@ -34,7 +34,10 @@ namespace VortexAnimatSim
 			osg::ref_ptr<osg::Group> m_osgSelectedGroup;
 			osg::ref_ptr<VsDragger> m_osgDragger;
 
-			osg::Matrix m_osgLocalMatrix;		
+			osg::Matrix m_osgLocalMatrix;	
+
+            /// This is used to report back 0 from GetDataPointer for items that are not supported in vortex.
+            float m_fltNullReport;
 
 			/// Sometimes it is necessary to rotate the geometry that was generated to match the correct
 			/// orientation of the physics geometry. If this MT is set then this is added 

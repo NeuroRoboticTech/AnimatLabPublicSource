@@ -14,14 +14,14 @@ namespace StdUtils
 
 CStdPID::CStdPID(void)
 {
-    Reset();
+    FullReset();
 }
 
 CStdPID::CStdPID(float fltSetpoint, float fltGain, float fltIntegralAct, float fltDerivativeAct, 
     bool bComplexError, bool bAntiResetWindup, bool bRampLimit, 
     float fltRangeMax, float fltRangeMin, float fltARWBound, float fltRampGradient)
 {
-    Reset();
+    FullReset();
 
     Setpoint(fltSetpoint);
     Gain(fltGain);
@@ -41,7 +41,8 @@ CStdPID::~CStdPID(void)
 {
 }
 
-void CStdPID::Reset()
+
+void CStdPID::FullReset()
 {
     m_fltError = 0;
     m_fltSetpoint = 0;
@@ -69,6 +70,28 @@ void CStdPID::Reset()
     m_fltRampGradient = 0;
 
     //Initialize with 3 spots
+    m_aryOldErrors.Clear();
+    m_aryOldErrors.Add(0);
+    m_aryOldErrors.Add(0);
+    m_aryOldErrors.Add(0);
+}
+
+void CStdPID::Reset()
+{
+    m_fltError = 0;
+    m_fltSetpoint = 0;
+    m_fltErrorChange = 0;
+
+    m_fltProportional = 0;
+    m_fltIntegral = 0;
+    m_fltOldIntegral = 0;
+    m_fltDerivative = 0;
+
+    m_fltOutput = 0;
+    m_fltOldOutput = 0;
+
+    //Initialize with 3 spots
+    m_aryOldErrors.Clear();
     m_aryOldErrors.Add(0);
     m_aryOldErrors.Add(0);
     m_aryOldErrors.Add(0);

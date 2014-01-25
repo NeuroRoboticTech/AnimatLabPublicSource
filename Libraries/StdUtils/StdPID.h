@@ -44,7 +44,7 @@ namespace StdUtils
         float m_fltARWBound;
         float m_fltRampGradient;
 
-        virtual void Reset();
+        virtual void FullReset();
 
     public:
         CStdPID(void);
@@ -98,6 +98,7 @@ namespace StdUtils
         virtual void RampGradient(float fltVal);
         virtual float RampGradient();
 
+        virtual void Reset();
         virtual float Calculate(float fltDt, float fltInput);
 
 		//virtual void Load(CStdXml &oXml);

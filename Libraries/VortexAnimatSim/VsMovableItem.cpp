@@ -36,6 +36,8 @@ VsMovableItem::VsMovableItem()
 	m_lpThisMI = NULL;
 	m_lpThisVsMI = NULL;
 	m_lpParentVsMI = NULL;
+
+    m_fltNullReport = 0;
 }
 
 

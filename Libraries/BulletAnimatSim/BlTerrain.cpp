@@ -147,6 +147,92 @@ void BlTerrain::CreateJoints()
 	BlMeshBase::Initialize();
 }
 
+void BlTerrain::CreateDynamicPart()
+{
+    BlSimulator *lpSim = GetBlSimulator();
+
+	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape)
+	{
+        btScalar mass( m_lpThisRB->GetMassValueWithStaticChildren() );
+	    btVector3 localInertia( 0, 0, 0 );
+        const bool isDynamic = ( mass != 0.f );
+	    if( isDynamic )
+		    m_btCollisionShape->calculateLocalInertia( mass, localInertia );
+
+        //Keep a copy of the matrix transform for osgMT so I can reset it back later
+        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+
+        // Create MotionState to control OSG subgraph visual reprentation transform
+        // from a Bullet world transform. To do this, the MotionState need the address
+        // of the Transform node (must be either AbsoluteModelTransform or
+        // MatrixTransform), center of mass, scale vector, and the parent (or initial)
+        // transform (usually the non-scaled OSG local-to-world matrix obtained from
+        // the parent node path).
+        m_osgbMotion = new osgbDynamics::MotionState();
+        m_osgbMotion->setTransform( m_osgMT.get() );
+
+        osg::Vec3 com;
+		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
+		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
+			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
+        else
+            com = osg::Vec3(0, 0, 0);
+        m_osgbMotion->setCenterOfMass( com );
+
+        m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
+        m_osgbMotion->setParentTransform( osg::Matrix::identity() );
+
+        // Finally, create rigid body.
+        btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
+        rbInfo.m_friction = btScalar( 1 );
+        rbInfo.m_restitution = btScalar( 1 );
+        rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
+        rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
+
+        m_btPart = new btRigidBody( rbInfo );
+        m_btPart->setUserPointer((void *) m_lpThisRB);
+        m_btPart->setContactProcessingThreshold(10000);
+
+        // Last thing to do: Position the rigid body in the world coordinate system. The
+        // MotionState has the initial (parent) transform, and also knows how to account
+        // for center of mass and scaling. Get the world transform from the MotionState,
+        // then set it on the rigid body, which in turn sets the world transform on the
+        // MotionState, which in turn transforms the OSG subgraph visual representation.
+        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
+        m_osgbMotion->setWorldTransform( wt );
+        m_btPart->setWorldTransform( wt );
+
+		//if this body is frozen; freeze it
+        if(m_lpThisRB->Freeze())
+            m_btPart->setActivationState(0);
+        else
+            m_btPart->setActivationState(ACTIVE_TAG);
+
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
+
+        //FIX PHYSICS
+		// Create the physics object.
+		//m_vxPart = new VxPart;
+		//m_vxSensor = m_vxPart;
+		//m_vxSensor->setUserData((void*) m_lpThisRB);
+		//int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
+
+		//m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
+		//m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
+		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+           
+        if(m_lpThisRB->DisplayDebugCollisionGraphic())
+        {
+            m_osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( m_btCollisionShape );
+            m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
+	        m_osgNodeGroup->addChild(m_osgDebugNode.get());	
+        }
+
+        GetBaseValues();
+	}
+}
+
+
 		}		//Bodies
 	}			// Environment
 }				//BulletAnimatSim

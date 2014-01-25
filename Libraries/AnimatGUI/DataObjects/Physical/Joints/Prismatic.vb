@@ -180,6 +180,41 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionX", "Position X Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionY", "Position Y Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
+
+            If Util.Application.Physics.ProvidesJointForceFeedback Then
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAX", "Motor Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAY", "Motor Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAZ", "Motor Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAY", "Motor Assist Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAZ", "Motor Assist Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBX", "Motor Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBY", "Motor Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBZ", "Motor Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBX", "Motor Assist Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBY", "Motor Assist Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBZ", "Motor Assist Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAX", "Motor Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAY", "Motor Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAZ", "Motor Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAX", "Motor Assist Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAY", "Motor Assist Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAZ", "Motor Assist Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBX", "Motor Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBY", "Motor Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBZ", "Motor Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBX", "Motor Assist Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBY", "Motor Assist Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBZ", "Motor Assist Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+            End If
+
             m_thDataTypes.ID = "JointPosition"
 
             If Util.Application.Physics.AllowConstraintRelaxation Then

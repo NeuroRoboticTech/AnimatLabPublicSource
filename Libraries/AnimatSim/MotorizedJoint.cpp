@@ -49,13 +49,30 @@ MotorizedJoint::MotorizedJoint(void)
 	m_bEnableMotor = false;
 	m_bEnableMotorInit = false;
 	m_fltMaxForce = 1000;
+    m_fltMaxForceNotScaled = 10;
 	m_bServoMotor = false;
 	m_ftlServoGain = 100;
 	m_lpPhysicsMotorJoint = NULL;
+    //m_lpAssistPid = NULL;
+    m_iAssistCountdown = 3;
+    m_lpAssistPid = new CStdPID(0, 10, 0.2f, 10, true, false, false, 0, 0, 0, 70);
+    ClearAssistForces();
 }
 
 MotorizedJoint::~MotorizedJoint(void)
 {
+	//ConstraintLimits are deleted in the base objects.
+	try
+	{
+
+        if(m_lpAssistPid)
+        {
+            delete m_lpAssistPid;
+            m_lpAssistPid = NULL;
+        }
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of BlMotorizMotorizedJointedJoint\r\n", "", -1, false, true);}
 }
 
 /**
@@ -185,6 +202,8 @@ void MotorizedJoint::MaxForce(float fltVal, bool bUseScaling)
 		fltVal = 1e35f;
 	else
 	{
+        m_fltMaxForceNotScaled = fltVal;
+
 		if(bUseScaling)
 		{
 			//If it uses radians then this is really a torque and not a force, so we have to scale appropriately.
@@ -210,6 +229,16 @@ void MotorizedJoint::MaxForce(float fltVal, bool bUseScaling)
 \return	Maximum torque the motor can apply.
 **/
 float MotorizedJoint::MaxForce() {return m_fltMaxForce;}
+
+/**
+\brief	Gets the maximum force/torque a motor can apply. This is the unscaled value. 
+
+\author	dcofer
+\date	3/24/2011
+
+\return	unscaled Maximum torque the motor can apply.
+**/
+float MotorizedJoint::MaxForceNotScaled() {return m_fltMaxForceNotScaled;}
 
 /**
 \brief	Gets the maximum velocity.
@@ -330,6 +359,327 @@ float MotorizedJoint::PrevVelocity() {return m_fltPrevVelocity;}
 void MotorizedJoint::PrevVelocity(float fltVal) {m_fltPrevVelocity = fltVal;}
 
 /**
+ \brief Gets the assist countdown.
+
+ \description Countdown timer till we can begin applying motor assist. Once a motor is turned on we wait for this
+            many time steps before checking if its velocity matches the desired velocity. This is so the part
+            has a chanct to start moving and so we do not apply additional forces if it is not required.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return coundown timer value.
+ */
+int MotorizedJoint::AssistCountdown()
+{return m_iAssistCountdown;}
+
+/**
+ \brief Sets the assist countdown.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param iVal    The coundown value.
+ */
+void MotorizedJoint::AssistCountdown(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, true, "Joint.AssistCountdown", true);
+    m_iAssistCountdown = iVal;
+}
+
+/**
+ \brief Gets the force vector that the motor is applying to body A. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return un-scaled force vector.
+ */
+CStdFPoint MotorizedJoint::MotorForceToA()
+{return m_vMotorForceToA;}
+
+/**
+ \brief Sets the force vector that the motor is applying to body A. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorForceToA(CStdFPoint &vVal)
+{m_vMotorForceToA = vVal;}
+
+/**
+ \brief Gets the force vector that the motor assist is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistForceToA()
+{return m_vMotorAssistForceToA;}
+
+/**
+ \brief Sets the force vector that the motor assist is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistForceToA(CStdFPoint &vVal)
+{m_vMotorAssistForceToA = vVal;}
+
+/**
+ \brief Gets the force vector that the motor assist is applying to body A. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistForceToAReport()
+{return m_vMotorAssistForceToAReport;}
+
+/**
+ \brief Sets the force vector that the motor assist is applying to body A. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistForceToAReport(CStdFPoint &vVal)
+{m_vMotorAssistForceToAReport = vVal;}
+
+/**
+ \brief Gets the force vector that the motor is applying to body B. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return un-scaled force vector.
+ */
+CStdFPoint MotorizedJoint::MotorForceToB()
+{return m_vMotorForceToB;}
+
+/**
+ \brief Sets the force vector that the motor is applying to body B. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorForceToB(CStdFPoint &vVal)
+{m_vMotorForceToB = vVal;}
+
+/**
+ \brief Gets the force vector that the motor assist is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistForceToB()
+{return m_vMotorAssistForceToB;}
+
+/**
+ \brief Sets the force vector that the motor assist is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistForceToB(CStdFPoint &vVal)
+{m_vMotorAssistForceToB = vVal;}
+
+/**
+ \brief Gets the force vector that the motor assist is applying to body B. (scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistForceToBReport()
+{return m_vMotorAssistForceToBReport;}
+
+/**
+ \brief Sets the force vector that the motor assist is applying to body B. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistForceToBReport(CStdFPoint &vVal)
+{m_vMotorAssistForceToBReport = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor is applying to body A. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return un-scaled torque vector.
+ */
+CStdFPoint MotorizedJoint::MotorTorqueToA()
+{return m_vMotorTorqueToA;}
+
+/**
+ \brief Sets the torque vector that the motor is applying to body A. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorTorqueToA(CStdFPoint &vVal)
+{m_vMotorTorqueToA = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor assist is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistTorqueToA()
+{return m_vMotorAssistTorqueToA;}
+
+/**
+ \brief Sets the torque vector that the motor assist is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistTorqueToA(CStdFPoint &vVal)
+{m_vMotorAssistTorqueToA = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor assist is applying to body A. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistTorqueToAReport()
+{return m_vMotorAssistTorqueToAReport;}
+
+/**
+ \brief Sets the torque vector that the motor assist is applying to body A. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistTorqueToAReport(CStdFPoint &vVal)
+{m_vMotorAssistTorqueToAReport = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor is applying to body B. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return un-scaled torque vector.
+ */
+CStdFPoint MotorizedJoint::MotorTorqueToB()
+{return m_vMotorTorqueToB;}
+
+/**
+ \brief Sets the torque vector that the motor is applying to body B. (un-scaled units). 
+        This includes any motor assist within it. 
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorTorqueToB(CStdFPoint &vVal)
+{m_vMotorTorqueToB = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor assist is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistTorqueToB()
+{return m_vMotorAssistTorqueToB;}
+
+/**
+ \brief Sets the torque vector that the motor assist is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistTorqueToB(CStdFPoint &vVal)
+{m_vMotorAssistTorqueToB = vVal;}
+
+/**
+ \brief Gets the torque vector that the motor assist is applying to body B. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return  Assist output.
+ */
+CStdFPoint MotorizedJoint::MotorAssistTorqueToBReport()
+{return m_vMotorAssistTorqueToBReport;}
+
+/**
+ \brief Sets the torque vector that the motor assist is applying to body B. (un-scaled units).
+        This is used for reporting purposes.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \param [in,out]    vVal    The input value.
+ */
+void MotorizedJoint::MotorAssistTorqueToBReport(CStdFPoint &vVal)
+{m_vMotorAssistTorqueToBReport = vVal;}
+
+/**
+ \brief Gets a pointer to the motor assist pid controller.
+
+ \author    David Cofer
+ \date  1/25/2014
+
+ \return    Pointer to PID object.
+ */
+CStdPID *MotorizedJoint::AssistPid()
+{return m_lpAssistPid;}
+
+
+/**
 \brief	Sets the desired velocity to use for the motor.
 
 \author	dcofer
@@ -369,6 +719,105 @@ void MotorizedJoint::ResetSimulation()
 	m_fltPrevVelocity = 0;
 
 	EnableMotor(m_bEnableMotorInit);
+
+    ClearAssistForces();
+
+    if(m_lpAssistPid)
+        m_lpAssistPid->Reset();
+
+    m_iAssistCountdown = 3;
+}
+
+float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
+{
+	if(strDataType == "MOTORFORCETOAX")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToA[0]);
+    }
+	else if(strDataType == "MOTORFORCETOAY")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToA[1]);
+    }
+	else if(strDataType == "MOTORFORCETOAZ")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToA[2]);
+    }
+	else if(strDataType == "MOTORASSISTFORCETOAX")
+        return (&m_vMotorAssistForceToAReport[0]);
+	else if(strDataType == "MOTORASSISTFORCETOAY")
+        return (&m_vMotorAssistForceToAReport[1]);
+	else if(strDataType == "MOTORASSISTFORCETOAZ")
+        return (&m_vMotorAssistForceToAReport[2]);
+	else if(strDataType == "MOTORFORCETOBX")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToB[0]);
+    }
+	else if(strDataType == "MOTORFORCETOBY")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToB[1]);
+    }
+	else if(strDataType == "MOTORFORCETOBZ")
+	{
+        EnableFeedback();
+        return (&m_vMotorForceToB[2]);
+    }
+	else if(strDataType == "MOTORASSISTFORCETOBX")
+        return (&m_vMotorAssistForceToBReport[0]);
+	else if(strDataType == "MOTORASSISTFORCETOBY")
+        return (&m_vMotorAssistForceToBReport[1]);
+	else if(strDataType == "MOTORASSISTFORCETOBZ")
+        return (&m_vMotorAssistForceToBReport[2]);
+	else if(strDataType == "MOTORTORQUETOAX")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToA[0]);
+    }
+	else if(strDataType == "MOTORTORQUETOAY")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToA[1]);
+    }
+	else if(strDataType == "MOTORTORQUETOAZ")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToA[2]);
+    }
+	else if(strDataType == "MOTORASSISTTORQUETOAX")
+        return (&m_vMotorAssistTorqueToAReport[0]);
+	else if(strDataType == "MOTORASSISTTORQUETOAY")
+        return (&m_vMotorAssistTorqueToAReport[1]);
+	else if(strDataType == "MOTORASSISTTORQUETOAZ")
+        return (&m_vMotorAssistTorqueToAReport[2]);
+	else if(strDataType == "MOTORTORQUETOBX")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToB[0]);
+    }
+	else if(strDataType == "MOTORTORQUETOBY")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToB[1]);
+    }
+	else if(strDataType == "MOTORTORQUETOBZ")
+	{
+        EnableFeedback();
+        return (&m_vMotorTorqueToB[2]);
+    }
+	else if(strDataType == "MOTORASSISTTORQUETOBX")
+        return (&m_vMotorAssistTorqueToBReport[0]);
+	else if(strDataType == "MOTORASSISTTORQUETOBY")
+        return (&m_vMotorAssistTorqueToBReport[1]);
+	else if(strDataType == "MOTORASSISTTORQUETOBZ")
+        return (&m_vMotorAssistTorqueToBReport[2]);
+    else
+        return Joint::GetDataPointer(strDataType);
+
+    return NULL;
 }
 
 bool MotorizedJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -434,6 +883,46 @@ void MotorizedJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray
 	aryNames.Add("MaxVelocity");
 	aryTypes.Add("Float");
 }
+
+/**
+ \brief Clears the assist forces.
+
+ \author    David Cofer
+ \date  1/25/2014
+ */
+void MotorizedJoint::ClearAssistForces()
+{
+    m_vMotorForceToA.Set(0,0,0);
+    m_vMotorAssistForceToA.Set(0,0,0);
+    m_vMotorAssistForceToAReport.Set(0,0,0);
+    m_vMotorForceToB.Set(0,0,0);
+    m_vMotorAssistForceToB.Set(0,0,0);
+    m_vMotorAssistForceToBReport.Set(0,0,0);
+    m_vMotorTorqueToA.Set(0,0,0);
+    m_vMotorAssistTorqueToA.Set(0,0,0);
+    m_vMotorAssistTorqueToAReport.Set(0,0,0);
+    m_vMotorTorqueToB.Set(0,0,0);
+    m_vMotorAssistTorqueToB.Set(0,0,0);
+    m_vMotorAssistTorqueToBReport.Set(0,0,0);
+}
+
+/**
+ \brief Applies the motor assist.
+
+ \author    David Cofer
+ \date  1/25/2014
+ */
+void MotorizedJoint::ApplyMotorAssist()
+{}
+
+/**
+ \brief Enables joint feedback.
+
+ \author    David Cofer
+ \date  1/25/2014
+ */
+void MotorizedJoint::EnableFeedback()
+{}
 
 void MotorizedJoint::Load(CStdXml &oXml)
 {

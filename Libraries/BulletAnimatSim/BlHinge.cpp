@@ -20,36 +20,6 @@ namespace BulletAnimatSim
 		namespace Joints
 		{
 
-btAnimatbtGeneric6DofConstraint::btAnimatbtGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB ,bool useLinearReferenceFrameA) : 
-        btGeneric6DofConstraint(rbA, rbB, frameInA, frameInB, useLinearReferenceFrameA)
-{
-}
-
-btAnimatbtGeneric6DofConstraint::btAnimatbtGeneric6DofConstraint(btRigidBody& rbB, const btTransform& frameInB, bool useLinearReferenceFrameB) : 
-        btGeneric6DofConstraint(rbB, frameInB, useLinearReferenceFrameB)
-{
-}
-
-void btAnimatbtGeneric6DofConstraint::ApplyMotorForces(btScalar	timeStep)
-{
-    // angular
-    btVector3 angular_axis;
-    btScalar angularJacDiagABInv;
-    int i=0;
-    //for (int i=0;i<3;i++)
-    //{
-        if (m_angularLimits[i].needApplyTorques())
-        {
-
-			// get axis
-			angular_axis = getAxis(i);
-
-			angularJacDiagABInv = btScalar(1.) / m_jacAng[i].getDiagonal();
-
-			m_angularLimits[i].solveAngularLimits(timeStep,angular_axis,angularJacDiagABInv, &m_rbA,&m_rbB);
-        }
-    //}
-}
 
 /**
 \brief	Default constructor.
@@ -78,8 +48,6 @@ BlHinge::BlHinge()
 
 	m_lpLowerLimit->IsLowerLimit(true);
 	m_lpUpperLimit->IsLowerLimit(false);
-
-    m_lpPID = new CStdPID(0, 0.4, 0.4, 0.4, true, false, false, 0, 0, 0, 0);
 }
 
 /**
@@ -93,12 +61,6 @@ BlHinge::~BlHinge()
 	//ConstraintLimits are deleted in the base objects.
 	try
 	{
-        if(m_lpPID)
-        {
-            delete m_lpPID;
-            m_lpPID = NULL;
-        }
-
 		DeleteGraphics();
 		DeletePhysics(false);
 	}
@@ -233,7 +195,7 @@ void BlHinge::SetupPhysics()
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
-    m_btHinge = new btAnimatbtGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
+    m_btHinge = new btAnimatGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     m_btHinge->setDbgDrawSize(btScalar(5.f));
 
@@ -298,7 +260,10 @@ float *BlHinge::GetDataPointer(const std::string &strDataType)
 		THROW_PARAM_ERROR(Al_Err_lMustBeContactBodyToGetCount, Al_Err_strMustBeContactBodyToGetCount, "JointID", m_strName);
 	else
 	{
-		lpData = Hinge::GetDataPointer(strDataType);
+        lpData = BlMotorizedJoint::Physics_GetDataPointer(strType);
+		if(lpData) return lpData;
+
+		lpData = Hinge::GetDataPointer(strType);
 		if(lpData) return lpData;
 
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "JointID: " + STR(m_strName) + "  DataType: " + strDataType);

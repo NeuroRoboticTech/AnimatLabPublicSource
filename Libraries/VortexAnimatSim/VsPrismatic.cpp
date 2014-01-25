@@ -286,6 +286,30 @@ float *VsPrismatic::GetDataPointer(const std::string &strDataType)
 		return &m_fltReportSetVelocity;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
+	else if(strType == "MOTORFORCETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBZ")
+		return &m_fltNullReport;
 	else if(strType == "CONTACTCOUNT")
 		THROW_PARAM_ERROR(Al_Err_lMustBeContactBodyToGetCount, Al_Err_strMustBeContactBodyToGetCount, "JointID", m_strName);
 	else

@@ -87,6 +87,7 @@ namespace BulletAnimatSim
 			class BlPrismatic;
 			class BlPrismaticLimit;
 			class BlUniversal;
+            class btAnimatGeneric6DofConstraint;
 		}
 	}
 

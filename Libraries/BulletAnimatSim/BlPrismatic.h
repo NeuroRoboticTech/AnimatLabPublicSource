@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "btAnimatGeneric6DofConstraint.h"
+
 namespace BulletAnimatSim
 {
 	namespace Environment
@@ -16,7 +18,7 @@ namespace BulletAnimatSim
 			class BULLET_PORT BlPrismatic : public BlMotorizedJoint, public AnimatSim::Environment::Joints::Prismatic, public OsgAnimatSim::Environment::Joints::OsgPrismatic     
 			{
 			protected:
-                btGeneric6DofConstraint *m_btPrismatic;
+                btAnimatGeneric6DofConstraint *m_btPrismatic;
 
        			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
@@ -24,6 +26,10 @@ namespace BulletAnimatSim
                 virtual float GetCurrentBtPosition();
 
                 virtual void TurnMotorOff();
+                virtual bool NeedApplyAssist();
+                virtual void ApplyMotorAssist();
+
+                virtual void EnableFeedback();
 
             public:
 				BlPrismatic();

@@ -92,6 +92,43 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 	}
 }
 
+void BlMotorizedJoint::Physics_CollectExtraData()
+{
+    OsgSimulator *lpSim = GetOsgSimulator();
+	if(m_btJoint && lpSim && m_lpThisMotorJoint)
+	{
+	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+        CStdFPoint vVal, vAssist;
+
+        float fltRatio = fMassUnits * fDisUnits;
+        vAssist = m_lpThisMotorJoint->MotorAssistForceToAReport();
+		vVal[0] = (m_btJointFeedback.m_appliedForceBodyA[0] * fltRatio) + vAssist[0];
+		vVal[1] = (m_btJointFeedback.m_appliedForceBodyA[1] * fltRatio) + vAssist[1];
+		vVal[2] = (m_btJointFeedback.m_appliedForceBodyA[2] * fltRatio) + vAssist[2];
+        m_lpThisMotorJoint->MotorForceToA(vVal);
+
+        vAssist = m_lpThisMotorJoint->MotorAssistForceToBReport();
+		vVal[0] = (m_btJointFeedback.m_appliedForceBodyB[0] * fltRatio) + vAssist[0];
+		vVal[1] = (m_btJointFeedback.m_appliedForceBodyB[1] * fltRatio) + vAssist[0];
+		vVal[2] = (m_btJointFeedback.m_appliedForceBodyB[2] * fltRatio) + vAssist[0];
+        m_lpThisMotorJoint->MotorForceToB(vVal);
+
+        fltRatio = fMassUnits * fDisUnits * fDisUnits;
+        vAssist = m_lpThisMotorJoint->MotorAssistTorqueToAReport();
+		vVal[0] = (m_btJointFeedback.m_appliedTorqueBodyA[0] * fltRatio) + vAssist[0];
+		vVal[1] = (m_btJointFeedback.m_appliedTorqueBodyA[1] * fltRatio) + vAssist[0];
+		vVal[2] = (m_btJointFeedback.m_appliedTorqueBodyA[2] * fltRatio) + vAssist[0];
+        m_lpThisMotorJoint->MotorTorqueToA(vVal);
+
+        vAssist = m_lpThisMotorJoint->MotorAssistTorqueToBReport();
+		vVal[0] = (m_btJointFeedback.m_appliedTorqueBodyB[0] * fltRatio) + vAssist[0];
+		vVal[1] = (m_btJointFeedback.m_appliedTorqueBodyB[1] * fltRatio) + vAssist[0];
+		vVal[2] = (m_btJointFeedback.m_appliedTorqueBodyB[2] * fltRatio) + vAssist[0];
+        m_lpThisMotorJoint->MotorTorqueToB(vVal);
+	}
+}
+
 
 	}			// Environment
 }				//BulletAnimatSim

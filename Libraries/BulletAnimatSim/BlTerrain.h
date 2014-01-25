@@ -18,6 +18,8 @@ namespace BulletAnimatSim
 				virtual void CreatePhysicsGeometry();
 				virtual void LoadMeshNode();
 
+                virtual void CreateDynamicPart();
+
 			public:
 				BlTerrain();
 				virtual ~BlTerrain();

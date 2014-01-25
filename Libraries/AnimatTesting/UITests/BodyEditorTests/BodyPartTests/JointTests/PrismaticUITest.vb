@@ -18,7 +18,12 @@ Namespace UITests
 
 #Region "Methods"
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                     DataSource("System.Data.OleDb", _
+                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                "PhysicsEngines", _
+                                DataAccessMethod.Sequential), _
+                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_Prismatic()
                         TestJoint()
                     End Sub
@@ -45,6 +50,8 @@ Namespace UITests
                         m_strInitialJointXRot = "0"
                         m_strInitialJointYRot = "0"
                         m_strInitialJointZRot = "90"
+
+                        m_strNoMoveJointRot = "90"
 
                         m_strFallUpper1 = "0.1"
                         m_strFallUpper2 = "0.2"

@@ -181,7 +181,7 @@ void BlPrismatic::SetupPhysics()
 	CStdFPoint vRot(0, 0, osg::PI);
     CalculateRelativeJointMatrices(vRot, mtJointRelParent, mtJointRelChild);
 
-	m_btPrismatic = new btGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
+	m_btPrismatic = new btAnimatGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, false); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btPrismatic, true);
     m_btPrismatic->setDbgDrawSize(btScalar(5.f));
@@ -205,6 +205,8 @@ void BlPrismatic::SetupPhysics()
     if(m_lpBlChild && m_lpBlChild->Part())
         m_lpBlChild->Part()->setSleepingThresholds(0, 0);
 
+    m_btPrismatic->setJointFeedback(&m_btJointFeedback);
+
     Prismatic::Initialize();
     BlJoint::Initialize();
 }
@@ -214,6 +216,7 @@ void BlPrismatic::CreateJoint()
 	SetupGraphics();
 	SetupPhysics();
 }
+
 
 #pragma region DataAccesMethods
 
@@ -240,13 +243,22 @@ float *BlPrismatic::GetDataPointer(const std::string &strDataType)
 		THROW_PARAM_ERROR(Al_Err_lMustBeContactBodyToGetCount, Al_Err_strMustBeContactBodyToGetCount, "JointID", m_strName);
 	else
 	{
-		lpData = Prismatic::GetDataPointer(strDataType);
+        lpData = BlMotorizedJoint::Physics_GetDataPointer(strType);
+		if(lpData) return lpData;
+
+		lpData = Prismatic::GetDataPointer(strType);
 		if(lpData) return lpData;
 
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "JointID: " + STR(m_strName) + "  DataType: " + strDataType);
 	}
 
 	return lpData;
+}
+
+void BlPrismatic::EnableFeedback()
+{
+    if(m_btPrismatic) m_btPrismatic->enableFeedback(true);
+    GetSimulator()->AddToExtractExtraData(m_lpThisJoint);
 }
 
 bool BlPrismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -276,6 +288,7 @@ void BlPrismatic::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
+    ApplyMotorAssist();
 }
 
 bool BlPrismatic::JointIsLocked()
@@ -314,6 +327,9 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 	{   
 		if(bOn)
         {
+            if(Std_ToLower(m_lpThisJoint->ID()) == "61cbf08d-4625-4b9f-87cd-d08b778cf04e" && GetSimulator()->Time() >= 1.01)
+                bOn = bOn;
+
 			//I had to cut this if statement out. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
 			// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
 			// doing this every single time I set the motor velocity.
@@ -333,6 +349,8 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 
             if(m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
             {
+                m_iAssistCountdown = 3;
+                ClearAssistForces();
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();
             }
@@ -390,6 +408,82 @@ void BlPrismatic::ResetSimulation()
     m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
+}
+
+bool BlPrismatic::NeedApplyAssist()
+{
+    int i = 4;
+    if(GetSimulator()->Time() >= 1.1)
+        i=5;
+
+    if(m_btPrismatic && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild)
+    {
+        float fltSetVel = SetVelocity();
+        int iCurLim = m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[0];
+        float fltPos = m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff[0];
+        float fltLow = m_btPrismatic->getTranslationalLimitMotor()->m_lowerLimit[0];
+        float fltHigh = m_btPrismatic->getTranslationalLimitMotor()->m_upperLimit[0];
+
+        float fltLow1Perc = fabs(fltLow)*0.001;
+        float fltHigh1Perc = fabs(fltHigh)*0.001;
+
+        //If we are moving upwards and are not at upper limit then apply force.
+        if(fltSetVel > 0 && fabs(fltHigh-fltPos)>=fltHigh1Perc)
+            return true;
+
+        //If we are moving downwards and are not at lower limit then apply force.
+        if(fltSetVel < 0 && fabs(fltPos-fltLow)>=fltLow1Perc)
+            return true;
+
+        //If we get here then we should be applying assist forces, but we are at the limit, so clear the
+        //vectors so we are not actually applying anything.
+        ClearAssistForces();
+    }
+
+    return false;
+}
+
+void BlPrismatic::ApplyMotorAssist()
+{
+    //If the motor is on and moving then give it an assisst if it is not making its velocity goal.
+    if(NeedApplyAssist())
+    {
+        if(m_iAssistCountdown<=0)
+        {
+	        float fDisUnits = m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+	        float fMassUnits = m_lpThisAB->GetSimulator()->InverseMassUnits();
+            float fltRatio = fMassUnits * fDisUnits;
+
+            float fltDt = GetSimulator()->PhysicsTimeStep();
+            m_lpAssistPid->Setpoint(SetVelocity());
+            float fltForceMag = m_lpAssistPid->Calculate(fltDt, m_lpThisJoint->JointVelocity());
+            if(fltForceMag > m_fltMaxForceNotScaled)
+                fltForceMag = m_fltMaxForceNotScaled;
+            if(fltForceMag < -m_fltMaxForceNotScaled)
+                fltForceMag = -m_fltMaxForceNotScaled;
+       
+            btVector3 vMotorAxis = m_btPrismatic->GetLinearForceAxis(0);
+
+            btVector3 vBodyAForceReport = -fltForceMag * vMotorAxis;
+            btVector3 vBodyBForceReport = fltForceMag * vMotorAxis;
+            btVector3 vBodyAForce = fltRatio * vBodyAForceReport;
+            btVector3 vBodyBForce = fltRatio * vBodyBForceReport;
+
+            for(int i=0; i<3; i++)
+            {
+                m_vMotorAssistForceToA[i] = vBodyAForce[i];
+                m_vMotorAssistForceToB[i] = vBodyBForce[i];
+                m_vMotorAssistForceToAReport[i] = vBodyAForceReport[i];
+                m_vMotorAssistForceToBReport[i] = vBodyBForceReport[i];
+            }
+
+            m_btParent->applyCentralForce(vBodyAForce);
+            m_btChild->applyCentralForce(vBodyBForce);
+            m_iAssistCountdown = 0;
+        }
+        else
+            m_iAssistCountdown--;
+    }
 }
 
 		}		//Joints

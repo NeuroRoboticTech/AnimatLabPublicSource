@@ -13,9 +13,10 @@ namespace BulletAnimatSim
 			bool m_bMotorOn;
             bool m_bJointLocked;
 
+            btJointFeedback m_btJointFeedback;
+
 			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
-            virtual void ApplyMotorAssist() {};
 
 		public:
 			BlMotorizedJoint();
@@ -24,6 +25,7 @@ namespace BulletAnimatSim
 			virtual bool JointIsLocked() = 0;
 
 		    virtual void Physics_SetVelocityToDesired();
+            virtual void Physics_CollectExtraData();
         };
 
 	}			// Environment

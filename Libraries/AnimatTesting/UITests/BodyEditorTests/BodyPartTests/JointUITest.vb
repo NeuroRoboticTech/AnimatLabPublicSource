@@ -83,6 +83,8 @@ Namespace UITests
                 Protected m_strInitialJointYRot As String = "0"
                 Protected m_strInitialJointZRot As String = "90"
 
+                Protected m_strNoMoveJointRot As String = m_strInitialJointXPos
+
                 Protected m_ptMoveJoint1Start As New Point(687, 428)
                 Protected m_ptMovejoint1End As New Point(652, 608)
 
@@ -324,7 +326,7 @@ Namespace UITests
 
                     'Reset the limit, rotate the part so it should not fall.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower1})
-                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", m_strNoMoveJointRot})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -413,6 +415,12 @@ Namespace UITests
                     'If this motor cannot be motorized then skip this test.
                     If Not Me.IsMotorizedJoint Then Return
 
+                    If m_strPhysicsEngine = "Bullet" Then
+                        'The motors do not currently work well at lower unit scales unless you subdivide your time steps.
+                        'I plan to fix this later, but for now do this to get it to work.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "10"})
+                    End If
+
                     ''Add motor velocity to joint. 
                     AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Joint_1", "JointVelocity") ', "Stimulus_2"
                     SetMotorVelocityStimulus("JointVelocity", False, True, 0, 5, True, True, 1, "")
@@ -452,6 +460,12 @@ Namespace UITests
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
                     DeletePart("Stimuli\JointVelocity", "Delete Stimulus")
+
+                    If m_strPhysicsEngine = "Bullet" Then
+                        'The motors do not currently work well at lower unit scales unless you subdivide your time steps.
+                        'I plan to fix this later, but for now do this to get it to work.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "1"})
+                    End If
                 End Sub
 
                 Protected Overridable Sub TestConstraintLimitsWithForce()
