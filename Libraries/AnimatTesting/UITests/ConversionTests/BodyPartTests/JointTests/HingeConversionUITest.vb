@@ -75,6 +75,8 @@ Namespace UITests
                                  DataAccessMethod.Sequential), _
                       DeploymentItem("TestCases.accdb")>
                     Public Sub Test_HingeLimits()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim dblMin As Single = CSng(TestContext.DataRow("Min"))
                         Dim dblMax As Single = CSng(TestContext.DataRow("Max"))
@@ -83,9 +85,6 @@ Namespace UITests
                         Dim strStiffness As Single = CSng(TestContext.DataRow("Stiffness"))
                         Dim strDataPrefix As String = CStr(TestContext.DataRow("DataPrefix"))
                         Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
-
-                        'If test is not enabled then skip it.
-                        If Not bEnabled Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
