@@ -100,6 +100,12 @@ namespace AnimatSim
             /// Torque vector that the motor assist is applying to body B. (un-scaled units).
             CStdFPoint m_vMotorAssistTorqueToBReport;
 
+            /// The motor assist Force magnitude
+            float m_fltMotorAssistMagnitude;
+
+            /// The reportable motor assist Force magnitude 
+            float m_fltMotorAssistMagnitudeReport;
+
             /// The PID controller for the motor assist system.
             PidControl *m_lpAssistPid;
 

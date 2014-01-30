@@ -255,8 +255,8 @@ void PidControl::Load(CStdXml &oXml)
 
 	//Load Source Data
 	Setpoint(oXml.GetChildFloat("Setpoint", 0));
-	Gain(oXml.GetChildFloat("kp", m_fltGain));
-	IntegralAct(oXml.GetChildFloat("Ki", m_fltIntegralAct));
+	Gain(oXml.GetChildFloat("Kp", m_fltGain)); 
+	IntegralAct(oXml.GetChildFloat("Ki", m_fltIntegralAct)); 
 	DerivativeAct(oXml.GetChildFloat("Kd", m_fltDerivativeAct));
 	ComplexError(oXml.GetChildBool("ComplexError", m_bComplexError));
 	AntiResetWindup(oXml.GetChildBool("AntiResetWindup", m_bAntiResetWindup));
@@ -266,7 +266,7 @@ void PidControl::Load(CStdXml &oXml)
 	ARWBound(oXml.GetChildFloat("ARWBound", m_fltARWBound));
 	RampGradient(oXml.GetChildFloat("RampGradient", m_fltRampGradient));
 
-	Enabled(oXml.GetChildBool("Enabled"));
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 
 	oXml.OutOfElem(); //OutOf PidControl Element
 }

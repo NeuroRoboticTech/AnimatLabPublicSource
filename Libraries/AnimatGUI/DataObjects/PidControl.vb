@@ -257,17 +257,17 @@ Namespace DataObjects
                                         "PID Properties", "Sets whether the PID controller uses complex error calculations or simple ones.", m_bComplexError))
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snKp.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kp", pbNumberBag.GetType(), "kp", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kp", pbNumberBag.GetType(), "Kp", _
                                         "Gains", "Proportional gain.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snKi.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ki", pbNumberBag.GetType(), "ki", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ki", pbNumberBag.GetType(), "Ki", _
                                         "Gains", "Integral gain.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snKd.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kd", pbNumberBag.GetType(), "kd", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kd", pbNumberBag.GetType(), "Kd", _
                                         "Gains", "Derivative gain.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
@@ -356,6 +356,7 @@ Namespace DataObjects
             oXml.IntoElem()
 
             oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Type", "PidControl")
             oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
             oXml.AddChildElement("ClassName", Me.ClassName)
 
@@ -382,5 +383,56 @@ Namespace DataObjects
 #End Region
 
     End Class
+
+#Region " PidControlPropBagConverter "
+
+    Public Class PidControlPropBagConverter
+        Inherits ExpandableObjectConverter
+
+        Public Overloads Overrides Function CanConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal sourceType As System.Type) As Boolean
+
+            Return MyBase.CanConvertFrom(context, sourceType)
+        End Function
+
+        Public Overloads Overrides Function CanConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal destinationType As System.Type) As Boolean
+
+            If destinationType Is GetType(AnimatGuiCtrls.Controls.PropertyBag) Then
+                Return True
+            End If
+            Return MyBase.CanConvertTo(context, destinationType)
+
+        End Function
+
+        Public Overloads Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Object, ByVal destinationType As System.Type) As Object
+            If destinationType Is GetType(String) AndAlso TypeOf (value) Is AnimatGuiCtrls.Controls.PropertyTable Then
+                Dim pbValue As AnimatGuiCtrls.Controls.PropertyTable = DirectCast(value, AnimatGuiCtrls.Controls.PropertyTable)
+
+                If Not pbValue Is Nothing AndAlso Not pbValue.Tag Is Nothing AndAlso TypeOf (pbValue.Tag) Is PidControl Then
+                    Dim svValue As PidControl = DirectCast(pbValue.Tag, PidControl)
+
+                    If svValue.Enabled Then
+                        Return "PID Params"
+                    Else
+                        Return "PID Params"
+                    End If
+                End If
+
+                Return ""
+            ElseIf destinationType Is GetType(String) AndAlso TypeOf (value) Is PidControl Then
+                Dim svValue As PidControl = DirectCast(value, PidControl)
+
+                If svValue.Enabled Then
+                    Return "PID Params"
+                Else
+                    Return "PID Params"
+                End If
+            End If
+
+            Return MyBase.ConvertTo(context, culture, value, destinationType)
+        End Function
+
+    End Class
+
+#End Region
 
 End Namespace

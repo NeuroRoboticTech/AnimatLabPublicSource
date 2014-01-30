@@ -20,6 +20,8 @@ BlMotorizedJoint::BlMotorizedJoint()
 	m_lpThisMotorJoint = NULL;
 	m_bMotorOn = false;
     m_bJointLocked = false;
+    m_fltPredictedPos = 0;
+    m_fltNextPredictedPos = 0;
 }
 
 BlMotorizedJoint::~BlMotorizedJoint()
@@ -71,6 +73,20 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 
 		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
 		m_lpThisMotorJoint->DesiredVelocity(0);
+
+        float fltHalfPercVel = fabs(fltSetVelocity * 0.01);
+        //If the actual velocity matches the set velocity within 1% then lets set the predicted position based on 
+        //current position going forward. If we are not neear the set velocity then continue to use predicted positions.
+        //if(fabs(fltSetVelocity - m_lpThisJoint->JointVelocity()) < fltHalfPercVel)
+        //{
+        //    m_fltPredictedPos = m_lpThisJoint->JointPosition();
+        //    m_fltNextPredictedPos = m_fltPredictedPos +  (fltSetVelocity*m_lpThisAB->GetSimulator()->PhysicsTimeStep());
+        //}
+        //else
+        {
+            m_fltPredictedPos = m_fltNextPredictedPos;
+            m_fltNextPredictedPos = m_fltPredictedPos +  (fltSetVelocity*m_lpThisAB->GetSimulator()->PhysicsTimeStep());
+        }
 
         float fltJointVel = m_lpThisJoint->JointVelocity();
 

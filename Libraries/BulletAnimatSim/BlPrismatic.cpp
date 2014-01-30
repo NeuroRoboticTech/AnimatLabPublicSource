@@ -255,12 +255,6 @@ float *BlPrismatic::GetDataPointer(const std::string &strDataType)
 	return lpData;
 }
 
-void BlPrismatic::EnableFeedback()
-{
-    if(m_btPrismatic) m_btPrismatic->enableFeedback(true);
-    GetSimulator()->AddToExtractExtraData(m_lpThisJoint);
-}
-
 bool BlPrismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(BlJoint::Physics_SetData(strDataType, strValue))
@@ -327,8 +321,8 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 	{   
 		if(bOn)
         {
-            if(Std_ToLower(m_lpThisJoint->ID()) == "61cbf08d-4625-4b9f-87cd-d08b778cf04e" && GetSimulator()->Time() >= 1.01)
-                bOn = bOn;
+           //if(Std_ToLower(m_lpThisJoint->ID()) == "61cbf08d-4625-4b9f-87cd-d08b778cf04e" && GetSimulator()->Time() >= 1.01)
+           //     bOn = bOn;  //Testing
 
 			//I had to cut this if statement out. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
 			// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
@@ -410,16 +404,21 @@ void BlPrismatic::ResetSimulation()
     m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
 }
 
+void BlPrismatic::EnableFeedback()
+{
+    if(m_btPrismatic) m_btPrismatic->enableFeedback(true);
+    GetSimulator()->AddToExtractExtraData(m_lpThisJoint);
+}
+
 bool BlPrismatic::NeedApplyAssist()
 {
     int i = 4;
     if(GetSimulator()->Time() >= 1.1)
         i=5;
 
-    if(m_btPrismatic && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild)
+    if(m_btPrismatic && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild && m_lpAssistPid && m_lpAssistPid->Enabled())
     {
         float fltSetVel = SetVelocity();
-        int iCurLim = m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[0];
         float fltPos = m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff[0];
         float fltLow = m_btPrismatic->getTranslationalLimitMotor()->m_lowerLimit[0];
         float fltHigh = m_btPrismatic->getTranslationalLimitMotor()->m_upperLimit[0];
@@ -455,8 +454,12 @@ void BlPrismatic::ApplyMotorAssist()
             float fltRatio = fMassUnits * fDisUnits;
 
             float fltDt = GetSimulator()->PhysicsTimeStep();
-            m_lpAssistPid->Setpoint(SetVelocity());
-            float fltForceMag = m_lpAssistPid->Calculate(fltDt, m_lpThisJoint->JointVelocity());
+            float fltSetPoint = SetVelocity();
+            float fltInput = m_lpThisJoint->JointVelocity() * fDisUnits;
+
+            m_lpAssistPid->Setpoint(fltSetPoint);
+            m_fltMotorAssistMagnitude = m_lpAssistPid->Calculate(fltDt, fltInput);
+            float fltForceMag = m_fltMotorAssistMagnitude;
             if(fltForceMag > m_fltMaxForceNotScaled)
                 fltForceMag = m_fltMaxForceNotScaled;
             if(fltForceMag < -m_fltMaxForceNotScaled)
@@ -468,6 +471,7 @@ void BlPrismatic::ApplyMotorAssist()
             btVector3 vBodyBForceReport = fltForceMag * vMotorAxis;
             btVector3 vBodyAForce = fltRatio * vBodyAForceReport;
             btVector3 vBodyBForce = fltRatio * vBodyBForceReport;
+            m_fltMotorAssistMagnitudeReport = m_fltMotorAssistMagnitude * fltRatio;
 
             for(int i=0; i<3; i++)
             {

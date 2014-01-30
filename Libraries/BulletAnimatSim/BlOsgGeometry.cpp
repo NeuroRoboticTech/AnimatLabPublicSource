@@ -222,6 +222,18 @@ namespace BulletAnimatSim
 
 #pragma endregion
 
+        btVector3 Vec3AnimatToBullet(const CStdFPoint &vPoint)
+        {
+            btVector3 vVal(vPoint.x, vPoint.y, vPoint.z);
+            return vVal;
+        }
+
+        CStdFPoint Vec3BulletToAnimat(const btVector3 &vPoint)
+        {
+            CStdFPoint vVal(vPoint[0], vPoint[1], vPoint[2]);
+            return vVal;
+        }
+
 	}			// Environment
 //}				//BulletAnimatSim
 

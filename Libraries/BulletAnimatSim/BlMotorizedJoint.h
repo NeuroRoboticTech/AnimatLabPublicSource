@@ -13,6 +13,9 @@ namespace BulletAnimatSim
 			bool m_bMotorOn;
             bool m_bJointLocked;
 
+            float m_fltPredictedPos;
+            float m_fltNextPredictedPos;
+
             btJointFeedback m_btJointFeedback;
 
 			virtual void SetThisPointers();

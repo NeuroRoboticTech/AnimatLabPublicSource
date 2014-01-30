@@ -678,7 +678,12 @@ public:
 		oNewPoint.z = z * oPoint.z;
 		return oNewPoint;
 	};
-
+    
+	float dot(const CStdPoint<T> &oPoint)
+	{
+        return ( (x * oPoint.x) + (y * oPoint.y) + (z * oPoint.z) );
+	};
+	 
 	CStdPoint<T> operator/(const CStdPoint<T> &oPoint)
 	{
 		CStdPoint<T> oNewPoint;
@@ -774,6 +779,16 @@ public:
 		oNewPoint.x = x / fltVal;
 		oNewPoint.y = y / fltVal;
 		oNewPoint.z = z / fltVal;
+		return oNewPoint;
+	};
+
+	CStdPoint<T> operator^(const CStdPoint<T> &vVal)
+	{
+		CStdPoint<T> oNewPoint;
+
+		oNewPoint.x = y*vVal.z - z*vVal.y;
+		oNewPoint.y = z*vVal.x - x*vVal.z;
+		oNewPoint.z = x*vVal.y - y*vVal.x;
 		return oNewPoint;
 	};
 

@@ -210,9 +210,9 @@ Namespace DataObjects.Physical.Joints
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBZ", "Motor Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
             End If
 
-            If Util.Application.Physics.GenerateMotorAssist Then
-                m_doAssistPID = New PidControl(Me)
+            m_doAssistPID = New PidControl(Me)
 
+            If Util.Application.Physics.GenerateMotorAssist Then
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAY", "Motor Assist Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAZ", "Motor Assist Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
@@ -228,6 +228,8 @@ Namespace DataObjects.Physical.Joints
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBX", "Motor Assist Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBY", "Motor Assist Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBZ", "Motor Assist Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceMagnitude", "Motor Assist Force Magnitude", "Newtons", "N", -10, 10))
             End If
 
             m_thDataTypes.ID = "JointPosition"
@@ -303,7 +305,7 @@ Namespace DataObjects.Physical.Joints
             m_doLowerLimit.InitializeSimulationReferences(bShowError)
             m_doUpperLimit.InitializeSimulationReferences(bShowError)
 
-            'If Not m_doAssistPID Is Nothing Then m_doAssistPID.InitializeSimulationReferences(bShowError)
+            If Util.Application.Physics.GenerateMotorAssist AndAlso Not m_doAssistPID Is Nothing Then m_doAssistPID.InitializeSimulationReferences(bShowError)
         End Sub
 
         Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList, ByVal arySelectedItems As ArrayList)
@@ -362,10 +364,12 @@ Namespace DataObjects.Physical.Joints
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
                           "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
 
-            'pbNumberBag = m_doAssistPID.Properties
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
-            '                                "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
-            '                                "", GetType(AnimatGUI.Framework)))
+            If Util.Application.Physics.GenerateMotorAssist Then
+                pbNumberBag = m_doAssistPID.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
+                                                "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
+                                                "", GetType(PidControlPropBagConverter)))
+            End If
 
         End Sub
 
@@ -429,7 +433,7 @@ Namespace DataObjects.Physical.Joints
             oXml.AddChildElement("ServoMotor", m_bServoMotor)
             oXml.AddChildElement("ServoGain", m_fltServoGain)
 
-            If Not m_doAssistPID Is Nothing Then
+            If Not m_doAssistPID Is Nothing AndAlso Util.Application.Physics.GenerateMotorAssist Then
                 m_doAssistPID.SaveSimulationXml(oXml, Me)
             End If
 

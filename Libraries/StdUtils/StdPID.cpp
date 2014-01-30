@@ -303,25 +303,4 @@ float CStdPID::Calculate(float fltDt, float fltInput)
     return m_fltOutput;
 }
 
-//void CStdPID::Load(CStdXml &oXml)
-//{
-//	AnimatBase::Load(oXml);
-//
-//	oXml.IntoElem();  //Into Joint Element
-//
-//    Setpoint(oXml.GetChildFloat("Setpoint", m_fltSetpoint));
-//    Gain(oXml.GetChildFloat("Gain", m_fltGain));
-//    IntegralAct(oXml.GetChildFloat("IntegralAct", m_fltIntegralAct));
-//    DerivativeAct(oXml.GetChildFloat("DerivativeAct", m_fltDerivativeAct));
-//    ComplexError(oXml.GetChildBool("ComplexError", m_bComplexError));
-//    AntiResetWindup(oXml.GetChildBool("ARW", m_bAntiResetWindup));
-//    RampLimit(oXml.GetChildBool("RampLimit", m_bRampLimit));
-//    RangeMax(oXml.GetChildFloat("RangeMax", m_fltRangeMax));
-//    RangeMin(oXml.GetChildFloat("RangeMin", m_fltRangeMin));
-//    ARWBound(oXml.GetChildFloat("ARWBound", m_fltARWBound));
-//    RampGradient(oXml.GetChildFloat("RampGradient", m_fltRampGradient));
-//
-//	oXml.OutOfElem(); //OutOf Joint Element
-//}
-
 }				//StdUtils

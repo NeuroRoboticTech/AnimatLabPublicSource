@@ -39,10 +39,16 @@ namespace BulletAnimatSim
 				/// The rotation of the hinge in degrees.
 				float m_fltRotationDeg;
 
+                float m_fltChildMassWithChildren;
+
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void UpdateData();
+
+                virtual bool NeedApplyAssist();
                 virtual void ApplyMotorAssist();
+
+                virtual void EnableFeedback();
 
                 virtual float GetCurrentBtPosition();
 

@@ -53,10 +53,11 @@ MotorizedJoint::MotorizedJoint(void)
 	m_bServoMotor = false;
 	m_ftlServoGain = 100;
 	m_lpPhysicsMotorJoint = NULL;
-    //m_lpAssistPid = NULL;
+    m_lpAssistPid = NULL;
     m_iAssistCountdown = 3;
-    m_lpAssistPid = new PidControl(0, 10, 0.2f, 10, true, false, false, 0, 0, 0, 70);
     ClearAssistForces();
+    m_fltMotorAssistMagnitude = 0;
+    m_fltMotorAssistMagnitudeReport = 0;
 }
 
 MotorizedJoint::~MotorizedJoint(void)
@@ -814,6 +815,8 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorAssistTorqueToBReport[1]);
 	else if(strDataType == "MOTORASSISTTORQUETOBZ")
         return (&m_vMotorAssistTorqueToBReport[2]);
+	else if(strDataType == "MOTORASSISTFORCEMAGNITUDE")
+        return (&m_fltMotorAssistMagnitudeReport);
     else
         return Joint::GetDataPointer(strDataType);
 
@@ -892,6 +895,9 @@ void MotorizedJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray
  */
 void MotorizedJoint::ClearAssistForces()
 {
+    if(m_lpAssistPid)
+        m_lpAssistPid->ResetVars();
+
     m_vMotorForceToA.Set(0,0,0);
     m_vMotorAssistForceToA.Set(0,0,0);
     m_vMotorAssistForceToAReport.Set(0,0,0);
@@ -904,6 +910,8 @@ void MotorizedJoint::ClearAssistForces()
     m_vMotorTorqueToB.Set(0,0,0);
     m_vMotorAssistTorqueToB.Set(0,0,0);
     m_vMotorAssistTorqueToBReport.Set(0,0,0);
+    m_fltMotorAssistMagnitude = 0;
+    m_fltMotorAssistMagnitudeReport = 0;
 }
 
 /**
@@ -936,6 +944,13 @@ void MotorizedJoint::Load(CStdXml &oXml)
 	MaxForce(oXml.GetChildFloat("MaxForce", m_fltMaxForce));
 	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
 	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
+
+    if(oXml.FindChildElement("PID", false))
+    {
+        m_lpAssistPid = new PidControl(0, 10, 0.2f, 10, true, false, false, 0, 0, 0, 70);
+		m_lpAssistPid->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
+        m_lpAssistPid->Load(oXml);
+    }
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

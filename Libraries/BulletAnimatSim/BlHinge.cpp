@@ -32,6 +32,7 @@ BlHinge::BlHinge()
 	SetThisPointers();
 	m_btHinge = NULL;
 	m_fltRotationDeg = 0;
+    m_fltChildMassWithChildren = 0;
 
 	m_lpUpperLimit = new BlHingeLimit();
 	m_lpLowerLimit = new BlHingeLimit();
@@ -223,8 +224,13 @@ void BlHinge::SetupPhysics()
     if(m_lpBlChild && m_lpBlChild->Part())
         m_lpBlChild->Part()->setSleepingThresholds(0, 0);
 
+    m_btHinge->setJointFeedback(&m_btJointFeedback);
+
     Hinge::Initialize();
     BlJoint::Initialize();
+
+    m_fltChildMassWithChildren = m_lpChild->MassWithChildren();
+    m_fltChildMassWithChildren *= (m_lpThisAB->GetSimulator()->MassUnits());
 }
 
 void BlHinge::CreateJoint()
@@ -343,14 +349,17 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 	{   
 		if(bOn)
         {
-			//I had to cut this if statement out. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
+            if(!m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
+            {
+                m_fltNextPredictedPos = m_lpThisJoint->JointPosition();
+                m_fltPredictedPos = m_fltNextPredictedPos;
+            }
+
+			//I had to move these statements out of the if above. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
 			// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
 			// doing this every single time I set the motor velocity.
-            //if(!m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked() || fabs(m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0]) < 1e-4)
-            //{
-                SetLimitValues();
-                m_lpThisJoint->WakeDynamics();
-            //}
+            SetLimitValues();
+            m_lpThisJoint->WakeDynamics();
 
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
@@ -362,6 +371,8 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 
             if(m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
             {
+                m_iAssistCountdown = 3;
+                ClearAssistForces();
                 m_lpThisJoint->WakeDynamics();
                 SetLimitValues();
             }
@@ -417,18 +428,105 @@ void BlHinge::ResetSimulation()
     m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
 }
 
+void BlHinge::EnableFeedback()
+{
+    if(m_btHinge) m_btHinge->enableFeedback(true);
+    GetSimulator()->AddToExtractExtraData(m_lpThisJoint);
+}
+
+bool BlHinge::NeedApplyAssist()
+{
+    //int i = 4;
+    //if(GetSimulator()->Time() >= 1.1)
+    //    i=5;
+
+    if(m_btHinge && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild && m_lpAssistPid && m_lpAssistPid->Enabled())
+    {
+        float fltSetVel = SetVelocity();
+        float fltPos = m_btHinge->getRotationalLimitMotor(0)->m_currentPosition;
+        float fltLow = m_btHinge->getRotationalLimitMotor(0)->m_loLimit;
+        float fltHigh = m_btHinge->getRotationalLimitMotor(0)->m_hiLimit;
+
+        float fltLow1Perc = fabs(fltLow)*0.001;
+        float fltHigh1Perc = fabs(fltHigh)*0.001;
+
+        //If we are moving upwards and are not at upper limit then apply force.
+        if(fltSetVel > 0 && fabs(fltHigh-fltPos)>=fltHigh1Perc)
+            return true;
+
+        //If we are moving downwards and are not at lower limit then apply force.
+        if(fltSetVel < 0 && fabs(fltPos-fltLow)>=fltLow1Perc)
+            return true;
+
+        //If we get here then we should be applying assist forces, but we are at the limit, so clear the
+        //vectors so we are not actually applying anything.
+        ClearAssistForces();
+    }
+
+    return false;
+}
+
 void BlHinge::ApplyMotorAssist()
 {
-    //Need to add later.
-    //If the motor is on and moving then nullify the torque acting on it.
-    //if(m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild)
-    //{
-       // m_lpPID->Setpoint(SetVelocity());
-        //m_fltVelocity
-        
-        //m_btParent->applyTorque(vInvParentTorque);
-        //m_btChild->applyTorque(vInvChildTorque);
-    //}
+    //If the motor is on and moving then give it an assisst if it is not making its velocity goal.
+    if(NeedApplyAssist())
+    {
+        if(m_iAssistCountdown<=0)
+        {
+	        float fDisUnits = m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+	        float fMassUnits = m_lpThisAB->GetSimulator()->InverseMassUnits();
+            float fltRatio = fMassUnits * fDisUnits;
+
+            float fltDt = GetSimulator()->PhysicsTimeStep();
+            float fltSetPoint = m_fltPredictedPos;
+            float fltInput = m_lpThisJoint->JointPosition();
+            float fltSetVel = SetVelocity();
+            float fltVelDiffSign = (fltSetVel-m_lpThisJoint->JointVelocity());
+
+            m_lpAssistPid->Setpoint(fltSetPoint);
+            m_fltMotorAssistMagnitudeReport = fabs(m_lpAssistPid->Calculate(fltDt, fltInput)) * Std_Sign(fltVelDiffSign);
+            float fltForceMag = m_fltMotorAssistMagnitudeReport * m_fltChildMassWithChildren;
+            if(fltForceMag > m_fltMaxForceNotScaled)
+                fltForceMag = m_fltMaxForceNotScaled;
+            if(fltForceMag < -m_fltMaxForceNotScaled)
+                fltForceMag = -m_fltMaxForceNotScaled;
+
+            btVector3 vbtMotorAxis = m_btHinge->GetAngularForceAxis(0);
+            
+            CStdFPoint vMotorAxis(vbtMotorAxis[0], vbtMotorAxis[1], vbtMotorAxis[2]);
+            CStdFPoint vBodyA = m_lpThisJoint->Parent()->AbsolutePosition();
+            CStdFPoint vBodyB = m_lpThisJoint->Child()->AbsolutePosition();
+            CStdFPoint vHinge = m_lpThisJoint->AbsolutePosition();
+
+            CStdFPoint vBodyAxisA = (vHinge - vBodyA);
+            vBodyAxisA.Normalize();
+            vBodyAxisA = vMotorAxis ^ vBodyAxisA;
+
+            CStdFPoint vBodyAxisB = (vHinge - vBodyB);
+            vBodyAxisB.Normalize();
+            vBodyAxisB = vMotorAxis ^ vBodyAxisB;
+
+            CStdFPoint vBodyAForceReport = vBodyAxisA * -fltForceMag;
+            CStdFPoint vBodyBForceReport = vBodyAxisB * fltForceMag;
+            CStdFPoint vBodyAForce = vBodyAForceReport * fltRatio;
+            CStdFPoint vBodyBForce = vBodyBForceReport * fltRatio;
+            m_fltMotorAssistMagnitude = m_fltMotorAssistMagnitudeReport * fltRatio;
+
+            m_vMotorAssistForceToA = vBodyAForce;
+            m_vMotorAssistForceToB = vBodyBForce;
+            m_vMotorAssistForceToAReport = vBodyAForceReport;
+            m_vMotorAssistForceToBReport = vBodyBForceReport;
+
+            btVector3 vbtMotorAForce(vBodyAForce.x, vBodyAForce.y, vBodyAForce.z);
+            btVector3 vbtMotorBForce(vBodyBForce.x, vBodyBForce.y, vBodyBForce.z);
+
+            m_btParent->applyCentralForce(vbtMotorAForce);
+            m_btChild->applyCentralForce(vbtMotorBForce);
+            m_iAssistCountdown = 0;
+        }
+        else
+            m_iAssistCountdown--;
+    }
 }
 
 		}		//Joints
