@@ -30,6 +30,8 @@ Namespace DataObjects.Physical
         ''' The neural modules treeview node
         Protected m_tnNeuralModules As Crownwood.DotNetMagic.Controls.Node
 
+        Protected m_doRobotInterface As Robotics.RobotInterface
+
 #End Region
 
 #Region " Properties "
@@ -96,6 +98,15 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable Property RobotInterface() As Robotics.RobotInterface
+            Get
+                Return m_doRobotInterface
+            End Get
+            Set(ByVal Value As Robotics.RobotInterface)
+                m_doRobotInterface = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -147,6 +158,9 @@ Namespace DataObjects.Physical
             Next
             m_tnNeuralModules.CollapseAll()
 
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            End If
         End Sub
 
         Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
@@ -167,6 +181,10 @@ Namespace DataObjects.Physical
                 End If
             Next
 
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            End If
+
             Return tnNode
         End Function
 
@@ -183,6 +201,18 @@ Namespace DataObjects.Physical
                 If Me.RootBody Is Nothing Then
                     Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
                     popup.Items.Add(mcAddRoot)
+                End If
+
+                If Util.Application.RobotInterfaces.Count > 0 AndAlso m_doRobotInterface Is Nothing Then
+                    Dim mcAddInterface As New System.Windows.Forms.ToolStripMenuItem("Add robot interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddRobotInterface.gif"), New EventHandler(AddressOf Me.OnAddRobotInterface))
+                    popup.Items.Add(mcAddInterface)
+                End If
+
+                If Not m_doRobotInterface Is Nothing Then
+                    Dim mcExportRobotStandalone As New System.Windows.Forms.ToolStripMenuItem("Export robot standalone simulation", Util.Application.ToolStripImages.GetImage("AnimatGUI.ExportStandalone.gif"), New EventHandler(AddressOf Me.OnExportRobotStandalone))
+                    Dim mcRunRobotSim As New System.Windows.Forms.ToolStripMenuItem("Run robot simulation", Nothing, New EventHandler(AddressOf Me.OnRunRobotSimulation))
+                    popup.Items.Add(mcExportRobotStandalone)
+                    popup.Items.Add(mcRunRobotSim)
                 End If
 
                 Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
@@ -308,6 +338,10 @@ Namespace DataObjects.Physical
                 m_bnRootSubSystem.FindChildrenOfType(tpTemplate, colDataObjects)
             End If
 
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.FindChildrenOfType(tpTemplate, colDataObjects)
+            End If
+
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
@@ -315,6 +349,7 @@ Namespace DataObjects.Physical
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_bnRootSubSystem Is Nothing Then doObject = m_bnRootSubSystem.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryNeuralModules Is Nothing Then doObject = m_aryNeuralModules.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doRobotInterface Is Nothing Then doObject = m_doRobotInterface.FindObjectByID(strID)
             Return doObject
 
         End Function
@@ -411,6 +446,17 @@ Namespace DataObjects.Physical
                 End If
 
                 oXml.OutOfElem() 'Outof NervousSystem Element
+
+                If oXml.FindChildElement("RobotInterface", False) Then
+                    oXml.IntoChildElement("RobotInterface")
+                    Dim strAssemblyFile As String = oXml.GetChildString("AssemblyFile")
+                    Dim strClassName As String = oXml.GetChildString("ClassName")
+                    oXml.OutOfElem()
+
+                    m_doRobotInterface = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Robotics.RobotInterface)
+                    m_doRobotInterface.LoadData(oXml)
+                End If
+
                 oXml.OutOfElem() 'Outof Organism Element
 
             Catch ex As System.Exception
@@ -449,6 +495,11 @@ Namespace DataObjects.Physical
             End If
 
             oXml.OutOfElem() 'Outof Nervous System
+
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof Organism 
 
         End Sub
@@ -476,6 +527,11 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof NeuralModules
 
                 oXml.OutOfElem() 'Outof Nervous System
+
+                If Not m_doRobotInterface Is Nothing Then
+                    m_doRobotInterface.SaveSimulationXml(oXml, Me)
+                End If
+
                 oXml.OutOfElem() 'Outof Organism 
 
             Catch ex As System.Exception
@@ -492,7 +548,7 @@ Namespace DataObjects.Physical
 
             m_bnRootSubSystem = DirectCast(doOrganism.m_bnRootSubSystem.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
             m_aryNeuralModules = DirectCast(doOrganism.m_aryNeuralModules.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNeuralModules)
-
+            m_doRobotInterface = DirectCast(doOrganism.m_doRobotInterface.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Robotics.RobotInterface)
         End Sub
 
         Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
@@ -500,6 +556,7 @@ Namespace DataObjects.Physical
 
             m_bnRootSubSystem.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             m_aryNeuralModules.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doRobotInterface Is Nothing Then m_doRobotInterface.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
@@ -526,6 +583,7 @@ Namespace DataObjects.Physical
 
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+                If Not m_doRobotInterface Is Nothing Then m_doRobotInterface.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             End If
 
         End Sub
@@ -544,6 +602,7 @@ Namespace DataObjects.Physical
 
             m_aryNeuralModules.ClearIsDirty()
             m_bnRootSubSystem.ClearIsDirty()
+            If Not m_doRobotInterface Is Nothing Then m_doRobotInterface.ClearIsDirty()
         End Sub
 
         Public Overrides Sub InitializeAfterLoad()
@@ -568,6 +627,9 @@ Namespace DataObjects.Physical
             If Not m_bnRootSubSystem Is Nothing AndAlso m_bnRootSubSystem.IsInitialized Then
                 m_bnRootSubSystem.AfterInitialized()
             End If
+
+            If Not m_doRobotInterface Is Nothing Then m_doRobotInterface.InitializeAfterLoad()
+
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
@@ -622,6 +684,50 @@ Namespace DataObjects.Physical
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Protected Overridable Sub OnAddRobotInterface(ByVal sender As Object, ByVal e As System.EventArgs)
+            Try
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = Util.Application.RobotInterfaces
+                frmSelInterface.PartTypeName = "Robot Intefaces"
+
+                If Not m_doRobotInterface Is Nothing Then
+                    If Util.ShowMessage("There is already a robot interface associated with this organism. Do you want to replace it?", "Replace Robot Interface", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    'First remove the old one if it exists
+                    If Not m_doRobotInterface Is Nothing Then
+                        m_doRobotInterface.RemoveWorksapceTreeView()
+                        m_doRobotInterface = Nothing
+                    End If
+
+                    'Then create the new one.
+                    m_doRobotInterface = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotInterface)
+                    m_doRobotInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnExportRobotStandalone(ByVal sender As Object, ByVal e As System.EventArgs)
+            Try
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnRunRobotSimulation(ByVal sender As Object, ByVal e As System.EventArgs)
+            Try
+                Throw New System.Exception("This operation is not yet supported.")
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

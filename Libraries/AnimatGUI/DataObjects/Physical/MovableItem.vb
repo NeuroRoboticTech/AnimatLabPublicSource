@@ -292,7 +292,7 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return m_strDescription
             End Get

@@ -189,10 +189,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus can set any property of any object within the system."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property StimulusClassType() As String

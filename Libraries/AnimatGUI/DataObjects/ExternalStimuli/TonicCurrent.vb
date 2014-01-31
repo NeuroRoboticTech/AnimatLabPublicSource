@@ -79,10 +79,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus injects a constant current into the selected cell for a specific amount of time, or continuously."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property DragImageName() As String

@@ -29,6 +29,12 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Set
         End Property
 
+        Public Overrides ReadOnly Property AllowUserToChoose() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property UseMassForRigidBodyDefinitions() As Boolean
             Get
                 Return True

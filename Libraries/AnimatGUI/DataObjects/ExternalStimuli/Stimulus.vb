@@ -214,8 +214,6 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public MustOverride ReadOnly Property Description() As String
-
         Public Overridable ReadOnly Property StimulusModuleName() As String
             Get
                 Return Me.ModuleName

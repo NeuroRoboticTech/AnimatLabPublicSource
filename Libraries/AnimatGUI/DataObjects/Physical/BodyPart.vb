@@ -20,7 +20,7 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_ButtonImage As System.Drawing.Image
+        Protected m_doRobotPartInterface As Robotics.RobotPartInterface
 
 #End Region
 
@@ -75,31 +75,6 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property ButtonImage() As System.Drawing.Image
-            Get
-                If m_ButtonImage Is Nothing AndAlso Me.ButtonImageName.Trim.Length > 0 Then
-                    Dim myAssembly As System.Reflection.Assembly
-                    myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
-                    m_ButtonImage = ImageManager.LoadImage(myAssembly, Me.ButtonImageName)
-                End If
-
-                Return m_ButtonImage
-            End Get
-            Set(ByVal Value As System.Drawing.Image)
-                If Not Value Is Nothing Then
-                    m_ButtonImage = Value
-                End If
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property ButtonImageName() As String
-            Get
-                Return ""
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overrides ReadOnly Property StructureID() As String
             Get
                 If Not Me.ParentStructure Is Nothing Then
@@ -122,6 +97,15 @@ Namespace DataObjects.Physical
             Get
                 Return 0
             End Get
+        End Property
+
+        Public Overridable Property RobotPartInterface As Robotics.RobotPartInterface
+            Get
+                Return m_doRobotPartInterface
+            End Get
+            Set(ByVal Value As Robotics.RobotPartInterface)
+                m_doRobotPartInterface = Value
+            End Set
         End Property
 
 #End Region
@@ -335,6 +319,18 @@ Namespace DataObjects.Physical
             ' Create the popup menu object
             popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcExpandAll, mcCollapseAll})
 
+            If m_doRobotPartInterface Is Nothing Then
+                If Util.Application.RobotPartInterfaces.Count > 0 AndAlso Util.IsTypeOf(Me.ParentStructure.GetType(), GetType(Physical.Organism), False) Then
+                    Dim doOrganism As Physical.Organism = DirectCast(Me.ParentStructure, Physical.Organism)
+                    If Not doOrganism.RobotInterface Is Nothing Then
+                        Dim mcSepExpand1 As New ToolStripSeparator()
+                        Dim mcAddRobotPartInterface As New System.Windows.Forms.ToolStripMenuItem("Add robot control interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddRobotInterface.gif"), New EventHandler(AddressOf Me.OnAddRobotPartInterface))
+                        popup.Items.Add(mcSepExpand1)
+                        popup.Items.Add(mcAddRobotPartInterface)
+                    End If
+                End If
+            End If
+
             Return popup
         End Function
 
@@ -348,6 +344,17 @@ Namespace DataObjects.Physical
 
             Return False
         End Function
+
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
+
+            If Not m_doRobotPartInterface Is Nothing Then
+                m_doRobotPartInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            End If
+        End Sub
 
         Public Overrides Sub SelectStimulusType()
             Dim frmStimulusType As New Forms.ExternalStimuli.SelectStimulusType
@@ -375,6 +382,16 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into BodyPart Element
 
+            If oXml.FindChildElement("RobotPartInterface", False) Then
+                oXml.IntoChildElement("RobotPartInterface")
+                Dim strAssemblyFile As String = oXml.GetChildString("AssemblyFile")
+                Dim strClassName As String = oXml.GetChildString("ClassName")
+                oXml.OutOfElem()
+
+                m_doRobotPartInterface = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Robotics.RobotPartInterface)
+                m_doRobotPartInterface.LoadData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -387,6 +404,10 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
 
+            If Not m_doRobotPartInterface Is Nothing Then
+                m_doRobotPartInterface.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -398,6 +419,10 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
+
+            If Not m_doRobotPartInterface Is Nothing Then
+                m_doRobotPartInterface.SaveSimulationXml(oXml, Me)
+            End If
 
             oXml.OutOfElem() 'Outof BodyPart Element
         End Sub
@@ -493,6 +518,48 @@ Namespace DataObjects.Physical
             End Try
 
         End Sub
+
+        Protected Overridable Sub OnAddRobotPartInterface(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                If Not m_doRobotPartInterface Is Nothing Then
+                    If Util.ShowMessage("This part already has a robot interface defined. Do you want to replace it?", "Replace robot interface", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
+                Dim aryCompatibleInterfaces As New Collections.RobotPartInterfaces(Nothing)
+
+                For Each doInterface As DataObjects.Robotics.RobotPartInterface In Util.Application.RobotPartInterfaces
+                    If doInterface.IsCompatibleWithPartType(Me) Then
+                        aryCompatibleInterfaces.Add(doInterface)
+                    End If
+                Next
+
+                If aryCompatibleInterfaces.Count <= 0 Then
+                    Throw New System.Exception("No compatible robot interfaces were found for this part type.")
+                End If
+
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = aryCompatibleInterfaces
+                frmSelInterface.PartTypeName = "Robot Part Interfaces"
+
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    If Not m_doRobotPartInterface Is Nothing Then
+                        m_doRobotPartInterface.RemoveWorksapceTreeView()
+                        m_doRobotPartInterface = Nothing
+                    End If
+
+                    m_doRobotPartInterface = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotPartInterface)
+                    m_doRobotPartInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
 
 #Region " Copy/Paste Methods "
 

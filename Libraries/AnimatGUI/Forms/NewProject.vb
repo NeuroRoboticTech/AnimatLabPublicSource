@@ -299,11 +299,13 @@ Namespace Forms
                     Dim iIdx As Integer = 0
                     Dim iSelIdx As Integer = 0
                     For Each doEngine As DataObjects.Physical.PhysicsEngine In Util.Application.PhysicsEngines
-                        cboPhysicsEngine.Items.Add(doEngine)
-                        If doEngine.Name = Util.Application.Physics.Name Then
-                            iSelIdx = iIdx
+                        If doEngine.AllowUserToChoose Then
+                            cboPhysicsEngine.Items.Add(doEngine)
+                            If doEngine.Name = Util.Application.Physics.Name Then
+                                iSelIdx = iIdx
+                            End If
+                            iIdx = iIdx + 1
                         End If
-                        iIdx = iIdx + 1
                     Next
 
                     cboPhysicsEngine.Enabled = True

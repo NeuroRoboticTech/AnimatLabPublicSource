@@ -1,0 +1,57 @@
+Imports System
+Imports System.Drawing
+Imports System.Collections
+Imports System.ComponentModel
+Imports System.Windows.Forms
+Imports System.Diagnostics
+Imports System.IO
+Imports System.Xml
+Imports AnimatGuiCtrls.Controls
+Imports AnimatGUI.Framework
+
+Namespace DataObjects
+    Namespace Robotics
+
+        Public MustInherit Class InputSensorSystem
+            Inherits RobotPartInterface
+
+#Region " Attributes "
+
+#End Region
+
+#Region " Properties "
+
+            Public Overrides ReadOnly Property PartType As String
+                Get
+                    Return "InputSensorSystem"
+                End Get
+            End Property
+
+#End Region
+
+#Region " Methods "
+
+            Public Sub New(ByVal doParent As Framework.DataObject)
+                MyBase.New(doParent)
+
+                m_strName = "InputSensorSystem"
+            End Sub
+
+            Public Overrides Sub ClearIsDirty()
+                MyBase.ClearIsDirty()
+            End Sub
+
+            Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                                ByVal doRoot As AnimatGUI.Framework.DataObject)
+                MyBase.CloneInternal(doOriginal, bCutData, doRoot)
+
+                Dim OrigNode As InputSensorSystem = DirectCast(doOriginal, InputSensorSystem)
+
+            End Sub
+
+#End Region
+
+        End Class
+
+    End Namespace
+End Namespace

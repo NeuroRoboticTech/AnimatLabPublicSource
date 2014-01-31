@@ -37,6 +37,8 @@ Namespace Framework
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_tnWorkspaceNode As Crownwood.DotNetMagic.Controls.Node
 
+        Protected m_ButtonImage As System.Drawing.Image
+
         Protected m_oTag As Object
 
         Protected m_bIsInitialized As Boolean = False
@@ -62,6 +64,15 @@ Namespace Framework
                     m_tnWorkspaceNode.Text = m_strName
                     Util.ProjectWorkspace.TreeView.Sort()
                 End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property Description() As String
+            Get
+                Return ""
+            End Get
+            Set(ByVal Value As String)
             End Set
         End Property
 
@@ -253,6 +264,32 @@ Namespace Framework
             Set(ByVal value As Crownwood.DotNetMagic.Controls.Node)
                 m_tnWorkspaceNode = value
             End Set
+        End Property
+
+
+        <Browsable(False)> _
+        Public Overridable Property ButtonImage() As System.Drawing.Image
+            Get
+                If m_ButtonImage Is Nothing AndAlso Me.ButtonImageName.Trim.Length > 0 Then
+                    Dim myAssembly As System.Reflection.Assembly
+                    myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
+                    m_ButtonImage = ImageManager.LoadImage(myAssembly, Me.ButtonImageName)
+                End If
+
+                Return m_ButtonImage
+            End Get
+            Set(ByVal Value As System.Drawing.Image)
+                If Not Value Is Nothing Then
+                    m_ButtonImage = Value
+                End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property ButtonImageName() As String
+            Get
+                Return ""
+            End Get
         End Property
 
         <Browsable(False)> _

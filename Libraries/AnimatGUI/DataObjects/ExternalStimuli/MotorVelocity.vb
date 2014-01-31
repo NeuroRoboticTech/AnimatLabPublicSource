@@ -99,10 +99,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus sets the velocity/position of a motorized joint."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property StimulusClassType() As String

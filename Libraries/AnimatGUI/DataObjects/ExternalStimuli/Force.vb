@@ -152,10 +152,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus applies a force or torque to a body part in the structure."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property StimulusClassType() As String

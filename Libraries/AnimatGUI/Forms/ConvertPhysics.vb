@@ -67,7 +67,9 @@ Namespace Forms
                 cboPhysicsEngine.Items.Clear()
                 For Each doEngine As DataObjects.Physical.PhysicsEngine In Util.Application.PhysicsEngines
                     If Util.Application.Physics.Name <> doEngine.Name OrElse (Util.Application.Physics.Name = doEngine.Name AndAlso m_bShowAllPhysicsOptions) Then
-                        cboPhysicsEngine.Items.Add(doEngine)
+                        If doEngine.AllowUserToChoose Then
+                            cboPhysicsEngine.Items.Add(doEngine)
+                        End If
                     End If
                 Next
                 cboPhysicsEngine.SelectedIndex = 0

@@ -20,6 +20,7 @@ Namespace DataObjects.Physical
 
 #Region " Properties "
 
+        Public MustOverride ReadOnly Property AllowUserToChoose() As Boolean
         Public MustOverride ReadOnly Property UseMassForRigidBodyDefinitions() As Boolean
         Public MustOverride ReadOnly Property AllowDynamicTriangleMesh() As Boolean
         Public MustOverride ReadOnly Property AllowPhysicsSubsteps() As Boolean

@@ -16,10 +16,12 @@ Namespace DataObjects
 
 #Region " Attributes "
 
-        Public Overridable ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return ""
             End Get
+            Set(value As String)
+            End Set
         End Property
 
 #End Region

@@ -50,7 +50,7 @@ Namespace DataObjects.Physical
 
 #Region " Properties "
 
-        Public Overridable Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return m_strDescription
             End Get

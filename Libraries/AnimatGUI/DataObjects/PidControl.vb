@@ -216,20 +216,6 @@ Namespace DataObjects
 
             Dim OrigNode As DataObjects.PidControl = DirectCast(doOriginal, DataObjects.PidControl)
 
-            'Protected m_bComplexError As Boolean = True
-            'Protected m_bAntiResetWindup As Boolean = False
-            'Protected m_bRampLimit As Boolean = False
-
-            'Protected m_snKp As AnimatGUI.Framework.ScaledNumber
-            'Protected m_snKi As AnimatGUI.Framework.ScaledNumber
-            'Protected m_snKd As AnimatGUI.Framework.ScaledNumber
-
-            'Protected m_snRangeMax As AnimatGUI.Framework.ScaledNumber
-            'Protected m_snRangeMin As AnimatGUI.Framework.ScaledNumber
-
-            'Protected m_snARWBound As AnimatGUI.Framework.ScaledNumber
-            'Protected m_snRampGradient As AnimatGUI.Framework.ScaledNumber
-
             m_bComplexError = OrigNode.m_bComplexError
             m_bAntiResetWindup = OrigNode.m_bAntiResetWindup
             m_bRampLimit = OrigNode.m_bRampLimit
@@ -357,8 +343,7 @@ Namespace DataObjects
 
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Type", "PidControl")
-            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
-            oXml.AddChildElement("ClassName", Me.ClassName)
+            oXml.AddChildElement("ModuleName", Me.ModuleName)
 
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("ComplexError", m_bComplexError)

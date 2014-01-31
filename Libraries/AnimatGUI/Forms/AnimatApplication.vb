@@ -1128,6 +1128,10 @@ Namespace Forms
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
         Protected m_aryProjectMigrations As New Hashtable()
         Protected m_aryPhysicsEngines As New Collections.PhysicsEngines(Nothing)
+        Protected m_aryMotorControlSystems As New Collections.MotorControlSystems(Nothing)
+        Protected m_aryInputSensorSystems As New Collections.InputSensorSystems(Nothing)
+        Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Nothing)
+        Protected m_aryRobotInterfaces As New Collections.RobotInterfaces(Nothing)
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1605,6 +1609,30 @@ Namespace Forms
         Public Overridable ReadOnly Property PhysicsEngines() As Collections.PhysicsEngines
             Get
                 Return m_aryPhysicsEngines
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property MotorControlSystems() As Collections.MotorControlSystems
+            Get
+                Return m_aryMotorControlSystems
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property InputSensorSystems() As Collections.InputSensorSystems
+            Get
+                Return m_aryInputSensorSystems
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RobotPartInterfaces() As Collections.RobotPartInterfaces
+            Get
+                Return m_aryRobotPartInterfaces
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RobotInterfaces() As Collections.RobotInterfaces
+            Get
+                Return m_aryRobotInterfaces
             End Get
         End Property
 
@@ -2234,6 +2262,10 @@ Namespace Forms
                 m_aryMacros.Clear()
                 m_aryExternalStimuli.Clear()
                 m_aryPhysicsEngines.Clear()
+                m_aryMotorControlSystems.Clear()
+                m_aryInputSensorSystems.Clear()
+                m_aryRobotPartInterfaces.Clear()
+                m_aryRobotInterfaces.Clear()
 
                 Util.DisableDirtyFlags = True
 
@@ -2415,6 +2447,29 @@ Namespace Forms
                                 Dim doConv As DataObjects.Physical.PhysicsEngine = CreatePhysicsEngine(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
                                     m_aryPhysicsEngines.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.MotorControlSystem), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.MotorControlSystem")
+                                Dim doConv As DataObjects.Robotics.MotorControlSystem = CreateMotorControlSystem(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryMotorControlSystems.Add(doConv)
+                                    m_aryRobotPartInterfaces.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.InputSensorSystem), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.InputSensorSystem")
+                                Dim doConv As DataObjects.Robotics.InputSensorSystem = CreateInputSensorSystem(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryInputSensorSystems.Add(doConv)
+                                    m_aryRobotPartInterfaces.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.RobotInterface), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.RobotInterface")
+                                Dim doConv As DataObjects.Robotics.RobotInterface = CreateRobotInterface(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryRobotInterfaces.Add(doConv)
                                     m_aryAllDataTypes.Add(doConv)
                                 End If
                             End If
@@ -2666,6 +2721,54 @@ Namespace Forms
             Return Nothing
         End Function
 
+        Protected Overridable Function CreateMotorControlSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.MotorControlSystem
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.MotorControlSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.MotorControlSystem)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateMotorControlSystem: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateInputSensorSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.InputSensorSystem
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.InputSensorSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.InputSensorSystem)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateInputSensorSystem: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateRobotInterface(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.RobotInterface
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.RobotInterface = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.RobotInterface)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateRobotInterface: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
         Protected Overridable Sub CreateBehavioralPanels()
 
             Try
@@ -2722,7 +2825,6 @@ Namespace Forms
 
                 'Now sort the panels
                 m_aryAlphabeticalBehavioralPanels.Sort(New AnimatGUI.Collections.Comparers.ComparePanelNames)
-
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
