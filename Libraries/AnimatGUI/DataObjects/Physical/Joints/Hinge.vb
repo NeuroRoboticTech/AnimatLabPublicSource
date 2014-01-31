@@ -370,9 +370,9 @@ Namespace DataObjects.Physical.Joints
             ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
             ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
 
-            If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
-                m_doAssistPID.LoadData(oXml)
-            End If
+            'If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
+            '    m_doAssistPID.LoadData(oXml)
+            'End If
 
             oXml.OutOfElem() 'Outof Joint Element
 

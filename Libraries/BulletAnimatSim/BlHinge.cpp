@@ -468,65 +468,65 @@ bool BlHinge::NeedApplyAssist()
 
 void BlHinge::ApplyMotorAssist()
 {
-    //If the motor is on and moving then give it an assisst if it is not making its velocity goal.
-    if(NeedApplyAssist())
-    {
-        if(m_iAssistCountdown<=0)
-        {
-	        float fDisUnits = m_lpThisAB->GetSimulator()->InverseDistanceUnits();
-	        float fMassUnits = m_lpThisAB->GetSimulator()->InverseMassUnits();
-            float fltRatio = fMassUnits * fDisUnits;
+    ////If the motor is on and moving then give it an assisst if it is not making its velocity goal.
+    //if(NeedApplyAssist())
+    //{
+    //    if(m_iAssistCountdown<=0)
+    //    {
+	   //     float fDisUnits = m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+	   //     float fMassUnits = m_lpThisAB->GetSimulator()->InverseMassUnits();
+    //        float fltRatio = fMassUnits * fDisUnits;
 
-            float fltDt = GetSimulator()->PhysicsTimeStep();
-            float fltSetPoint = m_fltPredictedPos;
-            float fltInput = m_lpThisJoint->JointPosition();
-            float fltSetVel = SetVelocity();
-            float fltVelDiffSign = (fltSetVel-m_lpThisJoint->JointVelocity());
+    //        float fltDt = GetSimulator()->PhysicsTimeStep();
+    //        float fltSetPoint = m_fltPredictedPos;
+    //        float fltInput = m_lpThisJoint->JointPosition();
+    //        float fltSetVel = SetVelocity();
+    //        float fltVelDiffSign = (fltSetVel-m_lpThisJoint->JointVelocity());
 
-            m_lpAssistPid->Setpoint(fltSetPoint);
-            m_fltMotorAssistMagnitudeReport = fabs(m_lpAssistPid->Calculate(fltDt, fltInput)) * Std_Sign(fltVelDiffSign);
-            float fltForceMag = m_fltMotorAssistMagnitudeReport * m_fltChildMassWithChildren;
-            if(fltForceMag > m_fltMaxForceNotScaled)
-                fltForceMag = m_fltMaxForceNotScaled;
-            if(fltForceMag < -m_fltMaxForceNotScaled)
-                fltForceMag = -m_fltMaxForceNotScaled;
+    //        m_lpAssistPid->Setpoint(fltSetPoint);
+    //        m_fltMotorAssistMagnitudeReport = fabs(m_lpAssistPid->Calculate(fltDt, fltInput)) * Std_Sign(fltVelDiffSign);
+    //        float fltForceMag = m_fltMotorAssistMagnitudeReport * m_fltChildMassWithChildren;
+    //        if(fltForceMag > m_fltMaxForceNotScaled)
+    //            fltForceMag = m_fltMaxForceNotScaled;
+    //        if(fltForceMag < -m_fltMaxForceNotScaled)
+    //            fltForceMag = -m_fltMaxForceNotScaled;
 
-            btVector3 vbtMotorAxis = m_btHinge->GetAngularForceAxis(0);
-            
-            CStdFPoint vMotorAxis(vbtMotorAxis[0], vbtMotorAxis[1], vbtMotorAxis[2]);
-            CStdFPoint vBodyA = m_lpThisJoint->Parent()->AbsolutePosition();
-            CStdFPoint vBodyB = m_lpThisJoint->Child()->AbsolutePosition();
-            CStdFPoint vHinge = m_lpThisJoint->AbsolutePosition();
+    //        btVector3 vbtMotorAxis = m_btHinge->GetAngularForceAxis(0);
+    //        
+    //        CStdFPoint vMotorAxis(vbtMotorAxis[0], vbtMotorAxis[1], vbtMotorAxis[2]);
+    //        CStdFPoint vBodyA = m_lpThisJoint->Parent()->AbsolutePosition();
+    //        CStdFPoint vBodyB = m_lpThisJoint->Child()->AbsolutePosition();
+    //        CStdFPoint vHinge = m_lpThisJoint->AbsolutePosition();
 
-            CStdFPoint vBodyAxisA = (vHinge - vBodyA);
-            vBodyAxisA.Normalize();
-            vBodyAxisA = vMotorAxis ^ vBodyAxisA;
+    //        CStdFPoint vBodyAxisA = (vHinge - vBodyA);
+    //        vBodyAxisA.Normalize();
+    //        vBodyAxisA = vMotorAxis ^ vBodyAxisA;
 
-            CStdFPoint vBodyAxisB = (vHinge - vBodyB);
-            vBodyAxisB.Normalize();
-            vBodyAxisB = vMotorAxis ^ vBodyAxisB;
+    //        CStdFPoint vBodyAxisB = (vHinge - vBodyB);
+    //        vBodyAxisB.Normalize();
+    //        vBodyAxisB = vMotorAxis ^ vBodyAxisB;
 
-            CStdFPoint vBodyAForceReport = vBodyAxisA * -fltForceMag;
-            CStdFPoint vBodyBForceReport = vBodyAxisB * fltForceMag;
-            CStdFPoint vBodyAForce = vBodyAForceReport * fltRatio;
-            CStdFPoint vBodyBForce = vBodyBForceReport * fltRatio;
-            m_fltMotorAssistMagnitude = m_fltMotorAssistMagnitudeReport * fltRatio;
+    //        CStdFPoint vBodyAForceReport = vBodyAxisA * -fltForceMag;
+    //        CStdFPoint vBodyBForceReport = vBodyAxisB * fltForceMag;
+    //        CStdFPoint vBodyAForce = vBodyAForceReport * fltRatio;
+    //        CStdFPoint vBodyBForce = vBodyBForceReport * fltRatio;
+    //        m_fltMotorAssistMagnitude = m_fltMotorAssistMagnitudeReport * fltRatio;
 
-            m_vMotorAssistForceToA = vBodyAForce;
-            m_vMotorAssistForceToB = vBodyBForce;
-            m_vMotorAssistForceToAReport = vBodyAForceReport;
-            m_vMotorAssistForceToBReport = vBodyBForceReport;
+    //        m_vMotorAssistForceToA = vBodyAForce;
+    //        m_vMotorAssistForceToB = vBodyBForce;
+    //        m_vMotorAssistForceToAReport = vBodyAForceReport;
+    //        m_vMotorAssistForceToBReport = vBodyBForceReport;
 
-            btVector3 vbtMotorAForce(vBodyAForce.x, vBodyAForce.y, vBodyAForce.z);
-            btVector3 vbtMotorBForce(vBodyBForce.x, vBodyBForce.y, vBodyBForce.z);
+    //        btVector3 vbtMotorAForce(vBodyAForce.x, vBodyAForce.y, vBodyAForce.z);
+    //        btVector3 vbtMotorBForce(vBodyBForce.x, vBodyBForce.y, vBodyBForce.z);
 
-            m_btParent->applyCentralForce(vbtMotorAForce);
-            m_btChild->applyCentralForce(vbtMotorBForce);
-            m_iAssistCountdown = 0;
-        }
-        else
-            m_iAssistCountdown--;
-    }
+    //        m_btParent->applyCentralForce(vbtMotorAForce);
+    //        m_btChild->applyCentralForce(vbtMotorBForce);
+    //        m_iAssistCountdown = 0;
+    //    }
+    //    else
+    //        m_iAssistCountdown--;
+    //}
 }
 
 		}		//Joints
