@@ -1,42 +1,47 @@
-// BlClassFactory.cpp: implementation of the BlClassFactory class.
+// RbClassFactory.cpp: implementation of the RbClassFactory class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
-#include "BlClassFactory.h"
+#include "RbClassFactory.h"
 
-#include "BlConstraintRelaxation.h"
-#include "BlConstraintFriction.h"
-#include "BlJoint.h"
-#include "BlMotorizedJoint.h"
-#include "BlRigidBody.h"
-#include "BlPlane.h"
-#include "BlBox.h"
-#include "BlCylinder.h"
-#include "BlCone.h" 
-#include "BlSphere.h"
-#include "BlTorus.h"
-#include "BlEllipsoid.h"
-#include "BlFluidPlane.h"
-#include "BlMeshBase.h"
-#include "BlMesh.h"
-#include "BlTerrain.h"
+#include "RbConstraintRelaxation.h"
+#include "RbConstraintFriction.h"
+#include "RbMovableItem.h"
+#include "RbBody.h"
+#include "RbJoint.h"
+#include "RbMotorizedJoint.h"
+#include "RbRigidBody.h"
+#include "RbBox.h"
+#include "RbCylinder.h"
+#include "RbCone.h" 
+#include "RbSphere.h"
+#include "RbTorus.h"
+#include "RbEllipsoid.h"
+#include "RbMesh.h"
 
-#include "BlHinge.h"
-#include "BlPrismatic.h"
-#include "BlBallSocket.h"
-#include "BlRPRO.h"
-#include "BlUniversal.h"
-#include "BlDistanceJoint.h"
+#include "RbHinge.h"
+#include "RbPrismatic.h"
+#include "RbBallSocket.h"
+#include "RbRPRO.h"
+#include "RbUniversal.h"
+#include "RbFreeJoint.h"
 
-#include "BlLine.h"
-#include "BlLinearHillMuscle.h"
-#include "BlLinearHillStretchReceptor.h"
-#include "BlSpring.h"
+#include "RbAttachment.h"
+#include "RbMouth.h"
+#include "RbOdorSensor.h"
 
-#include "BlSimulator.h"
+#include "RbLine.h"
+#include "RbLinearHillMuscle.h"
+#include "RbLinearHillStretchReceptor.h"
+#include "RbSpring.h"
 
-#include "BlMaterialType.h"
+#include "RbOrganism.h"
+#include "RbStructure.h"
+
+#include "RbSimulator.h"
+
+#include "RbMaterialType.h"
 
 
 #ifdef _WINDOWS
@@ -45,7 +50,7 @@
 	extern "C" IStdClassFactory* GetStdClassFactory() 
 #endif
 {
-	IStdClassFactory *lpFactory = new BlClassFactory;
+	IStdClassFactory *lpFactory = new RbClassFactory;
 	return lpFactory;
 }
 
@@ -86,26 +91,26 @@ catch(...)
 
 
 
-namespace BulletAnimatSim
+namespace RoboticsAnimatSim
 {
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-BlClassFactory::BlClassFactory()
+RbClassFactory::RbClassFactory()
 {
 
 }
 
-BlClassFactory::~BlClassFactory()
+RbClassFactory::~RbClassFactory()
 {
 
 }
 
 // ************* Body Type Conversion functions ******************************
 
-RigidBody *BlClassFactory::CreateRigidBody(std::string strType, bool bThrowError)
+RigidBody *RbClassFactory::CreateRigidBody(std::string strType, bool bThrowError)
 {
 	RigidBody *lpPart=NULL;
 
@@ -114,47 +119,41 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BOX")
-		lpPart = new BlBox;
+		lpPart = new RbBox;
 	else if(strType == "BOXCONTACTSENSOR")
 	{
-		lpPart = new BlBox;
+		lpPart = new RbBox;
 		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CYLINDER")
-		lpPart = new BlCylinder;
+		lpPart = new RbCylinder;
 	else if(strType == "CYLINDERCONTACTSENSOR")
 	{
-		lpPart = new BlCylinder;
+		lpPart = new RbCylinder;
 		lpPart->IsContactSensor(true);
 	}
 	else if(strType == "CONE")
-		lpPart = new BlCone;
+		lpPart = new RbCone;
 	else if(strType == "SPHERE")
-		lpPart = new BlSphere;
-	else if(strType == "PLANE")
-		lpPart = new BlPlane;
+		lpPart = new RbSphere;
 	else if(strType == "ATTACHMENT")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgAttachment;
+		lpPart = new RbAttachment;
 	else if(strType == "LINEARHILLMUSCLE")
-		lpPart = new BlLinearHillMuscle;
+		lpPart = new RbLinearHillMuscle;
 	else if(strType == "LINEARHILLSTRETCHRECEPTOR")
-		lpPart = new BlLinearHillStretchReceptor;
+		lpPart = new RbLinearHillStretchReceptor;
 	else if(strType == "SPRING")
-		lpPart = new BlSpring;
+		lpPart = new RbSpring;
 	else if(strType == "TORUS")
-		lpPart = new BlTorus;
+		lpPart = new RbTorus;
 	else if(strType == "ELLIPSOID")
-		lpPart = new BlEllipsoid;
+		lpPart = new RbEllipsoid;
 	else if(strType == "MOUTH")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgMouth;
+		lpPart = new RbMouth;
 	else if(strType == "ODORSENSOR")
-		lpPart = new OsgAnimatSim::Environment::Bodies::OsgOdorSensor;
-	else if(strType == "FLUIDPLANE")
-		lpPart = new BlFluidPlane;
-	else if(strType == "TERRAIN")
-		lpPart = new BlTerrain;
+		lpPart = new RbOdorSensor;
 	else if(strType == "MESH")
-		lpPart = new BlMesh;
+		lpPart = new RbMesh;
 	else if(strType == "STOMACH")
 		lpPart = new Stomach;
 	else
@@ -185,7 +184,7 @@ catch(...)
 
 // ************* Body Joint Conversion functions ******************************
 
-Joint *BlClassFactory::CreateJoint(std::string strType, bool bThrowError)
+Joint *RbClassFactory::CreateJoint(std::string strType, bool bThrowError)
 {
 	Joint *lpJoint=NULL;
 
@@ -194,21 +193,19 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "HINGE")
-		lpJoint = new BlHinge;
+		lpJoint = new RbHinge;
 	else if(strType == "PRISMATIC")
-		lpJoint = new BlPrismatic;
+		lpJoint = new RbPrismatic;
 	else if(strType == "BALLSOCKET")
-		lpJoint = new BlBallSocket;
+		lpJoint = new RbBallSocket;
 	else if(strType == "RPRO")
-		lpJoint = new BlRPRO;
+		lpJoint = new RbRPRO;
 	else if(strType == "STATIC")
 		lpJoint = NULL;
 	else if(strType == "UNIVERSAL")
-		lpJoint = new BlUniversal;
+		lpJoint = new RbUniversal;
 	else if(strType == "FREEJOINT")
-		lpJoint = new OsgAnimatSim::Environment::Joints::OsgFreeJoint;
-	else if(strType == "DISTANCE")
-		lpJoint = new BlDistanceJoint;
+		lpJoint = new RbFreeJoint;
 	else
 	{
 		lpJoint = NULL;
@@ -236,7 +233,7 @@ catch(...)
 
 // ************* Organism Type Conversion functions ******************************
 
-Structure *BlClassFactory::CreateStructure(std::string strType, bool bThrowError)
+Structure *RbClassFactory::CreateStructure(std::string strType, bool bThrowError)
 {
 	Structure *lpStructure=NULL;
 
@@ -245,11 +242,11 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC")
-		lpStructure = new OsgOrganism;
+		lpStructure = new RbOrganism;
 	else if(strType == "ORGANISM")
-		lpStructure = new OsgOrganism;
+		lpStructure = new RbOrganism;
 	else if(strType == "STRUCTURE")
-		lpStructure = new OsgStructure;
+		lpStructure = new RbStructure;
 	else
 	{
 		lpStructure = NULL;
@@ -278,7 +275,7 @@ catch(...)
 
 // ************* Simulator Type Conversion functions ******************************
 
-Simulator *BlClassFactory::CreateSimulator(std::string strType, bool bThrowError)
+Simulator *RbClassFactory::CreateSimulator(std::string strType, bool bThrowError)
 {
 	Simulator *lpSimulator=NULL;
 
@@ -286,10 +283,10 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-    if(strType == "VORTEXSIMULATOR" || strType == "BULLETSIMULATOR")
-		lpSimulator = new BlSimulator;
+	if(strType == "ROBOTICSSIMULATOR")
+		lpSimulator = new RbSimulator;
 	else if(strType == "")
-		lpSimulator = new BlSimulator;
+		lpSimulator = new RbSimulator;
 	else
 	{
 		lpSimulator = NULL;
@@ -318,7 +315,7 @@ catch(...)
 
 
 // ************* KeyFrame Type Conversion functions ******************************
-KeyFrame *BlClassFactory::CreateKeyFrame(std::string strType, bool bThrowError)
+KeyFrame *RbClassFactory::CreateKeyFrame(std::string strType, bool bThrowError)
 {
 	KeyFrame *lpFrame=NULL;
 
@@ -358,7 +355,7 @@ catch(...)
 
 // ************* DataChart Type Conversion functions ******************************
 
-DataChart *BlClassFactory::CreateDataChart(std::string strType, bool bThrowError)
+DataChart *RbClassFactory::CreateDataChart(std::string strType, bool bThrowError)
 {
 	DataChart *lpChart=NULL;
 
@@ -401,7 +398,7 @@ catch(...)
 
 // ************* DataColumn Type Conversion functions ******************************
 
-DataColumn *BlClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
+DataColumn *RbClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -439,7 +436,7 @@ catch(...)
 
 // ************* Adapter Type Conversion functions ******************************
 
-Adapter *BlClassFactory::CreateAdapter(std::string strType, bool bThrowError)
+Adapter *RbClassFactory::CreateAdapter(std::string strType, bool bThrowError)
 {
 	Adapter *lpAdapter=NULL;
 
@@ -485,7 +482,7 @@ catch(...)
 
 // ************* Gain Type Conversion functions ******************************
 
-Gain *BlClassFactory::CreateGain(std::string strType, bool bThrowError)
+Gain *RbClassFactory::CreateGain(std::string strType, bool bThrowError)
 {
 	Gain *lpGain=NULL;
 
@@ -529,7 +526,7 @@ catch(...)
 
 // ************* External Stimulus Type Conversion functions ******************************
 
-ExternalStimulus *BlClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
+ExternalStimulus *RbClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -585,7 +582,7 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
-HudItem *BlClassFactory::CreateHudItem(std::string strType, bool bThrowError)
+HudItem *RbClassFactory::CreateHudItem(std::string strType, bool bThrowError)
 {
 	HudItem *lpItem=NULL;
 
@@ -593,14 +590,9 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "HUDTEXT")
-		lpItem = new OsgHudText;
-	else
-	{
-		lpItem = NULL;
-		if(bThrowError)
-			THROW_PARAM_ERROR(Bl_Err_lInvalidHudItemType, Bl_Err_strInvalidHudItemType, "HudItem", strType);
-	}
+	lpItem = NULL;
+	if(bThrowError)
+		THROW_PARAM_ERROR(Rb_Err_lInvalidHudItemType, Rb_Err_strInvalidHudItemType, "HudItem", strType);
 
 	return lpItem;
 }
@@ -622,7 +614,7 @@ catch(...)
 
 // ************* Hud Type Conversion functions ******************************
 
-Hud *BlClassFactory::CreateHud(std::string strType, bool bThrowError)
+Hud *RbClassFactory::CreateHud(std::string strType, bool bThrowError)
 {
 	Hud *lpHud=NULL;
 
@@ -630,14 +622,9 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "HUD")
-		lpHud = new OsgHud;
-	else
-	{
-		lpHud = NULL;
-		if(bThrowError)
-			THROW_PARAM_ERROR(Bl_Err_lInvalidHudItemType, Bl_Err_strInvalidHudItemType, "Hud", strType);
-	}
+	lpHud = NULL;
+	if(bThrowError)
+		THROW_PARAM_ERROR(Rb_Err_lInvalidHudItemType, Rb_Err_strInvalidHudItemType, "Hud", strType);
 
 	return lpHud;
 }
@@ -659,7 +646,7 @@ catch(...)
 // 
 // ************* Material Type Conversion functions ******************************
 
-MaterialType *BlClassFactory::CreateMaterialItem(std::string strType, bool bThrowError)
+MaterialType *RbClassFactory::CreateMaterialItem(std::string strType, bool bThrowError)
 {
 	MaterialType *lpItem=NULL;
 
@@ -668,12 +655,12 @@ try
 	strType = Std_ToUpper(Std_Trim(strType));
 
 	if(strType == "BASIC" || strType == "DEFAULT" || strType == "BULLET")
-		lpItem = new BlMaterialType;
+		lpItem = new RbMaterialType;
 	else
 	{
 		lpItem = NULL;
 		if(bThrowError)
-			THROW_PARAM_ERROR(Bl_Err_lInvalidMaterialItemType, Bl_Err_strInvalidMaterialItemType, "Material Pair", strType);
+			THROW_PARAM_ERROR(Rb_Err_lInvalidMaterialItemType, Rb_Err_strInvalidMaterialItemType, "Material Pair", strType);
 	}
 
 	return lpItem;
@@ -696,7 +683,7 @@ catch(...)
 
 // ************* Material Type Conversion functions ******************************
 
-SimulationWindow *BlClassFactory::CreateWindowItem(std::string strType, bool bThrowError)
+SimulationWindow *RbClassFactory::CreateWindowItem(std::string strType, bool bThrowError)
 {
 	SimulationWindow *lpItem=NULL;
 
@@ -704,16 +691,9 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "BASIC" || strType == "DEFAULT")
-		lpItem = new OsgSimulationWindow;
-	else if(strType == "SCRIPTEDSIMWINDOW")
-		lpItem = new OsgScriptedSimulationWindow;
-	else
-	{
-		lpItem = NULL;
-		if(bThrowError)
-			THROW_PARAM_ERROR(Bl_Err_lInvalidSimWindowType, Bl_Err_strInvalidSimWindowType, "Simulation Window", strType);
-	}
+	lpItem = NULL;
+	if(bThrowError)
+		THROW_PARAM_ERROR(Rb_Err_lInvalidSimWindowType, Rb_Err_strInvalidSimWindowType, "Simulation Window", strType);
 
 	return lpItem;
 }
@@ -735,7 +715,7 @@ catch(...)
 
 // ************* Light Conversion functions ******************************
 
-Light *BlClassFactory::CreateLight(std::string strType, bool bThrowError)
+Light *RbClassFactory::CreateLight(std::string strType, bool bThrowError)
 {
 	Light *lpItem=NULL;
 
@@ -743,14 +723,9 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "LIGHT")
-		lpItem = new OsgLight;
-	else
-	{
-		lpItem = NULL;
-		if(bThrowError)
-			THROW_PARAM_ERROR(Bl_Err_lInvalidLightType, Bl_Err_strInvalidLightType, "Light Type", strType);
-	}
+	lpItem = NULL;
+	if(bThrowError)
+		THROW_PARAM_ERROR(Rb_Err_lInvalidLightType, Rb_Err_strInvalidLightType, "Light Type", strType);
 
 	return lpItem;
 }
@@ -772,7 +747,7 @@ catch(...)
 
 // ************* External Neural Module Conversion functions ******************************
 
-NeuralModule *BlClassFactory::CreateNeuralModule(std::string strType, bool bThrowError)
+NeuralModule *RbClassFactory::CreateNeuralModule(std::string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -783,7 +758,7 @@ try
 	if(strType == "PHYSICSNEURALMODULE")
 	{
 		lpModule = new AnimatSim::Behavior::PhysicsNeuralModule;
-		lpModule->ClassFactory(new BlClassFactory());
+		lpModule->ClassFactory(new RbClassFactory());
 	}
 	else
 	{
@@ -813,7 +788,7 @@ catch(...)
 
 // ************* Constraint Relaxation Conversion functions ******************************
 
-ConstraintRelaxation *BlClassFactory::CreateConstraintRelaxation(std::string strType, bool bThrowError)
+ConstraintRelaxation *RbClassFactory::CreateConstraintRelaxation(std::string strType, bool bThrowError)
 {
 	ConstraintRelaxation *lpRelax=NULL;
 
@@ -823,7 +798,7 @@ try
 
 	if(strType == "CONSTRAINTRELAXATION" || strType == "DEFAULT")
 	{
-		lpRelax = new BlConstraintRelaxation;
+		lpRelax = new RbConstraintRelaxation;
 	}
 	else
 	{
@@ -853,7 +828,7 @@ catch(...)
 
 // ************* Constraint Friction Conversion functions ******************************
 
-ConstraintFriction *BlClassFactory::CreateConstraintFriction(std::string strType, bool bThrowError)
+ConstraintFriction *RbClassFactory::CreateConstraintFriction(std::string strType, bool bThrowError)
 {
 	ConstraintFriction *lpFriction=NULL;
 
@@ -863,7 +838,7 @@ try
 
 	if(strType == "CONSTRAINTRELAXATION" || strType == "DEFAULT")
 	{
-		lpFriction = new BlConstraintFriction;
+		lpFriction = new RbConstraintFriction;
 	}
 	else
 	{
@@ -894,7 +869,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
+CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 
@@ -950,10 +925,10 @@ CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::strin
 // ************* IStdClassFactory functions ******************************
 
 
-void BULLET_PORT RunBootstrap(int argc, const char **argv)
+void ROBOTICS_PORT RunBootstrap(int argc, const char **argv)
 {
 	BootstrapRunLibrary(argc, argv);
 }
 
 
-}			//BulletAnimatSim
+}			//RoboticsAnimatSim
