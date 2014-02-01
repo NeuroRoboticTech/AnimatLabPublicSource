@@ -15,6 +15,9 @@ class ROBOTICS_PORT RbDynamixelCM5USBUARTHingeController : public AnimatSim::Rob
 {
 protected:
     RbHinge *m_lpHinge;
+    float m_fltPos;
+    int m_iCounter;
+    int m_iSign;
 
 	virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 

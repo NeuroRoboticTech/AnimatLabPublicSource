@@ -61,6 +61,7 @@ void RbOrganism::Create()
 
 	Organism::Create();
 }
+
 void RbOrganism::ResetSimulation()
 {
 	RbMovableItem::Physics_ResetSimulation();

@@ -30,7 +30,7 @@ namespace RoboticsGUI
             {
                 get
                 {
-                    return "RoboticsGUI.Graphics.SwitchlLarge.gif";
+                    return "RoboticsGUI.Graphics.SwitchLarge.gif";
                 }
             }
 

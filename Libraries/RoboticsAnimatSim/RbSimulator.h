@@ -51,12 +51,12 @@ namespace RoboticsAnimatSim
 
         //TODO Need to fix these and get them working again.
 		//Timer Methods
-        virtual unsigned long long GetTimerTick() {return 0;};
-		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd) {return 0;};
-		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd) {return 0;};
-		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd) {return 0;};
-		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) {return 0;};
-        virtual void MicroSleep(unsigned int iMicroTime) {}
+        virtual unsigned long long GetTimerTick();
+		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
+        virtual void MicroSleep(unsigned int iMicroTime);
         virtual void WriteToConsole(std::string strMessage) {};
 
 #pragma endregion

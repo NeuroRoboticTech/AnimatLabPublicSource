@@ -63,7 +63,7 @@ namespace RoboticsAnimatSim
             virtual void SetVisible(bool) {};
             virtual void SetAlpha() {};
 
-            virtual void CreateItem() {};
+            virtual void CreateItem();
         };
 
 	}			// Environment

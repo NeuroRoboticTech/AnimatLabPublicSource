@@ -106,7 +106,8 @@ void Organism::Initialize()
 {
 	Structure::Initialize();
 
-	m_lpNervousSystem->Initialize();
+    if(m_lpNervousSystem)
+    	m_lpNervousSystem->Initialize();
 
     if(m_lpRobot)
         m_lpRobot->Initialize();
@@ -119,7 +120,8 @@ void Organism::ResetSimulation()
 	//Make sure to reset us from being killed if it happend during the sim.
 	Kill(false);
 
-	m_lpNervousSystem->ResetSimulation();
+    if(m_lpNervousSystem)   
+    	m_lpNervousSystem->ResetSimulation();
 
     if(m_lpRobot)
         m_lpRobot->ResetSimulation();

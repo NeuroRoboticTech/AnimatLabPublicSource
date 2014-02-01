@@ -1188,7 +1188,7 @@ Namespace DataObjects
 
             Dim ePlaybackMode As enumPlaybackControlMode = m_ePlaybackControlMode
             If Not Util.ExportRobotInterface Is Nothing Then
-                ePlaybackMode = enumPlaybackControlMode.FastestPossible
+                ePlaybackMode = enumPlaybackControlMode.MatchPhysicsStep
             End If
 
             Dim iVal As Integer = CType(ePlaybackMode, Integer)

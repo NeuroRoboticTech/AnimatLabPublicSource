@@ -18,7 +18,7 @@ Namespace DataObjects
 #Region " Attributes "
 
             Protected m_doOrganism As Physical.Organism
-            Protected m_snPhysicsStep As AnimatGUI.Framework.ScaledNumber
+            Protected m_snPhysicsTimeStep As AnimatGUI.Framework.ScaledNumber
 
 #End Region
 
@@ -33,11 +33,11 @@ Namespace DataObjects
             <Browsable(False)> _
             Public Overridable Property PhysicsTimeStep() As AnimatGUI.Framework.ScaledNumber
                 Get
-                    Return m_snPhysicsStep
+                    Return m_snPhysicsTimeStep
                 End Get
                 Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                     If Not Value Is Nothing Then
-                        If Not Value Is Nothing Then m_snPhysicsStep.CopyData(Value)
+                        If Not Value Is Nothing Then m_snPhysicsTimeStep.CopyData(Value)
                     End If
                 End Set
             End Property
@@ -61,12 +61,12 @@ Namespace DataObjects
 
                 m_doOrganism = DirectCast(doParent, Physical.Organism)
                 m_strName = "RobotInterface"
-                m_snPhysicsStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "", "")
+                m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "", "")
             End Sub
 
             Public Overrides Sub ClearIsDirty()
                 MyBase.ClearIsDirty()
-                m_snPhysicsStep.ClearIsDirty()
+                m_snPhysicsTimeStep.ClearIsDirty()
             End Sub
 
             Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -75,7 +75,7 @@ Namespace DataObjects
 
                 Dim OrigNode As RobotInterface = DirectCast(doOriginal, RobotInterface)
 
-                m_snPhysicsStep = DirectCast(OrigNode.m_snPhysicsStep.Clone(Me, bCutData, doRoot), ScaledNumber)
+                m_snPhysicsTimeStep = DirectCast(OrigNode.m_snPhysicsTimeStep.Clone(Me, bCutData, doRoot), ScaledNumber)
             End Sub
 
             Public Overridable Sub GenerateStandaloneSimFile()
@@ -133,8 +133,8 @@ Namespace DataObjects
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", GetType(Boolean), "Enabled", _
                                             "Properties", "Determines if this controller is enabled or not.", m_bEnabled))
 
-                Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsStep.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Step", pbNumberBag.GetType(), "PhysicsStep", _
+                Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                             "Properties", "Overrides the physics step set in the simulation for the robot. " & _
                                             "This allows you to set a different physics time step for the robotic simulation.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
@@ -148,7 +148,7 @@ Namespace DataObjects
                 m_strID = oXml.GetChildString("ID", Me.ID)
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
 
-                m_snPhysicsStep.LoadData(oXml, "PhysicsStep")
+                m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
 
                 oXml.OutOfElem()
 
@@ -165,7 +165,7 @@ Namespace DataObjects
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 
-                m_snPhysicsStep.SaveData(oXml, "PhysicsStep")
+                m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
 
                 oXml.OutOfElem()
 
@@ -181,7 +181,7 @@ Namespace DataObjects
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
 
-                m_snPhysicsStep.SaveSimulationXml(oXml, Me, "PhysicsStep")
+                m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
 
                 oXml.OutOfElem()
 

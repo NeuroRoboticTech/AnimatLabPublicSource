@@ -6,16 +6,20 @@
 				 "../*.cpp"}
 		includedirs { "../../../include",
 					  "../../StdUtils",
-					  "../../AnimatSim"}	  
+					  "../../AnimatSim",
+  					  "../../../../3rdParty/OpenSceneGraph-3.0.1/include"}	  
 		libdirs { "../../../lib",
-				  "$(OutDir)" }
+				  "$(OutDir)",
+				  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib" }
 		
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "ROBOTICSANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("RoboticsAnimatSim_vc10D")
-			links { "wsock32", 
+			links { "OpenThreadsd",
+					"osgd", 
+					"wsock32", 
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
@@ -28,7 +32,9 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("RoboticsAnimatSim_vc10")
-			links { "wsock32",
+			links { "OpenThreads",
+					"osg",
+					"wsock32",
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }
@@ -45,9 +51,11 @@
 				      "../../StdUtils",
 					  "../../AnimatSim",
 					  "../../RoboticsAnimatSim",
+  					  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
 					  "../../../../3rdParty/boost_1_54_0"}	  
 		libdirs { "../../../lib",
 				  "$(OutDir)",
+				  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
 				  "../../../../3rdParty/boost_1_54_0/lib" }
 		targetdir ("../../../bin")
 		targetname ("Robotics_UnitTests")
@@ -55,7 +63,9 @@
 		configuration { "Debug", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "_CRT_SECURE_NO_WARNINGS"	}
 			flags   { "Symbols", "SEH" }
-			links { "wsock32", 
+			links { "OpenThreadsd",
+					"osgd", 
+					"wsock32", 
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
@@ -63,7 +73,9 @@
 		configuration { "Release", "windows" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL" }
 			flags   { "Optimize", "SEH" }
-			links { "wsock32",
+			links { "OpenThreads",
+					"osg",
+					"wsock32",
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }

@@ -28,6 +28,9 @@ namespace RoboticsAnimatSim
 RbDynamixelCM5USBUARTHingeController::RbDynamixelCM5USBUARTHingeController() 
 {
     m_lpHinge = NULL;
+    m_fltPos = 0;
+    m_iCounter = 0;
+    m_iSign = -1;
 }
 
 RbDynamixelCM5USBUARTHingeController::~RbDynamixelCM5USBUARTHingeController()
@@ -59,7 +62,17 @@ void RbDynamixelCM5USBUARTHingeController::StepSimulation()
 
     //Then we need to get the actual position and velocity of the joint and set it back on the joint part.
     //Also, do not forget to scale units if needed.
-    float fltActualPosition = 0;
+
+    // We will fake out some position movement here to show how it propogate to the neuron code.
+    m_iCounter++;
+    if(m_iCounter >= 250)
+    {
+        m_iSign *= -1;
+        m_iCounter=0;
+    }
+    m_fltPos+= (0.01*m_iSign);
+
+    float fltActualPosition = m_fltPos;
     float fltActualVelocity = 0;
     m_lpHinge->JointPosition(fltActualPosition);
     m_lpHinge->JointVelocity(fltActualVelocity);

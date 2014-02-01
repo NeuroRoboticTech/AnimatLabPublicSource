@@ -76,6 +76,29 @@ void RbSimulator::SetSimulationStabilityParams()
 
 }
 
+//Timer Methods
+unsigned long long RbSimulator::GetTimerTick()
+{
+	m_lLastTickTaken = osg::Timer::instance()->tick();
+	return m_lLastTickTaken;
+}
+
+double RbSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_n(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_u(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_m(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_s(lStart, lEnd);}
+
+void RbSimulator::MicroSleep(unsigned int iMicroTime)
+{OpenThreads::Thread::microSleep(iMicroTime);}
+
+
 //This function initializes the Vortex related
 //classes and the vortex viewer.
 void RbSimulator::InitializeRobotics(int argc, const char **argv)
@@ -133,7 +156,7 @@ void RbSimulator::StepSimulation()
 		{
 			Simulator::StepSimulation();
 
-			//unsigned long long lStart = GetTimerTick();
+			unsigned long long lStart = GetTimerTick();
 
    //         if( m_bDrawDebug )
    //             m_dbgDraw.BeginDraw();
@@ -146,22 +169,22 @@ void RbSimulator::StepSimulation()
    //             m_dbgDraw.EndDraw();
    //         }
 
-   //         double dblVal = TimerDiff_s(lStart, GetTimerTick());
-			//m_fltPhysicsStepTime += dblVal;
+            double dblVal = TimerDiff_s(lStart, GetTimerTick());
+			m_fltPhysicsStepTime += dblVal;
 
-			//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
-			//{
-			//	m_dblTotalVortexStepTime += dblVal;
-			//	m_lStepVortexTimeCount++;
-			//}
-			//else if(m_lTimeSlice == 5000)
-			//{
-			//	double dblAvgStepTime = m_dblTotalVortexStepTime/m_lStepVortexTimeCount;
-			//	osg::notify(osg::NOTICE) << "Average step time: " << dblAvgStepTime << std::endl;
-			//	osg::notify(osg::NOTICE) << "Total vortex step time: " << m_dblTotalVortexStepTime << std::endl;
-			//	osg::notify(osg::NOTICE) << "Slice Time: " << m_lTimeSlice << std::endl;
-			//	osg::notify(osg::NOTICE) << "Sim Time: " << Time() << std::endl;
-			//}
+			if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
+			{
+				m_dblTotalVortexStepTime += dblVal;
+				m_lStepVortexTimeCount++;
+			}
+			else if(m_lTimeSlice == 5000)
+			{
+				double dblAvgStepTime = m_dblTotalVortexStepTime/m_lStepVortexTimeCount;
+				//osg::notify(osg::NOTICE) << "Average step time: " << dblAvgStepTime << std::endl;
+				//osg::notify(osg::NOTICE) << "Total vortex step time: " << m_dblTotalVortexStepTime << std::endl;
+				//osg::notify(osg::NOTICE) << "Slice Time: " << m_lTimeSlice << std::endl;
+				//osg::notify(osg::NOTICE) << "Sim Time: " << Time() << std::endl;
+			}
 		}
 
         //PauseSimulation();

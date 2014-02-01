@@ -145,6 +145,11 @@ void RbMovableItem::Physics_OrientNewPart(float fltXPos, float fltYPos, float fl
 {
 }
 
+void RbMovableItem::CreateItem()
+{
+	m_lpThisAB->Initialize();
+}
+
 	}			// Environment
 //}				//RoboticsAnimatSim
 
