@@ -46,6 +46,7 @@ namespace AnimatSim
 BodyPart::BodyPart(void)
 {
 	m_lpPhysicsBody = NULL;
+    m_lpRobot = NULL;
 }
 
 /**
@@ -56,6 +57,17 @@ BodyPart::BodyPart(void)
 **/
 BodyPart::~BodyPart(void)
 {
+
+try
+{
+    if(m_lpRobot)
+    {
+        delete m_lpRobot;
+        m_lpRobot = NULL;
+    }
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of BodyPart\r\n", "", -1, false, true);}
 }
 
 #pragma region AccessorMutators
@@ -171,6 +183,27 @@ void BodyPart::WakeDynamics()
         m_lpPhysicsBody->Physics_WakeDynamics();
 }
 
+void BodyPart::Initialize()
+{
+    Node::Initialize();
+    if(m_lpRobot)
+        m_lpRobot->Initialize();
+}
+
+void BodyPart::StepSimulation()
+{
+    Node::StepSimulation();
+
+    if(m_lpRobot)
+        m_lpRobot->StepSimulation();
+}
+
+void BodyPart::ResetSimulation()
+{
+    if(m_lpRobot)
+        m_lpRobot->ResetSimulation();
+}
+
 #pragma region DataAccesMethods
 
 void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
@@ -225,6 +258,22 @@ void BodyPart::Load(CStdXml &oXml)
 {
 	Node::Load(oXml);
 	MovableItem::Load(oXml);
+
+    oXml.IntoElem(); //Into BodyPart Element
+    if(oXml.FindChildElement("RobotPartInterface", false))
+    {
+	    oXml.IntoChildElement("RobotPartInterface");
+	    std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	    std::string strType = oXml.GetChildString("Type");
+	    oXml.OutOfElem(); //OutOf RobotInterface Element
+
+	    m_lpRobot = dynamic_cast<RobotPartInterface *>(m_lpSim->CreateObject(strModuleName, "RobotPartInterface", strType));
+	    if(!m_lpRobot)
+		    THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotPartInterface");
+        m_lpRobot->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
+        m_lpRobot->Load(oXml);
+    }
+	oXml.OutOfElem(); //OutOf BodyPart Element
 }
 
 	}			//Environment

@@ -22,7 +22,6 @@ namespace RoboticsAnimatSim
 
 RbSimulator::RbSimulator()
 {
-	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
 	m_dblTotalStepTime= 0;
@@ -112,6 +111,12 @@ void RbSimulator::InitializeRobotics(int argc, const char **argv)
 void RbSimulator::Initialize(int argc, const char **argv)
 {
 	InitializeRobotics(argc, argv);
+
+	InitializeStructures();
+
+	m_oDataChartMgr.Initialize();
+	m_oExternalStimuliMgr.Initialize();
+	if(m_lpSimRecorder) m_lpSimRecorder->Initialize();
 }
 
 void RbSimulator::StepSimulation()

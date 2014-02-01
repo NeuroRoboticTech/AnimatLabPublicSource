@@ -40,9 +40,12 @@
 #include "RbStructure.h"
 
 #include "RbSimulator.h"
-
 #include "RbMaterialType.h"
 
+#include "RbLANWirelessInterface.h"
+#include "RbDynamixelCM5USBUARTHingeController.h"
+#include "RbDynamixelCM5USBUARTPrismaticController.h"
+#include "RbSwitchInputSensor.h"
 
 #ifdef _WINDOWS
 	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
@@ -867,6 +870,96 @@ catch(...)
 // ************* Constraint Friction Type Conversion functions ******************************
 
 
+// ************* Robot Interface Conversion functions ******************************
+
+RobotInterface *RbClassFactory::CreateRobotInterface(std::string strType, bool bThrowError)
+{
+	RobotInterface *lpInterface=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "LANWIRELESSINTERFACE" || strType == "DEFAULT")
+	{
+		lpInterface = new RbLANWirelessInterface;
+	}
+	else
+	{
+		lpInterface = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidRobotInterfaceType, Al_Err_strInvalidRobotInterfaceType, "RobotInterface", strType);
+	}
+
+	return lpInterface;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpInterface) delete lpInterface;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpInterface) delete lpInterface;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* Robot Interface Type Conversion functions ******************************
+
+
+// ************* Robot Part Interface Conversion functions ******************************
+
+RobotPartInterface *RbClassFactory::CreateRobotPartInterface(std::string strType, bool bThrowError)
+{
+	RobotPartInterface *lpInterface=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "DYNAMIXELCM5USBUARTHINGECONTROLLER")
+	{
+		lpInterface = new RbDynamixelCM5USBUARTHingeController;
+	}
+	else if(strType == "DYNAMIXELCM5USBUARTPRISMATICCONTROLLER")
+	{
+		lpInterface = new RbDynamixelCM5USBUARTPrismaticController;
+	}
+	else if(strType == "SWITCHINPUTSENSOR")
+	{
+		lpInterface = new RbSwitchInputSensor;
+	}
+	else
+	{
+		lpInterface = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidRobotPartInterfaceType, Al_Err_strInvalidRobotPartInterfaceType, "RobotartInterface", strType);
+	}
+
+	return lpInterface;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpInterface) delete lpInterface;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpInterface) delete lpInterface;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* Robot Part Interface Type Conversion functions ******************************
+
+
+
 // ************* IStdClassFactory functions ******************************
 
 CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
@@ -913,6 +1006,10 @@ CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateConstraintRelaxation(strObjectType, bThrowError);
 	else if(strClassType == "CONSTRAINTFRICTION")
 		lpObject = CreateConstraintFriction(strObjectType, bThrowError);
+	else if(strClassType == "ROBOTINTERFACE")
+		lpObject = CreateRobotInterface(strObjectType, bThrowError);
+	else if(strClassType == "ROBOTPARTINTERFACE")
+		lpObject = CreateRobotPartInterface(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

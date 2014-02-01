@@ -1523,7 +1523,12 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Environment")
             oXml.IntoElem()
 
-            oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
+            Else
+                oXml.AddChildElement("PhysicsTimeStep", Util.ExportRobotInterface.PhysicsTimeStep.ActualValue)
+            End If
+
             oXml.AddChildElement("PhysicsSubsteps", m_iPhysicsSubsteps)
             oXml.AddChildElement("Gravity", m_snGravity.ActualValue)
             oXml.AddChildElement("MouseSpringStiffness", m_snMouseSpringStiffness.ActualValue)
@@ -1575,27 +1580,31 @@ Namespace DataObjects.Physical
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
                 doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                doOrganism.SaveSimulationXml(oXml, Me, "Organism")
+                If Util.ExportRobotInterface Is Nothing OrElse Util.ExportRobotInterface.Organism Is doOrganism Then
+                    doOrganism.SaveSimulationXml(oXml, Me, "Organism")
+                End If
             Next
             oXml.OutOfElem() 'Outof Organisms Element
 
-            oXml.AddChildElement("Structures")
-            oXml.IntoElem()
-            Dim doStructure As DataObjects.Physical.PhysicalStructure
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                doStructure.SaveSimulationXml(oXml, Me, "Structure")
-            Next
-            oXml.OutOfElem() 'Outof Structures Element
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("Structures")
+                oXml.IntoElem()
+                Dim doStructure As DataObjects.Physical.PhysicalStructure
+                For Each deEntry As DictionaryEntry In m_aryStructures
+                    doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+                    doStructure.SaveSimulationXml(oXml, Me, "Structure")
+                Next
+                oXml.OutOfElem() 'Outof Structures Element
 
-            oXml.AddChildElement("Lights")
-            oXml.IntoElem()
-            Dim doLight As DataObjects.Physical.Light
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
-                doLight.SaveSimulationXml(oXml, Me)
-            Next
-            oXml.OutOfElem() 'Outof Structures Element
+                oXml.AddChildElement("Lights")
+                oXml.IntoElem()
+                Dim doLight As DataObjects.Physical.Light
+                For Each deEntry As DictionaryEntry In m_aryLights
+                    doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                    doLight.SaveSimulationXml(oXml, Me)
+                Next
+                oXml.OutOfElem() 'Outof Structures Element
+            End If
 
             oXml.OutOfElem() 'Outof Environment Element
 

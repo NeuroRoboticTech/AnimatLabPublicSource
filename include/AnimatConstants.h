@@ -466,6 +466,12 @@
 #define Al_Err_lSimFileNotFound -4077
 #define Al_Err_strSimFileNotFound "The specified simulation file was not found."
 
+#define Al_Err_lInvalidRobotInterfaceType -4078
+#define Al_Err_strInvalidRobotInterfaceType "An invalid robot interface type was specified."
+
+#define Al_Err_lInvalidRobotPartInterfaceType -4079
+#define Al_Err_strInvalidRobotPartInterfaceType "An invalid robot part interface type was specified."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

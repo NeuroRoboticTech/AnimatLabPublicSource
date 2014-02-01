@@ -35,6 +35,11 @@ namespace RoboticsGUI
                 }
             }
 
+            public override string PartType
+            {
+                get { return "DynamixelCM5USBUARTHingeController"; }
+            }
+
             public DynamixelCM5USBUARTHingeController(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
             {

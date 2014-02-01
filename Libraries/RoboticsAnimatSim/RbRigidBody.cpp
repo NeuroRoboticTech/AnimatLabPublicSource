@@ -188,6 +188,60 @@ float *RbRigidBody::Physics_GetDataPointer(const std::string &strDataType)
     if(strType == "BODYDRAGTORQUEZ")
 		return (&m_fltReportNull);
 
+	if(strType == "BODYTORQUEX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYTORQUEY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYTORQUEZ")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYFORCEX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYFORCEY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYFORCEZ")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARVELOCITYX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARVELOCITYY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARVELOCITYZ")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARVELOCITYX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARVELOCITYY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARVELOCITYZ")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARACCELERATIONX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARACCELERATIONY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYLINEARACCELERATIONZ")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARACCELERATIONX")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARACCELERATIONY")
+		return (&m_fltReportNull);
+
+	if(strType == "BODYANGULARACCELERATIONZ")
+		return (&m_fltReportNull);
+
 	return NULL;
 }
 

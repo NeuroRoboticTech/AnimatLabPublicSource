@@ -34,6 +34,11 @@ namespace RoboticsGUI
                 }
             }
 
+            public override string PartType
+            {
+                get { return "SwitchInputSensor"; }
+            }
+
             public SwitchInputSensor(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
             {

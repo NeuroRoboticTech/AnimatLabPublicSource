@@ -192,6 +192,9 @@ void RbHinge::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
+
+    if(m_lpRobot)
+        m_lpRobot->StepSimulation();
 }
 
 void RbHinge::UpdateData()

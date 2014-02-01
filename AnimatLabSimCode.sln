@@ -11,25 +11,29 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "Librari
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Libraries\VortexAnimatSim\VortexAnimatSim.vcxproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
 	ProjectSection(ProjectDependencies) = postProject
-		{D89130C9-37B7-5947-9B57-7073DB5983EF} = {D89130C9-37B7-5947-9B57-7073DB5983EF}
+		{0C2CCE30-10A0-5344-B769-4B6508A78402} = {0C2CCE30-10A0-5344-B769-4B6508A78402}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "Libraries\BootstrapLoader\BootstrapLoader.vcxproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatPrivateSim", "..\AnimatLabPrivateSource\Libraries\VortexAnimatPrivateSim\VortexAnimatPrivateSim.vcxproj", "{10578310-463D-43A6-816B-B4BD4C8670AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim", "Libraries\OsgAnimatSim\Projects_VisualStudio\OsgAnimatSim.vcxproj", "{D89130C9-37B7-5947-9B57-7073DB5983EF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim", "Libraries\OsgAnimatSim\Projects_VisualStudio\OsgAnimatSim.vcxproj", "{0C2CCE30-10A0-5344-B769-4B6508A78402}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
 		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vortex_UnitTests", "Libraries\VortexAnimatSim\Projects_VisualStudio\Vortex_UnitTests.vcxproj", "{53CA023B-C6C2-6347-8FF3-00142968C1E9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vortex_UnitTests", "Libraries\VortexAnimatSim\Projects_VisualStudio\Vortex_UnitTests.vcxproj", "{9322B286-3472-204D-BC3B-68457685E452}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
 		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
 		{C57E9FAC-C948-4386-A585-54FB1876FBCE} = {C57E9FAC-C948-4386-A585-54FB1876FBCE}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim", "Libraries\BulletAnimatSim\Projects_VisualStudio\BulletAnimatSim.vcxproj", "{C59E087A-5756-5044-8B33-3D304B0743D9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoboticsAnimatSim", "Libraries\RoboticsAnimatSim\Projects_VisualStudio\RoboticsAnimatSim.vcxproj", "{02F8A0DB-FD64-8F45-9195-C154F91791DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,14 +69,22 @@ Global
 		{10578310-463D-43A6-816B-B4BD4C8670AF}.Debug|Win32.Build.0 = Debug|Win32
 		{10578310-463D-43A6-816B-B4BD4C8670AF}.Release|Win32.ActiveCfg = Release|Win32
 		{10578310-463D-43A6-816B-B4BD4C8670AF}.Release|Win32.Build.0 = Release|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Debug|Win32.Build.0 = Debug|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Release|Win32.ActiveCfg = Release|Win32
-		{D89130C9-37B7-5947-9B57-7073DB5983EF}.Release|Win32.Build.0 = Release|Win32
-		{53CA023B-C6C2-6347-8FF3-00142968C1E9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{53CA023B-C6C2-6347-8FF3-00142968C1E9}.Debug|Win32.Build.0 = Debug|Win32
-		{53CA023B-C6C2-6347-8FF3-00142968C1E9}.Release|Win32.ActiveCfg = Release|Win32
-		{53CA023B-C6C2-6347-8FF3-00142968C1E9}.Release|Win32.Build.0 = Release|Win32
+		{0C2CCE30-10A0-5344-B769-4B6508A78402}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0C2CCE30-10A0-5344-B769-4B6508A78402}.Debug|Win32.Build.0 = Debug|Win32
+		{0C2CCE30-10A0-5344-B769-4B6508A78402}.Release|Win32.ActiveCfg = Release|Win32
+		{0C2CCE30-10A0-5344-B769-4B6508A78402}.Release|Win32.Build.0 = Release|Win32
+		{9322B286-3472-204D-BC3B-68457685E452}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9322B286-3472-204D-BC3B-68457685E452}.Debug|Win32.Build.0 = Debug|Win32
+		{9322B286-3472-204D-BC3B-68457685E452}.Release|Win32.ActiveCfg = Release|Win32
+		{9322B286-3472-204D-BC3B-68457685E452}.Release|Win32.Build.0 = Release|Win32
+		{C59E087A-5756-5044-8B33-3D304B0743D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C59E087A-5756-5044-8B33-3D304B0743D9}.Debug|Win32.Build.0 = Debug|Win32
+		{C59E087A-5756-5044-8B33-3D304B0743D9}.Release|Win32.ActiveCfg = Release|Win32
+		{C59E087A-5756-5044-8B33-3D304B0743D9}.Release|Win32.Build.0 = Release|Win32
+		{02F8A0DB-FD64-8F45-9195-C154F91791DA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{02F8A0DB-FD64-8F45-9195-C154F91791DA}.Debug|Win32.Build.0 = Debug|Win32
+		{02F8A0DB-FD64-8F45-9195-C154F91791DA}.Release|Win32.ActiveCfg = Release|Win32
+		{02F8A0DB-FD64-8F45-9195-C154F91791DA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

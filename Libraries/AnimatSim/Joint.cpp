@@ -625,6 +625,7 @@ void Joint::Initialize()
 
 void Joint::StepSimulation()
 {
+    BodyPart::StepSimulation();
 	UpdateData();
 }
 

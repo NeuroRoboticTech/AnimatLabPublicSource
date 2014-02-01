@@ -420,7 +420,8 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
 
-            If Not m_doRobotPartInterface Is Nothing Then
+            'Only save the robot interface in the simulation xml if we are doing an export for a robot sim.
+            If Not m_doRobotPartInterface Is Nothing AndAlso Not Util.ExportRobotInterface Is Nothing Then
                 m_doRobotPartInterface.SaveSimulationXml(oXml, Me)
             End If
 

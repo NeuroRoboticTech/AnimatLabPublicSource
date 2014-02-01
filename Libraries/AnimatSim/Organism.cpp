@@ -50,6 +50,7 @@ Organism::Organism()
 {
 	m_bDead = false;
 	m_lpNervousSystem = NULL;
+    m_lpRobot = NULL;
 }
 
 /**
@@ -64,10 +65,16 @@ Organism::~Organism()
 try
 {
 	if(m_lpNervousSystem) 
-		{
-			delete m_lpNervousSystem; 
-			m_lpNervousSystem = NULL;
+	{
+		delete m_lpNervousSystem; 
+		m_lpNervousSystem = NULL;
 	}
+
+    if(m_lpRobot)
+    {
+        delete m_lpRobot;
+        m_lpRobot = NULL;
+    }
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, false, true);}
@@ -100,6 +107,9 @@ void Organism::Initialize()
 	Structure::Initialize();
 
 	m_lpNervousSystem->Initialize();
+
+    if(m_lpRobot)
+        m_lpRobot->Initialize();
 }
 
 void Organism::ResetSimulation()
@@ -110,6 +120,9 @@ void Organism::ResetSimulation()
 	Kill(false);
 
 	m_lpNervousSystem->ResetSimulation();
+
+    if(m_lpRobot)
+        m_lpRobot->ResetSimulation();
 }
 
 /**
@@ -124,6 +137,14 @@ void Organism::StepNeuralEngine()
 {
 	if(!m_bDead)
 		m_lpNervousSystem->StepSimulation();
+}
+
+void Organism::StepPhysicsEngine()
+{
+    Structure::StepPhysicsEngine();
+
+    if(m_lpRobot)
+        m_lpRobot->StepSimulation();
 }
 
 void Organism::MinTimeStep(float &fltMin) 
@@ -238,7 +259,7 @@ void Organism::Load(CStdXml &oXml)
 {
 	Structure::Load(oXml);
 
-	oXml.IntoElem();  //Into Layout Element
+	oXml.IntoElem();  //Into Structure Element
 
 	//dwc convert. Need to have a method to remove a nervous system. It needs to remove any added
 	//modules from the list in the simulator.
@@ -250,7 +271,21 @@ void Organism::Load(CStdXml &oXml)
 	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
 	m_lpNervousSystem->Load(oXml);
 
-	oXml.OutOfElem();
+	oXml.OutOfElem(); //OutOf NervousSystem Element
 
-	oXml.OutOfElem(); //OutOf Layout Element
+    if(oXml.FindChildElement("RobotInterface", false))
+    {
+	    oXml.IntoChildElement("RobotInterface");
+	    std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	    std::string strType = oXml.GetChildString("Type");
+	    oXml.OutOfElem(); //OutOf RobotInterface Element
+
+	    m_lpRobot = dynamic_cast<RobotInterface *>(m_lpSim->CreateObject(strModuleName, "RobotInterface", strType));
+	    if(!m_lpRobot)
+		    THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotInterface");
+        m_lpRobot->SetSystemPointers(m_lpSim, this, m_lpModule, NULL, true);
+        m_lpRobot->Load(oXml);
+    }
+
+	oXml.OutOfElem(); //OutOf Structure Element
 }

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "RobotInterface.h"
+
 namespace AnimatSim
 {
 	namespace Environment
@@ -36,11 +38,16 @@ namespace AnimatSim
 			/// Tells if the organism is dead or not
 			bool m_bDead;
 
+            /// Pointer to a robot interface node to allow the organism to be hooked to a robot.
+            RobotInterface *m_lpRobot;
+
 		public:
 			Organism();
 			virtual ~Organism();
 
 			virtual bool IsDead();
+
+            virtual RobotInterface *GetRobotInterface() {return m_lpRobot;};
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
@@ -56,6 +63,7 @@ namespace AnimatSim
 
 			virtual void Initialize();
 			virtual void StepNeuralEngine();
+			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
 			virtual void Kill(bool bState = true);
 			virtual void MinTimeStep(float &fltMin);

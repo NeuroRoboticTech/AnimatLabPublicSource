@@ -1494,6 +1494,8 @@ void RigidBody::AddExternalNodeInput(float fltInput)
 
 void RigidBody::StepSimulation()
 {
+    BodyPart::StepSimulation();
+
 	if(m_bFoodSource)
 	{
 		m_fltFoodQuantity = m_fltFoodQuantity + m_fltFoodReplenishRate;

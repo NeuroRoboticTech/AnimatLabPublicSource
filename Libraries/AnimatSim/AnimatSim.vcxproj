@@ -250,6 +250,8 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="ReceptiveField.cpp" />
     <ClCompile Include="ReceptiveFieldPair.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="RobotInterface.cpp" />
+    <ClCompile Include="RobotPartInterface.cpp" />
     <ClCompile Include="RPRO.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="SigmoidGain.cpp" />
@@ -348,6 +350,8 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="ReceptiveField.h" />
     <ClInclude Include="ReceptiveFieldPair.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="RobotInterface.h" />
+    <ClInclude Include="RobotPartInterface.h" />
     <ClInclude Include="RPRO.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="SigmoidGain.h" />

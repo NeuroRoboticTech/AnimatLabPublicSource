@@ -1105,7 +1105,10 @@ Namespace DataObjects
 
             For Each deEntry As DictionaryEntry In m_aryProjectStimuli
                 doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                doStim.SaveSimulationXml(oXml)
+
+                If Util.ExportRobotInterface Is Nothing OrElse Util.ExportRobotInterface.Organism Is doStim.PhysicalStructure Then
+                    doStim.SaveSimulationXml(oXml)
+                End If
             Next
 
             oXml.OutOfElem()
@@ -1124,40 +1127,43 @@ Namespace DataObjects
         End Sub
 
         Protected Overridable Sub SaveSimWindowMgr(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
-            oXml.AddChildElement("WindowMgr")
-            oXml.IntoElem()   'Into WindowMgr element
 
-            oXml.AddChildElement("Hud")
-            oXml.IntoElem()   'Into Hud element
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("WindowMgr")
+                oXml.IntoElem()   'Into WindowMgr element
 
-            oXml.AddChildElement("Type", "Hud")
+                oXml.AddChildElement("Hud")
+                oXml.IntoElem()   'Into Hud element
 
-            oXml.AddChildElement("HudItems")
-            oXml.IntoElem()   'Into Hud Items element
+                oXml.AddChildElement("Type", "Hud")
 
-            For Each deItem As DictionaryEntry In m_aryHudItems
-                Dim hudItem As DataObjects.Visualization.HudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
-                hudItem.SaveSimulationXml(oXml)
-            Next
+                oXml.AddChildElement("HudItems")
+                oXml.IntoElem()   'Into Hud Items element
 
-            oXml.OutOfElem()    'Outof Hud Items element
-            oXml.OutOfElem()    'Outof Hud element
+                For Each deItem As DictionaryEntry In m_aryHudItems
+                    Dim hudItem As DataObjects.Visualization.HudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
+                    hudItem.SaveSimulationXml(oXml)
+                Next
 
-            If Util.ExportWindowsToFile Then
+                oXml.OutOfElem()    'Outof Hud Items element
+                oXml.OutOfElem()    'Outof Hud element
+
                 oXml.AddChildElement("Windows")
                 oXml.IntoElem()  'Into Windows element
 
-                For Each animatForm As Form In Util.Application.ChildForms
-                    If Util.IsTypeOf(animatForm.GetType(), "AnimatGUI.Forms.SimulationWindow", False) Then
-                        Dim simWindow As AnimatGUI.Forms.SimulationWindow = DirectCast(animatForm, AnimatGUI.Forms.SimulationWindow)
-                        simWindow.GenerateSimWindowXml(oXml)
-                    End If
-                Next
+                If Util.ExportWindowsToFile Then
+                    For Each animatForm As Form In Util.Application.ChildForms
+                        If Util.IsTypeOf(animatForm.GetType(), "AnimatGUI.Forms.SimulationWindow", False) Then
+                            Dim simWindow As AnimatGUI.Forms.SimulationWindow = DirectCast(animatForm, AnimatGUI.Forms.SimulationWindow)
+                            simWindow.GenerateSimWindowXml(oXml)
+                        End If
+                    Next
+                End If
 
                 oXml.OutOfElem()    'Outof Windows element
-            End If
 
-            oXml.OutOfElem()    'Outof WindowMgr element
+                oXml.OutOfElem()    'Outof WindowMgr element
+            End If
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -1180,7 +1186,12 @@ Namespace DataObjects
             oXml.AddChildElement("APIFile", m_strAPI_File)
             m_snSimEndTime.SaveSimulationXml(oXml, Me, "SimEndTime")
 
-            Dim iVal As Integer = CType(m_ePlaybackControlMode, Integer)
+            Dim ePlaybackMode As enumPlaybackControlMode = m_ePlaybackControlMode
+            If Not Util.ExportRobotInterface Is Nothing Then
+                ePlaybackMode = enumPlaybackControlMode.FastestPossible
+            End If
+
+            Dim iVal As Integer = CType(ePlaybackMode, Integer)
             oXml.AddChildElement("PlaybackControlMode", iVal)
             m_snPresetPlaybackTimeStep.SaveSimulationXml(oXml, Me, "PresetPlaybackTimeStep")
 

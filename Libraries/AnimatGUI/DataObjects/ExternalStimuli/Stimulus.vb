@@ -266,11 +266,7 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property StructureID() As String
-            Get
-                Return ""
-            End Get
-        End Property
+        Public MustOverride Property PhysicalStructure() As Physical.PhysicalStructure
 
         <Browsable(False)> _
         Public Overrides ReadOnly Property CanBeCharted() As Boolean

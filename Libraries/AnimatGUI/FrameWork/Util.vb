@@ -66,6 +66,7 @@ Namespace Framework
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
         Protected Shared m_bExportWindowsToFile As Boolean = False 'Determines if windows are saved to a file or kept in memory for sim.
+        Protected Shared m_doExportRobotInterface As DataObjects.Robotics.RobotInterface
         Protected Shared m_strVersionNumber As String = "2.1.0"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
@@ -241,6 +242,16 @@ Namespace Framework
                 m_bExportWindowsToFile = Value
             End Set
         End Property
+
+        Public Shared Property ExportRobotInterface As DataObjects.Robotics.RobotInterface
+            Get
+                Return m_doExportRobotInterface
+            End Get
+            Set(ByVal Value As DataObjects.Robotics.RobotInterface)
+                m_doExportRobotInterface = Value
+            End Set
+        End Property
+
 
         Public Shared ReadOnly Property Errors() As ArrayList
             Get

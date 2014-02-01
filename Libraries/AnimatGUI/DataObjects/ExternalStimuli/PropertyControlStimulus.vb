@@ -67,6 +67,27 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
+        Public Overrides Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
+            Get
+                If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
+                    If Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Physical.BodyPart), False) Then
+                        Dim bpPart As DataObjects.Physical.BodyPart = DirectCast(m_thLinkedObject.Item, DataObjects.Physical.BodyPart)
+                        Return bpPart.ParentStructure
+                    ElseIf Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Behavior.Node), False) Then
+                        Dim bpPart As DataObjects.Behavior.Node = DirectCast(m_thLinkedObject.Item, DataObjects.Behavior.Node)
+                        Return bpPart.Organism
+                    ElseIf Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                        Dim bpPart As DataObjects.Physical.PhysicalStructure = DirectCast(m_thLinkedObject.Item, DataObjects.Physical.PhysicalStructure)
+                        Return bpPart
+                    End If
+                End If
+                Return Nothing
+            End Get
+            Set(ByVal Value As DataObjects.Physical.PhysicalStructure)
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property LinkedProperty() As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
             Get
                 Return m_thLinkedProperty

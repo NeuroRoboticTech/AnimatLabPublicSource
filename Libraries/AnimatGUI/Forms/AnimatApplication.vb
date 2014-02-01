@@ -3352,7 +3352,8 @@ Namespace Forms
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean) As ManagedAnimatInterfaces.IStdXml
+        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean, ByVal doRobotInterface As DataObjects.Robotics.RobotInterface) As ManagedAnimatInterfaces.IStdXml
+            Dim doOrigPhysics As DataObjects.Physical.PhysicsEngine = m_doPhysics
 
             Try
                 Me.AppIsBusy = True
@@ -3363,6 +3364,11 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = bIncludeCharts
                 Util.ExportStimsInStandAloneSim = bIncludeStims
                 Util.ExportWindowsToFile = bIncludeWindows
+                Util.ExportRobotInterface = doRobotInterface
+
+                If Not Util.ExportRobotInterface Is Nothing Then
+                    m_doPhysics = Util.ExportRobotInterface.Physics
+                End If
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
@@ -3378,6 +3384,8 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
                 Util.ExportWindowsToFile = False
+                Util.ExportRobotInterface = Nothing
+                m_doPhysics = doOrigPhysics
                 Me.AppIsBusy = False
             End Try
 
@@ -5885,7 +5893,7 @@ Namespace Forms
         End Function
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
-            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False)
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False, Nothing)
             strXml = oXml.Serialize()
         End Sub
 

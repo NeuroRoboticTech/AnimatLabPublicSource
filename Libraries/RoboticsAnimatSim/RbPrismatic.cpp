@@ -183,6 +183,9 @@ void RbPrismatic::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
+
+    if(m_lpRobot)
+        m_lpRobot->StepSimulation();
 }
 
 void RbPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)

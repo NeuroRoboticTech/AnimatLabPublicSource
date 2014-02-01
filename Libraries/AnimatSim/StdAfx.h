@@ -154,6 +154,12 @@ namespace AnimatSim
 		class KeyFrame;
 		class SimulationRecorder;
 	}
+
+    namespace Robotics
+    {
+        class RobotInterface;
+        class RobotPartInterface;
+    }
 }
 
 using namespace AnimatSim;
@@ -166,6 +172,7 @@ using namespace AnimatSim::Environment::Joints;
 using namespace AnimatSim::ExternalStimuli;
 using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
+using namespace AnimatSim::Robotics;
 
 
 #include "AnimatUtils.h"

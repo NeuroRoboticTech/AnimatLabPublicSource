@@ -31,7 +31,7 @@ Namespace DataObjects
             End Property
 
             <Browsable(False)> _
-            Public Overridable Property PhysicsStep() As AnimatGUI.Framework.ScaledNumber
+            Public Overridable Property PhysicsTimeStep() As AnimatGUI.Framework.ScaledNumber
                 Get
                     Return m_snPhysicsStep
                 End Get
@@ -41,6 +41,16 @@ Namespace DataObjects
                     End If
                 End Set
             End Property
+
+            Public Overridable ReadOnly Property Organism() As Physical.Organism
+                Get
+                    Return m_doOrganism
+                End Get
+            End Property
+
+            Public MustOverride ReadOnly Property Physics As Physical.PhysicsEngine
+
+            Public MustOverride ReadOnly Property PartType() As String
 
 #End Region
 
@@ -68,7 +78,12 @@ Namespace DataObjects
                 m_snPhysicsStep = DirectCast(OrigNode.m_snPhysicsStep.Clone(Me, bCutData, doRoot), ScaledNumber)
             End Sub
 
-            Public MustOverride Sub GenerateStandaloneSimFile()
+            Public Overridable Sub GenerateStandaloneSimFile()
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(True, True, True, False, Me)
+                oXml.Save(Util.Application.ProjectPath & "\" & Util.Application.ProjectName & "_" & m_doOrganism.Name.Replace(" ", "_") & ".asim")
+
+                Util.ShowMessage("Robot simulation file for " & m_doOrganism.Name & " created successfully.", "Exported simulation file", MessageBoxButtons.OK)
+            End Sub
 
 #Region " DataObject Methods "
 
@@ -163,7 +178,7 @@ Namespace DataObjects
 
                 oXml.AddChildElement("Name", Me.Name)
                 oXml.AddChildElement("ID", Me.ID)
-                oXml.AddChildElement("Type", "RobotInterface")
+                oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
 
                 m_snPhysicsStep.SaveSimulationXml(oXml, Me, "PhysicsStep")

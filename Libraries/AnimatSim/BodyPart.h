@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "RobotPartInterface.h"
+
 namespace AnimatSim
 {
 	namespace Environment
@@ -28,6 +30,9 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsBody *m_lpPhysicsBody;
 
+            /// Pointer to a robot interface node to allow the organism to be hooked to a robot.
+            RobotPartInterface *m_lpRobot;
+
 			virtual void UpdateData();
 
 		public:
@@ -38,6 +43,8 @@ namespace AnimatSim
 
 			virtual IPhysicsBody *PhysicsBody();
 			virtual void PhysicsBody(IPhysicsBody *lpBody);
+
+            virtual RobotPartInterface *GetRobotInterface() {return m_lpRobot;};
 
 			virtual void Resize();
 
@@ -58,6 +65,10 @@ namespace AnimatSim
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void UpdatePhysicsPosFromGraphics();
             virtual void WakeDynamics();
+
+			virtual void Initialize();
+			virtual void StepSimulation();
+			virtual void ResetSimulation();
 
 			virtual void Load(CStdXml &oXml);
 		};

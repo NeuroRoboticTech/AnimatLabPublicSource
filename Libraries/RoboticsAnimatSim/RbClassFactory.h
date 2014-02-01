@@ -32,6 +32,8 @@ namespace RoboticsAnimatSim
 		virtual NeuralModule *CreateNeuralModule(std::string strType, bool bThrowError = true);
 		virtual ConstraintRelaxation *CreateConstraintRelaxation(std::string strType, bool bThrowError = true);
 		virtual ConstraintFriction *CreateConstraintFriction(std::string strType, bool bThrowError = true);
+		virtual RobotInterface *CreateRobotInterface(std::string strType, bool bThrowError = true);
+		virtual RobotPartInterface *CreateRobotPartInterface(std::string strType, bool bThrowError = true);
 
 		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};

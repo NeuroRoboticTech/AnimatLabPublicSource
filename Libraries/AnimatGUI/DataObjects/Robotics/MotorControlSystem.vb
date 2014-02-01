@@ -22,12 +22,6 @@ Namespace DataObjects
 
 #Region " Properties "
 
-            Public Overrides ReadOnly Property PartType As String
-                Get
-                    Return "MotorControlSystem"
-                End Get
-            End Property
-
 #End Region
 
 #Region " Methods "

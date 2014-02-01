@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AnimatGUI.Framework;
 
 namespace RoboticsGUI
 {
@@ -26,6 +27,16 @@ namespace RoboticsGUI
                 }
             }
 
+            public override AnimatGUI.DataObjects.Physical.PhysicsEngine Physics
+            {
+                get { return new RoboticsGUI.RoboticsPhysicsEngine(null); }
+            }
+
+            public override string PartType
+            {
+                get { return "LANWirelessInterface"; }
+            }
+
             public LANWirelessInterface(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
             {
@@ -36,10 +47,6 @@ namespace RoboticsGUI
             {
                 LANWirelessInterface doInterface = new LANWirelessInterface(doParent);
                 return doInterface;
-            }
-
-            public override void GenerateStandaloneSimFile()
-            {
             }
 
         }
