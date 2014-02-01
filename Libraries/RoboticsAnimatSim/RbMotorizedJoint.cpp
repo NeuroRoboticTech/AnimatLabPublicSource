@@ -62,35 +62,35 @@ void RbMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
-		//if(m_lpThisMotorJoint->ServoMotor())
-		//	CalculateServoVelocity();
-		//
-		//float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
-		//float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
-		//float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+		if(m_lpThisMotorJoint->ServoMotor())
+			CalculateServoVelocity();
+		
+		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
+		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
+		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
 
-		//float fltSetVelocity = fltDesiredVel;
+		float fltSetVelocity = fltDesiredVel;
 
-		//m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
-		//m_lpThisMotorJoint->DesiredVelocity(0);
+		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
+		m_lpThisMotorJoint->DesiredVelocity(0);
 
-  //      float fltJointVel = m_lpThisJoint->JointVelocity();
+        float fltJointVel = m_lpThisJoint->JointVelocity();
 
-		//if(!m_lpThisJoint->UsesRadians())
-		//	fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
+		if(!m_lpThisJoint->UsesRadians())
+			fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
 
-		//float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
+		float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
 
-		////Only do anything if the velocity value has changed
-  //      if(m_btJoint && fltVelDiff > 1e-4)
-		//{
-		//	if(fabs(fltSetVelocity) > 1e-4 && m_btJoint)
-		//		Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
-  //          else if(!m_bJointLocked)
-  //              Physics_EnableLock(true, GetCurrentBtPosition(), fltMaxForce);
-		//}
+		//Only do anything if the velocity value has changed
+        if(fltVelDiff > 1e-4)
+		{
+			if(fabs(fltSetVelocity) > 1e-4)
+				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
+            else if(!m_bJointLocked)
+                Physics_EnableLock(true, m_lpThisJoint->JointPosition(), fltMaxForce);
+		}
 
-		//m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
 	}
 }
 

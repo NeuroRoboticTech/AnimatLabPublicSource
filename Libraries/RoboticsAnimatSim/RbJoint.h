@@ -31,9 +31,11 @@ namespace RoboticsAnimatSim
             float m_fltPrevBtJointPos;
             float m_fltPrevJointPos;
 
+			Joint *m_lpThisJoint;
             RbRigidBody *m_lpRbParent;
             RbRigidBody *m_lpRbChild;
 
+			virtual void SetThisPointers();
 			virtual RbSimulator *GetRbSimulator();
 
 		public:

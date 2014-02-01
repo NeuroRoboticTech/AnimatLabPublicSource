@@ -26,6 +26,7 @@ RbJoint::RbJoint()
     m_lpRbSim = NULL;
     m_lpRbParent = NULL;
     m_lpRbChild = NULL;
+    m_lpThisJoint = NULL;
 
     m_fltPrevBtJointPos = 0;
     m_fltPrevJointPos = 0;
@@ -33,6 +34,17 @@ RbJoint::RbJoint()
 
 RbJoint::~RbJoint()
 {
+}
+
+void RbJoint::SetThisPointers()
+{
+	RbBody::SetThisPointers();
+
+	m_lpThisJoint = dynamic_cast<Joint *>(this);
+	if(!m_lpThisJoint)
+		THROW_TEXT_ERROR(Rb_Err_lThisPointerNotDefined, Rb_Err_strThisPointerNotDefined, "m_lpThisJoint, " + m_lpThisAB->Name());
+
+	m_lpThisJoint->PhysicsBody(this);
 }
 
 RbSimulator *RbJoint::GetRbSimulator()
