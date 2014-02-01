@@ -205,59 +205,42 @@ void RbHinge::UpdateData()
 
 void RbHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)
 {
- //   if (m_btJoint && m_btHinge)
-	//{ 		
-	//	if(bOn)
-	//	{
- //           m_bJointLocked = true;
-
-	//	    m_btHinge->setAngularLowerLimit(btVector3(fltPosition,0,0));
-	//	    m_btHinge->setAngularUpperLimit(btVector3(fltPosition,0,0));
-	//	}
-	//	else if (m_bMotorOn)
-	//		Physics_EnableMotor(true, 0, fltMaxLockForce, false);
-	//	else
- //           SetLimitValues();
-	//}
+	if(bOn)
+        m_bJointLocked = true;
+	else if (m_bMotorOn)
+		Physics_EnableMotor(true, 0, fltMaxLockForce, false);
+	else
+        SetLimitValues();
 }
 
 void RbHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltMaxForce, bool bForceWakeup)
 {
- //   if (m_btJoint && m_btHinge)
-	//{   
-	//	if(bOn)
- //       {
- //           if(!m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
- //           {
- //               m_fltNextPredictedPos = m_lpThisJoint->JointPosition();
- //               m_fltPredictedPos = m_fltNextPredictedPos;
- //           }
+	if(bOn)
+    {
+        if(!m_bMotorOn || bForceWakeup || m_bJointLocked)
+        {
+        }
 
-	//		//I had to move these statements out of the if above. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
-	//		// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
-	//		// doing this every single time I set the motor velocity.
- //           SetLimitValues();
- //           m_lpThisJoint->WakeDynamics();
+		//I had to move these statements out of the if above. I kept running into one instance after another where I ran inot a problem if I did not do this every single time.
+		// It is really annoying and inefficient, but I cannot find another way to reiably guarantee that the motor will behave coorectly under all conditions without
+		// doing this every single time I set the motor velocity.
+        SetLimitValues();
+        m_lpThisJoint->WakeDynamics();
+    }
+	else
+    {
+        TurnMotorOff();
 
-	//	    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
-	//	    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
-	//	    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = fltMaxForce;
- //       }
-	//	else
- //       {
- //           TurnMotorOff();
+        if(m_bMotorOn || bForceWakeup || m_bJointLocked)
+        {
+            m_iAssistCountdown = 3;
+            ClearAssistForces();
+            m_lpThisJoint->WakeDynamics();
+            SetLimitValues();
+        }
+    }
 
- //           if(m_bMotorOn || bForceWakeup || m_bJointLocked || JointIsLocked())
- //           {
- //               m_iAssistCountdown = 3;
- //               ClearAssistForces();
- //               m_lpThisJoint->WakeDynamics();
- //               SetLimitValues();
- //           }
- //       }
-
-	//	m_bMotorOn = bOn;
-	//}
+	m_bMotorOn = bOn;
 }
 
 void RbHinge::Physics_MaxForce(float fltVal)
@@ -286,8 +269,8 @@ void RbHinge::TurnMotorOff()
 
 void RbHinge::SetConstraintFriction()
 {
-    //if(m_btHinge && !m_bJointLocked && !m_bMotorOn && m_bEnabled)
-    //    TurnMotorOff();
+    if(!m_bJointLocked && !m_bMotorOn && m_bEnabled)
+        TurnMotorOff();
 }
 
 void RbHinge::ResetSimulation()
