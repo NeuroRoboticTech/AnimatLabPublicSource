@@ -46,6 +46,8 @@
 #include <btBulletDynamicsCommon.h>
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "BulletDynamics/MLCPSolvers/btDantzigSolver.h"
+#include "BulletDynamics/MLCPSolvers/btMLCPSolver.h"
 #include "LinearMath/btGeometryUtil.h"
 
 //Simulation Objects

@@ -50,7 +50,7 @@ BlSimulator::BlSimulator()
 	if(!m_lpAnimatClassFactory) 
 		m_lpAnimatClassFactory = new BlClassFactory;
 
-    m_bDrawDebug = false;
+    m_bDrawDebug = true;
 }
 
 BlSimulator::~BlSimulator()
@@ -324,7 +324,10 @@ void BlSimulator::InitializeBullet(int argc, const char **argv)
 
     m_lpCollisionConfiguration = new btDefaultCollisionConfiguration();
     m_lpDispatcher = new BlAnimatCollisionDispatcher(m_lpCollisionConfiguration, this);
+
     m_lpSolver = new btSequentialImpulseConstraintSolver;
+    //btDantzigSolver* mlcp = new btDantzigSolver();
+    //m_lpSolver = new btMLCPSolver(mlcp);
 
     btVector3 worldAabbMin( -10000, -10000, -10000 );
     btVector3 worldAabbMax( 10000, 10000, 10000 );
