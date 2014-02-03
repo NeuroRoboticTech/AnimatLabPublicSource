@@ -42,12 +42,19 @@ Namespace UITests
 #Region "Methods"
                     '
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                     DataSource("System.Data.OleDb", _
+                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                "PhysicsEngines", _
+                                DataAccessMethod.Sequential), _
+                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_ContactSensors()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("CylinderSensor", 0.05)
-                        aryMaxErrors.Add("BoxSensor", 0.05)
+                        aryMaxErrors.Add("CylinderSensor", 1.1)
+                        aryMaxErrors.Add("BoxSensor", 1.1)
                         aryMaxErrors.Add("BoxSensorX", 0.05)
                         aryMaxErrors.Add("BoxSensorY", 0.05)
                         aryMaxErrors.Add("CylinderSensorX", 0.05)

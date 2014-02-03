@@ -48,8 +48,7 @@ Namespace UITests
                                 DataAccessMethod.Sequential), _
                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_StretchReceptor()
-                        'If Not SetPhysicsEngine(TestContext.DataRow) Then Return
-                        m_strPhysicsEngine = "Bullet"
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         m_strProjectName = "StretchReceptorTest"
                         MuscleTest()
