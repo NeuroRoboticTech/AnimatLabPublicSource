@@ -32,6 +32,7 @@ Namespace UITests
 
 #Region "Attributes"
 
+                    Protected m_iSubSteps As Integer = 1
 
 #End Region
 
@@ -42,8 +43,15 @@ Namespace UITests
 #Region "Methods"
                     '
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_UnitScale_Kg_M()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("Rotation", 0.05)
@@ -78,8 +86,17 @@ Namespace UITests
                     End Sub
 
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_UnitScale_g_dm()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
+                        m_iSubSteps = 10
+
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("Rotation", 0.05)
@@ -122,6 +139,8 @@ Namespace UITests
                     Public Sub Test_UnitScale_dg_cm()
                         If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
+                        m_iSubSteps = 10
+
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("Rotation", 0.05)
@@ -152,6 +171,14 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F_10mN_")
+
+                    End Sub
+
+                    Protected Overrides Sub AfterConversionBeforeSim()
+
+                        If m_strPhysicsEngine = "Bullet" AndAlso m_iSubSteps > 1 Then
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", m_iSubSteps.ToString})
+                        End If
 
                     End Sub
 

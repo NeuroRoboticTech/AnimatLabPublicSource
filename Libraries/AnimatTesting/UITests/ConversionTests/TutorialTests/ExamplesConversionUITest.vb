@@ -31,6 +31,7 @@ Namespace UITests
 
 #Region "Attributes"
 
+                Protected m_iSubSteps As Integer = 1
 
 #End Region
 
@@ -65,8 +66,16 @@ Namespace UITests
 
                 'End Sub
 
-                <TestMethod()>
+                <TestMethod(), _
+                 DataSource("System.Data.OleDb", _
+                            "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                            "PhysicsEngines", _
+                            DataAccessMethod.Sequential), _
+                 DeploymentItem("TestCases.accdb")>
                 Public Sub Tutorial_BellyFlopper()
+                    If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
+                    m_iSubSteps = 10
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
@@ -89,6 +98,15 @@ Namespace UITests
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
                 End Sub
+
+                Protected Overrides Sub AfterConversionBeforeSim()
+
+                    If m_strPhysicsEngine = "Bullet" AndAlso m_iSubSteps > 1 Then
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", m_iSubSteps.ToString})
+                    End If
+
+                End Sub
+
 
                 <TestMethod()>
                 Public Sub Tutorial_StretchReflex()
