@@ -116,6 +116,7 @@ Namespace DataObjects.Physical.Bodies
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Tension", "Tension", "Newtons", "N", -1000, 1000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Energy", "Energy", "Joules", "J", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Velocity", "Velocity", "m/s", "m/s", -10, 10))
             m_thDataTypes.ID = "SpringLength"
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Enabled", "Enabled", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)

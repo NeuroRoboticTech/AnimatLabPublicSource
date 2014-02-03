@@ -188,6 +188,16 @@ public:
     {
         return (*this)[(m_iCurrentPos+iPos)%this->GetSize()];
     }
+
+    virtual float Average()
+    {
+        float fltTotal = 0;
+        for(int iIdx=0; iIdx<GetSize(); iIdx++)
+            fltTotal += (float) (*this)[iIdx];
+
+        float fltAvg = fltTotal/GetSize();
+        return fltAvg;
+    }
 };
 
 

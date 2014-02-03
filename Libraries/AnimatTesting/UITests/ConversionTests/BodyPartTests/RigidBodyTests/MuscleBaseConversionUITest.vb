@@ -93,7 +93,7 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Relax", "Velocity", "40 c"})
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Enabled", "True"})
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Damping", "1 k"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Damping", "3 k"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "NaturalLength", "0.5 "})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1", "EnableMotor", "False"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "Enabled", "False"})
@@ -101,10 +101,8 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim1", "Enabled", "True"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim2", "Enabled", "True"})
 
-                        m_bIgnoreSimAndCompare = True
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_")
-                        m_bIgnoreSimAndCompare = False
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Enabled", "False"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1", "EnableMotor", "True"})

@@ -58,6 +58,11 @@ namespace AnimatSim
                 ///The velocity of the spring length change
                 float m_fltVelocity;
 
+                /// The rolling average velocity over the last 5 steps
+                float m_fltAvgVelocity;
+
+                CStdCircularArray<float> m_aryVelocityAvg;
+
                 /**
 				\brief	Calculates the tension. 
 				
@@ -65,6 +70,14 @@ namespace AnimatSim
 				\date	3/10/2011
 				**/
 				virtual void CalculateTension();
+
+                /**
+                 \brief Clears the velocity average circular queue.
+                
+                 \author    David Cofer
+                 \date  2/2/2014
+                 */
+                virtual void ClearVelocityAverage();
 
 			public:
 				Spring();

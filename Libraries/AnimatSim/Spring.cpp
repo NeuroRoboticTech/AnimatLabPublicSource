@@ -60,6 +60,9 @@ Spring::Spring()
 	m_fltTension = 0;
 	m_fltEnergy = 0;
     m_fltVelocity = 0;
+    m_fltAvgVelocity = 0;
+
+    ClearVelocityAverage();
 }
 
 /**
@@ -162,6 +165,14 @@ float Spring::Energy() {return m_fltEnergy;}
 **/
 float Spring::Velocity() {return m_fltVelocity;}
 
+void Spring::ClearVelocityAverage()
+{
+    //Setup the circular cue for calculating rolling velocity average.
+    m_fltAvgVelocity = 0;
+    m_aryVelocityAvg.Clear();
+    for(int i=0; i<5; i++)
+        m_aryVelocityAvg.Add(0);
+}
 
 // There are no parts or joints to create for muscle attachment points.
 void Spring::CreateParts()
@@ -176,6 +187,9 @@ void Spring::ResetSimulation()
     m_fltPrevLength = m_fltLength;
 
     CalculateTension();
+
+    ClearVelocityAverage();
+    m_fltVelocity = 0;
 }
 
 void Spring::CalculateTension()
@@ -188,7 +202,10 @@ void Spring::CalculateTension()
 
     	m_fltVelocity = (m_fltLength-m_fltPrevLength)/m_lpSim->PhysicsTimeStep();
 
-		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement + m_fltVelocity*m_fltDamping;
+        m_aryVelocityAvg.AddEnd(m_fltVelocity);
+        m_fltAvgVelocity = m_aryVelocityAvg.Average();
+
+		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement + m_fltAvgVelocity*m_fltDamping;
 		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
 	}
     else
@@ -197,6 +214,8 @@ void Spring::CalculateTension()
 		m_fltTension = 0;
 		m_fltEnergy = 0;
         m_fltVelocity = 0;
+        if(m_aryVelocityAvg.GetSize())
+            ClearVelocityAverage();
     }
 }
 
@@ -231,11 +250,14 @@ float *Spring::GetDataPointer(const std::string &strDataType)
 	if(strType == "ENERGY")
 		return &m_fltEnergy;
 
+	if(strType == "VELOCITY")
+		return &m_fltAvgVelocity;
+
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
 
 	if(strType == "VELOCITY")
-		return &m_fltVelocity;
+		return &m_fltAvgVelocity;
 
 	return LineBase::GetDataPointer(strDataType);
 }
