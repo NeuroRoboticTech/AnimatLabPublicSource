@@ -83,7 +83,7 @@ Namespace UITests
                 Protected m_strInitialJointYRot As String = "0"
                 Protected m_strInitialJointZRot As String = "90"
 
-                Protected m_strNoMoveJointRot As String = m_strInitialJointXPos
+                Protected m_strNoMoveJointRot As String = m_strInitialJointXRot
 
                 Protected m_ptMoveJoint1Start As New Point(687, 428)
                 Protected m_ptMovejoint1End As New Point(652, 608)
@@ -418,7 +418,10 @@ Namespace UITests
                     If m_strPhysicsEngine = "Bullet" Then
                         'The motors do not currently work well at lower unit scales unless you subdivide your time steps.
                         'I plan to fix this later, but for now do this to get it to work.
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "10"})
+                        'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "10"})
+
+                        'Cut down the joint resistance
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Friction.Coefficient", "0.002"})
                     End If
 
                     ''Add motor velocity to joint. 
@@ -464,7 +467,10 @@ Namespace UITests
                     If m_strPhysicsEngine = "Bullet" Then
                         'The motors do not currently work well at lower unit scales unless you subdivide your time steps.
                         'I plan to fix this later, but for now do this to get it to work.
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "1"})
+                        'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", "1"})
+
+                        'Cut down the joint resistance
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Friction.Coefficient", "0.02"})
                     End If
                 End Sub
 

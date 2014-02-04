@@ -411,6 +411,11 @@ void BlHinge::TurnMotorOff()
         }
         else
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
+
+        m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
+        m_btHinge->getRotationalLimitMotor(0)->m_currentLimit = 0;
+        m_btHinge->getRotationalLimitMotor(0)->m_currentLimitError = 0;
+        m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
     }
 }
 
@@ -426,6 +431,9 @@ void BlHinge::ResetSimulation()
 
     m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;
     m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
+    m_btHinge->getRotationalLimitMotor(0)->m_currentLimit = 0;
+    m_btHinge->getRotationalLimitMotor(0)->m_currentLimitError = 0;
+    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
 }
 
 void BlHinge::EnableFeedback()
@@ -440,28 +448,28 @@ bool BlHinge::NeedApplyAssist()
     //if(GetSimulator()->Time() >= 1.1)
     //    i=5;
 
-    if(m_btHinge && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild && m_lpAssistPid && m_lpAssistPid->Enabled())
-    {
-        float fltSetVel = SetVelocity();
-        float fltPos = m_btHinge->getRotationalLimitMotor(0)->m_currentPosition;
-        float fltLow = m_btHinge->getRotationalLimitMotor(0)->m_loLimit;
-        float fltHigh = m_btHinge->getRotationalLimitMotor(0)->m_hiLimit;
+    //if(m_btHinge && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild && m_lpAssistPid && m_lpAssistPid->Enabled())
+    //{
+    //    float fltSetVel = SetVelocity();
+    //    float fltPos = m_btHinge->getRotationalLimitMotor(0)->m_currentPosition;
+    //    float fltLow = m_btHinge->getRotationalLimitMotor(0)->m_loLimit;
+    //    float fltHigh = m_btHinge->getRotationalLimitMotor(0)->m_hiLimit;
 
-        float fltLow1Perc = fabs(fltLow)*0.001;
-        float fltHigh1Perc = fabs(fltHigh)*0.001;
+    //    float fltLow1Perc = fabs(fltLow)*0.001;
+    //    float fltHigh1Perc = fabs(fltHigh)*0.001;
 
-        //If we are moving upwards and are not at upper limit then apply force.
-        if(fltSetVel > 0 && fabs(fltHigh-fltPos)>=fltHigh1Perc)
-            return true;
+    //    //If we are moving upwards and are not at upper limit then apply force.
+    //    if(fltSetVel > 0 && fabs(fltHigh-fltPos)>=fltHigh1Perc)
+    //        return true;
 
-        //If we are moving downwards and are not at lower limit then apply force.
-        if(fltSetVel < 0 && fabs(fltPos-fltLow)>=fltLow1Perc)
-            return true;
+    //    //If we are moving downwards and are not at lower limit then apply force.
+    //    if(fltSetVel < 0 && fabs(fltPos-fltLow)>=fltLow1Perc)
+    //        return true;
 
-        //If we get here then we should be applying assist forces, but we are at the limit, so clear the
-        //vectors so we are not actually applying anything.
-        ClearAssistForces();
-    }
+    //    //If we get here then we should be applying assist forces, but we are at the limit, so clear the
+    //    //vectors so we are not actually applying anything.
+    //    ClearAssistForces();
+    //}
 
     return false;
 }

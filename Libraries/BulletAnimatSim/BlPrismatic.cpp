@@ -386,6 +386,13 @@ void BlPrismatic::TurnMotorOff()
         }
         else
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = false;
+
+        m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
+        m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
+        m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[0] = 0;
+        m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[1] = 0;
+        m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[2] = 0;
+        m_btPrismatic->getTranslationalLimitMotor()->m_currentLimitError = btVector3(0, 0, 0);
     }
 }
 
@@ -402,6 +409,10 @@ void BlPrismatic::ResetSimulation()
     m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
+    m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[0] = 0;
+    m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[1] = 0;
+    m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[2] = 0;
+    m_btPrismatic->getTranslationalLimitMotor()->m_currentLimitError = btVector3(0, 0, 0);
 }
 
 void BlPrismatic::EnableFeedback()
@@ -412,9 +423,9 @@ void BlPrismatic::EnableFeedback()
 
 bool BlPrismatic::NeedApplyAssist()
 {
-    int i = 4;
-    if(GetSimulator()->Time() >= 1.1)
-        i=5;
+    //int i = 4;
+    //if(GetSimulator()->Time() >= 1.1)
+    //    i=5;
 
     if(m_btPrismatic && m_bMotorOn && m_lpBlParent && m_lpBlChild && m_btParent && m_btChild && m_lpAssistPid && m_lpAssistPid->Enabled())
     {

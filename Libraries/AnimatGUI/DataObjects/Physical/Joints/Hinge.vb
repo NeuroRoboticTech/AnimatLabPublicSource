@@ -346,12 +346,12 @@ Namespace DataObjects.Physical.Joints
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
                           "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
 
-            If Util.Application.Physics.GenerateMotorAssist Then
-                'pbNumberBag = m_doAssistPID.Properties
-                'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
-                '                                "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
-                '                                "", GetType(PidControlPropBagConverter)))
-            End If
+            'If Util.Application.Physics.GenerateMotorAssist Then
+            '    pbNumberBag = m_doAssistPID.Properties
+            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
+            '                                    "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
+            '                                    "", GetType(PidControlPropBagConverter)))
+            'End If
 
         End Sub
 

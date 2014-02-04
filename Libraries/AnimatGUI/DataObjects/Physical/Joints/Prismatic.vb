@@ -211,6 +211,7 @@ Namespace DataObjects.Physical.Joints
             End If
 
             m_doAssistPID = New PidControl(Me)
+            ' m_doAssistPID.Enabled = False
 
             If Util.Application.Physics.GenerateMotorAssist Then
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
