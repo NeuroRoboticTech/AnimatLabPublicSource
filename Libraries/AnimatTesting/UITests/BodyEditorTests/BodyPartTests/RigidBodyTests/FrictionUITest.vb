@@ -25,21 +25,23 @@ Namespace UITests
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_BoxFriction()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("Px", 0.01)
-                        aryMaxErrors.Add("Py", 0.02)
-                        aryMaxErrors.Add("Pz", 0.01)
-                        aryMaxErrors.Add("Vx", 0.1)
+                        aryMaxErrors.Add("Px", 0.03)
+                        aryMaxErrors.Add("Py", 0.03)
+                        aryMaxErrors.Add("Pz", 0.03)
+                        aryMaxErrors.Add("Vx", 0.2)
                         aryMaxErrors.Add("Vy", 2) 'essentially ignore this setting. It is pretty variable.
-                        aryMaxErrors.Add("Vz", 0.1)
+                        aryMaxErrors.Add("Vz", 0.2)
 
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
                         Dim strNewDensity As String = TestContext.DataRow("Density").ToString
-
-                        If Not bEnabled Then Return
+                        Dim fltFriction1 As Single = CSng(TestContext.DataRow("Friction1"))
+                        Dim fltFriction2 As Single = CSng(TestContext.DataRow("Friction2"))
+                        Dim fltFriction3 As Single = CSng(TestContext.DataRow("Friction3"))
 
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\BodyEditorTests\BodyPartTests\RigidBodyTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\BodyEditorTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
@@ -50,12 +52,23 @@ Namespace UITests
 
                         CleanupConversionProjectDirectory()
 
+                        SetPhysicsEngineOnExistingProject(Me.TestingProjectPath, m_strPhysicsEngine)
+
                         'Load and convert the project.
                         StartExistingProject()
 
                         WaitForProjectToOpen()
 
                         Threading.Thread.Sleep(3000)
+
+                        'Open the matierals dialog
+                        IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
+                        ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", fltFriction1.ToString()})
+                        If m_strPhysicsEngine <> "Bullet" Then
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", fltFriction1.ToString()})
+                        End If
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Run the simulation and wait for it to end.
                         RunSimulationWaitToEnd()
@@ -83,10 +96,11 @@ Namespace UITests
 
                         'Open the matierals dialog
                         IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
-
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", "0.2"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", "0.2"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", fltFriction2.ToString()})
+                        If m_strPhysicsEngine <> "Bullet" Then
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", fltFriction2.ToString()})
+                        End If
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Run the simulation and wait for it to end.
@@ -100,8 +114,10 @@ Namespace UITests
 
                         ExecuteActiveDialogMethod("Automation_AddMaterialType", New Object() {"Test"})
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Test"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", "0.3"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", "0.3"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", fltFriction3.ToString()})
+                        If m_strPhysicsEngine <> "Bullet" Then
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", fltFriction3.ToString()})
+                        End If
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'run the sim again and make sure results not changed.
@@ -110,16 +126,14 @@ Namespace UITests
                         'Compare chart data to verify simulation results.
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Uk_0_2_F_1_M_0_1_")
 
-                        'Set default to 0.3
-                        IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
-                        ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", "0.3"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", "0.3"})
-                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Set the box to use the new material and run again.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "MaterialTypeName", "Test"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "MaterialTypeName", "Test"})
 
+                        If Not MatchSimObjectPropertyString("Simulation\Environment\Structures\Structure_1\Body Plan\Root", "MaterialTypeName", "Test") Then
+                            Throw New System.Exception("Material ID was not set to Test material")
+                        End If
                         If Not MatchSimObjectPropertyString("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "MaterialTypeName", "Test") Then
                             Throw New System.Exception("Material ID was not set to Test material")
                         End If
@@ -130,23 +144,25 @@ Namespace UITests
                         'Compare chart data to verify simulation results.
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Uk_0_3_F_1_M_0_1_")
 
-                        'Set default to 0.3
+                        'Set test to 0.1
                         IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Test"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", "0.1"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", "0.1"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", fltFriction1.ToString()})
+                        If m_strPhysicsEngine <> "Bullet" Then
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", fltFriction1.ToString()})
+                        End If
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'run the sim again and make sure results not changed.
                         RunSimulationWaitToEnd()
 
                         'Compare chart data to verify simulation results.
-                        ' CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Test_Uk_0_1_F_1_M_0_1_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Uk_1_F_1_M_0_1_")
 
                         'Now remove the Test material
                         IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Test"})
-                        ExecuteIndirectActiveDialogMethod("Automation_RemoveOdorType", Nothing, , , True)
+                        ExecuteIndirectActiveDialogMethod("Automation_RemoveMaterialType", Nothing, , , True)
 
                         'Select replacement material
                         ExecuteIndirectActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"}, , , True)
@@ -155,6 +171,9 @@ Namespace UITests
                         'Close material edit box
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
+                        If Not MatchSimObjectPropertyString("Simulation\Environment\Structures\Structure_1\Body Plan\Root", "MaterialTypeName", "Default") Then
+                            Throw New System.Exception("Material ID was not reset to default after deletion")
+                        End If
                         If Not MatchSimObjectPropertyString("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "MaterialTypeName", "Default") Then
                             Throw New System.Exception("Material ID was not reset to default after deletion")
                         End If
@@ -163,7 +182,7 @@ Namespace UITests
                         RunSimulationWaitToEnd()
 
                         'Compare chart data to verify simulation results.
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Default_Uk_0_3_F_1_M_0_1_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Uk_0_2_F_1_M_0_1_")
 
                         'Turn friction push off
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Enabled", "False"})
@@ -180,8 +199,14 @@ Namespace UITests
                         'Reset the compliance and damping.
                         IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"Compliance", "100 u"})
-                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"Damping", "50 "})
+
+                        If m_strPhysicsEngine = "Bullet" Then
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"Restitution", "0.5 "})
+                        Else
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"Compliance", "100 u"})
+                            ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"Damping", "50 "})
+                        End If
+
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'run the sim again and make sure results not changed.
@@ -192,6 +217,80 @@ Namespace UITests
 
                     End Sub
 
+
+                    <TestMethod()>
+                    Public Sub Test_BoxFriction_ConvertVortexToBullet()
+
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Px", 0.03)
+                        aryMaxErrors.Add("Py", 0.03)
+                        aryMaxErrors.Add("Pz", 0.03)
+                        aryMaxErrors.Add("Vx", 0.2)
+                        aryMaxErrors.Add("Vy", 2) 'essentially ignore this setting. It is pretty variable.
+                        aryMaxErrors.Add("Vz", 0.2)
+
+                        m_strPhysicsEngine = "Bullet"
+                        m_strProjectName = "BoxFriction_KgM"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\BodyEditorTests\BodyPartTests\RigidBodyTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\BodyEditorTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
+
+                        m_strStructureGroup = "Structures"
+                        m_strStruct1Name = "Structure_1"
+
+                        CleanupConversionProjectDirectory()
+
+                        SetPhysicsEngineOnExistingProject(Me.TestingProjectPath, "Vortex")
+
+                        'Load and convert the project.
+                        StartExistingProject()
+
+                        WaitForProjectToOpen()
+
+                        Threading.Thread.Sleep(3000)
+
+                        'Open the matierals dialog
+                        IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
+                        ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearPrimary", "0.1"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionLinearSecondary", "0.1"})
+                        ExecuteActiveDialogMethod("Automation_SetSelectedItemProperty", New Object() {"FrictionAngularPrimary", "0.1"})
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                        ClickMenuItem("ConvertPhysicsEngineToolStripMenuItem", True, , , True)
+
+                        'Set Physics Method
+                        ExecuteIndirectActiveDialogMethod("SetPhysics", New Object() {"Bullet"}, , , True)
+
+                        'Click 'Ok' button
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , , True)
+
+                        Threading.Thread.Sleep(3000)
+
+                        WaitForProjectToOpen()
+
+                        'Now remove the Test material
+                        IndirectClickToolbarItem("EditMaterialsToolStripButton", True)
+                        ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
+
+                        Dim oVal As Object = ExecuteDirectActiveDialogMethod("Automation_GetSelectedItemProperty", New Object() {"FrictionLinearPrimary.ActualValue"})
+                        If Math.Abs(CSng(oVal) - 0.3162278) > 0.0001 Then
+                            Throw New System.Exception("Linear Primary Friction was not converted correctly.")
+                        End If
+                        oVal = ExecuteDirectActiveDialogMethod("Automation_GetSelectedItemProperty", New Object() {"FrictionAngularPrimary.ActualValue"})
+                        If Math.Abs(CSng(oVal) - 0.3162278) > 0.0001 Then
+                            Throw New System.Exception("Angular Primary Friction was not converted correctly.")
+                        End If
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Uk_1_F_10_M_1_")
+
+                    End Sub
 
                     <TestMethod(), _
                     DataSource("System.Data.OleDb", _
@@ -290,12 +389,12 @@ Namespace UITests
                     End Sub
 
 
-                   <TestMethod(), _
-                     DataSource("System.Data.OleDb", _
-                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
-                                "PhysicsEngines", _
-                                DataAccessMethod.Sequential), _
-                     DeploymentItem("TestCases.accdb")>
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_MassVolumeDensity()
                         If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
@@ -412,6 +511,7 @@ Namespace UITests
                     <TestCleanup()> Public Overrides Sub MyTestCleanup()
                         MyBase.MyTestCleanup()
                     End Sub
+
 #End Region
 
 #End Region

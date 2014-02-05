@@ -11,6 +11,7 @@ Imports System.Drawing
 Imports System.Text.RegularExpressions
 Imports System.IO
 Imports System.Reflection
+Imports System.Xml
 
 Namespace Framework
 
@@ -178,6 +179,23 @@ Namespace Framework
             Debug.WriteLine("Testing physics engine '" & m_strPhysicsEngine & "'")
             Return CBool(dataRow("Enabled"))
         End Function
+
+        Protected Overridable Sub SetPhysicsEngineOnExistingProject(ByVal strPath As String, ByVal strPhysicsEngine As String)
+            Debug.WriteLine("SetPhysicsEngineOnExistingProject. Path: '" & strPath & "', strPhysicsEngine: " & strPhysicsEngine)
+
+            Try
+                Dim xnProject As New XmlDom()
+                xnProject.Load(strPath)
+
+                Dim xnProj As XmlNode = xnProject.GetRootNode("Project")
+                xnProject.UpdateSingleNodeValue(xnProj, "Physics", strPhysicsEngine)
+
+                xnProject.Save(strPath)
+            Catch ex As Exception
+                Debug.Write(ex.Message)
+            End Try
+
+        End Sub
 
         Protected Overridable Sub WaitWhileBusy(Optional ByVal bSkipWaiting As Boolean = False, Optional ByVal bErrorOk As Boolean = False)
             If bSkipWaiting Then Return
@@ -434,6 +452,18 @@ Namespace Framework
             Debug.WriteLine("ExecuteActiveDialogMethod Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteDirectMethod("ExecuteActiveDialogMethod", New Object() {strMethodName, aryParams})
+            Threading.Thread.Sleep(iWaitMilliseconds)
+
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+            If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
+            Return oRet
+        End Function
+
+        Protected Overridable Function ExecuteDirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
+            Debug.WriteLine("ExecuteDirectActiveDialogMethod Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
+
+            Dim oRet As Object = m_oServer.ExecuteDirectMethod("ExecuteDirectActiveDialogMethod", New Object() {strMethodName, aryParams})
             Threading.Thread.Sleep(iWaitMilliseconds)
 
             WaitWhileBusy(bSkipWaiting, bErrorOk)

@@ -101,6 +101,12 @@ Namespace Framework
             End Get
         End Property
 
+        Public Overridable ReadOnly Property TestingProjectPath() As String
+            Get
+                Return m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"
+            End Get
+        End Property
+
 #End Region
 
 #Region "Methods"
@@ -153,7 +159,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub OpenExistingProject(ByVal bWaitTillOpen As Boolean)
-            ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
+            ExecuteIndirectMethod("LoadProject", New Object() {Me.TestingProjectPath}, 20, False, True)
 
             If bWaitTillOpen Then
                 WaitWhileBusy()

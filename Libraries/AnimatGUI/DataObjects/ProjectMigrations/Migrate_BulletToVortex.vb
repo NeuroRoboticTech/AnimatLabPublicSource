@@ -65,7 +65,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "BulletAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
-                'Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
+                Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
                 'Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
                 'For Each xnNode As XmlNode In xnOrganisms.ChildNodes
@@ -76,6 +76,13 @@ Namespace DataObjects
                 'For Each xnNode As XmlNode In xnStructures.ChildNodes
                 '    ModifyStructure(xnNode, False)
                 'Next
+
+                Dim xnMaterialtypes As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "MaterialTypes", False)
+                If Not xnMaterialtypes Is Nothing Then
+                    For Each xnNode As XmlNode In xnMaterialtypes.ChildNodes
+                        ModifyMaterialType(xnNode)
+                    Next
+                End If
 
             End Sub
 
@@ -325,6 +332,31 @@ Namespace DataObjects
 
 #End Region
 
+#Region "Modify Material Type"
+
+            Protected Overridable Sub ModifyMaterialType(ByVal xnMaterialType As XmlNode)
+
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnMaterialType, "Name", False)
+                Util.Application.AppStatusText = "Converting organism/structure " & strName & " body"
+
+                Dim dblLinearFriction As Double = m_xnProjectXml.GetScaleNumberValue(xnMaterialType, "FrictionLinearPrimary", False, -1)
+                Dim dblRollingFriction As Double = m_xnProjectXml.GetScaleNumberValue(xnMaterialType, "FrictionAngularPrimary", False, -1)
+
+                If dblLinearFriction > 0 Then
+                    Dim dblNewLinear As Double = dblLinearFriction * dblLinearFriction
+                    m_xnProjectXml.RemoveNode(xnMaterialType, "FrictionLinearPrimary", False)
+                    m_xnProjectXml.AddScaledNumber(xnMaterialType, "FrictionLinearPrimary", dblNewLinear, "None", dblNewLinear)
+                End If
+
+                If dblLinearFriction > 0 Then
+                    Dim dblNewRolling As Double = dblRollingFriction * dblRollingFriction
+                    m_xnProjectXml.RemoveNode(xnMaterialType, "FrictionAngularPrimary", False)
+                    m_xnProjectXml.AddScaledNumber(xnMaterialType, "FrictionAngularPrimary", dblNewRolling, "None", dblNewRolling)
+                End If
+
+            End Sub
+
+#End Region
 
 #End Region
 

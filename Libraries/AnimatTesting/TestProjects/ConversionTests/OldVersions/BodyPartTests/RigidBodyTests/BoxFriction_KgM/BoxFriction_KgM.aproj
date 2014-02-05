@@ -3,6 +3,7 @@
 <SimulationFile>BoxFriction_KgM.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
+<Physics>Vortex</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\BoxFriction_KgM\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>

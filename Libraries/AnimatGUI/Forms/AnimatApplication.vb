@@ -5369,6 +5369,22 @@ Namespace Forms
             Return oRet
         End Function
 
+        Public Overridable Function ExecuteDirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+
+            If Util.ActiveDialogs.Count = 0 Then
+                Throw New System.Exception("No dialog is currently active.")
+            End If
+
+            Dim oDlg As Object = Util.ActiveDialogs(Util.ActiveDialogs.Count - 1)
+            Dim oMethod As MethodInfo = oDlg.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
+            Dim oRet As Object = oMethod.Invoke(oDlg, aryParams)
+            Return oRet
+        End Function
+
         Public Sub ExecuteIndirecActiveDialogtMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
             Me.InternalAutomationMethodInProgress = True
 
@@ -5866,7 +5882,7 @@ Namespace Forms
                 If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
                     'First save the current project.
                     SaveProject(Me.ProjectFile)
-                    If ConvertPhysicsEngine(Util.Application.Physics.Name, frmConvert.cboPhysicsEngine.Name) Then
+                    If ConvertPhysicsEngine(Util.Application.Physics.Name, frmConvert.cboPhysicsEngine.SelectedItem.ToString) Then
                         'Now reopen the converted project.
                         LoadProject(Me.ProjectPath & Me.ProjectFile)
                     End If
