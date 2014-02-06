@@ -520,6 +520,19 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
+                                  ByVal eNewMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
+                                  ByVal fltMassChange As Single, _
+                                  ByVal ePrevDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
+                                  ByVal eNewDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
+                                  ByVal fltDistanceChange As Single)
+
+            'It appears that the rolling friction coefficient is scaled by the distance units. 
+            m_snFrictionAngularNormal.ActualValue = (m_snFrictionAngularNormal.ActualValue * Util.ConvertDistanceUnits(ePrevDistance.ToString)) / Util.ConvertDistanceUnits(eNewDistance.ToString)
+            m_snFrictionAngularPrimary.ActualValue = (m_snFrictionAngularPrimary.ActualValue * Util.ConvertDistanceUnits(ePrevDistance.ToString)) / Util.ConvertDistanceUnits(eNewDistance.ToString)
+            m_snFrictionAngularSecondary.ActualValue = (m_snFrictionAngularSecondary.ActualValue * Util.ConvertDistanceUnits(ePrevDistance.ToString)) / Util.ConvertDistanceUnits(eNewDistance.ToString)
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag

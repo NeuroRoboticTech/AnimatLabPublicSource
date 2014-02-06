@@ -1218,6 +1218,11 @@ Namespace DataObjects.Physical
                 doLight.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             Next
 
+            Dim doMaterial As DataObjects.Physical.MaterialType
+            For Each deEntry As DictionaryEntry In m_aryMaterialTypes
+                doMaterial = DirectCast(deEntry.Value, DataObjects.Physical.MaterialType)
+                doMaterial.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            Next
 
         End Sub
 

@@ -15,6 +15,9 @@ Namespace DataObjects
         Public Class Migrate_VortexToBullet
             Inherits ProjectMigration
 
+            Protected m_fltDistanceUnits As Single
+            Protected m_fltMassUnits As Single
+            Protected m_fltDisplayMassUnits As Single
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
             Public Overrides ReadOnly Property ConvertFrom As String
@@ -66,6 +69,10 @@ Namespace DataObjects
                 m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "BulletAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
+
+                m_fltDistanceUnits = Util.ConvertDistanceUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "DistanceUnits"))
+                m_fltMassUnits = Util.ConvertMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
+                m_fltDisplayMassUnits = Util.ConvertDisplayMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
 
                 Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
                 For Each xnNode As XmlNode In xnOrganisms.ChildNodes
@@ -339,22 +346,46 @@ Namespace DataObjects
                 Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnMaterialType, "Name", False)
                 Util.Application.AppStatusText = "Converting organism/structure " & strName & " body"
 
+                'Vortex scales the rolling friction coeffiicent by the unit scale for some reason. Need to undo this first.
                 Dim dblLinearFriction As Double = m_xnProjectXml.GetScaleNumberValue(xnMaterialType, "FrictionLinearPrimary", False, -1)
-                Dim dblRollingFriction As Double = m_xnProjectXml.GetScaleNumberValue(xnMaterialType, "FrictionAngularPrimary", False, -1)
+                Dim dblRollingFriction As Double = m_xnProjectXml.GetScaleNumberValue(xnMaterialType, "FrictionAngularPrimary", False, -1) * m_fltDistanceUnits
 
                 If dblLinearFriction > 0 Then
+                    'Vortex uses a scheme where it takes the mu for both parts and finds the most permissive one. 
+                    'Bullet multiplies the mu from each part together to get the mu that is actually used.
+                    'So to get a mu in bullet similar to the one in vortex we need to take the sqrt of the vortex value.
                     Dim dblNewLinear As Double = Math.Sqrt(dblLinearFriction)
                     m_xnProjectXml.RemoveNode(xnMaterialType, "FrictionLinearPrimary", False)
                     m_xnProjectXml.AddScaledNumber(xnMaterialType, "FrictionLinearPrimary", dblNewLinear, "None", dblNewLinear)
                 End If
 
                 If dblLinearFriction > 0 Then
-                    Dim dblNewRolling As Double = Math.Sqrt(dblRollingFriction)
+                    'I was unable to find a clear relationship with how bullet and vortex did rolling friction. I just had to look for an emperical conversion.
+                    Dim dblNewRolling As Double = ConveertVortexRollingFrictionToBullet(dblRollingFriction)
                     m_xnProjectXml.RemoveNode(xnMaterialType, "FrictionAngularPrimary", False)
                     m_xnProjectXml.AddScaledNumber(xnMaterialType, "FrictionAngularPrimary", dblNewRolling, "None", dblNewRolling)
                 End If
 
             End Sub
+
+            'I could not find any clear relationshipp with how bullet and vortex did rolling friction, so I had to look for an emperical solution. I 
+            ' ran a test where I had a sphere with radius of 1m and density of 1Kg/m^3, 4.189 Kg, resting on a plane. Physics dt is 0.5 ms. I applied a 
+            ' -20 N force to both the X and Z directions from 0 to 0.2 seconds. The rolling friction coefficient was varied and I measuered how far it rolled. 
+            'Please see AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\Sphere_Friction_KgM
+            'for the tests this was derived from and the Vortex_Bullet_Comparison.xlsx for numbers
+            Protected Overridable Function ConveertVortexRollingFrictionToBullet(ByVal dblCoeff As Double) As Double
+
+                'y = 0.0219x^(-1.143)  Vortex curve fit relating distance travelled to rolling friction coefficient.
+                'y = 0.0206x^(-0.486)   Bullet curve fit relating distance travelled to rolling friction coefficient
+
+                'First find what the distance travelled would be for the this coefficient in vortex
+                Dim dblDistance As Double = 0.0219 * Math.Pow(dblCoeff, -1.143)
+
+                'Now use that distance to calculate what a corresponding coefficient would be in bullet
+                Dim dblBulletCoef As Double = 0.0206 * Math.Pow(dblDistance, -0.486)
+
+                Return dblBulletCoef
+            End Function
 
 #End Region
 
