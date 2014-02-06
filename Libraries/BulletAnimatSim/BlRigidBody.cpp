@@ -684,6 +684,8 @@ void BlRigidBody::ProcessContacts()
 		float fltForceMag = 0;
 	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+        float fltPhysicsDt = m_lpThisAB->GetSimulator()->PhysicsTimeStep();
+        float fltRatio = (fMassUnits * fDisUnits) / fltPhysicsDt;
 
 		//Testing code
 		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
@@ -711,7 +713,7 @@ void BlRigidBody::ProcessContacts()
                     vBodyPos[2] = lpContactPoint->m_lpCP->m_localPointB[2];
                 }
 
-			    fltForceMag = lpContactPoint->m_lpCP->m_appliedImpulse * (fMassUnits * fDisUnits);
+			    fltForceMag = lpContactPoint->m_lpCP->m_appliedImpulse * fltRatio;
 
 			    if(fltForceMag > 0)
 				    lpSensor->ProcessContact(vBodyPos, fltForceMag);
