@@ -42,8 +42,14 @@ Namespace UITests
 #Region "Methods"
                     '
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                     DataSource("System.Data.OleDb", _
+                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                "PhysicsEngines", _
+                                DataAccessMethod.Sequential), _
+                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_BallSocketConversion()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
