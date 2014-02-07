@@ -78,6 +78,12 @@ void BlBallSocket::SetupPhysics()
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
     m_btSocket->setDbgDrawSize(btScalar(5.f));
 
+    if(m_lpBlParent && m_lpBlParent->Part())
+        m_lpBlParent->Part()->setSleepingThresholds(0, 0);
+
+    if(m_lpBlChild && m_lpBlChild->Part())
+        m_lpBlChild->Part()->setSleepingThresholds(0, 0);
+
 	m_btJoint = m_btSocket;
 }
 
@@ -85,6 +91,14 @@ void BlBallSocket::CreateJoint()
 {
 	SetupGraphics();
 	SetupPhysics();
+}
+
+void BlBallSocket::Physics_ResetSimulation()
+{
+    BlJoint::Physics_ResetSimulation();
+
+    if(m_btSocket)
+        m_btSocket->internalSetAppliedImpulse(0);
 }
 
 #pragma region DataAccesMethods

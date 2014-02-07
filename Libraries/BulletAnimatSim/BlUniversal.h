@@ -33,6 +33,7 @@ namespace BulletAnimatSim
 #pragma endregion
 
 				virtual void CreateJoint();
+    			virtual void Physics_ResetSimulation();
 			};
 
 		}		//Joints

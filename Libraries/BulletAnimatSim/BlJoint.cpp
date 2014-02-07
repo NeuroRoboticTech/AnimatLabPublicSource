@@ -116,6 +116,7 @@ void BlJoint::Physics_ResetSimulation()
 {
     if(m_btJoint)
 	{
+        m_lpThisJoint->WakeDynamics();
         m_fltPrevBtJointPos = 0;
         m_fltPrevJointPos = 0;
         OsgJoint::Physics_ResetSimulation();
