@@ -596,7 +596,8 @@ void VsRigidBody::ProcessContacts()
 		VxReal3 vForce;
 		float fltForceMag = 0;
 
-		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
+        //Test code
+		//if(m_lpThisRB->GetSimulator()->Time() >= 6.758)
 		//	fltForceMag = 0;
 
 		int iCount=0;

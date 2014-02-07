@@ -688,7 +688,7 @@ void BlRigidBody::ProcessContacts()
         float fltRatio = (fMassUnits * fDisUnits) / fltPhysicsDt;
 
 		//Testing code
-		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
+		//if(m_lpThisRB->GetSimulator()->Time() >= 6.758)
 		//	fltForceMag = 0;
 
 		int iCount=m_aryContactPoints.size();
