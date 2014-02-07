@@ -51,7 +51,7 @@ BlUniversal::~BlUniversal()
 
 void BlUniversal::SetupPhysics()
 {
-	if(m_btJoint)
+    if(m_btJoint)
 		DeletePhysics(false);
 
 	if(!m_lpParent)
@@ -71,15 +71,14 @@ void BlUniversal::SetupPhysics()
     m_btParent = m_lpBlParent->Part();
     m_btChild = m_lpBlChild->Part();
 
-	CStdFPoint vGlobal = this->GetOSGWorldCoords();
-    btVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-	btVector3 axis1(1, 0, 0), axis2(0, 0, 1);
+    btTransform mtJointRelParent, mtJointRelChild;
+    CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
-	m_btSocket = new btUniversalConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), pos, axis1, axis2); 
+	m_btSocket = new btConeTwistConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild); 
 
     GetBlSimulator()->DynamicsWorld()->addConstraint(m_btSocket, true);
     m_btSocket->setDbgDrawSize(btScalar(5.f));
-    
+
     if(m_lpBlParent && m_lpBlParent->Part())
         m_lpBlParent->Part()->setSleepingThresholds(0, 0);
 
