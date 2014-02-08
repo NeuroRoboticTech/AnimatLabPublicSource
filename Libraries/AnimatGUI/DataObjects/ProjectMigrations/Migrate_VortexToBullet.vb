@@ -133,6 +133,8 @@ Namespace DataObjects
                         ModifyRigidBodyCone(xnRigidBody)
                     Case "CYLINDER"
                         ModifyRigidBodyCylinder(xnRigidBody)
+                    Case "ATTACHMENT"
+                        ModifyRigidBodyAttachment(xnRigidBody)
                     Case "MUSCLEATTACHMENT"
                         ModifyRigidBodyAttachment(xnRigidBody)
                     Case "LINEARHILLMUSCLE"
@@ -163,6 +165,10 @@ Namespace DataObjects
                         ModifyRigidBodyBox(xnRigidBody)
                     Case "CYLINDERCONTACTSENSOR"
                         ModifyRigidBodyCylinder(xnRigidBody)
+                    Case "TERRAIN"
+                        ModifyRigidBodyTerrain(xnRigidBody)
+                    Case "FLUIDPLANE"
+                        'Do nothing
                     Case Else
                         Throw New System.Exception("Invalid body part type defined. '" & strType & "'")
                 End Select
@@ -280,6 +286,9 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyMultiSegmentSpring(ByVal xnRigidBody As XmlNode)
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyTerrain(ByVal xnRigidBody As XmlNode)
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyTorus(ByVal xnRigidBody As XmlNode)
