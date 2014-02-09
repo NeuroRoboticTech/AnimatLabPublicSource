@@ -29,7 +29,7 @@
 <UseAlphaBlending>False</UseAlphaBlending>
 <AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
 <ManualRandomSeed>12345</ManualRandomSeed>
-<CollisionObjects>2</CollisionObjects>
+<CollisionObjects>10</CollisionObjects>
 <Camera>
 <Rotation>0</Rotation>
 <Elevation>0</Elevation>
