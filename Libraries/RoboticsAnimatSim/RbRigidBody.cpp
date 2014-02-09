@@ -139,7 +139,11 @@ void RbRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 {
 }
 
-void RbRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+void RbRigidBody::Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+}
+
+void RbRigidBody::Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 }
 

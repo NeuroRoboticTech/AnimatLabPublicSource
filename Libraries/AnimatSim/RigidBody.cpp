@@ -2338,25 +2338,47 @@ catch(...)
 }
 
 /**
-\brief	Adds a force to this body at a specified position. 
+\brief	Adds a world-coordinate based force vector to this body at a specified local body position. 
 
 \author	dcofer
-\date	3/2/2011
+\date	2/9/2014
 
-\param	fltPx		The x position. 
-\param	fltPy		The y position.  
-\param	fltPz		The z position.  
-\param	fltFx		The x force. 
-\param	fltFy		The y force. 
-\param	fltFz		The z force. 
+\param	fltPx		The x position relative to the COM in local part coordinates. 
+\param	fltPy		The y position relative to the COM in local part coordinates.  
+\param	fltPz		The z position relative to the COM in local part coordinates.  
+\param	fltFx		The x force in world coordinates. 
+\param	fltFy		The y force in world coordinates. 
+\param	fltFz		The z force in world coordinates. 
 \param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
 					applied as provided. 
 **/
 
-void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+void RigidBody::AddForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_AddBodyForce(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
+		m_lpPhysicsBody->Physics_AddBodyForceAtLocalPos(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
+}
+
+/**
+\brief	Adds a world-coordinate based force vector to this body at a specified world-coordinate body position. 
+
+\author	dcofer
+\date	2/9/2014
+
+\param	fltPx		The x position in world coordinates. 
+\param	fltPy		The y position in world coordinates. 
+\param	fltPz		The z position in world coordinates.  
+\param	fltFx		The x force in world coordinates. 
+\param	fltFy		The y force in world coordinates. 
+\param	fltFz		The z force in world coordinates. 
+\param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
+					applied as provided. 
+**/
+
+void RigidBody::AddForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_AddBodyForceAtWorldPos(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
 }
 
 /**

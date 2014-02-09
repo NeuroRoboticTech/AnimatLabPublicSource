@@ -915,7 +915,33 @@ float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 	return NULL;
 }
 
-void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+void VsRigidBody::Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
+	{
+		VxReal3 fltF, fltP;
+		if(bScaleUnits)
+		{
+			fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+		}
+		else
+		{
+			fltF[0] = fltFx;
+			fltF[1] = fltFy;
+			fltF[2] = fltFz;
+		}
+
+		fltP[0] = fltPx;
+		fltP[1] = fltPy;
+		fltP[2] = fltPz;
+
+		m_vxPart->addForceAtPosition(fltF, fltP);
+	}
+}
+
+void VsRigidBody::Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{

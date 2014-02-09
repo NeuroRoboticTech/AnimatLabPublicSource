@@ -36,7 +36,8 @@ public:
     virtual bool Physics_IsGeometryDefined() {return false;};
     virtual void Physics_EnableCollision(RigidBody *lpBody) {};
     virtual void Physics_DisableCollision(RigidBody *lpBody) {};
-    virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};
+    virtual void Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};
+    virtual void Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};
 	virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits) {};
     virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint vVel; return vVel;};
     virtual bool Physics_IsDefined() {return m_bPhsyicsDefined;};

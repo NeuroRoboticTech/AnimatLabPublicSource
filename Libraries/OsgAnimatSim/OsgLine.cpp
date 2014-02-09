@@ -160,25 +160,13 @@ void OsgLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float 
 	oPrimForce *= fltTension;
 }
 
-CStdFPoint OsgLine::GetOffsetFromParentCOM(RigidBody *lpParent, const CStdFPoint &vPos)
-{
-    CStdFPoint vParentPos = lpParent->AbsolutePosition();
-    CStdFPoint vCOM;
-
-    if(lpParent->HasStaticChildren())
-        vCOM = lpParent->CenterOfMassWithStaticChildren();
-
-    CStdFPoint vRelPos = vParentPos - vCOM - vPos;
-    return vRelPos;
-}
-
 void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 {
 	if(bEnabled)
 	{
-        //int iTest = 0;
-		//if(m_lpLineBase->GetSimulator()->Time() >= 2.5)
-		//	iTest = iTest;
+        int iTest = 0;
+		if(m_lpLineBase->GetSimulator()->Time() >= 0.15)
+			iTest = iTest;
 
         //Dont bother with this unless there is actually tension developed by the muscle.
 		if(fabs(fltTension) > 1e-5)
@@ -202,11 +190,8 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
 				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-                CStdFPoint vPrimPosRel = GetOffsetFromParentCOM(lpAttach1Parent, oPrimPos);
-                CStdFPoint vSecPosRel = GetOffsetFromParentCOM(lpAttach2Parent, oSecPos);
-
-				lpAttach1Parent->AddForce(vPrimPosRel.x, vPrimPosRel.y, vPrimPosRel.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
-				lpAttach2Parent->AddForce(vSecPosRel.x, vSecPosRel.y, vSecPosRel.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
+				lpAttach1Parent->AddForceAtWorldPos(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
+				lpAttach2Parent->AddForceAtWorldPos(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
 
 				lpAttach1 = lpAttach2;
 			}

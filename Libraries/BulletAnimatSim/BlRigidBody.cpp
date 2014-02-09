@@ -860,7 +860,34 @@ void BlRigidBody::Physics_DisableCollision(RigidBody *lpBody)
         m_lpBulletData->m_bExclusionProcessing = true;
 }
 
-void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+void BlRigidBody::Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+	if(m_btPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
+	{
+		btVector3 fltF, fltP;
+		if(bScaleUnits)
+		{
+			fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+		}
+		else
+		{
+			fltF[0] = fltFx;
+			fltF[1] = fltFy;
+			fltF[2] = fltFz;
+		}
+
+		fltP[0] = fltPx;
+		fltP[1] = fltPy;
+		fltP[2] = fltPz;
+
+        Physics_WakeDynamics();
+        m_btPart->applyForce(fltF, fltP);
+	}
+}
+
+void BlRigidBody::Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_btPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{
@@ -881,9 +908,9 @@ void BlRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
         //Bullet force application position is relative to the center of mass of the part.
         btVector3 vCOM = m_btPart->getCenterOfMassPosition();
 
-		fltP[0] = fltPx; //vCOM[0] - fltPx;
-		fltP[1] = fltPy; //vCOM[1] - fltPy;
-		fltP[2] = fltPz; //vCOM[2] - fltPz;
+		fltP[0] = fltPx - vCOM[0];
+		fltP[1] = fltPy - vCOM[1];
+		fltP[2] = fltPz - vCOM[2];
 
         Physics_WakeDynamics();
         m_btPart->applyForce(fltF, fltP);

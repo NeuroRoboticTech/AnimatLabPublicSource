@@ -95,6 +95,39 @@ Namespace UITests
                     End Sub
 
 
+                    <TestMethod(), _
+                     DataSource("System.Data.OleDb", _
+                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                "PhysicsEngines", _
+                                DataAccessMethod.Sequential), _
+                     DeploymentItem("TestCases.accdb")>
+                    Public Sub Test_BalanceBeam()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Hinge", 1.1)
+                        aryMaxErrors.Add("Fy", 0.01)
+                        aryMaxErrors.Add("Tz", 0.01)
+                        aryMaxErrors.Add("default", 0.01)
+
+                        m_strProjectName = "BalanceBeam"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strStructureGroup = "Organisms"
+                        m_strStruct1Name = "BalanceBeam"
+
+                        m_aryWindowsToOpen.Clear()
+                        m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
+
+                        Dim aryIgnoreRows As New ArrayList
+
+                        'Load and convert the project.
+                        TestConversionProject("AfterConversion_", aryMaxErrors, -1, aryIgnoreRows)
+
+                    End Sub
+
 
 #Region "Additional test attributes"
                     '

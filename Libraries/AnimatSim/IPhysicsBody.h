@@ -28,7 +28,8 @@ namespace AnimatSim
 			virtual void Physics_UpdateNode() = 0;
 			virtual void Physics_EnableCollision(RigidBody *lpBody) = 0;
 			virtual void Physics_DisableCollision(RigidBody *lpBody) = 0;
-			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) = 0;
+			virtual void Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) = 0;
+			virtual void Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) = 0;
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits) = 0;
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) = 0;
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() = 0;

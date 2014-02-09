@@ -223,8 +223,8 @@ void VsLine::StepSimulation(float fltTension)
 				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
 				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-				lpAttach1Parent->AddForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
-				lpAttach2Parent->AddForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
+				lpAttach1Parent->AddForceAtWorldPos(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, true); 
+				lpAttach2Parent->AddForceAtWorldPos(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, true); 
 
 				lpAttach1 = lpAttach2;
 			}

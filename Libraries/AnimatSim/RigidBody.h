@@ -336,7 +336,8 @@ namespace AnimatSim
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);
             virtual void SetSurfaceContactCount(int iCount);
-			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void AddForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void AddForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMassValueWithStaticChildren();

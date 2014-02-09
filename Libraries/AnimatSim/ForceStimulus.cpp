@@ -250,7 +250,7 @@ void ForceStimulus::StepSimulation()
 				}
 
 				if(m_lpBody && (m_fltForceX || m_fltForceY || m_fltForceZ))
-					m_lpBody->AddForce(m_oRelativePosition.x, m_oRelativePosition.y, m_oRelativePosition.z,
+					m_lpBody->AddForceAtLocalPos(m_oRelativePosition.x, m_oRelativePosition.y, m_oRelativePosition.z,
                                        m_fltForceX, m_fltForceY, m_fltForceZ, false);
 			}
 
