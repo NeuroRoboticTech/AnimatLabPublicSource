@@ -257,7 +257,7 @@ void BlRigidBody::CreateSensorPart()
 
 void BlRigidBody::CreateDynamicPart()
 {
-	if(m_lpThisRB && m_lpThisAB && m_btCollisionShape)
+	if(m_lpThisRB && m_lpThisAB && m_btCollisionShape && m_lpMaterial)
     {
         BlSimulator *lpSim = GetBlSimulator();
 

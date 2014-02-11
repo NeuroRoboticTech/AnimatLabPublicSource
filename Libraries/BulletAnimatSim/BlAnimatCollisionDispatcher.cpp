@@ -59,7 +59,8 @@ bool	BlAnimatCollisionDispatcher::needsCollision(const btCollisionObject* body0,
 
     if(lpData1 && lpData2)
     {
-        //if(lpData1->m_bExclusionProcessing || lpData2->m_bExclusionProcessing)  //Testing only
+        //Testing Code
+        //if(lpData1->m_bExclusionProcessing || lpData2->m_bExclusionProcessing)  
         //    lpData1 = lpData1;
 
         if(lpData1->m_bExclusionProcessing && lpData1->m_lpBody && lpData2->m_lpBody && !lpData1->m_lpBody->NeedCollision(lpData2->m_lpBody))

@@ -27,6 +27,11 @@ BlTerrain::BlTerrain()
 	SetThisPointers();
 	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
+    m_btMotionState = NULL;
+    m_fltMinTerrainHeight = 0;
+    m_fltMaxTerrainHeight = 0;
+    m_fltTerrainHeightAdjust = 0;
+    m_aryHeightData = NULL;
 }
 
 BlTerrain::~BlTerrain()
@@ -119,10 +124,11 @@ void BlTerrain::CreatePhysicsGeometry()
 
         //Mass of a terrain is always zero because it is always static.
         m_fltMass = 0;
-		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, 0, 0, 0);
+		m_btHeightField = CreateBtHeightField(m_osgHeightField, m_fltSegmentWidth, m_fltSegmentLength, m_fltMinTerrainHeight, m_fltMaxTerrainHeight, &m_aryHeightData);
+        m_fltTerrainHeightAdjust = (m_fltMaxTerrainHeight - m_fltMinTerrainHeight)/2.0 + m_fltMinTerrainHeight;
         m_eBodyType = TERRAIN_SHAPE_PROXYTYPE;
 		m_btCollisionShape = m_btHeightField;
-	}
+    }
 
 	m_eControlType = DynamicsControlType::ControlNode;  //This is not a dynamic part.
 
@@ -151,7 +157,7 @@ void BlTerrain::CreateDynamicPart()
 {
     BlSimulator *lpSim = GetBlSimulator();
 
-	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape)
+	if(lpSim && m_lpThisRB && m_lpThisAB && m_btCollisionShape && m_lpMaterial)
 	{
         btScalar mass( m_lpThisRB->GetMassValueWithStaticChildren() );
 	    btVector3 localInertia( 0, 0, 0 );
@@ -160,32 +166,18 @@ void BlTerrain::CreateDynamicPart()
 		    m_btCollisionShape->calculateLocalInertia( mass, localInertia );
 
         //Keep a copy of the matrix transform for osgMT so I can reset it back later
-        osg::Matrix osgMTmat = m_osgMT->getMatrix();
+        osg::Vec3d vPos = m_osgMT->getMatrix().getTrans();
 
-        // Create MotionState to control OSG subgraph visual reprentation transform
-        // from a Bullet world transform. To do this, the MotionState need the address
-        // of the Transform node (must be either AbsoluteModelTransform or
-        // MatrixTransform), center of mass, scale vector, and the parent (or initial)
-        // transform (usually the non-scaled OSG local-to-world matrix obtained from
-        // the parent node path).
-        m_osgbMotion = new osgbDynamics::MotionState();
-        m_osgbMotion->setTransform( m_osgMT.get() );
-
-        osg::Vec3 com;
-		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
-		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
-			com = osg::Vec3(vCOM.x, vCOM.y, vCOM.z);
-        else
-            com = osg::Vec3(0, 0, 0);
-        m_osgbMotion->setCenterOfMass( com );
-
-        m_osgbMotion->setScale( osg::Vec3( 1., 1., 1. ) );
-        m_osgbMotion->setParentTransform( osg::Matrix::identity() );
+	    btTransform tr;
+	    tr.setIdentity();
+	    tr.setOrigin(btVector3(vPos[0], (m_fltTerrainHeightAdjust+vPos[1]), vPos[2]));
+        m_btMotionState = new btDefaultMotionState(tr);
 
         // Finally, create rigid body.
-        btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_osgbMotion, m_btCollisionShape, localInertia );
-        rbInfo.m_friction = btScalar( 1 );
-        rbInfo.m_restitution = btScalar( 1 );
+        btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_btMotionState, m_btCollisionShape, localInertia );
+		rbInfo.m_friction = m_lpMaterial->FrictionLinearPrimary();
+        rbInfo.m_rollingFriction = m_lpMaterial->FrictionAngularPrimaryConverted();
+		rbInfo.m_restitution = m_lpMaterial->Restitution();
         rbInfo.m_linearDamping = m_lpThisRB->LinearVelocityDamping();
         rbInfo.m_angularDamping = m_lpThisRB->AngularVelocityDamping();
 
@@ -193,45 +185,31 @@ void BlTerrain::CreateDynamicPart()
         m_btPart->setUserPointer((void *) m_lpThisRB);
         m_btPart->setContactProcessingThreshold(10000);
 
-        // Last thing to do: Position the rigid body in the world coordinate system. The
-        // MotionState has the initial (parent) transform, and also knows how to account
-        // for center of mass and scaling. Get the world transform from the MotionState,
-        // then set it on the rigid body, which in turn sets the world transform on the
-        // MotionState, which in turn transforms the OSG subgraph visual representation.
-        btTransform wt = osgbCollision::asBtTransform(osgMTmat);
-        m_osgbMotion->setWorldTransform( wt );
-        m_btPart->setWorldTransform( wt );
+        if(!m_lpBulletData)
+            m_lpBulletData = new BlBulletData(this, false);
 
-		//if this body is frozen; freeze it
-        if(m_lpThisRB->Freeze())
-            m_btPart->setActivationState(0);
-        else
-            m_btPart->setActivationState(ACTIVE_TAG);
+        m_btPart->setUserPointer((void *) m_lpBulletData);
+        m_btPart->setActivationState(0);
 
-        lpSim->DynamicsWorld()->addRigidBody( m_btPart );
-
-        //FIX PHYSICS
-		// Create the physics object.
-		//m_vxPart = new VxPart;
-		//m_vxSensor = m_vxPart;
-		//m_vxSensor->setUserData((void*) m_lpThisRB);
-		//int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
-
-		//m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-		//m_vxSensor->setControl(ConvertControlType());  // Set it to dynamic.
-		//CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
-           
-        if(m_lpThisRB->DisplayDebugCollisionGraphic())
-        {
-            m_osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( m_btCollisionShape );
-            m_osgDebugNode->setName(m_lpThisRB->Name() + "_Debug");
-	        m_osgNodeGroup->addChild(m_osgDebugNode.get());	
-        }
+        lpSim->DynamicsWorld()->addRigidBody( m_btPart, AnimatCollisionTypes::RIGID_BODY, ALL_COLLISIONS );
 
         GetBaseValues();
 	}
 }
 
+void BlTerrain::DeleteDynamicPart()
+{
+    if(m_btMotionState)
+    {delete m_btMotionState; m_btMotionState = NULL;}
+
+    if(m_aryHeightData)
+    {
+        delete m_aryHeightData;
+        m_aryHeightData = NULL;
+    }
+
+    BlRigidBody::DeleteDynamicPart();
+}
 
 		}		//Bodies
 	}			// Environment

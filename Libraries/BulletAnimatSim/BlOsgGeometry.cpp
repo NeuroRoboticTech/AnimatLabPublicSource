@@ -14,28 +14,33 @@ namespace BulletAnimatSim
 
 #pragma region CreateGeometry_Code
 
-    btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float fltBaseHeight, float fltXCenter, float fltYCenter)
+    btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float &fltMinHeight, float &fltMaxHeight, float **aryHeightData)
     {
 	    //Lets create the height array.
-        float fltMaxHeight = -1;
+        fltMaxHeight = -10000;
+        fltMinHeight = 10000;
 	    int iCols = osgHeightField->getNumColumns();
 	    int iRows = osgHeightField->getNumRows();
 	    float* heightfieldData = new float[iCols*iRows];
 	    for(int iRow=0; iRow<iRows; iRow++)
     	    for(int iCol=0; iCol<iCols; iCol++)
             {
-                float fltHeight = (osgHeightField->getHeight(iCol, iRow) + fltBaseHeight);
+                float fltHeight = osgHeightField->getHeight(iCol, iRow);
 			    heightfieldData[(iRow*iCols) + iCol] = fltHeight;
                 if(fltHeight > fltMaxHeight)
                     fltMaxHeight = fltHeight;
+                if(fltHeight < fltMinHeight)
+                    fltMinHeight = fltHeight;
             }
 
-        float fltHeightOffset = -(fltMaxHeight/2);
-        btHeightfieldTerrainShape* heightFieldShape = new btHeightfieldTerrainShape(iCols, iRows, heightfieldData, 1, fltHeightOffset, (fltMaxHeight+fltHeightOffset), 2, PHY_FLOAT , false);
 
-        btVector3 localScaling(fltSegWidth, fltSegLength, 1);
+        btHeightfieldTerrainShape* heightFieldShape = new btHeightfieldTerrainShape(iCols, iRows, heightfieldData, 1, fltMinHeight, fltMaxHeight, 1, PHY_FLOAT , false);
+
+        btVector3 localScaling(fltSegWidth, 1, fltSegLength);
         heightFieldShape->setLocalScaling(localScaling);
         heightFieldShape->setUseDiamondSubdivision(true);
+
+        *aryHeightData = heightfieldData;
 
 	    return heightFieldShape;
     }
