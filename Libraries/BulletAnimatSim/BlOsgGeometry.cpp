@@ -22,11 +22,12 @@ namespace BulletAnimatSim
 	    int iCols = osgHeightField->getNumColumns();
 	    int iRows = osgHeightField->getNumRows();
 	    float* heightfieldData = new float[iCols*iRows];
-	    for(int iRow=0; iRow<iRows; iRow++)
-    	    for(int iCol=0; iCol<iCols; iCol++)
+        //For some reason the bullet height field rows and the osg heightfield rows are in reverse order.
+	    for(int iOsgRow=0, iBtRow=(iRows-1); iOsgRow<iRows; iOsgRow++, iBtRow--)
+    	    for(int iOsgCol=0, iBtCol=(iCols-1); iOsgCol<iCols; iOsgCol++,iBtCol--)
             {
-                float fltHeight = osgHeightField->getHeight(iCol, iRow);
-			    heightfieldData[(iRow*iCols) + iCol] = fltHeight;
+                float fltHeight = osgHeightField->getHeight(iOsgCol, iOsgRow);
+			    heightfieldData[(iBtRow*iCols) + iOsgCol] = fltHeight;
                 if(fltHeight > fltMaxHeight)
                     fltMaxHeight = fltHeight;
                 if(fltHeight < fltMinHeight)

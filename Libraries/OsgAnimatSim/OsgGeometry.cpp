@@ -1107,7 +1107,7 @@ osg::Geometry ANIMAT_OSG_PORT *CreateTorusGeometry(float innerRadius,
     return torusGeom;
 }
 
-osg::Node ANIMAT_OSG_PORT *CreateHeightField(std::string heightFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap) 
+osg::Node ANIMAT_OSG_PORT *CreateHeightField(std::string heightFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap, bool bAdjustHeight) 
 {
     osg::Image* heightMap = osgDB::readImageFile(heightFile);
      
@@ -1121,11 +1121,36 @@ osg::Node ANIMAT_OSG_PORT *CreateHeightField(std::string heightFile, float fltSe
     heightField->setXInterval(fltSegWidth);
     heightField->setYInterval(fltSegLength);
     heightField->setSkirtHeight(1.0f);
-     
+
+    //Loop through once to find the min/max heights.
+    float fltMinTerrainHeight = 10000;
+    float fltMaxTerrainHeight = -10000;
+    float fltHeight = 0;
+    float fltHeightAdjust = 0;
+    if(bAdjustHeight)
+    {
+        for (int r = 0; r < heightField->getNumRows(); r++) 
+	    {
+		    for (int c = 0; c < heightField->getNumColumns(); c++) 
+            {
+			    fltHeight = (((*heightMap->data(c, r)) / 255.0f) * fltMaxHeight);
+                if(fltHeight < fltMinTerrainHeight)
+                    fltMinTerrainHeight = fltHeight;
+                if(fltHeight > fltMaxTerrainHeight)
+                    fltMaxTerrainHeight = fltHeight;
+            }
+        }
+
+        fltHeightAdjust = (fltMaxTerrainHeight - fltMinTerrainHeight)/2.0 + fltMinTerrainHeight;
+    }
+
     for (int r = 0; r < heightField->getNumRows(); r++) 
 	{
 		for (int c = 0; c < heightField->getNumColumns(); c++) 
-			heightField->setHeight(c, r, ((*heightMap->data(c, r)) / 255.0f) * fltMaxHeight);
+        {
+			fltHeight = ((((*heightMap->data(c, r)) / 255.0f) * fltMaxHeight) - fltHeightAdjust);
+			heightField->setHeight(c, r, fltHeight);
+        }
     }
      
     osg::Geode* geode = new osg::Geode();

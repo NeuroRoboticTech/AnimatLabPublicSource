@@ -105,9 +105,12 @@ void BlTerrain::LoadMeshNode()
 	std::string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
 
 	//Get the terrain node loaded in.
-	m_osgBaseMeshNode = CreateHeightField(strFile, m_fltSegmentWidth, m_fltSegmentLength, m_fltMaxHeight, &m_osgHeightField);
+	m_osgBaseMeshNode = CreateHeightField(strFile, m_fltSegmentWidth, m_fltSegmentLength, m_fltMaxHeight, &m_osgHeightField, true);
 
 	osg::Matrix osgScaleMatrix = osg::Matrix::identity();
+    //Not sure why, but the osg terrain and the bullet terrain are off by a half segment length in registration. So I am moving the 
+    //graphics over by a bit to compensate so they are correctly registered.
+    osgScaleMatrix = osgScaleMatrix.translate((m_fltSegmentWidth/2), (m_fltSegmentLength/2), 0); 
 	m_osgMeshNode = new osg::MatrixTransform(osgScaleMatrix);
 
 	m_osgMeshNode->addChild(m_osgBaseMeshNode.get());
@@ -170,7 +173,7 @@ void BlTerrain::CreateDynamicPart()
 
 	    btTransform tr;
 	    tr.setIdentity();
-	    tr.setOrigin(btVector3(vPos[0], (m_fltTerrainHeightAdjust+vPos[1]), vPos[2]));
+	    tr.setOrigin(btVector3(vPos[0], vPos[1], vPos[2]));
         m_btMotionState = new btDefaultMotionState(tr);
 
         // Finally, create rigid body.
