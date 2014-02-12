@@ -129,6 +129,51 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root\Root_Graphics", "Radius", "0.05"})
                     End Sub
 
+
+                    Protected Overrides Sub SimulateBeforeChildRemoved()
+
+                        'Set the texture to an valid value.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "MeshFile", _
+                                                                                    (m_strRootFolder & "\bin\Resources\Small_Offset_Bowl_Heightfield.jpg")})
+                        'Reposition the structure
+                        If m_strPhysicsEngine = "Bullet" Then
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.X", "-60 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Y", "18 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Z", "1.5 c"})
+                        Else
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.X", "-60 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Y", "50 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Z", "1.5 c"})
+                        End If
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "Hole1_")
+
+                        'Set the texture to an valid value.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "MeshFile", _
+                                                                                    (m_strRootFolder & "\bin\Resources\Small_Offset_Bowl_Heightfield_2.jpg")})
+                        'Reposition the structure
+                        If m_strPhysicsEngine = "Bullet" Then
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.X", "32 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Y", "20 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Z", "-1.15 c"})
+                        Else
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.X", "32 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Y", "50 c"})
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\Structure_2\Body Plan\Root", "WorldPosition.Z", "-1.15 c"})
+                        End If
+
+                        'Run the simulation and wait for it to end.
+                        RunSimulationWaitToEnd()
+
+                        'Compare chart data to verify simulation results.
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "Hole2_")
+
+                    End Sub
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:
