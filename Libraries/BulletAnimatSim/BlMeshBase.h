@@ -18,7 +18,7 @@ namespace BulletAnimatSim
 				osg::ref_ptr<osg::MatrixTransform> m_osgMeshNode;
 
 				virtual void SetThisPointers();
-				virtual void CreateGeometry();
+				virtual void CreateGeometry(bool bOverrideStatic = false);
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
 				virtual void LoadMeshNode();

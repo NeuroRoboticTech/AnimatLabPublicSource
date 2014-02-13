@@ -71,7 +71,7 @@ namespace OsgAnimatSim
             virtual void InitializeGraphicsGeometry();
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
-			virtual void CreateGeometry();
+			virtual void CreateGeometry(bool bOverrideStatic = false);
 			virtual void ResizePhysicsGeometry();
             virtual void ResetPhyiscsAndChildJoints();
 

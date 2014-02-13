@@ -265,7 +265,7 @@ void OsgMovableItem::InitializeGraphicsGeometry()
 	m_osgNode = m_osgGeometryRotationMT.get();
 }
 
-void OsgMovableItem::CreateGeometry() 
+void OsgMovableItem::CreateGeometry(bool bOverrideStatic) 
 {
     InitializeGraphicsGeometry();
 	CreatePhysicsGeometry();

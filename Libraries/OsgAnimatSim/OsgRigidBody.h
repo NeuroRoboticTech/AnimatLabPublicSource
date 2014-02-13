@@ -79,7 +79,7 @@ namespace OsgAnimatSim
 			virtual void HideSelectedVertex();
             virtual void GetBaseValues() = 0;
 
-			virtual void CreateGeometry();
+			virtual void CreateGeometry(bool bOverrideStatic = false);
 
 		public:
 			OsgRigidBody();

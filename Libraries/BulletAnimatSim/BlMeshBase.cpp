@@ -97,30 +97,33 @@ void BlMeshBase::CreateDefaultMesh()
 	m_osgBaseMeshNode = osgGroup;
 }
 
-void BlMeshBase::CreateGeometry()
+void BlMeshBase::CreateGeometry(bool bOverrideStatic)
 {
-	LoadMeshNode();
+    if(m_lpThisRB && (!m_lpThisRB->HasStaticJoint() || bOverrideStatic))
+    {
+	    LoadMeshNode();
 
-	//For the mesh stuff we need to create it immediately after the mesh is loaded, and before we add it to
-	//the matrix transforms. This is because when vortex creates the collision geometry it was using the attached
-	//matrix transform when setting up the vertex positions and this was causing the mesh to appear in the wrong 
-	//position relative to the collision mesh
-	CreatePhysicsGeometry();
+	    //For the mesh stuff we need to create it immediately after the mesh is loaded, and before we add it to
+	    //the matrix transforms. This is because when vortex creates the collision geometry it was using the attached
+	    //matrix transform when setting up the vertex positions and this was causing the mesh to appear in the wrong 
+	    //position relative to the collision mesh
+	    CreatePhysicsGeometry();
 
-	//Now add it to the nodes.
-	osg::Group *osgNodeGroup = NULL;
-	if(m_osgNode.valid())
-		osgNodeGroup = dynamic_cast<osg::Group *>(m_osgNode.get());		
-	else
-	{
-		osgNodeGroup = new osg::Group;
-		m_osgNode = osgNodeGroup;
-	}
+	    //Now add it to the nodes.
+	    osg::Group *osgNodeGroup = NULL;
+	    if(m_osgNode.valid())
+		    osgNodeGroup = dynamic_cast<osg::Group *>(m_osgNode.get());		
+	    else
+	    {
+		    osgNodeGroup = new osg::Group;
+		    m_osgNode = osgNodeGroup;
+	    }
 
-	if(!osgNodeGroup)
-		THROW_TEXT_ERROR(Bl_Err_lMeshOsgNodeGroupNotDefined, Bl_Err_strMeshOsgNodeGroupNotDefined, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
+	    if(!osgNodeGroup)
+		    THROW_TEXT_ERROR(Bl_Err_lMeshOsgNodeGroupNotDefined, Bl_Err_strMeshOsgNodeGroupNotDefined, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 
-	osgNodeGroup->addChild(m_osgMeshNode.get());
+	    osgNodeGroup->addChild(m_osgMeshNode.get());
+    }
 }
 
 void BlMeshBase::CreatePhysicsGeometry()
@@ -132,12 +135,14 @@ void BlMeshBase::CreatePhysicsGeometry()
 		if(m_lpThisMesh->CollisionMeshType() == "CONVEX")
         {
             m_eBodyType = CONVEX_HULL_SHAPE_PROXYTYPE;
-            m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, 0);
+            if(m_osgMeshNode.get())
+                m_btCollisionShape = OsgMeshToConvexHull(m_osgMeshNode.get(), true, 0);
         }
 		else
         {
             m_eBodyType = TRIANGLE_MESH_SHAPE_PROXYTYPE;
-            m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
+            if(m_osgMeshNode.get())
+                m_btCollisionShape = osgbCollision::btTriMeshCollisionShapeFromOSG(m_osgMeshNode.get());
         }
 
 		if(!m_btCollisionShape)

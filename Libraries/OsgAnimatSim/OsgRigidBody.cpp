@@ -368,14 +368,15 @@ osg::Matrix OsgRigidBody::GetComMatrix(bool bInvert)
         return OsgBody::GetComMatrix();
 }
 
-void OsgRigidBody::CreateGeometry() 
+void OsgRigidBody::CreateGeometry(bool bOverrideStatic) 
 {
-    InitializeGraphicsGeometry();
-
     //Do not try to create the physics geometry here if we have a static joint because it will have already been 
     //created in the parent object.
-    if(m_lpThisRB && !m_lpThisRB->HasStaticJoint())
-    	CreatePhysicsGeometry();
+    if(m_lpThisRB && (!m_lpThisRB->HasStaticJoint() || bOverrideStatic))
+    {
+        InitializeGraphicsGeometry();
+   	    CreatePhysicsGeometry();
+    }
 }
 
 void OsgRigidBody::SetupPhysics()

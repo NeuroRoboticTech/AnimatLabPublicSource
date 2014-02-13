@@ -3,7 +3,7 @@
 <SimulationFile>Static.asim</SimulationFile>
 <LogLevel>ErrorType</LogLevel>
 <Version>3</Version>
-<Physics>Vortex</Physics>
+<Physics>Bullet</Physics>
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Static\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>

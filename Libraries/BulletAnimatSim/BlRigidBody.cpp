@@ -402,7 +402,8 @@ void BlRigidBody::AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCom
     if(m_lpThisMI && lpChild && btCompound)
     {
        //First create the physics geometry for this part.
-       CreatePhysicsGeometry(); 
+       CreateGeometry(true);
+       //CreatePhysicsGeometry(); 
 
 		CStdFPoint vPos = m_lpThisMI->Position() - vCom;
 		CStdFPoint vRot = m_lpThisMI->Rotation();
@@ -989,23 +990,24 @@ void BlRigidBody::Physics_StepHydrodynamicSimulation()
 
             CStdFPoint vLinearDragForce = (m_lpThisRB->LinearDrag() * m_vRotatedArea * vLinearVel * vLinearVel * vSignLinear) * (lpPlane->Density() * -0.5);
             CStdFPoint vAngularDragTorque = (m_lpThisRB->AngularDrag() * m_vRotatedArea * vAngularVel * vAngularVel * vSignAngular) * (lpPlane->Density() * -0.5);
-
+            float fltMaxForce = m_lpThisRB->MaxHydroForce();
+            float fltMaxTorque = m_lpThisRB->MaxHydroTorque();
             for(int i=0; i<3; i++)
             {
-                if(vLinearDragForce[i] > m_lpThisRB->MaxHydroForce())
-                    vLinearDragForce[i] = m_lpThisRB->MaxHydroForce();
-
-                if(vLinearDragForce[i] < -m_lpThisRB->MaxHydroForce())
-                    vLinearDragForce[i] = -m_lpThisRB->MaxHydroForce();
-
-                if(m_vAngularDragTorque[i] > m_lpThisRB->MaxHydroTorque())
-                    vAngularDragTorque[i] = m_lpThisRB->MaxHydroTorque();
-
-                if(m_vAngularDragTorque[i] < -m_lpThisRB->MaxHydroTorque())
-                    vAngularDragTorque[i] = -m_lpThisRB->MaxHydroTorque();
-
                 m_vLinearDragForce[i] = vLinearDragForce[i] * lpSim->MassUnits() * lpSim->DistanceUnits();
                 m_vAngularDragTorque[i] = vAngularDragTorque[i] * lpSim->MassUnits() * lpSim->DistanceUnits() * lpSim->DistanceUnits();
+
+                if(vLinearDragForce[i] > fltMaxForce)
+                    vLinearDragForce[i] = fltMaxForce;
+
+                if(vLinearDragForce[i] < -fltMaxForce)
+                    vLinearDragForce[i] = -fltMaxForce;
+
+                if(m_vAngularDragTorque[i] > fltMaxTorque)
+                    vAngularDragTorque[i] = fltMaxTorque;
+
+                if(m_vAngularDragTorque[i] < -fltMaxTorque)
+                    vAngularDragTorque[i] = -fltMaxTorque;
             }
 
 	        Physics_WakeDynamics();
