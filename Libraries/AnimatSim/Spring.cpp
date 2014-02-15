@@ -61,6 +61,8 @@ Spring::Spring()
 	m_fltEnergy = 0;
     m_fltVelocity = 0;
     m_fltAvgVelocity = 0;
+    m_fltStiffnessTension = 0;
+    m_fltDampingTension = 0;
 
     ClearVelocityAverage();
 }
@@ -205,7 +207,10 @@ void Spring::CalculateTension()
         m_aryVelocityAvg.AddEnd(m_fltVelocity);
         m_fltAvgVelocity = m_aryVelocityAvg.Average();
 
-		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement + m_fltAvgVelocity*m_fltDamping;
+        m_fltStiffnessTension = m_fltStiffnessNotScaled * m_fltDisplacement;
+        m_fltDampingTension = m_fltAvgVelocity*m_fltDamping;
+
+		m_fltTension = m_fltStiffnessTension + m_fltDampingTension;
 		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
 	}
     else
@@ -246,6 +251,12 @@ float *Spring::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "TENSION")
 		return &m_fltTension;
+
+	if(strType == "STIFFNESSTENSION")
+		return &m_fltStiffnessTension;
+
+	if(strType == "DAMPINGTENSION")
+		return &m_fltDampingTension;
 
 	if(strType == "ENERGY")
 		return &m_fltEnergy;

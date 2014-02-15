@@ -164,9 +164,10 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 {
 	if(bEnabled)
 	{
-        int iTest = 0;
-		if(m_lpLineBase->GetSimulator()->Time() >= 0.15)
-			iTest = iTest;
+        //Testing code
+  //      int iTest = 0;
+		//if(m_lpLineBase->GetSimulator()->Time() >= 0.15)
+		//	iTest = iTest;
 
         //Dont bother with this unless there is actually tension developed by the muscle.
 		if(fabs(fltTension) > 1e-5)

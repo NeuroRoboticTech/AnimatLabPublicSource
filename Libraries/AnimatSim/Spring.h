@@ -61,7 +61,14 @@ namespace AnimatSim
                 /// The rolling average velocity over the last 5 steps
                 float m_fltAvgVelocity;
 
+                /// circular array for calculating the rolling average of the velocity.
                 CStdCircularArray<float> m_aryVelocityAvg;
+
+                //Tension derived only from the stifness portion of the equation.
+                float m_fltStiffnessTension;
+
+                //Tension derived only from the damping portion of the equation.
+                float m_fltDampingTension;
 
                 /**
 				\brief	Calculates the tension. 
