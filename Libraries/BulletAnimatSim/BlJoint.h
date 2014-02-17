@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "BlConstraintRelaxation.h"
+
 namespace BulletAnimatSim
 {
 	namespace Environment
@@ -38,10 +40,19 @@ namespace BulletAnimatSim
             btRigidBody *m_btParent;
             btRigidBody *m_btChild;
 
+            ///The bullet relaxation for the primary displacement relaxation
+            BlConstraintRelaxation *m_aryBlRelaxations[6];
+
+            btVector3 m_vLowerLinear;
+            btVector3 m_vUpperLinear;
+            btVector3 m_vLowerAngular;
+            btVector3 m_vUpperAngular;
+
 			virtual BlSimulator *GetBlSimulator();
 
             virtual void CalculateRelativeJointMatrices(btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
             virtual void CalculateRelativeJointMatrices(CStdFPoint vAdditionalRot, btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
+            virtual void InitBaseJointPointers(RigidBody *lpParent, RigidBody *lpChild, ConstraintRelaxation **aryRelaxations, int iDisallowSpringIndex);
 
 		public:
 			BlJoint();
@@ -61,6 +72,9 @@ namespace BulletAnimatSim
             virtual void SetConstraintFriction() {};
             
             virtual float GetCurrentBtPosition() {return 0;};
+
+            virtual void GetLimitsFromRelaxations(btVector3 &vLowerLinear, btVector3 &UpperLinear, btVector3 &vLowerAngular, btVector3 &vUpperAngular);
+            virtual void SetLimitValues() {};
 
 			virtual btTypedConstraint* Constraint() {return m_btJoint;};
 		};

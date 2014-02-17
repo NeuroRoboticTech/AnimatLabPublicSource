@@ -77,34 +77,36 @@ void BlPrismatic::SetLimitValues()
 {
     if(m_lpSim && m_btJoint && m_btPrismatic)
     {
+        GetLimitsFromRelaxations(m_vLowerLinear, m_vUpperLinear, m_vLowerAngular, m_vUpperAngular);
+
         if(m_bEnableLimits)
         {
             m_bJointLocked = false;
-            m_btPrismatic->setLinearLowerLimit(btVector3(m_lpLowerLimit->LimitPos(), 0, 0));
-            m_btPrismatic->setLinearUpperLimit(btVector3(m_lpUpperLimit->LimitPos(), 0, 0));
 
-            //Disable rotation about the axis for the prismatic joint.
-		    m_btPrismatic->setAngularLowerLimit(btVector3(0,0,0));
-		    m_btPrismatic->setAngularUpperLimit(btVector3(0,0,0));
+            m_vLowerLinear[0] = m_lpLowerLimit->LimitPos();
+            m_vUpperLinear[0] = m_lpUpperLimit->LimitPos();
 
-            float fltKp = m_lpUpperLimit->Stiffness();
-            float fltKd = m_lpUpperLimit->Damping();
-            float fltH = m_lpSim->PhysicsTimeStep()*1000;
-            
-            float fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
-            float fltCfm = 1/((fltH*fltKp) + fltKd);
+            //float fltKp = m_lpUpperLimit->Stiffness();
+            //float fltKd = m_lpUpperLimit->Damping();
+            //float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            //
+            //float fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
+            //float fltCfm = 1/((fltH*fltKp) + fltKd);
         }
         else
         {
             //To disable limits in bullet we need the lower limit to be bigger than the upper limit
             m_bJointLocked = false;
 
-            m_btPrismatic->setLinearLowerLimit(btVector3(1, 0, 0));
-            m_btPrismatic->setLinearUpperLimit(btVector3(-1, 0, 0));
-
-		    m_btPrismatic->setAngularLowerLimit(btVector3(0,0,0));
-		    m_btPrismatic->setAngularUpperLimit(btVector3(0,0,0));
+            m_vLowerLinear[0] = 1;
+            m_vUpperLinear[0] = -1;
         }
+
+        m_btPrismatic->setLinearLowerLimit(m_vLowerLinear);
+        m_btPrismatic->setLinearUpperLimit(m_vUpperLinear);
+
+		m_btPrismatic->setAngularLowerLimit(m_vLowerAngular);
+		m_btPrismatic->setAngularUpperLimit(m_vUpperAngular);
     }
 }
 
@@ -160,22 +162,7 @@ void BlPrismatic::SetupPhysics()
     if(m_btJoint)
 		DeletePhysics(false);
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!m_lpBlParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!m_lpBlChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-    m_btParent = m_lpBlParent->Part();
-    m_btChild = m_lpBlChild->Part();
+    InitBaseJointPointers(m_lpParent, m_lpChild, m_aryRelaxations, 0);
 
     btTransform mtJointRelParent, mtJointRelChild;
 	CStdFPoint vRot(0, 0, osg::PI);
@@ -280,7 +267,12 @@ void BlPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<st
 
 void BlPrismatic::StepSimulation()
 {
-	UpdateData();
+    //Test code
+    int iTest = 0;
+    if(m_lpSim->Time() >= 1.02)
+        iTest = 1;
+
+    UpdateData();
 	SetVelocityToDesired();
     ApplyMotorAssist();
 }
@@ -336,6 +328,7 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = -fltDesiredVelocity;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = fltMaxForce;
+            m_btPrismatic->enableSpring(0, false);
         }
 		else
         {
@@ -375,8 +368,15 @@ void BlPrismatic::TurnMotorOff()
 {
     if(m_btPrismatic)
     {
-        if(m_lpFriction && m_lpFriction->Enabled())
+        if(m_aryBlRelaxations[0] && m_aryBlRelaxations[0]->Enabled())
         {
+            //If we have the spring enabled then use that.
+            m_btPrismatic->enableSpring(0, true);
+        }
+        else if(m_lpFriction && m_lpFriction->Enabled())
+        {
+            //Otherwise if we have friction enable use it.
+
             //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
             //that were specified in vortex engine. This way I get similar behavior between the two.
             float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f*(m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());  
@@ -384,7 +384,7 @@ void BlPrismatic::TurnMotorOff()
 		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = 0;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = maxMotorImpulse;
         }
-        else
+        else //Otherwise just turn the motor off
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = false;
 
         m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
@@ -405,6 +405,15 @@ void BlPrismatic::SetConstraintFriction()
 void BlPrismatic::ResetSimulation()
 {
 	Prismatic::ResetSimulation();
+
+    for(int iIdx=0; iIdx<3; iIdx++)
+    {
+        m_btPrismatic->getRotationalLimitMotor(iIdx)->m_currentPosition = 0;
+        m_btPrismatic->getRotationalLimitMotor(iIdx)->m_accumulatedImpulse = 0;
+        m_btPrismatic->getRotationalLimitMotor(iIdx)->m_currentLimit = 0;
+        m_btPrismatic->getRotationalLimitMotor(iIdx)->m_currentLimitError = 0;
+        m_btPrismatic->getRotationalLimitMotor(iIdx)->m_targetVelocity = 0;
+    }
 
     m_btPrismatic->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
     m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);

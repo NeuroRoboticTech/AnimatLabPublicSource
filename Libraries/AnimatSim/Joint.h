@@ -60,29 +60,15 @@ namespace AnimatSim
 			///Scales the size of the graphics for this joint.
 			float m_fltSize;
 
-            ///The relaxation for the primary displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation1;
-
-            ///The relaxation for the secondary displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation2;
-
-            ///The relaxation for the third displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation3;
-
-            ///The relaxation for the secondary rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation4;
-
-            ///The relaxation for the third rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation5;
-
-            ///The relaxation for the third rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation6;
+            ///The relaxations for the constraints
+            ConstraintRelaxation *m_aryRelaxations[6];
 
             ///The friction for this joint
             ConstraintFriction *m_lpFriction;
 
-            ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, std::string strName);
-            ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
+            virtual ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, std::string strName);
+            virtual ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
+            virtual void ClearRelaxations();
 
 		public:
 			Joint();

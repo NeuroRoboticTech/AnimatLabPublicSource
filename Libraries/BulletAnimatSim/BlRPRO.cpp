@@ -53,25 +53,13 @@ void BlRPRO::SetupPhysics()
 	if(m_btJoint)
 		DeletePhysics(false);
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	BlRigidBody *lpVsParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-	BlRigidBody *lpVsChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+    InitBaseJointPointers(m_lpParent, m_lpChild, m_aryRelaxations, -1);
 
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
 
     //All limits are turned off by default.
-	m_btSocket = new btGeneric6DofConstraint(*lpVsParent->Part(), *lpVsChild->Part(), mtJointRelParent, mtJointRelChild, true); 
+	m_btSocket = new btAnimatGeneric6DofConstraint(*m_lpBlParent->Part(), *m_lpBlChild->Part(), mtJointRelParent, mtJointRelChild, true); 
     m_btSocket->setLinearLowerLimit(btVector3(0, 0, 0));
     m_btSocket->setLinearUpperLimit(btVector3(0, 0, 0));
     m_btSocket->setAngularLowerLimit(btVector3(0, 0, 0));

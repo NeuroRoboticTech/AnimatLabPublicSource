@@ -19,7 +19,7 @@ namespace BulletAnimatSim
 		namespace Joints
 		{
 
-            class BULLET_PORT btAnimatGeneric6DofConstraint : public btGeneric6DofConstraint
+            class BULLET_PORT btAnimatGeneric6DofConstraint : public btGeneric6DofSpringConstraint
             {
             public:
                 btAnimatGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB ,bool useLinearReferenceFrameA);

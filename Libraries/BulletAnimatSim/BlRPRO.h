@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "btAnimatGeneric6DofConstraint.h"
+
 namespace BulletAnimatSim
 {
 	namespace Environment
@@ -24,7 +26,7 @@ namespace BulletAnimatSim
 			{
 			protected:
 				/// The vortex socket class.
-				btGeneric6DofConstraint *m_btSocket;
+				btAnimatGeneric6DofConstraint *m_btSocket;
 
 			public:
 				BlRPRO();

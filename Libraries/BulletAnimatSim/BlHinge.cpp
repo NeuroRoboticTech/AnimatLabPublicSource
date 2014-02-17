@@ -80,16 +80,14 @@ void BlHinge::SetLimitValues()
 {
     if(m_btHinge)
     {
+        GetLimitsFromRelaxations(m_vLowerLinear, m_vUpperLinear, m_vLowerAngular, m_vUpperAngular);
+
         if(m_bEnableLimits)
         {
             m_bJointLocked = false;
 
-            m_btHinge->setLinearLowerLimit(btVector3(0, 0, 0));
-            m_btHinge->setLinearUpperLimit(btVector3(0, 0, 0));
-
-            //Disable rotation about the axis for the prismatic joint.
-		    m_btHinge->setAngularLowerLimit(btVector3(m_lpLowerLimit->LimitPos(),0,0));
-		    m_btHinge->setAngularUpperLimit(btVector3(m_lpUpperLimit->LimitPos(),0,0));
+            m_vLowerAngular[0] = m_lpLowerLimit->LimitPos();
+            m_vUpperAngular[0] = m_lpUpperLimit->LimitPos();
 
             //float fltKp = m_lpUpperLimit->Stiffness();
             //float fltKd = m_lpUpperLimit->Damping();
@@ -106,13 +104,15 @@ void BlHinge::SetLimitValues()
             //To disable limits in bullet we need the lower limit to be bigger than the upper limit
             m_bJointLocked = false;
 
-            m_btHinge->setLinearLowerLimit(btVector3(0, 0, 0));
-            m_btHinge->setLinearUpperLimit(btVector3(0, 0, 0));
-
             //Disable rotation about the axis for the prismatic joint.
-		    m_btHinge->setAngularLowerLimit(btVector3(1,0,0));
-		    m_btHinge->setAngularUpperLimit(btVector3(-1,0,0));
+            m_vLowerAngular[0] = 1;
+            m_vUpperAngular[0] = -1;
         }
+
+        m_btHinge->setLinearLowerLimit(m_vLowerLinear);
+        m_btHinge->setLinearUpperLimit(m_vUpperLinear);
+		m_btHinge->setAngularLowerLimit(m_vLowerAngular);
+		m_btHinge->setAngularUpperLimit(m_vUpperAngular);
     }
 }
 
@@ -176,22 +176,7 @@ void BlHinge::SetupPhysics()
 	if(m_btJoint)
 		DeletePhysics(false);
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!m_lpBlParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!m_lpBlChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-    m_btParent = m_lpBlParent->Part();
-    m_btChild = m_lpBlChild->Part();
+    InitBaseJointPointers(m_lpParent, m_lpChild, m_aryRelaxations, 3);
 
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);
@@ -303,6 +288,11 @@ void BlHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::s
 
 void BlHinge::StepSimulation()
 {
+    //Test code
+    //int iTest = 0;
+    //if(m_lpSim->Time() >= 0.2)
+    //    iTest = 1;
+
 	UpdateData();
 	SetVelocityToDesired();
     ApplyMotorAssist();
@@ -333,8 +323,10 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 		{
             m_bJointLocked = true;
 
-		    m_btHinge->setAngularLowerLimit(btVector3(fltPosition,0,0));
-		    m_btHinge->setAngularUpperLimit(btVector3(fltPosition,0,0));
+            m_vLowerAngular[0] = m_vUpperAngular[0] = 0;
+
+		    m_btHinge->setAngularLowerLimit(m_vLowerAngular);
+		    m_btHinge->setAngularUpperLimit(m_vUpperAngular);
 		}
 		else if (m_bMotorOn)
 			Physics_EnableMotor(true, 0, fltMaxLockForce, false);
@@ -364,6 +356,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
 		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = fltMaxForce;
+            m_btHinge->enableSpring(3, false);
         }
 		else
         {
@@ -400,8 +393,15 @@ void BlHinge::TurnMotorOff()
 {
     if(m_btHinge)
     {
-        if(m_lpFriction && m_lpFriction->Enabled())
+        if(m_aryBlRelaxations[3] && m_aryBlRelaxations[3]->Enabled())
         {
+            //If we have the spring enabled then use that.
+            m_btHinge->enableSpring(3, true);
+        }
+        else if(m_lpFriction && m_lpFriction->Enabled())
+        {
+            //Otherwise if we have friction enable use it.
+            
             //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
             //that were specified in vortex engine. This way I get similar behavior between the two.
             float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f*(m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());  
@@ -409,7 +409,7 @@ void BlHinge::TurnMotorOff()
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
 		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = maxMotorImpulse;
         }
-        else
+        else //Otherwise just turn the motor off
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
 
         m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
@@ -429,11 +429,23 @@ void BlHinge::ResetSimulation()
 {
 	Hinge::ResetSimulation();
 
-    m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;
-    m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
-    m_btHinge->getRotationalLimitMotor(0)->m_currentLimit = 0;
-    m_btHinge->getRotationalLimitMotor(0)->m_currentLimitError = 0;
-    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
+    for(int iIdx=0; iIdx<3; iIdx++)
+    {
+        m_btHinge->getRotationalLimitMotor(iIdx)->m_currentPosition = 0;
+        m_btHinge->getRotationalLimitMotor(iIdx)->m_accumulatedImpulse = 0;
+        m_btHinge->getRotationalLimitMotor(iIdx)->m_currentLimit = 0;
+        m_btHinge->getRotationalLimitMotor(iIdx)->m_currentLimitError = 0;
+        m_btHinge->getRotationalLimitMotor(iIdx)->m_targetVelocity = 0;
+    }
+
+    m_btHinge->getTranslationalLimitMotor()->m_currentLinearDiff = btVector3(0, 0, 0);
+    m_btHinge->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
+    m_btHinge->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
+    m_btHinge->getTranslationalLimitMotor()->m_currentLimit[0] = 0;
+    m_btHinge->getTranslationalLimitMotor()->m_currentLimit[1] = 0;
+    m_btHinge->getTranslationalLimitMotor()->m_currentLimit[2] = 0;
+    m_btHinge->getTranslationalLimitMotor()->m_currentLimitError = btVector3(0, 0, 0);
+
 }
 
 void BlHinge::EnableFeedback()

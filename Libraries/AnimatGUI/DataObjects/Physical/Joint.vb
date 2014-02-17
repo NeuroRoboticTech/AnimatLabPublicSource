@@ -211,6 +211,13 @@ Namespace DataObjects.Physical
                 End If
             End If
 
+            m_doRelaxation1 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation1)
+            m_doRelaxation2 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation2)
+            m_doRelaxation3 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation3)
+            m_doRelaxation4 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation4)
+            m_doRelaxation5 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation5)
+            m_doRelaxation6 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation6)
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -405,48 +412,46 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint Type", Me.Type.GetType(), "Type", _
                                         "Part Properties", "Type of joint.", Me.Type, True))
 
-            If Util.Application.Physics.AllowConstraintRelaxation Then
-                If Not m_doRelaxation1 Is Nothing Then
-                    pbNumberBag = m_doRelaxation1.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation1.Name, pbNumberBag.GetType(), "Relaxation1", _
-                                                "Relaxation Properties", m_doRelaxation1.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation1 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation1.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation1.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation1.Name, pbNumberBag.GetType(), "Relaxation1", _
+                                            "Relaxation Properties", m_doRelaxation1.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
 
-                If Not m_doRelaxation2 Is Nothing Then
-                    pbNumberBag = m_doRelaxation2.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation2.Name, pbNumberBag.GetType(), "Relaxation2", _
-                                                "Relaxation Properties", m_doRelaxation2.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation2 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation2.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation2.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation2.Name, pbNumberBag.GetType(), "Relaxation2", _
+                                            "Relaxation Properties", m_doRelaxation2.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
 
-                If Not m_doRelaxation3 Is Nothing Then
-                    pbNumberBag = m_doRelaxation3.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation3.Name, pbNumberBag.GetType(), "Relaxation3", _
-                                                "Relaxation Properties", m_doRelaxation3.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation3 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation3.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation3.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation3.Name, pbNumberBag.GetType(), "Relaxation3", _
+                                            "Relaxation Properties", m_doRelaxation3.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
 
-                If Not m_doRelaxation4 Is Nothing Then
-                    pbNumberBag = m_doRelaxation4.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation4.Name, pbNumberBag.GetType(), "Relaxation4", _
-                                                "Relaxation Properties", m_doRelaxation4.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation4 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation4.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation4.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation4.Name, pbNumberBag.GetType(), "Relaxation4", _
+                                            "Relaxation Properties", m_doRelaxation4.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
 
-                If Not m_doRelaxation5 Is Nothing Then
-                    pbNumberBag = m_doRelaxation5.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation5.Name, pbNumberBag.GetType(), "Relaxation5", _
-                                                "Relaxation Properties", m_doRelaxation5.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation5 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation5.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation5.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation5.Name, pbNumberBag.GetType(), "Relaxation5", _
+                                            "Relaxation Properties", m_doRelaxation5.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
+            End If
 
-                If Not m_doRelaxation6 Is Nothing Then
-                    pbNumberBag = m_doRelaxation6.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation6.Name, pbNumberBag.GetType(), "Relaxation6", _
-                                                "Relaxation Properties", m_doRelaxation6.Description, pbNumberBag, _
-                                                "", GetType(ConstraintRelaxationPropBagConverter)))
-                End If
+            If Not m_doRelaxation6 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation6.CoordinateAxis) Then
+                pbNumberBag = m_doRelaxation6.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_doRelaxation6.Name, pbNumberBag.GetType(), "Relaxation6", _
+                                            "Relaxation Properties", m_doRelaxation6.Description, pbNumberBag, _
+                                            "", GetType(ConstraintRelaxationPropBagConverter)))
             End If
 
             If Not m_doFriction Is Nothing Then
@@ -485,14 +490,30 @@ Namespace DataObjects.Physical
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             MyBase.InitializeSimulationReferences(bShowError)
 
-            If Util.Application.Physics.AllowConstraintRelaxation Then
-                If Not m_doRelaxation1 Is Nothing Then m_doRelaxation1.InitializeSimulationReferences(bShowError)
-                If Not m_doRelaxation2 Is Nothing Then m_doRelaxation2.InitializeSimulationReferences(bShowError)
-                If Not m_doRelaxation3 Is Nothing Then m_doRelaxation3.InitializeSimulationReferences(bShowError)
-                If Not m_doRelaxation4 Is Nothing Then m_doRelaxation4.InitializeSimulationReferences(bShowError)
-                If Not m_doRelaxation5 Is Nothing Then m_doRelaxation5.InitializeSimulationReferences(bShowError)
-                If Not m_doRelaxation6 Is Nothing Then m_doRelaxation6.InitializeSimulationReferences(bShowError)
+            If Not m_doRelaxation1 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation1.CoordinateAxis) Then
+                m_doRelaxation1.InitializeSimulationReferences(bShowError)
             End If
+
+            If Not m_doRelaxation2 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation2.CoordinateAxis) Then
+                m_doRelaxation2.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doRelaxation3 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation3.CoordinateAxis) Then
+                m_doRelaxation3.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doRelaxation4 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation4.CoordinateAxis) Then
+                m_doRelaxation4.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doRelaxation5 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation5.CoordinateAxis) Then
+                m_doRelaxation5.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doRelaxation6 Is Nothing AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation6.CoordinateAxis) Then
+                m_doRelaxation6.InitializeSimulationReferences(bShowError)
+            End If
+
             If Not m_doFriction Is Nothing Then m_doFriction.InitializeSimulationReferences(bShowError)
         End Sub
 
@@ -505,25 +526,40 @@ Namespace DataObjects.Physical
             m_snSize.LoadData(oXml, "Size")
             m_bEnableLimts = oXml.GetChildBool("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.Physics.AllowConstraintRelaxation Then
-                If Not m_doRelaxation1 Is Nothing AndAlso oXml.FindChildElement("Relaxation1", False) Then
-                    m_doRelaxation1.LoadData(oXml, "Relaxation1")
-                End If
-                If Not m_doRelaxation2 Is Nothing AndAlso oXml.FindChildElement("Relaxation2", False) Then
-                    m_doRelaxation2.LoadData(oXml, "Relaxation2")
-                End If
-                If Not m_doRelaxation3 Is Nothing AndAlso oXml.FindChildElement("Relaxation3", False) Then
-                    m_doRelaxation3.LoadData(oXml, "Relaxation3")
-                End If
-                If Not m_doRelaxation4 Is Nothing AndAlso oXml.FindChildElement("Relaxation4", False) Then
-                    m_doRelaxation4.LoadData(oXml, "Relaxation4")
-                End If
-                If Not m_doRelaxation5 Is Nothing AndAlso oXml.FindChildElement("Relaxation5", False) Then
-                    m_doRelaxation5.LoadData(oXml, "Relaxation5")
-                End If
-                If Not m_doRelaxation6 Is Nothing AndAlso oXml.FindChildElement("Relaxation6", False) Then
-                    m_doRelaxation5.LoadData(oXml, "Relaxation6")
-                End If
+            If Not m_doRelaxation1 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation1.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation1", False) Then
+                m_doRelaxation1.LoadData(oXml, "Relaxation1")
+            End If
+
+            If Not m_doRelaxation2 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation2.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation2", False) Then
+                m_doRelaxation2.LoadData(oXml, "Relaxation2")
+            End If
+
+            If Not m_doRelaxation3 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation3.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation3", False) Then
+                m_doRelaxation3.LoadData(oXml, "Relaxation3")
+            End If
+
+            If Not m_doRelaxation4 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation4.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation4", False) Then
+                m_doRelaxation4.LoadData(oXml, "Relaxation4")
+            End If
+
+            If Not m_doRelaxation5 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation5.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation5", False) Then
+                m_doRelaxation5.LoadData(oXml, "Relaxation5")
+            End If
+
+            If Not m_doRelaxation6 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation6.CoordinateAxis) _
+                AndAlso oXml.FindChildElement("Relaxation6", False) Then
+                m_doRelaxation5.LoadData(oXml, "Relaxation6")
             End If
 
             If Not m_doFriction Is Nothing AndAlso oXml.FindChildElement("Friction", False) Then
@@ -543,25 +579,34 @@ Namespace DataObjects.Physical
             m_snSize.SaveData(oXml, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.Physics.AllowConstraintRelaxation Then
-                If Not m_doRelaxation1 Is Nothing Then
-                    m_doRelaxation1.SaveData(oXml, "Relaxation1")
-                End If
-                If Not m_doRelaxation2 Is Nothing Then
-                    m_doRelaxation2.SaveData(oXml, "Relaxation2")
-                End If
-                If Not m_doRelaxation3 Is Nothing Then
-                    m_doRelaxation3.SaveData(oXml, "Relaxation3")
-                End If
-                If Not m_doRelaxation4 Is Nothing Then
-                    m_doRelaxation4.SaveData(oXml, "Relaxation4")
-                End If
-                If Not m_doRelaxation5 Is Nothing Then
-                    m_doRelaxation5.SaveData(oXml, "Relaxation5")
-                End If
-                If Not m_doRelaxation6 Is Nothing Then
-                    m_doRelaxation6.SaveData(oXml, "Relaxation6")
-                End If
+            If Not m_doRelaxation1 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation1.CoordinateAxis) Then
+                m_doRelaxation1.SaveData(oXml, "Relaxation1")
+            End If
+
+            If Not m_doRelaxation2 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation2.CoordinateAxis) Then
+                m_doRelaxation2.SaveData(oXml, "Relaxation2")
+            End If
+
+            If Not m_doRelaxation3 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation3.CoordinateAxis) Then
+                m_doRelaxation3.SaveData(oXml, "Relaxation3")
+            End If
+
+            If Not m_doRelaxation4 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation4.CoordinateAxis) Then
+                m_doRelaxation4.SaveData(oXml, "Relaxation4")
+            End If
+
+            If Not m_doRelaxation5 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation5.CoordinateAxis) Then
+                m_doRelaxation5.SaveData(oXml, "Relaxation5")
+            End If
+
+            If Not m_doRelaxation6 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation6.CoordinateAxis) Then
+                m_doRelaxation6.SaveData(oXml, "Relaxation6")
             End If
 
             If Not m_doFriction Is Nothing Then
@@ -580,25 +625,34 @@ Namespace DataObjects.Physical
             m_snSize.SaveSimulationXml(oXml, Me, "Size")
             oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
-            If Util.Application.Physics.AllowConstraintRelaxation Then
-                If Not m_doRelaxation1 Is Nothing Then
-                    m_doRelaxation1.SaveSimulationXml(oXml, Me, "Relaxation1")
-                End If
-                If Not m_doRelaxation2 Is Nothing Then
-                    m_doRelaxation2.SaveSimulationXml(oXml, Me, "Relaxation2")
-                End If
-                If Not m_doRelaxation3 Is Nothing Then
-                    m_doRelaxation3.SaveSimulationXml(oXml, Me, "Relaxation3")
-                End If
-                If Not m_doRelaxation4 Is Nothing Then
-                    m_doRelaxation4.SaveSimulationXml(oXml, Me, "Relaxation4")
-                End If
-                If Not m_doRelaxation5 Is Nothing Then
-                    m_doRelaxation5.SaveSimulationXml(oXml, Me, "Relaxation5")
-                End If
-                If Not m_doRelaxation6 Is Nothing Then
-                    m_doRelaxation6.SaveSimulationXml(oXml, Me, "Relaxation6")
-                End If
+            If Not m_doRelaxation1 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation1.CoordinateAxis) Then
+                m_doRelaxation1.SaveSimulationXml(oXml, Me, "Relaxation1")
+            End If
+
+            If Not m_doRelaxation2 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation2.CoordinateAxis) Then
+                m_doRelaxation2.SaveSimulationXml(oXml, Me, "Relaxation2")
+            End If
+
+            If Not m_doRelaxation3 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation3.CoordinateAxis) Then
+                m_doRelaxation3.SaveSimulationXml(oXml, Me, "Relaxation3")
+            End If
+
+            If Not m_doRelaxation4 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation4.CoordinateAxis) Then
+                m_doRelaxation4.SaveSimulationXml(oXml, Me, "Relaxation4")
+            End If
+
+            If Not m_doRelaxation5 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation5.CoordinateAxis) Then
+                m_doRelaxation5.SaveSimulationXml(oXml, Me, "Relaxation5")
+            End If
+
+            If Not m_doRelaxation6 Is Nothing _
+                AndAlso Util.Application.Physics.AllowConstraintRelaxation(Me.Type, m_doRelaxation6.CoordinateAxis) Then
+                m_doRelaxation6.SaveSimulationXml(oXml, Me, "Relaxation6")
             End If
 
             If Not m_doFriction Is Nothing Then

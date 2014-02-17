@@ -16,6 +16,8 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
+        Protected m_aryConstraintRelaxations As New Hashtable
+
 #End Region
 
 #Region " Properties "
@@ -25,7 +27,6 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property AllowDynamicTriangleMesh() As Boolean
         Public MustOverride ReadOnly Property AllowPhysicsSubsteps() As Boolean
         Public MustOverride ReadOnly Property ShowSeparateConstraintLimits() As Boolean
-        Public MustOverride ReadOnly Property AllowConstraintRelaxation() As Boolean
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
@@ -38,6 +39,21 @@ Namespace DataObjects.Physical
             MyBase.New(doParent)
 
         End Sub
+
+        Public Overridable Function AllowConstraintRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateAxis) As Boolean
+            Dim strKey As String = strType & "_" & eCoordinate.ToString()
+            If m_aryConstraintRelaxations.ContainsKey(strKey) Then
+                Return CBool(m_aryConstraintRelaxations(strKey))
+            Else
+                Return False
+            End If
+        End Function
+
+        Public MustOverride Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+
+        Protected Overridable Function CreateEmptyJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+            Return Nothing
+        End Function
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
@@ -58,9 +74,6 @@ Namespace DataObjects.Physical
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Show Separate Constraint Limits", Me.ShowSeparateConstraintLimits.GetType(), "ShowSeparateConstraintLimits", _
                                         "Physics Properties", "Tells whether this physics engine shows separate constraint limits.", Me.ShowSeparateConstraintLimits, True))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Allow Constraint Relaxation", Me.AllowConstraintRelaxation.GetType(), "AllowConstraintRelaxation", _
-                                        "Physics Properties", "Tells whether this physics engine allows constraint relaxation or not.", Me.AllowConstraintRelaxation, True))
 
         End Sub
 

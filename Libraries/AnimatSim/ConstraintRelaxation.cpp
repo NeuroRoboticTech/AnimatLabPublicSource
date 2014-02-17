@@ -49,7 +49,6 @@ ConstraintRelaxation::ConstraintRelaxation()
     m_iCoordinateID = 0;
 	m_fltStiffness = 1000e3;
 	m_fltDamping = 500;
-	m_fltLoss = 0;
     m_bEnabled = false;
 }
 
@@ -182,44 +181,6 @@ void ConstraintRelaxation::Damping(float fltVal, bool bUseScaling)
 }
 
 /**
-\brief	Gets the primary linear slip value.
-
-\details Contact slip allows a tangential loss at the contact position to be defined. For example, this is a useful
-parameter to set for the interaction between a cylindrical wheel and a terrain where, without a minimum
-amount of slip, the vehicle would have a hard time turning.
-
-\author	dcofer
-\date	3/23/2011
-
-\return	slip value.
-**/
-float ConstraintRelaxation::Loss() {return m_fltLoss;}
-
-/**
-\brief	Sets the primary linear slip value.
-
-\details Contact slip allows a tangential loss at the contact position to be defined. For example, this is a useful
-parameter to set for the interaction between a cylindrical wheel and a terrain where, without a minimum
-amount of slip, the vehicle would have a hard time turning.
-
-\author	dcofer
-\date	3/23/2011
-
-\param	fltVal	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void ConstraintRelaxation::Loss(float fltVal, bool bUseScaling) 
-{
-	Std_IsAboveMin((float) 0, fltVal, true, "Loss", true);
-
-	if(bUseScaling)
-		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
-
-	m_fltLoss = fltVal;
-	SetRelaxationProperties();
-}
-
-/**
 \brief	This takes the default values defined in the constructor and scales them according to
 the distance and mass units to be acceptable values.
 
@@ -230,13 +191,11 @@ void ConstraintRelaxation::CreateDefaultUnits()
 {
 	m_fltStiffness = 1e-7f;
 	m_fltDamping = 5e4f;
-	m_fltLoss = 0;
 
 	//scale the varios units to be consistent
 	//Friction coefficients are unitless
 	m_fltStiffness *= m_lpSim->InverseMassUnits(); 
 	m_fltDamping *= m_lpSim->InverseMassUnits();
-	m_fltLoss *= m_lpSim->MassUnits();  //Slip units are s/Kg
 }
 
 bool ConstraintRelaxation::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -261,12 +220,6 @@ bool ConstraintRelaxation::SetData(const std::string &strDataType, const std::st
 	if(strType == "DAMPING")
 	{
 		Damping((float) atof(strValue.c_str()));
-		return true;
-	}
-	
-	if(strType == "LOSS")
-	{
-		Loss((float) atof(strValue.c_str()));
 		return true;
 	}
 	
@@ -296,9 +249,6 @@ void ConstraintRelaxation::QueryProperties(CStdArray<std::string> &aryNames, CSt
 	aryNames.Add("Damping");
 	aryTypes.Add("Float");
 
-	aryNames.Add("Loss");
-	aryTypes.Add("Float");
-
     aryNames.Add("Stiffness");
 	aryTypes.Add("Float");
 }
@@ -313,7 +263,6 @@ void ConstraintRelaxation::Load(CStdXml &oXml)
     Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 	Stiffness(oXml.GetChildFloat("Stiffness", m_fltStiffness));
 	Damping(oXml.GetChildFloat("Damping", m_fltDamping));
-	Loss(oXml.GetChildFloat("Loss", m_fltLoss));
 
     oXml.OutOfElem(); //OutOf ConstraintRelaxation Element
 

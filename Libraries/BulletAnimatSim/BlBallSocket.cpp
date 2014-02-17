@@ -53,22 +53,7 @@ void BlBallSocket::SetupPhysics()
     if(m_btJoint)
 		DeletePhysics(false);
 
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	m_lpBlParent = dynamic_cast<BlRigidBody *>(m_lpParent);
-	if(!m_lpBlParent)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-	m_lpBlChild = dynamic_cast<BlRigidBody *>(m_lpChild);
-	if(!m_lpBlChild)
-		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
-
-    m_btParent = m_lpBlParent->Part();
-    m_btChild = m_lpBlChild->Part();
+    InitBaseJointPointers(m_lpParent, m_lpChild, m_aryRelaxations, -1);
 
     btTransform mtJointRelParent, mtJointRelChild;
     CalculateRelativeJointMatrices(mtJointRelParent, mtJointRelChild);

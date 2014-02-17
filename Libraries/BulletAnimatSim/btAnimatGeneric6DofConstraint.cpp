@@ -15,12 +15,12 @@ namespace BulletAnimatSim
 		{
 
 btAnimatGeneric6DofConstraint::btAnimatGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB ,bool useLinearReferenceFrameA) : 
-        btGeneric6DofConstraint(rbA, rbB, frameInA, frameInB, useLinearReferenceFrameA)
+        btGeneric6DofSpringConstraint(rbA, rbB, frameInA, frameInB, useLinearReferenceFrameA)
 {
 }
 
 btAnimatGeneric6DofConstraint::btAnimatGeneric6DofConstraint(btRigidBody& rbB, const btTransform& frameInB, bool useLinearReferenceFrameB) : 
-        btGeneric6DofConstraint(rbB, frameInB, useLinearReferenceFrameB)
+        btGeneric6DofSpringConstraint(rbB, frameInB, useLinearReferenceFrameB)
 {
 }
 

@@ -32,9 +32,6 @@ namespace AnimatSim
 			/// The damping of the collision between those two materials.
 			float m_fltDamping;
 
-			/// The primary linear slip of the collision between those two materials.
-			float m_fltLoss;
-
 			virtual void SetRelaxationProperties() = 0;
 
 		public:
@@ -52,9 +49,6 @@ namespace AnimatSim
 
 			virtual float Damping();
 			virtual void Damping(float fltVal, bool bUseScaling = true);
-
-			virtual float Loss();
-			virtual void Loss(float fltVal, bool bUseScaling = true);
 
 			virtual void CreateDefaultUnits();
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

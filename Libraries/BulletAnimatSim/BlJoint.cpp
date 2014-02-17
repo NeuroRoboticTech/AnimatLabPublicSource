@@ -31,6 +31,9 @@ BlJoint::BlJoint()
 
     m_fltPrevBtJointPos = 0;
     m_fltPrevJointPos = 0;
+
+    for(int iIdx=0; iIdx<6; iIdx++)
+        m_aryBlRelaxations[iIdx] = NULL;
 }
 
 BlJoint::~BlJoint()
@@ -54,6 +57,40 @@ bool BlJoint::Physics_IsDefined()
         return true;
     else
         return false;
+}
+
+void BlJoint::InitBaseJointPointers(RigidBody *lpParent, RigidBody *lpChild, ConstraintRelaxation **aryRelaxations, int iDisallowSpringIndex)
+{
+	if(!lpParent)
+		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+
+	if(!lpChild)
+		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
+
+	m_lpBlParent = dynamic_cast<BlRigidBody *>(lpParent);
+	if(!m_lpBlParent)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+	m_lpBlChild = dynamic_cast<BlRigidBody *>(lpChild);
+	if(!m_lpBlChild)
+		THROW_ERROR(Bl_Err_lUnableToConvertToBlRigidBody, Bl_Err_strUnableToConvertToBlRigidBody);
+
+    m_btParent = m_lpBlParent->Part();
+    m_btChild = m_lpBlChild->Part();
+
+    for(int iIdx=0; iIdx<6; iIdx++)
+    {
+        if(aryRelaxations[iIdx])
+        {
+            BlConstraintRelaxation *lpRelax = dynamic_cast<BlConstraintRelaxation *>(aryRelaxations[iIdx]);
+            m_aryBlRelaxations[iIdx] = lpRelax;
+        }
+        else
+            m_aryBlRelaxations[iIdx] = NULL;
+    }
+
+    if(iDisallowSpringIndex >= 0 && iDisallowSpringIndex <6 && m_aryBlRelaxations[iDisallowSpringIndex])
+        m_aryBlRelaxations[iDisallowSpringIndex]->DisallowSpringEnable(true);
 }
 
 void BlJoint::DeletePhysics(bool bIncludeChildren)
@@ -145,6 +182,39 @@ void BlJoint::CalculateRelativeJointMatrices(CStdFPoint vAdditionalRot, btTransf
 
     mtJointRelToParent = osgbCollision::asBtTransform(mtLocalRelToParent);
     mtJointRelToChild = osgbCollision::asBtTransform(mtJointRelChild);
+}
+
+void BlJoint::GetLimitsFromRelaxations(btVector3 &vLowerLinear, btVector3 &UpperLinear, btVector3 &vLowerAngular, btVector3 &vUpperAngular)
+{
+    btVector3 vLimits;
+
+    for(int iIdx=0, iBlIdx=0; iIdx<3; iIdx++, iBlIdx++)
+    {
+        if(m_aryBlRelaxations[iBlIdx] && m_aryBlRelaxations[iBlIdx]->Enabled())
+        {
+            vLowerLinear[iIdx] = m_aryBlRelaxations[iBlIdx]->MaxLimit();
+            UpperLinear[iIdx] = m_aryBlRelaxations[iBlIdx]->MinLimit();
+        }
+        else
+        {
+            vLowerLinear[iIdx] = 0;
+            UpperLinear[iIdx] = 0;
+        }
+    }
+
+    for(int iIdx=0, iBlIdx=3; iIdx<3; iIdx++, iBlIdx++)
+    {
+        if(m_aryBlRelaxations[iBlIdx] && m_aryBlRelaxations[iBlIdx]->Enabled())
+        {
+            vLowerAngular[iIdx] = m_aryBlRelaxations[iBlIdx]->MaxLimit();
+            vUpperAngular[iIdx] = m_aryBlRelaxations[iBlIdx]->MinLimit();
+        }
+        else
+        {
+            vLowerAngular[iIdx] = 0;
+            vUpperAngular[iIdx] = 0;
+        }
+    }
 }
 
 

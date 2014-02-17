@@ -113,6 +113,8 @@ Namespace UITests
                 Protected m_dblMouseRotateJointMin As Double = -360
                 Protected m_sblMouseRotateJointMax As Double = -90
 
+                Protected m_aryMaxJointErrors As New Hashtable
+
 #End Region
 
 #Region "Properties"
@@ -158,6 +160,18 @@ Namespace UITests
 
                     SimulateJointTests()
 
+                End Sub
+
+                Protected Overridable Sub SetMaxErrors()
+                    m_aryMaxJointErrors.Clear()
+                    m_aryMaxJointErrors.Add("Time", 0.001)
+                    m_aryMaxJointErrors.Add("Arm_X", 0.1)
+                    m_aryMaxJointErrors.Add("Arm_Y", 0.1)
+                    m_aryMaxJointErrors.Add("Arm_Z", 0.1)
+                    m_aryMaxJointErrors.Add("JointVelocity", 0.2)
+                    m_aryMaxJointErrors.Add("JointPosition", 0.1)
+                    m_aryMaxJointErrors.Add("Rotation", 0.2)
+                    m_aryMaxJointErrors.Add("default", 0.1)
                 End Sub
 
                 Protected Overrides Sub RecalculatePositionsUsingResolution()
@@ -264,6 +278,7 @@ Namespace UITests
                 End Sub
 
                 Protected Overridable Sub SimulateJointTests()
+                    SetMaxErrors()
                     TestConstraintLimitsByFalling()
                     TestConstraintLimitsWithMotor()
                     TestConstraintLimitsWithForce()
@@ -276,7 +291,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper1 & "Deg_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallUp" & m_strFallUpper1 & "Deg_")
 
                     'Now increase upper limit
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper2})
@@ -304,7 +319,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower1 & "Deg_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallLow" & m_strFallLower1 & "Deg_")
 
                     'Now increase upper limit
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower2})
@@ -313,7 +328,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower2 & "Deg_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallLow" & m_strFallLower2 & "Deg_")
 
                     'Now decrease upper limit
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower3})
@@ -322,7 +337,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower3 & "Deg_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallLow" & m_strFallLower3 & "Deg_")
 
                     'Reset the limit, rotate the part so it should not fall.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower1})
@@ -332,7 +347,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallNone_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallNone_")
 
                     'Now Rotate joint so it should fall.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "0"})
@@ -341,7 +356,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot0_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallXRot0_")
 
                     'Now Rotate joint so it should fall.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "45"})
@@ -350,7 +365,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot45_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallXRot45_")
 
                     'Turn off constraint limits
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "False"})
@@ -359,7 +374,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
 
                     'Compare chart data to verify simulation results.
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot45NoLimit_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "FallXRot45NoLimit_")
 
                     'Reset armature
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "True"})
@@ -372,7 +387,7 @@ Namespace UITests
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "BlockFall45_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "BlockFall45_")
 
                     'Made the blocker wider.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.3"})
@@ -429,27 +444,27 @@ Namespace UITests
                     SetMotorVelocityStimulus("JointVelocity", False, True, 0, 5, True, True, 1, "")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpVel1_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorUpVel1_")
 
                     SetMotorVelocityStimulus("JointVelocity", False, True, 1, 5, True, True, -1, "")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVel1_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorDownVel1_")
 
                     SetMotorVelocityStimulus("JointVelocity", False, True, 0, 5, False, True, 2, "")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpVel2_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorUpVel2_")
 
                     SetMotorVelocityStimulus("JointVelocity", True, True, 1, 5, False, True, -2, "")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVel2_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorDownVel2_")
 
                     SetMotorVelocityStimulus("JointVelocity", False, True, 1, 5, False, False, 0, "-5*t")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVelEqu_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorDownVelEqu_")
 
                     'Rotate joint
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", "45"})
@@ -457,7 +472,7 @@ Namespace UITests
                     SetMotorVelocityStimulus("JointVelocity", False, True, 1, 5, False, False, 0, "-0.25*t")
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVelEqu45Deg_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorDownVelEqu45Deg_")
 
                     'Reset the joint
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
@@ -487,12 +502,12 @@ Namespace UITests
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 10, 0, 0, 0, 0)
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpForce10_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorUpForce10_")
 
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 15, 0, 0, 0, 0)
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpForce15_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorUpForce15_")
 
                     'Rotate joint
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strForceXJointRotation})
@@ -500,7 +515,7 @@ Namespace UITests
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0)
 
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorLeftForce1_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, m_aryMaxJointErrors, "MotorLeftForce1_")
 
                     'Reset the joint
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})

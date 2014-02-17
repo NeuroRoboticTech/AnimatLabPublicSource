@@ -13,7 +13,6 @@ namespace RoboticsGUI
         public override bool AllowDynamicTriangleMesh { get { return false; } }
         public override bool AllowPhysicsSubsteps { get { return false; } }
         public override bool ShowSeparateConstraintLimits { get { return false; } }
-        public override bool AllowConstraintRelaxation { get { return false; } }
         public override bool UseHydrodynamicsMagnus { get { return false; } }
         public override bool ProvidesJointForceFeedback { get { return true; } }
         public override bool GenerateMotorAssist { get { return false; } }
@@ -27,6 +26,16 @@ namespace RoboticsGUI
         {
             RoboticsPhysicsEngine doEngine = new RoboticsPhysicsEngine(doParent);
             return doEngine;
+        }
+
+        public override bool AllowConstraintRelaxation(string strType, AnimatGUI.DataObjects.Physical.ConstraintRelaxation.enumCoordinateAxis eCoordinate)
+        {
+            return false;
+        }
+
+        public override AnimatGUI.DataObjects.Physical.ConstraintRelaxation CreateJointRelaxation(string strType, AnimatGUI.DataObjects.Physical.ConstraintRelaxation.enumCoordinateID eCoordinate)
+        {
+            return null;
         }
 
     }
