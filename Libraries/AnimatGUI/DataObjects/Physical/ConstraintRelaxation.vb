@@ -299,7 +299,7 @@ Namespace DataObjects.Physical
                 Dim svValue As ConstraintRelaxation = DirectCast(value, ConstraintRelaxation)
 
                 If svValue.Enabled Then
-                    Return svValue.Stiffness.ToString
+                    Return svValue.Stiffness.Text
                 Else
                     Return ""
                 End If

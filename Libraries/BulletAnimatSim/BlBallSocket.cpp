@@ -70,6 +70,9 @@ void BlBallSocket::SetupPhysics()
         m_lpBlChild->Part()->setSleepingThresholds(0, 0);
 
 	m_btJoint = m_btSocket;
+
+    BallSocket::Initialize();
+    BlJoint::Initialize();
 }
 
 void BlBallSocket::CreateJoint()

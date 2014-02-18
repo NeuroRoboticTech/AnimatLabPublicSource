@@ -2266,6 +2266,9 @@ Namespace Forms
                 m_aryInputSensorSystems.Clear()
                 m_aryRobotPartInterfaces.Clear()
                 m_aryRobotInterfaces.Clear()
+                m_aryProjectMigrations.Clear()
+
+                DataObjects.Physical.MaterialType.ClearRegisteredMaterialTypes()
 
                 Util.DisableDirtyFlags = True
 
@@ -3682,7 +3685,14 @@ Namespace Forms
                     Me.Logger.TraceLevel = eLogLevel
                 End If
 
+                Dim doOldEngine As DataObjects.Physical.PhysicsEngine = m_doPhysics
                 m_doPhysics = CreatePhysicsEngine(oXml.GetChildString("Physics", "Vortex"))
+
+                'If the physics engine has changed then recreate the list of plugin modules with the new physics engine.
+                If Not doOldEngine Is m_doPhysics Then
+                    CatalogPluginModules()
+                    doOldEngine = Nothing
+                End If
 
                 Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
                 If m_strSimulationFile.Trim.Length > 0 Then

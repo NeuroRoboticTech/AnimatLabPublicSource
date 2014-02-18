@@ -69,6 +69,10 @@ void BlRPRO::SetupPhysics()
     m_btSocket->setDbgDrawSize(btScalar(5.f));
 
 	m_btJoint = m_btSocket;
+    m_bt6DofJoint = m_btSocket;
+
+    RPRO::Initialize();
+    BlJoint::Initialize();
 }
 
 void BlRPRO::CreateJoint()

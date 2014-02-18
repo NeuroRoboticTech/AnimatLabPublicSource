@@ -20,6 +20,7 @@ namespace BulletAnimatSim
 BlJoint::BlJoint()
 {
 	m_btJoint = NULL;
+    m_bt6DofJoint = NULL;
 
     m_lpVsParent = NULL;
 	m_lpVsChild = NULL;
@@ -91,6 +92,20 @@ void BlJoint::InitBaseJointPointers(RigidBody *lpParent, RigidBody *lpChild, Con
 
     if(iDisallowSpringIndex >= 0 && iDisallowSpringIndex <6 && m_aryBlRelaxations[iDisallowSpringIndex])
         m_aryBlRelaxations[iDisallowSpringIndex]->DisallowSpringEnable(true);
+}
+
+
+void BlJoint::SetLimitValues()
+{
+    if(m_bt6DofJoint)
+    {
+        GetLimitsFromRelaxations(m_vLowerLinear, m_vUpperLinear, m_vLowerAngular, m_vUpperAngular);
+
+        m_bt6DofJoint->setLinearLowerLimit(m_vLowerLinear);
+        m_bt6DofJoint->setLinearUpperLimit(m_vUpperLinear);
+		m_bt6DofJoint->setAngularLowerLimit(m_vLowerAngular);
+		m_bt6DofJoint->setAngularUpperLimit(m_vUpperAngular);
+    }
 }
 
 void BlJoint::DeletePhysics(bool bIncludeChildren)

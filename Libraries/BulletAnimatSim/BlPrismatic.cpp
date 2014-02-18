@@ -177,6 +177,7 @@ void BlPrismatic::SetupPhysics()
 	BlPrismaticLimit *lpLowerLimit = dynamic_cast<BlPrismaticLimit *>(m_lpLowerLimit);
 
 	m_btJoint = m_btPrismatic;
+    m_bt6DofJoint = m_btPrismatic;
 
 	//Re-enable the limits once we have initialized the joint
 	EnableLimits(m_bEnableLimits);

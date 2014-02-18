@@ -27,6 +27,10 @@ Namespace DataObjects.Physical
         'The Equilibrum position for this relaxation. Should normally be 0
         Protected m_snEquilibriumPosition As ScaledNumber
 
+        'If this is true then this axis is the main one for a constraint movement direction.
+        'We need to not show the limits for this constraint axis.
+        Protected m_bConstraintAxis As Boolean
+
 #End Region
 
 #Region " Properties "
@@ -65,6 +69,15 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable Property ConstraintAxis() As Boolean
+            Get
+                Return m_bConstraintAxis
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bConstraintAxis = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -72,22 +85,24 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 0.1, ScaledNumber.enumNumericScale.None, "", "")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 50, ScaledNumber.enumNumericScale.Mega, "", "")
             m_snEquilibriumPosition = New AnimatGUI.Framework.ScaledNumber(Me, "EquilibriumPosition", 0.0, ScaledNumber.enumNumericScale.None, "Meters", "M")
 
             NewLimits(doParent)
         End Sub
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strDescription As String, ByVal eCoordID As enumCoordinateID, ByVal eCoordAxis As enumCoordinateAxis)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strDescription As String, _
+                       ByVal eCoordID As enumCoordinateID, ByVal eCoordAxis As enumCoordinateAxis, ByVal bConstraintAxis As Boolean)
             MyBase.New(doParent)
 
             m_strName = strName
             m_strDescription = strDescription
             m_eCoordinateID = eCoordID
             m_eCoordinateAxis = eCoordAxis
+            m_bConstraintAxis = bConstraintAxis
 
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 0.1, ScaledNumber.enumNumericScale.None, "", "")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 50, ScaledNumber.enumNumericScale.Mega, "", "")
             m_snEquilibriumPosition = New AnimatGUI.Framework.ScaledNumber(Me, "EquilibriumPosition", 0.0, ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_bEnabled = False
             NewLimits(doParent)
@@ -100,8 +115,8 @@ Namespace DataObjects.Physical
                 m_snMinLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MinLimit", -0.1, ScaledNumber.enumNumericScale.None, "Meters", "m")
                 m_snMaxLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MaxLimit", 0.1, ScaledNumber.enumNumericScale.None, "Meters", "m")
             Else
-                m_snMinLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MinLimit", -0.1, ScaledNumber.enumNumericScale.None, "Radians", "rad")
-                m_snMaxLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MaxLimit", 0.1, ScaledNumber.enumNumericScale.None, "Radians", "rad")
+                m_snMinLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MinLimit", -0.3, ScaledNumber.enumNumericScale.None, "Radians", "rad")
+                m_snMaxLimit = New AnimatGUI.Framework.ScaledNumber(Me, "MaxLimit", 0.3, ScaledNumber.enumNumericScale.None, "Radians", "rad")
             End If
         End Sub
 
@@ -130,6 +145,7 @@ Namespace DataObjects.Physical
             m_snMinLimit = DirectCast(doOrig.m_snMinLimit.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snMaxLimit = DirectCast(doOrig.m_snMaxLimit.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snEquilibriumPosition = DirectCast(doOrig.m_snEquilibriumPosition.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_bConstraintAxis = doOrig.m_bConstraintAxis
 
         End Sub
 
@@ -146,15 +162,17 @@ Namespace DataObjects.Physical
                             "but just a scaling factor that helps damp down the motion.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snMinLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Min Limit", pbNumberBag.GetType(), "MinLimit", _
-                            "Relaxation Properties", "The minimum distance that this relaxation can move.", pbNumberBag, _
-                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            If Not m_bConstraintAxis Then
+                pbNumberBag = m_snMinLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Min Limit", pbNumberBag.GetType(), "MinLimit", _
+                                "Relaxation Properties", "The minimum distance that this relaxation can move.", pbNumberBag, _
+                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snMaxLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Limit", pbNumberBag.GetType(), "MaxLimit", _
-                            "Relaxation Properties", "The maximum distance that this relaxation can move.", pbNumberBag, _
-                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                pbNumberBag = m_snMaxLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Limit", pbNumberBag.GetType(), "MaxLimit", _
+                                "Relaxation Properties", "The maximum distance that this relaxation can move.", pbNumberBag, _
+                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
             pbNumberBag = m_snEquilibriumPosition.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Equilibrium Position", pbNumberBag.GetType(), "EquilibriumPosition", _

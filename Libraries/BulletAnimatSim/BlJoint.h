@@ -30,6 +30,7 @@ namespace BulletAnimatSim
 		{
 		protected:
 			btTypedConstraint *m_btJoint;
+            btAnimatGeneric6DofConstraint *m_bt6DofJoint;
             BlSimulator *m_lpVsSim;
             float m_fltPrevBtJointPos;
             float m_fltPrevJointPos;
@@ -74,7 +75,7 @@ namespace BulletAnimatSim
             virtual float GetCurrentBtPosition() {return 0;};
 
             virtual void GetLimitsFromRelaxations(btVector3 &vLowerLinear, btVector3 &UpperLinear, btVector3 &vLowerAngular, btVector3 &vUpperAngular);
-            virtual void SetLimitValues() {};
+            virtual void SetLimitValues();
 
 			virtual btTypedConstraint* Constraint() {return m_btJoint;};
 		};

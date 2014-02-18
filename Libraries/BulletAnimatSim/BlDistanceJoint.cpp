@@ -84,6 +84,9 @@ void BlDistanceJoint::SetupPhysics()
     //m_btDistance->set
 
 	m_btJoint = m_btDistance;
+
+    Joint::Initialize();
+    BlJoint::Initialize();
 }
 
 void BlDistanceJoint::CreateJoint()

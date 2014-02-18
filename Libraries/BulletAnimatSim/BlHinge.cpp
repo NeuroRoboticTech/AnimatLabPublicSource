@@ -194,6 +194,7 @@ void BlHinge::SetupPhysics()
 	EnableLimits(m_bEnableLimits);
 
 	m_btJoint = m_btHinge;
+    m_bt6DofJoint = m_btHinge;
 
     //Init the current position.
     m_btHinge->getRotationalLimitMotor(0)->m_currentPosition = 0;

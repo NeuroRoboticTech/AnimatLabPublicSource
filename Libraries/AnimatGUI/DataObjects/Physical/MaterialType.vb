@@ -43,6 +43,10 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
+        Public Shared Sub ClearRegisteredMaterialTypes()
+            m_aryMaterialTypesPerPhysics.Clear()
+        End Sub
+
         Public Shared Function CreateMaterialType(ByRef doParent As AnimatGUI.Framework.DataObject, ByVal bCut As Boolean, ByRef doRoot As AnimatGUI.Framework.DataObject) As MaterialType
             If m_aryMaterialTypesPerPhysics.ContainsKey(Util.Application.Physics.Name) Then
                 Dim oMatType As MaterialType = DirectCast(m_aryMaterialTypesPerPhysics.Item(Util.Application.Physics.Name), MaterialType)
