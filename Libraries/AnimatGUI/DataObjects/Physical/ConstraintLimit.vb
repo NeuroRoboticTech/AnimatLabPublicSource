@@ -120,7 +120,7 @@ Namespace DataObjects.Physical
                 Return m_snRestitution
             End Get
             Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 OrElse Value.ActualValue > 1 Then
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 10000 Then
                     Throw New System.Exception("The restitution must be between 0 and 1.")
                 End If
 
@@ -151,8 +151,15 @@ Namespace DataObjects.Physical
             MyBase.New(doParent)
 
             m_snLimitPos = New AnimatGUI.Framework.ScaledNumber(Me, "LimitPos", -45, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Degrees", "Deg")
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 1, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 250, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
+
+            If Util.Application.Physics.Name = "Vortex" Then
+                m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 1, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
+                m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 250, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
+            Else
+                m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
+                m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 500, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
+            End If
+
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None, "v/v", "v/v")
 
         End Sub
@@ -238,46 +245,47 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable, ByVal bIncludeOtherProps As Boolean, ByVal strSetName As String, ByVal strExtraPropName As String)
+        Public Overridable Sub BuildPropertiesInline(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable, ByVal bIncludeOtherProps As Boolean, ByVal strSetName As String, ByVal strExtraPropName As String)
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             pbNumberBag = m_snLimitPos.Properties
             If m_bAngleLimit Then
                 Dim strName As String = "Angle"
                 If strSetName.Trim.Length > 0 Then strName = strSetName
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(strSetName, pbNumberBag.GetType(), strExtraPropName & "LimitPos", _
-                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " angle rotation that is allowed for this joint in degrees.", pbNumberBag, _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angle", pbNumberBag.GetType(), strExtraPropName & "LimitPos", _
+                                            "Constraint " & strSetName, "Sets the " & LimitDescription.ToLower() & " angle rotation that is allowed for this joint in degrees.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             Else
                 Dim strName As String = "Position"
                 If strSetName.Trim.Length > 0 Then strName = strSetName
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(strName, pbNumberBag.GetType(), strExtraPropName & "LimitPos", _
-                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " position that is allowed for this joint.", pbNumberBag, _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), strExtraPropName & "LimitPos", _
+                                            "Constraint " & strSetName, "Sets the " & LimitDescription.ToLower() & " position that is allowed for this joint.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             End If
 
             If bIncludeOtherProps Then
+                Dim strName As String = "Damping"
+                If strSetName.Trim.Length > 0 Then strName = strSetName
                 pbNumberBag = m_snDamping.Properties
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), strExtraPropName & "Damping", _
-                                            "Constraints", "The damping term for this limit. If the stiffness and damping " & _
+                                            "Constraint " & strSetName, "The damping term for this limit. If the stiffness and damping " & _
                                             "of an individual limit are both zero, it is effectively deactivated. This is the damping " & _
                                             "of the virtual spring used when the joint reaches its limit. It is not frictional damping " & _
                                             "for the motion around the joint.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                If Util.Application.Physics.ShowSeparateConstraintLimits Then
-                    'If we are not showing constraint limits separately then we do not show restitution.
-                    pbNumberBag = m_snRestitution.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), strExtraPropName & "Restitution", _
-                                                "Constraints", "The coefficient of restitution is the ratio of rebound velocity to " & _
-                                                "impact velocity when the joint reaches the low or high stop. This is used if the limit stiffness " & _
-                                                "is greater than zero. Restitution must be in the range zero to one inclusive.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-                End If
+                pbNumberBag = m_snRestitution.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), strExtraPropName & "Restitution", _
+                                            "Constraint " & strSetName, "The coefficient of restitution is the ratio of rebound velocity to " & _
+                                            "impact velocity when the joint reaches the low or high stop. This is used if the limit stiffness " & _
+                                            "is greater than zero. Restitution must be in the range zero to one inclusive.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+                strName = "Stiffness"
+                If strSetName.Trim.Length > 0 Then strName = strSetName
                 pbNumberBag = m_snStiffness.Properties
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stiffness", pbNumberBag.GetType(), strExtraPropName & "Stiffness", _
-                                            "Constraints", "The spring constant is used for restitution force when a limited " & _
+                                            "Constraint " & strSetName, "The spring constant is used for restitution force when a limited " & _
                                             "joint reaches one of its stops. This limit property must be zero or positive. " & _
                                             "If the stiffness and damping of an individual limit are both zero, it is effectively deactivated.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))

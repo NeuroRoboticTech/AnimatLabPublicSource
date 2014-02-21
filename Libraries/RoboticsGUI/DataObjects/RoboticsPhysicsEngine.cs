@@ -33,7 +33,12 @@ namespace RoboticsGUI
             return false;
         }
 
-        public override AnimatGUI.DataObjects.Physical.ConstraintRelaxation CreateJointRelaxation(string strType, AnimatGUI.DataObjects.Physical.ConstraintRelaxation.enumCoordinateID eCoordinate)
+        public override AnimatGUI.DataObjects.Physical.ConstraintRelaxation CreateJointRelaxation(string strType, AnimatGUI.DataObjects.Physical.ConstraintRelaxation.enumCoordinateID eCoordinate, AnimatGUI.Framework.DataObject doParent)
+        {
+            return null;
+        }
+
+        public override AnimatGUI.DataObjects.Physical.ConstraintLimit CreateConstraintLimit(string strType, AnimatGUI.Framework.DataObject doParent)
         {
             return null;
         }

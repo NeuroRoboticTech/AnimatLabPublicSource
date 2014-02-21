@@ -40,6 +40,8 @@ namespace BulletAnimatSim
 
                 float m_fltChildMassWithChildren;
 
+                float m_fltBounce;
+
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void UpdateData();
@@ -85,6 +87,7 @@ namespace BulletAnimatSim
 			    virtual void Physics_MaxForce(float fltVal);
 
                 virtual void SetConstraintFriction();
+                virtual void AxisConstraintSpringEnableChanged(bool bEnabled);
             };
 
 		}		//Joints

@@ -411,6 +411,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
     <Compile Include="DataObjects\Physical\Bodies\FluidPlane.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintLimit.vb" />
     <Compile Include="DataObjects\Physical\ConstraintRelaxationBullet.vb" />
     <Compile Include="DataObjects\Physical\ConstraintRelaxationVortex.vb" />
     <Compile Include="DataObjects\Physical\ContactSensor.vb" />
@@ -439,7 +440,6 @@
     <Compile Include="DataObjects\Physical\CollisionPair.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Physical\ConstrainLimit.vb" />
     <Compile Include="DataObjects\Physical\Environment.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -453,8 +453,10 @@
     <Compile Include="DataObjects\Physical\Joints\Distance.vb" />
     <Compile Include="DataObjects\Physical\Joints\FreeJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
+    <Compile Include="DataObjects\Physical\Joints\HingeLimitBullet.vb" />
     <Compile Include="DataObjects\Physical\Joints\Linear.vb" />
     <Compile Include="DataObjects\Physical\Joints\Prismatic.vb" />
+    <Compile Include="DataObjects\Physical\Joints\PrismaticLimitBullet.vb" />
     <Compile Include="DataObjects\Physical\Joints\RPRO.vb" />
     <Compile Include="DataObjects\Physical\Joints\StaticJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Universal.vb" />

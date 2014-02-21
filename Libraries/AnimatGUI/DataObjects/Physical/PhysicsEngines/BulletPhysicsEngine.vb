@@ -113,82 +113,93 @@ Namespace DataObjects.Physical.PhysicsEngines
             Return doItem
         End Function
 
-        Public Overrides Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Public Overrides Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (strType.Trim.ToUpper)
                 Case "BALLSOCKET"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "DISTANCE"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "FREEJOINT"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "HINGE"
-                    Return CreateHingeJointRelaxation(eCoordinate)
+                    Return CreateHingeJointRelaxation(eCoordinate, doParent)
                 Case "PRISMATIC"
-                    Return CreatePrismaticJointRelaxation(eCoordinate)
+                    Return CreatePrismaticJointRelaxation(eCoordinate, doParent)
                 Case "RPRO"
-                    Return CreateRPROJointRelaxation(eCoordinate)
+                    Return CreateRPROJointRelaxation(eCoordinate, doParent)
                 Case "STATIC"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "UNIVERSAL"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
             End Select
         End Function
 
-        Protected Overridable Function CreateHingeJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateHingeJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearX, False)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearX, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ, True)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ, True)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation6
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreatePrismaticJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreatePrismaticJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX, True)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX, True)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation6
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreateRPROJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateRPROJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX, False)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationBullet(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
+                    Return New ConstraintRelaxationBullet(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationBullet(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY, False)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation6
-                    Return New ConstraintRelaxationBullet(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularZ, False)
+                    Return New ConstraintRelaxationBullet(doParent, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularZ, False)
             End Select
 
             Return Nothing
+        End Function
+
+        Public Overrides Function CreateConstraintLimit(ByVal strType As String, ByVal doParent As Framework.DataObject) As ConstraintLimit
+            Dim strType1 As String = strType.Trim.ToUpper
+            If strType1 = "HINGE" Then
+                Return New Joints.HingeLimitBullet(doParent)
+            ElseIf strType1 = "PRISMATIC" Then
+                Return New Joints.PrismaticLimitBullet(doParent)
+            Else
+                Return Nothing
+            End If
         End Function
 
 #End Region

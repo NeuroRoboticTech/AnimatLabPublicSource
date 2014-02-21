@@ -156,8 +156,8 @@ Namespace DataObjects.Physical.Joints
             MyBase.New(doParent)
             m_strDescription = ""
 
-            m_doLowerLimit = New ConstraintLimit(Me)
-            m_doUpperLimit = New ConstraintLimit(Me)
+            m_doLowerLimit = Util.Application.Physics.CreateConstraintLimit(Me.Type, Me)
+            m_doUpperLimit = Util.Application.Physics.CreateConstraintLimit(Me.Type, Me)
 
             m_doLowerLimit.PairedLimit = m_doUpperLimit
             m_doUpperLimit.PairedLimit = m_doLowerLimit
@@ -315,8 +315,8 @@ Namespace DataObjects.Physical.Joints
                                             "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
                                             "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
             Else
-                m_doLowerLimit.BuildProperties(propTable, False, "Lower", "LowerLimit.")
-                m_doUpperLimit.BuildProperties(propTable, False, "Upper", "UpperLimit.")  'Note: We need to change includeotherprops to True when constraint stiff/damping supported again.
+                m_doLowerLimit.BuildPropertiesInline(propTable, False, "Lower", "LowerLimit.")
+                m_doUpperLimit.BuildPropertiesInline(propTable, True, "Upper", "UpperLimit.")
             End If
 
             pbNumberBag = m_snMaxForce.Properties

@@ -64,6 +64,7 @@ namespace BulletAnimatSim
                 virtual void Physics_MaxForce(float fltVal);
 
                 virtual void SetConstraintFriction();
+                virtual void AxisConstraintSpringEnableChanged(bool bEnabled);
             };
 
 		}		//Joints

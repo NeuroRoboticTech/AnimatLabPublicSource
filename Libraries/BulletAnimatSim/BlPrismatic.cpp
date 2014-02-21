@@ -79,6 +79,8 @@ void BlPrismatic::SetLimitValues()
     {
         GetLimitsFromRelaxations(m_vLowerLinear, m_vUpperLinear, m_vLowerAngular, m_vUpperAngular);
 
+        float fltErp = 0, fltCfm=0;
+
         if(m_bEnableLimits)
         {
             m_bJointLocked = false;
@@ -86,12 +88,12 @@ void BlPrismatic::SetLimitValues()
             m_vLowerLinear[0] = m_lpLowerLimit->LimitPos();
             m_vUpperLinear[0] = m_lpUpperLimit->LimitPos();
 
-            //float fltKp = m_lpUpperLimit->Stiffness();
-            //float fltKd = m_lpUpperLimit->Damping();
-            //float fltH = m_lpSim->PhysicsTimeStep()*1000;
-            //
-            //float fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
-            //float fltCfm = 1/((fltH*fltKp) + fltKd);
+            float fltKp = m_lpUpperLimit->Stiffness();
+            float fltKd = m_lpUpperLimit->Damping();
+            float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            
+            fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
+            fltCfm = 1/((fltH*fltKp) + fltKd);
         }
         else
         {
@@ -101,6 +103,12 @@ void BlPrismatic::SetLimitValues()
             m_vLowerLinear[0] = 1;
             m_vUpperLinear[0] = -1;
         }
+
+        m_btPrismatic->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, 0);
+        m_btPrismatic->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, 0);
+
+        float fltBounce = m_lpUpperLimit->Restitution();
+        float fltHigh = m_btPrismatic->getTranslationalLimitMotor()->m_restitution = fltBounce;
 
         m_btPrismatic->setLinearLowerLimit(m_vLowerLinear);
         m_btPrismatic->setLinearUpperLimit(m_vUpperLinear);
@@ -384,9 +392,13 @@ void BlPrismatic::TurnMotorOff()
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = 0;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = maxMotorImpulse;
+            m_btPrismatic->enableSpring(0, false);
         }
         else //Otherwise just turn the motor off
+        {
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = false;
+            m_btPrismatic->enableSpring(0, false);
+        }
 
         m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);
         m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity = btVector3(0, 0, 0);
@@ -395,6 +407,12 @@ void BlPrismatic::TurnMotorOff()
         m_btPrismatic->getTranslationalLimitMotor()->m_currentLimit[2] = 0;
         m_btPrismatic->getTranslationalLimitMotor()->m_currentLimitError = btVector3(0, 0, 0);
     }
+}
+
+void BlPrismatic::AxisConstraintSpringEnableChanged(bool bEnabled)
+{
+    if(!m_bMotorOn)
+        m_btPrismatic->enableSpring(0, bEnabled);
 }
 
 void BlPrismatic::SetConstraintFriction()

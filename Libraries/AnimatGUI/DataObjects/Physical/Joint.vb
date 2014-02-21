@@ -211,12 +211,12 @@ Namespace DataObjects.Physical
                 End If
             End If
 
-            m_doRelaxation1 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation1)
-            m_doRelaxation2 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation2)
-            m_doRelaxation3 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation3)
-            m_doRelaxation4 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation4)
-            m_doRelaxation5 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation5)
-            m_doRelaxation6 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation6)
+            m_doRelaxation1 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation1, Me)
+            m_doRelaxation2 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation2, Me)
+            m_doRelaxation3 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation3, Me)
+            m_doRelaxation4 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation4, Me)
+            m_doRelaxation5 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation5, Me)
+            m_doRelaxation6 = Util.Application.Physics.CreateJointRelaxation(Me.Type, ConstraintRelaxation.enumCoordinateID.Relaxation6, Me)
 
         End Sub
 

@@ -71,6 +71,7 @@ namespace BulletAnimatSim
 			virtual void Physics_ResetSimulation();
             virtual void Physics_CollectData();
             virtual void SetConstraintFriction() {};
+            virtual void AxisConstraintSpringEnableChanged(bool bEnabled) {};
             
             virtual float GetCurrentBtPosition() {return 0;};
 

@@ -283,7 +283,9 @@ void BlConstraintRelaxation::SetRelaxationProperties()
 {
     if(m_lpSim && m_lpNode && m_lpConstraint && m_lpBlJoint)
     {
-        if(!m_bDisallowSpringEnable)
+        if(m_bDisallowSpringEnable)
+            m_lpBlJoint->AxisConstraintSpringEnableChanged(m_bEnabled);
+        else
             m_lpConstraint->enableSpring(m_iCoordinateID, m_bEnabled);
 
         m_lpConstraint->setEquilibriumPoint(m_iCoordinateID, m_fltEqPos);

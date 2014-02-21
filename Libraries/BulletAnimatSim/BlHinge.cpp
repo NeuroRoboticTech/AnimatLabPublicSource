@@ -33,6 +33,7 @@ BlHinge::BlHinge()
 	m_btHinge = NULL;
 	m_fltRotationDeg = 0;
     m_fltChildMassWithChildren = 0;
+    m_fltBounce = 1;
 
 	m_lpUpperLimit = new BlHingeLimit();
 	m_lpLowerLimit = new BlHingeLimit();
@@ -82,6 +83,8 @@ void BlHinge::SetLimitValues()
     {
         GetLimitsFromRelaxations(m_vLowerLinear, m_vUpperLinear, m_vLowerAngular, m_vUpperAngular);
 
+        float fltErp = 0, fltCfm=0;
+
         if(m_bEnableLimits)
         {
             m_bJointLocked = false;
@@ -89,15 +92,12 @@ void BlHinge::SetLimitValues()
             m_vLowerAngular[0] = m_lpLowerLimit->LimitPos();
             m_vUpperAngular[0] = m_lpUpperLimit->LimitPos();
 
-            //float fltKp = m_lpUpperLimit->Stiffness();
-            //float fltKd = m_lpUpperLimit->Damping();
-            //float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            float fltKp = m_lpUpperLimit->Stiffness();
+            float fltKd = m_lpUpperLimit->Damping();
+            float fltH = m_lpSim->PhysicsTimeStep()*1000;
             
-            //float fltErp = 0.9; //(fltH*fltKp)/((fltH*fltKp) + fltKd);
-            //float fltCfm = 0.1; //1/((fltH*fltKp) + fltKd);
-
-            //m_btHinge->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, -1);
-            //m_btHinge->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, -1);
+            fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
+            fltCfm = 1/((fltH*fltKp) + fltKd);
         }
         else
         {
@@ -108,6 +108,11 @@ void BlHinge::SetLimitValues()
             m_vLowerAngular[0] = 1;
             m_vUpperAngular[0] = -1;
         }
+
+        //m_btHinge->setParam(BT_CONSTRAINT_STOP_CFM, fltCfm, 3);
+        //m_btHinge->setParam(BT_CONSTRAINT_STOP_ERP, fltErp, 3);
+        float fltBounce = m_lpUpperLimit->Restitution();
+        m_btHinge->getRotationalLimitMotor(0)->m_bounce = fltBounce;
 
         m_btHinge->setLinearLowerLimit(m_vLowerLinear);
         m_btHinge->setLinearUpperLimit(m_vUpperLinear);
@@ -409,15 +414,25 @@ void BlHinge::TurnMotorOff()
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
 		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = maxMotorImpulse;
+            m_btHinge->enableSpring(3, false);
         }
         else //Otherwise just turn the motor off
+        {
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
+            m_btHinge->enableSpring(3, false);
+        }
 
         m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
         m_btHinge->getRotationalLimitMotor(0)->m_currentLimit = 0;
         m_btHinge->getRotationalLimitMotor(0)->m_currentLimitError = 0;
         m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
     }
+}
+
+void BlHinge::AxisConstraintSpringEnableChanged(bool bEnabled)
+{
+    if(!m_bMotorOn)
+        m_btHinge->enableSpring(3, bEnabled);
 }
 
 void BlHinge::SetConstraintFriction()

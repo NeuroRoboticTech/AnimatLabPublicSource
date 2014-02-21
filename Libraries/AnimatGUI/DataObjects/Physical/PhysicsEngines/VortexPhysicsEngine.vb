@@ -149,117 +149,120 @@ Namespace DataObjects.Physical.PhysicsEngines
             Return doItem
         End Function
 
-        Public Overrides Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Public Overrides Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (strType.Trim.ToUpper)
                 Case "BALLSOCKET"
-                    Return CreateBallSocketJointRelaxation(eCoordinate)
+                    Return CreateBallSocketJointRelaxation(eCoordinate, doParent)
                 Case "DISTANCE"
-                    Return CreateDistanceJointRelaxation(eCoordinate)
+                    Return CreateDistanceJointRelaxation(eCoordinate, doParent)
                 Case "FREEJOINT"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "HINGE"
-                    Return CreateHingeJointRelaxation(eCoordinate)
+                    Return CreateHingeJointRelaxation(eCoordinate, doParent)
                 Case "PRISMATIC"
-                    Return CreatePrismaticJointRelaxation(eCoordinate)
+                    Return CreatePrismaticJointRelaxation(eCoordinate, doParent)
                 Case "RPRO"
-                    Return CreateRPROJointRelaxation(eCoordinate)
+                    Return CreateRPROJointRelaxation(eCoordinate, doParent)
                 Case "STATIC"
-                    Return CreateEmptyJointRelaxation(eCoordinate)
+                    Return CreateEmptyJointRelaxation(eCoordinate, doParent)
                 Case "UNIVERSAL"
-                    Return CreateUniversalJointRelaxation(eCoordinate)
+                    Return CreateUniversalJointRelaxation(eCoordinate, doParent)
             End Select
         End Function
 
-        Protected Overridable Function CreateBallSocketJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateBallSocketJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreateDistanceJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateDistanceJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "Distance Displacement", "Sets the relaxation for the distance constraint.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
+                    Return New ConstraintRelaxationVortex(doParent, "Distance Displacement", "Sets the relaxation for the distance constraint.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreateHingeJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateHingeJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreatePrismaticJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreatePrismaticJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.AngularX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.AngularX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularZ)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreateRPROJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateRPROJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation5
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5, ConstraintRelaxation.enumCoordinateAxis.AngularY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation6
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6, ConstraintRelaxation.enumCoordinateAxis.AngularZ)
             End Select
 
             Return Nothing
         End Function
 
-        Protected Overridable Function CreateUniversalJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Protected Overridable Function CreateUniversalJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Select Case (eCoordinate)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation1
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1, ConstraintRelaxation.enumCoordinateAxis.LinearX)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation2
-                    Return New ConstraintRelaxationVortex(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
+                    Return New ConstraintRelaxationVortex(doParent, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2, ConstraintRelaxation.enumCoordinateAxis.LinearY)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation3
-                    Return New ConstraintRelaxationVortex(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
+                    Return New ConstraintRelaxationVortex(doParent, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3, ConstraintRelaxation.enumCoordinateAxis.LinearZ)
                 Case ConstraintRelaxation.enumCoordinateID.Relaxation4
-                    Return New ConstraintRelaxationVortex(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
+                    Return New ConstraintRelaxationVortex(doParent, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4, ConstraintRelaxation.enumCoordinateAxis.AngularX)
             End Select
 
             Return Nothing
         End Function
 
+        Public Overrides Function CreateConstraintLimit(ByVal strType As String, ByVal doParent As Framework.DataObject) As ConstraintLimit
+            Return New ConstraintLimit(doParent)
+        End Function
 
 #End Region
 

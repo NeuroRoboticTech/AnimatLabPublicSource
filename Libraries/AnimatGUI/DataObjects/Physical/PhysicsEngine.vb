@@ -49,9 +49,11 @@ Namespace DataObjects.Physical
             End If
         End Function
 
-        Public MustOverride Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Public MustOverride Function CreateJointRelaxation(ByVal strType As String, ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
 
-        Protected Overridable Function CreateEmptyJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID) As ConstraintRelaxation
+        Public MustOverride Function CreateConstraintLimit(ByVal strType As String, ByVal doParent As Framework.DataObject) As ConstraintLimit
+
+        Protected Overridable Function CreateEmptyJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Return Nothing
         End Function
 
