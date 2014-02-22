@@ -43,7 +43,7 @@
           <Description />
           <Constraint Low="-2" High="4">
             <EnableLimits>True</EnableLimits>
-            <Damping Value="0" Scale="None" Actual="0" />
+            <Damping Value="3000" Scale="None" Actual="3000" />
             <Restitution Value="0" Scale="None" Actual="0" />
             <Stiffness Value="5000" Scale="None" Actual="5000" />
           </Constraint>
