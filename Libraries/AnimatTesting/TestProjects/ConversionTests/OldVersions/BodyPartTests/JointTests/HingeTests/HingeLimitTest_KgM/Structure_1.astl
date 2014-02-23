@@ -43,9 +43,9 @@
           <Description />
           <Constraint Low="-0.7853982" High="0.7853982">
             <EnableLimits>True</EnableLimits>
-            <Damping Value="5" Scale="None" Actual="5" />
-            <Restitution Value="0" Scale="None" Actual="0" />
-            <Stiffness Value="200" Scale="None" Actual="200" />
+            <Damping Value="1000" Scale="None" Actual="1000" />
+            <Restitution Value="6" Scale="None" Actual="6" />
+            <Stiffness Value="1000" Scale="None" Actual="1000" />
           </Constraint>
           <EnableMotor>False</EnableMotor>
           <ServoMotor>False</ServoMotor>
