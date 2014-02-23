@@ -1,7 +1,7 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="12" y="-16"/>
+<NormalLocation x="22" y="55"/>
 <NormalSize Width="1000" Height="600"/>
 <WindowState>Normal</WindowState>
 <Structure>c7da16ed-a926-4315-8f81-5afcb96d7d95</Structure>
@@ -63,7 +63,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
+  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="239, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Receptive Fields" />
       <State Value="DockLeft" />
@@ -77,7 +77,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Receptive Fields" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
+      <Position Size="239, 150" Location="150, 150" />
       <Best Count="3">
         <Item Name="Receptive Fields" />
         <Item Name="Properties" />
@@ -117,7 +117,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="239, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
@@ -131,7 +131,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
+      <Position Size="239, 150" Location="150, 150" />
       <Best Count="3">
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
@@ -169,7 +169,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties">
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="239, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Properties" />
       <State Value="DockLeft" />
@@ -183,7 +183,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Properties" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
+      <Position Size="239, 150" Location="150, 150" />
       <Best Count="3">
         <Item Name="Receptive Fields" />
         <Item Name="Properties" />

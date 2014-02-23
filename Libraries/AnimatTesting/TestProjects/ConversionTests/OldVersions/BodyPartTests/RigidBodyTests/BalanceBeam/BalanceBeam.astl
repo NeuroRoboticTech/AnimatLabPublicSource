@@ -39,13 +39,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="-1.5" y="2" z="0"/>
 <LocalPosition x="-1.5" y="2" z="0"/>
-<Rotation x="-3.14159" y="0" z="-3.14159"/>
-<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
+<Rotation x="3.14159" y="0" z="3.14159"/>
+<LocalRotation x="3.14159" y="0" z="3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1.5,2,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,-1.5,2,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,-1.5,2,0,1</CombinedTransformationMatrix>
 <Radius>0.15</Radius>
 <CollisionRadius>0.15</CollisionRadius>
 </RigidBody>
@@ -70,13 +70,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="1.5" y="2" z="0"/>
 <LocalPosition x="1.5" y="2" z="0"/>
-<Rotation x="-3.14159" y="0" z="-3.14159"/>
-<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
+<Rotation x="3.14159" y="0" z="3.14159"/>
+<LocalRotation x="3.14159" y="0" z="3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1.5,2,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,1.5,2,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,1.5,2,0,1</CombinedTransformationMatrix>
 <Radius>0.15</Radius>
 <CollisionRadius>0.15</CollisionRadius>
 </RigidBody>
@@ -143,13 +143,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="-1.5" y="0" z="0"/>
 <LocalPosition x="-1.5" y="0" z="0"/>
-<Rotation x="-3.14159" y="0" z="-3.14159"/>
-<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
+<Rotation x="3.14159" y="0" z="3.14159"/>
+<LocalRotation x="3.14159" y="0" z="3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1.5,0,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,-1.5,0,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,-1.5,0,0,1</CombinedTransformationMatrix>
 <Radius>0.15</Radius>
 <CollisionRadius>0.15</CollisionRadius>
 </RigidBody>
@@ -165,7 +165,7 @@
 <AttachID>1c5239fa-e2fd-441d-9c12-8b5c2f48080c</AttachID>
 <AttachID>605a983a-61a1-4241-ab27-e146df025596</AttachID>
 </MuscleAttachments>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <IsVisible>True</IsVisible>
 <MaximumTension Value="100" Scale="None" Actual="100"/>
 <StimulusTension>
@@ -235,13 +235,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="1.5" y="0" z="0"/>
 <LocalPosition x="1.5" y="0" z="0"/>
-<Rotation x="-3.14159" y="0" z="-3.14159"/>
-<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
+<Rotation x="3.14159" y="0" z="3.14159"/>
+<LocalRotation x="3.14159" y="0" z="3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1.5,0,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,1.5,0,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,1.5,0,0,1</CombinedTransformationMatrix>
 <Radius>0.15</Radius>
 <CollisionRadius>0.15</CollisionRadius>
 </RigidBody>
@@ -316,8 +316,8 @@
 <PrimaryAttachmentID>1c5239fa-e2fd-441d-9c12-8b5c2f48080c</PrimaryAttachmentID>
 <SecondaryAttachmentID>605a983a-61a1-4241-ab27-e146df025596</SecondaryAttachmentID>
 <NaturalLength Value="2" Scale="None" Actual="2"/>
-<Stiffness Value="1" Scale="Kilo" Actual="1000"/>
-<Damping Value="1" Scale="Kilo" Actual="1000"/>
+<Stiffness Value="100" Scale="None" Actual="100"/>
+<Damping Value="8" Scale="Kilo" Actual="8000"/>
 <Enabled>False</Enabled>
 <IsVisible>True</IsVisible>
 </RigidBody>
@@ -332,8 +332,8 @@
 <SecondaryAttachmentID>318f3e1b-385f-4e14-b7e0-b56f234de84b</SecondaryAttachmentID>
 <NaturalLength Value="2" Scale="None" Actual="2"/>
 <Stiffness Value="100" Scale="None" Actual="100"/>
-<Damping Value="4" Scale="Kilo" Actual="4000"/>
-<Enabled>True</Enabled>
+<Damping Value="8" Scale="Kilo" Actual="8000"/>
+<Enabled>False</Enabled>
 <IsVisible>True</IsVisible>
 </RigidBody>
 </ChildBodies>

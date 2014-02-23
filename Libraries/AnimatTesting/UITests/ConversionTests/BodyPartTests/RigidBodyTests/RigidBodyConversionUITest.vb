@@ -109,8 +109,16 @@ Namespace UITests
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("Hinge", 1.1)
-                        aryMaxErrors.Add("Fy", 0.01)
-                        aryMaxErrors.Add("Tz", 0.01)
+                        aryMaxErrors.Add("Mlt", 0.01)
+                        aryMaxErrors.Add("Mrt", 0.01)
+                        aryMaxErrors.Add("Slt", 0.01)
+                        aryMaxErrors.Add("Srt", 0.01)
+                        aryMaxErrors.Add("Mll", 0.01)
+                        aryMaxErrors.Add("Mrl", 0.01)
+                        aryMaxErrors.Add("Sll", 0.01)
+                        aryMaxErrors.Add("Srl", 0.01)
+                        aryMaxErrors.Add("Left", 0.01)
+                        aryMaxErrors.Add("Right", 0.01)
                         aryMaxErrors.Add("default", 0.01)
 
                         m_strProjectName = "BalanceBeam"
@@ -125,8 +133,84 @@ Namespace UITests
 
                         Dim aryIgnoreRows As New ArrayList
 
+
+                        'Test forces
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors, -1, aryIgnoreRows)
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Clock", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Clock_2N_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Clock", "ForceY", "-2 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CounterClock_2N_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Clock", "ForceY", "2 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Clock", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\CounterClock", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CounterClock_2N_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\CounterClock", "ForceY", "-2 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Clock_2N_")
+
+                        'Test Muscles
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\CounterClock", "ForceY", "2 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\CounterClock", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Left_Muscle", "Enabled", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Left", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Left_Muscle_Only_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Right", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Muscle_LA_RP_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Right_Muscle", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Muscle_BothActive_")
+
+                        ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Left", "AttachmentPoints"}, 500)
+                        ExecuteActiveDialogMethod("Automation_RemoveAttachment", New Object() {"Attach_Arm_Left"})
+                        ExecuteActiveDialogMethod("Automation_AddAttachment", New Object() {"Attach_Arm_Right"})
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Muscle_Swap_L_Attach_")
+
+                        ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Left", "AttachmentPoints"}, 500)
+                        ExecuteActiveDialogMethod("Automation_RemoveAttachment", New Object() {"Attach_Arm_Right"})
+                        ExecuteActiveDialogMethod("Automation_AddAttachment", New Object() {"Attach_Arm_Left"})
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Left_Muscle", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Right_Muscle", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Left", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Muscle_Right", "Enabled", "False"})
+
+                        'Test Springs
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Spring_Left", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_L_2_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Spring_Left", "NaturalLength", "1.8"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_L_1_8_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Spring_Right", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_L_1_8_R_2_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Spring_Right", "NaturalLength", "1.5"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_L_1_8_R_1_5_")
+
+                        ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\BalanceBeam\Body Plan\Root\Hinge\Arm\Spring_Left", "AttachmentPoints"}, 500)
+                        ExecuteActiveDialogMethod("Automation_RemoveAttachment", New Object() {"Attach_Arm_Left"})
+                        ExecuteActiveDialogMethod("Automation_AddAttachment", New Object() {"Attach_Arm_Right"})
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Spring_Swap_L_Attach_")
 
                     End Sub
 
