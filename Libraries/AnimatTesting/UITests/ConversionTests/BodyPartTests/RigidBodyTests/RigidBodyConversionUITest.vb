@@ -49,6 +49,8 @@ Namespace UITests
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_BodyBoxRotations()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim dblRootRotX As Double = CDbl(TestContext.DataRow("RootRotX"))
                         Dim dblRootRotY As Double = CDbl(TestContext.DataRow("RootRotY"))

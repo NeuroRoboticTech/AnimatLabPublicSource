@@ -54,8 +54,14 @@ Namespace UITests
                         MuscleTest()
                     End Sub
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_Enabler()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
@@ -98,8 +104,14 @@ Namespace UITests
 
                     End Sub
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
                     Public Sub Test_Muscle_Hinge_NoMotor()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
@@ -164,6 +176,80 @@ Namespace UITests
                         aryMaxErrors("Top_Tension") = 0.05
 
                     End Sub
+
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PhysicsEngines", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
+                    Public Sub Test_BalanceBeam()
+                        If Not SetPhysicsEngine(TestContext.DataRow) Then Return
+
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Bottom_A", 0.05)
+                        aryMaxErrors.Add("Top_A", 0.05)
+                        aryMaxErrors.Add("Bottom_Length", 0.05)
+                        aryMaxErrors.Add("Top_Length", 0.05)
+                        aryMaxErrors.Add("Bottom_Tension", 0.05)
+                        aryMaxErrors.Add("Top_Tension", 0.05)
+                        aryMaxErrors.Add("Bottom_MN", 0.05)
+                        aryMaxErrors.Add("Top_MN", 0.05)
+                        aryMaxErrors.Add("Rotation", 0.05)
+                        aryMaxErrors.Add("default", 0.05)
+
+                        m_strProjectName = "MuscleTest_Hinge_NoMotor_dmg"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strStructureGroup = "Organisms"
+                        m_strStruct1Name = "Organism_1"
+
+                        m_aryWindowsToOpen.Clear()
+                        m_aryWindowsToOpen.Add("Tool Viewers\BodyDataNoMuscle")
+
+                        'Load and convert the project.
+                        TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Balance_Force", "PositionZ", "-0.1 c"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Force_Z_-0_1cm_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Balance_Force", "ForceY", "0.98039215686274509803921568627451 "})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Force_Y_0_98N_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Balance_Force", "PositionZ", "2 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Balance_Force", "ForceY", "1.6666666666666666666666666666667 "})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Force_Z_1.6N_")
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Balance_Force", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Arm\Top_Muscle", "Enabled", "True"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Top_Enabled_")
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.Y", "3 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.Z", "-10 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Top_MN", "CurrentOn", "4.24 n"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TopAttach_0_3_-10_")
+
+                        aryMaxErrors("Top_Tension") = 0.26
+
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.Y", "0 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Top_Attach", "WorldPosition.Z", "-11 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TopAttach_0_0_-11_")
+
+                        aryMaxErrors("Top_Tension") = 0.05
+
+                    End Sub
+
 
 #Region "Additional test attributes"
                     '
