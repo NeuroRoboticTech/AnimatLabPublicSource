@@ -92,12 +92,12 @@ void BlHinge::SetLimitValues()
             m_vLowerAngular[0] = m_lpLowerLimit->LimitPos();
             m_vUpperAngular[0] = m_lpUpperLimit->LimitPos();
 
-            //float fltKp = m_lpUpperLimit->Stiffness();
-            //float fltKd = m_lpUpperLimit->Damping();
-            //float fltH = m_lpSim->PhysicsTimeStep()*1000;
-            //
-            //fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
-            //fltCfm = 1/((fltH*fltKp) + fltKd);
+            float fltKp = m_lpUpperLimit->Stiffness();
+            float fltKd = m_lpUpperLimit->Damping();
+            float fltH = m_lpSim->PhysicsTimeStep()*1000;
+            
+            fltErp = (fltH*fltKp)/((fltH*fltKp) + fltKd);
+            fltCfm = 1/((fltH*fltKp) + fltKd);
         }
         else
         {
