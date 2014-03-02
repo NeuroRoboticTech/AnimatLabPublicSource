@@ -359,6 +359,7 @@ void BlHinge::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float fltM
             SetLimitValues();
             m_lpThisJoint->WakeDynamics();
 
+            //NOTE: spring enable MUST be called before enable motor because enable spring turns the motor on/off
             m_btHinge->enableSpring(3, false);
 		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
 		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = fltDesiredVelocity;
