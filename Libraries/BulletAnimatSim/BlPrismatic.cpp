@@ -334,10 +334,10 @@ void BlPrismatic::Physics_EnableMotor(bool bOn, float fltDesiredVelocity, float 
                 m_lpThisJoint->WakeDynamics();
             //}
 
+            m_btPrismatic->enableSpring(0, false);
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = -fltDesiredVelocity;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = fltMaxForce;
-            m_btPrismatic->enableSpring(0, false);
         }
 		else
         {
@@ -389,10 +389,10 @@ void BlPrismatic::TurnMotorOff()
             //0.032 is a coefficient that produces friction behavior in bullet using the same coefficient values
             //that were specified in vortex engine. This way I get similar behavior between the two.
             float	maxMotorImpulse = m_lpFriction->Coefficient()*0.032f*(m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());  
+            m_btPrismatic->enableSpring(0, false);
 		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = 0;
 		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = maxMotorImpulse;
-            m_btPrismatic->enableSpring(0, false);
         }
         else //Otherwise just turn the motor off
         {
