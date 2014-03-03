@@ -306,8 +306,10 @@ void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLo
 		{
             m_bJointLocked = true;
 
-		    m_btPrismatic->setLinearLowerLimit(btVector3(fltPosition, 0, 0));
-		    m_btPrismatic->setLinearUpperLimit(btVector3(fltPosition, 0, 0));
+            m_vLowerLinear[0] = m_vUpperLinear[0] = fltPosition;
+
+		    m_btPrismatic->setLinearLowerLimit(m_vLowerLinear);
+		    m_btPrismatic->setLinearLowerLimit(m_vUpperLinear);
 		}
 		else if (m_bMotorOn)
 			Physics_EnableMotor(true, 0, fltMaxLockForce, false);
@@ -396,8 +398,8 @@ void BlPrismatic::TurnMotorOff()
         }
         else //Otherwise just turn the motor off
         {
-		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = false;
             m_btPrismatic->enableSpring(0, false);
+		    m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = false;
         }
 
         m_btPrismatic->getTranslationalLimitMotor()->m_accumulatedImpulse = btVector3(0, 0, 0);

@@ -329,7 +329,7 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 		{
             m_bJointLocked = true;
 
-            m_vLowerAngular[0] = m_vUpperAngular[0] = 0;
+            m_vLowerAngular[0] = m_vUpperAngular[0] = fltPosition;
 
 		    m_btHinge->setAngularLowerLimit(m_vLowerAngular);
 		    m_btHinge->setAngularUpperLimit(m_vUpperAngular);
@@ -419,8 +419,8 @@ void BlHinge::TurnMotorOff()
         }
         else //Otherwise just turn the motor off
         {
-		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
             m_btHinge->enableSpring(3, false);
+		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = false;
         }
 
         m_btHinge->getRotationalLimitMotor(0)->m_accumulatedImpulse = 0;
