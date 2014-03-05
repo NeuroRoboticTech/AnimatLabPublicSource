@@ -77,6 +77,16 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property LibraryVersionPrefix() As String
+            Get
+                If m_strLibraryVersion.ToUpper() = "DOUBLE" Then
+                    Return "_double"
+                Else
+                    Return "_single"
+                End If
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -104,6 +114,9 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_aryConstraintRelaxations.Add("RPRO_AngularX", True)
             m_aryConstraintRelaxations.Add("RPRO_AngularY", True)
             m_aryConstraintRelaxations.Add("RPRO_AngularZ", True)
+
+            m_aryLibraryVersions.Add("Single")
+            m_aryLibraryVersions.Add("Double")
 
         End Sub
 

@@ -77,6 +77,18 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AvailableLibraryVersions As ArrayList
+            Get
+                Return m_aryLibraryVersions
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property LibraryVersionPrefix() As String
+            Get
+                Return ""
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -140,6 +152,8 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_aryConstraintRelaxations.Add("Universal_AngularX", True)
             m_aryConstraintRelaxations.Add("Universal_AngularY", False)
             m_aryConstraintRelaxations.Add("Universal_AngularZ", False)
+
+            m_aryLibraryVersions.Add("Double")
 
         End Sub
 

@@ -34,8 +34,8 @@
     <ClInclude Include="..\BlTerrain.h" />
     <ClInclude Include="..\BlTorus.h" />
     <ClInclude Include="..\BlUniversal.h" />
-    <ClInclude Include="..\StdAfx.h" />
     <ClInclude Include="..\btAnimatGeneric6DofConstraint.h" />
+    <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BlAnimatCollisionDispatcher.cpp" />
@@ -71,8 +71,8 @@
     <ClCompile Include="..\BlTerrain.cpp" />
     <ClCompile Include="..\BlTorus.cpp" />
     <ClCompile Include="..\BlUniversal.cpp" />
+    <ClCompile Include="..\btAnimatGeneric6DofConstraint.cpp" />
     <ClCompile Include="..\BulletAnimatSim.cpp" />
     <ClCompile Include="..\StdAfx.cpp" />
-    <ClCompile Include="..\btAnimatGeneric6DofConstraint.cpp" />
   </ItemGroup>
 </Project>

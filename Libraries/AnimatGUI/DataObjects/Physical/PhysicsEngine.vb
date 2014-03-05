@@ -17,6 +17,8 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_aryConstraintRelaxations As New Hashtable
+        Protected m_aryLibraryVersions As New ArrayList
+        Protected m_strLibraryVersion As String = "Double"
 
 #End Region
 
@@ -30,6 +32,29 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
+        Public MustOverride ReadOnly Property AvailableLibraryVersions() As ArrayList
+
+        Public Overridable Property LibraryVersion As String
+            Get
+                Return m_strLibraryVersion
+            End Get
+            Set(value As String)
+                Dim bFound As Boolean = False
+                For Each strVal As String In m_aryLibraryVersions
+                    If strVal.ToUpper() = value.ToUpper() Then
+                        bFound = True
+                    End If
+                Next
+
+                If Not bFound Then
+                    Throw New System.Exception("Invalid library version specified: " & value)
+                End If
+
+                m_strLibraryVersion = value
+            End Set
+        End Property
+
+        Public MustOverride ReadOnly Property LibraryVersionPrefix() As String
 
 #End Region
 
