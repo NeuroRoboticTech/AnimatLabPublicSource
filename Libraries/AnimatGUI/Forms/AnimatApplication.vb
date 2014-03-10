@@ -1281,9 +1281,9 @@ Namespace Forms
         Public Overridable ReadOnly Property RuntimeModePrefix() As String
             Get
 #If DEBUG Then
-                Return ("D" & m_doPhysics.LibraryVersionPrefix)
+                Return "D"
 #Else
-                Return ("" & m_doPhysics.LibraryVersionPrefix)
+                Return ""
 #End If
             End Get
         End Property

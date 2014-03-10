@@ -2,11 +2,19 @@
 #define __BOOTSTRAP_LOADER_DLL_H__
 
 #ifndef _BOOTSTRAP_LOADER_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "BootstrapLoader_vc10D.lib")
-	#else
-		#pragma comment(lib, "BootstrapLoader_vc10.lib")
-	#endif          
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "BootstrapLoader_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "BootstrapLoader_vc10.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "BootstrapLoader_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "BootstrapLoader_vc10_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #endif          // _BOOTSTRAP_LOADER_DLL_NOFORCELIBS
 
 #ifdef WIN32

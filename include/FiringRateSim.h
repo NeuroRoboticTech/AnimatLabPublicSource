@@ -2,11 +2,19 @@
 #define __FAST_NEURAL_NET_LIB_DLL_H__
 
 #ifndef _FAST_NEURAL_NET_LIB_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "FiringRateSim_vc10D.lib")
-	#else
-		#pragma comment(lib, "FiringRateSim_vc10.lib")
-	#endif
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "FiringRateSim_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "FiringRateSim_vc10.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "FiringRateSim_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "FiringRateSim_vc10_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #endif          // _FAST_NEURAL_NET_LIB_DLL_NOFORCELIBS
 
 #define FAST_NET_PORT __declspec( dllimport )

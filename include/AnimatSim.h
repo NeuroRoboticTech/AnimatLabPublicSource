@@ -2,11 +2,19 @@
 #define __ANIMAT_LIB_DLL_H__
 
 #ifndef _ANIMAT_LIB_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "AnimatSim_vc10D.lib")
-	#else
-		#pragma comment(lib, "AnimatSim_vc10.lib")
-	#endif
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "AnimatSim_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "AnimatSim_vc10.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "AnimatSim_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "AnimatSim_vc10_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #endif          // _ANIMAT_LIB_DLL_NOFORCELIBS
 
 #ifdef WIN32	

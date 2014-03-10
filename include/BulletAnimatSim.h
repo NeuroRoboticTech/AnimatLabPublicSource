@@ -1,10 +1,34 @@
 #ifndef __BULLET_ANIMAT_LIB_DLL_H__
 #define __BULLET_ANIMAT_LIB_DLL_H__
 
-#ifdef _DEBUG
-	#pragma comment(lib, "BulletAnimatSim_vc10D.lib")
+#ifndef BT_USE_DOUBLE_PRECISION
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+	        #pragma comment(lib, "BulletAnimatSim_vc10D_single.lib")
+        #else
+	        #pragma comment(lib, "BulletAnimatSim_vc10_single.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+	        #pragma comment(lib, "BulletAnimatSim_vc10D_single_x64.lib")
+        #else
+	        #pragma comment(lib, "BulletAnimatSim_vc10_single_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #else
-	#pragma comment(lib, "BulletAnimatSim_vc10.lib")
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+	        #pragma comment(lib, "BulletAnimatSim_vc10D_double.lib")
+        #else
+	        #pragma comment(lib, "BulletAnimatSim_vc10_double.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+	        #pragma comment(lib, "BulletAnimatSim_vc10D_double_x64.lib")
+        #else
+	        #pragma comment(lib, "BulletAnimatSim_vc10_double_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #endif
 
 #ifdef WIN32

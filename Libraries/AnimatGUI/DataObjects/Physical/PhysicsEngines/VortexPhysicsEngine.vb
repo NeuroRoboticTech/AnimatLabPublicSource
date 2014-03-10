@@ -77,12 +77,6 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
-        Public Overrides ReadOnly Property AvailableLibraryVersions As ArrayList
-            Get
-                Return m_aryLibraryVersions
-            End Get
-        End Property
-
         Public Overrides ReadOnly Property LibraryVersionPrefix() As String
             Get
                 Return ""

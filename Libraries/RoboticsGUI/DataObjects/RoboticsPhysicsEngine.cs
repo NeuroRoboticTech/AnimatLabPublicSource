@@ -17,6 +17,11 @@ namespace RoboticsGUI
         public override bool ProvidesJointForceFeedback { get { return true; } }
         public override bool GenerateMotorAssist { get { return false; } }
 
+        public override string LibraryVersionPrefix
+        {
+            get { return ""; }
+        }
+
         public RoboticsPhysicsEngine(AnimatGUI.Framework.DataObject doParent)
             : base(doParent)
         {

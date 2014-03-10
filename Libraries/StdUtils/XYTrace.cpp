@@ -21,7 +21,12 @@ class XYTraceHelper
 	std::string m_strFilename;
 	HANDLE	m_hFile;
 	int m_nLevel;
-	long m_nThreadId;
+#ifdef _WIN64
+	    long long m_nThreadId;
+#else
+	    long m_nThreadId;
+#endif
+
 	std::string m_strTraceFilePrefix;
 	SYSTEMTIME m_timeStart;
 
@@ -81,7 +86,13 @@ class XYTraceHelper
 	// functions
 	void Lock()
 	{
-		long nThreadId = ::GetCurrentThreadId();
+#ifdef _WIN64
+	    long long nThreadId;
+#else
+	    long nThreadId;
+#endif
+
+		nThreadId = ::GetCurrentThreadId();
 		while(m_nThreadId!=nThreadId)
 		{
 			// keep trying until successfully completed the operation

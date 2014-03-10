@@ -54,7 +54,7 @@
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_single.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D_single.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_single.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin",
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin\\$(TargetName)$(TargetExt)" }
 
@@ -107,7 +107,7 @@
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_double.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D_double.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_double.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin",
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin\\$(TargetName)$(TargetExt)" }								
 
@@ -160,7 +160,7 @@
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_single_x64.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D_single_x64.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_single_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64",
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin_x64\\$(TargetName)$(TargetExt)" }								
 								
@@ -214,7 +214,7 @@
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_double_x64.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10D_double_x64.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10D_double_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64",
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin_x64\\$(TargetName)$(TargetExt)" }								
 
@@ -268,7 +268,7 @@
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_single.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10_single.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_single.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin", 
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin\\$(TargetName)$(TargetExt)" }
 								
@@ -321,7 +321,7 @@
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_double.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10_double.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_double.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin", 
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin\\$(TargetName)$(TargetExt)" }
 
@@ -374,7 +374,7 @@
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_single_x64.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10_single_x64.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_single_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64", 
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin_x64\\$(TargetName)$(TargetExt)" }
 								
@@ -427,7 +427,7 @@
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }
-			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_double_x64.lib", 
+			postbuildcommands { "Copy $(OutDir)BulletAnimatSim_vc10_double_x64.lib ..\\..\\..\\lib\\BulletAnimatSim_vc10_double_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64", 
 								"Copy $(TargetPATH) ..\\..\\..\\unit_test_bin_x64\\$(TargetName)$(TargetExt)" }
 

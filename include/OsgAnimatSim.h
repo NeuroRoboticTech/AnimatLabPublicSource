@@ -1,11 +1,19 @@
 #ifndef __OSG_ANIMAT_LIB_DLL_H__
 #define __OSG_ANIMAT_LIB_DLL_H__
 
-#ifdef _DEBUG
-	#pragma comment(lib, "OsgAnimatSim_vc10D.lib")
+#ifndef _WIN64
+	#ifdef _DEBUG
+	    #pragma comment(lib, "OsgAnimatSim_vc10D.lib")
+    #else
+	    #pragma comment(lib, "OsgAnimatSim_vc10.lib")
+	#endif      // _DEBUG  
 #else
-	#pragma comment(lib, "OsgAnimatSim_vc10.lib")
-#endif
+	#ifdef _DEBUG
+	    #pragma comment(lib, "OsgAnimatSim_vc10D_x64.lib")
+    #else
+	    #pragma comment(lib, "OsgAnimatSim_vc10_x64.lib")
+	#endif      // _DEBUG  
+#endif          // _WIN64
 
 #ifdef WIN32
 	#define ANIMAT_OSG_PORT __declspec( dllimport )

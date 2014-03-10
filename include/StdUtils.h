@@ -2,11 +2,19 @@
 #define __STD_UTILS_DLL_H__
 
 #ifndef _STD_UTILS_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "StdUtils_vc10D.lib")
-	#else
-		#pragma comment(lib, "StdUtils_vc10.lib")
-	#endif          
+    #ifndef _WIN64
+        #ifdef _DEBUG
+		    #pragma comment(lib, "StdUtils_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "StdUtils_vc10.lib")
+	    #endif      // _DEBUG      
+    #else
+        #ifdef _DEBUG
+		    #pragma comment(lib, "StdUtils_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "StdUtils_vc10_x64.lib")
+	    #endif      // _DEBUG      
+    #endif          // _WIN64
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 
 #define _SCL_SECURE_NO_WARNINGS
