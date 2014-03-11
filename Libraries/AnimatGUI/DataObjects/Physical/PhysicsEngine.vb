@@ -17,8 +17,7 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_aryConstraintRelaxations As New Hashtable
-        Protected m_aryLibraryVersions As New ArrayList
-        Protected m_strLibraryVersion As String = "Double"
+        Protected m_dtLibraryVersion As New TypeHelpers.DataTypeID(Me)
 
 #End Region
 
@@ -33,29 +32,24 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
 
-        Public Overridable ReadOnly Property AvailableLibraryVersions As ArrayList
+        Public Overridable ReadOnly Property AvailableLibraryVersions As Collections.DataTypes
             Get
-                Return m_aryLibraryVersions
+                Return m_dtLibraryVersion.DataTypes
             End Get
         End Property
 
-        Public Overridable Property LibraryVersion As String
+        Public Overridable Property LibraryVersion As AnimatGUI.TypeHelpers.DataTypeID
             Get
-                Return m_strLibraryVersion
+                Return m_dtLibraryVersion
             End Get
-            Set(value As String)
-                Dim bFound As Boolean = False
-                For Each strVal As String In m_aryLibraryVersions
-                    If strVal.ToUpper() = value.ToUpper() Then
-                        bFound = True
-                    End If
-                Next
-
-                If Not bFound Then
-                    Throw New System.Exception("Invalid library version specified: " & value)
+            Set(value As AnimatGUI.TypeHelpers.DataTypeID)
+                If Util.ShowMessage("This will cause the simulation to be saved and re-opened. Do you want to proceed?", "Re-open simulation", MessageBoxButtons.YesNo) = DialogResult.No Then
+                    Return
                 End If
 
-                m_strLibraryVersion = value
+                m_dtLibraryVersion = value
+
+                ReloadEngine()
             End Set
         End Property
 
@@ -86,6 +80,29 @@ Namespace DataObjects.Physical
         Protected Overridable Function CreateEmptyJointRelaxation(ByVal eCoordinate As ConstraintRelaxation.enumCoordinateID, ByVal doParent As Framework.DataObject) As ConstraintRelaxation
             Return Nothing
         End Function
+
+        Public Overridable Sub SetLibraryVersion(ByVal strVersion As String, ByVal bLoading As Boolean)
+
+            If Not bLoading AndAlso Util.ShowMessage("This will cause the simulation to be saved and re-opened. Do you want to proceed?", "Re-open simulation", MessageBoxButtons.YesNo) = DialogResult.No Then
+                Return
+            End If
+
+            Dim strCompare As String = strVersion.ToUpper()
+            For Each deEntry As DictionaryEntry In m_dtLibraryVersion.DataTypes
+                If deEntry.Key.ToString.ToUpper = strCompare Then
+                    m_dtLibraryVersion.ID = deEntry.Key.ToString()
+                    If Not bLoading Then
+                        ReloadEngine()
+                    End If
+                    Return
+                End If
+            Next
+
+        End Sub
+
+        Protected Overridable Sub ReloadEngine()
+            Util.Application.ReloadSimulation(True)
+        End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 

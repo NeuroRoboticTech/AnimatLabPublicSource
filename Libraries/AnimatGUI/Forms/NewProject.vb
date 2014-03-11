@@ -50,6 +50,10 @@ Namespace Forms
         Friend WithEvents txtLocation As System.Windows.Forms.TextBox
         Friend WithEvents cboPhysicsEngine As System.Windows.Forms.ComboBox
         Friend WithEvents Label1 As System.Windows.Forms.Label
+        Friend WithEvents lblMassUnits As System.Windows.Forms.Label
+        Friend WithEvents cboMassUnits As System.Windows.Forms.ComboBox
+        Friend WithEvents lblDistanceUnits As System.Windows.Forms.Label
+        Friend WithEvents cboDistanceUnits As System.Windows.Forms.ComboBox
         Friend WithEvents btnBrowseLocation As System.Windows.Forms.Button
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
             Me.lblProjectName = New System.Windows.Forms.Label()
@@ -61,6 +65,10 @@ Namespace Forms
             Me.btnOk = New System.Windows.Forms.Button()
             Me.cboPhysicsEngine = New System.Windows.Forms.ComboBox()
             Me.Label1 = New System.Windows.Forms.Label()
+            Me.lblMassUnits = New System.Windows.Forms.Label()
+            Me.cboMassUnits = New System.Windows.Forms.ComboBox()
+            Me.lblDistanceUnits = New System.Windows.Forms.Label()
+            Me.cboDistanceUnits = New System.Windows.Forms.ComboBox()
             Me.SuspendLayout()
             '
             'lblProjectName
@@ -108,7 +116,7 @@ Namespace Forms
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(160, 154)
+            Me.btnCancel.Location = New System.Drawing.Point(160, 249)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 13
@@ -117,7 +125,7 @@ Namespace Forms
             'btnOk
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.btnOk.Location = New System.Drawing.Point(88, 154)
+            Me.btnOk.Location = New System.Drawing.Point(88, 249)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 12
@@ -141,10 +149,50 @@ Namespace Forms
             Me.Label1.Text = "Physics Engine"
             Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
+            'lblMassUnits
+            '
+            Me.lblMassUnits.Location = New System.Drawing.Point(8, 148)
+            Me.lblMassUnits.Name = "lblMassUnits"
+            Me.lblMassUnits.Size = New System.Drawing.Size(280, 16)
+            Me.lblMassUnits.TabIndex = 17
+            Me.lblMassUnits.Text = "Mass Units"
+            Me.lblMassUnits.TextAlign = System.Drawing.ContentAlignment.TopCenter
+            '
+            'cboMassUnits
+            '
+            Me.cboMassUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboMassUnits.FormattingEnabled = True
+            Me.cboMassUnits.Location = New System.Drawing.Point(8, 165)
+            Me.cboMassUnits.Name = "cboMassUnits"
+            Me.cboMassUnits.Size = New System.Drawing.Size(288, 21)
+            Me.cboMassUnits.TabIndex = 16
+            '
+            'lblDistanceUnits
+            '
+            Me.lblDistanceUnits.Location = New System.Drawing.Point(8, 197)
+            Me.lblDistanceUnits.Name = "lblDistanceUnits"
+            Me.lblDistanceUnits.Size = New System.Drawing.Size(280, 16)
+            Me.lblDistanceUnits.TabIndex = 19
+            Me.lblDistanceUnits.Text = "Distance Units"
+            Me.lblDistanceUnits.TextAlign = System.Drawing.ContentAlignment.TopCenter
+            '
+            'cboDistanceUnits
+            '
+            Me.cboDistanceUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboDistanceUnits.FormattingEnabled = True
+            Me.cboDistanceUnits.Location = New System.Drawing.Point(8, 214)
+            Me.cboDistanceUnits.Name = "cboDistanceUnits"
+            Me.cboDistanceUnits.Size = New System.Drawing.Size(288, 21)
+            Me.cboDistanceUnits.TabIndex = 18
+            '
             'NewProject
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(312, 186)
+            Me.ClientSize = New System.Drawing.Size(312, 281)
+            Me.Controls.Add(Me.lblDistanceUnits)
+            Me.Controls.Add(Me.cboDistanceUnits)
+            Me.Controls.Add(Me.lblMassUnits)
+            Me.Controls.Add(Me.cboMassUnits)
             Me.Controls.Add(Me.Label1)
             Me.Controls.Add(Me.cboPhysicsEngine)
             Me.Controls.Add(Me.btnCancel)
@@ -169,6 +217,9 @@ Namespace Forms
 
         Protected m_bAllowUserToChoosePhysicsSystem As Boolean = True
 
+        Protected m_eMassUnits As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits = Physical.Environment.enumMassUnits.Kilograms
+        Protected m_eDistanceUnits As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits = Physical.Environment.enumDistanceUnits.Meters
+
 #End Region
 
 #Region " Properties "
@@ -179,6 +230,24 @@ Namespace Forms
             End Get
             Set(ByVal value As Boolean)
                 m_bAllowUserToChoosePhysicsSystem = value
+            End Set
+        End Property
+
+        Public Property MassUnits() As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits
+            Get
+                Return m_eMassUnits
+            End Get
+            Set(ByVal value As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits)
+                m_eMassUnits = value
+            End Set
+        End Property
+
+        Public Property DistanceUnits() As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits
+            Get
+                Return m_eDistanceUnits
+            End Get
+            Set(ByVal value As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits)
+                m_eDistanceUnits = value
             End Set
         End Property
 
@@ -194,6 +263,34 @@ Namespace Forms
             For Each doEngine As DataObjects.Physical.PhysicsEngine In cboPhysicsEngine.Items
                 If doEngine.Name = strPhysics Then
                     cboPhysicsEngine.SelectedIndex = iIdx
+                    Return
+                End If
+
+                iIdx = iIdx + 1
+            Next
+
+        End Sub
+
+        Public Sub SetMassUnit(ByVal strMass As String)
+
+            Dim iIdx As Integer = 0
+            For Each doUnit As DataObjects.Physical.PhysicsEngine In cboMassUnits.Items
+                If doUnit.Name = strMass Then
+                    cboMassUnits.SelectedIndex = iIdx
+                    Return
+                End If
+
+                iIdx = iIdx + 1
+            Next
+
+        End Sub
+
+        Public Sub SetDistanceUnit(ByVal strDistance As String)
+
+            Dim iIdx As Integer = 0
+            For Each doUnit As DataObjects.Physical.PhysicsEngine In cboDistanceUnits.Items
+                If doUnit.Name = strDistance Then
+                    cboDistanceUnits.SelectedIndex = iIdx
                     Return
                 End If
 
@@ -224,6 +321,9 @@ Namespace Forms
                 If System.IO.Directory.Exists(strProjectDir) Then
                     Throw New System.Exception("The directory '" & strProjectDir & "' already exists. Please choose a different name or location for the project.")
                 End If
+
+                m_eMassUnits = DirectCast([Enum].Parse(GetType(AnimatGUI.DataObjects.Physical.Environment.enumMassUnits), cboMassUnits.SelectedItem.ToString(), True), AnimatGUI.DataObjects.Physical.Environment.enumMassUnits)
+                m_eDistanceUnits = DirectCast([Enum].Parse(GetType(AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits), cboDistanceUnits.SelectedItem.ToString(), True), AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits)
 
                 Me.DialogResult = DialogResult.OK
                 Me.Close()
@@ -308,12 +408,36 @@ Namespace Forms
                         End If
                     Next
 
+                    Dim aryUnits As Array
+                    aryUnits = System.Enum.GetNames(GetType(AnimatGUI.DataObjects.Physical.Environment.enumMassUnits))
+                    For Each strUnit As String In aryUnits
+                        cboMassUnits.Items.Add(strUnit)
+                    Next
+                    cboMassUnits.SelectedItem = "Kilograms"
+
+                    aryUnits = System.Enum.GetNames(GetType(AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits))
+                    For Each strUnit As String In aryUnits
+                        cboDistanceUnits.Items.Add(strUnit)
+                    Next
+                    cboDistanceUnits.SelectedItem = "Meters"
+
+
                     cboPhysicsEngine.Enabled = True
                     cboPhysicsEngine.SelectedIndex = iSelIdx
+                    cboDistanceUnits.Enabled = True
+                    cboMassUnits.Enabled = True
                 Else
                     cboPhysicsEngine.Enabled = False
                     cboPhysicsEngine.Items.Add(Util.Application.Physics)
                     cboPhysicsEngine.SelectedIndex = 0
+
+                    cboDistanceUnits.Items.Add(Util.Environment.DistanceUnits.ToString())
+                    cboDistanceUnits.SelectedIndex = 0
+                    cboMassUnits.Items.Add(Util.Environment.MassUnits.ToString())
+                    cboMassUnits.SelectedIndex = 0
+
+                    cboDistanceUnits.Enabled = False
+                    cboMassUnits.Enabled = False
                 End If
 
             Catch ex As System.Exception

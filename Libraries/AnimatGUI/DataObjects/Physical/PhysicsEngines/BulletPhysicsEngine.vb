@@ -79,7 +79,7 @@ Namespace DataObjects.Physical.PhysicsEngines
 
         Public Overrides ReadOnly Property LibraryVersionPrefix() As String
             Get
-                If m_strLibraryVersion.ToUpper() = "DOUBLE" Then
+                If m_dtLibraryVersion.ID.ToUpper() = "DOUBLE" Then
                     Return "_double"
                 Else
                     Return "_single"
@@ -115,8 +115,8 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_aryConstraintRelaxations.Add("RPRO_AngularY", True)
             m_aryConstraintRelaxations.Add("RPRO_AngularZ", True)
 
-            m_aryLibraryVersions.Add("Single")
-            m_aryLibraryVersions.Add("Double")
+            m_dtLibraryVersion.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Single", "Single Precision", "", "", -1, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_dtLibraryVersion.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Double", "Double Precision", "", "", -1, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
 
         End Sub
 

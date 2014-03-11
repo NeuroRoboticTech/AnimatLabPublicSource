@@ -25,6 +25,7 @@ namespace RoboticsGUI
         public RoboticsPhysicsEngine(AnimatGUI.Framework.DataObject doParent)
             : base(doParent)
         {
+            m_dtLibraryVersion.DataTypes.Add(new AnimatGUI.DataObjects.DataType("Double", "Double Precision", "", "", -1, 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None));
         }
 
         public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

@@ -49,6 +49,9 @@ Namespace DataObjects
                 End If
                 strPhysics = "Vortex"
 
+                m_xnProjectXml.RemoveNode(xnProject, "LibraryVersion", False)
+                m_xnProjectXml.AddNodeValue(xnProject, "LibraryVersion", "Double")
+
                 CreateSimulationNode(xnProject)
 
             End Sub

@@ -510,6 +510,14 @@ namespace AnimatGuiCtrls.Controls
 			this(name, type.AssemblyQualifiedName, strPropertyName, category, description, defaultValue,
 			editor.AssemblyQualifiedName, typeConverter.AssemblyQualifiedName) { }
 
+        public PropertySpec(string name, Type type, string strPropertyName, string category, string description, object defaultValue,
+            Type editor, Type typeConverter, bool bReadOnly) :
+            this(name, type.AssemblyQualifiedName, strPropertyName, category, description, defaultValue,
+            editor.AssemblyQualifiedName, typeConverter.AssemblyQualifiedName) 
+        {
+            this.m_bReadOnly = bReadOnly;
+        }
+
 		/// <summary>
 		/// Initializes a new instance of the PropertySpec class.
 		/// </summary>

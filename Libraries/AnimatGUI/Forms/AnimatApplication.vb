@@ -2213,7 +2213,6 @@ Namespace Forms
                 'Now inform any interested part that the units have changed
                 RaiseEvent UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDist, eNewDistance, fltDistanceChange)
 
-                'TODO: Need to refactor this so we do not have to save and reload entire project.
                 SaveProject(Me.ProjectPath & Me.ProjectFile)
                 LoadProject(Me.ProjectPath & Me.ProjectFile)
 
@@ -2708,11 +2707,12 @@ Namespace Forms
 
         End Function
 
-        Protected Overridable Function CreatePhysicsEngine(ByVal strName As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.Physical.PhysicsEngine
+        Protected Overridable Function CreatePhysicsEngine(ByVal strName As String, ByVal strVersion As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.Physical.PhysicsEngine
 
             For Each doEngine As DataObjects.Physical.PhysicsEngine In m_aryPhysicsEngines
                 If doEngine.Name.ToUpper = strName.ToUpper Then
                     Dim doRetEngine As DataObjects.Physical.PhysicsEngine = DirectCast(doEngine.Clone(Nothing, False, Nothing), DataObjects.Physical.PhysicsEngine)
+                    doRetEngine.SetLibraryVersion(strVersion, True)
                     Return doRetEngine
                 End If
             Next
@@ -3686,7 +3686,8 @@ Namespace Forms
                 End If
 
                 Dim doOldEngine As DataObjects.Physical.PhysicsEngine = m_doPhysics
-                m_doPhysics = CreatePhysicsEngine(oXml.GetChildString("Physics", "Vortex"))
+                Dim strVersion As String = oXml.GetChildString("LibraryVersion", "Double")
+                m_doPhysics = CreatePhysicsEngine(oXml.GetChildString("Physics", "Vortex"), strVersion)
 
                 'If the physics engine has changed then recreate the list of plugin modules with the new physics engine.
                 If Not doOldEngine Is m_doPhysics Then
@@ -3845,6 +3846,7 @@ Namespace Forms
                 oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
                 oXml.AddChildElement("Version", Me.XmlVersion)
                 oXml.AddChildElement("Physics", Me.Physics.Name)
+                oXml.AddChildElement("LibraryVersion", Me.Physics.LibraryVersion.ID)
 
                 m_doSimulation.SaveData(oXml)
 
@@ -5476,6 +5478,48 @@ Namespace Forms
             Return oMethod.Invoke(oObj, aryParams)
 
         End Function
+
+        Public Sub ReloadSimulation(ByVal bIndirect As Boolean)
+
+            Try
+                If bIndirect Then
+                    m_timerAutomation = New System.Timers.Timer(10)
+                    AddHandler m_timerAutomation.Elapsed, AddressOf Me.ReloadSimulationTimer
+                    m_timerAutomation.Enabled = True
+                Else
+                    SaveProject(Me.ProjectPath & Me.ProjectFile)
+                    LoadProject(Me.ProjectPath & Me.ProjectFile)
+                End If
+
+            Catch ex As Exception
+                Throw ex
+            End Try
+        End Sub
+
+        Private Delegate Sub ReloadSimulationDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub ReloadSimulationTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New ReloadSimulationDelegate(AddressOf ReloadSimulationTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf ReloadSimulationTimer
+                m_timerAutomation = Nothing
+
+                SaveProject(Me.ProjectPath & Me.ProjectFile)
+                LoadProject(Me.ProjectPath & Me.ProjectFile)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
 #End Region
 
 #Region "Toolstrip Handlers "
@@ -5756,6 +5800,9 @@ Namespace Forms
                     System.IO.Directory.CreateDirectory(Util.Application.ProjectPath)
 
                     ResetProject(True)
+
+                    Util.Environment.MassUnits = frmNewProject.MassUnits
+                    Util.Environment.DistanceUnits = frmNewProject.DistanceUnits
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "About to call SaveProject")
 

@@ -147,7 +147,7 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_aryConstraintRelaxations.Add("Universal_AngularY", False)
             m_aryConstraintRelaxations.Add("Universal_AngularZ", False)
 
-            m_aryLibraryVersions.Add("Double")
+            m_dtLibraryVersion.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Double", "Double Precision", "", "", -1, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
 
         End Sub
 

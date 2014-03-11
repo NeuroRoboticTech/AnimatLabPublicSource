@@ -98,7 +98,7 @@ Namespace DataObjects
 
         Public ReadOnly Property AnimatModule() As String
             Get
-                Return Util.Application.Physics.Name & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return Util.Application.Physics.Name & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & ".dll"
             End Get
         End Property
 
@@ -214,6 +214,15 @@ Namespace DataObjects
             Get
                 Return Util.Application.Physics.Name
             End Get
+        End Property
+
+        Public Overridable Property SimPhysicsLibraryVersion() As TypeHelpers.DataTypeID
+            Get
+                Return Util.Application.Physics.LibraryVersion
+            End Get
+            Set(value As TypeHelpers.DataTypeID)
+                Util.Application.Physics.LibraryVersion = value
+            End Set
         End Property
 
         Public Overridable Property SetSimulationEnd() As Boolean
@@ -818,6 +827,15 @@ Namespace DataObjects
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics", SimPhysicsSystem.GetType(), "SimPhysicsSystem", _
                                         "Settings", "The physics system for this simulation.", SimPhysicsSystem, True))
+
+            Dim bLibVersionsReadonly As Boolean = True
+            If Util.Application.Physics.AvailableLibraryVersions.Count > 1 Then bLibVersionsReadonly = False
+            Dim aryTypes As Collections.DataTypes = Util.Application.Physics.AvailableLibraryVersions
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Library Version", GetType(AnimatGUI.TypeHelpers.DataTypeID), "SimPhysicsLibraryVersion", _
+                                        "Settings", "Sets the version of the library to use for the physics simulation.", aryTypes, _
+                                        GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                        GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter), bLibVersionsReadonly))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("API File", m_strAPI_File.GetType(), "APIFile", _
                                         "Settings", "APIFile", m_strAPI_File))
