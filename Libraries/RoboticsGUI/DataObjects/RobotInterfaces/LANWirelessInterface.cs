@@ -27,11 +27,6 @@ namespace RoboticsGUI
                 }
             }
 
-            public override AnimatGUI.DataObjects.Physical.PhysicsEngine Physics
-            {
-                get { return new RoboticsGUI.RoboticsPhysicsEngine(null); }
-            }
-
             public override string PartType
             {
                 get { return "LANWirelessInterface"; }
@@ -41,6 +36,9 @@ namespace RoboticsGUI
                 : base(doParent)
             {
                 m_strName = "LANWirelessInterface";
+
+                m_doPhysics = new RoboticsGUI.RoboticsPhysicsEngine(this);
+                m_doPhysics.SetLibraryVersion("Double", true);
             }
 
             public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

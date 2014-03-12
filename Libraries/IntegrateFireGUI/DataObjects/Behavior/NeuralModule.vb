@@ -234,7 +234,7 @@ Namespace DataObjects.Behavior
         <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-                Return "IntegrateFireSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return "IntegrateFireSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & ".dll"
             End Get
         End Property
 

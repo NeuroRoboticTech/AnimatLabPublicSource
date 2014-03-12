@@ -19,6 +19,7 @@ Namespace DataObjects
 
             Protected m_doOrganism As Physical.Organism
             Protected m_snPhysicsTimeStep As AnimatGUI.Framework.ScaledNumber
+            Protected m_doPhysics As Physical.PhysicsEngine
 
 #End Region
 
@@ -48,7 +49,11 @@ Namespace DataObjects
                 End Get
             End Property
 
-            Public MustOverride ReadOnly Property Physics As Physical.PhysicsEngine
+            Public Overridable ReadOnly Property Physics As Physical.PhysicsEngine
+                Get
+                    Return m_doPhysics
+                End Get
+            End Property
 
             Public MustOverride ReadOnly Property PartType() As String
 
@@ -79,8 +84,15 @@ Namespace DataObjects
             End Sub
 
             Public Overridable Sub GenerateStandaloneSimFile()
-                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(True, True, True, False, Me)
-                oXml.Save(Util.Application.ProjectPath & "\" & Util.Application.ProjectName & "_" & m_doOrganism.Name.Replace(" ", "_") & ".asim")
+
+                Dim frmExport As New Forms.ExportStandaloneSim()
+                frmExport.Physics = Me.Physics
+                If frmExport.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                    Return
+                End If
+
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(True, True, True, False, frmExport.Physics, Me)
+                oXml.Save(Util.Application.ProjectPath & "\" & frmExport.txtProjectName.Text)
 
                 Util.ShowMessage("Robot simulation file for " & m_doOrganism.Name & " created successfully.", "Exported simulation file", MessageBoxButtons.OK)
             End Sub

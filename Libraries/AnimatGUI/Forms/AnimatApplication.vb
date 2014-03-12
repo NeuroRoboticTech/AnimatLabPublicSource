@@ -3355,7 +3355,8 @@ Namespace Forms
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean, ByVal doRobotInterface As DataObjects.Robotics.RobotInterface) As ManagedAnimatInterfaces.IStdXml
+        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean, _
+                                                   ByVal doPhysics As DataObjects.Physical.PhysicsEngine, ByVal doRobotInterface As DataObjects.Robotics.RobotInterface) As ManagedAnimatInterfaces.IStdXml
             Dim doOrigPhysics As DataObjects.Physical.PhysicsEngine = m_doPhysics
 
             Try
@@ -3368,9 +3369,10 @@ Namespace Forms
                 Util.ExportStimsInStandAloneSim = bIncludeStims
                 Util.ExportWindowsToFile = bIncludeWindows
                 Util.ExportRobotInterface = doRobotInterface
+                Util.ExportPhysicsEngine = doPhysics
 
-                If Not Util.ExportRobotInterface Is Nothing Then
-                    m_doPhysics = Util.ExportRobotInterface.Physics
+                If Not Util.ExportPhysicsEngine Is Nothing Then
+                    m_doPhysics = Util.ExportPhysicsEngine
                 End If
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
@@ -3521,20 +3523,22 @@ Namespace Forms
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
+                Dim frmExport As New ExportStandaloneSim()
+                frmExport.Physics = Util.Application.Physics
+                If frmExport.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                    Return
+                End If
+
                 Me.AppIsBusy = True
 
                 Me.ClearIsDirty()
 
-                Dim strFilename As String = Me.ProjectName & "_Standalone.asim"
+                Dim strFilename As String = frmExport.txtProjectName.Text
 
                 Util.DisableDirtyFlags = True
-                Util.ExportForStandAloneSim = True
-                Util.ExportChartsInStandAloneSim = True
-                Util.ExportStimsInStandAloneSim = True
-                Util.ExportChartsToFile = True
-                Util.ExportWindowsToFile = True
 
-                Util.Simulation.SaveSimulationXml(strFilename)
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = SaveStandAlone(True, True, True, True, frmExport.Physics, Nothing)
+                oXml.Save(Util.Application.ProjectPath & "\" & strFilename)
 
                 Util.DisableDirtyFlags = False
 
@@ -5966,7 +5970,7 @@ Namespace Forms
         End Function
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
-            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False, Nothing)
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False, Nothing, Nothing)
             strXml = oXml.Serialize()
         End Sub
 

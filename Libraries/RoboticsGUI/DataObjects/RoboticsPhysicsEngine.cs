@@ -26,6 +26,9 @@ namespace RoboticsGUI
             : base(doParent)
         {
             m_dtLibraryVersion.DataTypes.Add(new AnimatGUI.DataObjects.DataType("Double", "Double Precision", "", "", -1, 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None));
+
+            m_aryAvailableBinarModes.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumBinaryMode.x32);
+            m_aryAvailableBinarModes.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumBinaryMode.x64);
         }
 
         public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

@@ -67,6 +67,7 @@ Namespace Framework
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
         Protected Shared m_bExportWindowsToFile As Boolean = False 'Determines if windows are saved to a file or kept in memory for sim.
         Protected Shared m_doExportRobotInterface As DataObjects.Robotics.RobotInterface
+        Protected Shared m_doExportPhysicsEngine As DataObjects.Physical.PhysicsEngine
         Protected Shared m_strVersionNumber As String = "2.1.0"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
@@ -252,6 +253,14 @@ Namespace Framework
             End Set
         End Property
 
+        Public Shared Property ExportPhysicsEngine As AnimatGUI.DataObjects.Physical.PhysicsEngine
+            Get
+                Return m_doExportPhysicsEngine
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Physical.PhysicsEngine)
+                m_doExportPhysicsEngine = Value
+            End Set
+        End Property
 
         Public Shared ReadOnly Property Errors() As ArrayList
             Get

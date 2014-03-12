@@ -14,10 +14,21 @@ Namespace DataObjects.Physical
     Public MustInherit Class PhysicsEngine
         Inherits Framework.DataObject
 
+#Region " Enums "
+
+        Public Enum enumBinaryMode
+            x32
+            x64
+        End Enum
+
+#End Region
+
 #Region " Attributes "
 
         Protected m_aryConstraintRelaxations As New Hashtable
         Protected m_dtLibraryVersion As New TypeHelpers.DataTypeID(Me)
+        Protected m_eBinaryMode As enumBinaryMode = enumBinaryMode.x32
+        Protected m_aryAvailableBinarModes As New ArrayList
 
 #End Region
 
@@ -54,6 +65,31 @@ Namespace DataObjects.Physical
         End Property
 
         Public MustOverride ReadOnly Property LibraryVersionPrefix() As String
+
+        Public Overridable Property BinaryMode() As enumBinaryMode
+            Get
+                Return m_eBinaryMode
+            End Get
+            Set(value As enumBinaryMode)
+                m_eBinaryMode = value
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property BinaryModPrefix() As String
+            Get
+                If m_eBinaryMode = enumBinaryMode.x64 Then
+                    Return "_x64"
+                Else
+                    Return ""
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property AvailableBinaryModeTypes() As ArrayList
+            Get
+                Return m_aryAvailableBinarModes
+            End Get
+        End Property
 
 #End Region
 
