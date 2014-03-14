@@ -5,75 +5,26 @@
 			<Configuration>Debug</Configuration>
 			<Platform>Win32</Platform>
 		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug|x64">
-			<Configuration>Debug</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_double|Win32">
-			<Configuration>Debug_double</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_double|x64">
-			<Configuration>Debug_double</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_x64|Win32">
-			<Configuration>Debug_x64</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_x64|x64">
-			<Configuration>Debug_x64</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
 		<ProjectConfiguration Include="Release|Win32">
 			<Configuration>Release</Configuration>
 			<Platform>Win32</Platform>
 		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|x64">
-			<Configuration>Release</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release_double|Win32">
-			<Configuration>Release_double</Configuration>
+		<ProjectConfiguration Include="Debug_Double|Win32">
+			<Configuration>Debug_Double</Configuration>
 			<Platform>Win32</Platform>
 		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release_double|x64">
-			<Configuration>Release_double</Configuration>
-			<Platform>x64</Platform>
+		<ProjectConfiguration Include="Release_Double|Win32">
+			<Configuration>Release_Double</Configuration>
+			<Platform>Win32</Platform>
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{CCB1B34D-1A0C-8241-B3F8-A525ED4039E0}</ProjectGuid>
+		<ProjectGuid>{0D57985D-F6C3-5447-9AEB-AC73485B0B63}</ProjectGuid>
 		<RootNamespace>BulletAnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="Configuration">
 		<ConfigurationType>DynamicLibrary</ConfigurationType>
 		<CharacterSet>MultiByte</CharacterSet>
 		<UseDebugLibraries>true</UseDebugLibraries>
@@ -84,19 +35,12 @@
 		<WholeProgramOptimization>true</WholeProgramOptimization>
 		<UseDebugLibraries>false</UseDebugLibraries>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
 		<ConfigurationType>DynamicLibrary</ConfigurationType>
 		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
+		<UseDebugLibraries>true</UseDebugLibraries>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'" Label="Configuration">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
 		<ConfigurationType>DynamicLibrary</ConfigurationType>
 		<CharacterSet>MultiByte</CharacterSet>
 		<WholeProgramOptimization>true</WholeProgramOptimization>
@@ -108,31 +52,13 @@
 	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
 	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'" Label="PropertySheets">
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
 	<PropertyGroup Label="UserMacros" />
@@ -143,51 +69,21 @@
 		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BulletAnimatSim_vc10D_single</TargetName>
 		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
 		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">obj\x64\Debug\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BulletAnimatSim_vc10D_single</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">obj\x32\Debug_double\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">BulletAnimatSim_vc10D_double</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">obj\x64\Debug_double\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">BulletAnimatSim_vc10D_double</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">Debug_x64\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">obj\x32\Debug_x64\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">BulletAnimatSim_vc10D_single_x64</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">Debug_x64\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">obj\x64\Debug_x64\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">BulletAnimatSim_vc10D_single_x64</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">true</LinkIncremental>
 		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
 		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\BulletAnimatSim\</IntDir>
 		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">BulletAnimatSim_vc10_single</TargetName>
 		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
 		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">obj\x64\Release\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BulletAnimatSim_vc10_single</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">obj\x32\Release_double\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">BulletAnimatSim_vc10_double</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">false</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">obj\x64\Release_double\BulletAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">BulletAnimatSim_vc10_double</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">false</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Debug\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\BulletAnimatSim\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">BulletAnimatSim_vc10D_double</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Release\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\BulletAnimatSim\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">BulletAnimatSim_vc10_double</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
 	</PropertyGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
@@ -218,167 +114,7 @@
 			<TargetMachine>MachineX86</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_single.lib ..\..\..\lib\BulletAnimatSim_vc10D_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>OldStyle</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_single.lib;osgbCollisiond_single.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_single_debug.lib;BulletCollision_vs2010_single_debug.lib;LinearMath_vs2010_single_debug.lib;BulletSoftBody_vs2010_single_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_single.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_single.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\BulletAnimatSim_vc10D_single.lib</ImportLibrary>
-			<TargetMachine>MachineX64</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_single.lib ..\..\..\lib\BulletAnimatSim_vc10D_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_double.lib;osgbCollisiond_double.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_double_debug.lib;BulletCollision_vs2010_double_debug.lib;LinearMath_vs2010_double_debug.lib;BulletSoftBody_vs2010_double_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_double.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_double.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\BulletAnimatSim_vc10D_double.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_double.lib ..\..\..\lib\BulletAnimatSim_vc10D_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_double|x64'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>OldStyle</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_double.lib;osgbCollisiond_double.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_double_debug.lib;BulletCollision_vs2010_double_debug.lib;LinearMath_vs2010_double_debug.lib;BulletSoftBody_vs2010_double_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_double.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_double.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\BulletAnimatSim_vc10D_double.lib</ImportLibrary>
-			<TargetMachine>MachineX64</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_double.lib ..\..\..\lib\BulletAnimatSim_vc10D_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_single_x64.lib;osgbCollisiond_single_x64.lib;osgwControlsd_x64.lib;osgwQueryd_x64.lib;osgwToolsd_x64.lib;BulletDynamics_vs2010_single_x64_debug.lib;BulletCollision_vs2010_single_x64_debug.lib;LinearMath_vs2010_single_x64_debug.lib;BulletSoftBody_vs2010_single_x64_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_single_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_single_x64.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug_x64\BulletAnimatSim_vc10D_single_x64.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_single_x64.lib ..\..\..\lib\BulletAnimatSim_vc10D_single_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin_x64\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>OldStyle</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_single_x64.lib;osgbCollisiond_single_x64.lib;osgwControlsd_x64.lib;osgwQueryd_x64.lib;osgwToolsd_x64.lib;BulletDynamics_vs2010_single_x64_debug.lib;BulletCollision_vs2010_single_x64_debug.lib;LinearMath_vs2010_single_x64_debug.lib;BulletSoftBody_vs2010_single_x64_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_single_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_single_x64.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug_x64\BulletAnimatSim_vc10D_single_x64.lib</ImportLibrary>
-			<TargetMachine>MachineX64</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_single_x64.lib ..\..\..\lib\BulletAnimatSim_vc10D_single_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin_x64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_single.lib ..\..\..\lib\BulletAnimatSim_vc10D_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -411,43 +147,42 @@
 			<TargetMachine>MachineX86</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10_single.lib ..\..\..\lib\BulletAnimatSim_vc10_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(OutDir)BulletAnimatSim_vc10_single.lib ..\..\..\lib\BulletAnimatSim_vc10_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
 		<ClCompile>
-			<Optimization>Full</Optimization>
+			<Optimization>Disabled</Optimization>
 			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
 			<FunctionLevelLinking>true</FunctionLevelLinking>
 			<PrecompiledHeader></PrecompiledHeader>
 			<WarningLevel>Level3</WarningLevel>
 		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
+			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
 		</ClCompile>
 		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_single.lib;osgbCollision_single.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_single.lib;BulletCollision_vs2010_single.lib;LinearMath_vs2010_single.lib;BulletSoftBody_vs2010_single.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10_single.dll</OutputFile>
+			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_double.lib;osgbCollisiond_double.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_double_debug.lib;BulletCollision_vs2010_double_debug.lib;LinearMath_vs2010_double_debug.lib;BulletSoftBody_vs2010_double_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_double.dll</OutputFile>
 			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\BulletAnimatSim_vc10_single.lib</ImportLibrary>
-			<TargetMachine>MachineX64</TargetMachine>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_double.pdb</ProgramDataBaseFileName>
+			<ImportLibrary>Debug\BulletAnimatSim_vc10D_double.lib</ImportLibrary>
+			<TargetMachine>MachineX86</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10_single.lib ..\..\..\lib\BulletAnimatSim_vc10_single.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(OutDir)BulletAnimatSim_vc10D_double.lib ..\..\..\lib\BulletAnimatSim_vc10D_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|Win32'">
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
 			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -477,40 +212,7 @@
 			<TargetMachine>MachineX86</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10_double.lib ..\..\..\lib\BulletAnimatSim_vc10_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_double|x64'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_double.lib;osgbCollision_double.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_double.lib;BulletCollision_vs2010_double.lib;LinearMath_vs2010_double.lib;BulletSoftBody_vs2010_double.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)BulletAnimatSim_vc10_double.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\BulletAnimatSim_vc10_double.lib</ImportLibrary>
-			<TargetMachine>MachineX64</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)BulletAnimatSim_vc10_double.lib ..\..\..\lib\BulletAnimatSim_vc10_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin&#x0D;&#x0A;Copy $(TargetPATH) ..\..\..\unit_test_bin\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(OutDir)BulletAnimatSim_vc10_double.lib ..\..\..\lib\BulletAnimatSim_vc10_double.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemGroup>

@@ -1,39 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{51607993-24A7-C344-B611-B1F97D3BA1D2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{01D5B308-9AFF-B74E-9249-31DDF4F873CE}"
 EndProject
 Global
-	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
-		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug_x64|Win32 = Debug_x64|Win32
-		Debug_x64|x64 = Debug_x64|x64
 		Debug|Win32 = Debug|Win32
-		Debug|x64 = Debug|x64
-		Release_x64|Win32 = Release_x64|Win32
-		Release_x64|x64 = Release_x64|x64
 		Release|Win32 = Release|Win32
-		Release|x64 = Release|x64
+		Debug_Double|Win32 = Debug_Double|Win32
+		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug_x64|Win32.ActiveCfg = Debug_x64|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug_x64|Win32.Build.0 = Debug_x64|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug_x64|x64.Build.0 = Debug_x64|x64
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug|Win32.Build.0 = Debug|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug|x64.ActiveCfg = Debug|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Debug|x64.Build.0 = Debug|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release_x64|Win32.ActiveCfg = Release_x64|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release_x64|Win32.Build.0 = Release_x64|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release_x64|x64.ActiveCfg = Release_x64|x64
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release_x64|x64.Build.0 = Release_x64|x64
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release|Win32.ActiveCfg = Release|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release|Win32.Build.0 = Release|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release|x64.ActiveCfg = Release|Win32
-		{51607993-24A7-C344-B611-B1F97D3BA1D2}.Release|x64.Build.0 = Release|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Debug|Win32.Build.0 = Debug|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Release|Win32.ActiveCfg = Release|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Release|Win32.Build.0 = Release|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{01D5B308-9AFF-B74E-9249-31DDF4F873CE}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
