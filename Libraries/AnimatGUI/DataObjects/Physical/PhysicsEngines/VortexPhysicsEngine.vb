@@ -150,6 +150,7 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_dtLibraryVersion.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Double", "Double Precision", "", "", -1, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
 
             m_aryAvailableBinarModes.Add(enumBinaryMode.x32)
+            m_aryAvailableBinarModes.Add(enumBinaryMode.x64)
 
         End Sub
 

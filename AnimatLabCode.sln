@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatGUI", "Libraries\AnimatGUI\AnimatGUI.vbproj", "{45227561-EC56-46E0-9395-E1D86A7F3464}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4} = {E96A0548-C2E1-F74A-9301-2C673E5374D4}
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B} = {50854952-1CA4-D449-8E97-EC0D910E2C5B}
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA} = {A9EDFA2B-356B-E949-951A-C90AED75D8BA}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatGUICtrls", "Libraries\AnimatGUICtrls\AnimatGUICtrls.csproj", "{1EABD935-A166-4B06-A4CA-96D5D9D7CB86}"
@@ -12,12 +12,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagedAnimatTools", "Libraries\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcxproj", "{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4} = {E96A0548-C2E1-F74A-9301-2C673E5374D4}
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B} = {50854952-1CA4-D449-8E97-EC0D910E2C5B}
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA} = {A9EDFA2B-356B-E949-951A-C90AED75D8BA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "Libraries\AnimatSim\Projects_VisualStudio\AnimatSim.vcxproj", "{E96A0548-C2E1-F74A-9301-2C673E5374D4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\Projects_VisualStudio\StdUtils.vcxproj", "{50854952-1CA4-D449-8E97-EC0D910E2C5B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\Projects_VisualStudio\StdUtils.vcxproj", "{A9EDFA2B-356B-E949-951A-C90AED75D8BA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim", "Libraries\FiringRateSim\Projects_VisualStudio\FiringRateSim.vcxproj", "{B513D1A4-A053-6748-9D81-4262372C8099}"
 EndProject
@@ -34,7 +34,7 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ManagedAnimatInterfaces", "Libraries\ManagedAnimatInterfaces\ManagedAnimatInterfaces.vbproj", "{EBC9D7C3-EB4A-4515-9426-AD41E0BBEBFC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4} = {E96A0548-C2E1-F74A-9301-2C673E5374D4}
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B} = {50854952-1CA4-D449-8E97-EC0D910E2C5B}
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA} = {A9EDFA2B-356B-E949-951A-C90AED75D8BA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim", "Libraries\BulletAnimatSim\Projects_VisualStudio\BulletAnimatSim.vcxproj", "{0D57985D-F6C3-5447-9AEB-AC73485B0B63}"
@@ -167,31 +167,31 @@ Global
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4}.ReleaseUnoptimizedWithSymbols|Mixed Platforms.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
 		{E96A0548-C2E1-F74A-9301-2C673E5374D4}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug_Double|Any CPU.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug_Double|Mixed Platforms.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug_Double|Mixed Platforms.Build.0 = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug_Double|Win32.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug_Double|Win32.Build.0 = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Debug|Win32.Build.0 = Debug|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release_Double|Any CPU.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release_Double|Mixed Platforms.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release_Double|Mixed Platforms.Build.0 = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release_Double|Win32.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release_Double|Win32.Build.0 = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release|Any CPU.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release|Win32.ActiveCfg = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.Release|Win32.Build.0 = Release|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.ReleaseUnoptimizedWithSymbols|Any CPU.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.ReleaseUnoptimizedWithSymbols|Mixed Platforms.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.ReleaseUnoptimizedWithSymbols|Mixed Platforms.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
-		{50854952-1CA4-D449-8E97-EC0D910E2C5B}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug_Double|Any CPU.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug_Double|Mixed Platforms.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug_Double|Mixed Platforms.Build.0 = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug_Double|Win32.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug_Double|Win32.Build.0 = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Debug|Win32.Build.0 = Debug|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release_Double|Any CPU.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release_Double|Mixed Platforms.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release_Double|Mixed Platforms.Build.0 = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release_Double|Win32.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release_Double|Win32.Build.0 = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release|Win32.ActiveCfg = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.Release|Win32.Build.0 = Release|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.ReleaseUnoptimizedWithSymbols|Any CPU.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.ReleaseUnoptimizedWithSymbols|Mixed Platforms.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.ReleaseUnoptimizedWithSymbols|Mixed Platforms.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.ReleaseUnoptimizedWithSymbols|Win32.ActiveCfg = ReleaseUnoptimizedWithSymbols|Win32
+		{A9EDFA2B-356B-E949-951A-C90AED75D8BA}.ReleaseUnoptimizedWithSymbols|Win32.Build.0 = ReleaseUnoptimizedWithSymbols|Win32
 		{B513D1A4-A053-6748-9D81-4262372C8099}.Debug_Double|Any CPU.ActiveCfg = Debug|Win32
 		{B513D1A4-A053-6748-9D81-4262372C8099}.Debug_Double|Mixed Platforms.ActiveCfg = Debug|Win32
 		{B513D1A4-A053-6748-9D81-4262372C8099}.Debug_Double|Mixed Platforms.Build.0 = Debug|Win32
