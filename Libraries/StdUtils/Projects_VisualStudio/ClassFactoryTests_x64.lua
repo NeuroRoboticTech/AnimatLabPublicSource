@@ -14,12 +14,12 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug_x64")
 			targetname ("StdClassFactoryTester_x64")
-			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\binx64\\$(TargetName)$(TargetExt)" }
+			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\binx_64\\$(TargetName)$(TargetExt)" }
 	 
 		configuration { "Release_x64 or Release_Double_x64", "windows" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "STDCLASSFACTORYTESTER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release_x64")
 			targetname ("StdClassFactoryTester_x64")
-			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\binx64\\$(TargetName)$(TargetExt)" }
+			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\binx_64\\$(TargetName)$(TargetExt)" }
 	

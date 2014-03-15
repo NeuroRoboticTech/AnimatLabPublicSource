@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{5DC83667-67B9-004D-B647-6B58B77C2F13}</ProjectGuid>
+		<ProjectGuid>{2D3B4664-1036-4544-BA91-C899B9C38A79}</ProjectGuid>
 		<RootNamespace>StdClassFactoryTester_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -114,7 +114,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
@@ -147,7 +147,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
@@ -179,7 +179,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
@@ -212,7 +212,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemGroup>
