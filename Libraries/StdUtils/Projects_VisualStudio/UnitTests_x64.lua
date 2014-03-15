@@ -16,7 +16,7 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug_x64")
 			targetname ("StdUtils_UnitTests_x64")
-			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\binx_64\\$(TargetName)$(TargetExt)" }
+			postbuildcommands { "Copy $(TargetPATH) ..\\..\\..\\bin_x64\\$(TargetName)$(TargetExt)" }
 	 
 		configuration { "Release_x64 or Release_Double_x64", "windows" }
 			libdirs { "../../../lib", 

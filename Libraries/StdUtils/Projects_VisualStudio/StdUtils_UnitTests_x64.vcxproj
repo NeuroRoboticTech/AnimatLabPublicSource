@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{EDB8B910-2201-3146-BBA8-10E9B3493738}</ProjectGuid>
+		<ProjectGuid>{8B99527D-0B0C-2241-B7FE-B933D1B99BD4}</ProjectGuid>
 		<RootNamespace>StdUtils_UnitTests_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -110,7 +110,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\bin_x64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
@@ -175,7 +175,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(TargetPATH) ..\..\..\binx_64\$(TargetName)$(TargetExt)</Command>
+			<Command>Copy $(TargetPATH) ..\..\..\bin_x64\$(TargetName)$(TargetExt)</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
