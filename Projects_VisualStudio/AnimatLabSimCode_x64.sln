@@ -2,8 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimulator_x64", "..\Applications\AnimatSimulator\Projects_VisualStudio\AnimatSimulator_x64.vcxproj", "{0ADCAA9E-A599-D54D-8679-E77528BF19B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9} = {8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9}
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader_x64", "..\Libraries\BootstrapLoader\Projects_VisualStudio\BootstrapLoader_x64.vcxproj", "{8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils_x64", "..\Libraries\StdUtils\Projects_VisualStudio\StdUtils_x64.vcxproj", "{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}"
 EndProject
@@ -18,22 +26,62 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdClassFactoryTester_x64",
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim_x64", "..\Libraries\AnimatSim\Projects_VisualStudio\AnimatSim_x64.vcxproj", "{632E7CF1-67B2-BF4C-88EA-87A908E9F11B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim_x64", "..\Libraries\FiringRateSim\Projects_VisualStudio\FiringRateSim_x64.vcxproj", "{32556D1C-DBCF-5D42-B666-05B9FF8612FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim_x64", "..\Libraries\IntegrateFireSim\Projects_VisualStudio\IntegrateFireSim_x64.vcxproj", "{DA655621-9CA5-8A4D-9E8F-8A779E55A628}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim_x64", "..\Libraries\OsgAnimatSim\Projects_VisualStudio\OsgAnimatSim_x64.vcxproj", "{1FED24A8-1BF6-EE48-BEBD-1B0AC4C128AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim_x64", "..\Libraries\BulletAnimatSim\Projects_VisualStudio\BulletAnimatSim_x64.vcxproj", "{4C03EB20-8D81-C245-91D6-B72BCB737630}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0ADCAA9E-A599-D54D-8679-E77528BF19B7} = {0ADCAA9E-A599-D54D-8679-E77528BF19B7}
+		{1FED24A8-1BF6-EE48-BEBD-1B0AC4C128AB} = {1FED24A8-1BF6-EE48-BEBD-1B0AC4C128AB}
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet_UnitTests_x64", "..\Libraries\BulletAnimatSim\Projects_VisualStudio\Bullet_UnitTests_x64.vcxproj", "{339EF3F5-43CF-6C42-8126-3D1CA5ADD8A1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4C03EB20-8D81-C245-91D6-B72BCB737630} = {4C03EB20-8D81-C245-91D6-B72BCB737630}
+		{1FED24A8-1BF6-EE48-BEBD-1B0AC4C128AB} = {1FED24A8-1BF6-EE48-BEBD-1B0AC4C128AB}
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoboticsAnimatSim_x64", "..\Libraries\RoboticsAnimatSim\Projects_VisualStudio\RoboticsAnimatSim_x64.vcxproj", "{28EF663F-16D5-4C4C-A775-4BA54850BF55}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Robotics_UnitTests_x64", "..\Libraries\RoboticsAnimatSim\Projects_VisualStudio\Robotics_UnitTests_x64.vcxproj", "{CB178999-8E89-6B49-ACB9-B13D9D0AEFE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28EF663F-16D5-4C4C-A775-4BA54850BF55} = {28EF663F-16D5-4C4C-A775-4BA54850BF55}
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim_x64", "..\Libraries\VortexAnimatSim\Projects_VisualStudio\VortexAnimatSim_x64.vcxproj", "{E549B3A5-4218-444F-A666-0939B06D4099}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FE62AE0-6CF9-A44E-8A96-8A10EF45086F} = {3FE62AE0-6CF9-A44E-8A96-8A10EF45086F}
+		{632E7CF1-67B2-BF4C-88EA-87A908E9F11B} = {632E7CF1-67B2-BF4C-88EA-87A908E9F11B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
