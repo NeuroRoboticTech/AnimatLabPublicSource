@@ -107,8 +107,10 @@ Namespace DataObjects
                 Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnStructure, "Name", False)
                 Util.Application.AppStatusText = "Converting organism/structure " & strName & " body"
 
-                Dim xnRoot As XmlNode = m_xnProjectXml.GetNode(xnStructure, "RigidBody")
-                ModifyRigidBody(xnRoot)
+                Dim xnRoot As XmlNode = m_xnProjectXml.GetNode(xnStructure, "RigidBody", False)
+                If Not xnRoot Is Nothing Then
+                    ModifyRigidBody(xnRoot)
+                End If
 
             End Sub
 
