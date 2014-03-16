@@ -106,6 +106,14 @@ void OsgJoint::Physics_RotationChanged()
 	Physics_ResetGraphicsAndPhysics();
 }
 
+void OsgJoint::Physics_ResetGraphicsAndPhysics()
+{
+    OsgMovableItem::Physics_ResetGraphicsAndPhysics();
+
+    if(m_osgDragger.valid())
+        m_osgDragger->SetupMatrix();
+}
+
 void OsgJoint::DeleteGraphics()
 {
     DeleteJointGraphics();
@@ -313,7 +321,6 @@ void OsgJoint::Physics_UpdateMatrix()
 	CStdFPoint vRot = m_lpThisMI->Rotation();
 	LocalMatrix(SetupMatrix(vPos, vRot));
 	m_osgMT->setMatrix(m_osgLocalMatrix);
-	m_osgDragger->SetupMatrix();
 
     //If we are here then we did not have a physics component, just and OSG one.
 	Physics_UpdateAbsolutePosition();

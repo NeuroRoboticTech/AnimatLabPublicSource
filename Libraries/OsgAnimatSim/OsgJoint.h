@@ -86,6 +86,7 @@ namespace OsgAnimatSim
 			virtual void Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
 
 			//Methods not used by joints.
+			virtual void Physics_ResetGraphicsAndPhysics();
             virtual bool Physics_IsGeometryDefined() {return true;};
 			virtual void Physics_Resize();
 			virtual void Physics_ResetSimulation();
