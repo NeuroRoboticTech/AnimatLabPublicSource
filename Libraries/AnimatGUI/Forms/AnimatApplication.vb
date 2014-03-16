@@ -3537,7 +3537,7 @@ Namespace Forms
 
                 Util.DisableDirtyFlags = True
 
-                Dim oXml As ManagedAnimatInterfaces.IStdXml = SaveStandAlone(True, True, True, True, frmExport.Physics, Nothing)
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = SaveStandAlone(True, True, True, frmExport.chkShowGraphics.Checked, frmExport.Physics, Nothing)
                 oXml.Save(Util.Application.ProjectPath & "\" & strFilename)
 
                 Util.DisableDirtyFlags = False

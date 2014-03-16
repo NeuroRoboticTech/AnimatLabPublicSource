@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{F23A3ACA-8256-364F-A490-6E87FF97E232}</ProjectGuid>
+		<ProjectGuid>{E4F34F80-B322-4849-8A8A-57467564B0E0}</ProjectGuid>
 		<RootNamespace>StdUtils_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -145,7 +145,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)StdUtils_vc10_x64.lib ..\..\..\lib\StdUtils_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\binx64</Command>
+			<Command>Copy $(OutDir)StdUtils_vc10_x64.lib ..\..\..\lib\StdUtils_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
@@ -208,7 +208,7 @@
 			<TargetMachine>MachineX64</TargetMachine>
 		</Link>
 		<PostBuildEvent>
-			<Command>Copy $(OutDir)StdUtils_vc10_x64.lib ..\..\..\lib\StdUtils_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\binx64</Command>
+			<Command>Copy $(OutDir)StdUtils_vc10_x64.lib ..\..\..\lib\StdUtils_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemGroup>

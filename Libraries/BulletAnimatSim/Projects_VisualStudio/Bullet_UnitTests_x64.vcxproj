@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{339EF3F5-43CF-6C42-8126-3D1CA5ADD8A1}</ProjectGuid>
+		<ProjectGuid>{E2CDE1F5-D1E6-D046-82D2-D11CD3C25F51}</ProjectGuid>
 		<RootNamespace>Bullet_UnitTests_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -129,7 +129,7 @@
 			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_single_x64.lib;osgbCollision_single_x64.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_x64_single.lib;BulletCollision_vs2010_x64_single.lib;LinearMath_vs2010_x64_single.lib;BulletSoftBody_vs2010_x64_single.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_single_x64.lib;osgbCollision_single_x64.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_single_x64_Release.lib;BulletCollision_vs2010_single_x64_Release.lib;LinearMath_vs2010_single_x64_Release.lib;BulletSoftBody_vs2010_single_x64_Release.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Bullet_UnitTests_single.exe</OutputFile>
 			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>
@@ -188,7 +188,7 @@
 			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_double_x64.lib;osgbCollision_double_x64.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_double_x64.lib;BulletCollision_vs2010_double_x64.lib;LinearMath_vs2010_double_x64.lib;BulletSoftBody_vs2010_double_x64.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_double_x64.lib;osgbCollision_double_x64.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_double_x64_Release.lib;BulletCollision_vs2010_double_x64_Release.lib;LinearMath_vs2010_double_x64_Release.lib;BulletSoftBody_vs2010_double_x64_Release.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Bullet_UnitTests_double_x64.exe</OutputFile>
 			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>

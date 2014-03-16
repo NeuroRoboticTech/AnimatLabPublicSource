@@ -25,4 +25,4 @@
 			targetdir ("Release_x64")
 			targetname ("StdUtils_vc10_x64")
 			postbuildcommands { "Copy $(OutDir)StdUtils_vc10_x64.lib ..\\..\\..\\lib\\StdUtils_vc10_x64.lib", 
-			                    "Copy $(TargetPath) ..\\..\\..\\binx64" }
+			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64" }

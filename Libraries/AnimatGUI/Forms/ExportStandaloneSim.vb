@@ -51,6 +51,7 @@ Namespace Forms
         Friend WithEvents lblMassUnits As System.Windows.Forms.Label
         Friend WithEvents cboLibraryVersion As System.Windows.Forms.ComboBox
         Friend WithEvents lblBinaryType As System.Windows.Forms.Label
+        Friend WithEvents chkShowGraphics As System.Windows.Forms.CheckBox
         Friend WithEvents cboBinaryType As System.Windows.Forms.ComboBox
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
             Me.lblProjectName = New System.Windows.Forms.Label()
@@ -63,6 +64,7 @@ Namespace Forms
             Me.cboLibraryVersion = New System.Windows.Forms.ComboBox()
             Me.lblBinaryType = New System.Windows.Forms.Label()
             Me.cboBinaryType = New System.Windows.Forms.ComboBox()
+            Me.chkShowGraphics = New System.Windows.Forms.CheckBox()
             Me.SuspendLayout()
             '
             'lblProjectName
@@ -86,7 +88,7 @@ Namespace Forms
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(160, 202)
+            Me.btnCancel.Location = New System.Drawing.Point(160, 228)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 13
@@ -95,7 +97,7 @@ Namespace Forms
             'btnOk
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.btnOk.Location = New System.Drawing.Point(88, 202)
+            Me.btnOk.Location = New System.Drawing.Point(88, 228)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 12
@@ -155,10 +157,23 @@ Namespace Forms
             Me.cboBinaryType.Size = New System.Drawing.Size(288, 21)
             Me.cboBinaryType.TabIndex = 18
             '
+            'chkShowGraphics
+            '
+            Me.chkShowGraphics.AutoSize = True
+            Me.chkShowGraphics.Checked = True
+            Me.chkShowGraphics.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.chkShowGraphics.Location = New System.Drawing.Point(89, 205)
+            Me.chkShowGraphics.Name = "chkShowGraphics"
+            Me.chkShowGraphics.Size = New System.Drawing.Size(135, 17)
+            Me.chkShowGraphics.TabIndex = 20
+            Me.chkShowGraphics.Text = "Show graphics window"
+            Me.chkShowGraphics.UseVisualStyleBackColor = True
+            '
             'ExportStandaloneSim
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(312, 234)
+            Me.ClientSize = New System.Drawing.Size(312, 260)
+            Me.Controls.Add(Me.chkShowGraphics)
             Me.Controls.Add(Me.lblBinaryType)
             Me.Controls.Add(Me.cboBinaryType)
             Me.Controls.Add(Me.lblMassUnits)

@@ -1,0 +1,1 @@
+This document is used during the automated tests.
