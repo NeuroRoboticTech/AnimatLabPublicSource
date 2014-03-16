@@ -148,7 +148,7 @@ Namespace Framework
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
-            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime, m_bCreateStructure, m_strPhysicsEngine)
+            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime, m_bCreateStructure, m_strPhysicsEngine, m_strDistanceUnits, m_strMassUnits)
         End Sub
 
         Protected Overridable Sub StartExistingProject()
@@ -431,9 +431,11 @@ Namespace Framework
             Debug.WriteLine("Set structure names. Struct Group: '" & m_strStructureGroup & "', Struct1 Name: '" & m_strStruct1Name & "'")
         End Sub
 
-        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean, ByVal strPhysics As String)
+        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, _
+                                                   ByVal bCreateStructure As Boolean, ByVal strPhysics As String, ByVal strDistanceUnits As String, ByVal strMassUnits As String)
 
-            Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & ", CreateStructure: " & bCreateStructure & ", Physics: " & strPhysics)
+            Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & _
+                            ", CreateStructure: " & bCreateStructure & ", Physics: " & strPhysics & ", Distance: " & strDistanceUnits & ", Mass: " & strMassUnits)
 
             OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton", False, 200, False, False})
 
@@ -442,6 +444,8 @@ Namespace Framework
 
             'Set Physics Method
             ExecuteIndirectActiveDialogMethod("SetPhysics", New Object() {strPhysics}, , , True)
+            ExecuteIndirectActiveDialogMethod("SetDistanceUnit", New Object() {strDistanceUnits}, , , True)
+            ExecuteIndirectActiveDialogMethod("SetMassUnit", New Object() {strMassUnits}, , , True)
 
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 

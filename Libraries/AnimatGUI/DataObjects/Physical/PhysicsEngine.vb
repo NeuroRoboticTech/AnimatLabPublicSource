@@ -140,6 +140,10 @@ Namespace DataObjects.Physical
             Util.Application.ReloadSimulation(True)
         End Sub
 
+        Public Overridable Sub SetDefaultLibraryVersion()
+            SetLibraryVersion("Double", True)
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strName.GetType(), "Name", _

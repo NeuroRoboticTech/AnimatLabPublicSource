@@ -51,6 +51,8 @@ Namespace Framework
         Protected m_bIgnoreSimAndCompare As Boolean = False
         Protected m_strOldProjectFolder As String
         Protected m_strPhysicsEngine As String = "Bullet" '"Vortex"
+        Protected m_strDistanceUnits As String = "Decimeters"
+        Protected m_strMassUnits As String = "Grams"
 
 #End Region
 

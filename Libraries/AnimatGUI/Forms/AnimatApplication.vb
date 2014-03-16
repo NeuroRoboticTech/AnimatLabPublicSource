@@ -5807,6 +5807,7 @@ Namespace Forms
 
                     Util.Environment.MassUnits = frmNewProject.MassUnits
                     Util.Environment.DistanceUnits = frmNewProject.DistanceUnits
+                    Util.Application.Physics.SetDefaultLibraryVersion()
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "About to call SaveProject")
 

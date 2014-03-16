@@ -274,8 +274,8 @@ Namespace Forms
         Public Sub SetMassUnit(ByVal strMass As String)
 
             Dim iIdx As Integer = 0
-            For Each doUnit As DataObjects.Physical.PhysicsEngine In cboMassUnits.Items
-                If doUnit.Name = strMass Then
+            For Each strUnit As String In cboMassUnits.Items
+                If strUnit = strMass Then
                     cboMassUnits.SelectedIndex = iIdx
                     Return
                 End If
@@ -288,8 +288,8 @@ Namespace Forms
         Public Sub SetDistanceUnit(ByVal strDistance As String)
 
             Dim iIdx As Integer = 0
-            For Each doUnit As DataObjects.Physical.PhysicsEngine In cboDistanceUnits.Items
-                If doUnit.Name = strDistance Then
+            For Each strUnit As String In cboDistanceUnits.Items
+                If strUnit = strDistance Then
                     cboDistanceUnits.SelectedIndex = iIdx
                     Return
                 End If
