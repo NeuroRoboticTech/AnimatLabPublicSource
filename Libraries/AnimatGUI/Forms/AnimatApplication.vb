@@ -5792,10 +5792,17 @@ Namespace Forms
                     If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
                     Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
+                    Dim doOldEngine As DataObjects.Physical.PhysicsEngine = m_doPhysics
                     m_doPhysics = DirectCast(frmNewProject.cboPhysicsEngine.SelectedItem, DataObjects.Physical.PhysicsEngine)
 
                     If m_doPhysics Is Nothing Then
                         Throw New System.Exception("No physics engine defined in new project dialog.")
+                    End If
+
+                    'If the physics engine has changed then recreate the list of plugin modules with the new physics engine.
+                    If Not doOldEngine Is m_doPhysics Then
+                        CatalogPluginModules()
+                        doOldEngine = Nothing
                     End If
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
