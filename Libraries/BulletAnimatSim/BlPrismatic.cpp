@@ -275,11 +275,11 @@ void BlPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<st
 #pragma endregion
 
 void BlPrismatic::StepSimulation()
-{
+{ 
     //Test code
-    int iTest = 0;
-    if(m_lpSim->Time() >= 1.02)
-        iTest = 1;
+    //int iTest = 0;
+    //if(m_lpSim->Time() >= 1.02)
+    //    iTest = 1;
 
     UpdateData();
 	SetVelocityToDesired();
@@ -309,7 +309,12 @@ void BlPrismatic::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLo
             m_vLowerLinear[0] = m_vUpperLinear[0] = fltPosition;
 
 		    m_btPrismatic->setLinearLowerLimit(m_vLowerLinear);
-		    m_btPrismatic->setLinearLowerLimit(m_vUpperLinear);
+		    m_btPrismatic->setLinearUpperLimit(m_vUpperLinear);
+
+            m_btPrismatic->enableSpring(0, false);
+            m_btPrismatic->getTranslationalLimitMotor()->m_enableMotor[0] = true;
+		    m_btPrismatic->getTranslationalLimitMotor()->m_targetVelocity[0] = 0;
+		    m_btPrismatic->getTranslationalLimitMotor()->m_maxMotorForce[0] = fltMaxLockForce;
 		}
 		else if (m_bMotorOn)
 			Physics_EnableMotor(true, 0, fltMaxLockForce, false);

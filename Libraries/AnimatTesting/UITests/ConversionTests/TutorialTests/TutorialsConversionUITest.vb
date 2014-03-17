@@ -451,11 +451,11 @@ Namespace UITests
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("A1", 0.0001)
-                    aryMaxErrors.Add("A2", 0.0001)
-                    aryMaxErrors.Add("A3", 0.0001)
-                    aryMaxErrors.Add("A4", 0.0001)
-                    aryMaxErrors.Add("A5", 0.0001)
+                    aryMaxErrors.Add("A1", 0.001)
+                    aryMaxErrors.Add("A2", 0.001)
+                    aryMaxErrors.Add("A3", 0.001)
+                    aryMaxErrors.Add("A4", 0.001)
+                    aryMaxErrors.Add("A5", 0.001)
 
                     m_strProjectName = "TouchReceptiveFields"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\SensorySystems"

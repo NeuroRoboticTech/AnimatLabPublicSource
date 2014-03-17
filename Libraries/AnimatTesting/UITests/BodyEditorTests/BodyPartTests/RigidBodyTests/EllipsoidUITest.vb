@@ -28,6 +28,17 @@ Namespace UITests
                         TestPart()
                     End Sub
 
+                    Protected Overrides Function GetPhysicsEngine() As Boolean
+
+                        Dim bRet As Boolean = MyBase.GetPhysicsEngine()
+
+                        If m_strPhysicsEngine = "Bullet" Then
+                            Return False
+                        End If
+
+                        Return bRet
+                    End Function
+
                     Protected Overrides Sub TestMovableRigidBodyProperties(ByVal strStructure As String, ByVal strPart As String)
                         MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 

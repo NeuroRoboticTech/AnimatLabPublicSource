@@ -32,6 +32,7 @@ Namespace UITests
 #Region "Attributes"
 
                 Protected m_iSubSteps As Integer = 1
+                Protected m_strMass As String = ""
 
 #End Region
 
@@ -76,13 +77,14 @@ Namespace UITests
                     If Not SetPhysicsEngine(TestContext.DataRow) Then Return
 
                     m_iSubSteps = 10
+                    m_strMass = "0.2 K"
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("BodyX", 0.001)
-                    aryMaxErrors.Add("BodyY", 0.001)
-                    aryMaxErrors.Add("BodyZ", 0.001)
-                    aryMaxErrors.Add("default", 0.001)
+                    aryMaxErrors.Add("BodyX", 0.01)
+                    aryMaxErrors.Add("BodyY", 0.01)
+                    aryMaxErrors.Add("BodyZ", 0.01)
+                    aryMaxErrors.Add("default", 0.01)
 
                     m_strProjectName = "Belly Flopper"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\Examples"
@@ -103,6 +105,10 @@ Namespace UITests
 
                     If m_strPhysicsEngine = "Bullet" AndAlso m_iSubSteps > 1 Then
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsSubsteps", m_iSubSteps.ToString})
+
+                        If m_strMass.Length > 0 Then
+                            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Belly Flopper\Body Plan\Body", "Mass", m_strMass})
+                        End If
                     End If
 
                 End Sub

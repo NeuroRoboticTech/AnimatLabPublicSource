@@ -268,15 +268,24 @@ Namespace UITests
                 '    '
                 'End Sub
 
-
-                Protected Overridable Sub TestPart()
+                Protected Overridable Function GetPhysicsEngine() As Boolean
 
                     If Not TestContext.DataRow Is Nothing Then
                         m_strPhysicsEngine = TestContext.DataRow("Physics").ToString
                         Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
-                        If Not bEnabled Then Return
+                        If Not bEnabled Then Return False
                     Else
                         m_strPhysicsEngine = "Vortex"
+                    End If
+
+                    Return True
+                End Function
+
+
+                Protected Overridable Sub TestPart()
+
+                    If Not GetPhysicsEngine() Then
+                        Return
                     End If
 
                     StartNewProject()

@@ -333,6 +333,11 @@ void BlHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockFo
 
 		    m_btHinge->setAngularLowerLimit(m_vLowerAngular);
 		    m_btHinge->setAngularUpperLimit(m_vUpperAngular);
+
+            m_btHinge->enableSpring(3, false);
+		    m_btHinge->getRotationalLimitMotor(0)->m_enableMotor = true;
+		    m_btHinge->getRotationalLimitMotor(0)->m_targetVelocity = 0;
+		    m_btHinge->getRotationalLimitMotor(0)->m_maxMotorForce = fltMaxLockForce;
 		}
 		else if (m_bMotorOn)
 			Physics_EnableMotor(true, 0, fltMaxLockForce, false);
