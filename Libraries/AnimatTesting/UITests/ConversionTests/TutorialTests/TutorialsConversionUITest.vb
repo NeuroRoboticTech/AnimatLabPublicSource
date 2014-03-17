@@ -352,13 +352,13 @@ Namespace UITests
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("Contact", 2) 'Ignore this
-                    aryMaxErrors.Add("Eat", 0.05)
-                    aryMaxErrors.Add("Energy", 5)
-                    aryMaxErrors.Add("Hungry", 0.05)
-                    aryMaxErrors.Add("LeftOdor", 1)
+                    aryMaxErrors.Add("Contact", 20) 'Ignore this
+                    aryMaxErrors.Add("Eat", 0.2)
+                    aryMaxErrors.Add("Energy", 25)
+                    aryMaxErrors.Add("Hungry", 0.5)
+                    aryMaxErrors.Add("LeftOdor", 5)
                     aryMaxErrors.Add("OS", 0.05)
-                    aryMaxErrors.Add("RightOdor", 1)
+                    aryMaxErrors.Add("RightOdor", 5)
 
                     m_strProjectName = "Eating"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\SensorySystems"
