@@ -28,7 +28,7 @@ namespace BulletAnimatSim
                 float m_fltTerrainHeightAdjust;
 
                 /// The array of height data used by the btHeightfieldTerrainShape
-                float *m_aryHeightData;
+                btScalar *m_aryHeightData;
 
 				virtual void CreateGraphicsGeometry();
 				virtual void CreatePhysicsGeometry();
