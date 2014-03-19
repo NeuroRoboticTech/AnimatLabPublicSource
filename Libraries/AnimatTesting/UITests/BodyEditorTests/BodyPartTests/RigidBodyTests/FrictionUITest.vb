@@ -275,11 +275,11 @@ Namespace UITests
                         ExecuteActiveDialogMethod("Automation_SelectMaterialType", New Object() {"Default"})
 
                         Dim oVal As Object = ExecuteDirectActiveDialogMethod("Automation_GetSelectedItemProperty", New Object() {"FrictionLinearPrimary.ActualValue"})
-                        If Math.Abs(CSng(oVal) - 0.3162278) > 0.0001 Then
+                        If Math.Abs(CSng(oVal) - 0.316227764) > 0.001 Then
                             Throw New System.Exception("Linear Primary Friction was not converted correctly.")
                         End If
                         oVal = ExecuteDirectActiveDialogMethod("Automation_GetSelectedItemProperty", New Object() {"FrictionAngularPrimary.ActualValue"})
-                        If Math.Abs(CSng(oVal) - 0.037) > 0.0001 Then
+                        If Math.Abs(CSng(oVal) - 0.0367209055) > 0.001 Then
                             Throw New System.Exception("Angular Primary Friction was not converted correctly.")
                         End If
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)

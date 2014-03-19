@@ -91,6 +91,9 @@ Namespace UITests
                     CleanupProjectDirectory()
                 End Sub
 
+                <TestCleanup()> Public Overrides Sub MyTestCleanup()
+                    MyBase.MyTestCleanup()
+                End Sub
 
 #End Region
 

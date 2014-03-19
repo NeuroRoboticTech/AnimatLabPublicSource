@@ -14,14 +14,16 @@ namespace BulletAnimatSim
 
 #pragma region CreateGeometry_Code
 
-    btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float &fltMinHeight, float &fltMaxHeight, float **aryHeightData)
+    btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float &fltMinHeight, float &fltMaxHeight, btScalar **aryHeightData)
     {
 	    //Lets create the height array.
         fltMaxHeight = -10000;
         fltMinHeight = 10000;
 	    int iCols = osgHeightField->getNumColumns();
 	    int iRows = osgHeightField->getNumRows();
-	    float* heightfieldData = new float[iCols*iRows];
+
+        btScalar * heightfieldData = new btScalar[iCols*iRows];
+
         //For some reason the bullet height field rows and the osg heightfield rows are in reverse order.
 	    for(int iOsgRow=0, iBtRow=(iRows-1); iOsgRow<iRows; iOsgRow++, iBtRow--)
     	    for(int iOsgCol=0, iBtCol=(iCols-1); iOsgCol<iCols; iOsgCol++,iBtCol--)

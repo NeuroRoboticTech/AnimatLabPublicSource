@@ -5,7 +5,7 @@ namespace BulletAnimatSim
 {
 	namespace Environment
 	{
-        btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float &fltMinHeight, float &fltMaxHeight, float **aryHeightData);
+        btHeightfieldTerrainShape BULLET_PORT *CreateBtHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float &fltMinHeight, float &fltMaxHeight, btScalar **aryHeightData);
         btConvexHullShape BULLET_PORT *OsgMeshToConvexHull(osg::Node *lpNode, bool bOptimize, float fltMargin);
         btConvexHullShape* OsgConvexShrunkenHullCollisionShape( osg::Node* node );
         float BULLET_PORT OsgConvexHullVolume( osg::Node* nod);

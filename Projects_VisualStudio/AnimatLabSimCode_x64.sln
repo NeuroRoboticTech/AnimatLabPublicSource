@@ -99,9 +99,7 @@ Global
 		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
 		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Debug_x64|x64.Build.0 = Debug_x64|x64
 		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
-		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
 		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Release_x64|x64.ActiveCfg = Release_x64|x64
-		{0ADCAA9E-A599-D54D-8679-E77528BF19B7}.Release_x64|x64.Build.0 = Release_x64|x64
 		{8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
 		{8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
 		{8789296C-AD4D-6B4C-BBB5-75ABDA21D2A9}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
