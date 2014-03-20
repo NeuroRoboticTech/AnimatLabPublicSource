@@ -408,19 +408,23 @@ Namespace Forms
                         End If
                     Next
 
-                    Dim aryUnits As Array
-                    aryUnits = System.Enum.GetNames(GetType(AnimatGUI.DataObjects.Physical.Environment.enumMassUnits))
-                    For Each strUnit As String In aryUnits
-                        cboMassUnits.Items.Add(strUnit)
-                    Next
-                    cboMassUnits.SelectedItem = "Kilograms"
-
-                    aryUnits = System.Enum.GetNames(GetType(AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits))
-                    For Each strUnit As String In aryUnits
-                        cboDistanceUnits.Items.Add(strUnit)
-                    Next
+                    cboDistanceUnits.Items.Add("Kilometers")
+                    cboDistanceUnits.Items.Add("Centameters")
+                    cboDistanceUnits.Items.Add("Decameters")
+                    cboDistanceUnits.Items.Add("Meters")
+                    cboDistanceUnits.Items.Add("Decimeters")
+                    cboDistanceUnits.Items.Add("Centimeters")
+                    cboDistanceUnits.Items.Add("Millimeters")
                     cboDistanceUnits.SelectedItem = "Meters"
 
+                    cboMassUnits.Items.Add("Kilograms")
+                    cboMassUnits.Items.Add("Centagrams")
+                    cboMassUnits.Items.Add("Decagrams")
+                    cboMassUnits.Items.Add("Grams")
+                    cboMassUnits.Items.Add("Decigrams")
+                    cboMassUnits.Items.Add("Centigrams")
+                    cboMassUnits.Items.Add("Milligrams")
+                    cboMassUnits.SelectedItem = "Kilograms"
 
                     cboPhysicsEngine.Enabled = True
                     cboPhysicsEngine.SelectedIndex = iSelIdx
