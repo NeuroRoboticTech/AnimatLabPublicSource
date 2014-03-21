@@ -1,6 +1,7 @@
 echo "Generating AnimatSim Mono Solution"
 
 ..\..\..\bin\premake4m --os=linux --file=Solution.lua monodevelop
+..\..\..\bin\premake4m --os=linux --file=Solution_x64.lua monodevelop
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\..\include</Include>" "<Include>../../../../include</Include>"
 TIMEOUT /T 2

@@ -9,22 +9,20 @@
 		links { "dl", 
 			    "pthread" }
 	  
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "BOOTSTRAPLOADER_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("BootstrapLoader_vc10D")
 			links { "StdUtils_vc10D", 
 					"AnimatSim_vc10D"}
-			postbuildcommands { "cp Debug/libBootstrapLoader_vc10D.so ../../../bin",
-								"cp Debug/libBootstrapLoader_vc10D.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libBootstrapLoader_vc10D.so ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "BOOTSTRAPLOADER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("BootstrapLoader_vc10")
 			links { "StdUtils_vc10",
 					"AnimatSim_vc10"}
-			postbuildcommands { "cp Release/libBootstrapLoader_vc10.so ../../../bin", 
-								"cp Release/libBootstrapLoader_vc10.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libBootstrapLoader_vc10.so ../../../bin" }

@@ -16,16 +16,14 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_vc10D")
-			postbuildcommands { "cp Debug/libStdUtils_vc10D.so ../../../bin",
-								"cp Debug/libStdUtils_vc10D.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libStdUtils_vc10D.so ../../../bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_vc10")
-			postbuildcommands { "cp Release/libStdUtils_vc10.so ../../../bin", 
-								"cp Release/libStdUtils_vc10.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libStdUtils_vc10.so ../../../bin" }
 
 	project "StdClassFactoryTester"
 		language "C++"
@@ -42,14 +40,14 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "cp Debug/libStdClassFactoryTester.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libStdClassFactoryTester.so ../../../bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "STDCLASSFACTORYTESTER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdClassFactoryTester")
-			postbuildcommands { "cp Release/libStdClassFactoryTester.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libStdClassFactoryTester.so ../../../bin" }
 
 	project "StdUtils_UnitTests"
 		language "C++"
@@ -69,7 +67,7 @@
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10D" }
-			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG" }
@@ -77,5 +75,5 @@
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
 			links { "StdUtils_vc10" }
-			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../bin" }
 						
