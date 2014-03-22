@@ -17,22 +17,22 @@
 			targetname ("OsgAnimatSim_vc10D")
 			links { "StdUtils_vc10D", 
 				"AnimatSim_vc10D",
-				"OpenThreadsd", 
-				"osgAnimationd", 
-				"osgd", 
-				"osgDBd", 
-				"osgFXd", 
-				"osgGAd", 
-				"osgManipulatord", 
-				"osgParticled", 
-				"osgShadowd", 
-				"osgSimd", 
-				"osgTerraind", 
-				"osgTextd", 
-				"osgUtild", 
-				"osgViewerd", 
-				"osgVolumed", 
-				"osgWidgetd" }
+				"OpenThreads", 
+				"osgAnimation", 
+				"osg", 
+				"osgDB", 
+				"osgFX", 
+				"osgGA", 
+				"osgManipulator", 
+				"osgParticle", 
+				"osgShadow", 
+				"osgSim", 
+				"osgTerrain", 
+				"osgText", 
+				"osgUtil", 
+				"osgViewer", 
+				"osgVolume", 
+				"osgWidget" }
 
 			postbuildcommands { "cp Debug/libOsgAnimatSim_vc10D.so ../../../bin" }
 	 

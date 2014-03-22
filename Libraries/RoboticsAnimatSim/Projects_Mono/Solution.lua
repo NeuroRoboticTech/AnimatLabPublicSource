@@ -1,5 +1,5 @@
 
 -- A solution contains projects, and defines the available configurations
-solution "VortexAnimatSim"
-	configurations { "Debug", "Release" }
+solution "RoboticsAnimatSim"
+	configurations { "Debug", "Release", "Debug_Double", "Release_Double" }
 	dofile "Projects.lua"

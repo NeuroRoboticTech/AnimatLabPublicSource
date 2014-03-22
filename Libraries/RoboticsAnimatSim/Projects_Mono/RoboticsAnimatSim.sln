@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "RoboticsAnimatSim", "RoboticsAnimatSim.cproj", "{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Robotics_UnitTests", "Robotics_UnitTests.cproj", "{8B0F01F0-3107-D948-A477-52857EFD159F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{DC7CB5C0-0E03-7346-BC60-5B59FD7DEADB}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{8B0F01F0-3107-D948-A477-52857EFD159F}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal

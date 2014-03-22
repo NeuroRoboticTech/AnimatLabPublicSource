@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C8764275-920C-2A40-B396-0072B812FAF1}</ProjectGuid>
+    <ProjectGuid>{81FACA50-4BE4-B742-A0F2-514CDC517316}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -22,14 +22,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -37,22 +37,22 @@
         <Lib>dl</Lib>
         <Lib>StdUtils_vc10D</Lib>
         <Lib>AnimatSim_vc10D</Lib>
-        <Lib>OpenThreadsd</Lib>
-        <Lib>osgAnimationd</Lib>
-        <Lib>osgd</Lib>
-        <Lib>osgDBd</Lib>
-        <Lib>osgFXd</Lib>
-        <Lib>osgGAd</Lib>
-        <Lib>osgManipulatord</Lib>
-        <Lib>osgParticled</Lib>
-        <Lib>osgShadowd</Lib>
-        <Lib>osgSimd</Lib>
-        <Lib>osgTerraind</Lib>
-        <Lib>osgTextd</Lib>
-        <Lib>osgUtild</Lib>
-        <Lib>osgViewerd</Lib>
-        <Lib>osgVolumed</Lib>
-        <Lib>osgWidgetd</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -71,14 +71,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -120,14 +120,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -135,22 +135,22 @@
         <Lib>dl</Lib>
         <Lib>StdUtils_vc10D</Lib>
         <Lib>AnimatSim_vc10D</Lib>
-        <Lib>OpenThreadsd</Lib>
-        <Lib>osgAnimationd</Lib>
-        <Lib>osgd</Lib>
-        <Lib>osgDBd</Lib>
-        <Lib>osgFXd</Lib>
-        <Lib>osgGAd</Lib>
-        <Lib>osgManipulatord</Lib>
-        <Lib>osgParticled</Lib>
-        <Lib>osgShadowd</Lib>
-        <Lib>osgSimd</Lib>
-        <Lib>osgTerraind</Lib>
-        <Lib>osgTextd</Lib>
-        <Lib>osgUtild</Lib>
-        <Lib>osgViewerd</Lib>
-        <Lib>osgVolumed</Lib>
-        <Lib>osgWidgetd</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -169,14 +169,14 @@
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
