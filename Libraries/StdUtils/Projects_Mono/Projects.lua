@@ -11,14 +11,14 @@
 				"boost_filesystem",
 				"boost_unit_test_framework" }
 	  
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_vc10D")
 			postbuildcommands { "cp Debug/libStdUtils_vc10D.so ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
@@ -35,14 +35,14 @@
 		links {"dl",
   		       "pthread" }
 		
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "STDCLASSFACTORYTESTER_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdClassFactoryTester")
 			postbuildcommands { "cp Debug/libStdClassFactoryTester.so ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "STDCLASSFACTORYTESTER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
@@ -61,7 +61,7 @@
 				"boost_filesystem",
 				"boost_unit_test_framework" }
 		
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
@@ -69,7 +69,7 @@
 			links { "StdUtils_vc10D" }
 			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")

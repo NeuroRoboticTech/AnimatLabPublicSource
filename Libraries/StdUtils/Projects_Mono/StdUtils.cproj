@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0BBC273E-712F-D148-965D-C9B57F28C64E}</ProjectGuid>
+    <ProjectGuid>{F896E301-DA32-8C41-BADA-CBA99BEE132C}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -41,6 +41,62 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdUtils_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libStdUtils_vc10.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG STDUTILS_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libStdUtils_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libStdUtils_vc10D.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
     <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
