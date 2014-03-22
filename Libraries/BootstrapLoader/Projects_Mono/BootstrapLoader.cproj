@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C53F956F-1FA7-8846-8C37-5879C5DBC17D}</ProjectGuid>
+    <ProjectGuid>{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -15,7 +15,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBootstrapLoader_vc10D.so</OutputName>
@@ -34,21 +33,17 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10D</Lib>
-        <Lib>AnimatSim_vc10D</Lib>
         <Lib>pthread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBootstrapLoader_vc10.so</OutputName>
@@ -68,14 +63,72 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10</Lib>
-        <Lib>AnimatSim_vc10</Lib>
+        <Lib>pthread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBootstrapLoader_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBootstrapLoader_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

@@ -1,18 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BootstrapLoader", "BootstrapLoader.cproj", "{C53F956F-1FA7-8846-8C37-5879C5DBC17D}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BootstrapLoader", "BootstrapLoader.cproj", "{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C53F956F-1FA7-8846-8C37-5879C5DBC17D}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{C53F956F-1FA7-8846-8C37-5879C5DBC17D}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{C53F956F-1FA7-8846-8C37-5879C5DBC17D}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{C53F956F-1FA7-8846-8C37-5879C5DBC17D}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

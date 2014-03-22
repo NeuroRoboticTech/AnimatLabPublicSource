@@ -14,8 +14,6 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("BootstrapLoader_vc10D")
-			links { "StdUtils_vc10D", 
-					"AnimatSim_vc10D"}
 			postbuildcommands { "cp Debug/libBootstrapLoader_vc10D.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
@@ -23,6 +21,4 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("BootstrapLoader_vc10")
-			links { "StdUtils_vc10",
-					"AnimatSim_vc10"}
 			postbuildcommands { "cp Release/libBootstrapLoader_vc10.so ../../../bin" }
