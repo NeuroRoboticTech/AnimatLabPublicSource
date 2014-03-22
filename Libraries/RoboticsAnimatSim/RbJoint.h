@@ -45,7 +45,7 @@ namespace RoboticsAnimatSim
             virtual RbRigidBody *GetRbParent() {return m_lpRbParent;};
             virtual RbRigidBody *GetRbChild() {return m_lpRbChild;};
 
-            virtual bool IPhysicsBody::Physics_IsDefined() {return true;};
+            virtual bool Physics_IsDefined() {return true;};
             virtual bool Physics_IsGeometryDefined() {return true;};
             virtual void Physics_EnableCollision(AnimatSim::Environment::RigidBody *lpBody) {};
             virtual void Physics_DisableCollision(AnimatSim::Environment::RigidBody *lpBody) {};
