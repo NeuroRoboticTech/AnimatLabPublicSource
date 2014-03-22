@@ -192,10 +192,10 @@ public:
     virtual float Average()
     {
         float fltTotal = 0;
-        for(int iIdx=0; iIdx<GetSize(); iIdx++)
+        for(int iIdx=0; iIdx<this->GetSize(); iIdx++)
             fltTotal += (float) (*this)[iIdx];
 
-        float fltAvg = fltTotal/GetSize();
+        float fltAvg = fltTotal/this->GetSize();
         return fltAvg;
     }
 };
