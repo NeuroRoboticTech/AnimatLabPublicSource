@@ -1,18 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "FiringRateSim", "FiringRateSim.cproj", "{2BB4F773-4E01-AE45-995E-6F1CB865305D}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "FiringRateSim", "FiringRateSim.cproj", "{580017DC-2118-7041-8026-2840E7B6E9B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2BB4F773-4E01-AE45-995E-6F1CB865305D}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{2BB4F773-4E01-AE45-995E-6F1CB865305D}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{2BB4F773-4E01-AE45-995E-6F1CB865305D}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{2BB4F773-4E01-AE45-995E-6F1CB865305D}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{580017DC-2118-7041-8026-2840E7B6E9B0}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

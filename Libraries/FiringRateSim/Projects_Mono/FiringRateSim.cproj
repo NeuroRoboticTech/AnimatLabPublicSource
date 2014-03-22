@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2BB4F773-4E01-AE45-995E-6F1CB865305D}</ProjectGuid>
+    <ProjectGuid>{580017DC-2118-7041-8026-2840E7B6E9B0}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_vc10D.so</OutputName>
@@ -43,13 +42,11 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp Debug/libFiringRateSim_vc10D.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Debug/libFiringRateSim_vc10D.so ../../../unit_test_bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_vc10.so</OutputName>
@@ -78,7 +75,72 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp Release/libFiringRateSim_vc10.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Release/libFiringRateSim_vc10.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libFiringRateSim_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libFiringRateSim_vc10D.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libFiringRateSim_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10</Lib>
+        <Lib>AnimatSim_vc10</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libFiringRateSim_vc10.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

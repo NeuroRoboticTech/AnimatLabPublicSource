@@ -1,18 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "OsgAnimatSim", "OsgAnimatSim.cproj", "{402EC85F-B5C1-0644-A9EB-320B862FBE85}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "OsgAnimatSim", "OsgAnimatSim.cproj", "{C8764275-920C-2A40-B396-0072B812FAF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{402EC85F-B5C1-0644-A9EB-320B862FBE85}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{402EC85F-B5C1-0644-A9EB-320B862FBE85}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{402EC85F-B5C1-0644-A9EB-320B862FBE85}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{402EC85F-B5C1-0644-A9EB-320B862FBE85}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{C8764275-920C-2A40-B396-0072B812FAF1}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

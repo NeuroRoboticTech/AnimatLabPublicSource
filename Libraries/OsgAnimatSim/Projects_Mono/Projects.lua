@@ -10,7 +10,7 @@
 		libdirs { "../../../../bin" }
 		links { "dl"}
 	  
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "OSGANIMATLIBRARY_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
@@ -34,10 +34,9 @@
 				"osgVolumed", 
 				"osgWidgetd" }
 
-			postbuildcommands { "cp Debug/libOsgAnimatSim_vc10D.so ../../../bin",
-					    "cp Debug/libOsgAnimatSim_vc10D.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Debug/libOsgAnimatSim_vc10D.so ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "OSGANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
@@ -60,5 +59,4 @@
 				"osgViewer",
 				"osgVolume",
 				"osgWidget" }
-			postbuildcommands { "cp Release/libOsgAnimatSim_vc10.so ../../../bin", 
-					    "cp Release/libOsgAnimatSim_vc10.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libOsgAnimatSim_vc10.so ../../../bin" }
