@@ -1,0 +1,1 @@
+sudo mount -t ntfs -o fmask=0022,dmask=0000,uid=1000,gid=1000 /dev/sdd1 /media/Win7_Data
