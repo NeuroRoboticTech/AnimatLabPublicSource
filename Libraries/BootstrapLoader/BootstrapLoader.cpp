@@ -111,7 +111,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 			bRetrieved = TRUE;
 		}
 
-		if(_stricmp(strParam, "-library") == 0)
+		if(_stricmp(strParam, "-library") == 0 || _stricmp(strParam, "-Library") == 0)
 			bFound = TRUE;
 
 		iParam++;

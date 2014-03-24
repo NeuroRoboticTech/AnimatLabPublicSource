@@ -85,7 +85,7 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>-Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
+    <Commandlineparameters>-Library libBulletAnimatSim_vc10D_single.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPrivateSource/Experiment/StandAloneSimTest/Bullet_Single_x32.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
