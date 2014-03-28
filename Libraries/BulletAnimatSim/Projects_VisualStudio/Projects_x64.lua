@@ -13,13 +13,15 @@
 						  "../../../../3rdParty/osgBullet_03_00_00/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../OsgAnimatSim"}	  
+						  "../../OsgAnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1_x64/lib",
 					  "../../../../3rdParty/osgWorks_03_00_00/lib",
 					  "../../../../3rdParty/Bullet-2.82/lib",
-					  "../../../../3rdParty/osgBullet_03_00_00/lib" }
+					  "../../../../3rdParty/osgBullet_03_00_00/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib_x64" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug_x64")

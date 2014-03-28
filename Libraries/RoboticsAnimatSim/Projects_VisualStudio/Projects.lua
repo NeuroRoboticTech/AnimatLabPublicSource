@@ -9,10 +9,12 @@
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include"}	  
+						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
-					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib" }
+					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "ROBOTICSANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
@@ -30,10 +32,12 @@
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include"}	  
+						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
-					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib" }
+					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "ROBOTICSANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")

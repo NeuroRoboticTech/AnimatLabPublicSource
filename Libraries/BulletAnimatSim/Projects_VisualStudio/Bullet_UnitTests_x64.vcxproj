@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{E2CDE1F5-D1E6-D046-82D2-D11CD3C25F51}</ProjectGuid>
+		<ProjectGuid>{F23D221F-9DA5-8343-A9A7-FAA4149E6A01}</ProjectGuid>
 		<RootNamespace>Bullet_UnitTests_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

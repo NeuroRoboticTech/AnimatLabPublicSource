@@ -11,13 +11,15 @@
 						  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/osg-2.8.3/include",
 						  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/include",
 						  "../../StdUtils",
-						  "../../AnimatSim"}	  
+						  "../../AnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/osg-2.8.3/lib",
 					  "../../../../3rdParty/Vortex_5_1_x64/lib",
 					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/boost-1.45.0/lib",
-					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/lib" }
+					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib_x64" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "VORTEXANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug_x64")
@@ -71,13 +73,15 @@
 						  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/osg-2.8.3/include",
 						  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/include",
 						  "../../StdUtils",
-						  "../../AnimatSim"}	  
+						  "../../AnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/osg-2.8.3/lib",
 					  "../../../../3rdParty/Vortex_5_1_x64/lib",
 					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/boost-1.45.0/lib",
-					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/lib" }
+					  "../../../../3rdParty/Vortex_5_1_x64/3rdparty/sdl-1.2.14/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib_x64" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "VORTEXANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release_x64")

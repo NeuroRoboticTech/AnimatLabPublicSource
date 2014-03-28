@@ -74,6 +74,11 @@ cd'ed into build folder and ran
 make -j4
 sudo make install
 
+If you do not have cmake already installed then you need to run these from cmake dir
+./bootstrap
+make 
+make install
+
 It still did not change the version for the cmake-gui
 
 cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/

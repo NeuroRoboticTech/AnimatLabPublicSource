@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{28EF663F-16D5-4C4C-A775-4BA54850BF55}</ProjectGuid>
+		<ProjectGuid>{1346F7A8-C9DE-CA42-A32F-7A6515D7FC0B}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -88,7 +88,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,12 +101,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreadsd.lib;osgd.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D_x64.pdb</ProgramDataBaseFileName>
@@ -120,7 +120,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -133,12 +133,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreads.lib;osg.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>
@@ -153,7 +153,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -166,12 +166,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreadsd.lib;osgd.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D_x64.pdb</ProgramDataBaseFileName>
@@ -185,7 +185,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -198,12 +198,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreads.lib;osg.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>

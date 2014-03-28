@@ -74,8 +74,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_ANIMAT_VC9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_ANIMAT_VC9;STD_DO_NOT_ADD_BOOST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -87,7 +87,7 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <TargetMachine>MachineX86</TargetMachine>
@@ -98,8 +98,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_ANIMAT_VC9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_ANIMAT_VC9;STD_DO_NOT_ADD_BOOST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -112,7 +112,7 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -122,8 +122,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnoptimizedWithSymbols|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_ANIMAT_VC9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_ANIMAT_VC9;STD_DO_NOT_ADD_BOOST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -136,7 +136,7 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>

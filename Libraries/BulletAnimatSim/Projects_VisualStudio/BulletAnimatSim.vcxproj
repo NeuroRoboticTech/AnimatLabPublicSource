@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{CDE7E01C-A018-3148-A226-699260B8E773}</ProjectGuid>
+		<ProjectGuid>{EDA48B03-C27F-C745-AF99-2BCD49FB07E9}</ProjectGuid>
 		<RootNamespace>BulletAnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -88,7 +88,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,12 +101,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;BULLETANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_single.lib;osgbCollisiond_single.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_single_debug.lib;BulletCollision_vs2010_single_debug.lib;LinearMath_vs2010_single_debug.lib;BulletSoftBody_vs2010_single_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)BulletAnimatSim_vc10D_single.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)BulletAnimatSim_vc10D_single.pdb</ProgramDataBaseFileName>

@@ -82,8 +82,12 @@
 #include <memory.h>
 #include <algorithm>
 #include <string.h>
-//#include <vfw.h>
-//using namespace std;
+
+#ifndef STD_DO_NOT_ADD_BOOST
+	#include <boost/thread.hpp>
+	#include <boost/algorithm/string.hpp>
+	#include <boost/filesystem.hpp>
+#endif
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
