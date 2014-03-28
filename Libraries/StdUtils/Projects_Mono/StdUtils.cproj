@@ -33,6 +33,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread-mt</Lib>
       </Libs>
     </Libs>
     <CustomCommands>

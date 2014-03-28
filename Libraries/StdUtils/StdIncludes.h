@@ -57,12 +57,13 @@
 #include <memory.h>
 #include <algorithm>
 #include <string.h>
+#include <atomic>
 //using namespace std;
 
 #include <boost/thread.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/atomic.hpp>
+//#include <boost/atomic.hpp>
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
