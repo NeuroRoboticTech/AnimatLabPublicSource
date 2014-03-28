@@ -38,6 +38,7 @@
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_vc10D</Lib>
+        <Lib>boost_thread-mt</Lib>
       </Libs>
     </Libs>
     <CustomCommands>

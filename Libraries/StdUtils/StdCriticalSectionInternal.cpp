@@ -50,10 +50,10 @@ an instance of CStdCriticalSection from other threads
 
 \param	plBusy	The busy flag. 
 **/
-CStdCriticalSectionInternal::InternalLocker::InternalLocker(boost::atomic<LockState> &iBusy) :
+CStdCriticalSectionInternal::InternalLocker::InternalLocker(std::atomic<int> &iBusy) :
    m_iBusy(iBusy)
 {
-   while (m_iBusy.exchange(Locked, boost::memory_order_acquire) == Locked)
+   while (m_iBusy.exchange(Locked, std::memory_order_acquire) == Locked)
    {
 	   #ifdef WIN32
 	   		Sleep(0);
@@ -75,7 +75,7 @@ class gained.
 **/
 CStdCriticalSectionInternal::InternalLocker::~InternalLocker()
 {
-   m_iBusy.exchange(Unlocked, boost::memory_order_acquire);
+   m_iBusy.exchange(Unlocked, std::memory_order_acquire);
 }
 
 /**

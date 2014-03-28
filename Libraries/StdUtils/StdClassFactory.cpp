@@ -90,8 +90,11 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 
 	//If the module name already has .so in it then do not modfiy it.
 	std::string strModRenamed = strModuleName;
-	if(Std_ToLower(strModuleName).find(".so") == -1)  
+	if(Std_ToLower(strModuleName).find(".so") == -1)
+	{  
 		strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
+		strModRenamed = Std_Replace(strModRenamed, "VC10", "vc10");
+	}
 	
 	void *hMod = NULL;
 

@@ -52,7 +52,7 @@ class CStdCriticalSectionInternal : public CStdCriticalSection
 protected:
 
     /// Tells if this critical section is currently being used.
-    boost::atomic<LockState> m_iBusy;
+    std::atomic<int> m_iBusy;
 
     boost::thread::id m_dwOwner;
 
@@ -113,7 +113,7 @@ protected:
       const InternalLocker& operator=(const InternalLocker& src);
 
 	  /// Tells if this is busy.
-	  boost::atomic<LockState> &m_iBusy;
+	  std::atomic<int> &m_iBusy;
    public:
 
       /**
@@ -124,7 +124,7 @@ protected:
       
       \param	plBusy	The pl busy. 
       **/
-      explicit InternalLocker(boost::atomic<LockState> &iBusy);
+      explicit InternalLocker(std::atomic<int> &iBusy);
 
 	  /**
 	  \brief	Finaliser.

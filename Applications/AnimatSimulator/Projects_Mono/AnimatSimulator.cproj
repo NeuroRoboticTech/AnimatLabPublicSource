@@ -61,7 +61,6 @@
         <Include>../../../../Libraries/AnimatSim</Include>
         <Include>../../../../Libraries/OsgAnimatSim</Include>
         <Include>../../../../Libraries/BulletAnimatSim</Include>
-        <Include>/usr/local/include/bullet</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -77,7 +76,15 @@
         <Lib>StdUtils_vc10D</Lib>
         <Lib>AnimatSim_vc10D</Lib>
         <Lib>OsgAnimatSim_vc10D</Lib>
-        <Lib>BulletAnimatSim_vc10D</Lib>
+        <Lib>BulletAnimatSim_vc10D_single</Lib>
+        <Lib>osgbDynamics_single_debug</Lib>
+        <Lib>osgbCollision_single_debug</Lib>
+        <Lib>osgwControls_animat_debug</Lib>
+        <Lib>osgwQuery_animat_debug</Lib>
+        <Lib>osgwTools_animat_debug</Lib>
+        <Lib>BulletCollision_single_debug</Lib>
+        <Lib>BulletDynamics_single_debug</Lib>
+        <Lib>LinearMath_single_debug</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -85,7 +92,7 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>-Library libBulletAnimatSim_vc10D_single.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPrivateSource/Experiment/StandAloneSimTest/Bullet_Single_x32.asim"</Commandlineparameters>
+    <Commandlineparameters>-Library libBulletAnimatSim_vc10D_single.so -Project "/home/david/AnimatLabSDK/AnimatLabPrivateSource/Experiment/StandAloneSimTest/Bullet_Single_x32_Debug.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>

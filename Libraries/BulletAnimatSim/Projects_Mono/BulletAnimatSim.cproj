@@ -24,18 +24,16 @@
     <Includes>
       <Includes>
         <Include>../../../../include</Include>
-        <Include>../../../../../3rdParty/osgWorks_03_00_00/include</Include>
-        <Include>/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src</Include>
-        <Include>../../../../../3rdParty/osgBullet_03_00_00/include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
         <Include>../../../OsgAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
+        <Include>../../../../../../3rdParty/boost_1_54_0</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>../../../../bin</LibPath>
-        <LibPath>../../../../../3rdParty/osgBullet_03_00_00/bin/lib/x86_64-linux-gnu</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -62,6 +60,9 @@
         <Lib>osgWidget</Lib>
         <Lib>osgbDynamics_single_debug</Lib>
         <Lib>osgbCollision_single_debug</Lib>
+        <Lib>osgwControls_animat_debug</Lib>
+        <Lib>osgwQuery_animat_debug</Lib>
+        <Lib>osgwTools_animat_debug</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
