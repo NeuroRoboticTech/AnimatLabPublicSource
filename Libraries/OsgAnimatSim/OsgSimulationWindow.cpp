@@ -236,6 +236,7 @@ void OsgSimulationWindow::InitEmbedded(Simulator *lpSim, OsgSimulator *lpVsSim)
 #endif
 }
 
+/*
 void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim)
 {
 
@@ -249,7 +250,8 @@ void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim
     m_osgViewer->addEventHandler(lpHandler);
 
     // Create the window and run the threads.
-    m_osgViewer->setUpViewInWindow(m_ptPosition.x, m_ptPosition.y, m_ptSize.x, m_ptSize.y);
+    //m_osgViewer->apply(new osgViewer::SingleScreen(0)); 
+    //m_osgViewer->setUpViewInWindow(m_ptPosition.x, m_ptPosition.y, m_ptSize.x, m_ptSize.y);
 
 	CStdColor *vColor = lpSim->BackgroundColor();
 	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
@@ -262,25 +264,56 @@ void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim
 	// set mask for upper camera
 	m_osgViewer->getCamera()->setInheritanceMask(inheritanceMask);
 	m_osgViewer->getCamera()->setCullMask(0x1);
-/*
-	m_osgStatsHandler = new VsStatsHandler;
-	m_osgStatsHandler->setStatsHandler(osgViewer::StatsHandler::StatsType::FRAME_RATE);
-	m_osgViewer->addEventHandler( m_osgStatsHandler );*/
 
 	m_osgViewer->realize();
+}
+*/
 
-	// correct aspect ratio
-	//double fovy,aspectRatio,z1,z2;
+void OsgSimulationWindow::InitStandalone(Simulator *lpSim, OsgSimulator *lpVsSim)
+{
+    // create the window to draw to.
+    osg::ref_ptr<osg::GraphicsContext::Traits> traits = new osg::GraphicsContext::Traits;
+    traits->x = 200;
+    traits->y = 200;
+    traits->width = 800;
+    traits->height = 600;
+    traits->windowDecoration = true;
+    traits->doubleBuffer = true;
+    traits->sharedContext = 0;
 
-	//m_osgViewer->getCamera()->getProjectionMatrixAsPerspective(fovy,aspectRatio, z1,z2);
-	//aspectRatio=double(traits->width)/double(traits->height);
-	//m_osgViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
+    osg::ref_ptr<osg::GraphicsContext> gc = osg::GraphicsContext::createGraphicsContext(traits.get());
+    osgViewer::GraphicsWindow* gw = dynamic_cast<osgViewer::GraphicsWindow*>(gc.get());
+    if (!gw)
+    {
+        osg::notify(osg::NOTICE)<<"Error: unable to create graphics window."<<std::endl;
+		THROW_ERROR(Osg_Err_lUnableToConvertToVsSimulator, Osg_Err_strUnableToConvertToVsSimulator);
+    }
+	gw->setWindowName("AnimatSimulator");
 
-	/*osgViewer::Viewer::Windows windows;
-    m_osgViewer->getWindows(windows);
-    m_osgViewer->stopThreading();
-    windows[0]->setWindowName("AnimatSimulator");
-    m_osgViewer->startThreading();*/
+ 	m_osgViewer = new osgViewer::Viewer;
+
+    //m_osgManip = new osgGA::TrackballManipulator;
+	m_osgManip = new OsgCameraManipulator(lpSim, m_osgViewer.get());
+	m_osgViewer->setCameraManipulator(m_osgManip.get());
+
+	osgGA::GUIEventHandler *lpHandler = new OsgDraggerHandler(lpSim, m_osgViewer.get());
+    m_osgViewer->addEventHandler(lpHandler);
+
+	CStdColor *vColor = lpSim->BackgroundColor();
+    m_osgViewer->getCamera()->setGraphicsContext(gc.get());
+	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
+	m_osgViewer->setSceneData(lpVsSim->OSGRoot());
+    m_osgViewer->getCamera()->setViewport(0,0,800,600);
+
+	int inheritanceMask = 
+	  (osgUtil::SceneView::VariablesMask::ALL_VARIABLES &
+	  ~osgUtil::SceneView::VariablesMask::CULL_MASK);
+
+	// set mask for upper camera
+	m_osgViewer->getCamera()->setInheritanceMask(inheritanceMask);
+	m_osgViewer->getCamera()->setCullMask(0x1);
+
+	m_osgViewer->realize();
 }
 
 void OsgSimulationWindow::Initialize()
