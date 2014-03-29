@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BE7F6820-8026-B342-ABAF-FB0B2C327501}</ProjectGuid>
+    <ProjectGuid>{360F40E4-6594-5A49-A30A-A66B55A17DA3}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10D.so</OutputName>
@@ -48,8 +47,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libVortexAnimatSim_vc10.so</OutputName>
@@ -91,9 +89,6 @@
     </None>
     <None Include="..\OsgLinearPath.h">
       <Link>OsgLinearPath.h</Link>
-    </None>
-    <None Include="..\OsgTrackballManipulator.h">
-      <Link>OsgTrackballManipulator.h</Link>
     </None>
     <None Include="..\StdAfx.h">
       <Link>StdAfx.h</Link>
@@ -218,9 +213,6 @@
     <None Include="..\VsOrganism.h">
       <Link>VsOrganism.h</Link>
     </None>
-    <None Include="..\VsOsgGeometry.h">
-      <Link>VsOsgGeometry.h</Link>
-    </None>
     <None Include="..\VsOsgUserData.h">
       <Link>VsOsgUserData.h</Link>
     </None>
@@ -294,9 +286,6 @@
     </Compile>
     <Compile Include="..\OsgLinearPath.cpp">
       <Link>OsgLinearPath.cpp</Link>
-    </Compile>
-    <Compile Include="..\OsgTrackballManipulator.cpp">
-      <Link>OsgTrackballManipulator.cpp</Link>
     </Compile>
     <Compile Include="..\StdAfx.cpp">
       <Link>StdAfx.cpp</Link>
@@ -423,9 +412,6 @@
     </Compile>
     <Compile Include="..\VsOrganism.cpp">
       <Link>VsOrganism.cpp</Link>
-    </Compile>
-    <Compile Include="..\VsOsgGeometry.cpp">
-      <Link>VsOsgGeometry.cpp</Link>
     </Compile>
     <Compile Include="..\VsOsgUserData.cpp">
       <Link>VsOsgUserData.cpp</Link>

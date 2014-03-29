@@ -17,8 +17,6 @@ TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\Libraries\StdUtils</Include>" "<Include>../Libraries/StdUtils</Include>"
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\Libraries\AnimatSim</Include>" "<Include>../Libraries/AnimatSim</Include>"
-TIMEOUT /T 2
-..\..\..\bin\fart *.cproj "<Include>..\Libraries\RoboticsAnimatSim</Include>" "<Include>../Libraries/RoboticsAnimatSim</Include>"
 
 
 @pause
