@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{13BABA77-CAE4-E64B-B3D2-E192708D390D}</ProjectGuid>
+    <ProjectGuid>{230F2230-FFFB-A84E-8093-0DB0D8C8E941}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -17,8 +17,7 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -33,7 +32,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader_vc10D</Lib>
+        <Lib>BootstrapLoader_debug</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -43,63 +42,12 @@
         <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>-Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Static|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <DefineSymbols>_DEBUG ANIMAT_STATIC</DefineSymbols>
-    <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulatorD</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
-    <CompileTarget>Bin</CompileTarget>
-    <Externalconsole>true</Externalconsole>
-    <Includes>
-      <Includes>
-        <Include>../../../../include</Include>
-        <Include>../../../../Libraries/StdUtils</Include>
-        <Include>../../../../Libraries/AnimatSim</Include>
-        <Include>../../../../Libraries/OsgAnimatSim</Include>
-        <Include>../../../../Libraries/BulletAnimatSim</Include>
-      </Includes>
-    </Includes>
-    <LibPaths>
-      <LibPaths>
-        <LibPath>../../../../bin</LibPath>
-      </LibPaths>
-    </LibPaths>
-    <Libs>
-      <Libs>
-        <Lib>BootstrapLoader_vc10D</Lib>
-        <Lib>dl</Lib>
-        <Lib>pthread</Lib>
-        <Lib>StdUtils_vc10D</Lib>
-        <Lib>AnimatSim_vc10D</Lib>
-        <Lib>OsgAnimatSim_vc10D</Lib>
-        <Lib>BulletAnimatSim_vc10D_single</Lib>
-        <Lib>osgbDynamics_single_debug</Lib>
-        <Lib>osgbCollision_single_debug</Lib>
-        <Lib>osgwControls_animat_debug</Lib>
-        <Lib>osgwQuery_animat_debug</Lib>
-        <Lib>osgwTools_animat_debug</Lib>
-        <Lib>BulletCollision_single_debug</Lib>
-        <Lib>BulletDynamics_single_debug</Lib>
-        <Lib>LinearMath_single_debug</Lib>
-      </Libs>
-    </Libs>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
-      </CustomCommands>
-    </CustomCommands>
-    <Commandlineparameters>-Library libBulletAnimatSim_vc10D_single.so -Project "/home/david/AnimatLabSDK/AnimatLabPrivateSource/Experiment/StandAloneSimTest/Bullet_Single_x32_Debug.asim"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>AnimatSimulator</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -115,7 +63,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader_vc10</Lib>
+        <Lib>BootstrapLoader</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -125,7 +73,132 @@
         <Command type="AfterBuild" command="cp Release/AnimatSimulator ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>-Library libBulletAnimatSim_vc10.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"</Commandlineparameters>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>BootstrapLoader_debug</Lib>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>AnimatSimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>BootstrapLoader</Lib>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/AnimatSimulator ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Static|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <DefineSymbols>_DEBUG OSGBULLET_STATIC ANIMAT_STATIC</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>AnimatSimulatorD</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>..\..\..\..\Libraries\StdUtils</Include>
+        <Include>..\..\..\..\Libraries\AnimatSim</Include>
+        <Include>..\..\..\..\Libraries\OsgAnimatSim</Include>
+        <Include>..\..\..\..\Libraries\BulletAnimatSim</Include>
+        <Include>\usr\local\include\bullet</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>BootstrapLoader_debug</Lib>
+        <Lib>dl</Lib>
+        <Lib>pthread</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>OsgAnimatSim_debug</Lib>
+        <Lib>OpenThreadsd</Lib>
+        <Lib>osgAnimationd</Lib>
+        <Lib>osgd</Lib>
+        <Lib>osgDBd</Lib>
+        <Lib>osgFXd</Lib>
+        <Lib>osgGAd</Lib>
+        <Lib>osgManipulatord</Lib>
+        <Lib>osgParticled</Lib>
+        <Lib>osgShadowd</Lib>
+        <Lib>osgSimd</Lib>
+        <Lib>osgTerraind</Lib>
+        <Lib>osgTextd</Lib>
+        <Lib>osgUtild</Lib>
+        <Lib>osgViewerd</Lib>
+        <Lib>osgVolumed</Lib>
+        <Lib>osgWidgetd</Lib>
+        <Lib>osgbDynamics_single_debug</Lib>
+        <Lib>osgbCollision_single_debug</Lib>
+        <Lib>osgwControls_animat_debug</Lib>
+        <Lib>osgwQuery_animat_debug</Lib>
+        <Lib>osgwTools_animat_debug</Lib>
+        <Lib>BulletCollision_single_debug</Lib>
+        <Lib>BulletDynamics_single_debug</Lib>
+        <Lib>LinearMath_single_debug</Lib>
+        <Lib>BulletSoftBody_single_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/AnimatSimulatorD ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\StdAfx.h">

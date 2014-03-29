@@ -1,21 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{13BABA77-CAE4-E64B-B3D2-E192708D390D}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{230F2230-FFFB-A84E-8093-0DB0D8C8E941}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
-		Debug_Static|AnyCPU = Debug_Static|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
+		Debug_Static|AnyCPU = Debug_Static|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{13BABA77-CAE4-E64B-B3D2-E192708D390D}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
+		{230F2230-FFFB-A84E-8093-0DB0D8C8E941}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
