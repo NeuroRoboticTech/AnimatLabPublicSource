@@ -57,7 +57,16 @@
 #include <memory.h>
 #include <algorithm>
 #include <string.h>
-#include <atomic>
+
+//Std atomic not included until VS2012, but I need it in linux
+//because I need to use boost 1.48 and boost::atomic is not included
+//until later.
+#ifdef WIN32
+    #include <boost/atomic.hpp>
+#else
+    #include <atomic>
+#endif
+
 //using namespace std;
 
 #include <boost/thread.hpp>

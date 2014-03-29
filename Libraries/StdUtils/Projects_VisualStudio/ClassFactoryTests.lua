@@ -5,8 +5,10 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../include", 
-					  "../../StdUtils" }	  
-		libdirs { "../../../lib" }
+					  "../../StdUtils", 
+					  "../../../../3rdParty/boost_1_54_0" }	  
+		libdirs { "../../../lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 		links { "StdUtils" }
 	  
 		configuration { "Debug or Debug_Double", "windows" }

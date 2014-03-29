@@ -9,21 +9,22 @@
 				"pthread",
 				"boost_system", 
 				"boost_filesystem",
-				"boost_unit_test_framework" }
+				"boost_unit_test_framework",
+				"boost_thread-mt" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("StdUtils_vc10D")
-			postbuildcommands { "cp Debug/libStdUtils_vc10D.so ../../../bin" }
+			targetname ("StdUtils_debug")
+			postbuildcommands { "cp Debug/libStdUtils_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "STDUTILS_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("StdUtils_vc10")
-			postbuildcommands { "cp Release/libStdUtils_vc10.so ../../../bin" }
+			targetname ("StdUtils")
+			postbuildcommands { "cp Release/libStdUtils.so ../../../bin" }
 
 	project "StdClassFactoryTester"
 		language "C++"
@@ -59,14 +60,15 @@
 		libdirs { "../../../../bin" }
 		links { "boost_system", 
 				"boost_filesystem",
-				"boost_unit_test_framework" }
+				"boost_unit_test_framework",
+				"boost_thread-mt" }
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("StdUtils_UnitTests")
-			links { "StdUtils_vc10D" }
+			links { "StdUtils_debug" }
 			postbuildcommands { "cp Debug/StdUtils_UnitTests ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
@@ -74,6 +76,6 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("StdUtils_UnitTests")
-			links { "StdUtils_vc10" }
+			links { "StdUtils" }
 			postbuildcommands { "cp Release/StdUtils_UnitTests ../../../bin" }
 						

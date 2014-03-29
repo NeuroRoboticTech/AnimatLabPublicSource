@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{431DE0E8-1BE7-3F4A-B7C9-AFE0CE16F89E}</ProjectGuid>
+    <ProjectGuid>{58BF694F-4F5D-CD4F-B7C3-C1AE56FF85F5}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,10 +14,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10D.so</OutputName>
+    <OutputName>libBootstrapLoader_debug.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -38,15 +38,15 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_debug.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10.so</OutputName>
+    <OutputName>libBootstrapLoader.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -68,16 +68,16 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libBootstrapLoader.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10D.so</OutputName>
+    <OutputName>libBootstrapLoader_debug.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -98,15 +98,15 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libBootstrapLoader_debug.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG BOOTSTRAPLOADER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBootstrapLoader_vc10.so</OutputName>
+    <OutputName>libBootstrapLoader.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -128,7 +128,7 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libBootstrapLoader_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libBootstrapLoader.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

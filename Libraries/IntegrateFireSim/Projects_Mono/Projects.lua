@@ -14,16 +14,16 @@
 			defines { "_DEBUG", "REALISTICNEURALNET_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("IntegrateFireSim_vc10D")
-			links { "StdUtils_vc10D", 
-					"AnimatSim_vc10D"}
-			postbuildcommands { "cp Debug/libIntegrateFireSim_vc10D.so ../../../bin" }
+			targetname ("IntegrateFireSim_debug")
+			links { "StdUtils_debug", 
+					"AnimatSim_debug"}
+			postbuildcommands { "cp Debug/libIntegrateFireSim_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "REALISTICNEURALNET_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("IntegrateFireSim_vc10")
-			links { "StdUtils_vc10",
-					"AnimatSim_vc10"}
-			postbuildcommands { "cp Release/libIntegrateFireSim_vc10.so ../../../bin" }
+			targetname ("IntegrateFireSim")
+			links { "StdUtils",
+					"AnimatSim"}
+			postbuildcommands { "cp Release/libIntegrateFireSim.so ../../../bin" }

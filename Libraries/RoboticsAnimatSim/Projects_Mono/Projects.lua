@@ -14,22 +14,22 @@
 			defines { "_DEBUG", "ROBOTICSANIMATLIBRARY_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("RoboticsAnimatSim_vc10D")
-			links { "StdUtils_vc10D", 
-				"AnimatSim_vc10D",
+			targetname ("RoboticsAnimatSim_debug")
+			links { "StdUtils_debug", 
+				"AnimatSim_debug",
 				"OpenThreads" }
-			postbuildcommands { "cp Debug/libRoboticsAnimatSim_vc10D.so ../../../bin" }
+			postbuildcommands { "cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "ROBOTICSANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("RoboticsAnimatSim_vc10")
-			links { "StdUtils_vc10",
-				"AnimatSim_vc10", 
-				"OsgAnimatSim_vc10",
+			targetname ("RoboticsAnimatSim")
+			links { "StdUtils",
+				"AnimatSim", 
+				"OsgAnimatSim",
 				"OpenThreads"}					
-			postbuildcommands { "cp Release/libBulletAnimatSim_vc10.so ../../../bin" }
+			postbuildcommands { "cp Release/libBulletAnimatSim.so ../../../bin" }
 
 
 	project "Robotics_UnitTests"
@@ -51,15 +51,15 @@
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG" }
 			flags   { "Symbols", "SEH" }
-			links { "StdUtils_vc10D", 
-				"AnimatSim_vc10D",
+			links { "StdUtils_debug", 
+				"AnimatSim_debug",
 				"OpenThreads"}
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
-			links { "StdUtils_vc10",
-				"AnimatSim_vc10",
+			links { "StdUtils",
+				"AnimatSim",
 				"OpenThreads"}					
 					
 

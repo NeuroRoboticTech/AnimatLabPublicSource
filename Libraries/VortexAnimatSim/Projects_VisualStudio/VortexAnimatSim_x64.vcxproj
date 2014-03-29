@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{67224912-2C47-5548-B868-20E157AB054C}</ProjectGuid>
+		<ProjectGuid>{013FCED1-D3DC-E043-BF45-06812666C740}</ProjectGuid>
 		<RootNamespace>VortexAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

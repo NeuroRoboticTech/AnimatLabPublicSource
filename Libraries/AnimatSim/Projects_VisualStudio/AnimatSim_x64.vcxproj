@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{C475969F-A3B8-424A-9752-4580A66B4361}</ProjectGuid>
+		<ProjectGuid>{775A6F8C-E8C7-4844-BDA8-E3C92C25BED8}</ProjectGuid>
 		<RootNamespace>AnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

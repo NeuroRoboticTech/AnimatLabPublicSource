@@ -14,9 +14,9 @@
 			defines { "_DEBUG", "OSGANIMATLIBRARY_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("OsgAnimatSim_vc10D")
-			links { "StdUtils_vc10D", 
-				"AnimatSim_vc10D",
+			targetname ("OsgAnimatSim_debug")
+			links { "StdUtils_debug", 
+				"AnimatSim_debug",
 				"OpenThreads", 
 				"osgAnimation", 
 				"osg", 
@@ -34,15 +34,15 @@
 				"osgVolume", 
 				"osgWidget" }
 
-			postbuildcommands { "cp Debug/libOsgAnimatSim_vc10D.so ../../../bin" }
+			postbuildcommands { "cp Debug/libOsgAnimatSim_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "OSGANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("OsgAnimatSim_vc10")
-			links { "StdUtils_vc10",
-				"AnimatSim_vc10", 
+			targetname ("OsgAnimatSim")
+			links { "StdUtils",
+				"AnimatSim", 
 				"OpenThreads",
 				"osgAnimation",
 				"osg",
@@ -59,4 +59,4 @@
 				"osgViewer",
 				"osgVolume",
 				"osgWidget" }
-			postbuildcommands { "cp Release/libOsgAnimatSim_vc10.so ../../../bin" }
+			postbuildcommands { "cp Release/libOsgAnimatSim.so ../../../bin" }

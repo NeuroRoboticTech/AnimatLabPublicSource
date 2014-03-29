@@ -6,6 +6,14 @@ cd media/Ubuntu_Data/Projects/AnimatLabSDK
 installed openscengraph-3.0.1.2 from synaptics
 (Need to test it)
 
+libopenscenegraph-dev 
+libopenscenegraph80 
+openscenegraph 
+openscenegraph-doc 
+openscenegraph-examples 
+libopenthreads-dev 
+libopenthreads14 
+
 Tried to build boost_1_54, but got command not found error. Found out that I need to get the source from the tarball instead of the zip because it keeps the linux permissions. Other option was to use chmod 755 bootstrap.sh to change permissions.
 
 tried to build boost using the following command and got this error
@@ -311,5 +319,25 @@ I tried a different method of opening the graphics window that was in one of the
 
 
 Installing virtualbox on my system to test creating debian packages.
+
+
+STARTING WITH VIRTUAL MACHINE (off of base_install)
+Install synaptics from software center
+
+Setup video drivers
+http://www.dedoimedo.com/computers/ubuntu-quetzal-nvidia.html
+
+sudo apt-get install build-essential linux-source
+(I tried this with linux-headers, but it always failes. Do this first and then get the headers.)
+sudo apt-get install linux-headers-`uname -r`
+
+(Install current nvidia drivers.)
+sudo apt-get install nvidia-current
+
+(REBOOT)
+
+(Test if it is installed.)
+sudo /sbin/lsmod | grep nvidia
+For some reason this did not show nvidia as being configured for the virtual machine. I am not sure if that is because it is a virtual machine or if there. I ran jockey and it showed only x86 virtualization solution - guest addition module source for dkms. I activated that to see what would happen. 
 
 

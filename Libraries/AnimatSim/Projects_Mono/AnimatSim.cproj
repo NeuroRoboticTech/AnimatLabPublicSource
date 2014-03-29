@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{025C75E7-FEEF-5744-868C-1A32076334BC}</ProjectGuid>
+    <ProjectGuid>{CCD3DF0E-CC5F-1448-8670-6C6422DBB41D}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,11 +14,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libAnimatSim_vc10D.so</OutputName>
+    <OutputName>libAnimatSim_debug.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -35,21 +34,20 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10D</Lib>
+        <Lib>StdUtils_debug</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libAnimatSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libAnimatSim_debug.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libAnimatSim_vc10.so</OutputName>
+    <OutputName>libAnimatSim.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -67,22 +65,21 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10</Lib>
+        <Lib>StdUtils</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libAnimatSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libAnimatSim.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libAnimatSim_vc10D.so</OutputName>
+    <OutputName>libAnimatSim_debug.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -99,21 +96,20 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10D</Lib>
+        <Lib>StdUtils_debug</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libAnimatSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libAnimatSim_debug.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libAnimatSim_vc10.so</OutputName>
+    <OutputName>libAnimatSim.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -131,12 +127,12 @@
     <Libs>
       <Libs>
         <Lib>dl</Lib>
-        <Lib>StdUtils_vc10</Lib>
+        <Lib>StdUtils</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libAnimatSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libAnimatSim.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

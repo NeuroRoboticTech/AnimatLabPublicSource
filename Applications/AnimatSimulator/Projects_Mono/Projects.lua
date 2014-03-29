@@ -7,12 +7,12 @@
 		includedirs { "../../../../include" }
 		libdirs { "../../../../bin" }
 	  
-		configuration { "Debug", "linux" }
+		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG"}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("AnimatSimulatorD")
-			links { "BootstrapLoader_vc10D", "dl", "pthread" }
+			links { "BootstrapLoader_debug", "dl", "pthread" }
 			postbuildcommands { "cp Debug/AnimatSimulatorD ../../../bin" }
 	  
 		configuration { "Debug_Static", "linux" }
@@ -25,12 +25,12 @@
 				      "../../../../Libraries/OsgAnimatSim",
 				      "../../../../Libraries/BulletAnimatSim",
 				      "/usr/local/include/bullet" }
-			links { "BootstrapLoader_vc10D", 
+			links { "BootstrapLoader_debug", 
 				"dl", 
 				"pthread",
-				"StdUtils_vc10D", 
-				"AnimatSim_vc10D",
-				"OsgAnimatSim_vc10D",
+				"StdUtils_debug", 
+				"AnimatSim_debug",
+				"OsgAnimatSim_debug",
 				"OpenThreadsd", 
 				"osgAnimationd", 
 				"osgd", 
@@ -47,21 +47,21 @@
 				"osgViewerd", 
 				"osgVolumed", 
 				"osgWidgetd",
-				"osgbDynamicsd",
-				"osgbCollisiond",
-				"osgwControlsd",
-				"osgwQueryd",
-				"osgwToolsd",
-				"BulletDynamics_debug",
-				"BulletCollision_debug",
-				"LinearMath_debug",
-				"BulletSoftBody_debug"}
+				"osgbDynamics_single_debug",
+				"osgbCollision_single_debug",
+				"osgwControls_animat_debug",
+				"osgwQuery_animat_debug",
+				"osgwTools_animat_debug",
+				"BulletCollision_single_debug",
+				"BulletDynamics_single_debug",
+				"LinearMath_single_debug",
+				"BulletSoftBody_single_debug"}
 			postbuildcommands { "cp Debug/AnimatSimulatorD ../../../bin" }
 	 
-		configuration { "Release", "linux" }
+		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("AnimatSimulator")
-			links { "BootstrapLoader_vc10", "dl", "pthread" }
+			links { "BootstrapLoader", "dl", "pthread" }
 			postbuildcommands { "cp Release/AnimatSimulator ../../../bin" }

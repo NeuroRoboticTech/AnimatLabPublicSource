@@ -52,17 +52,15 @@ class CStdCriticalSectionInternal : public CStdCriticalSection
 protected:
 
     /// Tells if this critical section is currently being used.
+#ifdef WIN32
+    boost::atomic<LockState> m_iBusy;
+#else
     std::atomic<int> m_iBusy;
+#endif
 
     boost::thread::id m_dwOwner;
 
     bool m_bOwned;
-
-    ///// Tells if this critical section is currently being used.
-    //LONG  m_lBusy;
-
-    ///// The current owner of this critical section.
-    //DWORD m_dwOwner;
 
     /// The number of reference counts to this critical section.
     ULONG m_ulRefCnt;
@@ -113,7 +111,12 @@ protected:
       const InternalLocker& operator=(const InternalLocker& src);
 
 	  /// Tells if this is busy.
+#ifdef WIN32
+	  boost::atomic<LockState> &m_iBusy;
+#else
 	  std::atomic<int> &m_iBusy;
+#endif
+
    public:
 
       /**
@@ -124,8 +127,11 @@ protected:
       
       \param	plBusy	The pl busy. 
       **/
+#ifdef WIN32
+      explicit InternalLocker(boost::atomic<LockState> &iBusy);
+#else
       explicit InternalLocker(std::atomic<int> &iBusy);
-
+#endif
 	  /**
 	  \brief	Finaliser.
 	  
