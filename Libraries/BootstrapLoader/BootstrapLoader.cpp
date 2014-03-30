@@ -119,7 +119,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 
 	if(strlen(strLibrary) == 0)
 		throw "No library was specified on the command line.";
-
+	
 	void *hMod = NULL;
 
 	hMod = dlopen(strLibrary, RTLD_LAZY);
@@ -127,6 +127,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 	if(!hMod)
 	{
 		sprintf(strError, "Unable to load the library module named '%s'. Error: %s", strLibrary, dlerror());
+		cout << strError << "\r\n\r\n";
 		throw strError;
 	}
 

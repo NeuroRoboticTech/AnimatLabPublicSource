@@ -84,7 +84,7 @@
 			defines { "NDEBUG", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("BulletAnimatSim")
+			targetname ("BulletAnimatSim_single")
 			links { "StdUtils",
 				"AnimatSim", 
 				"OsgAnimatSim",
@@ -106,14 +106,13 @@
 				"osgWidget",
 				"osgbDynamics_single",
 				"osgbCollision_single",
-				"osgwQuery_single",
-				"osgwTools_single",
+				"osgwQuery_animat",
+				"osgwTools_animat",
 				"BulletCollision_single",
 				"BulletDynamics_single",
 				"LinearMath_single",
 				"BulletSoftBody_single" }					
-			postbuildcommands { "cp Release/libBulletAnimatSim.so ../../../bin", 
-					    "cp Release/libBulletAnimatSim.so ../../../unit_test_bin" }
+			postbuildcommands { "cp Release/libBulletAnimatSim_single.so ../../../bin" }
 
 		configuration { "Release_Double", "linux" }
 			defines { "_DEBUG", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS", "BT_USE_DOUBLE_PRECISION" }
@@ -141,11 +140,11 @@
 				"osgWidget",
 				"osgbDynamics_double",
 				"osgbCollision_double",
-				"osgwQuery_double",
-				"osgwTools_double",
+				"osgwQuery_animat",
+				"osgwTools_animat",
 				"BulletCollision_double",
 				"BulletDynamics_double",
 				"LinearMath_double",
 				"BulletSoftBody_double" }
-			postbuildcommands { "cp Debug/libBulletAnimatSim_double.so ../../../bin" }
+			postbuildcommands { "cp Release/libBulletAnimatSim_double.so ../../../bin" }
 

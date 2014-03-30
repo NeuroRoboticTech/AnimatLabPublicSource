@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -47,7 +48,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -71,7 +73,7 @@
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
         <Lib>boost_thread-mt</Lib>
-        <Lib>Release\libStdUtils.so</Lib>
+        <Lib>StdUtils</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -82,7 +84,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -115,7 +118,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>StdUtils_UnitTests</OutputName>
@@ -150,24 +154,24 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\StdUtils_UnitTests\stdafx.h">
-      <Link>StdUtils_UnitTests/stdafx.h</Link>
+      <Link>StdUtils_UnitTests\stdafx.h</Link>
     </None>
     <None Include="..\StdUtils_UnitTests\targetver.h">
-      <Link>StdUtils_UnitTests/targetver.h</Link>
+      <Link>StdUtils_UnitTests\targetver.h</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\StdUtils_UnitTests\ClassFactory_Tests.cpp">
-      <Link>StdUtils_UnitTests/ClassFactory_Tests.cpp</Link>
+      <Link>StdUtils_UnitTests\ClassFactory_Tests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\StdUtils_UnitTests.cpp">
-      <Link>StdUtils_UnitTests/StdUtils_UnitTests.cpp</Link>
+      <Link>StdUtils_UnitTests\StdUtils_UnitTests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\Tree_Tests.cpp">
-      <Link>StdUtils_UnitTests/Tree_Tests.cpp</Link>
+      <Link>StdUtils_UnitTests\Tree_Tests.cpp</Link>
     </Compile>
     <Compile Include="..\StdUtils_UnitTests\stdafx.cpp">
-      <Link>StdUtils_UnitTests/stdafx.cpp</Link>
+      <Link>StdUtils_UnitTests\stdafx.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>

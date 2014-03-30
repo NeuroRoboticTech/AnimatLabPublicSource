@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_single.so</OutputName>
@@ -73,10 +74,11 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libBulletAnimatSim.so</OutputName>
+    <OutputName>libBulletAnimatSim_single.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -118,8 +120,8 @@
         <Lib>osgWidget</Lib>
         <Lib>osgbDynamics_single</Lib>
         <Lib>osgbCollision_single</Lib>
-        <Lib>osgwQuery_single</Lib>
-        <Lib>osgwTools_single</Lib>
+        <Lib>osgwQuery_animat</Lib>
+        <Lib>osgwTools_animat</Lib>
         <Lib>BulletCollision_single</Lib>
         <Lib>BulletDynamics_single</Lib>
         <Lib>LinearMath_single</Lib>
@@ -128,14 +130,15 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim.so ../../../bin" />
-        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim.so ../../../unit_test_bin" />
+        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim_single.so ../../../bin" />
+        <Command type="AfterBuild" command="" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_double.so</OutputName>
@@ -195,7 +198,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_double.so</OutputName>
@@ -239,8 +243,8 @@
         <Lib>osgWidget</Lib>
         <Lib>osgbDynamics_double</Lib>
         <Lib>osgbCollision_double</Lib>
-        <Lib>osgwQuery_double</Lib>
-        <Lib>osgwTools_double</Lib>
+        <Lib>osgwQuery_animat</Lib>
+        <Lib>osgwTools_animat</Lib>
         <Lib>BulletCollision_double</Lib>
         <Lib>BulletDynamics_double</Lib>
         <Lib>LinearMath_double</Lib>
@@ -249,7 +253,7 @@
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Debug/libBulletAnimatSim_double.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim_double.so ../../../bin" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

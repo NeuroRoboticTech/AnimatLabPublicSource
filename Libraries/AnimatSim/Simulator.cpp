@@ -2734,9 +2734,7 @@ try
 #ifdef WIN32
 	int iFindDebug = Std_ToLower(strModuleName).find("_vc10d");
 #else
-	int iFindDebug = Std_ToLower(strModuleName).find("_vc10d");
-	if(iFindDebug == -1 )
-		iFindDebug = Std_ToLower(strModuleName).find("d.so");
+	int iFindDebug = Std_ToLower(strModuleName).find("_debug");
 #endif	
 
 #ifdef _DEBUG

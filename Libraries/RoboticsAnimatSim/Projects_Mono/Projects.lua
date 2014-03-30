@@ -29,7 +29,7 @@
 				"AnimatSim", 
 				"OsgAnimatSim",
 				"OpenThreads"}					
-			postbuildcommands { "cp Release/libBulletAnimatSim.so ../../../bin" }
+			postbuildcommands { "cp Release/libRoboticsAnimatSim.so ../../../bin" }
 
 
 	project "Robotics_UnitTests"
