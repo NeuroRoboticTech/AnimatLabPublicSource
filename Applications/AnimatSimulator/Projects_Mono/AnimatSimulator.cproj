@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D2EF7A6A-EFF2-AA44-BBB4-16178589DEAA}</ProjectGuid>
+    <ProjectGuid>{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -32,7 +32,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader_debug</Lib>
+        <Lib>AnimatBootstrapLoader_debug</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -63,7 +63,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader</Lib>
+        <Lib>AnimatBootstrapLoader</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -94,7 +94,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader_debug</Lib>
+        <Lib>AnimatBootstrapLoader_debug</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -125,7 +125,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader</Lib>
+        <Lib>AnimatBootstrapLoader</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -161,7 +161,7 @@
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>BootstrapLoader_debug</Lib>
+        <Lib>AnimatBootstrapLoader_debug</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
         <Lib>StdUtils_debug</Lib>
