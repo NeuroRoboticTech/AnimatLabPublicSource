@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B6CD613F-1983-EC42-936B-821937130991}</ProjectGuid>
+    <ProjectGuid>{9A62D19A-1663-AD49-B07B-0FAF1475B318}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libOsgAnimatSim_debug.so</OutputName>
@@ -63,8 +62,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libOsgAnimatSim.so</OutputName>
@@ -114,8 +112,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libOsgAnimatSim_debug.so</OutputName>
@@ -163,8 +160,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG OSGANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libOsgAnimatSim.so</OutputName>
