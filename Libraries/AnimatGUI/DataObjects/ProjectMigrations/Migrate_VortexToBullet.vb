@@ -66,7 +66,7 @@ Namespace DataObjects
 
                 Util.Application.AppStatusText = "Converting simulation nodes"
 
-                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "BulletAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & ".dll")
+                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", Util.Application.Physics.LibraryPrefix & "BulletAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension)
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 

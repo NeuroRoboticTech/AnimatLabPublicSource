@@ -21,6 +21,11 @@ Namespace DataObjects.Physical
             x64
         End Enum
 
+        Public Enum enumOperatingSystem
+            Windows
+            Linux
+        End Enum
+
 #End Region
 
 #Region " Attributes "
@@ -29,6 +34,8 @@ Namespace DataObjects.Physical
         Protected m_dtLibraryVersion As New TypeHelpers.DataTypeID(Me)
         Protected m_eBinaryMode As enumBinaryMode = enumBinaryMode.x32
         Protected m_aryAvailableBinarModes As New ArrayList
+        Protected m_aryAvailableOperatingSystems As New ArrayList
+        Protected m_eOperatingSystem As enumOperatingSystem = enumOperatingSystem.Windows
 
 #End Region
 
@@ -42,6 +49,55 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
+
+        Public Overridable ReadOnly Property LibraryPrefix() As String
+            Get
+                If m_eOperatingSystem = enumOperatingSystem.Windows Then
+                    Return ""
+                Else
+                    Return "lib"
+                End If
+
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property LibraryExtension() As String
+            Get
+                If m_eOperatingSystem = enumOperatingSystem.Windows Then
+                    Return ".dll"
+                Else
+                    Return ".so"
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property SimVCVersion() As String
+            Get
+                If m_eOperatingSystem = enumOperatingSystem.Windows Then
+                    Return "_VC" & Util.Application.SimVCVersion
+                Else
+                    Return ""
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RuntimeModePrefix() As String
+            Get
+                If m_eOperatingSystem = enumOperatingSystem.Windows Then
+#If DEBUG Then
+                    Return "D"
+#Else
+                    Return ""
+#End If
+                Else
+#If DEBUG Then
+                    Return "_debug"
+#Else
+                    Return ""
+#End If
+                End If
+            End Get
+        End Property
 
         Public Overridable ReadOnly Property AvailableLibraryVersions As Collections.DataTypes
             Get
@@ -88,6 +144,21 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property AvailableBinaryModeTypes() As ArrayList
             Get
                 Return m_aryAvailableBinarModes
+            End Get
+        End Property
+
+        Public Overridable Property OperatingSystem() As enumOperatingSystem
+            Get
+                Return m_eOperatingSystem
+            End Get
+            Set(value As enumOperatingSystem)
+                m_eOperatingSystem = value
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property AvailableOperatingSystems() As ArrayList
+            Get
+                Return m_aryAvailableOperatingSystems
             End Get
         End Property
 

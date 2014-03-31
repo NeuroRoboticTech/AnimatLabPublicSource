@@ -52,6 +52,8 @@ Namespace Forms
         Friend WithEvents cboLibraryVersion As System.Windows.Forms.ComboBox
         Friend WithEvents lblBinaryType As System.Windows.Forms.Label
         Friend WithEvents chkShowGraphics As System.Windows.Forms.CheckBox
+        Friend WithEvents lblOS As System.Windows.Forms.Label
+        Friend WithEvents cboOS As System.Windows.Forms.ComboBox
         Friend WithEvents cboBinaryType As System.Windows.Forms.ComboBox
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
             Me.lblProjectName = New System.Windows.Forms.Label()
@@ -65,6 +67,8 @@ Namespace Forms
             Me.lblBinaryType = New System.Windows.Forms.Label()
             Me.cboBinaryType = New System.Windows.Forms.ComboBox()
             Me.chkShowGraphics = New System.Windows.Forms.CheckBox()
+            Me.lblOS = New System.Windows.Forms.Label()
+            Me.cboOS = New System.Windows.Forms.ComboBox()
             Me.SuspendLayout()
             '
             'lblProjectName
@@ -88,7 +92,7 @@ Namespace Forms
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(160, 228)
+            Me.btnCancel.Location = New System.Drawing.Point(160, 270)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 13
@@ -97,7 +101,7 @@ Namespace Forms
             'btnOk
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.btnOk.Location = New System.Drawing.Point(88, 228)
+            Me.btnOk.Location = New System.Drawing.Point(88, 270)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 12
@@ -162,17 +166,37 @@ Namespace Forms
             Me.chkShowGraphics.AutoSize = True
             Me.chkShowGraphics.Checked = True
             Me.chkShowGraphics.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.chkShowGraphics.Location = New System.Drawing.Point(89, 205)
+            Me.chkShowGraphics.Location = New System.Drawing.Point(89, 247)
             Me.chkShowGraphics.Name = "chkShowGraphics"
             Me.chkShowGraphics.Size = New System.Drawing.Size(135, 17)
             Me.chkShowGraphics.TabIndex = 20
             Me.chkShowGraphics.Text = "Show graphics window"
             Me.chkShowGraphics.UseVisualStyleBackColor = True
             '
+            'lblOS
+            '
+            Me.lblOS.Location = New System.Drawing.Point(12, 200)
+            Me.lblOS.Name = "lblOS"
+            Me.lblOS.Size = New System.Drawing.Size(280, 16)
+            Me.lblOS.TabIndex = 22
+            Me.lblOS.Text = "Operating System"
+            Me.lblOS.TextAlign = System.Drawing.ContentAlignment.TopCenter
+            '
+            'cboOS
+            '
+            Me.cboOS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboOS.FormattingEnabled = True
+            Me.cboOS.Location = New System.Drawing.Point(12, 217)
+            Me.cboOS.Name = "cboOS"
+            Me.cboOS.Size = New System.Drawing.Size(288, 21)
+            Me.cboOS.TabIndex = 21
+            '
             'ExportStandaloneSim
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(312, 260)
+            Me.ClientSize = New System.Drawing.Size(312, 302)
+            Me.Controls.Add(Me.lblOS)
+            Me.Controls.Add(Me.cboOS)
             Me.Controls.Add(Me.chkShowGraphics)
             Me.Controls.Add(Me.lblBinaryType)
             Me.Controls.Add(Me.cboBinaryType)
@@ -260,6 +284,20 @@ Namespace Forms
 
         End Sub
 
+        Public Sub SetOperatingSystem(ByVal strType As String)
+
+            Dim iIdx As Integer = 0
+            For Each strUnit As String In cboOS.Items
+                If strUnit = strType Then
+                    cboBinaryType.SelectedIndex = iIdx
+                    Return
+                End If
+
+                iIdx = iIdx + 1
+            Next
+
+        End Sub
+
         Protected Sub SetupLibraryVersions(ByVal doPhysics As Physical.PhysicsEngine)
 
             cboLibraryVersion.Items.Clear()
@@ -279,6 +317,12 @@ Namespace Forms
 
             If iSelIdx >= 0 Then
                 cboLibraryVersion.SelectedIndex = iSelIdx
+            End If
+
+            If cboLibraryVersion.Items.Count = 1 Then
+                cboLibraryVersion.Enabled = False
+            Else
+                cboLibraryVersion.Enabled = True
             End If
 
         End Sub
@@ -301,6 +345,40 @@ Namespace Forms
 
             If iSelIdx >= 0 Then
                 cboBinaryType.SelectedIndex = iSelIdx
+            End If
+
+            If cboBinaryType.Items.Count = 1 Then
+                cboBinaryType.Enabled = False
+            Else
+                cboBinaryType.Enabled = True
+            End If
+
+        End Sub
+
+        Protected Sub SetupOperatingSystems(ByVal doPhysics As Physical.PhysicsEngine)
+
+            cboOS.Items.Clear()
+
+            Dim iSelIdx As Integer = -1
+            Dim iIdx As Integer = 0
+            For Each eVal As Physical.PhysicsEngine.enumOperatingSystem In doPhysics.AvailableOperatingSystems
+                cboOS.Items.Add(eVal)
+
+                If eVal = m_doPhysics.OperatingSystem Then
+                    iSelIdx = iIdx
+                End If
+
+                iIdx = iIdx + 1
+            Next
+
+            If iSelIdx >= 0 Then
+                cboOS.SelectedIndex = iSelIdx
+            End If
+
+            If cboOS.Items.Count = 1 Then
+                cboOS.Enabled = False
+            Else
+                cboOS.Enabled = True
             End If
 
         End Sub
@@ -327,6 +405,7 @@ Namespace Forms
                 m_doPhysics.BinaryMode = DirectCast([Enum].Parse(GetType(Physical.PhysicsEngine.enumBinaryMode), cboBinaryType.SelectedItem.ToString(), True), Physical.PhysicsEngine.enumBinaryMode)
                 Dim dtData As DataType = DirectCast(cboLibraryVersion.SelectedItem, DataType)
                 m_doPhysics.SetLibraryVersion(dtData.ID, True)
+                m_doPhysics.OperatingSystem = DirectCast([Enum].Parse(GetType(Physical.PhysicsEngine.enumOperatingSystem), cboOS.SelectedItem.ToString(), True), Physical.PhysicsEngine.enumOperatingSystem)
 
                 Me.DialogResult = DialogResult.OK
                 Me.Close()
@@ -407,6 +486,7 @@ Namespace Forms
                 Dim doPhysics As Physical.PhysicsEngine = DirectCast(cboPhysicsEngine.SelectedItem, Physical.PhysicsEngine)
                 SetupLibraryVersions(doPhysics)
                 SetupBinaryTypes(doPhysics)
+                SetupOperatingSystems(doPhysics)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

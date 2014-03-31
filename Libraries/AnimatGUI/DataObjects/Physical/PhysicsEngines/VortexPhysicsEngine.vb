@@ -152,6 +152,8 @@ Namespace DataObjects.Physical.PhysicsEngines
             m_aryAvailableBinarModes.Add(enumBinaryMode.x32)
             m_aryAvailableBinarModes.Add(enumBinaryMode.x64)
 
+            m_aryAvailableOperatingSystems.Add(enumOperatingSystem.Windows)
+
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

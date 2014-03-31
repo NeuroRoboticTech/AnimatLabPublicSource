@@ -67,13 +67,15 @@
 						  "../../../../3rdParty/osgBullet_03_00_00/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../OsgAnimatSim"}	  
+						  "../../OsgAnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
 					  "../../../../3rdParty/osgWorks_03_00_00/lib",
 					  "../../../../3rdParty/Bullet-2.82/lib",
-					  "../../../../3rdParty/osgBullet_03_00_00/lib" }
+					  "../../../../3rdParty/osgBullet_03_00_00/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS", "BT_USE_DOUBLE_PRECISION", "_CRT_SECURE_NO_WARNINGS" }
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
@@ -119,13 +121,15 @@
 						  "../../../../3rdParty/osgBullet_03_00_00/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../OsgAnimatSim"}	  
+						  "../../OsgAnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
 					  "../../../../3rdParty/osgWorks_03_00_00/lib",
 					  "../../../../3rdParty/Bullet-2.82/lib",
-					  "../../../../3rdParty/osgBullet_03_00_00/lib" }
+					  "../../../../3rdParty/osgBullet_03_00_00/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
@@ -171,13 +175,15 @@
 						  "../../../../3rdParty/osgBullet_03_00_00/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../OsgAnimatSim"}	  
+						  "../../OsgAnimatSim",
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
 					  "../../../../3rdParty/osgWorks_03_00_00/lib",
 					  "../../../../3rdParty/Bullet-2.82/lib",
-					  "../../../../3rdParty/osgBullet_03_00_00/lib" }
+					  "../../../../3rdParty/osgBullet_03_00_00/lib", 
+					  "../../../../3rdParty/boost_1_54_0/lib" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "OSGBULLET_STATIC", "BULLETANIMATLIBRARY_EXPORTS", "BT_USE_DOUBLE_PRECISION" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")

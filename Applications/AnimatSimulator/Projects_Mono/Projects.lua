@@ -11,21 +11,21 @@
 			defines { "_DEBUG"}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("AnimatSimulatorD")
-			links { "BootstrapLoader_debug", "dl", "pthread" }
-			postbuildcommands { "cp Debug/AnimatSimulatorD ../../../bin" }
+			targetname ("animatsimulator_debug")
+			links { "AnimatBootstrapLoader_debug", "dl", "pthread" }
+			postbuildcommands { "cp Debug/animatsimulator_debug ../../../bin" }
 	  
 		configuration { "Debug_Static", "linux" }
 			defines { "_DEBUG", "OSGBULLET_STATIC", "ANIMAT_STATIC"}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("AnimatSimulatorD")
+			targetname ("animatsimulator_debug")
 			includedirs { "../../../../Libraries/StdUtils",
 				      "../../../../Libraries/AnimatSim",
 				      "../../../../Libraries/OsgAnimatSim",
 				      "../../../../Libraries/BulletAnimatSim",
 				      "/usr/local/include/bullet" }
-			links { "BootstrapLoader_debug", 
+			links { "AnimatBootstrapLoader_debug", 
 				"dl", 
 				"pthread",
 				"StdUtils_debug", 
@@ -56,12 +56,12 @@
 				"BulletDynamics_single_debug",
 				"LinearMath_single_debug",
 				"BulletSoftBody_single_debug"}
-			postbuildcommands { "cp Debug/AnimatSimulatorD ../../../bin" }
+			postbuildcommands { "cp Debug/animatsimulator_debug ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("AnimatSimulator")
-			links { "BootstrapLoader", "dl", "pthread" }
-			postbuildcommands { "cp Release/AnimatSimulator ../../../bin" }
+			targetname ("animatsimulator")
+			links { "AnimatBootstrapLoader", "dl", "pthread" }
+			postbuildcommands { "cp Release/animatsimulator ../../../bin" }

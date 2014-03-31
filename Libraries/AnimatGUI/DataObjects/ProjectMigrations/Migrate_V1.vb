@@ -97,7 +97,7 @@ Namespace DataObjects
             Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
-                m_iSimInterface.CreateStandAloneSim("VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
+                m_iSimInterface.CreateStandAloneSim(Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension,
                                                     Application.ExecutablePath)
                 m_iSimInterface.SetProjectPath(m_strProjectPath & "\")
 
@@ -149,7 +149,7 @@ Namespace DataObjects
 
                 Util.Application.AppStatusText = "Converting simulation nodes"
 
-                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
+                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension)
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
@@ -783,7 +783,7 @@ Namespace DataObjects
                                         "<Specular Red=""0.25098"" Green=""0.25098"" Blue=""0.25098"" Alpha=""1""/>" & vbCrLf & _
                                         "<Shininess>64</Shininess>" & vbCrLf & _
                                         "<Texture/>" & _
-                                        "<ModuleName>VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
+                                        "<ModuleName>VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
                                         "<LocalPosition>" & vbCrLf & _
                                         "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
                                         "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
@@ -864,7 +864,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension)
 
                 m_xnStomach = xnRigidBody
 

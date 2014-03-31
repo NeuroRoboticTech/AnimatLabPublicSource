@@ -1,5 +1,5 @@
 
-	project "BootstrapLoader"
+	project "AnimatBootstrapLoader"
 		language "C++"
 		kind     "SharedLib"
 		files  { "../*.h",
@@ -7,18 +7,20 @@
 		includedirs { "../../../../include" }
 		libdirs { "../../../../bin" }
 		links { "dl", 
-			    "pthread" }
+			    "pthread",
+				"boost_system", 
+				"boost_filesystem" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "BOOTSTRAPLOADER_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("BootstrapLoader_debug")
-			postbuildcommands { "cp Debug/libBootstrapLoader_debug.so ../../../bin" }
+			targetname ("AnimatBootstrapLoader_debug")
+			postbuildcommands { "cp Debug/libAnimatBootstrapLoader_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG", "BOOTSTRAPLOADER_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("BootstrapLoader")
-			postbuildcommands { "cp Release/libBootstrapLoader.so ../../../bin" }
+			targetname ("AnimatBootstrapLoader")
+			postbuildcommands { "cp Release/libAnimatBootstrapLoader.so ../../../bin" }

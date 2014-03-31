@@ -32,7 +32,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-                Return "FiringRateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & ".dll"
+                Return Util.Application.Physics.LibraryPrefix & "FiringRateSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
             End Get
         End Property
 

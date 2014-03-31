@@ -24,7 +24,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-                Return Util.Application.Physics.Name & "AnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & Util.Application.Physics.BinaryModPrefix & ".dll"
+                Return Util.Application.Physics.LibraryPrefix & Util.Application.Physics.Name & "AnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
             End Get
         End Property
 
