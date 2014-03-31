@@ -341,3 +341,48 @@ sudo /sbin/lsmod | grep nvidia
 For some reason this did not show nvidia as being configured for the virtual machine. I am not sure if that is because it is a virtual machine or if there. I ran jockey and it showed only x86 virtualization solution - guest addition module source for dkms. I activated that to see what would happen. 
 
 
+
+
+On work laptop it gave me an error:
+
+ nvidia-current : Depends: xorg-video-abi-11
+                  Depends: xserver-xorg-core (>= 2:1.10.99.901)
+Had to run this command first
+sudo apt-get install xorg-video-abi-11 xserver-xorg-core
+
+
+Attempting to re-install ATI graphics drivers on dev machine
+sudo apt-get install ia32-libs
+(Gave me errors so skipped)
+sudo sh /usr/share/ati/fglrx-uninstall.sh
+sudo apt-get remove --purge fglrx fglrx_* fglrx-amdcccle* fglrx-dev*
+sudo rm /etc/X11/xorg.conf
+
+sudo apt-get install ia32-libs
+(Reran it now and worked)
+
+sudo apt-get install --reinstall libgl1-mesa-glx:i386 libgl1-mesa-glx:amd64 libgl1-mesa-dri:i386 libgl1-mesa-dri:amd64 xserver-xorg-core
+
+None of this crap worked. I cannot get it to uninstall the old driver. I have decided to try reinstalling a fresh copy of the OS and start over.
+
+After installing fresh ubuntu I installed synaptic and then checked jockey. This time it listed an option AMD/ATI FGLRX drivers with postrelease updates in addition to the main and beta releases. I choose that and activated and it worked without issue. I then had it do 422 updates and when it rebooted it still worked!!! Also, it looks like the libGL.so link is correct now.
+
+I tried installing the animatsimulator package I created, but it failed with dependency issues as it should. I have not added build-essential to the dependency list yet. I want to see if it will compile and run without that. I will installl boost and osg next.
+
+I installed only boost dependencies libboost-filesystem1.48.0, libboost-system1.48.0, libboost-thread1.48.0. However, when I tried to install animatsimulator again it still said boost systems were not found. I investigated a little more and found out that I was not specifying the package names correctly. I had to change it to what you see above. I reran it and the boost packages were found, but it died on the osg stuff. I changede the osg dependecies to be: libOpenThreads14, libopenscenegraph80. I then installed just openscenegraph (3.0.12) in synaptics. I reran the animatsimulator installer and it says it installed correctly. I tried to run the app, but it said that it could not find the shared libs. I looked in ldconfig and they were not configured. I reran sudo ldconfig and they were, then I was able to run the app succesffully!!
+
+I need to create a postinst script to go into DEBIAN directory to run ldconfig. I did this, but when I try and compile it again it gives me an error about the file permission state. Using following command to change it. I added it and it ran great after doing the dpgk install. Woo Hoo!
+
+
+Testing path independent cmake for bullet
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_single -DosgWorks_DIR=../../../osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+make install
+
+
+Does not work. relative path to osgworks does not work. Will need to specify full path in description.
+
+
+
+
+
+
