@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "BootstrapLoader.vcxproj", "{80EDF14A-C7A0-D841-8015-74117D0A3D61}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "BootstrapLoader.vcxproj", "{82FBD98A-AB72-9847-A768-A1DADA9F807E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Debug|Win32.ActiveCfg = Debug|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Debug|Win32.Build.0 = Debug|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Release|Win32.ActiveCfg = Release|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Release|Win32.Build.0 = Release|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
-		{80EDF14A-C7A0-D841-8015-74117D0A3D61}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Debug|Win32.Build.0 = Debug|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Release|Win32.ActiveCfg = Release|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Release|Win32.Build.0 = Release|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{82FBD98A-AB72-9847-A768-A1DADA9F807E}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

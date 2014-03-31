@@ -29,6 +29,9 @@ namespace RoboticsGUI
 
             m_aryAvailableBinarModes.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumBinaryMode.x32);
             m_aryAvailableBinarModes.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumBinaryMode.x64);
+
+            m_aryAvailableOperatingSystems.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumOperatingSystem.Windows);
+            m_aryAvailableOperatingSystems.Add(AnimatGUI.DataObjects.Physical.PhysicsEngine.enumOperatingSystem.Linux);
         }
 
         public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

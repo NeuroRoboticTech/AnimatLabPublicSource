@@ -54,6 +54,8 @@
 #include <memory.h>
 #include <sys/types.h>
 #include <sys/timeb.h>
+#include <boost/filesystem.hpp>
+
 using namespace std;
 
 

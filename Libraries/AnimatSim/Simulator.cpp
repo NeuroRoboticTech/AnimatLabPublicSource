@@ -3008,18 +3008,39 @@ catch(...)
 **/
 void Simulator::LoadAnimatModuleName(std::string strFile, std::string &strAnimatModule)
 {
-	CStdXml oXml;
+    std::ifstream ifSimFile;
+    char sBuffer[1000]; 
 
-	TRACE_DEBUG("Loading simulator module name file.\r\nFileName: " + strFile);
+    if(!Std_FileExists(strFile))
+		THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strFile);
 
-	if(Std_IsBlank(strFile))
-		THROW_ERROR(Al_Err_lSimFileBlank, Al_Err_strSimFileBlank);
+    ifSimFile.open(strFile);
 
-	oXml.Load(strFile);
+    if(ifSimFile.is_open())
+    {
+        ifSimFile.read(sBuffer, 1000);       // read the first 1000 chars. Assume the sim lib text is in it.
+        ifSimFile.close();
 
-	LoadAnimatModuleName(oXml, strAnimatModule);
+        std::string strText = sBuffer;
 
-	TRACE_DEBUG("Finished loading simulator module name.");
+        int iModuleStart = strText.find("<AnimatModule>");
+        int iModuleEnd = strText.find("</AnimatModule>");
+
+        if(iModuleStart == -1)
+    		THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
+
+        if(iModuleEnd == -1)
+    		THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
+
+        int iLen = iModuleEnd - iModuleStart - 14; //Take off the <AnimatModule>
+
+        strAnimatModule = strText.substr((iModuleStart+14), iLen);
+    }
+    else
+	    THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strFile);
+
+    if(strAnimatModule.length() == 0)
+    	THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
 }
 
 /**
@@ -3117,14 +3138,14 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 	else
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
 
-	std::string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
-	std::string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
+    if(argc != 2)
+		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
+        
+	std::string strProject = argv[1];
+	std::string strAnimatModule = ""; //Get it from the file
 
 	if(Std_IsBlank(strProject))
 		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
-
-	if(Std_IsBlank(strAnimatModule))
-		THROW_ERROR(Al_Err_lNoModuleParamOnCommandLine, Al_Err_strNoModuleParamOnCommandLine);
 
 	return CreateSimulator(strAnimatModule, strProject);
 }

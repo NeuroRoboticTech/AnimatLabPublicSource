@@ -4,8 +4,10 @@
 		kind     "SharedLib"
 		files  { "../*.h",
 				 "../*.cpp"}
-		includedirs { "../../../include"}	  
-		libdirs { "../../../lib" }
+		includedirs { "../../../include", 
+					  "../../../../3rdParty/boost_1_54_0"}	  
+		libdirs { "../../../lib", 
+				  "../../../../3rdParty/boost_1_54_0/lib" }
 		
 		configuration { "Debug or Debug_Double", "windows" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "BOOTSTRAPLOADER_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }

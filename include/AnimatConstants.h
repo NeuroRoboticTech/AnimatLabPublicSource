@@ -472,6 +472,9 @@
 #define Al_Err_lInvalidRobotPartInterfaceType -4079
 #define Al_Err_strInvalidRobotPartInterfaceType "An invalid robot part interface type was specified."
 
+#define Al_Err_lAnimatModuleTagNotFound -4080
+#define Al_Err_strAnimatModuleTagNotFound "<AnimatModule> tag was not found within the first 1000 characters of the simulation file."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

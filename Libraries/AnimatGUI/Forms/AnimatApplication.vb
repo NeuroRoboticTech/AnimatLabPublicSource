@@ -1278,16 +1278,6 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RuntimeModePrefix() As String
-            Get
-#If DEBUG Then
-                Return "D"
-#Else
-                Return ""
-#End If
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property Physics() As DataObjects.Physical.PhysicsEngine
             Get
                 Return m_doPhysics
