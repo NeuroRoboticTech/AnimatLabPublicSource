@@ -5,16 +5,6 @@
 
 typedef int (*RunLibrary)(int argc, const char **argv); 
 
-#ifdef WIN32
-
-BOOL APIENTRY DllMain( HANDLE hModule, 
-                       DWORD  ul_reason_for_call, 
-                       LPVOID lpReserved
-					 )
-{
-    return TRUE;
-}
-
 /**
 \brief	Finds if a given file exists.
 
@@ -103,6 +93,18 @@ void ShowErrorText()
     std::cout << "animatsimulator sim_file.\n";
 }
 
+
+#ifdef WIN32
+
+BOOL APIENTRY DllMain( HANDLE hModule, 
+                       DWORD  ul_reason_for_call, 
+                       LPVOID lpReserved
+					 )
+{
+    return TRUE;
+}
+
+
 /**
 \brief	Boot strap method to run an arbitary library.
 
@@ -135,7 +137,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 	
 	if(!hMod)
 	{
-        cout << "Unable to load the library module named '" << strRunLibrary << "'.";
+        std::cout << "Unable to load the library module named '" << strRunLibrary << "'.";
 		return -1;
 	}
 
@@ -144,7 +146,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 
 	if(!lpRunLibrary)
 	{
-        cout << "Unable to obtain a pointer to the run library entry function in library '" << strRunLibrary << "'.";
+        std::cout << "Unable to obtain a pointer to the run library entry function in library '" << strRunLibrary << "'.";
 		return -1;
 	}
 
@@ -171,39 +173,25 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 {
 	int iParam=0;
 	bool bRetrieved=false, bFound = false;
-	char strParam[200], strLibrary[200], strError[200];
 
-	//Clear out the library first.
-	strcpy(strLibrary, "");
+    if(argc != 2)
+        ShowErrorText();
 
-	while(!bRetrieved && iParam<argc)
-	{
-		strcpy(strParam, argv[iParam]);
-
-		if(bFound)
-		{
-			strcpy(strLibrary, strParam);
-			bRetrieved = TRUE;
-		}
-
-		if(_stricmp(strParam, "-library") == 0 || _stricmp(strParam, "-Library") == 0)
-			bFound = TRUE;
-
-		iParam++;
-	}
-
-	if(strlen(strLibrary) == 0)
-		throw "No library was specified on the command line.";
+    std::string strSimFile = argv[1];
+    std::string strRunLibrary = "";
+    
+    int iRet = FindRunLibrary(strSimFile, strRunLibrary);
+    if(iRet != 0)
+        return iRet;
 	
 	void *hMod = NULL;
 
-	hMod = dlopen(strLibrary, RTLD_LAZY);
+	hMod = dlopen(strRunLibrary.c_str(), RTLD_LAZY);
 	
 	if(!hMod)
 	{
-		sprintf(strError, "Unable to load the library module named '%s'. Error: %s", strLibrary, dlerror());
-		cout << strError << "\r\n\r\n";
-		throw strError;
+		std::cout << "Unable to load the library module named " << strRunLibrary << ". Error: " << dlerror() << "\r\n";
+		return -1;
 	}
 
 	RunLibrary lpRunLibrary = NULL;
@@ -211,8 +199,8 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 
 	if(!lpRunLibrary || dlerror() != NULL)
 	{
-		sprintf(strError, "Unable to obtain a pointer to the run library entry function in library '%s'. Error: %s", strLibrary, dlerror());
-		throw strError;
+		std::cout << "Unable to obtain a pointer to the run library entry function in library  " << strRunLibrary << ". Error: " << dlerror() << "\r\n";
+		return -1;
 	}
 
 	return lpRunLibrary(argc, argv);

@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdClassFactoryTester.so</OutputName>
@@ -39,7 +40,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdClassFactoryTester.so</OutputName>
@@ -66,7 +68,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdClassFactoryTester.so</OutputName>
@@ -91,7 +94,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDCLASSFACTORYTESTER_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdClassFactoryTester.so</OutputName>
@@ -118,33 +122,33 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\StdClassFactoryTester\TestClassFactory.h">
-      <Link>StdClassFactoryTester/TestClassFactory.h</Link>
+      <Link>StdClassFactoryTester\TestClassFactory.h</Link>
     </None>
     <None Include="..\StdClassFactoryTester\TestObject.h">
-      <Link>StdClassFactoryTester/TestObject.h</Link>
+      <Link>StdClassFactoryTester\TestObject.h</Link>
     </None>
     <None Include="..\StdClassFactoryTester\stdafx.h">
-      <Link>StdClassFactoryTester/stdafx.h</Link>
+      <Link>StdClassFactoryTester\stdafx.h</Link>
     </None>
     <None Include="..\StdClassFactoryTester\targetver.h">
-      <Link>StdClassFactoryTester/targetver.h</Link>
+      <Link>StdClassFactoryTester\targetver.h</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\StdClassFactoryTester\StdClassFactoryTester.cpp">
-      <Link>StdClassFactoryTester/StdClassFactoryTester.cpp</Link>
+      <Link>StdClassFactoryTester\StdClassFactoryTester.cpp</Link>
     </Compile>
     <Compile Include="..\StdClassFactoryTester\TestClassFactory.cpp">
-      <Link>StdClassFactoryTester/TestClassFactory.cpp</Link>
+      <Link>StdClassFactoryTester\TestClassFactory.cpp</Link>
     </Compile>
     <Compile Include="..\StdClassFactoryTester\TestObject.cpp">
-      <Link>StdClassFactoryTester/TestObject.cpp</Link>
+      <Link>StdClassFactoryTester\TestObject.cpp</Link>
     </Compile>
     <Compile Include="..\StdClassFactoryTester\dllmain.cpp">
-      <Link>StdClassFactoryTester/dllmain.cpp</Link>
+      <Link>StdClassFactoryTester\dllmain.cpp</Link>
     </Compile>
     <Compile Include="..\StdClassFactoryTester\stdafx.cpp">
-      <Link>StdClassFactoryTester/stdafx.cpp</Link>
+      <Link>StdClassFactoryTester\stdafx.cpp</Link>
     </Compile>
   </ItemGroup>
 </Project>
