@@ -382,7 +382,132 @@ make install
 Does not work. relative path to osgworks does not work. Will need to specify full path in description.
 
 
+4/1/2014
+Testing Ubuntu SDK. Starting from fresh install.
 
+Initial Setup
+1. Install synaptic from software center.
+2. Install build-essentials
+   sudo apt-get install build-essential linux-source
+   sudo apt-get install linux-headers-`uname -r`
+
+3. Use software center install git, Cola git GUI (or whatever git GUI you want to use) 
+4. Install mono runtime, and Monodevelop from the software center
+5. Install monodevelop-debugger-gdb using synaptics
+6. Install boost packages using synaptics
+   libboost1.48-dbg
+   libboost1.48-all-dev
+   libboost1.48-doc
+   libboost1.48-dev
+7. Install Openscenegraph packages using synaptics
+   openscenegraph 
+   openscenegraph-doc 
+   openscenegraph-examples 
+   libopenscenegraph-dev 
+   libopenscenegraph80 
+   libopenthreads-dev 
+   libopenthreads14 
+8. Downloaded the OpenSceneGraph-Data-3.0.0.zip file from http://www.openscenegraph.org/index.php/download-section/data. Extract it to your home directory. You can place this anywhere, but make sure you point to the correct path in step 10.
+9. Open gedit as root user. Start a terminal
+   gksudo gedit
+10. Open the file /etc/environment and add the following line. (You will need to reboot before this will take effect.)
+   OSG_FILE_PATH=home/OpenSceneGraph-Data-3.0.0/
+11. Download and extract AnimatLabSDK.tar.gz. You can place this anywhere you want it. However, please note that the cmake commands used below on Bullet, osgWorks, and osgBullet cannot use relative paths, so if you want to debug them then you will want to place the SDK where it will finally reside, or you will need to regenerate these.
+12. Get the latest code. In a terminal, cd into AnimatLabPublicSource and run:
+   git pull
+13. Download cmake-2.8.12.2.tar.gz from http://www.cmake.org/cmake/resources/software.html Unzip it. (You cannot simply use the one available in apt-get because we need a later version.)
+14. cd into cmake folder, compile, and install it.
+   ./bootstrap
+   make 
+   sudo make install
+
+Build Bullet
+1. cd to bullet/build
+2. create build directories
+   mkdir single_debug
+   mkdir double_debug
+   mkdir single_release
+   mkdir double_release
+3. Build single_debug
+   cd single_debug
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+4. Build double_debug
+   cd double_debug
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+5. Build single_release
+   cd single_release
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_single -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+6. Build double_release
+   cd double_release
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_double -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   make install
+
+Build osgWorks
+1. cd osgWorks_03_00_00/build
+2. create build directories
+   mkdir debug
+   mkdir release
+3. Build debug
+   cd debug
+   cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_animat_debug
+   make 
+   sudo make install
+4. Build release
+   cd release
+   cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_animat
+   make 
+   sudo make install
+
+Build osgBullet
+1. cd osgBullet_03_00_00/build
+2. create build directories
+   mkdir single_debug
+   mkdir double_debug
+   mkdir single_release
+   mkdir double_release
+3. Build single_debug (Please note in all of these cmakes that the path to osgWorks_DIR is absolute, not relative. You must replace this with the correct path for where you installed AnimatLabSDK.) Also, the first time you run the cmake command it will tell you it cannot find the bullet include directory. I am not sure why it does this, but if you run the same command again it will find it and compile.
+   cd single_debug
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+   make 
+   sudo make install
+4. Build double_debug
+   cd double_debug
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+   make
+   sudo make install
+5. Build single_release
+   cd single_release
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_single -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+   make
+   sudo make install
+6. Build double_release
+   cd double_release
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_double -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+   make
+   sudo make install
+
+Build AnimatSimulator
+1. Refresh shared library list
+   sudo ldconfig
+2. Go to AnimatLabSDK/AnimatLabPublicSource/Projects_Mono and double click on the the AnimatLabSimCode.sln file.
+3. Make sure the configuration is set to debug and then do a rebuild all
+4. Change configuration to debug_double and rebuild BulletAnimatSim
+5. Change configuration to release and rebuild all
+6. Change configuration to release_double and rebuild BulletAnimatSim
+7. Open /AnimatLabPublicSource/Documentation/Ubuntu_help/AnimatLab.conf file
+8. Edit the file path to point to the location where you installed AnimatLabSDK/AnimatLabPublicSource/bin
+9. Copy AnimatLab.conf into ld config
+   sudo cp Animatlab.conf /etc/ld.so.conf.d/AnimatLab.conf
+10. Refresh shared library list
+   sudo ldconfig
+11. 
 
 
 
