@@ -74,7 +74,7 @@
 #include <osgGA/GUIActionAdapter>
 #include <osgGA/StateSetManipulator>
 #include <osgGA/TrackballManipulator>
-#include <osgGA/MatrixManipulator>
+#include <osgGA/CameraManipulator>
 
 #include <osgManipulator/CommandManager>
 #include <osgManipulator/TabBoxDragger>

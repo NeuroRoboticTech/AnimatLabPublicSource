@@ -13,7 +13,7 @@
  * OpenSceneGraph Public License for more details.
 */
 
-#include <osgGA/MatrixManipulator>
+#include <osgGA/CameraManipulator>
 #include <osg/Quat>
 
 namespace OsgAnimatSim
@@ -21,7 +21,7 @@ namespace OsgAnimatSim
 	namespace Visualization
 	{
 
-class ANIMAT_OSG_PORT OsgTrackballManipulator : public osgGA::MatrixManipulator
+class ANIMAT_OSG_PORT OsgTrackballManipulator : public osgGA::CameraManipulator
 {
     public:
         OsgTrackballManipulator();
