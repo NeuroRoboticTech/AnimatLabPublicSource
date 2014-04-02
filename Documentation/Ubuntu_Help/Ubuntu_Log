@@ -521,20 +521,11 @@ Build AnimatSimulator
    sudo cp Animatlab.conf /etc/ld.so.conf.d/AnimatLab.conf
 10. Refresh shared library list
    sudo ldconfig
-11. 
+11. Test all AnimatSimulator configurations
+   ./animatsimulator_debug /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux_Debug.asim
+   ./animatsimulator_debug /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Double_Linux_Debug.asim
+   ./animatsimulator /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux.asim
+   ./animatsimulator /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Double_Linux.asim
 
 
-    <table style="background-color: #a5a5a5;">
-        <tbody>
-            <tr>
-                <td><span style="font-family: 'Times New Roman';">libboost-filesystem1.48.0</span></td>
-            </tr>
-            <tr>
-                <td><span style="font-family: 'Times New Roman';">libboost-system1.48.0</span></td>
-            </tr>
-            <tr>
-                <td><span style="font-family: 'Times New Roman';">libboost-thread1.48.0</span></td>
-            </tr>
-        </tbody>
-    </table>
 
