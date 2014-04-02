@@ -382,6 +382,20 @@ make install
 Does not work. relative path to osgworks does not work. Will need to specify full path in description.
 
 
+Testing to get AnimatLab Installer running on Ubuntu
+1. Configure your video drivers. AnimatSimulator will not run, and you will not be able to properly install the prerequisites packages unless you have your actual video drivers installed and configured correctly. The default drivers that come with the Ubuntu installation will not work.
+2. Use the software center to install Synaptic package manager (Or any other package manager you would prefer to use.)
+3. Use Synaptic to install required boost files.
+   libboost-filesystem1.48.0
+   libboost-system1.48.0
+   libboost-thread1.48.0 
+4. Use Syanptic to install openscenegraph
+   openscenegraph
+5. Install animatsimulator. Download animatsimulator_2.1.1_amd64.deb.
+   dpkg -i ./animatsimulator_2.1.1_amd64.deb
+6. It should install with no errors. To run simulations you will need a sim file generated from the GUI, or by hand, that uses the linux libraries. You can export any simulation in the GUI and set the operating system to Linux to save out the correct file. Once you have a file then you can run the simulation as shown below, where sim_file is the path to the simulation file.
+   ./animatsimulator sim_file
+
 4/1/2014
 Testing Ubuntu SDK. Starting from fresh install.
 
@@ -510,4 +524,17 @@ Build AnimatSimulator
 11. 
 
 
+    <table style="background-color: #a5a5a5;">
+        <tbody>
+            <tr>
+                <td><span style="font-family: 'Times New Roman';">libboost-filesystem1.48.0</span></td>
+            </tr>
+            <tr>
+                <td><span style="font-family: 'Times New Roman';">libboost-system1.48.0</span></td>
+            </tr>
+            <tr>
+                <td><span style="font-family: 'Times New Roman';">libboost-thread1.48.0</span></td>
+            </tr>
+        </tbody>
+    </table>
 
