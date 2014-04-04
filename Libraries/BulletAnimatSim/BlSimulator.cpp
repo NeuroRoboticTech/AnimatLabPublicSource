@@ -261,6 +261,10 @@ void BlSimulator::InitializeBulletViewer(int argc, const char **argv)
     osgDB::getDataFilePathList().push_front("../Resources");
     osgDB::getDataFilePathList().push_front("../../Resources");
 
+#ifndef WIN32
+    osgDB::getDataFilePathList().push_front("/usr/share/fonts/truetype");
+#endif
+
 	std::string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
 
 	//This is the root of the scenegraph.  Which will corrospond
