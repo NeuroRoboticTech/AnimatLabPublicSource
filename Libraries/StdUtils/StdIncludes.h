@@ -31,7 +31,7 @@
 	#define LPCTSTR const char*
 #endif
 
-#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 )
+#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4996 )
 
 #include <sys/types.h>
 #include <sys/timeb.h>
