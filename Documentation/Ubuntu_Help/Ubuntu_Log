@@ -508,9 +508,7 @@ Build osgBullet
    sudo make install
 
 Build AnimatSimulator
-1. Refresh shared library list
-   sudo ldconfig
-2. Go to AnimatLabSDK/AnimatLabPublicSource/Projects_Mono and double click on the the AnimatLabSimCode.sln file.
+2. Go to AnimatLabSDK/AnimatLabPublicSource/Projects_Mono and open AnimatLabSimCode.sln file in monodevelop (right click and open in).
 3. Make sure the configuration is set to debug and then do a rebuild all
 4. Change configuration to debug_double and rebuild BulletAnimatSim
 5. Change configuration to release and rebuild all
