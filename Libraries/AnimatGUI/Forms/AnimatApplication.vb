@@ -6650,8 +6650,13 @@ Namespace Forms
                 'Lets close all of the children first.
                 'We have to do this to make certain that all of the controls are closed 
                 'down in the appropriate order.
+                Dim aryForms As New ArrayList
                 For Each oChild As Form In Me.ChildForms
-                    oChild.Close()
+                    aryForms.Add(oChild)
+                Next
+
+                For Each frmChild As Form In aryForms
+                    frmChild.Close()
                 Next
 
                 'We also need to explicitly close the docking toolbars.
@@ -6665,10 +6670,15 @@ Namespace Forms
                 End If
 
                 'close down any modal forms that are not me.
+                aryForms.Clear()
                 For Each frmModal As Form In Application.OpenForms
                     If frmModal.Modal AndAlso Not frmModal Is Me Then
-                        frmModal.Close()
+                        aryForms.Add(frmModal)
                     End If
+                Next
+
+                For Each frmModal As Form In aryForms
+                    frmModal.Close()
                 Next
 
                 m_mdiClient = Nothing

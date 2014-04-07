@@ -317,6 +317,8 @@ Namespace Forms
 
             If iSelIdx >= 0 Then
                 cboLibraryVersion.SelectedIndex = iSelIdx
+            Else
+                cboLibraryVersion.SelectedIndex = 0
             End If
 
             If cboLibraryVersion.Items.Count = 1 Then
@@ -345,6 +347,8 @@ Namespace Forms
 
             If iSelIdx >= 0 Then
                 cboBinaryType.SelectedIndex = iSelIdx
+            Else
+                cboBinaryType.SelectedIndex = 0
             End If
 
             If cboBinaryType.Items.Count = 1 Then
@@ -373,6 +377,8 @@ Namespace Forms
 
             If iSelIdx >= 0 Then
                 cboOS.SelectedIndex = iSelIdx
+            Else
+                cboOS.SelectedIndex = 0
             End If
 
             If cboOS.Items.Count = 1 Then
