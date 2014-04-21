@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="IntegrateFireSim" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/libIntegrateFireSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DREALISTICNEURALNET_EXPORTS" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libIntegrateFireSim_debug.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/libIntegrateFireSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DREALISTICNEURALNET_EXPORTS" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libIntegrateFireSim.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Debug_Double">
+				<Option output="Debug/libIntegrateFireSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug_Double" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DREALISTICNEURALNET_EXPORTS" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libIntegrateFireSim_debug.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release_Double">
+				<Option output="Release/libIntegrateFireSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release_Double" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DREALISTICNEURALNET_EXPORTS" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libIntegrateFireSim.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="../CaActivation.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ClassFactory.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../Connexion.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../DoubleList.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ElectricalSynapse.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IntegrateFireModule.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IntegrateFireSimIncludes.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IonChannel.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IonChannelSigmoid.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../NeuralUtils.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../Neuron.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../NonSpikingChemicalSynapse.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SpikingChemicalSynapse.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../stdafx.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SynapseType.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CaActivation.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ClassFactory.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../Connexion.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../DoubleList.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ElectricalSynapse.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IntegrateFireModule.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IntegrateFireSim.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IonChannel.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../IonChannelSigmoid.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../NeuralUtils.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../Neuron.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../NonSpikingChemicalSynapse.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SpikingChemicalSynapse.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../stdafx.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SynapseType.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+

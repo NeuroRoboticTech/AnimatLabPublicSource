@@ -20,7 +20,7 @@
 					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -45,7 +45,7 @@
 					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -71,7 +71,7 @@
 					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -96,7 +96,7 @@
 					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

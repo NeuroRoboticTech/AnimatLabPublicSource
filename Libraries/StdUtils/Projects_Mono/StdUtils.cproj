@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F5E5A1FC-B15D-2542-8E59-EAEC03A2AF24}</ProjectGuid>
+    <ProjectGuid>{00DFB9E3-CFA3-7741-A12B-B49ED41E06A6}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils_debug.so</OutputName>
@@ -33,7 +32,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
-        <Lib>boost_thread-mt</Lib>
+        <Lib>boost_thread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -43,8 +42,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils.so</OutputName>
@@ -63,7 +61,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
-        <Lib>boost_thread-mt</Lib>
+        <Lib>boost_thread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -74,8 +72,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils_debug.so</OutputName>
@@ -93,7 +90,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
-        <Lib>boost_thread-mt</Lib>
+        <Lib>boost_thread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -103,8 +100,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG STDUTILS_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libStdUtils.so</OutputName>
@@ -123,7 +119,7 @@
         <Lib>boost_system</Lib>
         <Lib>boost_filesystem</Lib>
         <Lib>boost_unit_test_framework</Lib>
-        <Lib>boost_thread-mt</Lib>
+        <Lib>boost_thread</Lib>
       </Libs>
     </Libs>
     <CustomCommands>

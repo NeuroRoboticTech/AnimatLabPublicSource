@@ -10,7 +10,7 @@
 				"boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework",
-				"boost_thread-mt" }
+				"boost_thread" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
@@ -61,7 +61,7 @@
 		links { "boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework",
-				"boost_thread-mt" }
+				"boost_thread" }
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG"	}

@@ -16,10 +16,10 @@
 					<Add option="-D_DEBUG" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
@@ -40,11 +40,11 @@
 					<Add option="-DNDEBUG" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add directory="Release" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
@@ -66,10 +66,10 @@
 					<Add option="-D_DEBUG" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
@@ -90,11 +90,11 @@
 					<Add option="-DNDEBUG" />
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
+					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add directory="Release" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />

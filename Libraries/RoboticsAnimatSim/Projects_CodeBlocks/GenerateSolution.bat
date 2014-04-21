@@ -1,4 +1,4 @@
-echo "Generating StdUtils codeblocks Solution"
+echo "Generating RoboticsAnimatSim CodeBlocks Solution"
 
 ..\..\..\bin\premake4m --os=linux --file=Solution.lua codeblocks
 TIMEOUT /T 2
@@ -6,6 +6,9 @@ TIMEOUT /T 2
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" "../../../Libraries/StdUtils"
 TIMEOUT /T 2
+..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" "../../../Libraries/AnimatSim"
+TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" "../../../bin"
+
 
 @pause
