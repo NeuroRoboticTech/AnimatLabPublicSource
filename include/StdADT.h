@@ -11,15 +11,15 @@ public:
 	virtual ~CStdPtrArray() {this->clear();};
 
 	virtual void Add(T *lpVal)
-	{push_back(lpVal);};
-	
+	{this->push_back(lpVal);};
+
 	virtual void clear()
-	{		
+	{
 		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
 			T *lpVal = this->at(i);
-			if(lpVal) 
+			if(lpVal)
 				delete lpVal;
 
 			this->at(i) = NULL;
@@ -48,7 +48,7 @@ public:
 	{
 		if(oPos!=this->end())
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
@@ -61,7 +61,7 @@ public:
 		typename std::vector<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
@@ -86,7 +86,7 @@ public:
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 
 };
@@ -105,7 +105,7 @@ void CopyPtrArray(CStdPtrArray<T> &oSource, CStdPtrArray<T> &oDest)
 	{
 		lpOldObj = oSource[iIndex];
 		lpNewObj = dynamic_cast<T *>(lpOldObj->Clone());
-		
+
 		if(lpNewObj)
 			oDest.Add(lpNewObj);
 	}
@@ -122,7 +122,7 @@ public:
 
 	virtual void Add(T lpVal)
 	{this->push_back(lpVal);};
-	
+
 	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
@@ -154,7 +154,7 @@ public:
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 
 };
@@ -168,7 +168,7 @@ protected:
     int m_iCurrentPos;
 
 public:
-	CStdCircularArray() 
+	CStdCircularArray()
     {
         m_iCurrentPos = 0;
     };
@@ -217,19 +217,19 @@ public:
 
 	virtual void Add(T *lpVal)
 	{this->push_back(lpVal);};
-	
+
 	virtual void Push(T lpVal)
 	{this->push_front(lpVal);};
-	
+
 	virtual T Pop()
 	{
 		T lpVal = this->front();
 		this->pop_front();
 		return lpVal;
 	};
-	
+
 	virtual void clear()
-	{		
+	{
 		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
@@ -259,7 +259,7 @@ public:
 	{
 		if(oPos!=this->end())
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
@@ -272,7 +272,7 @@ public:
 		typename std::deque<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
@@ -293,7 +293,7 @@ public:
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 
 };
@@ -315,10 +315,10 @@ public:
 
 	virtual void Add(T lpVal)
 	{this->push_back(lpVal);};
-	
+
 	virtual void Push(T lpVal)
 	{this->push_front(lpVal);};
-	
+
 	virtual T Pop()
 	{
 		T lpVal = this->front();
@@ -354,7 +354,7 @@ public:
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 
 };
@@ -370,7 +370,7 @@ public:
 	virtual void RemoveAll() {this->clear();};
 	virtual void Clear() {this->clear();};
 	virtual void clear()
-	{	
+	{
 		T *lpNode;
 
 		int iCount = this->size();
@@ -422,7 +422,7 @@ public:
 	virtual void RemoveAll() {this->clear();};
 	virtual void Clear() {this->clear();};
 	virtual void clear()
-	{	
+	{
 		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 			this->pop();
@@ -478,11 +478,11 @@ public:
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 
 	virtual void clear()
-	{	
+	{
 		//Lets go through and delete all the non null pointers.
 		typename std::map<Key, T*>::iterator oPos;
 		for(oPos=this->begin(); oPos!=this->end(); ++oPos)
@@ -490,12 +490,12 @@ public:
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
-		
+
 		std::map<Key, T*>::clear();
 	};
 
 	virtual typename std::map<Key, T*>::size_type erase(const Key &oKey)
-	{	
+	{
 		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
 		if(oPos!=this->end() && oPos->second)
 		{
@@ -542,7 +542,7 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 	typename std::map<Key, T*>::iterator oPos;
 	for(oPos=oSource.begin(); oPos!=oSource.end(); ++oPos)
 	{
-		if(oPos->second) 
+		if(oPos->second)
 			lpNewObj = dynamic_cast<T *>(oPos->second->Clone());
 		else
 			lpNewObj = NULL;
@@ -584,7 +584,7 @@ public:
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return this->size();}; 
+	virtual int GetSize() {return this->size();};
 	virtual void Clear() {this->clear();};
 };
 
@@ -630,8 +630,8 @@ public:
 
     bool Equal(const CStdPoint<T> &oPoint, double fltTolerance)
     {
-        if( (fabs(x - oPoint.x) < fltTolerance) && 
-            (fabs(y - oPoint.y) < fltTolerance) && 
+        if( (fabs(x - oPoint.x) < fltTolerance) &&
+            (fabs(y - oPoint.y) < fltTolerance) &&
             (fabs(z - oPoint.z) < fltTolerance) )
             return true;
         else
@@ -688,12 +688,12 @@ public:
 		oNewPoint.z = z * oPoint.z;
 		return oNewPoint;
 	};
-    
+
 	float dot(const CStdPoint<T> &oPoint)
 	{
         return ( (x * oPoint.x) + (y * oPoint.y) + (z * oPoint.z) );
 	};
-	 
+
 	CStdPoint<T> operator/(const CStdPoint<T> &oPoint)
 	{
 		CStdPoint<T> oNewPoint;
@@ -918,7 +918,7 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 	void TraceSTL_Obj(const char* SourceFileName, int SourceLineNum, const char* ObjectName, T t, int Index = -1, bool bShowSource = true)
 	{
 		std::ostringstream oss;
-		
+
 		oss << ObjectName;
 		if (Index > -1) oss << "[" << Index << "]";
 		oss << " = " << t;
@@ -1002,9 +1002,9 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 	#define TRACE_STL_ARRAY_DESC(t, c, n)					TraceSTL_Array(__FILE__, __LINE__, #t, t, c, n)
 #else //STD_TRACING_ON
 	#define TRACE_STL_OBJ_NS(t)
-	#define TRACE_STL_OBJ(t)             
-	#define TRACE_STL_CONTAINER(t)             
-	#define TRACE_STL_CONTAINER_DESC(t, n)             
+	#define TRACE_STL_OBJ(t)
+	#define TRACE_STL_CONTAINER(t)
+	#define TRACE_STL_CONTAINER_DESC(t, n)
 	#define TRACE_STL_ASSC_CONTAINER(t)
 	#define TRACE_STL_ASSC_CONTAINER_DESC(t)
 	#define TRACE_STL_ARRAY(t, c)

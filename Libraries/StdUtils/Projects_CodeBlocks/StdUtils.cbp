@@ -5,20 +5,21 @@
 		<Option title="StdUtils" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="./;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="Debug/libStdUtils_debug.so" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/Debug/StdUtils" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DSTDUTILS_EXPORTS" />
-					<Add directory="C:/Projects/AnimatLabSDK/include" />
+					<Add directory="../../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -27,7 +28,7 @@
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="boost_thread-mt" />
+					<Add library="boost_thread" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/libStdUtils_debug.so ../../../bin" />
@@ -38,7 +39,6 @@
 				<Option object_output="obj/Release/StdUtils" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -66,7 +66,6 @@
 				<Option object_output="obj/Debug_Double/StdUtils" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
@@ -93,7 +92,6 @@
 				<Option object_output="obj/Release_Double/StdUtils" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -117,64 +115,10 @@
 				</ExtraCommands>
 			</Target>
 		</Build>
-		<Unit filename="../MarkupSTL.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdAfx.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdClassFactory.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdColor.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdCriticalSection.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdCriticalSectionInternal.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdErrorInfo.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdFixed.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdFont.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdIncludes.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdLookupTable.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdPID.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdPostFixEval.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdSerialize.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdUtilFunctions.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdVariable.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdVariant.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdXml.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../XYTrace.h">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../MarkupSTL.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../MarkupSTL.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../MersenneTwister.cpp">
@@ -183,40 +127,82 @@
 		<Unit filename="../StdAfx.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdClassFactory.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdClassFactory.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdColor.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdColor.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdCriticalSection.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdCriticalSection.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdCriticalSectionInternal.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdCriticalSectionInternal.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdErrorInfo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdErrorInfo.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdFixed.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdFixed.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdFont.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdFont.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdIncludes.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdLookupTable.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdLookupTable.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdPID.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdPID.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdPostFixEval.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdPostFixEval.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdSerialize.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdSerialize.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdUtilFunctions.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdUtilFunctions.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdUtils.cpp">
@@ -225,17 +211,30 @@
 		<Unit filename="../StdVariable.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdVariable.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdVariant.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdVariant.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdXml.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdXml.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../XYTrace.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../XYTrace.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Extensions>
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
-
