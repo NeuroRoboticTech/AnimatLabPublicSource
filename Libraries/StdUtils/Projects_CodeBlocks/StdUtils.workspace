@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="StdUtils">
+		<Project filename="StdUtils.cbp" active="1">
+		</Project>
+		<Project filename="StdClassFactoryTester.cbp">
+		</Project>
+		<Project filename="StdUtils_UnitTests.cbp">
+			<Depends filename="StdUtils.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>
