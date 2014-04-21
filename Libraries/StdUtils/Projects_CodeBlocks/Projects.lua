@@ -4,13 +4,14 @@
 		kind     "SharedLib"
 		files  { "../*.h",
 				 "../*.cpp"}
-		includedirs { "../../../../include" }
+		includedirs { "../../../include" }
+		buildoptions { "-std=c++11" }
 		links { "dl",
 				"pthread",
 				"boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework",
-				"boost_thread-mt" }
+				"boost_thread" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "STDUTILS_EXPORTS"	}
@@ -31,8 +32,9 @@
 		kind     "SharedLib"
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
-		includedirs { "../../../../include", 
-					  "../../../StdUtils" }	  
+		buildoptions { "-std=c++11" }
+		includedirs { "../../../include", 
+					  "../../StdUtils" }	  
 		links {"dl",
   		       "pthread" }
 		
@@ -55,13 +57,14 @@
 		kind     "ConsoleApp"
 		files  { "../StdUtils_UnitTests/*.h",
 				 "../StdUtils_UnitTests/*.cpp"}
-		includedirs { "../../../../include", 
-			      "../../../StdUtils" }	  
-		libdirs { "../../../../bin" }
+		buildoptions { "-std=c++11" }
+		includedirs { "../../../include", 
+			      "../../StdUtils" }	  
+		libdirs { "../../../bin" }
 		links { "boost_system", 
 				"boost_filesystem",
 				"boost_unit_test_framework",
-				"boost_thread-mt" }
+				"boost_thread" }
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG"	}

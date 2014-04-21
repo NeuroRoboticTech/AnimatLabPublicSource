@@ -5,7 +5,6 @@
 		<Option title="StdUtils_UnitTests" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="StdUtils_UnitTests/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="Debug/StdUtils_UnitTests" prefix_auto="0" extension_auto="0" />
@@ -13,19 +12,19 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
+					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
-					<Add directory="../../StdUtils" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
 					<Add library="boost_thread" />
 					<Add library="StdUtils_debug" />
-					<Add directory="C:/Projects/AnimatLabSDK/bin" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/StdUtils_UnitTests ../../../bin" />
@@ -39,18 +38,19 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/StdUtils" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="Release" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="boost_thread-mt" />
+					<Add library="boost_thread" />
 					<Add library="StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/bin" />
-					<Add directory="Release" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Release/StdUtils_UnitTests ../../../bin" />
@@ -64,16 +64,17 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/StdUtils" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="boost_thread-mt" />
+					<Add library="boost_thread" />
 					<Add library="StdUtils_debug" />
-					<Add directory="C:/Projects/AnimatLabSDK/bin" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/StdUtils_UnitTests ../../../bin" />
@@ -87,25 +88,35 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/StdUtils" />
+					<Add option="-std=c++11" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="Release" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="boost_thread-mt" />
+					<Add library="boost_thread" />
 					<Add library="StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/bin" />
-					<Add directory="Release" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Release/StdUtils_UnitTests ../../../bin" />
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="../StdUtils_UnitTests/stdafx.h">
+			<Option virtualFolder="StdUtils_UnitTests" />
+		</Unit>
+		<Unit filename="../StdUtils_UnitTests/targetver.h">
+			<Option virtualFolder="StdUtils_UnitTests" />
+		</Unit>
 		<Unit filename="../StdUtils_UnitTests/ClassFactory_Tests.cpp">
+			<Option virtualFolder="StdUtils_UnitTests" />
+		</Unit>
+		<Unit filename="../StdUtils_UnitTests/stdafx.cpp">
 			<Option virtualFolder="StdUtils_UnitTests" />
 		</Unit>
 		<Unit filename="../StdUtils_UnitTests/StdUtils_UnitTests.cpp">
@@ -114,18 +125,8 @@
 		<Unit filename="../StdUtils_UnitTests/Tree_Tests.cpp">
 			<Option virtualFolder="StdUtils_UnitTests" />
 		</Unit>
-		<Unit filename="../StdUtils_UnitTests/stdafx.cpp">
-			<Option virtualFolder="StdUtils_UnitTests" />
-		</Unit>
-		<Unit filename="../StdUtils_UnitTests/stdafx.h">
-			<Option virtualFolder="StdUtils_UnitTests" />
-		</Unit>
-		<Unit filename="../StdUtils_UnitTests/targetver.h">
-			<Option virtualFolder="StdUtils_UnitTests" />
-		</Unit>
 		<Extensions>
-			<code_completion />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
+
