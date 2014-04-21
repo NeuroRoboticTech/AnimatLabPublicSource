@@ -14,12 +14,11 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/AnimatSim" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Projects_CodeBlocks" />
 					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
@@ -37,13 +36,12 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/AnimatSim" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Projects_CodeBlocks" />
 					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
@@ -61,12 +59,11 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/AnimatSim" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Projects_CodeBlocks" />
 					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
@@ -84,13 +81,12 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Libraries/AnimatSim" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Projects_CodeBlocks" />
 					<Add directory="../../../bin" />
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />

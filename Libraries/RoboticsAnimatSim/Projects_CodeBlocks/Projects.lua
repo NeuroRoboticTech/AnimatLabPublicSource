@@ -40,11 +40,10 @@
                  "../Robotics_UnitTests/*.cpp"}
 		targetdir ("../../../bin")
 		targetname ("Robotics_UnitTests")				
-		includedirs { "../include",
-			      "../Libraries/StdUtils",
-			      "../Libraries/AnimatSim"}	  
-		libdirs { ".",
-			  "../../../bin" }
+		includedirs { "../../../include", 
+			      "../../StdUtils", 
+		   	      "../../AnimatSim"}
+		libdirs { "../../../bin" }
 		links { "boost_system", 
 			"boost_filesystem",
 			"boost_unit_test_framework" }

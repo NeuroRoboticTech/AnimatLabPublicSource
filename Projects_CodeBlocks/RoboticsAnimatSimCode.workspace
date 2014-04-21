@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="RoboticsAnimatSimCode">
-		<Project filename="../Libraries/BootstrapLoader/Projects_Mono/AnimatBootstrapLoader.cbp" active="1">
+		<Project filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" active="1">
 		</Project>
-		<Project filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp">
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp">
 		</Project>
-		<Project filename="../Libraries/StdUtils/Projects_Mono/StdClassFactoryTester.cbp">
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdClassFactoryTester.cbp">
 		</Project>
-		<Project filename="../Libraries/StdUtils/Projects_Mono/StdUtils_UnitTests.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils_UnitTests.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
 		</Project>
-		<Project filename="../Libraries/AnimatSim/Projects_Mono/AnimatSim.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
+		<Project filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
 		</Project>
-		<Project filename="../Libraries/FiringRateSim/Projects_Mono/FiringRateSim.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
-			<Depends filename="../Libraries/AnimatSim/Projects_Mono/AnimatSim.cbp" />
+		<Project filename="../Libraries/FiringRateSim/Projects_CodeBlocks/FiringRateSim.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
+			<Depends filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp" />
 		</Project>
-		<Project filename="../Libraries/IntegrateFireSim/Projects_Mono/IntegrateFireSim.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
-			<Depends filename="../Libraries/AnimatSim/Projects_Mono/AnimatSim.cbp" />
+		<Project filename="../Libraries/IntegrateFireSim/Projects_CodeBlocks/IntegrateFireSim.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
+			<Depends filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp" />
 		</Project>
-		<Project filename="../Libraries/RoboticsAnimatSim/Projects_Mono/RoboticsAnimatSim.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
-			<Depends filename="../Libraries/AnimatSim/Projects_Mono/AnimatSim.cbp" />
+		<Project filename="../Libraries/RoboticsAnimatSim/Projects_CodeBlocks/RoboticsAnimatSim.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
+			<Depends filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp" />
 		</Project>
-		<Project filename="../Libraries/RoboticsAnimatSim/Projects_Mono/Robotics_UnitTests.cbp">
-			<Depends filename="../Libraries/StdUtils/Projects_Mono/StdUtils.cbp" />
-			<Depends filename="../Libraries/AnimatSim/Projects_Mono/AnimatSim.cbp" />
+		<Project filename="../Libraries/RoboticsAnimatSim/Projects_CodeBlocks/Robotics_UnitTests.cbp">
+			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
+			<Depends filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp" />
 		</Project>
-		<Project filename="../Applications/AnimatSimulator/Projects_Mono/AnimatSimulator.cbp">
-			<Depends filename="../Libraries/BootstrapLoader/Projects_Mono/AnimatBootstrapLoader.cbp" />
+		<Project filename="../Applications/AnimatSimulator/Projects_CodeBlocks/AnimatSimulator.cbp">
+			<Depends filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" />
 		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
