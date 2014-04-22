@@ -1,6 +1,6 @@
 <Simulation>
 <ProjectPath/>
-<AnimatModule>libRoboticsAnimatSim.so</AnimatModule>
+<AnimatModule>libRoboticsAnimatSim_debug.so</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -10,7 +10,7 @@
 <PlaybackControlMode>1</PlaybackControlMode>
 <PresetPlaybackTimeStep>0</PresetPlaybackTimeStep>
 <Environment>
-<PhysicsTimeStep>0.0005</PhysicsTimeStep>
+<PhysicsTimeStep>0.0006</PhysicsTimeStep>
 <PhysicsSubsteps>1</PhysicsSubsteps>
 <Gravity>-9.81</Gravity>
 <MouseSpringStiffness>0.5</MouseSpringStiffness>
@@ -147,6 +147,12 @@
 <DraggerSize>-1</DraggerSize>
 <Type>Hinge</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<RobotPartInterface>
+<Name>DynamixelCM5USBUARTHingeController</Name>
+<ID>9f9850b5-ef78-4e46-bb12-69b8d4bd5eeb</ID>
+<Type>DynamixelCM5USBUARTHingeController</Type>
+<ModuleName/>
+</RobotPartInterface>
 <Size>0.2</Size>
 <EnableLimits>True</EnableLimits>
 <Friction>
@@ -202,6 +208,12 @@
 <DraggerSize>-1</DraggerSize>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<RobotPartInterface>
+<Name>SwitchInputSensor</Name>
+<ID>4667561b-0aba-4965-9677-16dbcfe21527</ID>
+<Type>SwitchInputSensor</Type>
+<ModuleName/>
+</RobotPartInterface>
 <IsContactSensor>True</IsContactSensor>
 <IsCollisionObject>True</IsCollisionObject>
 <BuoyancyCenter x="0" y="0" z="0"/>
@@ -261,7 +273,7 @@
 <NeuralModule>
 <ID>6a092801-6219-447a-8241-840c9bba7a1a</ID>
 <ModuleName>FiringRateSim</ModuleName>
-<ModuleFileName>libFiringRateSim.so</ModuleFileName>
+<ModuleFileName>libFiringRateSim_debug.so</ModuleFileName>
 <Type>FiringRateSimModule</Type>
 <TimeStep>0.0025</TimeStep>
 <Neurons>
@@ -339,7 +351,7 @@
 <NeuralModule>
 <ID>95e1deb7-51d9-4bc0-aa20-69f6ef77dbcc</ID>
 <ModuleName>IntegrateFireSim</ModuleName>
-<ModuleFileName>libIntegrateFireSim.so</ModuleFileName>
+<ModuleFileName>libIntegrateFireSim_debug.so</ModuleFileName>
 <Type>IntegrateFireSimModule</Type>
 <TimeStep>0.00025</TimeStep>
 <SpikePeak>0</SpikePeak>
@@ -550,7 +562,7 @@
 <NeuralModule>
 <ID>b902b6bd-beb9-42d3-8376-43d008ff1379</ID>
 <ModuleName>PhysicsModule</ModuleName>
-<ModuleFileName>libRoboticsAnimatSim.so</ModuleFileName>
+<ModuleFileName>libRoboticsAnimatSim_debug.so</ModuleFileName>
 <Type>PhysicsNeuralModule</Type>
 <TimeStep>0.0005</TimeStep>
 <Adapters>
@@ -618,65 +630,15 @@
 </NeuralModule>
 </NeuralModules>
 </NervousSystem>
+<RobotInterface>
+<Name>LANWirelessInterface</Name>
+<ID>894deef9-eae1-42b2-9288-6bf76adf9620</ID>
+<Type>LANWirelessInterface</Type>
+<ModuleName/>
+<PhysicsTimeStep>0.0006</PhysicsTimeStep>
+</RobotInterface>
 </Organism>
 </Organisms>
-<Structures/>
-<Lights>
-<Light>
-<Name>Light_2</Name>
-<ID>462025f6-4f33-481b-9444-2325136971dd</ID>
-<Description/>
-<GraphicsAlpha>0.5</GraphicsAlpha>
-<CollisionsAlpha>0.5</CollisionsAlpha>
-<JointsAlpha>0.5</JointsAlpha>
-<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
-<SimulationAlpha>0</SimulationAlpha>
-<IsVisible>True</IsVisible>
-<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
-<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
-<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
-<Shininess>64</Shininess>
-<Texture/>
-<Position x="-1" y="2" z="-1"/>
-<Rotation x="0" y="0" z="0"/>
-<DraggerSize>-1</DraggerSize>
-<Type>Light</Type>
-<Enabled>True</Enabled>
-<Radius>0.05</Radius>
-<ConstantAttenuation>0</ConstantAttenuation>
-<LinearAttenuationDistance>0</LinearAttenuationDistance>
-<QuadraticAttenuationDistance>75</QuadraticAttenuationDistance>
-<LatitudeSegments>10</LatitudeSegments>
-<LongtitudeSegments>10</LongtitudeSegments>
-</Light>
-<Light>
-<Name>Light_1</Name>
-<ID>a79b6eac-7b48-4519-9d31-6c8d10a398a6</ID>
-<Description/>
-<GraphicsAlpha>0.5</GraphicsAlpha>
-<CollisionsAlpha>0.5</CollisionsAlpha>
-<JointsAlpha>0.5</JointsAlpha>
-<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
-<SimulationAlpha>0</SimulationAlpha>
-<IsVisible>True</IsVisible>
-<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
-<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
-<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
-<Shininess>64</Shininess>
-<Texture/>
-<Position x="1" y="2" z="1"/>
-<Rotation x="0" y="0" z="0"/>
-<DraggerSize>-1</DraggerSize>
-<Type>Light</Type>
-<Enabled>True</Enabled>
-<Radius>0.05</Radius>
-<ConstantAttenuation>0.7</ConstantAttenuation>
-<LinearAttenuationDistance>0</LinearAttenuationDistance>
-<QuadraticAttenuationDistance>0</QuadraticAttenuationDistance>
-<LatitudeSegments>10</LatitudeSegments>
-<LongtitudeSegments>10</LongtitudeSegments>
-</Light>
-</Lights>
 </Environment>
 <ExternalStimuli>
 <Stimulus>
@@ -798,28 +760,4 @@
 </DataColumns>
 </DataChart>
 </DataCharts>
-<WindowMgr>
-<Hud>
-<Type>Hud</Type>
-<HudItems>
-<HudItem>
-<ModuleName/>
-<Type>HudText</Type>
-<Name>ff184653-a8f2-4eb9-9c7a-84df97097ca8</Name>
-<ID>ff184653-a8f2-4eb9-9c7a-84df97097ca8</ID>
-<Type>HudText</Type>
-<CharSize>30</CharSize>
-<Text>Time: %3.3f</Text>
-<DisplayTargetID>Simulator</DisplayTargetID>
-<DisplayDataType>Time</DisplayDataType>
-<UpdateTargetID>Simulator</UpdateTargetID>
-<UpdateDataType>RealTime</UpdateDataType>
-<UpdateInterval>1</UpdateInterval>
-<Position x="10" y="10"/>
-<Color Red="1" Green="1" Blue="1" Alpha="1"/>
-</HudItem>
-</HudItems>
-</Hud>
-<Windows/>
-</WindowMgr>
 </Simulation>
