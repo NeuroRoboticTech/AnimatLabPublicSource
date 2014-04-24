@@ -190,6 +190,30 @@ Namespace DataObjects
 
             End Sub
 
+            Public Overrides Sub InitializeAfterLoad()
+
+                Try
+                    MyBase.InitializeAfterLoad()
+
+                    If m_bIsInitialized Then
+                        Dim bpPart As AnimatGUI.DataObjects.Physical.BodyPart
+                        If (Not Me.LinkedPart Is Nothing AndAlso Me.LinkedPart.BodyPart Is Nothing) AndAlso (m_strLinkedBodyPartID.Length > 0) Then
+                            bpPart = m_doOrganism.FindBodyPart(m_strLinkedBodyPartID, False)
+
+                            If Not bpPart Is Nothing Then
+                                Me.LinkedPart = CreateBodyPartList(m_doOrganism, bpPart, CompatiblePartType())
+                            Else
+                                Util.Application.DeleteItemAfterLoading(Me)
+                                Util.DisplayError(New System.Exception("The body part connector ID: " & Me.ID & " was unable to find its linked item ID: " & m_strLinkedBodyPartID & " in the diagram. This node and all links will be removed."))
+                            End If
+                        End If
+                    End If
+
+                Catch ex As System.Exception
+                    m_bIsInitialized = False
+                End Try
+            End Sub
+
             Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
                 oXml.IntoElem()  'Into RobotPartInterface Element
@@ -197,6 +221,7 @@ Namespace DataObjects
                 m_strName = oXml.GetChildString("Name", Me.Name)
                 m_strID = oXml.GetChildString("ID", Me.ID)
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
+                m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "") 'Note: The ID of the name is added in the LoadID method.
 
                 oXml.OutOfElem()
 
@@ -214,6 +239,10 @@ Namespace DataObjects
 
                 oXml.AddChildElement("Enabled", m_bEnabled)
 
+                If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                    oXml.AddChildElement("LinkedBodyPartID", m_thLinkedPart.BodyPart.ID)
+                End If
+
                 oXml.OutOfElem()
 
             End Sub
@@ -227,6 +256,10 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
+
+                If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                    oXml.AddChildElement("LinkedBodyPartID", m_thLinkedPart.BodyPart.ID)
+                End If
 
                 oXml.OutOfElem()
 

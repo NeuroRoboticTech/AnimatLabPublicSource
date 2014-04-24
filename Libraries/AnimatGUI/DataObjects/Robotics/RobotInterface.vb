@@ -215,6 +215,17 @@ Namespace DataObjects
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             End Sub
 
+            Public Overrides Sub InitializeAfterLoad()
+                MyBase.InitializeAfterLoad()
+
+                Dim ioControl As RobotIOControl
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    ioControl = DirectCast(deEntry.Value, RobotIOControl)
+                    ioControl.InitializeAfterLoad()
+                Next
+
+            End Sub
+
             Public Overridable Sub LoadIOControls(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
                 Try

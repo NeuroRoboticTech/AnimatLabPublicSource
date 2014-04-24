@@ -196,6 +196,17 @@ Namespace DataObjects
                                             "Properties", "Determines if this controller is enabled or not.", m_bEnabled))
             End Sub
 
+            Public Overrides Sub InitializeAfterLoad()
+                MyBase.InitializeAfterLoad()
+
+                Dim doPart As RobotPartInterface
+                For Each deEntry As DictionaryEntry In m_aryParts
+                    doPart = DirectCast(deEntry.Value, RobotPartInterface)
+                    doPart.InitializeAfterLoad()
+                Next
+
+            End Sub
+
             Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
                 oXml.IntoElem()  'Into RobotInterface Element
