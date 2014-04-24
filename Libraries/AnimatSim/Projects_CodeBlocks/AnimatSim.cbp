@@ -21,6 +21,7 @@
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -47,6 +48,7 @@
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -74,6 +76,7 @@
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -100,6 +103,7 @@
 					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -290,6 +294,9 @@
 		<Unit filename="../Mesh.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../ModuleThreadProcessor.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../MotorizedJoint.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -326,7 +333,7 @@
 		<Unit filename="../Organism.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../PhysicalNeuralModule.h">
+		<Unit filename="../PhysicsNeuralModule.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../PidControl.h">
@@ -399,6 +406,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Terrain.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ThreadProcessor.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Torus.h">
@@ -584,6 +594,9 @@
 		<Unit filename="../Mesh.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../ModuleThreadProcessor.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../MotorizedJoint.cpp">
 			<Option virtualFolder="." />
 		</Unit>
@@ -620,7 +633,7 @@
 		<Unit filename="../Organism.cpp">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../PhysicalNeuralModule.cpp">
+		<Unit filename="../PhysicsNeuralModule.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../PidControl.cpp">
@@ -693,6 +706,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Terrrain.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../ThreadProcessor.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Torus.cpp">

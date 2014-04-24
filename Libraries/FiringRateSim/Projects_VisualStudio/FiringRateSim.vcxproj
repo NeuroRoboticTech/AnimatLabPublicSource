@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{D1072B92-5445-1E46-9723-085D95D82A2F}</ProjectGuid>
+		<ProjectGuid>{9BAF75D4-D430-2B42-87CD-BEDAE272DD9E}</ProjectGuid>
 		<RootNamespace>FiringRateSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

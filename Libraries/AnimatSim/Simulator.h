@@ -13,6 +13,8 @@ using namespace StdUtils;
 #include "HudItem.h"
 #include "Hud.h"
 #include "SimulationWindowMgr.h"
+#include "ThreadProcessor.h"
+#include "ModuleThreadProcessor.h"
 
 namespace AnimatSim
 {
@@ -159,6 +161,15 @@ namespace AnimatSim
 
             /// True if we are in the process of resetting the simulation. False otherwise.
             bool m_bIsResetting;
+
+            /// The pointer to a neural thread processor
+            ThreadProcessor *m_lpNeuralThread;
+
+            /// The pointer to the physics thread processor
+            ThreadProcessor *m_lpPhysicsThread;
+
+            /// The pointer to an i/o thread processor
+            ThreadProcessor *m_lpIOThread;
 
 #pragma endregion
 
@@ -347,7 +358,7 @@ namespace AnimatSim
 			float m_fltActualFrameRate;
 
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
-			unsigned long long m_lLastTickTaken;
+			signed __int64 m_lLastTickTaken;
 
 			/// This is the time pers step for the physics engine.
 			float m_fltPhysicsStepTime;
@@ -793,15 +804,14 @@ namespace AnimatSim
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
 
 		//Timer Methods
-		virtual unsigned long long GetTimerTick() = 0;
-		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd) = 0;
-		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd) = 0;
-		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd) = 0;
-		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) = 0;
-		virtual void MicroSleep(unsigned int iMicroTime) = 0;
+		virtual signed __int64 GetTimerTick();
+		virtual double TimerDiff_u(signed __int64 lStart, signed __int64 lEnd);
+		virtual double TimerDiff_m(signed __int64 lStart, signed __int64 lEnd);
+		virtual double TimerDiff_s(signed __int64 lStart, signed __int64 lEnd);
+		virtual void MicroSleep(unsigned int iMicroTime);
 		virtual void MicroWait(unsigned int iMicroTime);
 
-		virtual void WriteToConsole(std::string strMessage) = 0;
+		virtual void WriteToConsole(std::string strMessage);
         
         virtual void NotifyRigidBodyAdded(std::string strID);
         virtual void NotifyRigidBodyRemoved(std::string strID);

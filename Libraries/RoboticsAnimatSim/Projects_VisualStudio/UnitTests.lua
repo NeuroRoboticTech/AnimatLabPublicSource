@@ -10,7 +10,6 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../RoboticsAnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
 						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
@@ -20,9 +19,7 @@
 			targetname ("Robotics_UnitTests")
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "_CRT_SECURE_NO_WARNINGS"	}
 			flags   { "Symbols", "SEH" }
-			links { "OpenThreadsd",
-					"osgd", 
-					"wsock32", 
+			links { "wsock32", 
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
@@ -32,7 +29,6 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../RoboticsAnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
 						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
@@ -42,9 +38,7 @@
 			targetname ("Robotics_UnitTests")
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL" }
 			flags   { "Optimize", "SEH" }
-			links { "OpenThreads",
-					"osg",
-					"wsock32",
+			links { "wsock32",
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }

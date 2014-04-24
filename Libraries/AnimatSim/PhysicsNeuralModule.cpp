@@ -23,7 +23,7 @@
 #include "RigidBody.h"
 #include "Structure.h"
 #include "NeuralModule.h"
-#include "PhysicalNeuralModule.h"
+#include "PhysicsNeuralModule.h"
 #include "NervousSystem.h"
 #include "Organism.h"
 #include "ActivatedItem.h"

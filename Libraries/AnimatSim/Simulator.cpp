@@ -40,6 +40,9 @@
 #include "LightManager.h"
 #include "Simulator.h"
 
+#include <platformstl/performance/performance_counter.hpp>
+#include <platformstl/synch/sleep_functions.h>
+
 namespace AnimatSim
 {
 
@@ -47,6 +50,8 @@ namespace AnimatSim
 Simulator *g_lpSimulator = NULL;
 Simulator ANIMAT_PORT *GetSimulator() 
 {return g_lpSimulator;};
+
+platformstl::performance_counter g_Counter;
 
 /**
 \brief	Default constructor.
@@ -172,6 +177,10 @@ Simulator::Simulator()
 
     m_bInDrag = false;
     m_bIsResetting = false;
+
+    m_lpNeuralThread = NULL;
+    m_lpPhysicsThread = NULL;
+    m_lpIOThread = NULL;
 }
 
 /**
@@ -216,6 +225,24 @@ try
 		delete m_lpSimCallback;
 		m_lpSimCallback = NULL;
 	}
+
+    //if(m_lpNeuralThread)
+    //{
+    //    delete m_lpNeuralThread;
+    //    m_lpNeuralThread = NULL;
+    //}
+
+    //if(m_lpPhysicsThread)
+    //{
+    //    delete m_lpPhysicsThread;
+    //    m_lpPhysicsThread = NULL;
+    //}
+
+    //if(m_lpIOThread)
+    //{
+    //    delete m_lpIOThread;
+    //    m_lpIOThread = NULL;
+    //}
 
 	m_aryNeuralModuleFactories.RemoveAll();
 
@@ -1505,7 +1532,7 @@ unsigned long long Simulator::StepSimEndTick()
 {return m_lStepSimEndTick;}
 
 double Simulator::CurrentRealTimeForStep_n()
-{return TimerDiff_n(m_lStepStartTick, GetTimerTick());}
+{return TimerDiff_u(m_lStepStartTick, GetTimerTick());}
 
 double Simulator::CurrentRealTimeForStep_s()
 {return TimerDiff_s(m_lStepStartTick, GetTimerTick());}
@@ -1741,6 +1768,15 @@ and calls their Initialize method.
 **/
 void Simulator::InitializeStructures()
 {
+    //if(!m_lpNeuralThread)
+    //    m_lpNeuralThread = new ThreadProcessor();
+
+    //if(!m_lpPhysicsThread)
+    //    m_lpPhysicsThread = new ThreadProcessor();
+
+    //if(!m_lpNeuralThread)
+    //    m_lpNeuralThread = new ThreadProcessor();
+
 	InitializeRandomNumbers();
 
 	m_oMaterialMgr.Initialize();
@@ -2051,6 +2087,24 @@ void Simulator::Reset()
 		m_lpSimCallback = NULL;
 	}
 
+    //if(m_lpNeuralThread)
+    //{
+    //    delete m_lpNeuralThread;
+    //    m_lpNeuralThread = NULL;
+    //}
+
+    //if(m_lpPhysicsThread)
+    //{
+    //    delete m_lpPhysicsThread;
+    //    m_lpPhysicsThread = NULL;
+    //}
+
+    //if(m_lpIOThread)
+    //{
+    //    delete m_lpIOThread;
+    //    m_lpIOThread = NULL;
+    //}
+
 	m_aryNeuralModuleFactories.RemoveAll();
 
 	m_arySourcePhysicsAdapters.RemoveAll();
@@ -2127,6 +2181,38 @@ float Simulator::MinTimeStep()
 	}
 
 	return m_fltTimeStep;
+}
+
+//Timer Methods
+signed __int64 Simulator::GetTimerTick()
+{
+	m_lLastTickTaken = g_Counter.get_epoch();
+	return m_lLastTickTaken;
+}
+
+double Simulator::TimerDiff_u(signed __int64 lStart, signed __int64 lEnd)
+{
+	return (double) g_Counter.get_microseconds(lStart, lEnd);
+}
+
+double Simulator::TimerDiff_m(signed __int64 lStart, signed __int64 lEnd)
+{
+	return (double) (g_Counter.get_microseconds(lStart, lEnd)*1e-3);
+}
+
+double Simulator::TimerDiff_s(signed __int64 lStart, signed __int64 lEnd)
+{
+	return (double) (g_Counter.get_microseconds(lStart, lEnd)*1e-6);
+}
+
+void Simulator::MicroSleep(unsigned int iMicroTime)
+{
+	platformstl::micro_sleep(iMicroTime);
+}
+
+void Simulator::WriteToConsole(std::string strMessage)
+{
+	std::cout << strMessage;
 }
 
 void Simulator::MicroWait(unsigned int iMicroTime)
@@ -2351,6 +2437,9 @@ void Simulator::StepSimulation()
 void Simulator::SimulateBegin()
 {
 	m_bSteppingSim = true;
+
+	//Reset the counter.
+	g_Counter.start();
 }
 
 /**
@@ -2566,7 +2655,8 @@ void Simulator::StartVideoFrameTimer()
 
 double Simulator::TimeBetweenVideoFrames()
 {
-	return TimerDiff_s(m_lVideoFrameStartTick, GetTimerTick());
+	double dblTime = TimerDiff_s(m_lVideoFrameStartTick, GetTimerTick());
+	return dblTime;
 }
 
 double Simulator::RemainingVideoFrameTime()

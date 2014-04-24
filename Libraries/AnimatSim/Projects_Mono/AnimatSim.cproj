@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{15169622-235C-124C-87FF-7DA428D45888}</ProjectGuid>
+    <ProjectGuid>{6761F460-821C-A44D-B8C1-6E7FECA30131}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_debug.so</OutputName>
@@ -25,6 +24,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -45,8 +45,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim.so</OutputName>
@@ -57,6 +56,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -78,8 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_debug.so</OutputName>
@@ -89,6 +88,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -109,8 +109,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim.so</OutputName>
@@ -121,6 +120,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -318,6 +318,9 @@
     <None Include="..\Mesh.h">
       <Link>Mesh.h</Link>
     </None>
+    <None Include="..\ModuleThreadProcessor.h">
+      <Link>ModuleThreadProcessor.h</Link>
+    </None>
     <None Include="..\MotorVelocityStimulus.h">
       <Link>MotorVelocityStimulus.h</Link>
     </None>
@@ -354,8 +357,8 @@
     <None Include="..\Organism.h">
       <Link>Organism.h</Link>
     </None>
-    <None Include="..\PhysicalNeuralModule.h">
-      <Link>PhysicalNeuralModule.h</Link>
+    <None Include="..\PhysicsNeuralModule.h">
+      <Link>PhysicsNeuralModule.h</Link>
     </None>
     <None Include="..\PidControl.h">
       <Link>PidControl.h</Link>
@@ -428,6 +431,9 @@
     </None>
     <None Include="..\Terrain.h">
       <Link>Terrain.h</Link>
+    </None>
+    <None Include="..\ThreadProcessor.h">
+      <Link>ThreadProcessor.h</Link>
     </None>
     <None Include="..\Torus.h">
       <Link>Torus.h</Link>
@@ -614,6 +620,9 @@
     <Compile Include="..\Mesh.cpp">
       <Link>Mesh.cpp</Link>
     </Compile>
+    <Compile Include="..\ModuleThreadProcessor.cpp">
+      <Link>ModuleThreadProcessor.cpp</Link>
+    </Compile>
     <Compile Include="..\MotorVelocityStimulus.cpp">
       <Link>MotorVelocityStimulus.cpp</Link>
     </Compile>
@@ -650,8 +659,8 @@
     <Compile Include="..\Organism.cpp">
       <Link>Organism.cpp</Link>
     </Compile>
-    <Compile Include="..\PhysicalNeuralModule.cpp">
-      <Link>PhysicalNeuralModule.cpp</Link>
+    <Compile Include="..\PhysicsNeuralModule.cpp">
+      <Link>PhysicsNeuralModule.cpp</Link>
     </Compile>
     <Compile Include="..\PidControl.cpp">
       <Link>PidControl.cpp</Link>
@@ -724,6 +733,9 @@
     </Compile>
     <Compile Include="..\Terrrain.cpp">
       <Link>Terrrain.cpp</Link>
+    </Compile>
+    <Compile Include="..\ThreadProcessor.cpp">
+      <Link>ThreadProcessor.cpp</Link>
     </Compile>
     <Compile Include="..\Torus.cpp">
       <Link>Torus.cpp</Link>

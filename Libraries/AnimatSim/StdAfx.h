@@ -46,6 +46,8 @@ namespace AnimatSim
 	class SimulationWindow;
 	class SimulationWindowMgr;
 	class BoundingBox;
+    class ThreadProcessor;
+    class ModuleThreadProcessor;
 
 	namespace Adapters
 	{

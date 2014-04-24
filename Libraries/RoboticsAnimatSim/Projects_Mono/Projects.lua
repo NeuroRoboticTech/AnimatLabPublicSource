@@ -16,8 +16,7 @@
 			targetdir ("Debug")
 			targetname ("RoboticsAnimatSim_debug")
 			links { "StdUtils_debug", 
-				"AnimatSim_debug",
-				"OpenThreads" }
+				"AnimatSim_debug" }
 			postbuildcommands { "cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
@@ -27,8 +26,7 @@
 			targetname ("RoboticsAnimatSim")
 			links { "StdUtils",
 				"AnimatSim", 
-				"OsgAnimatSim",
-				"OpenThreads"}					
+				"OsgAnimatSim"}					
 			postbuildcommands { "cp Release/libRoboticsAnimatSim.so ../../../bin" }
 
 
@@ -52,15 +50,13 @@
 			defines { "_DEBUG" }
 			flags   { "Symbols", "SEH" }
 			links { "StdUtils_debug", 
-				"AnimatSim_debug",
-				"OpenThreads"}
+				"AnimatSim_debug"}
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			links { "StdUtils",
-				"AnimatSim",
-				"OpenThreads"}					
+				"AnimatSim"}					
 					
 
 								

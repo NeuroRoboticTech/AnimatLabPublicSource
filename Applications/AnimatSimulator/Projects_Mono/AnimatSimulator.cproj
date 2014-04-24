@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}</ProjectGuid>
+    <ProjectGuid>{7A79B38B-B956-644B-ABFE-03C6716DAB7B}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -17,8 +17,7 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -43,14 +42,12 @@
         <Command type="AfterBuild" command="cp Debug/animatsimulator_debug ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>/home/david/AnimatLabSDK/AnimatLabPrivateSource/Experiment/StandAloneSimTest/Bullet_Single_Linux_Debug.asim</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -82,8 +79,7 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -113,8 +109,7 @@
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -146,8 +141,7 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC ANIMAT_STATIC</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>

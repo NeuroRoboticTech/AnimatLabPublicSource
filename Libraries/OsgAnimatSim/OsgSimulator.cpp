@@ -130,29 +130,6 @@ osg::NotifySeverity OsgSimulator::ConvertTraceLevelToOSG()
 	}
 }
 
-
-//Timer Methods
-unsigned long long OsgSimulator::GetTimerTick()
-{
-	m_lLastTickTaken = osg::Timer::instance()->tick();
-	return m_lLastTickTaken;
-}
-
-double OsgSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_n(lStart, lEnd);}
-
-double OsgSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_u(lStart, lEnd);}
-
-double OsgSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_m(lStart, lEnd);}
-
-double OsgSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_s(lStart, lEnd);}
-
-void OsgSimulator::MicroSleep(unsigned int iMicroTime)
-{OpenThreads::Thread::microSleep(iMicroTime);}
-
 void OsgSimulator::WriteToConsole(std::string strMessage)
 {
 	osg::notify(osg::NOTICE) << strMessage << std::endl;

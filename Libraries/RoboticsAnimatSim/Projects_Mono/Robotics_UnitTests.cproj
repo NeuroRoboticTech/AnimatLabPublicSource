@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8BF27017-04C6-C448-A2E7-B740B595B1F0}</ProjectGuid>
+    <ProjectGuid>{FBF40CB0-4786-3F47-8997-C96D62867BEB}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -40,7 +40,6 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
-        <Lib>OpenThreads</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -72,7 +71,6 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
-        <Lib>OpenThreads</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -104,7 +102,6 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
-        <Lib>OpenThreads</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -136,7 +133,6 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
-        <Lib>OpenThreads</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>

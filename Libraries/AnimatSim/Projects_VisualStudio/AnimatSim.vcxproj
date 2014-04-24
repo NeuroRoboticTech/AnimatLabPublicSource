@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{2BFA8A65-2A51-4548-AA66-BEC776B684D0}</ProjectGuid>
+		<ProjectGuid>{AE425A0A-2538-EE4B-BF7D-AE8A14A2DC37}</ProjectGuid>
 		<RootNamespace>AnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -88,7 +88,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +101,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
@@ -119,7 +119,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -132,7 +132,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
@@ -151,7 +151,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -164,7 +164,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
@@ -182,7 +182,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -195,7 +195,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
@@ -271,6 +271,7 @@
 		<ClInclude Include="..\MaterialType.h" />
 		<ClInclude Include="..\MemoryChart.h" />
 		<ClInclude Include="..\Mesh.h" />
+		<ClInclude Include="..\ModuleThreadProcessor.h" />
 		<ClInclude Include="..\MotorizedJoint.h" />
 		<ClInclude Include="..\MotorVelocityStimulus.h" />
 		<ClInclude Include="..\Mouth.h" />
@@ -283,7 +284,7 @@
 		<ClInclude Include="..\OdorSensor.h" />
 		<ClInclude Include="..\OdorType.h" />
 		<ClInclude Include="..\Organism.h" />
-		<ClInclude Include="..\PhysicalNeuralModule.h" />
+		<ClInclude Include="..\PhysicsNeuralModule.h" />
 		<ClInclude Include="..\PidControl.h" />
 		<ClInclude Include="..\Plane.h" />
 		<ClInclude Include="..\PolynomialGain.h" />
@@ -308,6 +309,7 @@
 		<ClInclude Include="..\Stomach.h" />
 		<ClInclude Include="..\Structure.h" />
 		<ClInclude Include="..\Terrain.h" />
+		<ClInclude Include="..\ThreadProcessor.h" />
 		<ClInclude Include="..\Torus.h" />
 		<ClInclude Include="..\VoltageClamp.h" />
 	</ItemGroup>
@@ -430,6 +432,8 @@
 		</ClCompile>
 		<ClCompile Include="..\Mesh.cpp">
 		</ClCompile>
+		<ClCompile Include="..\ModuleThreadProcessor.cpp">
+		</ClCompile>
 		<ClCompile Include="..\MotorizedJoint.cpp">
 		</ClCompile>
 		<ClCompile Include="..\MotorVelocityStimulus.cpp">
@@ -454,7 +458,7 @@
 		</ClCompile>
 		<ClCompile Include="..\Organism.cpp">
 		</ClCompile>
-		<ClCompile Include="..\PhysicalNeuralModule.cpp">
+		<ClCompile Include="..\PhysicsNeuralModule.cpp">
 		</ClCompile>
 		<ClCompile Include="..\PidControl.cpp">
 		</ClCompile>
@@ -503,6 +507,8 @@
 		<ClCompile Include="..\Structure.cpp">
 		</ClCompile>
 		<ClCompile Include="..\Terrrain.cpp">
+		</ClCompile>
+		<ClCompile Include="..\ThreadProcessor.cpp">
 		</ClCompile>
 		<ClCompile Include="..\Torus.cpp">
 		</ClCompile>

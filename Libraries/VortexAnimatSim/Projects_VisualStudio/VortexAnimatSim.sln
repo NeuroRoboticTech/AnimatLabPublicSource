@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{158A7543-5DAE-D24C-BF49-416766A92645}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "VortexAnimatSim.vcxproj", "{7DF22079-EA29-9C46-BD48-C35105B3C580}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Debug|Win32.ActiveCfg = Debug|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Debug|Win32.Build.0 = Debug|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Release|Win32.ActiveCfg = Release|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Release|Win32.Build.0 = Release|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
-		{158A7543-5DAE-D24C-BF49-416766A92645}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Debug|Win32.Build.0 = Debug|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Release|Win32.ActiveCfg = Release|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Release|Win32.Build.0 = Release|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{7DF22079-EA29-9C46-BD48-C35105B3C580}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

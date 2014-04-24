@@ -509,28 +509,6 @@ void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 	vRot.ClearNearZero();
 }
 
-//Timer Methods
-unsigned long long VsSimulator::GetTimerTick()
-{
-	m_lLastTickTaken = osg::Timer::instance()->tick();
-	return m_lLastTickTaken;
-}
-
-double VsSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_n(lStart, lEnd);}
-
-double VsSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_u(lStart, lEnd);}
-
-double VsSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_m(lStart, lEnd);}
-
-double VsSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
-{return osg::Timer::instance()->delta_s(lStart, lEnd);}
-
-void VsSimulator::MicroSleep(unsigned int iMicroTime)
-{OpenThreads::Thread::microSleep(iMicroTime);}
-
 void VsSimulator::WriteToConsole(std::string strMessage)
 {
 	osg::notify(osg::NOTICE) << strMessage << std::endl;

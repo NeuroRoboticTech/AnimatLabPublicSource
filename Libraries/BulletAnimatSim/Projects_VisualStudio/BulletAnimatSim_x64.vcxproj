@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{BF9DED63-4DE4-E24D-B223-7D450C5A6E85}</ProjectGuid>
+		<ProjectGuid>{BC1845B7-3C7C-9B49-AF19-F713C2645BF6}</ProjectGuid>
 		<RootNamespace>BulletAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

@@ -9,7 +9,6 @@
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
 						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
@@ -19,9 +18,7 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("RoboticsAnimatSim_vc10D")
-			links { "OpenThreadsd",
-					"osgd", 
-					"wsock32", 
+			links { "wsock32", 
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid" }
@@ -32,7 +29,6 @@
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/OpenSceneGraph-3.0.1/include",
 						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
@@ -42,9 +38,7 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("RoboticsAnimatSim_vc10")
-			links { "OpenThreads",
-					"osg",
-					"wsock32",
+			links { "wsock32",
 					"netapi32",
 					"comctl32",
 					"wbemuuid" }

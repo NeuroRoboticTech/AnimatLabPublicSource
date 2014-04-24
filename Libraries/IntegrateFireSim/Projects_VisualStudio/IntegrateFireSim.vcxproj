@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{0C25D648-2E11-7640-8CB4-C254480C624D}</ProjectGuid>
+		<ProjectGuid>{FF914E97-B5C2-6345-A03A-B2B6DB9022AC}</ProjectGuid>
 		<RootNamespace>IntegrateFireSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

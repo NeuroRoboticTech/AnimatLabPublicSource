@@ -6,7 +6,8 @@
 				 "../*.cpp"}
 		buildoptions { "-std=c++11" }
 		includedirs { "../../../include", 
-					  "../../StdUtils" }
+					  "../../StdUtils",
+					  "../../../../3rdParty/stlsoft-1.9.117/include" }
 		libdirs { "../../../bin" }
 		links { "dl"}
 	  

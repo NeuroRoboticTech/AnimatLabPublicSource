@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{7A79B38B-B956-644B-ABFE-03C6716DAB7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,16 +12,16 @@ Global
 		Debug_Static|AnyCPU = Debug_Static|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
-		{E72B384A-5FD1-6B49-BD75-7D100CF8EF20}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
+		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

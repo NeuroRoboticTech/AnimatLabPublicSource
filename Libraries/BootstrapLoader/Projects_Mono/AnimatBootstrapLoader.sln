@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatBootstrapLoader", "AnimatBootstrapLoader.cproj", "{A50731FF-FC2B-2146-9086-29194E7013EA}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatBootstrapLoader", "AnimatBootstrapLoader.cproj", "{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|AnyCPU = Release_Double|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
-		{A50731FF-FC2B-2146-9086-29194E7013EA}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{F8DA183F-44E0-D447-BB9F-B53BE1ECAD69}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

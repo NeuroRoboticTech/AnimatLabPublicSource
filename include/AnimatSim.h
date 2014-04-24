@@ -45,6 +45,8 @@ namespace AnimatSim
 	class HudItem;
 	class HudText;
     class PidControl;
+    class ThreadProcessor;
+    class ModuleThreadProcessor;
 
 	namespace Adapters
 	{
@@ -57,7 +59,7 @@ namespace AnimatSim
 	{
 		class NervousSystem;
 		class NeuralModule;
-		class PhysicalNeuralModule;
+		class PhysicsNeuralModule;
 	}
 
 	namespace Charting
@@ -243,7 +245,7 @@ using namespace AnimatSim::Robotics;
 #include "Structure.h"
 #include "NervousSystem.h"
 #include "NeuralModule.h"
-#include "PhysicalNeuralModule.h"
+#include "PhysicsNeuralModule.h"
 #include "Organism.h"
 #include "Light.h"
 #include "LightManager.h"
