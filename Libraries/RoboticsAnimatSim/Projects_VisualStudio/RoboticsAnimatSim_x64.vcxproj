@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{D7849B25-FE8E-E144-8A5A-27120EC6EAAC}</ProjectGuid>
+		<ProjectGuid>{7C45003D-B52C-F34A-9434-028B7660BC40}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -88,7 +88,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,12 +101,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D_x64.pdb</ProgramDataBaseFileName>
@@ -120,7 +120,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -133,12 +133,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>
@@ -153,7 +153,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -166,12 +166,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D_x64.pdb</ProgramDataBaseFileName>
@@ -185,7 +185,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -198,12 +198,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10_x64.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Windows</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>

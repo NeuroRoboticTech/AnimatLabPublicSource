@@ -21,6 +21,8 @@ Namespace DataObjects
             Protected m_snPhysicsTimeStep As AnimatGUI.Framework.ScaledNumber
             Protected m_doPhysics As Physical.PhysicsEngine
 
+            Protected m_aryIOControls As New Collections.SortedRobotIOControls(Me)
+
 #End Region
 
 #Region " Properties "
@@ -57,6 +59,13 @@ Namespace DataObjects
 
             Public MustOverride ReadOnly Property PartType() As String
 
+            Public Overridable ReadOnly Property IOControls As Collections.SortedRobotIOControls
+                Get
+                    Return m_aryIOControls
+                End Get
+            End Property
+
+
 #End Region
 
 #Region " Methods "
@@ -64,7 +73,10 @@ Namespace DataObjects
             Public Sub New(ByVal doParent As Framework.DataObject)
                 MyBase.New(doParent)
 
-                m_doOrganism = DirectCast(doParent, Physical.Organism)
+                If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(Physical.Organism), False) Then
+                    m_doOrganism = DirectCast(doParent, Physical.Organism)
+                End If
+
                 m_strName = "RobotInterface"
                 m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "", "")
             End Sub
@@ -72,6 +84,7 @@ Namespace DataObjects
             Public Overrides Sub ClearIsDirty()
                 MyBase.ClearIsDirty()
                 m_snPhysicsTimeStep.ClearIsDirty()
+                m_aryIOControls.ClearIsDirty()
             End Sub
 
             Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -81,6 +94,7 @@ Namespace DataObjects
                 Dim OrigNode As RobotInterface = DirectCast(doOriginal, RobotInterface)
 
                 m_snPhysicsTimeStep = DirectCast(OrigNode.m_snPhysicsTimeStep.Clone(Me, bCutData, doRoot), ScaledNumber)
+                m_aryIOControls = DirectCast(OrigNode.m_aryIOControls.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedRobotIOControls)
             End Sub
 
             Public Overridable Sub GenerateStandaloneSimFile()
@@ -97,16 +111,46 @@ Namespace DataObjects
                 Util.ShowMessage("Robot simulation file for " & m_doOrganism.Name & " created successfully.", "Exported simulation file", MessageBoxButtons.OK)
             End Sub
 
+
 #Region " DataObject Methods "
+
+
+#Region " Workspace TreeView "
+
+            Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                           ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                           Optional ByVal bRootObject As Boolean = False)
+                MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
+
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    Dim nmControl As RobotIOControl = DirectCast(deEntry.Value, RobotIOControl)
+                    nmControl.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                Next
+            End Sub
+
+            Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                           ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                           ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+                Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    Dim nmControl As RobotIOControl = DirectCast(deEntry.Value, RobotIOControl)
+                    nmControl.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+                Next
+
+                Return tnNode
+            End Function
 
             Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
                 If tnSelectedNode Is m_tnWorkspaceNode Then
-                    Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Robot Interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
-
                     ' Create the popup menu object
                     Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Robotics.RobotInterface.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
-                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete})
+
+                    Dim mcAddIOControl As New System.Windows.Forms.ToolStripMenuItem("Add IO Control", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddRobotIOControl.gif"), New EventHandler(AddressOf Me.OnAddRobotIOControl))
+                    Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Robot Interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+
+                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddIOControl, mcDelete})
 
                     Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
@@ -115,6 +159,25 @@ Namespace DataObjects
 
                 Return False
             End Function
+
+#End Region
+
+#Region " Find Methods "
+
+            Public Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByVal colDataObjects As Collections.DataObjects)
+                MyBase.FindChildrenOfType(tpTemplate, colDataObjects)
+                m_aryIOControls.FindChildrenOfType(tpTemplate, colDataObjects)
+            End Sub
+
+            Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+                Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+                If doObject Is Nothing AndAlso Not m_aryIOControls Is Nothing Then doObject = m_aryIOControls.FindObjectByID(strID)
+                Return doObject
+
+            End Function
+
+#End Region
 
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
                 Try
@@ -152,6 +215,37 @@ Namespace DataObjects
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             End Sub
 
+            Public Overridable Sub LoadIOControls(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+                Try
+                    Dim oMod As Object
+                    Dim ioControl As RobotIOControl
+
+                    Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " IO controls"
+
+                    m_aryIOControls.Clear()
+
+                    If oXml.FindChildElement("IOControls", False) Then
+                        oXml.IntoChildElement("IOControls")
+                        Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                        For iIndex As Integer = 0 To iCount
+                            'If the module cannot be found then do not die because of this, just keep trying to go on.
+                            oMod = Util.LoadClass(oXml, iIndex, Me, False)
+                            If Not oMod Is Nothing Then
+                                ioControl = DirectCast(oMod, RobotIOControl)
+                                ioControl.LoadData(oXml)
+                                m_aryIOControls.Add(ioControl.ID, ioControl)
+                            End If
+                        Next
+                        oXml.OutOfElem() 'Outof IOControls Element
+                    End If
+
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+
+            End Sub
+
             Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
                 oXml.IntoElem()  'Into RobotInterface Element
@@ -161,6 +255,8 @@ Namespace DataObjects
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
 
                 m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
+
+                LoadIOControls(oXml)
 
                 oXml.OutOfElem()
 
@@ -179,6 +275,16 @@ Namespace DataObjects
 
                 m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
 
+                Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " IO controls"
+                oXml.AddChildElement("IOControls")
+                oXml.IntoElem()
+                Dim ioControl As RobotIOControl
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    ioControl = DirectCast(deEntry.Value, RobotIOControl)
+                    ioControl.SaveData(oXml)
+                Next
+                oXml.OutOfElem() 'Outof IOControls
+
                 oXml.OutOfElem()
 
             End Sub
@@ -195,11 +301,44 @@ Namespace DataObjects
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
 
+
+                Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " IO controls"
+                oXml.AddChildElement("IOControls")
+                oXml.IntoElem()
+                Dim ioControl As RobotIOControl
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    ioControl = DirectCast(deEntry.Value, RobotIOControl)
+                    ioControl.SaveSimulationXml(oXml, Me)
+                Next
+                oXml.OutOfElem() 'Outof IOControls
+
                 oXml.OutOfElem()
 
             End Sub
 
 #End Region
+
+#End Region
+
+#Region " Events "
+
+            Protected Overridable Sub OnAddRobotIOControl(ByVal sender As Object, ByVal e As System.EventArgs)
+                Try
+                    Dim frmSelInterface As New Forms.SelectObject()
+                    frmSelInterface.Objects = Util.Application.RobotIOControls
+                    frmSelInterface.PartTypeName = "Robot IO Controls"
+
+                    If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                        'Then create the new one.
+                        Dim doIOControl As Robotics.RobotIOControl = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotIOControl)
+                        doIOControl.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                        m_aryIOControls.Add(doIOControl.ID, doIOControl)
+                    End If
+
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
 
 #End Region
 

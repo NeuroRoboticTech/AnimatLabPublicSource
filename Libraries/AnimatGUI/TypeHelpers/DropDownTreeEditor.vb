@@ -73,10 +73,10 @@ Namespace TypeHelpers
             'This event is called when the treeview is first displayed. I obviously do not 
             'want it to close right then so I check if this is the first time it is called and
             'if so then I jump out of this routine.
-            If m_bFirstSelect Then
-                m_bFirstSelect = False
-                Return
-            End If
+            'If m_bFirstSelect Then
+            '    m_bFirstSelect = False
+            '    Return
+            'End If
 
             'If a node is selected and it does not have a tag value then this is a 'Filler' Node
             'and not really a value node. We only close the drop down when the user has selected

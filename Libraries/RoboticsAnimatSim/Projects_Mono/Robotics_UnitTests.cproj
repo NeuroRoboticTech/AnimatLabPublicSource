@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FBF40CB0-4786-3F47-8997-C96D62867BEB}</ProjectGuid>
+    <ProjectGuid>{A1E20CEE-67F9-E140-A590-547A53455DF9}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>

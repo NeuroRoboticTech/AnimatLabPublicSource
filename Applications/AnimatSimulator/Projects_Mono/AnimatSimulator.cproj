@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7A79B38B-B956-644B-ABFE-03C6716DAB7B}</ProjectGuid>
+    <ProjectGuid>{2F32BF84-3179-6345-A9ED-DA5DD5FAABDE}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -17,17 +17,17 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -47,23 +47,23 @@
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator</OutputName>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>AnimatBootstrapLoader</Lib>
+        <Lib>..\..\..\Libraries\BootstrapLoader\Projects_Mono\Release\libAnimatBootstrapLoader.so</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -79,17 +79,17 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -109,23 +109,23 @@
     <OutputPath>Release</OutputPath>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator</OutputName>
     <CompileTarget>Bin</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
       <Libs>
-        <Lib>AnimatBootstrapLoader</Lib>
+        <Lib>..\..\..\Libraries\BootstrapLoader\Projects_Mono\Release\libAnimatBootstrapLoader.so</Lib>
         <Lib>dl</Lib>
         <Lib>pthread</Lib>
       </Libs>
@@ -141,12 +141,12 @@
     <OutputPath>Debug</OutputPath>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC ANIMAT_STATIC</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>animatsimulator_debug</OutputName><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputName>animatsimulator_debug</OutputName>
     <CompileTarget>Bin</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
       <Includes>
-        <Include>../../../../include</Include>
+        <Include>..\..\..\..\include</Include>
         <Include>..\..\..\..\Libraries\StdUtils</Include>
         <Include>..\..\..\..\Libraries\AnimatSim</Include>
         <Include>..\..\..\..\Libraries\OsgAnimatSim</Include>
@@ -156,7 +156,7 @@
     </Includes>
     <LibPaths>
       <LibPaths>
-        <LibPath>../../../../bin</LibPath>
+        <LibPath>..\..\..\..\bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>

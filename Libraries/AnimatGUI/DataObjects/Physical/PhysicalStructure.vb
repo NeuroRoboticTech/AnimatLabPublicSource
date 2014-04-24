@@ -505,6 +505,7 @@ Namespace DataObjects.Physical
                 tvTree.Nodes.Add(tnOrganism)
             End If
             tnOrganism.ForeColor = Color.Black
+            tnOrganism.Selectable = False
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.CreateJointTreeView(tvTree, tnOrganism, thSelectedPart)
@@ -523,6 +524,7 @@ Namespace DataObjects.Physical
                 tvTree.Nodes.Add(tnOrganism)
             End If
             tnOrganism.ForeColor = Color.Black
+            tnOrganism.Selectable = False
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.CreateRigidBodyTreeView(tvTree, tnOrganism, thSelectedPart)

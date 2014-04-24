@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataObjects\InputSensorSystems\SwitchInputSensor.cs" />
-    <Compile Include="DataObjects\MotorControlSystems\DynamixelCM5USBUARTHingeController.cs" />
-    <Compile Include="DataObjects\MotorControlSystems\DynamixelCM5USBUARTPrismaticController.cs" />
     <Compile Include="DataObjects\RoboticsPhysicsEngine.cs" />
     <Compile Include="DataObjects\RobotInterfaces\LANWirelessInterface.cs" />
+    <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSB.cs" />
+    <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBHingeMotor.cs" />
+    <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBPrismaticMotor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +74,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\SwitchLarge.gif" />
     <EmbeddedResource Include="Graphics\SwitchSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataObjects\RobotIOControls\Firmata\" />
+    <Folder Include="DataObjects\RobotIOControls\MiniMaestro\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\DynamixelUSB.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\DynamixelUSBSmall.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

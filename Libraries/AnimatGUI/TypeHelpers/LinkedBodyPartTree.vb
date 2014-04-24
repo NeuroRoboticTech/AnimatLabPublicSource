@@ -20,6 +20,7 @@ Namespace TypeHelpers
 
 #Region " Properties "
 
+
 #End Region
 
 #Region " Methods "
@@ -30,11 +31,12 @@ Namespace TypeHelpers
 
         Public Sub New(ByVal doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure, _
                        ByVal bpBodyPart As AnimatGUI.DataObjects.Physical.BodyPart, _
-                       ByVal tpBodyPartType As System.Type)
+                       ByVal tpBodyPartType As System.Type, Optional ByVal doPruner As TreeListPruner = Nothing)
             MyBase.New(doStructure)
             m_doStructure = doStructure
             m_bpBodyPart = bpBodyPart
             m_tpBodyPartType = tpBodyPartType
+            m_doPruner = doPruner
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -63,6 +65,10 @@ Namespace TypeHelpers
                 m_doStructure.CreateJointTreeView(tvTree, Nothing, Me)
             Else
                 m_doStructure.CreateRigidBodyTreeView(tvTree, Nothing, Me)
+            End If
+
+            If Not m_doPruner Is Nothing Then
+                m_doPruner.PruneTree(tvTree.Nodes)
             End If
 
             tvTree.Width = 300

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader_x64", "BootstrapLoader_x64.vcxproj", "{72F9332F-7CF4-0648-A35C-524CB03B486A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader_x64", "BootstrapLoader_x64.vcxproj", "{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double_x64|x64 = Release_Double_x64|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Debug_x64|x64.Build.0 = Debug_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Release_x64|x64.ActiveCfg = Release_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Release_x64|x64.Build.0 = Release_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
-		{72F9332F-7CF4-0648-A35C-524CB03B486A}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Release_x64|x64.Build.0 = Release_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

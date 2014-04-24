@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{40BF1C60-D5B3-F946-960D-257907B04287}</ProjectGuid>
+		<ProjectGuid>{F0DC381C-56C0-D942-958A-035F213651DA}</ProjectGuid>
 		<RootNamespace>StdUtils_UnitTests</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>

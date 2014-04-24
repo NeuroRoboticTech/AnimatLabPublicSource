@@ -242,6 +242,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\RobotInterfacess.vb" />
+    <Compile Include="Collections\RobotIOControls.vb" />
     <Compile Include="Collections\RobotPartInterfaces.vb" />
     <Compile Include="Collections\Stimuli.vb">
       <SubType>Code</SubType>
@@ -499,6 +500,7 @@
     <Compile Include="DataObjects\ProjectMigrations\Migrate_V2.vb" />
     <Compile Include="DataObjects\ProjectMigrations\Migrate_VortexToBullet.vb" />
     <Compile Include="DataObjects\Robotics\InputSensorSystem.vb" />
+    <Compile Include="DataObjects\Robotics\RobotIOControl.vb" />
     <Compile Include="DataObjects\Robotics\MotorControlSystem.vb" />
     <Compile Include="DataObjects\Robotics\RobotInterface.vb" />
     <Compile Include="DataObjects\Robotics\RobotPartInterface.vb" />
@@ -856,6 +858,8 @@
     <Compile Include="TypeHelpers\OdorTypeEditor.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\RobotTreePruner.vb" />
+    <Compile Include="TypeHelpers\TreeListPruner.vb" />
     <Compile Include="TypeHelpers\UnitsTypeConverter.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -1471,6 +1475,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\AddRobotInterface.gif" />
     <EmbeddedResource Include="Graphics\RobotInterface.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddRobotIOControl.gif" />
+    <EmbeddedResource Include="Graphics\RobotIO.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

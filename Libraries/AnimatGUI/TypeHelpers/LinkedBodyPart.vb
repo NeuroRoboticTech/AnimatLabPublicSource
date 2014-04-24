@@ -19,6 +19,7 @@ Namespace TypeHelpers
         Protected m_doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure
         Protected m_bpBodyPart As AnimatGUI.DataObjects.Physical.BodyPart
         Protected m_tpBodyPartType As System.Type
+        Protected m_doPruner As TreeListPruner
 
 #End Region
 
@@ -63,6 +64,16 @@ Namespace TypeHelpers
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Pruner() As TreeListPruner
+            Get
+                Return m_doPruner
+            End Get
+            Set(ByVal Value As TreeListPruner)
+                m_doPruner = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -73,12 +84,13 @@ Namespace TypeHelpers
 
         Public Sub New(ByVal doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure, _
                        ByVal bpBodyPart As AnimatGUI.DataObjects.Physical.BodyPart, _
-                       ByVal tpBodyPartType As System.Type)
+                       ByVal tpBodyPartType As System.Type, Optional ByVal doPruner As TreeListPruner = Nothing)
             MyBase.New(doStructure)
 
             m_doStructure = doStructure
             m_bpBodyPart = bpBodyPart
             m_tpBodyPartType = tpBodyPartType
+            m_doPruner = doPruner
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -91,6 +103,7 @@ Namespace TypeHelpers
             m_doStructure = thOrig.m_doStructure
             m_bpBodyPart = thOrig.m_bpBodyPart
             m_tpBodyPartType = thOrig.m_tpBodyPartType
+            m_doPruner = thOrig.m_doPruner
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

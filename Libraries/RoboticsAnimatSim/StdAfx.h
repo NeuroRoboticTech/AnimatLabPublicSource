@@ -22,6 +22,7 @@
 #include "AnimatSim.h"
 
 #include "RoboticsAnimatSimConstants.h"
+#include "dynamixel.h"
 
 //Simulation Objects
 namespace RoboticsAnimatSim

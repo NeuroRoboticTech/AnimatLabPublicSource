@@ -226,6 +226,15 @@
 #define Rb_Err_lMatrixUtilNotDefined -4042
 #define Rb_Err_strMatrixUtilNotDefined "Matrix utility was not defined."
 
+
+
+#define Rb_Err_lInvalidBaudRate -4043
+#define Rb_Err_strInvalidBaudRate "Invalid baud rate specified."
+
+#define Rb_Err_lFailedDynamixelConnection -4044
+#define Rb_Err_strFailedDynamixelConnection "Failed to connect to the Dynamixel."
+
+
 #define RB_PI 3.14159
 
 #endif // __RB_ERROR_CONSTANTS_H__
