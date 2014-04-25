@@ -529,7 +529,7 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof Nervous System
 
                 'Only save the robot interface in the simulation xml if we are doing an export for a robot sim.
-                If Not m_doRobotInterface Is Nothing AndAlso Not Util.ExportRobotInterface Is Nothing Then
+                If Not m_doRobotInterface Is Nothing Then
                     m_doRobotInterface.SaveSimulationXml(oXml, Me)
                 End If
 
@@ -650,6 +650,10 @@ Namespace DataObjects.Physical
 
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 

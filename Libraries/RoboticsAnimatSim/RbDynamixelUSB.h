@@ -1,4 +1,4 @@
-// RbLANWirelessInterface.h: interface for the RbLANWirelessInterface class.
+// RbDynamixelCM5USBUARTHingeController.h: interface for the RbDynamixelCM5USBUARTHingeController class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -8,17 +8,26 @@ namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace RobotInterfaces
+		namespace RobotIOControls
 		{
+			namespace DynamixelUSB
+			{
 
-class ROBOTICS_PORT RbLANWirelessInterface : public AnimatSim::Robotics::RobotInterface
+class ROBOTICS_PORT RbDynamixelUSB : public AnimatSim::Robotics::RobotIOControl
 {
 protected:
+	int m_iPortNumber;
+	int m_iBaudRate;
 
 public:
+	RbDynamixelUSB();
+	virtual ~RbDynamixelUSB();
 
-	RbLANWirelessInterface();
-	virtual ~RbLANWirelessInterface();
+	virtual void PortNumber(int iPort);
+	virtual int PortNumber();
+
+	virtual void BaudRate(int iRate);
+	virtual int BaudRate();
 
 #pragma region DataAccesMethods
 
@@ -29,11 +38,11 @@ public:
 #pragma endregion
 
 	virtual void Initialize();
-	virtual void StepSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 
-		}		//MotorControlSystems
+			}	//DynamixelUSB
+		}		//RobotIOControls
 	}			// Robotics
 }				//RoboticsAnimatSim
 

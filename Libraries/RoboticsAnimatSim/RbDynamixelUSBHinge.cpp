@@ -12,20 +12,22 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
-#include "RbDynamixelCM5USBUARTHingeController.h"
+#include "RbDynamixelUSBHinge.h"
 
 namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace MotorControlSystems
+		namespace RobotIOControls
 		{
+			namespace DynamixelUSB
+			{
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-RbDynamixelCM5USBUARTHingeController::RbDynamixelCM5USBUARTHingeController() 
+RbDynamixelUSBHinge::RbDynamixelUSBHinge() 
 {
     m_lpHinge = NULL;
     m_fltPos = 0;
@@ -33,7 +35,7 @@ RbDynamixelCM5USBUARTHingeController::RbDynamixelCM5USBUARTHingeController()
     m_iSign = -1;
 }
 
-RbDynamixelCM5USBUARTHingeController::~RbDynamixelCM5USBUARTHingeController()
+RbDynamixelUSBHinge::~RbDynamixelUSBHinge()
 {
 	try
 	{
@@ -44,16 +46,7 @@ RbDynamixelCM5USBUARTHingeController::~RbDynamixelCM5USBUARTHingeController()
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
 }
 
-void RbDynamixelCM5USBUARTHingeController::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
-{
-    AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
-
-    m_lpHinge = dynamic_cast<RbHinge *>(lpNode);
-	if(!m_lpHinge) 
-		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RbHinge: ", m_strID);
-}
-
-void RbDynamixelCM5USBUARTHingeController::StepSimulation()
+void RbDynamixelUSBHinge::StepSimulation()
 {
     AnimatBase::StepSimulation();
 
@@ -79,7 +72,8 @@ void RbDynamixelCM5USBUARTHingeController::StepSimulation()
 }
 
 
-		}		//MotorControlSystems
+			}	//DynamixelUSB
+		}		//RobotIOControls
 	}			// Robotics
 }				//RoboticsAnimatSim
 

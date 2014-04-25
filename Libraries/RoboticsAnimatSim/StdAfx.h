@@ -74,10 +74,14 @@ namespace RoboticsAnimatSim
             class RbLANWirelessInterface;
         }
 
-        namespace MotorControlSystems
+        namespace RobotIOControls
         {
-            class RbDynamixelCM5USBUARTHingeController;
-            class RbDynamixelCM5USBUARTPrismaticController;
+			namespace DynamixelUSB
+			{
+				class RbDynamixelUSB;
+				class RbDynamixelUSBHinge;
+				class RbDynamixelUSBPrismatic;
+			}
         }
 
         namespace InputSensorSystems
@@ -94,5 +98,6 @@ using namespace RoboticsAnimatSim::Environment::Bodies;
 using namespace RoboticsAnimatSim::Environment::Joints;
 using namespace RoboticsAnimatSim::Robotics;
 using namespace RoboticsAnimatSim::Robotics::RobotInterfaces;
-using namespace RoboticsAnimatSim::Robotics::MotorControlSystems;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls::DynamixelUSB;
 using namespace RoboticsAnimatSim::Robotics::InputSensorSystems;

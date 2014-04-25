@@ -366,6 +366,9 @@
 		<Unit filename="../RobotInterface.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RobotIOControl.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RobotPartInterface.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -664,6 +667,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RobotInterface.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RobotIOControl.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RobotPartInterface.cpp">

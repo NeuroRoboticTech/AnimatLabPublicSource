@@ -13,43 +13,12 @@ namespace RoboticsGUI
             public class DynamixelUSBHingeMotor : AnimatGUI.DataObjects.Robotics.MotorControlSystem
             {
 
-                public override string Description
-                {
-                    get
-                    {
-                        return "Controls a Dynamixel servo motor for a hinge joint using a USB to UART controller";
-                    }
-                    set { }
-                }
-
-                public override string WorkspaceImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelSmall.gif";
-                    }
-                }
-
-                public override string ButtonImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelLarge.gif";
-                    }
-                }
-
-                public override string PartType
-                {
-                    get { return "DynamixelUSBHingeMotor"; }
-                }
-
-                public override Type CompatiblePartType
-                {
-                    get 
-                    {
-                        return typeof(AnimatGUI.DataObjects.Physical.Joints.Hinge);
-                    }
-                }
+                public override string Description {get {return "Controls a Dynamixel servo motor for a hinge joint using a USB to UART controller";}set { }}
+                public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.DynamixelSmall.gif";}}
+                public override string ButtonImageName {get {return "RoboticsGUI.Graphics.DynamixelLarge.gif";}}
+                public override string PartType {get { return "DynamixelUSBHinge"; }}
+                public override Type CompatiblePartType {get {return typeof(AnimatGUI.DataObjects.Physical.Joints.Hinge);}}
+                public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 
                 public DynamixelUSBHingeMotor(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)

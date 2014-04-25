@@ -43,8 +43,9 @@
 #include "RbMaterialType.h"
 
 #include "RbLANWirelessInterface.h"
-#include "RbDynamixelCM5USBUARTHingeController.h"
-#include "RbDynamixelCM5USBUARTPrismaticController.h"
+#include "RbDynamixelUSB.h"
+#include "RbDynamixelUSBHinge.h"
+#include "RbDynamixelUSBPrismatic.h"
 #include "RbSwitchInputSensor.h"
 
 #ifdef _WINDOWS
@@ -912,6 +913,56 @@ catch(...)
 // ************* Robot Interface Type Conversion functions ******************************
 
 
+
+// ************* Robot IO Control Conversion functions ******************************
+
+RobotIOControl *RbClassFactory::CreateRobotIOControl(std::string strType, bool bThrowError)
+{
+	RobotIOControl *lpControl=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "DYNAMIXELUSB")
+	{
+		lpControl = new RbDynamixelUSB;
+	}
+	//else if(strType == "DYNAMIXELUSBPRISMATIC")
+	//{
+	//	lpControl = new RbDynamixelUSBPrismatic;
+	//}
+	//else if(strType == "SWITCHINPUTSENSOR")
+	//{
+	//	lpControl = new RbSwitchInputSensor;
+	//}
+	else
+	{
+		lpControl = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidRobotIOControlType, Al_Err_strInvalidRobotIOControlType, "RobotartIOControl", strType);
+	}
+
+	return lpControl;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpControl) delete lpControl;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpControl) delete lpControl;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* Robot IO Control Conversion functions ******************************
+
+
 // ************* Robot Part Interface Conversion functions ******************************
 
 RobotPartInterface *RbClassFactory::CreateRobotPartInterface(std::string strType, bool bThrowError)
@@ -922,13 +973,13 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "DYNAMIXELCM5USBUARTHINGECONTROLLER")
+	if(strType == "DYNAMIXELUSBHINGE")
 	{
-		lpInterface = new RbDynamixelCM5USBUARTHingeController;
+		lpInterface = new RbDynamixelUSBHinge;
 	}
-	else if(strType == "DYNAMIXELCM5USBUARTPRISMATICCONTROLLER")
+	else if(strType == "DYNAMIXELUSBPRISMATIC")
 	{
-		lpInterface = new RbDynamixelCM5USBUARTPrismaticController;
+		lpInterface = new RbDynamixelUSBPrismatic;
 	}
 	else if(strType == "SWITCHINPUTSENSOR")
 	{
@@ -1010,6 +1061,8 @@ CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateConstraintFriction(strObjectType, bThrowError);
 	else if(strClassType == "ROBOTINTERFACE")
 		lpObject = CreateRobotInterface(strObjectType, bThrowError);
+	else if(strClassType == "ROBOTIOCONTROL")
+		lpObject = CreateRobotIOControl(strObjectType, bThrowError);
 	else if(strClassType == "ROBOTPARTINTERFACE")
 		lpObject = CreateRobotPartInterface(strObjectType, bThrowError);
 	else

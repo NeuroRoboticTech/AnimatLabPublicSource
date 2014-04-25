@@ -13,43 +13,12 @@ namespace RoboticsGUI
             public class DynamixelUSBPrismaticMotor : AnimatGUI.DataObjects.Robotics.MotorControlSystem
             {
 
-                public override string Description
-                {
-                    get
-                    {
-                        return "Controls a Dynamixel servo motor for a prismatic joint using a USB to UART controller";
-                    }
-                    set { }
-                }
-
-                public override string WorkspaceImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelSmall.gif";
-                    }
-                }
-
-                public override string ButtonImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelLarge.gif";
-                    }
-                }
-
-                public override string PartType
-                {
-                    get { return "DynamixelCM5USBUARTPrismaticController"; }
-                }
-
-                public override Type CompatiblePartType
-                {
-                    get
-                    {
-                        return typeof(AnimatGUI.DataObjects.Physical.Joints.Prismatic);
-                    }
-                }
+                public override string Description{ get{return "Controls a Dynamixel servo motor for a prismatic joint using a USB to UART controller";} set { }}
+                public override string WorkspaceImageName{ get{return "RoboticsGUI.Graphics.DynamixelSmall.gif";}}
+                public override string ButtonImageName{ get{return "RoboticsGUI.Graphics.DynamixelLarge.gif";}}
+                public override string PartType {get { return "DynamixelUSBPrismatic"; }}
+                public override Type CompatiblePartType {get {return typeof(AnimatGUI.DataObjects.Physical.Joints.Prismatic);}}
+                public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 
                 public DynamixelUSBPrismaticMotor(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)

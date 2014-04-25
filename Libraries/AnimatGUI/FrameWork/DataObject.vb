@@ -209,6 +209,12 @@ Namespace Framework
             End Get
         End Property
 
+        Public Overridable ReadOnly Property ModuleFilename() As String
+            Get
+                Return Util.Application.Physics.LibraryPrefix & Me.ModuleName & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
+            End Get
+        End Property
+
         <Browsable(False)> _
         Public Overridable ReadOnly Property ClassName() As String
             Get

@@ -8,24 +8,25 @@ namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace MotorControlSystems
+		namespace RobotIOControls
 		{
+			namespace DynamixelUSB
+			{
 
-class ROBOTICS_PORT RbDynamixelCM5USBUARTPrismaticController : public AnimatSim::Robotics::RobotPartInterface
+class ROBOTICS_PORT RbDynamixelUSBPrismatic : public AnimatSim::Robotics::RobotPartInterface
 {
 protected:
     RbPrismatic *m_lpPrismatic;
 
-	virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
-
 public:
-	RbDynamixelCM5USBUARTPrismaticController();
-	virtual ~RbDynamixelCM5USBUARTPrismaticController();
+	RbDynamixelUSBPrismatic();
+	virtual ~RbDynamixelUSBPrismatic();
 
     virtual void StepSimulation();
 };
 
-		}		//MotorControlSystems
+			}	//DynamixelUSB
+		}		//RobotIOControls
 	}			// Robotics
 }				//RoboticsAnimatSim
 

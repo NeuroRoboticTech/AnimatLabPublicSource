@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{5637187D-AA00-7A40-81EA-FE8E9DCC306A}</ProjectGuid>
+		<ProjectGuid>{DA80279D-3371-6945-822F-BF0DEE2C2D3B}</ProjectGuid>
 		<RootNamespace>AnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -295,6 +295,7 @@
 		<ClInclude Include="..\ReceptiveFieldPair.h" />
 		<ClInclude Include="..\RigidBody.h" />
 		<ClInclude Include="..\RobotInterface.h" />
+		<ClInclude Include="..\RobotIOControl.h" />
 		<ClInclude Include="..\RobotPartInterface.h" />
 		<ClInclude Include="..\RPRO.h" />
 		<ClInclude Include="..\Sensor.h" />
@@ -479,6 +480,8 @@
 		<ClCompile Include="..\RigidBody.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RobotInterface.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RobotIOControl.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RobotPartInterface.cpp">
 		</ClCompile>

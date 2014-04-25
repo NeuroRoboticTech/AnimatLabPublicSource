@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{6326055F-5B82-8D4D-9C03-18BCC960E28D}</ProjectGuid>
+		<ProjectGuid>{F200803E-EAD2-724C-BD28-B83B52692853}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -225,8 +225,9 @@
 		<ClInclude Include="..\RbConstraintFriction.h" />
 		<ClInclude Include="..\RbConstraintRelaxation.h" />
 		<ClInclude Include="..\RbCylinder.h" />
-		<ClInclude Include="..\RbDynamixelCM5USBUARTHingeController.h" />
-		<ClInclude Include="..\RbDynamixelCM5USBUARTPrismaticController.h" />
+		<ClInclude Include="..\RbDynamixelUSB.h" />
+		<ClInclude Include="..\RbDynamixelUSBHinge.h" />
+		<ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
 		<ClInclude Include="..\RbEllipsoid.h" />
 		<ClInclude Include="..\RbFreeJoint.h" />
 		<ClInclude Include="..\RbHinge.h" />
@@ -275,9 +276,11 @@
 		</ClCompile>
 		<ClCompile Include="..\RbCylinder.cpp">
 		</ClCompile>
-		<ClCompile Include="..\RbDynamixelCM5USBUARTHingeController.cpp">
+		<ClCompile Include="..\RbDynamixelUSB.cpp">
 		</ClCompile>
-		<ClCompile Include="..\RbDynamixelCM5USBUARTPrismaticController.cpp">
+		<ClCompile Include="..\RbDynamixelUSBHinge.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbEllipsoid.cpp">
 		</ClCompile>

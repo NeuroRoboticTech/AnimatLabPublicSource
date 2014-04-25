@@ -32,6 +32,7 @@
 #include "Simulator.h"
 
 #include "RobotInterface.h"
+#include "RobotIOControl.h"
 #include "RobotPartInterface.h"
 
 
@@ -42,10 +43,33 @@ namespace AnimatSim
 
 RobotPartInterface::RobotPartInterface(void)
 {
+	m_lpParentInterface = NULL;
+	m_lpParentIOControl = NULL;
 }
 
 RobotPartInterface::~RobotPartInterface(void)
 {
+
+try
+{
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of RobotPartInterface\r\n", "", -1, false, true);}
+}
+
+void RobotPartInterface::ParentIOControl(RobotIOControl *lpParent) 
+{
+	m_lpParentIOControl = lpParent;
+
+	if(m_lpParentIOControl)
+		m_lpParentInterface = m_lpParentIOControl->ParentInterface();
+}
+
+RobotIOControl *RobotPartInterface::ParentIOControl() {return m_lpParentIOControl;}
+
+void RobotPartInterface::Initialize()
+{
+
 }
 
 	}

@@ -160,6 +160,7 @@ namespace AnimatSim
     namespace Robotics
     {
         class RobotInterface;
+		class RobotIOControl;
         class RobotPartInterface;
     }
 }

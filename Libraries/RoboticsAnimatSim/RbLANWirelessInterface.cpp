@@ -29,37 +29,16 @@ namespace RoboticsAnimatSim
 
 RbLANWirelessInterface::RbLANWirelessInterface() 
 {
-	m_iPortNumber = 3;
-	m_iBaudRate = 1; //Max
 }
 
 RbLANWirelessInterface::~RbLANWirelessInterface()
 {
 	try
 	{
-		dxl_terminate();
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbLANWirelessInterface\r\n", "", -1, false, true);}
 }
-
-void RbLANWirelessInterface::PortNumber(int iPort)
-{
-	Std_IsAboveMin((int) 0, iPort, true, "PortNumber", true);
-	m_iPortNumber = iPort;
-}
-
-int RbLANWirelessInterface::PortNumber() {return m_iPortNumber;}
-
-void RbLANWirelessInterface::BaudRate(int iRate)
-{
-	if( !((iRate == 1) || (iRate == 3) || (iRate == 4) || (iRate == 7) || (iRate == 9) ||
-		  (iRate == 9) || (iRate == 16) || (iRate == 34) || (iRate == 103) || (iRate == 207)) )
-		THROW_PARAM_ERROR(Rb_Err_lInvalidBaudRate, Rb_Err_strInvalidBaudRate, "Baud rate", iRate);
-	m_iBaudRate = iRate;
-}
-
-int RbLANWirelessInterface::BaudRate() {return m_iBaudRate;}
 
 #pragma region DataAccesMethods
 
@@ -79,19 +58,19 @@ bool RbLANWirelessInterface::SetData(const std::string &strDataType, const std::
 {
 	std::string strType = Std_CheckString(strDataType);
 	
-	if(AnimatBase::SetData(strDataType, strValue, false))
+	if(RobotInterface::SetData(strDataType, strValue, false))
 		return true;
 
-	if(strType == "PORT")
-	{
-		PortNumber((int) atoi(strValue.c_str()));
-		return true;
-	}
-	else if(strType == "BAUDRATE")
-	{
-		BaudRate((int) atoi(strValue.c_str()));
-		return true;
-	}
+	//if(strType == "PORT")
+	//{
+	//	PortNumber((int) atoi(strValue.c_str()));
+	//	return true;
+	//}
+	//else if(strType == "BAUDRATE")
+	//{
+	//	BaudRate((int) atoi(strValue.c_str()));
+	//	return true;
+	//}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -102,13 +81,13 @@ bool RbLANWirelessInterface::SetData(const std::string &strDataType, const std::
 
 void RbLANWirelessInterface::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	RobotInterface::QueryProperties(aryNames, aryTypes);
 
-	aryNames.Add("ComPort");
-	aryTypes.Add("Integer");
+	//aryNames.Add("ComPort");
+	//aryTypes.Add("Integer");
 
-	aryNames.Add("BaudRate");
-	aryTypes.Add("Integer");
+	//aryNames.Add("BaudRate");
+	//aryTypes.Add("Integer");
 }
 
 #pragma endregion
@@ -116,17 +95,18 @@ void RbLANWirelessInterface::QueryProperties(CStdArray<std::string> &aryNames, C
 
 void RbLANWirelessInterface::Initialize()
 {
-	// Open device
-	if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
-		THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
+	RobotInterface::Initialize();
 }
 
 void RbLANWirelessInterface::StepSimulation()
 {
+	RobotInterface::StepSimulation();
 }
 
 void RbLANWirelessInterface::Load(StdUtils::CStdXml &oXml)
 {
+	RobotInterface::Load(oXml);
+
 }
 		}		//RobotInterfaces
 	}			// Robotics

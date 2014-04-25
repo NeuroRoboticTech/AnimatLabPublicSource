@@ -89,10 +89,14 @@ namespace RoboticsAnimatSim
             class RbLANWirelessInterface;
         }
 
-        namespace MotorControlSystems
+        namespace RobotIOControls
         {
-            class RbDynamixelCM5USBUARTHingeController;
-            class RbDynamixelCM5USBUARTPrismaticController;
+			namespace DynamixelUSB
+			{
+				class RbDynamixelUSB;
+				class RbDynamixelUSBHinge;
+				class RbDynamixelUSBPrismatic;
+			}
         }
 
         namespace InputSensorSystems

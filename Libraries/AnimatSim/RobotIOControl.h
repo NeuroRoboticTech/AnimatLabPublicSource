@@ -5,30 +5,28 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
-		class ANIMAT_PORT RobotInterface : public AnimatBase
+		class ANIMAT_PORT RobotIOControl : public AnimatBase
 		{
 		protected:
+			RobotInterface *m_lpParentInterface;
+
 			///A list of child parts that are connected to this part through
 			///different joints. 
-			CStdPtrArray<RobotIOControl> m_aryIOControls;
+			CStdPtrArray<RobotPartInterface> m_aryParts;
 
-			/// Used to determine if we are running in a simulation, or in a real control mode.
-			/// If we are in a simulatino then none of the sim or init methods are called for the robot code.
-			bool m_bInSimulation;
-
-			virtual RobotIOControl *LoadIOControl(CStdXml &oXml);
-			virtual RobotIOControl *AddIOControl(std::string strXml);
-			virtual void RemoveIOControl(std::string strID, bool bThrowError = true);
+			virtual RobotPartInterface *LoadPartInterface(CStdXml &oXml);
+			virtual RobotPartInterface *AddPartInterface(std::string strXml);
+			virtual void RemovePartInterface(std::string strID, bool bThrowError = true);
 			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
 		public:
-			RobotInterface(void);
-			virtual ~RobotInterface(void);
+			RobotIOControl(void);
+			virtual ~RobotIOControl(void);
 
-			virtual CStdPtrArray<RobotIOControl>* IOControls();
+			virtual void ParentInterface(RobotInterface *lpParent);
+			virtual RobotInterface *ParentInterface();
 
-			virtual bool InSimulation();
-			virtual void InSimulation(bool bVal);
+			virtual CStdPtrArray<RobotPartInterface>* Parts();
 
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

@@ -150,10 +150,13 @@
 		<Unit filename="../RbCylinder.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelCM5USBUARTHingeController.h">
+		<Unit filename="../RbDynamixelUSB.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelCM5USBUARTPrismaticController.h">
+		<Unit filename="../RbDynamixelUSBHinge.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBPrismatic.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbEllipsoid.h">
@@ -267,10 +270,13 @@
 		<Unit filename="../RbCylinder.cpp">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelCM5USBUARTHingeController.cpp">
+		<Unit filename="../RbDynamixelUSB.cpp">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelCM5USBUARTPrismaticController.cpp">
+		<Unit filename="../RbDynamixelUSBHinge.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBPrismatic.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbEllipsoid.cpp">

@@ -7,6 +7,8 @@
 #pragma once
 
 #include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
 
 namespace AnimatSim
 {

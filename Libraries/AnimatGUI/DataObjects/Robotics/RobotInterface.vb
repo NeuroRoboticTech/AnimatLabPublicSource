@@ -179,6 +179,11 @@ Namespace DataObjects
 
 #End Region
 
+            Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+                MyBase.InitializeSimulationReferences(bShowError)
+                m_aryIOControls.InitializeSimulationReferences(bShowError)
+            End Sub
+
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
                 Try
                     If bAskToDelete AndAlso Util.ShowMessage("Are you sure you want to remove the robot interface?", _
@@ -308,10 +313,17 @@ Namespace DataObjects
                 oXml.AddChildElement("Name", Me.Name)
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
-                oXml.AddChildElement("ModuleName", Me.ModuleName)
+                oXml.AddChildElement("ModuleName", Me.ModuleFilename)
+
+                'This is used in the interface to determine if we are running in sim mode or in robot control mode.
+                'If we are in sim mode then none of the robot sim/init methods are called.
+                If Util.ExportRobotInterface Is Nothing Then
+                    oXml.AddChildElement("InSimulation", True)
+                Else
+                    oXml.AddChildElement("InSimulation", False)
+                End If
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
-
 
                 Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " IO controls"
                 oXml.AddChildElement("IOControls")

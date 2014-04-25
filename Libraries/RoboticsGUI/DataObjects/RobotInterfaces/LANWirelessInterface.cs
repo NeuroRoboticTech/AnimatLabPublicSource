@@ -10,27 +10,10 @@ namespace RoboticsGUI
     {
         public class LANWirelessInterface : AnimatGUI.DataObjects.Robotics.RobotInterface
         {
-            public override string Description
-            {
-                get
-                {
-                    return "Interfaces with a robot wireless over a LAN network.";
-                }
-                set { }
-            }
-
-            public override string ButtonImageName
-            {
-                get
-                {
-                    return "RoboticsGUI.Graphics.LANWirelessInterface.gif";
-                }
-            }
-
-            public override string PartType
-            {
-                get { return "LANWirelessInterface"; }
-            }
+            public override string Description{get {return "Interfaces with a robot wireless over a LAN network.";} set { }}
+            public override string ButtonImageName{get {return "RoboticsGUI.Graphics.LANWirelessInterface.gif";}}
+            public override string PartType {get { return "LANWirelessInterface"; }}
+            public override string ModuleName {get {return "RoboticsAnimatSim";}}
 
             public LANWirelessInterface(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)

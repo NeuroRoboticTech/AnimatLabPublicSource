@@ -12,25 +12,27 @@
 #include "RbPrismatic.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
-#include "RbDynamixelCM5USBUARTPrismaticController.h"
+#include "RbDynamixelUSBPrismatic.h"
 
 namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace MotorControlSystems
+		namespace RobotIOControls
 		{
+			namespace DynamixelUSB
+			{
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-RbDynamixelCM5USBUARTPrismaticController::RbDynamixelCM5USBUARTPrismaticController() 
+RbDynamixelUSBPrismatic::RbDynamixelUSBPrismatic() 
 {
     m_lpPrismatic = NULL;
 }
 
-RbDynamixelCM5USBUARTPrismaticController::~RbDynamixelCM5USBUARTPrismaticController()
+RbDynamixelUSBPrismatic::~RbDynamixelUSBPrismatic()
 {
 	try
 	{
@@ -41,16 +43,7 @@ RbDynamixelCM5USBUARTPrismaticController::~RbDynamixelCM5USBUARTPrismaticControl
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTPrismaticController\r\n", "", -1, false, true);}
 }
 
-void RbDynamixelCM5USBUARTPrismaticController::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
-{
-    AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
-
-    m_lpPrismatic = dynamic_cast<RbPrismatic *>(lpNode);
-	if(!m_lpPrismatic) 
-		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RbPrismatic: ", m_strID);
-}
-
-void RbDynamixelCM5USBUARTPrismaticController::StepSimulation()
+void RbDynamixelUSBPrismatic::StepSimulation()
 {
     AnimatBase::StepSimulation();
 
@@ -65,7 +58,8 @@ void RbDynamixelCM5USBUARTPrismaticController::StepSimulation()
     m_lpPrismatic->JointVelocity(fltActualVelocity);
 }
 
-		}		//MotorControlSystems
+			}	//DynamixelUSB
+		}		//RobotIOControls
 	}			// Robotics
 }				//RoboticsAnimatSim
 

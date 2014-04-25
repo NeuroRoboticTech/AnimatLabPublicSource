@@ -472,8 +472,17 @@
 #define Al_Err_lInvalidRobotPartInterfaceType -4079
 #define Al_Err_strInvalidRobotPartInterfaceType "An invalid robot part interface type was specified."
 
-#define Al_Err_lAnimatModuleTagNotFound -4080
+#define Al_Err_lInvalidRobotIOControlType -4080
+#define Al_Err_strInvalidRobotIOControlType "An invalid robot IO control type was specified."
+
+#define Al_Err_lAnimatModuleTagNotFound -4081
 #define Al_Err_strAnimatModuleTagNotFound "<AnimatModule> tag was not found within the first 1000 characters of the simulation file."
+
+#define Al_Err_lIOControlIDNotFound -4082
+#define Al_Err_strIOControlIDNotFound "IO Control not found."
+
+#define Al_Err_lPartInterfaceIDNotFound -4083
+#define Al_Err_strPartInterfaceIDNotFound "Part interface not found."
 
 #define MAX_DATA_CHART_BUFFER 10485760
 

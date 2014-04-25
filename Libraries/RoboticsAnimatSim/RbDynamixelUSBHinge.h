@@ -8,10 +8,12 @@ namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace MotorControlSystems
+		namespace RobotIOControls
 		{
+			namespace DynamixelUSB
+			{
 
-class ROBOTICS_PORT RbDynamixelCM5USBUARTHingeController : public AnimatSim::Robotics::RobotPartInterface
+class ROBOTICS_PORT RbDynamixelUSBHinge : public AnimatSim::Robotics::RobotPartInterface
 {
 protected:
     RbHinge *m_lpHinge;
@@ -19,16 +21,15 @@ protected:
     int m_iCounter;
     int m_iSign;
 
-	virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
-
 public:
-	RbDynamixelCM5USBUARTHingeController();
-	virtual ~RbDynamixelCM5USBUARTHingeController();
+	RbDynamixelUSBHinge();
+	virtual ~RbDynamixelUSBHinge();
 
     virtual void StepSimulation();
 };
 
-		}		//MotorControlSystems
+			}	//DynamixelUSB
+		}		//RobotIOControls
 	}			// Robotics
 }				//RoboticsAnimatSim
 

@@ -22,35 +22,11 @@ namespace RoboticsGUI
 
                 #region " Attributes "
 
-                public override string Description
-                {
-                    get
-                    {
-                        return "Performs IO with the Dynamixel USB controller using their SDK to control servo motors. Implements angular or linear motor systems.";
-                    }
-                    set { }
-                }
-
-                public override string ButtonImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelUSB.gif";
-                    }
-                }
-
-                public override string WorkspaceImageName
-                {
-                    get
-                    {
-                        return "RoboticsGUI.Graphics.DynamixelUSBSmall.gif";
-                    }
-                }
-
-                public override string PartType
-                {
-                    get { return "DynamixelUSB"; }
-                }
+                public override string Description {get {return "Performs IO with the Dynamixel USB controller using their SDK to control servo motors. Implements angular or linear motor systems.";} set { }}
+                public override string ButtonImageName {get {return "RoboticsGUI.Graphics.DynamixelUSB.gif";}}
+                public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.DynamixelUSBSmall.gif";}}
+                public override string PartType {get { return "DynamixelUSB"; }}
+                public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 
                 public virtual int PortNumber
                 {
@@ -60,6 +36,7 @@ namespace RoboticsGUI
                     }
                     set
                     {
+                        SetSimData("PortNumber", value.ToString(), true);
                         m_iPortNumber = value;
                     }
                 }
@@ -76,6 +53,7 @@ namespace RoboticsGUI
                               (value == 9) || (value == 16) || (value == 34) || (value == 103) || (value == 207)))
                             throw new System.Exception("Invalid baud rate specified. Rate: " + value.ToString());
 
+                        SetSimData("BaudRate", value.ToString(), true);
                         m_iBaudRate = value;
                     }
                 }
@@ -112,24 +90,36 @@ namespace RoboticsGUI
                 {
                     base.LoadData(oXml);
 
+                    oXml.IntoElem();
+
                     oXml.AddChildElement("Port", m_iPortNumber);
                     oXml.AddChildElement("BaudRate", m_iBaudRate);
+
+                    oXml.OutOfElem(); 
                 }
 
                 public override void SaveData(ManagedAnimatInterfaces.IStdXml oXml)
                 {
                     base.SaveData(oXml);
 
+                    oXml.IntoElem();
+
                     m_iPortNumber = oXml.GetChildInt("Port", m_iPortNumber);
                     m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
+
+                    oXml.OutOfElem();
                 }
 
                 public override void SaveSimulationXml(ManagedAnimatInterfaces.IStdXml oXml, ref DataObject nmParentControl, string strName = "")
                 {
                     base.SaveSimulationXml(oXml, ref nmParentControl, strName);
 
+                    oXml.IntoElem();
+
                     m_iPortNumber = oXml.GetChildInt("Port", m_iPortNumber);
                     m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
+
+                    oXml.OutOfElem();
                 }
 
                 #endregion

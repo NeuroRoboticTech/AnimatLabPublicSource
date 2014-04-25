@@ -35,27 +35,29 @@
 #include "RobotIOControl.h"
 #include "RobotPartInterface.h"
 
-
 namespace AnimatSim
 {
 	namespace Robotics
 	{
 
-RobotInterface::RobotInterface(void)
+RobotIOControl::RobotIOControl(void)
 {
-	m_bInSimulation = false;
+	m_lpParentInterface = NULL;
 }
 
-RobotInterface::~RobotInterface(void)
+RobotIOControl::~RobotIOControl(void)
 {
-
 try
 {
-	m_aryIOControls.RemoveAll();
+	m_aryParts.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of RobotInterface\r\n", "", -1, false, true);}
+{Std_TraceMsg(0, "Caught Error in desctructor of RobotIOControl\r\n", "", -1, false, true);}
 }
+
+void RobotIOControl::ParentInterface(RobotInterface *lpParent) {m_lpParentInterface = lpParent;}
+
+RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
 
 /**
 \brief	Gets the array of IO controls. 
@@ -65,30 +67,11 @@ catch(...)
 
 \return	pointer to array of IO controls. 
 **/
-CStdPtrArray<RobotIOControl> *RobotInterface::IOControls() {return &m_aryIOControls;}
-
-/**
-\brief	Gets whether we are running in sim mode or not for the robot. 
-
-\author	dcofer
-\date	4/25/2014
-
-\return	true/false. 
-**/
-bool RobotInterface::InSimulation() {return m_bInSimulation;}
-
-/**
-\brief	Sets whether we are running in sim mode or not for the robot. 
-
-\author	dcofer
-\date	4/25/2014
-
-**/
-void RobotInterface::InSimulation(bool bVal) {m_bInSimulation = bVal;}
+CStdPtrArray<RobotPartInterface> *RobotIOControl::Parts() {return &m_aryParts;}
 
 #pragma region DataAccesMethods
 
-float *RobotInterface::GetDataPointer(const std::string &strDataType)
+float *RobotIOControl::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
@@ -100,7 +83,7 @@ float *RobotInterface::GetDataPointer(const std::string &strDataType)
 	return NULL;
 }
 
-bool RobotInterface::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+bool RobotIOControl::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 
@@ -114,19 +97,19 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void RobotInterface::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RobotIOControl::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
 }
 
-bool RobotInterface::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
+bool RobotIOControl::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	std::string strType = Std_CheckString(strItemType);
 
-	if(strType == "ROBOTIOCONTROL")
+	if(strType == "ROBOTPARTINTERFACE")
 	{
-		AddIOControl(strXml);
+		AddPartInterface(strXml);
 		return true;
 	}
 
@@ -137,13 +120,13 @@ bool RobotInterface::AddItem(const std::string &strItemType, const std::string &
 	return false;
 }
 
-bool RobotInterface::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
+bool RobotIOControl::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strItemType);
 
-	if(strType == "ROBOTIOCONTROL")
+	if(strType == "ROBOTPARTINTERFACE")
 	{
-		RemoveIOControl(strID);
+		RemovePartInterface(strID);
 		return true;
 	}
 
@@ -162,18 +145,18 @@ bool RobotInterface::RemoveItem(const std::string &strItemType, const std::strin
 
 \param	strXml	The xml data packet for loading the control node. 
 **/
-RobotIOControl *RobotInterface::AddIOControl(std::string strXml)
+RobotPartInterface *RobotIOControl::AddPartInterface(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
-	oXml.FindChildElement("IOControl");
+	oXml.FindChildElement("RobotPartInterface");
 
-	RobotIOControl *lpControl = LoadIOControl(oXml);
+	RobotPartInterface *lpPart = LoadPartInterface(oXml);
 
-	lpControl->Initialize();
+	lpPart->Initialize();
 
-    return lpControl;
+    return lpPart;
 }
 
 /**
@@ -186,13 +169,13 @@ RobotIOControl *RobotInterface::AddIOControl(std::string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
+void RobotIOControl::RemovePartInterface(std::string strID, bool bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
 
-    RobotIOControl *lpControl = m_aryIOControls[iPos];
+    RobotPartInterface *lpPart = m_aryParts[iPos];
 
-	m_aryIOControls.RemoveAt(iPos);
+	m_aryParts.RemoveAt(iPos);
 }
 
 
@@ -209,66 +192,60 @@ void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int RobotInterface::FindChildListPos(std::string strID, bool bThrowError)
+int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 {
 	std::string sID = Std_ToUpper(Std_Trim(strID));
 
-	int iCount = m_aryIOControls.GetSize();
+	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryIOControls[iIndex]->ID() == sID)
+		if(m_aryParts[iIndex]->ID() == sID)
 			return iIndex;
 
 	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lIOControlIDNotFound, Al_Err_strIOControlIDNotFound, "ID", strID);
+		THROW_PARAM_ERROR(Al_Err_lPartInterfaceIDNotFound, Al_Err_strPartInterfaceIDNotFound, "ID", strID);
 
 	return -1;
 }
 
 #pragma endregion
 
-void RobotInterface::Initialize()
+void RobotIOControl::Initialize()
 {
-	int iCount = m_aryIOControls.GetSize();
+	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->Initialize();
+		m_aryParts[iIndex]->Initialize();
 }
 
-void RobotInterface::ResetSimulation()
+void RobotIOControl::ResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
+	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->ResetSimulation();
+		m_aryParts[iIndex]->ResetSimulation();
 }
 
-void RobotInterface::AfterResetSimulation()
+void RobotIOControl::AfterResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
+	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->AfterResetSimulation();
+		m_aryParts[iIndex]->AfterResetSimulation();
 }
 
-void RobotInterface::StepSimulation()
+void RobotIOControl::StepSimulation()
 {
-	//If we are running in simulation mode then do not step the interfaces.
-	if(m_bInSimulation)
-		return;
-
     AnimatBase::StepSimulation();
 
-	int iCount = m_aryIOControls.GetSize();
+	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->StepSimulation();
+		m_aryParts[iIndex]->StepSimulation();
 }
 
-void RobotInterface::Load(CStdXml &oXml)
+void RobotIOControl::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	InSimulation(oXml.GetChildBool("InSimulation", false));
-
-	if(oXml.FindChildElement("IOControls", false))
+	if(oXml.FindChildElement("Parts", false))
 	{
 		oXml.IntoElem();  //Into ChildBodies Element
 		int iChildCount = oXml.NumberOfChildren();
@@ -276,7 +253,7 @@ void RobotInterface::Load(CStdXml &oXml)
 		for(int iIndex=0; iIndex<iChildCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadIOControl(oXml);
+			LoadPartInterface(oXml);
 		}
 		oXml.OutOfElem(); //OutOf ChildBodies Element
 	}
@@ -295,9 +272,9 @@ void RobotInterface::Load(CStdXml &oXml)
 \return	null if it fails, else the IO control. 
 **/
 
-RobotIOControl *RobotInterface::LoadIOControl(CStdXml &oXml)
+RobotPartInterface *RobotIOControl::LoadPartInterface(CStdXml &oXml)
 {
-	RobotIOControl *lpChild = NULL;
+	RobotPartInterface *lpChild = NULL;
 	std::string strType;
 
 try
@@ -307,16 +284,16 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
-	lpChild = dynamic_cast<RobotIOControl *>(m_lpSim->CreateObject(strModule, "RobotIOControl", strType));
+	lpChild = dynamic_cast<RobotPartInterface *>(m_lpSim->CreateObject(strModule, "RobotPartInterface", strType));
 	if(!lpChild)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotIOControl");
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotPartInterface");
 	
-	lpChild->ParentInterface(this);
+	lpChild->ParentIOControl(this);
 	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 
 	lpChild->Load(oXml);
 
-	m_aryIOControls.Add(lpChild);
+	m_aryParts.Add(lpChild);
 
 	return lpChild;
 }
@@ -333,6 +310,7 @@ catch(...)
 	return NULL;
 }
 }
+
 
 	}
 }

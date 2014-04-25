@@ -16,7 +16,7 @@
 					<Add option="-D_DEBUG" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -37,7 +37,7 @@
 					<Add option="-DNDEBUG" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -59,7 +59,7 @@
 					<Add option="-D_DEBUG" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -80,7 +80,7 @@
 					<Add option="-DNDEBUG" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/AnimatSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

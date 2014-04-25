@@ -255,7 +255,7 @@ Namespace DataObjects
                 oXml.AddChildElement("Name", Me.Name)
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
-                oXml.AddChildElement("ModuleName", Me.ModuleName)
+                oXml.AddChildElement("ModuleName", Me.ModuleFilename)
 
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                     oXml.AddChildElement("LinkedBodyPartID", m_thLinkedPart.BodyPart.ID)

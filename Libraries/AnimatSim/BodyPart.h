@@ -66,10 +66,6 @@ namespace AnimatSim
 			virtual void UpdatePhysicsPosFromGraphics();
             virtual void WakeDynamics();
 
-			virtual void Initialize();
-			virtual void StepSimulation();
-			virtual void ResetSimulation();
-
 			virtual void Load(CStdXml &oXml);
 		};
 
