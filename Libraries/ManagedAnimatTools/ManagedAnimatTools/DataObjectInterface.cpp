@@ -11,7 +11,7 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID)
+DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, System::String ^strID)
 {
 	try
 	{
@@ -41,14 +41,14 @@ DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInte
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew System::Exception(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -109,7 +109,7 @@ void DataObjectInterface::GetPointers()
 	}
 }
 
-System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError)
+System::Boolean DataObjectInterface::SetData(System::String ^sDataType, System::String ^sValue, System::Boolean bThrowError)
 {
 	try
 	{
@@ -138,7 +138,7 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
 		std::string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
@@ -146,47 +146,50 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	catch(...)
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
-		String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 	return false;
 }
 
 
-void DataObjectInterface::QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes)
+void DataObjectInterface::QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes, System::Collections::ArrayList ^aryDirections)
 {
 	try
 	{
 		if(m_lpBase)
 		{
-			CStdArray<std::string> aryNames, aryTypes;
-			m_lpBase->QueryProperties(aryNames, aryTypes);
+			CStdPtrArray<TypeProperty> aryProperties;
+			m_lpBase->QueryProperties(aryProperties);
 
 			aryPropertyNames->Clear();
 			aryPropertyTypes->Clear();
+			aryDirections->Clear();
 
-			int iCount = aryNames.GetSize();
+			int iCount = aryProperties.GetSize();
 			for(int iIdx=0; iIdx<iCount; iIdx++)
 			{
-				System::String^ sName = gcnew String(aryNames[iIdx].c_str());
-				System::String^ sType = gcnew String(aryTypes[iIdx].c_str());
+				System::String^ sName = gcnew System::String(aryProperties[iIdx]->m_strName.c_str());
+				System::String^ sType = gcnew System::String(aryProperties[iIdx]->TypeName().c_str());
+				System::String^ sDirection = gcnew System::String(aryProperties[iIdx]->DirectionName().c_str());
 
 				aryPropertyNames->Add(sName);
 				aryPropertyTypes->Add(sType);
+				aryDirections->Add(sDirection);
 			}
 		}
 	}
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to QueryProperties.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to QueryProperties.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to QueryProperties.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -209,7 +212,7 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
 		std::string strError = "An error occurred while attempting to select an item.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
@@ -217,12 +220,12 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 	catch(...)
 	{
 		if(m_lpSim) m_lpSim->UnblockSimulation();
-		String ^strErrorMessage = "An unknown error occurred while attempting to select an item.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to select an item.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
-void DataObjectInterface::GetDataPointer(String ^sData)
+void DataObjectInterface::GetDataPointer(System::String ^sData)
 {
 	try
 	{
@@ -247,14 +250,14 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to get a data pointer.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to get a data pointer.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to get a data pointer.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -280,7 +283,7 @@ float *DataObjectInterface::FindDataPointer(std::string strData, bool bThrowErro
 	return lpData;
 }
 
-float DataObjectInterface::GetDataValue(String ^sData)
+float DataObjectInterface::GetDataValue(System::String ^sData)
 {
 	if(!m_lpBase) 
 		throw gcnew System::Exception("The base object has not been defined!");
@@ -311,21 +314,21 @@ float DataObjectInterface::GetDataValue(String ^sData)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
 
 
-float DataObjectInterface::GetDataValueImmediate(String ^sData)
+float DataObjectInterface::GetDataValueImmediate(System::String ^sData)
 {
 	if(!m_lpBase) 
 		throw gcnew System::Exception("The base object has not been defined!");
@@ -343,14 +346,14 @@ float DataObjectInterface::GetDataValueImmediate(String ^sData)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -378,14 +381,14 @@ float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to call GetBoundingBoxValue.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to call GetBoundingBoxValue.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to call GetBoundingBoxValue.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -400,14 +403,14 @@ void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double d
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to OrientNewPart.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to OrientNewPart.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to OrientNewPart.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
@@ -435,19 +438,19 @@ System::Boolean DataObjectInterface::CalculateLocalPosForWorldPos(double dblXWor
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
-void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)
+void DataObjectInterface::EnableCollisions(System::String ^sOtherBodyID)
 {
 	try
 	{
@@ -471,19 +474,19 @@ void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to add a collision exclusion pair.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting  to add a collision exclusion pair.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting  to add a collision exclusion pair.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
-void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
+void DataObjectInterface::DisableCollisions(System::String ^sOtherBodyID)
 {
 	try
 	{
@@ -507,41 +510,41 @@ void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to remove a collision exclusion pair.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to remove a collision exclusion pair.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to remove a collision exclusion pair.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
-String ^DataObjectInterface::GetLocalTransformMatrixString()
+System::String ^DataObjectInterface::GetLocalTransformMatrixString()
 {
 	try
 	{
 		if(m_lpMovable)
 		{
             std::string strMatrix = m_lpMovable->LocalTransformationMatrixString();
-            return gcnew String(strMatrix.c_str());
+            return gcnew System::String(strMatrix.c_str());
 		}
 
-		return gcnew String("");
+		return gcnew System::String("");
 	}
 	catch(CStdErrorInfo oError)
 	{
 		std::string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
-		String ^strErrorMessage = gcnew String(strError.c_str());
+		System::String ^strErrorMessage = gcnew System::String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
 	}
 	catch(System::Exception ^ex)
 	{throw ex;}
 	catch(...)
 	{
-		String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
+		System::String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
 }

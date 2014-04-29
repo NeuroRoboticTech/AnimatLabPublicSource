@@ -383,10 +383,10 @@ bool VsHinge::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void VsHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Hinge::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	Hinge::QueryProperties(aryProperties);
 }
 
 #pragma endregion

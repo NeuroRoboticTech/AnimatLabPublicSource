@@ -680,24 +680,15 @@ bool DataChart::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void DataChart::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void DataChart::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ActivatedItem::QueryProperties(aryNames, aryTypes);
+	ActivatedItem::QueryProperties(aryProperties);
 
-	aryNames.Add("StartTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EndTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SetStartEndTime");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("CollectTimeWindow");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CollectInterval");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("StartTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EndTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetStartEndTime", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CollectTimeWindow", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CollectInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool DataChart::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

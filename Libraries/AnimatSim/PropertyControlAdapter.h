@@ -39,7 +39,7 @@ namespace AnimatSim
 			float m_fltFinalValue;
 
 			std::string m_strPropertyName;
-			AnimatBase::AnimatPropertyType m_ePropertyType;
+			AnimatPropertyType m_ePropertyType;
 
 			virtual void SetPropertyValue(float fltVal);
 			virtual void SetDestinationID(std::string strXml);
@@ -66,7 +66,7 @@ namespace AnimatSim
 			virtual void ResetSimulation();
 			virtual void SimStarting();
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};

@@ -189,18 +189,13 @@ bool RbMaterialType::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void RbMaterialType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbMaterialType::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	MaterialType::QueryProperties(aryNames, aryTypes);
+	MaterialType::QueryProperties(aryProperties);
 
-	aryNames.Add("FrictionLinearPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Restitution");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("FrictionLinearPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Restitution", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void RbMaterialType::Load(CStdXml &oXml)

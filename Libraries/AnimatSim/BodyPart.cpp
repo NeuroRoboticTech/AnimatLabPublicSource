@@ -209,10 +209,10 @@ bool BodyPart::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void BodyPart::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BodyPart::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
-	MovableItem::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
+	MovableItem::QueryProperties(aryProperties);
 }
 
 /**

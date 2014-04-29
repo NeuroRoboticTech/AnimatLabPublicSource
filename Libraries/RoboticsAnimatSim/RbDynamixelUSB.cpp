@@ -101,15 +101,12 @@ bool RbDynamixelUSB::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void RbDynamixelUSB::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbDynamixelUSB::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RobotIOControl::QueryProperties(aryNames, aryTypes);
+	RobotIOControl::QueryProperties(aryProperties);
 
-	aryNames.Add("ComPort");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("BaudRate");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("ComPort", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BaudRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

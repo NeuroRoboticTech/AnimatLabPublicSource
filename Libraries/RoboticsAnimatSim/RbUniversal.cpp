@@ -70,10 +70,10 @@ bool RbUniversal::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void RbUniversal::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbUniversal::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	//RbJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	//RbJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

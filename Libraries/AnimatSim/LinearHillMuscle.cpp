@@ -625,21 +625,14 @@ bool LinearHillMuscle::SetData(const std::string &strDataType, const std::string
 	return false;
 }
 
-void LinearHillMuscle::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void LinearHillMuscle::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	MuscleBase::QueryProperties(aryNames, aryTypes);
+	MuscleBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Kse");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Kpe");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("IbDischarge");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Kse", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Kpe", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IbDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void LinearHillMuscle::Load(CStdXml &oXml)

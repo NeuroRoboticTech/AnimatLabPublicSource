@@ -162,21 +162,14 @@ bool NonSpikingChemicalSynapse::SetData(const std::string &strDataType, const st
 	return false;
 }
 
-void NonSpikingChemicalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void NonSpikingChemicalSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("EquilibriumPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxSynapticConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PreSynapticThreshold");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PreSynapticSaturationLevel");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("EquilibriumPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxSynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PreSynapticThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PreSynapticSaturationLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

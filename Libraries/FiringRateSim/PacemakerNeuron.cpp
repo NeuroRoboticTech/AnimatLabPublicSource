@@ -404,27 +404,16 @@ bool PacemakerNeuron::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void PacemakerNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void PacemakerNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Vssm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Btl");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Mtl");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Th");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Il");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ih");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Vssm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Btl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Mtl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Th", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Il", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ih", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

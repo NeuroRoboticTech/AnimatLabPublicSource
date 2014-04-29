@@ -68,10 +68,10 @@ bool RbRPRO::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void RbRPRO::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbRPRO::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	//RbJoint::Physics_QueryProperties(aryNames, aryTypes);
-	RPRO::QueryProperties(aryNames, aryTypes);
+	//RbJoint::Physics_QueryProperties(aryProperties);
+	RPRO::QueryProperties(aryProperties);
 }
 
 #pragma endregion

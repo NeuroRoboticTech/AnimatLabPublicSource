@@ -28,7 +28,7 @@ namespace OsgAnimatSim
     #pragma region DataAccesMethods
 
 			    virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-			    virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			    virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
                 virtual bool Physics_IsDefined() {return m_bPhsyicsDefined;};
 
     #pragma endregion

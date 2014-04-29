@@ -289,21 +289,14 @@ bool Stomach::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void Stomach::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Stomach::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("KillOrganism");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("EnergyLevel");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxEnergyLevel");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BaseConsumptionRate");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("KillOrganism", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxEnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BaseConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 float *Stomach::GetDataPointer(const std::string &strDataType)

@@ -12,7 +12,7 @@ Imports AnimatGUI.Framework
 Namespace DataObjects
     Namespace Robotics
 
-        Public MustInherit Class InputSensorSystem
+        Public MustInherit Class InputSystem
             Inherits RobotPartInterface
 
 #Region " Attributes "
@@ -28,19 +28,7 @@ Namespace DataObjects
             Public Sub New(ByVal doParent As Framework.DataObject)
                 MyBase.New(doParent)
 
-                m_strName = "InputSensorSystem"
-            End Sub
-
-            Public Overrides Sub ClearIsDirty()
-                MyBase.ClearIsDirty()
-            End Sub
-
-            Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                                ByVal doRoot As AnimatGUI.Framework.DataObject)
-                MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-                Dim OrigNode As InputSensorSystem = DirectCast(doOriginal, InputSensorSystem)
-
+                m_strName = "InputSystem"
             End Sub
 
 #End Region

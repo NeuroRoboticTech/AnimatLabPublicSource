@@ -1507,45 +1507,22 @@ bool Neuron::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void Neuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
 
-	aryNames.Add("RestingPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeSize");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TimeConstant");
-	aryTypes.Add("Float");
-
-	aryNames.Add("InitialThreshold");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeAccomodation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AccomodationTimeConstant");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AHP_Conductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AHP_TimeConstant");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxCAConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TonicStimulus");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TonicNoise");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AddExternalCurrent");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("RestingPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RelativeSize", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitialThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RelativeAccomodation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AccomodationTimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AHP_Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AHP_TimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxCAConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TonicStimulus", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TonicNoise", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AddExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**

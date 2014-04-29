@@ -218,12 +218,11 @@ bool ExternalInputStimulus::SetData(const std::string &strDataType, const std::s
 	return false;
 }
 
-void ExternalInputStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ExternalInputStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("InputEquation");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("InputEquation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void ExternalInputStimulus::Load(CStdXml &oXml)

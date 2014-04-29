@@ -191,21 +191,14 @@ bool LengthTensionGain::SetData(const std::string &strDataType, const std::strin
 	return false;
 }
 
-void LengthTensionGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void LengthTensionGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("RestingLength");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Lwidth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PeLengthPercentage");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MinPeLengthPercentage");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("RestingLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Lwidth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PeLengthPercentage", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinPeLengthPercentage", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void LengthTensionGain::Load(CStdXml &oXml)

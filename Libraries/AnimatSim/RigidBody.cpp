@@ -1723,81 +1723,34 @@ bool RigidBody::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void RigidBody::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RigidBody::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BodyPart::QueryProperties(aryNames, aryTypes);
+	BodyPart::QueryProperties(aryProperties);
 
-	aryNames.Add("Freeze");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Density");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Mass");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CenterOfMass");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("FoodSource");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("FoodQuantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxFoodQuantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FoodReplenishRate");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FoodEnergyContent");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BuoyancyCenter");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BuoyancyScale");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearDrag");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("LinearDrag.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearDrag.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearDrag.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularDrag");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("AngularDrag.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularDrag.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularDrag.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxHydroForce");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxHydroTorque");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Magnus");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EnableFluids");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaterialTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Freeze", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Density", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Mass", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CenterOfMass", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodSource", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodQuantity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxFoodQuantity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodReplenishRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodEnergyContent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BuoyancyCenter", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BuoyancyScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHydroForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHydroTorque", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Magnus", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnableFluids", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaterialTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 bool RigidBody::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

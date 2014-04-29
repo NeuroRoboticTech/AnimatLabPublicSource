@@ -303,18 +303,13 @@ bool Spring::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void Spring::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Spring::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LineBase::QueryProperties(aryNames, aryTypes);
+	LineBase::QueryProperties(aryProperties);
 
-	aryNames.Add("NaturalLength");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Stiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("NaturalLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void Spring::Load(CStdXml &oXml)

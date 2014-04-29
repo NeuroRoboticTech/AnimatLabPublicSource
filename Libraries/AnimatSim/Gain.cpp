@@ -215,24 +215,15 @@ bool Gain::SetData(const std::string &strDataType, const std::string &strValue, 
 	return false;
 }
 
-void Gain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Gain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("AnimatBase");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("LowerLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LowerOutput");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UpperLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UpperOutput");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("UseLimits", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LowerLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LowerOutput", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpperLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpperOutput", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**

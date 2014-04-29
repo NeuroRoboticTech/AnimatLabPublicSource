@@ -390,12 +390,11 @@ bool Adapter::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void Adapter::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Adapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
 
-	aryNames.Add("Gain");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 void Adapter::Initialize()

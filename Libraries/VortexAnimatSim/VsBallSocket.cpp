@@ -136,10 +136,10 @@ bool VsBallSocket::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void VsBallSocket::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsBallSocket::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

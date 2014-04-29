@@ -34,7 +34,7 @@ namespace AnimatSim
 			CStdPostFixEval *m_lpEval;
 
 			std::string m_strPropertyName;
-			AnimatBase::AnimatPropertyType m_ePropertyType;
+			AnimatPropertyType m_ePropertyType;
 
 			virtual void SetPropertyValue(float fltVal);
 
@@ -69,7 +69,7 @@ namespace AnimatSim
 			virtual void StepSimulation();
 			virtual void Deactivate();
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
 

@@ -363,10 +363,9 @@ are Boolean, Float, Integer, and Xml.
 
 \return	Nothing. 
 **/
-void AnimatBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void AnimatBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	aryNames.Add("Name");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Name", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -383,45 +382,31 @@ void AnimatBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std
 **/
 bool AnimatBase::HasProperty(const std::string &strName)
 {
-	CStdArray<std::string> aryNames, aryTypes;
-	QueryProperties(aryNames, aryTypes);
+	CStdPtrArray<TypeProperty> aryProperties;
+	QueryProperties(aryProperties);
 
 	std::string strCheck = Std_CheckString(strName);
-	int iCount = aryNames.GetSize();
+	int iCount = aryProperties.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
-		if(Std_CheckString(aryNames[iIdx]) == strCheck)
+		if(Std_CheckString(aryProperties[iIdx]->m_strName) == strCheck)
 			return true;
 
 	return false;
 }
 
 
-AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const std::string &strName)
+AnimatPropertyType AnimatBase::PropertyType(const std::string &strName)
 {
-	CStdArray<std::string> aryNames, aryTypes;
-	QueryProperties(aryNames, aryTypes);
+	CStdPtrArray<TypeProperty> aryProperties;
+	QueryProperties(aryProperties);
 
 	std::string strCheck = Std_CheckString(strName);
-	int iCount = aryNames.GetSize();
+	int iCount = aryProperties.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
-		if(Std_CheckString(aryNames[iIdx]) == strCheck)
-		{
-			std::string strType = Std_CheckString(aryTypes[iIdx]);
-			if(strType == "BOOLEAN")
-				return AnimatBase::AnimatPropertyType::Boolean;
-			else if(strType == "INTEGER")
-				return AnimatBase::AnimatPropertyType::Integer;
-			else if(strType == "FLOAT")
-				return AnimatBase::AnimatPropertyType::Float;
-			else if(strType == "STRING")
-				return AnimatBase::AnimatPropertyType::String;
-			else if(strType == "XML")
-				return AnimatBase::AnimatPropertyType::Xml;
-			else
-				return AnimatBase::AnimatPropertyType::Invalid;
-		}
+		if(Std_CheckString(aryProperties[iIdx]->m_strName) == strCheck)
+			return aryProperties[iIdx]->m_eType;
 
-	return AnimatBase::AnimatPropertyType::Invalid;
+	return AnimatPropertyType::Invalid;
 }
 
 /**

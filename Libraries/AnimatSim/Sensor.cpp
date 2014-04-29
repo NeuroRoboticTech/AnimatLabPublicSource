@@ -136,18 +136,13 @@ bool Sensor::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void Sensor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Sensor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Radius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LatitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("LongtitudeSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Radius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LatitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LongtitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Sensor::Initialize() 

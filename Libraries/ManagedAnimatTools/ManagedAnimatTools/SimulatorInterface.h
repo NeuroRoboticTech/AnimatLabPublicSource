@@ -70,32 +70,32 @@ namespace AnimatGUI
 
 			virtual System::String ^ErrorMessage();
 
-			virtual void SaveSimulationFile(String ^sFile);
-			virtual void TrackCamera(System::Boolean bTrackCamera, String ^sLookAtStructureID, String ^sLookAtBodyID);
+			virtual void SaveSimulationFile(System::String ^sFile);
+			virtual void TrackCamera(System::Boolean bTrackCamera, System::String ^sLookAtStructureID, System::String ^sLookAtBodyID);
 
 #pragma endregion
 
 #pragma region VideoPlayback
 
-			virtual System::String ^AddKeyFrame(String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
-			virtual void RemoveKeyFrame(String ^strID);
-			virtual String ^MoveKeyFrame(String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
-			virtual void EnableVideoPlayback(String ^strID);
+			virtual System::String ^AddKeyFrame(System::String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
+			virtual void RemoveKeyFrame(System::String ^strID);
+			virtual  System::String ^MoveKeyFrame(System::String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
+			virtual void EnableVideoPlayback(System::String ^strID);
 			virtual void DisableVideoPlayback();
 			virtual void StartVideoPlayback();
 			virtual void StopVideoPlayback();
 			virtual void StepVideoPlayback(int iFrameCount);
-			virtual void MoveSimulationToKeyFrame(String ^strID);
-			virtual void SaveVideo(String ^strPath);
+			virtual void MoveSimulationToKeyFrame(System::String ^strID);
+			virtual void SaveVideo(System::String ^strPath);
 
 #pragma endregion
 
 #pragma region HelperMethods
 
 			virtual void ReInitializeSimulation();
-			virtual int RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
-			virtual void GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
-			virtual void ConvertV1MeshFile(String ^sOriginalMeshFile, String ^sNewMeshFile, String ^sTexture);
+			virtual int RetrieveChartData(System::String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
+			virtual void GenerateCollisionMeshFile(System::String ^sOriginalMeshFile, System::String ^sCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
+			virtual void ConvertV1MeshFile(System::String ^sOriginalMeshFile, System::String ^sNewMeshFile, System::String ^sTexture);
 			virtual ManagedAnimatInterfaces::PositionRotationInfo ^GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform);
 
 #pragma endregion
@@ -103,10 +103,10 @@ namespace AnimatGUI
 
 #pragma region DataAccess
 
-			virtual System::Boolean AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit);
-			virtual System::Boolean RemoveItem(String ^sParentID, String ^sItemType, String ^sID, System::Boolean bThrowError);
-			virtual System::Boolean SetData(String ^sID, String ^sDataType, String ^sValue, System::Boolean bThrowError);
-			virtual System::Boolean FindItem(String ^sID, System::Boolean bThrowError);
+			virtual System::Boolean AddItem(System::String ^sParentID, System::String ^sItemType, System::String ^sID, System::String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit);
+			virtual System::Boolean RemoveItem(System::String ^sParentID, System::String ^sItemType, System::String ^sID, System::Boolean bThrowError);
+			virtual System::Boolean SetData(System::String ^sID, System::String ^sDataType, System::String ^sValue, System::Boolean bThrowError);
+			virtual System::Boolean FindItem(System::String ^sID, System::Boolean bThrowError);
 
 #pragma endregion
 

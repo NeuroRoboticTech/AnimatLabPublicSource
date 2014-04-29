@@ -188,12 +188,11 @@ bool OdorType::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void OdorType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void OdorType::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("DiffusionConstant");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("DiffusionConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void OdorType::Load(CStdXml &oXml)

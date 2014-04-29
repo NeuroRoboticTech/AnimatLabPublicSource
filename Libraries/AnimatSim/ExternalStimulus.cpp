@@ -86,12 +86,11 @@ bool ExternalStimulus::SetData(const std::string &strDataType, const std::string
 	return false;
 }
 
-void ExternalStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ExternalStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ActivatedItem::QueryProperties(aryNames, aryTypes);
+	ActivatedItem::QueryProperties(aryProperties);
 
-	aryNames.Add("ValueType");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("ValueType", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 bool ExternalStimulus::operator<(ActivatedItem *lpItem)

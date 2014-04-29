@@ -106,7 +106,7 @@ namespace AnimatSim
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 

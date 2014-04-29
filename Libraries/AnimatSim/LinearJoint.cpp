@@ -115,12 +115,11 @@ bool LinearJoint::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void LinearJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void LinearJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Joint::QueryProperties(aryNames, aryTypes);
+	Joint::QueryProperties(aryProperties);
 
-	aryNames.Add("LinearType");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("LinearType", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

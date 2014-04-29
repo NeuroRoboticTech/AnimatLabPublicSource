@@ -115,33 +115,18 @@ bool IonChannelSigmoid::SetData(const std::string &strDataType, const std::strin
 	return false;
 }
 
-void IonChannelSigmoid::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void IonChannelSigmoid::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("A");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("C");
-	aryTypes.Add("Float");
-
-	aryNames.Add("D");
-	aryTypes.Add("Float");
-
-	aryNames.Add("E");
-	aryTypes.Add("Float");
-
-	aryNames.Add("F");
-	aryTypes.Add("Float");
-
-	aryNames.Add("G");
-	aryTypes.Add("Float");
-
-	aryNames.Add("H");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("C", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("E", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("F", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("G", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("H", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void IonChannelSigmoid::Load(CStdXml &oXml)

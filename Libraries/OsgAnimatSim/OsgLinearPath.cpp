@@ -697,36 +697,19 @@ bool OsgLinearPath::SetData(const std::string &strDataType, const std::string &s
 	return false;
 }
 
-void OsgLinearPath::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void OsgLinearPath::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("TrackPartID");
-	aryTypes.Add("String");
-
-	aryNames.Add("StartTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EndTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LineColor");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("LineColor.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LineColor.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LineColor.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LineColor.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("VisibleInSim");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("TrackPartID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StartTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EndTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LineColor", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LineColor.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LineColor.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LineColor.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LineColor.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("VisibleInSim", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 
@@ -1053,24 +1036,15 @@ bool ControlPoint::SetData(const std::string &strDataType, const std::string &st
 }
 
 
-void ControlPoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ControlPoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Position");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Position.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Time");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Position", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Time", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void ControlPoint::Load(StdUtils::CStdXml &oXml)

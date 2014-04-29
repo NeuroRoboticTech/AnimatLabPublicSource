@@ -141,10 +141,10 @@ bool VsDistanceJoint::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void VsDistanceJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsDistanceJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Joint::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	Joint::QueryProperties(aryProperties);
 }
 
 #pragma endregion

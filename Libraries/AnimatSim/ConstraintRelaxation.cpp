@@ -236,21 +236,14 @@ bool ConstraintRelaxation::SetData(const std::string &strDataType, const std::st
 	return false;
 }
 
-void ConstraintRelaxation::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ConstraintRelaxation::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("CoordinateID");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
-
-    aryNames.Add("Stiffness");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("CoordinateID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void ConstraintRelaxation::Load(CStdXml &oXml)

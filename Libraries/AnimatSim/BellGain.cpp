@@ -181,21 +181,14 @@ bool BellGain::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void BellGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BellGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("A");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("C");
-	aryTypes.Add("Float");
-
-	aryNames.Add("D");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("C", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void BellGain::Load(CStdXml &oXml)

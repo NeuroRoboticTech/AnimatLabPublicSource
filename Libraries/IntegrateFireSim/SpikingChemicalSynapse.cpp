@@ -634,57 +634,26 @@ bool SpikingChemicalSynapse::SetData(const std::string &strDataType, const std::
 	return false;
 }
 
-void SpikingChemicalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void SpikingChemicalSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("EquilibriumPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SynapticConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("DecayRate");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeFacilitation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FacilitationDecay");
-	aryTypes.Add("Float");
-
-	aryNames.Add("VoltageDependent");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxRelativeConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SaturatePotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ThresholdPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Hebbian");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxAugmentedConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LearningIncrement");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LearningTimeWindow");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AllowForgetting");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ForgettingTimeWindow");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ConsolidationFactor");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("EquilibriumPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DecayRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RelativeFacilitation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FacilitationDecay", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("VoltageDependent", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxRelativeConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SaturatePotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ThresholdPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hebbian", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxAugmentedConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LearningIncrement", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LearningTimeWindow", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AllowForgetting", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForgettingTimeWindow", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConsolidationFactor", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

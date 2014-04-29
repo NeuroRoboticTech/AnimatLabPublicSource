@@ -964,42 +964,21 @@ bool Neuron::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void Neuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
 
-	aryNames.Add("Cm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Gm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Vth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Vrest");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeAccommodation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AccommodationTimeConstant");
-	aryTypes.Add("Float");
-
-	aryNames.Add("VNoiseMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Fmin");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Gain");
-	aryTypes.Add("Float");
-
-	aryNames.Add("GainType");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AddExternalCurrent");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Cm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Vth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Vrest", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RelativeAccommodation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AccommodationTimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("VNoiseMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Fmin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("GainType", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AddExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool Neuron::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

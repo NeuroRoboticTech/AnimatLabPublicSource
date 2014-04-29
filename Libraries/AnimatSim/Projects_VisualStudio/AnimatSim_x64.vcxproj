@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{DA80279D-3371-6945-822F-BF0DEE2C2D3B}</ProjectGuid>
+		<ProjectGuid>{5CA00D50-9739-784B-92A9-7D936016B287}</ProjectGuid>
 		<RootNamespace>AnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -312,6 +312,7 @@
 		<ClInclude Include="..\Terrain.h" />
 		<ClInclude Include="..\ThreadProcessor.h" />
 		<ClInclude Include="..\Torus.h" />
+		<ClInclude Include="..\TypeProperty.h" />
 		<ClInclude Include="..\VoltageClamp.h" />
 	</ItemGroup>
 	<ItemGroup>
@@ -514,6 +515,8 @@
 		<ClCompile Include="..\ThreadProcessor.cpp">
 		</ClCompile>
 		<ClCompile Include="..\Torus.cpp">
+		</ClCompile>
+		<ClCompile Include="..\TypeProperty.cpp">
 		</ClCompile>
 		<ClCompile Include="..\VoltageClamp.cpp">
 		</ClCompile>

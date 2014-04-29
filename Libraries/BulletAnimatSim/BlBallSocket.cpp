@@ -106,10 +106,10 @@ bool BlBallSocket::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void BlBallSocket::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlBallSocket::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

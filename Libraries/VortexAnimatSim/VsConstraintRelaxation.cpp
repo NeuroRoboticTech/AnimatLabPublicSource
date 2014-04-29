@@ -113,12 +113,11 @@ bool VsConstraintRelaxation::SetData(const std::string &strDataType, const std::
 	return false;
 }
 
-void VsConstraintRelaxation::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsConstraintRelaxation::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ConstraintRelaxation::QueryProperties(aryNames, aryTypes);
+	ConstraintRelaxation::QueryProperties(aryProperties);
 
-	aryNames.Add("Loss");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Loss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void VsConstraintRelaxation::Load(CStdXml &oXml)

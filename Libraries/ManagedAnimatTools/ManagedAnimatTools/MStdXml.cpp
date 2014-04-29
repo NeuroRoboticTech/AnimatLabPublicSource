@@ -38,11 +38,11 @@ namespace AnimatGUI
 			try
 			{
 				TRACE_DETAIL("StdXml::Serializing xml");
-				return gcnew String(m_lpXml->Serialize().c_str());
+				return gcnew System::String(m_lpXml->Serialize().c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return nullptr;
 			}
 			catch(...)
@@ -65,7 +65,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -83,7 +83,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -103,7 +103,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -122,11 +122,11 @@ namespace AnimatGUI
 			try
 			{
 				TRACE_DETAIL("StdXml::FullTagPath");
-				return gcnew String(m_lpXml->FullTagPath(bAddChildName).c_str());
+				return gcnew System::String(m_lpXml->FullTagPath(bAddChildName).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return nullptr;
 			}
 			catch(...)
@@ -143,11 +143,11 @@ namespace AnimatGUI
 			{
 				std::string strVal = m_lpXml->GetTagName();
 				TRACE_DETAIL("StdXml::TagName: " + strVal);
-				return gcnew String(strVal.c_str());
+				return gcnew System::String(strVal.c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -164,11 +164,11 @@ namespace AnimatGUI
 			{
 				std::string strVal = m_lpXml->GetChildTagName();
 				TRACE_DETAIL("StdXml::ChildTagName: " + strVal);
-				return gcnew String(strVal.c_str());
+				return gcnew System::String(strVal.c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -189,7 +189,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -213,7 +213,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -236,7 +236,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -260,7 +260,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -284,7 +284,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -301,11 +301,11 @@ namespace AnimatGUI
 			{
 				std::string strName = Util::StringToStd(strElementName);
 				TRACE_DETAIL("StdXml::GetChildString: " + strName);
-				return gcnew String(m_lpXml->GetChildString(strName).c_str());
+				return gcnew System::String(m_lpXml->GetChildString(strName).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -323,11 +323,11 @@ namespace AnimatGUI
 				std::string strName = Util::StringToStd(strElementName);
 				std::string strDef = Util::StringToStd(strDefault);
 				TRACE_DETAIL("StdXml::GetChildString: " + strName = ", Default: " + strDef);
-				return gcnew String(m_lpXml->GetChildString(strName, strDef).c_str());
+				return gcnew System::String(m_lpXml->GetChildString(strName, strDef).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -343,11 +343,11 @@ namespace AnimatGUI
 			try
 			{
 				TRACE_DETAIL("StdXml::GetChildString");
-				return gcnew String(m_lpXml->GetChildString().c_str());
+				return gcnew System::String(m_lpXml->GetChildString().c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -368,7 +368,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -389,7 +389,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -409,7 +409,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -430,7 +430,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -451,7 +451,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -471,7 +471,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -492,7 +492,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -513,7 +513,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -533,7 +533,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -554,7 +554,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -575,7 +575,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -595,7 +595,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -616,7 +616,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -637,7 +637,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -657,7 +657,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -699,7 +699,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return nullptr;
 			}
 			catch(...)
@@ -724,7 +724,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -743,7 +743,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -763,7 +763,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -782,7 +782,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -801,7 +801,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -820,7 +820,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -839,7 +839,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -858,7 +858,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -877,7 +877,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -896,7 +896,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -932,7 +932,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -952,7 +952,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -977,11 +977,11 @@ namespace AnimatGUI
 				std::string strName = Util::StringToStd(strAttribName);
 				std::string strD = Util::StringToStd(strDefault);
 				TRACE_DETAIL("StdXml::GetAttribString: " + strName + ", Default: " + strD);
-				return gcnew String(m_lpXml->GetAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
+				return gcnew System::String(m_lpXml->GetAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -1008,7 +1008,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1035,7 +1035,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1062,7 +1062,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1089,7 +1089,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1116,7 +1116,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1138,7 +1138,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1157,7 +1157,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1176,7 +1176,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1195,7 +1195,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1214,7 +1214,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1233,7 +1233,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1252,7 +1252,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1271,7 +1271,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1296,11 +1296,11 @@ namespace AnimatGUI
 				std::string strName = Util::StringToStd(strAttribName);
 				std::string strD = Util::StringToStd(strDefault);
 				TRACE_DETAIL("StdXml::GetChildAttribString: " + strName + ", Default: " +strD);
-				return gcnew String(m_lpXml->GetChildAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
+				return gcnew System::String(m_lpXml->GetChildAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -1327,7 +1327,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1354,7 +1354,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1381,7 +1381,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1408,7 +1408,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1435,7 +1435,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return NULL;
 			}
 			catch(...)
@@ -1457,7 +1457,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1476,7 +1476,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1495,7 +1495,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1514,7 +1514,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1533,7 +1533,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1552,7 +1552,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1571,7 +1571,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1590,7 +1590,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1606,11 +1606,11 @@ namespace AnimatGUI
 				std::string strDoc = Util::StringToStd(Doc);
 				TRACE_DETAIL("StdXml::AddChildDoc: " + strDoc);
 				m_lpXml->AddChildDoc(strDoc);
-				Doc = gcnew String(strDoc.c_str());
+				Doc = gcnew System::String(strDoc.c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1625,12 +1625,12 @@ namespace AnimatGUI
 			{
 				std::string strDoc = m_lpXml->GetChildDoc();
 				TRACE_DETAIL("StdXml::GetChildDoc: " + strDoc);
-				System::String ^strVal = gcnew String(strDoc.c_str());
+				System::String ^strVal = gcnew System::String(strDoc.c_str());
 				return strVal;
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -1646,11 +1646,11 @@ namespace AnimatGUI
 			try
 			{
 				TRACE_DETAIL("StdXml::GetParentTagName");
-				return gcnew String(m_lpXml->GetParentTagName().c_str());
+				return gcnew System::String(m_lpXml->GetParentTagName().c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 				return "";
 			}
 			catch(...)
@@ -1679,7 +1679,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{
@@ -1705,7 +1705,7 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				throw gcnew Exception(gcnew System::String(oError.m_strError.c_str()));
 			}
 			catch(...)
 			{

@@ -182,21 +182,14 @@ bool Torus::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Torus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Torus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("OutsideRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("InsideRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Sides");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("Rings");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("OutsideRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InsideRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Sides", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rings", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Torus::Load(CStdXml &oXml)

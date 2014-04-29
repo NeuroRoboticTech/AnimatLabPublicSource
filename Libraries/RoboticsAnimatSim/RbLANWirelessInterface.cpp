@@ -79,9 +79,9 @@ bool RbLANWirelessInterface::SetData(const std::string &strDataType, const std::
 	return false;
 }
 
-void RbLANWirelessInterface::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbLANWirelessInterface::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RobotInterface::QueryProperties(aryNames, aryTypes);
+	RobotInterface::QueryProperties(aryProperties);
 
 	//aryNames.Add("ComPort");
 	//aryTypes.Add("Integer");

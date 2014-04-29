@@ -171,12 +171,11 @@ bool EnablerStimulus::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void EnablerStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void EnablerStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("EnableWhenActive");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("EnableWhenActive", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void EnablerStimulus::Load(CStdXml &oXml)

@@ -435,7 +435,7 @@ bool VsJoint::Physics_SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void VsJoint::Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsJoint::Physics_QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 }
 

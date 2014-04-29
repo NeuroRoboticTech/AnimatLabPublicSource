@@ -185,24 +185,15 @@ bool Terrain::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void Terrain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Terrain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Mesh::QueryProperties(aryNames, aryTypes);
+	Mesh::QueryProperties(aryProperties);
 
-	aryNames.Add("SegmentWidth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SegmentLength");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxHeight");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TextureLengthSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("TextureWidthSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("SegmentWidth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SegmentLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHeight", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TextureLengthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TextureWidthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Terrain::Load(CStdXml &oXml)

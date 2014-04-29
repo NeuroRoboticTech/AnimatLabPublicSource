@@ -115,9 +115,9 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void RobotInterface::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RobotInterface::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
 }
 

@@ -427,7 +427,7 @@ bool OsgJoint::Physics_SetData(const std::string &strDataType, const std::string
 	return false;
 }
 
-void OsgJoint::Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void OsgJoint::Physics_QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 }
 

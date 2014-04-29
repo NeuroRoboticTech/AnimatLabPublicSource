@@ -102,12 +102,11 @@ bool GatedSynapse::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void GatedSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void GatedSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Synapse::QueryProperties(aryNames, aryTypes);
+	Synapse::QueryProperties(aryProperties);
 
-	aryNames.Add("GateInitiallyOn");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("GateInitiallyOn", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -251,18 +251,13 @@ bool BlConstraintRelaxation::SetData(const std::string &strDataType, const std::
 	return false;
 }
 
-void BlConstraintRelaxation::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlConstraintRelaxation::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ConstraintRelaxation::QueryProperties(aryNames, aryTypes);
+	ConstraintRelaxation::QueryProperties(aryProperties);
 
-	aryNames.Add("MinLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EqPos");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("MinLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EqPos", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void BlConstraintRelaxation::Load(CStdXml &oXml)

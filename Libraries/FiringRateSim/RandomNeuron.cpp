@@ -429,21 +429,14 @@ bool RandomNeuron::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void RandomNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RandomNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Il");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CurrentDistribution");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BurstLengthDistribution");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("InterbusrtLengthDistribution");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Il", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CurrentDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BurstLengthDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InterbusrtLengthDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

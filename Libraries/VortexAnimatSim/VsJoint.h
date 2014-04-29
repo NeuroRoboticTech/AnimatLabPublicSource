@@ -95,7 +95,7 @@ namespace VortexAnimatSim
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
 			virtual bool Physics_SetData(const std::string &strDataType, const std::string &strValue);
-			virtual void Physics_QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void Physics_QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void Physics_Resize();
 
 			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};

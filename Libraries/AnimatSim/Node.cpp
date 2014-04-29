@@ -165,12 +165,11 @@ bool Node::SetData(const std::string &strDataType, const std::string &strValue, 
 	return false;
 }
 
-void Node::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Node::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
 }
 
 }			//AnimatSim

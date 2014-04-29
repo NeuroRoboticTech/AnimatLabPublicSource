@@ -219,18 +219,13 @@ bool SimulationWindow::SetData(const std::string &strDataType, const std::string
 	return false;
 }
 
-void SimulationWindow::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void SimulationWindow::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("LookAtStructureID");
-	aryTypes.Add("String");
-
-	aryNames.Add("LookAtBodyID");
-	aryTypes.Add("String");
-
-	aryNames.Add("TrackCamera");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("LookAtStructureID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LookAtBodyID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TrackCamera", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

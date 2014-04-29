@@ -305,27 +305,16 @@ bool ConstraintFriction::SetData(const std::string &strDataType, const std::stri
 	return false;
 }
 
-void ConstraintFriction::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ConstraintFriction::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-    aryNames.Add("Coefficient");
-	aryTypes.Add("Float");
-
-    aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxForce");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Loss");
-	aryTypes.Add("Float");
-
-    aryNames.Add("Proportional");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("StaticFrictionScale");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Coefficient", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("MaxForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Loss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Proportional", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StaticFrictionScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void ConstraintFriction::Load(CStdXml &oXml)

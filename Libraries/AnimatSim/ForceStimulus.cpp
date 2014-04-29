@@ -389,36 +389,19 @@ bool ForceStimulus::SetData(const std::string &strDataType, const std::string &s
 	return false;
 }
 
-void ForceStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ForceStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("PositionX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PositionY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PositionZ");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceZ");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueZ");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("PositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TorqueX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TorqueY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TorqueZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void ForceStimulus::Load(CStdXml &oXml)

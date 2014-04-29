@@ -755,18 +755,13 @@ bool Connexion::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void Connexion::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Connexion::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Link::QueryProperties(aryNames, aryTypes);
+	Link::QueryProperties(aryProperties);
 
-	aryNames.Add("SynapticConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ConductionDelay");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SynapseTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("SynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConductionDelay", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynapseTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

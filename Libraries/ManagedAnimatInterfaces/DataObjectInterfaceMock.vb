@@ -93,7 +93,7 @@ Public Class DataObjectInterfaceMock
         Return False
     End Function
 
-    Public Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList) Implements IDataObjectInterface.QueryProperties
+    Public Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList, ByVal aryDirections As System.Collections.ArrayList) Implements IDataObjectInterface.QueryProperties
 
     End Sub
 

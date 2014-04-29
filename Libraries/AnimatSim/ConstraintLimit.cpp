@@ -322,27 +322,16 @@ bool ConstraintLimit::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void ConstraintLimit::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ConstraintLimit::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("LimitPos");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Restitution");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Stiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Color");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Alpha");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("LimitPos", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Restitution", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Color", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -43,7 +43,7 @@ namespace AnimatGUI
 			float *FindDataPointer(std::string strData, bool bThrowError);
 
 		public:
-			DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID);
+			DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, System::String ^strID);
 			!DataObjectInterface();
 			~DataObjectInterface();
 
@@ -107,22 +107,22 @@ namespace AnimatGUI
 
 		#pragma region Methods
 
-			virtual System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
-			virtual void QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes);
+			virtual System::Boolean SetData(System::String ^sDataType, System::String ^sValue, System::Boolean bThrowError);
+			virtual void QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes, System::Collections::ArrayList ^aryDirections);
 			virtual void SelectItem(bool bVal, bool bSelectMultiple);
 
-			virtual void GetDataPointer(String ^sData);
-			virtual float GetDataValue(String ^sData);
-			virtual float GetDataValueImmediate(String ^sData);
+			virtual void GetDataPointer(System::String ^sData);
+			virtual float GetDataValue(System::String ^sData);
+			virtual float GetDataValueImmediate(System::String ^sData);
 
 			virtual float GetBoundingBoxValue(int iIndex);
 			virtual void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
 			virtual System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
 
-			virtual void EnableCollisions(String ^sOtherBodyID);
-			virtual void DisableCollisions(String ^sOtherBodyID);
+			virtual void EnableCollisions(System::String ^sOtherBodyID);
+			virtual void DisableCollisions(System::String ^sOtherBodyID);
 
-            virtual String ^GetLocalTransformMatrixString();
+            virtual System::String ^GetLocalTransformMatrixString();
 
 		#pragma endregion
 

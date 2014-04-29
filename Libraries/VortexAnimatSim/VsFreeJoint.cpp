@@ -86,10 +86,10 @@ bool VsFreeJoint::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void VsFreeJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsFreeJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

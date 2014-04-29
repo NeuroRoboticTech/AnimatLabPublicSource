@@ -142,10 +142,10 @@ bool VsRPRO::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void VsRPRO::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsRPRO::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	RPRO::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	RPRO::QueryProperties(aryProperties);
 }
 
 #pragma endregion

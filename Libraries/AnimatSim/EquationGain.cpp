@@ -120,12 +120,11 @@ bool EquationGain::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void EquationGain::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void EquationGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("Equation");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void EquationGain::Load(CStdXml &oXml)

@@ -181,7 +181,7 @@ namespace AnimatSim
 			virtual void VerifySystemPointers();
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-			virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void Load(CStdXml &oXml, std::string strName);
 
 			/**

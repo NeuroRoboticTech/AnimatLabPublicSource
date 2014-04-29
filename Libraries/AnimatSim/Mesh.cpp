@@ -302,33 +302,18 @@ bool Mesh::SetData(const std::string &strDataType, const std::string &strValue, 
 	return false;
 }
 
-void Mesh::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Mesh::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("MeshFile");
-	aryTypes.Add("String");
-
-	aryNames.Add("MeshType");
-	aryTypes.Add("String");
-
-	aryNames.Add("ConvexMeshFile");
-	aryTypes.Add("String");
-
-	aryNames.Add("SetMeshFile");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Scale");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Scale.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Scale.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Scale.Z");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("MeshFile", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MeshType", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConvexMeshFile", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetMeshFile", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void Mesh::Load(CStdXml &oXml)

@@ -162,21 +162,14 @@ bool ElectricalSynapse::SetData(const std::string &strDataType, const std::strin
 	return false;
 }
 
-void ElectricalSynapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void ElectricalSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("LowCoupling");
-	aryTypes.Add("Float");
-
-	aryNames.Add("HighCoupling");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TurnOnThreshold");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TurnOnSaturate");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("LowCoupling", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HighCoupling", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TurnOnThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TurnOnSaturate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

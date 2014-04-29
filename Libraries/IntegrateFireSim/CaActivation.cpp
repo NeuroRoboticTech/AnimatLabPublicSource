@@ -78,18 +78,13 @@ bool CaActivation::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void CaActivation::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void CaActivation::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Midpoint");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Slope");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TimeConstant");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Midpoint", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Slope", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void CaActivation::Load(CStdXml &oXml)

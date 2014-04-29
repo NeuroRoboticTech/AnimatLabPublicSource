@@ -4359,105 +4359,42 @@ bool Simulator::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void Simulator::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Simulator::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("VisualSelectionMode");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("AddBodiesMode");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("DistanceUnits");
-	aryTypes.Add("String");
-
-	aryNames.Add("MassUnits");
-	aryTypes.Add("String");
-
-	aryNames.Add("Gravity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PhysicsTimeStep");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SimulateHydrodynamics");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AutoGenerateRandomSeed");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ManualRandomSeed");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("FrameRate");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("ForceFastMoving");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("MouseSpringStiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MouseSpringDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CalcCriticalSimParams");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("LinearCompliance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularCompliance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearKineticLoss");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularKineticLoss");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SetEndSimTime");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("EndSimTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RecFieldSelRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BackgroundColor.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PlaybackControlMode");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("PresetPlaybackTimeStep");
-	aryTypes.Add("Float");
-
-	aryNames.Add("StabilityScale");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AlphaThreshold");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("VisualSelectionMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AddBodiesMode", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DistanceUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MassUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gravity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PhysicsTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimulateHydrodynamics", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AutoGenerateRandomSeed", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ManualRandomSeed", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrameRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceFastMoving", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MouseSpringStiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MouseSpringDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CalcCriticalSimParams", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearCompliance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularCompliance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearKineticLoss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularKineticLoss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetEndSimTime", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EndSimTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RecFieldSelRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PlaybackControlMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PresetPlaybackTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StabilityScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AlphaThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool Simulator::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

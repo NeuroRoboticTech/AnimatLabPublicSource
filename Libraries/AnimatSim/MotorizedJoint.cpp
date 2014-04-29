@@ -1028,24 +1028,15 @@ bool MotorizedJoint::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void MotorizedJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void MotorizedJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Joint::QueryProperties(aryNames, aryTypes);
+	Joint::QueryProperties(aryProperties);
 
-	aryNames.Add("EnableMotor");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ServoMotor");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ServoGain");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxForce");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxVelocity");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("EnableMotor", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ServoMotor", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ServoGain", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**

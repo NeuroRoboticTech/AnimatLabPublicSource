@@ -264,27 +264,16 @@ bool Box::SetData(const std::string &strDataType, const std::string &strValue, b
 	return false;
 }
 
-void Box::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Box::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Length");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Width");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Height");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LengthSections");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("WidthSections");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("HeightSections");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Length", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Width", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Height", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LengthSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("WidthSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HeightSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Box::Load(CStdXml &oXml)

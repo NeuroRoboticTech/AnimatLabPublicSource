@@ -1542,51 +1542,24 @@ bool IntegrateFireNeuralModule::SetData(const std::string &strDataType, const st
 	return false;
 }
 
-void IntegrateFireNeuralModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void IntegrateFireNeuralModule::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	NeuralModule::QueryProperties(aryNames, aryTypes);
+	NeuralModule::QueryProperties(aryProperties);
 
-	aryNames.Add("TimeStep");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TTX");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Cd");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("HH");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("RetainHebbMemory");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("UseCriticalPeriod");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("StartCriticalPeriod");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EndCriticalPeriod");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FreezeHebb");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("SpikePeak");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SpikeStrength");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CaEquilPot");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AbsoluteRefr");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AHPEquilPot");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("TimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TTX", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Cd", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HH", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RetainHebbMemory", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UseCriticalPeriod", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StartCriticalPeriod", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EndCriticalPeriod", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FreezeHebb", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SpikePeak", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SpikeStrength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CaEquilPot", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AbsoluteRefr", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AHPEquilPot", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**

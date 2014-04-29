@@ -676,51 +676,24 @@ bool IonChannel::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void IonChannel::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void IonChannel::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Gmax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ginit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Minit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Hinit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MPower");
-	aryTypes.Add("Float");
-
-	aryNames.Add("HPower");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EquilibriumPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Nm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Nh");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Minf");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Tm");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Hinf");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Th");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Gmax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ginit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Minit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hinit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MPower", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HPower", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EquilibriumPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Nm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Nh", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Minf", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Tm", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hinf", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Th", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

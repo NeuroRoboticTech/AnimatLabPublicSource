@@ -266,10 +266,10 @@ bool BlPrismatic::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void BlPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Prismatic::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	Prismatic::QueryProperties(aryProperties);
 }
 
 #pragma endregion

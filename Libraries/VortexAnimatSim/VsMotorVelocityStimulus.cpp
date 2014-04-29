@@ -201,18 +201,13 @@ bool VsMotorVelocityStimulus::SetData(const std::string &strDataType, const std:
 	return false;
 }
 
-void VsMotorVelocityStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsMotorVelocityStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("Velocity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Equation");
-	aryTypes.Add("String");
-
-	aryNames.Add("DisableMotorWhenDone");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DisableMotorWhenDone", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void VsMotorVelocityStimulus::Load(CStdXml &oXml)

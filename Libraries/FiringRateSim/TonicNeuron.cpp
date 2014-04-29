@@ -96,12 +96,11 @@ bool TonicNeuron::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void TonicNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void TonicNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Ih");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Ih", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -47,6 +47,7 @@ namespace AnimatSim
     class PidControl;
     class ThreadProcessor;
     class ModuleThreadProcessor;
+	class TypeProperty;
 
 	namespace Adapters
 	{
@@ -186,6 +187,7 @@ using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
 using namespace AnimatSim::Robotics;
 
+#include "AnimatUtils.h"
 #include "IMovableItemCallback.h"
 #include "IMotorizedJoint.h"
 #include "ISimGUICallback.h"
@@ -280,7 +282,5 @@ using namespace AnimatSim::Robotics;
 #include "Hud.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
-
-#include "AnimatUtils.h"
 
 #endif // __ANIMAT_LIB_DLL_H__

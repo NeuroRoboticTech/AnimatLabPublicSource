@@ -16,7 +16,7 @@ namespace AnimatGUI
 public ref class PropertyUpdateException : public System::Exception
 {
 public:
-	PropertyUpdateException(String ^strMessage);
+	PropertyUpdateException(System::String ^strMessage);
 	virtual ~PropertyUpdateException(void);
 };
 

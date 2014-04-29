@@ -19,7 +19,7 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				std::string strError = "An error occurred while get_LogPrefix.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to get_LogPrefix.");}
@@ -38,7 +38,7 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				std::string strError = "An error occurred while SetLogPrefix.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to SetLogPrefix.");}
@@ -54,7 +54,7 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				std::string strError = "An error occurred while Std_SetTraceLevel.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to Std_SetTraceLevel."); return ManagedAnimatInterfaces::ILogger::enumLogLevel::None;}
@@ -69,7 +69,7 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				std::string strError = "An error occurred while TraceLevel.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to TraceLevel.");}
@@ -85,7 +85,7 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				std::string strError = "An error occurred while LogMsg.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to LogMsg.");}

@@ -231,15 +231,12 @@ bool Mouth::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Mouth::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Mouth::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Sensor::QueryProperties(aryNames, aryTypes);
+	Sensor::QueryProperties(aryProperties);
 
-	aryNames.Add("StomachID");
-	aryTypes.Add("String");
-
-	aryNames.Add("MinimumFoodRadius");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("StomachID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinimumFoodRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 float *Mouth::GetDataPointer(const std::string &strDataType)

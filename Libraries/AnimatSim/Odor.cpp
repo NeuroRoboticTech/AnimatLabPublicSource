@@ -241,18 +241,13 @@ bool Odor::SetData(const std::string &strDataType, const std::string &strValue, 
 	return false;
 }
 
-void Odor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Odor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Quantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UseFoodQuantity");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Quantity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UseFoodQuantity", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void Odor::Load(CStdXml &oXml)

@@ -98,10 +98,10 @@ bool BlRPRO::SetData(const std::string &strDataType, const std::string &strValue
 	return false;
 }
 
-void BlRPRO::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlRPRO::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	RPRO::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	RPRO::QueryProperties(aryProperties);
 }
 
 #pragma endregion

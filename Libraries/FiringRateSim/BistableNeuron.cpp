@@ -196,18 +196,13 @@ bool BistableNeuron::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void BistableNeuron::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BistableNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Vsth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Il");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ih");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Vsth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Il", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ih", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -175,15 +175,12 @@ bool FluidPlane::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void FluidPlane::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void FluidPlane::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Plane::QueryProperties(aryNames, aryTypes);
+	Plane::QueryProperties(aryProperties);
 
-	aryNames.Add("Velocity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Gravity");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gravity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void FluidPlane::Load(CStdXml &oXml)

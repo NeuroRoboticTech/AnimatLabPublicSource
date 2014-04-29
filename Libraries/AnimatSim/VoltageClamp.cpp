@@ -217,12 +217,11 @@ bool VoltageClamp::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void VoltageClamp::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VoltageClamp::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("Vtarget");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Vtarget", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void VoltageClamp::Load(CStdXml &oXml)

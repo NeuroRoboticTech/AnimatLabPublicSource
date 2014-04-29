@@ -339,31 +339,18 @@ bool Light::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Light::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Light::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
-	MovableItem::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
+	MovableItem::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Radius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LatitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("LongtitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("ConstantAttenuation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearAttenuationDistance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("QuadraticAttenuationDistance");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Radius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LatitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LongtitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConstantAttenuation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearAttenuationDistance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("QuadraticAttenuationDistance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

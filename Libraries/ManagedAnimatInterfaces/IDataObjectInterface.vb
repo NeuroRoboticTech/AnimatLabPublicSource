@@ -23,7 +23,7 @@ Public Interface IDataObjectInterface
 #Region "Methods"
 
     Function SetData(ByVal sDataType As String, ByVal sValue As String, ByVal bThrowError As Boolean) As Boolean
-    Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList)
+    Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList, ByVal aryDirections As System.Collections.ArrayList)
     Sub SelectItem(ByVal bVal As Boolean, ByVal bSelectMultiple As Boolean)
 
     Sub GetDataPointer(ByVal sData As String)

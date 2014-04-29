@@ -147,18 +147,13 @@ bool Cylinder::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void Cylinder::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Cylinder::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Radius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Height");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Sides");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Radius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Height", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Sides", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Cylinder::Load(CStdXml &oXml)

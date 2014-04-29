@@ -262,18 +262,13 @@ bool LineBase::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void LineBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void LineBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("AttachmentPoints");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AttachedPartMovedOrRotated");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("AttachmentPoints", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("AttachedPartMovedOrRotated", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

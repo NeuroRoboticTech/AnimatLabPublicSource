@@ -310,21 +310,14 @@ bool InverseMuscleCurrent::SetData(const std::string &strDataType, const std::st
 	return false;
 }
 
-void InverseMuscleCurrent::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void InverseMuscleCurrent::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("RestPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Conductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MuscleID");
-	aryTypes.Add("String");
-
-	aryNames.Add("MuscleLengthData");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("RestPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MuscleID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MuscleLengthData", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void InverseMuscleCurrent::Load(CStdXml &oXml)

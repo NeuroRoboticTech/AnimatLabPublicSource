@@ -229,18 +229,13 @@ bool LinearHillStretchReceptor::SetData(const std::string &strDataType, const st
 	return false;
 }
 
-void LinearHillStretchReceptor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void LinearHillStretchReceptor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LinearHillMuscle::QueryProperties(aryNames, aryTypes);
+	LinearHillMuscle::QueryProperties(aryProperties);
 
-	aryNames.Add("ApplyTension");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("IaDischarge");
-	aryTypes.Add("Float");
-
-	aryNames.Add("IIDischarge");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("ApplyTension", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IaDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IIDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void LinearHillStretchReceptor::Load(CStdXml &oXml)

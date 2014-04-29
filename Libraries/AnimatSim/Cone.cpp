@@ -174,21 +174,14 @@ bool Cone::SetData(const std::string &strDataType, const std::string &strValue, 
 	return false;
 }
 
-void Cone::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Cone::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("LowerRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UpperRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Height");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Sides");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("LowerRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpperRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Height", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Sides", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Cone::Load(CStdXml &oXml)

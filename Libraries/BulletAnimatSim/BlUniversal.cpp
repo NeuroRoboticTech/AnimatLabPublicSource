@@ -108,10 +108,10 @@ bool BlUniversal::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void BlUniversal::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlUniversal::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

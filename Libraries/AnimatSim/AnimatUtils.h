@@ -1,3 +1,4 @@
+#include "TypeProperty.h"
 
 namespace AnimatSim
 {

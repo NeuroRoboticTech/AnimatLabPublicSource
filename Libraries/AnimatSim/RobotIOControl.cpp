@@ -97,9 +97,9 @@ bool RobotIOControl::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void RobotIOControl::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RobotIOControl::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
 }
 

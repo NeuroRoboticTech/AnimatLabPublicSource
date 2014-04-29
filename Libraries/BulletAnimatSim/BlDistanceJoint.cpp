@@ -113,10 +113,10 @@ bool BlDistanceJoint::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void BlDistanceJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlDistanceJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Joint::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	Joint::QueryProperties(aryProperties);
 }
 
 #pragma endregion

@@ -1066,81 +1066,34 @@ bool VsMaterialType::SetData(const std::string &strDataType, const std::string &
 	return false;
 }
 
-void VsMaterialType::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void VsMaterialType::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	MaterialType::QueryProperties(aryNames, aryTypes);
+	MaterialType::QueryProperties(aryProperties);
 
-	aryNames.Add("FrictionLinearPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionLinearSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularNormal");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionLinearPrimaryMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionLinearSecondaryMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularNormalMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularPrimaryMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FrictionAngularSecondaryMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Compliance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Restitution");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlipLinearPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlipLinearSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlipAngularNormal");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlipAngularPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlipAngularSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlideLinearPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlideLinearSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlideAngularNormal");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlideAngularPrimary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SlideAngularSecondary");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxAdhesion");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("FrictionLinearPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionLinearSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularNormal", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionLinearPrimaryMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionLinearSecondaryMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularNormalMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularPrimaryMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrictionAngularSecondaryMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Compliance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Restitution", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlipLinearPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlipLinearSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlipAngularNormal", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlipAngularPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlipAngularSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlideLinearPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlideLinearSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlideAngularNormal", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlideAngularPrimary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SlideAngularSecondary", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxAdhesion", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void VsMaterialType::Load(CStdXml &oXml)

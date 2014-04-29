@@ -84,12 +84,11 @@ bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::str
 	return false;
 }
 
-void RbDynamixelUSBHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbDynamixelUSBHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RobotPartInterface::QueryProperties(aryNames, aryTypes);
+	RobotPartInterface::QueryProperties(aryProperties);
 
-	aryNames.Add("ServoID");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -520,10 +520,10 @@ bool Structure::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void Structure::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Structure::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
-	MovableItem::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
+	MovableItem::QueryProperties(aryProperties);
 }
 
 bool Structure::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

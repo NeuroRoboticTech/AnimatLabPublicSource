@@ -133,12 +133,11 @@ bool OdorSensor::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void OdorSensor::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void OdorSensor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Sensor::QueryProperties(aryNames, aryTypes);
+	Sensor::QueryProperties(aryProperties);
 
-	aryNames.Add("OdorTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("OdorTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 float *OdorSensor::GetDataPointer(const std::string &strDataType)

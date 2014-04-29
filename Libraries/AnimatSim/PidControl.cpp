@@ -204,42 +204,21 @@ bool PidControl::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void PidControl::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void PidControl::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Kp");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ki");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Kd");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ComplexError");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AntiResetWindup");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("RampLimit");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("RangeMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RangeMin");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ARWBound");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RampGradient");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Kp", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ki", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Kd", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ComplexError", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AntiResetWindup", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RampLimit", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RangeMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RangeMin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ARWBound", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RampGradient", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void PidControl::ResetSimulation()

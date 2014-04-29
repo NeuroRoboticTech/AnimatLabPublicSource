@@ -700,36 +700,19 @@ bool Joint::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Joint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Joint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BodyPart::QueryProperties(aryNames, aryTypes);
+	BodyPart::QueryProperties(aryProperties);
 
-	aryNames.Add("EnableLimits");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Size");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Relaxation1");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation2");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation3");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation4");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation5");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation6");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Friction");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("EnableLimits", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Size", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation1", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation2", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation3", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation4", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation5", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation6", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Friction", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 void Joint::AddExternalNodeInput(float fltInput) {}

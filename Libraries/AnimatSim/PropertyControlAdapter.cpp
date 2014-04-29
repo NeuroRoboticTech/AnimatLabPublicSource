@@ -69,7 +69,7 @@ PropertyControlAdapter::~PropertyControlAdapter()
 
 try
 {
-	m_ePropertyType = AnimatBase::AnimatPropertyType::Invalid;
+	m_ePropertyType = AnimatPropertyType::Invalid;
 	m_lpTargetObject = NULL;
 }
 catch(...)
@@ -97,14 +97,14 @@ void PropertyControlAdapter::PropertyName(std::string strPropName)
 		if(!m_lpTargetObject->HasProperty(strPropName))
 			THROW_PARAM_ERROR(Al_Err_lTargetDoesNotHaveProperty, Al_Err_strTargetDoesNotHaveProperty, "Property name", strPropName);
 
-		AnimatBase::AnimatPropertyType ePropertyType = m_lpTargetObject->PropertyType(strPropName);
-		if(!(ePropertyType != AnimatBase::AnimatPropertyType::Boolean || ePropertyType != AnimatBase::AnimatPropertyType::Integer || ePropertyType != AnimatBase::AnimatPropertyType::Float))
+		AnimatPropertyType ePropertyType = m_lpTargetObject->PropertyType(strPropName);
+		if(!(ePropertyType != AnimatPropertyType::Boolean || ePropertyType != AnimatPropertyType::Integer || ePropertyType != AnimatPropertyType::Float))
 			THROW_PARAM_ERROR(Al_Err_lTargetInvalidPropertyType, Al_Err_strTargetInvalidPropertyType, "Property name", strPropName);
 
 		m_ePropertyType = ePropertyType;
 	}
 	else
-		m_ePropertyType = AnimatBase::AnimatPropertyType::Invalid;
+		m_ePropertyType = AnimatPropertyType::Invalid;
 
 	m_strPropertyName = strPropName;
 }
@@ -247,21 +247,14 @@ bool PropertyControlAdapter::SetData(const std::string &strDataType, const std::
 	return false;
 }
 
-void PropertyControlAdapter::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void PropertyControlAdapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Adapter::QueryProperties(aryNames, aryTypes);
+	Adapter::QueryProperties(aryProperties);
 
-	aryNames.Add("PropertyName");
-	aryTypes.Add("String");
-
-	aryNames.Add("SetThreshold");
-	aryTypes.Add("Float");
-
-	aryNames.Add("InitialValue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FinalValue");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("PropertyName", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitialValue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FinalValue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void PropertyControlAdapter::ResetSimulation()
@@ -271,7 +264,7 @@ void PropertyControlAdapter::ResetSimulation()
 	if(m_bEnabled)
 	{
 		m_fltPreviousSetVal = m_fltInitialValue;
-		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+		if(m_ePropertyType != AnimatPropertyType::Invalid)
 			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
 	}
 }
@@ -281,7 +274,7 @@ void PropertyControlAdapter::SimStarting()
 	if(m_bEnabled)
 	{
 		m_fltPreviousSetVal = m_fltInitialValue;
-		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+		if(m_ePropertyType != AnimatPropertyType::Invalid)
 			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
 	}
 }
@@ -317,21 +310,21 @@ void PropertyControlAdapter::Initialize()
 void PropertyControlAdapter::SetPropertyValue(float fltVal)
 {
 	//If they have not set the property name yet then we cannot set the property value
-	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+	if(m_ePropertyType != AnimatPropertyType::Invalid)
 	{
 		float fltDiff = fltVal - m_fltPreviousSetVal;
 		if(fabs(fltDiff) > m_fltSetThreshold)
 		{
 			m_fltPreviousSetVal = fltVal;
 
-			if(m_ePropertyType == AnimatBase::AnimatPropertyType::Boolean)
+			if(m_ePropertyType == AnimatPropertyType::Boolean)
 			{
 				if(fltDiff > 0)
 					m_lpTargetObject->SetData(m_strPropertyName, "1");
 				else
 					m_lpTargetObject->SetData(m_strPropertyName, "0");
 			}
-			else if(m_ePropertyType == AnimatBase::AnimatPropertyType::Integer)
+			else if(m_ePropertyType == AnimatPropertyType::Integer)
 			{
 				int iVal = (int) fltVal;
 				m_lpTargetObject->SetData(m_strPropertyName, STR(iVal));

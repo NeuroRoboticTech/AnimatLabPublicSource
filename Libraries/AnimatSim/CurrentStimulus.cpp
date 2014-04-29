@@ -592,33 +592,18 @@ bool CurrentStimulus::SetData(const std::string &strDataType, const std::string 
 	return false;
 }
 
-void CurrentStimulus::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void CurrentStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("CurrentOn");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CurrentOff");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CurrentBurstOff");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CycleOnDuration");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CycleOffDuration");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BurstOnDuration");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BurstOffDuration");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CurrentEquation");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("CurrentOn", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CurrentOff", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CurrentBurstOff", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CycleOnDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CycleOffDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BurstOnDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BurstOffDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CurrentEquation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void CurrentStimulus::Load(CStdXml &oXml)

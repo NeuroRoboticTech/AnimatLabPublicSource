@@ -1484,104 +1484,40 @@ bool MovableItem::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void MovableItem::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void MovableItem::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	aryNames.Add("Position");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Position.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Rotation.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Visible");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("GraphicsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CollisionAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("JointsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ReceptiveFieldsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SimulationAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Ambient.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Diffuse.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Specular.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Shininess");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Texture");
-	aryTypes.Add("String");
-
-	aryNames.Add("DraggerRadius");
-	aryTypes.Add("Float");
-
+	aryProperties.Add(new TypeProperty("Position", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Visible", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("GraphicsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CollisionAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("JointsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ReceptiveFieldsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimulationAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Shininess", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Texture", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DraggerRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

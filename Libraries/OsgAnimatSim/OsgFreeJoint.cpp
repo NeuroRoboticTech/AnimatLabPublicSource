@@ -91,10 +91,10 @@ bool OsgFreeJoint::SetData(const std::string &strDataType, const std::string &st
 	return false;
 }
 
-void OsgFreeJoint::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void OsgFreeJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	OsgJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	OsgJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

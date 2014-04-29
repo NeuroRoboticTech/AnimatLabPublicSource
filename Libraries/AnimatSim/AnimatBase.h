@@ -83,16 +83,6 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-       enum AnimatPropertyType
-        {
-            Invalid,
-            Boolean,
-            Integer,
-			Float,
-			String,
-			Xml
-        };
-
 		/**
 		\brief	Sets the system pointers.
 		
@@ -119,7 +109,7 @@ namespace AnimatSim
 		virtual void VerifySystemPointers();
 		virtual float *GetDataPointer(const std::string &strDataType);
 		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-		virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 		virtual bool HasProperty(const std::string &strName);
 		virtual AnimatPropertyType PropertyType(const std::string &strName);
 		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);

@@ -284,10 +284,10 @@ bool BlHinge::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void BlHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void BlHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BlJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Hinge::QueryProperties(aryNames, aryTypes);
+	BlJoint::Physics_QueryProperties(aryProperties);
+	Hinge::QueryProperties(aryProperties);
 }
 
 #pragma endregion

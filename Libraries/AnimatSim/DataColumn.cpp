@@ -285,15 +285,12 @@ bool DataColumn::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void DataColumn::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void DataColumn::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("ColumnIndex");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("DataType");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("ColumnIndex", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DataType", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 /**

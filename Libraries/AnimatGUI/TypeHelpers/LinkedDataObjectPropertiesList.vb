@@ -43,7 +43,8 @@ Namespace TypeHelpers
             If Not doItem Is Nothing AndAlso Not doItem.SimInterface Is Nothing Then
                 Dim aryNames As New System.Collections.ArrayList
                 Dim aryTypes As New System.Collections.ArrayList
-                m_doItem.SimInterface.QueryProperties(aryNames, aryTypes)
+                Dim aryDirections As New System.Collections.ArrayList
+                m_doItem.SimInterface.QueryProperties(aryNames, aryTypes, aryDirections)
 
                 If Not aryNames.Contains(strPropertyName) Then
                     Throw New System.Exception("No Property was found for object '" & doItem.ID & "' with the property name '" & strPropertyName & "'")
@@ -75,7 +76,8 @@ Namespace TypeHelpers
             Dim colParts As New AnimatGUI.Collections.DataObjects(Nothing)
             Dim aryNames As New System.Collections.ArrayList
             Dim aryTypes As New System.Collections.ArrayList
-            m_doItem.SimInterface.QueryProperties(aryNames, aryTypes)
+            Dim aryDirections As New System.Collections.ArrayList
+            m_doItem.SimInterface.QueryProperties(aryNames, aryTypes, aryDirections)
 
             lbList.BeginUpdate()
             lbList.Items.Clear()

@@ -194,12 +194,11 @@ bool FiringRateModule::SetData(const std::string &strDataType, const std::string
 	return false;
 }
 
-void FiringRateModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void FiringRateModule::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	NeuralModule::QueryProperties(aryNames, aryTypes);
+	NeuralModule::QueryProperties(aryProperties);
 
-	aryNames.Add("TimeStep");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("TimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**

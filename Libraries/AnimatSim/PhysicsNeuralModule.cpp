@@ -136,12 +136,11 @@ bool PhysicsNeuralModule::SetData(const std::string &strDataType, const std::str
 	return false;
 }
 
-void PhysicsNeuralModule::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void PhysicsNeuralModule::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	NeuralModule::QueryProperties(aryNames, aryTypes);
+	NeuralModule::QueryProperties(aryProperties);
 
-	aryNames.Add("TimeStep");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("TimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void PhysicsNeuralModule::AddAdapter(std::string strXml, bool bDoNotInit)

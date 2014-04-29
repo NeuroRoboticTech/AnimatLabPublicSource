@@ -312,18 +312,13 @@ bool MuscleBase::SetData(const std::string &strDataType, const std::string &strV
 	return false;
 }
 
-void MuscleBase::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void MuscleBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LineBase::QueryProperties(aryNames, aryTypes);
+	LineBase::QueryProperties(aryProperties);
 
-	aryNames.Add("MaxTension");
-	aryTypes.Add("Float");
-
-	aryNames.Add("StimTension");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("LengthTension");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("MaxTension", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StimTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LengthTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

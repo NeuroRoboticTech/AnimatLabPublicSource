@@ -171,10 +171,10 @@ bool RbPrismatic::SetData(const std::string &strDataType, const std::string &str
 	return false;
 }
 
-void RbPrismatic::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	//RbJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Prismatic::QueryProperties(aryNames, aryTypes);
+	//RbJoint::Physics_QueryProperties(aryProperties);
+	Prismatic::QueryProperties(aryProperties);
 }
 
 #pragma endregion

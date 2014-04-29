@@ -180,10 +180,10 @@ bool RbHinge::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void RbHinge::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void RbHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	//RbJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Hinge::QueryProperties(aryNames, aryTypes);
+	//RbJoint::Physics_QueryProperties(aryProperties);
+	Hinge::QueryProperties(aryProperties);
 }
 
 #pragma endregion

@@ -259,18 +259,13 @@ bool Plane::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Plane::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Plane::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Size");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LengthSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("WidthSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Size", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LengthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("WidthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Plane::Load(CStdXml &oXml)

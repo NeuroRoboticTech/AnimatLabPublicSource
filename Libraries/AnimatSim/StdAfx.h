@@ -48,6 +48,7 @@ namespace AnimatSim
 	class BoundingBox;
     class ThreadProcessor;
     class ModuleThreadProcessor;
+	class TypeProperty;
 
 	namespace Adapters
 	{

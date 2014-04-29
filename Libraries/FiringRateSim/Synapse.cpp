@@ -282,12 +282,11 @@ bool Synapse::SetData(const std::string &strDataType, const std::string &strValu
 	return false;
 }
 
-void Synapse::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes)
+void Synapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Link::QueryProperties(aryNames, aryTypes);
+	Link::QueryProperties(aryProperties);
 
-	aryNames.Add("Weight");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Weight", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool Synapse::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
