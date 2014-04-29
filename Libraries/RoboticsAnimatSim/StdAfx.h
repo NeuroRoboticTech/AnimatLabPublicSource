@@ -85,7 +85,7 @@ namespace RoboticsAnimatSim
 			}
         }
 
-        namespace InputSensorSystems
+        namespace InputSystems
         {
             class RbSwitchInputSensor;
         }
@@ -101,4 +101,4 @@ using namespace RoboticsAnimatSim::Robotics;
 using namespace RoboticsAnimatSim::Robotics::RobotInterfaces;
 using namespace RoboticsAnimatSim::Robotics::RobotIOControls;
 using namespace RoboticsAnimatSim::Robotics::RobotIOControls::DynamixelUSB;
-using namespace RoboticsAnimatSim::Robotics::InputSensorSystems;
+using namespace RoboticsAnimatSim::Robotics::InputSystems;

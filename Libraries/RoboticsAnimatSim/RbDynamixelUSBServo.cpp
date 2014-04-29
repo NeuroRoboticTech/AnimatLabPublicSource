@@ -14,11 +14,6 @@
 #include "RbStructure.h"
 #include "RbDynamixelUSBServo.h"
 
-inline double round( double d )
-{
-    return floor( d + 0.5 );
-}
-
 namespace RoboticsAnimatSim
 {
 	namespace Robotics

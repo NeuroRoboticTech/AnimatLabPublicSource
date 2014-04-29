@@ -15,7 +15,7 @@ namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace InputSensorSystems
+		namespace InputSystems
 		{
 
 //////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ void RbSwitchInputSensor::StepSimulation()
     m_lpBody->SetSurfaceContactCount(iState);
 }
 
-		}		//InputSensorSystems
+		}		//InputSystems
 	}			// Robotics
 }				//RoboticsAnimatSim
 

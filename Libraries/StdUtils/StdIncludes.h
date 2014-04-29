@@ -63,16 +63,20 @@
 //until later.
 #ifdef WIN32
     #include <boost/atomic.hpp>
+
+	//For some reason this is not in math.h on windows.
+	inline double round( double d )
+	{
+		return floor( d + 0.5 );
+	}
+
 #else
     #include <atomic>
 #endif
 
-//using namespace std;
-
 #include <boost/thread.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
-//#include <boost/atomic.hpp>
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG

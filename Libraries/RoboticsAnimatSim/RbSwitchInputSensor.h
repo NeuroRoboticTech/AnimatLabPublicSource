@@ -8,7 +8,7 @@ namespace RoboticsAnimatSim
 {
 	namespace Robotics
 	{
-		namespace InputSensorSystems
+		namespace InputSystems
 		{
 
 class ROBOTICS_PORT RbSwitchInputSensor : public AnimatSim::Robotics::RobotPartInterface

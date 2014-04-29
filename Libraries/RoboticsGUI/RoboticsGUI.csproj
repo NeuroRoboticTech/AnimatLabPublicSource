@@ -48,6 +48,14 @@
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSB.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBHingeMotor.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBPrismaticMotor.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataAnalogInput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataAnalogOutput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataController.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalInput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalOutput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataHingeServo.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPrismaticServo.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPWMOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +84,6 @@
     <EmbeddedResource Include="Graphics\SwitchSmall.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataObjects\RobotIOControls\Firmata\" />
     <Folder Include="DataObjects\RobotIOControls\MiniMaestro\" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +91,22 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\DynamixelUSBSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AnalogInpuLarge.gif" />
+    <EmbeddedResource Include="Graphics\AnalogInputSmall.gif" />
+    <EmbeddedResource Include="Graphics\AnalogOutputLarge.gif" />
+    <EmbeddedResource Include="Graphics\AnalogOutputSmall.gif" />
+    <EmbeddedResource Include="Graphics\DigitalInputLarge.gif" />
+    <EmbeddedResource Include="Graphics\DigitalInputSmall.gif" />
+    <EmbeddedResource Include="Graphics\DigitalOutputLarge.gif" />
+    <EmbeddedResource Include="Graphics\DigitalOutputSmall.gif" />
+    <EmbeddedResource Include="Graphics\HingeServoLarge.gif" />
+    <EmbeddedResource Include="Graphics\HingeServoSmall.gif" />
+    <EmbeddedResource Include="Graphics\PrismaticServoLarge.gif" />
+    <EmbeddedResource Include="Graphics\PrismaticServoSmall.gif" />
+    <EmbeddedResource Include="Graphics\PWMLarge.gif" />
+    <EmbeddedResource Include="Graphics\PWMSmall.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,9 +20,11 @@ Namespace DataObjects
             Protected m_bpParentIO As RobotIOControl
 
             Protected m_thLinkedPart As AnimatGUI.TypeHelpers.LinkedBodyPart
+            Protected m_thLinkedProperty As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
 
             'Only used during loading
             Protected m_strLinkedBodyPartID As String = ""
+            Protected m_strLinkedObjectProperty As String = ""
 
             Protected m_doOrganism As Physical.Organism
 
@@ -78,7 +80,11 @@ Namespace DataObjects
                 End Set
             End Property
 
-            Public MustOverride ReadOnly Property CompatiblePartType() As Type
+            Public Overridable ReadOnly Property CompatiblePartType() As Type
+                Get
+                    Return GetType(AnimatGUI.DataObjects.Physical.BodyPart)
+                End Get
+            End Property
 
 #End Region
 
@@ -102,7 +108,11 @@ Namespace DataObjects
             End Sub
 
             Public Overridable Function IsCompatibleWithPartType(ByVal bpPart As Physical.BodyPart) As Boolean
-                Return False
+                If Util.IsTypeOf(bpPart.GetType(), CompatiblePartType(), False) Then
+                    Return True
+                Else
+                    Return False
+                End If
             End Function
 
             Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

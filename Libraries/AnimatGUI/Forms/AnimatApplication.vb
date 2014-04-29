@@ -1129,7 +1129,7 @@ Namespace Forms
         Protected m_aryProjectMigrations As New Hashtable()
         Protected m_aryPhysicsEngines As New Collections.PhysicsEngines(Nothing)
         Protected m_aryMotorControlSystems As New Collections.MotorControlSystems(Nothing)
-        Protected m_aryInputSensorSystems As New Collections.InputSensorSystems(Nothing)
+        Protected m_aryInputSystems As New Collections.InputSystems(Nothing)
         Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Nothing)
         Protected m_aryRobotInterfaces As New Collections.RobotInterfaces(Nothing)
         Protected m_aryRobotIOControls As New Collections.RobotIOControls(Nothing)
@@ -1609,9 +1609,9 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property InputSensorSystems() As Collections.InputSensorSystems
+        Public Overridable ReadOnly Property InputSystems() As Collections.InputSystems
             Get
-                Return m_aryInputSensorSystems
+                Return m_aryInputSystems
             End Get
         End Property
 
@@ -2259,7 +2259,7 @@ Namespace Forms
                 m_aryExternalStimuli.Clear()
                 m_aryPhysicsEngines.Clear()
                 m_aryMotorControlSystems.Clear()
-                m_aryInputSensorSystems.Clear()
+                m_aryInputSystems.Clear()
                 m_aryRobotPartInterfaces.Clear()
                 m_aryRobotInterfaces.Clear()
                 m_aryRobotIOControls.Clear()
@@ -2457,11 +2457,11 @@ Namespace Forms
                                     m_aryRobotPartInterfaces.Add(doConv)
                                     m_aryAllDataTypes.Add(doConv)
                                 End If
-                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.InputSensorSystem), True) Then
-                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.InputSensorSystem")
-                                Dim doConv As DataObjects.Robotics.InputSensorSystem = CreateInputSensorSystem(assemModule, tpClass, Nothing)
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.InputSystem), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.InputSystem")
+                                Dim doConv As DataObjects.Robotics.InputSystem = CreateInputSystem(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
-                                    m_aryInputSensorSystems.Add(doConv)
+                                    m_aryInputSystems.Add(doConv)
                                     m_aryRobotPartInterfaces.Add(doConv)
                                     m_aryAllDataTypes.Add(doConv)
                                 End If
@@ -2745,16 +2745,16 @@ Namespace Forms
 
         End Function
 
-        Protected Overridable Function CreateInputSensorSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.InputSensorSystem
+        Protected Overridable Function CreateInputSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.InputSystem
 
             Try
                 If Not tpClass.IsAbstract Then
-                    Dim doConv As DataObjects.Robotics.InputSensorSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.InputSensorSystem)
+                    Dim doConv As DataObjects.Robotics.InputSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.InputSystem)
                     Return doConv
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    Util.ShowMessage("CreateInputSensorSystem: " & tpClass.FullName)
+                    Util.ShowMessage("CreateInputSystem: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try

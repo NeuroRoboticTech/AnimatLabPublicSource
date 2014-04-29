@@ -89,6 +89,14 @@
 	#include <boost/filesystem.hpp>
 #endif
 
+#ifdef WIN32
+	//For some reason this is not in math.h on windows.
+	inline double round( double d )
+	{
+		return floor( d + 0.5 );
+	}
+#endif
+
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
 //#define STD_TRACE_INFO
@@ -155,5 +163,6 @@ namespace StdUtils
 #include "StdPID.h"
 
 using namespace StdUtils;
+
 
 #endif // __STD_UTILS_DLL_H__

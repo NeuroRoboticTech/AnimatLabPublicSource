@@ -13,7 +13,7 @@ Namespace DataObjects
     Namespace Robotics
 
         Public MustInherit Class MotorControlSystem
-            Inherits RobotPartInterface
+            Inherits OutputSystem
 
 #Region " Attributes "
 
