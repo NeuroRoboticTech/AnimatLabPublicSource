@@ -58,6 +58,13 @@ MotorizedJoint::MotorizedJoint(void)
     ClearAssistForces();
     m_fltMotorAssistMagnitude = 0;
     m_fltMotorAssistMagnitudeReport = 0;
+	m_fltTemperature = 0;
+	m_fltVoltage = 0;
+
+	m_fltMotorForceAMagnitude = 0;
+	m_fltMotorForceBMagnitude = 0;
+	m_fltMotorTorqueAMagnitude = 0;
+	m_fltMotorTorqueBMagnitude = 0;
 }
 
 MotorizedJoint::~MotorizedJoint(void)
@@ -410,7 +417,30 @@ CStdFPoint MotorizedJoint::MotorForceToA()
  \param [in,out]    vVal    The input value.
  */
 void MotorizedJoint::MotorForceToA(CStdFPoint &vVal)
-{m_vMotorForceToA = vVal;}
+{
+	m_vMotorForceToA = vVal;
+	m_fltMotorForceAMagnitude = fabs(m_vMotorForceToA.Magnitude());
+}
+
+/**
+ \brief Gets the magnitude of the force that the motor is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return  Motor force output.
+ */
+float MotorizedJoint::MotorForceToAMagnitude() {return m_fltMotorForceAMagnitude;}
+
+/**
+ \brief Sets the magnitude of the force that the motor is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The motor force magnitude value.
+ */
+void MotorizedJoint::MotorForceToAMagnitude(float fltVal) {m_fltMotorForceAMagnitude = fltVal;}
 
 /**
  \brief Gets the force vector that the motor assist is applying to body A. (scaled units).
@@ -480,7 +510,30 @@ CStdFPoint MotorizedJoint::MotorForceToB()
  \param [in,out]    vVal    The input value.
  */
 void MotorizedJoint::MotorForceToB(CStdFPoint &vVal)
-{m_vMotorForceToB = vVal;}
+{
+	m_vMotorForceToB = vVal;
+	m_fltMotorForceBMagnitude = fabs(m_vMotorForceToB.Magnitude());
+}
+
+/**
+ \brief Gets the magnitude of the force that the motor is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return  Motor force output.
+ */
+float MotorizedJoint::MotorForceToBMagnitude() {return m_fltMotorForceBMagnitude;}
+
+/**
+ \brief Sets the magnitude of the force that the motor is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The motor force magnitude value.
+ */
+void MotorizedJoint::MotorForceToBMagnitude(float fltVal) {m_fltMotorForceBMagnitude = fltVal;}
 
 /**
  \brief Gets the force vector that the motor assist is applying to body B. (scaled units).
@@ -550,7 +603,30 @@ CStdFPoint MotorizedJoint::MotorTorqueToA()
  \param [in,out]    vVal    The input value.
  */
 void MotorizedJoint::MotorTorqueToA(CStdFPoint &vVal)
-{m_vMotorTorqueToA = vVal;}
+{
+	m_vMotorTorqueToA = vVal;
+	m_fltMotorTorqueAMagnitude = fabs(m_vMotorTorqueToA.Magnitude());
+}
+
+/**
+ \brief Gets the magnitude of the torque that the motor is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return  Motor torque output.
+ */
+float MotorizedJoint::MotorTorqueToAMagnitude() {return m_fltMotorTorqueAMagnitude;}
+
+/**
+ \brief Sets the magnitude of the torque that the motor is applying to body A. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The motor torque magnitude value.
+ */
+void MotorizedJoint::MotorTorqueToAMagnitude(float fltVal) {m_fltMotorTorqueAMagnitude = fltVal;}
 
 /**
  \brief Gets the torque vector that the motor assist is applying to body A. (scaled units).
@@ -620,7 +696,30 @@ CStdFPoint MotorizedJoint::MotorTorqueToB()
  \param [in,out]    vVal    The input value.
  */
 void MotorizedJoint::MotorTorqueToB(CStdFPoint &vVal)
-{m_vMotorTorqueToB = vVal;}
+{
+	m_vMotorTorqueToB = vVal;
+	m_fltMotorTorqueBMagnitude = fabs(m_vMotorTorqueToB.Magnitude());
+}
+
+/**
+ \brief Gets the magnitude of the torque that the motor is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return  Motor torque output.
+ */
+float MotorizedJoint::MotorTorqueToBMagnitude() {return m_fltMotorTorqueBMagnitude;}
+
+/**
+ \brief Sets the magnitude of the torque that the motor is applying to body B. (scaled units).
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The motor torque magnitude value.
+ */
+void MotorizedJoint::MotorTorqueToBMagnitude(float fltVal) {m_fltMotorTorqueBMagnitude = fltVal;}
 
 /**
  \brief Gets the torque vector that the motor assist is applying to body B. (scaled units).
@@ -679,6 +778,51 @@ void MotorizedJoint::MotorAssistTorqueToBReport(CStdFPoint &vVal)
 CStdPID *MotorizedJoint::AssistPid()
 {return m_lpAssistPid;}
 
+/**
+ \brief Gets the motor temperature.
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return    motor temperature.
+ */
+float MotorizedJoint::Temperature() {return m_fltTemperature;}
+
+/**
+ \brief Sets the motor temperature.
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The temperature value.
+ */
+void MotorizedJoint::Temperature(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "Joint.Temperature", true);
+
+	m_fltTemperature = fltVal;
+}
+
+
+/**
+ \brief Gets the motor voltage.
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \return    motor voltage.
+ */
+float MotorizedJoint::Voltage() {return m_fltVoltage;}
+
+/**
+ \brief Sets the motor voltage.
+
+ \author    David Cofer
+ \date  4/25/2014
+
+ \param [in]    fltVal    The voltage value.
+ */
+ void MotorizedJoint::Voltage(float fltVal) {m_fltVoltage = fltVal;}
 
 /**
 \brief	Sets the desired velocity to use for the motor.
@@ -719,6 +863,11 @@ void MotorizedJoint::ResetSimulation()
 	m_fltDesiredVelocity = 0;
 	m_fltPrevVelocity = 0;
 
+	m_fltMotorForceAMagnitude = 0;
+	m_fltMotorForceBMagnitude = 0;
+	m_fltMotorTorqueAMagnitude = 0;
+	m_fltMotorTorqueBMagnitude = 0;
+
 	EnableMotor(m_bEnableMotorInit);
 
     ClearAssistForces();
@@ -746,6 +895,8 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         EnableFeedback();
         return (&m_vMotorForceToA[2]);
     }
+	else if(strDataType == "MOTORFORCETOAMAGNITUDE")
+        return (&m_fltMotorForceAMagnitude);
 	else if(strDataType == "MOTORASSISTFORCETOAX")
         return (&m_vMotorAssistForceToAReport[0]);
 	else if(strDataType == "MOTORASSISTFORCETOAY")
@@ -767,6 +918,8 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         EnableFeedback();
         return (&m_vMotorForceToB[2]);
     }
+	else if(strDataType == "MOTORFORCETOBMAGNITUDE")
+        return (&m_fltMotorForceBMagnitude);
 	else if(strDataType == "MOTORASSISTFORCETOBX")
         return (&m_vMotorAssistForceToBReport[0]);
 	else if(strDataType == "MOTORASSISTFORCETOBY")
@@ -788,6 +941,8 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         EnableFeedback();
         return (&m_vMotorTorqueToA[2]);
     }
+	else if(strDataType == "MOTORTORQUETOAMAGNITUDE")
+        return (&m_fltMotorTorqueAMagnitude);
 	else if(strDataType == "MOTORASSISTTORQUETOAX")
         return (&m_vMotorAssistTorqueToAReport[0]);
 	else if(strDataType == "MOTORASSISTTORQUETOAY")
@@ -809,6 +964,8 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         EnableFeedback();
         return (&m_vMotorTorqueToB[2]);
     }
+	else if(strDataType == "MOTORTORQUETOBMAGNITUDE")
+        return (&m_fltMotorTorqueBMagnitude);
 	else if(strDataType == "MOTORASSISTTORQUETOBX")
         return (&m_vMotorAssistTorqueToBReport[0]);
 	else if(strDataType == "MOTORASSISTTORQUETOBY")
@@ -817,6 +974,10 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorAssistTorqueToBReport[2]);
 	else if(strDataType == "MOTORASSISTFORCEMAGNITUDE")
         return (&m_fltMotorAssistMagnitudeReport);
+	else if(strDataType == "TEMPERATURE")
+        return (&m_fltTemperature);
+	else if(strDataType == "VOLTAGE")
+        return (&m_fltVoltage);
     else
         return Joint::GetDataPointer(strDataType);
 

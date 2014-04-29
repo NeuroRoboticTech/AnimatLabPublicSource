@@ -92,8 +92,8 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    oXml.AddChildElement("Port", m_iPortNumber);
-                    oXml.AddChildElement("BaudRate", m_iBaudRate);
+                    m_iPortNumber = oXml.GetChildInt("PortNumber", m_iPortNumber);
+                    m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem(); 
                 }
@@ -104,8 +104,8 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    m_iPortNumber = oXml.GetChildInt("Port", m_iPortNumber);
-                    m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
+                    oXml.AddChildElement("PortNumber", m_iPortNumber);
+                    oXml.AddChildElement("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem();
                 }
@@ -116,8 +116,8 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    m_iPortNumber = oXml.GetChildInt("Port", m_iPortNumber);
-                    m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
+                    oXml.AddChildElement("PortNumber", m_iPortNumber);
+                    oXml.AddChildElement("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem();
                 }

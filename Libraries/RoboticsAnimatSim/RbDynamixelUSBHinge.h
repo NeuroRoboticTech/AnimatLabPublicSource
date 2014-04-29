@@ -1,4 +1,4 @@
-// RbDynamixelCM5USBUARTHingeController.h: interface for the RbDynamixelCM5USBUARTHingeController class.
+// RbDynamixelUSBHinge.h: interface for the RbDynamixelUSBHinge class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -13,19 +13,28 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 
-class ROBOTICS_PORT RbDynamixelUSBHinge : public AnimatSim::Robotics::RobotPartInterface
+class ROBOTICS_PORT RbDynamixelUSBHinge : public AnimatSim::Robotics::RobotPartInterface, public RbDynamixelUSBServo
 {
 protected:
     RbHinge *m_lpHinge;
-    float m_fltPos;
-    int m_iCounter;
-    int m_iSign;
 
 public:
 	RbDynamixelUSBHinge();
 	virtual ~RbDynamixelUSBHinge();
 
+	virtual void ServoID(int iID);
+
+#pragma region DataAccesMethods
+
+	virtual float *GetDataPointer(const std::string &strDataType);
+	virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+	virtual void QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::string> &aryTypes);
+
+#pragma endregion
+
+	virtual void Initialize();
     virtual void StepSimulation();
+	virtual void Load(StdUtils::CStdXml &oXml);
 };
 
 			}	//DynamixelUSB

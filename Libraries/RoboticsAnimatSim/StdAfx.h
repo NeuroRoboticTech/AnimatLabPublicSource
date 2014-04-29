@@ -79,6 +79,7 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 				class RbDynamixelUSB;
+				class RbDynamixelUSBServo;
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;
 			}

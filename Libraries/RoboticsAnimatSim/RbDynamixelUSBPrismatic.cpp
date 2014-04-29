@@ -1,4 +1,4 @@
-// RbDynamixelCM5USBUARTPrismaticController.cpp: implementation of the RbDynamixelCM5USBUARTPrismaticController class.
+// RbDynamixelUSBPrismatic.cpp: implementation of the RbDynamixelUSBPrismatic class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -12,6 +12,7 @@
 #include "RbPrismatic.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbDynamixelUSBServo.h"
 #include "RbDynamixelUSBPrismatic.h"
 
 namespace RoboticsAnimatSim
@@ -47,15 +48,18 @@ void RbDynamixelUSBPrismatic::StepSimulation()
 {
     AnimatBase::StepSimulation();
 
-    //Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
-    float fltSetVelocity = m_lpPrismatic->SetVelocity();
+	if(m_lpPrismatic)
+	{
+		//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
+		float fltSetVelocity = m_lpPrismatic->SetVelocity();
 
-    //Then we need to get the actual position and velocity of the joint and set it back on the joint part.
-    //Also, do not forget to scale units if needed.
-    float fltActualPosition = 0;
-    float fltActualVelocity = 0;
-    m_lpPrismatic->JointPosition(fltActualPosition);
-    m_lpPrismatic->JointVelocity(fltActualVelocity);
+		//Then we need to get the actual position and velocity of the joint and set it back on the joint part.
+		//Also, do not forget to scale units if needed.
+		float fltActualPosition = 0;
+		float fltActualVelocity = 0;
+		m_lpPrismatic->JointPosition(fltActualPosition);
+		m_lpPrismatic->JointVelocity(fltActualVelocity);
+	}
 }
 
 			}	//DynamixelUSB

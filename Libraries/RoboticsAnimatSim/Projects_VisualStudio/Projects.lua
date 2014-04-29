@@ -10,7 +10,8 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
-						  "../../../../3rdParty/DynamixelSDK/x32/import"}	  
+						  "../../../../3rdParty/DynamixelSDK/x32/import",
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
@@ -24,7 +25,8 @@
 					"netapi32", 
 					"comctl32", 
 					"wbemuuid",
-					"dynamixel" }
+					"dynamixel",
+					"openFrameworksArduinoD" }
 			postbuildcommands { "Copy $(OutDir)RoboticsAnimatSim_vc10D.lib ..\\..\\..\\lib\\RoboticsAnimatSim_vc10D.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin" }
 	 
@@ -33,7 +35,8 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
-						  "../../../../3rdParty/DynamixelSDK/x32/import"}	  
+						  "../../../../3rdParty/DynamixelSDK/x32/import",
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
@@ -47,6 +50,7 @@
 					"netapi32",
 					"comctl32",
 					"wbemuuid",
-					"dynamixel" }
+					"dynamixel",
+					"openFrameworksArduino" }
 			postbuildcommands { "Copy $(OutDir)RoboticsAnimatSim_vc10.lib ..\\..\\..\\lib\\RoboticsAnimatSim_vc10.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin" }

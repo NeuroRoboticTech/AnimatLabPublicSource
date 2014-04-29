@@ -1,4 +1,4 @@
-// RbDynamixelCM5USBUARTHingeController.cpp: implementation of the RbDynamixelCM5USBUARTHingeController class.
+// RbDynamixelUSB.cpp: implementation of the RbDynamixelUSB class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -114,23 +114,26 @@ void RbDynamixelUSB::QueryProperties(CStdArray<std::string> &aryNames, CStdArray
 
 #pragma endregion
 
-
 void RbDynamixelUSB::Initialize()
 {
-	RobotIOControl::Initialize();
-
-	// Open device
+	// Open device. Do this before calling the Initialize on the parts so they can have communications.
 	if(!m_lpParentInterface->InSimulation())
 	{
 		if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
 			THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
 	}
+
+	RobotIOControl::Initialize();
 }
 
 void RbDynamixelUSB::Load(StdUtils::CStdXml &oXml)
 {
 	RobotIOControl::Load(oXml);
 
+	oXml.IntoElem();
+	PortNumber(oXml.GetChildInt("PortNumber", m_iPortNumber));
+	BaudRate(oXml.GetChildInt("BaudRate", m_iBaudRate));
+	oXml.OutOfElem();
 }
 
 

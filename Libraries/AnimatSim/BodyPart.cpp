@@ -215,6 +215,24 @@ void BodyPart::QueryProperties(CStdArray<std::string> &aryNames, CStdArray<std::
 	MovableItem::QueryProperties(aryNames, aryTypes);
 }
 
+/**
+\brief	Gets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+**/
+RobotPartInterface *BodyPart::GetRobotPartInterface() {return m_lpRobot;};
+
+/**
+\brief	Sets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	lpPart	The new robot part. 
+**/
+void BodyPart::SetRobotPartInterface(RobotPartInterface *lpPart) {m_lpRobot = lpPart;};
+
 #pragma endregion
 
 /**

@@ -1,4 +1,4 @@
-// RbDynamixelCM5USBUARTPrismaticController.h: interface for the RbDynamixelCM5USBUARTPrismaticController class.
+// RbDynamixelUSBPrismatic.h: interface for the RbDynamixelUSBPrismatic class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -13,7 +13,7 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 
-class ROBOTICS_PORT RbDynamixelUSBPrismatic : public AnimatSim::Robotics::RobotPartInterface
+class ROBOTICS_PORT RbDynamixelUSBPrismatic : public AnimatSim::Robotics::RobotPartInterface, public RbDynamixelUSBServo
 {
 protected:
     RbPrismatic *m_lpPrismatic;

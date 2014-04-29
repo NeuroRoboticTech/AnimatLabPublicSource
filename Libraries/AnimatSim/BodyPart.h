@@ -44,7 +44,8 @@ namespace AnimatSim
 			virtual IPhysicsBody *PhysicsBody();
 			virtual void PhysicsBody(IPhysicsBody *lpBody);
 
-            virtual RobotPartInterface *GetRobotInterface() {return m_lpRobot;};
+            virtual RobotPartInterface *GetRobotPartInterface();
+            virtual void SetRobotPartInterface(RobotPartInterface *lpPart);
 
 			virtual void Resize();
 

@@ -44,6 +44,7 @@
 
 #include "RbLANWirelessInterface.h"
 #include "RbDynamixelUSB.h"
+#include "RbDynamixelUSBServo.h"
 #include "RbDynamixelUSBHinge.h"
 #include "RbDynamixelUSBPrismatic.h"
 #include "RbSwitchInputSensor.h"

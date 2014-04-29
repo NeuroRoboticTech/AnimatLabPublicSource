@@ -78,7 +78,7 @@ Namespace DataObjects
                 End If
 
                 m_strName = "RobotInterface"
-                m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "", "")
+                m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
             End Sub
 
             Public Overrides Sub ClearIsDirty()

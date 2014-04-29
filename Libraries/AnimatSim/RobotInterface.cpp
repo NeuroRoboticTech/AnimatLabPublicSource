@@ -83,6 +83,7 @@ bool RobotInterface::InSimulation() {return m_bInSimulation;}
 \author	dcofer
 \date	4/25/2014
 
+\param	bVal	Sets if we are in a simulation or not.
 **/
 void RobotInterface::InSimulation(bool bVal) {m_bInSimulation = bVal;}
 

@@ -20,6 +20,7 @@ namespace RoboticsGUI
                 public override Type CompatiblePartType {get {return typeof(AnimatGUI.DataObjects.Physical.Joints.Hinge);}}
                 public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 
+
                 public DynamixelUSBHingeMotor(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)
                 {

@@ -11,6 +11,9 @@ namespace AnimatSim
 			RobotInterface *m_lpParentInterface;
 			RobotIOControl *m_lpParentIOControl;
 
+			BodyPart *m_lpBodyPart;
+			std::string m_strPartID;
+
 		public:
 			RobotPartInterface(void);
 			virtual ~RobotPartInterface(void);
@@ -19,6 +22,7 @@ namespace AnimatSim
 			virtual RobotIOControl *ParentIOControl();
 
 			virtual void Initialize();
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}

@@ -45,6 +45,7 @@ RobotPartInterface::RobotPartInterface(void)
 {
 	m_lpParentInterface = NULL;
 	m_lpParentIOControl = NULL;
+	m_lpBodyPart = NULL;
 }
 
 RobotPartInterface::~RobotPartInterface(void)
@@ -52,6 +53,10 @@ RobotPartInterface::~RobotPartInterface(void)
 
 try
 {
+	//We do not own any of these.
+	m_lpParentInterface = NULL;
+	m_lpParentIOControl = NULL;
+	m_lpBodyPart = NULL;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RobotPartInterface\r\n", "", -1, false, true);}
@@ -69,7 +74,21 @@ RobotIOControl *RobotPartInterface::ParentIOControl() {return m_lpParentIOContro
 
 void RobotPartInterface::Initialize()
 {
+	//We need to find the referenced body part and set its robot part interface to this one.
+	if(!Std_IsBlank(m_strPartID))
+		m_lpBodyPart = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
 
+	if(m_lpBodyPart)
+		m_lpBodyPart->SetRobotPartInterface(this);
+}
+
+void RobotPartInterface::Load(CStdXml &oXml)
+{
+	AnimatBase::Load(oXml);
+
+	oXml.IntoElem();  //Into RigidBody Element
+	m_strPartID = oXml.GetChildString("LinkedBodyPartID", "");
+	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 
 	}

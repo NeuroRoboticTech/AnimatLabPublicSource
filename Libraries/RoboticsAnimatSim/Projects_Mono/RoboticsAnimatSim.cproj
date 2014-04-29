@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3CCE1E17-5CC8-C545-A58D-66FA097A19CA}</ProjectGuid>
+    <ProjectGuid>{CD2ED1C8-6011-BE4E-BF20-1048D0EDA75A}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -180,6 +180,9 @@
     <None Include="..\RbDynamixelUSBHinge.h">
       <Link>RbDynamixelUSBHinge.h</Link>
     </None>
+    <None Include="..\RbDynamixelUSBMotor.h">
+      <Link>RbDynamixelUSBMotor.h</Link>
+    </None>
     <None Include="..\RbDynamixelUSBPrismatic.h">
       <Link>RbDynamixelUSBPrismatic.h</Link>
     </None>
@@ -301,6 +304,9 @@
     </Compile>
     <Compile Include="..\RbDynamixelUSBHinge.cpp">
       <Link>RbDynamixelUSBHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbDynamixelUSBMotor.cpp">
+      <Link>RbDynamixelUSBMotor.cpp</Link>
     </Compile>
     <Compile Include="..\RbDynamixelUSBPrismatic.cpp">
       <Link>RbDynamixelUSBPrismatic.cpp</Link>

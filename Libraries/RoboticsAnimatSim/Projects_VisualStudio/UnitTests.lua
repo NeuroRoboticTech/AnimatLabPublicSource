@@ -10,11 +10,14 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../RoboticsAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0"}	  
+						  "../../../../3rdParty/boost_1_54_0",
+						  "../../../../3rdParty/DynamixelSDK/x32/import",
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
-					  "../../../../3rdParty/boost_1_54_0/lib" }
+					  "../../../../3rdParty/boost_1_54_0/lib",
+					  "../../../../3rdParty/DynamixelSDK/x32/import" }
 			targetdir ("../../../bin")
 			targetname ("Robotics_UnitTests")
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "_CRT_SECURE_NO_WARNINGS"	}
@@ -29,11 +32,14 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../RoboticsAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0"}	  
+						  "../../../../3rdParty/boost_1_54_0",
+						  "../../../../3rdParty/DynamixelSDK/x32/import",
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
-					  "../../../../3rdParty/boost_1_54_0/lib" }
+					  "../../../../3rdParty/boost_1_54_0/lib",
+					  "../../../../3rdParty/DynamixelSDK/x32/import" }
 			targetdir ("../../../bin")
 			targetname ("Robotics_UnitTests")
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL" }

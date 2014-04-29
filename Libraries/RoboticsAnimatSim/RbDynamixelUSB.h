@@ -1,4 +1,4 @@
-// RbDynamixelCM5USBUARTHingeController.h: interface for the RbDynamixelCM5USBUARTHingeController class.
+// RbDynamixelUSB.h: interface for the RbDynamixelUSB class.
 //
 //////////////////////////////////////////////////////////////////////
 

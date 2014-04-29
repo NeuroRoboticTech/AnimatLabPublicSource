@@ -156,6 +156,9 @@
 		<Unit filename="../RbDynamixelUSBHinge.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbDynamixelUSBMotor.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbDynamixelUSBPrismatic.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -274,6 +277,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbDynamixelUSBHinge.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBMotor.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbDynamixelUSBPrismatic.cpp">

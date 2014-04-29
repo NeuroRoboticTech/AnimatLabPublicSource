@@ -192,6 +192,9 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionY", "Position Y Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
 
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Temperature", "Temperature", "Celcius", "C", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Voltage", "Voltage", "Volts", "V", -20, 20))
+
             If Util.Application.Physics.ProvidesJointForceFeedback Then
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAX", "Motor Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAY", "Motor Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))

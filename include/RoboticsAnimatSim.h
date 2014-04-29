@@ -94,6 +94,7 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 				class RbDynamixelUSB;
+				class RbDynamixelUSBServo;
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;
 			}
@@ -150,8 +151,10 @@ using namespace RoboticsAnimatSim::Robotics::InputSensorSystems;
 #include "RbMaterialType.h"
 
 #include "RbLANWirelessInterface.h"
-#include "RbDynamixelCM5USBUARTHingeController.h"
-#include "RbDynamixelCM5USBUARTPrismaticController.h"
+#include "RbDynamixelUSB.h"
+#include "RbDynamixelUSBServo.h"
+#include "RbDynamixelUSBHinge.h"
+#include "RbDynamixelUSBPrismatic.h"
 #include "RbSwitchInputSensor.h"
 
 #endif // __ROBOTICS_ANIMAT_LIB_DLL_H__

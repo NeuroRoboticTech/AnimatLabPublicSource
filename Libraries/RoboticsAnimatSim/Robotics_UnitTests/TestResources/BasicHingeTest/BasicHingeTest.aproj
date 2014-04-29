@@ -13,7 +13,7 @@
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="10.5" Scale="None" Actual="10.5"/>
+<SimEndTime Value="5.1" Scale="None" Actual="5.1"/>
 <PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
 <PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
 <Environment>
@@ -169,7 +169,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.26495,0,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.265,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -231,7 +231,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.26495,0.1,7.24964e-016,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.265,0.1,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Prismatic</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Joints.Prismatic</PartType>
@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>af709ceb-485e-4651-84c9-f613256269a9</ID>
+<ID>5d710507-89f2-4e93-838e-9eec89e1440a</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>55dad4bc-50d0-495f-96ca-4b0992900e54</ID>
+<ID>7262da88-de02-45ea-921d-95af960f07da</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -483,7 +483,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>b5adf353-1134-4794-b7b3-5bfa05f875b5</ID>
+<ID>aef222f4-be73-4cab-8007-745cc67c2454</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -492,7 +492,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>21c245ea-5eea-46ab-be79-260890e848b6</ID>
+<ID>c7cfee85-f965-4d6a-ab44-fc9522c1ae61</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -532,7 +532,7 @@
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
 <PID>
-<ID>7340024c-3b2b-454a-b3dc-99efc53410c5</ID>
+<ID>664444ee-6944-40a5-9240-bd8cae128813</ID>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
 <Enabled>False</Enabled>
@@ -1483,7 +1483,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -1519,7 +1519,7 @@
 <C Value="2" Scale="None" Actual="2"/>
 <D Value="-1" Scale="None" Actual="-1"/>
 </Gain>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2139,13 +2139,14 @@
     <Tag>f00bc5ed-4dc9-497b-a1d5-1f24ee716d4b</Tag>
   </Link>
   <Node Left="291.5" Top="161.5" Width="40" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Display" Orientation="so_0" />
     <FillColor>-360334</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>7</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6e47926e-2765-4212-b32a-2d2f608f46d9</Tag>
   </Node>
@@ -2272,7 +2273,7 @@
 <ID>894deef9-eae1-42b2-9288-6bf76adf9620</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotInterfaces.LANWirelessInterface</ClassName>
-<PhysicsTimeStep Value="0.6" Scale="milli" Actual="0.0006"/>
+<PhysicsTimeStep Value="35" Scale="milli" Actual="0.035"/>
 <IOControls>
 <RobotIO>
 <Name>DynamixelUSB</Name>
@@ -2287,6 +2288,7 @@
 <ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSBHingeMotor</ClassName>
 <Enabled>True</Enabled>
 <LinkedBodyPartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</LinkedBodyPartID>
+<ServoID>1</ServoID>
 </RobotPartInterface>
 <RobotPartInterface>
 <Name>Prismatic Motor</Name>
@@ -2295,8 +2297,11 @@
 <ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSBPrismaticMotor</ClassName>
 <Enabled>True</Enabled>
 <LinkedBodyPartID>4e261174-87df-4a20-a6ca-34dd2713e479</LinkedBodyPartID>
+<ServoID>1</ServoID>
 </RobotPartInterface>
 </Parts>
+<PortNumber>6</PortNumber>
+<BaudRate>1</BaudRate>
 </RobotIO>
 </IOControls>
 </RobotInterface>
@@ -2414,6 +2419,40 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Up</Name>
+<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="1" Scale="None" Actual="1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Down</Name>
+<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="-1" Scale="None" Actual="-1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Stimulus_P</Name>
 <ID>039e18a4-e6c5-4753-afb8-b058ab0d6baa</ID>
@@ -2437,8 +2476,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>7338de67-a447-48b2-a8f6-09602ca20be4</Name>
-<ID>7338de67-a447-48b2-a8f6-09602ca20be4</ID>
+<Name>cb9ecf8b-b8ec-4998-a37d-1081cfc1f7ab</Name>
+<ID>cb9ecf8b-b8ec-4998-a37d-1081cfc1f7ab</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -2532,7 +2571,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/25/2014 07:20:05"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/28/2014 16:52:18"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -2965,7 +3004,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="3" Unique="3" Space="100"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9e29cb55-d232-45c6-a0e9-cd94c7937f1e&lt;/ID&gt;
@@ -2994,7 +3033,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;8900d74b-8f82-44f0-a181-7f899da8bae6&lt;/ID&gt;

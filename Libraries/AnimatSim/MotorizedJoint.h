@@ -64,6 +64,9 @@ namespace AnimatSim
             /// This includes any motor assist within it. 
             CStdFPoint m_vMotorForceToA;
 
+            /// The magnitude of the motor Force being applied to body A. (scaled units)
+            float m_fltMotorForceAMagnitude;
+
             /// Force vector that the motor assist is applying to body A. (scaled units).
             CStdFPoint m_vMotorAssistForceToA;
 
@@ -73,6 +76,9 @@ namespace AnimatSim
             /// Force vector that the motor is applying to body B. (un-scaled units). 
             /// This includes any motor assist within it. 
             CStdFPoint m_vMotorForceToB;
+
+            /// The magnitude of the motor Force being applied to body B. (scaled units)
+            float m_fltMotorForceBMagnitude;
 
             /// Force vector that the motor assist is applying to body B. (scaled units).
             CStdFPoint m_vMotorAssistForceToB;
@@ -84,6 +90,9 @@ namespace AnimatSim
             /// This includes any motor assist within it. 
             CStdFPoint m_vMotorTorqueToA;
 
+            /// The magnitude of the motor torque being applied to body A. (scaled units)
+            float m_fltMotorTorqueAMagnitude;
+
             /// Torque vector that the motor assist is applying to body A. (scaled units).
             CStdFPoint m_vMotorAssistTorqueToA;
 
@@ -93,6 +102,9 @@ namespace AnimatSim
             /// Torque vector that the motor is applying to body B. (un-scaled units). 
             /// This includes any motor assist within it. 
             CStdFPoint m_vMotorTorqueToB;
+
+            /// The magnitude of the motor torque being applied to body B. (scaled units)
+            float m_fltMotorTorqueBMagnitude;
 
             /// Torque vector that the motor assist is applying to body B. (scaled units).
             CStdFPoint m_vMotorAssistTorqueToB;
@@ -108,6 +120,14 @@ namespace AnimatSim
 
             /// The PID controller for the motor assist system.
             PidControl *m_lpAssistPid;
+
+			//This is the temperature for the motor. This is not really that useful in the simulation at the moment, but
+			//it is data that is available for robotic motors, so I am adding a hook here for setting and displaying it.
+			float m_fltTemperature;
+
+			//This is the voltage for the motor. This is not really that useful in the simulation at the moment, but
+			//it is data that is available for robotic motors, so I am adding a hook here for setting and displaying it.
+			float m_fltVoltage;
 
             virtual void ClearAssistForces();
             virtual void ApplyMotorAssist();
@@ -151,6 +171,9 @@ namespace AnimatSim
             virtual CStdFPoint MotorForceToA();
             virtual void MotorForceToA(CStdFPoint &vVal);
 
+            virtual float MotorForceToAMagnitude();
+            virtual void MotorForceToAMagnitude(float fltVal);
+
             virtual CStdFPoint MotorAssistForceToA();
             virtual void MotorAssistForceToA(CStdFPoint &vVal);
 
@@ -159,6 +182,9 @@ namespace AnimatSim
 
             virtual CStdFPoint MotorForceToB();
             virtual void MotorForceToB(CStdFPoint &vVal);
+
+            virtual float MotorForceToBMagnitude();
+            virtual void MotorForceToBMagnitude(float fltVal);
 
             virtual CStdFPoint MotorAssistForceToB();
             virtual void MotorAssistForceToB(CStdFPoint &vVal);
@@ -169,6 +195,9 @@ namespace AnimatSim
             virtual CStdFPoint MotorTorqueToA();
             virtual void MotorTorqueToA(CStdFPoint &vVal);
 
+            virtual float MotorTorqueToAMagnitude();
+            virtual void MotorTorqueToAMagnitude(float fltVal);
+
             virtual CStdFPoint MotorAssistTorqueToA();
             virtual void MotorAssistTorqueToA(CStdFPoint &vVal);
 
@@ -178,6 +207,9 @@ namespace AnimatSim
             virtual CStdFPoint MotorTorqueToB();
             virtual void MotorTorqueToB(CStdFPoint &vVal);
 
+            virtual float MotorTorqueToBMagnitude();
+            virtual void MotorTorqueToBMagnitude(float fltVal);
+
             virtual CStdFPoint MotorAssistTorqueToB();
             virtual void MotorAssistTorqueToB(CStdFPoint &vVal);
 
@@ -185,6 +217,12 @@ namespace AnimatSim
             virtual void MotorAssistTorqueToBReport(CStdFPoint &vVal);
 
             virtual CStdPID *AssistPid();
+
+			virtual float Temperature();
+			virtual void Temperature(float fltVal);
+
+			virtual float Voltage();
+			virtual void Voltage(float fltVal);
 
 			virtual void MotorInput(float fltInput);
 
