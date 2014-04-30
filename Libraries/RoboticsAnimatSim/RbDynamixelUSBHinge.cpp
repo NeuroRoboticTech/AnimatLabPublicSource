@@ -99,7 +99,8 @@ void RbDynamixelUSBHinge::Initialize()
 
 	m_lpHinge = dynamic_cast<RbHinge *>(m_lpBodyPart);
 
-	InitMotorData();
+	if(!m_lpParentInterface->InSimulation())
+		InitMotorData();
 }
 
 void RbDynamixelUSBHinge::StepSimulation()
@@ -127,13 +128,13 @@ void RbDynamixelUSBHinge::StepSimulation()
 		}
 
 		float fltActualPosition = GetActualPosition();
-		//float fltActualVelocity = GetActualVelocity();
+		float fltActualVelocity = GetActualVelocity();
 		//float fltTemperature = GetActualTemperatureCelcius();
 		//float fltVoltage = GetActualVoltage();
 		//float fltLoad = GetActualLoad();
 
 		m_lpHinge->JointPosition(fltActualPosition);
-		//m_lpHinge->JointVelocity(fltActualVelocity);
+		m_lpHinge->JointVelocity(fltActualVelocity);
 		//m_lpHinge->Temperature(fltTemperature);
 		//m_lpHinge->Voltage(fltVoltage);
 		//m_lpHinge->MotorTorqueToAMagnitude(fltLoad);

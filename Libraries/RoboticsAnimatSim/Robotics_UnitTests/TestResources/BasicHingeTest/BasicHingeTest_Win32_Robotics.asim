@@ -836,7 +836,7 @@
 <CollectTimeWindow>-1</CollectTimeWindow>
 <AlwaysActive>False</AlwaysActive>
 <StartTime>0</StartTime>
-<EndTime>1</EndTime>
+<EndTime>5</EndTime>
 <CollectInterval>0.00025</CollectInterval>
 <DataColumns>
 <DataColumn>

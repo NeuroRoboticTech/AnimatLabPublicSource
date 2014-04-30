@@ -8,7 +8,7 @@
 // Dynamixel Control table address
 #define P_MODEL_NUMBER_L		0x00
 #define P_MODEL_NUMBER_H		0x01
-#define P_FIRMWARE_VERSION_H	0x02
+#define P_FIRMWARE_VERSION		0x02
 #define P_ID					0x03
 #define P_BAUD_RATE				0x04
 #define P_RETURN_DELAY_TIME		0x05

@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>5d710507-89f2-4e93-838e-9eec89e1440a</ID>
+<ID>7262da88-de02-45ea-921d-95af960f07da</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>7262da88-de02-45ea-921d-95af960f07da</ID>
+<ID>d83dbdfe-2605-4f45-bc44-7abd81cf6be5</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -483,7 +483,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>aef222f4-be73-4cab-8007-745cc67c2454</ID>
+<ID>c7cfee85-f965-4d6a-ab44-fc9522c1ae61</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -492,7 +492,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>c7cfee85-f965-4d6a-ab44-fc9522c1ae61</ID>
+<ID>9e6713d0-bcca-4f52-a125-5bcaba9700b1</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -532,7 +532,7 @@
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
 <PID>
-<ID>664444ee-6944-40a5-9240-bd8cae128813</ID>
+<ID>763f2e8e-7e58-4732-845f-5daa5e460606</ID>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
 <Enabled>False</Enabled>
@@ -2419,40 +2419,6 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Up</Name>
-<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1" Scale="None" Actual="1"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="1" Scale="None" Actual="1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Down</Name>
-<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
-<StartTime Value="2" Scale="None" Actual="2"/>
-<EndTime Value="4" Scale="None" Actual="4"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="-1" Scale="None" Actual="-1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Stimulus_P</Name>
 <ID>039e18a4-e6c5-4753-afb8-b058ab0d6baa</ID>
@@ -2473,11 +2439,45 @@
 <BurstOnDuration Value="10" Scale="None" Actual="10"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Down</Name>
+<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="-1" Scale="None" Actual="-1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Up</Name>
+<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="1" Scale="None" Actual="1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>cb9ecf8b-b8ec-4998-a37d-1081cfc1f7ab</Name>
-<ID>cb9ecf8b-b8ec-4998-a37d-1081cfc1f7ab</ID>
+<Name>af32c592-c98f-4866-8d4d-8dfc5ea92da6</Name>
+<ID>af32c592-c98f-4866-8d4d-8dfc5ea92da6</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -2571,7 +2571,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/28/2014 16:52:18"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/30/2014 06:10:25"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

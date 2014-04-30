@@ -123,11 +123,7 @@ void RbDynamixelUSBServo::SetGoalVelocity_FP(int iVelocity)
 
 	m_iLastGoalVelocity = iVelocity;
 
-	int iHigh = dxl_get_highbyte(iVelocity);
-	int iLow = dxl_get_lowbyte(iVelocity);
-
-	dxl_write_word(m_iServoID, P_MOVING_SPEED_L, iLow );
-	dxl_write_word(m_iServoID, P_MOVING_SPEED_H, iHigh );
+	dxl_write_word(m_iServoID, P_MOVING_SPEED_L, iVelocity );
 }
 
 /**
@@ -145,7 +141,6 @@ void RbDynamixelUSBServo::SetMaximumVelocity()
 	m_iLastGoalVelocity = 0;
 
 	dxl_write_word(m_iServoID, P_MOVING_SPEED_L, 0 );
-	dxl_write_word(m_iServoID, P_MOVING_SPEED_H, 0 );
 }
 
 /**
@@ -158,10 +153,7 @@ void RbDynamixelUSBServo::SetMaximumVelocity()
 **/
 int RbDynamixelUSBServo::GetGoalVelocity_FP()
 {
-	int iLow = dxl_read_word(m_iServoID, P_MOVING_SPEED_L);
-	int iHigh = dxl_read_word(m_iServoID, P_MOVING_SPEED_H );
-
-	int iGoalVel = dxl_makeword(iLow, iHigh);
+	int iGoalVel = dxl_read_word(m_iServoID, P_MOVING_SPEED_L);
 
 	return iGoalVel;
 }
@@ -228,11 +220,7 @@ void RbDynamixelUSBServo::SetGoalPosition_FP(int iPos)
 
 	m_iLastGoalPos = iPos;
 
-	int iHigh = dxl_get_highbyte(iPos);
-	int iLow = dxl_get_lowbyte(iPos);
-
-	dxl_write_word(m_iServoID, P_GOAL_POSITION_L, iLow );
-	dxl_write_word(m_iServoID, P_GOAL_POSITION_H, iHigh );
+	dxl_write_word(m_iServoID, P_GOAL_POSITION_L, iPos );
 }
 
 /**
@@ -245,11 +233,7 @@ void RbDynamixelUSBServo::SetGoalPosition_FP(int iPos)
 **/
 int RbDynamixelUSBServo::GetGoalPosition_FP()
 {
-	int iLow = dxl_read_word(m_iServoID, P_GOAL_POSITION_L);
-	int iHigh = dxl_read_word(m_iServoID, P_GOAL_POSITION_H );
-
-	int iGoalPos = dxl_makeword(iLow, iHigh);
-
+	int iGoalPos = dxl_read_word(m_iServoID, P_GOAL_POSITION_L);
 	return iGoalPos;
 }
 
@@ -308,11 +292,7 @@ int RbDynamixelUSBServo::LastGoalPosition_FP() {return m_iLastGoalPos;}
 **/
 int RbDynamixelUSBServo::GetActualPosition_FP()
 {
-	int iLow = dxl_read_word(m_iServoID, P_PRESENT_POSITION_L);
-	int iHigh = dxl_read_word(m_iServoID, P_PRESENT_POSITION_H );
-
-	int iPos = dxl_makeword(iLow, iHigh);
-
+	int iPos = dxl_read_word(m_iServoID, P_PRESENT_POSITION_L);
 	return iPos;
 }
 
@@ -343,11 +323,7 @@ float RbDynamixelUSBServo::GetActualPosition()
 **/
 int RbDynamixelUSBServo::GetActualVelocity_FP()
 {
-	int iLow = dxl_read_word(m_iServoID, P_PRESENT_SPEED_L);
-	int iHigh = dxl_read_word(m_iServoID, P_PRESENT_SPEED_H );
-
-	int iVel = dxl_makeword(iLow, iHigh);
-
+	int iVel = dxl_read_word(m_iServoID, P_PRESENT_SPEED_L);
 	return iVel;
 }
 
@@ -363,11 +339,11 @@ float RbDynamixelUSBServo::GetActualVelocity()
 {
 	int iVel = GetActualVelocity_FP();
 
-	int iDir = -1;
+	int iDir = 1;
 	if(iVel > m_iMaxVelocity)
 	{
 		iVel -= m_iMaxVelocity;
-		iDir = 1;
+		iDir = -1;
 	}
 
 	float fltPos = iDir*iVel*m_fltConvertFPToRadS;
@@ -385,12 +361,8 @@ float RbDynamixelUSBServo::GetActualVelocity()
 **/
 int RbDynamixelUSBServo::GetActualLoad_FP()
 {
-	int iLow = dxl_read_word(m_iServoID, P_PRESENT_SPEED_L);
-	int iHigh = dxl_read_word(m_iServoID, P_PRESENT_SPEED_H );
-
-	int iVel = dxl_makeword(iLow, iHigh);
-
-	return iVel;
+	int iLoad = dxl_read_word(m_iServoID, P_PRESENT_SPEED_L);
+	return iLoad;
 }
 
 /**
@@ -427,7 +399,7 @@ float RbDynamixelUSBServo::GetActualLoad()
 **/
 int RbDynamixelUSBServo::GetActualVoltage_FP()
 {
-	int iVoltage = dxl_read_word(m_iServoID, P_PRESENT_VOLTAGE);
+	int iVoltage = dxl_read_byte(m_iServoID, P_PRESENT_VOLTAGE);
 	return iVoltage;
 }
 
@@ -470,7 +442,7 @@ float RbDynamixelUSBServo::GetActualTemperatureFahrenheit()
 **/
 float RbDynamixelUSBServo::GetActualTemperatureCelcius()
 {
-	float fltTemp = (float) dxl_read_word(m_iServoID, P_PRESENT_TEMPERATURE);
+	float fltTemp = (float) dxl_read_byte(m_iServoID, P_PRESENT_TEMPERATURE);
 	return fltTemp;
 }
 
@@ -484,7 +456,7 @@ float RbDynamixelUSBServo::GetActualTemperatureCelcius()
 **/
 bool RbDynamixelUSBServo::GetIsMoving()
 {
-	int iMoving = dxl_read_word(m_iServoID, P_MOVING);
+	int iMoving = dxl_read_byte(m_iServoID, P_MOVING);
 
 	if(iMoving)
 		return true;
@@ -504,7 +476,7 @@ bool RbDynamixelUSBServo::GetIsMoving()
 **/
 void RbDynamixelUSBServo::GetIsLEDOn(bool &bIsBlueOn, bool &bIsGreenOn, bool &bIsRedOn)
 {
-	int iLED = dxl_read_word(m_iServoID, P_LED);
+	int iLED = dxl_read_byte(m_iServoID, P_LED);
 
 	bIsBlueOn = iLED & 0x04;
 	bIsGreenOn =  iLED & 0x02;
@@ -521,7 +493,7 @@ void RbDynamixelUSBServo::GetIsLEDOn(bool &bIsBlueOn, bool &bIsGreenOn, bool &bI
 **/
 bool RbDynamixelUSBServo::GetIsAlarmShutdown()
 {
-	int iAlarm = dxl_read_word(m_iServoID, P_ALARM_SHUTDOWN);
+	int iAlarm = dxl_read_byte(m_iServoID, P_ALARM_SHUTDOWN);
 
 	if(iAlarm)
 		return true;
@@ -539,11 +511,7 @@ bool RbDynamixelUSBServo::GetIsAlarmShutdown()
 **/
 int RbDynamixelUSBServo::GetModelNumber()
 {
-	int iLow = dxl_read_word(m_iServoID, P_MODEL_NUMBER_L);
-	int iHigh = dxl_read_word(m_iServoID, P_MODEL_NUMBER_H );
-
-	int iModel = dxl_makeword(iLow, iHigh);
-
+	int iModel = dxl_read_word(m_iServoID, P_MODEL_NUMBER_L);
 	return iModel;
 }
 
@@ -557,7 +525,7 @@ int RbDynamixelUSBServo::GetModelNumber()
 **/
 int RbDynamixelUSBServo::GetIDNumber()
 {
-	int iID = dxl_read_word(m_iServoID, P_ID);
+	int iID = dxl_read_byte(m_iServoID, P_ID);
 	return iID;
 }
 
@@ -571,7 +539,7 @@ int RbDynamixelUSBServo::GetIDNumber()
 **/
 int RbDynamixelUSBServo::GetFirmwareVersion()
 {
-	int iID = dxl_read_word(m_iServoID, P_FIRMWARE_VERSION_H);
+	int iID = dxl_read_byte(m_iServoID, P_FIRMWARE_VERSION);
 	return iID;
 }
 
@@ -583,9 +551,14 @@ int RbDynamixelUSBServo::GetFirmwareVersion()
 **/
 void RbDynamixelUSBServo::InitMotorData()
 {
-	SetGoalVelocity_FP(1023);
+	m_iLastGoalPos = GetActualPosition_FP();
+	SetMaximumVelocity();
 	SetGoalPosition(0);
-	//m_iLastGoalPos = GetActualPosition_FP();
+
+	do
+	{
+		Std_Sleep(100);
+	} while(GetIsMoving());
 }
 
 
