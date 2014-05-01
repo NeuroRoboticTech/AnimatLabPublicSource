@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{CC6D9AA9-306C-1C46-AECD-B545B0074B5E}</ProjectGuid>
+		<ProjectGuid>{66B81DFB-8BBE-704D-84D1-60B6B4574834}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -230,6 +230,14 @@
 		<ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
 		<ClInclude Include="..\RbDynamixelUSBServo.h" />
 		<ClInclude Include="..\RbEllipsoid.h" />
+		<ClInclude Include="..\RbFirmataAnalogInput.h" />
+		<ClInclude Include="..\RbFirmataAnalogOutput.h" />
+		<ClInclude Include="..\RbFirmataController.h" />
+		<ClInclude Include="..\RbFirmataDigitalInput.h" />
+		<ClInclude Include="..\RbFirmataDigitalOutput.h" />
+		<ClInclude Include="..\RbFirmataHingeServo.h" />
+		<ClInclude Include="..\RbFirmataPrismaticServo.h" />
+		<ClInclude Include="..\RbFirmataPWMOutput.h" />
 		<ClInclude Include="..\RbFreeJoint.h" />
 		<ClInclude Include="..\RbHinge.h" />
 		<ClInclude Include="..\RbHingeLimit.h" />
@@ -253,7 +261,6 @@
 		<ClInclude Include="..\RbSphere.h" />
 		<ClInclude Include="..\RbSpring.h" />
 		<ClInclude Include="..\RbStructure.h" />
-		<ClInclude Include="..\RbSwitchInputSensor.h" />
 		<ClInclude Include="..\RbTorus.h" />
 		<ClInclude Include="..\RbUniversal.h" />
 		<ClInclude Include="..\StdAfx.h" />
@@ -286,6 +293,22 @@
 		<ClCompile Include="..\RbDynamixelUSBServo.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbEllipsoid.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataAnalogInput.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataAnalogOutput.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataController.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataDigitalInput.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataDigitalOutput.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataHingeServo.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataPrismaticServo.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataPWMOutput.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbFreeJoint.cpp">
 		</ClCompile>
@@ -332,8 +355,6 @@
 		<ClCompile Include="..\RbSpring.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbStructure.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbSwitchInputSensor.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbTorus.cpp">
 		</ClCompile>

@@ -47,7 +47,15 @@
 #include "RbDynamixelUSBServo.h"
 #include "RbDynamixelUSBHinge.h"
 #include "RbDynamixelUSBPrismatic.h"
-#include "RbSwitchInputSensor.h"
+
+#include "RbFirmataController.h"
+#include "RbFirmataAnalogInput.h"
+#include "RbFirmataAnalogOutput.h"
+#include "RbFirmataDigitalInput.h"
+#include "RbFirmataDigitalOutput.h"
+#include "RbFirmataHingeServo.h"
+#include "RbFirmataPrismaticServo.h"
+#include "RbFirmataPWMOutput.h"
 
 #ifdef _WINDOWS
 	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
@@ -929,10 +937,10 @@ try
 	{
 		lpControl = new RbDynamixelUSB;
 	}
-	//else if(strType == "DYNAMIXELUSBPRISMATIC")
-	//{
-	//	lpControl = new RbDynamixelUSBPrismatic;
-	//}
+	else if(strType == "FIRMATACONTROLLER")
+	{
+		lpControl = new RbFirmataController;
+	}
 	//else if(strType == "SWITCHINPUTSENSOR")
 	//{
 	//	lpControl = new RbSwitchInputSensor;
@@ -982,9 +990,33 @@ try
 	{
 		lpInterface = new RbDynamixelUSBPrismatic;
 	}
-	else if(strType == "SWITCHINPUTSENSOR")
+	else if(strType == "FIRMATAANALOGINPUT")
 	{
-		lpInterface = new RbSwitchInputSensor;
+		lpInterface = new RbFirmataAnalogInput;
+	}
+	else if(strType == "FIRMATAANALOGOUTPUT")
+	{
+		lpInterface = new RbFirmataAnalogInput;
+	}
+	else if(strType == "FIRMATADIGITALINPUT")
+	{
+		lpInterface = new RbFirmataDigitalInput;
+	}
+	else if(strType == "FIRMATADIGITALOUTPUT")
+	{
+		lpInterface = new RbFirmataDigitalOutput;
+	}
+	else if(strType == "FIRMATAHINGESERVO")
+	{
+		lpInterface = new RbFirmataHingeServo;
+	}
+	else if(strType == "FIRMATAPRISMATICSERVO")
+	{
+		lpInterface = new RbFirmataPrismaticServo;
+	}
+	else if(strType == "FIRMATAPWMOUTPUT")
+	{
+		lpInterface = new RbFirmataPWMOutput;
 	}
 	else
 	{

@@ -301,6 +301,7 @@ Namespace DataObjects
                 m_strID = oXml.GetChildString("ID", Me.ID)
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
                 m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "") 'Note: The ID of the name is added in the LoadID method.
+                m_strLinkedObjectProperty = oXml.GetChildString("LinkedDataObjectProperty", "")
 
                 oXml.OutOfElem()
 
@@ -320,6 +321,10 @@ Namespace DataObjects
 
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                     oXml.AddChildElement("LinkedBodyPartID", m_thLinkedPart.BodyPart.ID)
+
+                    If Not m_thLinkedProperty Is Nothing Then
+                        oXml.AddChildElement("LinkedDataObjectProperty", Me.LinkedPropertyName)
+                    End If
                 End If
 
                 oXml.OutOfElem()
@@ -338,6 +343,10 @@ Namespace DataObjects
 
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                     oXml.AddChildElement("LinkedBodyPartID", m_thLinkedPart.BodyPart.ID)
+
+                    If Not m_thLinkedProperty Is Nothing Then
+                        oXml.AddChildElement("PropertyName", Me.LinkedPropertyName)
+                    End If
                 End If
 
                 oXml.OutOfElem()

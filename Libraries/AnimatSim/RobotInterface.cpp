@@ -199,7 +199,7 @@ RobotIOControl *RobotInterface::AddIOControl(std::string strXml)
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
-	oXml.FindChildElement("IOControl");
+	oXml.FindChildElement("RobotIOControl");
 
 	RobotIOControl *lpControl = LoadIOControl(oXml);
 

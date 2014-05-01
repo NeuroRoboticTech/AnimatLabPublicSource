@@ -265,7 +265,7 @@ Namespace DataObjects
 
             Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
-                oXml.AddChildElement("RobotIO")
+                oXml.AddChildElement("RobotIOControl")
                 oXml.IntoElem()
 
                 oXml.AddChildElement("Name", Me.Name)
@@ -288,7 +288,7 @@ Namespace DataObjects
 
             Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-                oXml.AddChildElement("RobotIO")
+                oXml.AddChildElement("RobotIOControl")
                 oXml.IntoElem()
 
                 oXml.AddChildElement("Name", Me.Name)

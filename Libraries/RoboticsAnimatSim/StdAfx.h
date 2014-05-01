@@ -12,17 +12,24 @@
     #include <windows.h>
 
     #define ROBOTICS_PORT __declspec( dllexport )
+    #define ARDUINO_PORT __declspec( dllimport )
 #else
     #define ROBOTICS_PORT
+    #define ARDUINO_PORT
 #endif
 
 //#define STD_TRACING_ON
+
+#include <boost/interprocess/sync/interprocess_mutex.hpp>
+#include <boost/interprocess/sync/interprocess_condition.hpp>
 
 #include "StdUtils.h"
 #include "AnimatSim.h"
 
 #include "RoboticsAnimatSimConstants.h"
 #include "dynamixel.h"
+
+#include "ofArduino.h"
 
 //Simulation Objects
 namespace RoboticsAnimatSim
@@ -83,12 +90,19 @@ namespace RoboticsAnimatSim
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;
 			}
-        }
 
-        namespace InputSystems
-        {
-            class RbSwitchInputSensor;
-        }
+			namespace Firmata
+			{
+				class RbFirmataController;
+				class RbFirmataAnalogInput;
+				class RbFirmataAnalogOutput;
+				class RbFirmataDigitalInput;
+				class RbFirmataDigitalOutput;
+				class RbFirmataHingeServo;
+				class RbFirmataPrismaticServo;
+				class RbFirmataPWMOutput;
+			}
+		}
     }
 }
 
@@ -101,4 +115,4 @@ using namespace RoboticsAnimatSim::Robotics;
 using namespace RoboticsAnimatSim::Robotics::RobotInterfaces;
 using namespace RoboticsAnimatSim::Robotics::RobotIOControls;
 using namespace RoboticsAnimatSim::Robotics::RobotIOControls::DynamixelUSB;
-using namespace RoboticsAnimatSim::Robotics::InputSystems;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls::Firmata;

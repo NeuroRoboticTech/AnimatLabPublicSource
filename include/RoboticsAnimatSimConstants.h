@@ -234,6 +234,15 @@
 #define Rb_Err_lFailedDynamixelConnection -4044
 #define Rb_Err_strFailedDynamixelConnection "Failed to connect to the Dynamixel."
 
+#define Rb_Err_lInvalidPort -4044
+#define Rb_Err_strInvalidPort "Invalid port specified."
+
+#define Std_Err_lErrorConnectingToArduino -4045
+#define Std_Err_strErrorConnectingToArduino "Error connecting to Arduino."
+
+#define Std_Err_lErrorSettingUpArduino -4046
+#define Std_Err_strErrorErrorSettingUpArduino "Timed out waiting for Arduino to setup."
+
 
 #define RB_PI 3.14159
 

@@ -17,8 +17,10 @@
 
 #ifdef WIN32
 	#define ROBOTICS_PORT __declspec( dllimport )
+    #define ARDUINO_PORT __declspec( dllimport )
 #else
 	#define ROBOTICS_PORT
+    #define ARDUINO_PORT
 #endif
 
 #include "StdUtils.h"
@@ -26,6 +28,8 @@
 
 #include "RoboticsAnimatSimConstants.h"
 #include "dynamixel.h"
+
+#include "ofArduino.h"
 
 //Simulation Objects
 namespace RoboticsAnimatSim
@@ -98,12 +102,19 @@ namespace RoboticsAnimatSim
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;
 			}
-        }
 
-        namespace InputSensorSystems
-        {
-            class RbSwitchInputSensor;
-        }
+			namespace Firmata
+			{
+				class RbFirmataController;
+				class RbFirmataAnalogInput;
+				class RbFirmataAnalogOutput;
+				class RbFirmataDigitalInput;
+				class RbFirmataDigitalOutput;
+				class RbFirmataHingeServo;
+				class RbFirmataPrismaticServo;
+				class RbFirmataPWMOutput;
+			}
+		}
     }
 }
 
@@ -114,8 +125,9 @@ using namespace RoboticsAnimatSim::Environment::Bodies;
 using namespace RoboticsAnimatSim::Environment::Joints;
 using namespace RoboticsAnimatSim::Robotics;
 using namespace RoboticsAnimatSim::Robotics::RobotInterfaces;
-using namespace RoboticsAnimatSim::Robotics::MotorControlSystems;
-using namespace RoboticsAnimatSim::Robotics::InputSensorSystems;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls::DynamixelUSB;
+using namespace RoboticsAnimatSim::Robotics::RobotIOControls::Firmata;
 
 
 #include "RbClassFactory.h"
@@ -155,6 +167,14 @@ using namespace RoboticsAnimatSim::Robotics::InputSensorSystems;
 #include "RbDynamixelUSBServo.h"
 #include "RbDynamixelUSBHinge.h"
 #include "RbDynamixelUSBPrismatic.h"
-#include "RbSwitchInputSensor.h"
+
+#include "RbFirmataController.h"
+#include "RbFirmataAnalogInput.h"
+#include "RbFirmataAnalogOutput.h"
+#include "RbFirmataDigitalInput.h"
+#include "RbFirmataDigitalOutput.h"
+#include "RbFirmataHingeServo.h"
+#include "RbFirmataPrismaticServo.h"
+#include "RbFirmataPWMOutput.h"
 
 #endif // __ROBOTICS_ANIMAT_LIB_DLL_H__
