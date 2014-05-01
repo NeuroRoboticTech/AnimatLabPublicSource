@@ -396,12 +396,12 @@ void ForceStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("PositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("ForceX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("ForceY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("ForceZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("TorqueX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("TorqueY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("TorqueZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceX", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("ForceY", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("ForceZ", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueX", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueY", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueZ", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 }
 
 void ForceStimulus::Load(CStdXml &oXml)

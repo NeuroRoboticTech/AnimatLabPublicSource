@@ -137,6 +137,8 @@ void OdorSensor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Sensor::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("OdorValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("OdorTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 

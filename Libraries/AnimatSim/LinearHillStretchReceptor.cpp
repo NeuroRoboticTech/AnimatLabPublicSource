@@ -233,6 +233,9 @@ void LinearHillStretchReceptor::QueryProperties(CStdPtrArray<TypeProperty> &aryP
 {
 	LinearHillMuscle::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Ia", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("II", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("ApplyTension", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("IaDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("IIDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

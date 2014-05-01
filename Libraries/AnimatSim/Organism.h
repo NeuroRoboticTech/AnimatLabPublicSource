@@ -43,6 +43,10 @@ namespace AnimatSim
             /// Pointer to a robot interface node to allow the organism to be hooked to a robot.
             RobotInterface *m_lpRobot;
 
+			virtual RobotInterface *AddRobotInterface(std::string strXml);
+			virtual void RemoveRobotInterface(std::string strID, bool bThrowError = true);
+			virtual RobotInterface *LoadRobotInterface(CStdXml &oXml);
+
 		public:
 			Organism();
 			virtual ~Organism();

@@ -4363,12 +4363,27 @@ void Simulator::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	AnimatBase::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Time", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PhysicsSubStepTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SimulationRealTimeToStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PlaybackAdditionalRealTimeToStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AcutalFrameRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RealTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalRealTimeForStepSmoothed", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PhysicsRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("NeuralRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ExternalStimuliRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("DataChartRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SimRecorderRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RemainingStepTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("VisualSelectionMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AddBodiesMode", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DistanceUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MassUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Gravity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("PhysicsTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PhysicsTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("SimulateHydrodynamics", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AutoGenerateRandomSeed", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("ManualRandomSeed", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));

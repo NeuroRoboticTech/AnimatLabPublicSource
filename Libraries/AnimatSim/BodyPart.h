@@ -30,8 +30,8 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsBody *m_lpPhysicsBody;
 
-            /// Pointer to a robot interface node to allow the organism to be hooked to a robot.
-            RobotPartInterface *m_lpRobot;
+            /// Array of pointers to robot part interfaces connected to this body part.
+            CStdArray<RobotPartInterface *> m_aryRobotParts;
 
 			virtual void UpdateData();
 
@@ -44,8 +44,10 @@ namespace AnimatSim
 			virtual IPhysicsBody *PhysicsBody();
 			virtual void PhysicsBody(IPhysicsBody *lpBody);
 
-            virtual RobotPartInterface *GetRobotPartInterface();
-            virtual void SetRobotPartInterface(RobotPartInterface *lpPart);
+            virtual CStdArray<RobotPartInterface *> *GetRobotPartInterfaces();
+            virtual void AddRobotPartInterface(RobotPartInterface *lpPart);
+            virtual void RemoveRobotPartInterface(RobotPartInterface *lpPart);
+			virtual int FindRobotPartListIndex(std::string strID, bool bThrowError = true);
 
 			virtual void Resize();
 

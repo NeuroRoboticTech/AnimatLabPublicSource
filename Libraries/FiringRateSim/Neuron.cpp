@@ -968,10 +968,20 @@ void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Node::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("IntrinsicCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SynapticCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AdapterCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MembraneVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("FiringFrequency", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("NoiseVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Threshold", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Cm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Gm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gm", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("Vth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Vrest", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Vrest", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("RelativeAccommodation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AccommodationTimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("VNoiseMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

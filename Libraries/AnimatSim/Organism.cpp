@@ -176,6 +176,48 @@ bool Organism::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
+
+/**
+\brief	Creates and adds a robot interface control. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the control node. 
+**/
+RobotInterface *Organism::AddRobotInterface(std::string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("RobotInterface");
+
+	RobotInterface *lpInterface = LoadRobotInterface(oXml);
+
+	lpInterface->Initialize();
+
+    return lpInterface;
+}
+
+/**
+\brief	Removes the robot interface with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the body to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void Organism::RemoveRobotInterface(std::string strID, bool bThrowError)
+{
+	if(!m_lpRobot || Std_CheckString(m_lpRobot->ID()) != Std_CheckString(strID))
+		THROW_PARAM_ERROR(Al_Err_lRobotInterfaceIDNotFound, Al_Err_strRobotInterfaceIDNotFound, "ID", strID);
+
+	delete m_lpRobot;
+	m_lpRobot = NULL;
+}
+
 bool Organism::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	std::string strType = Std_CheckString(strItemType);
@@ -197,6 +239,11 @@ bool Organism::AddItem(const std::string &strItemType, const std::string &strXml
 		}
 	}
 
+	if(strType == "ROBOTINTERFACE")
+	{
+		AddRobotInterface(strXml);
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -224,6 +271,12 @@ bool Organism::RemoveItem(const std::string &strItemType, const std::string &str
 			if(bThrowError)
 				RELAY_ERROR(oError);
 		}
+	}
+
+	if(strType == "ROBOTINTERFACE")
+	{
+		RemoveRobotInterface(strID, bThrowError);
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
@@ -257,6 +310,61 @@ void Organism::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 void Organism::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {m_lpNervousSystem->LoadKeyFrameSnapshot(aryBytes, lIndex);}
 
+/**
+\brief	Loads a robot interface Control. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oXml	The xml data definition of the part to load. 
+
+\return	null if it fails, else the IO control. 
+**/
+
+RobotInterface *Organism::LoadRobotInterface(CStdXml &oXml)
+{
+	RobotInterface *lpInterface = NULL;
+	std::string strType;
+
+try
+{
+    if(oXml.FindChildElement("RobotInterface", false))
+    {
+		if(m_lpRobot)
+		{
+			delete m_lpRobot;
+			m_lpRobot = NULL;
+		}
+
+	    oXml.IntoChildElement("RobotInterface");
+	    std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	    std::string strType = oXml.GetChildString("Type");
+	    oXml.OutOfElem(); //OutOf RobotInterface Element
+
+	    lpInterface = dynamic_cast<RobotInterface *>(m_lpSim->CreateObject(strModuleName, "RobotInterface", strType));
+	    if(!lpInterface)
+		    THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotInterface");
+        lpInterface->SetSystemPointers(m_lpSim, this, m_lpModule, NULL, true);
+        lpInterface->Load(oXml);
+		m_lpRobot = lpInterface;
+    }
+
+	return m_lpRobot;
+}
+catch(CStdErrorInfo oError)
+{
+	if(m_lpRobot) delete m_lpRobot;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(m_lpRobot) delete m_lpRobot;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
 void Organism::Load(CStdXml &oXml)
 {
 	Structure::Load(oXml);
@@ -275,19 +383,7 @@ void Organism::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf NervousSystem Element
 
-    if(oXml.FindChildElement("RobotInterface", false))
-    {
-	    oXml.IntoChildElement("RobotInterface");
-	    std::string strModuleName = oXml.GetChildString("ModuleName", "");
-	    std::string strType = oXml.GetChildString("Type");
-	    oXml.OutOfElem(); //OutOf RobotInterface Element
-
-	    m_lpRobot = dynamic_cast<RobotInterface *>(m_lpSim->CreateObject(strModuleName, "RobotInterface", strType));
-	    if(!m_lpRobot)
-		    THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotInterface");
-        m_lpRobot->SetSystemPointers(m_lpSim, this, m_lpModule, NULL, true);
-        m_lpRobot->Load(oXml);
-    }
+	LoadRobotInterface(oXml);
 
 	oXml.OutOfElem(); //OutOf Structure Element
 }

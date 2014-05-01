@@ -171,6 +171,24 @@ Namespace DataObjects
                 m_aryParts.InitializeSimulationReferences(bShowError)
             End Sub
 
+#Region " Add-Remove to List Methods "
+
+            Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+                If Not Me.Parent Is Nothing Then
+                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RobotIOControl", Me.ID, Me.GetSimulationXml("RobotIOControl"), bThrowError, bDoNotInit)
+                    InitializeSimulationReferences()
+                End If
+            End Sub
+
+            Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+                If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RobotIOControl", Me.ID, bThrowError)
+                End If
+                m_doInterface = Nothing
+            End Sub
+
+#End Region
+
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
                 Try
                     If bAskToDelete AndAlso Util.ShowMessage("Are you sure you want to remove the robot IO control and all children?", _

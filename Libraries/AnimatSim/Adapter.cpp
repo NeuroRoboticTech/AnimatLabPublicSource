@@ -394,6 +394,8 @@ void Adapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Node::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 

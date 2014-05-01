@@ -31,6 +31,14 @@ Namespace DataObjects
                 m_strName = "InputSystem"
             End Sub
 
+            Protected Overrides Function CreateLinkedPropertyList(ByVal doItem As AnimatGUI.Framework.DataObject) As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
+                Return New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(doItem, True, False)
+            End Function
+
+            Protected Overrides Function CreateLinkedPropertyList(ByVal doItem As AnimatGUI.Framework.DataObject, ByVal strPropertyName As String) As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
+                Return New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(doItem, strPropertyName, True, False)
+            End Function
+
 #End Region
 
         End Class

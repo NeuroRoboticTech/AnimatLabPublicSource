@@ -106,6 +106,8 @@ void GatedSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Synapse::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("GateInitiallyOn", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 

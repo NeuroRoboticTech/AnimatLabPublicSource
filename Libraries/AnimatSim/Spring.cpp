@@ -267,9 +267,6 @@ float *Spring::GetDataPointer(const std::string &strDataType)
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
 
-	if(strType == "VELOCITY")
-		return &m_fltAvgVelocity;
-
 	return LineBase::GetDataPointer(strDataType);
 }
 
@@ -306,6 +303,15 @@ bool Spring::SetData(const std::string &strDataType, const std::string &strValue
 void Spring::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	LineBase::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("SpringLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Displacement", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("StiffnessTension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("DampingTension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Energy", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("NaturalLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

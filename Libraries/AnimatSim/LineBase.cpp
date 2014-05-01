@@ -266,6 +266,10 @@ void LineBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	RigidBody::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MuscleLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Length", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("AttachmentPoints", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("AttachedPartMovedOrRotated", AnimatPropertyType::String, AnimatPropertyDirection::Set));

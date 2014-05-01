@@ -484,6 +484,9 @@
 #define Al_Err_lPartInterfaceIDNotFound -4083
 #define Al_Err_strPartInterfaceIDNotFound "Part interface not found."
 
+#define Al_Err_lRobotInterfaceIDNotFound -4083
+#define Al_Err_strRobotInterfaceIDNotFound "Robot interface ID not found."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

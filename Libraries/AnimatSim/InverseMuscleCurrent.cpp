@@ -314,6 +314,10 @@ void InverseMuscleCurrent::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Vm", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Current", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("RestPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MuscleID", AnimatPropertyType::String, AnimatPropertyDirection::Set));

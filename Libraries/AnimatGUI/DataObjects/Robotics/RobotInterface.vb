@@ -40,6 +40,7 @@ Namespace DataObjects
                 End Get
                 Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                     If Not Value Is Nothing Then
+                        SetSimData("PhysicsTimeStep", Value.ActualValue.ToString(), True)
                         If Not Value Is Nothing Then m_snPhysicsTimeStep.CopyData(Value)
                     End If
                 End Set
@@ -184,6 +185,24 @@ Namespace DataObjects
                 m_aryIOControls.InitializeSimulationReferences(bShowError)
             End Sub
 
+#Region " Add-Remove to List Methods "
+
+            Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+                If Not Me.Parent Is Nothing Then
+                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RobotInterface", Me.ID, Me.GetSimulationXml("RobotInterface"), bThrowError, bDoNotInit)
+                    InitializeSimulationReferences()
+                End If
+            End Sub
+
+            Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+                If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RobotInterface", Me.ID, bThrowError)
+                End If
+                m_doInterface = Nothing
+            End Sub
+
+#End Region
+
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
                 Try
                     If bAskToDelete AndAlso Util.ShowMessage("Are you sure you want to remove the robot interface?", _
@@ -192,6 +211,7 @@ Namespace DataObjects
                     End If
 
                     Util.Application.AppIsBusy = True
+                    Me.RemoveFromSim(True)
                     m_doOrganism.RobotInterface = Nothing
                     Me.RemoveWorksapceTreeView()
                     Return True

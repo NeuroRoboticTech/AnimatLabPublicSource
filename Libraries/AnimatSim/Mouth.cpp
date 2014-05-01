@@ -235,6 +235,9 @@ void Mouth::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Sensor::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("EatingRate", AnimatPropertyType::String, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("FoodDistance", AnimatPropertyType::String, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("StomachID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MinimumFoodRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }

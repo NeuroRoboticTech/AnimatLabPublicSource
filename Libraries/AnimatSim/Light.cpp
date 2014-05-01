@@ -275,11 +275,6 @@ void Light::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralMo
 	m_lpMovableSim = lpSim;
 }
 
-float *Light::GetDataPointer(const std::string &strDataType)
-{
-	return MovableItem::GetDataPointer(strDataType);
-}
-
 bool Light::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);

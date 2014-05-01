@@ -1486,6 +1486,16 @@ bool MovableItem::SetData(const std::string &strDataType, const std::string &str
 
 void MovableItem::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
+	aryProperties.Add(new TypeProperty("WorldPositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WorldPositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WorldPositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Position", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Position.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Position.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

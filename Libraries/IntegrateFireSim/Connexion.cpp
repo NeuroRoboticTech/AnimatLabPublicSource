@@ -759,6 +759,9 @@ void Connexion::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Link::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Facilitation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("SynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("ConductionDelay", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SynapseTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));

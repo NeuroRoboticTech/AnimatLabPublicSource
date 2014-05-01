@@ -16,6 +16,11 @@ namespace AnimatSim
 			/// If we are in a simulatino then none of the sim or init methods are called for the robot code.
 			bool m_bInSimulation;
 
+			///This is the physics time step used by the robotics framework. This is not necessarily the same
+			///thing as the physics time step used in the simulation because the robot IO is not going to be able
+			///to go as fast as we will need the sim steps to go for it to be stable.
+			float m_fltPhysicsTimeStep;
+
 			virtual RobotIOControl *LoadIOControl(CStdXml &oXml);
 			virtual RobotIOControl *AddIOControl(std::string strXml);
 			virtual void RemoveIOControl(std::string strID, bool bThrowError = true);
@@ -29,6 +34,9 @@ namespace AnimatSim
 
 			virtual bool InSimulation();
 			virtual void InSimulation(bool bVal);
+
+			virtual float PhysicsTimeStep();
+			virtual void PhysicsTimeStep(float fltStep);
 
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

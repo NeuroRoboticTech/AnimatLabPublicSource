@@ -50,6 +50,13 @@ float *ModulatedSynapse::GetDataPointer(const std::string &strDataType)
 	return Synapse::GetDataPointer(strDataType);
 }
 
+void ModulatedSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+{
+	Synapse::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+}
+
 #pragma endregion
 
 float ModulatedSynapse::CalculateModulation(FiringRateModule *lpModule)

@@ -93,7 +93,6 @@
     <EmbeddedResource Include="Graphics\DynamixelUSBSmall.gif" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\AnalogInpuLarge.gif" />
     <EmbeddedResource Include="Graphics\AnalogInputSmall.gif" />
     <EmbeddedResource Include="Graphics\AnalogOutputLarge.gif" />
     <EmbeddedResource Include="Graphics\AnalogOutputSmall.gif" />
@@ -107,6 +106,13 @@
     <EmbeddedResource Include="Graphics\PrismaticServoSmall.gif" />
     <EmbeddedResource Include="Graphics\PWMLarge.gif" />
     <EmbeddedResource Include="Graphics\PWMSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Firmata.gif" />
+    <EmbeddedResource Include="Graphics\FirmataSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AnalogInputLarge.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

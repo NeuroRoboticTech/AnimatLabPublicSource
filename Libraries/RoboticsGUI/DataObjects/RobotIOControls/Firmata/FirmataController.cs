@@ -22,7 +22,7 @@ namespace RoboticsGUI
 
                 #region " Attributes "
 
-                public override string Description {get {return "Performs IO with the a microcontroller like the Arduino that implements the Firmata protocols.";} set { }}
+                public override string Description {get {return "Performs IO with a microcontroller like the Arduino that implements the Firmata protocols.";} set { }}
                 public override string ButtonImageName {get {return "RoboticsGUI.Graphics.Firmata.gif";}}
                 public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.FirmataSmall.gif";}}
                 public override string PartType {get { return "FirmataController"; }}

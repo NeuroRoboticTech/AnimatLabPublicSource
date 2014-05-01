@@ -286,7 +286,9 @@ void Synapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Link::QueryProperties(aryProperties);
 
-	aryProperties.Add(new TypeProperty("Weight", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("Weight", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 }
 
 bool Synapse::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)

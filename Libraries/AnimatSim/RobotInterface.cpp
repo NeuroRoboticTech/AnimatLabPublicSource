@@ -87,6 +87,30 @@ bool RobotInterface::InSimulation() {return m_bInSimulation;}
 **/
 void RobotInterface::InSimulation(bool bVal) {m_bInSimulation = bVal;}
 
+/**
+\brief	Gets the physics time step used within the robot framwork. 
+
+\author	dcofer
+\date	4/25/2014
+
+\return	Gets physics time step.
+**/
+float RobotInterface::PhysicsTimeStep() {return m_fltPhysicsTimeStep;}
+
+/**
+\brief	Sets the physics time step used within the robot framwork. 
+
+\author	dcofer
+\date	4/25/2014
+
+\param	bVal	Sets physics time step.
+**/
+void RobotInterface::PhysicsTimeStep(float fltStep)
+{
+	Std_IsAboveMin((float) 0, fltStep, true, "PhysicsTimeStep", false);
+	m_fltPhysicsTimeStep = fltStep;
+}
+
 #pragma region DataAccesMethods
 
 float *RobotInterface::GetDataPointer(const std::string &strDataType)
@@ -105,8 +129,15 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 {
 	std::string strType = Std_CheckString(strDataType);
 
+	if(strType == "PHYSICSTIMESTEP")
+	{
+		PhysicsTimeStep((float) atof(strValue.c_str()));
+		return true;
+	}
+
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
+
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

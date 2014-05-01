@@ -221,6 +221,8 @@ void VoltageClamp::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("ClampCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Vtarget", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 

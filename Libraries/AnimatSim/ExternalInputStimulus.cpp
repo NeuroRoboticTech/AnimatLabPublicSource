@@ -222,6 +222,8 @@ void ExternalInputStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryPrope
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Input", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("InputEquation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 

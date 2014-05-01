@@ -53,16 +53,38 @@ Namespace DataObjects
                 Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPart)
                     Dim thPrevLinked As AnimatGUI.TypeHelpers.LinkedBodyPart = m_thLinkedPart
 
-                    If Not Value Is Nothing AndAlso Not Value.BodyPart Is Nothing AndAlso _
-                       Not Value.BodyPart.RobotPartInterface Is Nothing AndAlso _
-                       Not Value.BodyPart.RobotPartInterface Is Me Then
-                        Throw New System.Exception("The part '" & Value.BodyPart.Name & "' is already associated with robot interface '" & Value.BodyPart.RobotPartInterface.Name & "'.")
-                    End If
-
                     DiconnectLinkedPartEvents()
                     m_thLinkedPart = Value
                     ConnectLinkedPartEvents()
 
+                End Set
+            End Property
+
+            <Browsable(False)> _
+            Public Overridable Property LinkedProperty() As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
+                Get
+                    Return m_thLinkedProperty
+                End Get
+                Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList)
+                    m_thLinkedProperty = Value
+                End Set
+            End Property
+
+            <Browsable(False)> _
+            Public Overridable Property LinkedPropertyName() As String
+                Get
+                    If Not m_thLinkedProperty Is Nothing AndAlso Not m_thLinkedProperty.PropertyName Is Nothing Then
+                        Return m_thLinkedProperty.PropertyName
+                    Else
+                        Return ""
+                    End If
+                End Get
+                Set(value As String)
+                    If m_thLinkedPart Is Nothing OrElse m_thLinkedPart.BodyPart Is Nothing Then
+                        Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
+                    End If
+
+                    Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedPart.BodyPart, value, False, True)
                 End Set
             End Property
 
@@ -99,12 +121,17 @@ Namespace DataObjects
                 End If
 
                 m_thLinkedPart = CreateBodyPartList(m_doOrganism, Nothing, CompatiblePartType())
+                m_thLinkedProperty = CreateLinkedPropertyList(Nothing)
 
             End Sub
 
+            Protected MustOverride Function CreateLinkedPropertyList(ByVal doItem As AnimatGUI.Framework.DataObject) As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
+            Protected MustOverride Function CreateLinkedPropertyList(ByVal doItem As AnimatGUI.Framework.DataObject, ByVal strPropertyName As String) As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
+
             Public Overrides Sub ClearIsDirty()
                 MyBase.ClearIsDirty()
-                m_thLinkedPart.ClearIsDirty()
+                If Not m_thLinkedPart Is Nothing Then m_thLinkedPart.ClearIsDirty()
+                If Not m_thLinkedProperty Is Nothing Then m_thLinkedProperty.ClearIsDirty()
             End Sub
 
             Public Overridable Function IsCompatibleWithPartType(ByVal bpPart As Physical.BodyPart) As Boolean
@@ -123,6 +150,7 @@ Namespace DataObjects
 
                 DiconnectLinkedPartEvents()
                 m_thLinkedPart = DirectCast(OrigNode.m_thLinkedPart.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedBodyPart)
+                m_thLinkedProperty = DirectCast(OrigNode.m_thLinkedProperty.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedDataObjectPropertiesList)
 
             End Sub
 
@@ -149,14 +177,23 @@ Namespace DataObjects
                 DiconnectLinkedPartEvents()
 
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
-                    m_thLinkedPart.BodyPart.RobotPartInterface = Me
+
+                    If Not m_thLinkedPart.BodyPart.RobotPartInterfaces.Contains(Me) Then
+                        m_thLinkedPart.BodyPart.RobotPartInterfaces.Add(Me)
+                    End If
                     AddHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+
+                    m_thLinkedProperty = CreateLinkedPropertyList(m_thLinkedPart.BodyPart)
                 End If
             End Sub
 
             Protected Overridable Sub DiconnectLinkedPartEvents()
+                m_thLinkedProperty = CreateLinkedPropertyList(Nothing)
+
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
-                    m_thLinkedPart.BodyPart.RobotPartInterface = Nothing
+                    If m_thLinkedPart.BodyPart.RobotPartInterfaces.Contains(Me) Then
+                        m_thLinkedPart.BodyPart.RobotPartInterfaces.Remove(Me)
+                    End If
                     RemoveHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
                 End If
             End Sub
@@ -164,6 +201,24 @@ Namespace DataObjects
             Protected Overridable Overloads Function CreateBodyPartList(ByVal doStruct As Physical.PhysicalStructure, ByVal doBodyPart As Physical.BodyPart, ByVal tpBodyPartType As System.Type) As TypeHelpers.LinkedBodyPart
                 Return New AnimatGUI.TypeHelpers.LinkedBodyPartTree(doStruct, doBodyPart, tpBodyPartType, m_doPruner)
             End Function
+
+#Region " Add-Remove to List Methods "
+
+            Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+                If Not Me.Parent Is Nothing Then
+                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RobotPartInterface", Me.ID, Me.GetSimulationXml("RobotPartInterface"), bThrowError, bDoNotInit)
+                    InitializeSimulationReferences()
+                End If
+            End Sub
+
+            Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+                If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RobotPartInterface", Me.ID, bThrowError)
+                End If
+                m_doInterface = Nothing
+            End Sub
+
+#End Region
 
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
                 Try
@@ -173,6 +228,10 @@ Namespace DataObjects
                     End If
 
                     Util.Application.AppIsBusy = True
+
+                    Me.DiconnectLinkedPartEvents()
+                    Me.ParentIOControl.Parts.Remove(Me.ID)
+
                     Me.RemoveWorksapceTreeView()
                     Return True
                 Catch ex As Exception
@@ -198,6 +257,11 @@ Namespace DataObjects
                                             GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor), _
                                             GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTypeConverter)))
 
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linked Property", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList), "LinkedProperty", _
+                                            "Properties", "Determines the property that is set by this controller.", m_thLinkedProperty, _
+                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                            GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesTypeConverter)))
+
             End Sub
 
             Public Overrides Sub InitializeAfterLoad()
@@ -217,6 +281,11 @@ Namespace DataObjects
                                 Util.DisplayError(New System.Exception("The body part connector ID: " & Me.ID & " was unable to find its linked item ID: " & m_strLinkedBodyPartID & " in the diagram. This node and all links will be removed."))
                             End If
                         End If
+
+                        If m_strLinkedObjectProperty.Trim.Length > 0 AndAlso Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                            m_thLinkedProperty = CreateLinkedPropertyList(m_thLinkedPart.BodyPart, m_strLinkedObjectProperty)
+                        End If
+
                     End If
 
                 Catch ex As System.Exception

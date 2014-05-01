@@ -241,7 +241,7 @@ void MotorVelocityStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryPrope
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DisableMotorWhenDone", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }

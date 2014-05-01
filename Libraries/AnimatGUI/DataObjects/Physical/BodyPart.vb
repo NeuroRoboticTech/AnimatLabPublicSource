@@ -20,7 +20,7 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_doRobotPartInterface As Robotics.RobotPartInterface
+        Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Me)
 
 #End Region
 
@@ -99,12 +99,12 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        Public Overridable Property RobotPartInterface As Robotics.RobotPartInterface
+        Public Overridable Property RobotPartInterfaces As Collections.RobotPartInterfaces
             Get
-                Return m_doRobotPartInterface
+                Return m_aryRobotPartInterfaces
             End Get
-            Set(ByVal Value As Robotics.RobotPartInterface)
-                m_doRobotPartInterface = Value
+            Set(ByVal Value As Collections.RobotPartInterfaces)
+                m_aryRobotPartInterfaces = Value
             End Set
         End Property
 
@@ -127,6 +127,7 @@ Namespace DataObjects.Physical
 
             Dim bpOrig As BodyPart = DirectCast(doOriginal, BodyPart)
 
+            m_aryRobotPartInterfaces = DirectCast(bpOrig.m_aryRobotPartInterfaces.Clone(Me, False, Nothing), Collections.RobotPartInterfaces)
         End Sub
 
         'This method is called for each part type during the catalog of the modules. It sets up the 

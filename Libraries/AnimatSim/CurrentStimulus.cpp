@@ -596,6 +596,8 @@ void CurrentStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("ActiveCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("CurrentOn", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("CurrentOff", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("CurrentBurstOff", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

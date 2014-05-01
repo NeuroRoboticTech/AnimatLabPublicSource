@@ -316,6 +316,10 @@ void MuscleBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	LineBase::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Tension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tdot", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MembraneVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("MaxTension", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("StimTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("LengthTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));

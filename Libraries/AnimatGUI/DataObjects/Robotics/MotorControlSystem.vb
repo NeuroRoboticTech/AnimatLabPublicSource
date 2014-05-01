@@ -63,6 +63,9 @@ Namespace DataObjects
 
                 MyBase.BuildProperties(propTable)
 
+                'This is not used for motor systems. We already know what we are connecting with.
+                If propTable.Properties.Contains("Linked Property") Then propTable.Properties.Remove("Linked Property")
+
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo ID", Me.ServoID.GetType(), "ServoID", _
                                             "Properties", "ServoID", Me.ServoID))
 

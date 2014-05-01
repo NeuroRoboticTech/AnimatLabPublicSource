@@ -408,6 +408,10 @@ void PacemakerNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Neuron::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("SteadStateVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("InterburstInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("InterburstTimer", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Vssm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Btl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Mtl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

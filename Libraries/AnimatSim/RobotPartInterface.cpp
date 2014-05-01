@@ -79,7 +79,7 @@ void RobotPartInterface::Initialize()
 		m_lpBodyPart = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
 
 	if(m_lpBodyPart)
-		m_lpBodyPart->SetRobotPartInterface(this);
+		m_lpBodyPart->AddRobotPartInterface(this);
 }
 
 void RobotPartInterface::Load(CStdXml &oXml)

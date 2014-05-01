@@ -713,6 +713,7 @@ Namespace DataObjects.Physical
                     'Then create the new one.
                     m_doRobotInterface = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotInterface)
                     m_doRobotInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                    m_doRobotInterface.AddToSim(True)
                 End If
 
             Catch ex As System.Exception

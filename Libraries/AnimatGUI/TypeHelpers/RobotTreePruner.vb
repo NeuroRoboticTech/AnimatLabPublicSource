@@ -42,10 +42,8 @@ Namespace TypeHelpers
                         If Not liPart.BodyPart Is Nothing AndAlso Util.IsTypeOf(liPart.BodyPart.GetType(), GetType(AnimatGUI.DataObjects.Physical.BodyPart)) Then
                             Dim bpPart As AnimatGUI.DataObjects.Physical.BodyPart = DirectCast(liPart.BodyPart, AnimatGUI.DataObjects.Physical.BodyPart)
 
-                            If m_doPartInterface.IsCompatibleWithPartType(bpPart) AndAlso (bpPart.RobotPartInterface Is Nothing OrElse bpPart.RobotPartInterface Is m_doPartInterface) Then
-                                MakeSelectable(tnNode)
-                                bSelected = True
-                            End If
+                            MakeSelectable(tnNode)
+                            bSelected = True
                         End If
 
                     End If

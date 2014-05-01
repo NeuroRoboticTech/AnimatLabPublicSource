@@ -293,8 +293,13 @@ void Stomach::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	RigidBody::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("ConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ConsumptionForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AdapterConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Alive", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("KillOrganism", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("EnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("MaxEnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("BaseConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }

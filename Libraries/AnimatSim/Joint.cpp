@@ -704,6 +704,8 @@ void Joint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	BodyPart::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("EnableLimits", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Size", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Relaxation1", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));

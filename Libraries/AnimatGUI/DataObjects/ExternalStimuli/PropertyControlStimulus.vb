@@ -40,7 +40,7 @@ Namespace DataObjects.ExternalStimuli
                 DisconnectItemEvents()
                 m_doStimulatedItem = value
                 Me.LinkedObject = New TypeHelpers.LinkedDataObjectTree(value)
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(value)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(value, False, True)
                 ConnectItemEvents()
             End Set
         End Property
@@ -60,7 +60,7 @@ Namespace DataObjects.ExternalStimuli
                 m_thLinkedObject = Value
 
                 If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is m_doStimulatedItem Then
-                    m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+                    m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
                     Me.StimulatedItem = m_thLinkedObject.Item
                 End If
             End Set
@@ -117,7 +117,7 @@ Namespace DataObjects.ExternalStimuli
                     Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
                 End If
 
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value, False, True)
             End Set
         End Property
 
@@ -238,7 +238,7 @@ Namespace DataObjects.ExternalStimuli
             MyBase.New(doParent)
 
             m_thLinkedObject = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(Nothing)
-            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
         End Sub
 
         Protected Overrides Sub SetSimEquation(ByVal strEquation As String)
@@ -308,7 +308,7 @@ Namespace DataObjects.ExternalStimuli
 
             If m_strLinkedObjectID.Trim.Length > 0 Then
                 Me.StimulatedItem = Util.Simulation.FindObjectByID(m_strLinkedObjectID)
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Me.StimulatedItem, m_strLinkedObjectProperty)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Me.StimulatedItem, m_strLinkedObjectProperty, False, True)
             End If
         End Sub
 

@@ -46,7 +46,6 @@ namespace AnimatSim
 BodyPart::BodyPart(void)
 {
 	m_lpPhysicsBody = NULL;
-    m_lpRobot = NULL;
 }
 
 /**
@@ -60,9 +59,7 @@ BodyPart::~BodyPart(void)
 
 try
 {
-	//We do not own the robot part.
-    if(m_lpRobot)
-        m_lpRobot = NULL;
+	m_aryRobotParts.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BodyPart\r\n", "", -1, false, true);}
@@ -221,7 +218,7 @@ void BodyPart::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 \author	dcofer
 \date	4/25/2014
 **/
-RobotPartInterface *BodyPart::GetRobotPartInterface() {return m_lpRobot;};
+CStdArray<RobotPartInterface *> *BodyPart::GetRobotPartInterfaces() {return &m_aryRobotParts;};
 
 /**
 \brief	Sets a pointer to the roboto part interface associated with this body part.
@@ -231,7 +228,48 @@ RobotPartInterface *BodyPart::GetRobotPartInterface() {return m_lpRobot;};
 
 \param	lpPart	The new robot part. 
 **/
-void BodyPart::SetRobotPartInterface(RobotPartInterface *lpPart) {m_lpRobot = lpPart;};
+void BodyPart::AddRobotPartInterface(RobotPartInterface *lpPart) 
+{
+	if(FindRobotPartListIndex(lpPart->ID(), false) == -1)
+		m_aryRobotParts.Add(lpPart);
+};
+
+/**
+\brief	Sets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	lpPart	The new robot part. 
+**/
+void BodyPart::RemoveRobotPartInterface(RobotPartInterface *lpPart) 
+{
+	int iIdx = FindRobotPartListIndex(lpPart->ID(), false);
+	if(iIdx >= 0)
+		m_aryRobotParts.RemoveAt(iIdx);
+};
+
+/**
+\brief	Finds the index of a robot part attached to this body part with the matching ID.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	strID	Part ID to find. 
+\param	bThrowError	If true and the part is not found it throws an exception. If false and not found it returns -1. 
+**/
+int BodyPart::FindRobotPartListIndex(std::string strID, bool bThrowError)
+{
+	int iCount = m_aryRobotParts.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(m_aryRobotParts[iIdx]->ID() == strID)
+			return iIdx;
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lPartInterfaceIDNotFound, Al_Err_strPartInterfaceIDNotFound, "ID", strID);
+
+	return -1;
+}
 
 #pragma endregion
 

@@ -326,7 +326,7 @@ void ConstraintLimit::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	AnimatBase::QueryProperties(aryProperties);
 
-	aryProperties.Add(new TypeProperty("LimitPos", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LimitPos", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Restitution", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
