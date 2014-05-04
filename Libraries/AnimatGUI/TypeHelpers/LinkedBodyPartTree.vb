@@ -53,7 +53,7 @@ Namespace TypeHelpers
             If m_doStructure Is Nothing Then Return
 
             If Not TypeOf (ctrlDropDown) Is Crownwood.DotNetMagic.Controls.TreeControl Then
-                Throw New System.Exception("The control passed into LinkedSynapse.BuildPropertyDropDown is not a treeview type")
+                Throw New System.Exception("The control passed into BuildPropertyDropDown is not a treeview type")
             End If
 
             Dim tvTree As Crownwood.DotNetMagic.Controls.TreeControl = DirectCast(ctrlDropDown, Crownwood.DotNetMagic.Controls.TreeControl)

@@ -12,7 +12,9 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbFirmataPart.h"
 #include "RbFirmataDigitalOutput.h"
+#include "RbFirmataController.h"
 
 namespace RoboticsAnimatSim
 {
@@ -29,91 +31,53 @@ namespace RoboticsAnimatSim
 
 RbFirmataDigitalOutput::RbFirmataDigitalOutput() 
 {
-    m_lpHinge = NULL;
 }
 
 RbFirmataDigitalOutput::~RbFirmataDigitalOutput()
 {
-	try
+}
+
+void RbFirmataDigitalOutput::SetupIO()
+{
+	m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_OUTPUT);
+}
+
+void RbFirmataDigitalOutput::StepIO()
+{
+	if(!m_lpParentInterface->InSimulation())
 	{
-        //Do not delete because we do not own it.
-        m_lpHinge = NULL;
+		int iValue = (int) round(m_fltIOValue);
+
+		if(iValue != m_lpFirmata->getDigital(m_iIOComponentID))
+		{
+			if(iValue)
+				std::cout << "Turning pin " << m_iIOComponentID << " ON." << "\r\n";
+			else
+				std::cout << "Turning pin " << m_iIOComponentID << " OFF." << "\r\n";
+
+			m_lpFirmata->sendDigital(m_iIOComponentID, iValue);
+		}
 	}
-	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
-}
-
-void RbFirmataDigitalOutput::ServoID(int iID)
-{
-	Std_IsAboveMin((int) 0, iID, true, "ServoID");
-	//RbDynamixelUSBServo::ServoID(iID);
-}
-
-#pragma region DataAccesMethods
-
-float *RbFirmataDigitalOutput::GetDataPointer(const std::string &strDataType)
-{
-	std::string strType = Std_CheckString(strDataType);
-
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
-}
-
-bool RbFirmataDigitalOutput::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
-{
-	std::string strType = Std_CheckString(strDataType);
-	
-	if(RobotPartInterface::SetData(strDataType, strValue, false))
-		return true;
-
-	if(strType == "SERVOID")
-	{
-		ServoID((int) atoi(strValue.c_str()));
-		return true;
-	}
-
-	//If it was not one of those above then we have a problem.
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
-
-	return false;
-}
-
-void RbFirmataDigitalOutput::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
-{
-	RobotPartInterface::QueryProperties(aryProperties);
-
-	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-}
-
-#pragma endregion
-
-void RbFirmataDigitalOutput::Initialize()
-{
-	RobotPartInterface::Initialize();
-
-	m_lpHinge = dynamic_cast<RbHinge *>(m_lpBodyPart);
-
 }
 
 void RbFirmataDigitalOutput::StepSimulation()
 {
     RobotPartInterface::StepSimulation();
 
+	//If it is associated with a part property then we need to get that value.
+	//run it through the gain to transform it, round it out to int, and then
+	//send it if the value has changed.
+	if(m_lpProperty &&m_lpGain && m_lpFirmata)
+	{
+		float fltValue = m_lpGain->CalculateGain(*m_lpProperty);
 
-}
+		int iValue = 0;
+		if(fltValue > 0.5f)
+			iValue = 1;
 
-void RbFirmataDigitalOutput::Load(StdUtils::CStdXml &oXml)
-{
-	RobotPartInterface::Load(oXml);
+		m_fltIOValue = iValue;
+	}
 
-	oXml.IntoElem();
-	//ServoID(oXml.GetChildInt("ServoID", m_iServoID));
-	oXml.OutOfElem();
 }
 
 			}	//Firmata

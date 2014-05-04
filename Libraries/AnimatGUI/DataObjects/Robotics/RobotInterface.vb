@@ -13,7 +13,7 @@ Namespace DataObjects
     Namespace Robotics
 
         Public MustInherit Class RobotInterface
-            Inherits Framework.DataObject
+            Inherits DataObjects.DragObject
 
 #Region " Attributes "
 
@@ -26,6 +26,25 @@ Namespace DataObjects
 #End Region
 
 #Region " Properties "
+
+#Region "DragObject Properties"
+
+            Public Overrides Property ItemName As String
+                Get
+                    Return Me.Name()
+                End Get
+                Set(value As String)
+                    Me.Name = value
+                End Set
+            End Property
+
+            Public Overrides ReadOnly Property CanBeCharted As Boolean
+                Get
+                    Return True
+                End Get
+            End Property
+
+#End Region
 
             Public Overrides ReadOnly Property WorkspaceImageName As String
                 Get
@@ -161,6 +180,16 @@ Namespace DataObjects
                 Return False
             End Function
 
+            Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
+                Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
+
+                For Each deEntry As DictionaryEntry In m_aryIOControls
+                    Dim nmControl As RobotIOControl = DirectCast(deEntry.Value, RobotIOControl)
+                    nmControl.CreateDataItemTreeView(frmDataItem, tnNode, tpTemplatePartType)
+                Next
+
+            End Function
+
 #End Region
 
 #Region " Find Methods "
@@ -176,6 +205,10 @@ Namespace DataObjects
                 If doObject Is Nothing AndAlso Not m_aryIOControls Is Nothing Then doObject = m_aryIOControls.FindObjectByID(strID)
                 Return doObject
 
+            End Function
+
+            Public Overrides Function FindDragObject(strStructureName As String, strDataItemID As String, Optional bThrowError As Boolean = True) As DragObject
+                Throw New System.Exception("FindDragObject not implemented")
             End Function
 
 #End Region

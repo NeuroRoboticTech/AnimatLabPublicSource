@@ -630,9 +630,9 @@ public:
 
     bool Equal(const CStdPoint<T> &oPoint, double fltTolerance)
     {
-        if( (fabs(x - oPoint.x) < fltTolerance) &&
-            (fabs(y - oPoint.y) < fltTolerance) &&
-            (fabs(z - oPoint.z) < fltTolerance) )
+        if( (fabs((double)(x - oPoint.x)) < fltTolerance) &&
+            (fabs((double)(y - oPoint.y)) < fltTolerance) &&
+            (fabs((double)(z - oPoint.z)) < fltTolerance) )
             return true;
         else
             return false;
@@ -803,7 +803,7 @@ public:
 	};
 
 	double Magnitude()
-	{return sqrt( (x*x) + (y*y) + (z*z) );};
+	{return sqrt((double)((x*x) + (y*y) + (z*z)) );};
 
 	void Normalize()
 	{
@@ -827,11 +827,11 @@ public:
 	//If it is then it just sets it to zero.
 	void ClearNearZero(float fltTolerance = 1e-5f)
 	{
-		if(fabs(x) < fltTolerance)
+		if(fabs((float)x) < fltTolerance)
 			x = 0;
-		if(fabs(y) < fltTolerance)
+		if(fabs((float)y) < fltTolerance)
 			y = 0;
-		if(fabs(z) < fltTolerance)
+		if(fabs((float)z) < fltTolerance)
 			z = 0;
 	}
 

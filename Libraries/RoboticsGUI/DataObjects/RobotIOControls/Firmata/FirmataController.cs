@@ -15,7 +15,7 @@ namespace RoboticsGUI
             {
                 #region " Attributes "
 
-                protected int m_iPortNumber = 3;
+                protected string m_strComPort = "COM4";
                 protected int m_iBaudRate = 57600;
 
                 #endregion
@@ -28,16 +28,16 @@ namespace RoboticsGUI
                 public override string PartType {get { return "FirmataController"; }}
                 public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 
-                public virtual int PortNumber
+                public virtual string ComPort
                 {
                     get
                     {
-                        return m_iPortNumber;
+                        return m_strComPort;
                     }
                     set
                     {
-                        SetSimData("PortNumber", value.ToString(), true);
-                        m_iPortNumber = value;
+                        SetSimData("ComPort", m_strComPort, true);
+                        m_strComPort = value;
                     }
                 }
 
@@ -82,11 +82,24 @@ namespace RoboticsGUI
                     return doInterface;
                 }
 
+                protected override void CloneInternal(DataObject doOriginal, bool bCutData, DataObject doRoot)
+                {
+                    base.CloneInternal(doOriginal, bCutData, doRoot);
+
+                    FirmataController doOrig = (FirmataController)doOriginal;
+
+                    if (doOrig != null)
+                    {
+                        m_strComPort = doOrig.m_strComPort;
+                        m_iBaudRate = doOrig.m_iBaudRate;
+                    }
+                }
+
                 public override void BuildProperties(ref AnimatGuiCtrls.Controls.PropertyTable propTable)
                 {
                     base.BuildProperties(ref propTable);
 
-                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Com Port", this.PortNumber.GetType(), "PortNumber", "Properties", "Com port number", this.PortNumber));
+                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Com Port", this.ComPort.GetType(), "ComPort", "Properties", "Com port number", this.ComPort));
                     propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Baud Rate", this.BaudRate.GetType(), "BaudRate", "Properties", "Baud rate to use for communications", this.BaudRate));
                 }
 
@@ -96,7 +109,7 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    m_iPortNumber = oXml.GetChildInt("PortNumber", m_iPortNumber);
+                    m_strComPort = oXml.GetChildString("ComPort", m_strComPort);
                     m_iBaudRate = oXml.GetChildInt("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem(); 
@@ -108,7 +121,7 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    oXml.AddChildElement("PortNumber", m_iPortNumber);
+                    oXml.AddChildElement("ComPort", m_strComPort);
                     oXml.AddChildElement("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem();
@@ -120,7 +133,7 @@ namespace RoboticsGUI
 
                     oXml.IntoElem();
 
-                    oXml.AddChildElement("PortNumber", m_iPortNumber);
+                    oXml.AddChildElement("ComPort", m_strComPort);
                     oXml.AddChildElement("BaudRate", m_iBaudRate);
 
                     oXml.OutOfElem();

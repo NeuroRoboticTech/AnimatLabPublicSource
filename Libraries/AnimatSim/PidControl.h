@@ -11,9 +11,6 @@ namespace AnimatSim
 		class ANIMAT_PORT PidControl : public CStdPID, public AnimatBase 
 		{
 		protected:
-            /// Enables/disables this PID controller
-            bool m_bEnabled;
-
 		    /// Keeps track of the enabled state at sim startup.
 		    bool m_bInitEnabled;
 

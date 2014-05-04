@@ -22,7 +22,7 @@ public:
 	RbDynamixelUSBHinge();
 	virtual ~RbDynamixelUSBHinge();
 
-	virtual void ServoID(int iID);
+	virtual void IOComponentID(int iID);
 
 #pragma region DataAccesMethods
 

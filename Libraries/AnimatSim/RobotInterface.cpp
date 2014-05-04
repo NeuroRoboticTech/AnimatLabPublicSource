@@ -282,14 +282,15 @@ void RobotInterface::AfterResetSimulation()
 void RobotInterface::StepSimulation()
 {
 	//If we are running in simulation mode then do not step the interfaces.
-	if(m_bInSimulation)
+	if(!m_bEnabled)
 		return;
 
     AnimatBase::StepSimulation();
 
 	int iCount = m_aryIOControls.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->StepSimulation();
+		if(m_aryIOControls[iIndex]->Enabled())
+			m_aryIOControls[iIndex]->StepSimulation();
 }
 
 void RobotInterface::Load(CStdXml &oXml)

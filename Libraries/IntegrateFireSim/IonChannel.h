@@ -23,9 +23,6 @@ namespace IntegrateFireSim
 		/// The initial inactivation
 		float m_fltHInit;
 
-		/// true to enable, false to disable
-		bool m_bEnabled;
-
 		/// The maximum conductance
 		float m_fltGmax;
 
@@ -90,8 +87,8 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void Enabled(bool bVal);
-		bool Enabled();
+		virtual void Enabled(bool bVal);
+		virtual bool Enabled();
 
 		void Gmax(float fltVal);
 		float Gmax();

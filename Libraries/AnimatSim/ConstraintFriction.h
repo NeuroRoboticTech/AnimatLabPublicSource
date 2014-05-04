@@ -20,9 +20,6 @@ namespace AnimatSim
 		class ANIMAT_PORT ConstraintFriction : public AnimatBase
 		{
 		protected:
-            ///whether the relaxation is enabled or not
-            bool m_bEnabled;
-
 			/// The friction coefficient for this constraint.
 			float m_fltCoefficient;
 

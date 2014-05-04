@@ -145,7 +145,7 @@ void Organism::StepPhysicsEngine()
 {
     Structure::StepPhysicsEngine();
 
-    if(m_lpRobot)
+    if(m_lpRobot && m_lpRobot->Enabled())
         m_lpRobot->StepSimulation();
 }
 

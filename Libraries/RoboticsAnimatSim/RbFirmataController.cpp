@@ -12,7 +12,11 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbFirmataPart.h"
 #include "RbFirmataController.h"
+
+#include <platformstl/performance/performance_counter.hpp>
+#include <platformstl/synch/sleep_functions.h>
 
 namespace RoboticsAnimatSim
 {
@@ -38,12 +42,14 @@ RbFirmataController::RbFirmataController()
 	m_EInitializedConnection = this->EInitialized.connect(boost::bind(&RbFirmataController::setupArduino, this, _1));
 	m_bSetupArduino	= false;	// flag so we setup arduino when its ready, you don't need to touch this :)
 	m_bStopArduino = false;
+	m_bArduinoThreadProcessing = false;
 }
 
 RbFirmataController::~RbFirmataController()
 {
 	try
 	{
+		ExitArduinoThreadProcess();
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbFirmataController\r\n", "", -1, false, true);}
@@ -128,13 +134,16 @@ void RbFirmataController::Initialize()
 
 		m_ArduinoThread = boost::thread(&RbFirmataController::ProcessArduino, this);
 		
-		boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(60);
+		boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(5);
 
 		boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForArduinoMutex);
 		bool bWaitRet = m_WaitForArduinoCond.timed_wait(lock, pt);
 
 		if(!bWaitRet)
+		{
 			THROW_ERROR(Std_Err_lErrorSettingUpArduino, Std_Err_strErrorErrorSettingUpArduino);
+			ExitArduinoThreadProcess();
+		}
 	}
 
 	RobotIOControl::Initialize();
@@ -144,60 +153,90 @@ void RbFirmataController::ProcessArduino()
 {
 	try
 	{
+		m_bArduinoThreadProcessing = true;
+
 		//Need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called
 		//and we can start processing.
 		sendFirmwareVersionRequest();
 
-		m_WaitForArduinoCond.notify_all();
-
 		while(!m_bStopArduino)
+		{
 			update();
+
+			//Do not try and step IO until it has been setup correctly.
+			if(m_bSetupArduino)
+				StepIO();
+
+			//platformstl::micro_sleep(5);
+		}
+
+		//m_WaitForArduinoCond.notify_all();
+		//while(!m_bStopArduino)
+		//	boost::this_thread::sleep(boost::posix_time::milliseconds(10));
+
 	}
 	catch(CStdErrorInfo oError)
 	{
-		RELAY_ERROR(oError); 
+		m_bArduinoThreadProcessing = false;
 	}
 	catch(...)
 	{
-		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+		m_bArduinoThreadProcessing = false;
+	}
+
+	m_bArduinoThreadProcessing = false;
+}
+
+void RbFirmataController::ExitArduinoThreadProcess()
+{
+	if(m_bArduinoThreadProcessing)
+	{
+		m_bStopArduino = true;
+
+		bool bTryJoin = m_ArduinoThread.try_join_for(boost::chrono::seconds(30));
+
+		_port.close();
 	}
 }
 
 void RbFirmataController::setupArduino(const int & version)
 {
-	//m_EInitializedConnection.disconnect();
+	m_EInitializedConnection.disconnect();
     
     // it is now safe to send commands to the Arduino
     m_bSetupArduino = true;
-    
+
     // print firmware name and version to the console
     std::cout << this->getFirmwareName(); 
-    std::cout << "firmata v" << this->getMajorFirmwareVersion() << "." << this->getMinorFirmwareVersion();
-        
-    // Note: pins A0 - A5 can be used as digital input and output.
-    // Refer to them as pins 14 - 19 if using StandardFirmata from Arduino 1.0.
-    // If using Arduino 0022 or older, then use 16 - 21.
-    // Firmata pin numbering changed in version 2.3 (which is included in Arduino 1.0)
-    
-    // set pins D2 and A5 to digital input
-    this->sendDigitalPinMode(2, ARD_INPUT);
+	std::cout << "firmata v" << this->getMajorFirmwareVersion() << "." << this->getMinorFirmwareVersion();
 
-    // set pin A0 to analog input
-    this->sendAnalogPinReporting(0, ARD_ANALOG);
-    
-    // set pin D13 as digital output
-	this->sendDigitalPinMode(13, ARD_OUTPUT);
-    // set pin A4 as digital output
-    this->sendDigitalPinMode(18, ARD_OUTPUT);  // pin 20 if using StandardFirmata from Arduino 0022 or older
+	SetupIO();
 
-    // set pin D11 as PWM (analog output)
-	this->sendDigitalPinMode(11, ARD_PWM);
-    
-    // attach a servo to pin D9
-    // servo motors can only be attached to pin D3, D5, D6, D9, D10, or D11
-    this->sendServoAttach(9);
-	this->sendServo(9, 0, true);
+ //       
+ //   // Note: pins A0 - A5 can be used as digital input and output.
+ //   // Refer to them as pins 14 - 19 if using StandardFirmata from Arduino 1.0.
+ //   // If using Arduino 0022 or older, then use 16 - 21.
+ //   // Firmata pin numbering changed in version 2.3 (which is included in Arduino 1.0)
+ //   
+ //   // set pins D2 and A5 to digital input
+ //   this->sendDigitalPinMode(2, ARD_INPUT);
+
+ //   // set pin A0 to analog input
+ //   this->sendAnalogPinReporting(0, ARD_ANALOG);
+ //   
+ //   // set pin D13 as digital output
+	//this->sendDigitalPinMode(13, ARD_OUTPUT);
+ //   // set pin A4 as digital output
+ //   this->sendDigitalPinMode(18, ARD_OUTPUT);  // pin 20 if using StandardFirmata from Arduino 0022 or older
+
+ //   // set pin D11 as PWM (analog output)
+	//this->sendDigitalPinMode(11, ARD_PWM);
+ //   
+ //   // attach a servo to pin D9
+ //   // servo motors can only be attached to pin D3, D5, D6, D9, D10, or D11
+ //   this->sendServoAttach(9);
+	//this->sendServo(9, 0, true);
 
     // Listen for changes on the digital and analog pins
 	m_EDigitalPinChanged = this->EDigitalPinChanged.connect(boost::bind(&RbFirmataController::digitalPinChanged, this, _1));
@@ -214,12 +253,12 @@ void RbFirmataController::setupArduino(const int & version)
 //--------------------------------------------------------------
 void RbFirmataController::digitalPinChanged(const int & pinNum) 
 {
-    // do something with the digital input. here we're simply going to print the pin number and
-    // value to the screen each time it changes
-	int iVal = this->getDigital(pinNum);
-    std::cout << "digital pin: " << pinNum << " = " << iVal << "\r\n";
+ //   // do something with the digital input. here we're simply going to print the pin number and
+ //   // value to the screen each time it changes
+	//int iVal = this->getDigital(pinNum);
+ //   std::cout << "digital pin: " << pinNum << " = " << iVal << "\r\n";
 
-	this->sendDigital(13, iVal);
+	//this->sendDigital(13, iVal);
 }
 
 // analog pin event handler, called whenever an analog pin value has changed
@@ -227,10 +266,10 @@ void RbFirmataController::digitalPinChanged(const int & pinNum)
 //--------------------------------------------------------------
 void RbFirmataController::analogPinChanged(const int & pinNum) 
 {
-    // do something with the analog input. here we're simply going to print the pin number and
-    // value to the screen each time it changes
-	int iVal = this->getAnalog(pinNum);
-    std::cout << "analog pin: " << pinNum << " = " << iVal << "\r\n";
+ //   // do something with the analog input. here we're simply going to print the pin number and
+ //   // value to the screen each time it changes
+	//int iVal = this->getAnalog(pinNum);
+ //   std::cout << "analog pin: " << pinNum << " = " << iVal << "\r\n";
 }
 
 void RbFirmataController::Load(StdUtils::CStdXml &oXml)

@@ -36,6 +36,9 @@ namespace AnimatSim
 	class ANIMAT_PORT AnimatBase : public CStdSerialize 
 	{
 	protected:
+		/// Tells if this item is enabled or not. If it is not enabled then it is not run.
+		bool m_bEnabled;
+
 		 /// The pointer to a Simulation
 		Simulator *m_lpSim;
 
@@ -68,6 +71,9 @@ namespace AnimatSim
 		virtual Structure *GetStructure();
 		virtual NeuralModule *GetNeuralModule();
 		virtual Node *GetNode();
+
+		virtual void Enabled(bool bVal);
+		virtual bool Enabled();
 
 		virtual std::string ID() ;
 		virtual void ID(std::string strValue);

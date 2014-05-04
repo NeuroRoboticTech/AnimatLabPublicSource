@@ -94,6 +94,7 @@ namespace RoboticsAnimatSim
 			namespace Firmata
 			{
 				class RbFirmataController;
+				class RbFirmataPart;
 				class RbFirmataAnalogInput;
 				class RbFirmataAnalogOutput;
 				class RbFirmataDigitalInput;

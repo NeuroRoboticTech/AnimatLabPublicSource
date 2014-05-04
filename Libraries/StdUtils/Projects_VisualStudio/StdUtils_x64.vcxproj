@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{FC00BBF5-E99D-4543-9EF5-2D443EFB9A00}</ProjectGuid>
+		<ProjectGuid>{FCBC8948-C284-8E4E-82B3-98755B2DB07A}</ProjectGuid>
 		<RootNamespace>StdUtils_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -227,6 +227,7 @@
 		<ClInclude Include="..\StdPostFixEval.h" />
 		<ClInclude Include="..\StdSerialize.h" />
 		<ClInclude Include="..\StdUtilFunctions.h" />
+		<ClInclude Include="..\StdUtils_wrap.h" />
 		<ClInclude Include="..\StdVariable.h" />
 		<ClInclude Include="..\StdVariant.h" />
 		<ClInclude Include="..\StdXml.h" />

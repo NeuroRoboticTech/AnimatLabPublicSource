@@ -292,6 +292,15 @@ namespace AnimatSim
 			/// The damping of the user mouse spring.
 			float m_ftlMouseSpringDamping;
 
+			/// The magnitude of the force being applied by the mosue spring at each step
+			float m_fltMouseSpringForceMagnitude;
+
+			/// The magnitude of the damping component of the force being applied by the mosue spring at each step
+			float m_fltMouseSpringDampingForceMagnitude;
+
+			/// The magnitude of the length of the mouse spring at each step
+			float m_fltMouseSpringLengthMagnitude;
+
 			/// The background color to use when drawing the environment.
 			CStdColor m_vBackgroundColor;
 
@@ -746,6 +755,15 @@ namespace AnimatSim
 
 			virtual float MouseSpringDamping();
 			virtual void MouseSpringDamping(float fltVal, bool bUseScaling = true);
+
+			virtual float MouseSpringForceMagnitude();
+			virtual void MouseSpringForceMagnitude(float fltVal, bool bUseScaling = true);
+
+			virtual float MouseSpringDampingForceMagnitude();
+			virtual void MouseSpringDampingForceMagnitude(float fltVal, bool bUseScaling = true);
+
+			virtual float MouseSpringLengthMagnitude();
+			virtual void MouseSpringLengthMagnitude(float fltVal, bool bUseScaling = true);
 
 			virtual bool SimulateHydrodynamics();
 			virtual void SimulateHydrodynamics(bool bVal);

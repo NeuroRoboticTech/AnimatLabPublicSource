@@ -28,10 +28,6 @@ namespace AnimatSim
 		/// The pointer to this node's organism
 		Organism *m_lpOrganism;
 
-		///Determines if this node is enabled. This will only have any effect if this node can be disabled.
-		///The majority of nodes, like rigid bodies, can not be disabled.
-		bool m_bEnabled;
-
 		/// Keeps track of the enabled state at sim startup.
 		bool m_bInitEnabled;
 

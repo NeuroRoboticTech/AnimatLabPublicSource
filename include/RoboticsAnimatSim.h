@@ -106,6 +106,7 @@ namespace RoboticsAnimatSim
 			namespace Firmata
 			{
 				class RbFirmataController;
+				class RbFirmataPart;
 				class RbFirmataAnalogInput;
 				class RbFirmataAnalogOutput;
 				class RbFirmataDigitalInput;
@@ -169,6 +170,7 @@ using namespace RoboticsAnimatSim::Robotics::RobotIOControls::Firmata;
 #include "RbDynamixelUSBPrismatic.h"
 
 #include "RbFirmataController.h"
+#include "RbFirmataPart.h"
 #include "RbFirmataAnalogInput.h"
 #include "RbFirmataAnalogOutput.h"
 #include "RbFirmataDigitalInput.h"

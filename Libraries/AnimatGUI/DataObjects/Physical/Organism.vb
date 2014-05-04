@@ -280,6 +280,10 @@ Namespace DataObjects.Physical
                 m_bnRootSubSystem.CreateDataItemTreeView(frmDataItem, tnBehavioralNode, tpTemplatePartType)
             End If
 
+            If Not m_doRobotInterface Is Nothing Then
+                m_doRobotInterface.CreateDataItemTreeView(frmDataItem, tnNode, tpTemplatePartType)
+            End If
+
         End Function
 
         Public Overridable Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl)

@@ -84,7 +84,7 @@ Namespace TypeHelpers
         Public Overrides Sub BuildPropertyDropDown(ByRef ctrlDropDown As System.Windows.Forms.Control)
 
             If Not TypeOf (ctrlDropDown) Is ListBox Then
-                Throw New System.Exception("The control passed into LinkedSynapse.BuildPropertyDropDown is not a listbox type")
+                Throw New System.Exception("The control passed into BuildPropertyDropDown is not a listbox type")
             End If
 
             Dim lbList As ListBox = DirectCast(ctrlDropDown, ListBox)

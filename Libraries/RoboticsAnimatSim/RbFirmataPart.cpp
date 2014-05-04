@@ -1,4 +1,4 @@
-// RbFirmataAnalogOutput.cpp: implementation of the RbFirmataAnalogOutput class.
+// RbFirmataAnalogInput.cpp: implementation of the RbFirmataAnalogInput class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -13,7 +13,6 @@
 #include "RbRigidBody.h"
 #include "RbStructure.h"
 #include "RbFirmataPart.h"
-#include "RbFirmataAnalogOutput.h"
 #include "RbFirmataController.h"
 
 namespace RoboticsAnimatSim
@@ -29,29 +28,28 @@ namespace RoboticsAnimatSim
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-RbFirmataAnalogOutput::RbFirmataAnalogOutput() 
+RbFirmataPart::RbFirmataPart() 
 {
+	m_lpFirmata = NULL;
 }
 
-RbFirmataAnalogOutput::~RbFirmataAnalogOutput()
+RbFirmataPart::~RbFirmataPart()
 {
+	m_lpFirmata = NULL;
 }
 
-void RbFirmataAnalogOutput::SetupIO()
+void RbFirmataPart::ParentIOControl(RobotIOControl *lpParent)
 {
+	RobotPartInterface::ParentIOControl(lpParent);
 
+	m_lpFirmata = dynamic_cast<RbFirmataController *>(lpParent);
+	if(!m_lpFirmata)
+		THROW_ERROR(Rb_Err_lUnableToObtainFirmataPointer, Rb_Err_strUnableToObtainFirmataPointer);
 }
 
-void RbFirmataAnalogOutput::StepIO()
-{
-}
+void RbFirmataPart::SetFirmata(RbFirmataController *lpFirmata) {m_lpFirmata = lpFirmata;}
 
-void RbFirmataAnalogOutput::StepSimulation()
-{
-    RobotPartInterface::StepSimulation();
-
-
-}
+RbFirmataController *RbFirmataPart::GetFirmata() {return m_lpFirmata;}
 
 			}	//Firmata
 		}		//RobotIOControls

@@ -176,9 +176,7 @@ Namespace DataObjects
 
             'If a template part type is supplied and this part is not one of those template types then do not add it to the tree view
             If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
-                Dim myAssembly As System.Reflection.Assembly
-                myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
-                frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
+                frmDataItem.ImageManager.AddImage(Me.WorkspaceImageName)
 
                 Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
                 If tnParent Is Nothing Then

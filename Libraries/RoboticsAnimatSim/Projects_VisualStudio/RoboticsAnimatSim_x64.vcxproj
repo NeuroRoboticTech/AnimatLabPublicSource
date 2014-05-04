@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{66B81DFB-8BBE-704D-84D1-60B6B4574834}</ProjectGuid>
+		<ProjectGuid>{CECF62F7-6DF8-A648-924D-1D68FC1A6D0E}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -236,6 +236,7 @@
 		<ClInclude Include="..\RbFirmataDigitalInput.h" />
 		<ClInclude Include="..\RbFirmataDigitalOutput.h" />
 		<ClInclude Include="..\RbFirmataHingeServo.h" />
+		<ClInclude Include="..\RbFirmataPart.h" />
 		<ClInclude Include="..\RbFirmataPrismaticServo.h" />
 		<ClInclude Include="..\RbFirmataPWMOutput.h" />
 		<ClInclude Include="..\RbFreeJoint.h" />
@@ -305,6 +306,8 @@
 		<ClCompile Include="..\RbFirmataDigitalOutput.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbFirmataHingeServo.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataPart.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbFirmataPrismaticServo.cpp">
 		</ClCompile>

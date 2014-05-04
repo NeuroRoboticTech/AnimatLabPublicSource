@@ -1511,7 +1511,7 @@ void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Node::QueryProperties(aryProperties);
 
-	aryProperties.Add(new TypeProperty("MembranePotential", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MembraneVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("AdapterCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("ExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("FiringFrequency", AnimatPropertyType::Float, AnimatPropertyDirection::Get));

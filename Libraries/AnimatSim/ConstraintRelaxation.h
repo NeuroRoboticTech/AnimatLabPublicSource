@@ -23,9 +23,6 @@ namespace AnimatSim
             ///The constraint coordinate ID 
             int m_iCoordinateID;
 
-            ///whether the relaxation is enabled or not
-            bool m_bEnabled;
-
 			/// The compliance of the collision between those two materials.
 			float m_fltStiffness;
 

@@ -30,6 +30,14 @@ namespace RoboticsGUI
                     return doEngine;
                 }
 
+                public override void BuildProperties(ref AnimatGuiCtrls.Controls.PropertyTable propTable)
+                {
+                    base.BuildProperties(ref propTable);
+
+                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Pin", this.IOComponentID.GetType(), "IOComponentID",
+                                                "Properties", "The pin number where the PWM value will be output.", this.IOComponentID));
+                }
+
             }
 
         }

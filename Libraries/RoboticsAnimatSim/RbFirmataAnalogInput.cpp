@@ -12,7 +12,9 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbFirmataPart.h"
 #include "RbFirmataAnalogInput.h"
+#include "RbFirmataController.h"
 
 namespace RoboticsAnimatSim
 {
@@ -29,74 +31,20 @@ namespace RoboticsAnimatSim
 
 RbFirmataAnalogInput::RbFirmataAnalogInput() 
 {
-    m_lpHinge = NULL;
 }
 
 RbFirmataAnalogInput::~RbFirmataAnalogInput()
 {
-	try
-	{
-        //Do not delete because we do not own it.
-        m_lpHinge = NULL;
-	}
-	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
 }
 
-void RbFirmataAnalogInput::ServoID(int iID)
+void RbFirmataAnalogInput::SetupIO()
 {
-	Std_IsAboveMin((int) 0, iID, true, "ServoID");
-	//RbDynamixelUSBServo::ServoID(iID);
+	if(!m_lpParentInterface->InSimulation())
+		m_lpFirmata->sendAnalogPinReporting(m_iIOComponentID, ARD_ANALOG);
 }
 
-#pragma region DataAccesMethods
-
-float *RbFirmataAnalogInput::GetDataPointer(const std::string &strDataType)
+void RbFirmataAnalogInput::StepIO()
 {
-	std::string strType = Std_CheckString(strDataType);
-
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
-}
-
-bool RbFirmataAnalogInput::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
-{
-	std::string strType = Std_CheckString(strDataType);
-	
-	if(RobotPartInterface::SetData(strDataType, strValue, false))
-		return true;
-
-	if(strType == "SERVOID")
-	{
-		ServoID((int) atoi(strValue.c_str()));
-		return true;
-	}
-
-	//If it was not one of those above then we have a problem.
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
-
-	return false;
-}
-
-void RbFirmataAnalogInput::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
-{
-	RobotPartInterface::QueryProperties(aryProperties);
-
-	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-}
-
-#pragma endregion
-
-void RbFirmataAnalogInput::Initialize()
-{
-	RobotPartInterface::Initialize();
-
-	m_lpHinge = dynamic_cast<RbHinge *>(m_lpBodyPart);
 }
 
 void RbFirmataAnalogInput::StepSimulation()
@@ -104,15 +52,6 @@ void RbFirmataAnalogInput::StepSimulation()
     RobotPartInterface::StepSimulation();
 
 
-}
-
-void RbFirmataAnalogInput::Load(StdUtils::CStdXml &oXml)
-{
-	RobotPartInterface::Load(oXml);
-
-	oXml.IntoElem();
-	//ServoID(oXml.GetChildInt("ServoID", m_iServoID));
-	oXml.OutOfElem();
 }
 
 			}	//Firmata

@@ -40,7 +40,7 @@ Namespace DataObjects.Visualization
 
         Public Overrides ReadOnly Property WorkspaceImageName As String
             Get
-                Return "AnimatGUI.RobotInterface.gif"
+                Return "AnimatGUI.CameraWaypoints.gif"
             End Get
         End Property
 

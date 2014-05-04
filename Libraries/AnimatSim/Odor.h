@@ -32,9 +32,6 @@ namespace AnimatSim
 			/// the odor strength instead of the m_fltQuantity of this odor object.
 			bool m_bUseFoodQuantity;
 
-			//Enable the odor
-			bool m_bEnabled;
-
 		public:
 			Odor(RigidBody *lpParent);
 			virtual ~Odor();

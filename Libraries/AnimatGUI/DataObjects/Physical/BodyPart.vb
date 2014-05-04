@@ -20,8 +20,6 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Me)
-
 #End Region
 
 #Region " Properties "
@@ -99,15 +97,6 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        Public Overridable Property RobotPartInterfaces As Collections.RobotPartInterfaces
-            Get
-                Return m_aryRobotPartInterfaces
-            End Get
-            Set(ByVal Value As Collections.RobotPartInterfaces)
-                m_aryRobotPartInterfaces = Value
-            End Set
-        End Property
-
 #End Region
 
 #Region " Methods "
@@ -120,14 +109,6 @@ Namespace DataObjects.Physical
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_thDataTypes Is Nothing Then m_thDataTypes.ClearIsDirty()
-        End Sub
-
-        Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
-            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-            Dim bpOrig As BodyPart = DirectCast(doOriginal, BodyPart)
-
-            m_aryRobotPartInterfaces = DirectCast(bpOrig.m_aryRobotPartInterfaces.Clone(Me, False, Nothing), Collections.RobotPartInterfaces)
         End Sub
 
         'This method is called for each part type during the catalog of the modules. It sets up the 

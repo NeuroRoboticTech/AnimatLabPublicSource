@@ -78,6 +78,19 @@ namespace RoboticsGUI
                     return doInterface;
                 }
 
+                protected override void CloneInternal(DataObject doOriginal, bool bCutData, DataObject doRoot)
+                {
+                    base.CloneInternal(doOriginal, bCutData, doRoot);
+
+                    DynamixelUSB doOrig = (DynamixelUSB)doOriginal;
+
+                    if (doOrig != null)
+                    {
+                        m_iPortNumber = doOrig.m_iPortNumber;
+                        m_iBaudRate = doOrig.m_iBaudRate;
+                    }
+                }
+
                 public override void BuildProperties(ref AnimatGuiCtrls.Controls.PropertyTable propTable)
                 {
                     base.BuildProperties(ref propTable);

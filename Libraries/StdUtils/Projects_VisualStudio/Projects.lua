@@ -3,7 +3,8 @@
 		language "C++"
 		kind     "SharedLib"
 		files  { "../*.h",
-				 "../*.cpp"}
+				 "../*.cpp",
+				 "../*.cxx"}
 		includedirs { "../../../include", 
 					  "../../../../3rdParty/boost_1_54_0" }	  
 	  

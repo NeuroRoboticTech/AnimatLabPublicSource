@@ -62,6 +62,7 @@ AnimatBase::AnimatBase()
 	m_lpNode = NULL;
 	m_strID = Std_CreateAppID();
 	m_bSelected = false;
+	m_bEnabled = true;
 }
 
 /**
@@ -87,6 +88,28 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, false, true);}
 }
+
+/**
+\brief	Tells whether this item is enabled or not. This is not actually used for all objects, only specific ones.
+I am putting it in the base class though to prevent numerous duplications.
+
+\author	dcofer
+\date	2/24/2011
+
+\param bVal	Sets whether this item is enabled. 
+**/
+void AnimatBase::Enabled(bool bVal) {m_bEnabled = bVal;}
+
+/**
+\brief	Tells whether this item is enabled or not. This is not actually used for all objects, only specific ones.
+I am putting it in the base class though to prevent numerous duplications.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	Whether this item is enabled. 
+**/
+bool AnimatBase::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Gets the simulator pointer. 

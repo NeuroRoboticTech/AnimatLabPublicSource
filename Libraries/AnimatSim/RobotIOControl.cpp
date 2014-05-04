@@ -209,6 +209,38 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 
 #pragma endregion
 
+/**
+\brief	This method is called after all connections to whatever control board have been made. It calls
+each parts SetupIO method. For example, We connect to a Firmata
+microcontroller like an Arduino, and then do a setup that could take some time. We should not attempt to
+setup any of the pins until after the board itself has been setup. After that we need to loop through and setup
+all the parts.
+
+\author	dcofer
+\date	5/1/2014
+
+**/
+void RobotIOControl::SetupIO()
+{
+	int iCount = m_aryParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryParts[iIndex]->SetupIO();
+}
+
+/**
+\brief	This method is called from within the IO thread. It calls StepIO for each part.
+
+\author	dcofer
+\date	5/2/2014
+
+**/
+void RobotIOControl::StepIO()
+{
+	int iCount = m_aryParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryParts[iIndex]->StepIO();
+}
+
 void RobotIOControl::Initialize()
 {
 	int iCount = m_aryParts.GetSize();
@@ -236,7 +268,8 @@ void RobotIOControl::StepSimulation()
 
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->StepSimulation();
+		if(m_aryParts[iIndex]->Enabled())
+			m_aryParts[iIndex]->StepSimulation();
 }
 
 void RobotIOControl::Load(CStdXml &oXml)

@@ -13,7 +13,7 @@ Namespace TypeHelpers
 
     Public MustInherit Class TreeListPruner
 
-        Public MustOverride Sub PruneTree(ByVal tnNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
+        Public MustOverride Function PruneTree(ByVal tnNodes As Crownwood.DotNetMagic.Controls.NodeCollection) As Integer
         Public MustOverride Sub PruneList(ByVal lbList As ListBox)
     End Class
 

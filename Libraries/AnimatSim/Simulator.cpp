@@ -95,6 +95,9 @@ Simulator::Simulator()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
@@ -1290,6 +1293,89 @@ void Simulator::MouseSpringDamping(float fltVal, bool bUseScaling)
 }
 
 /**
+\brief	Gets the magnitude of the mouse spring force applied at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringForceMagnitude() {return m_fltMouseSpringForceMagnitude;}
+
+/**
+\brief	Sets the mouse spring force that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Simulator::MouseSpringForceMagnitude(float fltVal, bool bUseScaling)
+{
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits());
+
+	m_fltMouseSpringForceMagnitude = fltVal;
+}
+
+/**
+\brief	Gets the magnitude of the mouse spring damping force applied at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringDampingForceMagnitude() {return m_fltMouseSpringDampingForceMagnitude;}
+
+/**
+\brief	Sets the mouse spring damping force that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Simulator::MouseSpringDampingForceMagnitude(float fltVal, bool bUseScaling)
+{
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits());
+
+	m_fltMouseSpringDampingForceMagnitude = fltVal;
+}
+
+/**
+\brief	Gets the magnitude of the mouse spring length at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringLengthMagnitude() {return m_fltMouseSpringLengthMagnitude;}
+
+/**
+\brief	Sets the mouse spring length that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Simulator::MouseSpringLengthMagnitude(float fltVal, bool bUseScaling)
+{
+	if(bUseScaling)
+		m_fltMouseSpringLengthMagnitude = fltVal * m_fltDistanceUnits;
+	else
+		m_fltMouseSpringLengthMagnitude = fltVal;
+}
+
+/**
 \brief	Gets whether the simulation uses hydrodynamics.
 
 \details Tells whether or not we will be doing hydrodynamic simulations.
@@ -2002,6 +2088,9 @@ void Simulator::Reset()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
@@ -2139,6 +2228,9 @@ void Simulator::ResetSimulation()
 	m_iPhysicsStepCount = 0;
 	m_bPaused = true;
 	m_bSimRunning = false;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 
 	InitializeRandomNumbers();
 
@@ -4172,6 +4264,12 @@ float *Simulator::GetDataPointer(const std::string &strDataType)
 		lpData = &m_fltSimRecorderStepTime;
 	else if(strType == "REMAININGSTEPTIME")
 		lpData = &m_fltRemainingStepTime;
+	else if(strType == "MOUSESPRINGFORCEMAGNITUDE")
+		lpData = &m_fltMouseSpringForceMagnitude;
+	else if(strType == "MOUSESPRINGDAMPINGFORCEMAGNITUDE")
+		lpData = &m_fltMouseSpringDampingForceMagnitude;
+	else if(strType == "MOUSESPRINGLENGTHMAGNITUDE")
+		lpData = &m_fltMouseSpringLengthMagnitude;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 

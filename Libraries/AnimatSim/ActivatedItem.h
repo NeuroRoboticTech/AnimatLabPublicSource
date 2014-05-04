@@ -27,8 +27,6 @@ namespace AnimatSim
 	class ANIMAT_PORT ActivatedItem : public AnimatBase  
 	{
 	protected:
-		/// Tells if this item is enabled or not. If it is not enabled then it is not run.
-		bool m_bEnabled;
 
 		/// Keeps track of whether we loaded in time values or time slices. This is used
 		/// during the initialization procedures.

@@ -418,6 +418,10 @@ bool OsgCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, flo
 	osg::Vec3 vTotalForce = vSpringForce - v3DampForce;
 	rbBody->AddForceAtWorldPos(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), false);
 
+	m_lpSim->MouseSpringForceMagnitude(vTotalForce.length(), true);
+	m_lpSim->MouseSpringDampingForceMagnitude(v3DampForce.length(), true);
+	m_lpSim->MouseSpringLengthMagnitude(vSpringLength.length(), true);
+
 	//sprintf(strDest, "Length: (%3.3f, %3.3f, %3.3f)   MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n\n", vSpringLength[0], vSpringLength[1], vSpringLength[2], vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
 	//OutputDebugString(strDest);
 

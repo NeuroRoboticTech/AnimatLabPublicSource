@@ -34,6 +34,9 @@ namespace AnimatSim
 			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
 			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
+			virtual void SetupIO();
+			virtual void StepIO();
+
 			virtual void Initialize();
 			virtual void StepSimulation();
 			virtual void ResetSimulation();

@@ -17,6 +17,7 @@ Namespace TypeHelpers
 #Region " Attributes "
 
         Protected m_doItem As AnimatGUI.Framework.DataObject
+        Protected m_doPruner As TreeListPruner
 
 #End Region
 
@@ -32,14 +33,25 @@ Namespace TypeHelpers
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Pruner() As TreeListPruner
+            Get
+                Return m_doPruner
+            End Get
+            Set(ByVal Value As TreeListPruner)
+                m_doPruner = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
 
-        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject)
+        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject, Optional ByVal doPruner As TreeListPruner = Nothing)
             MyBase.New(doItem)
 
             m_doItem = doItem
+            m_doPruner = doPruner
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -50,6 +62,7 @@ Namespace TypeHelpers
 
             Dim thOrig As LinkedDataObject = DirectCast(OrigNode, LinkedDataObject)
             m_doItem = thOrig.m_doItem
+            m_doPruner = thOrig.m_doPruner
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

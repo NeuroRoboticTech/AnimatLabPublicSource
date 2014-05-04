@@ -20,10 +20,6 @@ namespace AnimatSim
 		/// The pointer to this link's organism
 		Organism *m_lpOrganism;
 
-		///Determines if this Link is enabled. This will only have any effect if this Link can be disabled.
-		///The majority of Links, like rigid bodies, can not be disabled.
-		bool m_bEnabled;
-
 		///This is for reporting purposes.
 		float m_fltEnabled;
 

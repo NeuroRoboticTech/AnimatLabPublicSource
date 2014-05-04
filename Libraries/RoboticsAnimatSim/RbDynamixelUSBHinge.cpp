@@ -44,9 +44,10 @@ RbDynamixelUSBHinge::~RbDynamixelUSBHinge()
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
 }
 
-void RbDynamixelUSBHinge::ServoID(int iID)
+void RbDynamixelUSBHinge::IOComponentID(int iID)
 {
 	Std_IsAboveMin((int) 0, iID, true, "ServoID");
+	RobotPartInterface::IOComponentID(iID);
 	RbDynamixelUSBServo::ServoID(iID);
 }
 
@@ -97,7 +98,7 @@ void RbDynamixelUSBHinge::Initialize()
 {
 	RobotPartInterface::Initialize();
 
-	m_lpHinge = dynamic_cast<RbHinge *>(m_lpBodyPart);
+	m_lpHinge = dynamic_cast<RbHinge *>(m_lpPart);
 
 	if(!m_lpParentInterface->InSimulation())
 		InitMotorData();
@@ -105,40 +106,43 @@ void RbDynamixelUSBHinge::Initialize()
 
 void RbDynamixelUSBHinge::StepSimulation()
 {
-    RobotPartInterface::StepSimulation();
-
-	if(m_lpHinge)
+	if(!m_lpParentInterface->InSimulation())
 	{
-		//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
-		if(!m_lpHinge->ServoMotor())
-		{
-			float fltSetVelocity = m_lpHinge->SetVelocity();
-			SetGoalVelocity(fltSetVelocity);
+		RobotPartInterface::StepSimulation();
 
-			if(fltSetVelocity > 0)
-				SetGoalPosition_FP(m_iMaxPos);
+		if(m_lpHinge)
+		{
+			//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
+			if(!m_lpHinge->ServoMotor())
+			{
+				float fltSetVelocity = m_lpHinge->SetVelocity();
+				SetGoalVelocity(fltSetVelocity);
+
+				if(fltSetVelocity > 0)
+					SetGoalPosition_FP(m_iMaxPos);
+				else
+					SetGoalPosition_FP(m_iMinPos);
+			}
 			else
-				SetGoalPosition_FP(m_iMinPos);
-		}
-		else
-		{
-			float fltSetPosition = m_lpHinge->SetVelocity();
-			SetGoalPosition(fltSetPosition);
-			SetMaximumVelocity();
-		}
+			{
+				float fltSetPosition = m_lpHinge->SetVelocity();
+				SetGoalPosition(fltSetPosition);
+				SetMaximumVelocity();
+			}
 
-		float fltActualPosition = GetActualPosition();
-		float fltActualVelocity = GetActualVelocity();
-		//float fltTemperature = GetActualTemperatureCelcius();
-		//float fltVoltage = GetActualVoltage();
-		//float fltLoad = GetActualLoad();
+			float fltActualPosition = GetActualPosition();
+			float fltActualVelocity = GetActualVelocity();
+			//float fltTemperature = GetActualTemperatureCelcius();
+			//float fltVoltage = GetActualVoltage();
+			//float fltLoad = GetActualLoad();
 
-		m_lpHinge->JointPosition(fltActualPosition);
-		m_lpHinge->JointVelocity(fltActualVelocity);
-		//m_lpHinge->Temperature(fltTemperature);
-		//m_lpHinge->Voltage(fltVoltage);
-		//m_lpHinge->MotorTorqueToAMagnitude(fltLoad);
-		//m_lpHinge->MotorTorqueToBMagnitude(fltLoad);
+			m_lpHinge->JointPosition(fltActualPosition);
+			m_lpHinge->JointVelocity(fltActualVelocity);
+			//m_lpHinge->Temperature(fltTemperature);
+			//m_lpHinge->Voltage(fltVoltage);
+			//m_lpHinge->MotorTorqueToAMagnitude(fltLoad);
+			//m_lpHinge->MotorTorqueToBMagnitude(fltLoad);
+		}
 	}
 }
 

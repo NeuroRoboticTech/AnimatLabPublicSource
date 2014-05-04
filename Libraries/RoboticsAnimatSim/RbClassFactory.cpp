@@ -49,6 +49,7 @@
 #include "RbDynamixelUSBPrismatic.h"
 
 #include "RbFirmataController.h"
+#include "RbFirmataPart.h"
 #include "RbFirmataAnalogInput.h"
 #include "RbFirmataAnalogOutput.h"
 #include "RbFirmataDigitalInput.h"

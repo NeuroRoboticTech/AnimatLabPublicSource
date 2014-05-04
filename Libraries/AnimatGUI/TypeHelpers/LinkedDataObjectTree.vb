@@ -24,8 +24,8 @@ Namespace TypeHelpers
 
 #Region " Methods "
 
-        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject)
-            MyBase.New(doItem)
+        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject, Optional ByVal doPruner As TreeListPruner = Nothing)
+            MyBase.New(doItem, doPruner)
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -41,7 +41,7 @@ Namespace TypeHelpers
         Public Overrides Sub BuildPropertyDropDown(ByRef ctrlDropDown As System.Windows.Forms.Control)
 
             If Not TypeOf (ctrlDropDown) Is Crownwood.DotNetMagic.Controls.TreeControl Then
-                Throw New System.Exception("The control passed into LinkedSynapse.BuildPropertyDropDown is not a treeview type")
+                Throw New System.Exception("The control passed into BuildPropertyDropDown is not a treeview type")
             End If
 
             Dim tvTree As Crownwood.DotNetMagic.Controls.TreeControl = DirectCast(ctrlDropDown, Crownwood.DotNetMagic.Controls.TreeControl)
@@ -57,6 +57,10 @@ Namespace TypeHelpers
             tvTree.Nodes.Add(tnRoot)
 
             SelectDefaultNode(tvTree, tnRoot)
+
+            If Not m_doPruner Is Nothing Then
+                m_doPruner.PruneTree(tvTree.Nodes)
+            End If
 
             tvTree.Width = 300
             tvTree.ExpandAll()

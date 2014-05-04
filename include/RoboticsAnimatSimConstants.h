@@ -243,6 +243,9 @@
 #define Std_Err_lErrorSettingUpArduino -4046
 #define Std_Err_strErrorErrorSettingUpArduino "Timed out waiting for Arduino to setup."
 
+#define Rb_Err_lUnableToObtainFirmataPointer -4047
+#define Rb_Err_strUnableToObtainFirmataPointer "Unable to obtain a pointer to the Firmata controller."
+
 
 #define RB_PI 3.14159
 

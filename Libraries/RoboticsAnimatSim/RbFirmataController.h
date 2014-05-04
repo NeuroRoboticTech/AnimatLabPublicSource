@@ -22,6 +22,9 @@ protected:
 	//Baud rate for the connection to the Arduino
 	int m_iBaudRate;
 
+	//True while the thread processing loop is going on.
+	bool m_bArduinoThreadProcessing;
+
 	///Set to true once the Arduino is setup correctly.
 	bool m_bSetupArduino;
 
@@ -41,6 +44,7 @@ protected:
 	virtual void digitalPinChanged(const int & pinNum);
 	virtual void analogPinChanged(const int & pinNum);
 	virtual void setupArduino(const int & version);
+	virtual void ExitArduinoThreadProcess();
 
 public:
 	RbFirmataController();
