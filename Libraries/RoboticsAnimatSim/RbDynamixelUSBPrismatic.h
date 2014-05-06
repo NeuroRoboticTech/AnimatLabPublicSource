@@ -16,7 +16,7 @@ namespace RoboticsAnimatSim
 class ROBOTICS_PORT RbDynamixelUSBPrismatic : public AnimatSim::Robotics::RobotPartInterface, public RbDynamixelUSBServo
 {
 protected:
-    RbPrismatic *m_lpPrismatic;
+    Prismatic *m_lpPrismatic;
 
 public:
 	RbDynamixelUSBPrismatic();

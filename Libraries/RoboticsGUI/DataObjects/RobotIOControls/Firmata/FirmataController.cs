@@ -68,7 +68,7 @@ namespace RoboticsGUI
 
                     //Setup the parts that are available for this type of controller.
                     m_aryAvailablePartTypes.Add(new FirmataAnalogInput(this));
-                    m_aryAvailablePartTypes.Add(new FirmataAnalogOutput(this));
+                    // m_aryAvailablePartTypes.Add(new FirmataAnalogOutput(this)); //This is not supported at the moment. Leaving the code in here for future use.
                     m_aryAvailablePartTypes.Add(new FirmataDigitalInput(this));
                     m_aryAvailablePartTypes.Add(new FirmataDigitalOutput(this));
                     m_aryAvailablePartTypes.Add(new FirmataHingeServo(this));

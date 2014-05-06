@@ -50,7 +50,9 @@ RobotPartInterface::RobotPartInterface(void)
 	m_lpProperty = NULL;
 	m_iIOComponentID = 0;
 	m_fltIOValue = 0;
+	m_iIOValue = 0;
 	m_lpGain = NULL;
+	m_bChanged= false;
 }
 
 RobotPartInterface::~RobotPartInterface(void)
@@ -86,7 +88,15 @@ void RobotPartInterface::IOComponentID(int iID) {m_iIOComponentID = iID;}
 float RobotPartInterface::IOValue() {return m_fltIOValue;}
 
 void RobotPartInterface::IOValue(float fltVal) {m_fltIOValue = fltVal;}
+						
+int RobotPartInterface::IOValueInt() {return m_iIOValue;}
+
+void RobotPartInterface::IOValueInt(int iVal) {m_iIOValue = iVal;}
 			
+bool RobotPartInterface::Changed() {return m_bChanged;}
+
+void RobotPartInterface::Changed(bool bVal) {m_bChanged = bVal;}
+
 void RobotPartInterface::LinkedPartID(std::string strID)
 {
 	m_strPartID = strID;
@@ -250,6 +260,15 @@ void RobotPartInterface::Initialize()
 	}
 	else
 		m_lpProperty = NULL;
+}
+
+void RobotPartInterface::ResetSimulation()
+{
+	AnimatBase::ResetSimulation();
+
+	m_fltIOValue = 0;
+	m_iIOValue = 0;
+	m_bChanged= false;
 }
 
 void RobotPartInterface::Load(CStdXml &oXml)

@@ -16,7 +16,7 @@ namespace RoboticsAnimatSim
 class ROBOTICS_PORT RbDynamixelUSBHinge : public AnimatSim::Robotics::RobotPartInterface, public RbDynamixelUSBServo
 {
 protected:
-    RbHinge *m_lpHinge;
+    Hinge *m_lpHinge;
 
 public:
 	RbDynamixelUSBHinge();

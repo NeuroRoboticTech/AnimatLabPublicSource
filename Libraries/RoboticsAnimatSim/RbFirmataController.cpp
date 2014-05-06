@@ -239,8 +239,8 @@ void RbFirmataController::setupArduino(const int & version)
 	//this->sendServo(9, 0, true);
 
     // Listen for changes on the digital and analog pins
-	m_EDigitalPinChanged = this->EDigitalPinChanged.connect(boost::bind(&RbFirmataController::digitalPinChanged, this, _1));
-	m_EAnalogPinChanged = this->EAnalogPinChanged.connect(boost::bind(&RbFirmataController::analogPinChanged, this, _1));
+	//m_EDigitalPinChanged = this->EDigitalPinChanged.connect(boost::bind(&RbFirmataController::digitalPinChanged, this, _1));
+	//m_EAnalogPinChanged = this->EAnalogPinChanged.connect(boost::bind(&RbFirmataController::analogPinChanged, this, _1));
 
 	m_WaitForArduinoCond.notify_all();
 }
@@ -256,7 +256,7 @@ void RbFirmataController::digitalPinChanged(const int & pinNum)
  //   // do something with the digital input. here we're simply going to print the pin number and
  //   // value to the screen each time it changes
 	//int iVal = this->getDigital(pinNum);
- //   std::cout << "digital pin: " << pinNum << " = " << iVal << "\r\n";
+    //std::cout << "digital pin: " << pinNum << " = " << iVal << "\r\n";
 
 	//this->sendDigital(13, iVal);
 }

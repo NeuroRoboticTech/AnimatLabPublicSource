@@ -39,23 +39,22 @@ RbFirmataDigitalOutput::~RbFirmataDigitalOutput()
 
 void RbFirmataDigitalOutput::SetupIO()
 {
-	m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_OUTPUT);
+	if(!m_lpParentInterface->InSimulation() && m_lpFirmata)
+		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_OUTPUT);
 }
 
 void RbFirmataDigitalOutput::StepIO()
 {
 	if(!m_lpParentInterface->InSimulation())
 	{
-		int iValue = (int) round(m_fltIOValue);
-
-		if(iValue != m_lpFirmata->getDigital(m_iIOComponentID))
+		if(m_iIOValue != m_lpFirmata->getDigital(m_iIOComponentID))
 		{
-			if(iValue)
+			if(m_iIOValue)
 				std::cout << "Turning pin " << m_iIOComponentID << " ON." << "\r\n";
 			else
 				std::cout << "Turning pin " << m_iIOComponentID << " OFF." << "\r\n";
 
-			m_lpFirmata->sendDigital(m_iIOComponentID, iValue);
+			m_lpFirmata->sendDigital(m_iIOComponentID, m_iIOValue);
 		}
 	}
 }
@@ -71,13 +70,12 @@ void RbFirmataDigitalOutput::StepSimulation()
 	{
 		float fltValue = m_lpGain->CalculateGain(*m_lpProperty);
 
-		int iValue = 0;
+		m_iIOValue = 0;
 		if(fltValue > 0.5f)
-			iValue = 1;
+			m_iIOValue = 1;
 
-		m_fltIOValue = iValue;
+		m_fltIOValue = m_iIOValue;
 	}
-
 }
 
 			}	//Firmata

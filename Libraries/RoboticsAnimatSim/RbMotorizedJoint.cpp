@@ -22,6 +22,8 @@ RbMotorizedJoint::RbMotorizedJoint()
 	m_lpThisMotorJoint = NULL;
 	m_bMotorOn = false;
     m_bJointLocked = false;
+    m_fltPredictedPos = 0;
+    m_fltNextPredictedPos = 0;
 }
 
 RbMotorizedJoint::~RbMotorizedJoint()
@@ -43,19 +45,16 @@ void RbMotorizedJoint::SetThisPointers()
 //It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
 void RbMotorizedJoint::CalculateServoVelocity()
 {
-	//if(!m_btJoint)
-	//	return;
+	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredVelocity());
+	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
 
-	//float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredVelocity());
-	//float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
-
-	//if(m_lpThisJoint->EnableLimits())
-	//{
-	//	float fltProp = fltError / m_lpThisJoint->GetLimitRange();
-	//	m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
-	//}
-	//else
-	//	m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
+	if(m_lpThisJoint->EnableLimits())
+	{
+		float fltProp = fltError / m_lpThisJoint->GetLimitRange();
+		m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
+	}
+	else
+		m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
 }
 
 void RbMotorizedJoint::Physics_SetVelocityToDesired()
@@ -63,35 +62,52 @@ void RbMotorizedJoint::Physics_SetVelocityToDesired()
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
 		if(m_lpThisMotorJoint->ServoMotor())
-			CalculateServoVelocity();
-		
-		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
-		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
-		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
-
-		float fltSetVelocity = fltDesiredVel;
-
-		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
-		m_lpThisMotorJoint->DesiredVelocity(0);
-
-        float fltJointVel = m_lpThisJoint->JointVelocity();
-
-		if(!m_lpThisJoint->UsesRadians())
-			fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
-
-		float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
-
-		//Only do anything if the velocity value has changed
-        if(fltVelDiff > 1e-4)
 		{
-			if(fabs(fltSetVelocity) > 1e-4)
-				Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
-            else if(!m_bJointLocked)
-                Physics_EnableLock(true, m_lpThisJoint->JointPosition(), fltMaxForce);
+			m_lpThisJoint->JointPosition(m_lpThisMotorJoint->DesiredVelocity());
+			m_lpThisMotorJoint->DesiredVelocity(0);
 		}
+		else
+		{
+			float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
+			float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
+			float fltMaxForce = m_lpThisMotorJoint->MaxForce();
 
-		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+			float fltSetVelocity = fltDesiredVel;
+
+			m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
+			m_lpThisMotorJoint->DesiredVelocity(0);
+
+			float fltHalfPercVel = fabs(fltSetVelocity * 0.01);
+            m_fltPredictedPos = m_fltNextPredictedPos;
+            m_fltNextPredictedPos = m_fltPredictedPos +  (fltSetVelocity*m_lpThisAB->GetSimulator()->PhysicsTimeStep());
+
+			m_lpThisJoint->JointPosition(m_fltNextPredictedPos);
+
+			float fltJointVel = m_lpThisJoint->JointVelocity();
+
+			if(!m_lpThisJoint->UsesRadians())
+				fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
+
+			float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
+
+			//Only do anything if the velocity value has changed
+			if(fltVelDiff > 1e-4)
+			{
+				if(fabs(fltSetVelocity) > 1e-4)
+					Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
+				else if(!m_bJointLocked)
+					Physics_EnableLock(true, m_lpThisJoint->JointPosition(), fltMaxForce);
+			}
+
+			m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+		}
 	}
+}
+
+void RbMotorizedJoint::Physics_ResetSimulation()
+{
+	m_fltPredictedPos = 0;
+	m_fltNextPredictedPos = 0;
 }
 
 void RbMotorizedJoint::Physics_CollectExtraData()

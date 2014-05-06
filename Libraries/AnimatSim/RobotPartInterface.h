@@ -28,6 +28,12 @@ namespace AnimatSim
 			///If it is a digital value then you will need to cast it appropriately.
 			float m_fltIOValue;
 
+			///This stores the temporary IO value to be used later in IO calculations. 
+			int m_iIOValue;
+
+			///True when the value changes.
+			bool m_bChanged;
+
 			virtual void AddGain(std::string strXml);
 
 		public:
@@ -42,6 +48,12 @@ namespace AnimatSim
 			
 			virtual float IOValue();
 			virtual void IOValue(float fltVal);
+			
+			virtual int IOValueInt();
+			virtual void IOValueInt(int iVal);
+			
+			virtual bool Changed();
+			virtual void Changed(bool bVal);
 
 			virtual void LinkedPartID(std::string strID);
 			virtual std::string LinkedPartID();
@@ -64,6 +76,7 @@ namespace AnimatSim
 			virtual void StepIO();
 
 			virtual void Initialize();
+			virtual void ResetSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

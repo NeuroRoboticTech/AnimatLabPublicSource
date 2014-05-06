@@ -45,13 +45,38 @@ void RbFirmataAnalogInput::SetupIO()
 
 void RbFirmataAnalogInput::StepIO()
 {
+	if(!m_lpParentInterface->InSimulation())
+	{
+		int iValue = m_lpFirmata->getAnalog(m_iIOComponentID);
+		if(iValue != -1 && m_iIOValue != iValue)
+		{
+			std::cout << "Analog In: " << iValue << "\r\n";
+
+			m_iIOValue = iValue;
+			m_bChanged = true;
+		}
+	}
 }
 
 void RbFirmataAnalogInput::StepSimulation()
 {
     RobotPartInterface::StepSimulation();
 
+	if(m_bChanged)
+	{
+		m_bChanged = false;
 
+		//Calculate the gain of the IO value.
+		float fltValue = m_lpGain->CalculateGain((float) m_iIOValue);
+
+		//Remove any previously added value from the param
+		*m_lpProperty -= m_fltIOValue;
+
+		m_fltIOValue = fltValue;
+
+		//Add the value back.
+		*m_lpProperty += m_fltIOValue;
+	}
 }
 
 			}	//Firmata

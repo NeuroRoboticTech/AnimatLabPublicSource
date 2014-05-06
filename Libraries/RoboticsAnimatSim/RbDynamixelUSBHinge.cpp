@@ -98,7 +98,7 @@ void RbDynamixelUSBHinge::Initialize()
 {
 	RobotPartInterface::Initialize();
 
-	m_lpHinge = dynamic_cast<RbHinge *>(m_lpPart);
+	m_lpHinge = dynamic_cast<Hinge *>(m_lpPart);
 
 	if(!m_lpParentInterface->InSimulation())
 		InitMotorData();

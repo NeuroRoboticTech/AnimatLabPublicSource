@@ -13,6 +13,9 @@ namespace RoboticsAnimatSim
 			bool m_bMotorOn;
             bool m_bJointLocked;
 
+            float m_fltPredictedPos;
+            float m_fltNextPredictedPos;
+
 			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
 
@@ -20,6 +23,7 @@ namespace RoboticsAnimatSim
 			RbMotorizedJoint();
 			virtual ~RbMotorizedJoint();
 
+			virtual void Physics_ResetSimulation();
 		    virtual void Physics_SetVelocityToDesired();
             virtual void Physics_CollectExtraData();
         };

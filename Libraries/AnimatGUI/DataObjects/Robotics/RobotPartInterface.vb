@@ -149,7 +149,7 @@ Namespace DataObjects
                     Return m_iIOComponentID
                 End Get
                 Set(value As Integer)
-                    If value <= 0 Then
+                    If value < 0 Then
                         Throw New System.Exception("Invalid component ID specified. ID: " & value)
                     End If
                     SetSimData("IOComponentID", value.ToString(), True)
