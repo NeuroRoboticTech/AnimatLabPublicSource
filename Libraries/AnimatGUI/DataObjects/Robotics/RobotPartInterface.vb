@@ -200,8 +200,8 @@ Namespace DataObjects
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
 
                 m_thDataTypes.DataTypes.Clear()
-
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IOValue", "IO Value", "", "", 0, 1))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StepIODuration", "IO Duration", "Seconds", "s", 0, 1))
                 m_thDataTypes.ID = "IOValue"
 
             End Sub

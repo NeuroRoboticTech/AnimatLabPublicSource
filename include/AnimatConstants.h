@@ -487,6 +487,9 @@
 #define Al_Err_lRobotInterfaceIDNotFound -4083
 #define Al_Err_strRobotInterfaceIDNotFound "Robot interface ID not found."
 
+#define Al_Err_lErrorSettingUpIOThread -4085
+#define Al_Err_strErrorSettingUpIOThread "Timed out waiting for IO thread to finish setup."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

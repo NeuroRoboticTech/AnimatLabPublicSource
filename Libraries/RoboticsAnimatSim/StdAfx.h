@@ -20,9 +20,6 @@
 
 //#define STD_TRACING_ON
 
-#include <boost/interprocess/sync/interprocess_mutex.hpp>
-#include <boost/interprocess/sync/interprocess_condition.hpp>
-
 #include "StdUtils.h"
 #include "AnimatSim.h"
 
@@ -86,6 +83,7 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 				class RbDynamixelUSB;
+				class RbDynamixelUSBMotorUpdateData;
 				class RbDynamixelUSBServo;
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;

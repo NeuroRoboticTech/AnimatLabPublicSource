@@ -40,16 +40,13 @@ RbFirmataController::RbFirmataController()
 	// the arduino is ready to receive commands and it is safe to
 	// call setupArduino()
 	m_EInitializedConnection = this->EInitialized.connect(boost::bind(&RbFirmataController::setupArduino, this, _1));
-	m_bSetupArduino	= false;	// flag so we setup arduino when its ready, you don't need to touch this :)
-	m_bStopArduino = false;
-	m_bArduinoThreadProcessing = false;
+
 }
 
 RbFirmataController::~RbFirmataController()
 {
 	try
 	{
-		ExitArduinoThreadProcess();
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbFirmataController\r\n", "", -1, false, true);}
@@ -130,82 +127,55 @@ void RbFirmataController::Initialize()
 	{
 		//Try to connect to the arduino board.
 		if(!connect(m_strComPort, m_iBaudRate))
-			THROW_PARAM_ERROR(Std_Err_lErrorConnectingToArduino, Std_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
+			THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
 
-		m_ArduinoThread = boost::thread(&RbFirmataController::ProcessArduino, this);
-		
-		boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(5);
-
-		boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForArduinoMutex);
-		bool bWaitRet = m_WaitForArduinoCond.timed_wait(lock, pt);
-
-		if(!bWaitRet)
-		{
-			THROW_ERROR(Std_Err_lErrorSettingUpArduino, Std_Err_strErrorErrorSettingUpArduino);
-			ExitArduinoThreadProcess();
-		}
+		StartIOThread();
 	}
 
 	RobotIOControl::Initialize();
 }
 
-void RbFirmataController::ProcessArduino()
+void RbFirmataController::ProcessIO()
 {
 	try
 	{
-		m_bArduinoThreadProcessing = true;
+		m_bIOThreadProcessing = true;
 
 		//Need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called
 		//and we can start processing.
 		sendFirmwareVersionRequest();
 
-		while(!m_bStopArduino)
+		while(!m_bStopIO)
 		{
 			update();
 
 			//Do not try and step IO until it has been setup correctly.
-			if(m_bSetupArduino)
+			if(m_bSetupComplete)
 				StepIO();
 
 			//platformstl::micro_sleep(5);
 		}
-
-		//m_WaitForArduinoCond.notify_all();
-		//while(!m_bStopArduino)
-		//	boost::this_thread::sleep(boost::posix_time::milliseconds(10));
-
 	}
 	catch(CStdErrorInfo oError)
 	{
-		m_bArduinoThreadProcessing = false;
+		m_bIOThreadProcessing = false;
 	}
 	catch(...)
 	{
-		m_bArduinoThreadProcessing = false;
+		m_bIOThreadProcessing = false;
 	}
 
-	m_bArduinoThreadProcessing = false;
+	m_bIOThreadProcessing = false;
 }
 
-void RbFirmataController::ExitArduinoThreadProcess()
-{
-	if(m_bArduinoThreadProcessing)
-	{
-		m_bStopArduino = true;
-
-		bool bTryJoin = m_ArduinoThread.try_join_for(boost::chrono::seconds(30));
-
-		_port.close();
-	}
-}
 
 void RbFirmataController::setupArduino(const int & version)
 {
 	m_EInitializedConnection.disconnect();
     
     // it is now safe to send commands to the Arduino
-    m_bSetupArduino = true;
+    m_bSetupComplete = true;
 
     // print firmware name and version to the console
     std::cout << this->getFirmwareName(); 
@@ -242,9 +212,15 @@ void RbFirmataController::setupArduino(const int & version)
 	//m_EDigitalPinChanged = this->EDigitalPinChanged.connect(boost::bind(&RbFirmataController::digitalPinChanged, this, _1));
 	//m_EAnalogPinChanged = this->EAnalogPinChanged.connect(boost::bind(&RbFirmataController::analogPinChanged, this, _1));
 
-	m_WaitForArduinoCond.notify_all();
+	m_WaitForIOSetupCond.notify_all();
 }
 
+void RbFirmataController::ExitIOThread()
+{
+	RobotIOControl::ExitIOThread();
+
+	_port.close();
+}
 
 // digital pin event handler, called whenever a digital pin value has changed
 // note: if an analog pin has been set as a digital pin, it will be handled

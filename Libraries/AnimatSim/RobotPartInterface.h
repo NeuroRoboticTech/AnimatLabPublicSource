@@ -34,6 +34,9 @@ namespace AnimatSim
 			///True when the value changes.
 			bool m_bChanged;
 
+			//The time it takes to perform a step of the IO for this part.
+			float m_fltStepIODuration;
+
 			virtual void AddGain(std::string strXml);
 
 		public:
@@ -63,6 +66,8 @@ namespace AnimatSim
 
 			virtual Gain *GetGain();
 			virtual void SetGain(Gain *lpGain);
+
+			virtual float StepIODuration();
 
 #pragma region DataAccesMethods
 

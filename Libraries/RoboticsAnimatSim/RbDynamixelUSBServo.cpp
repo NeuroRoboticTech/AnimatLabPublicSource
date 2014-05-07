@@ -14,6 +14,13 @@
 #include "RbStructure.h"
 #include "RbDynamixelUSBServo.h"
 
+#define DYN_ID					(2)
+#define DYN_LENGTH				(3)
+#define DYN_INSTRUCTION			(4)
+#define DYN_ERRBIT				(4)
+#define DYN_PARAMETER			(5)
+#define DYN_DEFAULT_BAUDNUMBER	(1)
+
 namespace RoboticsAnimatSim
 {
 	namespace Robotics
@@ -57,8 +64,14 @@ RbDynamixelUSBServo::RbDynamixelUSBServo()
 	m_iMaxLoad = 1023;
 	m_fltConvertFPToLoad = 100.0/(m_iMaxLoad - m_iMinLoad);
 
+	m_iNextGoalPos = 0;
+	m_iNextGoalVelocity = 0;
 
-	
+	m_fltPresentPos = 0;
+	m_fltPresentVelocity = 0;
+	m_fltLoad = 0;
+	m_fltVoltage = 0;
+	m_fltTemperature = 0;
 }
 
 RbDynamixelUSBServo::~RbDynamixelUSBServo()
@@ -127,6 +140,24 @@ void RbDynamixelUSBServo::SetGoalVelocity_FP(int iVelocity)
 }
 
 /**
+\brief	Sets the fixed point value of the servo velocity for the next time the IO for this servo is processed. 
+
+\author	dcofer
+\date	4/25/2014
+
+\param	iVelocity	The new value fixed point velocity.
+**/
+void RbDynamixelUSBServo::SetNextGoalVelocity_FP(int iVelocity)
+{
+	//Verify we are not putting invalid values in.
+	if(iVelocity < m_iMinVelocity) iVelocity = m_iMinVelocity;
+	if(iVelocity > m_iMaxVelocity) iVelocity = m_iMaxVelocity;
+
+	m_iNextGoalVelocity = iVelocity;
+}
+
+
+/**
 \brief	Sets the servo goal speed to 0 for maximum velocity. 
 
 \author	dcofer
@@ -141,6 +172,21 @@ void RbDynamixelUSBServo::SetMaximumVelocity()
 	m_iLastGoalVelocity = 0;
 
 	dxl_write_word(m_iServoID, P_MOVING_SPEED_L, 0 );
+}
+
+/**
+\brief	Sets the servo goal speed to 0 for maximum velocity the next time the IO for this servo is processed. 
+
+\author	dcofer
+\date	4/25/2014
+**/
+void RbDynamixelUSBServo::SetNextMaximumVelocity()
+{
+	//If the velocity we are setting is the same as we just set then no point sending it.
+	if(m_iLastGoalVelocity == 0)
+		return;
+
+	m_iNextGoalVelocity = 0;
 }
 
 /**
@@ -171,7 +217,24 @@ void RbDynamixelUSBServo::SetGoalVelocity(float fltVelocity)
 {
 	int iVel = (int) (fabs(fltVelocity)*m_fltConvertRadSToFP);
 
-	SetGoalVelocity_FP(iVel);}
+	SetGoalVelocity_FP(iVel);
+}
+
+/**
+\brief	Sets the floating point value of the servo velocity the next time the IO for this servo is processed. This is the velocity in rad/s. It will be converted to a fixed
+point value based on the motor configuration and then used to set the velocity.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	fltVelocity	The new value velocity in rad/s.
+**/
+void RbDynamixelUSBServo::SetNextGoalVelocity(float fltVelocity)
+{
+	int iVel = (int) (fabs(fltVelocity)*m_fltConvertRadSToFP);
+
+	SetNextGoalVelocity_FP(iVel);
+}
 
 /**
 \brief	Gets the floating point value of the servo velocity. The fixed point value is retrieved from the servo and then converted to rad/s. 
@@ -224,6 +287,23 @@ void RbDynamixelUSBServo::SetGoalPosition_FP(int iPos)
 }
 
 /**
+\brief	Sets the fixed point value of the servo goal position that will be used the next time the IO for this servo is processed. This is the exact value that will be sent to the servo. 
+
+\author	dcofer
+\date	4/25/2014
+
+\param	iPos	The new value fixed point position.
+**/
+void RbDynamixelUSBServo::SetNextGoalPosition_FP(int iPos)
+{
+	//Verify we are not putting invalid values in.
+	if(iPos < m_iMinPos) iPos = m_iMinPos;
+	if(iPos > m_iMaxPos) iPos = m_iMaxPos;
+
+	m_iNextGoalPos = iPos;
+}
+
+/**
 \brief	Gets the fixed point value of the servo goal position. This is the exact value returned from the servo. 
 
 \author	dcofer
@@ -236,7 +316,6 @@ int RbDynamixelUSBServo::GetGoalPosition_FP()
 	int iGoalPos = dxl_read_word(m_iServoID, P_GOAL_POSITION_L);
 	return iGoalPos;
 }
-
 
 /**
 \brief	Sets the floating point value of the servo goal position. This is the position in radians. It will be converted to a fixed
@@ -253,6 +332,24 @@ void RbDynamixelUSBServo::SetGoalPosition(float fltPos)
 	int iPos = ConvertPosRadToFP(fltPos);
 
 	SetGoalPosition_FP(iPos);
+}
+
+/**
+\brief	Sets the floating point value of the servo goal position that will be used the next time the iO for this servo is processed. 
+This is the position in radians. It will be converted to a fixed
+point value based on the motor configuration and then used to set the position. This method assumes that center value is 0 and that
+it uses +/- values on either side.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	fltPos	The new value position in radians.
+**/
+void RbDynamixelUSBServo::SetNextGoalPosition(float fltPos)
+{
+	int iPos = ConvertPosRadToFP(fltPos);
+
+	SetNextGoalPosition_FP(iPos);
 }
 
 /**
@@ -333,12 +430,12 @@ int RbDynamixelUSBServo::GetActualVelocity_FP()
 \author	dcofer
 \date	4/25/2014
 
-\return	Floating point value of actual velocity from the servo in rad/s. 
-**/
-float RbDynamixelUSBServo::GetActualVelocity()
-{
-	int iVel = GetActualVelocity_FP();
+\param	iVel	The fixed point velocity.
 
+\return	Floating point value of velocity from the servo in rad/s. 
+**/
+float RbDynamixelUSBServo::ConvertFPVelocity(int iVel)
+{
 	int iDir = 1;
 	if(iVel > m_iMaxVelocity)
 	{
@@ -346,9 +443,22 @@ float RbDynamixelUSBServo::GetActualVelocity()
 		iDir = -1;
 	}
 
-	float fltPos = iDir*iVel*m_fltConvertFPToRadS;
+	float fltVel = iDir*iVel*m_fltConvertFPToRadS;
+	return fltVel;
+}
 
-	return fltPos;
+/**
+\brief	Gets the floating point value of the servo actual velocity. The fixed point value is retrieved from the servo and then converted to rad/s. 
+
+\author	dcofer
+\date	4/25/2014
+
+\return	Floating point value of actual velocity from the servo in rad/s. 
+**/
+float RbDynamixelUSBServo::GetActualVelocity()
+{
+	int iVel = GetActualVelocity_FP();
+	return ConvertFPVelocity(iVel);
 }
 
 /**
@@ -366,17 +476,17 @@ int RbDynamixelUSBServo::GetActualLoad_FP()
 }
 
 /**
-\brief	Gets the floating point value of the servo actual torque. The fixed point value is retrieved from the servo and then converted to Nm. 
+\brief	Gets the floating point value of the servo load. The fixed point value is retrieved from the servo and then converted. 
 
 \author	dcofer
 \date	4/25/2014
 
-\return	Floating point value of actual torque from the servo in Nm. 
-**/
-float RbDynamixelUSBServo::GetActualLoad()
-{
-	int iLoad = GetActualLoad_FP();
+\param	iVel	The fixed point load.
 
+\return	Floating point value of velocity from the servo in rad/s. 
+**/
+float RbDynamixelUSBServo::ConvertFPLoad(int iLoad)
+{
 	int iDir = -1;
 	if(iLoad > m_iMaxLoad)
 	{
@@ -387,6 +497,20 @@ float RbDynamixelUSBServo::GetActualLoad()
 	float fltLoad = iDir*iLoad*m_fltConvertFPToLoad;
 
 	return fltLoad;
+}
+
+/**
+\brief	Gets the floating point value of the servo actual torque. The fixed point value is retrieved from the servo and then converted to Nm. 
+
+\author	dcofer
+\date	4/25/2014
+
+\return	Floating point value of actual torque from the servo in Nm. 
+**/
+float RbDynamixelUSBServo::GetActualLoad()
+{
+	int iLoad = GetActualLoad_FP();
+	return ConvertFPLoad(iLoad);
 }
 
 /**
@@ -551,7 +675,6 @@ int RbDynamixelUSBServo::GetFirmwareVersion()
 **/
 void RbDynamixelUSBServo::InitMotorData()
 {
-	m_iLastGoalPos = GetActualPosition_FP();
 	SetMaximumVelocity();
 	SetGoalPosition(0);
 
@@ -559,8 +682,180 @@ void RbDynamixelUSBServo::InitMotorData()
 	{
 		Std_Sleep(100);
 	} while(GetIsMoving());
+
+	m_iLastGoalPos = GetActualPosition_FP();
+	std::cout << "Reset Position: " << m_iLastGoalPos << "\r\n";
 }
 
+/**
+\brief	Reads all major data parameters from the servo in one read packet. This include present position, 
+speed, load, temperature, and voltage. It sets the corresponding internal variables.
+
+\author	dcofer
+\date	5/7/2014
+**/
+void RbDynamixelUSBServo::ReadAllParams()
+{
+	std::vector<int> aryData;
+
+	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 8, aryData) && aryData.size() == 8)
+	{
+		int iPos = dxl_makeword(aryData[0], aryData[1]);
+		int iVel = dxl_makeword(aryData[2], aryData[3]);
+		int iLoad = dxl_makeword(aryData[4], aryData[5]);
+		int iVolt = aryData[6];
+		int iTemp = aryData[7];
+
+		m_fltPresentPos = ConvertPosFPToRad(iPos);
+		m_fltPresentVelocity = ConvertFPVelocity(iVel);
+		m_fltLoad = ConvertFPLoad(iLoad);
+		m_fltVoltage = iVolt/100.0;
+		m_fltTemperature = (float) iTemp;
+	}
+}
+
+/**
+\brief	Reads only the key data parameters from the servo in one read packet. This include present position and speed. 
+It sets the corresponding internal variables.
+
+\author	dcofer
+\date	5/7/2014
+**/
+void RbDynamixelUSBServo::ReadKeyParams()
+{
+	std::vector<int> aryData;
+
+	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 4, aryData) && aryData.size() == 4)
+	{
+		int iPos = dxl_makeword(aryData[0], aryData[1]);
+		int iVel = dxl_makeword(aryData[2], aryData[3]);
+
+		m_fltPresentPos = ConvertPosFPToRad(iPos);
+		m_fltPresentVelocity = ConvertFPVelocity(iVel);
+	}
+}
+
+/**
+\brief	Reads an entire block of data from a dynamixel servo. This is used to allow us to read back a number of 
+params at one time instead of having to seperate them into different packets.
+
+\author	dcofer
+\date	5/7/2014
+
+\param	id	ID of the servo to query.
+\param	address	address in the control block to start reading.
+\param	length	length of the data to read.
+\param	aryData	Data that was read.
+
+\return	True if it succedded in the read. 
+**/
+bool RbDynamixelUSBServo::dxl_read_block( int id, int address, int length, std::vector<int> &aryData)
+{
+	// Make a packet to read a bunch of data at once.
+	dxl_set_txpacket_id(id);
+	dxl_set_txpacket_instruction(INST_READ);
+	dxl_set_txpacket_parameter(0, address);
+	dxl_set_txpacket_parameter(1, length);
+	dxl_set_txpacket_length(4);
+
+	dxl_txrx_packet();
+
+	int CommStatus = dxl_get_result();
+
+	if(!CommStatus)
+	{
+		return false;
+	}
+
+	aryData.clear();
+	for(int iIdx=0; iIdx<length; iIdx++)
+	{
+		int iParam = dxl_get_rxpacket_parameter(iIdx);
+		aryData.push_back(iParam);
+	}
+
+	return true;
+}
+
+/**
+\brief	Checks the error code and returns an associated error message.
+
+\author	dcofer
+\date	5/7/2014
+
+\return	Error message. 
+**/
+std::string RbDynamixelUSBServo::GetErrorCode()
+{
+	if(dxl_get_rxpacket_error(ERRBIT_VOLTAGE) == 1)
+		return "Input voltage error!";
+
+	if(dxl_get_rxpacket_error(ERRBIT_ANGLE) == 1)
+		return "Angle limit error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_OVERHEAT) == 1)
+		return "Overheat error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_RANGE) == 1)
+		return "Out of range error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_CHECKSUM) == 1)
+		return "Checksum error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_OVERLOAD) == 1)
+		return "Overload error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_INSTRUCTION) == 1)
+		return "Instruction code error!\n";	
+
+	return "Unknown error";
+}
+
+std::string RbDynamixelUSBServo::GetCommStatus(int CommStatus)
+{
+	switch(CommStatus)
+	{
+	case COMM_TXFAIL:
+		return "COMM_TXFAIL: Failed transmit instruction packet!";
+		break;
+
+	case COMM_TXERROR:
+		return "COMM_TXERROR: Incorrect instruction packet!";
+		break;
+
+	case COMM_RXFAIL:
+		return "COMM_RXFAIL: Failed get status packet from device!";
+		break;
+
+	case COMM_RXWAITING:
+		return "COMM_RXWAITING: Now recieving status packet!";
+		break;
+
+	case COMM_RXTIMEOUT:
+		return "COMM_RXTIMEOUT: There is no status packet!";
+		break;
+
+	case COMM_RXCORRUPT:
+		return "COMM_RXCORRUPT: Incorrect status packet!";
+		break;
+
+	default:
+		return "This is unknown error code!";
+		break;
+	}
+}
+
+
+void RbDynamixelUSBServo::SetReturnDelayTime(int iVal)
+{
+	if(iVal >= 0 && iVal < 256)
+		dxl_write_byte(m_iServoID, P_RETURN_DELAY_TIME, iVal);
+}
+
+int RbDynamixelUSBServo::GetReturnDelayTime()
+{
+	return dxl_read_byte(m_iServoID, P_RETURN_DELAY_TIME);
+}
 
 			}	//DynamixelUSB
 		}		//RobotIOControls

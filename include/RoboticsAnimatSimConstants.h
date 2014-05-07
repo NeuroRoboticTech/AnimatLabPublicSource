@@ -237,13 +237,10 @@
 #define Rb_Err_lInvalidPort -4044
 #define Rb_Err_strInvalidPort "Invalid port specified."
 
-#define Std_Err_lErrorConnectingToArduino -4045
-#define Std_Err_strErrorConnectingToArduino "Error connecting to Arduino."
+#define Rb_Err_lErrorConnectingToArduino -4045
+#define Rb_Err_strErrorConnectingToArduino "Error connecting to Arduino."
 
-#define Std_Err_lErrorSettingUpArduino -4046
-#define Std_Err_strErrorErrorSettingUpArduino "Timed out waiting for Arduino to setup."
-
-#define Rb_Err_lUnableToObtainFirmataPointer -4047
+#define Rb_Err_lUnableToObtainFirmataPointer -4046
 #define Rb_Err_strUnableToObtainFirmataPointer "Unable to obtain a pointer to the Firmata controller."
 
 

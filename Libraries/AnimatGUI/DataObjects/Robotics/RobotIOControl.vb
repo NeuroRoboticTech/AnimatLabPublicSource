@@ -100,6 +100,11 @@ Namespace DataObjects
                     m_doOrganism = m_doParentInterface.Organism
                 End If
                 m_strName = "RobotIOControl"
+
+                m_thDataTypes.DataTypes.Clear()
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StepIODuration", "IO Duration", "Seconds", "s", 0, 1))
+                m_thDataTypes.ID = "StepIODuration"
+
             End Sub
 
             Public Overrides Sub ClearIsDirty()

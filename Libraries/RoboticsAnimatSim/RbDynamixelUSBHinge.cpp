@@ -12,6 +12,7 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
 #include "RbDynamixelUSBHinge.h"
 
@@ -31,6 +32,8 @@ namespace RoboticsAnimatSim
 RbDynamixelUSBHinge::RbDynamixelUSBHinge() 
 {
     m_lpHinge = NULL;
+	m_iUpdateAllParamsCount = 10;
+	m_iUpdateIdx = 0;
 }
 
 RbDynamixelUSBHinge::~RbDynamixelUSBHinge()
@@ -51,6 +54,14 @@ void RbDynamixelUSBHinge::IOComponentID(int iID)
 	RbDynamixelUSBServo::ServoID(iID);
 }
 
+void RbDynamixelUSBHinge::UpdateAllParamsCount(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, true, "UpdateAllParamsCount");
+	m_iUpdateAllParamsCount = iVal;
+}
+
+int RbDynamixelUSBHinge::UpdateAllParamsCount() {return m_iUpdateAllParamsCount;}
+
 #pragma region DataAccesMethods
 
 float *RbDynamixelUSBHinge::GetDataPointer(const std::string &strDataType)
@@ -60,9 +71,7 @@ float *RbDynamixelUSBHinge::GetDataPointer(const std::string &strDataType)
 	//if(strType == "LIMITPOS")
 	//	return &m_fltLimitPos;
 	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
+	return RobotPartInterface::GetDataPointer(strDataType);
 }
 
 bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -78,6 +87,12 @@ bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::str
 		return true;
 	}
 
+	if(strType == "UPDATEALLPARAMSCOUNT")
+	{
+		UpdateAllParamsCount((int) atoi(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -90,6 +105,7 @@ void RbDynamixelUSBHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 	RobotPartInterface::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpdateAllParamsCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -99,9 +115,49 @@ void RbDynamixelUSBHinge::Initialize()
 	RobotPartInterface::Initialize();
 
 	m_lpHinge = dynamic_cast<Hinge *>(m_lpPart);
+	m_lpParentUSB = dynamic_cast<RbDynamixelUSB *>(m_lpParentIOControl);
+}
+
+void RbDynamixelUSBHinge::SetupIO()
+{
+	if(!m_lpParentInterface->InSimulation())
+	{
+		InitMotorData();
+
+		//Set the next goal positions to the current ones.
+		m_iNextGoalPos = m_iLastGoalPos;
+		m_iNextGoalVelocity = m_iLastGoalVelocity;
+	}
+}
+
+void RbDynamixelUSBHinge::StepIO()
+{	
+	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 	if(!m_lpParentInterface->InSimulation())
-		InitMotorData();
+	{
+		if(m_iNextGoalPos != m_iLastGoalPos ||  m_iNextGoalVelocity != m_iLastGoalVelocity)
+		{
+			std::cout << m_lpSim->Time() <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
+
+			//Add a new update data so we can send the move command out synchronously to all motors.
+			m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelUSBMotorUpdateData(m_iServoID, m_iNextGoalPos, m_iNextGoalVelocity));
+			m_iLastGoalPos = m_iNextGoalPos;
+			m_iLastGoalVelocity = m_iNextGoalVelocity;
+
+			m_fltIOValue = m_iNextGoalVelocity;
+		}
+
+		if(m_iUpdateIdx == m_iUpdateAllParamsCount)
+			ReadAllParams();
+		else
+			ReadKeyParams();
+	}
+
+	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
+
+	m_iUpdateIdx++;
 }
 
 void RbDynamixelUSBHinge::StepSimulation()
@@ -113,35 +169,36 @@ void RbDynamixelUSBHinge::StepSimulation()
 		if(m_lpHinge)
 		{
 			//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
+			//Here we are setting the values that will be used the next time the IO is processed for this servo.
 			if(!m_lpHinge->ServoMotor())
 			{
 				float fltSetVelocity = m_lpHinge->SetVelocity();
-				SetGoalVelocity(fltSetVelocity);
+				SetNextGoalVelocity(fltSetVelocity);
+				//m_fltIOValue = m_iNextGoalVelocity;
 
-				if(fltSetVelocity > 0)
-					SetGoalPosition_FP(m_iMaxPos);
+				if(fltSetVelocity == 0)
+					SetNextGoalPosition_FP(m_iLastGoalPos);
+				else if(fltSetVelocity > 0)
+					SetNextGoalPosition_FP(m_iMaxPos);
 				else
-					SetGoalPosition_FP(m_iMinPos);
+					SetNextGoalPosition_FP(m_iMinPos);
 			}
 			else
 			{
 				float fltSetPosition = m_lpHinge->SetVelocity();
-				SetGoalPosition(fltSetPosition);
-				SetMaximumVelocity();
+				SetNextGoalPosition(fltSetPosition);
+				SetNextMaximumVelocity();
+
+				//m_fltIOValue = m_iNextGoalPos;
 			}
 
-			float fltActualPosition = GetActualPosition();
-			float fltActualVelocity = GetActualVelocity();
-			//float fltTemperature = GetActualTemperatureCelcius();
-			//float fltVoltage = GetActualVoltage();
-			//float fltLoad = GetActualLoad();
-
-			m_lpHinge->JointPosition(fltActualPosition);
-			m_lpHinge->JointVelocity(fltActualVelocity);
-			//m_lpHinge->Temperature(fltTemperature);
-			//m_lpHinge->Voltage(fltVoltage);
-			//m_lpHinge->MotorTorqueToAMagnitude(fltLoad);
-			//m_lpHinge->MotorTorqueToBMagnitude(fltLoad);
+			//Retrieve the values that we got from the last time the IO for this servo was read in.
+			m_lpHinge->JointPosition(m_fltPresentPos);
+			m_lpHinge->JointVelocity(m_fltPresentVelocity);
+			m_lpHinge->Temperature(m_fltVoltage);
+			m_lpHinge->Voltage(m_fltTemperature);
+			m_lpHinge->MotorTorqueToAMagnitude(m_fltLoad);
+			m_lpHinge->MotorTorqueToBMagnitude(m_fltLoad);
 		}
 	}
 }
@@ -151,7 +208,7 @@ void RbDynamixelUSBHinge::Load(StdUtils::CStdXml &oXml)
 	RobotPartInterface::Load(oXml);
 
 	oXml.IntoElem();
-	ServoID(oXml.GetChildInt("ServoID", m_iServoID));
+	UpdateAllParamsCount(oXml.GetChildInt("UpdateAllParamsCount", m_iUpdateAllParamsCount));
 	oXml.OutOfElem();
 }
 

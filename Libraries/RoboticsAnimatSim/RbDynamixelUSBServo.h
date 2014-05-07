@@ -93,6 +93,9 @@ protected:
 	//Keeps track of the last servo goal position that we set
 	int m_iLastGoalPos;
 
+	//This is the goal position that you would like to use in the next time step.
+	int m_iNextGoalPos;
+
 	///Minimum value that can be set for the velocity
 	int m_iMinVelocity; 
 
@@ -108,6 +111,8 @@ protected:
 	//Keeps track of the last servo goal velocity that we set
 	int m_iLastGoalVelocity;
 
+	//This is the goal velocity that you would like to use in the next time step.
+	int m_iNextGoalVelocity;
 
 	///Minimum value that can be set for the load
 	int m_iMinLoad; 
@@ -118,6 +123,20 @@ protected:
 	//Used to conver the load fixed point value back to a percentage of load
 	float m_fltConvertFPToLoad;
 
+	//The current position that was last read in for this servo.
+	float m_fltPresentPos;
+
+	//The current velocity that was last read in for this servo.
+	float m_fltPresentVelocity;
+
+	//The current load that was last read in for this servo.
+	float m_fltLoad;
+
+	//The current voltage that was last read in for this servo.
+	float m_fltVoltage;
+	
+	//The current temperature that was last read in for this servo.
+	float m_fltTemperature;
 
 public:
 	RbDynamixelUSBServo();
@@ -126,21 +145,29 @@ public:
 	virtual float ConvertPosFPToRad(int iPos);
 	virtual int ConvertPosRadToFP(float fltPos);
 
+	virtual float ConvertFPVelocity(int iVel);
+	virtual float ConvertFPLoad(int iLoad);
+
 	virtual void ServoID(int iID);
 	virtual int ServoID();
 
 	virtual void SetGoalVelocity_FP(int iVelocity);
+	virtual void SetNextGoalVelocity_FP(int iVelocity);
 	virtual int GetGoalVelocity_FP();
 
 	virtual void SetMaximumVelocity();
+	virtual void SetNextMaximumVelocity();
 
 	virtual void SetGoalVelocity(float fltVelocity);
+	virtual void SetNextGoalVelocity(float fltVelocity);
 	virtual float GetGoalVelocity();
 
 	virtual void SetGoalPosition_FP(int iPos);
+	virtual void SetNextGoalPosition_FP(int iPos);
 	virtual int GetGoalPosition_FP();
 
 	virtual void SetGoalPosition(float fltPos);
+	virtual void SetNextGoalPosition(float fltPos);
 	virtual float GetGoalPosition();
 
 	virtual int LastGoalPosition_FP();
@@ -162,6 +189,12 @@ public:
 	virtual float GetActualTemperatureFahrenheit();
 	virtual float GetActualTemperatureCelcius();
 
+	virtual float GetPresentPosition() {return m_fltPresentPos;}
+	virtual float GetPresentVelocity() {return m_fltPresentVelocity;}
+	virtual float GetPresentLoad() {return m_fltLoad;}
+	virtual float GetPresentVoltage() {return m_fltVoltage;}
+	virtual float GetPresentTemperature() {return m_fltTemperature;}
+
 	virtual bool GetIsMoving();
 	virtual void GetIsLEDOn(bool &bIsBlueOn, bool &bIsGreenOn, bool &bIsRedOn);
 	virtual bool GetIsAlarmShutdown();
@@ -171,6 +204,16 @@ public:
 	virtual int GetFirmwareVersion();
 
 	virtual void InitMotorData();
+
+	virtual bool dxl_read_block( int id, int address, int length, std::vector<int> &aryData);
+	virtual void ReadAllParams();
+	virtual void ReadKeyParams();
+
+	virtual std::string GetErrorCode();
+	virtual std::string GetCommStatus(int CommStatus);
+
+	virtual void SetReturnDelayTime(int iVal);
+	virtual int GetReturnDelayTime();
 };
 
 			}	//DynamixelUSB

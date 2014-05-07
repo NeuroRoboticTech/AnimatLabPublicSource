@@ -22,29 +22,15 @@ protected:
 	//Baud rate for the connection to the Arduino
 	int m_iBaudRate;
 
-	//True while the thread processing loop is going on.
-	bool m_bArduinoThreadProcessing;
-
-	///Set to true once the Arduino is setup correctly.
-	bool m_bSetupArduino;
-
-	///Flags the thread processing loop to exit.
-	bool m_bStopArduino;
-
-	boost::thread m_ArduinoThread;
-
 	boost::signals2::connection m_EInitializedConnection;
 	boost::signals2::connection m_EDigitalPinChanged;
 	boost::signals2::connection m_EAnalogPinChanged;
 
-	boost::interprocess::interprocess_mutex m_WaitForArduinoMutex;
-	boost::interprocess::interprocess_condition  m_WaitForArduinoCond;
-
-	virtual void ProcessArduino();
 	virtual void digitalPinChanged(const int & pinNum);
 	virtual void analogPinChanged(const int & pinNum);
 	virtual void setupArduino(const int & version);
-	virtual void ExitArduinoThreadProcess();
+	virtual void ProcessIO();
+	virtual void ExitIOThread();
 
 public:
 	RbFirmataController();

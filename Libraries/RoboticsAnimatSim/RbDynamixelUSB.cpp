@@ -13,6 +13,8 @@
 #include "RbRigidBody.h"
 #include "RbStructure.h"
 #include "RbDynamixelUSB.h"
+#include "RbDynamixelUSBServo.h"
+#include <platformstl/synch/sleep_functions.h>
 
 namespace RoboticsAnimatSim
 {
@@ -37,8 +39,6 @@ RbDynamixelUSB::~RbDynamixelUSB()
 {
 	try
 	{
-		if(m_lpParentInterface && !m_lpParentInterface->InSimulation())
-			dxl_terminate();
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelUSB\r\n", "", -1, false, true);}
@@ -68,12 +68,7 @@ float *RbDynamixelUSB::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
+	return RobotIOControl::GetDataPointer(strDataType);
 }
 
 bool RbDynamixelUSB::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -118,10 +113,91 @@ void RbDynamixelUSB::Initialize()
 	{
 		if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
 			THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
+
+		StartIOThread();
 	}
 
 	RobotIOControl::Initialize();
 }
+
+void RbDynamixelUSB::ProcessIO()
+{
+	try
+	{
+		m_bIOThreadProcessing = true;
+
+		SetupIO();
+
+		m_bSetupComplete = true;
+		m_WaitForIOSetupCond.notify_all();
+
+		while(!m_bStopIO)
+		{
+			m_aryMotorData.RemoveAll();
+			StepIO();
+			SendSynchronousMoveCommand();
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		m_bIOThreadProcessing = false;
+	}
+	catch(...)
+	{
+		m_bIOThreadProcessing = false;
+	}
+
+	m_bIOThreadProcessing = false;
+}
+
+void RbDynamixelUSB::ExitIOThread()
+{
+	RobotIOControl::ExitIOThread();
+
+	if(m_lpParentInterface && !m_lpParentInterface->InSimulation())
+		dxl_terminate();
+}
+
+bool RbDynamixelUSB::SendSynchronousMoveCommand()
+{
+	int iServos = m_aryMotorData.GetSize();
+	int iDataPerServo = 4; 
+
+	if(iServos > 0)
+	{
+		dxl_set_txpacket_id(BROADCAST_ID);
+		dxl_set_txpacket_instruction(INST_SYNC_WRITE);
+		dxl_set_txpacket_parameter(0, P_GOAL_POSITION_L);
+		dxl_set_txpacket_parameter(1, iDataPerServo);
+
+		for(int iServo=0; iServo<iServos; iServo++ )
+		{
+			RbDynamixelUSBMotorUpdateData *lpServo = m_aryMotorData[iServo];
+
+			int iOffset = (2+(iDataPerServo)*iServo);
+			dxl_set_txpacket_parameter((iOffset+0), lpServo->m_iID);
+			dxl_set_txpacket_parameter((iOffset+1), dxl_get_lowbyte(lpServo->m_iGoalPos));
+			dxl_set_txpacket_parameter((iOffset+2), dxl_get_highbyte(lpServo->m_iGoalPos));
+			dxl_set_txpacket_parameter((iOffset+3), dxl_get_lowbyte(lpServo->m_iGoalVelocity));
+			dxl_set_txpacket_parameter((iOffset+4), dxl_get_highbyte(lpServo->m_iGoalVelocity));
+		}
+
+		dxl_set_txpacket_length((iDataPerServo+1)*iServos+4);
+
+		dxl_txrx_packet();
+		int CommStatus = dxl_get_result();
+		if( CommStatus == COMM_RXSUCCESS )
+			return true;
+		//else
+		//{
+		//	PrintCommStatus(CommStatus);
+		//	break;
+		//}
+
+	}
+
+	return false;
+}			
 
 void RbDynamixelUSB::Load(StdUtils::CStdXml &oXml)
 {

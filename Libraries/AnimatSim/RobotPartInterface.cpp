@@ -53,6 +53,7 @@ RobotPartInterface::RobotPartInterface(void)
 	m_iIOValue = 0;
 	m_lpGain = NULL;
 	m_bChanged= false;
+	m_fltStepIODuration = 0;
 }
 
 RobotPartInterface::~RobotPartInterface(void)
@@ -137,6 +138,16 @@ void RobotPartInterface::SetGain(Gain *lpGain)
 }
 
 /**
+\brief	Gets the time duration required to perform one step of the IO for this part.
+
+\author	dcofer
+\date	5/7/2014
+
+\return	Step duration.
+**/
+float RobotPartInterface::StepIODuration() {return m_fltStepIODuration;}
+
+/**
 \brief	Creates and adds a gain object. 
 
 \author	dcofer
@@ -162,6 +173,8 @@ float *RobotPartInterface::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "IOVALUE")
 		return &m_fltIOValue;
+	else if(strType == "STEPIODURATION")
+		return &m_fltStepIODuration;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
@@ -208,6 +221,7 @@ void RobotPartInterface::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 	AnimatBase::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("IOValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("StepIODuration", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("IOComponentID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
@@ -253,10 +267,10 @@ void RobotPartInterface::Initialize()
 
 	if(m_lpPart)
 	{
-		//m_lpBodyPart->AddRobotPartInterface(this);
-
 		if(!Std_IsBlank(m_strPropertyName))
 			m_lpProperty = m_lpPart->GetDataPointer(m_strPropertyName);
+		else
+			m_lpProperty = NULL;
 	}
 	else
 		m_lpProperty = NULL;
@@ -276,9 +290,9 @@ void RobotPartInterface::Load(CStdXml &oXml)
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-	m_strPartID = oXml.GetChildString("LinkedPartID", "");
-	m_strPropertyName = oXml.GetChildString("PropertyName", "");
-	m_iIOComponentID = oXml.GetChildInt("IOComponentID", m_iIOComponentID);
+	LinkedPartID(oXml.GetChildString("LinkedPartID", ""));
+	PropertyName(oXml.GetChildString("PropertyName", ""));
+	IOComponentID(oXml.GetChildInt("IOComponentID", m_iIOComponentID));
 	
 	SetGain(AnimatSim::Gains::LoadGain(m_lpSim, "Gain", oXml));
 

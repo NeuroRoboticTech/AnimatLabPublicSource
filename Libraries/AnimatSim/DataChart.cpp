@@ -482,7 +482,24 @@ void DataChart::ReInitialize()
 		//Now initialize the data columns.
 		int iCount = m_aryDataColumns.GetSize();
 		for(int iCol=0; iCol<iCount; iCol++)
-			m_aryDataColumns[iCol]->ReInitialize();
+		{
+			//If initialization fails then we need to remove the one that failed.
+			try
+			{
+				m_aryDataColumns[iCol]->ReInitialize();
+			}
+			catch(CStdErrorInfo oError)
+			{
+				m_aryDataColumns.RemoveAt(iCol);
+				RELAY_ERROR(oError);
+			}
+			catch(...)
+			{
+				m_aryDataColumns.RemoveAt(iCol);
+				THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+			}
+
+		}
 	}
 }
 

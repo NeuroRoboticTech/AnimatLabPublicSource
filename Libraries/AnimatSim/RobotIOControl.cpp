@@ -43,6 +43,10 @@ namespace AnimatSim
 RobotIOControl::RobotIOControl(void)
 {
 	m_lpParentInterface = NULL;
+	m_bSetupComplete	= false;	// flag so we setup arduino when its ready, you don't need to touch this :)
+	m_bStopIO = false;
+	m_bIOThreadProcessing = false;
+	m_fltStepIODuration = 0;
 }
 
 RobotIOControl::~RobotIOControl(void)
@@ -50,6 +54,7 @@ RobotIOControl::~RobotIOControl(void)
 try
 {
 	m_aryParts.RemoveAll();
+	ExitIOThread();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RobotIOControl\r\n", "", -1, false, true);}
@@ -69,15 +74,25 @@ RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
 **/
 CStdPtrArray<RobotPartInterface> *RobotIOControl::Parts() {return &m_aryParts;}
 
+/**
+\brief	Gets the time duration required to perform one step of the IO for all parts in this control.
+
+\author	dcofer
+\date	5/7/2014
+
+\return	Step duration.
+**/
+float RobotIOControl::StepIODuration() {return m_fltStepIODuration;}
+
 #pragma region DataAccesMethods
 
 float *RobotIOControl::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
+	if(strType == "STEPIODURATION")
+		return &m_fltStepIODuration;
+	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	return NULL;
@@ -101,6 +116,7 @@ void RobotIOControl::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	AnimatBase::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("StepIODuration", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 bool RobotIOControl::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
@@ -209,6 +225,32 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 
 #pragma endregion
 
+void RobotIOControl::StartIOThread()
+{
+	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
+		
+	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(500);
+
+	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
+	bool bWaitRet = m_WaitForIOSetupCond.timed_wait(lock, pt);
+
+	if(!bWaitRet)
+	{
+		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
+		ExitIOThread();
+	}
+}
+	
+void RobotIOControl::ExitIOThread()
+{
+	if(m_bIOThreadProcessing)
+	{
+		m_bStopIO = true;
+
+		bool bTryJoin = m_ioThread.try_join_for(boost::chrono::seconds(30));
+	}
+}
+
 /**
 \brief	This method is called after all connections to whatever control board have been made. It calls
 each parts SetupIO method. For example, We connect to a Firmata
@@ -236,9 +278,14 @@ void RobotIOControl::SetupIO()
 **/
 void RobotIOControl::StepIO()
 {
+	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryParts[iIndex]->StepIO();
+
+	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
 }
 
 void RobotIOControl::Initialize()
@@ -260,6 +307,11 @@ void RobotIOControl::AfterResetSimulation()
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryParts[iIndex]->AfterResetSimulation();
+}
+
+void RobotIOControl::SimStopping()
+{
+	ExitIOThread();
 }
 
 void RobotIOControl::StepSimulation()
