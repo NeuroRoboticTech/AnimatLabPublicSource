@@ -77,6 +77,18 @@ protected:
 	float m_fltMinPos;
 	float m_fltMaxPos;
 
+	///This is the minimum angle in fixed point that can be used for this servo as specified in the simulation.
+	int m_iMinSimPos;
+
+	///This is the maximum angle in fixed point that can be used for this servo as specified in the simulation.
+	int m_iMaxSimPos;
+
+	///This is the minimum angle in radians that can be used for this servo as specified in the simulation.
+	float m_fltMinSimPos;
+
+	///This is the maximum angle in radians that can be used for this servo as specified in the simulation.
+	float m_fltMaxSimPos;
+
 	///The conversion factor to convert radians to FP position.
 	float m_fltPosFPToRadSlope;
 	float m_fltPosFPToRadIntercept;
@@ -214,6 +226,24 @@ public:
 
 	virtual void SetReturnDelayTime(int iVal);
 	virtual int GetReturnDelayTime();
+
+	virtual void SetCWAngleLimit_FP(int iVal);
+	virtual void SetCWAngleLimit(float fltLimit);
+	virtual int GetCWAngleLimit_FP();
+	virtual float GetCWAngleLimit();
+
+	virtual void SetCCWAngleLimit_FP(int iVal);
+	virtual void SetCCWAngleLimit(float fltLimit);
+	virtual int GetCCWAngleLimit_FP();
+	virtual float GetCCWAngleLimit();
+
+	virtual int GetMinSimPos_FP();
+	virtual float GetMinSimPos();
+	virtual void SetMinSimPos(float fltVal);
+
+	virtual int GetMaxSimPos_FP();
+	virtual float GetMaxSimPos();
+	virtual void SetMaxSimPos(float fltVal);	
 };
 
 			}	//DynamixelUSB

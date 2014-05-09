@@ -46,6 +46,11 @@ RbDynamixelUSBServo::RbDynamixelUSBServo()
 	m_fltMinPos = -(m_fltMaxAngle/2);
 	m_fltMaxPos = (m_fltMaxAngle/2);
 
+	m_iMinSimPos = m_iMinPos;
+	m_iMaxSimPos = m_iMaxPos;
+	m_fltMinSimPos = m_fltMinPos;
+	m_fltMaxSimPos = m_fltMaxPos;
+
 	m_fltPosFPToRadSlope = (m_fltMaxAngle/m_iMaxAngle);
 	m_fltPosFPToRadIntercept = -(m_fltPosFPToRadSlope*m_iCenterPosFP);
 
@@ -274,8 +279,8 @@ int RbDynamixelUSBServo::LastGoalVelocity_FP() {return m_iLastGoalVelocity;}
 void RbDynamixelUSBServo::SetGoalPosition_FP(int iPos)
 {
 	//Verify we are not putting invalid values in.
-	if(iPos < m_iMinPos) iPos = m_iMinPos;
-	if(iPos > m_iMaxPos) iPos = m_iMaxPos;
+	if(iPos < m_iMinSimPos) iPos = m_iMinSimPos;
+	if(iPos > m_iMaxSimPos) iPos = m_iMaxSimPos;
 
 	//If the position we are setting is the same as we just set then no point sending it.
 	if(m_iLastGoalPos == iPos)
@@ -297,8 +302,8 @@ void RbDynamixelUSBServo::SetGoalPosition_FP(int iPos)
 void RbDynamixelUSBServo::SetNextGoalPosition_FP(int iPos)
 {
 	//Verify we are not putting invalid values in.
-	if(iPos < m_iMinPos) iPos = m_iMinPos;
-	if(iPos > m_iMaxPos) iPos = m_iMaxPos;
+	if(iPos < m_iMinSimPos) iPos = m_iMinSimPos;
+	if(iPos > m_iMaxSimPos) iPos = m_iMaxSimPos;
 
 	m_iNextGoalPos = iPos;
 }
@@ -675,6 +680,15 @@ int RbDynamixelUSBServo::GetFirmwareVersion()
 **/
 void RbDynamixelUSBServo::InitMotorData()
 {
+	int iMinPos = GetCWAngleLimit_FP();
+	int iMaxPos = GetCCWAngleLimit_FP();
+
+	if(iMinPos != m_iMinSimPos)
+		SetCWAngleLimit_FP(m_iMinSimPos);
+
+	if(iMaxPos != m_iMaxSimPos)
+		SetCCWAngleLimit_FP(m_iMaxSimPos);
+
 	SetMaximumVelocity();
 	SetGoalPosition(0);
 
@@ -845,16 +859,218 @@ std::string RbDynamixelUSBServo::GetCommStatus(int CommStatus)
 	}
 }
 
+/**
+\brief	Sets the return delay time of the servo.
 
+\author	dcofer
+\date	5/7/2014
+
+\param	iVal	delay time
+**/
 void RbDynamixelUSBServo::SetReturnDelayTime(int iVal)
 {
 	if(iVal >= 0 && iVal < 256)
 		dxl_write_byte(m_iServoID, P_RETURN_DELAY_TIME, iVal);
 }
 
+/**
+\brief	Gets the return delay time of the servo.
+
+\author	dcofer
+\date	5/7/2014
+
+\return	delay time 
+**/
 int RbDynamixelUSBServo::GetReturnDelayTime()
 {
 	return dxl_read_byte(m_iServoID, P_RETURN_DELAY_TIME);
+}
+
+
+/**
+\brief	Sets the limit for the CCW limit of the servo using fixed point value.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	iVal	limit
+**/
+void RbDynamixelUSBServo::SetCCWAngleLimit_FP(int iVal)
+{
+	if(iVal >= m_iMinPos && iVal <= m_iMaxPos)
+		dxl_write_word(m_iServoID, P_CCW_ANGLE_LIMIT_L, iVal);
+}
+
+/**
+\brief	Sets the limit for the CCW limit of the servo using radians.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	fltVal	limit
+**/
+void RbDynamixelUSBServo::SetCCWAngleLimit(float fltVal)
+{
+	int iPos = ConvertPosRadToFP(fltVal);
+	SetCCWAngleLimit_FP(iPos);
+}
+
+/**
+\brief	Gets the limit for the CCW limit of the servo in fixed point value.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+int RbDynamixelUSBServo::GetCCWAngleLimit_FP()
+{
+	return dxl_read_word(m_iServoID, P_CCW_ANGLE_LIMIT_L);
+}
+
+/**
+\brief	Gets the limit for the CCW limit of the servo in radian values.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+float RbDynamixelUSBServo::GetCCWAngleLimit()
+{
+	int iPos = dxl_read_word(m_iServoID, P_CCW_ANGLE_LIMIT_L);
+	return ConvertPosFPToRad(iPos);
+}
+
+/**
+\brief	Sets the limit for the CW limit of the servo using fixed point value.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	iVal	limit
+**/
+void RbDynamixelUSBServo::SetCWAngleLimit_FP(int iVal)
+{
+	if(iVal >= m_iMinPos && iVal <= m_iMaxPos)
+		dxl_write_word(m_iServoID, P_CW_ANGLE_LIMIT_L, iVal);
+}
+
+/**
+\brief	Sets the limit for the CW limit of the servo using radians.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	fltVal	limit
+**/
+void RbDynamixelUSBServo::SetCWAngleLimit(float fltVal)
+{
+	int iPos = ConvertPosRadToFP(fltVal);
+	SetCWAngleLimit_FP(iPos);
+}
+
+/**
+\brief	Gets the limit for the CW limit of the servo in fixed point value.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+int RbDynamixelUSBServo::GetCWAngleLimit_FP()
+{
+	return dxl_read_word(m_iServoID, P_CW_ANGLE_LIMIT_L);
+}
+
+/**
+\brief	Gets the limit for the CW limit of the servo in radian values.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+float RbDynamixelUSBServo::GetCWAngleLimit()
+{
+	int iPos = dxl_read_word(m_iServoID, P_CW_ANGLE_LIMIT_L);
+	return ConvertPosFPToRad(iPos);
+}
+
+/**
+\brief	Gets the minimum position in fixed point that the simulation will allow for the joint.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+int RbDynamixelUSBServo::GetMinSimPos_FP() {return m_iMinSimPos;}
+
+/**
+\brief	Gets the minimum position in radians that the simulation will allow for the joint.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+float RbDynamixelUSBServo::GetMinSimPos()  {return m_fltMinSimPos;}
+
+/**
+\brief	Sets the minimum position that the simulation will allow for this joint in radians.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	fltVal	limit
+**/
+void RbDynamixelUSBServo::SetMinSimPos(float fltVal)
+{
+	m_iMinSimPos = ConvertPosRadToFP(fltVal);
+
+	if(m_iMinSimPos < m_iMinPos) m_iMinSimPos = m_iMinPos;
+	if(m_iMinSimPos > m_iMaxPos) m_iMinSimPos = m_iMaxPos;
+
+	m_fltMinSimPos = ConvertPosFPToRad(m_iMinSimPos);
+}
+
+/**
+\brief	Gets the maximum position in fixed point that the simulation will allow for the joint.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+int RbDynamixelUSBServo::GetMaxSimPos_FP() {return m_iMaxSimPos;}
+
+/**
+\brief	Gets the maximum position in radians that the simulation will allow for the joint.
+
+\author	dcofer
+\date	5/9/2014
+
+\return	limit 
+**/
+float RbDynamixelUSBServo::GetMaxSimPos()  {return m_fltMaxSimPos;}
+
+/**
+\brief	Sets the maximum position that the simulation will allow for this joint in radians.
+
+\author	dcofer
+\date	5/9/2014
+
+\param	fltVal	limit
+**/
+void RbDynamixelUSBServo::SetMaxSimPos(float fltVal)
+{
+	m_iMaxSimPos = ConvertPosRadToFP(fltVal);
+
+	if(m_iMaxSimPos < m_iMinPos) m_iMaxSimPos = m_iMinPos;
+	if(m_iMaxSimPos > m_iMaxPos) m_iMaxSimPos = m_iMaxPos;
+
+	m_fltMaxSimPos = ConvertPosFPToRad(m_iMaxSimPos);
 }
 
 			}	//DynamixelUSB

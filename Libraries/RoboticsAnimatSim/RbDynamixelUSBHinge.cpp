@@ -122,6 +122,8 @@ void RbDynamixelUSBHinge::SetupIO()
 {
 	if(!m_lpParentInterface->InSimulation())
 	{
+		SetMinSimPos(m_lpHinge->LowerLimit()->LimitPos());
+		SetMaxSimPos(m_lpHinge->UpperLimit()->LimitPos());
 		InitMotorData();
 
 		//Set the next goal positions to the current ones.

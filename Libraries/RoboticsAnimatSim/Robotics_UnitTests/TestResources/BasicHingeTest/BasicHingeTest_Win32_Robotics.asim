@@ -263,7 +263,7 @@
 								<LowerLimit>
 									<Name>90aa9424-54d2-41e1-b68c-efa5958171c0</Name>
 									<ID>90aa9424-54d2-41e1-b68c-efa5958171c0</ID>
-									<LimitPos>-1.48353</LimitPos>
+									<LimitPos>-2.617994</LimitPos>
 									<Damping>250</Damping>
 									<Restitution>0</Restitution>
 									<Stiffness>1000</Stiffness>
@@ -271,7 +271,7 @@
 								<UpperLimit>
 									<Name>9d38e223-c32a-4411-912a-b3fcda5adaa6</Name>
 									<ID>9d38e223-c32a-4411-912a-b3fcda5adaa6</ID>
-									<LimitPos>1.48353</LimitPos>
+									<LimitPos>2.617994</LimitPos>
 									<Damping>250</Damping>
 									<Restitution>0</Restitution>
 									<Stiffness>1000</Stiffness>
@@ -750,6 +750,7 @@
 										<C>1</C>
 										<D>0</D>
 									</Gain>
+									<UpdateAllParamsCount>10</UpdateAllParamsCount>
 								</RobotPartInterface>
 								<RobotPartInterface>
 									<Name>Prismatic Motor</Name>
@@ -797,34 +798,6 @@
 			<CurrentBurstOff>0</CurrentBurstOff>
 		</Stimulus>
 		<Stimulus>
-			<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
-			<Name>Motor_Up</Name>
-			<AlwaysActive>False</AlwaysActive>
-			<Enabled>True</Enabled>
-			<ModuleName/>
-			<Type>MotorVelocity</Type>
-			<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-			<JointID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</JointID>
-			<StartTime>0</StartTime>
-			<EndTime>1</EndTime>
-			<Velocity>1</Velocity>
-			<DisableMotorWhenDone>False</DisableMotorWhenDone>
-		</Stimulus>
-		<Stimulus>
-			<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
-			<Name>Motor_Down</Name>
-			<AlwaysActive>False</AlwaysActive>
-			<Enabled>True</Enabled>
-			<ModuleName/>
-			<Type>MotorVelocity</Type>
-			<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-			<JointID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</JointID>
-			<StartTime>2</StartTime>
-			<EndTime>4</EndTime>
-			<Velocity>-1</Velocity>
-			<DisableMotorWhenDone>False</DisableMotorWhenDone>
-		</Stimulus>
-		<Stimulus>
 			<ID>039e18a4-e6c5-4753-afb8-b058ab0d6baa</ID>
 			<Name>Stimulus_P</Name>
 			<AlwaysActive>False</AlwaysActive>
@@ -842,6 +815,34 @@
 			<CurrentOn>1e-009</CurrentOn>
 			<CurrentOff>0</CurrentOff>
 			<CurrentBurstOff>0</CurrentBurstOff>
+		</Stimulus>
+		<Stimulus>
+			<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
+			<Name>Motor_Down</Name>
+			<AlwaysActive>False</AlwaysActive>
+			<Enabled>True</Enabled>
+			<ModuleName/>
+			<Type>MotorVelocity</Type>
+			<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+			<JointID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</JointID>
+			<StartTime>2</StartTime>
+			<EndTime>4</EndTime>
+			<Velocity>-1</Velocity>
+			<DisableMotorWhenDone>False</DisableMotorWhenDone>
+		</Stimulus>
+		<Stimulus>
+			<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+			<Name>Motor_Up</Name>
+			<AlwaysActive>False</AlwaysActive>
+			<Enabled>True</Enabled>
+			<ModuleName/>
+			<Type>MotorVelocity</Type>
+			<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+			<JointID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</JointID>
+			<StartTime>0</StartTime>
+			<EndTime>1</EndTime>
+			<Velocity>1</Velocity>
+			<DisableMotorWhenDone>False</DisableMotorWhenDone>
 		</Stimulus>
 	</ExternalStimuli>
 	<DataCharts>
