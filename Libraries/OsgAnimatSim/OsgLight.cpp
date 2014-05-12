@@ -184,12 +184,12 @@ void OsgLight::SetupLighting()
     osg::Vec4 specular(m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), 1.0);
     osg::Vec4 position(m_oPosition.x, m_oPosition.y, m_oPosition.z, 1);
 
-	SetAttenuation();
     m_osgLight = new osg::Light(m_iLightNum);
     m_osgLight->setAmbient(ambient);
 	m_osgLight->setDiffuse(diffuse);
     m_osgLight->setSpecular(specular);
     m_osgLight->setPosition(position);
+	SetAttenuation();
 
     m_osgLightSource = new osg::LightSource;
     m_osgLightSource->setLight(m_osgLight.get());
