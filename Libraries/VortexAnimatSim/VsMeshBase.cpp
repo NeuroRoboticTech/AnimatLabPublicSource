@@ -85,6 +85,8 @@ void VsMeshBase::LoadMeshNode()
 
 	m_osgMeshNode = new osg::MatrixTransform(osgScaleMatrix);
 
+	m_osgMeshNode->getOrCreateStateSet()->setMode(GL_NORMALIZE, osg::StateAttribute::ON); 
+
 	m_osgMeshNode->addChild(m_osgBaseMeshNode.get());
 	m_osgMeshNode->setName(m_lpThisAB->Name() + "_MeshNode");
 }
