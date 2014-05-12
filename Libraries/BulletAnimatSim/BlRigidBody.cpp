@@ -743,7 +743,15 @@ void BlRigidBody::Physics_CollectData()
         btVector3 vPos = trans.getOrigin();
         osg::Vec3 vCom = m_osgbMotion->getCenterOfMass();
 
- 		m_lpThisMI->AbsolutePosition((vPos.x()-vCom.x()), (vPos.y()-vCom.y()), (vPos.z()-vCom.z()));
+		float fltX = (vPos.x()-vCom.x());
+		float fltY = (vPos.y()-vCom.y());
+		float fltZ = (vPos.z()-vCom.z());
+
+ 		m_lpThisMI->AbsolutePosition(fltX, fltY, fltZ);
+
+		m_osgWorldMatrix(3,0) = fltX;
+		m_osgWorldMatrix(3,1) = fltY;
+		m_osgWorldMatrix(3,2) = fltZ;
 
         CStdFPoint vRot = OsgMatrixUtil::EulerRotationFromMatrix_Static(m_osgWorldMatrix);
 		m_lpThisMI->ReportRotation(vRot[0], vRot[1], vRot[2]);
