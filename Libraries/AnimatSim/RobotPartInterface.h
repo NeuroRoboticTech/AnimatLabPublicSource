@@ -79,6 +79,7 @@ namespace AnimatSim
 
 			virtual void SetupIO();
 			virtual void StepIO();
+			virtual void ShutdownIO();
 
 			virtual void Initialize();
 			virtual void ResetSimulation();

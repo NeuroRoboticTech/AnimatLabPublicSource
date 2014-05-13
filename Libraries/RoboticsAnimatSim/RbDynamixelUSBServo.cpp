@@ -72,11 +72,18 @@ RbDynamixelUSBServo::RbDynamixelUSBServo()
 	m_iNextGoalPos = 0;
 	m_iNextGoalVelocity = 0;
 
+	m_iPresentPos = 0;
+	m_iPresentVelocity = 0;
+	m_iLoad = 0;
+	m_iVoltage = 0;
+	m_iTemperature = 0;
+
 	m_fltPresentPos = 0;
 	m_fltPresentVelocity = 0;
 	m_fltLoad = 0;
 	m_fltVoltage = 0;
 	m_fltTemperature = 0;
+
 }
 
 RbDynamixelUSBServo::~RbDynamixelUSBServo()
@@ -155,8 +162,8 @@ void RbDynamixelUSBServo::SetGoalVelocity_FP(int iVelocity)
 void RbDynamixelUSBServo::SetNextGoalVelocity_FP(int iVelocity)
 {
 	//Verify we are not putting invalid values in.
-	if(iVelocity < m_iMinVelocity) iVelocity = m_iMinVelocity;
-	if(iVelocity > m_iMaxVelocity) iVelocity = m_iMaxVelocity;
+	if(iVelocity != -1 && iVelocity < m_iMinVelocity) iVelocity = m_iMinVelocity;
+	if(iVelocity != -1 && iVelocity > m_iMaxVelocity) iVelocity = m_iMaxVelocity;
 
 	m_iNextGoalVelocity = iVelocity;
 }
@@ -237,6 +244,10 @@ point value based on the motor configuration and then used to set the velocity.
 void RbDynamixelUSBServo::SetNextGoalVelocity(float fltVelocity)
 {
 	int iVel = (int) (fabs(fltVelocity)*m_fltConvertRadSToFP);
+
+	//If the velocity is being set to 0 then code this special.
+	if(fltVelocity == 0)
+		iVel = -1;
 
 	SetNextGoalVelocity_FP(iVel);
 }
@@ -698,7 +709,28 @@ void RbDynamixelUSBServo::InitMotorData()
 	} while(GetIsMoving());
 
 	m_iLastGoalPos = GetActualPosition_FP();
+
+	//Reset the goal velocity to the minimum value.
+	SetGoalVelocity_FP(1);
+
 	std::cout << "Reset Position: " << m_iLastGoalPos << "\r\n";
+}
+
+/**
+\brief	Shuts the motor down cleanly and ensures that it is not continuing to move after processing has stopped. 
+
+\author	dcofer
+\date	4/25/2014
+**/
+void RbDynamixelUSBServo::ShutdownMotor()
+{
+	int iCurPos = GetActualPosition_FP();
+
+	//Reset the goal velocity to the minimum value.
+	SetGoalVelocity_FP(1);
+	SetGoalPosition_FP(iCurPos);
+
+	std::cout << "Shutting down servo: " << m_iServoID << ", Pos: " << iCurPos << "\r\n";
 }
 
 /**
@@ -714,17 +746,17 @@ void RbDynamixelUSBServo::ReadAllParams()
 
 	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 8, aryData) && aryData.size() == 8)
 	{
-		int iPos = dxl_makeword(aryData[0], aryData[1]);
-		int iVel = dxl_makeword(aryData[2], aryData[3]);
-		int iLoad = dxl_makeword(aryData[4], aryData[5]);
-		int iVolt = aryData[6];
-		int iTemp = aryData[7];
+		m_iPresentPos = dxl_makeword(aryData[0], aryData[1]);
+		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);
+		m_iLoad = dxl_makeword(aryData[4], aryData[5]);
+		m_iVoltage = aryData[6];
+		m_iTemperature = aryData[7];
 
-		m_fltPresentPos = ConvertPosFPToRad(iPos);
-		m_fltPresentVelocity = ConvertFPVelocity(iVel);
-		m_fltLoad = ConvertFPLoad(iLoad);
-		m_fltVoltage = iVolt/100.0;
-		m_fltTemperature = (float) iTemp;
+		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
+		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
+		m_fltLoad = ConvertFPLoad(m_iLoad);
+		m_fltVoltage = m_iVoltage/100.0;
+		m_fltTemperature = (float) m_iTemperature;
 	}
 }
 
@@ -741,11 +773,11 @@ void RbDynamixelUSBServo::ReadKeyParams()
 
 	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 4, aryData) && aryData.size() == 4)
 	{
-		int iPos = dxl_makeword(aryData[0], aryData[1]);
-		int iVel = dxl_makeword(aryData[2], aryData[3]);
+		m_iPresentPos = dxl_makeword(aryData[0], aryData[1]);
+		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);
 
-		m_fltPresentPos = ConvertPosFPToRad(iPos);
-		m_fltPresentVelocity = ConvertFPVelocity(iVel);
+		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
+		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 	}
 }
 

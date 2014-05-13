@@ -138,9 +138,22 @@ void RbDynamixelUSBHinge::StepIO()
 
 	if(!m_lpParentInterface->InSimulation())
 	{
+		if(m_iUpdateIdx == m_iUpdateAllParamsCount)
+			ReadAllParams();
+		else
+			ReadKeyParams();
+
 		if(m_iNextGoalPos != m_iLastGoalPos ||  m_iNextGoalVelocity != m_iLastGoalVelocity)
 		{
-			std::cout << m_lpSim->Time() <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
+			std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
+
+			//If the next goal velocity was set to -1 then we are trying to set velocity to 0. So lets set the goal position to its current
+			//loctation and velocity to lowest value.
+			if(m_iNextGoalVelocity == -1)
+			{
+				m_iNextGoalPos = m_iPresentPos;
+				m_iNextGoalVelocity = 1;
+			}
 
 			//Add a new update data so we can send the move command out synchronously to all motors.
 			m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelUSBMotorUpdateData(m_iServoID, m_iNextGoalPos, m_iNextGoalVelocity));
@@ -149,17 +162,17 @@ void RbDynamixelUSBHinge::StepIO()
 
 			m_fltIOValue = m_iNextGoalVelocity;
 		}
-
-		if(m_iUpdateIdx == m_iUpdateAllParamsCount)
-			ReadAllParams();
-		else
-			ReadKeyParams();
 	}
 
 	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
 
 	m_iUpdateIdx++;
+}
+
+void RbDynamixelUSBHinge::ShutdownIO()
+{
+	ShutdownMotor();
 }
 
 void RbDynamixelUSBHinge::StepSimulation()

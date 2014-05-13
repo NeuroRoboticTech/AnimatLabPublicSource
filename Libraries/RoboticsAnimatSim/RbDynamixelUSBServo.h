@@ -136,16 +136,31 @@ protected:
 	float m_fltConvertFPToLoad;
 
 	//The current position that was last read in for this servo.
+	int m_iPresentPos;
+
+	//The current position that was last read in for this servo.
 	float m_fltPresentPos;
+
+	//The current velocity that was last read in for this servo.
+	int m_iPresentVelocity;
 
 	//The current velocity that was last read in for this servo.
 	float m_fltPresentVelocity;
 
 	//The current load that was last read in for this servo.
+	int m_iLoad;
+
+	//The current load that was last read in for this servo.
 	float m_fltLoad;
 
 	//The current voltage that was last read in for this servo.
+	int m_iVoltage;
+
+	//The current voltage that was last read in for this servo.
 	float m_fltVoltage;
+
+	//The current temperature that was last read in for this servo.
+	int m_iTemperature;
 	
 	//The current temperature that was last read in for this servo.
 	float m_fltTemperature;
@@ -216,6 +231,7 @@ public:
 	virtual int GetFirmwareVersion();
 
 	virtual void InitMotorData();
+	virtual void ShutdownMotor();
 
 	virtual bool dxl_read_block( int id, int address, int length, std::vector<int> &aryData);
 	virtual void ReadAllParams();

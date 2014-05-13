@@ -248,6 +248,8 @@ void RobotIOControl::ExitIOThread()
 		m_bStopIO = true;
 
 		bool bTryJoin = m_ioThread.try_join_for(boost::chrono::seconds(30));
+
+		ShutdownIO();
 	}
 }
 
@@ -286,6 +288,21 @@ void RobotIOControl::StepIO()
 
 	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
+}
+
+/**
+\brief	This method is called just before the IO thread is closed down. It gives the IO objects a chance to do 
+any required cleanup.
+
+\author	dcofer
+\date	5/12/2014
+
+**/
+void RobotIOControl::ShutdownIO()
+{
+	int iCount = m_aryParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryParts[iIndex]->ShutdownIO();
 }
 
 void RobotIOControl::Initialize()

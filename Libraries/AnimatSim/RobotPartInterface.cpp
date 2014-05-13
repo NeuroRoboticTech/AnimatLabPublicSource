@@ -259,6 +259,18 @@ void RobotPartInterface::StepIO()
 {
 }
 
+/**
+\brief	This method is called just before the IO thread is closed down. It gives the IO objects a chance to do 
+any required cleanup.
+
+\author	dcofer
+\date	5/12/2014
+
+**/
+void RobotPartInterface::ShutdownIO()
+{
+}
+
 void RobotPartInterface::Initialize()
 {
 	//We need to find the referenced body part and set its robot part interface to this one.

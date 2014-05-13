@@ -21,7 +21,7 @@ namespace RoboticsGUI
                 public override string ModuleName { get { return "RoboticsAnimatSim"; } }
                 protected override System.Type GetLinkedPartDropDownTreeType() { return typeof(AnimatGUI.TypeHelpers.DropDownTreeEditorNoFirstSelect); }
 
-                protected virtual int UpdateAllParamsCount
+                public virtual int UpdateAllParamsCount
                 {
                     get { return m_iUpdateAllParamsCount; }
                     set
