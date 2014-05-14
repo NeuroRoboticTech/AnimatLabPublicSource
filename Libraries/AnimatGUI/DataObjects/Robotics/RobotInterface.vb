@@ -20,6 +20,7 @@ Namespace DataObjects
             Protected m_doOrganism As Physical.Organism
             Protected m_snPhysicsTimeStep As AnimatGUI.Framework.ScaledNumber
             Protected m_doPhysics As Physical.PhysicsEngine
+            Protected m_bSynchSim As Boolean = True
 
             Protected m_aryIOControls As New Collections.SortedRobotIOControls(Me)
 
@@ -85,6 +86,15 @@ Namespace DataObjects
                 End Get
             End Property
 
+            Public Overridable Property SynchSim As Boolean
+                Get
+                    Return m_bSynchSim
+                End Get
+                Set(value As Boolean)
+                    SetSimData("SynchSim", value.ToString, True)
+                    m_bSynchSim = value
+                End Set
+            End Property
 
 #End Region
 
@@ -115,6 +125,7 @@ Namespace DataObjects
 
                 m_snPhysicsTimeStep = DirectCast(OrigNode.m_snPhysicsTimeStep.Clone(Me, bCutData, doRoot), ScaledNumber)
                 m_aryIOControls = DirectCast(OrigNode.m_aryIOControls.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedRobotIOControls)
+                m_bSynchSim = OrigNode.m_bSynchSim
             End Sub
 
             Public Overridable Sub GenerateStandaloneSimFile()
@@ -266,6 +277,9 @@ Namespace DataObjects
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", GetType(Boolean), "Enabled", _
                                             "Properties", "Determines if this controller is enabled or not.", m_bEnabled))
 
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Sim", GetType(Boolean), "SynchSim", _
+                                            "Properties", "Determines whether or not the IO update of the simulation is synched with the time step of the robot.", m_bSynchSim))
+
                 Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                             "Properties", "Overrides the physics step set in the simulation for the robot. " & _
@@ -322,6 +336,7 @@ Namespace DataObjects
                 m_strName = oXml.GetChildString("Name", Me.Name)
                 m_strID = oXml.GetChildString("ID", Me.ID)
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
+                m_bSynchSim = oXml.GetChildBool("SynchSim", m_bSynchSim)
 
                 m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
 
@@ -341,6 +356,7 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
+                oXml.AddChildElement("SynchSim", Me.SynchSim)
 
                 m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
 
@@ -377,6 +393,7 @@ Namespace DataObjects
                 End If
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
+                oXml.AddChildElement("SynchSim", Me.SynchSim)
 
                 Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " IO controls"
                 oXml.AddChildElement("IOControls")

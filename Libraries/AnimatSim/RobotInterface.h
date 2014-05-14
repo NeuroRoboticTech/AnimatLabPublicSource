@@ -21,6 +21,11 @@ namespace AnimatSim
 			///to go as fast as we will need the sim steps to go for it to be stable.
 			float m_fltPhysicsTimeStep;
 
+			///If this is true and we are in simulation mode then we will set some flags in the simulation object
+			///to make it delay stepping of the physics adapter objects to more closely match the IO time step of
+			///the real robot.
+			bool m_bSynchSim;
+
 			virtual RobotIOControl *LoadIOControl(CStdXml &oXml);
 			virtual RobotIOControl *AddIOControl(std::string strXml);
 			virtual void RemoveIOControl(std::string strID, bool bThrowError = true);
@@ -37,6 +42,9 @@ namespace AnimatSim
 
 			virtual float PhysicsTimeStep();
 			virtual void PhysicsTimeStep(float fltStep);
+
+			virtual bool SynchSim();
+			virtual void SynchSim(bool bVal);
 
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

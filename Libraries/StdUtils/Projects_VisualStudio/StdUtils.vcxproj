@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;C:\Python34\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;C:\Python27\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;STDUTILS_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -106,7 +106,7 @@
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10D.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;C:\Python27\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDataBaseFileName>$(OutDir)StdUtils_vc10D.pdb</ProgramDataBaseFileName>
@@ -276,6 +276,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\StdUtils.cpp">
     </ClCompile>
+    <ClCompile Include="..\StdUtils_wrap.cxx" />
     <ClCompile Include="..\StdVariable.cpp">
     </ClCompile>
     <ClCompile Include="..\StdVariant.cpp">
@@ -283,8 +284,6 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClCompile Include="..\StdXml.cpp">
     </ClCompile>
     <ClCompile Include="..\XYTrace.cpp">
-    </ClCompile>
-    <ClCompile Include="..\StdUtils_wrap.cxx">
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

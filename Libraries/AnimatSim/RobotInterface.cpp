@@ -44,6 +44,8 @@ namespace AnimatSim
 RobotInterface::RobotInterface(void)
 {
 	m_bInSimulation = false;
+	m_bSynchSim = true;
+	m_fltPhysicsTimeStep = 0.02f;
 }
 
 RobotInterface::~RobotInterface(void)
@@ -111,6 +113,37 @@ void RobotInterface::PhysicsTimeStep(float fltStep)
 	m_fltPhysicsTimeStep = fltStep;
 }
 
+/**
+\brief	Gets whether we need to delay stepping of the physics adapters in the simulation to more closely match the real robot behavior. 
+
+\author	dcofer
+\date	5/13/2014
+
+\return	Gets whether we will attempt to synch sim update to robots update.
+**/
+bool RobotInterface::SynchSim() {return m_bSynchSim;}
+
+/**
+\brief	Sets whether we need to delay stepping of the physics adapters in the simulation to more closely match the real robot behavior. 
+
+\author	dcofer
+\date	5/13/2014
+
+\param	bVal	new value.
+**/
+void RobotInterface::SynchSim(bool bVal)
+{
+	m_bSynchSim = bVal;
+
+	if(m_lpSim)
+	{
+		m_lpSim->RobotAdpaterSynch(bVal);
+
+		if(bVal)
+			m_lpSim->RobotSynchTimeInterval(this->m_fltPhysicsTimeStep);
+	}
+}
+
 #pragma region DataAccesMethods
 
 float *RobotInterface::GetDataPointer(const std::string &strDataType)
@@ -132,6 +165,12 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 	if(strType == "PHYSICSTIMESTEP")
 	{
 		PhysicsTimeStep((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "SYNCHSIM")
+	{
+		SynchSim(Std_ToBool(strValue));
 		return true;
 	}
 
@@ -300,6 +339,8 @@ void RobotInterface::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	InSimulation(oXml.GetChildBool("InSimulation", false));
+	PhysicsTimeStep(oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep));
+	SynchSim(oXml.GetChildBool("SynchSim", m_bSynchSim));
 
 	if(oXml.FindChildElement("IOControls", false))
 	{

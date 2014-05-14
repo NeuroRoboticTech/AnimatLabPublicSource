@@ -207,23 +207,23 @@ Namespace DataObjects.Physical.Joints
             m_doAssistPID.Enabled = False
 
             If Util.Application.Physics.GenerateMotorAssist Then
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAY", "Motor Assist Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAZ", "Motor Assist Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAY", "Motor Assist Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAZ", "Motor Assist Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
 
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBX", "Motor Assist Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBY", "Motor Assist Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBZ", "Motor Assist Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBX", "Motor Assist Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBY", "Motor Assist Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBZ", "Motor Assist Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
 
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAX", "Motor Assist Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAY", "Motor Assist Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAZ", "Motor Assist Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAX", "Motor Assist Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAY", "Motor Assist Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAZ", "Motor Assist Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
 
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBX", "Motor Assist Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBY", "Motor Assist Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBZ", "Motor Assist Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBX", "Motor Assist Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBY", "Motor Assist Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBZ", "Motor Assist Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
 
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceMagnitude", "Motor Assist Force Magnitude", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceMagnitude", "Motor Assist Force Magnitude", "Newtons", "N", -10, 10))
             End If
 
             m_thDataTypes.ID = "JointRotation"
@@ -341,12 +341,12 @@ Namespace DataObjects.Physical.Joints
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
                           "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
 
-            'If Util.Application.Physics.GenerateMotorAssist Then
-            '    pbNumberBag = m_doAssistPID.Properties
-            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
-            '                                    "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
-            '                                    "", GetType(PidControlPropBagConverter)))
-            'End If
+            If Util.Application.Physics.GenerateMotorAssist Then
+                pbNumberBag = m_doAssistPID.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
+                                                "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
+                                                "", GetType(PidControlPropBagConverter)))
+            End If
 
         End Sub
 
@@ -365,9 +365,9 @@ Namespace DataObjects.Physical.Joints
             ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
             ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
 
-            'If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
-            '    m_doAssistPID.LoadData(oXml)
-            'End If
+            If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
+                m_doAssistPID.LoadData(oXml)
+            End If
 
             oXml.OutOfElem() 'Outof Joint Element
 

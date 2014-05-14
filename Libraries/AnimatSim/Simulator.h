@@ -316,6 +316,21 @@ namespace AnimatSim
 			/// presets for the simulation.
 			int m_iPhysicsBodyCount;
 
+			///If this has been set to true then we have are in a simulation of a robot and we should only update the physics
+			///adapters with the same frequency as would happen in the real robot.
+			bool m_bRobotAdpaterSynch;
+
+			///If m_bAdapterRobotSynch is true then we will use this to determine how many time slices to go through
+			///before allowing the physics adapters to step.
+			int m_iRobotSynchTimeInterval;
+
+			///If m_bAdapterRobotSynch is true then we will use this to determine how many time slices to go through
+			///before allowing the physics adapters to step.
+			float m_fltRobotSynchTimeInterval;
+
+			///This keeps track of how many slices have occurred since the last robot physics adapter update.
+			int m_iRobotSynchTimeCount;
+
 #pragma endregion
 
 #pragma region TimingVariables
@@ -801,6 +816,14 @@ namespace AnimatSim
             virtual bool InDrag() {return m_bInDrag;};
             virtual void InDrag(bool bVal) {m_bInDrag = bVal;};
 
+			virtual bool RobotAdpaterSynch();
+			virtual void RobotAdpaterSynch(bool bVal);
+
+			virtual int RobotSynchTimeInterval();
+			virtual void RobotSynchTimeInterval(float fltVal);
+
+			virtual int RobotSynchTimeCount();
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -1041,6 +1064,7 @@ namespace AnimatSim
 			virtual void RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
+			virtual bool IsPhysicsAdapter(Adapter *lpAdapter);
 
             virtual void AddToExtractExtraData(BodyPart *lpPart);
             virtual void RemoveFromExtractExtraData(BodyPart *lpPart);

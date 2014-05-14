@@ -184,6 +184,11 @@ Simulator::Simulator()
     m_lpNeuralThread = NULL;
     m_lpPhysicsThread = NULL;
     m_lpIOThread = NULL;
+
+	m_bRobotAdpaterSynch = false;
+	m_iRobotSynchTimeInterval = 0;
+	m_fltRobotSynchTimeInterval = 0;
+	m_iRobotSynchTimeCount = 0;
 }
 
 /**
@@ -1125,20 +1130,29 @@ void Simulator::PhysicsTimeStep(float fltVal)
 	//Find min time step.
 	float fltMin = MinTimeStep();
 	
-	//Division
-	int iDiv = (int) ((fltVal / fltMin) + 0.5f);
+	if(fltMin > 0 && m_iPhysicsSubsteps > 0)
+	{
+		//Division
+		int iDiv = (int) ((fltVal / fltMin) + 0.5f);
 	
-	//Find the number of timeslices that need to occur before the physics system is updated
-	PhysicsStepInterval(iDiv);
+		//Find the number of timeslices that need to occur before the physics system is updated
+		PhysicsStepInterval(iDiv);
 
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+		//Now recaculate the physics time step using the minimum time step as the base.
+		m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 
-	//Now reset the m_fltTimeStep of the sim.
-	if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
+		//Now reset the m_fltTimeStep of the sim.
+		if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
 
-    //Reset the physics substep time if required.
-     m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
+		//Reset the physics substep time if required.
+		 m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
+
+		if(m_bRobotAdpaterSynch && m_fltTimeStep > 0)
+		{
+			m_iRobotSynchTimeInterval = m_fltRobotSynchTimeInterval/m_fltTimeStep;
+			m_iRobotSynchTimeCount = 0;
+		}
+	}
 }
 
 /**
@@ -1622,6 +1636,76 @@ double Simulator::CurrentRealTimeForStep_n()
 
 double Simulator::CurrentRealTimeForStep_s()
 {return TimerDiff_s(m_lStepStartTick, GetTimerTick());}
+
+/**
+\brief	Gets whether we need to synch the physics adapters in a simulation to the robot physics time step.
+
+\author	dcofer
+\date	5/13/2014
+
+\return	Whether we need to synch or not.
+**/
+bool Simulator::RobotAdpaterSynch() {return m_bRobotAdpaterSynch;}
+
+/**
+\brief	Sets whether we need to synch the physics adapters in a simulation to the robot physics time step.
+
+\author	dcofer
+\date	5/13/2014
+
+\param	bVal	new value. 
+**/
+void Simulator::RobotAdpaterSynch(bool bVal) 
+{
+	m_bRobotAdpaterSynch = bVal;
+
+	if(!bVal)
+	{
+		m_iRobotSynchTimeInterval = 0;
+		m_iRobotSynchTimeCount = 0;
+	}
+}
+
+/**
+\brief	Gets The time slice interval count to use when synching the adapter steps of the simulation to the robot.
+
+\author	dcofer
+\date	5/13/2014
+
+\return	time slice interval.
+**/
+int Simulator::RobotSynchTimeInterval() {return m_iRobotSynchTimeInterval;}
+
+/**
+\brief	Sets The time slice interval count to use when synching the adapter steps of the simulation to the robot.
+
+\description This uses the time value passed in to determine the number of time slices that are required.
+
+\author	dcofer
+\date	5/13/2014
+
+\param  fltVal	time value.
+**/
+void Simulator::RobotSynchTimeInterval(float fltVal)
+{
+	m_fltRobotSynchTimeInterval = fltVal;
+
+	if(m_fltTimeStep > 0)
+	{
+		m_iRobotSynchTimeInterval = fltVal/m_fltTimeStep;
+		m_iRobotSynchTimeCount = 0;
+	}
+}
+
+/**
+\brief	Gets the number of slices since the last time the physics adapters were updated .
+
+\author	dcofer
+\date	5/13/2014
+
+\return Slices since last update.
+**/
+int Simulator::RobotSynchTimeCount() {return m_iRobotSynchTimeCount;}
 
 #pragma endregion
 
@@ -2210,6 +2294,11 @@ void Simulator::Reset()
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
 	m_bShuttingDown = false;
+
+	m_bRobotAdpaterSynch = false;
+	m_iRobotSynchTimeInterval = 0;
+	m_fltRobotSynchTimeInterval = 0;
+	m_iRobotSynchTimeCount = 0;
 }
 
 /**
@@ -2231,6 +2320,7 @@ void Simulator::ResetSimulation()
 	m_fltMouseSpringForceMagnitude = 0;
 	m_fltMouseSpringDampingForceMagnitude = 0;
 	m_fltMouseSpringLengthMagnitude = 0;
+	m_iRobotSynchTimeCount = 0;
 
 	InitializeRandomNumbers();
 
@@ -2416,8 +2506,6 @@ void Simulator::StepPhysicsEngine()
 		m_lpSelStructure->StepPhysicsEngine();
 	}
 
-	//Now lets step all Target adapters. This will be all items outputing
-	//to the physics engine. Examples are motorized joints and muscles.
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
 		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation();
 
@@ -2478,6 +2566,14 @@ void Simulator::Step()
 	StepDataCharts();
 		
 	m_lTimeSlice++;
+	
+	if(m_bRobotAdpaterSynch)
+	{
+		m_iRobotSynchTimeCount++;
+		if(m_iRobotSynchTimeCount >= m_iRobotSynchTimeInterval)
+			m_iRobotSynchTimeCount = 0;
+	}
+
 	m_fltTime = m_lTimeSlice*m_fltTimeStep;
 }
 
@@ -3988,6 +4084,25 @@ void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->RemoveTargetAdapter(lpAdapter);
 	}
+}
+
+/**
+\brief	Returns true if the specified adapter is in either the source or target physics adapters list. 
+
+\author	dcofer
+\date	5/13/2014
+
+\param [in]	lpAdapter	Adapter to check. 
+**/
+bool Simulator::IsPhysicsAdapter(Adapter *lpAdapter)
+{
+	int iIdx1 = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false);
+	int iIdx2 = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false);
+
+	if(iIdx1 > -1 || iIdx2 > -1)
+		return true;
+	else
+		return false;
 }
 
 

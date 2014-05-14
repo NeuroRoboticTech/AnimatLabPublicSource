@@ -54,6 +54,8 @@ Adapter::Adapter()
 	m_lpSourceNode = NULL;
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
+	m_bConnectedToPhysics = false;
+	m_fltPrevVal = 0;
 }
 
 /**
@@ -269,6 +271,17 @@ void Adapter::SetGain(Gain *lpGain)
 	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 }
 
+/**
+\brief	Returns whether or not this adpater is connected to a physics object or not.
+
+\author	dcofer
+\date	5/13/2014
+
+\return	Pointer to the gain.
+**/
+bool Adapter::ConnectedToPhysics() {return m_bConnectedToPhysics;}
+
+
 void Adapter::DetachAdaptersFromSimulation()
 {
 	if(m_lpSim)
@@ -419,14 +432,20 @@ void Adapter::Initialize()
 
 	m_lpSim->AttachSourceAdapter(m_lpStructure, this);
 	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
+
+	m_bConnectedToPhysics = m_lpSim->IsPhysicsAdapter(this);
 }
 
 void Adapter::StepSimulation()
 {
 	if(m_bEnabled)
 	{
-		float fltInput = m_lpGain->CalculateGain(*m_lpSourceData);
-		m_lpTargetNode->AddExternalNodeInput(fltInput);
+		//If we are trying to synch the adapters to match the IO charachteristics of a robot then we should only
+		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
+		if(!m_lpSim->RobotAdpaterSynch() || (m_lpSim->RobotAdpaterSynch() && !m_lpSim->RobotSynchTimeCount()))
+			m_fltPrevVal = m_lpGain->CalculateGain(*m_lpSourceData);
+
+		m_lpTargetNode->AddExternalNodeInput(m_fltPrevVal);
 	}
 }
 

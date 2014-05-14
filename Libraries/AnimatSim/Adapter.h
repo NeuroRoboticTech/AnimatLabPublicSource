@@ -60,6 +60,13 @@ namespace AnimatSim
 			/// Pointer to the Gain that will be used to convert the source value into the target value.
 			Gain *m_lpGain;
 
+			///This is true if either the target or soruce are connected to the physics engine. It is false
+			///if target and source are neural only.
+			bool m_bConnectedToPhysics;
+
+			///This is the previous value that was passed into the adpters target
+			float m_fltPrevVal;
+
 			virtual void AddGain(std::string strXml);
 			virtual void SetOriginID(std::string strXml);
 			virtual void SetDestinationID(std::string strXml);
@@ -92,6 +99,8 @@ namespace AnimatSim
 
 			virtual Gain *GetGain();
 			virtual void SetGain(Gain *lpGain);
+
+			virtual bool ConnectedToPhysics();
 
 			virtual void DetachAdaptersFromSimulation();
 
