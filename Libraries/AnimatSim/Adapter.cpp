@@ -55,7 +55,11 @@ Adapter::Adapter()
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
 	m_bConnectedToPhysics = false;
-	m_fltPrevVal = 0;
+	m_fltNextVal = 0;
+	m_fltCalculatedVal = 0;
+	m_fltDelayBufferInterval = 0;
+	m_eDelayBufferMode = NoDelayBuffer;
+	m_fltRobotIOScale = 1;
 }
 
 /**
@@ -281,6 +285,97 @@ void Adapter::SetGain(Gain *lpGain)
 **/
 bool Adapter::ConnectedToPhysics() {return m_bConnectedToPhysics;}
 
+/**
+\brief	Returns the mode for the delay buffer.
+
+\discussion This is what determines whether a delay buffer is used at all or only during the simulation. See eDelayBufferMode.
+
+\author	dcofer
+\date	5/15/2014
+
+\return	mode.
+**/
+eDelayBufferMode Adapter::DelayBufferMode()
+{
+	return m_eDelayBufferMode;
+}
+
+/**
+\brief	Sets the target data type.
+
+\discussion This is what determines whether a delay buffer is used at all or only during the simulation. See eDelayBufferMode.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	eMode	new mode. 
+**/
+void Adapter::DelayBufferMode(eDelayBufferMode eMode)
+{
+	m_eDelayBufferMode = eMode;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Returns the time interval used for the delay buffer if this adapter is set to use one.
+
+\author	dcofer
+\date	5/15/2014
+
+\return	interval.
+**/
+float Adapter::DelayBufferInterval() {return m_fltDelayBufferInterval;}
+
+/**
+\brief	Sets the time interval used for the delay buffer if this adapter is set to use one.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	fltVal	new time step. 
+**/
+void Adapter::DelayBufferInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "DelayBufferInterval", true);
+	m_fltDelayBufferInterval = fltVal;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Gets the scale value used for calculated values for this adapter during simulation mode only. 
+
+\discussion If you are modeling a robot then you can use this to scale the IO of this adapter to match the real response of the robot.
+			An example where this might be used is while simulating a motor. Real motors usually end up having a slightly slower response
+			time than you get in the simulation. The value specified here is a percentage with 1 at 100%. To slow the simulated response time
+			down slightly you could set it to 0.95 instead. This will only be applied during the simulation, NOT during the running of the real
+			robot. This is only so you can try and tune your simulation repsonse to more closely match the real robot response.
+
+\author	dcofer
+\date	5/26/2014
+
+\return	IO percentage. 
+**/
+float Adapter::RobotIOScale() {return m_fltRobotIOScale;}
+
+/**
+\brief	Sets the scale value used for calculated values for this adapter during simulation mode only. 
+
+\discussion If you are modeling a robot then you can use this to scale the IO of this adapter to match the real response of the robot.
+			An example where this might be used is while simulating a motor. Real motors usually end up having a slightly slower response
+			time than you get in the simulation. The value specified here is a percentage with 1 at 100%. To slow the simulated response time
+			down slightly you could set it to 0.95 instead. This will only be applied during the simulation, NOT during the running of the real
+			robot. This is only so you can try and tune your simulation repsonse to more closely match the real robot response.
+
+\author	dcofer
+\date	5/26/2014
+
+\param	fltVal	new IO percentage. 
+**/
+void Adapter::RobotIOScale(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "RobotIOScale");
+	m_fltRobotIOScale = fltVal;
+}
 
 void Adapter::DetachAdaptersFromSimulation()
 {
@@ -304,6 +399,10 @@ float *Adapter::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
+	else if(strType == "CALCULATEDVAL")
+		return &m_fltCalculatedVal;
+	else if(strType == "NEXTVAL")
+		return &m_fltNextVal;
 
 	return AnimatBase::GetDataPointer(strDataType);
 }
@@ -396,6 +495,24 @@ bool Adapter::SetData(const std::string &strDataType, const std::string &strValu
 		return true;
 	}
 
+	if(strType == "DELAYBUFFERMODE")
+	{
+		DelayBufferMode((eDelayBufferMode) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "DELAYBUFFERINTERVAL")
+	{
+		DelayBufferInterval(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "ROBOTIOSCALE")
+	{
+		RobotIOScale(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
@@ -408,8 +525,54 @@ void Adapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	Node::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("CalculatedVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("NextVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DelayBufferMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DelayBufferInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RobotIOScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+}
+
+/**
+\brief	If the time step is modified then we need to recalculate the length of the delay buffer.
+
+\discussion If a neural module has been assigned to this adapter then that is its target module and
+we need to use the time step associated with it to determine how big the delay buffer should be in length.
+If the module is NULL then the target for this adapter is the physics engine and we should use the physics time step instead.
+
+\author	dcofer
+\date	5/15/2014
+**/
+void Adapter::TimeStepModified()
+{
+	SetDelayBufferSize();
+}
+
+void Adapter::ResetSimulation()
+{
+	int iSize = m_aryDelayBuffer.GetSize();
+	for(int iIdx=0; iIdx<iSize; iIdx++)
+		m_aryDelayBuffer[iIdx] = 0;
+}
+
+void Adapter::SetDelayBufferSize()
+{
+	if(m_eDelayBufferMode == eDelayBufferMode::DelayBufferAlwaysOn || 
+	  (m_eDelayBufferMode == eDelayBufferMode::DelayBufferInSimOnly && m_lpSim->InSimulation()))
+	{
+		float fltTimeStep = m_lpSim->PhysicsTimeStep();
+		if(m_lpModule)
+			fltTimeStep = m_lpModule->TimeStep();
+
+		if(fltTimeStep > 0)
+		{
+			int iLength = (int) (m_fltDelayBufferInterval/fltTimeStep);
+			m_aryDelayBuffer.SetSize(iLength);
+		}
+	}
+	else
+		m_aryDelayBuffer.RemoveAll();
 }
 
 void Adapter::Initialize()
@@ -434,6 +597,8 @@ void Adapter::Initialize()
 	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 
 	m_bConnectedToPhysics = m_lpSim->IsPhysicsAdapter(this);
+
+	SetDelayBufferSize();
 }
 
 void Adapter::StepSimulation()
@@ -443,9 +608,30 @@ void Adapter::StepSimulation()
 		//If we are trying to synch the adapters to match the IO charachteristics of a robot then we should only
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
 		if(!m_lpSim->RobotAdpaterSynch() || (m_lpSim->RobotAdpaterSynch() && !m_lpSim->RobotSynchTimeCount()))
-			m_fltPrevVal = m_lpGain->CalculateGain(*m_lpSourceData);
+		{
+			m_fltCalculatedVal = m_lpGain->CalculateGain(*m_lpSourceData);
 
-		m_lpTargetNode->AddExternalNodeInput(m_fltPrevVal);
+			//Scale the calculated value for robot performance matching if we are in simulation mode only.
+			if(m_lpSim->InSimulation())
+				m_fltCalculatedVal *= m_fltRobotIOScale;
+		}
+
+		//If we 5are configured to use a delay buffer then use it.
+		if(m_eDelayBufferMode == eDelayBufferMode::DelayBufferAlwaysOn || 
+		  (m_eDelayBufferMode == eDelayBufferMode::DelayBufferInSimOnly && m_lpSim->InSimulation()))
+		{
+			//First get the head element off the buffer.
+			float fltNextVal = m_aryDelayBuffer.GetHead();
+			//Now set the current value into the buffer.
+			m_aryDelayBuffer.AddEnd(m_fltCalculatedVal);
+
+			//Now reset the next val with the one from the buffer
+			m_fltNextVal = fltNextVal;
+		}
+		else
+			m_fltNextVal = m_fltCalculatedVal;
+
+		m_lpTargetNode->AddExternalNodeInput(m_fltNextVal);
 	}
 }
 
@@ -467,6 +653,11 @@ void Adapter::Load(CStdXml &oXml)
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 	
 	Enabled(oXml.GetChildBool("Enabled"));
+
+	DelayBufferMode((eDelayBufferMode) oXml.GetChildInt("DelayBufferMode", m_eDelayBufferMode));
+	DelayBufferInterval(oXml.GetChildFloat("DelayBufferInterval", m_fltDelayBufferInterval));
+
+	RobotIOScale(oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

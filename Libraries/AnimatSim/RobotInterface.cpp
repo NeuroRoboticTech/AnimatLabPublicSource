@@ -43,7 +43,6 @@ namespace AnimatSim
 
 RobotInterface::RobotInterface(void)
 {
-	m_bInSimulation = false;
 	m_bSynchSim = true;
 	m_fltPhysicsTimeStep = 0.02f;
 }
@@ -68,26 +67,6 @@ catch(...)
 \return	pointer to array of IO controls. 
 **/
 CStdPtrArray<RobotIOControl> *RobotInterface::IOControls() {return &m_aryIOControls;}
-
-/**
-\brief	Gets whether we are running in sim mode or not for the robot. 
-
-\author	dcofer
-\date	4/25/2014
-
-\return	true/false. 
-**/
-bool RobotInterface::InSimulation() {return m_bInSimulation;}
-
-/**
-\brief	Sets whether we are running in sim mode or not for the robot. 
-
-\author	dcofer
-\date	4/25/2014
-
-\param	bVal	Sets if we are in a simulation or not.
-**/
-void RobotInterface::InSimulation(bool bVal) {m_bInSimulation = bVal;}
 
 /**
 \brief	Gets the physics time step used within the robot framwork. 
@@ -133,15 +112,20 @@ bool RobotInterface::SynchSim() {return m_bSynchSim;}
 **/
 void RobotInterface::SynchSim(bool bVal)
 {
-	m_bSynchSim = bVal;
-
-	if(m_lpSim)
+	if(m_lpSim->InSimulation())
 	{
-		m_lpSim->RobotAdpaterSynch(bVal);
+		m_bSynchSim = bVal;
 
-		if(bVal)
-			m_lpSim->RobotSynchTimeInterval(this->m_fltPhysicsTimeStep);
+		if(m_lpSim)
+		{
+			m_lpSim->RobotAdpaterSynch(bVal);
+
+			if(bVal)
+				m_lpSim->RobotSynchTimeInterval(this->m_fltPhysicsTimeStep);
+		}
 	}
+	else
+		m_lpSim->RobotAdpaterSynch(false);
 }
 
 #pragma region DataAccesMethods
@@ -338,7 +322,6 @@ void RobotInterface::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	InSimulation(oXml.GetChildBool("InSimulation", false));
 	PhysicsTimeStep(oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep));
 	SynchSim(oXml.GetChildBool("SynchSim", m_bSynchSim));
 

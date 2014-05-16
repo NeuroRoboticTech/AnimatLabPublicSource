@@ -17,6 +17,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -25,6 +28,8 @@
 					<Add library="boost_unit_test_framework" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduinoD" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -38,6 +43,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -47,6 +55,8 @@
 					<Add library="boost_unit_test_framework" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduino" />
 				</Linker>
 			</Target>
 			<Target title="Debug_Double">
@@ -60,6 +70,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -68,6 +81,8 @@
 					<Add library="boost_unit_test_framework" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduinoD" />
 				</Linker>
 			</Target>
 			<Target title="Release_Double">
@@ -81,6 +96,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -90,6 +108,8 @@
 					<Add library="boost_unit_test_framework" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduino" />
 				</Linker>
 			</Target>
 		</Build>

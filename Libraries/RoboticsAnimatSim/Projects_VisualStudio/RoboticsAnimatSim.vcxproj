@@ -1,374 +1,384 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
-			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
-			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_Double|Win32">
-			<Configuration>Debug_Double</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release_Double|Win32">
-			<Configuration>Release_Double</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-	</ItemGroup>
-	<PropertyGroup Label="Globals">
-		<ProjectGuid>{307F681B-4130-1F46-BCA8-2EF9479329AD}</ProjectGuid>
-		<RootNamespace>RoboticsAnimatSim</RootNamespace>
-		<Keyword>Win32Proj</Keyword>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Label="ExtensionSettings">
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup>
-		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\x32\Debug\RoboticsAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RoboticsAnimatSim_vc10D</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\RoboticsAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RoboticsAnimatSim_vc10</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\RoboticsAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">RoboticsAnimatSim_vc10D</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\RoboticsAnimatSim\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">RoboticsAnimatSim_vc10</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
-	</PropertyGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduinoD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\RoboticsAnimatSim_vc10D.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)RoboticsAnimatSim_vc10D.lib ..\..\..\lib\RoboticsAnimatSim_vc10D.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduino.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\RoboticsAnimatSim_vc10.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)RoboticsAnimatSim_vc10.lib ..\..\..\lib\RoboticsAnimatSim_vc10.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduinoD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\RoboticsAnimatSim_vc10D.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)RoboticsAnimatSim_vc10D.lib ..\..\..\lib\RoboticsAnimatSim_vc10D.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduino.lib;%(AdditionalDependencies)</AdditionalDependencies>
-			<OutputFile>$(OutDir)RoboticsAnimatSim_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\RoboticsAnimatSim_vc10.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)RoboticsAnimatSim_vc10.lib ..\..\..\lib\RoboticsAnimatSim_vc10.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<ClInclude Include="..\RbAttachment.h" />
-		<ClInclude Include="..\RbBallSocket.h" />
-		<ClInclude Include="..\RbBody.h" />
-		<ClInclude Include="..\RbBox.h" />
-		<ClInclude Include="..\RbClassFactory.h" />
-		<ClInclude Include="..\RbCone.h" />
-		<ClInclude Include="..\RbConstraintFriction.h" />
-		<ClInclude Include="..\RbConstraintRelaxation.h" />
-		<ClInclude Include="..\RbCylinder.h" />
-		<ClInclude Include="..\RbDynamixelUSB.h" />
-		<ClInclude Include="..\RbDynamixelUSBHinge.h" />
-		<ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
-		<ClInclude Include="..\RbDynamixelUSBServo.h" />
-		<ClInclude Include="..\RbEllipsoid.h" />
-		<ClInclude Include="..\RbFirmataAnalogInput.h" />
-		<ClInclude Include="..\RbFirmataAnalogOutput.h" />
-		<ClInclude Include="..\RbFirmataController.h" />
-		<ClInclude Include="..\RbFirmataDigitalInput.h" />
-		<ClInclude Include="..\RbFirmataDigitalOutput.h" />
-		<ClInclude Include="..\RbFirmataHingeServo.h" />
-		<ClInclude Include="..\RbFirmataPart.h" />
-		<ClInclude Include="..\RbFirmataPrismaticServo.h" />
-		<ClInclude Include="..\RbFirmataPWMOutput.h" />
-		<ClInclude Include="..\RbFreeJoint.h" />
-		<ClInclude Include="..\RbHinge.h" />
-		<ClInclude Include="..\RbHingeLimit.h" />
-		<ClInclude Include="..\RbJoint.h" />
-		<ClInclude Include="..\RbLANWirelessInterface.h" />
-		<ClInclude Include="..\RbLine.h" />
-		<ClInclude Include="..\RbLinearHillMuscle.h" />
-		<ClInclude Include="..\RbLinearHillStretchReceptor.h" />
-		<ClInclude Include="..\RbMaterialType.h" />
-		<ClInclude Include="..\RbMesh.h" />
-		<ClInclude Include="..\RbMotorizedJoint.h" />
-		<ClInclude Include="..\RbMouth.h" />
-		<ClInclude Include="..\RbMovableItem.h" />
-		<ClInclude Include="..\RbOdorSensor.h" />
-		<ClInclude Include="..\RbOrganism.h" />
-		<ClInclude Include="..\RbPrismatic.h" />
-		<ClInclude Include="..\RbPrismaticLimit.h" />
-		<ClInclude Include="..\RbRigidBody.h" />
-		<ClInclude Include="..\RbRPRO.h" />
-		<ClInclude Include="..\RbSimulator.h" />
-		<ClInclude Include="..\RbSphere.h" />
-		<ClInclude Include="..\RbSpring.h" />
-		<ClInclude Include="..\RbStructure.h" />
-		<ClInclude Include="..\RbTorus.h" />
-		<ClInclude Include="..\RbUniversal.h" />
-		<ClInclude Include="..\StdAfx.h" />
-	</ItemGroup>
-	<ItemGroup>
-		<ClCompile Include="..\RbAttachment.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbBallSocket.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbBox.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbClassFactory.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbCone.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbConstraintFriction.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbConstraintRelaxation.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbCylinder.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSB.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSBHinge.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSBServo.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbEllipsoid.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataAnalogInput.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataAnalogOutput.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataController.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataDigitalInput.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataDigitalOutput.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataHingeServo.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataPart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataPrismaticServo.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFirmataPWMOutput.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbFreeJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbHinge.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbHingeLimit.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbLANWirelessInterface.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbLine.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbLinearHillMuscle.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbLinearHillStretchReceptor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbMaterialType.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbMesh.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbMotorizedJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbMouth.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbMovableItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbOdorSensor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbOrganism.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbPrismatic.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbPrismaticLimit.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbRigidBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbRPRO.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbSimulator.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbSphere.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbSpring.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbStructure.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbTorus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbUniversal.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RoboticsAnimatSim.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdAfx.cpp">
-		</ClCompile>
-	</ItemGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-	<ImportGroup Label="ExtensionTargets">
-	</ImportGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Double|Win32">
+      <Configuration>Debug_Double</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_Double|Win32">
+      <Configuration>Release_Double</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{307F681B-4130-1F46-BCA8-2EF9479329AD}</ProjectGuid>
+    <RootNamespace>RoboticsAnimatSim</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\x32\Debug\RoboticsAnimatSim\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RoboticsAnimatSim_vc10D</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\RoboticsAnimatSim\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RoboticsAnimatSim_vc10</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\RoboticsAnimatSim\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">RoboticsAnimatSim_vc10D</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\RoboticsAnimatSim\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">RoboticsAnimatSim_vc10</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduinoD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)RoboticsAnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
+      <ImportLibrary>Debug\RoboticsAnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)RoboticsAnimatSim_vc10D.lib ..\..\..\lib\RoboticsAnimatSim_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduino.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)RoboticsAnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>Release\RoboticsAnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)RoboticsAnimatSim_vc10.lib ..\..\..\lib\RoboticsAnimatSim_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduinoD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)RoboticsAnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDataBaseFileName>$(OutDir)RoboticsAnimatSim_vc10D.pdb</ProgramDataBaseFileName>
+      <ImportLibrary>Debug\RoboticsAnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)RoboticsAnimatSim_vc10D.lib ..\..\..\lib\RoboticsAnimatSim_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ROBOTICSANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;dynamixel.lib;openFrameworksArduino.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)RoboticsAnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>Release\RoboticsAnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)RoboticsAnimatSim_vc10.lib ..\..\..\lib\RoboticsAnimatSim_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\RbAttachment.h" />
+    <ClInclude Include="..\RbBallSocket.h" />
+    <ClInclude Include="..\RbBody.h" />
+    <ClInclude Include="..\RbBox.h" />
+    <ClInclude Include="..\RbClassFactory.h" />
+    <ClInclude Include="..\RbCone.h" />
+    <ClInclude Include="..\RbConstraintFriction.h" />
+    <ClInclude Include="..\RbConstraintRelaxation.h" />
+    <ClInclude Include="..\RbCylinder.h" />
+    <ClInclude Include="..\RbDynamixelUSB.h" />
+    <ClInclude Include="..\RbDynamixelUSBHinge.h" />
+    <ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
+    <ClInclude Include="..\RbDynamixelUSBServo.h" />
+    <ClInclude Include="..\RbEllipsoid.h" />
+    <ClInclude Include="..\RbFirmataAnalogInput.h" />
+    <ClInclude Include="..\RbFirmataAnalogOutput.h" />
+    <ClInclude Include="..\RbFirmataController.h" />
+    <ClInclude Include="..\RbFirmataDigitalInput.h" />
+    <ClInclude Include="..\RbFirmataDigitalOutput.h" />
+    <ClInclude Include="..\RbFirmataHingeServo.h" />
+    <ClInclude Include="..\RbFirmataPart.h" />
+    <ClInclude Include="..\RbFirmataPrismaticServo.h" />
+    <ClInclude Include="..\RbFirmataPWMOutput.h" />
+    <ClInclude Include="..\RbFreeJoint.h" />
+    <ClInclude Include="..\RbHinge.h" />
+    <ClInclude Include="..\RbHingeLimit.h" />
+    <ClInclude Include="..\RbJoint.h" />
+    <ClInclude Include="..\RbLANWirelessInterface.h" />
+    <ClInclude Include="..\RbLine.h" />
+    <ClInclude Include="..\RbLinearHillMuscle.h" />
+    <ClInclude Include="..\RbLinearHillStretchReceptor.h" />
+    <ClInclude Include="..\RbMaterialType.h" />
+    <ClInclude Include="..\RbMesh.h" />
+    <ClInclude Include="..\RbMotorizedJoint.h" />
+    <ClInclude Include="..\RbMouth.h" />
+    <ClInclude Include="..\RbMovableItem.h" />
+    <ClInclude Include="..\RbOdorSensor.h" />
+    <ClInclude Include="..\RbOrganism.h" />
+    <ClInclude Include="..\RbPrismatic.h" />
+    <ClInclude Include="..\RbPrismaticLimit.h" />
+    <ClInclude Include="..\RbRigidBody.h" />
+    <ClInclude Include="..\RbRPRO.h" />
+    <ClInclude Include="..\RbSimulator.h" />
+    <ClInclude Include="..\RbSphere.h" />
+    <ClInclude Include="..\RbSpring.h" />
+    <ClInclude Include="..\RbStructure.h" />
+    <ClInclude Include="..\RbTorus.h" />
+    <ClInclude Include="..\RbUniversal.h" />
+    <ClInclude Include="..\StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\RbAttachment.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbBallSocket.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbBox.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbClassFactory.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbCone.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbConstraintFriction.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbConstraintRelaxation.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbCylinder.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbDynamixelUSB.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbDynamixelUSBHinge.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbDynamixelUSBServo.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbEllipsoid.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataAnalogInput.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataAnalogOutput.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataController.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataDigitalInput.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataDigitalOutput.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataHingeServo.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataPart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataPrismaticServo.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFirmataPWMOutput.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbFreeJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbHinge.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbHingeLimit.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbLANWirelessInterface.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbLine.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbLinearHillMuscle.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbLinearHillStretchReceptor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbMaterialType.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbMesh.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbMotorizedJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbMouth.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbMovableItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbOdorSensor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbOrganism.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbPrismatic.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbPrismaticLimit.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbRigidBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbRPRO.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbSimulator.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbSphere.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbSpring.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbStructure.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbTorus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RbUniversal.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RoboticsAnimatSim.cpp">
+    </ClCompile>
+    <ClCompile Include="..\StdAfx.cpp">
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

@@ -1707,6 +1707,21 @@ void Simulator::RobotSynchTimeInterval(float fltVal)
 **/
 int Simulator::RobotSynchTimeCount() {return m_iRobotSynchTimeCount;}
 
+/**
+\brief	Used to determine if we are running in a simulation, or in a real control mode.
+
+\discussion The robotics simulation object will override this and return false to signify that it is in 
+real-time control of physical hardware. Other simulator objects should leave this as true to signify that they 
+are simulating the physical world. This are several places where we have to initialize things differently based
+on whether we are trying to run physical hardware or in simulation and this flag lets us know that.
+
+\author	dcofer
+\date	5/15/2014
+
+\return True if running in simulation, false if running on real hardware.
+**/
+bool Simulator::InSimulation() {return true;}
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -2626,6 +2641,8 @@ void Simulator::SimulateBegin()
 {
 	m_bSteppingSim = true;
 
+	std::cout << "starting sim" << "\r\n";
+
 	//Reset the counter.
 	g_Counter.start();
 }
@@ -2853,6 +2870,7 @@ double Simulator::RemainingVideoFrameTime()
 	if(dblRemaining < 0) dblRemaining = 0;
 	return dblRemaining;
 }
+
 
 /**
 \brief	Generates an automatic seed value based on the current time.
@@ -4048,6 +4066,9 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 
 		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->AttachTargetAdapter(lpAdapter);
+
+		//Attach the target neural module to the adapter. 
+		lpAdapter->SetSystemPointers(this, lpStructure, lpModule, NULL, true);
 	}
 }
 

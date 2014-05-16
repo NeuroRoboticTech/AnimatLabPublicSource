@@ -39,13 +39,13 @@ RbFirmataDigitalInput::~RbFirmataDigitalInput()
 
 void RbFirmataDigitalInput::SetupIO()
 {
-	if(!m_lpParentInterface->InSimulation() && m_lpFirmata)
+	if(!m_lpSim->InSimulation() && m_lpFirmata)
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_INPUT);
 }
 
 void RbFirmataDigitalInput::StepIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		int iValue = m_lpFirmata->getDigital(m_iIOComponentID);
 

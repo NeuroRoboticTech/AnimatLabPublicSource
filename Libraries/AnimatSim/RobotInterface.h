@@ -12,10 +12,6 @@ namespace AnimatSim
 			///different joints. 
 			CStdPtrArray<RobotIOControl> m_aryIOControls;
 
-			/// Used to determine if we are running in a simulation, or in a real control mode.
-			/// If we are in a simulatino then none of the sim or init methods are called for the robot code.
-			bool m_bInSimulation;
-
 			///This is the physics time step used by the robotics framework. This is not necessarily the same
 			///thing as the physics time step used in the simulation because the robot IO is not going to be able
 			///to go as fast as we will need the sim steps to go for it to be stable.
@@ -36,9 +32,6 @@ namespace AnimatSim
 			virtual ~RobotInterface(void);
 
 			virtual CStdPtrArray<RobotIOControl>* IOControls();
-
-			virtual bool InSimulation();
-			virtual void InSimulation(bool bVal);
 
 			virtual float PhysicsTimeStep();
 			virtual void PhysicsTimeStep(float fltStep);

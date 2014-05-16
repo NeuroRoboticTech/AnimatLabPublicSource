@@ -11,6 +11,7 @@
 #include "RbRigidBody.h"
 #include "RbClassFactory.h"
 #include "RbSimulator.h"
+#include <platformstl/synch/sleep_functions.h>
 
 namespace RoboticsAnimatSim
 {
@@ -46,7 +47,9 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
-#pragma region MutatorOverrides
+#pragma region AccessorMutatorOverrides
+
+bool RbSimulator::InSimulation() {return false;}
 
 #pragma endregion
 

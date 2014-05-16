@@ -120,7 +120,7 @@ void RbDynamixelUSBHinge::Initialize()
 
 void RbDynamixelUSBHinge::SetupIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		SetMinSimPos(m_lpHinge->LowerLimit()->LimitPos());
 		SetMaxSimPos(m_lpHinge->UpperLimit()->LimitPos());
@@ -136,14 +136,14 @@ void RbDynamixelUSBHinge::StepIO()
 {	
 	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		if(m_iUpdateIdx == m_iUpdateAllParamsCount)
 			ReadAllParams();
 		else
 			ReadKeyParams();
 
-		if(m_iNextGoalPos != m_iLastGoalPos ||  m_iNextGoalVelocity != m_iLastGoalVelocity)
+		if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
 		{
 			std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
 
@@ -177,7 +177,7 @@ void RbDynamixelUSBHinge::ShutdownIO()
 
 void RbDynamixelUSBHinge::StepSimulation()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		RobotPartInterface::StepSimulation();
 

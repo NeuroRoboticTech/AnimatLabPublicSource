@@ -22,6 +22,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -29,6 +32,8 @@
 					<Add library="dl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduinoD" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
@@ -50,6 +55,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -59,6 +67,8 @@
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduino" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Release/libRoboticsAnimatSim.so ../../../bin" />
@@ -80,6 +90,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -87,6 +100,8 @@
 					<Add library="dl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduinoD" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
@@ -108,6 +123,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -117,6 +135,8 @@
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />
+					<Add library="dynamixel" />
+					<Add library="openFrameworksArduino" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Release/libRoboticsAnimatSim.so ../../../bin" />
@@ -156,13 +176,40 @@
 		<Unit filename="../RbDynamixelUSBHinge.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelUSBMotor.h">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../RbDynamixelUSBPrismatic.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbDynamixelUSBServo.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbEllipsoid.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogInput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataController.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalInput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataHingeServo.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPart.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPrismaticServo.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPWMOutput.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFreeJoint.h">
@@ -234,9 +281,6 @@
 		<Unit filename="../RbStructure.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbSwitchInputSensor.h">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../RbTorus.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -279,13 +323,40 @@
 		<Unit filename="../RbDynamixelUSBHinge.cpp">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../RbDynamixelUSBMotor.cpp">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../RbDynamixelUSBPrismatic.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbDynamixelUSBServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbEllipsoid.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogInput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataController.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalInput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataHingeServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPart.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPrismaticServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPWMOutput.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFreeJoint.cpp">
@@ -355,9 +426,6 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbStructure.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../RbSwitchInputSensor.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbTorus.cpp">

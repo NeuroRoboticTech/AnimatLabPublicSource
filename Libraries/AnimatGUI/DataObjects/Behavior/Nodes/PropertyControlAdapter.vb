@@ -66,7 +66,7 @@ Namespace DataObjects.Behavior.Nodes
                 End If
 
                 'Do not attempt to save this adapter if there is no source data type specified.
-                If m_thDataTypes.ID.Trim.Length = 0 Then
+                If m_thSourceDataTypes.ID.Trim.Length = 0 Then
                     Return False
                 End If
 
@@ -140,7 +140,7 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             'Do not attempt to save this adapter if there is no source data type specified.
-            If m_thDataTypes.ID.Trim.Length = 0 Then
+            If m_thSourceDataTypes.ID.Trim.Length = 0 Then
                 Return
             End If
 
@@ -158,7 +158,7 @@ Namespace DataObjects.Behavior.Nodes
                 Return
             End If
 
-            If Not m_thDataTypes Is Nothing AndAlso m_thDataTypes.ID.Trim.Length > 0 AndAlso Not m_gnGain Is Nothing Then
+            If Not m_thSourceDataTypes Is Nothing AndAlso m_thSourceDataTypes.ID.Trim.Length > 0 AndAlso Not m_gnGain Is Nothing Then
 
                 oXml.AddChildElement("Adapter")
                 oXml.IntoElem()
@@ -170,13 +170,16 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("Type", Me.AdapterType)
                 oXml.AddChildElement("SourceModule", nmSource.ModuleName)
                 oXml.AddChildElement("SourceID", bnOrigin.ID)
-                oXml.AddChildElement("SourceDataType", m_thDataTypes.ID)
+                oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
                 oXml.AddChildElement("TargetModule", "AnimatLab")
                 oXml.AddChildElement("TargetID", bpProp.LinkedObject.Item.ID)
                 oXml.AddChildElement("PropertyName", bpProp.LinkedPropertyName)
                 oXml.AddChildElement("SetThreshold", bpProp.SetThreshold)
                 oXml.AddChildElement("InitialValue", bpProp.InitialValue)
                 oXml.AddChildElement("FinalValue", bpProp.FinalValue)
+                oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
+                m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
+                oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
 
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
 

@@ -194,7 +194,7 @@ void RbFirmataHingeServo::Initialize()
 
 void RbFirmataHingeServo::SetupIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		m_lpFirmata->sendServoAttach(m_iIOComponentID);
 
@@ -208,7 +208,7 @@ void RbFirmataHingeServo::SetupIO()
 
 void RbFirmataHingeServo::StepIO()
 {
-	if(!m_lpParentInterface->InSimulation() && m_iIOValue != m_iLastGoalPos)
+	if(!m_lpSim->InSimulation() && m_iIOValue != m_iLastGoalPos)
 		SetGoalPosition_FP(m_iIOValue);
 }
 

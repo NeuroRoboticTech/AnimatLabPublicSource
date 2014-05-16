@@ -177,6 +177,13 @@ public:
 
     virtual int CurrentPos() {return m_iCurrentPos;}
 
+    virtual T GetHead()
+    {
+		int iPos = m_iCurrentPos+1;
+		iPos%=this->GetSize();
+		return (*this)[iPos];
+    }
+
     virtual void AddEnd(T newNum)
     {
         (*this)[m_iCurrentPos] = newNum;

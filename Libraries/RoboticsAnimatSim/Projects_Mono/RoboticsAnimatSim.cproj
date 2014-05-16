@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CD2ED1C8-6011-BE4E-BF20-1048D0EDA75A}</ProjectGuid>
+    <ProjectGuid>{B4B3F08A-A5B0-EB43-A07B-106D3AE13B97}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,6 +25,9 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -37,6 +40,8 @@
         <Lib>dl</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -58,6 +63,9 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -71,6 +79,8 @@
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
         <Lib>OsgAnimatSim</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduino</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -92,6 +102,9 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -104,6 +117,8 @@
         <Lib>dl</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -125,6 +140,9 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -138,6 +156,8 @@
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
         <Lib>OsgAnimatSim</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduino</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
@@ -180,14 +200,41 @@
     <None Include="..\RbDynamixelUSBHinge.h">
       <Link>RbDynamixelUSBHinge.h</Link>
     </None>
-    <None Include="..\RbDynamixelUSBMotor.h">
-      <Link>RbDynamixelUSBMotor.h</Link>
-    </None>
     <None Include="..\RbDynamixelUSBPrismatic.h">
       <Link>RbDynamixelUSBPrismatic.h</Link>
     </None>
+    <None Include="..\RbDynamixelUSBServo.h">
+      <Link>RbDynamixelUSBServo.h</Link>
+    </None>
     <None Include="..\RbEllipsoid.h">
       <Link>RbEllipsoid.h</Link>
+    </None>
+    <None Include="..\RbFirmataAnalogInput.h">
+      <Link>RbFirmataAnalogInput.h</Link>
+    </None>
+    <None Include="..\RbFirmataAnalogOutput.h">
+      <Link>RbFirmataAnalogOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataController.h">
+      <Link>RbFirmataController.h</Link>
+    </None>
+    <None Include="..\RbFirmataDigitalInput.h">
+      <Link>RbFirmataDigitalInput.h</Link>
+    </None>
+    <None Include="..\RbFirmataDigitalOutput.h">
+      <Link>RbFirmataDigitalOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataHingeServo.h">
+      <Link>RbFirmataHingeServo.h</Link>
+    </None>
+    <None Include="..\RbFirmataPWMOutput.h">
+      <Link>RbFirmataPWMOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataPart.h">
+      <Link>RbFirmataPart.h</Link>
+    </None>
+    <None Include="..\RbFirmataPrismaticServo.h">
+      <Link>RbFirmataPrismaticServo.h</Link>
     </None>
     <None Include="..\RbFreeJoint.h">
       <Link>RbFreeJoint.h</Link>
@@ -258,9 +305,6 @@
     <None Include="..\RbStructure.h">
       <Link>RbStructure.h</Link>
     </None>
-    <None Include="..\RbSwitchInputSensor.h">
-      <Link>RbSwitchInputSensor.h</Link>
-    </None>
     <None Include="..\RbTorus.h">
       <Link>RbTorus.h</Link>
     </None>
@@ -305,14 +349,41 @@
     <Compile Include="..\RbDynamixelUSBHinge.cpp">
       <Link>RbDynamixelUSBHinge.cpp</Link>
     </Compile>
-    <Compile Include="..\RbDynamixelUSBMotor.cpp">
-      <Link>RbDynamixelUSBMotor.cpp</Link>
-    </Compile>
     <Compile Include="..\RbDynamixelUSBPrismatic.cpp">
       <Link>RbDynamixelUSBPrismatic.cpp</Link>
     </Compile>
+    <Compile Include="..\RbDynamixelUSBServo.cpp">
+      <Link>RbDynamixelUSBServo.cpp</Link>
+    </Compile>
     <Compile Include="..\RbEllipsoid.cpp">
       <Link>RbEllipsoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataAnalogInput.cpp">
+      <Link>RbFirmataAnalogInput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataAnalogOutput.cpp">
+      <Link>RbFirmataAnalogOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataController.cpp">
+      <Link>RbFirmataController.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataDigitalInput.cpp">
+      <Link>RbFirmataDigitalInput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataDigitalOutput.cpp">
+      <Link>RbFirmataDigitalOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataHingeServo.cpp">
+      <Link>RbFirmataHingeServo.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPWMOutput.cpp">
+      <Link>RbFirmataPWMOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPart.cpp">
+      <Link>RbFirmataPart.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPrismaticServo.cpp">
+      <Link>RbFirmataPrismaticServo.cpp</Link>
     </Compile>
     <Compile Include="..\RbFreeJoint.cpp">
       <Link>RbFreeJoint.cpp</Link>
@@ -382,9 +453,6 @@
     </Compile>
     <Compile Include="..\RbStructure.cpp">
       <Link>RbStructure.cpp</Link>
-    </Compile>
-    <Compile Include="..\RbSwitchInputSensor.cpp">
-      <Link>RbSwitchInputSensor.cpp</Link>
     </Compile>
     <Compile Include="..\RbTorus.cpp">
       <Link>RbTorus.cpp</Link>

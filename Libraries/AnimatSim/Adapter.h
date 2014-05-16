@@ -14,6 +14,13 @@ namespace AnimatSim
 	**/
 	namespace Adapters
 	{
+		
+		enum eDelayBufferMode
+		{
+			NoDelayBuffer,
+			DelayBufferInSimOnly,
+			DelayBufferAlwaysOn
+		};
 
 		/**
 		\class	Adapter
@@ -64,12 +71,34 @@ namespace AnimatSim
 			///if target and source are neural only.
 			bool m_bConnectedToPhysics;
 
-			///This is the previous value that was passed into the adpters target
-			float m_fltPrevVal;
+			///This is the value that will was calculated for this adpater. If you are using a delay buffer this may be different than m_fltNextVal
+			float m_fltCalculatedVal;
+
+			///This is the value that will be passed into the adpters target
+			float m_fltNextVal;
+
+			//Determines whether this adapter uses a delay buffer. 
+			eDelayBufferMode m_eDelayBufferMode;
+
+			//The duration of the delay buffer.
+			float m_fltDelayBufferInterval;
+
+			///This buffer is used if the adapter has been setup to have delays between calcuating values and 
+			///setting them in the target object. 
+			CStdCircularArray<float> m_aryDelayBuffer;
+
+			///If you are modeling a robot then you can use this to scale the IO of this adapter to match the real response of the robot.
+			///An example where this might be used is while simulating a motor. Real motors usually end up having a slightly slower response
+			///time than you get in the simulation. The value specified here is a percentage with 1 at 100%. To slow the simulated response time
+			///down slightly you could set it to 0.95 instead. This will only be applied during the simulation, NOT during the running of the real
+			///robot. This is only so you can try and tune your simulation repsonse to more closely match the real robot response.
+			float m_fltRobotIOScale;
 
 			virtual void AddGain(std::string strXml);
 			virtual void SetOriginID(std::string strXml);
 			virtual void SetDestinationID(std::string strXml);
+
+			virtual void SetDelayBufferSize();
 
 		public:
 			Adapter();
@@ -102,14 +131,24 @@ namespace AnimatSim
 
 			virtual bool ConnectedToPhysics();
 
+			virtual eDelayBufferMode DelayBufferMode();
+			virtual void DelayBufferMode(eDelayBufferMode eMode);
+
+			virtual float DelayBufferInterval();
+			virtual void DelayBufferInterval(float fltVal);
+
 			virtual void DetachAdaptersFromSimulation();
 
+			virtual float RobotIOScale();
+			virtual void RobotIOScale(float fltVal);
+
 			virtual void Initialize();
+			virtual void TimeStepModified();
+			virtual void ResetSimulation();
 			virtual void AddExternalNodeInput(float fltInput);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual float *GetDataPointer(const std::string &strDataType);
-			virtual void ResetSimulation() {};
 			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};

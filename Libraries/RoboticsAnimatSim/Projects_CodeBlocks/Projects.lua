@@ -7,7 +7,10 @@
 		buildoptions { "-std=c++11" }
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
-		   	      "../../AnimatSim"}
+		   	      "../../AnimatSim",
+				  "../../../../3rdParty/DynamixelSDK/x32/import",
+				  "../../../../3rdParty/openFrameworksArduino/src",
+				  "../../../../3rdParty/stlsoft-1.9.117/include"}
 		libdirs { "../../../bin" }
 		links { "dl" }
 	  
@@ -17,7 +20,9 @@
 			targetdir ("Debug")
 			targetname ("RoboticsAnimatSim_debug")
 			links { "StdUtils_debug", 
-				"AnimatSim_debug" }
+					"AnimatSim_debug",
+					"dynamixel",
+					"openFrameworksArduinoD" }
 			postbuildcommands { "cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" }
 	 
 		configuration { "Release or Release_Double", "linux" }
@@ -27,7 +32,9 @@
 			targetname ("RoboticsAnimatSim")
 			links { "StdUtils",
 				"AnimatSim", 
-				"OsgAnimatSim"}					
+				"OsgAnimatSim",
+				"dynamixel",
+				"openFrameworksArduino"}					
 			postbuildcommands { "cp Release/libRoboticsAnimatSim.so ../../../bin" }
 
 
@@ -40,7 +47,10 @@
 		targetname ("Robotics_UnitTests")				
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
-		   	      "../../AnimatSim"}
+		   	      "../../AnimatSim",
+				  "../../../../3rdParty/DynamixelSDK/x32/import",
+				  "../../../../3rdParty/openFrameworksArduino/src",
+				  "../../../../3rdParty/stlsoft-1.9.117/include"}
 		libdirs { "../../../bin" }
 		links { "boost_system", 
 			"boost_filesystem",
@@ -50,13 +60,17 @@
 			defines { "_DEBUG" }
 			flags   { "Symbols", "SEH" }
 			links { "StdUtils_debug", 
-				"AnimatSim_debug"}
+					"AnimatSim_debug",
+					"dynamixel",
+					"openFrameworksArduinoD"}
 	 
 		configuration { "Release or Release_Double", "linux" }
 			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			links { "StdUtils",
-				"AnimatSim"}					
+					"AnimatSim",
+					"dynamixel",
+					"openFrameworksArduino"}					
 					
 
 								

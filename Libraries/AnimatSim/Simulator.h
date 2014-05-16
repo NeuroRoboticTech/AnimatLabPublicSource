@@ -824,6 +824,8 @@ namespace AnimatSim
 
 			virtual int RobotSynchTimeCount();
 
+			virtual bool InSimulation();
+
 #pragma endregion
 
 #pragma region UnitScalingVariables

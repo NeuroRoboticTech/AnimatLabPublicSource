@@ -47,7 +47,7 @@ Namespace DataObjects.Behavior.Nodes
                 End If
 
                 'Do not attempt to save this adapter if there is no source data type specified.
-                If m_thDataTypes.ID.Trim.Length = 0 Then
+                If m_thSourceDataTypes.ID.Trim.Length = 0 Then
                     Return False
                 End If
 
@@ -107,14 +107,14 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             'Do not attempt to save this adapter if there is no source data type specified.
-            If m_thDataTypes.ID.Trim.Length = 0 Then
+            If m_thSourceDataTypes.ID.Trim.Length = 0 Then
                 Return
             End If
 
             Dim nmSource As NeuralModule = DirectCast(m_doOrganism.NeuralModules(bnOrigin.NeuralModuleType.FullName), NeuralModule)
             Dim nmTarget As NeuralModule = DirectCast(m_doOrganism.NeuralModules(bnDestination.NeuralModuleType.FullName), NeuralModule)
 
-            If Not m_thDataTypes Is Nothing AndAlso m_thDataTypes.ID.Trim.Length > 0 AndAlso _
+            If Not m_thSourceDataTypes Is Nothing AndAlso m_thSourceDataTypes.ID.Trim.Length > 0 AndAlso _
                Not nmTarget Is Nothing AndAlso Not bnDestination Is Nothing AndAlso _
                Not m_gnGain Is Nothing Then
 
@@ -128,9 +128,12 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("Type", Me.AdapterType)
                 oXml.AddChildElement("SourceModule", nmSource.ModuleName)
                 oXml.AddChildElement("SourceID", bnOrigin.ID)
-                oXml.AddChildElement("SourceDataType", m_thDataTypes.ID)
+                oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
                 oXml.AddChildElement("TargetModule", nmTarget.ModuleName)
                 oXml.AddChildElement("TargetID", bnDestination.ID)
+                oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
+                m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
+                oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
 
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
 

@@ -39,13 +39,13 @@ RbFirmataAnalogInput::~RbFirmataAnalogInput()
 
 void RbFirmataAnalogInput::SetupIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 		m_lpFirmata->sendAnalogPinReporting(m_iIOComponentID, ARD_ANALOG);
 }
 
 void RbFirmataAnalogInput::StepIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		int iValue = m_lpFirmata->getAnalog(m_iIOComponentID);
 		if(iValue != -1 && m_iIOValue != iValue)

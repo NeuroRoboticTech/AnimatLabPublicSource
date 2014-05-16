@@ -46,7 +46,7 @@ RbDynamixelUSBPrismatic::~RbDynamixelUSBPrismatic()
 
 void RbDynamixelUSBPrismatic::StepSimulation()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		RobotPartInterface::StepSimulation();
 

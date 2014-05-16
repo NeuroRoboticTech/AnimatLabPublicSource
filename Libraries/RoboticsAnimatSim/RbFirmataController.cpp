@@ -123,7 +123,7 @@ void RbFirmataController::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 void RbFirmataController::Initialize()
 {
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		//Try to connect to the arduino board.
 		if(!connect(m_strComPort, m_iBaudRate))

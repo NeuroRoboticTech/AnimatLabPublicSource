@@ -39,13 +39,13 @@ RbFirmataPWMOutput::~RbFirmataPWMOutput()
 
 void RbFirmataPWMOutput::SetupIO()
 {
-	if(!m_lpParentInterface->InSimulation() && m_lpFirmata)
+	if(!m_lpSim->InSimulation() && m_lpFirmata)
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_PWM);
 }
 
 void RbFirmataPWMOutput::StepIO()
 {
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		if(m_iIOValue != m_lpFirmata->getPwm(m_iIOComponentID))
 		{

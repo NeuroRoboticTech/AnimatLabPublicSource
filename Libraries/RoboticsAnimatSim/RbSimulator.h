@@ -40,8 +40,9 @@ namespace RoboticsAnimatSim
 
 #pragma endregion
 
-#pragma region MutatorOverrides
+#pragma region AccessorMutatorOverrides
 
+			virtual bool InSimulation();
 
 #pragma endregion
 		

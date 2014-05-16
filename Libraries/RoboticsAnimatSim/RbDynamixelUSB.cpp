@@ -109,7 +109,7 @@ void RbDynamixelUSB::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 void RbDynamixelUSB::Initialize()
 {
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 	{
 		if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
 			THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
@@ -154,7 +154,7 @@ void RbDynamixelUSB::ExitIOThread()
 {
 	RobotIOControl::ExitIOThread();
 
-	if(m_lpParentInterface && !m_lpParentInterface->InSimulation())
+	if(!m_lpSim->InSimulation())
 		dxl_terminate();
 }
 

@@ -58,7 +58,7 @@ void RbFirmataPrismaticServo::Initialize()
 
 	m_lpHinge = dynamic_cast<RbHinge *>(m_lpPart);
 
-	//if(!m_lpParentInterface->InSimulation())
+	//if(!m_lpSim->InSimulation())
 	//	InitMotorData();
 }
 

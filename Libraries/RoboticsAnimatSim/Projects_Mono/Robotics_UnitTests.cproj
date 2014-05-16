@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DBB74BF5-18CA-7140-B528-CD96DFE434FE}</ProjectGuid>
+    <ProjectGuid>{A16475B0-0FAC-A942-A2AF-8B8BFD15EA09}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,6 +25,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -40,6 +43,8 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -56,6 +61,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -71,6 +79,8 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduino</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -87,6 +97,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -102,6 +115,8 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils_debug</Lib>
         <Lib>AnimatSim_debug</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>
@@ -118,6 +133,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
+        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
+        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -133,6 +151,8 @@
         <Lib>boost_unit_test_framework</Lib>
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
+        <Lib>dynamixel</Lib>
+        <Lib>openFrameworksArduino</Lib>
       </Libs>
     </Libs>
   </PropertyGroup>

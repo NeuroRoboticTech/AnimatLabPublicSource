@@ -14,8 +14,7 @@
 						  "../../../../3rdParty/openFrameworksArduino/src",
 						  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 			libdirs { "../../../lib",
-					  "$(OutDir)",
-					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
+					  "$(OutDir)", 
 					  "../../../../3rdParty/boost_1_54_0/lib",
 					  "../../../../3rdParty/DynamixelSDK/x32/import" }
 			defines { "WIN32", "_DEBUG", "_WINDOWS", "_USRDLL", "ROBOTICSANIMATLIBRARY_EXPORTS", "_CRT_SECURE_NO_WARNINGS" }
@@ -40,8 +39,7 @@
 						  "../../../../3rdParty/openFrameworksArduino/src",
 						  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 			libdirs { "../../../lib",
-					  "$(OutDir)",
-					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib", 
+					  "$(OutDir)", 
 					  "../../../../3rdParty/boost_1_54_0/lib",
 					  "../../../../3rdParty/DynamixelSDK/x32/import" }
 			defines { "WIN32", "NDEBUG", "_WINDOWS", "_USRDLL", "ROBOTICSANIMATLIBRARY_EXPORTS" }
