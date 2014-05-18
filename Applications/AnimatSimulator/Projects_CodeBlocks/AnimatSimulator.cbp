@@ -15,10 +15,11 @@
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 					<Add option="-std=c++11" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add library="AnimatBootstrapLoader_debug" />
 					<Add library="dl" />
 					<Add library="pthread" />
@@ -36,12 +37,12 @@
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
 					<Add option="-std=c++11" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
-					<Add directory="../../../Libraries/BootstrapLoader/Projects_CodeBlocks/Release" />
+					<Add directory="../../../bin" />
 					<Add library="AnimatBootstrapLoader" />
 					<Add library="dl" />
 					<Add library="pthread" />
@@ -59,10 +60,11 @@
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 					<Add option="-std=c++11" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add library="AnimatBootstrapLoader_debug" />
 					<Add library="dl" />
 					<Add library="pthread" />
@@ -80,12 +82,12 @@
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
 					<Add option="-std=c++11" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
-					<Add directory="../../../Libraries/BootstrapLoader/Projects_CodeBlocks/Release" />
+					<Add directory="../../../bin" />
 					<Add library="AnimatBootstrapLoader" />
 					<Add library="dl" />
 					<Add library="pthread" />
@@ -105,15 +107,16 @@
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DANIMAT_STATIC" />
 					<Add option="-std=c++11" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/StdUtils" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/OsgAnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim" />
+					<Add directory="../../../include" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/OsgAnimatSim" />
+					<Add directory="../../../Libraries/BulletAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
 				</Compiler>
 				<Linker>
-					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" />
+					<Add directory="../../../bin" />
 					<Add library="AnimatBootstrapLoader_debug" />
 					<Add library="dl" />
 					<Add library="pthread" />

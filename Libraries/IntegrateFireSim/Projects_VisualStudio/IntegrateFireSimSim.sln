@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "IntegrateFireSim.vcxproj", "{FA81F1C1-02C8-744A-B80B-633DD9E62729}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "IntegrateFireSim.vcxproj", "{D27003CE-3F88-074C-9996-DF9DF5795EE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Debug|Win32.Build.0 = Debug|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Release|Win32.ActiveCfg = Release|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Release|Win32.Build.0 = Release|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
-		{FA81F1C1-02C8-744A-B80B-633DD9E62729}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Debug|Win32.Build.0 = Debug|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Release|Win32.ActiveCfg = Release|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Release|Win32.Build.0 = Release|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{D27003CE-3F88-074C-9996-DF9DF5795EE7}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

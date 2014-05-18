@@ -25,6 +25,7 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -81,6 +82,7 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -139,6 +141,7 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -196,6 +199,7 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />

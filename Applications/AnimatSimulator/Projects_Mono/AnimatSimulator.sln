@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{7A79B38B-B956-644B-ABFE-03C6716DAB7B}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimulator", "AnimatSimulator.cproj", "{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,16 +12,16 @@ Global
 		Debug_Static|AnyCPU = Debug_Static|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
-		{7A79B38B-B956-644B-ABFE-03C6716DAB7B}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug_Static|AnyCPU.ActiveCfg = Debug_Static|Any CPU
+		{12E6ED63-5F98-0B48-8B6D-3E6CCB0FC43A}.Debug_Static|AnyCPU.Build.0 = Debug_Static|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

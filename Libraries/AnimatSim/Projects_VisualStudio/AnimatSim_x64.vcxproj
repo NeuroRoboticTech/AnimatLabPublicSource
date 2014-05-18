@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{5CA00D50-9739-784B-92A9-7D936016B287}</ProjectGuid>
+		<ProjectGuid>{BF60AB36-7AE5-E945-B585-DDF1D0D2167F}</ProjectGuid>
 		<RootNamespace>AnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -300,7 +300,9 @@
 		<ClInclude Include="..\RPRO.h" />
 		<ClInclude Include="..\Sensor.h" />
 		<ClInclude Include="..\SigmoidGain.h" />
+		<ClInclude Include="..\SimulationMgr.h" />
 		<ClInclude Include="..\SimulationRecorder.h" />
+		<ClInclude Include="..\SimulationThread.h" />
 		<ClInclude Include="..\SimulationWindow.h" />
 		<ClInclude Include="..\SimulationWindowMgr.h" />
 		<ClInclude Include="..\Simulator.h" />
@@ -492,7 +494,11 @@
 		</ClCompile>
 		<ClCompile Include="..\SigmoidGain.cpp">
 		</ClCompile>
+		<ClCompile Include="..\SimulationMgr.cpp">
+		</ClCompile>
 		<ClCompile Include="..\SimulationRecorder.cpp">
+		</ClCompile>
+		<ClCompile Include="..\SimulationThread.cpp">
 		</ClCompile>
 		<ClCompile Include="..\SimulationWindow.cpp">
 		</ClCompile>

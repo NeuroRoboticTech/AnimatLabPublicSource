@@ -134,7 +134,7 @@ void RbDynamixelUSBHinge::SetupIO()
 
 void RbDynamixelUSBHinge::StepIO()
 {	
-	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+	platformstl::performance_counter::epoch_type lStepStartTick = m_lpSim->GetTimerTick();
 
 	if(!m_lpSim->InSimulation())
 	{
@@ -164,7 +164,7 @@ void RbDynamixelUSBHinge::StepIO()
 		}
 	}
 
-	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	platformstl::performance_counter::epoch_type lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
 
 	m_iUpdateIdx++;

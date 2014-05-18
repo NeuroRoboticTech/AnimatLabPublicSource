@@ -15,7 +15,8 @@ solution "PyAnimatSim"
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
-						  "$(PYTHON_ROOT)/include"}	  
+						  "$(PYTHON_ROOT)/include",
+					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib",

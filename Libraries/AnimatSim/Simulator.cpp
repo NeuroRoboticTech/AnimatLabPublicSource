@@ -40,9 +40,6 @@
 #include "LightManager.h"
 #include "Simulator.h"
 
-#include <platformstl/performance/performance_counter.hpp>
-#include <platformstl/synch/sleep_functions.h>
-
 namespace AnimatSim
 {
 
@@ -599,7 +596,7 @@ long Simulator::SliceToMillisecond(long lSlice) {return (long) (lSlice * m_fltTi
 
 \return	tick when the simulation begins.
 **/
-unsigned long long Simulator::StartSimTick() {return m_lStartSimTick;}
+platformstl::performance_counter::epoch_type Simulator::StartSimTick() {return m_lStartSimTick;}
 
 /**
 \brief	Gets the current time slice.
@@ -1627,10 +1624,10 @@ void Simulator::PresetPlaybackTimeStep(float fltTimeStep)
 	m_fltPresetPlaybackTimeStep = fltTimeStep;
 }
 
-unsigned long long Simulator::StepStartTick()
+platformstl::performance_counter::epoch_type Simulator::StepStartTick()
 {return m_lStepStartTick;}
 
-unsigned long long Simulator::StepSimEndTick()
+platformstl::performance_counter::epoch_type Simulator::StepSimEndTick()
 {return m_lStepSimEndTick;}
 
 double Simulator::CurrentRealTimeForStep_n()
@@ -2395,23 +2392,23 @@ float Simulator::MinTimeStep()
 }
 
 //Timer Methods
-signed __int64 Simulator::GetTimerTick()
+platformstl::performance_counter::epoch_type Simulator::GetTimerTick()
 {
 	m_lLastTickTaken = g_Counter.get_epoch();
 	return m_lLastTickTaken;
 }
 
-double Simulator::TimerDiff_u(signed __int64 lStart, signed __int64 lEnd)
+double Simulator::TimerDiff_u(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd)
 {
 	return (double) g_Counter.get_microseconds(lStart, lEnd);
 }
 
-double Simulator::TimerDiff_m(signed __int64 lStart, signed __int64 lEnd)
+double Simulator::TimerDiff_m(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd)
 {
 	return (double) (g_Counter.get_microseconds(lStart, lEnd)*1e-3);
 }
 
-double Simulator::TimerDiff_s(signed __int64 lStart, signed __int64 lEnd)
+double Simulator::TimerDiff_s(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd)
 {
 	return (double) (g_Counter.get_microseconds(lStart, lEnd)*1e-6);
 }
@@ -2428,7 +2425,7 @@ void Simulator::WriteToConsole(std::string strMessage)
 
 void Simulator::MicroWait(unsigned int iMicroTime)
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 	int iRemaining = iMicroTime;
 
 	while(iRemaining > 0)
@@ -2486,7 +2483,7 @@ void Simulator::StepVideoFrame()
 **/
 void Simulator::StepNeuralEngine()
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
 	for(m_oOrganismIterator=m_aryOrganisms.begin(); 
 	    m_oOrganismIterator!=m_aryOrganisms.end(); 
@@ -2525,7 +2522,7 @@ void Simulator::AfterStepSimulation()
 **/
 void Simulator::StepPhysicsEngine()
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
 	for(m_oStructureIterator=m_aryAllStructures.begin(); 
 	    m_oStructureIterator!=m_aryAllStructures.end(); 
@@ -2548,7 +2545,7 @@ void Simulator::StepPhysicsEngine()
 
 void Simulator::StepExternalStimuli()
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
 	m_oExternalStimuliMgr.StepSimulation();
 
@@ -2557,7 +2554,7 @@ void Simulator::StepExternalStimuli()
 
 void Simulator::StepDataCharts()
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
 	m_oDataChartMgr.StepSimulation();
 
@@ -2566,7 +2563,7 @@ void Simulator::StepDataCharts()
 
 void Simulator::StepSimRecorder()
 {
-	unsigned long long lStart = GetTimerTick();
+	platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
 	m_lpSimRecorder->StepSimulation();
 
@@ -2828,7 +2825,7 @@ void Simulator::RecordSimulationStepTimer()
 
 void Simulator::RecordSimulationTotalStepTimer()
 {
-	unsigned long long lEnd = GetTimerTick();
+	platformstl::performance_counter::epoch_type lEnd = GetTimerTick();
 	m_fltPrevTotalRealTimeForStep = m_fltTotalRealTimeForStep;
 	m_fltTotalRealTimeForStep = (float) TimerDiff_s(m_lStepStartTick, lEnd);
 
@@ -2861,7 +2858,7 @@ double Simulator::CalculateRemainingPlaybackTime()
 
 void Simulator::RecordAddedPlaybackTime()
 {
-	unsigned long long lEnd = GetTimerTick();
+	platformstl::performance_counter::epoch_type lEnd = GetTimerTick();
 	m_fltPlaybackAdditionRealTimeToStep = (float) TimerDiff_s(m_lStepSimEndTick, lEnd);
 }
 

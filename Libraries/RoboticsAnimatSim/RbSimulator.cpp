@@ -136,7 +136,7 @@ void RbSimulator::StepSimulation()
 		{
 			Simulator::StepSimulation();
 
-			unsigned long long lStart = GetTimerTick();
+			platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 
    //         if( m_bDrawDebug )
    //             m_dbgDraw.BeginDraw();

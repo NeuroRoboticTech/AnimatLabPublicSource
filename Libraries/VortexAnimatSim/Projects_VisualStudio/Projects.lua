@@ -12,7 +12,8 @@
 						  "../../../../3rdParty/Vortex_5_1/3rdparty/sdl-1.2.14/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/boost_1_54_0"}	  
+						  "../../../../3rdParty/boost_1_54_0",
+					  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",
@@ -74,7 +75,8 @@
 						  "../../../../3rdParty/Vortex_5_1/3rdparty/sdl-1.2.14/include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
-						  "../../../../3rdParty/boost_1_54_0"}	  
+						  "../../../../3rdParty/boost_1_54_0",
+					  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/Vortex_5_1/3rdparty/osg-2.8.3/lib",

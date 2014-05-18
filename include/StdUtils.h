@@ -91,6 +91,9 @@
 	#include <boost/interprocess/sync/interprocess_condition.hpp>
 #endif
 
+#include <platformstl/performance/performance_counter.hpp>
+#include <platformstl/synch/sleep_functions.h>
+
 #ifdef WIN32
 	//For some reason this is not in math.h on windows.
 	inline double round( double d )

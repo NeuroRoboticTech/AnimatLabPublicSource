@@ -260,7 +260,7 @@ namespace AnimatSim
 			float m_lEndSimTimeSlice;
 
 			///The tick count for when the simulation first begins running.
-			unsigned long long m_lStartSimTick;
+			platformstl::performance_counter::epoch_type m_lStartSimTick;
 
 			///The number of slices that the physics engine has been updated.
 			long m_lPhysicsSliceCount;
@@ -343,10 +343,10 @@ namespace AnimatSim
 			float m_fltPresetPlaybackTimeStep;
 
 			/// This is the tick count that is taken when a step is started.
-			unsigned long long m_lStepStartTick;
+			platformstl::performance_counter::epoch_type m_lStepStartTick;
 			
 			///The tick count for when the simulation procressing of the step ends.
-			unsigned long long m_lStepSimEndTick;
+			platformstl::performance_counter::epoch_type m_lStepSimEndTick;
 
 			/// This is the total number of milliseconds for the simulation processing time.
 			/// This is a float so that it can easily be reported.
@@ -376,13 +376,13 @@ namespace AnimatSim
 			float m_fltDesiredFrameStep;
 
 			/// The tick when a new video frame time starts.
-			unsigned long long m_lVideoFrameStartTick;
+			platformstl::performance_counter::epoch_type m_lVideoFrameStartTick;
 
 			/// The frame rate for the current frame.
 			float m_fltActualFrameRate;
 
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
-			signed __int64 m_lLastTickTaken;
+			platformstl::performance_counter::epoch_type m_lLastTickTaken;
 
 			/// This is the time pers step for the physics engine.
 			float m_fltPhysicsStepTime;
@@ -698,7 +698,7 @@ namespace AnimatSim
 			virtual long Millisecond();
 			virtual long MillisecondToSlice(long lMillisecond);
 			virtual long SliceToMillisecond(long lSlice);
-			virtual unsigned long long StartSimTick();
+			virtual platformstl::performance_counter::epoch_type StartSimTick();
 
 			virtual float MinTimeStep();
 			virtual float TimeStep();
@@ -810,8 +810,8 @@ namespace AnimatSim
 			virtual float PresetPlaybackTimeStep();
 			virtual void PresetPlaybackTimeStep(float fltTimeStep);
 
-			virtual unsigned long long StepStartTick();
-			virtual unsigned long long StepSimEndTick();
+			virtual platformstl::performance_counter::epoch_type StepStartTick();
+			virtual platformstl::performance_counter::epoch_type StepSimEndTick();
 
 			virtual int DesiredFrameRate();
 			virtual float DesiredFrameStep();
@@ -856,10 +856,10 @@ namespace AnimatSim
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
 
 		//Timer Methods
-		virtual signed __int64 GetTimerTick();
-		virtual double TimerDiff_u(signed __int64 lStart, signed __int64 lEnd);
-		virtual double TimerDiff_m(signed __int64 lStart, signed __int64 lEnd);
-		virtual double TimerDiff_s(signed __int64 lStart, signed __int64 lEnd);
+		virtual platformstl::performance_counter::epoch_type GetTimerTick();
+		virtual double TimerDiff_u(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
+		virtual double TimerDiff_m(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
+		virtual double TimerDiff_s(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
 		virtual void MicroSleep(unsigned int iMicroTime);
 		virtual void MicroWait(unsigned int iMicroTime);
 

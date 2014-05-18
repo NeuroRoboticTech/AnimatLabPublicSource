@@ -5,7 +5,8 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		buildoptions { "-std=c++11" }
-		includedirs { "../../../include" }
+		includedirs { "../../../include",
+					  "../../../../3rdParty/stlsoft-1.9.117/include" }
 		libdirs { "../../../bin" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }

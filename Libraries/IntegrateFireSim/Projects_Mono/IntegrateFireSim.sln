@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "IntegrateFireSim.cproj", "{5383406F-7084-DB48-AFCE-9B14EEE662B9}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "IntegrateFireSim", "IntegrateFireSim.cproj", "{69B53473-3288-5342-8BFA-AA5A84DEDBC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|AnyCPU = Release_Double|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Release|AnyCPU.Build.0 = Release|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
-		{5383406F-7084-DB48-AFCE-9B14EEE662B9}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{69B53473-3288-5342-8BFA-AA5A84DEDBC0}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

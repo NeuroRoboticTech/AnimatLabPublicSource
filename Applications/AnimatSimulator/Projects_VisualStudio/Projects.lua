@@ -4,7 +4,8 @@
 		kind     "ConsoleApp"
 		files  { "../*.h",
 				 "../*.cpp"}
-		includedirs { "../../../include"}	  
+		includedirs { "../../../include",
+					  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
 		libdirs { "../../../lib" }
 		
 		configuration { "Debug or Debug_Double", "windows" }

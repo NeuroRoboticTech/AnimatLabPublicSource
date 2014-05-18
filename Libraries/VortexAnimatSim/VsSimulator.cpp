@@ -543,7 +543,7 @@ void VsSimulator::StepSimulation()
 		{
 			Simulator::StepSimulation();
 
-			unsigned long long lStart = GetTimerTick();
+			platformstl::performance_counter::epoch_type lStart = GetTimerTick();
 			m_vxFrame->step();
 			double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;

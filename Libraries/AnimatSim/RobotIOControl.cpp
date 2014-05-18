@@ -247,7 +247,12 @@ void RobotIOControl::ExitIOThread()
 	{
 		m_bStopIO = true;
 
-		bool bTryJoin = m_ioThread.try_join_for(boost::chrono::seconds(30));
+	bool bTryJoin = false;
+#if (BOOST_VERSION >= 105000)
+	bTryJoin = m_ioThread.try_join_for(boost::chrono::seconds(30));
+#else
+	bTryJoin = m_ioThread.join();
+#endif
 
 		ShutdownIO();
 	}
@@ -280,13 +285,13 @@ void RobotIOControl::SetupIO()
 **/
 void RobotIOControl::StepIO()
 {
-	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+	platformstl::performance_counter::epoch_type lStepStartTick = m_lpSim->GetTimerTick();
 
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryParts[iIndex]->StepIO();
 
-	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	platformstl::performance_counter::epoch_type lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
 }
 
