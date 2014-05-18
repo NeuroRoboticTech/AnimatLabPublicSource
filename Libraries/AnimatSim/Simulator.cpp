@@ -71,7 +71,6 @@ Simulator::Simulator()
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lEndSimTimeSlice = -1;
-	m_lStartSimTick = 0;
 	m_bStopSimulation = false;
 	m_bForceSimulationStop = false;
     m_bBlockSimulation = false;
@@ -129,8 +128,6 @@ Simulator::Simulator()
 
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
 	m_fltPresetPlaybackTimeStep = 0;
-	m_lStepStartTick = 0;
-	m_lStepSimEndTick = 0;
 	m_fltSimulationRealTimeToStep = 0;
 	m_fltTotalRealTimeForStep = 0;
 	m_fltPlaybackAdditionRealTimeToStep = 0;
@@ -140,7 +137,6 @@ Simulator::Simulator()
 	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
@@ -148,7 +144,6 @@ Simulator::Simulator()
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
-	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
 	m_bRecordVideo = false;
@@ -2225,8 +2220,6 @@ void Simulator::Reset()
 	m_lSnapshotByteSize = 0;
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
 	m_fltPresetPlaybackTimeStep = 0;
-	m_lStepStartTick = 0;
-	m_lStepSimEndTick = 0;
 	m_fltSimulationRealTimeToStep = 0;
 	m_fltTotalRealTimeForStep = 0;
 	m_fltPlaybackAdditionRealTimeToStep = 0;
@@ -2236,7 +2229,6 @@ void Simulator::Reset()
 	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
@@ -2244,7 +2236,6 @@ void Simulator::Reset()
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
-	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
 	m_bPaused = true;
