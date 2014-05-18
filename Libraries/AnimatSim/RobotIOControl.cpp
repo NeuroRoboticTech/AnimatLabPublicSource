@@ -251,7 +251,7 @@ void RobotIOControl::ExitIOThread()
 #if (BOOST_VERSION >= 105000)
 	bTryJoin = m_ioThread.try_join_for(boost::chrono::seconds(30));
 #else
-	bTryJoin = m_ioThread.join();
+	m_ioThread.join();
 #endif
 
 		ShutdownIO();

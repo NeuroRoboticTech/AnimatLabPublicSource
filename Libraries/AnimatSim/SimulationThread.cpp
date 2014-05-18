@@ -186,7 +186,7 @@ void SimulationThread::ShutdownSimulation()
 #if (BOOST_VERSION >= 105000)
 	bTryJoin = m_SimThread.try_join_for(boost::chrono::seconds(10));
 #else
-	bTryJoin = m_SimThread.join();
+	m_SimThread.join();
 #endif
 		//if(m_lpSim)
 		//{
