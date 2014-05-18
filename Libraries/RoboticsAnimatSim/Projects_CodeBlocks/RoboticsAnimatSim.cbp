@@ -22,9 +22,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -55,9 +55,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -67,7 +67,7 @@
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />
-					<Add library="dynamixel" />
+					<Add library="dxl" />
 					<Add library="openFrameworksArduino" />
 				</Linker>
 				<ExtraCommands>
@@ -90,9 +90,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -123,9 +123,9 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -135,7 +135,7 @@
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />
-					<Add library="dynamixel" />
+					<Add library="dxl" />
 					<Add library="openFrameworksArduino" />
 				</Linker>
 				<ExtraCommands>

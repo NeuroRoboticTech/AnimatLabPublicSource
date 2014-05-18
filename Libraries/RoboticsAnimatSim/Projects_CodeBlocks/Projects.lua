@@ -8,7 +8,7 @@
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",
-				  "../../../../3rdParty/DynamixelSDK/linux/import",
+				  "../../../../3rdParty/DynamixelSDK/linux/include",
 				  "../../../../3rdParty/openFrameworksArduino/src",
 				  "../../../../3rdParty/stlsoft-1.9.117/include"}
 		libdirs { "../../../bin" }
@@ -33,7 +33,7 @@
 			links { "StdUtils",
 				"AnimatSim", 
 				"OsgAnimatSim",
-				"dynamixel",
+				"dxl",
 				"openFrameworksArduino"}					
 			postbuildcommands { "cp Release/libRoboticsAnimatSim.so ../../../bin" }
 
@@ -48,13 +48,14 @@
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",
-				  "../../../../3rdParty/DynamixelSDK/linux/import",
+				  "../../../../3rdParty/DynamixelSDK/linux/include",
 				  "../../../../3rdParty/openFrameworksArduino/src",
 				  "../../../../3rdParty/stlsoft-1.9.117/include"}
 		libdirs { "../../../bin" }
 		links { "boost_system", 
 			"boost_filesystem",
-			"boost_unit_test_framework" }
+			"boost_unit_test_framework", 
+			"dxl" }
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG" }

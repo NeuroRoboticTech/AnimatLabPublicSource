@@ -20,7 +20,7 @@ TIMEOUT /T 2
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>" "<Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>"
 TIMEOUT /T 2
-..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\DynamixelSDK\linux\import</Include>" "<Include>../../../../../3rdParty/DynamixelSDK/linux/import</Include>"
+..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\DynamixelSDK\linux\include</Include>" "<Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>"
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>" "<Include>../../../../../3rdParty/openFrameworksArduino/src</Include>"
 
