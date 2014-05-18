@@ -7,7 +7,7 @@
 		includedirs { "../../../../include", 
 			      "../../../StdUtils", 
 		   	      "../../../AnimatSim",
-				  "../../../../../3rdParty/DynamixelSDK/import",
+				  "../../../../../3rdParty/DynamixelSDK/linux/import",
 				  "../../../../../3rdParty/openFrameworksArduino/src",
 				  "../../../../../3rdParty/stlsoft-1.9.117/include"}
 		libdirs { "../../../../bin" }
@@ -47,7 +47,7 @@
 		includedirs { "../include",
 			      "../Libraries/StdUtils",
 			      "../Libraries/AnimatSim",
-				  "../../../../../3rdParty/DynamixelSDK/import",
+				  "../../../../../3rdParty/DynamixelSDK/linux/import",
 				  "../../../../../3rdParty/openFrameworksArduino/src",
 				  "../../../../../3rdParty/stlsoft-1.9.117/include"}	  
 		libdirs { ".",

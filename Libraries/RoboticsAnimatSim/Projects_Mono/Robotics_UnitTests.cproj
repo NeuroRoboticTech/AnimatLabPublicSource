@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FED4AF07-C0FC-D946-AC2D-36D849F9E961}</ProjectGuid>
+    <ProjectGuid>{ABFD2B5E-6D64-8E4B-A2CC-3A496EC18D78}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,15 +25,15 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
-        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/import</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>.</LibPath>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -61,15 +61,15 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
-        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/import</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>.</LibPath>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -97,15 +97,15 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
-        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/import</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>.</LibPath>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>
@@ -133,15 +133,15 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
-        <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/import</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
       <LibPaths>
         <LibPath>.</LibPath>
-        <LibPath>..\..\..\..\bin</LibPath>
+        <LibPath>../../../../bin</LibPath>
       </LibPaths>
     </LibPaths>
     <Libs>

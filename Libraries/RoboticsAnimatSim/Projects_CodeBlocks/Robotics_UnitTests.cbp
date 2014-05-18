@@ -17,7 +17,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
@@ -43,7 +43,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
@@ -70,7 +70,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
@@ -96,7 +96,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/x32/import" />
+					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/DynamixelSDK/linux/import" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/openFrameworksArduino/src" />
 					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
