@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B4B3F08A-A5B0-EB43-A07B-106D3AE13B97}</ProjectGuid>
+    <ProjectGuid>{1E290E9B-EA8F-5E4C-843A-7A7B24EB62BC}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -27,7 +27,7 @@
         <Include>../../../AnimatSim</Include>
         <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
         <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -65,7 +65,7 @@
         <Include>../../../AnimatSim</Include>
         <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
         <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -104,7 +104,7 @@
         <Include>../../../AnimatSim</Include>
         <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
         <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -142,7 +142,7 @@
         <Include>../../../AnimatSim</Include>
         <Include>..\..\..\..\..\3rdParty\DynamixelSDK\import</Include>
         <Include>..\..\..\..\..\3rdParty\openFrameworksArduino\src</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>

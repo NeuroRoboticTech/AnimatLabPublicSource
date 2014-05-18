@@ -32,7 +32,8 @@
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdUtils" }	  
+					  "../../../StdUtils",
+				      "../../../../../3rdParty/stlsoft-1.9.117/include" }	  
 		links {"dl",
   		       "pthread" }
 		
@@ -56,7 +57,8 @@
 		files  { "../StdUtils_UnitTests/*.h",
 				 "../StdUtils_UnitTests/*.cpp"}
 		includedirs { "../../../../include", 
-			      "../../../StdUtils" }	  
+			      "../../../StdUtils",
+				  "../../../../../3rdParty/stlsoft-1.9.117/include" }	  
 		libdirs { "../../../../bin" }
 		links { "boost_system", 
 				"boost_filesystem",

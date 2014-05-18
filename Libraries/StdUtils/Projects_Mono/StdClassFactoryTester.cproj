@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B76A1685-43BA-D947-AC32-11BA1FF40075}</ProjectGuid>
+    <ProjectGuid>{65534081-200D-3547-9C83-7BB35E2FCE25}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -24,6 +24,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <Libs>
@@ -50,6 +51,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <Libs>
@@ -76,6 +78,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <Libs>
@@ -102,6 +105,7 @@
       <Includes>
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <Libs>
