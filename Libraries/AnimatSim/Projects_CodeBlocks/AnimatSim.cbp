@@ -381,7 +381,13 @@
 		<Unit filename="../SigmoidGain.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../SimulationMgr.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../SimulationRecorder.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SimulationThread.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../SimulationWindow.h">
@@ -415,6 +421,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Torus.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../TypeProperty.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../VoltageClamp.h">
@@ -684,7 +693,13 @@
 		<Unit filename="../SigmoidGain.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../SimulationMgr.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../SimulationRecorder.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../SimulationThread.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../SimulationWindow.cpp">
@@ -718,6 +733,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Torus.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../TypeProperty.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../VoltageClamp.cpp">

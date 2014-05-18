@@ -29,6 +29,12 @@ namespace AnimatGUI
 				delete m_lpSim;
 				m_lpSim = NULL;
 			}
+
+			if(m_lpSimGUICallback)
+			{
+				delete m_lpSimGUICallback;
+				m_lpSimGUICallback = NULL;
+			}
 		}
 
 

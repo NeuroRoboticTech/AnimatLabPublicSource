@@ -36,6 +36,7 @@
 #include "RobotInterface.h"
 #include "RobotIOControl.h"
 #include "RobotPartInterface.h"
+#include <platformstl/synch/sleep_functions.h>
 
 namespace AnimatSim
 {
@@ -44,6 +45,7 @@ SimulationThread::SimulationThread(void)
 {
 	m_lpSim = NULL;
 	m_bThreadProcessing = false;
+	m_bNeedToStop = false;
 }
 
 SimulationThread::~SimulationThread(void)
@@ -63,6 +65,8 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SimulationThread\r\n", "", -1, false, true);}
 }
 
+bool SimulationThread::NeedToStopSim() {return m_bNeedToStop;}
+
 Simulator *SimulationThread::Sim() {return m_lpSim;}
 
 void SimulationThread::StartSimulation(std::string strSimFile, bool bForceNoWindows)
@@ -70,9 +74,9 @@ void SimulationThread::StartSimulation(std::string strSimFile, bool bForceNoWind
 	m_lpSim = Simulator::CreateSimulator(strSimFile, bForceNoWindows);
 
 	m_lpSim->Load();
-	m_lpSim->Initialize();
     m_lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);
-	m_lpSim->SimCallBack(this);					
+	m_lpSim->SimCallBack(this);		
+	m_lpSim->PauseSimulation();
 
 	m_SimThread = boost::thread(&SimulationThread::ProcessSimulation, this);
 }
@@ -84,7 +88,10 @@ void SimulationThread::ProcessSimulation()
 		m_bThreadProcessing = true;
 
 		if(m_lpSim)
+		{
+			m_lpSim->Initialize();
 			m_lpSim->Simulate();
+		}
 	}
 	catch(CStdErrorInfo oError)
 	{
@@ -98,7 +105,7 @@ void SimulationThread::ProcessSimulation()
 	m_bThreadProcessing = false;
 }
 
-void SimulationThread::Simulate(float fltTime)
+void SimulationThread::Simulate(float fltTime, bool bBlocking, float fltWaitTime)
 {
 	if(m_lpSim && m_lpSim->Paused())
 	{
@@ -111,6 +118,24 @@ void SimulationThread::Simulate(float fltTime)
 			m_lpSim->ToggleSimulation();
 		else
 			m_lpSim->StartSimulation();
+	}
+
+	if(bBlocking && fltTime > 0)
+	{
+		if(fltWaitTime <= 0)
+			fltWaitTime = fltTime+120;
+
+		//If we want to block till the sim is over then lets wait here until we get the notification that it has 
+		//gone past the set simulation time and then stop the simulation.
+		boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(fltWaitTime);
+
+		boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForSimEndMutex);
+		bool bWaitRet = m_WaitForSimEndCond.timed_wait(lock, pt);
+
+		StopSimulation();
+
+		if(!bWaitRet)
+			THROW_PARAM_ERROR(Al_Err_lTimedOutWaitingForSimToStop, Al_Err_strTimedOutWaitingForSimToStop, "Sim ID", m_lpSim->ID());
 	}
 }
 
@@ -159,17 +184,17 @@ void SimulationThread::ShutdownSimulation()
 
 		bool bTryJoin = m_SimThread.try_join_for(boost::chrono::seconds(10));
 
-		if(m_lpSim)
-		{
-			delete m_lpSim;
-			m_lpSim = NULL;
-		}
+		//if(m_lpSim)
+		//{
+		//	delete m_lpSim;
+		//	m_lpSim = NULL;
+		//}
 	}
 }
 
 void SimulationThread::NeedToStopSimulation() 
 {
-	StopSimulation();
+	m_WaitForSimEndCond.notify_all();
 }
 
 void SimulationThread::HandleNonCriticalError(std::string strError) 

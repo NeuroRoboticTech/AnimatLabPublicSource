@@ -443,10 +443,10 @@ BOOST_AUTO_TEST_CASE( SimulationMgr_CreateModifyShutdownWithWindow )
 
 	AnimatBase *lpNeuron = lpThread->Sim()->FindByID("0825d6e6-ebc4-4d4e-8c87-1fd06f821916");
 
-	float fltVm = -0.050;
+	float fltVth = -0.050;
 	for(int iIdx=0; iIdx<2; iIdx++)
-	{
-		lpNeuron->SetData("Vm", fltVm);
+	{ 
+		lpNeuron->SetData("Vth", fltVth);
 
 		lpThread->Simulate(2.0);
 
@@ -455,7 +455,7 @@ BOOST_AUTO_TEST_CASE( SimulationMgr_CreateModifyShutdownWithWindow )
 			platformstl::micro_sleep(1000);
 		}
 
-		fltVm-=-0.02;
+		fltVth-=-0.02;
 	}
 
 	lpSimMgr->ShutdownAllSimulations();

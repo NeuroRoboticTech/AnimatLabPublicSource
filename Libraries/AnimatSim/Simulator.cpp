@@ -232,7 +232,7 @@ try
 
 	if(m_lpSimCallback)
 	{
-		delete m_lpSimCallback;
+		//We do not own this callback.
 		m_lpSimCallback = NULL;
 	}
 
@@ -2284,7 +2284,7 @@ void Simulator::Reset()
 
 	if(m_lpSimCallback)
 	{
-		delete m_lpSimCallback;
+		//We do not own this callback.
 		m_lpSimCallback = NULL;
 	}
 

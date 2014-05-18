@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1FA6DD47-6026-FA4F-B81A-C758CD15F301}</ProjectGuid>
+    <ProjectGuid>{61957CD8-3CBA-684D-BF32-D9C31629224B}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -405,8 +405,14 @@
     <None Include="..\SigmoidGain.h">
       <Link>SigmoidGain.h</Link>
     </None>
+    <None Include="..\SimulationMgr.h">
+      <Link>SimulationMgr.h</Link>
+    </None>
     <None Include="..\SimulationRecorder.h">
       <Link>SimulationRecorder.h</Link>
+    </None>
+    <None Include="..\SimulationThread.h">
+      <Link>SimulationThread.h</Link>
     </None>
     <None Include="..\SimulationWindow.h">
       <Link>SimulationWindow.h</Link>
@@ -440,6 +446,9 @@
     </None>
     <None Include="..\Torus.h">
       <Link>Torus.h</Link>
+    </None>
+    <None Include="..\TypeProperty.h">
+      <Link>TypeProperty.h</Link>
     </None>
     <None Include="..\VoltageClamp.h">
       <Link>VoltageClamp.h</Link>
@@ -710,8 +719,14 @@
     <Compile Include="..\SigmoidGain.cpp">
       <Link>SigmoidGain.cpp</Link>
     </Compile>
+    <Compile Include="..\SimulationMgr.cpp">
+      <Link>SimulationMgr.cpp</Link>
+    </Compile>
     <Compile Include="..\SimulationRecorder.cpp">
       <Link>SimulationRecorder.cpp</Link>
+    </Compile>
+    <Compile Include="..\SimulationThread.cpp">
+      <Link>SimulationThread.cpp</Link>
     </Compile>
     <Compile Include="..\SimulationWindow.cpp">
       <Link>SimulationWindow.cpp</Link>
@@ -745,6 +760,9 @@
     </Compile>
     <Compile Include="..\Torus.cpp">
       <Link>Torus.cpp</Link>
+    </Compile>
+    <Compile Include="..\TypeProperty.cpp">
+      <Link>TypeProperty.cpp</Link>
     </Compile>
     <Compile Include="..\VoltageClamp.cpp">
       <Link>VoltageClamp.cpp</Link>

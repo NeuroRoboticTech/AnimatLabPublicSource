@@ -8,9 +8,12 @@ namespace AnimatSim
 	protected:
 		Simulator *m_lpSim;
 		bool m_bThreadProcessing;
+		bool m_bNeedToStop;
 
 #ifndef STD_DO_NOT_ADD_BOOST
 		boost::thread m_SimThread; 
+		boost::interprocess::interprocess_mutex m_WaitForSimEndMutex;
+		boost::interprocess::interprocess_condition  m_WaitForSimEndCond;
 #endif
 
 		virtual void ProcessSimulation();
@@ -19,10 +22,11 @@ namespace AnimatSim
 		SimulationThread(void);
 		virtual ~SimulationThread(void);
 
+		virtual bool NeedToStopSim();
 		virtual Simulator *Sim();
 
 		virtual void StartSimulation(std::string strSimFile, bool bForceNoWindows = false);
-		virtual void Simulate(float fltTime = -1);
+		virtual void Simulate(float fltTime = -1, bool bBlocking = true, float fltWaitTime = -1);
 		virtual void PauseSimulation();
 		virtual void ResumeSimulation();
 		virtual void ResetSimulation();
