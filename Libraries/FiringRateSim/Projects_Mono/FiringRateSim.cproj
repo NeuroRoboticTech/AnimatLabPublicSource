@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1A90B04F-6045-B149-8E44-840B301E1491}</ProjectGuid>
+    <ProjectGuid>{1FCECBB0-A19D-4940-B5DB-21C6D1D60A14}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,7 +25,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -59,7 +59,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -93,7 +93,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -127,7 +127,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>

@@ -17,6 +17,8 @@ TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\Libraries\StdUtils</Include>" "<Include>../Libraries/StdUtils</Include>"
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\Libraries\AnimatSim</Include>" "<Include>../Libraries/AnimatSim</Include>"
+TIMEOUT /T 2
+..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>" "<Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>"
 
 
 @pause

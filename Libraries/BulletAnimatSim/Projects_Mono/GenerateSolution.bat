@@ -14,6 +14,8 @@ TIMEOUT /T 2
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\boost_1_54_0</Include>" "<Include>../../../../../3rdParty/boost_1_54_0</Include>"
 TIMEOUT /T 2
+..\..\..\bin\fart *.cproj "<Include>..\..\..\..\..\3rdParty\stlsoft-1.9.117\include</Include>" "<Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>"
+TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>..\..\..\OsgAnimatSim</Include>" "<Include>../../../OsgAnimatSim</Include>"
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cproj "<Include>\usr\local\include\bullet</Include>" "<Include>/usr/local/include/bullet</Include>"
