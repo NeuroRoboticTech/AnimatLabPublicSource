@@ -372,6 +372,47 @@ bool AnimatBase::SetData(const std::string &strDataType, const std::string &strV
 }
 
 /**
+\brief	Set a variable based on a string data type name.
+
+\details This is a helper method for the string version. 
+
+\author	dcofer
+\date	2/22/2011
+
+\param	strDataType	string name of the data type to set. 
+\param	fltValue	float value that will be converted to a string. 
+\param	bThrowError	true to throw error if there is a problem. If false then it will not return
+					an error, just return false. 
+
+\return	true if it succeeds, false if it fails. 
+**/
+bool AnimatBase::SetData(const std::string &strDataType, const float fltValue, bool bThrowError)
+{
+	return SetData(strDataType, Std_ToStr(fltValue), bThrowError);
+}
+
+/**
+\brief	Set a variable based on a string data type name.
+
+\details This is a helper method for the string version. 
+
+\author	dcofer
+\date	2/22/2011
+
+\param	strDataType	string name of the data type to set. 
+\param	fltValue	long value that will be converted to a string. 
+\param	bThrowError	true to throw error if there is a problem. If false then it will not return
+					an error, just return false. 
+
+\return	true if it succeeds, false if it fails. 
+**/
+bool AnimatBase::SetData(const std::string &strDataType, const long lValue, bool bThrowError)
+{
+	return SetData(strDataType, Std_ToStr(lValue), bThrowError);
+}
+
+
+/**
 \brief	Queries this object for a list of properties that can be changed using SetData.
 
 \details The method provides a list of the properties that can be set using the SetData method.

@@ -108,7 +108,7 @@ namespace AnimatSim
 			virtual void SaveColumnNames(std::ofstream &oStream);
 		};
 
-		bool LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
+		bool ANIMAT_PORT LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
 
 	}			//Charting
 }				//AnimatSim

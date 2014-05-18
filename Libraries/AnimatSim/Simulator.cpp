@@ -189,6 +189,8 @@ Simulator::Simulator()
 	m_iRobotSynchTimeInterval = 0;
 	m_fltRobotSynchTimeInterval = 0;
 	m_iRobotSynchTimeCount = 0;
+
+	m_bForceNoWindows = false;
 }
 
 /**
@@ -1722,6 +1724,17 @@ on whether we are trying to run physical hardware or in simulation and this flag
 **/
 bool Simulator::InSimulation() {return true;}
 
+
+bool Simulator::ForceNoWindows() {return m_bForceNoWindows;}
+
+void Simulator::ForceNoWindows(bool bVal)
+{
+	m_bForceNoWindows = bVal;
+
+	if(bVal && m_lpWinMgr)
+		m_lpWinMgr->CloseAllWindows();
+}
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -2314,6 +2327,7 @@ void Simulator::Reset()
 	m_iRobotSynchTimeInterval = 0;
 	m_fltRobotSynchTimeInterval = 0;
 	m_iRobotSynchTimeCount = 0;
+
 }
 
 /**
@@ -2830,7 +2844,7 @@ void Simulator::RecordSimulationTotalStepTimer()
 	else if(m_lTimeSlice == 5000)
 	{
 		double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
-		WriteToConsole("Average total step time: " + STR(dblAvgStepTime));
+		//WriteToConsole("Average total step time: " + STR(dblAvgStepTime));
 	}
 
 }
@@ -3447,6 +3461,82 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 }
 
 /**
+\brief	Creates a simulator from a specified file.
+
+\details This method is primarily used when running the simulator in stand-alone mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	argc	The argc parameter from the command line. 
+\param	argv	The argv parameter from the command line. 
+\param bForceNoWindows If this is true then it forces no graphics windows to be created regardless of what the config file says.
+
+\return	Pointer to the new simulator.
+**/
+Simulator *Simulator::CreateSimulator(std::string strSimFile, bool bForceNoWindows)
+{	
+	std::string strExecutablePath, strExeFile;
+
+    std::string strBuffer = Std_ExecutablePath();
+	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
+
+	//Set the log file prefix
+	if(Std_DirectoryExists(strExecutablePath + "Logs"))
+		Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
+	else
+		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
+
+	std::string strProject = strSimFile;
+	std::string strAnimatModule = ""; //Get it from the file
+
+	if(Std_IsBlank(strProject))
+		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
+
+	return CreateSimulator(strAnimatModule, strProject, bForceNoWindows);
+}
+
+/**
+\brief	Creates a simulator from a specified file and initializes it.
+
+\details This method is primarily used when running the simulator in stand-alone mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	argc	The argc parameter from the command line. 
+\param	argv	The argv parameter from the command line. 
+\param bForceNoWindows If this is true then it forces no graphics windows to be created regardless of what the config file says.
+
+\return	Pointer to the new simulator.
+**/
+Simulator *Simulator::CreateAndInitializeSimulator(std::string strSimFile, bool bForceNoWindows)
+{
+	Simulator *lpSim = NULL;
+
+	try
+	{ 
+		lpSim = CreateSimulator(strSimFile, bForceNoWindows);
+		lpSim->Load();
+		lpSim->Initialize();
+		return lpSim;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpSim) delete lpSim;
+		RELAY_ERROR(oError);
+		return NULL;
+	}
+	catch(...)
+	{
+		if(lpSim) delete lpSim;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+		return NULL;
+	}
+}
+
+
+/**
 \brief	Creates a simulator from a simulator file.
 
 \author	dcofer
@@ -3456,7 +3546,7 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strSimulationFile)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strSimulationFile, bool bForceNoWindows)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
@@ -3499,6 +3589,7 @@ try
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
 	lpSim->SimulationFile(strProjectFile);
+	lpSim->ForceNoWindows(bForceNoWindows);
 
 	if(lpAnimatFactory) 
 		{delete lpAnimatFactory; lpAnimatFactory = NULL;}
@@ -5068,6 +5159,11 @@ void Simulator::DisableCollision(RigidBody *lpBody)
 		lpStructure = oPos->second;
 		lpStructure->DisableCollision(lpBody);
 	}
+}
+
+void Simulator::Initialize()
+{
+	Initialize(0, NULL);
 }
 
 #pragma endregion

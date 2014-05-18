@@ -147,21 +147,6 @@ void KeyFrame::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf KeyFrame Element
 }
 
-/**
-\brief	Less than activated item compare.
-
-\author	dcofer
-\date	3/24/2011
-
-\param [in,out]	lpItem1	If non-null, the first pointer to an item. 
-\param [in,out]	lpItem2	If non-null, the second pointer to an item. 
-
-\return	true if it succeeds, false if it fails.
-**/
-bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
-{
-	return lpItem1->operator<(lpItem2);
-}
 
 	}			//Recording
 }				//AnimatSim

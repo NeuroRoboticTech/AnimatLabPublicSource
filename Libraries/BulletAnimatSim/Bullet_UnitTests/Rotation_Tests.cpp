@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <boost/test/unit_test.hpp> 
 #include <boost/shared_ptr.hpp>
+#include <platformstl/synch/sleep_functions.h>
 
 BOOST_AUTO_TEST_SUITE( Rotation_Suite )
 
@@ -197,230 +198,270 @@ CStdFPoint ExtractEulerXYZ (osg::Matrix osgMT)
 
     return vRot;
 }
-
-BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
-{
-    //CStdFPoint vRot(0, 0, 0);
-
-    //CStdPtrArray<CStdFPoint> m_aryPos;
-    //m_aryPos.Add(new CStdFPoint(0, 0, 0));
-    //m_aryPos.Add(new CStdFPoint(-10, 0, 0));
-    //m_aryPos.Add(new CStdFPoint(10, 0, 10));
-    //m_aryPos.Add(new CStdFPoint(10, 10, 10));
-
-    ////int iPosCount = m_aryPos.GetSize();
-    ////for(int iPosIdx=0; iPosIdx<iPosCount; iPosIdx++)
-    ////{
-    ////    CStdFPoint &vPos = *m_aryPos[iPosIdx];
-    //CStdFPoint vPos(0, 0, 0);
-   
-    //    float fltDiv = osg::PI/100;
-    //    float fltStart = -osg::PI*2;
-    //    float fltEnd = osg::PI*2;
-
-    //    //vRot.Set(osg::PI/4, osg::PI/4, -osg::PI/6);
-
-    //    for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
-    //        for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
-    //            for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
-    //            {
-    //                osg::Matrix vNew, vOld;
-    //                //osg::Quat vNew, vOld;
-    //                //vRot.Set(fltXRot, fltYRot, fltZRot);
-
-    //                //vOld = OldSetupMatrixQuat(vPos, vRot);
-    //                //vNew = FromEuler(vRot.y, vRot.z, vRot.x);
-
-    //                vOld = OldSetupMatrix(vPos, vRot);
-    //                vNew = NewSetupMatrix(vPos, vRot);
-
-    //                //OsgMatrixUtil::Print(vOld);
-    //                //OsgMatrixUtil::Print(vNew);
-
-    //                int i=5;
-    //                if(!(vOld == vNew))
-    //                    i=6;
-    //                //if(!QuatEqual(vOld, vNew))
-    //                //    i=6;
-    //                //BOOST_ASSERT();
-    //            }
-    ////}
-}
-
-
-BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
-{
-    CStdFPoint vRot(0, 0, 0);
-    CStdFPoint vPos(0, 0, 0);
-
-    //OsgMatrixUtil osgUtil;
-    //BlMatrixUtil vsUtil;
-
-    ////SetMatrixUtil(&osgUtil);
-    //SetMatrixUtil(&vsUtil);
-
-    float fltDiv = osg::PI/20;
-    float fltStart = -osg::PI*2;
-    float fltEnd = osg::PI*2;
-
-    //for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
-    //    for(float fltYRot = -((osg::PI/2)-0.001); fltYRot<((osg::PI/2)-0.001); fltYRot+=fltDiv)
-    //        for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
-    //        {
-    //            osg::Matrix osgMT;
-    //            vRot.Set(fltXRot, fltYRot, fltZRot);
-
-    //            osgMT = SetupMatrix(vPos, vRot);
-
-
-    //            CStdFPoint vOld = EulerRotationFromMatrix(osgMT);
-    //            CStdFPoint vNew = ExtractEulerXYZ(osgMT);
-    //            
-    //            int i=5;
-    //            if(!vOld.Equal(vNew, 1e-4))
-    //                i=6;
-
-                //BOOST_ASSERT(vOld == vNew);
-    //        }
-}
-
-BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
-{
-    osg::Matrix osgMT(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255, 0.00000000000000000,
-                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 0.00000000000000000, 
-                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916, 0.00000000000000000, 
-                      0.00000000000000000, 1.5000000000000000, 0, 1);
-    
-    osg::Matrix3 osgMT3(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255,
-                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 
-                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
-
-    osg::Matrix3 osgMT3T(-0.041392912621901916, -2.2185430073521640e-016, 0.99914294612166255,
-                         2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016,
-                         -0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
-        
-
-    OsgMatrixUtil osgUtil;
-    //BlMatrixUtil vsUtil;
-
-    SetMatrixUtil(&osgUtil);
-    CStdFPoint vOsgRot = EulerRotationFromMatrix(osgMT);  
-
-    //SetMatrixUtil(&vsUtil);
-    CStdFPoint vVsRot = EulerRotationFromMatrix(osgMT);  
-
-    CStdFPoint vtRot = ExtractEulerXYZ(osgMT);
-
-    int i=5;
-    if(vOsgRot != vVsRot)
-        i=6;
-
-   //osgUItil.
-}
-
-//+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
-//+		vRot	{x=-3.1415927 y=1.4628686 z=3.1415927 }	CStdPoint<float>
+//
+//BOOST_AUTO_TEST_CASE( CompareOldNewSetupMatrix )
+//{
+//    //CStdFPoint vRot(0, 0, 0);
+//
+//    //CStdPtrArray<CStdFPoint> m_aryPos;
+//    //m_aryPos.Add(new CStdFPoint(0, 0, 0));
+//    //m_aryPos.Add(new CStdFPoint(-10, 0, 0));
+//    //m_aryPos.Add(new CStdFPoint(10, 0, 10));
+//    //m_aryPos.Add(new CStdFPoint(10, 10, 10));
+//
+//    ////int iPosCount = m_aryPos.GetSize();
+//    ////for(int iPosIdx=0; iPosIdx<iPosCount; iPosIdx++)
+//    ////{
+//    ////    CStdFPoint &vPos = *m_aryPos[iPosIdx];
+//    //CStdFPoint vPos(0, 0, 0);
+//   
+//    //    float fltDiv = osg::PI/100;
+//    //    float fltStart = -osg::PI*2;
+//    //    float fltEnd = osg::PI*2;
+//
+//    //    //vRot.Set(osg::PI/4, osg::PI/4, -osg::PI/6);
+//
+//    //    for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+//    //        for(float fltYRot = fltStart; fltYRot<fltEnd; fltYRot+=fltDiv)
+//    //            for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+//    //            {
+//    //                osg::Matrix vNew, vOld;
+//    //                //osg::Quat vNew, vOld;
+//    //                //vRot.Set(fltXRot, fltYRot, fltZRot);
+//
+//    //                //vOld = OldSetupMatrixQuat(vPos, vRot);
+//    //                //vNew = FromEuler(vRot.y, vRot.z, vRot.x);
+//
+//    //                vOld = OldSetupMatrix(vPos, vRot);
+//    //                vNew = NewSetupMatrix(vPos, vRot);
+//
+//    //                //OsgMatrixUtil::Print(vOld);
+//    //                //OsgMatrixUtil::Print(vNew);
+//
+//    //                int i=5;
+//    //                if(!(vOld == vNew))
+//    //                    i=6;
+//    //                //if(!QuatEqual(vOld, vNew))
+//    //                //    i=6;
+//    //                //BOOST_ASSERT();
+//    //            }
+//    ////}
+//}
 //
 //
+//BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix )
+//{
+//    CStdFPoint vRot(0, 0, 0);
+//    CStdFPoint vPos(0, 0, 0);
 //
-//+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
-//+		vRot	{x=0.00000000 y=0.00000000 z=1.6122011 }	CStdPoint<float>
-//-		osgMT	{_mat=0x0ce5dffc }	osg::Matrixd
-//-		_mat	0x0ce5dffc	double [4][4]
-//-		[0]	0x0ce5dffc	double [4]
-//		[0]	-0.041392912621901916	double
-//		[1]	2.2185430073521640e-016	double
-//		[2]	-0.99914294612166255	double
-//		[3]	0.00000000000000000	double
+//    //OsgMatrixUtil osgUtil;
+//    //BlMatrixUtil vsUtil;
+//
+//    ////SetMatrixUtil(&osgUtil);
+//    //SetMatrixUtil(&vsUtil);
+//
+//    float fltDiv = osg::PI/20;
+//    float fltStart = -osg::PI*2;
+//    float fltEnd = osg::PI*2;
+//
+//    //for(float fltXRot = fltStart; fltXRot<fltEnd; fltXRot+=fltDiv)
+//    //    for(float fltYRot = -((osg::PI/2)-0.001); fltYRot<((osg::PI/2)-0.001); fltYRot+=fltDiv)
+//    //        for(float fltZRot = fltStart; fltZRot<fltEnd; fltZRot+=fltDiv)
+//    //        {
+//    //            osg::Matrix osgMT;
+//    //            vRot.Set(fltXRot, fltYRot, fltZRot);
+//
+//    //            osgMT = SetupMatrix(vPos, vRot);
+//
+//
+//    //            CStdFPoint vOld = EulerRotationFromMatrix(osgMT);
+//    //            CStdFPoint vNew = ExtractEulerXYZ(osgMT);
+//    //            
+//    //            int i=5;
+//    //            if(!vOld.Equal(vNew, 1e-4))
+//    //                i=6;
+//
+//                //BOOST_ASSERT(vOld == vNew);
+//    //        }
+//}
+//
+//BOOST_AUTO_TEST_CASE( CompareOldNewEulerRotationFromMatrix_Specific )
+//{
+//    osg::Matrix osgMT(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255, 0.00000000000000000,
+//                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 0.00000000000000000, 
+//                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916, 0.00000000000000000, 
+//                      0.00000000000000000, 1.5000000000000000, 0, 1);
+//    
+//    osg::Matrix3 osgMT3(-0.041392912621901916, 2.2185430073521640e-016, -0.99914294612166255,
+//                      -2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016, 
+//                      0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
+//
+//    osg::Matrix3 osgMT3T(-0.041392912621901916, -2.2185430073521640e-016, 0.99914294612166255,
+//                         2.2185430073521640e-016, 0.99999999999999989, 2.3123567785485781e-016,
+//                         -0.99914294612166255, 2.3123567785485781e-016, -0.041392912621901916);
+//        
+//
+//    OsgMatrixUtil osgUtil;
+//    //BlMatrixUtil vsUtil;
+//
+//    SetMatrixUtil(&osgUtil);
+//    CStdFPoint vOsgRot = EulerRotationFromMatrix(osgMT);  
+//
+//    //SetMatrixUtil(&vsUtil);
+//    CStdFPoint vVsRot = EulerRotationFromMatrix(osgMT);  
+//
+//    CStdFPoint vtRot = ExtractEulerXYZ(osgMT);
+//
+//    int i=5;
+//    if(vOsgRot != vVsRot)
+//        i=6;
+//
+//   //osgUItil.
+//}
+//
+////+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
+////+		vRot	{x=-3.1415927 y=1.4628686 z=3.1415927 }	CStdPoint<float>
+////
+////
+////
+////+		vLocal	{x=0.00000000 y=1.5000000 z=0.00000000 }	CStdPoint<float>
+////+		vRot	{x=0.00000000 y=0.00000000 z=1.6122011 }	CStdPoint<float>
+////-		osgMT	{_mat=0x0ce5dffc }	osg::Matrixd
+////-		_mat	0x0ce5dffc	double [4][4]
+////-		[0]	0x0ce5dffc	double [4]
+////		[0]	-0.041392912621901916	double
+////		[1]	2.2185430073521640e-016	double
+////		[2]	-0.99914294612166255	double
+////		[3]	0.00000000000000000	double
+//
+////-		[1]	0x0ce5e01c	double [4]
+////		[0]	-2.2185430073521640e-016	double
+////		[1]	0.99999999999999989	double
+////		[2]	2.3123567785485781e-016	double
+////		[3]	0.00000000000000000	double
+//
+////-		[2]	0x0ce5e03c	double [4]
+////		[0]	0.99914294612166255	double
+////		[1]	2.3123567785485781e-016	double
+////		[2]	-0.041392912621901916	double
+////		[3]	0.00000000000000000	double
+//
+////-		[3]	0x0ce5e05c	double [4]
+////		[0]	0.00000000000000000	double
+////		[1]	1.5000000000000000	double
+////		[2]	0.00000000000000000	double
+////		[3]	1.0000000000000000	double
+//
+//BOOST_AUTO_TEST_CASE( Dynamic_Loading )
+//{
+//    std::string strExePath = Std_ExecutablePath();
+//    std::string strExecutablePath, strExeFile;
+//	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
+//
+//    std::string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
+//
+//	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
+//	 
+//	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSim->CreateObject("", "RigidBody", "Box"));
+//	if(lpBody)
+//		delete lpBody;
+//
+//    if(lpSim)
+//        delete lpSim;
+//}
+//
+//BOOST_AUTO_TEST_CASE( Falling_Shapes_Sim )
+//{
+//    std::string strExePath = Std_ExecutablePath();
+//    std::string strExecutablePath, strExeFile;
+//	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
+//
+//    std::string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/FallingBodies/FallingBodies_StandaloneD.asim";
+//
+//	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
+//	 
+//	lpSim->Load();
+//	lpSim->Initialize(0, 0);
+//	lpSim->Simulate();
+//
+//    if(lpSim)
+//        delete lpSim;
+//}
+//
+//
+//BOOST_AUTO_TEST_CASE( VolumeOfBox )
+//{
+//    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateBoxGeometry(2, 2, 2, 1, 1, 1);
+//    osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateConeGeometry(3, 2, 2, 15, true, true, true);
+//    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateSphereGeometry(15, 15, 1);
+//
+//	osg::ref_ptr<osg::Geode> osgGeode = new osg::Geode;
+//
+//    osgGeode->addDrawable(osgBox.get());
+//
+//    btConvexHullShape *btHull = OsgMeshToConvexHull(osgGeode.get(), true, 0);
+//
+//    //osg::ref_ptr<osg::Node> osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( btHull );
+//
+//    //osgDB::writeNodeFile(*(osgDebugNode.get()), "C:\\Temp\\Test.osg");
+//
+//    float fltVolume = OsgConvexHullVolume(osgGeode.get());
+//    fltVolume = fltVolume + 1;
+//}
+//
+//BOOST_AUTO_TEST_CASE( PyramidVolume )
+//{
+//    osg::Vec3d v1(0,0,0); 
+//    osg::Vec3d v2(1,0,0);
+//    osg::Vec3d v3(1,2,0);
+//    osg::Vec3d vCenterPoint(0.5,1.5,1);
+//
+//    OsgAnimatSim::Visualization::OsgPyramid p(vCenterPoint, v1, v2, v3);
+//
+//    float fltHeight = p.Height();
+//    float fltArea = p.BaseArea();
+//    float fltVolume = p.Volume();
+//}
 
-//-		[1]	0x0ce5e01c	double [4]
-//		[0]	-2.2185430073521640e-016	double
-//		[1]	0.99999999999999989	double
-//		[2]	2.3123567785485781e-016	double
-//		[3]	0.00000000000000000	double
 
-//-		[2]	0x0ce5e03c	double [4]
-//		[0]	0.99914294612166255	double
-//		[1]	2.3123567785485781e-016	double
-//		[2]	-0.041392912621901916	double
-//		[3]	0.00000000000000000	double
-
-//-		[3]	0x0ce5e05c	double [4]
-//		[0]	0.00000000000000000	double
-//		[1]	1.5000000000000000	double
-//		[2]	0.00000000000000000	double
-//		[3]	1.0000000000000000	double
-
-BOOST_AUTO_TEST_CASE( Dynamic_Loading )
+BOOST_AUTO_TEST_CASE( SimulationMgr_CreateModifyShutdownWithWindow )
 {
     std::string strExePath = Std_ExecutablePath();
     std::string strExecutablePath, strExeFile;
 	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
+	std::string strProjFile = "";
 
-    std::string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/SingleJoint_StandaloneD.asim";
+#ifdef _DEBUG
+	strProjFile = strExecutablePath + "../Tutorials/Examples/StandAloneSimTest/Bullet_Single_x32_debug.asim";
+#else
+	strProjFile = strExecutablePath + "../Tutorials/Examples/StandAloneSimTest/Bullet_Single_x32.asim";
+#endif
 
-	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
-	 
-	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSim->CreateObject("", "RigidBody", "Box"));
-	if(lpBody)
-		delete lpBody;
+	SimulationMgr *lpSimMgr = new SimulationMgr();
+	
+	SimulationThread *lpThread = lpSimMgr->CreateSimulation(strProjFile);
 
-    if(lpSim)
-        delete lpSim;
+	AnimatBase *lpNeuron = lpThread->Sim()->FindByID("0825d6e6-ebc4-4d4e-8c87-1fd06f821916");
+
+	float fltVm = -0.050;
+	for(int iIdx=0; iIdx<2; iIdx++)
+	{
+		lpNeuron->SetData("Vm", fltVm);
+
+		lpThread->Simulate(2.0);
+
+		while(lpThread->Sim()->SimRunning())
+		{
+			platformstl::micro_sleep(1000);
+		}
+
+		fltVm-=-0.02;
+	}
+
+	lpSimMgr->ShutdownAllSimulations();
+
+    if(lpSimMgr)
+        delete lpSimMgr;
 }
-
-BOOST_AUTO_TEST_CASE( Falling_Shapes_Sim )
-{
-    std::string strExePath = Std_ExecutablePath();
-    std::string strExecutablePath, strExeFile;
-	Std_SplitPathAndFile(strExePath, strExecutablePath, strExeFile);
-
-    std::string strProjFile = strExecutablePath + "../Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/FallingBodies/FallingBodies_StandaloneD.asim";
-
-	Simulator *lpSim = Simulator::CreateSimulator("", strProjFile);
-	 
-	lpSim->Load();
-	lpSim->Initialize(0, 0);
-	lpSim->Simulate();
-
-    if(lpSim)
-        delete lpSim;
-}
-
-
-BOOST_AUTO_TEST_CASE( VolumeOfBox )
-{
-    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateBoxGeometry(2, 2, 2, 1, 1, 1);
-    osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateConeGeometry(3, 2, 2, 15, true, true, true);
-    //osg::ref_ptr<osg::Geometry> osgBox = OsgAnimatSim::Environment::CreateSphereGeometry(15, 15, 1);
-
-	osg::ref_ptr<osg::Geode> osgGeode = new osg::Geode;
-
-    osgGeode->addDrawable(osgBox.get());
-
-    btConvexHullShape *btHull = OsgMeshToConvexHull(osgGeode.get(), true, 0);
-
-    //osg::ref_ptr<osg::Node> osgDebugNode = osgbCollision::osgNodeFromBtCollisionShape( btHull );
-
-    //osgDB::writeNodeFile(*(osgDebugNode.get()), "C:\\Temp\\Test.osg");
-
-    float fltVolume = OsgConvexHullVolume(osgGeode.get());
-    fltVolume = fltVolume + 1;
-}
-
-BOOST_AUTO_TEST_CASE( PyramidVolume )
-{
-    osg::Vec3d v1(0,0,0); 
-    osg::Vec3d v2(1,0,0);
-    osg::Vec3d v3(1,2,0);
-    osg::Vec3d vCenterPoint(0.5,1.5,1);
-
-    OsgAnimatSim::Visualization::OsgPyramid p(vCenterPoint, v1, v2, v3);
-
-    float fltHeight = p.Height();
-    float fltArea = p.BaseArea();
-    float fltVolume = p.Volume();
-}
-
 
 BOOST_AUTO_TEST_SUITE_END()

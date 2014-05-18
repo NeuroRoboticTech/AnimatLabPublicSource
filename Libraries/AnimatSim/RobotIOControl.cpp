@@ -236,8 +236,8 @@ void RobotIOControl::StartIOThread()
 
 	if(!bWaitRet)
 	{
-		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 		ExitIOThread();
+		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 	}
 }
 	

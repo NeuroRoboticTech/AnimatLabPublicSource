@@ -33,6 +33,8 @@ namespace AnimatSim
 	class IGUI_AppCallback;
 	class AnimatBase;
 	class Simulator;
+	class SimulationThread;
+	class SimulationMgr;
 	class Node;
 	class Link;
 	class ActivatedItem;
@@ -188,6 +190,7 @@ using namespace AnimatSim::Recording;
 using namespace AnimatSim::Robotics;
 
 #include "AnimatUtils.h"
+#include "TypeProperty.h"
 #include "IMovableItemCallback.h"
 #include "IMotorizedJoint.h"
 #include "ISimGUICallback.h"
@@ -282,5 +285,7 @@ using namespace AnimatSim::Robotics;
 #include "Hud.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
+#include "SimulationThread.h"
+#include "SimulationMgr.h"
 
 #endif // __ANIMAT_LIB_DLL_H__

@@ -490,6 +490,12 @@
 #define Al_Err_lErrorSettingUpIOThread -4085
 #define Al_Err_strErrorSettingUpIOThread "Timed out waiting for IO thread to finish setup."
 
+#define Al_Err_lTimedOutWaitingForSimToStop -4086
+#define Al_Err_strTimedOutWaitingForSimToStop "Timed out waiting for the simulation to stop."
+
+#define Al_Err_lUnknownError -4087
+#define Al_Err_strUnknownError "An unknown error occurred."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

@@ -133,6 +133,6 @@ namespace AnimatSim
 		virtual void Load(CStdXml &oXml);
 	};
 
-	bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
+	bool ANIMAT_PORT LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
 
 }			//AnimatSim

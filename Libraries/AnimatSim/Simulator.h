@@ -408,8 +408,14 @@ namespace AnimatSim
 			/// This is primarily used for debuggin purposes to make sure that I have not missed anything.
 			float m_fltRemainingStepTime;
 
+			///This is a temp variable for measuring sim time for a set period for each simulation
 			double m_dblTotalStepTime;
+
+			///This is a temp variable for measuring sim time for a set period for each simulation
 			long m_lStepTimeCount;
+
+			///If this is set to true then no graphical simulation windows will be created regardless of what the config files says.
+			bool m_bForceNoWindows;
 
 #pragma endregion
 
@@ -826,6 +832,9 @@ namespace AnimatSim
 
 			virtual bool InSimulation();
 
+			virtual bool ForceNoWindows();
+			virtual void ForceNoWindows(bool bVal);
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -946,6 +955,17 @@ namespace AnimatSim
 			**/
 			virtual void Initialize(int argc, const char **argv) = 0;
 
+
+			/**
+			\brief	Initializes this object with no argc/argv params.
+			
+			\author	dcofer
+			\date	5/16/2014
+
+			\details This method initializes the simulation with no input params.
+			**/
+			virtual void Initialize();
+
 			/**
 			\brief	Simulates the system.
 
@@ -1029,7 +1049,9 @@ namespace AnimatSim
 #pragma region CreateMethods
 
 			virtual CStdSerialize *CreateObject(std::string strModule, std::string strClassName, std::string strType, bool bThrowError = true);
-			static Simulator *CreateSimulator(std::string strAnimatModule, std::string strSimulationFile);
+			static Simulator *CreateSimulator(std::string strAnimatModule, std::string strSimulationFile, bool bForceNoWindows = false);
+			static Simulator *CreateSimulator(std::string strSimFile, bool bForceNoWindows = false);
+			static Simulator *CreateAndInitializeSimulator(std::string strSimFile, bool bForceNoWindows = false);
 			static Simulator *CreateSimulator(std::string strAnimatModule, CStdXml &oXml);
 			static Simulator *CreateSimulator(std::string strAnimatModule, std::string strProjectPath, std::string strExecutablePath);
 			static Simulator *CreateSimulator(int argc, const char **argv);

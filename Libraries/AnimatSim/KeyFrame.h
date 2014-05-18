@@ -113,7 +113,5 @@ namespace AnimatSim
 			virtual void MakeCurrentFrame() = 0;
 		};
 
-		bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
-
 	}			//Recording
 }				//AnimatSim

@@ -79,7 +79,8 @@ void SimulationWindowMgr::Initialize()
 {
 	AnimatBase::Initialize();
 
-	m_lpHudMgr->Initialize();
+	if(m_lpHudMgr)
+		m_lpHudMgr->Initialize();
 }
 
 /**
@@ -306,48 +307,52 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 	{
 		AnimatBase::Load(oXml);
 	
-		oXml.IntoElem(); //Into WindowMgr Element
-
-		if(oXml.FindChildElement("Position", false))
+		//If the user has specified to not create any visible graphics windows then lets skip loading them.
+		if(!m_lpSim->ForceNoWindows())
 		{
-			Std_LoadPoint(oXml, "Position", m_ptPosition);
-			if(m_ptPosition.x < 0 || m_ptPosition.y < 0)
-				THROW_TEXT_ERROR(Al_Err_lSimWinPosInvalid, Al_Err_strSimWinPosInvalid, "POS: (" + STR(m_ptPosition.x) + ", " + STR(m_ptPosition.y) + ")");
-		}
+			oXml.IntoElem(); //Into WindowMgr Element
 
-		if(oXml.FindChildElement("Size", false))
-		{
-			Std_LoadPoint(oXml, "Size", m_ptSize);
-			if(m_ptSize.x < 0 || m_ptSize.y < 0)
-				THROW_TEXT_ERROR(Al_Err_lSimWinSizeInvalid, Al_Err_strSimWinSizeInvalid, "Size: (" + STR(m_ptSize.x) + ", " + STR(m_ptSize.y) + ")");
-		}
-
-		if(oXml.FindChildElement("Windows", false))
-		{
-			oXml.IntoChildElement("Windows"); //There must be a windows section if we get here.
-			int iCount = oXml.NumberOfChildren();
-			SimulationWindow *lpItem = NULL;
-			for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(oXml.FindChildElement("Position", false))
 			{
-				oXml.FindChildByIndex(iIndex);
-				lpItem = LoadSimulationWindow(oXml);
-				m_aryWindows.Add(lpItem);
+				Std_LoadPoint(oXml, "Position", m_ptPosition);
+				if(m_ptPosition.x < 0 || m_ptPosition.y < 0)
+					THROW_TEXT_ERROR(Al_Err_lSimWinPosInvalid, Al_Err_strSimWinPosInvalid, "POS: (" + STR(m_ptPosition.x) + ", " + STR(m_ptPosition.y) + ")");
 			}
-			oXml.OutOfElem(); //OutOf Windows Element
-		}
 
-		if(oXml.FindChildElement("Hud", false))
-		{
-			//Create and load the HUD manager
-			oXml.IntoElem();
-			std::string strModuleName = oXml.GetChildString("ModuleName", "");
-			std::string strType = oXml.GetChildString("Type");
-			oXml.OutOfElem();
+			if(oXml.FindChildElement("Size", false))
+			{
+				Std_LoadPoint(oXml, "Size", m_ptSize);
+				if(m_ptSize.x < 0 || m_ptSize.y < 0)
+					THROW_TEXT_ERROR(Al_Err_lSimWinSizeInvalid, Al_Err_strSimWinSizeInvalid, "Size: (" + STR(m_ptSize.x) + ", " + STR(m_ptSize.y) + ")");
+			}
 
-			m_lpHudMgr = dynamic_cast<Hud *>(m_lpSim->CreateObject(strModuleName, "Hud", strType));
+			if(oXml.FindChildElement("Windows", false))
+			{
+				oXml.IntoChildElement("Windows"); //There must be a windows section if we get here.
+				int iCount = oXml.NumberOfChildren();
+				SimulationWindow *lpItem = NULL;
+				for(int iIndex=0; iIndex<iCount; iIndex++)
+				{
+					oXml.FindChildByIndex(iIndex);
+					lpItem = LoadSimulationWindow(oXml);
+					m_aryWindows.Add(lpItem);
+				}
+				oXml.OutOfElem(); //OutOf Windows Element
+			}
 
-			m_lpHudMgr->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true); 
-			m_lpHudMgr->Load(oXml);
+			if(oXml.FindChildElement("Hud", false))
+			{
+				//Create and load the HUD manager
+				oXml.IntoElem();
+				std::string strModuleName = oXml.GetChildString("ModuleName", "");
+				std::string strType = oXml.GetChildString("Type");
+				oXml.OutOfElem();
+
+				m_lpHudMgr = dynamic_cast<Hud *>(m_lpSim->CreateObject(strModuleName, "Hud", strType));
+
+				m_lpHudMgr->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true); 
+				m_lpHudMgr->Load(oXml);
+			}
 		}
 
 		oXml.OutOfElem(); //OutOf WindowMgr Element

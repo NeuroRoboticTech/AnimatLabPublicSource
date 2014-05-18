@@ -53,12 +53,10 @@ namespace AnimatSim
 
 			Gain *FieldGain();
 			Gain *CurrentGain();
-			float ReceptiveFieldDistance();
 
 			ReceptiveField *GetReceptiveField(int iIndex);
 			bool FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex);
 			int FindClosestReceptiveField(float fltX, float fltY, float fltZ);
-			void AddVertex(float fltX, float fltY, float fltZ);
 			void FinishedAddingVertices();
 
 #pragma region DataAccesMethods
