@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D84241E2-9F02-A14E-AF02-249E74B2C708}</ProjectGuid>
+    <ProjectGuid>{BEFD38D3-BC85-3844-8A53-4EE3DA705389}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -25,8 +25,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>../../../../../3rdParty\DynamixelSDK\linux\include</Include>
-        <Include>../../../../../3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\Libraries\RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
@@ -61,8 +62,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>../../../../../3rdParty\DynamixelSDK\linux\include</Include>
-        <Include>../../../../../3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\Libraries\RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
@@ -97,8 +99,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>../../../../../3rdParty\DynamixelSDK\linux\include</Include>
-        <Include>../../../../../3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\Libraries\RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
@@ -133,8 +136,9 @@
         <Include>../include</Include>
         <Include>../Libraries/StdUtils</Include>
         <Include>../Libraries/AnimatSim</Include>
-        <Include>../../../../../3rdParty\DynamixelSDK\linux\include</Include>
-        <Include>../../../../../3rdParty\openFrameworksArduino\src</Include>
+        <Include>..\Libraries\RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
         <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>

@@ -6,7 +6,8 @@
 				 "../StdClassFactoryTester/*.cpp"}
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
-					  "../../../../3rdParty/boost_1_54_0" }	  
+					  "../../../../3rdParty/boost_1_54_0",
+					  "../../../../3rdParty/stlsoft-1.9.117/include" }	  
 		libdirs { "../../../lib", 
 					  "../../../../3rdParty/boost_1_54_0/lib" }
 		links { "StdUtils" }

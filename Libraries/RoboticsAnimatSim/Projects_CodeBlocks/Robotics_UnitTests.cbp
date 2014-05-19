@@ -18,6 +18,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -45,6 +46,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -73,6 +75,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -100,6 +103,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />

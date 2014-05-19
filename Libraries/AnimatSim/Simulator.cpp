@@ -2645,6 +2645,8 @@ void Simulator::StepSimulation()
 **/
 void Simulator::SimulateBegin()
 {
+	m_lStartSimTick = GetTimerTick();
+
 	m_bSteppingSim = true;
 
 	std::cout << "starting sim" << "\r\n";
