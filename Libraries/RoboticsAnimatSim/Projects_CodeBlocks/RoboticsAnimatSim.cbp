@@ -32,7 +32,7 @@
 					<Add library="dl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
-					<Add library="dynamixel" />
+					<Add library="dxl_debug" />
 					<Add library="openFrameworksArduinoD" />
 				</Linker>
 				<ExtraCommands>
@@ -100,7 +100,7 @@
 					<Add library="dl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
-					<Add library="dynamixel" />
+					<Add library="dxl_debug" />
 					<Add library="openFrameworksArduinoD" />
 				</Linker>
 				<ExtraCommands>

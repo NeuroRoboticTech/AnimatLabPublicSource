@@ -26,10 +26,9 @@
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="dxl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
-					<Add library="dynamixel" />
+					<Add library="dxl_debug" />
 					<Add library="openFrameworksArduinoD" />
 				</Linker>
 			</Target>
@@ -54,10 +53,9 @@
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="dxl" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
-					<Add library="dynamixel" />
+					<Add library="dxl" />
 					<Add library="openFrameworksArduino" />
 				</Linker>
 			</Target>
@@ -81,10 +79,9 @@
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="dxl" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
-					<Add library="dynamixel" />
+					<Add library="dxl_debug" />
 					<Add library="openFrameworksArduinoD" />
 				</Linker>
 			</Target>
@@ -109,10 +106,9 @@
 					<Add library="boost_system" />
 					<Add library="boost_filesystem" />
 					<Add library="boost_unit_test_framework" />
-					<Add library="dxl" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
-					<Add library="dynamixel" />
+					<Add library="dxl" />
 					<Add library="openFrameworksArduino" />
 				</Linker>
 			</Target>
