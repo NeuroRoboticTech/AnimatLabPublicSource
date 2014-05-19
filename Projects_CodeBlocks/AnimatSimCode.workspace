@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="AnimatSimCode">
-		<Project filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" active="1">
-		</Project>
-		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp">
-		</Project>
-		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdClassFactoryTester.cbp">
-		</Project>
+		<Project filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" />
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" active="1" />
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdClassFactoryTester.cbp" />
 		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils_UnitTests.cbp">
 			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
 		</Project>

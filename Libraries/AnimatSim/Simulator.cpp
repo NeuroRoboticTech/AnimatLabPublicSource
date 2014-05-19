@@ -2391,6 +2391,10 @@ platformstl::performance_counter::epoch_type Simulator::GetTimerTick()
 
 double Simulator::TimerDiff_u(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd)
 {
+#ifndef WIN32	
+
+#endif
+	
 	return (double) g_Counter.get_microseconds(lStart, lEnd);
 }
 

@@ -14,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_single.so</OutputName>
@@ -74,7 +75,8 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_single.so</OutputName>
@@ -136,7 +138,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_double.so</OutputName>
@@ -197,7 +200,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_double.so</OutputName>
