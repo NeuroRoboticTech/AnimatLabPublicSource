@@ -14,9 +14,9 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -36,9 +36,9 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -59,9 +59,9 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add directory="../../../bin" />
@@ -81,9 +81,9 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -106,9 +106,9 @@
 					<Add option="-D_DEBUG" />
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DANIMAT_STATIC" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />

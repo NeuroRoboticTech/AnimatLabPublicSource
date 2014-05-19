@@ -4,7 +4,7 @@
 		kind     "SharedLib"
 		files  { "../*.h",
 				 "../*.cpp"}
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include" }
 		libdirs { "../../../bin" }
 		links { "dl", 

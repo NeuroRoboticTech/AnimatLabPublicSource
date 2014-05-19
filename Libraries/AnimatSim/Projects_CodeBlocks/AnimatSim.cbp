@@ -18,7 +18,7 @@
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -45,7 +45,7 @@
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -73,7 +73,7 @@
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
@@ -100,7 +100,7 @@
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />

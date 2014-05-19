@@ -2,13 +2,13 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="StdClassFactoryTester" />
+		<Option title="AnimatSim" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="Debug/libStdClassFactoryTester.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="obj/Debug/StdClassFactoryTester" />
+				<Option output="Debug/libAnimatSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="0" />
@@ -17,23 +17,25 @@
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
-					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
+					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
+					<Add directory="../../../bin" />
 					<Add library="dl" />
-					<Add library="pthread" />
+					<Add library="StdUtils_debug" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Debug/libStdClassFactoryTester.so ../../../bin" />
+					<Add after="cp Debug/libAnimatSim_debug.so ../../../bin" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Release">
-				<Option output="Release/libStdClassFactoryTester.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="obj/Release/StdClassFactoryTester" />
+				<Option output="Release/libAnimatSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="0" />
@@ -42,24 +44,26 @@
 					<Add option="-O2" />
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
-					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
+					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-shared" />
+					<Add directory="../../../bin" />
 					<Add library="dl" />
-					<Add library="pthread" />
+					<Add library="StdUtils" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Release/libStdClassFactoryTester.so ../../../bin" />
+					<Add after="cp Release/libAnimatSim.so ../../../bin" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Debug_Double">
-				<Option output="Debug/libStdClassFactoryTester.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="obj/Debug_Double/StdClassFactoryTester" />
+				<Option output="Debug/libAnimatSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug_Double" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="0" />
@@ -68,23 +72,25 @@
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
-					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
+					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
+					<Add directory="../../../bin" />
 					<Add library="dl" />
-					<Add library="pthread" />
+					<Add library="StdUtils_debug" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Debug/libStdClassFactoryTester.so ../../../bin" />
+					<Add after="cp Debug/libAnimatSim_debug.so ../../../bin" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Release_Double">
-				<Option output="Release/libStdClassFactoryTester.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="obj/Release_Double/StdClassFactoryTester" />
+				<Option output="Release/libAnimatSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release_Double" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="0" />
@@ -93,48 +99,35 @@
 					<Add option="-O2" />
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
-					<Add option="-DSTDCLASSFACTORYTESTER_EXPORTS" />
+					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-shared" />
+					<Add directory="../../../bin" />
 					<Add library="dl" />
-					<Add library="pthread" />
+					<Add library="StdUtils" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Release/libStdClassFactoryTester.so ../../../bin" />
+					<Add after="cp Release/libAnimatSim.so ../../../bin" />
 				</ExtraCommands>
 			</Target>
 		</Build>
-		<Unit filename="../StdClassFactoryTester/stdafx.h">
-			<Option virtualFolder="StdClassFactoryTester" />
+		<Unit filename="../PyAnimatSim_wrap.h">
+			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../StdClassFactoryTester/targetver.h">
-			<Option virtualFolder="StdClassFactoryTester" />
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../StdClassFactoryTester/TestClassFactory.h">
-			<Option virtualFolder="StdClassFactoryTester" />
+		<Unit filename="../PyAnimatSim.cpp">
+			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../StdClassFactoryTester/TestObject.h">
-			<Option virtualFolder="StdClassFactoryTester" />
-		</Unit>
-		<Unit filename="../StdClassFactoryTester/dllmain.cpp">
-			<Option virtualFolder="StdClassFactoryTester" />
-		</Unit>
-		<Unit filename="../StdClassFactoryTester/stdafx.cpp">
-			<Option virtualFolder="StdClassFactoryTester" />
-		</Unit>
-		<Unit filename="../StdClassFactoryTester/StdClassFactoryTester.cpp">
-			<Option virtualFolder="StdClassFactoryTester" />
-		</Unit>
-		<Unit filename="../StdClassFactoryTester/TestClassFactory.cpp">
-			<Option virtualFolder="StdClassFactoryTester" />
-		</Unit>
-		<Unit filename="../StdClassFactoryTester/TestObject.cpp">
-			<Option virtualFolder="StdClassFactoryTester" />
+		<Unit filename="../StdAfx.cpp">
+			<Option virtualFolder="." />
 		</Unit>
 		<Extensions>
 		</Extensions>

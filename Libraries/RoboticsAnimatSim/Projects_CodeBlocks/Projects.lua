@@ -4,7 +4,7 @@
 		kind     "SharedLib"
 		files  { "../*.h",
 			 "../*.cpp"}
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",
@@ -45,6 +45,7 @@
                  "../Robotics_UnitTests/*.cpp"}
 		targetdir ("../../../bin")
 		targetname ("Robotics_UnitTests")				
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",

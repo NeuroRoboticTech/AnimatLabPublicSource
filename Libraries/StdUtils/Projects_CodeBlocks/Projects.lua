@@ -5,7 +5,7 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../include" }
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		links { "dl",
 				"pthread",
 				"boost_system", 
@@ -32,7 +32,7 @@
 		kind     "SharedLib"
 		files  { "../StdClassFactoryTester/*.h",
 				 "../StdClassFactoryTester/*.cpp"}
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 					  "../../StdUtils" }	  
 		links {"dl",
@@ -57,7 +57,7 @@
 		kind     "ConsoleApp"
 		files  { "../StdUtils_UnitTests/*.h",
 				 "../StdUtils_UnitTests/*.cpp"}
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 			      "../../StdUtils" }	  
 		libdirs { "../../../bin" }

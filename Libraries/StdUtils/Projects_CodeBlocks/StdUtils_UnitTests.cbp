@@ -14,7 +14,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
@@ -38,7 +38,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
@@ -64,7 +64,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>
@@ -88,7 +88,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 				</Compiler>

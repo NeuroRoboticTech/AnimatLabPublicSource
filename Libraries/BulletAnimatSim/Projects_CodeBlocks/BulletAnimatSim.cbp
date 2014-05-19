@@ -19,13 +19,13 @@
 					<Add option="-D_DEBUG" />
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -76,13 +76,13 @@
 					<Add option="-DNDEBUG" />
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -135,13 +135,13 @@
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
 					<Add option="-DBT_USE_DOUBLE_PRECISION" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -193,13 +193,13 @@
 					<Add option="-DOSGBULLET_STATIC" />
 					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
 					<Add option="-DBT_USE_DOUBLE_PRECISION" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../Libraries/OsgAnimatSim" />
 					<Add directory="/usr/local/include/bullet" />
-					<Add directory="C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" />
+					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />

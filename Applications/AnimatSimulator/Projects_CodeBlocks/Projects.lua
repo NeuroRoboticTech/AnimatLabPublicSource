@@ -4,7 +4,7 @@
 		kind     "ConsoleApp"
 		files  { "../*.h",
 				 "../*.cpp"}
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include",
 					  "../../../../3rdParty/stlsoft-1.9.117/include" }
 		libdirs { "../../../bin" }

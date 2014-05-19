@@ -14,5 +14,7 @@ TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim" "../../../Libraries/BulletAnimatSim"
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" "../../../bin"
+TIMEOUT /T 2
+..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" "../../../../3rdParty/stlsoft-1.9.117/include"
 
 @pause

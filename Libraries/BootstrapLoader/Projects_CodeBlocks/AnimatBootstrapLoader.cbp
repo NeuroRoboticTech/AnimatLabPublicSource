@@ -18,7 +18,7 @@
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DBOOTSTRAPLOADER_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 				</Compiler>
 				<Linker>
@@ -45,7 +45,7 @@
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DBOOTSTRAPLOADER_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 				</Compiler>
 				<Linker>
@@ -73,7 +73,7 @@
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DBOOTSTRAPLOADER_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 				</Compiler>
 				<Linker>
@@ -100,7 +100,7 @@
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
 					<Add option="-DBOOTSTRAPLOADER_EXPORTS" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 				</Compiler>
 				<Linker>

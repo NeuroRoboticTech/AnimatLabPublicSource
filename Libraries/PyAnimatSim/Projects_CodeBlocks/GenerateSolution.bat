@@ -1,6 +1,6 @@
-echo "Generating AnimatSim Mono Solution"
+echo "Generating PyAnimatSim Mono Solution"
 
-..\..\..\bin\premake4m --os=linux --file=Solution.lua codeblocks
+..\..\..\bin\premake4m --os=linux --file=PyAnimatSim.lua codeblocks
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/include" "../../../include"
 TIMEOUT /T 2
