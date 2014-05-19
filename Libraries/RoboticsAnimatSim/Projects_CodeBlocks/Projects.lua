@@ -49,6 +49,7 @@
 		includedirs { "../../../include", 
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",
+		   	      "../../RoboticsAnimatSim",
 				  "../../../../3rdParty/DynamixelSDK/linux/include",
 				  "../../../../3rdParty/openFrameworksArduino/src",
 				  "../../../../3rdParty/stlsoft-1.9.117/include"}
