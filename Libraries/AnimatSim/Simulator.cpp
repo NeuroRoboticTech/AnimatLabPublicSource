@@ -2645,7 +2645,12 @@ void Simulator::StepSimulation()
 **/
 void Simulator::SimulateBegin()
 {
+	//Initialize all of our epoch counters at the start of the simulation so we do not get assertions on times being wrong.
 	m_lStartSimTick = GetTimerTick();
+	m_lStartSimTick = m_lStepStartTick;
+	m_lStepSimEndTick = m_lStepStartTick;
+	m_lVideoFrameStartTick = m_lStepStartTick;
+	m_lLastTickTaken = m_lStepStartTick;
 
 	m_bSteppingSim = true;
 
