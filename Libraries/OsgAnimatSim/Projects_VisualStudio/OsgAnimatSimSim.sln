@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim", "OsgAnimatSim.vcxproj", "{9555E03C-2181-6A46-97AD-512FE6EAECDC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim", "OsgAnimatSim.vcxproj", "{494DA28D-1F36-1E44-AC40-D0284E59B2E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Debug|Win32.Build.0 = Debug|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Release|Win32.ActiveCfg = Release|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Release|Win32.Build.0 = Release|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
-		{9555E03C-2181-6A46-97AD-512FE6EAECDC}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Debug|Win32.Build.0 = Debug|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Release|Win32.ActiveCfg = Release|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Release|Win32.Build.0 = Release|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{494DA28D-1F36-1E44-AC40-D0284E59B2E5}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

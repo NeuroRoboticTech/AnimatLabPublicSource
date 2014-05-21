@@ -50,6 +50,7 @@ namespace AnimatSim
     class ThreadProcessor;
     class ModuleThreadProcessor;
 	class TypeProperty;
+	class ObjectScript;
 
 	namespace Adapters
 	{
@@ -283,6 +284,7 @@ using namespace AnimatSim::Robotics;
 #include "SimulationWindow.h"
 #include "HudItem.h"
 #include "Hud.h"
+#include "ObjectScript.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
 #include "SimulationThread.h"
