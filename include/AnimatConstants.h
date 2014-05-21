@@ -496,6 +496,9 @@
 #define Al_Err_lUnknownError -4087
 #define Al_Err_strUnknownError "An unknown error occurred."
 
+#define Al_Err_lTimedOutInMicroWait -4088
+#define Al_Err_strTimedOutInMicroWait "Timed out in microwait."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

@@ -178,9 +178,6 @@
     <None Include="..\StdUtilFunctions.h">
       <Link>StdUtilFunctions.h</Link>
     </None>
-    <None Include="..\StdUtils_python_wrap.h">
-      <Link>StdUtils_python_wrap.h</Link>
-    </None>
     <None Include="..\StdUtils_wrap.h">
       <Link>StdUtils_wrap.h</Link>
     </None>

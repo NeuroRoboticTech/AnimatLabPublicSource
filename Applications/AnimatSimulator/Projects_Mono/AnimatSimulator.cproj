@@ -44,7 +44,8 @@
         <Command type="AfterBuild" command="cp Debug/animatsimulator_debug ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>/media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux_Debug.asim</Commandlineparameters>
+    <Commandlineparameters>/media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux_Debug.asim
+</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>

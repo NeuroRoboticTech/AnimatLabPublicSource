@@ -2,7 +2,7 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="AnimatSimCode">
 		<Project filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" />
-		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" active="1" />
+		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
 		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdClassFactoryTester.cbp" />
 		<Project filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils_UnitTests.cbp">
 			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
@@ -36,7 +36,7 @@
 			<Depends filename="../Libraries/StdUtils/Projects_CodeBlocks/StdUtils.cbp" />
 			<Depends filename="../Libraries/AnimatSim/Projects_CodeBlocks/AnimatSim.cbp" />
 		</Project>
-		<Project filename="../Applications/AnimatSimulator/Projects_CodeBlocks/AnimatSimulator.cbp">
+		<Project filename="../Applications/AnimatSimulator/Projects_CodeBlocks/AnimatSimulator.cbp" active="1">
 			<Depends filename="../Libraries/BootstrapLoader/Projects_CodeBlocks/AnimatBootstrapLoader.cbp" />
 		</Project>
 	</Workspace>

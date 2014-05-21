@@ -51,7 +51,7 @@ namespace BulletAnimatSim
     btConvexHullShape BULLET_PORT *OsgMeshToConvexHull(osg::Node *lpNode, bool bOptimize, float fltMargin)
     {
         btConvexHullShape *originalConvexShape =  osgbCollision::btConvexHullCollisionShapeFromOSG(lpNode);
-        
+
         if(fltMargin >= 0)
             originalConvexShape->setMargin(fltMargin);
 
@@ -89,19 +89,19 @@ namespace BulletAnimatSim
     /**
      \brief Takes an OSG node and finds a shrunken convex hull collision shape. When you create a btConvexHullShape
      it adds a margin around it that increases the total volume compared to the original mesh passed in. That is why
-     we have to try and shrink the convex hull. However, it is still not perfect. Also, any convex mesh will end up 
+     we have to try and shrink the convex hull. However, it is still not perfect. Also, any convex mesh will end up
      being a rough approximation because convex hull itself is optimized into 42 spherical point tests that wrap around
      the part, so you are losing a lot of data right there. So this convex hull will always at best be a rough approximation
-     of the actual volume of a mesh. Once the convex hull is created it loops through all vertices to find the centroid. 
+     of the actual volume of a mesh. Once the convex hull is created it loops through all vertices to find the centroid.
      It then loops through all triangles of the hull and creates a pyramid for each one with the triangle as the base and the
      centriod as the tip. It calculates the volume for all such pyrmaids in the hull and adds them to get an approximation of the
      volume for that hull.
-    
+
      \author    David Cofer
      \date  10/15/2013
-    
+
      \param [in,out]    node    Osg node that we need the volume for.
-    
+
      \return   An approximation of the total volume of a mesh.
      */
 
@@ -117,7 +117,7 @@ namespace BulletAnimatSim
 	    int nVerts( sh.numVertices () );
 	    int nIdx( sh.numIndices() );
         if( (nVerts <= 0) || (nIdx <= 0) )
-            return( NULL );
+            return( 0 );
 
         const btVector3* bVerts( sh.getVertexPointer() );
         const unsigned int* bIdx( sh.getIndexPointer() );
@@ -170,12 +170,12 @@ namespace BulletAnimatSim
     /**
      \brief This method takes an osg node and creates a btConvexHullShape that is shrunken back down by its margin value.
      This is so the margin does not play as big of a role in the calculation of the volume of the mesh.
-    
+
      \author    David Cofer
      \date  10/15/2013
-    
+
      \param [in,out]    node    Osg node for which we want to calculate the volume.
-    
+
      \return    Shrunken convex hull shape.
      */
 
