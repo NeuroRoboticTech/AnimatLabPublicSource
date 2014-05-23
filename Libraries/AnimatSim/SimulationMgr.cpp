@@ -42,7 +42,6 @@ namespace AnimatSim
 
 SimulationMgr::SimulationMgr(void)
 {
-
 }
 
 SimulationMgr::~SimulationMgr(void)
@@ -53,6 +52,12 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SimulationMgr\r\n", "", -1, false, true);}
+}
+
+SimulationMgr &SimulationMgr::Instance()
+{
+	static SimulationMgr g_SimMgrInstance;
+	return g_SimMgrInstance;
 }
 
 SimulationThread *SimulationMgr::CreateSimulation(std::string strSimFile, bool bForceNoWindows)

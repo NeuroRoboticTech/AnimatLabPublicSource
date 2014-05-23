@@ -79,6 +79,19 @@ void SimulationThread::StartSimulation(std::string strSimFile, bool bForceNoWind
 	m_lpSim->PauseSimulation();
 
 	m_SimThread = boost::thread(&SimulationThread::ProcessSimulation, this);
+
+	//If we want to block till the sim is over then lets wait here until we get the notification that it has 
+	//gone past the set simulation time and then stop the simulation.
+	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(10);
+
+	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForInitEndMutex);
+	bool bWaitRet = m_WaitForInitEndCond.timed_wait(lock, pt);
+
+	if(!bWaitRet)
+		THROW_PARAM_ERROR(Al_Err_lTimedOutWaitingForSimToStop, Al_Err_strTimedOutWaitingForSimToStop, "Sim ID", m_lpSim->ID());
+
+	//Give it just smidge of time to start processing in sumulation loop. This is not strictly necessary, but I wanted to give it the time anyway.
+	boost::this_thread::sleep(boost::posix_time::milliseconds(100));
 }
 
 void SimulationThread::ProcessSimulation()
@@ -90,6 +103,8 @@ void SimulationThread::ProcessSimulation()
 		if(m_lpSim)
 		{
 			m_lpSim->Initialize();
+
+			m_WaitForInitEndCond.notify_all();
 			m_lpSim->Simulate();
 		}
 	}

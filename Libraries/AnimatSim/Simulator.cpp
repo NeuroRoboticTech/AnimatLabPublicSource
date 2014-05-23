@@ -2472,9 +2472,9 @@ void Simulator::StepPlaybackControl()
 					MicroSleep(dblRemainingTime*1000000);
 				else
 					MicroWait(dblRemainingTime*1000000);
-
-				StepVideoFrame();
 			}
+
+			StepVideoFrame();
 			
 		} while(dblRemainingTime > 0);
 	}

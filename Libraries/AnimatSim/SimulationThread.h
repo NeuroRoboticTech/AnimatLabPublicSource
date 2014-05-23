@@ -12,6 +12,10 @@ namespace AnimatSim
 
 #ifndef STD_DO_NOT_ADD_BOOST
 		boost::thread m_SimThread; 
+
+		boost::interprocess::interprocess_mutex m_WaitForInitEndMutex;
+		boost::interprocess::interprocess_condition  m_WaitForInitEndCond;
+
 		boost::interprocess::interprocess_mutex m_WaitForSimEndMutex;
 		boost::interprocess::interprocess_condition  m_WaitForSimEndCond;
 #endif
