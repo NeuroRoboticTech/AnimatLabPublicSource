@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "ScriptProcessor.h"
+
 namespace AnimatSim
 {
 
@@ -108,13 +110,20 @@ namespace AnimatSim
 			/// The radius of the graphical sphere shown for the structure position.
 			float m_fltSize;
 
+			///Script processor for running python or other scripting systems related to this structure.
+			ScriptProcessor *m_lpScript;
+
 			virtual void LoadLayout(CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
 
 			virtual void AddRoot(std::string strXml);
 			virtual void RemoveRoot(std::string strID, bool bThrowError = true);
-			
+
+			virtual ScriptProcessor *LoadScript(CStdXml &oXml);
+			virtual void AddScript(std::string strXml);
+			virtual void RemoveScript(std::string strID, bool bThrowError = true);
+
 			virtual void UpdateData();
 
 		public:
@@ -168,6 +177,9 @@ namespace AnimatSim
 			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void UpdatePhysicsPosFromGraphics();
 
+			virtual void Script(ScriptProcessor *lpScript);
+			virtual ScriptProcessor *Script();
+
 #pragma region DataAccesMethods
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
@@ -184,6 +196,12 @@ namespace AnimatSim
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
+
+			virtual void Initialize();
+			virtual void Kill(bool bState = true);
+			virtual void SimStarting();
+			virtual void SimPausing();
+			virtual void SimStopping();
 
 			virtual void Load(CStdXml &oXml);
 		};

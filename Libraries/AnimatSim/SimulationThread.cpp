@@ -72,6 +72,9 @@ Simulator *SimulationThread::Sim() {return m_lpSim;}
 void SimulationThread::StartSimulation(std::string strSimFile, bool bForceNoWindows)
 {
 	m_lpSim = Simulator::CreateSimulator(strSimFile, bForceNoWindows);
+	
+	//Set the most recently created simulation to be the active one.
+	ActiveSim(m_lpSim);
 
 	m_lpSim->Load();
     m_lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);

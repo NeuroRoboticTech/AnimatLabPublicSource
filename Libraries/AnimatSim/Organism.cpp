@@ -93,6 +93,8 @@ bool Organism::IsDead()
 
 void Organism::Kill(bool bState)
 {
+	Structure::Kill(bState);
+
 	m_bDead = bState;
 	
 	if(m_lpBody)
@@ -138,7 +140,12 @@ void Organism::ResetSimulation()
 void Organism::StepNeuralEngine()
 {
 	if(!m_bDead)
+	{
 		m_lpNervousSystem->StepSimulation();
+
+		if(m_lpScript)
+			m_lpScript->StepPhysicsEngine();
+	}
 }
 
 void Organism::StepPhysicsEngine()

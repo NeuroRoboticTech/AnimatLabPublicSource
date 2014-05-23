@@ -100,7 +100,7 @@ catch(CStdErrorInfo oError)
 catch(...)
 {
 	if(lpSim) delete lpSim;
-  printf("An Unknown Error occurred.\n") ;
+	printf("An Unknown Error occurred.\n") ;
 	return -1;
 }
 }

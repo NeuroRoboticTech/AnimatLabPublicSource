@@ -183,6 +183,8 @@ Simulator::Simulator()
 	m_iRobotSynchTimeCount = 0;
 
 	m_bForceNoWindows = false;
+
+	m_lpScript = NULL;
 }
 
 /**
@@ -245,6 +247,12 @@ try
     //    delete m_lpIOThread;
     //    m_lpIOThread = NULL;
     //}
+
+	if(m_lpScript)
+	{
+		delete 	m_lpScript;
+		m_lpScript = NULL;
+	}
 
 	m_aryNeuralModuleFactories.RemoveAll();
 
@@ -2294,6 +2302,12 @@ void Simulator::Reset()
     //    m_lpIOThread = NULL;
     //}
 
+    if(m_lpScript)
+    {
+        delete m_lpScript;
+        m_lpScript = NULL;
+    }
+
 	m_aryNeuralModuleFactories.RemoveAll();
 
 	m_arySourcePhysicsAdapters.RemoveAll();
@@ -3069,13 +3083,17 @@ try
 {
 #ifdef WIN32
 	int iFindDebug = Std_ToLower(strModuleName).find("_vc10d");
+	if(iFindDebug == -1) iFindDebug = Std_ToLower(strModuleName).find("_d.");
 #else
 	int iFindDebug = Std_ToLower(strModuleName).find("_debug");
+	if(iFindDebug == -1) iFindDebug = Std_ToLower(strModuleName).find("_d.");
 #endif
 
 #ifdef _DEBUG
 	if(iFindDebug == -1 )
+	{
 		THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+	}
 #else
 	if(iFindDebug != -1)
 		THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
@@ -3437,11 +3455,17 @@ CStdSerialize *Simulator::CreateObject(std::string strModule, std::string strCla
 			return lpFactory->CreateObject(strClassName, strType, bThrowError);
 		else
 		{
+			std::string strFullPathModule = m_strExecutablePath + strModule;
+
 			//Lets load the dynamic library and get a pointer to the class factory.
-			lpFactory = LoadClassFactory(strModule);
+			lpFactory = LoadClassFactory(strFullPathModule);
 
 			//Now create an instance of a neural module. There is only one type of
-			return lpFactory->CreateObject(strClassName, strType, bThrowError);
+			CStdSerialize *lpObj = lpFactory->CreateObject(strClassName, strType, bThrowError);
+
+			delete lpFactory;
+
+			return lpObj;
 		}
 	}
 

@@ -5273,6 +5273,7 @@ class Structure(AnimatBase,MovableItem):
     def DisableCollision(self, *args): return _AnimatSimPy.Structure_DisableCollision(self, *args)
     def Selected(self, *args): return _AnimatSimPy.Structure_Selected(self, *args)
     def UpdatePhysicsPosFromGraphics(self): return _AnimatSimPy.Structure_UpdatePhysicsPosFromGraphics(self)
+    def Script(self, *args): return _AnimatSimPy.Structure_Script(self, *args)
     def SetSystemPointers(self, *args): return _AnimatSimPy.Structure_SetSystemPointers(self, *args)
     def GetDataPointer(self, *args): return _AnimatSimPy.Structure_GetDataPointer(self, *args)
     def SetData(self, *args): return _AnimatSimPy.Structure_SetData(self, *args)
@@ -5282,6 +5283,11 @@ class Structure(AnimatBase,MovableItem):
     def CalculateSnapshotByteSize(self): return _AnimatSimPy.Structure_CalculateSnapshotByteSize(self)
     def SaveKeyFrameSnapshot(self, *args): return _AnimatSimPy.Structure_SaveKeyFrameSnapshot(self, *args)
     def LoadKeyFrameSnapshot(self, *args): return _AnimatSimPy.Structure_LoadKeyFrameSnapshot(self, *args)
+    def Initialize(self): return _AnimatSimPy.Structure_Initialize(self)
+    def Kill(self, bState=True): return _AnimatSimPy.Structure_Kill(self, bState)
+    def SimStarting(self): return _AnimatSimPy.Structure_SimStarting(self)
+    def SimPausing(self): return _AnimatSimPy.Structure_SimPausing(self)
+    def SimStopping(self): return _AnimatSimPy.Structure_SimStopping(self)
     def Load(self, *args): return _AnimatSimPy.Structure_Load(self, *args)
 Structure_swigregister = _AnimatSimPy.Structure_swigregister
 Structure_swigregister(Structure)
@@ -6403,22 +6409,24 @@ Simulator_CreateSimulator = _AnimatSimPy.Simulator_CreateSimulator
 def GetSimulator():
   return _AnimatSimPy.GetSimulator()
 GetSimulator = _AnimatSimPy.GetSimulator
-class ObjectScript(AnimatBase):
+class ScriptProcessor(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ObjectScript, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ScriptProcessor, name, value)
     __swig_getmethods__ = {}
     for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ObjectScript, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, ScriptProcessor, name)
     __repr__ = _swig_repr
     def __init__(self): 
-        this = _AnimatSimPy.new_ObjectScript()
+        this = _AnimatSimPy.new_ScriptProcessor()
         try: self.this.append(this)
         except: self.this = this
-    __swig_destroy__ = _AnimatSimPy.delete_ObjectScript
+    __swig_destroy__ = _AnimatSimPy.delete_ScriptProcessor
     __del__ = lambda self : None;
-ObjectScript_swigregister = _AnimatSimPy.ObjectScript_swigregister
-ObjectScript_swigregister(ObjectScript)
+    def StepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_StepPhysicsEngine(self)
+    def StepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_StepNeuralEngine(self)
+ScriptProcessor_swigregister = _AnimatSimPy.ScriptProcessor_swigregister
+ScriptProcessor_swigregister(ScriptProcessor)
 
 class SimulationThread(ISimGUICallback):
     __swig_setmethods__ = {}
@@ -6471,6 +6479,10 @@ def SimulationMgr_Instance():
   return _AnimatSimPy.SimulationMgr_Instance()
 SimulationMgr_Instance = _AnimatSimPy.SimulationMgr_Instance
 
+
+def ActiveSim(*args):
+  return _AnimatSimPy.ActiveSim(*args)
+ActiveSim = _AnimatSimPy.ActiveSim
 # This file is compatible with both classic and new-style classes.
 
 

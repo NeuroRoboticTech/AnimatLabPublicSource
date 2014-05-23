@@ -40,6 +40,8 @@
 namespace AnimatSim
 {
 
+static Simulator *g_lpActiveSim = NULL;
+
 SimulationMgr::SimulationMgr(void)
 {
 }
@@ -58,6 +60,16 @@ SimulationMgr &SimulationMgr::Instance()
 {
 	static SimulationMgr g_SimMgrInstance;
 	return g_SimMgrInstance;
+}
+
+void ActiveSim(Simulator *lpActive)
+{
+	g_lpActiveSim = lpActive;
+}
+
+Simulator *ActiveSim()
+{
+	return g_lpActiveSim;
 }
 
 SimulationThread *SimulationMgr::CreateSimulation(std::string strSimFile, bool bForceNoWindows)

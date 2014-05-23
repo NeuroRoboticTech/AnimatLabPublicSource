@@ -21,4 +21,7 @@ namespace AnimatSim
 		virtual AnimatBase *FindByID(std::string strID, bool bThrowError = true);
 	};
 
+	void ANIMAT_PORT ActiveSim(Simulator *lpActive);
+	Simulator ANIMAT_PORT *ActiveSim();
+
 }

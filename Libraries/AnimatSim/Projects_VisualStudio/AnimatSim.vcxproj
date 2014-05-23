@@ -290,7 +290,6 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\NervousSystem.h" />
     <ClInclude Include="..\NeuralModule.h" />
     <ClInclude Include="..\Node.h" />
-    <ClInclude Include="..\ObjectScript.h" />
     <ClInclude Include="..\Odor.h" />
     <ClInclude Include="..\OdorSensor.h" />
     <ClInclude Include="..\OdorType.h" />
@@ -309,6 +308,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RobotIOControl.h" />
     <ClInclude Include="..\RobotPartInterface.h" />
     <ClInclude Include="..\RPRO.h" />
+    <ClInclude Include="..\ScriptProcessor.h" />
     <ClInclude Include="..\Sensor.h" />
     <ClInclude Include="..\SigmoidGain.h" />
     <ClInclude Include="..\SimulationMgr.h" />
@@ -465,7 +465,6 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\Node.cpp">
     </ClCompile>
-    <ClCompile Include="..\ObjectScript.cpp" />
     <ClCompile Include="..\Odor.cpp">
     </ClCompile>
     <ClCompile Include="..\OdorSensor.cpp">
@@ -502,6 +501,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RPRO.cpp">
     </ClCompile>
+    <ClCompile Include="..\ScriptProcessor.cpp" />
     <ClCompile Include="..\Sensor.cpp">
     </ClCompile>
     <ClCompile Include="..\SigmoidGain.cpp">

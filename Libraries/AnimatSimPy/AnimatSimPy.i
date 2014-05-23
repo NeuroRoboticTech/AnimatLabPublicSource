@@ -300,7 +300,7 @@ typedef float StdVector3[3];
 %include "../AnimatSim/Hud.h"
 %include "../AnimatSim/SimulationWindowMgr.h"
 %include "../AnimatSim/Simulator.h"
-%include "../AnimatSim/ObjectScript.h"
+%include "../AnimatSim/ScriptProcessor.h"
 %include "../AnimatSim/SimulationThread.h"
 %include "../AnimatSim/SimulationMgr.h"
 

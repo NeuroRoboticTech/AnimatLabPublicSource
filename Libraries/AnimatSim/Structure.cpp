@@ -55,6 +55,7 @@ Structure::Structure()
 	m_lpBody = NULL;
 	m_lpPhysicsMovableItem = NULL;
 	m_fltSize = 0.02f;
+	m_lpScript = NULL;
 }
 
 /**
@@ -72,6 +73,7 @@ try
 	m_aryJoints.RemoveAll();
 	m_aryExcludeCollisionList.RemoveAll();
 	if(m_lpBody) delete m_lpBody;
+	if(m_lpScript) delete m_lpScript;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Structure\r\n", "", -1, false, true);}
@@ -175,6 +177,18 @@ bool Structure::AllowRotateDragY() {return false;}
 
 bool Structure::AllowRotateDragZ() {return false;}
 
+void Structure::Script(ScriptProcessor *lpScript) 
+{
+	if(m_lpScript)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+
+	m_lpScript = lpScript;
+}
+
+ScriptProcessor *Structure::Script() {return m_lpScript;}
 
 /**
 \brief	Gets the collision exclusion list as an array.
@@ -247,6 +261,9 @@ void Structure::ResetSimulation()
 		//already being reset to their original positions. So they must be done first and then these items get reset.
 		m_lpBody->AfterResetSimulation();
 	}
+
+	if(m_lpScript)
+		m_lpScript->ResetSimulation();
 }
 
 void Structure::MinTimeStep(float &fltMin) {}
@@ -272,6 +289,40 @@ void Structure::StepPhysicsEngine()
 		m_lpBody->StepSimulation();
 		UpdateData();
 	}
+
+	if(m_lpScript)
+		m_lpScript->StepPhysicsEngine();
+}
+
+void Structure::Initialize()
+{
+	AnimatBase::Initialize();
+	if(m_lpScript)
+		m_lpScript->Initialize();
+}
+
+void Structure::Kill(bool bState)
+{
+	if(m_lpScript)
+		m_lpScript->Kill(bState);
+}
+
+void Structure::SimStarting()
+{
+	if(m_lpScript)
+		m_lpScript->SimStarting();
+}
+
+void Structure::SimPausing()
+{
+	if(m_lpScript)
+		m_lpScript->SimPausing();
+}
+
+void Structure::SimStopping()
+{
+	if(m_lpScript)
+		m_lpScript->SimStopping();
 }
 
 /**
@@ -536,6 +587,12 @@ bool Structure::AddItem(const std::string &strItemType, const std::string &strXm
 		return true;
 	}
 
+	if(strType == "SCRIPT")
+	{
+		AddScript(strXml);
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
@@ -550,6 +607,12 @@ bool Structure::RemoveItem(const std::string &strItemType, const std::string &st
 	if(strType == "RIGIDBODY")
 	{
 		RemoveRoot(strID);
+		return true;
+	}
+
+	if(strType == "SCRIPT")
+	{
+		RemoveScript(strID);
 		return true;
 	}
 
@@ -615,6 +678,71 @@ void Structure::RemoveRoot(std::string strID, bool bThrowError)
 
         if(m_lpSim && m_lpBody)
             m_lpSim->NotifyRigidBodyRemoved(strID);
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
+}
+
+/**
+\brief	Creates and adds a scripting object to this structure. 
+
+\details This method is primarily used by the GUI to add a new script objects to the structure.
+It creates the ScriptProcessor from info in the XML packet and then uses the XML to load in the new
+script.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strXml	The xml configuration data packet. 
+**/
+void Structure::AddScript(std::string strXml)
+{
+	ScriptProcessor *lpScript = NULL;
+	try
+	{
+		CStdXml oXml;
+		oXml.Deserialize(strXml);
+		oXml.FindElement("Root");
+		oXml.FindChildElement("RigidBody");
+
+		lpScript = LoadScript(oXml);
+		lpScript->Initialize();
+		m_lpScript = lpScript;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	}
+}
+
+/**
+\brief	Removes the script based on ID. 
+
+\details This is primarily used by the GUI to remove the script from the structure when 
+the user does this in the GUI.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strID	GUI ID of the script to remove
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+
+\return	true if it succeeds, false if it fails. 
+**/
+void Structure::RemoveScript(std::string strID, bool bThrowError)
+{
+	if(m_lpScript && m_lpScript->ID() == strID)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
 	}
 	else
 		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
@@ -768,6 +896,9 @@ void Structure::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into Layout Element
 
 	LoadLayout(oXml);
+
+	if(oXml.FindChildElement("Script", false))
+		Script(LoadScript(oXml));
 
 	oXml.OutOfElem(); //OutOf Layout Element
 }
@@ -924,6 +1055,56 @@ catch(...)
 {
 	if(m_lpBody) delete m_lpBody;
 	m_lpBody = NULL;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+/**
+\brief	Loads the script. 
+
+\author	dcofer
+\date	5/23/2014
+
+\param [in,out]	oXml The xml data packet to load. 
+
+\return	The script. 
+**/
+ScriptProcessor *Structure::LoadScript(CStdXml &oXml)
+{
+	std::string strModule;
+	std::string strType;
+	ScriptProcessor *lpScript = NULL;
+
+try
+{
+	oXml.IntoElem(); //Into Child Element
+	strModule = oXml.GetChildString("ModuleFileName", "");
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Child Element
+
+	lpScript = dynamic_cast<ScriptProcessor *>(m_lpSim->CreateObject(strModule, "ScriptProcessor", strType));
+	if(!lpScript)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Script");
+
+	lpScript->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
+
+	lpScript->Load(oXml);
+
+	return lpScript;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }

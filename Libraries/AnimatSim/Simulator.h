@@ -15,6 +15,7 @@ using namespace StdUtils;
 #include "SimulationWindowMgr.h"
 #include "ThreadProcessor.h"
 #include "ModuleThreadProcessor.h"
+#include "ScriptProcessor.h"
 
 namespace AnimatSim
 {
@@ -170,6 +171,9 @@ namespace AnimatSim
 
             /// The pointer to an i/o thread processor
             ThreadProcessor *m_lpIOThread;
+			
+			//Script processor for running python or other scripting systems related to the simulation.
+			ScriptProcessor *m_lpScript;
 
 #pragma endregion
 
