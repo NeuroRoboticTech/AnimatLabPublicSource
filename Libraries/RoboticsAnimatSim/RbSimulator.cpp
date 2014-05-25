@@ -11,7 +11,6 @@
 #include "RbRigidBody.h"
 #include "RbClassFactory.h"
 #include "RbSimulator.h"
-#include <platformstl/synch/sleep_functions.h>
 
 namespace RoboticsAnimatSim
 {
@@ -30,7 +29,7 @@ RbSimulator::RbSimulator()
 	m_dblTotalVortexStepTime = 0;
 	m_lStepVortexTimeCount = 0;
 
-	if(!m_lpAnimatClassFactory) 
+	if(!m_lpAnimatClassFactory)
 		m_lpAnimatClassFactory = new RbClassFactory;
 }
 
@@ -56,14 +55,14 @@ bool RbSimulator::InSimulation() {return false;}
 
 SimulationRecorder *RbSimulator::CreateSimulationRecorder()
 {
-	return NULL; 
+	return NULL;
 }
 
 void RbSimulator::Reset()
 {
 	Simulator::Reset();
 
-	if(!m_lpAnimatClassFactory) 
+	if(!m_lpAnimatClassFactory)
 		m_lpAnimatClassFactory = new RbClassFactory;
 }
 
@@ -79,7 +78,34 @@ void RbSimulator::SetSimulationStabilityParams()
 
 }
 
-//This function initializes the Vortex related
+//Timer Methods
+unsigned long long RbSimulator::GetTimerTick()
+{
+	m_lLastTickTaken = osg::Timer::instance()->tick();
+	return m_lLastTickTaken;
+}
+
+double RbSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_n(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_u(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_m(lStart, lEnd);}
+
+double RbSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_s(lStart, lEnd);}
+
+void RbSimulator::MicroSleep(unsigned int iMicroTime)
+{OpenThreads::Thread::microSleep(iMicroTime);}
+
+void RbSimulator::WriteToConsole(std::string strMessage)
+{
+    std::cout << strMessage << "\r\n";
+}
+
+//This function initializes the robotics related
 //classes and the vortex viewer.
 void RbSimulator::InitializeRobotics(int argc, const char **argv)
 {
@@ -130,13 +156,13 @@ void RbSimulator::StepSimulation()
 
 
 	try
-	{ 
+	{
 		//step the frame and update the windows
-		if (!m_bPaused)	
+		if (!m_bPaused)
 		{
 			Simulator::StepSimulation();
 
-			platformstl::performance_counter::epoch_type lStart = GetTimerTick();
+			unsigned long long lStart = GetTimerTick();
 
    //         if( m_bDrawDebug )
    //             m_dbgDraw.BeginDraw();

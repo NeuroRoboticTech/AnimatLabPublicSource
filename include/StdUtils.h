@@ -89,10 +89,8 @@
 	#include <boost/filesystem.hpp>
 	#include <boost/interprocess/sync/interprocess_mutex.hpp>
 	#include <boost/interprocess/sync/interprocess_condition.hpp>
+	#include <boost/interprocess/sync/scoped_lock.hpp>
 #endif
-
-#include <platformstl/performance/performance_counter.hpp>
-#include <platformstl/synch/sleep_functions.h>
 
 #ifdef WIN32
 	//For some reason this is not in math.h on windows.
