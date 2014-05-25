@@ -23,6 +23,10 @@
 #include "StdUtils.h"
 #include "AnimatSim.h"
 
+//Include the timer code and openthreads code from osg
+#include <osg/Timer>
+#include <OpenThreads/Thread>
+
 #include "RoboticsAnimatSimConstants.h"
 #include "dynamixel.h"
 

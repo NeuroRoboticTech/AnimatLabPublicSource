@@ -36,7 +36,6 @@
 #include "RobotInterface.h"
 #include "RobotIOControl.h"
 #include "RobotPartInterface.h"
-#include <platformstl/synch/sleep_functions.h>
 
 namespace AnimatSim
 {
@@ -78,7 +77,7 @@ void SimulationThread::StartSimulation(std::string strSimFile, bool bForceNoWind
 
 	m_lpSim->Load();
     m_lpSim->VisualSelectionMode(SIMULATION_SELECTION_MODE);
-	m_lpSim->SimCallBack(this);		
+	m_lpSim->SimCallBack(this);
 	m_lpSim->PauseSimulation();
 
 	m_SimThread = boost::thread(&SimulationThread::ProcessSimulation, this);
@@ -143,7 +142,7 @@ void SimulationThread::Simulate(float fltTime, bool bBlocking, float fltWaitTime
 		if(fltWaitTime <= 0)
 			fltWaitTime = fltTime+120;
 
-		//If we want to block till the sim is over then lets wait here until we get the notification that it has 
+		//If we want to block till the sim is over then lets wait here until we get the notification that it has
 		//gone past the set simulation time and then stop the simulation.
 		boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(fltWaitTime);
 
@@ -214,19 +213,19 @@ void SimulationThread::ShutdownSimulation()
 	}
 }
 
-void SimulationThread::NeedToStopSimulation() 
+void SimulationThread::NeedToStopSimulation()
 {
 	m_WaitForSimEndCond.notify_all();
 }
 
-void SimulationThread::HandleNonCriticalError(std::string strError) 
+void SimulationThread::HandleNonCriticalError(std::string strError)
 {
 	std::cout << "Critical error has occured. Shutting down the simulation.\r\n";
 	std::cout << strError << "\r\n";
 	ShutdownSimulation();
 }
 
-void SimulationThread::HandleCriticalError(std::string strError) 
+void SimulationThread::HandleCriticalError(std::string strError)
 {
 	std::cout << "Critical error has occured. Shutting down the simulation.\r\n";
 	std::cout << strError << "\r\n";

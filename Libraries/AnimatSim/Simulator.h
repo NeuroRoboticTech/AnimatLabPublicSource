@@ -24,7 +24,7 @@ namespace AnimatSim
 
 		\details This is the core simulation object of AnimatLab. It is responsible for managing all organisms/structures, the environment, etc..
 		Essentially, anything related to the simulation is controlled by this class, or the derived class that is specific for a physics engine.
-		
+
 		\author	dcofer
 		\date	3/25/2011
 		**/
@@ -49,7 +49,7 @@ namespace AnimatSim
 			///It is an actual list that destroys its objects when the list is destroyed.
 			CStdPtrMap<std::string, Organism> m_aryOrganisms;
 
-			///A list of structures in this simulation that are not organisms. 
+			///A list of structures in this simulation that are not organisms.
 			///This is not a reference list. It is an actual list that destroys
 			///its objects when the list is destroyed.
 			CStdPtrMap<std::string, Structure> m_aryStructures;
@@ -66,24 +66,24 @@ namespace AnimatSim
 			CStdArray<RigidBody *> m_aryFoodSources;
 
 			///A list of class factories for neural modules that have been loaded by any organisms in the
-			///environment. Each factory is only added to the list once even if the 
-			///the same module is loaded seperately for each organism. 
+			///environment. Each factory is only added to the list once even if the
+			///the same module is loaded seperately for each organism.
 			CStdMap<std::string, IStdClassFactory *> m_aryNeuralModuleFactories;
 
-			///This is a copy of the class factory associated with the animat module. 
+			///This is a copy of the class factory associated with the animat module.
 			///This is the default class factory that is used if no specific module name
 			///is specified. If a specific name is given then it looks through the list
-			///of modules that were loaded for neural modules. 
+			///of modules that were loaded for neural modules.
 			///All class factories should have have NO state.
 			IStdClassFactory *m_lpAnimatClassFactory;
 
-			///A list of all animatbase objects in the simulation. 
+			///A list of all animatbase objects in the simulation.
 			CStdMap<std::string, AnimatBase *> m_aryObjectList;
 
 			/// Array of source physics adapters
 			CStdArray<Adapter *> m_arySourcePhysicsAdapters;
 
-			/// Array of target physics adapters. 
+			/// Array of target physics adapters.
 			CStdArray<Adapter *> m_aryTargetPhysicsAdapters;
 
             /// Array of parts that need extra data collected from them. Each part will
@@ -126,7 +126,7 @@ namespace AnimatSim
 			/// true to confirm that a simulation block is in place.
 			bool m_bSimBlockConfirm;
 
-			/// Pointer to a simulation callback class. This is only set if we are using the GUI. This is set by the managed wrapper to 
+			/// Pointer to a simulation callback class. This is only set if we are using the GUI. This is set by the managed wrapper to
 			/// allow us to post callback notifications to the GUI.
 			ISimGUICallback *m_lpSimCallback;
 
@@ -157,7 +157,7 @@ namespace AnimatSim
 			/// True if the simulation is shutting down. This is used by other objects in their destructor to know whether to do certain operations or not.
 			bool m_bShuttingDown;
 
-            /// Tells if we are in the middle of a mouse drag operation to move or rotate a part. 
+            /// Tells if we are in the middle of a mouse drag operation to move or rotate a part.
             bool m_bInDrag;
 
             /// True if we are in the process of resetting the simulation. False otherwise.
@@ -178,7 +178,7 @@ namespace AnimatSim
 #pragma endregion
 
 #pragma region UnitScalingVariables
-			
+
 			/// Tells how many meters each unit of distance is worth within the simulation environment.
 			float m_fltDistanceUnits;
 
@@ -239,7 +239,7 @@ namespace AnimatSim
 
             ///This is used only for the bullet physics engine. It allows the user to specify how many substeps should
             /// be made for the physics time step specified. This allows you to keep the overall physics time step you
-            /// wanted but subdivide it more finely if that is required. However, The larger this number the slower 
+            /// wanted but subdivide it more finely if that is required. However, The larger this number the slower
             /// your simulation will run.
             int m_iPhysicsSubsteps;
 
@@ -264,17 +264,17 @@ namespace AnimatSim
 			float m_lEndSimTimeSlice;
 
 			///The tick count for when the simulation first begins running.
-			platformstl::performance_counter::epoch_type m_lStartSimTick;
+			unsigned long long m_lStartSimTick;
 
 			///The number of slices that the physics engine has been updated.
 			long m_lPhysicsSliceCount;
 
-			///This tells how many time slices occur between each interval where the 
+			///This tells how many time slices occur between each interval where the
 			///body physics is updated. There could be multiple neural updates in between
 			///one physics update.
 			short m_iPhysicsStepInterval;
 
-			///The time increment for each time slice of the physics simulation. 
+			///The time increment for each time slice of the physics simulation.
 			float m_fltPhysicsTimeStep;
 
 			///This keeps track of the number of steps since the physics system was
@@ -282,14 +282,14 @@ namespace AnimatSim
 			///at each time step to determine if it is time to update the physics engine.
 			int m_iPhysicsStepCount;
 
-			///Determines whether a random seed is automatically generated when the 
+			///Determines whether a random seed is automatically generated when the
 			///simulation is initialized, or if a manual seed is used.
 			bool m_bAutoGenerateRandomSeed;
 
 			///If the AutoGenerateRandomSeed variable is false then this manual seed is
 			///used for the random number generator.
 			int m_iManualRandomSeed;
-			
+
 			/// The stiffness of the user mouse spring.
 			float m_fltMouseSpringStiffness;
 
@@ -316,7 +316,7 @@ namespace AnimatSim
 			/// uses this radius when drawing the sphere.
 			float m_fltRecFieldSelRadius;
 
-			/// This is the number of physics bodies within the simulation. This is used to setup the 
+			/// This is the number of physics bodies within the simulation. This is used to setup the
 			/// presets for the simulation.
 			int m_iPhysicsBodyCount;
 
@@ -347,10 +347,10 @@ namespace AnimatSim
 			float m_fltPresetPlaybackTimeStep;
 
 			/// This is the tick count that is taken when a step is started.
-			platformstl::performance_counter::epoch_type m_lStepStartTick;
-			
+			unsigned long long m_lStepStartTick;
+
 			///The tick count for when the simulation procressing of the step ends.
-			platformstl::performance_counter::epoch_type m_lStepSimEndTick;
+			unsigned long long m_lStepSimEndTick;
 
 			/// This is the total number of milliseconds for the simulation processing time.
 			/// This is a float so that it can easily be reported.
@@ -380,19 +380,19 @@ namespace AnimatSim
 			float m_fltDesiredFrameStep;
 
 			/// The tick when a new video frame time starts.
-			platformstl::performance_counter::epoch_type m_lVideoFrameStartTick;
+			unsigned long long m_lVideoFrameStartTick;
 
 			/// The frame rate for the current frame.
 			float m_fltActualFrameRate;
 
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
-			platformstl::performance_counter::epoch_type m_lLastTickTaken;
+			unsigned long long m_lLastTickTaken;
 
 			/// This is the time pers step for the physics engine.
 			float m_fltPhysicsStepTime;
 
 			/// This is the previous time pers step for the physics engine.
-			/// This time is a weird one. It really gets calculated after we have updated the data in the chart, so we need to 
+			/// This time is a weird one. It really gets calculated after we have updated the data in the chart, so we need to
 			/// use the value from the previous time step to get the real value correctly.
 			float m_fltPrevPhysicsStepTime;
 
@@ -528,13 +528,13 @@ namespace AnimatSim
 			being added has a unique ID value. If you attempt to add a organism that
 			has a ID that is already in the list then an exception will be thrown.
 			Note that this method is NOT creating the object itself, that is done
-			elsewhere. It is simply adding it to the organism list and adding 
+			elsewhere. It is simply adding it to the organism list and adding
 			a reference to that created object to m_aryAllStructures list.
 
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpOrganism	Pointer to an organism. 
+			\param [in,out]	lpOrganism	Pointer to an organism.
 			**/
 			virtual void AddOrganism(Organism *lpOrganism);
 			virtual void AddOrganism(std::string strXml);
@@ -546,7 +546,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpStructure	Pointer to the structure to add. 
+			\param [in,out]	lpStructure	Pointer to the structure to add.
 			**/
 			virtual void AddStructure(Structure *lpStructure);
 			virtual void AddStructure(std::string strXml);
@@ -601,7 +601,7 @@ namespace AnimatSim
 			virtual void SimStarting();
 			virtual void SimPausing();
 			virtual void SimStopping();
-			
+
 			virtual void GenerateAutoSeed();
 
 			virtual void HandleCriticalError(std::string strError);
@@ -627,10 +627,10 @@ namespace AnimatSim
 
 			/**
 			\brief	Creates the simulation recorder.
-			
+
 			\author	dcofer
 			\date	3/28/2011
-			
+
 			\return	Pointer to the SimulationRecorder.
 			**/
 			virtual SimulationRecorder *CreateSimulationRecorder() = 0;
@@ -639,7 +639,7 @@ namespace AnimatSim
 
 			/**
 			\brief	Takes a snapshot of the current frame.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
@@ -656,7 +656,7 @@ namespace AnimatSim
 			virtual ~Simulator();
 
 #pragma region AccessorMutators
-			
+
 #pragma region ProjectVariables
 
 			virtual std::string ProjectPath();
@@ -675,7 +675,7 @@ namespace AnimatSim
 			virtual void Initialized(bool bVal);
 
 			virtual CStdMap<std::string, AnimatBase *> *ObjectList();
-			
+
 			virtual DataChartMgr *GetDataChartMgr();
 			virtual ExternalStimuliMgr *GetExternalStimuliMgr();
 			virtual SimulationRecorder *GetSimulationRecorder();
@@ -688,7 +688,7 @@ namespace AnimatSim
 
 			virtual bool AddBodiesMode();
 			virtual void AddBodiesMode(bool bVal);
-			
+
 			virtual	ISimGUICallback *SimCallback();
 			virtual void SimCallBack(ISimGUICallback *lpCallback);
 
@@ -702,7 +702,7 @@ namespace AnimatSim
 			virtual long Millisecond();
 			virtual long MillisecondToSlice(long lMillisecond);
 			virtual long SliceToMillisecond(long lSlice);
-			virtual platformstl::performance_counter::epoch_type StartSimTick();
+			virtual unsigned long long StartSimTick();
 
 			virtual float MinTimeStep();
 			virtual float TimeStep();
@@ -763,7 +763,7 @@ namespace AnimatSim
 
 			virtual short PhysicsStepInterval();
 			virtual void PhysicsStepInterval(short iVal);
-		 
+
 			virtual void PhysicsTimeStep(float fltVal);
 			virtual float PhysicsTimeStep();
 			virtual long PhysicsStepCount();
@@ -795,8 +795,8 @@ namespace AnimatSim
 
 			virtual int GetMaterialID(std::string strID);
 
-			virtual bool IsPhysicsBeingUpdated();	
-			
+			virtual bool IsPhysicsBeingUpdated();
+
 			virtual CStdColor *BackgroundColor();
 			virtual void BackgroundColor(CStdColor &aryColor);
 			virtual void BackgroundColor(float *aryColor);
@@ -814,8 +814,8 @@ namespace AnimatSim
 			virtual float PresetPlaybackTimeStep();
 			virtual void PresetPlaybackTimeStep(float fltTimeStep);
 
-			virtual platformstl::performance_counter::epoch_type StepStartTick();
-			virtual platformstl::performance_counter::epoch_type StepSimEndTick();
+			virtual unsigned long long StepStartTick();
+			virtual unsigned long long StepSimEndTick();
 
 			virtual int DesiredFrameRate();
 			virtual float DesiredFrameStep();
@@ -842,7 +842,7 @@ namespace AnimatSim
 #pragma endregion
 
 #pragma region UnitScalingVariables
-			
+
 			virtual void DistanceUnits(std::string strUnits);
 			virtual float DistanceUnits();
 			virtual float InverseDistanceUnits();
@@ -854,28 +854,28 @@ namespace AnimatSim
 			virtual float DisplayMassUnits();
 
 #pragma endregion
-			
+
 #pragma region HelperMethods
 
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
 
 		//Timer Methods
-		virtual platformstl::performance_counter::epoch_type GetTimerTick();
-		virtual double TimerDiff_u(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
-		virtual double TimerDiff_m(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
-		virtual double TimerDiff_s(platformstl::performance_counter::epoch_type lStart, platformstl::performance_counter::epoch_type lEnd);
-		virtual void MicroSleep(unsigned int iMicroTime);
+		virtual unsigned long long GetTimerTick() = 0;
+		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual void MicroSleep(unsigned int iMicroTime) = 0;
 		virtual void MicroWait(unsigned int iMicroTime);
 
-		virtual void WriteToConsole(std::string strMessage);
-        
+		virtual void WriteToConsole(std::string strMessage) = 0;
+
         virtual void NotifyRigidBodyAdded(std::string strID);
         virtual void NotifyRigidBodyRemoved(std::string strID);
 
 #pragma endregion
 
 #pragma region RecordingVariables
-			
+
 			virtual long VideoSliceCount();
 			virtual void VideoSliceCount(long lVal);
 
@@ -898,7 +898,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpFrame	Pointer to a frame. 
+			\param [in,out]	lpFrame	Pointer to a frame.
 			**/
 			virtual void VideoRecorder(KeyFrame *lpFrame);
 
@@ -918,7 +918,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpFrame	Pointer to the video playback frame. 
+			\param [in,out]	lpFrame	Pointer to the video playback frame.
 			**/
 			virtual void VideoPlayback(KeyFrame *lpFrame);
 
@@ -940,29 +940,29 @@ namespace AnimatSim
 			virtual bool SimulationBlockConfirm();
 			virtual bool WaitForSimulationBlock(long lTimeout = 6000);
 
-			virtual void Reset(); //Resets the entire application back to the default state 
+			virtual void Reset(); //Resets the entire application back to the default state
 			virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
 
 			/**
 			\brief	Initializes this object.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 
 			\details This is a pure virtual method that must be implemented in the simulator application.
-			 It is where a lot of the nitty gritty details are done with initializing and 
+			 It is where a lot of the nitty gritty details are done with initializing and
 			 setting up the physics engine so that it can run. It is also where we initialize
 			 each structure to tell them to create their parts and joints.
 
-			\param	argc	The argc parameter from the command line. 
-			\param	argv	The argv parameter from the command line. 
+			\param	argc	The argc parameter from the command line.
+			\param	argv	The argv parameter from the command line.
 			**/
 			virtual void Initialize(int argc, const char **argv) = 0;
 
 
 			/**
 			\brief	Initializes this object with no argc/argv params.
-			
+
 			\author	dcofer
 			\date	5/16/2014
 
@@ -973,9 +973,9 @@ namespace AnimatSim
 			/**
 			\brief	Simulates the system.
 
-			\details This starts the simulation running. This method does not return until the simulation 
+			\details This starts the simulation running. This method does not return until the simulation
 			has been stopped. It is a blocking call. It loops through and calls the Step method repeatedly.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
@@ -983,7 +983,7 @@ namespace AnimatSim
 
 			/**
 			\brief	Shuts down the simulation.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
@@ -991,7 +991,7 @@ namespace AnimatSim
 
 			/**
 			\brief	Toggles the simulation between running and paused.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
@@ -999,7 +999,7 @@ namespace AnimatSim
 
 			/**
 			\brief	Stops the simulation and resets it.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
@@ -1007,20 +1007,20 @@ namespace AnimatSim
 
 			/**
 			\brief	Starts the simulation.
-			
+
 			\author	dcofer
 			\date	3/28/2011
-			
+
 			\return	true if it succeeds, false if it fails.
 			**/
 			virtual bool StartSimulation() = 0;
 
 			/**
 			\brief	Pauses the simulation.
-			
+
 			\author	dcofer
 			\date	3/28/2011
-			
+
 			\return	true if it succeeds, false if it fails.
 			**/
 			virtual bool PauseSimulation() = 0;
@@ -1030,14 +1030,14 @@ namespace AnimatSim
 
 			\details This is different from the Simulate method. This is used when the AnimatSimulator is running standalone.
 			It Loads the simulation from the specified file, initailizes it, and the calls Simulate.
-			
+
 			\author	dcofer
 			\date	3/28/2011
 			**/
 			virtual void RunSimulation();
 
 #pragma endregion
-			
+
 #pragma region LoadMethods
 
 			virtual void Load(std::string strFileName = "");
@@ -1049,7 +1049,7 @@ namespace AnimatSim
 			virtual void IncrementPhysicsBodyCount();
 
 #pragma endregion
-		 			
+
 #pragma region CreateMethods
 
 			virtual CStdSerialize *CreateObject(std::string strModule, std::string strClassName, std::string strType, bool bThrowError = true);
@@ -1063,8 +1063,8 @@ namespace AnimatSim
 			virtual void ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture) = 0;
 
 #pragma endregion
-		 
-	
+
+
 #pragma region FindMethods
 
 			virtual IStdClassFactory *FindNeuralModuleFactory(std::string strModuleName, bool bThrowError = false);
@@ -1126,7 +1126,7 @@ namespace AnimatSim
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 
 #pragma endregion
-			
+
 #pragma region CollisionMethods
 
 			virtual void EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList);
@@ -1141,7 +1141,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpBody	Pointer to a body. 
+			\param [in,out]	lpBody	Pointer to a body.
 			**/
 			virtual void EnableCollision(RigidBody *lpBody);
 
@@ -1154,7 +1154,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 
-			\param [in,out]	lpBody	Pointer to a body. 
+			\param [in,out]	lpBody	Pointer to a body.
 			**/
 			virtual void DisableCollision(RigidBody *lpBody);
 

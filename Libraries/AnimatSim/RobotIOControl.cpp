@@ -43,7 +43,7 @@ namespace AnimatSim
 RobotIOControl::RobotIOControl(void)
 {
 	m_lpParentInterface = NULL;
-	m_bSetupComplete	= false;	// flag so we setup arduino when its ready, you don't need to touch this :)
+	m_bSetupComplete	= false;	// flag so we setup when its ready, you don't need to touch this :)
 	m_bStopIO = false;
 	m_bIOThreadProcessing = false;
 	m_fltStepIODuration = 0;
@@ -65,12 +65,12 @@ void RobotIOControl::ParentInterface(RobotInterface *lpParent) {m_lpParentInterf
 RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
 
 /**
-\brief	Gets the array of IO controls. 
+\brief	Gets the array of IO controls.
 
 \author	dcofer
 \date	3/2/2011
 
-\return	pointer to array of IO controls. 
+\return	pointer to array of IO controls.
 **/
 CStdPtrArray<RobotPartInterface> *RobotIOControl::Parts() {return &m_aryParts;}
 
@@ -154,12 +154,12 @@ bool RobotIOControl::RemoveItem(const std::string &strItemType, const std::strin
 }
 
 /**
-\brief	Creates and adds a robot IO control. 
+\brief	Creates and adds a robot IO control.
 
 \author	dcofer
 \date	3/2/2011
 
-\param	strXml	The xml data packet for loading the control node. 
+\param	strXml	The xml data packet for loading the control node.
 **/
 RobotPartInterface *RobotIOControl::AddPartInterface(std::string strXml)
 {
@@ -176,7 +176,7 @@ RobotPartInterface *RobotIOControl::AddPartInterface(std::string strXml)
 }
 
 /**
-\brief	Removes the rigid body with the specified ID. 
+\brief	Removes the rigid body with the specified ID.
 
 \author	dcofer
 \date	3/2/2011
@@ -205,7 +205,7 @@ void RobotIOControl::RemovePartInterface(std::string strID, bool bThrowError)
 \param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
 \exception If bThrowError is true and ID is not found.
 
-\return	If bThrowError is false and ID is not found returns NULL, 
+\return	If bThrowError is false and ID is not found returns NULL,
 else returns the pointer to the found part.
 **/
 int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
@@ -228,7 +228,7 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 void RobotIOControl::StartIOThread()
 {
 	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
-		
+
 	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(500);
 
 	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
@@ -240,7 +240,7 @@ void RobotIOControl::StartIOThread()
 		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 	}
 }
-	
+
 void RobotIOControl::ExitIOThread()
 {
 	if(m_bIOThreadProcessing)
@@ -285,18 +285,18 @@ void RobotIOControl::SetupIO()
 **/
 void RobotIOControl::StepIO()
 {
-	platformstl::performance_counter::epoch_type lStepStartTick = m_lpSim->GetTimerTick();
+	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryParts[iIndex]->StepIO();
 
-	platformstl::performance_counter::epoch_type lEndStartTick = m_lpSim->GetTimerTick();
-	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
+	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
 }
 
 /**
-\brief	This method is called just before the IO thread is closed down. It gives the IO objects a chance to do 
+\brief	This method is called just before the IO thread is closed down. It gives the IO objects a chance to do
 any required cleanup.
 
 \author	dcofer
@@ -369,14 +369,14 @@ void RobotIOControl::Load(CStdXml &oXml)
 }
 
 /**
-\brief	Loads a child IO Control. 
+\brief	Loads a child IO Control.
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	oXml	The xml data definition of the part to load. 
+\param [in,out]	oXml	The xml data definition of the part to load.
 
-\return	null if it fails, else the IO control. 
+\return	null if it fails, else the IO control.
 **/
 
 RobotPartInterface *RobotIOControl::LoadPartInterface(CStdXml &oXml)
@@ -394,7 +394,7 @@ try
 	lpChild = dynamic_cast<RobotPartInterface *>(m_lpSim->CreateObject(strModule, "RobotPartInterface", strType));
 	if(!lpChild)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotPartInterface");
-	
+
 	lpChild->ParentIOControl(this);
 	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 

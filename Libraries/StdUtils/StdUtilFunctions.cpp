@@ -21,7 +21,7 @@ void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string s
 {
 	ostringstream oStream;
 
-	oStream << "   " << strValueName << ": " << lVal; 
+	oStream << "   " << strValueName << ": " << lVal;
 
 	ThrowError(lError, strSource, strError, oStream.str());
 }
@@ -30,7 +30,7 @@ void STD_UTILS_PORT ThrowError(long lError, std::string strSource, std::string s
 {
 	ostringstream oStream;
 
-	oStream << "   " << strValueName << ": " << dblVal; 
+	oStream << "   " << strValueName << ": " << dblVal;
 
 	ThrowError(lError, strSource, strError, oStream.str());
 }
@@ -69,27 +69,27 @@ int g_iAppID = 1000;
 std::string STD_UTILS_PORT Std_CreateAppID()
 {
 	//Need to make this threadsafe at somet point.
-	
+
 	g_iAppID++;
 	return STR(g_iAppID);
 }
 
 /**
-\brief	Adds to the error call chain. 
+\brief	Adds to the error call chain.
 
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	oInfo	The error information. 
-\param	strSourceFile	The string source file. 
-\param	lSourceLine  	Source line. 
+\param [in,out]	oInfo	The error information.
+\param	strSourceFile	The string source file.
+\param	lSourceLine  	Source line.
 **/
 void AddToErrorCallChain(CStdErrorInfo &oInfo, std::string strSourceFile, long lSourceLine)
 {
 	if(lSourceLine > 0)
 	{
 		std::ostringstream oStream;
-		oStream << strSourceFile << " (" << lSourceLine << ")"; 
+		oStream << strSourceFile << " (" << lSourceLine << ")";
 		oInfo.m_aryCallChain.Add(oStream.str());
 	}
 }
@@ -100,11 +100,11 @@ void AddToErrorCallChain(CStdErrorInfo &oInfo, std::string strSourceFile, long l
 \author	dcofer
 \date	5/3/2011
 
-\exception	oInfo	Thrown when information. 
+\exception	oInfo	Thrown when information.
 
-\param	oInfo		 	The information. 
-\param	strSourceFile	The string source file. 
-\param	lSourceLine  	Source line. 
+\param	oInfo		 	The information.
+\param	strSourceFile	The string source file.
+\param	lSourceLine  	Source line.
 
 \return	.
 **/
@@ -120,20 +120,20 @@ void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, std::string strSourceFil
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	iVal		 	The value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	iVal		 	The value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, unsigned char iVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << (int) iVal << ")"; 
+	oStream << "   (" << strValueName << ": " << (int) iVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -143,20 +143,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	iVal		 	The value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	iVal		 	The value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, unsigned short iVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << iVal << ")"; 
+	oStream << "   (" << strValueName << ": " << iVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -166,20 +166,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	iVal		 	The value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	iVal		 	The value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, int iVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << iVal << ")"; 
+	oStream << "   (" << strValueName << ": " << iVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -189,20 +189,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	lVal		 	The value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	lVal		 	The value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, long lVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << lVal << ")"; 
+	oStream << "   (" << strValueName << ": " << lVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -212,20 +212,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	fltVal		 	The flt value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	fltVal		 	The flt value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, float fltVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << fltVal << ")"; 
+	oStream << "   (" << strValueName << ": " << fltVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -235,20 +235,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	dblVal		 	The double value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	dblVal		 	The double value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, double dblVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << dblVal << ")"; 
+	oStream << "   (" << strValueName << ": " << dblVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -258,20 +258,20 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strValueName 	Name of the string value. 
-\param	strVal		 	The string value. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strValueName 	Name of the string value.
+\param	strVal		 	The string value.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strValueName, std::string strVal)
 {
 	std::ostringstream oStream;
-	oStream << "   (" << strValueName << ": " << strVal << ")"; 
+	oStream << "   (" << strValueName << ": " << strVal << ")";
 	Std_ThrowError(lError, strError, strSourceFile, lSourceLine, oStream.str());
 }
 
@@ -281,17 +281,17 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\exception	oInfo	Thrown when information. 
+\exception	oInfo	Thrown when information.
 
-\param	lError		 	The error number. 
-\param	strError	 	The string error message. 
-\param	strSourceFile	The string source filename. 
-\param	lSourceLine  	Source line number. 
-\param	strText		 	The string text. 
+\param	lError		 	The error number.
+\param	strError	 	The string error message.
+\param	strSourceFile	The string source filename.
+\param	lSourceLine  	Source line number.
+\param	strText		 	The string text.
 
 \return	.
 **/
-void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine,
 																	 std::string strText)
 {
 	CStdErrorInfo oInfo;
@@ -302,7 +302,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 	oInfo.m_lSourceLine = lSourceLine;
 
 	AddToErrorCallChain(oInfo, strSourceFile, lSourceLine);
-	
+
 	Std_TraceMsg(StdLogError, oInfo.m_strError, oInfo.m_strSourceFile, oInfo.m_lSourceLine, true, true);
 
 	throw oInfo;
@@ -314,7 +314,7 @@ void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::strin
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -327,7 +327,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -343,13 +343,13 @@ std::string STD_UTILS_PORT Std_ToStr(const char *strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	iVal	The value. 
+\param	iVal	The value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(unsigned char iVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << iVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -361,13 +361,13 @@ std::string STD_UTILS_PORT Std_ToStr(unsigned char iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	iVal	The value. 
+\param	iVal	The value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << iVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -379,13 +379,13 @@ std::string STD_UTILS_PORT Std_ToStr(unsigned short iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	iVal	The value. 
+\param	iVal	The value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(int iVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << iVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -397,13 +397,13 @@ std::string STD_UTILS_PORT Std_ToStr(int iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	lVal	The value. 
+\param	lVal	The value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(long lVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << lVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -415,13 +415,13 @@ std::string STD_UTILS_PORT Std_ToStr(long lVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	fltVal	The flt value. 
+\param	fltVal	The flt value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(float fltVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << fltVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -433,13 +433,13 @@ std::string STD_UTILS_PORT Std_ToStr(float fltVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	dblVal	The double value. 
+\param	dblVal	The double value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(double dblVal)
 {
-	std::ostringstream buf; 
+	std::ostringstream buf;
 	buf << dblVal ;
 	std::string str = buf.str() ;
 	return str;
@@ -451,12 +451,12 @@ std::string STD_UTILS_PORT Std_ToStr(double dblVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	bVal	true to value. 
+\param	bVal	true to value.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(bool bVal)
-{	
+{
 	if(bVal)
 		return "True";
 	else
@@ -469,8 +469,8 @@ std::string STD_UTILS_PORT Std_ToStr(bool bVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	iVal	 	The value. 
+\param	strFormat	The string format.
+\param	iVal	 	The value.
 
 \return	.
 **/
@@ -483,8 +483,8 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned char iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	iVal	 	The value. 
+\param	strFormat	The string format.
+\param	iVal	 	The value.
 
 \return	.
 **/
@@ -497,8 +497,8 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned short iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	iVal	 	The value. 
+\param	strFormat	The string format.
+\param	iVal	 	The value.
 
 \return	.
 **/
@@ -511,8 +511,8 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, int iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	lVal	 	The value. 
+\param	strFormat	The string format.
+\param	lVal	 	The value.
 
 \return	.
 **/
@@ -525,8 +525,8 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, long lVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	fltVal   	The flt value. 
+\param	strFormat	The string format.
+\param	fltVal   	The flt value.
 
 \return	.
 **/
@@ -539,8 +539,8 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, float fltVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
-\param	dblVal   	The double value. 
+\param	strFormat	The string format.
+\param	dblVal   	The double value.
 
 \return	.
 **/
@@ -553,7 +553,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, double dblVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	iVal	The value. 
+\param	iVal	The value.
 
 \return	.
 **/
@@ -571,7 +571,7 @@ bool STD_UTILS_PORT Std_ToBool(int iVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -591,7 +591,7 @@ bool STD_UTILS_PORT Std_ToBool(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strFormat	The string format. 
+\param	strFormat	The string format.
 
 \return	.
 **/
@@ -611,7 +611,7 @@ std::string STD_UTILS_PORT Std_NullStr(std::string strFormat)
 \author	dcofer
 \date	5/3/2011
 
-\param	strData	Information describing the string. 
+\param	strData	Information describing the string.
 
 \return	.
 **/
@@ -625,7 +625,7 @@ std::string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
 	WideCharToMultiByte(CP_ACP, 0, strData, -1, result, len, 0, 0);
 
 	std::string strVal = result;
-	if(result) 
+	if(result)
 		delete[] result;
 
 	return strVal;
@@ -637,7 +637,7 @@ std::string STD_UTILS_PORT Std_ConvertToANSI(LPCWSTR strData)
 \author	dcofer
 \date	5/3/2011
 
-\param	strData	Information describing the string. 
+\param	strData	Information describing the string.
 
 \return	.
 **/
@@ -660,7 +660,7 @@ LPWSTR STD_UTILS_PORT Std_ConvertFromANSI(std::string strData)
 \author	dcofer
 \date	5/3/2011
 
-\param	strType	Type of the string. 
+\param	strType	Type of the string.
 
 \return	.
 **/
@@ -707,7 +707,7 @@ int STD_UTILS_PORT Std_VariantTypeToConst(std::string strType)
 \author	dcofer
 \date	5/3/2011
 
-\param	iType	The type. 
+\param	iType	The type.
 
 \return	.
 **/
@@ -743,7 +743,7 @@ std::string STD_UTILS_PORT Std_ConstToVariantType(int iType)
 		default:
 			THROW_PARAM_ERROR(Std_Err_lInvalidVariantType, Std_Err_strInvalidVariantType, "VariantType", iType);
 	}
-	
+
 	return "";
 }
 
@@ -753,9 +753,9 @@ std::string STD_UTILS_PORT Std_ConstToVariantType(int iType)
 \author	dcofer
 \date	5/3/2011
 
-\param	input		   	The input. 
-\param	delimiter	   	The delimiter. 
-\param [in,out]	results	The results. 
+\param	input		   	The input.
+\param	delimiter	   	The delimiter.
+\param [in,out]	results	The results.
 
 \return	.
 **/
@@ -771,8 +771,8 @@ int STD_UTILS_PORT  Std_Split(const std::string& input, const std::string& delim
 
 	newPos = input.find (delimiter, 0);
 
-	if( newPos < 0 ) 
-	{ 
+	if( newPos < 0 )
+	{
 		std::string strInput = input;
 
 		if(!Std_IsBlank(input))
@@ -782,7 +782,7 @@ int STD_UTILS_PORT  Std_Split(const std::string& input, const std::string& delim
 			return 1;
 		}
 		else
-			return 0; 
+			return 0;
 	}
 
 	int numFound = 0;
@@ -798,7 +798,7 @@ int STD_UTILS_PORT  Std_Split(const std::string& input, const std::string& delim
 	for( int i=0; i <= positions.size(); i++ )
 	{
 		std::string s;
-		if( i == 0 ) 
+		if( i == 0 )
 			{s = input.substr( i, positions[i] ); }
 		else
 		{
@@ -830,8 +830,8 @@ int STD_UTILS_PORT  Std_Split(const std::string& input, const std::string& delim
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryParts	The array of string parts. 
-\param	strDelimiter		The string delimiter. 
+\param [in,out]	aryParts	The array of string parts.
+\param	strDelimiter		The string delimiter.
 
 \return	.
 **/
@@ -854,7 +854,7 @@ std::string STD_UTILS_PORT Std_Combine(CStdArray<std::string> &aryParts, std::st
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -869,7 +869,7 @@ std::string STD_UTILS_PORT Std_Trim(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	c	The character. 
+\param	c	The character.
 
 \return	true if it succeeds, false if it fails.
 **/
@@ -882,7 +882,7 @@ bool NotSpace(char c)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -898,7 +898,7 @@ std::string STD_UTILS_PORT Std_TrimLeft(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -924,7 +924,7 @@ std::string STD_UTILS_PORT Std_TrimRight(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -943,7 +943,7 @@ bool STD_UTILS_PORT Std_IsNumeric(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -962,15 +962,15 @@ bool STD_UTILS_PORT Std_IsIntegerType(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
-\param	iCount	Number of characters to the left to get. 
+\param	strVal	The string value.
+\param	iCount	Number of characters to the left to get.
 
 \return	.
 **/
 std::string STD_UTILS_PORT Std_Left(std::string strVal, int iCount)
 {
 	iCount = SSMAX(0, SSMIN(iCount, static_cast<int>(strVal.length())));
-	return strVal.substr(0, iCount); 
+	return strVal.substr(0, iCount);
 }
 
 /**
@@ -979,8 +979,8 @@ std::string STD_UTILS_PORT Std_Left(std::string strVal, int iCount)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
-\param	iCount	Number of characters to the right to get. 
+\param	strVal	The string value.
+\param	iCount	Number of characters to the right to get.
 
 \return	.
 **/
@@ -996,7 +996,7 @@ std::string STD_UTILS_PORT Std_Right(std::string strVal, int iCount)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -1012,7 +1012,7 @@ std::string STD_UTILS_PORT Std_ToUpper(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	.
 **/
@@ -1028,9 +1028,9 @@ std::string STD_UTILS_PORT Std_ToLower(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	  	The string to test. 
-\param	strFind   	The string to find. 
-\param	strReplace	The string to replace it with. 
+\param	strVal	  	The string to test.
+\param	strFind   	The string to find.
+\param	strReplace	The string to replace it with.
 
 \return	new string.
 **/
@@ -1051,7 +1051,7 @@ std::string STD_UTILS_PORT Std_Replace(std::string strVal, std::string strFind, 
 \author	dcofer
 \date	5/3/2011
 
-\param	szFormat	The size format. 
+\param	szFormat	The size format.
 
 \return	.
 **/
@@ -1079,9 +1079,9 @@ std::string STD_UTILS_PORT Std_Format(const char* szFormat,...)
 \author	dcofer
 \date	5/3/2011
 
-\param	iRed  	The red. 
-\param	iGreen	The green. 
-\param	iBlue 	The blue. 
+\param	iRed  	The red.
+\param	iGreen	The green.
+\param	iBlue 	The blue.
 
 \return	.
 **/
@@ -1097,10 +1097,10 @@ long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned c
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	oXml	The xml to load. 
-\param	strParamName	Name of the xml parameter. 
-\param	bThrowError 	true to throw error if there is a problem. 
-\param	lDefault		The default color value. 
+\param [in,out]	oXml	The xml to load.
+\param	strParamName	Name of the xml parameter.
+\param	bThrowError 	true to throw error if there is a problem.
+\param	lDefault		The default color value.
 
 \return	.
 **/
@@ -1118,7 +1118,7 @@ long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, std::string strParamName, bool bT
 
 		int iBlue = oXml.GetChildAttribInt("Blue");
 		Std_InValidRange((int) 0, (int) 255, iBlue, true, (strParamName + "::Blue"));
-		
+
 		lVal = Std_RGB(iRed, iGreen, iBlue);
 	}
 	else
@@ -1133,10 +1133,10 @@ long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, std::string strParamName, bool bT
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	oXml		The xml to load. 
-\param	strParamName		Name of the xml parameter. 
-\param [in,out]	aryColor	Color array. 
-\param	bThrowError 	true to throw error if there is a problem. 
+\param [in,out]	oXml		The xml to load.
+\param	strParamName		Name of the xml parameter.
+\param [in,out]	aryColor	Color array.
+\param	bThrowError 	true to throw error if there is a problem.
 
 **/
 void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, std::string strParamName, float *aryColor, bool bThrowError)
@@ -1172,10 +1172,10 @@ void STD_UTILS_PORT Std_LoadColor(CStdXml &oXml, std::string strParamName, float
 \author	dcofer
 \date	5/3/2011
 
-\param	strXml				The string xml. 
-\param	strParamName		Name of the string parameter. 
-\param [in,out]	aryColor	If non-null, the ary color. 
-\param	bThrowError			true to throw error. 
+\param	strXml				The string xml.
+\param	strParamName		Name of the string parameter.
+\param [in,out]	aryColor	If non-null, the ary color.
+\param	bThrowError			true to throw error.
 
 **/
 void STD_UTILS_PORT Std_LoadColor(std::string strXml, std::string strParamName, float *aryColor, bool bThrowError)
@@ -1184,7 +1184,7 @@ void STD_UTILS_PORT Std_LoadColor(std::string strXml, std::string strParamName, 
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	oXml.FindChildElement(strParamName);
-	
+
 	Std_LoadColor(oXml, strParamName, aryColor, bThrowError);
 }
 
@@ -1194,14 +1194,14 @@ void STD_UTILS_PORT Std_LoadColor(std::string strXml, std::string strParamName, 
 \author	dcofer
 \date	5/4/2011
 
-\param	fltVal	The value. 
+\param	fltVal	The value.
 
 \return	-1 if number is negative, 0 if it is 0, and 1 if it is positive.
 **/
 int STD_UTILS_PORT Std_Sign(float fltVal)
 {
-	if(fltVal<0) 
-		return -1; 
+	if(fltVal<0)
+		return -1;
 	else if(fltVal==0)
 		return 0;
 	else
@@ -1220,8 +1220,8 @@ int STD_UTILS_PORT Std_Sign(float fltVal)
  */
 int STD_UTILS_PORT Std_Sign(float fltVal, float fltDefault)
 {
-	if(fltVal<0) 
-		return -1; 
+	if(fltVal<0)
+		return -1;
 	else if(fltVal==0)
 		return fltDefault;
 	else
@@ -1242,7 +1242,7 @@ double genrand_res53(void);
 \author	dcofer
 \date	5/3/2011
 
-\param	lSeed	The seed. 
+\param	lSeed	The seed.
 **/
 void STD_UTILS_PORT Std_SRand(unsigned long lSeed)
 {init_genrand(lSeed);}
@@ -1253,8 +1253,8 @@ void STD_UTILS_PORT Std_SRand(unsigned long lSeed)
 \author	dcofer
 \date	5/3/2011
 
-\param	low 	The low value for the random number. 
-\param	high	The high value for the random number. 
+\param	low 	The low value for the random number.
+\param	high	The high value for the random number.
 
 \return	random number.
 **/
@@ -1271,8 +1271,8 @@ int STD_UTILS_PORT Std_IRand( int low, int high )
 \author	dcofer
 \date	5/3/2011
 
-\param	low 	The low value for the random number. 
-\param	high	The high value for the random number. 
+\param	low 	The low value for the random number.
+\param	high	The high value for the random number.
 
 \return	random number.
 **/
@@ -1289,8 +1289,8 @@ long STD_UTILS_PORT Std_LRand( long low, long high )
 \author	dcofer
 \date	5/3/2011
 
-\param	low 	The low value for the random number. 
-\param	high	The high value for the random number. 
+\param	low 	The low value for the random number.
+\param	high	The high value for the random number.
 
 \return	random number.
 **/
@@ -1304,8 +1304,8 @@ float STD_UTILS_PORT Std_FRand( float low, float high )
 \author	dcofer
 \date	5/3/2011
 
-\param	low 	The low value for the random number. 
-\param	high	The high value for the random number. 
+\param	low 	The low value for the random number.
+\param	high	The high value for the random number.
 
 \return	random number.
 **/
@@ -1318,11 +1318,11 @@ double STD_UTILS_PORT Std_DRand( double low, double high )
 \author	dcofer
 \date	5/3/2011
 
-\param	iMinVal			The minimum value. 
-\param	iMaxVal			The maximum value. 
-\param	iVal			The test value. 
-\param	bThrowError 	true to throw error if outside of range. 
-\param	strParamName	Name of the parameter. 
+\param	iMinVal			The minimum value.
+\param	iMaxVal			The maximum value.
+\param	iVal			The test value.
+\param	bThrowError 	true to throw error if outside of range.
+\param	strParamName	Name of the parameter.
 
 \return	true if valid, false else.
 **/
@@ -1336,7 +1336,7 @@ bool STD_UTILS_PORT Std_InValidRange(int iMinVal, int iMaxVal, int iVal, bool bT
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1357,11 +1357,11 @@ bool STD_UTILS_PORT Std_InValidRange(int iMinVal, int iMaxVal, int iVal, bool bT
 \author	dcofer
 \date	5/3/2011
 
-\param	lMinVal			The minimum value. 
-\param	lMaxVal			The maximum value. 
-\param	lVal			The test value. 
-\param	bThrowError 	true to throw error if outside of range. 
-\param	strParamName	Name of the parameter. 
+\param	lMinVal			The minimum value.
+\param	lMaxVal			The maximum value.
+\param	lVal			The test value.
+\param	bThrowError 	true to throw error if outside of range.
+\param	strParamName	Name of the parameter.
 
 \return	true if valid, false else.
 **/
@@ -1375,7 +1375,7 @@ bool STD_UTILS_PORT Std_InValidRange(long lMinVal, long lMaxVal, long lVal, bool
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1396,11 +1396,11 @@ bool STD_UTILS_PORT Std_InValidRange(long lMinVal, long lMaxVal, long lVal, bool
 \author	dcofer
 \date	5/3/2011
 
-\param	fltMinVal   	The minimum value. 
-\param	fltMaxVal   	The maximum value. 
-\param	fltVal			The test value. 
-\param	bThrowError 	true to throw error if outside of range. 
-\param	strParamName	Name of the parameter. 
+\param	fltMinVal   	The minimum value.
+\param	fltMaxVal   	The maximum value.
+\param	fltVal			The test value.
+\param	bThrowError 	true to throw error if outside of range.
+\param	strParamName	Name of the parameter.
 
 \return	true if valid, false else.
 **/
@@ -1414,7 +1414,7 @@ bool STD_UTILS_PORT Std_InValidRange(float fltMinVal, float fltMaxVal, float flt
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1435,11 +1435,11 @@ bool STD_UTILS_PORT Std_InValidRange(float fltMinVal, float fltMaxVal, float flt
 \author	dcofer
 \date	5/3/2011
 
-\param	dblMinVal   	The double minimum value. 
-\param	dblMaxVal   	The double maximum value. 
-\param	dblVal			The test value. 
-\param	bThrowError 	true to throw error if outside of range. 
-\param	strParamName	Name of the parameter. 
+\param	dblMinVal   	The double minimum value.
+\param	dblMaxVal   	The double maximum value.
+\param	dblVal			The test value.
+\param	bThrowError 	true to throw error if outside of range.
+\param	strParamName	Name of the parameter.
 
 \return	true if valid, false else.
 **/
@@ -1453,7 +1453,7 @@ bool STD_UTILS_PORT Std_InValidRange(double dblMinVal, double dblMaxVal, double 
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1474,11 +1474,11 @@ bool STD_UTILS_PORT Std_InValidRange(double dblMinVal, double dblMaxVal, double 
 \author	dcofer
 \date	5/3/2011
 
-\param	iMaxVal		   	The maximum value. 
-\param	iVal		   	The test value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	iMaxVal		   	The maximum value.
+\param	iVal		   	The test value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1492,7 +1492,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(int iMaxVal, int iVal, bool bThrowError, std:
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1512,11 +1512,11 @@ bool STD_UTILS_PORT Std_IsBelowMax(int iMaxVal, int iVal, bool bThrowError, std:
 \author	dcofer
 \date	5/3/2011
 
-\param	lMaxVal		   	The maximum value. 
-\param	lVal		   	The value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	lMaxVal		   	The maximum value.
+\param	lVal		   	The value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1530,7 +1530,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(long lMaxVal, long lVal, bool bThrowError, st
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1550,11 +1550,11 @@ bool STD_UTILS_PORT Std_IsBelowMax(long lMaxVal, long lVal, bool bThrowError, st
 \author	dcofer
 \date	5/3/2011
 
-\param	fltMaxVal	   	The flt maximum value. 
-\param	fltVal		   	The flt value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	fltMaxVal	   	The flt maximum value.
+\param	fltVal		   	The flt value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1568,7 +1568,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(float fltMaxVal, float fltVal, bool bThrowErr
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1588,11 +1588,11 @@ bool STD_UTILS_PORT Std_IsBelowMax(float fltMaxVal, float fltVal, bool bThrowErr
 \author	dcofer
 \date	5/3/2011
 
-\param	dblMaxVal	   	The double maximum value. 
-\param	dblVal		   	The double value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	dblMaxVal	   	The double maximum value.
+\param	dblVal		   	The double value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1606,7 +1606,7 @@ bool STD_UTILS_PORT Std_IsBelowMax(double dblMaxVal, double dblVal, bool bThrowE
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1626,11 +1626,11 @@ bool STD_UTILS_PORT Std_IsBelowMax(double dblMaxVal, double dblVal, bool bThrowE
 \author	dcofer
 \date	5/3/2011
 
-\param	iMinVal		   	The minimum value. 
-\param	iVal		   	The test value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	iMinVal		   	The minimum value.
+\param	iVal		   	The test value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1644,7 +1644,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(int iMinVal, int iVal, bool bThrowError, std:
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1664,11 +1664,11 @@ bool STD_UTILS_PORT Std_IsAboveMin(int iMinVal, int iVal, bool bThrowError, std:
 \author	dcofer
 \date	5/3/2011
 
-\param	lMinVal		   	The minimum value. 
-\param	lVal		   	The test value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	lMinVal		   	The minimum value.
+\param	lVal		   	The test value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1682,7 +1682,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(long lMinVal, long lVal, bool bThrowError, st
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1702,11 +1702,11 @@ bool STD_UTILS_PORT Std_IsAboveMin(long lMinVal, long lVal, bool bThrowError, st
 \author	dcofer
 \date	5/3/2011
 
-\param	fltMinVal	   	The flt minimum value. 
-\param	fltVal		   	The test value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	fltMinVal	   	The flt minimum value.
+\param	fltVal		   	The test value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1720,7 +1720,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(float fltMinVal, float fltVal, bool bThrowErr
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1740,11 +1740,11 @@ bool STD_UTILS_PORT Std_IsAboveMin(float fltMinVal, float fltVal, bool bThrowErr
 \author	dcofer
 \date	5/3/2011
 
-\param	dblMinVal	   	The double minimum value. 
-\param	dblVal		   	The test value. 
-\param	bThrowError	   	true to throw error if outside of range. 
-\param	strParamName   	Name of the parameter. 
-\param	bInclusiveLimit	true for inclusive limit. 
+\param	dblMinVal	   	The double minimum value.
+\param	dblVal		   	The test value.
+\param	bThrowError	   	true to throw error if outside of range.
+\param	strParamName   	Name of the parameter.
+\param	bInclusiveLimit	true for inclusive limit.
 
 \return	true if valid, false else.
 **/
@@ -1758,7 +1758,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowE
 		if(bThrowError)
 		{
 			std::ostringstream oss;
-			
+
 			if(!strParamName.empty())
 				oss << "Paramater: " << strParamName;
 
@@ -1778,7 +1778,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowE
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	new string.
 **/
@@ -1795,7 +1795,7 @@ std::string STD_UTILS_PORT Std_CheckString(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	true if blank, false else.
 **/
@@ -1847,16 +1847,16 @@ std::string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, std::s
 \author	dcofer
 \date	5/3/2011
 
-\param	x	The x coordinate. 
-\param	i	The bit index. 
+\param	x	The x coordinate.
+\param	i	The bit index.
 
 \return	.
 **/
-unsigned long bit_get (unsigned long x, int i) 
+unsigned long bit_get (unsigned long x, int i)
 {return ( x >> i) & 1;}
 
 
-//  bit_put (x, i, v) returns the same as x except that bit i is 
+//  bit_put (x, i, v) returns the same as x except that bit i is
 //                    set to the same value as bit 0 of v.
 
 /**
@@ -1865,13 +1865,13 @@ unsigned long bit_get (unsigned long x, int i)
 \author	dcofer
 \date	5/3/2011
 
-\param	x	The x coordinate. 
-\param	i	The bit index. 
-\param	v	The new bit. 
+\param	x	The x coordinate.
+\param	i	The bit index.
+\param	v	The new bit.
 
 \return	.
 **/
-unsigned long bit_put (unsigned long x, int i, unsigned long v) 
+unsigned long bit_put (unsigned long x, int i, unsigned long v)
 {
 	if ( v & 1 ) {
 		return x | (1 << i);
@@ -1886,11 +1886,11 @@ unsigned long bit_put (unsigned long x, int i, unsigned long v)
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryBytes	The array in bytes. 
+\param [in,out]	aryBytes	The array in bytes.
 
 \return	hex string.
 **/
-std::string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes) 
+std::string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes)
 {
 	std::string strHex;
 	Std_ByteArrayToHexString(aryBytes, strHex);
@@ -1903,11 +1903,11 @@ std::string STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &ar
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryBytes	The array in bytes. 
-\param [in,out]	strHex  	The string hexadecimal. 
+\param [in,out]	aryBytes	The array in bytes.
+\param [in,out]	strHex  	The string hexadecimal.
 
 **/
-void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes, std::string &strHex) 
+void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes, std::string &strHex)
 {
 	std::string strByte;
 	int iByte, iByteLength;
@@ -1929,10 +1929,10 @@ void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes,
 \author	dcofer
 \date	5/3/2011
 
-\param	strHex				The hexadecimal string. 
-\param [in,out]	aryBytes	The array of bytes. 
+\param	strHex				The hexadecimal string.
+\param [in,out]	aryBytes	The array of bytes.
 **/
-void STD_UTILS_PORT Std_HexStringToByteArray(std::string strHex, CStdArray<unsigned char> &aryBytes) 
+void STD_UTILS_PORT Std_HexStringToByteArray(std::string strHex, CStdArray<unsigned char> &aryBytes)
 {
 	int iLength, iByteSize, iNibble0, iNibble1, iByte;
 	unsigned char cVal;
@@ -1959,12 +1959,12 @@ void STD_UTILS_PORT Std_HexStringToByteArray(std::string strHex, CStdArray<unsig
 \author	dcofer
 \date	5/3/2011
 
-\param	strHex			  	The hexadecimal string. 
-\param [in,out]	lArraySize	Size of the array. 
+\param	strHex			  	The hexadecimal string.
+\param [in,out]	lArraySize	Size of the array.
 
 \return	Byte array
 **/
-unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(std::string strHex, long &lArraySize) 
+unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(std::string strHex, long &lArraySize)
 {
 	int iLength, iByteSize, iNibble0, iNibble1, iByte;
 	unsigned char cVal;
@@ -1993,11 +1993,11 @@ unsigned char STD_UTILS_PORT *Std_HexStringToByteArray(std::string strHex, long 
 \author	dcofer
 \date	5/3/2011
 
-\param	strVal	The string value. 
+\param	strVal	The string value.
 
 \return	byte.
 **/
-unsigned char STD_UTILS_PORT Std_HexToByte(std::string strVal) 
+unsigned char STD_UTILS_PORT Std_HexToByte(std::string strVal)
 {
 	unsigned char cVal;
 
@@ -2018,15 +2018,15 @@ unsigned char STD_UTILS_PORT Std_HexToByte(std::string strVal)
 \author	dcofer
 \date	5/3/2011
 
-\param	cVal	The value. 
+\param	cVal	The value.
 
 \return	byte.
 **/
-unsigned char STD_UTILS_PORT Std_HexCharToByte(char cVal) 
+unsigned char STD_UTILS_PORT Std_HexCharToByte(char cVal)
 {
 	if (cVal >= '0' && cVal <= '9')
 		return (cVal - '0');
-	
+
 	if (cVal >= 'A' && cVal <= 'F')
 		return ((cVal - 'A') + 0x0A);
 
@@ -2046,7 +2046,7 @@ unsigned char STD_UTILS_PORT Std_HexCharToByte(char cVal)
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
+\param [in,out]	aryRawData	Raw byte array.
 
 \return	number of bits.
 **/
@@ -2061,7 +2061,7 @@ Assume we have a byte array of ByteArray = "5A05AA58607AEA3A9F69F97A1B17139A8AC0
 The GetBinarySection functions retrieve sections of that byte array on BIT boundaries and not on byte
 boundaries. In other words you can tell it to get 10 bits starting at bit position 19 and return it
 to me as a 2 byte short. It works on the basic assumption that the right hand side of the binary data
-is the least significant bit. However, when you tell it the bit position where you want to start 
+is the least significant bit. However, when you tell it the bit position where you want to start
 reading from the most signfigant bit is numbered 0. So lets setup some examples to show what it will
 return. The binray data shown below is the 5AA58 section, the first bit shown is number 12 and the
 last bit is 31.
@@ -2073,18 +2073,18 @@ GetBinarySection(m_aryBinaryData, 12, 16, iOut);  iOut = 0x5AA5
 GetBinarySection(m_aryBinaryData, 19, 6, cOut);   cOut = 0x14
 GetBinarySection(m_aryBinaryData, 19, 10, iOut);  iOut = 0x014B   0001 0100 1011
 GetBinarySection(m_aryBinaryData, 19, 11, iOut);  iOut = 0x0296   0010 1001 0110
-when it starts filling in the returned value it starts at the end of the section it is retrieving 
+when it starts filling in the returned value it starts at the end of the section it is retrieving
 and fills it in backwards so that the least signifigant value in the section is the least significant
-bit in the value. If the section is too small to completely fill the bytes of the variable then the 
+bit in the value. If the section is too small to completely fill the bytes of the variable then the
 remaining bits are set to zero.
 
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section we will retrieve. 
-\param	lBitLength		  	Bit length of the section to retrieve. 
-\param [in,out]	cOut	  	The output section. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section we will retrieve.
+\param	lBitLength		  	Bit length of the section to retrieve.
+\param [in,out]	cOut	  	The output section.
 
 **/
 void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned char &cOut)
@@ -2106,7 +2106,7 @@ Assume we have a byte array of ByteArray = "5A05AA58607AEA3A9F69F97A1B17139A8AC0
 The GetBinarySection functions retrieve sections of that byte array on BIT boundaries and not on byte
 boundaries. In other words you can tell it to get 10 bits starting at bit position 19 and return it
 to me as a 2 byte short. It works on the basic assumption that the right hand side of the binary data
-is the least significant bit. However, when you tell it the bit position where you want to start 
+is the least significant bit. However, when you tell it the bit position where you want to start
 reading from the most signfigant bit is numbered 0. So lets setup some examples to show what it will
 return. The binray data shown below is the 5AA58 section, the first bit shown is number 12 and the
 last bit is 31.
@@ -2118,18 +2118,18 @@ GetBinarySection(m_aryBinaryData, 12, 16, iOut);  iOut = 0x5AA5
 GetBinarySection(m_aryBinaryData, 19, 6, cOut);   cOut = 0x14
 GetBinarySection(m_aryBinaryData, 19, 10, iOut);  iOut = 0x014B   0001 0100 1011
 GetBinarySection(m_aryBinaryData, 19, 11, iOut);  iOut = 0x0296   0010 1001 0110
-when it starts filling in the returned value it starts at the end of the section it is retrieving 
+when it starts filling in the returned value it starts at the end of the section it is retrieving
 and fills it in backwards so that the least signifigant value in the section is the least significant
-bit in the value. If the section is too small to completely fill the bytes of the variable then the 
+bit in the value. If the section is too small to completely fill the bytes of the variable then the
 remaining bits are set to zero.
 
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section we will retrieve. 
-\param	lBitLength		  	Bit length of the section to retrieve. 
-\param [in,out]	iOut	  	The output section. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section we will retrieve.
+\param	lBitLength		  	Bit length of the section to retrieve.
+\param [in,out]	iOut	  	The output section.
 
 **/
 void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned short &iOut)
@@ -2147,7 +2147,7 @@ void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, l
 	for(iByte=iArraySize; iByte>=0 && iByteCount<2; iByte--)
 	{
 		iOut += (aryOutData[iByte] << (iByteCount*8));
-		iByteCount++;		
+		iByteCount++;
 	}
 }
 
@@ -2159,7 +2159,7 @@ Assume we have a byte array of ByteArray = "5A05AA58607AEA3A9F69F97A1B17139A8AC0
 The GetBinarySection functions retrieve sections of that byte array on BIT boundaries and not on byte
 boundaries. In other words you can tell it to get 10 bits starting at bit position 19 and return it
 to me as a 2 byte short. It works on the basic assumption that the right hand side of the binary data
-is the least significant bit. However, when you tell it the bit position where you want to start 
+is the least significant bit. However, when you tell it the bit position where you want to start
 reading from the most signfigant bit is numbered 0. So lets setup some examples to show what it will
 return. The binray data shown below is the 5AA58 section, the first bit shown is number 12 and the
 last bit is 31.
@@ -2171,18 +2171,18 @@ GetBinarySection(m_aryBinaryData, 12, 16, iOut);  iOut = 0x5AA5
 GetBinarySection(m_aryBinaryData, 19, 6, cOut);   cOut = 0x14
 GetBinarySection(m_aryBinaryData, 19, 10, iOut);  iOut = 0x014B   0001 0100 1011
 GetBinarySection(m_aryBinaryData, 19, 11, iOut);  iOut = 0x0296   0010 1001 0110
-when it starts filling in the returned value it starts at the end of the section it is retrieving 
+when it starts filling in the returned value it starts at the end of the section it is retrieving
 and fills it in backwards so that the least signifigant value in the section is the least significant
-bit in the value. If the section is too small to completely fill the bytes of the variable then the 
+bit in the value. If the section is too small to completely fill the bytes of the variable then the
 remaining bits are set to zero.
 
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section we will retrieve. 
-\param	lBitLength		  	Bit length of the section to retrieve. 
-\param [in,out]	lOut	  	The output section. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section we will retrieve.
+\param	lBitLength		  	Bit length of the section to retrieve.
+\param [in,out]	lOut	  	The output section.
 
 **/
 void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned long &lOut)
@@ -2200,7 +2200,7 @@ void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, l
 	for(iByte=iArraySize; iByte>=0 && iByteCount<4; iByte--)
 	{
 		lOut += (aryOutData[iByte] << (iByteCount*8));
-		iByteCount++;		
+		iByteCount++;
 	}
 }
 
@@ -2212,7 +2212,7 @@ Assume we have a byte array of ByteArray = "5A05AA58607AEA3A9F69F97A1B17139A8AC0
 The GetBinarySection functions retrieve sections of that byte array on BIT boundaries and not on byte
 boundaries. In other words you can tell it to get 10 bits starting at bit position 19 and return it
 to me as a 2 byte short. It works on the basic assumption that the right hand side of the binary data
-is the least significant bit. However, when you tell it the bit position where you want to start 
+is the least significant bit. However, when you tell it the bit position where you want to start
 reading from the most signfigant bit is numbered 0. So lets setup some examples to show what it will
 return. The binray data shown below is the 5AA58 section, the first bit shown is number 12 and the
 last bit is 31.
@@ -2224,21 +2224,21 @@ GetBinarySection(m_aryBinaryData, 12, 16, iOut);  iOut = 0x5AA5
 GetBinarySection(m_aryBinaryData, 19, 6, cOut);   cOut = 0x14
 GetBinarySection(m_aryBinaryData, 19, 10, iOut);  iOut = 0x014B   0001 0100 1011
 GetBinarySection(m_aryBinaryData, 19, 11, iOut);  iOut = 0x0296   0010 1001 0110
-when it starts filling in the returned value it starts at the end of the section it is retrieving 
+when it starts filling in the returned value it starts at the end of the section it is retrieving
 and fills it in backwards so that the least signifigant value in the section is the least significant
-bit in the value. If the section is too small to completely fill the bytes of the variable then the 
+bit in the value. If the section is too small to completely fill the bytes of the variable then the
 remaining bits are set to zero.
 
 \author	dcofer
 \date	5/3/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section we will retrieve. 
-\param	lBitLength		  	Bit length of the section to retrieve. 
-\param [in,out]	aryOutData	  	The output section. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section we will retrieve.
+\param	lBitLength		  	Bit length of the section to retrieve.
+\param [in,out]	aryOutData	  	The output section.
 
 **/
-void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, 
+void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength,
 																							CStdArray<unsigned char> &aryOutData)
 {
 	long lEndBit, lByteLength, lBit, lBitsNeeded, lByte;
@@ -2252,7 +2252,7 @@ void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, l
 		lByteLength = ((long) ceil((float) (lBitLength / 8))) + 1;
 	else
 		lByteLength = lBitLength / 8;
-	
+
 	aryOutData.RemoveAll();
 	aryOutData.SetSize(lByteLength);
 
@@ -2274,9 +2274,9 @@ void STD_UTILS_PORT Std_GetBinarySection(CStdArray<unsigned char> &aryRawData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lEndBit			  	The end bit. 
-\param	lBitsNeeded		  	The number of bits to retrieve. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lEndBit			  	The end bit.
+\param	lBitsNeeded		  	The number of bits to retrieve.
 
 \return	output data.
 **/
@@ -2290,7 +2290,7 @@ unsigned char STD_UTILS_PORT Std_GetByteFromArray(CStdArray<unsigned char> &aryR
 	for(lBitIndex=0; lBitIndex<lBitsNeeded; lBitIndex++)
 	{
 		lBit = lEndBit - lBitIndex;
-		
+
 		if(Std_GetBitFromArray(aryRawData, lBit))
 			cVal += (1 << lBitIndex);
 	}
@@ -2304,8 +2304,8 @@ unsigned char STD_UTILS_PORT Std_GetByteFromArray(CStdArray<unsigned char> &aryR
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lBit			  	The bit to retrieve. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lBit			  	The bit to retrieve.
 
 \return	True if it succeeds.
 **/
@@ -2332,10 +2332,10 @@ bool STD_UTILS_PORT Std_GetBitFromArray(CStdArray<unsigned char> &aryRawData, lo
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lStartBit		  	The start bit. 
-\param	lBitLength		  	Bit length of the section to replace. 
-\param	cIn				  	The new data. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lStartBit		  	The start bit.
+\param	lBitLength		  	Bit length of the section to replace.
+\param	cIn				  	The new data.
 
 **/
 void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned char cIn)
@@ -2355,10 +2355,10 @@ void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lStartBit		  	The start bit. 
-\param	lBitLength		  	Bit length of the section to replace. 
-\param	iIn				  	The new data. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lStartBit		  	The start bit.
+\param	lBitLength		  	Bit length of the section to replace.
+\param	iIn				  	The new data.
 
 **/
 void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned short iIn)
@@ -2383,10 +2383,10 @@ void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lStartBit		  	The start bit. 
-\param	lBitLength		  	Bit length of the section to replace. 
-\param	lIn				  	The new data. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lStartBit		  	The start bit.
+\param	lBitLength		  	Bit length of the section to replace.
+\param	lIn				  	The new data.
 
 **/
 void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, unsigned long lIn)
@@ -2417,13 +2417,13 @@ void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	The raw byte array. 
-\param	lStartBit		  	The start bit. 
-\param	lBitLength		  	Bit length of the section to replace. 
-\param	aryInData				  	The new data. 
+\param [in,out]	aryRawData	The raw byte array.
+\param	lStartBit		  	The start bit.
+\param	lBitLength		  	Bit length of the section to replace.
+\param	aryInData				  	The new data.
 
 **/
-void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, 
+void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength,
 																		 CStdArray<unsigned char> &aryInData)
 {
 	long lEndBit, lByteLength, lBit, lBitsNeeded, lByte, lNumBytes, lLastByte;
@@ -2436,7 +2436,7 @@ void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, l
 		lByteLength = ((long) ceil((float) (lBitLength / 8))) + 1;
 	else
 		lByteLength = lBitLength / 8;
-	
+
 	lNumBytes = aryInData.GetSize();
 	lLastByte = lNumBytes - lByteLength;
 
@@ -2458,19 +2458,19 @@ void STD_UTILS_PORT Std_SetBinarySection(CStdArray<unsigned char> &aryRawData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryInData 	Input raw byte array. 
-\param	lStartInBit		  	The start bit to begin the copy. 
-\param [in,out]	aryOutData	Output raw byte array. 
-\param	lStartOutBit	  	The start bit of where to place the copy. 
-\param	lBitLength		  	Bit length of the copy. 
+\param [in,out]	aryInData 	Input raw byte array.
+\param	lStartInBit		  	The start bit to begin the copy.
+\param [in,out]	aryOutData	Output raw byte array.
+\param	lStartOutBit	  	The start bit of where to place the copy.
+\param	lBitLength		  	Bit length of the copy.
 
 **/
-void STD_UTILS_PORT Std_CopyBinarySection(CStdArray<unsigned char> &aryInData, long lStartInBit,  
+void STD_UTILS_PORT Std_CopyBinarySection(CStdArray<unsigned char> &aryInData, long lStartInBit,
  																		  CStdArray<unsigned char> &aryOutData, long lStartOutBit,
 																			long lBitLength)
 {
 	CStdArray<unsigned char> aryTempData;
-	
+
 	//Get the part that needs to be copied.
 	Std_GetBinarySection(aryInData, lStartInBit, lBitLength, aryTempData);
 	Std_SetBinarySection(aryOutData, lStartOutBit, lBitLength, aryTempData);
@@ -2482,10 +2482,10 @@ void STD_UTILS_PORT Std_CopyBinarySection(CStdArray<unsigned char> &aryInData, l
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	Raw input byte array. 
-\param	cIn				  	The input byte. 
-\param	lEndBit			  	The end bit. 
-\param	lBitsNeeded		  	The number of bits to copy. 
+\param [in,out]	aryRawData	Raw input byte array.
+\param	cIn				  	The input byte.
+\param	lEndBit			  	The end bit.
+\param	lBitsNeeded		  	The number of bits to copy.
 
 **/
 void STD_UTILS_PORT Std_SetByteInArray(CStdArray<unsigned char> &aryRawData, unsigned char cIn, long lEndBit, long lBitsNeeded)
@@ -2512,9 +2512,9 @@ void STD_UTILS_PORT Std_SetByteInArray(CStdArray<unsigned char> &aryRawData, uns
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lBit			  	The bit to set in the array. 
-\param	bVal			  	The bit value. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lBit			  	The bit to set in the array.
+\param	bVal			  	The bit value.
 
 **/
 void STD_UTILS_PORT Std_SetBitInArray(CStdArray<unsigned char> &aryRawData, long lBit, bool bVal)
@@ -2545,10 +2545,10 @@ void STD_UTILS_PORT Std_SetBitInArray(CStdArray<unsigned char> &aryRawData, long
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section. 
-\param	lBitLength		  	Bit length of the section. 
-\param	bVal			  	Bit value to set. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section.
+\param	lBitLength		  	Bit length of the section.
+\param	bVal			  	Bit value to set.
 **/
 void STD_UTILS_PORT Std_SetBitRangeInArray(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength, bool bVal)
 {
@@ -2566,8 +2566,8 @@ void STD_UTILS_PORT Std_SetBitRangeInArray(CStdArray<unsigned char> &aryRawData,
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lBit			  	The bit to flip. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lBit			  	The bit to flip.
 **/
 void STD_UTILS_PORT Std_FlipBitInArray(CStdArray<unsigned char> &aryRawData, long lBit)
 {
@@ -2582,9 +2582,9 @@ void STD_UTILS_PORT Std_FlipBitInArray(CStdArray<unsigned char> &aryRawData, lon
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryRawData	Raw byte array. 
-\param	lStartBit		  	The start bit of the section to flip. 
-\param	lBitLength		  	Bit length of the section. 
+\param [in,out]	aryRawData	Raw byte array.
+\param	lStartBit		  	The start bit of the section to flip.
+\param	lBitLength		  	Bit length of the section.
 
 **/
 void STD_UTILS_PORT Std_FlipBitRangeInArray(CStdArray<unsigned char> &aryRawData, long lStartBit, long lBitLength)
@@ -2603,11 +2603,11 @@ void STD_UTILS_PORT Std_FlipBitRangeInArray(CStdArray<unsigned char> &aryRawData
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param	lLastBit			 	The last bit. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section to read. 
-\param [in,out]	cOut		 	The output. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param	lLastBit			 	The last bit.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section to read.
+\param [in,out]	cOut		 	The output.
 
 \return	True if successful.
 **/
@@ -2637,11 +2637,11 @@ bool STD_UTILS_PORT Std_ReadBinaryData(CStdArray<unsigned char> &aryBinaryData, 
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param	lLastBit			 	The last bit. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section to read. 
-\param [in,out]	iOut		 	The output. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param	lLastBit			 	The last bit.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section to read.
+\param [in,out]	iOut		 	The output.
 
 \return	True if successful.
 **/
@@ -2671,11 +2671,11 @@ bool STD_UTILS_PORT Std_ReadBinaryData(CStdArray<unsigned char> &aryBinaryData, 
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param	lLastBit			 	The last bit. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section to read. 
-\param [in,out]	lOut		 	The output. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param	lLastBit			 	The last bit.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section to read.
+\param [in,out]	lOut		 	The output.
 
 \return	True if successful.
 **/
@@ -2705,10 +2705,10 @@ bool STD_UTILS_PORT Std_ReadBinaryData(CStdArray<unsigned char> &aryBinaryData, 
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section. 
-\param	cIn					 	The input. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section.
+\param	cIn					 	The input.
 
 **/
 void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData, long &lStartBit, long lBitLength, unsigned char cIn)
@@ -2728,10 +2728,10 @@ void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData,
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section. 
-\param	iIn					 	The input. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section.
+\param	iIn					 	The input.
 
 **/
 void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData, long &lStartBit, long lBitLength, unsigned short iIn)
@@ -2751,10 +2751,10 @@ void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData,
 \author	dcofer
 \date	5/4/2011
 
-\param [in,out]	aryBinaryData	Raw byte array. 
-\param [in,out]	lStartBit	 	The start bit. 
-\param	lBitLength			 	Bit length of the section. 
-\param	lIn					 	The input. 
+\param [in,out]	aryBinaryData	Raw byte array.
+\param [in,out]	lStartBit	 	The start bit.
+\param	lBitLength			 	Bit length of the section.
+\param	lIn					 	The input.
 
 **/
 void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData, long &lStartBit, long lBitLength, unsigned long lIn)
@@ -2773,7 +2773,7 @@ void STD_UTILS_PORT Std_WriteBinaryData(CStdArray<unsigned char> &aryBinaryData,
 \author	dcofer
 \date	5/4/2011
 
-\param	cVal	The binary value. 
+\param	cVal	The binary value.
 
 \return	grey code value.
 **/
@@ -2782,7 +2782,7 @@ unsigned char STD_UTILS_PORT Std_BinaryToGreyCode(unsigned char cVal)
 	short iBit;
 	unsigned char cOut=0;
 
-	for(iBit=0; iBit< 7; iBit++) 
+	for(iBit=0; iBit< 7; iBit++)
 	{
 		cOut = (unsigned char) bit_put(cOut, iBit, bit_get(cVal, iBit) ^ bit_get(cVal, iBit+1) );
 	}
@@ -2800,7 +2800,7 @@ unsigned char STD_UTILS_PORT Std_BinaryToGreyCode(unsigned char cVal)
 \author	dcofer
 \date	5/4/2011
 
-\param	iVal	The binary value. 
+\param	iVal	The binary value.
 
 \return	grey code value.
 **/
@@ -2809,7 +2809,7 @@ unsigned short STD_UTILS_PORT Std_BinaryToGreyCode(unsigned short iVal)
 	short iBit;
 	unsigned short iOut=0;
 
-	for(iBit=0; iBit< 15; iBit++) 
+	for(iBit=0; iBit< 15; iBit++)
 	{
 		iOut = (unsigned short) bit_put(iOut, iBit, bit_get(iVal, iBit) ^ bit_get(iVal, iBit+1) );
 	}
@@ -2826,7 +2826,7 @@ unsigned short STD_UTILS_PORT Std_BinaryToGreyCode(unsigned short iVal)
 \author	dcofer
 \date	5/4/2011
 
-\param	lVal	The binary value. 
+\param	lVal	The binary value.
 
 \return	grey code value.
 **/
@@ -2835,7 +2835,7 @@ unsigned long STD_UTILS_PORT Std_BinaryToGreyCode(unsigned long lVal)
 	short iBit;
 	unsigned long lOut=0;
 
-	for(iBit=0; iBit< 31; iBit++) 
+	for(iBit=0; iBit< 31; iBit++)
 	{
 		lOut = bit_put(lOut, iBit, bit_get(lVal, iBit) ^ bit_get(lVal, iBit+1) );
 	}
@@ -2853,7 +2853,7 @@ unsigned long STD_UTILS_PORT Std_BinaryToGreyCode(unsigned long lVal)
 \author	dcofer
 \date	5/4/2011
 
-\param	cVal	The grey code value. 
+\param	cVal	The grey code value.
 
 \return	binary code value.
 **/
@@ -2863,10 +2863,10 @@ unsigned char STD_UTILS_PORT Std_GreyCodeToBinary(unsigned char cVal)
 	unsigned char cOut=0, cTemp;
 
 	cOut = 0;
-	for (iBit = 0; iBit <= 7; iBit++ ) 
+	for (iBit = 0; iBit <= 7; iBit++ )
 	{
 		cTemp = 0;
-		for (iTempBit = iBit; iTempBit <= 7; iTempBit++ ) 
+		for (iTempBit = iBit; iTempBit <= 7; iTempBit++ )
 			cTemp ^= bit_get(cVal, iTempBit);
 
 		cOut = (unsigned char) bit_put (cOut, iBit, cTemp);
@@ -2883,7 +2883,7 @@ unsigned char STD_UTILS_PORT Std_GreyCodeToBinary(unsigned char cVal)
 \author	dcofer
 \date	5/4/2011
 
-\param	iVal	The grey code value. 
+\param	iVal	The grey code value.
 
 \return	binary code value.
 **/
@@ -2893,10 +2893,10 @@ unsigned short STD_UTILS_PORT Std_GreyCodeToBinary(unsigned short iVal)
 	unsigned short iOut=0, iTemp;
 
 	iOut = 0;
-	for (iBit = 0; iBit <= 15; iBit++ ) 
+	for (iBit = 0; iBit <= 15; iBit++ )
 	{
 		iTemp = 0;
-		for (iTempBit = iBit; iTempBit <= 15; iTempBit++ ) 
+		for (iTempBit = iBit; iTempBit <= 15; iTempBit++ )
 			iTemp ^= bit_get(iVal, iTempBit);
 
 		iOut = (unsigned short) bit_put (iOut, iBit, iTemp);
@@ -2914,7 +2914,7 @@ unsigned short STD_UTILS_PORT Std_GreyCodeToBinary(unsigned short iVal)
 \author	dcofer
 \date	5/4/2011
 
-\param	lVal	The grey code value. 
+\param	lVal	The grey code value.
 
 \return	binary code value.
 **/
@@ -2924,10 +2924,10 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	unsigned long lOut=0, lTemp;
 
 	lOut = 0;
-	for (iBit = 0; iBit <= 31; iBit++ ) 
+	for (iBit = 0; iBit <= 31; iBit++ )
 	{
 		lTemp = 0;
-		for (iTempBit = iBit; iTempBit <= 31; iTempBit++ ) 
+		for (iTempBit = iBit; iTempBit <= 31; iTempBit++ )
 			lTemp ^= bit_get(lVal, iTempBit);
 
 		lOut = bit_put (lOut, iBit, lTemp);
@@ -2970,7 +2970,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 		else
 			strFinalMessage = strMessage;
 
-		STLOG_WRITE(strFinalMessage.c_str()); 
+		STLOG_WRITE(strFinalMessage.c_str());
 	}
 
 	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
@@ -2987,7 +2987,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 		}
 	#endif
 
-		if(bLogToFile) 
+		if(bLogToFile)
 			Std_LogMsg(iLevel, strMessage, strSourceFile, iSourceLine, bPrintHeader);
 	}
 
@@ -2999,10 +2999,10 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Gets the trace level.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
+
 	\return	trace level.
 	**/
 	int STD_UTILS_PORT Std_GetTraceLevel()
@@ -3016,11 +3016,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Sets teh trace level.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
-	\param	iVal	The value. 
+
+	\param	iVal	The value.
 
 	**/
 	void STD_UTILS_PORT Std_SetTraceLevel(const int iVal)
@@ -3032,11 +3032,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Sets the log file prefix.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
-	\param	strFilePrefix	The string file prefix. 
+
+	\param	strFilePrefix	The string file prefix.
 
 	**/
 	void STD_UTILS_PORT Std_SetLogFilePrefix(std::string strFilePrefix)
@@ -3049,10 +3049,10 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Gets the log file prefix.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
+
 	\return	prefix.
 	**/
 	std::string STD_UTILS_PORT Std_GetLogFilePrefix()
@@ -3066,11 +3066,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Sets the log level.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
-	\param	iLevel	The level. 
+
+	\param	iLevel	The level.
 
 	**/
 	void STD_UTILS_PORT Std_SetLogLevel(const int iLevel)
@@ -3082,15 +3082,15 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Logs a message,
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
-	\param	iLevel		 	The log level. 
-	\param	strMessage   	Log message. 
-	\param	strSourceFile	The string source file. 
-	\param	iSourceLine  	Source line number. 
-	\param	bPrintHeader 	true to print header. 
+
+	\param	iLevel		 	The log level.
+	\param	strMessage   	Log message.
+	\param	strSourceFile	The string source file.
+	\param	iSourceLine  	Source line number.
+	\param	bPrintHeader 	true to print header.
 
 	**/
 	void STD_UTILS_PORT Std_LogMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bPrintHeader)
@@ -3112,16 +3112,16 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 
 	/**
 	\brief	Traces a message to the debugger window.
-	
+
 	\author	dcofer
 	\date	5/4/2011
-	
-	\param	iLevel		 	The log level. 
-	\param	strMessage   	Log message. 
-	\param	strSourceFile	The string source file. 
-	\param	iSourceLine  	Source line number. 
-	\param	bLogToFile   	true to log to file. 
-	\param	bPrintHeader 	true to print header. 
+
+	\param	iLevel		 	The log level.
+	\param	strMessage   	Log message.
+	\param	strSourceFile	The string source file.
+	\param	iSourceLine  	Source line number.
+	\param	bLogToFile   	true to log to file.
+	\param	bPrintHeader 	true to print header.
 
 	**/
 	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, std::string strMessage, std::string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
@@ -3136,7 +3136,7 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 			OutputDebugString(strTemp.c_str());
 		#endif
 
-		if(bLogToFile) 
+		if(bLogToFile)
 		{
 			if(iSourceLine>=0)
 				strMessage = STR(strSourceFile) + " (" + STR(iSourceLine) + ") \r\n" + STR(strMessage) + "\r\n";
@@ -3175,7 +3175,7 @@ unsigned long STD_UTILS_PORT Std_GetTick()
 #endif
 }
 
-#endif 
+#endif
 
 void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds)
 {
@@ -3186,7 +3186,7 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds)
 #endif
 }
 
-  
+
 // Timing Functions
 //***************************************************************************************************************
 
@@ -3201,7 +3201,7 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds)
 \author	dcofer
 \date	5/4/2011
 
-\param	strPath	filename. 
+\param	strPath	filename.
 
 \return	True if full path name.
 **/
@@ -3222,19 +3222,19 @@ bool STD_UTILS_PORT Std_IsFullPath(std::string strPath)
 \author	dcofer
 \date	5/4/2011
 
-\param	strFullPath	   	Full pathname of the string full file. 
-\param [in,out]	strPath	Full path without the filename. 
-\param [in,out]	strFile	Filename. 
+\param	strFullPath	   	Full pathname of the string full file.
+\param [in,out]	strPath	Full path without the filename.
+\param [in,out]	strFile	Filename.
 
 **/
 void STD_UTILS_PORT Std_SplitPathAndFile(std::string strFullPath, std::string &strPath, std::string &strFile)
 {
-    try 
+    try
     {
 	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
 	    strFile = path.filename().string();
 	    strPath = Std_Replace(path.string(), strFile, "");
-    } 
+    }
     catch(const boost::filesystem::filesystem_error& e)
     {
        if(e.code() == boost::system::errc::permission_denied)
@@ -3252,7 +3252,7 @@ void STD_UTILS_PORT Std_SplitPathAndFile(std::string strFullPath, std::string &s
 \author	dcofer
 \date	5/4/2011
 
-\param	strPath	Full pathname of the string file. 
+\param	strPath	Full pathname of the string file.
 
 \return	.
 **/
@@ -3268,16 +3268,16 @@ bool STD_UTILS_PORT Std_DirectoryExists(std::string strPath)
 \author	dcofer
 \date	8/29/2013
 
-\param	strFullPath	   	Full pathname of the string full file. 
+\param	strFullPath	   	Full pathname of the string full file.
 
 **/
 bool STD_UTILS_PORT Std_FileExists(std::string strFullPath)
 {
-    try 
+    try
     {
 	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
         return true;
-    } 
+    }
     catch(const boost::filesystem::filesystem_error& e)
     {
        if(e.code() == boost::system::errc::permission_denied)
@@ -3289,7 +3289,6 @@ bool STD_UTILS_PORT Std_FileExists(std::string strFullPath)
        return false;
     }
 }
-
 
 /**
 \brief	Finds the name and path of the current executable.
@@ -3309,7 +3308,11 @@ std::string STD_UTILS_PORT Std_ExecutablePath()
     HINSTANCE hInst = GetModuleHandle(NULL);
 	GetModuleFileName(hInst, strBuffer, 2000);
 #else
-    readlink( "/proc/self/exe", strBuffer, 2000 );
+    ssize_t len = ::readlink("/proc/self/exe", strBuffer, sizeof(strBuffer)-1);
+    if (len != -1)
+      strBuffer[len] = '\0';
+    else
+        THROW_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded);
 #endif
 
     strPath = strBuffer;
@@ -3326,13 +3329,13 @@ void Std_SetFileTime(std::string strFilename, SYSTEMTIME newTime)
 	// over to the FILETIME struct for use in SetFileTime below
 	FILETIME thefiletime;
 	SystemTimeToFileTime(&newTime,&thefiletime);
-	 
+
 	// Get a handle to our file and with file_write_attributes access
 	HANDLE filename = CreateFile(strFilename.c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	    
+
 	// Set the file time on the file
 	SetFileTime(filename,(LPFILETIME) NULL,(LPFILETIME) NULL,&thefiletime);
-	    
+
 	// Close our handle.
 	CloseHandle(filename);
 }
@@ -3341,7 +3344,7 @@ void STD_UTILS_PORT Std_SetFileTime(std::string strFilename)
 {
 	// Create a systemtime struct
 	SYSTEMTIME thesystemtime;
-	 
+
 	// Get current system time and then change the day to the 3rd
 	// You can also change year, month, day of week etc
 	GetSystemTime(&thesystemtime);
@@ -3373,7 +3376,7 @@ void STD_UTILS_PORT Std_SetFileTime(std::string strFilename)
 //	CStdFixed *lp1 = new CStdFixed();
 //	top=tr.begin();
 //	one=tr.insert(top, lp1);
-//	
+//
 //	tr.clear();
 //
 //	ostringstream str;

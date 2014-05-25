@@ -26,7 +26,7 @@ namespace OsgAnimatSim
 
 OsgSimulator::OsgSimulator()
 {
-	m_grpScene = NULL;	
+	m_grpScene = NULL;
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new OsgSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
@@ -130,6 +130,28 @@ osg::NotifySeverity OsgSimulator::ConvertTraceLevelToOSG()
 	}
 }
 
+//Timer Methods
+unsigned long long OsgSimulator::GetTimerTick()
+{
+	m_lLastTickTaken = osg::Timer::instance()->tick();
+	return m_lLastTickTaken;
+}
+
+double OsgSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_n(lStart, lEnd);}
+
+double OsgSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_u(lStart, lEnd);}
+
+double OsgSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_m(lStart, lEnd);}
+
+double OsgSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_s(lStart, lEnd);}
+
+void OsgSimulator::MicroSleep(unsigned int iMicroTime)
+{OpenThreads::Thread::microSleep(iMicroTime);}
+
 void OsgSimulator::WriteToConsole(std::string strMessage)
 {
 	osg::notify(osg::NOTICE) << strMessage << std::endl;
@@ -138,7 +160,7 @@ void OsgSimulator::WriteToConsole(std::string strMessage)
 void OsgSimulator::Initialize(int argc, const char **argv)
 {
 #ifndef WIN32
-	osgDB::setLibraryFilePathList("/usr/lib/osgPlugins-3.0.1"); 
+	osgDB::setLibraryFilePathList("/usr/lib/osgPlugins-3.0.1");
 #endif
 
 	InitializeStructures();
@@ -221,7 +243,7 @@ OsgSimulator *OsgSimulator::ConvertSimulator(Simulator *lpSim)
 	return lpVsSim;
 }
 
-void OsgSimulator::Save(std::string strFile) 
+void OsgSimulator::Save(std::string strFile)
 {
 	std::string strOsgFile = strFile + ".osg";
 
