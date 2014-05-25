@@ -143,213 +143,6 @@
 <Freeze>True</Freeze>
 <ChildBodies>
 <RigidBody>
-<Name>Body_1</Name>
-<ID>2e048036-7fdb-4785-8c37-04b180aef740</ID>
-<Description/>
-<Transparencies>
-<Graphics>50</Graphics>
-<Collisions>0</Collisions>
-<Joints>50</Joints>
-<RecFields>50</RecFields>
-<Simulation>0</Simulation>
-</Transparencies>
-<IsVisible>True</IsVisible>
-<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
-<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
-<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
-<Shininess>64</Shininess>
-<Texture/>
-<LocalPosition>
-<X Value="3.265" Scale="None" Actual="3.265"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</LocalPosition>
-<Rotation>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.265,0,0,1</LocalMatrix>
-<DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Type>Box</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
-<IsContactSensor>False</IsContactSensor>
-<IsCollisionObject>True</IsCollisionObject>
-<BuoyancyCenter>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</BuoyancyCenter>
-<BuoyancyScale>1</BuoyancyScale>
-<LinearDrag>
-<X Value="1" Scale="None" Actual="1"/>
-<Y Value="1" Scale="None" Actual="1"/>
-<Z Value="1" Scale="None" Actual="1"/>
-</LinearDrag>
-<AngularDrag>
-<X Value="50" Scale="milli" Actual="0.05"/>
-<Y Value="50" Scale="milli" Actual="0.05"/>
-<Z Value="50" Scale="milli" Actual="0.05"/>
-</AngularDrag>
-<MaxHydroForce Value="50" Scale="None" Actual="50"/>
-<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
-<Magnus>0</Magnus>
-<EnableFluids>False</EnableFluids>
-<Density Value="1" Scale="Kilo" Actual="1000"/>
-<Mass Value="1" Scale="Kilo" Actual="1000"/>
-<COM>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</COM>
-<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
-<Freeze>False</Freeze>
-<Joint>
-<Name>Joint_1</Name>
-<ID>4e261174-87df-4a20-a6ca-34dd2713e479</ID>
-<Description/>
-<Transparencies>
-<Graphics>50</Graphics>
-<Collisions>50</Collisions>
-<Joints>0</Joints>
-<RecFields>50</RecFields>
-<Simulation>50</Simulation>
-</Transparencies>
-<IsVisible>True</IsVisible>
-<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
-<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
-<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
-<Shininess>64</Shininess>
-<Texture/>
-<LocalPosition>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="10" Scale="centi" Actual="0.1"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</LocalPosition>
-<Rotation>
-<X Value="0" Scale="None" Actual="0"/>
-<Y Value="0" Scale="None" Actual="0"/>
-<Z Value="0" Scale="None" Actual="0"/>
-</Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,3.265,0.1,0,1</LocalMatrix>
-<DraggerSize Value="-1" Scale="None" Actual="-1"/>
-<Type>Prismatic</Type>
-<PartType>AnimatGUI.DataObjects.Physical.Joints.Prismatic</PartType>
-<Size Value="20" Scale="milli" Actual="0.02"/>
-<EnableLimits>True</EnableLimits>
-<Relaxation1>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>9ecbb987-900a-4538-81b0-5f641e6b50de</ID>
-<Enabled>False</Enabled>
-<CoordinateID>0</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation1>
-<Relaxation2>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>63f1e615-5a9a-4afa-9b69-2ea938032c30</ID>
-<Enabled>False</Enabled>
-<CoordinateID>1</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation2>
-<Relaxation3>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>dea3df9a-6e5e-4e29-a553-c2c1e2b5bbc5</ID>
-<Enabled>False</Enabled>
-<CoordinateID>2</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation3>
-<Relaxation4>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>38715daf-65a3-4404-ab3b-96bd0f7ad6d1</ID>
-<Enabled>False</Enabled>
-<CoordinateID>3</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation4>
-<Relaxation5>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>50aa479a-a197-4064-8e39-7b3d11cd3937</ID>
-<Enabled>False</Enabled>
-<CoordinateID>4</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation5>
-<Relaxation6>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>de9fb503-3364-4269-9c42-f48cfe047f96</ID>
-<Enabled>False</Enabled>
-<CoordinateID>5</CoordinateID>
-<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
-<Damping Value="50" Scale="Mega" Actual="5e+007"/>
-</Relaxation6>
-<Friction>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
-<ID>fff1b609-ab55-4b83-8d32-5690184e3b39</ID>
-<Name/>
-<Enabled>True</Enabled>
-<Proportional>True</Proportional>
-<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
-<MaxForce Value="10" Scale="None" Actual="10"/>
-<Loss Value="0" Scale="None" Actual="0"/>
-<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
-</Friction>
-<LowerLimit>
-<Name>981c3339-0aa2-48e4-96f0-0da4359a557b</Name>
-<ID>981c3339-0aa2-48e4-96f0-0da4359a557b</ID>
-<LimitPos Value="-1" Scale="None" Actual="-1"/>
-<Damping Value="500" Scale="None" Actual="500"/>
-<Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="100" Scale="None" Actual="100"/>
-</LowerLimit>
-<UpperLimit>
-<Name>35d1c2cc-1db0-4e57-a916-fe34b94282fa</Name>
-<ID>35d1c2cc-1db0-4e57-a916-fe34b94282fa</ID>
-<LimitPos Value="1" Scale="None" Actual="1"/>
-<Damping Value="500" Scale="None" Actual="500"/>
-<Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="100" Scale="None" Actual="100"/>
-</UpperLimit>
-<MaxForce Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
-<EnableMotor>False</EnableMotor>
-<ServoMotor>False</ServoMotor>
-<ServoGain>100</ServoGain>
-<PID>
-<ID>900224f6-c4a8-4598-bb35-b4b2faffbaa3</ID>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
-<Enabled>True</Enabled>
-<ComplexError>True</ComplexError>
-<AntiResetWindup>False</AntiResetWindup>
-<RampLimit>False</RampLimit>
-<Kp Value="10" Scale="None" Actual="10"/>
-<Ki Value="0.2" Scale="None" Actual="0.2"/>
-<Kd Value="10" Scale="None" Actual="10"/>
-<RangeMax Value="1" Scale="None" Actual="1"/>
-<RangeMin Value="-1" Scale="None" Actual="-1"/>
-<ARWBound Value="0" Scale="None" Actual="0"/>
-<RampGradient Value="45" Scale="None" Actual="45"/>
-</PID>
-</Joint>
-<FoodSource>False</FoodSource>
-<Length Value="1" Scale="None" Actual="1"/>
-<Width Value="1" Scale="None" Actual="1"/>
-<Height Value="1" Scale="None" Actual="1"/>
-<LengthSections>1</LengthSections>
-<WidthSections>1</WidthSections>
-<HeightSections>1</HeightSections>
-</RigidBody>
-<RigidBody>
 <Name>Lower_Arm</Name>
 <ID>ac9ff44f-3350-46bf-a0ba-7081938c6064</ID>
 <Description/>
@@ -483,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>9447d3d3-fb06-4c18-8f68-3ad977ae909b</ID>
+<ID>6335c17d-127f-4516-a277-d60a4d7a8d8a</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -492,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>6335c17d-127f-4516-a277-d60a4d7a8d8a</ID>
+<ID>03d380b7-71dd-48a9-af9a-e0fabb274df3</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1518,7 +1311,10 @@
 <C Value="2" Scale="None" Actual="2"/>
 <D Value="-1" Scale="None" Actual="-1"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>False</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -1589,7 +1385,10 @@
 <C Value="5" Scale="nano" Actual="5e-009"/>
 <D Value="0" Scale="None" Actual="0"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>True</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>FiringRateGUI.dll</AssemblyFile>
@@ -1716,7 +1515,10 @@
 <C Value="8" Scale="nano" Actual="8e-009"/>
 <D Value="0" Scale="None" Actual="0"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>True</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2273,6 +2075,7 @@
 <ID>894deef9-eae1-42b2-9288-6bf76adf9620</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotInterfaces.LANWirelessInterface</ClassName>
+<SynchSim>True</SynchSim>
 <PhysicsTimeStep Value="35" Scale="milli" Actual="0.035"/>
 <IOControls>
 <RobotIOControl>
@@ -2280,67 +2083,7 @@
 <ID>4b23ac63-cbce-4ca2-949e-334da679eba1</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSB</ClassName>
-<Parts>
-<RobotPartInterface>
-<Name>Hinge Motor</Name>
-<ID>06bef80b-fc7e-4f97-8a71-63a3f0c1575f</ID>
-<AssemblyFile>RoboticsGUI.dll</AssemblyFile>
-<ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSBHingeMotor</ClassName>
-<Enabled>True</Enabled>
-<IOComponentID>1</IOComponentID>
-<LinkedPartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</LinkedPartID>
-<PropertyName/>
-<Gain>
-<ID>bad847bc-dc73-4417-b62d-98cd1288d48b</ID>
-<Type>Polynomial</Type>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
-<UseLimits>False</UseLimits>
-<LimitsReadOnly>False</LimitsReadOnly>
-<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
-<UseParentIncomingDataType>True</UseParentIncomingDataType>
-<LowerLimitScale Value="0" Scale="None" Actual="0"/>
-<UpperLimitScale Value="1" Scale="None" Actual="1"/>
-<LowerOutputScale Value="0" Scale="None" Actual="0"/>
-<UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits/>
-<DependentUnits>Output Variable</DependentUnits>
-<A Value="0" Scale="None" Actual="0"/>
-<B Value="0" Scale="None" Actual="0"/>
-<C Value="1" Scale="None" Actual="1"/>
-<D Value="0" Scale="None" Actual="0"/>
-</Gain>
-<UpdateAllParamsCount>10</UpdateAllParamsCount>
-</RobotPartInterface>
-<RobotPartInterface>
-<Name>Prismatic Motor</Name>
-<ID>c6fe548a-aece-429a-aa34-a3e627c7e60c</ID>
-<AssemblyFile>RoboticsGUI.dll</AssemblyFile>
-<ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSBPrismaticMotor</ClassName>
-<Enabled>True</Enabled>
-<IOComponentID>1</IOComponentID>
-<Gain>
-<ID>4a169d82-2abc-44c9-a22c-96b151da2c9d</ID>
-<Type>Polynomial</Type>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
-<UseLimits>False</UseLimits>
-<LimitsReadOnly>False</LimitsReadOnly>
-<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
-<UseParentIncomingDataType>True</UseParentIncomingDataType>
-<LowerLimitScale Value="0" Scale="None" Actual="0"/>
-<UpperLimitScale Value="1" Scale="None" Actual="1"/>
-<LowerOutputScale Value="0" Scale="None" Actual="0"/>
-<UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits/>
-<DependentUnits>Output Variable</DependentUnits>
-<A Value="0" Scale="None" Actual="0"/>
-<B Value="0" Scale="None" Actual="0"/>
-<C Value="1" Scale="None" Actual="1"/>
-<D Value="0" Scale="None" Actual="0"/>
-</Gain>
-</RobotPartInterface>
-</Parts>
+<Parts/>
 <PortNumber>6</PortNumber>
 <BaudRate>1</BaudRate>
 </RobotIOControl>
@@ -2486,7 +2229,7 @@
 <Radius Value="50" Scale="milli" Actual="0.05"/>
 <ConstantAttenuation>0</ConstantAttenuation>
 <LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
-<QuadraticAttenuationDistance Value="75" Scale="None" Actual="75"/>
+<QuadraticAttenuationDistance Value="10" Scale="None" Actual="10"/>
 <LatitudeSegments>10</LatitudeSegments>
 <LongtitudeSegments>10</LongtitudeSegments>
 </Light>
@@ -2521,7 +2264,7 @@
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
-<ConstantAttenuation>0.7</ConstantAttenuation>
+<ConstantAttenuation>0.9</ConstantAttenuation>
 <LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
 <QuadraticAttenuationDistance Value="0" Scale="None" Actual="0"/>
 <LatitudeSegments>10</LatitudeSegments>
@@ -2570,25 +2313,20 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_P</Name>
-<ID>039e18a4-e6c5-4753-afb8-b058ab0d6baa</ID>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Up</Name>
+<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
-<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
-<NodeID>5f6f483d-6d78-44cd-8303-c2f6ffc27244</NodeID>
-<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="1" Scale="None" Actual="1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2609,26 +2347,31 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Up</Name>
-<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_P</Name>
+<ID>039e18a4-e6c5-4753-afb8-b058ab0d6baa</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1" Scale="None" Actual="1"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="1" Scale="None" Actual="1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>5f6f483d-6d78-44cd-8303-c2f6ffc27244</NodeID>
+<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>8383ec3e-547b-4d56-a32b-8cc81595c4ff</Name>
-<ID>8383ec3e-547b-4d56-a32b-8cc81595c4ff</ID>
+<Name>b69f27ea-4a85-482b-aa11-9b50633c8598</Name>
+<ID>b69f27ea-4a85-482b-aa11-9b50633c8598</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -2722,7 +2465,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/09/2014 11:02:25"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/24/2014 10:00:31"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

@@ -126,6 +126,7 @@ Copy ..\AnimatSimPy.py ..\..\..\bin\AnimatSimPy.py</Command>
   <ItemGroup>
     <ClInclude Include="..\AnimatSimPy_wrap.h" />
     <ClInclude Include="..\PyClassFactory.h" />
+    <ClInclude Include="..\PyEmbedder.h" />
     <ClInclude Include="..\ScriptProcessorPy.h" />
     <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
@@ -133,6 +134,7 @@ Copy ..\AnimatSimPy.py ..\..\..\bin\AnimatSimPy.py</Command>
     <ClCompile Include="..\AnimatSimPy.cpp">
     </ClCompile>
     <ClCompile Include="..\PyClassFactory.cpp" />
+    <ClCompile Include="..\PyEmbedder.cpp" />
     <ClCompile Include="..\ScriptProcessorPy.cpp" />
     <ClCompile Include="..\StdAfx.cpp">
     </ClCompile>
