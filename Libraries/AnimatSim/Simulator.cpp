@@ -3023,7 +3023,7 @@ void Simulator::Load(CStdXml &oXml)
 \return	Pointer to the class factory.
 \exception Throws an exception if there is an error creating the class factory.
 **/
-IStdClassFactory *Simulator::LoadClassFactory(std::string strModuleName)
+IStdClassFactory *Simulator::LoadClassFactory(std::string strModuleName, bool bThrowError)
 {
 	IStdClassFactory *lpFactory=NULL;
 
@@ -3040,14 +3040,22 @@ try
 #ifdef _DEBUG
 	if(iFindDebug == -1 )
 	{
-		THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+		else
+			return NULL;
 	}
 #else
 	if(iFindDebug != -1)
-		THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
+		else
+			return NULL;
+	}
 #endif
 
-	lpFactory = IStdClassFactory::LoadModule(strModuleName);
+	lpFactory = IStdClassFactory::LoadModule(strModuleName, bThrowError);
 	return lpFactory;
 }
 catch(CStdErrorInfo oError)
@@ -3406,10 +3414,14 @@ CStdSerialize *Simulator::CreateObject(std::string strModule, std::string strCla
 			std::string strFullPathModule = m_strExecutablePath + strModule;
 
 			//Lets load the dynamic library and get a pointer to the class factory.
-			lpFactory = LoadClassFactory(strFullPathModule);
+			lpFactory = LoadClassFactory(strFullPathModule, false);
+
+			//If we could not load it using a full path then try just using the module name
+			if(!lpFactory)
+				lpFactory = LoadClassFactory(strModule);
 
 			//Now create an instance of a neural module. There is only one type of
-			CStdSerialize *lpObj = lpFactory->CreateObject(strClassName, strType, bThrowError);
+			CStdSerialize *lpObj = lpFactory->CreateObject(strClassName, strType, false);
 
 			delete lpFactory;
 

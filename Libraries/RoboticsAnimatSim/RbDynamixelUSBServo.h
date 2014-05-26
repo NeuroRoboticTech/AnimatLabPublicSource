@@ -260,6 +260,8 @@ public:
 	virtual int GetMaxSimPos_FP();
 	virtual float GetMaxSimPos();
 	virtual void SetMaxSimPos(float fltVal);	
+	
+	virtual void MicroSleep(unsigned int iTime) = 0;
 };
 
 			}	//DynamixelUSB

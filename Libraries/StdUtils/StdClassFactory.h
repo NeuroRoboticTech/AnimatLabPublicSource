@@ -37,7 +37,7 @@ public:
 	**/
 	virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true) = 0;
 
-	static IStdClassFactory *LoadModule(std::string strModuleName);
+	static IStdClassFactory *LoadModule(std::string strModuleName, bool bThrowError = true);
 };
 
 typedef IStdClassFactory *(*GetClassFactory)(void); 

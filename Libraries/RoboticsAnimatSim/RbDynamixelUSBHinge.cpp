@@ -110,6 +110,12 @@ void RbDynamixelUSBHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 
 #pragma endregion
 
+void RbDynamixelUSBHinge::MicroSleep(unsigned int iTime)
+{
+	if(m_lpSim)
+	m_lpSim->MicroSleep(iTime);
+}
+
 void RbDynamixelUSBHinge::Initialize()
 {
 	RobotPartInterface::Initialize();

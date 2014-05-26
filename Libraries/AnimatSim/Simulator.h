@@ -1044,7 +1044,7 @@ namespace AnimatSim
 			virtual void Load(CStdXml &oXml);
 			virtual void Save(std::string strFilename);
 
-			static IStdClassFactory *LoadClassFactory(std::string strModuleName);
+			static IStdClassFactory *LoadClassFactory(std::string strModuleName, bool bThrowError = true);
 
 			virtual void IncrementPhysicsBodyCount();
 

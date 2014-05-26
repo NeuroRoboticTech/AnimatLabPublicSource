@@ -40,7 +40,7 @@ IStdClassFactory::~IStdClassFactory()
 
 \return	Pointer to the loaded module, exception if not found.
 **/
-IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
+IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool bThrowError)
 {
 	TRACE_DEBUG("Loading Module: " + strModuleName);
 
@@ -53,8 +53,14 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 	
 	if(!hMod)
     {
-        int iError = GetLastError();
-		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + STR(iError));
+	    if(bThrowError)
+	    {
+	        int iError = GetLastError();        
+			THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + STR(iError));
+			return NULL;
+	    }
+	    else
+	    	return NULL;
     }
 
 	GetClassFactory lpFactoryFunc = NULL;
@@ -64,7 +70,12 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
     lpFactoryFunc = (GetClassFactory) GetProcAddress(hMod, "GetStdClassFactory"); 
 
 	if(!lpFactoryFunc)
-		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModuleName);
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModuleName);
+		else
+			return NULL;
+	}
 
 	TRACE_DEBUG("Finished Loading Module: " + strModuleName);
 	return lpFactoryFunc();
@@ -81,7 +92,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 
 \return	Pointer to the loaded module, exception if not found.
 **/
-IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
+IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool bThrowError)
 {
 	TRACE_DEBUG("Loading Module: " + strModuleName);
 
@@ -101,7 +112,12 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 	hMod = dlopen(strModRenamed.c_str(), RTLD_LAZY);
 	
 	if(!hMod)
-		THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
+		else
+			return NULL;
+	}
 
 	GetClassFactory lpFactoryFunc = NULL;
 
@@ -110,7 +126,12 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName)
 	lpFactoryFunc = (GetClassFactory) dlsym(hMod, "GetStdClassFactory");
 
 	if(!lpFactoryFunc || dlerror() != NULL)
-		THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Std_Err_lModuleProcNotLoaded, Std_Err_strModuleProcNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
+		else
+			return NULL;
+	}
 
 	TRACE_DEBUG("Finished Loading Module: " + strModRenamed);
 	IStdClassFactory *lpFact = lpFactoryFunc();

@@ -44,6 +44,12 @@ RbDynamixelUSBPrismatic::~RbDynamixelUSBPrismatic()
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTPrismaticController\r\n", "", -1, false, true);}
 }
 
+void RbDynamixelUSBPrismatic::MicroSleep(unsigned int iTime)
+{
+	if(m_lpSim)
+	m_lpSim->MicroSleep(iTime);
+}
+
 void RbDynamixelUSBPrismatic::StepSimulation()
 {
 	if(!m_lpSim->InSimulation())

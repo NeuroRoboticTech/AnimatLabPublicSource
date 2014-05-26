@@ -52,6 +52,7 @@ public:
 	virtual void Initialize();
     virtual void StepSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
+	virtual void MicroSleep(unsigned int iTime);    
 };
 
 			}	//DynamixelUSB

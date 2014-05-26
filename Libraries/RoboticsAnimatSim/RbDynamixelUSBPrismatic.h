@@ -23,6 +23,7 @@ public:
 	virtual ~RbDynamixelUSBPrismatic();
 
     virtual void StepSimulation();
+	virtual void MicroSleep(unsigned int iTime);    
 };
 
 			}	//DynamixelUSB
