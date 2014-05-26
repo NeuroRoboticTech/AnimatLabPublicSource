@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1CDAA48D-E571-3D48-AEA8-A9EC46395C1E}</ProjectGuid>
+    <ProjectGuid>{D4C4E998-FDCF-3749-8020-00E9B3F888D4}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_single.so</OutputName>
@@ -28,7 +27,6 @@
         <Include>../../../AnimatSim</Include>
         <Include>../../../OsgAnimatSim</Include>
         <Include>/usr/local/include/bullet</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -75,8 +73,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_single.so</OutputName>
@@ -90,7 +87,6 @@
         <Include>../../../AnimatSim</Include>
         <Include>../../../OsgAnimatSim</Include>
         <Include>/usr/local/include/bullet</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -138,8 +134,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_debug_double.so</OutputName>
@@ -152,7 +147,6 @@
         <Include>../../../AnimatSim</Include>
         <Include>../../../OsgAnimatSim</Include>
         <Include>/usr/local/include/bullet</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -200,8 +194,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libBulletAnimatSim_double.so</OutputName>
@@ -214,7 +207,6 @@
         <Include>../../../AnimatSim</Include>
         <Include>../../../OsgAnimatSim</Include>
         <Include>/usr/local/include/bullet</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>

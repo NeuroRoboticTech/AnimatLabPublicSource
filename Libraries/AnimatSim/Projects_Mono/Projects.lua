@@ -5,10 +5,10 @@
 		files  { "../*.h",
 				 "../*.cpp"}
 		includedirs { "../../../../include", 
-					  "../../../StdUtils",
-				      "../../../../../3rdParty/stlsoft-1.9.117/include" }
+					  "../../../StdUtils" }
 		libdirs { "../../../../bin" }
-		links { "dl"}
+		links { "dl", 
+				"boost_thread" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "ANIMATLIBRARY_EXPORTS"	}

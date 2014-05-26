@@ -7,8 +7,7 @@
 		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
-					  "../../AnimatSim",
-					  "../../../../3rdParty/stlsoft-1.9.117/include" }
+					  "../../AnimatSim" }
 		libdirs { "../../../bin" }
 		links { "dl"}
 	  

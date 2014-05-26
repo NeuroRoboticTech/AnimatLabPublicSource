@@ -8,8 +8,7 @@
 			      "../../../StdUtils", 
 		   	      "../../../AnimatSim",
 			      "../../../OsgAnimatSim",
-		   	      "/usr/local/include/bullet",
-				  "../../../../../3rdParty/stlsoft-1.9.117/include" }
+		   	      "/usr/local/include/bullet" }
 		libdirs { "../../../../bin" }
 		links { "dl" }
 	  

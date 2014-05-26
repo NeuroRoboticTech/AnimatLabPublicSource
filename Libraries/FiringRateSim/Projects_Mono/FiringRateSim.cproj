@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1FCECBB0-A19D-4940-B5DB-21C6D1D60A14}</ProjectGuid>
+    <ProjectGuid>{B4FBABC1-FCD8-DC46-ABB1-843BF2BE6FF9}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_debug.so</OutputName>
@@ -26,7 +25,6 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -48,8 +46,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim.so</OutputName>
@@ -61,7 +58,6 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -84,8 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_debug.so</OutputName>
@@ -96,7 +91,6 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -118,8 +112,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim.so</OutputName>
@@ -131,7 +124,6 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
-        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
       </Includes>
     </Includes>
     <LibPaths>

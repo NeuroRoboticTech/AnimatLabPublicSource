@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{C3A79F38-AB58-7D46-A27A-D87B049AA276}</ProjectGuid>
+		<ProjectGuid>{62C45B54-3510-4746-88D5-A7F964141E73}</ProjectGuid>
 		<RootNamespace>StdUtils_UnitTests</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -84,7 +84,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -97,7 +97,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>Debug\StdUtils_vc10D.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -116,7 +116,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -129,7 +129,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>Release\StdUtils_vc10.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -149,7 +149,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -162,7 +162,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>Debug\StdUtils_vc10D.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -181,7 +181,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -194,7 +194,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>Release\StdUtils_vc10.lib;%(AdditionalDependencies)</AdditionalDependencies>

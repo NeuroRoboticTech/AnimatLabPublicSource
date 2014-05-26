@@ -15,9 +15,6 @@
 #include "RbFirmataPart.h"
 #include "RbFirmataController.h"
 
-#include <platformstl/performance/performance_counter.hpp>
-#include <platformstl/synch/sleep_functions.h>
-
 namespace RoboticsAnimatSim
 {
 	namespace Robotics

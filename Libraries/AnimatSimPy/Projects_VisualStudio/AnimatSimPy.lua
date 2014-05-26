@@ -16,8 +16,7 @@ solution "AnimatSimPy"
 						  "../../AnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
-						  "../../../../3rdParty/Python-2.7.6/PC",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/Python-2.7.6/PC"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib",
@@ -38,8 +37,7 @@ solution "AnimatSimPy"
 						  "../../AnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
-						  "../../../../3rdParty/Python-2.7.6/PC",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/Python-2.7.6/PC"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib",
@@ -67,8 +65,7 @@ solution "AnimatSimPy"
 						  "../",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
-						  "../../../../3rdParty/Python-2.7.6/PC",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/Python-2.7.6/PC"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib",
@@ -87,8 +84,7 @@ solution "AnimatSimPy"
 						  "../",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
-						  "../../../../3rdParty/Python-2.7.6/PC",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/Python-2.7.6/PC"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib",

@@ -9,10 +9,10 @@
 			      "../../StdUtils", 
 		   	      "../../AnimatSim",
 				  "../../../../3rdParty/DynamixelSDK/linux/include",
-				  "../../../../3rdParty/openFrameworksArduino/src",
-				  "../../../../3rdParty/stlsoft-1.9.117/include"}
+				  "../../../../3rdParty/openFrameworksArduino/src"}
 		libdirs { "../../../bin" }
-		links { "dl" }
+		links { "dl",
+				"boos_thread"}
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "ROBOTICSANIMATLIBRARY_EXPORTS"	}
@@ -51,12 +51,12 @@
 		   	      "../../AnimatSim",
 		   	      "../../RoboticsAnimatSim",
 				  "../../../../3rdParty/DynamixelSDK/linux/include",
-				  "../../../../3rdParty/openFrameworksArduino/src",
-				  "../../../../3rdParty/stlsoft-1.9.117/include"}
+				  "../../../../3rdParty/openFrameworksArduino/src"}
 		libdirs { "../../../bin" }
 		links { "boost_system", 
 			"boost_filesystem",
-			"boost_unit_test_framework" }
+			"boost_unit_test_framework",
+			"boost_Thread"}
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG" }

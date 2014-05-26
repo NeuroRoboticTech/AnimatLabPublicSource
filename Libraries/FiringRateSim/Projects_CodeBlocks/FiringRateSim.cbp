@@ -22,7 +22,6 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -51,7 +50,6 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -81,7 +79,6 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -110,7 +107,6 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

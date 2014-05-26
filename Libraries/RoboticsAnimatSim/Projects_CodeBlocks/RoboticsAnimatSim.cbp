@@ -24,12 +24,12 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
 					<Add directory="../../../bin" />
 					<Add library="dl" />
+					<Add library="boos_thread" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
 					<Add library="dxl_debug" />
@@ -57,13 +57,13 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-shared" />
 					<Add directory="../../../bin" />
 					<Add library="dl" />
+					<Add library="boos_thread" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />
@@ -92,12 +92,12 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
 					<Add directory="../../../bin" />
 					<Add library="dl" />
+					<Add library="boos_thread" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
 					<Add library="dxl_debug" />
@@ -125,13 +125,13 @@
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
 					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
-					<Add directory="../../../../3rdParty/stlsoft-1.9.117/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-shared" />
 					<Add directory="../../../bin" />
 					<Add library="dl" />
+					<Add library="boos_thread" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="OsgAnimatSim" />

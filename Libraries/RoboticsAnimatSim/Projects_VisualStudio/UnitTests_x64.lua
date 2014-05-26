@@ -11,12 +11,13 @@
 						  "../../AnimatSim",
 						  "../../RoboticsAnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
+						  "../../../../3rdParty/OpenSceneGraph-3.0.1_x64/include",
 						  "../../../../3rdParty/DynamixelSDK/x64/import",
-						  "../../../../3rdParty/openFrameworksArduino/src",
-						  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib_x64",
+					  "../../../../3rdParty/OpenSceneGraph-3.0.1_x64/lib",
 					  "../../../../3rdParty/DynamixelSDK/x64/import" }
 			targetdir ("../../../bin_x64")
 			targetname ("Robotics_UnitTests_x64")
@@ -25,7 +26,9 @@
 			links { "wsock32", 
 					"netapi32", 
 					"comctl32", 
-					"wbemuuid" }
+					"wbemuuid",
+					"OpenThreadsd", 
+					"osgd" }
 	 
 		configuration { "Release_x64 or Release_Double_x64", "windows" }
 			includedirs { "../../../include",
@@ -34,11 +37,11 @@
 						  "../../RoboticsAnimatSim",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/DynamixelSDK/x64/import",
-						  "../../../../3rdParty/openFrameworksArduino/src",
-						  "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/openFrameworksArduino/src"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/boost_1_54_0/lib_x64",
+					  "../../../../3rdParty/OpenSceneGraph-3.0.1_x64/lib",
 					  "../../../../3rdParty/DynamixelSDK/x64/import" }
 			targetdir ("../../../bin_x64")
 			targetname ("Robotics_UnitTests_x64")
@@ -47,6 +50,8 @@
 			links { "wsock32",
 					"netapi32",
 					"comctl32",
-					"wbemuuid" }
+					"wbemuuid",
+					"OpenThreads", 
+					"osg" }
 
 								

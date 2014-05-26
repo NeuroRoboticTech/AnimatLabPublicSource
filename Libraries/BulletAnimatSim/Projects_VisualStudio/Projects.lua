@@ -14,8 +14,7 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../OsgAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
@@ -69,8 +68,7 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../OsgAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
@@ -124,8 +122,7 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../OsgAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",
@@ -179,8 +176,7 @@
 						  "../../StdUtils",
 						  "../../AnimatSim",
 						  "../../OsgAnimatSim",
-						  "../../../../3rdParty/boost_1_54_0",
-					      "../../../../3rdParty/stlsoft-1.9.117/include"}	  
+						  "../../../../3rdParty/boost_1_54_0"}	  
 			libdirs { "../../../lib",
 					  "$(OutDir)",
 					  "../../../../3rdParty/OpenSceneGraph-3.0.1/lib",

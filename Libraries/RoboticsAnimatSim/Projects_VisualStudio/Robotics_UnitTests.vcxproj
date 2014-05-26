@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{44484CF3-A815-794D-8A8D-AC6BD80170D8}</ProjectGuid>
+		<ProjectGuid>{9545B67B-EC01-0E4D-BDF5-FC43F91CF852}</ProjectGuid>
 		<RootNamespace>Robotics_UnitTests</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -84,7 +84,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -97,12 +97,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreadsd.lib;osgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Robotics_UnitTests.exe</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)Robotics_UnitTests.pdb</ProgramDataBaseFileName>
@@ -113,7 +113,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -126,12 +126,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreads.lib;osg.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Robotics_UnitTests.exe</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>
@@ -143,7 +143,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -156,12 +156,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreadsd.lib;osgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Robotics_UnitTests.exe</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<ProgramDataBaseFileName>$(OutDir)Robotics_UnitTests.pdb</ProgramDataBaseFileName>
@@ -172,7 +172,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -185,12 +185,12 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\DynamixelSDK\x32\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
-			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreads.lib;osg.lib;%(AdditionalDependencies)</AdditionalDependencies>
 			<OutputFile>$(OutDir)Robotics_UnitTests.exe</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\DynamixelSDK\x32\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
 			<SubSystem>Console</SubSystem>
 			<GenerateDebugInformation>false</GenerateDebugInformation>
 			<OptimizeReferences>true</OptimizeReferences>

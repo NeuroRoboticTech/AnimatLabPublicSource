@@ -6,8 +6,7 @@
 				 "../StdUtils_UnitTests/*.cpp"}
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
-					  "../../../../3rdParty/boost_1_54_0",
-					  "../../../../3rdParty/stlsoft-1.9.117/include" }	  
+					  "../../../../3rdParty/boost_1_54_0" }	  
 		links { "StdUtils_x64" }
 
 		configuration { "Debug_x64 or Debug_Double_x64", "windows" }

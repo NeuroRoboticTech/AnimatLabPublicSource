@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "AnimatSim.vcxproj", "{036831BE-B1D3-E040-A472-2D5975493793}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release_Double|Win32 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Debug|Win32.Build.0 = Debug|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Release|Win32.ActiveCfg = Release|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Release|Win32.Build.0 = Release|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
-		{7E5BC01B-EF6F-F546-92C5-2DF3CB9206C3}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Win32.ActiveCfg = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Win32.Build.0 = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Win32.ActiveCfg = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Win32.Build.0 = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Win32.Build.0 = Release_Double|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

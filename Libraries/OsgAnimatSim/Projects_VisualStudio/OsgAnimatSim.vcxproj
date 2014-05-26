@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{494DA28D-1F36-1E44-AC40-D0284E59B2E5}</ProjectGuid>
+		<ProjectGuid>{12B9BA24-33A7-4646-B3A2-537AFC68076C}</ProjectGuid>
 		<RootNamespace>OsgAnimatSim</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -88,7 +88,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +101,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,7 +120,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -133,7 +133,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -153,7 +153,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
 		<ClCompile>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>true</MinimalRebuild>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -166,7 +166,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -185,7 +185,7 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
 		<ClCompile>
 			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<MinimalRebuild>false</MinimalRebuild>
 			<StringPooling>true</StringPooling>
@@ -198,7 +198,7 @@
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\stlsoft-1.9.117\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\StdUtils;..\..\AnimatSim;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Link>
 			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>

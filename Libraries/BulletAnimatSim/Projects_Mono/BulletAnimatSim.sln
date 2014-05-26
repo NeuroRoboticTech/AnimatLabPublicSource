@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "BulletAnimatSim", "BulletAnimatSim.cproj", "{D4C4E998-FDCF-3749-8020-00E9B3F888D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+		Debug_Double|AnyCPU = Debug_Double|AnyCPU
+		Release_Double|AnyCPU = Release_Double|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Debug_Double|AnyCPU.ActiveCfg = Debug_Double|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Debug_Double|AnyCPU.Build.0 = Debug_Double|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Release_Double|AnyCPU.ActiveCfg = Release_Double|Any CPU
+		{D4C4E998-FDCF-3749-8020-00E9B3F888D4}.Release_Double|AnyCPU.Build.0 = Release_Double|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+	EndGlobalSection
+EndGlobal

@@ -14,7 +14,6 @@
 #include "RbStructure.h"
 #include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
-#include <platformstl/synch/sleep_functions.h>
 
 namespace RoboticsAnimatSim
 {

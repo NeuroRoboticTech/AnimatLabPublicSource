@@ -477,7 +477,7 @@ void BlSimulator::StepSimulation()
 		{
 			OsgSimulator::StepSimulation();
 
-			platformstl::performance_counter::epoch_type lStart = GetTimerTick();
+			unsigned long long lStart = GetTimerTick();
 
             if( m_bDrawDebug )
                 m_dbgDraw.BeginDraw();
