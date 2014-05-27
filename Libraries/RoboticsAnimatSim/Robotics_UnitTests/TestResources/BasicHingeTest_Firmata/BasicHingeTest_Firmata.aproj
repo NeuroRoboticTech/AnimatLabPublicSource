@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>40ee6385-34a8-41e0-9bf8-75eed531442d</ID>
+<ID>1a7c4a44-d661-4abc-9017-95a014046158</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>1a7c4a44-d661-4abc-9017-95a014046158</ID>
+<ID>278d6887-63e4-4e4b-bd26-ad654d9fdb93</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -483,7 +483,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>16df4e6b-7970-4766-81f8-1aaa77fc011d</ID>
+<ID>49e8703c-c10d-44c5-b643-db7f27ec198d</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -492,7 +492,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>49e8703c-c10d-44c5-b643-db7f27ec198d</ID>
+<ID>25274892-52ce-4771-83d7-ed468b6b12eb</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1574,7 +1574,10 @@
 <C Value="2" Scale="None" Actual="2"/>
 <D Value="-1" Scale="None" Actual="-1"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>False</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -1645,7 +1648,10 @@
 <C Value="3.1416" Scale="None" Actual="3.1416"/>
 <D Value="-1.57078" Scale="None" Actual="-1.57078"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>False</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>FiringRateGUI.dll</AssemblyFile>
@@ -1770,7 +1776,10 @@
 <C Value="5" Scale="nano" Actual="5e-009"/>
 <D Value="0" Scale="None" Actual="0"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>True</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>FiringRateGUI.dll</AssemblyFile>
@@ -1897,7 +1906,10 @@
 <C Value="8" Scale="nano" Actual="8e-009"/>
 <D Value="0" Scale="None" Actual="0"/>
 </Gain>
+<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <Enabled>True</Enabled>
+<RobotIOScale>1</RobotIOScale>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2596,6 +2608,7 @@
 <ID>894deef9-eae1-42b2-9288-6bf76adf9620</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotInterfaces.LANWirelessInterface</ClassName>
+<SynchSim>True</SynchSim>
 <PhysicsTimeStep Value="15" Scale="milli" Actual="0.015"/>
 <IOControls>
 <RobotIOControl>
@@ -2609,7 +2622,7 @@
 <ID>3599a0f0-1fc4-4494-be46-8eb62e85218e</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.Firmata.FirmataAnalogInput</ClassName>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <IOComponentID>0</IOComponentID>
 <LinkedPartID>35d18d08-8d6c-4831-9b7d-8a146875c20f</LinkedPartID>
 <PropertyName>ExternalCurrent</PropertyName>
@@ -2639,7 +2652,7 @@
 <ID>36394555-b6c9-427c-8129-fe6a042dd7ef</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.Firmata.FirmataDigitalInput</ClassName>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <IOComponentID>2</IOComponentID>
 <LinkedPartID>b8255b20-9bc6-42b3-9efc-b4b09e1cf241</LinkedPartID>
 <PropertyName>ExternalCurrent</PropertyName>
@@ -2699,7 +2712,7 @@
 <ID>acab60ea-2949-4f36-ad58-4f1b0fec3954</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.Firmata.FirmataPWMOutput</ClassName>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <IOComponentID>11</IOComponentID>
 <LinkedPartID>5f6f483d-6d78-44cd-8303-c2f6ffc27244</LinkedPartID>
 <PropertyName>FiringFrequency</PropertyName>
@@ -2729,7 +2742,7 @@
 <ID>effc0afc-81ce-4414-b828-cf57161b06d2</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.Firmata.FirmataHingeServo</ClassName>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <IOComponentID>9</IOComponentID>
 <LinkedPartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</LinkedPartID>
 <PropertyName/>
@@ -2964,9 +2977,26 @@
 <Stimuli>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_FB</Name>
-<ID>2b5c9846-7394-4f4a-8a38-a164ad68af4e</ID>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Up</Name>
+<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="1" Scale="None" Actual="1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>cc1f3eb0-88c0-4f24-8b52-5c865db55c53</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -2975,14 +3005,31 @@
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
-<NodeID>c64831d6-af84-4253-935c-201f24a00c39</NodeID>
-<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
+<NodeID>b8255b20-9bc6-42b3-9efc-b4b09e1cf241</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
 <BurstOnDuration Value="10" Scale="None" Actual="10"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Down</Name>
+<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="-1" Scale="None" Actual="-1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -3008,37 +3055,25 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Up</Name>
-<ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_FB</Name>
+<ID>2b5c9846-7394-4f4a-8a38-a164ad68af4e</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1" Scale="None" Actual="1"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="1" Scale="None" Actual="1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Down</Name>
-<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
-<StartTime Value="2" Scale="None" Actual="2"/>
-<EndTime Value="4" Scale="None" Actual="4"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="-1" Scale="None" Actual="-1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>c64831d6-af84-4253-935c-201f24a00c39</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -3065,8 +3100,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>3990e866-699a-494c-9a0b-96571ec25963</Name>
-<ID>3990e866-699a-494c-9a0b-96571ec25963</ID>
+<Name>8ee00fd4-6cd9-4834-8c3e-c784eecbb834</Name>
+<ID>8ee00fd4-6cd9-4834-8c3e-c784eecbb834</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -3160,7 +3195,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/06/2014 07:54:38"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/27/2014 07:40:14"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
