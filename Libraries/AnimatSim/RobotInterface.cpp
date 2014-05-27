@@ -161,7 +161,6 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
-
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);

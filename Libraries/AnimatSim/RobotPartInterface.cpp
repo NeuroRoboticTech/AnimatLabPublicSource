@@ -209,6 +209,15 @@ bool RobotPartInterface::SetData(const std::string &strDataType, const std::stri
 		return true;
 	}
 
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
