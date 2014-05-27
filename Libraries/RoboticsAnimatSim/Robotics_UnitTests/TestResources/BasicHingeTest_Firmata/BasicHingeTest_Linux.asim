@@ -895,7 +895,7 @@
 <MinPulse>544</MinPulse>
 </RobotPartInterface>
 </Parts>
-<ComPort>COM4</ComPort>
+<ComPort>ttyACM0</ComPort>
 <BaudRate>57600</BaudRate>
 </RobotIOControl>
 </IOControls>
