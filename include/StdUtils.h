@@ -84,6 +84,7 @@
 #include <string.h>
 
 #ifndef STD_DO_NOT_ADD_BOOST
+	#include "boost/format.hpp"
 	#include <boost/thread.hpp>
 	#include <boost/algorithm/string.hpp>
 	#include <boost/filesystem.hpp>

@@ -132,7 +132,6 @@ std::string STD_UTILS_PORT Std_Right(std::string strVal, int iCount);
 std::string STD_UTILS_PORT Std_ToUpper(std::string strVal);
 std::string STD_UTILS_PORT Std_ToLower(std::string strVal);
 std::string STD_UTILS_PORT Std_Replace(std::string strVal, std::string strFind, std::string strReplace);
-std::string STD_UTILS_PORT Std_Format(const char* szFormat,...);
 
 long STD_UTILS_PORT Std_RGB(unsigned char iRed, unsigned char iGreen, unsigned char iBlue);
 //long STD_UTILS_PORT Std_LoadRGB(CStdXml &oXml, std::string strParamName, bool bThrowError = true, long lDefault = 0);

@@ -475,7 +475,7 @@ std::string STD_UTILS_PORT Std_ToStr(bool bVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned char iVal)
-{return Std_Format(strFormat.c_str(), iVal);}
+{return str(boost::format("%d") % iVal);}
 
 /**
 \brief	Converts a value to a string
@@ -489,7 +489,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned char iVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned short iVal)
-{return Std_Format(strFormat.c_str(), iVal);}
+{return str(boost::format("%d") % iVal);}
 
 /**
 \brief	Converts a value to a string
@@ -503,7 +503,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, unsigned short iVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, int iVal)
-{return Std_Format(strFormat.c_str(), iVal);}
+{return str(boost::format("%d") % iVal);}
 
 /**
 \brief	Converts a value to a string
@@ -517,7 +517,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, int iVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, long lVal)
-{return Std_Format(strFormat.c_str(), lVal);}
+{return str(boost::format("%d") % lVal);}
 
 /**
 \brief	Converts a value to a string
@@ -531,7 +531,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, long lVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, float fltVal)
-{return Std_Format(strFormat.c_str(), fltVal);}
+{return str(boost::format("%f") % fltVal);}
 
 /**
 \brief	Converts a value to a string
@@ -545,7 +545,7 @@ std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, float fltVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(std::string strFormat, double dblVal)
-{return Std_Format(strFormat.c_str(), dblVal);}
+{return str(boost::format("%f") % dblVal);}
 
 /**
 \brief	Converts a value toa  bool.
@@ -1043,34 +1043,6 @@ std::string STD_UTILS_PORT Std_Replace(std::string strVal, std::string strFind, 
 		i = strVal.find(strFind, 0);
 	}
 	return strVal;
-}
-
-/**
-\brief	Formats a string
-
-\author	dcofer
-\date	5/3/2011
-
-\param	szFormat	The size format.
-
-\return	.
-**/
-std::string STD_UTILS_PORT Std_Format(const char* szFormat,...)
-{
-#ifdef WIN32
-	std::vector<CHAR> _buffer(8096);
-	va_list argList;
-	va_start(argList,szFormat);
-	int ret = _vsnprintf(&_buffer[0],8096,szFormat,argList);
-
-	va_end(argList);
-	std::string strVal;
-
-	strVal.assign(&_buffer[0],ret);
-	return strVal;
-#else
-	return "";
-#endif
 }
 
 /**
@@ -1917,7 +1889,7 @@ void STD_UTILS_PORT Std_ByteArrayToHexString(CStdArray<unsigned char> &aryBytes,
 
 	for(iByte=0; iByte<iByteLength; iByte++)
 	{
-		strByte = Std_Format("%02X", aryBytes[iByte]);
+		str(boost::format("%02x") % aryBytes[iByte]);
 		strHex += strByte;
 	}
 

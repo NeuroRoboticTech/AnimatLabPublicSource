@@ -77,6 +77,7 @@
 #include <boost/thread.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
+#include "boost/format.hpp"
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
