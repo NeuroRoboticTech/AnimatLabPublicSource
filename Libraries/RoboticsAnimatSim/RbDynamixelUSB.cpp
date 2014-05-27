@@ -135,6 +135,7 @@ void RbDynamixelUSB::ProcessIO()
 			m_aryMotorData.RemoveAll();
 			StepIO();
 			SendSynchronousMoveCommand();
+			m_lpSim->MicroSleep(15000);
 		}
 	}
 	catch(CStdErrorInfo oError)

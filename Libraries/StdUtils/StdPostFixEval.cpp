@@ -147,7 +147,7 @@ void CStdPostFixEval::FillInVariables(CStdArray<std::string> &aryPostFix)
 		lpVar = FindVariable(aryPostFix[i]);
 		if(lpVar)
 		{
-			strTemp = Std_Format("%f", lpVar->m_dblValue);
+			strTemp = str( boost::format("%f") % (float) lpVar->m_dblValue );
 			aryPostFix[i] = strTemp;
 		}
 	}
