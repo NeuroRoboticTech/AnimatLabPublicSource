@@ -12,7 +12,10 @@
 				  "../../../../3rdParty/openFrameworksArduino/src"}
 		libdirs { "../../../bin" }
 		links { "dl",
-				"boos_thread"}
+				"boost_thread",
+				"boost_chrono",
+				"osg",
+				"OpenThreads"}
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "ROBOTICSANIMATLIBRARY_EXPORTS"	}
@@ -56,7 +59,10 @@
 		links { "boost_system", 
 			"boost_filesystem",
 			"boost_unit_test_framework",
-			"boost_Thread"}
+			"boost_thread",
+			"boost_chrono",
+			"osg",
+			"OpenThreads"}
 		
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG" }
