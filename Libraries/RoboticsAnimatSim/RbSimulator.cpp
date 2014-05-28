@@ -200,6 +200,10 @@ void RbSimulator::StepSimulation()
 	{
 		std::string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
+
+		//For the robotics system there are no non-critical errors. If we get an error while running the simulation
+		//we need to exit immediately.
+		ShutdownSimulation();
 	}
 
 

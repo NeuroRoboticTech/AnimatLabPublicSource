@@ -334,7 +334,10 @@ float MotorizedJoint::DesiredVelocity()
 
 \param	fltVelocity	The new velocity. 
 **/
-void MotorizedJoint::DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = fltVelocity;}
+void MotorizedJoint::DesiredVelocity(float fltVelocity) 
+{
+	m_fltDesiredVelocity = fltVelocity;
+}
 
 /**
 \brief	Sets the desired velocity.
@@ -344,7 +347,10 @@ void MotorizedJoint::DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = 
 
 \param	fltInput	The new velocity. 
 **/
-void MotorizedJoint::MotorInput(float fltInput) {m_fltDesiredVelocity = fltInput;}
+void MotorizedJoint::MotorInput(float fltInput) 
+{
+	m_fltDesiredVelocity = fltInput;
+}
 
 /**
 \brief	Sets the previous velocity that is actually used by the physics method.

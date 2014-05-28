@@ -8,15 +8,18 @@ namespace AnimatSimPy
 	protected:
 		std::string m_strInitPy;
 		std::string m_strResetSimPy;
-		std::string m_strStepPhysicsEnginePy;
-		std::string m_strStepNeuralEnginePy;
-		std::string m_strStepSimulationPy;
+		std::string m_strBeforeStepPhysicsEnginePy;
+		std::string m_strAfterStepPhysicsEnginePy;
+		std::string m_strBeforeStepNeuralEnginePy;
+		std::string m_strAfterStepNeuralEnginePy;
+		std::string m_strBeforeStepSimulationPy;
+		std::string m_strAfterStepSimulationPy;
 		std::string m_strKillPy;
 		std::string m_strSimStartingPy;
 		std::string m_strSimPausingPy;
 		std::string m_strSimStoppingPy;
 		
-		virtual void ExecutePythonScript(const std::string &strPy);
+		virtual bool ExecutePythonScript(const std::string &strPy, bool bThrowError = true);
 
 	public:
 		ScriptProcessorPy(void);
@@ -28,14 +31,23 @@ namespace AnimatSimPy
 		virtual void ResetSimPy(std::string strVal);
 		virtual std::string ResetSimPy();
 
-		virtual void StepPhysicsEnginePy(std::string strVal);
-		virtual std::string StepPhysicsEnginePy();
+		virtual void BeforeStepPhysicsEnginePy(std::string strVal);
+		virtual std::string BeforeStepPhysicsEnginePy();
 
-		virtual void StepNeuralEnginePy(std::string strVal);
-		virtual std::string StepNeuralEnginePy();
+		virtual void AfterStepPhysicsEnginePy(std::string strVal);
+		virtual std::string AfterStepPhysicsEnginePy();
 
-		virtual void StepSimulationPy(std::string strVal);
-		virtual std::string StepSimulationPy();
+		virtual void BeforeStepNeuralEnginePy(std::string strVal);
+		virtual std::string BeforeStepNeuralEnginePy();
+
+		virtual void AfterStepNeuralEnginePy(std::string strVal);
+		virtual std::string AfterStepNeuralEnginePy();
+
+		virtual void BeforeStepSimulationPy(std::string strVal);
+		virtual std::string BeforeStepSimulationPy();
+
+		virtual void AfterStepSimulationPy(std::string strVal);
+		virtual std::string AfterStepSimulationPy();
 
 		virtual void KillPy(std::string strVal);
 		virtual std::string KillPy();
@@ -55,9 +67,13 @@ namespace AnimatSimPy
 		virtual void Initialize();
 		virtual void ResetSimulation();
 		virtual void Kill(bool bState = true);
-		virtual void StepPhysicsEngine();
-		virtual void StepNeuralEngine();
-		virtual void StepSimulation();
+
+		virtual void BeforeStepPhysicsEngine();
+		virtual void AfterStepPhysicsEngine();
+		virtual void BeforeStepNeuralEngine();
+		virtual void AfterStepNeuralEngine();
+		virtual void BeforeStepSimulation();
+		virtual void AfterStepSimulation();
 
 		virtual void SimStarting();
 		virtual void SimPausing();

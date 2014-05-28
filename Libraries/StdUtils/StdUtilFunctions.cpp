@@ -3079,6 +3079,11 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 			strFinalMessage = strMessage;
 
 		Std_Log(iLevel, bPrintHeader, strFinalMessage.c_str());
+#else
+		if(GetTraceLevel()==0 || iLevel>GetTraceLevel())
+			return;
+
+		std::cout << strMessage;
 #endif
 	}
 

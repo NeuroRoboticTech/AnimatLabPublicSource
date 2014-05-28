@@ -4328,6 +4328,8 @@ class MotorizedJoint(Joint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_MotorizedJoint
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MotorizedJoint_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MotorizedJoint_CastToDerived)
     def PhysicsMotorJoint(self, *args): return _AnimatSimPy.MotorizedJoint_PhysicsMotorJoint(self, *args)
     def EnableMotor(self, *args): return _AnimatSimPy.MotorizedJoint_EnableMotor(self, *args)
     def ServoMotor(self, *args): return _AnimatSimPy.MotorizedJoint_ServoMotor(self, *args)
@@ -4368,6 +4370,10 @@ class MotorizedJoint(Joint):
     def Load(self, *args): return _AnimatSimPy.MotorizedJoint_Load(self, *args)
 MotorizedJoint_swigregister = _AnimatSimPy.MotorizedJoint_swigregister
 MotorizedJoint_swigregister(MotorizedJoint)
+
+def MotorizedJoint_CastToDerived(*args):
+  return _AnimatSimPy.MotorizedJoint_CastToDerived(*args)
+MotorizedJoint_CastToDerived = _AnimatSimPy.MotorizedJoint_CastToDerived
 
 class BallSocket(Joint):
     __swig_setmethods__ = {}
@@ -6423,11 +6429,23 @@ class ScriptProcessor(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ScriptProcessor
     __del__ = lambda self : None;
-    def StepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_StepPhysicsEngine(self)
-    def StepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_StepNeuralEngine(self)
+    def BeforeStepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_BeforeStepPhysicsEngine(self)
+    def AfterStepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_AfterStepPhysicsEngine(self)
+    def BeforeStepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_BeforeStepNeuralEngine(self)
+    def AfterStepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_AfterStepNeuralEngine(self)
+    def BeforeStepSimulation(self): return _AnimatSimPy.ScriptProcessor_BeforeStepSimulation(self)
+    def AfterStepSimulation(self): return _AnimatSimPy.ScriptProcessor_AfterStepSimulation(self)
 ScriptProcessor_swigregister = _AnimatSimPy.ScriptProcessor_swigregister
 ScriptProcessor_swigregister(ScriptProcessor)
 
+
+def SetLastScriptError(*args):
+  return _AnimatSimPy.SetLastScriptError(*args)
+SetLastScriptError = _AnimatSimPy.SetLastScriptError
+
+def GetLastScriptError():
+  return _AnimatSimPy.GetLastScriptError()
+GetLastScriptError = _AnimatSimPy.GetLastScriptError
 class SimulationThread(ISimGUICallback):
     __swig_setmethods__ = {}
     for _s in [ISimGUICallback]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))

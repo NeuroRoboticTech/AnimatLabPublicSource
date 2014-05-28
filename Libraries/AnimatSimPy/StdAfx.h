@@ -6,6 +6,7 @@
 #pragma once
 
 #include "AnimatSim.h"
+#include "AnimatSimPyConstants.h"
 
 #if _MSC_VER > 1000
 #pragma once

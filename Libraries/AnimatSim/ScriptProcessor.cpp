@@ -35,6 +35,18 @@
 namespace AnimatSim
 {
 
+std::string g_strLastScriptError;
+
+void SetLastScriptError(std::string strError)
+{
+	g_strLastScriptError = strError;
+}
+
+std::string GetLastScriptError()
+{
+	return g_strLastScriptError;
+}
+
 ScriptProcessor::ScriptProcessor(void)
 {
 }
@@ -47,5 +59,6 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ScriptProcessor\r\n", "", -1, false, true);}
 }
+
 
 }

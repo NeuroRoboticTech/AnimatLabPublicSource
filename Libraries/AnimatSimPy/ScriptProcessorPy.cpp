@@ -35,17 +35,29 @@ void ScriptProcessorPy::ResetSimPy(std::string strVal) {m_strResetSimPy = strVal
 
 std::string ScriptProcessorPy::ResetSimPy() {return m_strResetSimPy;}
 
-void ScriptProcessorPy::StepPhysicsEnginePy(std::string strVal) {m_strStepPhysicsEnginePy = strVal;}
+void ScriptProcessorPy::BeforeStepPhysicsEnginePy(std::string strVal) {m_strBeforeStepPhysicsEnginePy = strVal;}
 
-std::string ScriptProcessorPy::StepPhysicsEnginePy() {return m_strStepPhysicsEnginePy;}
+std::string ScriptProcessorPy::BeforeStepPhysicsEnginePy() {return m_strBeforeStepPhysicsEnginePy;}
 
-void ScriptProcessorPy::StepNeuralEnginePy(std::string strVal) {m_strStepNeuralEnginePy = strVal;}
+void ScriptProcessorPy::AfterStepPhysicsEnginePy(std::string strVal) {m_strAfterStepPhysicsEnginePy = strVal;}
 
-std::string ScriptProcessorPy::StepNeuralEnginePy() {return m_strStepNeuralEnginePy;}
+std::string ScriptProcessorPy::AfterStepPhysicsEnginePy() {return m_strAfterStepPhysicsEnginePy;}
 
-void ScriptProcessorPy::StepSimulationPy(std::string strVal) {m_strStepSimulationPy = strVal;}
+void ScriptProcessorPy::BeforeStepNeuralEnginePy(std::string strVal) {m_strBeforeStepNeuralEnginePy = strVal;}
 
-std::string ScriptProcessorPy::StepSimulationPy() {return m_strStepSimulationPy;}
+std::string ScriptProcessorPy::BeforeStepNeuralEnginePy() {return m_strBeforeStepNeuralEnginePy;}
+
+void ScriptProcessorPy::AfterStepNeuralEnginePy(std::string strVal) {m_strAfterStepNeuralEnginePy = strVal;}
+
+std::string ScriptProcessorPy::AfterStepNeuralEnginePy() {return m_strAfterStepNeuralEnginePy;}
+
+void ScriptProcessorPy::BeforeStepSimulationPy(std::string strVal) {m_strBeforeStepSimulationPy = strVal;}
+
+std::string ScriptProcessorPy::BeforeStepSimulationPy() {return m_strBeforeStepSimulationPy;}
+
+void ScriptProcessorPy::AfterStepSimulationPy(std::string strVal) {m_strAfterStepSimulationPy = strVal;}
+
+std::string ScriptProcessorPy::AfterStepSimulationPy() {return m_strAfterStepSimulationPy;}
 
 void ScriptProcessorPy::KillPy(std::string strVal) {m_strKillPy = strVal;}
 
@@ -63,52 +75,86 @@ void ScriptProcessorPy::SimStoppingPy(std::string strVal) {m_strSimStoppingPy = 
 
 std::string ScriptProcessorPy::SimStoppingPy() {return m_strSimStoppingPy;}
 
-void ScriptProcessorPy::ExecutePythonScript(const std::string &strPy)
+bool ScriptProcessorPy::ExecutePythonScript(const std::string &strPy, bool bThrowError)
 {
+	//Create a static python embedder to init python. Using static to ensure that this is only done once per process.
+	static PyEmbedder g_pyEmbedder;
+	if(m_bEnabled)
+		return g_pyEmbedder.ExecutePythonScript(strPy, bThrowError);
+	else
+		return true;
 }
 
 void ScriptProcessorPy::Initialize()
 {
+	ScriptProcessor::Initialize();
+
 	ExecutePythonScript(m_strInitPy);
 }
 
 void ScriptProcessorPy::ResetSimulation()
 {
+	ScriptProcessor::ResetSimulation();
 	ExecutePythonScript(m_strResetSimPy);
 }
 
-void ScriptProcessorPy::StepPhysicsEngine()
+void ScriptProcessorPy::BeforeStepPhysicsEngine()
 {
-	ExecutePythonScript(m_strStepPhysicsEnginePy);
+	ScriptProcessor::BeforeStepPhysicsEngine();
+	ExecutePythonScript(m_strBeforeStepPhysicsEnginePy);
 }
 
-void ScriptProcessorPy::StepNeuralEngine()
+void ScriptProcessorPy::AfterStepPhysicsEngine()
 {
-	ExecutePythonScript(m_strStepNeuralEnginePy);
+	ScriptProcessor::AfterStepPhysicsEngine();
+	ExecutePythonScript(m_strAfterStepPhysicsEnginePy);
 }
 
-void ScriptProcessorPy::StepSimulation()
+void ScriptProcessorPy::BeforeStepNeuralEngine()
 {
-	ExecutePythonScript(m_strStepSimulationPy);
+	ScriptProcessor::BeforeStepNeuralEngine();
+	ExecutePythonScript(m_strBeforeStepNeuralEnginePy);
+}
+
+void ScriptProcessorPy::AfterStepNeuralEngine()
+{
+	ScriptProcessor::AfterStepNeuralEngine();
+	ExecutePythonScript(m_strAfterStepNeuralEnginePy);
+}
+
+void ScriptProcessorPy::BeforeStepSimulation()
+{
+	ScriptProcessor::BeforeStepSimulation();
+	ExecutePythonScript(m_strBeforeStepSimulationPy);
+}
+
+void ScriptProcessorPy::AfterStepSimulation()
+{
+	ScriptProcessor::AfterStepSimulation();
+	ExecutePythonScript(m_strAfterStepSimulationPy);
 }
 
 void ScriptProcessorPy::Kill(bool bState)
 {
+	ScriptProcessor::Kill();
 	ExecutePythonScript(m_strKillPy);
 }
 
 void ScriptProcessorPy::SimStarting()
 {
+	ScriptProcessor::SimStarting();
 	ExecutePythonScript(m_strSimStartingPy);
 }
 
 void ScriptProcessorPy::SimPausing()
 {
+	ScriptProcessor::SimPausing();
 	ExecutePythonScript(m_strSimPausingPy);
 }
 
 void ScriptProcessorPy::SimStopping()
 {
+	ScriptProcessor::SimStopping();
 	ExecutePythonScript(m_strSimStoppingPy);
 }
 
@@ -116,45 +162,81 @@ bool ScriptProcessorPy::SetData(const std::string &strDataType, const std::strin
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strDataType, strValue, false))
+	if(ScriptProcessor::SetData(strDataType, strValue, false))
 		return true;
-	/*
-	if(strType == "GAIN")
+
+	if(strType == "ENABLED")
 	{
-		AddGain(strValue);
+		Enabled(Std_ToBool(strValue));
 		return true;
 	}
 
-	if(strType == "ORIGINID")
+	if(strType == "RESETSIMPY")
 	{
-		SetOriginID(strValue);
+		ResetSimPy(strValue);
 		return true;
 	}
 
-	if(strType == "DESTINATIONID")
+	if(strType == "BEFORESTEPPHYSICSENGINEPY")
 	{
-		SetDestinationID(strValue);
+		BeforeStepPhysicsEnginePy(strValue);
 		return true;
 	}
 
-	if(strType == "DELAYBUFFERMODE")
+	if(strType == "AFTERSTEPPHYSICSENGINEPY")
 	{
-		DelayBufferMode((eDelayBufferMode) atoi(strValue.c_str()));
+		AfterStepPhysicsEnginePy(strValue);
 		return true;
 	}
 
-	if(strType == "DELAYBUFFERINTERVAL")
+	if(strType == "BEFORESTEPNEURALENGINEPY")
 	{
-		DelayBufferInterval(atof(strValue.c_str()));
+		BeforeStepNeuralEnginePy(strValue);
 		return true;
 	}
 
-	if(strType == "ROBOTIOSCALE")
+	if(strType == "AFTERSTEPNEURALENGINEPY")
 	{
-		RobotIOScale(atof(strValue.c_str()));
+		AfterStepNeuralEnginePy(strValue);
 		return true;
 	}
-*/
+
+	if(strType == "BEFORESTEPSIMULATIONPY")
+	{
+		BeforeStepSimulationPy(strValue);
+		return true;
+	}
+
+	if(strType == "AFTERSTEPSIMULATIONPY")
+	{
+		AfterStepSimulationPy(strValue);
+		return true;
+	}
+
+	if(strType == "KILLPY")
+	{
+		KillPy(strValue);
+		return true;
+	}
+
+	if(strType == "SIMSTARTINGPY")
+	{
+		SimStartingPy(strValue);
+		return true;
+	}
+
+	if(strType == "SIMPAUSINGPY")
+	{
+		SimPausingPy(strValue);
+		return true;
+	}
+
+	if(strType == "SIMSTOPPINGPY")
+	{
+		SimStoppingPy(strValue);
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
@@ -164,46 +246,44 @@ bool ScriptProcessorPy::SetData(const std::string &strDataType, const std::strin
 
 void ScriptProcessorPy::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryProperties);
-/*
-	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
-	aryProperties.Add(new TypeProperty("CalculatedVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
-	aryProperties.Add(new TypeProperty("NextVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	ScriptProcessor::QueryProperties(aryProperties);
 
-	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("DelayBufferMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("DelayBufferInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("RobotIOScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	*/
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ResetSimPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BeforeStepPhysicsEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AfterStepPhysicsEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BeforeStepNeuralEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AfterStepNeuralEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BeforeStepSimulationPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AfterStepSimulationPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("KillPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimStartingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimPausingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimStoppingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void ScriptProcessorPy::Load(StdUtils::CStdXml &oXml)
 {
-	AnimatBase::Load(oXml);
+	ScriptProcessor::Load(oXml);
 
-	/*
-	oXml.IntoElem();  //Into Adapter Element
+	oXml.IntoElem();  //Into Script Element
 
-	//Load Source Data
-	SourceModule(oXml.GetChildString("SourceModule"));
-	SourceID(oXml.GetChildString("SourceID"));
-	SourceDataType(oXml.GetChildString("SourceDataType"));
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
+	InitPy(oXml.GetChildString("InitPy", m_strInitPy));
+	ResetSimPy(oXml.GetChildString("ResetSimPy", m_strResetSimPy));
+	BeforeStepPhysicsEnginePy(oXml.GetChildString("BeforeStepPhysicsEnginePy", m_strBeforeStepPhysicsEnginePy));
+	AfterStepPhysicsEnginePy(oXml.GetChildString("AfterStepPhysicsEnginePy", m_strAfterStepPhysicsEnginePy));
+	BeforeStepNeuralEnginePy(oXml.GetChildString("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy));
+	AfterStepNeuralEnginePy(oXml.GetChildString("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy));
+	BeforeStepSimulationPy(oXml.GetChildString("BeforeStepSimulationPy", m_strBeforeStepSimulationPy));
+	AfterStepSimulationPy(oXml.GetChildString("AfterStepSimulationPy", m_strAfterStepSimulationPy));
+	KillPy(oXml.GetChildString("KillPy", m_strKillPy));
+	SimStartingPy(oXml.GetChildString("SimStartingPy", m_strSimStartingPy));
+	SimPausingPy(oXml.GetChildString("SimPausingPy", m_strSimPausingPy));
+	SimStoppingPy(oXml.GetChildString("SimStoppingPy", m_strSimStoppingPy));
 
-	//Load Target Data
-	TargetModule(oXml.GetChildString("TargetModule"));
-	TargetID(oXml.GetChildString("TargetID"));
-
-	SetGain(LoadGain(m_lpSim, "Gain", oXml));
-	
-	Enabled(oXml.GetChildBool("Enabled"));
-
-	DelayBufferMode((eDelayBufferMode) oXml.GetChildInt("DelayBufferMode", m_eDelayBufferMode));
-	DelayBufferInterval(oXml.GetChildFloat("DelayBufferInterval", m_fltDelayBufferInterval));
-
-	RobotIOScale(oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale));
-
-	oXml.OutOfElem(); //OutOf Adapter Element
-	*/
+	oXml.OutOfElem(); //OutOf Script Element
 }
 
 
