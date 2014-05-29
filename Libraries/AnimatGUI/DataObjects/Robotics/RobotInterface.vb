@@ -258,6 +258,7 @@ Namespace DataObjects
                     Me.RemoveFromSim(True)
                     m_doOrganism.RobotInterface = Nothing
                     Me.RemoveWorksapceTreeView()
+                    If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
                     Return True
                 Catch ex As Exception
                     Throw ex
@@ -383,14 +384,6 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleFilename)
-
-                'This is used in the interface to determine if we are running in sim mode or in robot control mode.
-                'If we are in sim mode then none of the robot sim/init methods are called.
-                If Util.ExportRobotInterface Is Nothing Then
-                    oXml.AddChildElement("InSimulation", True)
-                Else
-                    oXml.AddChildElement("InSimulation", False)
-                End If
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
                 oXml.AddChildElement("SynchSim", Me.SynchSim)

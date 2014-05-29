@@ -244,6 +244,7 @@
     <Compile Include="Collections\RobotInterfacess.vb" />
     <Compile Include="Collections\RobotIOControls.vb" />
     <Compile Include="Collections\RobotPartInterfaces.vb" />
+    <Compile Include="Collections\ScriptProcessors.vb" />
     <Compile Include="Collections\Stimuli.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -505,6 +506,8 @@
     <Compile Include="DataObjects\Robotics\MotorControlSystem.vb" />
     <Compile Include="DataObjects\Robotics\RobotInterface.vb" />
     <Compile Include="DataObjects\Robotics\RobotPartInterface.vb" />
+    <Compile Include="DataObjects\Scripting\ScriptProcessor.vb" />
+    <Compile Include="DataObjects\Scripting\ScriptProcessorPy.vb" />
     <Compile Include="DataObjects\Simulation.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -1368,7 +1371,6 @@
     <EmbeddedResource Include="Graphics\Lightbulb_Small.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataObjects\ProgramModules\" />
     <Folder Include="Forms\ProgramModules\" />
     <Folder Include="My Project\" />
   </ItemGroup>

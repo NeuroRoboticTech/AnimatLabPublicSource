@@ -1133,6 +1133,7 @@ Namespace Forms
         Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Nothing)
         Protected m_aryRobotInterfaces As New Collections.RobotInterfaces(Nothing)
         Protected m_aryRobotIOControls As New Collections.RobotIOControls(Nothing)
+        Protected m_aryScriptProcessors As New Collections.ScriptProcessors(Nothing)
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1630,6 +1631,12 @@ Namespace Forms
         Public Overridable ReadOnly Property RobotIOControls() As Collections.RobotIOControls
             Get
                 Return m_aryRobotIOControls
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ScriptProcessors() As Collections.ScriptProcessors
+            Get
+                Return m_aryScriptProcessors
             End Get
         End Property
 
@@ -2263,6 +2270,7 @@ Namespace Forms
                 m_aryRobotPartInterfaces.Clear()
                 m_aryRobotInterfaces.Clear()
                 m_aryRobotIOControls.Clear()
+                m_aryScriptProcessors.Clear()
                 m_aryProjectMigrations.Clear()
 
                 DataObjects.Physical.MaterialType.ClearRegisteredMaterialTypes()
@@ -2477,6 +2485,13 @@ Namespace Forms
                                 Dim doConv As DataObjects.Robotics.RobotIOControl = CreateRobotIOControl(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
                                     m_aryRobotIOControls.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Scripting.ScriptProcessor), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Scripting.ScriptProcessor")
+                                Dim doConv As DataObjects.Scripting.ScriptProcessor = CreateScriptProcessor(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryScriptProcessors.Add(doConv)
                                     m_aryAllDataTypes.Add(doConv)
                                 End If
                             End If
@@ -2787,6 +2802,22 @@ Namespace Forms
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
                     Util.ShowMessage("CreateRobotIOControl: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateScriptProcessor(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Scripting.ScriptProcessor
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Scripting.ScriptProcessor = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Scripting.ScriptProcessor)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateScriptProcessor: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try

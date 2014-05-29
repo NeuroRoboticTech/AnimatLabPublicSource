@@ -700,7 +700,7 @@ void Structure::AddScript(std::string strXml)
 		CStdXml oXml;
 		oXml.Deserialize(strXml);
 		oXml.FindElement("Root");
-		oXml.FindChildElement("RigidBody");
+		oXml.FindChildElement("Script");
 
 		lpScript = LoadScript(oXml);
 		lpScript->Initialize();

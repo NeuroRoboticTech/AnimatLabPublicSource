@@ -237,6 +237,7 @@ Namespace DataObjects
                     Util.Application.AppIsBusy = True
                     m_doParentInterface.IOControls.Remove(Me.ID)
                     Me.RemoveWorksapceTreeView()
+                    If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
                     Return True
                 Catch ex As Exception
                     Throw ex

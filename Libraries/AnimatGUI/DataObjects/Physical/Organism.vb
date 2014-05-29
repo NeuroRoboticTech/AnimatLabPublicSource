@@ -203,6 +203,11 @@ Namespace DataObjects.Physical
                     popup.Items.Add(mcAddRoot)
                 End If
 
+                If m_doScript Is Nothing Then
+                    Dim mcAddScript As New System.Windows.Forms.ToolStripMenuItem("Add script", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddScript))
+                    popup.Items.Add(mcAddScript)
+                End If
+
                 If Util.Application.RobotInterfaces.Count > 0 AndAlso m_doRobotInterface Is Nothing Then
                     Dim mcAddInterface As New System.Windows.Forms.ToolStripMenuItem("Add robot interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddRobotInterface.gif"), New EventHandler(AddressOf Me.OnAddRobotInterface))
                     popup.Items.Add(mcAddInterface)
@@ -711,6 +716,7 @@ Namespace DataObjects.Physical
                     'First remove the old one if it exists
                     If Not m_doRobotInterface Is Nothing Then
                         m_doRobotInterface.RemoveWorksapceTreeView()
+                        m_doRobotInterface.RemoveFromSim(True)
                         m_doRobotInterface = Nothing
                     End If
 

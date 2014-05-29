@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>c64ba0d3-16d7-4837-914c-5d1cef1eee94</ID>
+<ID>1b626520-1c8d-4c3e-87a1-31d3eca417b8</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>19cef173-cae5-4783-87f7-4a4e4489680d</ID>
+<ID>124c82d7-4dae-4f78-84ea-dcb3220c2b90</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -430,6 +430,27 @@
 <WidthSections>1</WidthSections>
 <HeightSections>1</HeightSections>
 </RigidBody>
+<Script>
+<Name>Python Script</Name>
+<ID>219f24b6-7f6d-4489-ae4e-a83f0827a589</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Scripting.ScriptProcessorPy</ClassName>
+<InitPy>elbow = AnimatSimPy.MotorizedJoint.CastToDerived(AnimatSimPy.ActiveSim().FindByID("ba1616eb-45ad-48b4-aee4-f47c6d19ba09"))
+</InitPy>
+<ResetSimPy/>
+<BeforeStepPhysicsEnginePy>vel = -1.5*math.sin(1.5*AnimatSimPy.ActiveSim().Time())
+elbow.MotorInput(vel)
+</BeforeStepPhysicsEnginePy>
+<AfterStepPhysicsEnginePy/>
+<BeforeStepNeuralEnginePy/>
+<AfterStepNeuralEnginePy/>
+<BeforeStepSimulationPy/>
+<AfterStepSimulationPy/>
+<KillPy/>
+<SimStartingPy/>
+<SimPausingPy/>
+<SimStoppingPy/>
+</Script>
 <CollisionExclusionPairs/>
 <NervousSystem>
 <NeuralModules/>
@@ -746,8 +767,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>abeacca2-3283-4ca3-add6-a9aa1acd7906</Name>
-<ID>abeacca2-3283-4ca3-add6-a9aa1acd7906</ID>
+<Name>bbf0533c-ea52-4a20-96f3-dd285c7991f0</Name>
+<ID>bbf0533c-ea52-4a20-96f3-dd285c7991f0</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -841,7 +862,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/27/2014 13:46:43"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/29/2014 10:05:28"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

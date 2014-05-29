@@ -35,6 +35,8 @@ Namespace DataObjects.Physical
 
         Protected m_aryCollisionExclusionPairs As New Collections.CollisionPairs(Me)
 
+        Protected m_doScript As Scripting.ScriptProcessor
+
 #End Region
 
 #Region " Properties "
@@ -162,6 +164,16 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Script() As Scripting.ScriptProcessor
+            Get
+                Return m_doScript
+            End Get
+            Set(ByVal Value As Scripting.ScriptProcessor)
+                m_doScript = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -203,6 +215,7 @@ Namespace DataObjects.Physical
             MyBase.ClearIsDirty()
             If Not m_dbRoot Is Nothing Then m_dbRoot.ClearIsDirty()
             If Not m_aryCollisionExclusionPairs Is Nothing Then m_aryCollisionExclusionPairs.ClearIsDirty()
+            If Not m_doScript Is Nothing Then m_doScript.ClearIsDirty()
         End Sub
 
         Public Overrides Sub AfterClone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -223,6 +236,7 @@ Namespace DataObjects.Physical
             If Not doOrig.WorkspaceImage Is Nothing Then m_WorkspaceImage = DirectCast(doOrig.WorkspaceImage.Clone(), Image)
             If Not doOrig.m_DragImage Is Nothing Then m_DragImage = DirectCast(doOrig.m_DragImage.Clone(), Image)
             If Not doOrig.RootBody Is Nothing Then m_dbRoot = DirectCast(doOrig.RootBody.Clone(Me, bCutData, doRoot), RigidBody)
+            If Not doOrig.m_doScript Is Nothing Then m_doScript = DirectCast(doOrig.m_doScript.Clone(Me, bCutData, doRoot), Scripting.ScriptProcessor)
 
             'm_frmBodyEditor = doOrig.m_frmBodyEditor
             m_iNewBodyIndex = doOrig.m_iNewBodyIndex
@@ -245,13 +259,15 @@ Namespace DataObjects.Physical
         Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList, ByVal arySelectedItems As ArrayList)
             MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
-            Me.RootBody.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not Me.RootBody Is Nothing Then Me.RootBody.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doScript Is Nothing Then m_doScript.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
 
         Public Overrides Sub AddToRecursiveSelectedItemsList(ByVal arySelectedItems As ArrayList)
             MyBase.AddToRecursiveSelectedItemsList(arySelectedItems)
 
-            Me.RootBody.AddToRecursiveSelectedItemsList(arySelectedItems)
+            If Not Me.RootBody Is Nothing Then Me.RootBody.AddToRecursiveSelectedItemsList(arySelectedItems)
+            If Not m_doScript Is Nothing Then m_doScript.AddToRecursiveSelectedItemsList(arySelectedItems)
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -456,6 +472,9 @@ Namespace DataObjects.Physical
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.FindChildrenOfType(tpTemplate, colDataObjects)
             End If
+            If Not m_doScript Is Nothing Then
+                m_doScript.FindChildrenOfType(tpTemplate, colDataObjects)
+            End If
         End Sub
 
         Public Overrides Function FindDragObject(ByVal strStructureName As String, ByVal strDataItemID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.DragObject
@@ -554,6 +573,11 @@ Namespace DataObjects.Physical
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
             End If
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            End If
+
         End Sub
 
         Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
@@ -575,6 +599,10 @@ Namespace DataObjects.Physical
                 Next
             End If
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            End If
+
             Return tnNode
         End Function
 
@@ -591,6 +619,11 @@ Namespace DataObjects.Physical
                 If Me.RootBody Is Nothing Then
                     Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
                     popup.Items.Add(mcAddRoot)
+                End If
+
+                If m_doScript Is Nothing Then
+                    Dim mcAddScript As New System.Windows.Forms.ToolStripMenuItem("Add script", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddScript))
+                    popup.Items.Add(mcAddScript)
                 End If
 
                 Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
@@ -653,6 +686,10 @@ Namespace DataObjects.Physical
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.InitializeAfterLoad()
             End If
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeAfterLoad()
+            End If
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
@@ -660,6 +697,10 @@ Namespace DataObjects.Physical
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.InitializeSimulationReferences(bShowError)
+            End If
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 
@@ -698,6 +739,19 @@ Namespace DataObjects.Physical
                     oXml.OutOfElem()
                 End If
 
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " script processor"
+                If oXml.FindChildElement("Script", False) Then
+                    oXml.IntoChildElement("Script")
+                    Dim strAssemblyFile As String = oXml.GetChildString("AssemblyFile")
+                    Dim strClassName As String = oXml.GetChildString("ClassName")
+                    oXml.OutOfElem()
+
+                    m_doScript = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), Scripting.ScriptProcessor)
+                    m_doScript.LoadData(oXml)
+                Else
+                    m_doScript = Nothing
+                End If
+
                 'Now lets find the index values used for adding new bodies and joints.
                 Dim aryBodies As AnimatGUI.Collections.SortedRigidBodies = Me.GetChildBodiesList()
                 Dim aryJoints As AnimatGUI.Collections.SortedJoints = Me.GetChildJointsList()
@@ -728,6 +782,10 @@ Namespace DataObjects.Physical
                     m_dbRoot.SaveData(Me, oXml)
                 End If
 
+                If Not m_doScript Is Nothing Then
+                    m_doScript.SaveData(oXml)
+                End If
+
                 'Save collision pairs
                 Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " collision exclusions"
                 oXml.AddChildElement("CollisionExclusionPairs")
@@ -755,6 +813,10 @@ Namespace DataObjects.Physical
 
                 If Not m_dbRoot Is Nothing Then
                     m_dbRoot.SaveSimulationXml(oXml, Me)
+                End If
+
+                If Not m_doScript Is Nothing Then
+                    m_doScript.SaveSimulationXml(oXml, Me)
                 End If
 
                 'Save collision pairs
@@ -849,6 +911,7 @@ Namespace DataObjects.Physical
 
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_dbRoot Is Nothing Then doObject = m_dbRoot.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doScript Is Nothing Then doObject = m_doScript.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryCollisionExclusionPairs Is Nothing Then doObject = m_aryCollisionExclusionPairs.FindObjectByID(strID)
             Return doObject
 
@@ -901,6 +964,41 @@ Namespace DataObjects.Physical
 
             Try
                 Me.AddRootBody()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Protected Overridable Sub OnAddScript(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = Util.Application.ScriptProcessors
+                frmSelInterface.PartTypeName = "Script"
+
+                If Not m_doScript Is Nothing Then
+                    If Util.ShowMessage("There is already a script associated with this organism. Do you want to replace it?", "Replace script", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    'First remove the old one if it exists
+                    If Not m_doScript Is Nothing Then
+                        m_doScript.RemoveWorksapceTreeView()
+                        m_doScript.RemoveFromSim(True)
+                        m_doScript = Nothing
+                    End If
+
+                    'Then create the new one.
+                    Dim doScript As Scripting.ScriptProcessor = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Scripting.ScriptProcessor)
+                    doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                    doScript.AddToSim(True)
+                    m_doScript = doScript
+                End If
+
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

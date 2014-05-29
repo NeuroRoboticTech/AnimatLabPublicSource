@@ -382,6 +382,7 @@ Namespace DataObjects
 
                     Me.DiconnectLinkedPartEvents()
                     Me.ParentIOControl.Parts.Remove(Me.ID)
+                    If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
 
                     Me.RemoveWorksapceTreeView()
                     Return True
