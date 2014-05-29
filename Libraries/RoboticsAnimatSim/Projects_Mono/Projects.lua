@@ -12,6 +12,7 @@
 		libdirs { "../../../../bin" }
 		links { "dl", 
 				"boost_thread",
+				"boost_chrono",
 				"osg",
 				"OpenThreads"}
 	  
@@ -58,6 +59,7 @@
 			    "boost_filesystem",
 			    "boost_unit_test_framework", 
 				"boost_thread",
+				"boost_chrono",
 				"osg",
 				"OpenThreads" }
 		

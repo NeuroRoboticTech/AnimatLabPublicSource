@@ -102,7 +102,7 @@
 <DataItemID>b8255b20-9bc6-42b3-9efc-b4b09e1cf241</DataItemID>
 <SelectedDataType>FiringFrequency</SelectedDataType>
 <DataSubSet>4</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<PrevDataSubset>4</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -120,7 +120,7 @@
 <DataItemID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</DataItemID>
 <SelectedDataType>FiringFrequency</SelectedDataType>
 <DataSubSet>5</DataSubSet>
-<PrevDataSubset>4</PrevDataSubset>
+<PrevDataSubset>5</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -146,7 +146,7 @@
 <DataItemID>3bf95c30-4041-4ae1-be14-4059849ff44a</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>6</DataSubSet>
-<PrevDataSubset>5</PrevDataSubset>
+<PrevDataSubset>6</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -172,7 +172,7 @@
 <DataItemID>35d18d08-8d6c-4831-9b7d-8a146875c20f</DataItemID>
 <SelectedDataType>ExternalCurrent</SelectedDataType>
 <DataSubSet>7</DataSubSet>
-<PrevDataSubset>6</PrevDataSubset>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -198,7 +198,7 @@
 <DataItemID>35d18d08-8d6c-4831-9b7d-8a146875c20f</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>8</DataSubSet>
-<PrevDataSubset>7</PrevDataSubset>
+<PrevDataSubset>8</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -212,6 +212,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>44000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8981"/>
+<GraphConfig ByteCount="8997"/>
 </Form>
 </Form>

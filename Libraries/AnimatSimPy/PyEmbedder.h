@@ -6,6 +6,8 @@ namespace AnimatSimPy
 	class PyEmbedder
 	{
 	protected:
+		bool m_bPyInit;
+
 		virtual void InitPython();
 		virtual void FinalizePython();
 
@@ -13,6 +15,7 @@ namespace AnimatSimPy
 		PyEmbedder(void);
 		virtual ~PyEmbedder(void);
 
+		virtual bool ExecutePythonScript(const std::string strPy, bool bThrowError = true);
 		virtual void ResetPython();
 	};
 

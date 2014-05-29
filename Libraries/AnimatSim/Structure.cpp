@@ -284,6 +284,9 @@ occurrs within this loop will lead to major impacts on the ultimate performance 
 **/
 void Structure::StepPhysicsEngine()
 {
+	if(m_lpScript)
+		m_lpScript->BeforeStepPhysicsEngine();
+
 	if(m_lpBody)
 	{
 		m_lpBody->StepSimulation();
@@ -291,7 +294,7 @@ void Structure::StepPhysicsEngine()
 	}
 
 	if(m_lpScript)
-		m_lpScript->StepPhysicsEngine();
+		m_lpScript->AfterStepPhysicsEngine();
 }
 
 void Structure::Initialize()
@@ -309,20 +312,14 @@ void Structure::Kill(bool bState)
 
 void Structure::SimStarting()
 {
-	if(m_lpScript)
-		m_lpScript->SimStarting();
 }
 
 void Structure::SimPausing()
 {
-	if(m_lpScript)
-		m_lpScript->SimPausing();
 }
 
 void Structure::SimStopping()
 {
-	if(m_lpScript)
-		m_lpScript->SimStopping();
 }
 
 /**
@@ -1080,7 +1077,7 @@ ScriptProcessor *Structure::LoadScript(CStdXml &oXml)
 try
 {
 	oXml.IntoElem(); //Into Child Element
-	strModule = oXml.GetChildString("ModuleFileName", "");
+	strModule = oXml.GetChildString("ModuleName", "");
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 

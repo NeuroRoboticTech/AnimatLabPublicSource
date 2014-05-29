@@ -141,10 +141,13 @@ void Organism::StepNeuralEngine()
 {
 	if(!m_bDead)
 	{
+		if(m_lpScript)
+			m_lpScript->BeforeStepPhysicsEngine();
+
 		m_lpNervousSystem->StepSimulation();
 
 		if(m_lpScript)
-			m_lpScript->StepPhysicsEngine();
+			m_lpScript->AfterStepPhysicsEngine();
 	}
 }
 

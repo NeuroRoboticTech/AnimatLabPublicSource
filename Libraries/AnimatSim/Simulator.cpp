@@ -39,6 +39,8 @@
 #include "Light.h"
 #include "LightManager.h"
 #include "Simulator.h"
+#include "SimulationThread.h"
+#include "SimulationMgr.h"
 
 namespace AnimatSim
 {
@@ -3595,6 +3597,7 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
@@ -3658,6 +3661,7 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
@@ -3713,6 +3717,7 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);

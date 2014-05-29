@@ -137,6 +137,8 @@ namespace AnimatSim
 			MotorizedJoint(void);
 			virtual ~MotorizedJoint(void);
 
+			static MotorizedJoint *CastToDerived(AnimatBase *lpBase) {return static_cast<MotorizedJoint*>(lpBase);}
+
 			virtual IMotorizedJoint *PhysicsMotorJoint();
 			virtual void PhysicsMotorJoint(IMotorizedJoint *lpJoint);
 
