@@ -29,6 +29,8 @@ namespace AnimatSim
 			EnablerStimulus();
 			virtual ~EnablerStimulus();
 			
+			static EnablerStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<EnablerStimulus*>(lpBase);}
+			
 			virtual std::string Type();
 
 			virtual std::string TargetNodeID();

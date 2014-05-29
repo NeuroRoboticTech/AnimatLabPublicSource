@@ -10,13 +10,13 @@ namespace AnimatSim
 	public:
 		ScriptProcessor(void);
 		virtual ~ScriptProcessor(void);
+						
+		static ScriptProcessor *CastToDerived(AnimatBase *lpBase) {return static_cast<ScriptProcessor*>(lpBase);}
 
 		virtual void BeforeStepPhysicsEngine() {};
 		virtual void AfterStepPhysicsEngine() {};
 		virtual void BeforeStepNeuralEngine() {};
 		virtual void AfterStepNeuralEngine() {};
-		virtual void BeforeStepSimulation() {};
-		virtual void AfterStepSimulation() {};
 	};
 
 	void ANIMAT_PORT SetLastScriptError(std::string strError);

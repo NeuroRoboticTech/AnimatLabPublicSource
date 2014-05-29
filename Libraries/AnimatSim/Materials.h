@@ -39,6 +39,8 @@ namespace AnimatSim
 			Materials();
 			virtual ~Materials();
 
+			static Materials *CastToDerived(AnimatBase *lpBase) {return static_cast<Materials*>(lpBase);}
+
 			virtual void Reset();
 			virtual void Initialize();
 

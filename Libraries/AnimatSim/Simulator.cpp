@@ -1735,6 +1735,19 @@ void Simulator::ForceNoWindows(bool bVal)
 		m_lpWinMgr->CloseAllWindows();
 }
 
+void Simulator::Script(ScriptProcessor *lpScript) 
+{
+	if(m_lpScript)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+
+	m_lpScript = lpScript;
+}
+
+ScriptProcessor *Simulator::Script() {return m_lpScript;}
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -2013,6 +2026,8 @@ void Simulator::InitializeStructures()
 			remove(strVideoFile.c_str( ));
 	}
 
+	if(m_lpScript)
+		m_lpScript->Initialize();
 }
 
 /**
@@ -2379,6 +2394,9 @@ void Simulator::ResetSimulation()
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
 
+	if(m_lpScript)
+		m_lpScript->ResetSimulation();
+
     m_bIsResetting = false;
 }
 
@@ -2473,6 +2491,9 @@ void Simulator::StepNeuralEngine()
 {
 	unsigned long long lStart = GetTimerTick();
 
+	if(m_lpScript)
+		m_lpScript->BeforeStepNeuralEngine();
+
 	for(m_oOrganismIterator=m_aryOrganisms.begin();
 	    m_oOrganismIterator!=m_aryOrganisms.end();
 			++m_oOrganismIterator)
@@ -2480,6 +2501,9 @@ void Simulator::StepNeuralEngine()
 		m_lpSelOrganism = m_oOrganismIterator->second;
 		m_lpSelOrganism->StepNeuralEngine();
 	}
+
+	if(m_lpScript)
+		m_lpScript->AfterStepNeuralEngine();
 
 	m_fltTotalNeuralStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
@@ -2500,6 +2524,10 @@ void Simulator::AfterStepSimulation()
 	// added by the physics engine itself for this time step.
 	for(int iIndex=0; iIndex<m_iExtraDataCount; iIndex++)
 		m_aryExtraDataParts[iIndex]->UpdateExtraData();
+
+	if(m_lpScript)
+		m_lpScript->AfterStepPhysicsEngine();
+
 }
 
 /**
@@ -2511,6 +2539,9 @@ void Simulator::AfterStepSimulation()
 void Simulator::StepPhysicsEngine()
 {
 	unsigned long long lStart = GetTimerTick();
+
+	if(m_lpScript)
+		m_lpScript->BeforeStepPhysicsEngine();
 
 	for(m_oStructureIterator=m_aryAllStructures.begin();
 	    m_oStructureIterator!=m_aryAllStructures.end();
@@ -3178,6 +3209,9 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	m_oLightMgr.Load(oXml);
 
+	if(oXml.FindChildElement("Script", false))
+		Script(LoadScript(oXml));
+
 	oXml.OutOfElem(); //OutOf Environment Element
 
 	TRACE_DEBUG("Finished loading structures from Xml.");
@@ -3304,6 +3338,55 @@ catch(CStdErrorInfo oError)
 catch(...)
 {
 	if(lpOdorType) delete lpOdorType;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+/**
+\brief	Loads the script. 
+
+\author	dcofer
+\date	5/23/2014
+
+\param [in,out]	oXml The xml data packet to load. 
+
+\return	The script. 
+**/
+ScriptProcessor *Simulator::LoadScript(CStdXml &oXml)
+{
+	std::string strModule;
+	std::string strType;
+	ScriptProcessor *lpScript = NULL;
+
+try
+{
+	oXml.IntoElem(); //Into Child Element
+	strModule = oXml.GetChildString("ModuleName", "");
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Child Element
+
+	lpScript = dynamic_cast<ScriptProcessor *>(m_lpSim->CreateObject(strModule, "ScriptProcessor", strType));
+	if(!lpScript)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Script");
+
+	lpScript->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
+
+	lpScript->Load(oXml);
+
+	return lpScript;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }
@@ -4465,6 +4548,70 @@ void Simulator::RemoveOdorType(std::string strID, bool bThrowError)
 void  Simulator::IncrementPhysicsBodyCount()
 {
 	m_iPhysicsBodyCount++;
+}
+/**
+\brief	Creates and adds a scripting object to this structure. 
+
+\details This method is primarily used by the GUI to add a new script objects to the structure.
+It creates the ScriptProcessor from info in the XML packet and then uses the XML to load in the new
+script.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strXml	The xml configuration data packet. 
+**/
+void Simulator::AddScript(std::string strXml)
+{
+	ScriptProcessor *lpScript = NULL;
+	try
+	{
+		CStdXml oXml;
+		oXml.Deserialize(strXml);
+		oXml.FindElement("Root");
+		oXml.FindChildElement("Script");
+
+		lpScript = LoadScript(oXml);
+		lpScript->Initialize();
+		m_lpScript = lpScript;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	}
+}
+
+/**
+\brief	Removes the script based on ID. 
+
+\details This is primarily used by the GUI to remove the script from the structure when 
+the user does this in the GUI.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strID	GUI ID of the script to remove
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+
+\return	true if it succeeds, false if it fails. 
+**/
+void Simulator::RemoveScript(std::string strID, bool bThrowError)
+{
+	if(m_lpScript && m_lpScript->ID() == strID)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
 }
 
 #pragma endregion

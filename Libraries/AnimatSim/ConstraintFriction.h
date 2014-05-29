@@ -40,6 +40,8 @@ namespace AnimatSim
 		public:
 			ConstraintFriction();
 			virtual ~ConstraintFriction();
+			
+			static ConstraintFriction *CastToDerived(AnimatBase *lpBase) {return static_cast<ConstraintFriction*>(lpBase);}
 
             virtual bool Enabled();
             virtual void Enabled(bool bVal);

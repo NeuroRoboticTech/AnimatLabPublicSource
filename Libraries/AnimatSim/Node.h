@@ -40,6 +40,8 @@ namespace AnimatSim
 		Node();
 		virtual ~Node();
 
+		static Node *CastToDerived(AnimatBase *lpBase) {return static_cast<Node*>(lpBase);}
+
 		virtual bool Enabled();
 		virtual void Enabled(bool bValue);
 

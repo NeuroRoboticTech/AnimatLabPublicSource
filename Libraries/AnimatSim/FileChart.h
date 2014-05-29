@@ -33,6 +33,8 @@ namespace AnimatSim
 		public:
 			FileChart();
 			virtual ~FileChart();
+			
+			static FileChart *CastToDerived(AnimatBase *lpBase) {return static_cast<FileChart*>(lpBase);}
 
 			virtual std::string Type();
 

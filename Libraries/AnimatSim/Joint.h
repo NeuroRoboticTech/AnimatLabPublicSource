@@ -73,6 +73,8 @@ namespace AnimatSim
 		public:
 			Joint();
 			virtual ~Joint();
+						
+			static Joint *CastToDerived(AnimatBase *lpBase) {return static_cast<Joint*>(lpBase);}
 
 			virtual bool UsesRadians();
 

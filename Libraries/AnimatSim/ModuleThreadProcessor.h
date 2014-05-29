@@ -28,6 +28,8 @@ namespace AnimatSim
 		ModuleThreadProcessor(std::string strModuleName);
 		virtual ~ModuleThreadProcessor();
 
+		static ModuleThreadProcessor *CastToDerived(AnimatBase *lpBase) {return static_cast<ModuleThreadProcessor*>(lpBase);}
+
         virtual void StepSimulation();
         virtual void StepAdapters();
 	};

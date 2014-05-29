@@ -30,6 +30,8 @@ namespace AnimatSim
 			ExternalInputStimulus();
 			virtual ~ExternalInputStimulus();
 			
+			static ExternalInputStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<ExternalInputStimulus*>(lpBase);}
+			
 			virtual std::string Type();
 
 			virtual std::string TargetNodeID();

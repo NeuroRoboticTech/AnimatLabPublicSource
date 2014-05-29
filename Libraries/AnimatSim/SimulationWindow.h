@@ -60,6 +60,8 @@ namespace AnimatSim
 		SimulationWindow(void);
 		SimulationWindow(HWND win);
 		~SimulationWindow(void);
+						
+		static SimulationWindow *CastToDerived(AnimatBase *lpBase) {return static_cast<SimulationWindow*>(lpBase);}
 
 		virtual void LookAtStructureID(std::string strID);
 		virtual std::string LookAtStructureID();

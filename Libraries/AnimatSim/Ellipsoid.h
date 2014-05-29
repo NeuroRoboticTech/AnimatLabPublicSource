@@ -39,6 +39,8 @@ namespace AnimatSim
 			public:
 				Ellipsoid();
 				virtual ~Ellipsoid();
+			
+				static Ellipsoid *CastToDerived(AnimatBase *lpBase) {return static_cast<Ellipsoid*>(lpBase);}
 
 				/**
 				\brief	Gets the major axis radius.

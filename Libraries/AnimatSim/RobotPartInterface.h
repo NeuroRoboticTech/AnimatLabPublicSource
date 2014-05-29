@@ -42,6 +42,8 @@ namespace AnimatSim
 		public:
 			RobotPartInterface(void);
 			virtual ~RobotPartInterface(void);
+						
+			static RobotPartInterface *CastToDerived(AnimatBase *lpBase) {return static_cast<RobotPartInterface*>(lpBase);}
 
 			virtual void ParentIOControl(RobotIOControl *lpParent);
 			virtual RobotIOControl *ParentIOControl();

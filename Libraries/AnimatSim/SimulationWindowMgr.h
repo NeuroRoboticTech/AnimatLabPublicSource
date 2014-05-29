@@ -39,6 +39,8 @@ protected:
 public:
 	SimulationWindowMgr(void);
 	~SimulationWindowMgr(void);
+						
+	static SimulationWindowMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<SimulationWindowMgr*>(lpBase);}
 
 	virtual bool HasContainedWindow();
 

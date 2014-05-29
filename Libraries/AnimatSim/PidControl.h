@@ -24,6 +24,8 @@ namespace AnimatSim
                 float fltRangeMax, float fltRangeMin, float fltARWBound, float fltRampGradient);
 			virtual ~PidControl();
 
+			static PidControl *CastToDerived(AnimatBase *lpBase) {return static_cast<PidControl*>(lpBase);}
+
 		    virtual bool Enabled();
 		    virtual void Enabled(bool bValue);
 

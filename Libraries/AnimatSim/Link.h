@@ -29,6 +29,8 @@ namespace AnimatSim
 		Link();
 		virtual ~Link();
 
+		static Link *CastToDerived(AnimatBase *lpBase) {return static_cast<Link*>(lpBase);}
+
 		virtual bool Enabled();
 		virtual void Enabled(bool bValue);
 

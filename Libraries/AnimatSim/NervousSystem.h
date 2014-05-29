@@ -44,6 +44,8 @@ namespace AnimatSim
 			NervousSystem();
 			virtual ~NervousSystem();
 
+			static NervousSystem *CastToDerived(AnimatBase *lpBase) {return static_cast<NervousSystem*>(lpBase);}
+
 			virtual NeuralModule *FindNeuralModule(std::string strModuleName, bool bThrowError = true);
 			virtual void AddNeuralModule(std::string strXml);
 			virtual void RemoveNeuralModule(std::string strID);

@@ -25,6 +25,8 @@ namespace AnimatSim
 		public:
 			ExternalStimuliMgr();
 			virtual ~ExternalStimuliMgr();
+			
+			static ExternalStimuliMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<ExternalStimuliMgr*>(lpBase);}
 
 			virtual bool AddStimulus(std::string strXml);
 			virtual bool RemoveStimulus(std::string strID);

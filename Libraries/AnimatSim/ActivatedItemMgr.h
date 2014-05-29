@@ -42,6 +42,8 @@ namespace AnimatSim
 	public:
 		ActivatedItemMgr();
 		virtual ~ActivatedItemMgr();
+				
+		static ActivatedItemMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<ActivatedItemMgr*>(lpBase);}
 
 		virtual void Add(ActivatedItem *lpItem);
 		virtual void Remove(std::string strID, bool bThrowError = true);

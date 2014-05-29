@@ -105,6 +105,8 @@ namespace AnimatSim
 			CurrentStimulus();
 			virtual ~CurrentStimulus();
 			
+			static CurrentStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<CurrentStimulus*>(lpBase);}
+			
 			//virtual int Type();
 			virtual std::string Type();
 			virtual void Type(std::string strValue);

@@ -36,6 +36,8 @@ namespace AnimatSim
 			public:
 				SigmoidGain();
 				virtual ~SigmoidGain();
+						
+				static SigmoidGain *CastToDerived(AnimatBase *lpBase) {return static_cast<SigmoidGain*>(lpBase);}
 				
 				float A();
 				void A(float fltVal);

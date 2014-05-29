@@ -14,6 +14,8 @@ namespace AnimatSim
 	public:
 		/// Singleton accessor for this class.
 		static SimulationMgr &Instance();
+						
+		static SimulationMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<SimulationMgr*>(lpBase);}
 
 		virtual CStdPtrArray<SimulationThread> &SimThreads() {return m_arySimThreads;};
 		virtual SimulationThread *CreateSimulation(std::string strSimFile, bool bForceNoWindows = false);

@@ -69,6 +69,8 @@ namespace AnimatSim
 	public:
 		ActivatedItem();
 		virtual ~ActivatedItem();
+		
+		static ActivatedItem *CastToDerived(AnimatBase *lpBase) {return static_cast<ActivatedItem*>(lpBase);}
 
 		virtual bool Enabled();
 		virtual void Enabled(bool bVal);

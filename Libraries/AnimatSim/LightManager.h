@@ -38,6 +38,8 @@ namespace AnimatSim
 		public:
 			LightManager(void);
 			virtual ~LightManager(void);
+									
+			static LightManager *CastToDerived(AnimatBase *lpBase) {return static_cast<LightManager*>(lpBase);}
 
 #pragma region AccessorMutators
 

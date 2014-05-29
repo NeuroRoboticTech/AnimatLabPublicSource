@@ -33,6 +33,8 @@ namespace AnimatSim
 			public:
 				EquationGain();
 				virtual ~EquationGain();
+			
+				static EquationGain *CastToDerived(AnimatBase *lpBase) {return static_cast<EquationGain*>(lpBase);}
 
 				virtual std::string GainEquation();
 				virtual void GainEquation(std::string strEquation);

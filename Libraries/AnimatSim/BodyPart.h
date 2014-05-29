@@ -38,6 +38,8 @@ namespace AnimatSim
 		public:
 			BodyPart(void);
 			virtual ~BodyPart(void);
+																	
+			static BodyPart *CastToDerived(AnimatBase *lpBase) {return static_cast<BodyPart*>(lpBase);}
 
 #pragma region AccessorMutators
 

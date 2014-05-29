@@ -31,6 +31,8 @@ namespace AnimatSim
 			public:
 				RPRO();
 				virtual ~RPRO();
+						
+				static RPRO *CastToDerived(AnimatBase *lpBase) {return static_cast<RPRO*>(lpBase);}
 
 				float CylinderRadius();
 				float CylinderHeight();

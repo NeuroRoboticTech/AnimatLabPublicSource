@@ -36,6 +36,8 @@ namespace AnimatSim
 			public:
 				BellGain();
 				virtual ~BellGain();
+														
+				static BellGain *CastToDerived(AnimatBase *lpBase) {return static_cast<BellGain*>(lpBase);}
 
 				float A();
 				void A(float fltVal);

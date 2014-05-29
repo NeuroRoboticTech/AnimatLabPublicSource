@@ -57,6 +57,8 @@ namespace AnimatSim
 		public:
 			DataColumn();
 			virtual ~DataColumn();
+			
+			static DataColumn *CastToDerived(AnimatBase *lpBase) {return static_cast<DataColumn*>(lpBase);}
 
 			virtual int ColumnCount();
 

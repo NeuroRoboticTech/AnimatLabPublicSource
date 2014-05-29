@@ -28,6 +28,8 @@ namespace AnimatSim
 		public:
 			DataChartMgr();
 			virtual ~DataChartMgr();
+			
+			static DataChartMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<DataChartMgr*>(lpBase);}
 
 			virtual bool AddDataChart(std::string strXml);
 			virtual bool RemoveDataChart(std::string strID);

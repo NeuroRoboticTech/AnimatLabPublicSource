@@ -25,7 +25,7 @@ namespace AnimatSim
 
 		BoundingBox(void);
 		~BoundingBox(void);
-		
+
 		/**
 		\brief	Sets the minimum and maximum widths of the bounding box.
 

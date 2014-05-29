@@ -3690,6 +3690,8 @@ class Gain(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_Gain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Gain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Gain_CastToDerived)
     def UseLimits(self, *args): return _AnimatSimPy.Gain_UseLimits(self, *args)
     def LowerLimit(self, *args): return _AnimatSimPy.Gain_LowerLimit(self, *args)
     def UpperLimit(self, *args): return _AnimatSimPy.Gain_UpperLimit(self, *args)
@@ -3701,6 +3703,10 @@ class Gain(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.Gain_Load(self, *args)
 Gain_swigregister = _AnimatSimPy.Gain_swigregister
 Gain_swigregister(Gain)
+
+def Gain_CastToDerived(*args):
+  return _AnimatSimPy.Gain_CastToDerived(*args)
+Gain_CastToDerived = _AnimatSimPy.Gain_CastToDerived
 
 
 def LoadGain(*args):
@@ -3720,6 +3726,8 @@ class BellGain(Gain):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_BellGain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.BellGain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.BellGain_CastToDerived)
     def A(self, *args): return _AnimatSimPy.BellGain_A(self, *args)
     def B(self, *args): return _AnimatSimPy.BellGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.BellGain_C(self, *args)
@@ -3730,6 +3738,10 @@ class BellGain(Gain):
     def Load(self, *args): return _AnimatSimPy.BellGain_Load(self, *args)
 BellGain_swigregister = _AnimatSimPy.BellGain_swigregister
 BellGain_swigregister(BellGain)
+
+def BellGain_CastToDerived(*args):
+  return _AnimatSimPy.BellGain_CastToDerived(*args)
+BellGain_CastToDerived = _AnimatSimPy.BellGain_CastToDerived
 
 class EquationGain(Gain):
     __swig_setmethods__ = {}
@@ -3745,6 +3757,8 @@ class EquationGain(Gain):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_EquationGain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.EquationGain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.EquationGain_CastToDerived)
     def GainEquation(self, *args): return _AnimatSimPy.EquationGain_GainEquation(self, *args)
     def CalculateGain(self, *args): return _AnimatSimPy.EquationGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.EquationGain_SetData(self, *args)
@@ -3752,6 +3766,10 @@ class EquationGain(Gain):
     def Load(self, *args): return _AnimatSimPy.EquationGain_Load(self, *args)
 EquationGain_swigregister = _AnimatSimPy.EquationGain_swigregister
 EquationGain_swigregister(EquationGain)
+
+def EquationGain_CastToDerived(*args):
+  return _AnimatSimPy.EquationGain_CastToDerived(*args)
+EquationGain_CastToDerived = _AnimatSimPy.EquationGain_CastToDerived
 
 class PolynomialGain(Gain):
     __swig_setmethods__ = {}
@@ -3767,6 +3785,8 @@ class PolynomialGain(Gain):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_PolynomialGain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PolynomialGain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PolynomialGain_CastToDerived)
     def A(self, *args): return _AnimatSimPy.PolynomialGain_A(self, *args)
     def B(self, *args): return _AnimatSimPy.PolynomialGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.PolynomialGain_C(self, *args)
@@ -3777,6 +3797,10 @@ class PolynomialGain(Gain):
     def Load(self, *args): return _AnimatSimPy.PolynomialGain_Load(self, *args)
 PolynomialGain_swigregister = _AnimatSimPy.PolynomialGain_swigregister
 PolynomialGain_swigregister(PolynomialGain)
+
+def PolynomialGain_CastToDerived(*args):
+  return _AnimatSimPy.PolynomialGain_CastToDerived(*args)
+PolynomialGain_CastToDerived = _AnimatSimPy.PolynomialGain_CastToDerived
 
 class SigmoidGain(Gain):
     __swig_setmethods__ = {}
@@ -3792,6 +3816,8 @@ class SigmoidGain(Gain):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_SigmoidGain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.SigmoidGain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.SigmoidGain_CastToDerived)
     def A(self, *args): return _AnimatSimPy.SigmoidGain_A(self, *args)
     def B(self, *args): return _AnimatSimPy.SigmoidGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.SigmoidGain_C(self, *args)
@@ -3802,6 +3828,10 @@ class SigmoidGain(Gain):
     def Load(self, *args): return _AnimatSimPy.SigmoidGain_Load(self, *args)
 SigmoidGain_swigregister = _AnimatSimPy.SigmoidGain_swigregister
 SigmoidGain_swigregister(SigmoidGain)
+
+def SigmoidGain_CastToDerived(*args):
+  return _AnimatSimPy.SigmoidGain_CastToDerived(*args)
+SigmoidGain_CastToDerived = _AnimatSimPy.SigmoidGain_CastToDerived
 
 class LengthTensionGain(Gain):
     __swig_setmethods__ = {}
@@ -3817,6 +3847,8 @@ class LengthTensionGain(Gain):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LengthTensionGain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LengthTensionGain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LengthTensionGain_CastToDerived)
     def RestingLength(self, *args): return _AnimatSimPy.LengthTensionGain_RestingLength(self, *args)
     def TLwidth(self, *args): return _AnimatSimPy.LengthTensionGain_TLwidth(self, *args)
     def TLc(self): return _AnimatSimPy.LengthTensionGain_TLc(self)
@@ -3831,6 +3863,10 @@ class LengthTensionGain(Gain):
 LengthTensionGain_swigregister = _AnimatSimPy.LengthTensionGain_swigregister
 LengthTensionGain_swigregister(LengthTensionGain)
 
+def LengthTensionGain_CastToDerived(*args):
+  return _AnimatSimPy.LengthTensionGain_CastToDerived(*args)
+LengthTensionGain_CastToDerived = _AnimatSimPy.LengthTensionGain_CastToDerived
+
 class Node(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -3842,6 +3878,8 @@ class Node(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_Node
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Node_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Node_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.Node_Enabled(self, *args)
     def Kill(self, bState=True): return _AnimatSimPy.Node_Kill(self, bState)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.Node_AddExternalNodeInput(self, *args)
@@ -3852,6 +3890,10 @@ class Node(AnimatBase):
     def QueryProperties(self, *args): return _AnimatSimPy.Node_QueryProperties(self, *args)
 Node_swigregister = _AnimatSimPy.Node_swigregister
 Node_swigregister(Node)
+
+def Node_CastToDerived(*args):
+  return _AnimatSimPy.Node_CastToDerived(*args)
+Node_CastToDerived = _AnimatSimPy.Node_CastToDerived
 
 class Link(AnimatBase):
     __swig_setmethods__ = {}
@@ -3867,6 +3909,8 @@ class Link(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Link
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Link_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Link_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.Link_Enabled(self, *args)
     def SetSystemPointers(self, *args): return _AnimatSimPy.Link_SetSystemPointers(self, *args)
     def VerifySystemPointers(self): return _AnimatSimPy.Link_VerifySystemPointers(self)
@@ -3874,6 +3918,10 @@ class Link(AnimatBase):
     def QueryProperties(self, *args): return _AnimatSimPy.Link_QueryProperties(self, *args)
 Link_swigregister = _AnimatSimPy.Link_swigregister
 Link_swigregister(Link)
+
+def Link_CastToDerived(*args):
+  return _AnimatSimPy.Link_CastToDerived(*args)
+Link_CastToDerived = _AnimatSimPy.Link_CastToDerived
 
 class IPhysicsMovableItem(_object):
     __swig_setmethods__ = {}
@@ -4050,6 +4098,8 @@ class BodyPart(Node,MovableItem):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_BodyPart
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.BodyPart_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.BodyPart_CastToDerived)
     def PhysicsBody(self, *args): return _AnimatSimPy.BodyPart_PhysicsBody(self, *args)
     def GetRobotPartInterfaces(self): return _AnimatSimPy.BodyPart_GetRobotPartInterfaces(self)
     def AddRobotPartInterface(self, *args): return _AnimatSimPy.BodyPart_AddRobotPartInterface(self, *args)
@@ -4070,6 +4120,10 @@ class BodyPart(Node,MovableItem):
 BodyPart_swigregister = _AnimatSimPy.BodyPart_swigregister
 BodyPart_swigregister(BodyPart)
 
+def BodyPart_CastToDerived(*args):
+  return _AnimatSimPy.BodyPart_CastToDerived(*args)
+BodyPart_CastToDerived = _AnimatSimPy.BodyPart_CastToDerived
+
 class ReceptiveFieldPair(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4084,6 +4138,8 @@ class ReceptiveFieldPair(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ReceptiveFieldPair
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ReceptiveFieldPair_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ReceptiveFieldPair_CastToDerived)
     def FieldID(self, *args): return _AnimatSimPy.ReceptiveFieldPair_FieldID(self, *args)
     def TargetNodeID(self, *args): return _AnimatSimPy.ReceptiveFieldPair_TargetNodeID(self, *args)
     def Field(self): return _AnimatSimPy.ReceptiveFieldPair_Field(self)
@@ -4092,6 +4148,10 @@ class ReceptiveFieldPair(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.ReceptiveFieldPair_Load(self, *args)
 ReceptiveFieldPair_swigregister = _AnimatSimPy.ReceptiveFieldPair_swigregister
 ReceptiveFieldPair_swigregister(ReceptiveFieldPair)
+
+def ReceptiveFieldPair_CastToDerived(*args):
+  return _AnimatSimPy.ReceptiveFieldPair_CastToDerived(*args)
+ReceptiveFieldPair_CastToDerived = _AnimatSimPy.ReceptiveFieldPair_CastToDerived
 
 NoDelayBuffer = _AnimatSimPy.NoDelayBuffer
 DelayBufferInSimOnly = _AnimatSimPy.DelayBufferInSimOnly
@@ -4110,6 +4170,8 @@ class Adapter(Node):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Adapter
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Adapter_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Adapter_CastToDerived)
     def SourceModule(self, *args): return _AnimatSimPy.Adapter_SourceModule(self, *args)
     def SourceID(self, *args): return _AnimatSimPy.Adapter_SourceID(self, *args)
     def SourceDataType(self, *args): return _AnimatSimPy.Adapter_SourceDataType(self, *args)
@@ -4137,6 +4199,10 @@ class Adapter(Node):
 Adapter_swigregister = _AnimatSimPy.Adapter_swigregister
 Adapter_swigregister(Adapter)
 
+def Adapter_CastToDerived(*args):
+  return _AnimatSimPy.Adapter_CastToDerived(*args)
+Adapter_CastToDerived = _AnimatSimPy.Adapter_CastToDerived
+
 class PropertyControlAdapter(Adapter):
     __swig_setmethods__ = {}
     for _s in [Adapter]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4151,6 +4217,8 @@ class PropertyControlAdapter(Adapter):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_PropertyControlAdapter
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PropertyControlAdapter_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PropertyControlAdapter_CastToDerived)
     def TargetObject(self): return _AnimatSimPy.PropertyControlAdapter_TargetObject(self)
     def PropertyName(self, *args): return _AnimatSimPy.PropertyControlAdapter_PropertyName(self, *args)
     def SetThreshold(self, *args): return _AnimatSimPy.PropertyControlAdapter_SetThreshold(self, *args)
@@ -4166,6 +4234,10 @@ class PropertyControlAdapter(Adapter):
 PropertyControlAdapter_swigregister = _AnimatSimPy.PropertyControlAdapter_swigregister
 PropertyControlAdapter_swigregister(PropertyControlAdapter)
 
+def PropertyControlAdapter_CastToDerived(*args):
+  return _AnimatSimPy.PropertyControlAdapter_CastToDerived(*args)
+PropertyControlAdapter_CastToDerived = _AnimatSimPy.PropertyControlAdapter_CastToDerived
+
 class ContactAdapter(Adapter):
     __swig_setmethods__ = {}
     for _s in [Adapter]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4180,6 +4252,8 @@ class ContactAdapter(Adapter):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ContactAdapter
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ContactAdapter_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ContactAdapter_CastToDerived)
     def SourceBodyID(self, *args): return _AnimatSimPy.ContactAdapter_SourceBodyID(self, *args)
     def SourceModule(self): return _AnimatSimPy.ContactAdapter_SourceModule(self)
     def TargetModule(self, *args): return _AnimatSimPy.ContactAdapter_TargetModule(self, *args)
@@ -4190,6 +4264,10 @@ class ContactAdapter(Adapter):
     def Load(self, *args): return _AnimatSimPy.ContactAdapter_Load(self, *args)
 ContactAdapter_swigregister = _AnimatSimPy.ContactAdapter_swigregister
 ContactAdapter_swigregister(ContactAdapter)
+
+def ContactAdapter_CastToDerived(*args):
+  return _AnimatSimPy.ContactAdapter_CastToDerived(*args)
+ContactAdapter_CastToDerived = _AnimatSimPy.ContactAdapter_CastToDerived
 
 class ConstraintLimit(AnimatBase):
     __swig_setmethods__ = {}
@@ -4202,6 +4280,8 @@ class ConstraintLimit(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_ConstraintLimit
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ConstraintLimit_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ConstraintLimit_CastToDerived)
     def LimitPos(self, *args): return _AnimatSimPy.ConstraintLimit_LimitPos(self, *args)
     def SetLimitPos(self): return _AnimatSimPy.ConstraintLimit_SetLimitPos(self)
     def Damping(self, *args): return _AnimatSimPy.ConstraintLimit_Damping(self, *args)
@@ -4222,6 +4302,10 @@ class ConstraintLimit(AnimatBase):
 ConstraintLimit_swigregister = _AnimatSimPy.ConstraintLimit_swigregister
 ConstraintLimit_swigregister(ConstraintLimit)
 
+def ConstraintLimit_CastToDerived(*args):
+  return _AnimatSimPy.ConstraintLimit_CastToDerived(*args)
+ConstraintLimit_CastToDerived = _AnimatSimPy.ConstraintLimit_CastToDerived
+
 class ConstraintRelaxation(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4233,6 +4317,8 @@ class ConstraintRelaxation(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_ConstraintRelaxation
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ConstraintRelaxation_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ConstraintRelaxation_CastToDerived)
     def CoordinateID(self, *args): return _AnimatSimPy.ConstraintRelaxation_CoordinateID(self, *args)
     def Enabled(self, *args): return _AnimatSimPy.ConstraintRelaxation_Enabled(self, *args)
     def Stiffness(self, *args): return _AnimatSimPy.ConstraintRelaxation_Stiffness(self, *args)
@@ -4243,6 +4329,10 @@ class ConstraintRelaxation(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.ConstraintRelaxation_Load(self, *args)
 ConstraintRelaxation_swigregister = _AnimatSimPy.ConstraintRelaxation_swigregister
 ConstraintRelaxation_swigregister(ConstraintRelaxation)
+
+def ConstraintRelaxation_CastToDerived(*args):
+  return _AnimatSimPy.ConstraintRelaxation_CastToDerived(*args)
+ConstraintRelaxation_CastToDerived = _AnimatSimPy.ConstraintRelaxation_CastToDerived
 
 class ConstraintFriction(AnimatBase):
     __swig_setmethods__ = {}
@@ -4255,6 +4345,8 @@ class ConstraintFriction(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_ConstraintFriction
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ConstraintFriction_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ConstraintFriction_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.ConstraintFriction_Enabled(self, *args)
     def Coefficient(self, *args): return _AnimatSimPy.ConstraintFriction_Coefficient(self, *args)
     def MaxForce(self, *args): return _AnimatSimPy.ConstraintFriction_MaxForce(self, *args)
@@ -4267,6 +4359,10 @@ class ConstraintFriction(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.ConstraintFriction_Load(self, *args)
 ConstraintFriction_swigregister = _AnimatSimPy.ConstraintFriction_swigregister
 ConstraintFriction_swigregister(ConstraintFriction)
+
+def ConstraintFriction_CastToDerived(*args):
+  return _AnimatSimPy.ConstraintFriction_CastToDerived(*args)
+ConstraintFriction_CastToDerived = _AnimatSimPy.ConstraintFriction_CastToDerived
 
 class Joint(BodyPart):
     __swig_setmethods__ = {}
@@ -4282,6 +4378,8 @@ class Joint(BodyPart):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Joint
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Joint_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Joint_CastToDerived)
     def UsesRadians(self): return _AnimatSimPy.Joint_UsesRadians(self)
     def Size(self, *args): return _AnimatSimPy.Joint_Size(self, *args)
     def EnableLimits(self, *args): return _AnimatSimPy.Joint_EnableLimits(self, *args)
@@ -4313,6 +4411,10 @@ class Joint(BodyPart):
     def Load(self, *args): return _AnimatSimPy.Joint_Load(self, *args)
 Joint_swigregister = _AnimatSimPy.Joint_swigregister
 Joint_swigregister(Joint)
+
+def Joint_CastToDerived(*args):
+  return _AnimatSimPy.Joint_CastToDerived(*args)
+Joint_CastToDerived = _AnimatSimPy.Joint_CastToDerived
 
 class MotorizedJoint(Joint):
     __swig_setmethods__ = {}
@@ -4389,12 +4491,18 @@ class BallSocket(Joint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_BallSocket
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.BallSocket_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.BallSocket_CastToDerived)
     def CylinderRadius(self): return _AnimatSimPy.BallSocket_CylinderRadius(self)
     def CylinderHeight(self): return _AnimatSimPy.BallSocket_CylinderHeight(self)
     def BallRadius(self): return _AnimatSimPy.BallSocket_BallRadius(self)
     def Load(self, *args): return _AnimatSimPy.BallSocket_Load(self, *args)
 BallSocket_swigregister = _AnimatSimPy.BallSocket_swigregister
 BallSocket_swigregister(BallSocket)
+
+def BallSocket_CastToDerived(*args):
+  return _AnimatSimPy.BallSocket_CastToDerived(*args)
+BallSocket_CastToDerived = _AnimatSimPy.BallSocket_CastToDerived
 
 class Hinge(MotorizedJoint):
     __swig_setmethods__ = {}
@@ -4410,6 +4518,8 @@ class Hinge(MotorizedJoint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Hinge
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Hinge_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Hinge_CastToDerived)
     def CylinderRadius(self): return _AnimatSimPy.Hinge_CylinderRadius(self)
     def CylinderHeight(self): return _AnimatSimPy.Hinge_CylinderHeight(self)
     def FlapWidth(self): return _AnimatSimPy.Hinge_FlapWidth(self)
@@ -4423,6 +4533,10 @@ class Hinge(MotorizedJoint):
     def Load(self, *args): return _AnimatSimPy.Hinge_Load(self, *args)
 Hinge_swigregister = _AnimatSimPy.Hinge_swigregister
 Hinge_swigregister(Hinge)
+
+def Hinge_CastToDerived(*args):
+  return _AnimatSimPy.Hinge_CastToDerived(*args)
+Hinge_CastToDerived = _AnimatSimPy.Hinge_CastToDerived
 
 class Prismatic(MotorizedJoint):
     __swig_setmethods__ = {}
@@ -4438,6 +4552,8 @@ class Prismatic(MotorizedJoint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Prismatic
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Prismatic_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Prismatic_CastToDerived)
     def CylinderRadius(self): return _AnimatSimPy.Prismatic_CylinderRadius(self)
     def BoxSize(self): return _AnimatSimPy.Prismatic_BoxSize(self)
     def Enabled(self, *args): return _AnimatSimPy.Prismatic_Enabled(self, *args)
@@ -4451,6 +4567,10 @@ class Prismatic(MotorizedJoint):
     def Load(self, *args): return _AnimatSimPy.Prismatic_Load(self, *args)
 Prismatic_swigregister = _AnimatSimPy.Prismatic_swigregister
 Prismatic_swigregister(Prismatic)
+
+def Prismatic_CastToDerived(*args):
+  return _AnimatSimPy.Prismatic_CastToDerived(*args)
+Prismatic_CastToDerived = _AnimatSimPy.Prismatic_CastToDerived
 
 class LinearJoint(Joint):
     __swig_setmethods__ = {}
@@ -4466,6 +4586,8 @@ class LinearJoint(Joint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LinearJoint
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LinearJoint_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LinearJoint_CastToDerived)
     def LinearType(self, *args): return _AnimatSimPy.LinearJoint_LinearType(self, *args)
     def PlaneWidth(self): return _AnimatSimPy.LinearJoint_PlaneWidth(self)
     def PlaneSize(self): return _AnimatSimPy.LinearJoint_PlaneSize(self)
@@ -4476,6 +4598,10 @@ class LinearJoint(Joint):
     def Load(self, *args): return _AnimatSimPy.LinearJoint_Load(self, *args)
 LinearJoint_swigregister = _AnimatSimPy.LinearJoint_swigregister
 LinearJoint_swigregister(LinearJoint)
+
+def LinearJoint_CastToDerived(*args):
+  return _AnimatSimPy.LinearJoint_CastToDerived(*args)
+LinearJoint_CastToDerived = _AnimatSimPy.LinearJoint_CastToDerived
 
 class RPRO(Joint):
     __swig_setmethods__ = {}
@@ -4491,12 +4617,18 @@ class RPRO(Joint):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_RPRO
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RPRO_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RPRO_CastToDerived)
     def CylinderRadius(self): return _AnimatSimPy.RPRO_CylinderRadius(self)
     def CylinderHeight(self): return _AnimatSimPy.RPRO_CylinderHeight(self)
     def BallRadius(self): return _AnimatSimPy.RPRO_BallRadius(self)
     def Load(self, *args): return _AnimatSimPy.RPRO_Load(self, *args)
 RPRO_swigregister = _AnimatSimPy.RPRO_swigregister
 RPRO_swigregister(RPRO)
+
+def RPRO_CastToDerived(*args):
+  return _AnimatSimPy.RPRO_CastToDerived(*args)
+RPRO_CastToDerived = _AnimatSimPy.RPRO_CastToDerived
 
 class ContactSensor(AnimatBase):
     __swig_setmethods__ = {}
@@ -4512,6 +4644,8 @@ class ContactSensor(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ContactSensor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ContactSensor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ContactSensor_CastToDerived)
     def FieldGain(self): return _AnimatSimPy.ContactSensor_FieldGain(self)
     def CurrentGain(self): return _AnimatSimPy.ContactSensor_CurrentGain(self)
     def GetReceptiveField(self, *args): return _AnimatSimPy.ContactSensor_GetReceptiveField(self, *args)
@@ -4525,6 +4659,10 @@ class ContactSensor(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.ContactSensor_Load(self, *args)
 ContactSensor_swigregister = _AnimatSimPy.ContactSensor_swigregister
 ContactSensor_swigregister(ContactSensor)
+
+def ContactSensor_CastToDerived(*args):
+  return _AnimatSimPy.ContactSensor_CastToDerived(*args)
+ContactSensor_CastToDerived = _AnimatSimPy.ContactSensor_CastToDerived
 
 class Odor(AnimatBase):
     __swig_setmethods__ = {}
@@ -4540,6 +4678,8 @@ class Odor(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Odor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Odor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Odor_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.Odor_Enabled(self, *args)
     def SetOdorType(self, *args): return _AnimatSimPy.Odor_SetOdorType(self, *args)
     def GetOdorType(self): return _AnimatSimPy.Odor_GetOdorType(self)
@@ -4551,6 +4691,10 @@ class Odor(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.Odor_Load(self, *args)
 Odor_swigregister = _AnimatSimPy.Odor_swigregister
 Odor_swigregister(Odor)
+
+def Odor_CastToDerived(*args):
+  return _AnimatSimPy.Odor_CastToDerived(*args)
+Odor_CastToDerived = _AnimatSimPy.Odor_CastToDerived
 
 class OdorType(AnimatBase):
     __swig_setmethods__ = {}
@@ -4566,6 +4710,8 @@ class OdorType(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_OdorType
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.OdorType_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.OdorType_CastToDerived)
     def DiffusionConstant(self, *args): return _AnimatSimPy.OdorType_DiffusionConstant(self, *args)
     def FindOdorSource(self, *args): return _AnimatSimPy.OdorType_FindOdorSource(self, *args)
     def AddOdorSource(self, *args): return _AnimatSimPy.OdorType_AddOdorSource(self, *args)
@@ -4575,6 +4721,10 @@ class OdorType(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.OdorType_Load(self, *args)
 OdorType_swigregister = _AnimatSimPy.OdorType_swigregister
 OdorType_swigregister(OdorType)
+
+def OdorType_CastToDerived(*args):
+  return _AnimatSimPy.OdorType_CastToDerived(*args)
+OdorType_CastToDerived = _AnimatSimPy.OdorType_CastToDerived
 
 class RigidBody(BodyPart):
     __swig_setmethods__ = {}
@@ -4590,6 +4740,8 @@ class RigidBody(BodyPart):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_RigidBody
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RigidBody_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RigidBody_CastToDerived)
     def Position(self, *args): return _AnimatSimPy.RigidBody_Position(self, *args)
     def VisualSelectionType(self): return _AnimatSimPy.RigidBody_VisualSelectionType(self)
     def CenterOfMassWithStaticChildren(self): return _AnimatSimPy.RigidBody_CenterOfMassWithStaticChildren(self)
@@ -4665,6 +4817,10 @@ class RigidBody(BodyPart):
 RigidBody_swigregister = _AnimatSimPy.RigidBody_swigregister
 RigidBody_swigregister(RigidBody)
 
+def RigidBody_CastToDerived(*args):
+  return _AnimatSimPy.RigidBody_CastToDerived(*args)
+RigidBody_CastToDerived = _AnimatSimPy.RigidBody_CastToDerived
+
 class Plane(RigidBody):
     __swig_setmethods__ = {}
     for _s in [RigidBody]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4679,6 +4835,8 @@ class Plane(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Plane
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Plane_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Plane_CastToDerived)
     def CornerX(self): return _AnimatSimPy.Plane_CornerX(self)
     def CornerY(self): return _AnimatSimPy.Plane_CornerY(self)
     def GridX(self): return _AnimatSimPy.Plane_GridX(self)
@@ -4691,6 +4849,10 @@ class Plane(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Plane_Load(self, *args)
 Plane_swigregister = _AnimatSimPy.Plane_swigregister
 Plane_swigregister(Plane)
+
+def Plane_CastToDerived(*args):
+  return _AnimatSimPy.Plane_CastToDerived(*args)
+Plane_CastToDerived = _AnimatSimPy.Plane_CastToDerived
 
 class FluidPlane(Plane):
     __swig_setmethods__ = {}
@@ -4706,6 +4868,8 @@ class FluidPlane(Plane):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_FluidPlane
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.FluidPlane_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.FluidPlane_CastToDerived)
     def AllowRotateDragX(self): return _AnimatSimPy.FluidPlane_AllowRotateDragX(self)
     def AllowRotateDragY(self): return _AnimatSimPy.FluidPlane_AllowRotateDragY(self)
     def AllowRotateDragZ(self): return _AnimatSimPy.FluidPlane_AllowRotateDragZ(self)
@@ -4716,6 +4880,10 @@ class FluidPlane(Plane):
     def Load(self, *args): return _AnimatSimPy.FluidPlane_Load(self, *args)
 FluidPlane_swigregister = _AnimatSimPy.FluidPlane_swigregister
 FluidPlane_swigregister(FluidPlane)
+
+def FluidPlane_CastToDerived(*args):
+  return _AnimatSimPy.FluidPlane_CastToDerived(*args)
+FluidPlane_CastToDerived = _AnimatSimPy.FluidPlane_CastToDerived
 
 class Cylinder(RigidBody):
     __swig_setmethods__ = {}
@@ -4731,6 +4899,8 @@ class Cylinder(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Cylinder
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Cylinder_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Cylinder_CastToDerived)
     def Radius(self, *args): return _AnimatSimPy.Cylinder_Radius(self, *args)
     def Height(self, *args): return _AnimatSimPy.Cylinder_Height(self, *args)
     def Sides(self, *args): return _AnimatSimPy.Cylinder_Sides(self, *args)
@@ -4739,6 +4909,10 @@ class Cylinder(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Cylinder_Load(self, *args)
 Cylinder_swigregister = _AnimatSimPy.Cylinder_swigregister
 Cylinder_swigregister(Cylinder)
+
+def Cylinder_CastToDerived(*args):
+  return _AnimatSimPy.Cylinder_CastToDerived(*args)
+Cylinder_CastToDerived = _AnimatSimPy.Cylinder_CastToDerived
 
 class Cone(RigidBody):
     __swig_setmethods__ = {}
@@ -4754,6 +4928,8 @@ class Cone(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Cone
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Cone_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Cone_CastToDerived)
     def LowerRadius(self, *args): return _AnimatSimPy.Cone_LowerRadius(self, *args)
     def UpperRadius(self, *args): return _AnimatSimPy.Cone_UpperRadius(self, *args)
     def Height(self, *args): return _AnimatSimPy.Cone_Height(self, *args)
@@ -4763,6 +4939,10 @@ class Cone(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Cone_Load(self, *args)
 Cone_swigregister = _AnimatSimPy.Cone_swigregister
 Cone_swigregister(Cone)
+
+def Cone_CastToDerived(*args):
+  return _AnimatSimPy.Cone_CastToDerived(*args)
+Cone_CastToDerived = _AnimatSimPy.Cone_CastToDerived
 
 class Ellipsoid(RigidBody):
     __swig_setmethods__ = {}
@@ -4778,6 +4958,8 @@ class Ellipsoid(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Ellipsoid
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Ellipsoid_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Ellipsoid_CastToDerived)
     def MajorRadius(self, *args): return _AnimatSimPy.Ellipsoid_MajorRadius(self, *args)
     def MinorRadius(self, *args): return _AnimatSimPy.Ellipsoid_MinorRadius(self, *args)
     def LatSegments(self, *args): return _AnimatSimPy.Ellipsoid_LatSegments(self, *args)
@@ -4787,6 +4969,10 @@ class Ellipsoid(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Ellipsoid_Load(self, *args)
 Ellipsoid_swigregister = _AnimatSimPy.Ellipsoid_swigregister
 Ellipsoid_swigregister(Ellipsoid)
+
+def Ellipsoid_CastToDerived(*args):
+  return _AnimatSimPy.Ellipsoid_CastToDerived(*args)
+Ellipsoid_CastToDerived = _AnimatSimPy.Ellipsoid_CastToDerived
 
 class Torus(RigidBody):
     __swig_setmethods__ = {}
@@ -4802,6 +4988,8 @@ class Torus(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Torus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Torus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Torus_CastToDerived)
     def OutsideRadius(self, *args): return _AnimatSimPy.Torus_OutsideRadius(self, *args)
     def InsideRadius(self, *args): return _AnimatSimPy.Torus_InsideRadius(self, *args)
     def Sides(self, *args): return _AnimatSimPy.Torus_Sides(self, *args)
@@ -4811,6 +4999,10 @@ class Torus(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Torus_Load(self, *args)
 Torus_swigregister = _AnimatSimPy.Torus_swigregister
 Torus_swigregister(Torus)
+
+def Torus_CastToDerived(*args):
+  return _AnimatSimPy.Torus_CastToDerived(*args)
+Torus_CastToDerived = _AnimatSimPy.Torus_CastToDerived
 
 class Box(RigidBody):
     __swig_setmethods__ = {}
@@ -4826,6 +5018,8 @@ class Box(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Box
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Box_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Box_CastToDerived)
     def Length(self, *args): return _AnimatSimPy.Box_Length(self, *args)
     def Width(self, *args): return _AnimatSimPy.Box_Width(self, *args)
     def Height(self, *args): return _AnimatSimPy.Box_Height(self, *args)
@@ -4841,6 +5035,10 @@ class Box(RigidBody):
 Box_swigregister = _AnimatSimPy.Box_swigregister
 Box_swigregister(Box)
 
+def Box_CastToDerived(*args):
+  return _AnimatSimPy.Box_CastToDerived(*args)
+Box_CastToDerived = _AnimatSimPy.Box_CastToDerived
+
 class Mesh(RigidBody):
     __swig_setmethods__ = {}
     for _s in [RigidBody]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4855,6 +5053,8 @@ class Mesh(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Mesh
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Mesh_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Mesh_CastToDerived)
     def MeshFile(self, *args): return _AnimatSimPy.Mesh_MeshFile(self, *args)
     def CollisionMeshType(self, *args): return _AnimatSimPy.Mesh_CollisionMeshType(self, *args)
     def ConvexMeshFile(self, *args): return _AnimatSimPy.Mesh_ConvexMeshFile(self, *args)
@@ -4865,6 +5065,10 @@ class Mesh(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Mesh_Load(self, *args)
 Mesh_swigregister = _AnimatSimPy.Mesh_swigregister
 Mesh_swigregister(Mesh)
+
+def Mesh_CastToDerived(*args):
+  return _AnimatSimPy.Mesh_CastToDerived(*args)
+Mesh_CastToDerived = _AnimatSimPy.Mesh_CastToDerived
 
 class Terrain(Mesh):
     __swig_setmethods__ = {}
@@ -4880,6 +5084,8 @@ class Terrain(Mesh):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Terrain
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Terrain_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Terrain_CastToDerived)
     def AllowRotateDragX(self): return _AnimatSimPy.Terrain_AllowRotateDragX(self)
     def AllowRotateDragY(self): return _AnimatSimPy.Terrain_AllowRotateDragY(self)
     def AllowRotateDragZ(self): return _AnimatSimPy.Terrain_AllowRotateDragZ(self)
@@ -4893,6 +5099,10 @@ class Terrain(Mesh):
     def Load(self, *args): return _AnimatSimPy.Terrain_Load(self, *args)
 Terrain_swigregister = _AnimatSimPy.Terrain_swigregister
 Terrain_swigregister(Terrain)
+
+def Terrain_CastToDerived(*args):
+  return _AnimatSimPy.Terrain_CastToDerived(*args)
+Terrain_CastToDerived = _AnimatSimPy.Terrain_CastToDerived
 
 class Sensor(RigidBody):
     __swig_setmethods__ = {}
@@ -4908,6 +5118,8 @@ class Sensor(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Sensor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Sensor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Sensor_CastToDerived)
     def Radius(self, *args): return _AnimatSimPy.Sensor_Radius(self, *args)
     def LatitudeSegments(self, *args): return _AnimatSimPy.Sensor_LatitudeSegments(self, *args)
     def LongtitudeSegments(self, *args): return _AnimatSimPy.Sensor_LongtitudeSegments(self, *args)
@@ -4924,6 +5136,10 @@ class Sensor(RigidBody):
 Sensor_swigregister = _AnimatSimPy.Sensor_swigregister
 Sensor_swigregister(Sensor)
 
+def Sensor_CastToDerived(*args):
+  return _AnimatSimPy.Sensor_CastToDerived(*args)
+Sensor_CastToDerived = _AnimatSimPy.Sensor_CastToDerived
+
 class Attachment(Sensor):
     __swig_setmethods__ = {}
     for _s in [Sensor]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4938,8 +5154,14 @@ class Attachment(Sensor):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Attachment
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Attachment_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Attachment_CastToDerived)
 Attachment_swigregister = _AnimatSimPy.Attachment_swigregister
 Attachment_swigregister(Attachment)
+
+def Attachment_CastToDerived(*args):
+  return _AnimatSimPy.Attachment_CastToDerived(*args)
+Attachment_CastToDerived = _AnimatSimPy.Attachment_CastToDerived
 
 class LineBase(RigidBody):
     __swig_setmethods__ = {}
@@ -4955,6 +5177,8 @@ class LineBase(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LineBase
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LineBase_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LineBase_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.LineBase_Enabled(self, *args)
     def Length(self): return _AnimatSimPy.LineBase_Length(self)
     def PrevLength(self): return _AnimatSimPy.LineBase_PrevLength(self)
@@ -4976,6 +5200,10 @@ class LineBase(RigidBody):
 LineBase_swigregister = _AnimatSimPy.LineBase_swigregister
 LineBase_swigregister(LineBase)
 
+def LineBase_CastToDerived(*args):
+  return _AnimatSimPy.LineBase_CastToDerived(*args)
+LineBase_CastToDerived = _AnimatSimPy.LineBase_CastToDerived
+
 class MuscleBase(LineBase):
     __swig_setmethods__ = {}
     for _s in [LineBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4987,6 +5215,8 @@ class MuscleBase(LineBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_MuscleBase
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MuscleBase_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MuscleBase_CastToDerived)
     def Tension(self, *args): return _AnimatSimPy.MuscleBase_Tension(self, *args)
     def MaxTension(self, *args): return _AnimatSimPy.MuscleBase_MaxTension(self, *args)
     def Vm(self): return _AnimatSimPy.MuscleBase_Vm(self)
@@ -5007,6 +5237,10 @@ class MuscleBase(LineBase):
 MuscleBase_swigregister = _AnimatSimPy.MuscleBase_swigregister
 MuscleBase_swigregister(MuscleBase)
 
+def MuscleBase_CastToDerived(*args):
+  return _AnimatSimPy.MuscleBase_CastToDerived(*args)
+MuscleBase_CastToDerived = _AnimatSimPy.MuscleBase_CastToDerived
+
 class LinearHillMuscle(MuscleBase):
     __swig_setmethods__ = {}
     for _s in [MuscleBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5021,6 +5255,8 @@ class LinearHillMuscle(MuscleBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LinearHillMuscle
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LinearHillMuscle_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LinearHillMuscle_CastToDerived)
     def Kse(self, *args): return _AnimatSimPy.LinearHillMuscle_Kse(self, *args)
     def Kpe(self, *args): return _AnimatSimPy.LinearHillMuscle_Kpe(self, *args)
     def B(self, *args): return _AnimatSimPy.LinearHillMuscle_B(self, *args)
@@ -5047,6 +5283,10 @@ class LinearHillMuscle(MuscleBase):
 LinearHillMuscle_swigregister = _AnimatSimPy.LinearHillMuscle_swigregister
 LinearHillMuscle_swigregister(LinearHillMuscle)
 
+def LinearHillMuscle_CastToDerived(*args):
+  return _AnimatSimPy.LinearHillMuscle_CastToDerived(*args)
+LinearHillMuscle_CastToDerived = _AnimatSimPy.LinearHillMuscle_CastToDerived
+
 class LinearHillStretchReceptor(LinearHillMuscle):
     __swig_setmethods__ = {}
     for _s in [LinearHillMuscle]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5061,6 +5301,8 @@ class LinearHillStretchReceptor(LinearHillMuscle):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LinearHillStretchReceptor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LinearHillStretchReceptor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LinearHillStretchReceptor_CastToDerived)
     def ApplyTension(self, *args): return _AnimatSimPy.LinearHillStretchReceptor_ApplyTension(self, *args)
     def IaDischargeConstant(self, *args): return _AnimatSimPy.LinearHillStretchReceptor_IaDischargeConstant(self, *args)
     def IIDischargeConstant(self, *args): return _AnimatSimPy.LinearHillStretchReceptor_IIDischargeConstant(self, *args)
@@ -5073,6 +5315,10 @@ class LinearHillStretchReceptor(LinearHillMuscle):
     def Load(self, *args): return _AnimatSimPy.LinearHillStretchReceptor_Load(self, *args)
 LinearHillStretchReceptor_swigregister = _AnimatSimPy.LinearHillStretchReceptor_swigregister
 LinearHillStretchReceptor_swigregister(LinearHillStretchReceptor)
+
+def LinearHillStretchReceptor_CastToDerived(*args):
+  return _AnimatSimPy.LinearHillStretchReceptor_CastToDerived(*args)
+LinearHillStretchReceptor_CastToDerived = _AnimatSimPy.LinearHillStretchReceptor_CastToDerived
 
 class OdorSensor(Sensor):
     __swig_setmethods__ = {}
@@ -5088,6 +5334,8 @@ class OdorSensor(Sensor):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_OdorSensor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.OdorSensor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.OdorSensor_CastToDerived)
     def OdorTypeID(self, *args): return _AnimatSimPy.OdorSensor_OdorTypeID(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.OdorSensor_ResetSimulation(self)
     def SetData(self, *args): return _AnimatSimPy.OdorSensor_SetData(self, *args)
@@ -5097,6 +5345,10 @@ class OdorSensor(Sensor):
     def Load(self, *args): return _AnimatSimPy.OdorSensor_Load(self, *args)
 OdorSensor_swigregister = _AnimatSimPy.OdorSensor_swigregister
 OdorSensor_swigregister(OdorSensor)
+
+def OdorSensor_CastToDerived(*args):
+  return _AnimatSimPy.OdorSensor_CastToDerived(*args)
+OdorSensor_CastToDerived = _AnimatSimPy.OdorSensor_CastToDerived
 
 class Sphere(RigidBody):
     __swig_setmethods__ = {}
@@ -5112,6 +5364,8 @@ class Sphere(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Sphere
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Sphere_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Sphere_CastToDerived)
     def Radius(self, *args): return _AnimatSimPy.Sphere_Radius(self, *args)
     def LatitudeSegments(self, *args): return _AnimatSimPy.Sphere_LatitudeSegments(self, *args)
     def LongtitudeSegments(self, *args): return _AnimatSimPy.Sphere_LongtitudeSegments(self, *args)
@@ -5120,6 +5374,10 @@ class Sphere(RigidBody):
     def Load(self, *args): return _AnimatSimPy.Sphere_Load(self, *args)
 Sphere_swigregister = _AnimatSimPy.Sphere_swigregister
 Sphere_swigregister(Sphere)
+
+def Sphere_CastToDerived(*args):
+  return _AnimatSimPy.Sphere_CastToDerived(*args)
+Sphere_CastToDerived = _AnimatSimPy.Sphere_CastToDerived
 
 class Spring(LineBase):
     __swig_setmethods__ = {}
@@ -5135,6 +5393,8 @@ class Spring(LineBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Spring
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Spring_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Spring_CastToDerived)
     def InitEnabled(self): return _AnimatSimPy.Spring_InitEnabled(self)
     def NaturalLength(self, *args): return _AnimatSimPy.Spring_NaturalLength(self, *args)
     def Stiffness(self, *args): return _AnimatSimPy.Spring_Stiffness(self, *args)
@@ -5153,6 +5413,10 @@ class Spring(LineBase):
 Spring_swigregister = _AnimatSimPy.Spring_swigregister
 Spring_swigregister(Spring)
 
+def Spring_CastToDerived(*args):
+  return _AnimatSimPy.Spring_CastToDerived(*args)
+Spring_CastToDerived = _AnimatSimPy.Spring_CastToDerived
+
 class Stomach(RigidBody):
     __swig_setmethods__ = {}
     for _s in [RigidBody]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5167,6 +5431,8 @@ class Stomach(RigidBody):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Stomach
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Stomach_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Stomach_CastToDerived)
     def EnergyLevel(self, *args): return _AnimatSimPy.Stomach_EnergyLevel(self, *args)
     def AddEnergy(self, *args): return _AnimatSimPy.Stomach_AddEnergy(self, *args)
     def ConsumptionRate(self, *args): return _AnimatSimPy.Stomach_ConsumptionRate(self, *args)
@@ -5185,6 +5451,10 @@ class Stomach(RigidBody):
 Stomach_swigregister = _AnimatSimPy.Stomach_swigregister
 Stomach_swigregister(Stomach)
 
+def Stomach_CastToDerived(*args):
+  return _AnimatSimPy.Stomach_CastToDerived(*args)
+Stomach_CastToDerived = _AnimatSimPy.Stomach_CastToDerived
+
 class Mouth(Sensor):
     __swig_setmethods__ = {}
     for _s in [Sensor]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5199,6 +5469,8 @@ class Mouth(Sensor):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Mouth
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Mouth_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Mouth_CastToDerived)
     def EatingRate(self): return _AnimatSimPy.Mouth_EatingRate(self)
     def MinFoodRadius(self, *args): return _AnimatSimPy.Mouth_MinFoodRadius(self, *args)
     def StomachID(self, *args): return _AnimatSimPy.Mouth_StomachID(self, *args)
@@ -5212,6 +5484,10 @@ class Mouth(Sensor):
     def Load(self, *args): return _AnimatSimPy.Mouth_Load(self, *args)
 Mouth_swigregister = _AnimatSimPy.Mouth_swigregister
 Mouth_swigregister(Mouth)
+
+def Mouth_CastToDerived(*args):
+  return _AnimatSimPy.Mouth_CastToDerived(*args)
+Mouth_CastToDerived = _AnimatSimPy.Mouth_CastToDerived
 
 class CollisionPair(AnimatBase):
     __swig_setmethods__ = {}
@@ -5250,6 +5526,8 @@ class Structure(AnimatBase,MovableItem):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Structure
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Structure_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Structure_CastToDerived)
     def Sim(self, *args): return _AnimatSimPy.Structure_Sim(self, *args)
     def Body(self, *args): return _AnimatSimPy.Structure_Body(self, *args)
     def Position(self, *args): return _AnimatSimPy.Structure_Position(self, *args)
@@ -5298,6 +5576,10 @@ class Structure(AnimatBase,MovableItem):
 Structure_swigregister = _AnimatSimPy.Structure_swigregister
 Structure_swigregister(Structure)
 
+def Structure_CastToDerived(*args):
+  return _AnimatSimPy.Structure_CastToDerived(*args)
+Structure_CastToDerived = _AnimatSimPy.Structure_CastToDerived
+
 class NervousSystem(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5312,6 +5594,8 @@ class NervousSystem(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_NervousSystem
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.NervousSystem_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.NervousSystem_CastToDerived)
     def FindNeuralModule(self, *args): return _AnimatSimPy.NervousSystem_FindNeuralModule(self, *args)
     def AddNeuralModule(self, *args): return _AnimatSimPy.NervousSystem_AddNeuralModule(self, *args)
     def RemoveNeuralModule(self, *args): return _AnimatSimPy.NervousSystem_RemoveNeuralModule(self, *args)
@@ -5329,6 +5613,10 @@ class NervousSystem(AnimatBase):
 NervousSystem_swigregister = _AnimatSimPy.NervousSystem_swigregister
 NervousSystem_swigregister(NervousSystem)
 
+def NervousSystem_CastToDerived(*args):
+  return _AnimatSimPy.NervousSystem_CastToDerived(*args)
+NervousSystem_CastToDerived = _AnimatSimPy.NervousSystem_CastToDerived
+
 class NeuralModule(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5340,6 +5628,8 @@ class NeuralModule(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_NeuralModule
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.NeuralModule_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.NeuralModule_CastToDerived)
     def ModuleName(self): return _AnimatSimPy.NeuralModule_ModuleName(self)
     def TimeStepInterval(self, *args): return _AnimatSimPy.NeuralModule_TimeStepInterval(self, *args)
     def TimeStep(self, *args): return _AnimatSimPy.NeuralModule_TimeStep(self, *args)
@@ -5361,6 +5651,10 @@ class NeuralModule(AnimatBase):
 NeuralModule_swigregister = _AnimatSimPy.NeuralModule_swigregister
 NeuralModule_swigregister(NeuralModule)
 
+def NeuralModule_CastToDerived(*args):
+  return _AnimatSimPy.NeuralModule_CastToDerived(*args)
+NeuralModule_CastToDerived = _AnimatSimPy.NeuralModule_CastToDerived
+
 class PhysicsNeuralModule(NeuralModule):
     __swig_setmethods__ = {}
     for _s in [NeuralModule]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5375,6 +5669,8 @@ class PhysicsNeuralModule(NeuralModule):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_PhysicsNeuralModule
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PhysicsNeuralModule_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PhysicsNeuralModule_CastToDerived)
     def TimeStep(self, *args): return _AnimatSimPy.PhysicsNeuralModule_TimeStep(self, *args)
     def ModuleName(self): return _AnimatSimPy.PhysicsNeuralModule_ModuleName(self)
     def AddAdapter(self, *args): return _AnimatSimPy.PhysicsNeuralModule_AddAdapter(self, *args)
@@ -5394,6 +5690,10 @@ class PhysicsNeuralModule(NeuralModule):
 PhysicsNeuralModule_swigregister = _AnimatSimPy.PhysicsNeuralModule_swigregister
 PhysicsNeuralModule_swigregister(PhysicsNeuralModule)
 
+def PhysicsNeuralModule_CastToDerived(*args):
+  return _AnimatSimPy.PhysicsNeuralModule_CastToDerived(*args)
+PhysicsNeuralModule_CastToDerived = _AnimatSimPy.PhysicsNeuralModule_CastToDerived
+
 class Organism(Structure):
     __swig_setmethods__ = {}
     for _s in [Structure]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5408,6 +5708,8 @@ class Organism(Structure):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Organism
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Organism_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Organism_CastToDerived)
     def IsDead(self): return _AnimatSimPy.Organism_IsDead(self)
     def GetRobotInterface(self): return _AnimatSimPy.Organism_GetRobotInterface(self)
     def CalculateSnapshotByteSize(self): return _AnimatSimPy.Organism_CalculateSnapshotByteSize(self)
@@ -5427,6 +5729,10 @@ class Organism(Structure):
 Organism_swigregister = _AnimatSimPy.Organism_swigregister
 Organism_swigregister(Organism)
 
+def Organism_CastToDerived(*args):
+  return _AnimatSimPy.Organism_CastToDerived(*args)
+Organism_CastToDerived = _AnimatSimPy.Organism_CastToDerived
+
 class Light(AnimatBase,MovableItem):
     __swig_setmethods__ = {}
     for _s in [AnimatBase,MovableItem]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5441,6 +5747,8 @@ class Light(AnimatBase,MovableItem):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Light
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Light_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Light_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.Light_Enabled(self, *args)
     def Resize(self): return _AnimatSimPy.Light_Resize(self)
     def Radius(self, *args): return _AnimatSimPy.Light_Radius(self, *args)
@@ -5460,6 +5768,10 @@ class Light(AnimatBase,MovableItem):
 Light_swigregister = _AnimatSimPy.Light_swigregister
 Light_swigregister(Light)
 
+def Light_CastToDerived(*args):
+  return _AnimatSimPy.Light_CastToDerived(*args)
+Light_CastToDerived = _AnimatSimPy.Light_CastToDerived
+
 class LightManager(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5474,6 +5786,8 @@ class LightManager(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_LightManager
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.LightManager_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.LightManager_CastToDerived)
     def Lights(self): return _AnimatSimPy.LightManager_Lights(self)
     def AddItem(self, *args): return _AnimatSimPy.LightManager_AddItem(self, *args)
     def RemoveItem(self, *args): return _AnimatSimPy.LightManager_RemoveItem(self, *args)
@@ -5482,6 +5796,10 @@ class LightManager(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.LightManager_Load(self, *args)
 LightManager_swigregister = _AnimatSimPy.LightManager_swigregister
 LightManager_swigregister(LightManager)
+
+def LightManager_CastToDerived(*args):
+  return _AnimatSimPy.LightManager_CastToDerived(*args)
+LightManager_CastToDerived = _AnimatSimPy.LightManager_CastToDerived
 
 class ActivatedItem(AnimatBase):
     __swig_setmethods__ = {}
@@ -5494,6 +5812,8 @@ class ActivatedItem(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_ActivatedItem
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ActivatedItem_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ActivatedItem_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.ActivatedItem_Enabled(self, *args)
     def LoadedTime(self, *args): return _AnimatSimPy.ActivatedItem_LoadedTime(self, *args)
     def StartSlice(self, *args): return _AnimatSimPy.ActivatedItem_StartSlice(self, *args)
@@ -5521,6 +5841,10 @@ class ActivatedItem(AnimatBase):
 ActivatedItem_swigregister = _AnimatSimPy.ActivatedItem_swigregister
 ActivatedItem_swigregister(ActivatedItem)
 
+def ActivatedItem_CastToDerived(*args):
+  return _AnimatSimPy.ActivatedItem_CastToDerived(*args)
+ActivatedItem_CastToDerived = _AnimatSimPy.ActivatedItem_CastToDerived
+
 
 def LessThanActivatedItemCompare(*args):
   return _AnimatSimPy.LessThanActivatedItemCompare(*args)
@@ -5539,6 +5863,8 @@ class ActivatedItemMgr(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ActivatedItemMgr
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ActivatedItemMgr_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ActivatedItemMgr_CastToDerived)
     def Add(self, *args): return _AnimatSimPy.ActivatedItemMgr_Add(self, *args)
     def Remove(self, *args): return _AnimatSimPy.ActivatedItemMgr_Remove(self, *args)
     def Find(self, *args): return _AnimatSimPy.ActivatedItemMgr_Find(self, *args)
@@ -5550,6 +5876,10 @@ class ActivatedItemMgr(AnimatBase):
     def StepSimulation(self): return _AnimatSimPy.ActivatedItemMgr_StepSimulation(self)
 ActivatedItemMgr_swigregister = _AnimatSimPy.ActivatedItemMgr_swigregister
 ActivatedItemMgr_swigregister(ActivatedItemMgr)
+
+def ActivatedItemMgr_CastToDerived(*args):
+  return _AnimatSimPy.ActivatedItemMgr_CastToDerived(*args)
+ActivatedItemMgr_CastToDerived = _AnimatSimPy.ActivatedItemMgr_CastToDerived
 
 class DataColumn(AnimatBase):
     __swig_setmethods__ = {}
@@ -5565,6 +5895,8 @@ class DataColumn(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_DataColumn
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.DataColumn_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.DataColumn_CastToDerived)
     def ColumnCount(self): return _AnimatSimPy.DataColumn_ColumnCount(self)
     def Name(self, *args): return _AnimatSimPy.DataColumn_Name(self, *args)
     def DataType(self, *args): return _AnimatSimPy.DataColumn_DataType(self, *args)
@@ -5587,6 +5919,10 @@ class DataColumn(AnimatBase):
 DataColumn_swigregister = _AnimatSimPy.DataColumn_swigregister
 DataColumn_swigregister(DataColumn)
 
+def DataColumn_CastToDerived(*args):
+  return _AnimatSimPy.DataColumn_CastToDerived(*args)
+DataColumn_CastToDerived = _AnimatSimPy.DataColumn_CastToDerived
+
 
 def LessThanDataColumnCompare(*args):
   return _AnimatSimPy.LessThanDataColumnCompare(*args)
@@ -5605,6 +5941,8 @@ class DataChart(ActivatedItem):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_DataChart
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.DataChart_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.DataChart_CastToDerived)
     def Type(self): return _AnimatSimPy.DataChart_Type(self)
     def StartTime(self, *args): return _AnimatSimPy.DataChart_StartTime(self, *args)
     def EndTime(self, *args): return _AnimatSimPy.DataChart_EndTime(self, *args)
@@ -5639,6 +5977,10 @@ class DataChart(ActivatedItem):
 DataChart_swigregister = _AnimatSimPy.DataChart_swigregister
 DataChart_swigregister(DataChart)
 
+def DataChart_CastToDerived(*args):
+  return _AnimatSimPy.DataChart_CastToDerived(*args)
+DataChart_CastToDerived = _AnimatSimPy.DataChart_CastToDerived
+
 class FileChart(DataChart):
     __swig_setmethods__ = {}
     for _s in [DataChart]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5653,6 +5995,8 @@ class FileChart(DataChart):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_FileChart
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.FileChart_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.FileChart_CastToDerived)
     def Type(self): return _AnimatSimPy.FileChart_Type(self)
     def OutputFilename(self, *args): return _AnimatSimPy.FileChart_OutputFilename(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.FileChart_ResetSimulation(self)
@@ -5662,6 +6006,10 @@ class FileChart(DataChart):
     def SaveOutput(self): return _AnimatSimPy.FileChart_SaveOutput(self)
 FileChart_swigregister = _AnimatSimPy.FileChart_swigregister
 FileChart_swigregister(FileChart)
+
+def FileChart_CastToDerived(*args):
+  return _AnimatSimPy.FileChart_CastToDerived(*args)
+FileChart_CastToDerived = _AnimatSimPy.FileChart_CastToDerived
 
 class ArrayChart(DataChart):
     __swig_setmethods__ = {}
@@ -5677,6 +6025,8 @@ class ArrayChart(DataChart):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ArrayChart
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ArrayChart_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ArrayChart_CastToDerived)
     def Type(self): return _AnimatSimPy.ArrayChart_Type(self)
     def CurrentRow(self, *args): return _AnimatSimPy.ArrayChart_CurrentRow(self, *args)
     def Initialize(self): return _AnimatSimPy.ArrayChart_Initialize(self)
@@ -5685,6 +6035,10 @@ class ArrayChart(DataChart):
     def Load(self, *args): return _AnimatSimPy.ArrayChart_Load(self, *args)
 ArrayChart_swigregister = _AnimatSimPy.ArrayChart_swigregister
 ArrayChart_swigregister(ArrayChart)
+
+def ArrayChart_CastToDerived(*args):
+  return _AnimatSimPy.ArrayChart_CastToDerived(*args)
+ArrayChart_CastToDerived = _AnimatSimPy.ArrayChart_CastToDerived
 
 class MemoryChart(DataChart):
     __swig_setmethods__ = {}
@@ -5700,6 +6054,8 @@ class MemoryChart(DataChart):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_MemoryChart
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MemoryChart_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MemoryChart_CastToDerived)
     def Type(self): return _AnimatSimPy.MemoryChart_Type(self)
     def Lock(self): return _AnimatSimPy.MemoryChart_Lock(self)
     def Unlock(self): return _AnimatSimPy.MemoryChart_Unlock(self)
@@ -5708,6 +6064,10 @@ class MemoryChart(DataChart):
     def Load(self, *args): return _AnimatSimPy.MemoryChart_Load(self, *args)
 MemoryChart_swigregister = _AnimatSimPy.MemoryChart_swigregister
 MemoryChart_swigregister(MemoryChart)
+
+def MemoryChart_CastToDerived(*args):
+  return _AnimatSimPy.MemoryChart_CastToDerived(*args)
+MemoryChart_CastToDerived = _AnimatSimPy.MemoryChart_CastToDerived
 
 class DataChartMgr(ActivatedItemMgr):
     __swig_setmethods__ = {}
@@ -5723,6 +6083,8 @@ class DataChartMgr(ActivatedItemMgr):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_DataChartMgr
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.DataChartMgr_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.DataChartMgr_CastToDerived)
     def AddDataChart(self, *args): return _AnimatSimPy.DataChartMgr_AddDataChart(self, *args)
     def RemoveDataChart(self, *args): return _AnimatSimPy.DataChartMgr_RemoveDataChart(self, *args)
     def AddDataColumn(self, *args): return _AnimatSimPy.DataChartMgr_AddDataColumn(self, *args)
@@ -5731,6 +6093,10 @@ class DataChartMgr(ActivatedItemMgr):
     def Load(self, *args): return _AnimatSimPy.DataChartMgr_Load(self, *args)
 DataChartMgr_swigregister = _AnimatSimPy.DataChartMgr_swigregister
 DataChartMgr_swigregister(DataChartMgr)
+
+def DataChartMgr_CastToDerived(*args):
+  return _AnimatSimPy.DataChartMgr_CastToDerived(*args)
+DataChartMgr_CastToDerived = _AnimatSimPy.DataChartMgr_CastToDerived
 
 class ExternalStimulus(ActivatedItem):
     __swig_setmethods__ = {}
@@ -5746,11 +6112,17 @@ class ExternalStimulus(ActivatedItem):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ExternalStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ExternalStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ExternalStimulus_CastToDerived)
     def SetData(self, *args): return _AnimatSimPy.ExternalStimulus_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.ExternalStimulus_QueryProperties(self, *args)
     def __lt__(self, *args): return _AnimatSimPy.ExternalStimulus___lt__(self, *args)
 ExternalStimulus_swigregister = _AnimatSimPy.ExternalStimulus_swigregister
 ExternalStimulus_swigregister(ExternalStimulus)
+
+def ExternalStimulus_CastToDerived(*args):
+  return _AnimatSimPy.ExternalStimulus_CastToDerived(*args)
+ExternalStimulus_CastToDerived = _AnimatSimPy.ExternalStimulus_CastToDerived
 
 class ExternalStimuliMgr(ActivatedItemMgr):
     __swig_setmethods__ = {}
@@ -5766,11 +6138,17 @@ class ExternalStimuliMgr(ActivatedItemMgr):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ExternalStimuliMgr
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ExternalStimuliMgr_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ExternalStimuliMgr_CastToDerived)
     def AddStimulus(self, *args): return _AnimatSimPy.ExternalStimuliMgr_AddStimulus(self, *args)
     def RemoveStimulus(self, *args): return _AnimatSimPy.ExternalStimuliMgr_RemoveStimulus(self, *args)
     def Load(self, *args): return _AnimatSimPy.ExternalStimuliMgr_Load(self, *args)
 ExternalStimuliMgr_swigregister = _AnimatSimPy.ExternalStimuliMgr_swigregister
 ExternalStimuliMgr_swigregister(ExternalStimuliMgr)
+
+def ExternalStimuliMgr_CastToDerived(*args):
+  return _AnimatSimPy.ExternalStimuliMgr_CastToDerived(*args)
+ExternalStimuliMgr_CastToDerived = _AnimatSimPy.ExternalStimuliMgr_CastToDerived
 
 class ExternalInputStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
@@ -5786,6 +6164,8 @@ class ExternalInputStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ExternalInputStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ExternalInputStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ExternalInputStimulus_CastToDerived)
     def Type(self): return _AnimatSimPy.ExternalInputStimulus_Type(self)
     def TargetNodeID(self, *args): return _AnimatSimPy.ExternalInputStimulus_TargetNodeID(self, *args)
     def Input(self, *args): return _AnimatSimPy.ExternalInputStimulus_Input(self, *args)
@@ -5801,6 +6181,10 @@ class ExternalInputStimulus(ExternalStimulus):
 ExternalInputStimulus_swigregister = _AnimatSimPy.ExternalInputStimulus_swigregister
 ExternalInputStimulus_swigregister(ExternalInputStimulus)
 
+def ExternalInputStimulus_CastToDerived(*args):
+  return _AnimatSimPy.ExternalInputStimulus_CastToDerived(*args)
+ExternalInputStimulus_CastToDerived = _AnimatSimPy.ExternalInputStimulus_CastToDerived
+
 class CurrentStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5815,6 +6199,8 @@ class CurrentStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_CurrentStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.CurrentStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.CurrentStimulus_CastToDerived)
     def Type(self, *args): return _AnimatSimPy.CurrentStimulus_Type(self, *args)
     def AlwaysActive(self, *args): return _AnimatSimPy.CurrentStimulus_AlwaysActive(self, *args)
     def TargetNodeID(self, *args): return _AnimatSimPy.CurrentStimulus_TargetNodeID(self, *args)
@@ -5838,6 +6224,10 @@ class CurrentStimulus(ExternalStimulus):
 CurrentStimulus_swigregister = _AnimatSimPy.CurrentStimulus_swigregister
 CurrentStimulus_swigregister(CurrentStimulus)
 
+def CurrentStimulus_CastToDerived(*args):
+  return _AnimatSimPy.CurrentStimulus_CastToDerived(*args)
+CurrentStimulus_CastToDerived = _AnimatSimPy.CurrentStimulus_CastToDerived
+
 class EnablerStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5852,6 +6242,8 @@ class EnablerStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_EnablerStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.EnablerStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.EnablerStimulus_CastToDerived)
     def Type(self): return _AnimatSimPy.EnablerStimulus_Type(self)
     def TargetNodeID(self, *args): return _AnimatSimPy.EnablerStimulus_TargetNodeID(self, *args)
     def EnableWhenActive(self, *args): return _AnimatSimPy.EnablerStimulus_EnableWhenActive(self, *args)
@@ -5864,6 +6256,10 @@ class EnablerStimulus(ExternalStimulus):
     def Load(self, *args): return _AnimatSimPy.EnablerStimulus_Load(self, *args)
 EnablerStimulus_swigregister = _AnimatSimPy.EnablerStimulus_swigregister
 EnablerStimulus_swigregister(EnablerStimulus)
+
+def EnablerStimulus_CastToDerived(*args):
+  return _AnimatSimPy.EnablerStimulus_CastToDerived(*args)
+EnablerStimulus_CastToDerived = _AnimatSimPy.EnablerStimulus_CastToDerived
 
 class VoltageClamp(ExternalStimulus):
     __swig_setmethods__ = {}
@@ -5879,6 +6275,8 @@ class VoltageClamp(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_VoltageClamp
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.VoltageClamp_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.VoltageClamp_CastToDerived)
     def Type(self): return _AnimatSimPy.VoltageClamp_Type(self)
     def TargetNodeID(self, *args): return _AnimatSimPy.VoltageClamp_TargetNodeID(self, *args)
     def Vtarget(self, *args): return _AnimatSimPy.VoltageClamp_Vtarget(self, *args)
@@ -5894,6 +6292,10 @@ class VoltageClamp(ExternalStimulus):
 VoltageClamp_swigregister = _AnimatSimPy.VoltageClamp_swigregister
 VoltageClamp_swigregister(VoltageClamp)
 
+def VoltageClamp_CastToDerived(*args):
+  return _AnimatSimPy.VoltageClamp_CastToDerived(*args)
+VoltageClamp_CastToDerived = _AnimatSimPy.VoltageClamp_CastToDerived
+
 class InverseMuscleCurrent(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5908,6 +6310,8 @@ class InverseMuscleCurrent(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_InverseMuscleCurrent
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.InverseMuscleCurrent_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.InverseMuscleCurrent_CastToDerived)
     def RestPotential(self, *args): return _AnimatSimPy.InverseMuscleCurrent_RestPotential(self, *args)
     def Conductance(self, *args): return _AnimatSimPy.InverseMuscleCurrent_Conductance(self, *args)
     def TargetNodeID(self, *args): return _AnimatSimPy.InverseMuscleCurrent_TargetNodeID(self, *args)
@@ -5928,6 +6332,10 @@ class InverseMuscleCurrent(ExternalStimulus):
 InverseMuscleCurrent_swigregister = _AnimatSimPy.InverseMuscleCurrent_swigregister
 InverseMuscleCurrent_swigregister(InverseMuscleCurrent)
 
+def InverseMuscleCurrent_CastToDerived(*args):
+  return _AnimatSimPy.InverseMuscleCurrent_CastToDerived(*args)
+InverseMuscleCurrent_CastToDerived = _AnimatSimPy.InverseMuscleCurrent_CastToDerived
+
 class PropertyControlStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5942,6 +6350,8 @@ class PropertyControlStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_PropertyControlStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PropertyControlStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PropertyControlStimulus_CastToDerived)
     def Type(self): return _AnimatSimPy.PropertyControlStimulus_Type(self)
     def TargetID(self, *args): return _AnimatSimPy.PropertyControlStimulus_TargetID(self, *args)
     def TargetObject(self): return _AnimatSimPy.PropertyControlStimulus_TargetObject(self)
@@ -5960,6 +6370,10 @@ class PropertyControlStimulus(ExternalStimulus):
 PropertyControlStimulus_swigregister = _AnimatSimPy.PropertyControlStimulus_swigregister
 PropertyControlStimulus_swigregister(PropertyControlStimulus)
 
+def PropertyControlStimulus_CastToDerived(*args):
+  return _AnimatSimPy.PropertyControlStimulus_CastToDerived(*args)
+PropertyControlStimulus_CastToDerived = _AnimatSimPy.PropertyControlStimulus_CastToDerived
+
 class MotorVelocityStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -5974,6 +6388,8 @@ class MotorVelocityStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_MotorVelocityStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MotorVelocityStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MotorVelocityStimulus_CastToDerived)
     def StructureID(self, *args): return _AnimatSimPy.MotorVelocityStimulus_StructureID(self, *args)
     def JointID(self, *args): return _AnimatSimPy.MotorVelocityStimulus_JointID(self, *args)
     def VelocityEquation(self, *args): return _AnimatSimPy.MotorVelocityStimulus_VelocityEquation(self, *args)
@@ -5991,6 +6407,10 @@ class MotorVelocityStimulus(ExternalStimulus):
 MotorVelocityStimulus_swigregister = _AnimatSimPy.MotorVelocityStimulus_swigregister
 MotorVelocityStimulus_swigregister(MotorVelocityStimulus)
 
+def MotorVelocityStimulus_CastToDerived(*args):
+  return _AnimatSimPy.MotorVelocityStimulus_CastToDerived(*args)
+MotorVelocityStimulus_CastToDerived = _AnimatSimPy.MotorVelocityStimulus_CastToDerived
+
 class ForceStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -6005,6 +6425,8 @@ class ForceStimulus(ExternalStimulus):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ForceStimulus
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ForceStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ForceStimulus_CastToDerived)
     def RelativePositionX(self, *args): return _AnimatSimPy.ForceStimulus_RelativePositionX(self, *args)
     def RelativePositionY(self, *args): return _AnimatSimPy.ForceStimulus_RelativePositionY(self, *args)
     def RelativePositionZ(self, *args): return _AnimatSimPy.ForceStimulus_RelativePositionZ(self, *args)
@@ -6026,6 +6448,10 @@ class ForceStimulus(ExternalStimulus):
 ForceStimulus_swigregister = _AnimatSimPy.ForceStimulus_swigregister
 ForceStimulus_swigregister(ForceStimulus)
 
+def ForceStimulus_CastToDerived(*args):
+  return _AnimatSimPy.ForceStimulus_CastToDerived(*args)
+ForceStimulus_CastToDerived = _AnimatSimPy.ForceStimulus_CastToDerived
+
 class KeyFrame(ActivatedItem):
     __swig_setmethods__ = {}
     for _s in [ActivatedItem]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -6037,6 +6463,8 @@ class KeyFrame(ActivatedItem):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_KeyFrame
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.KeyFrame_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.KeyFrame_CastToDerived)
     def CollectInterval(self, *args): return _AnimatSimPy.KeyFrame_CollectInterval(self, *args)
     def GenerateID(self): return _AnimatSimPy.KeyFrame_GenerateID(self)
     def Load(self, *args): return _AnimatSimPy.KeyFrame_Load(self, *args)
@@ -6053,6 +6481,10 @@ class KeyFrame(ActivatedItem):
 KeyFrame_swigregister = _AnimatSimPy.KeyFrame_swigregister
 KeyFrame_swigregister(KeyFrame)
 
+def KeyFrame_CastToDerived(*args):
+  return _AnimatSimPy.KeyFrame_CastToDerived(*args)
+KeyFrame_CastToDerived = _AnimatSimPy.KeyFrame_CastToDerived
+
 class SimulationRecorder(ActivatedItemMgr):
     __swig_setmethods__ = {}
     for _s in [ActivatedItemMgr]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -6067,10 +6499,16 @@ class SimulationRecorder(ActivatedItemMgr):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_SimulationRecorder
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.SimulationRecorder_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.SimulationRecorder_CastToDerived)
     def Add(self, *args): return _AnimatSimPy.SimulationRecorder_Add(self, *args)
     def Load(self, *args): return _AnimatSimPy.SimulationRecorder_Load(self, *args)
 SimulationRecorder_swigregister = _AnimatSimPy.SimulationRecorder_swigregister
 SimulationRecorder_swigregister(SimulationRecorder)
+
+def SimulationRecorder_CastToDerived(*args):
+  return _AnimatSimPy.SimulationRecorder_CastToDerived(*args)
+SimulationRecorder_CastToDerived = _AnimatSimPy.SimulationRecorder_CastToDerived
 
 class MaterialType(AnimatBase):
     __swig_setmethods__ = {}
@@ -6083,10 +6521,16 @@ class MaterialType(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_MaterialType
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MaterialType_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MaterialType_CastToDerived)
     def GetMaterialID(self, *args): return _AnimatSimPy.MaterialType_GetMaterialID(self, *args)
     def CreateDefaultUnits(self): return _AnimatSimPy.MaterialType_CreateDefaultUnits(self)
 MaterialType_swigregister = _AnimatSimPy.MaterialType_swigregister
 MaterialType_swigregister(MaterialType)
+
+def MaterialType_CastToDerived(*args):
+  return _AnimatSimPy.MaterialType_CastToDerived(*args)
+MaterialType_CastToDerived = _AnimatSimPy.MaterialType_CastToDerived
 
 class Materials(AnimatBase):
     __swig_setmethods__ = {}
@@ -6102,6 +6546,8 @@ class Materials(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_Materials
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Materials_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Materials_CastToDerived)
     def Reset(self): return _AnimatSimPy.Materials_Reset(self)
     def Initialize(self): return _AnimatSimPy.Materials_Initialize(self)
     def AddItem(self, *args): return _AnimatSimPy.Materials_AddItem(self, *args)
@@ -6109,6 +6555,10 @@ class Materials(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.Materials_Load(self, *args)
 Materials_swigregister = _AnimatSimPy.Materials_swigregister
 Materials_swigregister(Materials)
+
+def Materials_CastToDerived(*args):
+  return _AnimatSimPy.Materials_CastToDerived(*args)
+Materials_CastToDerived = _AnimatSimPy.Materials_CastToDerived
 
 class HudItem(AnimatBase):
     __swig_setmethods__ = {}
@@ -6121,11 +6571,17 @@ class HudItem(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_HudItem
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.HudItem_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.HudItem_CastToDerived)
     def Initialize(self, *args): return _AnimatSimPy.HudItem_Initialize(self, *args)
     def Update(self): return _AnimatSimPy.HudItem_Update(self)
     def Load(self, *args): return _AnimatSimPy.HudItem_Load(self, *args)
 HudItem_swigregister = _AnimatSimPy.HudItem_swigregister
 HudItem_swigregister(HudItem)
+
+def HudItem_CastToDerived(*args):
+  return _AnimatSimPy.HudItem_CastToDerived(*args)
+HudItem_CastToDerived = _AnimatSimPy.HudItem_CastToDerived
 
 class HudText(HudItem):
     __swig_setmethods__ = {}
@@ -6138,10 +6594,16 @@ class HudText(HudItem):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_HudText
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.HudText_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.HudText_CastToDerived)
     def Initialize(self, *args): return _AnimatSimPy.HudText_Initialize(self, *args)
     def Load(self, *args): return _AnimatSimPy.HudText_Load(self, *args)
 HudText_swigregister = _AnimatSimPy.HudText_swigregister
 HudText_swigregister(HudText)
+
+def HudText_CastToDerived(*args):
+  return _AnimatSimPy.HudText_CastToDerived(*args)
+HudText_CastToDerived = _AnimatSimPy.HudText_CastToDerived
 
 class Hud(AnimatBase):
     __swig_setmethods__ = {}
@@ -6154,6 +6616,8 @@ class Hud(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_Hud
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Hud_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Hud_CastToDerived)
     def Reset(self): return _AnimatSimPy.Hud_Reset(self)
     def ResetSimulation(self): return _AnimatSimPy.Hud_ResetSimulation(self)
     def Initialize(self): return _AnimatSimPy.Hud_Initialize(self)
@@ -6161,6 +6625,10 @@ class Hud(AnimatBase):
     def Load(self, *args): return _AnimatSimPy.Hud_Load(self, *args)
 Hud_swigregister = _AnimatSimPy.Hud_swigregister
 Hud_swigregister(Hud)
+
+def Hud_CastToDerived(*args):
+  return _AnimatSimPy.Hud_CastToDerived(*args)
+Hud_CastToDerived = _AnimatSimPy.Hud_CastToDerived
 
 class SimulationWindow(AnimatBase):
     __swig_setmethods__ = {}
@@ -6173,6 +6641,8 @@ class SimulationWindow(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_SimulationWindow
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.SimulationWindow_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.SimulationWindow_CastToDerived)
     def LookAtStructureID(self, *args): return _AnimatSimPy.SimulationWindow_LookAtStructureID(self, *args)
     def LookAtBodyID(self, *args): return _AnimatSimPy.SimulationWindow_LookAtBodyID(self, *args)
     def UsingTrackCamera(self, *args): return _AnimatSimPy.SimulationWindow_UsingTrackCamera(self, *args)
@@ -6195,6 +6665,10 @@ class SimulationWindow(AnimatBase):
 SimulationWindow_swigregister = _AnimatSimPy.SimulationWindow_swigregister
 SimulationWindow_swigregister(SimulationWindow)
 
+def SimulationWindow_CastToDerived(*args):
+  return _AnimatSimPy.SimulationWindow_CastToDerived(*args)
+SimulationWindow_CastToDerived = _AnimatSimPy.SimulationWindow_CastToDerived
+
 class SimulationWindowMgr(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -6206,6 +6680,8 @@ class SimulationWindowMgr(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_SimulationWindowMgr
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.SimulationWindowMgr_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.SimulationWindowMgr_CastToDerived)
     def HasContainedWindow(self): return _AnimatSimPy.SimulationWindowMgr_HasContainedWindow(self)
     def Windows(self): return _AnimatSimPy.SimulationWindowMgr_Windows(self)
     def Update(self): return _AnimatSimPy.SimulationWindowMgr_Update(self)
@@ -6222,6 +6698,10 @@ class SimulationWindowMgr(AnimatBase):
 SimulationWindowMgr_swigregister = _AnimatSimPy.SimulationWindowMgr_swigregister
 SimulationWindowMgr_swigregister(SimulationWindowMgr)
 
+def SimulationWindowMgr_CastToDerived(*args):
+  return _AnimatSimPy.SimulationWindowMgr_CastToDerived(*args)
+SimulationWindowMgr_CastToDerived = _AnimatSimPy.SimulationWindowMgr_CastToDerived
+
 class Simulator(AnimatBase):
     __swig_setmethods__ = {}
     for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -6233,6 +6713,8 @@ class Simulator(AnimatBase):
     __repr__ = _swig_repr
     __swig_destroy__ = _AnimatSimPy.delete_Simulator
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.Simulator_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Simulator_CastToDerived)
     def ProjectPath(self, *args): return _AnimatSimPy.Simulator_ProjectPath(self, *args)
     def ExecutablePath(self, *args): return _AnimatSimPy.Simulator_ExecutablePath(self, *args)
     def SimulationFile(self, *args): return _AnimatSimPy.Simulator_SimulationFile(self, *args)
@@ -6306,6 +6788,7 @@ class Simulator(AnimatBase):
     def RobotSynchTimeCount(self): return _AnimatSimPy.Simulator_RobotSynchTimeCount(self)
     def InSimulation(self): return _AnimatSimPy.Simulator_InSimulation(self)
     def ForceNoWindows(self, *args): return _AnimatSimPy.Simulator_ForceNoWindows(self, *args)
+    def Script(self, *args): return _AnimatSimPy.Simulator_Script(self, *args)
     def DistanceUnits(self, *args): return _AnimatSimPy.Simulator_DistanceUnits(self, *args)
     def InverseDistanceUnits(self): return _AnimatSimPy.Simulator_InverseDistanceUnits(self)
     def DenominatorDistanceUnits(self): return _AnimatSimPy.Simulator_DenominatorDistanceUnits(self)
@@ -6399,6 +6882,10 @@ class Simulator(AnimatBase):
 Simulator_swigregister = _AnimatSimPy.Simulator_swigregister
 Simulator_swigregister(Simulator)
 
+def Simulator_CastToDerived(*args):
+  return _AnimatSimPy.Simulator_CastToDerived(*args)
+Simulator_CastToDerived = _AnimatSimPy.Simulator_CastToDerived
+
 def Simulator_LoadClassFactory(*args):
   return _AnimatSimPy.Simulator_LoadClassFactory(*args)
 Simulator_LoadClassFactory = _AnimatSimPy.Simulator_LoadClassFactory
@@ -6429,14 +6916,18 @@ class ScriptProcessor(AnimatBase):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_ScriptProcessor
     __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.ScriptProcessor_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.ScriptProcessor_CastToDerived)
     def BeforeStepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_BeforeStepPhysicsEngine(self)
     def AfterStepPhysicsEngine(self): return _AnimatSimPy.ScriptProcessor_AfterStepPhysicsEngine(self)
     def BeforeStepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_BeforeStepNeuralEngine(self)
     def AfterStepNeuralEngine(self): return _AnimatSimPy.ScriptProcessor_AfterStepNeuralEngine(self)
-    def BeforeStepSimulation(self): return _AnimatSimPy.ScriptProcessor_BeforeStepSimulation(self)
-    def AfterStepSimulation(self): return _AnimatSimPy.ScriptProcessor_AfterStepSimulation(self)
 ScriptProcessor_swigregister = _AnimatSimPy.ScriptProcessor_swigregister
 ScriptProcessor_swigregister(ScriptProcessor)
+
+def ScriptProcessor_CastToDerived(*args):
+  return _AnimatSimPy.ScriptProcessor_CastToDerived(*args)
+ScriptProcessor_CastToDerived = _AnimatSimPy.ScriptProcessor_CastToDerived
 
 
 def SetLastScriptError(*args):
@@ -6486,6 +6977,8 @@ class SimulationMgr(AnimatBase):
     __repr__ = _swig_repr
     __swig_getmethods__["Instance"] = lambda x: _AnimatSimPy.SimulationMgr_Instance
     if _newclass:Instance = staticmethod(_AnimatSimPy.SimulationMgr_Instance)
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.SimulationMgr_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.SimulationMgr_CastToDerived)
     def SimThreads(self): return _AnimatSimPy.SimulationMgr_SimThreads(self)
     def CreateSimulation(self, *args): return _AnimatSimPy.SimulationMgr_CreateSimulation(self, *args)
     def ShutdownAllSimulations(self): return _AnimatSimPy.SimulationMgr_ShutdownAllSimulations(self)
@@ -6496,6 +6989,10 @@ SimulationMgr_swigregister(SimulationMgr)
 def SimulationMgr_Instance():
   return _AnimatSimPy.SimulationMgr_Instance()
 SimulationMgr_Instance = _AnimatSimPy.SimulationMgr_Instance
+
+def SimulationMgr_CastToDerived(*args):
+  return _AnimatSimPy.SimulationMgr_CastToDerived(*args)
+SimulationMgr_CastToDerived = _AnimatSimPy.SimulationMgr_CastToDerived
 
 
 def ActiveSim(*args):

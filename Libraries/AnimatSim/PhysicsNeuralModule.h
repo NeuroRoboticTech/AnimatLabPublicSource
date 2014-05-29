@@ -31,6 +31,8 @@ namespace AnimatSim
 			PhysicsNeuralModule();
 			virtual ~PhysicsNeuralModule();
 
+			static PhysicsNeuralModule *CastToDerived(AnimatBase *lpBase) {return static_cast<PhysicsNeuralModule*>(lpBase);}
+
 			virtual float TimeStep();
 			virtual void TimeStep(float fltVal);
 

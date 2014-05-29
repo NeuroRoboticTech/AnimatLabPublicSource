@@ -25,8 +25,6 @@ Namespace DataObjects
             Protected m_strAfterStepPhysicsEnginePy As String
             Protected m_strBeforeStepNeuralEnginePy As String
             Protected m_strAfterStepNeuralEnginePy As String
-            Protected m_strBeforeStepSimulationPy As String
-            Protected m_strAfterStepSimulationPy As String
             Protected m_strKillPy As String
             Protected m_strSimStartingPy As String
             Protected m_strSimPausingPy As String
@@ -122,24 +120,6 @@ Namespace DataObjects
                 End Set
             End Property
 
-            Public Overridable Property BeforeStepSimulationPy() As String
-                Get
-                    Return m_strBeforeStepSimulationPy
-                End Get
-                Set(value As String)
-                    m_strBeforeStepSimulationPy = value
-                End Set
-            End Property
-
-            Public Overridable Property AfterStepSimulationPy() As String
-                Get
-                    Return m_strAfterStepSimulationPy
-                End Get
-                Set(value As String)
-                    m_strAfterStepSimulationPy = value
-                End Set
-            End Property
-
             Public Overridable Property KillPy() As String
                 Get
                     Return m_strKillPy
@@ -207,8 +187,6 @@ Namespace DataObjects
                 m_strAfterStepPhysicsEnginePy = OrigNode.m_strAfterStepPhysicsEnginePy
                 m_strBeforeStepNeuralEnginePy = OrigNode.m_strBeforeStepNeuralEnginePy
                 m_strAfterStepNeuralEnginePy = OrigNode.m_strAfterStepNeuralEnginePy
-                m_strBeforeStepSimulationPy = OrigNode.m_strBeforeStepSimulationPy
-                m_strAfterStepSimulationPy = OrigNode.m_strAfterStepSimulationPy
                 m_strKillPy = OrigNode.m_strKillPy
                 m_strSimStartingPy = OrigNode.m_strSimStartingPy
                 m_strSimPausingPy = OrigNode.m_strSimPausingPy
@@ -229,34 +207,26 @@ Namespace DataObjects
                                             "Properties", "Python script to run when the simulation is reset.", _
                                             m_strResetSimPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-                If Not m_doStructure Is Nothing Then
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Before Step Physics", m_strBeforeStepPhysicsEnginePy.GetType(), "BeforeStepPhysicsEnginePy", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Before Step Physics", m_strBeforeStepPhysicsEnginePy.GetType(), "BeforeStepPhysicsEnginePy", _
                                 "Properties", "Python script to run before the physics engine is stepped for this object.", _
                                 m_strBeforeStepPhysicsEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("After Step Physics", m_strAfterStepPhysicsEnginePy.GetType(), "AfterStepPhysicsEnginePy", _
-                                                "Properties", "Python script to run after the physics engine is stepped for this object.", _
-                                                m_strAfterStepPhysicsEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("After Step Physics", m_strAfterStepPhysicsEnginePy.GetType(), "AfterStepPhysicsEnginePy", _
+                                            "Properties", "Python script to run after the physics engine is stepped for this object.", _
+                                            m_strAfterStepPhysicsEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Before Step Neural", m_strBeforeStepNeuralEnginePy.GetType(), "BeforeStepNeuralEnginePy", _
-                                                "Properties", "Python script to run before the neural engine is stepped for this object.", _
-                                                m_strBeforeStepNeuralEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Before Step Neural", m_strBeforeStepNeuralEnginePy.GetType(), "BeforeStepNeuralEnginePy", _
+                                            "Properties", "Python script to run before the neural engine is stepped for this object.", _
+                                            m_strBeforeStepNeuralEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("After Step Neural", m_strAfterStepNeuralEnginePy.GetType(), "AfterStepNeuralEnginePy", _
-                                                "Properties", "Python script to run after the neural engine is stepped for this object.", _
-                                                m_strAfterStepNeuralEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("After Step Neural", m_strAfterStepNeuralEnginePy.GetType(), "AfterStepNeuralEnginePy", _
+                                            "Properties", "Python script to run after the neural engine is stepped for this object.", _
+                                            m_strAfterStepNeuralEnginePy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
+                If Not m_doStructure Is Nothing Then
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kill", m_strKillPy.GetType(), "KillPy", _
                                                 "Properties", "Python script to if the organism is killed.", _
                                                 m_strKillPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
-                Else
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Before Step Simulation", m_strBeforeStepSimulationPy.GetType(), "BeforeStepSimulationPy", _
-                                                "Properties", "Python script to run before the simulation is stepped for this object.", _
-                                                m_strBeforeStepSimulationPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
-
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("After Step Simulation", m_strAfterStepSimulationPy.GetType(), "AfterStepSimulationPy", _
-                                                "Properties", "Python script to run after the simulation is stepped for this object.", _
-                                                m_strAfterStepSimulationPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
                 End If
 
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Sim Starting", m_strSimStartingPy.GetType(), "SimStartingPy", _
@@ -284,8 +254,6 @@ Namespace DataObjects
                 m_strAfterStepPhysicsEnginePy = oXml.GetChildString("AfterStepPhysicsEnginePy", "")
                 m_strBeforeStepNeuralEnginePy = oXml.GetChildString("BeforeStepNeuralEnginePy", "")
                 m_strAfterStepNeuralEnginePy = oXml.GetChildString("AfterStepNeuralEnginePy", "")
-                m_strBeforeStepSimulationPy = oXml.GetChildString("BeforeStepSimulationPy", "")
-                m_strAfterStepSimulationPy = oXml.GetChildString("AfterStepSimulationPy", "")
                 m_strKillPy = oXml.GetChildString("KillPy", "")
                 m_strSimStartingPy = oXml.GetChildString("SimStartingPy", "")
                 m_strSimPausingPy = oXml.GetChildString("SimPausingPy", "")
@@ -307,8 +275,6 @@ Namespace DataObjects
                 oXml.AddChildElement("AfterStepPhysicsEnginePy", m_strAfterStepPhysicsEnginePy)
                 oXml.AddChildElement("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy)
                 oXml.AddChildElement("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy)
-                oXml.AddChildElement("BeforeStepSimulationPy", m_strBeforeStepSimulationPy)
-                oXml.AddChildElement("AfterStepSimulationPy", m_strAfterStepSimulationPy)
                 oXml.AddChildElement("KillPy", m_strKillPy)
                 oXml.AddChildElement("SimStartingPy", m_strSimStartingPy)
                 oXml.AddChildElement("SimPausingPy", m_strSimPausingPy)
@@ -329,8 +295,6 @@ Namespace DataObjects
                 oXml.AddChildElement("AfterStepPhysicsEnginePy", m_strAfterStepPhysicsEnginePy)
                 oXml.AddChildElement("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy)
                 oXml.AddChildElement("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy)
-                oXml.AddChildElement("BeforeStepSimulationPy", m_strBeforeStepSimulationPy)
-                oXml.AddChildElement("AfterStepSimulationPy", m_strAfterStepSimulationPy)
                 oXml.AddChildElement("KillPy", m_strKillPy)
                 oXml.AddChildElement("SimStartingPy", m_strSimStartingPy)
                 oXml.AddChildElement("SimPausingPy", m_strSimPausingPy)

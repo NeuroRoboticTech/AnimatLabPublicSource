@@ -47,6 +47,8 @@ namespace AnimatSim
 			public:
 				LengthTensionGain();
 				virtual ~LengthTensionGain();
+						
+				static LengthTensionGain *CastToDerived(AnimatBase *lpBase) {return static_cast<LengthTensionGain*>(lpBase);}
 				
 				virtual float RestingLength();
 				virtual void RestingLength(float fltVal);

@@ -61,6 +61,8 @@ namespace AnimatSim
 			public:
 				Stomach();
 				virtual ~Stomach();
+						
+				static Stomach *CastToDerived(AnimatBase *lpBase) {return static_cast<Stomach*>(lpBase);}
 
 				virtual float EnergyLevel();
 				virtual void EnergyLevel(float fltVal);

@@ -76,6 +76,8 @@ namespace AnimatSim
 				LinearHillStretchReceptor();
 				virtual ~LinearHillStretchReceptor();
 
+				static LinearHillStretchReceptor *CastToDerived(AnimatBase *lpBase) {return static_cast<LinearHillStretchReceptor*>(lpBase);}
+
 				virtual bool ApplyTension();
 				virtual void ApplyTension(bool bVal);
 

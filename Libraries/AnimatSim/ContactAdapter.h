@@ -41,6 +41,8 @@ namespace AnimatSim
 		public:
 			ContactAdapter();
 			virtual ~ContactAdapter();
+			
+			static ContactAdapter *CastToDerived(AnimatBase *lpBase) {return static_cast<ContactAdapter*>(lpBase);}
 
 			virtual std::string SourceBodyID();
 			virtual void SourceBodyID(std::string strID);

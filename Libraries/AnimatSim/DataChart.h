@@ -84,6 +84,8 @@ namespace AnimatSim
 		public:
 			DataChart();
 			virtual ~DataChart();
+			
+			static DataChart *CastToDerived(AnimatBase *lpBase) {return static_cast<DataChart*>(lpBase);}
 
 			virtual std::string Type();
 

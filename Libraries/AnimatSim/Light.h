@@ -49,6 +49,8 @@ namespace AnimatSim
 		public:
 			Light(void);
 			virtual ~Light(void);
+						
+			static Light *CastToDerived(AnimatBase *lpBase) {return static_cast<Light*>(lpBase);}
 
 #pragma region AccessorMutators
 

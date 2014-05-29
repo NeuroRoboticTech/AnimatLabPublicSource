@@ -30,6 +30,8 @@ namespace AnimatSim
 	public:
 		ThreadProcessor();
 		virtual ~ThreadProcessor();
+						
+		static ThreadProcessor *CastToDerived(AnimatBase *lpBase) {return static_cast<ThreadProcessor*>(lpBase);}
 
         virtual void CreateModuleProcessor(std::string strModuleName);
         virtual void RemoveModuleProcessor(std::string strModuleName);

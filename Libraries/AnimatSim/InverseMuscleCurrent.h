@@ -45,6 +45,8 @@ namespace AnimatSim
 		public:
 			InverseMuscleCurrent();
 			virtual ~InverseMuscleCurrent();
+			
+			static InverseMuscleCurrent *CastToDerived(AnimatBase *lpBase) {return static_cast<InverseMuscleCurrent*>(lpBase);}
 
 			virtual void RestPotential(float fltV);
 			virtual float RestPotential();

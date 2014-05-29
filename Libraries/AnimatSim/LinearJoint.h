@@ -30,6 +30,8 @@ namespace AnimatSim
 				LinearJoint();
 				virtual ~LinearJoint();
 
+				static LinearJoint *CastToDerived(AnimatBase *lpBase) {return static_cast<LinearJoint*>(lpBase);}
+
 				virtual void LinearType(std::string strType);
 				virtual void LinearType(int iType);
 				virtual int LinearType();

@@ -36,6 +36,8 @@ namespace AnimatSim
 			public:
 				Sphere();
 				virtual ~Sphere();
+						
+				static Sphere *CastToDerived(AnimatBase *lpBase) {return static_cast<Sphere*>(lpBase);}
 				
 				/**
 				\brief	Gets the radius. 

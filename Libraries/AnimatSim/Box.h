@@ -64,6 +64,8 @@ namespace AnimatSim
 				Box();
 				virtual ~Box();
 
+				static Box *CastToDerived(AnimatBase *lpBase) {return static_cast<Box*>(lpBase);}
+
 				/**
 				\brief	Gets the length of the box. 
 

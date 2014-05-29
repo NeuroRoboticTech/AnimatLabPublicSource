@@ -50,6 +50,8 @@ namespace AnimatSim
 				Plane();
 				virtual ~Plane();
 
+				static Plane *CastToDerived(AnimatBase *lpBase) {return static_cast<Plane*>(lpBase);}
+
 				virtual float CornerX();
 				virtual float CornerY();
 				

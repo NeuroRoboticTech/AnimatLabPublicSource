@@ -38,6 +38,8 @@ namespace AnimatSim
 			public:
 				FluidPlane();
 				virtual ~FluidPlane();
+			
+				static FluidPlane *CastToDerived(AnimatBase *lpBase) {return static_cast<FluidPlane*>(lpBase);}
 
 				virtual bool AllowRotateDragX();
 				virtual bool AllowRotateDragY();

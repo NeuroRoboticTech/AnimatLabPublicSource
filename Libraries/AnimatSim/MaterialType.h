@@ -39,6 +39,8 @@ namespace AnimatSim
 			MaterialType();
 			virtual ~MaterialType();
 
+			static MaterialType *CastToDerived(AnimatBase *lpBase) {return static_cast<MaterialType*>(lpBase);}
+
 			/**
 			\brief	Gets a material identifier used by the physics engine.
 

@@ -60,6 +60,8 @@ namespace AnimatSim
 		public:
 			ForceStimulus();
 			virtual ~ForceStimulus();
+			
+			static ForceStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<ForceStimulus*>(lpBase);}
 
 			float RelativePositionX() {return m_oRelativePosition.x;};
 			float RelativePositionY() {return m_oRelativePosition.y;};

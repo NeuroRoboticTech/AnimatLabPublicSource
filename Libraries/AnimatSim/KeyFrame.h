@@ -26,6 +26,8 @@ namespace AnimatSim
 		public:
 			KeyFrame();
 			virtual ~KeyFrame();
+						
+			static KeyFrame *CastToDerived(AnimatBase *lpBase) {return static_cast<KeyFrame*>(lpBase);}
 
 			int CollectInterval();
 			void CollectInterval(int iVal);

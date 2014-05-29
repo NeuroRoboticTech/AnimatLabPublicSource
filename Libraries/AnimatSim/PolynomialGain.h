@@ -37,6 +37,8 @@ namespace AnimatSim
 				PolynomialGain();
 				virtual ~PolynomialGain();
 
+				static PolynomialGain *CastToDerived(AnimatBase *lpBase) {return static_cast<PolynomialGain*>(lpBase);}
+
 				float A();
 				void A(float fltVal);
 

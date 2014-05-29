@@ -29,6 +29,8 @@ namespace AnimatSim
 		public:
 			ReceptiveFieldPair();
 			virtual ~ReceptiveFieldPair();
+			
+			static ReceptiveFieldPair *CastToDerived(AnimatBase *lpBase) {return static_cast<ReceptiveFieldPair*>(lpBase);}
 
 			virtual void FieldID(std::string strID);
 			virtual std::string FieldID();

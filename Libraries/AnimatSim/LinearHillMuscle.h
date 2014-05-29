@@ -142,6 +142,8 @@ namespace AnimatSim
 				LinearHillMuscle();
 				virtual ~LinearHillMuscle();
 
+				static LinearHillMuscle *CastToDerived(AnimatBase *lpBase) {return static_cast<LinearHillMuscle*>(lpBase);}
+
 				virtual float Kse();
 				virtual void Kse(float fltVal);
 

@@ -34,6 +34,8 @@ namespace AnimatSim
 			MemoryChart();
 			virtual ~MemoryChart();
 
+			static MemoryChart *CastToDerived(AnimatBase *lpBase) {return static_cast<MemoryChart*>(lpBase);}
+
 			virtual std::string Type();
 
 			virtual bool Lock();

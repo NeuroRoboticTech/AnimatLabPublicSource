@@ -41,6 +41,8 @@ namespace AnimatSim
 		public:
 			PropertyControlStimulus();
 			virtual ~PropertyControlStimulus();
+
+			static PropertyControlStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<PropertyControlStimulus*>(lpBase);}
 			
 			virtual std::string Type();
 

@@ -34,6 +34,8 @@ namespace AnimatSim
 		public:
 			ConstraintRelaxation();
 			virtual ~ConstraintRelaxation();
+			
+			static ConstraintRelaxation *CastToDerived(AnimatBase *lpBase) {return static_cast<ConstraintRelaxation*>(lpBase);}
 
             virtual int CoordinateID();
             virtual void CoordinateID(int iVal);

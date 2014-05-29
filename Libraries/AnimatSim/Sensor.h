@@ -37,6 +37,8 @@ namespace AnimatSim
 				public:
 					Sensor();
 					virtual ~Sensor();
+						
+					static Sensor *CastToDerived(AnimatBase *lpBase) {return static_cast<Sensor*>(lpBase);}
 									
 					/**
 					\brief	Gets the radius. 

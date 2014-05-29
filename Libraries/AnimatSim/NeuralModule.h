@@ -67,6 +67,8 @@ namespace AnimatSim
 			NeuralModule();
 			virtual ~NeuralModule();
 
+			static NeuralModule *CastToDerived(AnimatBase *lpBase) {return static_cast<NeuralModule*>(lpBase);}
+
 			/**
 			\brief	Gets the module name.
 			

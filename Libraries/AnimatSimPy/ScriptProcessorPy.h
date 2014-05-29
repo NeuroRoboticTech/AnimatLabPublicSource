@@ -12,8 +12,6 @@ namespace AnimatSimPy
 		std::string m_strAfterStepPhysicsEnginePy;
 		std::string m_strBeforeStepNeuralEnginePy;
 		std::string m_strAfterStepNeuralEnginePy;
-		std::string m_strBeforeStepSimulationPy;
-		std::string m_strAfterStepSimulationPy;
 		std::string m_strKillPy;
 		std::string m_strSimStartingPy;
 		std::string m_strSimPausingPy;
@@ -43,12 +41,6 @@ namespace AnimatSimPy
 		virtual void AfterStepNeuralEnginePy(std::string strVal);
 		virtual std::string AfterStepNeuralEnginePy();
 
-		virtual void BeforeStepSimulationPy(std::string strVal);
-		virtual std::string BeforeStepSimulationPy();
-
-		virtual void AfterStepSimulationPy(std::string strVal);
-		virtual std::string AfterStepSimulationPy();
-
 		virtual void KillPy(std::string strVal);
 		virtual std::string KillPy();
 
@@ -72,8 +64,6 @@ namespace AnimatSimPy
 		virtual void AfterStepPhysicsEngine();
 		virtual void BeforeStepNeuralEngine();
 		virtual void AfterStepNeuralEngine();
-		virtual void BeforeStepSimulation();
-		virtual void AfterStepSimulation();
 
 		virtual void SimStarting();
 		virtual void SimPausing();

@@ -51,6 +51,8 @@ namespace AnimatSim
 			Organism();
 			virtual ~Organism();
 
+			static Organism *CastToDerived(AnimatBase *lpBase) {return static_cast<Organism*>(lpBase);}
+
 			virtual bool IsDead();
 
             virtual RobotInterface *GetRobotInterface() {return m_lpRobot;};

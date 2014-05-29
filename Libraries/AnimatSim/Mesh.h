@@ -26,6 +26,8 @@ namespace AnimatSim
 				//This is a test comment.
 				Mesh();
 				virtual ~Mesh();
+
+				static Mesh *CastToDerived(AnimatBase *lpBase) {return static_cast<Mesh*>(lpBase);}
 				
 				virtual std::string MeshFile();
 				virtual void MeshFile(std::string strFile);

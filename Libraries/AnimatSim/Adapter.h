@@ -103,6 +103,8 @@ namespace AnimatSim
 		public:
 			Adapter();
 			virtual ~Adapter();
+							
+			static Adapter *CastToDerived(AnimatBase *lpBase) {return static_cast<Adapter*>(lpBase);}
 
 			virtual std::string SourceModule();
 			virtual void SourceModule(std::string strName);

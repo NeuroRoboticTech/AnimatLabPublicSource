@@ -36,6 +36,8 @@ namespace AnimatSim
 			Odor(RigidBody *lpParent);
 			virtual ~Odor();
 
+			static Odor *CastToDerived(AnimatBase *lpBase) {return static_cast<Odor*>(lpBase);}
+
 			virtual void Enabled(bool bEnabled);
 			virtual bool Enabled();
 

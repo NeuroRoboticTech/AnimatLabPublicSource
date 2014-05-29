@@ -89,6 +89,8 @@ namespace AnimatSim
 			public:
 				Spring();
 				virtual ~Spring();
+						
+				static Spring *CastToDerived(AnimatBase *lpBase) {return static_cast<Spring*>(lpBase);}
 
 				virtual bool InitEnabled();
 

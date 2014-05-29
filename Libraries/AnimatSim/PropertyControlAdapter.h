@@ -48,6 +48,8 @@ namespace AnimatSim
 			PropertyControlAdapter();
 			virtual ~PropertyControlAdapter();
 
+			static PropertyControlAdapter *CastToDerived(AnimatBase *lpBase) {return static_cast<PropertyControlAdapter*>(lpBase);}
+
 			virtual AnimatBase *TargetObject();
 			
 			virtual void PropertyName(std::string strPropName);

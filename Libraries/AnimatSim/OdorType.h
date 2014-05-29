@@ -37,6 +37,8 @@ namespace AnimatSim
 			OdorType();
 			virtual ~OdorType();
 
+			static OdorType *CastToDerived(AnimatBase *lpBase) {return static_cast<OdorType*>(lpBase);}
+
 			virtual float DiffusionConstant();
 			virtual void DiffusionConstant(float fltVal, bool bUseScaling = true);
 

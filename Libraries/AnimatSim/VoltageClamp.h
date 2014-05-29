@@ -42,6 +42,8 @@ namespace AnimatSim
 		public:
 			VoltageClamp();
 			virtual ~VoltageClamp();
+						
+			static VoltageClamp *CastToDerived(AnimatBase *lpBase) {return static_cast<VoltageClamp*>(lpBase);}
 
 			virtual std::string Type();
 			

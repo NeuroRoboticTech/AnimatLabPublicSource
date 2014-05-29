@@ -92,6 +92,8 @@ namespace AnimatSim
 		public:
 			Gain();
 			virtual ~Gain();
+			
+			static Gain *CastToDerived(AnimatBase *lpBase) {return static_cast<Gain*>(lpBase);}
 
 			bool UseLimits();
 			void UseLimits(bool bVal);

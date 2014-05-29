@@ -33,6 +33,8 @@ namespace AnimatSim
 			MotorVelocityStimulus();
 			virtual ~MotorVelocityStimulus();
 
+			static MotorVelocityStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<MotorVelocityStimulus*>(lpBase);}
+
 			std::string StructureID() {return m_strStructureID;};
 			void StructureID(std::string strVal) {m_strStructureID = strVal;};
 

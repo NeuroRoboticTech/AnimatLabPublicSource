@@ -53,6 +53,8 @@ namespace AnimatSim
 		public:
 			ConstraintLimit();
 			virtual ~ConstraintLimit();
+			
+			static ConstraintLimit *CastToDerived(AnimatBase *lpBase) {return static_cast<ConstraintLimit*>(lpBase);}
 
 			/**
 			\brief	Gets the limit position.

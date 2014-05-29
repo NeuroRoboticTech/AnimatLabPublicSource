@@ -218,6 +218,8 @@ namespace AnimatSim
 		public:
 			RigidBody();
 			virtual ~RigidBody();
+						
+			static RigidBody *CastToDerived(AnimatBase *lpBase) {return static_cast<RigidBody*>(lpBase);}
 
 #pragma region AccessorMutators
 

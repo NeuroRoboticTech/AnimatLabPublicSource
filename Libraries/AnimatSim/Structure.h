@@ -129,6 +129,8 @@ namespace AnimatSim
 		public:
 			Structure();
 			virtual ~Structure();
+						
+			static Structure *CastToDerived(AnimatBase *lpBase) {return static_cast<Structure*>(lpBase);}
 
 			void Sim(Simulator *lpSim);
 

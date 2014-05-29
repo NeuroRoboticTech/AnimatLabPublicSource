@@ -39,6 +39,8 @@ namespace AnimatSim
 			public:
 				Torus();
 				virtual ~Torus();
+						
+				static Torus *CastToDerived(AnimatBase *lpBase) {return static_cast<Torus*>(lpBase);}
 
 				/**
 				\brief	Gets the outside radius.

@@ -46,6 +46,8 @@ namespace AnimatSim
 				Prismatic();
 				virtual ~Prismatic();
 
+				static Prismatic *CastToDerived(AnimatBase *lpBase) {return static_cast<Prismatic*>(lpBase);}
+
 				float CylinderRadius();
 				float BoxSize();
 

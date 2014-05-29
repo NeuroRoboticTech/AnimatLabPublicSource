@@ -45,6 +45,8 @@ namespace AnimatSim
 				LineBase();
 				virtual ~LineBase();
 
+				static LineBase *CastToDerived(AnimatBase *lpBase) {return static_cast<LineBase*>(lpBase);}
+
 				virtual void Enabled(bool bValue);
 
 				virtual float Length();

@@ -59,6 +59,8 @@ namespace AnimatSim
 				MuscleBase();
 				virtual ~MuscleBase();
 
+				static MuscleBase *CastToDerived(AnimatBase *lpBase) {return static_cast<MuscleBase*>(lpBase);}
+
 				float Tension();
 				void Tension(float fltVal);
 

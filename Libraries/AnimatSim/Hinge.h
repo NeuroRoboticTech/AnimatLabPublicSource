@@ -51,6 +51,8 @@ namespace AnimatSim
 			public:
 				Hinge();
 				virtual ~Hinge();
+			
+				static Hinge *CastToDerived(AnimatBase *lpBase) {return static_cast<Hinge*>(lpBase);}
 
 				float CylinderRadius();
 				float CylinderHeight();

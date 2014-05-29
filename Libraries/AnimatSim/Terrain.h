@@ -34,6 +34,8 @@ namespace AnimatSim
 			public:
 				Terrain();
 				virtual ~Terrain();
+						
+				static Terrain *CastToDerived(AnimatBase *lpBase) {return static_cast<Terrain*>(lpBase);}
 
 				virtual bool AllowRotateDragX();
 				virtual bool AllowRotateDragY();

@@ -30,6 +30,8 @@ namespace AnimatSim
 		public:
 			ExternalStimulus();
 			virtual ~ExternalStimulus();
+			
+			static ExternalStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<ExternalStimulus*>(lpBase);}
 
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);

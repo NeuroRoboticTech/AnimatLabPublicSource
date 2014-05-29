@@ -31,6 +31,8 @@ namespace AnimatSim
 		HudText();
 		HudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval);
 		virtual ~HudText();
+			
+		static HudText *CastToDerived(AnimatBase *lpBase) {return static_cast<HudText*>(lpBase);}
 
 		virtual void Initialize(void *lpVoidProjection);
 		virtual void Load(CStdXml &oXml);

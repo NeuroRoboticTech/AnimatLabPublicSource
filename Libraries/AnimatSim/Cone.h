@@ -40,6 +40,8 @@ namespace AnimatSim
 				Cone();
 				virtual ~Cone();
 
+				static Cone *CastToDerived(AnimatBase *lpBase) {return static_cast<Cone*>(lpBase);}
+
 				/**
 				\brief	Gets the lower radius. 
 

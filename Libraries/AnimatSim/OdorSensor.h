@@ -39,6 +39,8 @@ namespace AnimatSim
 				OdorSensor();
 				virtual ~OdorSensor();
 
+				static OdorSensor *CastToDerived(AnimatBase *lpBase) {return static_cast<OdorSensor*>(lpBase);}
+
 				virtual void OdorTypeID(std::string strID);
 				virtual std::string OdorTypeID();
 

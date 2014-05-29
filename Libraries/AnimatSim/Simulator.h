@@ -513,6 +513,8 @@ namespace AnimatSim
 			static void LoadAnimatModuleName(std::string strFile, std::string &strAnimatModule);
 			static void LoadAnimatModuleName(CStdXml &oXml, std::string &strAnimatModule);
 
+			virtual ScriptProcessor *LoadScript(CStdXml &oXml);
+
 #pragma endregion
 
 #pragma region AddRemoveMethods
@@ -559,6 +561,9 @@ namespace AnimatSim
 			virtual void AddOdorType(OdorType *lpOdorType);
 			virtual void AddOdorType(std::string strXml, bool bDoNotInit);
 			virtual void RemoveOdorType(std::string strID, bool bThrowError = true);
+
+			virtual void AddScript(std::string strXml);
+			virtual void RemoveScript(std::string strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -654,6 +659,8 @@ namespace AnimatSim
 		public:
 			Simulator();
 			virtual ~Simulator();
+						
+			static Simulator *CastToDerived(AnimatBase *lpBase) {return static_cast<Simulator*>(lpBase);}
 
 #pragma region AccessorMutators
 
@@ -838,6 +845,9 @@ namespace AnimatSim
 
 			virtual bool ForceNoWindows();
 			virtual void ForceNoWindows(bool bVal);
+			
+			virtual void Script(ScriptProcessor *lpScript);
+			virtual ScriptProcessor *Script();
 
 #pragma endregion
 

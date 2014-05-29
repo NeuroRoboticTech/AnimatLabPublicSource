@@ -50,6 +50,8 @@ namespace AnimatSim
 		public:
 			ContactSensor();
 			virtual ~ContactSensor();
+			
+			static ContactSensor *CastToDerived(AnimatBase *lpBase) {return static_cast<ContactSensor*>(lpBase);}
 
 			Gain *FieldGain();
 			Gain *CurrentGain();

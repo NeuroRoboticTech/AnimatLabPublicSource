@@ -30,6 +30,8 @@ namespace AnimatSim
 		public:
 			RobotInterface(void);
 			virtual ~RobotInterface(void);
+						
+			static RobotInterface *CastToDerived(AnimatBase *lpBase) {return static_cast<RobotInterface*>(lpBase);}
 
 			virtual CStdPtrArray<RobotIOControl>* IOControls();
 

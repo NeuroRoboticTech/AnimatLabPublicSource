@@ -48,6 +48,8 @@ namespace AnimatSim
 				Mouth();
 				virtual ~Mouth();
 
+				static Mouth *CastToDerived(AnimatBase *lpBase) {return static_cast<Mouth*>(lpBase);}
+
 				virtual float EatingRate();
 
 				/**

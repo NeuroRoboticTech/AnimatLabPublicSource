@@ -47,6 +47,8 @@ namespace AnimatSim
 			public:
 				Attachment();
 				virtual ~Attachment();
+										
+				static Attachment *CastToDerived(AnimatBase *lpBase) {return static_cast<Attachment*>(lpBase);}
 			};
 
 		}		//Bodies

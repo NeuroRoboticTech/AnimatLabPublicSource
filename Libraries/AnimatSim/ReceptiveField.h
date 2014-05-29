@@ -31,6 +31,8 @@ namespace AnimatSim
 			ReceptiveField(float fltX, float fltY, float fltZ, float fltStim);
 			virtual ~ReceptiveField();
 
+			static ReceptiveField *CastToDerived(AnimatBase *lpBase) {return static_cast<ReceptiveField*>(lpBase);}
+
 			void SetVertex(CStdFPoint vPoint);
 
 			bool operator<(ReceptiveField *lpItem);

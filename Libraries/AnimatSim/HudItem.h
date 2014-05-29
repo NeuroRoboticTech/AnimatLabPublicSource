@@ -16,6 +16,8 @@ namespace AnimatSim
 	public:
 		HudItem();
 		virtual ~HudItem();
+			
+		static HudItem *CastToDerived(AnimatBase *lpBase) {return static_cast<HudItem*>(lpBase);}
 
 		virtual void Initialize(void *lpVoidProjection) = 0;
 		virtual void Update() = 0;

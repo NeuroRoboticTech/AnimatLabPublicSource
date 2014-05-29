@@ -36,6 +36,8 @@ namespace AnimatSim
 			public:
 				Cylinder();
 				virtual ~Cylinder();
+			
+				static Cylinder *CastToDerived(AnimatBase *lpBase) {return static_cast<Cylinder*>(lpBase);}
 
 				/**
 				\brief	Gets the radius. 
