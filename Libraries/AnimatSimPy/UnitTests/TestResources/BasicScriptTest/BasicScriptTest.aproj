@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>1b626520-1c8d-4c3e-87a1-31d3eca417b8</ID>
+<ID>124c82d7-4dae-4f78-84ea-dcb3220c2b90</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>124c82d7-4dae-4f78-84ea-dcb3220c2b90</ID>
+<ID>f9814ba4-1b7f-49d7-b046-201996c43b1a</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -444,8 +444,6 @@ elbow.MotorInput(vel)
 <AfterStepPhysicsEnginePy/>
 <BeforeStepNeuralEnginePy/>
 <AfterStepNeuralEnginePy/>
-<BeforeStepSimulationPy/>
-<AfterStepSimulationPy/>
 <KillPy/>
 <SimStartingPy/>
 <SimPausingPy/>
@@ -712,6 +710,22 @@ elbow.MotorInput(vel)
 <LongtitudeSegments>10</LongtitudeSegments>
 </Light>
 </Lights>
+<Script>
+<Name>Python Script</Name>
+<ID>d2e24053-221a-496e-8d4d-7bcd188a04ec</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Scripting.ScriptProcessorPy</ClassName>
+<InitPy/>
+<ResetSimPy/>
+<BeforeStepPhysicsEnginePy/>
+<AfterStepPhysicsEnginePy/>
+<BeforeStepNeuralEnginePy/>
+<AfterStepNeuralEnginePy/>
+<KillPy/>
+<SimStartingPy/>
+<SimPausingPy/>
+<SimStoppingPy/>
+</Script>
 </Environment>
 <ToolViewers>
 <ToolHolder>
@@ -767,8 +781,8 @@ elbow.MotorInput(vel)
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>bbf0533c-ea52-4a20-96f3-dd285c7991f0</Name>
-<ID>bbf0533c-ea52-4a20-96f3-dd285c7991f0</ID>
+<Name>f4f05e24-9c46-488c-bd28-0a9aee9f86a8</Name>
+<ID>f4f05e24-9c46-488c-bd28-0a9aee9f86a8</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -862,7 +876,7 @@ elbow.MotorInput(vel)
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/29/2014 10:05:28"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/30/2014 11:19:19"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;

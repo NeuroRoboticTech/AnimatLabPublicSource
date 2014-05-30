@@ -1331,7 +1331,7 @@ void Simulator::MouseSpringForceMagnitude(float fltVal, bool bUseScaling)
 {
 	//We must convert the gravity to use the correct scale.
 	if(bUseScaling)
-		fltVal /= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits());
+		fltVal /= (InverseMassUnits() * InverseDistanceUnits());
 
 	m_fltMouseSpringForceMagnitude = fltVal;
 }
@@ -1359,7 +1359,7 @@ void Simulator::MouseSpringDampingForceMagnitude(float fltVal, bool bUseScaling)
 {
 	//We must convert the gravity to use the correct scale.
 	if(bUseScaling)
-		fltVal /= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits());
+		fltVal /= (InverseMassUnits() * InverseDistanceUnits());
 
 	m_fltMouseSpringDampingForceMagnitude = fltVal;
 }
@@ -3366,11 +3366,11 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
-	lpScript = dynamic_cast<ScriptProcessor *>(m_lpSim->CreateObject(strModule, "ScriptProcessor", strType));
+	lpScript = dynamic_cast<ScriptProcessor *>(CreateObject(strModule, "ScriptProcessor", strType));
 	if(!lpScript)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Script");
 
-	lpScript->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
+	lpScript->SetSystemPointers(this, NULL, NULL, NULL, true);
 
 	lpScript->Load(oXml);
 
@@ -4930,6 +4930,11 @@ bool Simulator::AddItem(const std::string &strItemType, const std::string &strXm
 		AddOdorType(strXml, bDoNotInit);
 		return true;
 	}
+	else if(strType == "SCRIPT")
+	{
+		AddScript(strXml);
+		return true;
+	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError, bDoNotInit);
 
@@ -4963,6 +4968,11 @@ bool Simulator::RemoveItem(const std::string &strItemType, const std::string &st
 	else if(strType == "ODORTYPE")
 	{
 		RemoveOdorType(strID);
+		return true;
+	}
+	else if(strType == "SCRIPT")
+	{
+		RemoveScript(strID);
 		return true;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")

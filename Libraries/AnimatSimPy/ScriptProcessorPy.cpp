@@ -55,6 +55,10 @@ void ScriptProcessorPy::KillPy(std::string strVal) {m_strKillPy = strVal;}
 
 std::string ScriptProcessorPy::KillPy() {return m_strKillPy;}
 
+void ScriptProcessorPy::KillResetPy(std::string strVal) {m_strKillResetPy = strVal;}
+
+std::string ScriptProcessorPy::KillResetPy() {return m_strKillResetPy;}
+
 void ScriptProcessorPy::SimStartingPy(std::string strVal) {m_strSimStartingPy = strVal;}
 
 std::string ScriptProcessorPy::SimStartingPy() {return m_strSimStartingPy;}
@@ -116,8 +120,12 @@ void ScriptProcessorPy::AfterStepNeuralEngine()
 
 void ScriptProcessorPy::Kill(bool bState)
 {
-	ScriptProcessor::Kill();
-	ExecutePythonScript(m_strKillPy);
+	ScriptProcessor::Kill(bState);
+
+	if(bState)
+		ExecutePythonScript(m_strKillPy);
+	else
+		ExecutePythonScript(m_strKillResetPy);
 }
 
 void ScriptProcessorPy::SimStarting()
@@ -187,6 +195,12 @@ bool ScriptProcessorPy::SetData(const std::string &strDataType, const std::strin
 		return true;
 	}
 
+	if(strType == "KILLRESETPY")
+	{
+		KillResetPy(strValue);
+		return true;
+	}
+
 	if(strType == "SIMSTARTINGPY")
 	{
 		SimStartingPy(strValue);
@@ -224,6 +238,7 @@ void ScriptProcessorPy::QueryProperties(CStdPtrArray<TypeProperty> &aryPropertie
 	aryProperties.Add(new TypeProperty("BeforeStepNeuralEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AfterStepNeuralEnginePy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("KillPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("KillResetPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SimStartingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SimPausingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SimStoppingPy", AnimatPropertyType::String, AnimatPropertyDirection::Set));
@@ -243,6 +258,7 @@ void ScriptProcessorPy::Load(StdUtils::CStdXml &oXml)
 	BeforeStepNeuralEnginePy(oXml.GetChildString("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy));
 	AfterStepNeuralEnginePy(oXml.GetChildString("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy));
 	KillPy(oXml.GetChildString("KillPy", m_strKillPy));
+	KillResetPy(oXml.GetChildString("KillResetPy", m_strKillResetPy));
 	SimStartingPy(oXml.GetChildString("SimStartingPy", m_strSimStartingPy));
 	SimPausingPy(oXml.GetChildString("SimPausingPy", m_strSimPausingPy));
 	SimStoppingPy(oXml.GetChildString("SimStoppingPy", m_strSimStoppingPy));

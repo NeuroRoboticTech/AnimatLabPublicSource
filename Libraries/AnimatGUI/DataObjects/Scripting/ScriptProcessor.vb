@@ -92,14 +92,23 @@ Namespace DataObjects
 
             Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
                 If Not Me.Parent Is Nothing Then
-                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "Script", Me.ID, Me.GetSimulationXml("Script"), bThrowError, bDoNotInit)
+                    If Util.Application.SimulationInterface.FindItem(Me.Parent.ID, False) Then
+                        Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "Script", Me.ID, Me.GetSimulationXml("Script"), bThrowError, bDoNotInit)
+                    ElseIf Me.Parent Is Util.Environment Then
+                        'If we are adding it to the environment then add it to the sim object.
+                        Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Script", Me.ID, Me.GetSimulationXml("Script"), bThrowError, bDoNotInit)
+                    End If
                     InitializeSimulationReferences()
                 End If
             End Sub
 
             Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
                 If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
-                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "Script", Me.ID, bThrowError)
+                    If Util.Application.SimulationInterface.FindItem(Me.Parent.ID, False) Then
+                        Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "Script", Me.ID, bThrowError)
+                    ElseIf Me.Parent Is Util.Environment Then
+                        Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Script", Me.ID, bThrowError)
+                    End If
                 End If
                 m_doInterface = Nothing
             End Sub

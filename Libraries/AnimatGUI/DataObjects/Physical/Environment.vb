@@ -84,6 +84,8 @@ Namespace DataObjects.Physical
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
 
+        Protected m_doScript As Scripting.ScriptProcessor
+
 #End Region
 
 #Region " Properties "
@@ -661,6 +663,16 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Script() As Scripting.ScriptProcessor
+            Get
+                Return m_doScript
+            End Get
+            Set(ByVal Value As Scripting.ScriptProcessor)
+                m_doScript = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -752,6 +764,10 @@ Namespace DataObjects.Physical
             m_iNewStructureCount = Util.ExtractIDCount("Structure", m_aryStructures)
             m_iNewLightCount = Util.ExtractIDCount("Light", m_aryLights)
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            End If
+
         End Sub
 
         Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
@@ -803,6 +819,10 @@ Namespace DataObjects.Physical
                 Next
             End If
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            End If
+
             Return tnNode
         End Function
 
@@ -848,9 +868,18 @@ Namespace DataObjects.Physical
                 mcExpandAll.Tag = tnSelectedNode
                 mcCollapseAll.Tag = tnSelectedNode
 
-                ' Create the popup menu object
                 Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+
+                If m_doScript Is Nothing Then
+                    Dim mcAddScript As New System.Windows.Forms.ToolStripMenuItem("Add script", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddScript))
+                    popup.Items.Add(mcAddScript)
+                End If
+
+                ' Create the popup menu object
                 popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+
+                Return True
             End If
 
             Return False
@@ -1012,6 +1041,9 @@ Namespace DataObjects.Physical
             m_aryOdorTypes.FindChildrenOfType(tpTemplate, colDataObjects)
             m_aryLights.FindChildrenOfType(tpTemplate, colDataObjects)
             m_aryMaterialTypes.FindChildrenOfType(tpTemplate, colDataObjects)
+            If Not m_doScript Is Nothing Then
+                m_doScript.FindChildrenOfType(tpTemplate, colDataObjects)
+            End If
 
         End Sub
 
@@ -1144,6 +1176,7 @@ Namespace DataObjects.Physical
             If Not m_snAngularDamping Is Nothing Then m_snAngularDamping.ClearIsDirty()
             If Not m_snAngularKineticLoss Is Nothing Then m_snAngularKineticLoss.ClearIsDirty()
             If Not m_snRecFieldSelRadius Is Nothing Then m_snRecFieldSelRadius.ClearIsDirty()
+            If Not m_doScript Is Nothing Then m_doScript.ClearIsDirty()
 
         End Sub
 
@@ -1179,6 +1212,7 @@ Namespace DataObjects.Physical
             m_iNewOrganismCount = doOrig.m_iNewOrganismCount
             m_iNewStructureCount = doOrig.m_iNewStructureCount
             m_iNewLightCount = doOrig.m_iNewLightCount
+            If Not doOrig.m_doScript Is Nothing Then m_doScript = DirectCast(doOrig.m_doScript.Clone(Me, bCutData, doRoot), Scripting.ScriptProcessor)
 
         End Sub
 
@@ -1358,6 +1392,19 @@ Namespace DataObjects.Physical
                 AddDefaultLights()
             End If
 
+            Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " script processor"
+            If oXml.FindChildElement("Script", False) Then
+                oXml.IntoChildElement("Script")
+                Dim strAssemblyFile As String = oXml.GetChildString("AssemblyFile")
+                Dim strClassName As String = oXml.GetChildString("ClassName")
+                oXml.OutOfElem()
+
+                m_doScript = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), Scripting.ScriptProcessor)
+                m_doScript.LoadData(oXml)
+            Else
+                m_doScript = Nothing
+            End If
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1504,6 +1551,10 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1611,6 +1662,10 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof Structures Element
             End If
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.SaveSimulationXml(oXml, Me)
+            End If
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1636,6 +1691,10 @@ Namespace DataObjects.Physical
             m_aryLights.InitializeAfterLoad()
             m_aryMaterialTypes.InitializeAfterLoad()
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeAfterLoad()
+            End If
+
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
@@ -1646,6 +1705,7 @@ Namespace DataObjects.Physical
             If doObject Is Nothing AndAlso Not m_aryOdorTypes Is Nothing Then doObject = m_aryOdorTypes.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryLights Is Nothing Then doObject = m_aryLights.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryMaterialTypes Is Nothing Then doObject = m_aryMaterialTypes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doScript Is Nothing Then doObject = m_doScript.FindObjectByID(strID)
 
             Return doObject
 
@@ -1662,6 +1722,10 @@ Namespace DataObjects.Physical
             m_aryStructures.InitializeSimulationReferences(bShowError)
             m_aryLights.InitializeSimulationReferences(bShowError)
             m_aryMaterialTypes.InitializeSimulationReferences(bShowError)
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeSimulationReferences(bShowError)
+            End If
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then
@@ -1738,6 +1802,41 @@ Namespace DataObjects.Physical
 
                 doLight.CreateWorkspaceTreeView(Me, m_tnStructures)
                 doLight.SelectItem()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+
+        Protected Overridable Sub OnAddScript(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = Util.Application.ScriptProcessors
+                frmSelInterface.PartTypeName = "Script"
+
+                If Not m_doScript Is Nothing Then
+                    If Util.ShowMessage("There is already a script associated with this simulation environment. Do you want to replace it?", "Replace script", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    'First remove the old one if it exists
+                    If Not m_doScript Is Nothing Then
+                        m_doScript.RemoveWorksapceTreeView()
+                        m_doScript.RemoveFromSim(True)
+                        m_doScript = Nothing
+                    End If
+
+                    'Then create the new one.
+                    Dim doScript As Scripting.ScriptProcessor = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Scripting.ScriptProcessor)
+                    doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                    doScript.AddToSim(True)
+                    m_doScript = doScript
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

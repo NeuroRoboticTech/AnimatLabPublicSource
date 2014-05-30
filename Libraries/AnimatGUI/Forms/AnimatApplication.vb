@@ -1204,6 +1204,8 @@ Namespace Forms
 
         Protected m_SplashTimer As New System.Timers.Timer
 
+        Protected m_bStoppingSimulation As Boolean = False
+
 #Region " Preferences "
 
         Protected m_strDefaultNewFolder As String = ""
@@ -4582,9 +4584,13 @@ Namespace Forms
 
                 Me.AppIsBusy = True
 
-                Me.SimulationInterface.PauseSimulation()
-                RaiseEvent SimulationStopped()
-                Me.SimulationInterface.StopSimulation()
+                If Not m_bStoppingSimulation Then
+                    m_bStoppingSimulation = True
+                    Me.SimulationInterface.PauseSimulation()
+                    RaiseEvent SimulationStopped()
+                    Me.SimulationInterface.StopSimulation()
+                    m_bStoppingSimulation = False
+                End If
 
                 Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Simulation was stopped.")
 

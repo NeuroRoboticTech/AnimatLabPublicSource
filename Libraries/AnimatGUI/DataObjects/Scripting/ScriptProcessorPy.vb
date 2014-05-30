@@ -19,16 +19,17 @@ Namespace DataObjects
 
             Protected m_doStructure As DataObjects.Physical.PhysicalStructure
 
-            Protected m_strInitPy As String
-            Protected m_strResetSimPy As String
-            Protected m_strBeforeStepPhysicsEnginePy As String
-            Protected m_strAfterStepPhysicsEnginePy As String
-            Protected m_strBeforeStepNeuralEnginePy As String
-            Protected m_strAfterStepNeuralEnginePy As String
-            Protected m_strKillPy As String
-            Protected m_strSimStartingPy As String
-            Protected m_strSimPausingPy As String
-            Protected m_strSimStoppingPy As String
+            Protected m_strInitPy As String = ""
+            Protected m_strResetSimPy As String = ""
+            Protected m_strBeforeStepPhysicsEnginePy As String = ""
+            Protected m_strAfterStepPhysicsEnginePy As String = ""
+            Protected m_strBeforeStepNeuralEnginePy As String = ""
+            Protected m_strAfterStepNeuralEnginePy As String = ""
+            Protected m_strKillPy As String = ""
+            Protected m_strKillResetPy As String = ""
+            Protected m_strSimStartingPy As String = ""
+            Protected m_strSimPausingPy As String = ""
+            Protected m_strSimStoppingPy As String = ""
 
 #End Region
 
@@ -129,6 +130,15 @@ Namespace DataObjects
                 End Set
             End Property
 
+            Public Overridable Property KillResetPy() As String
+                Get
+                    Return m_strKillResetPy
+                End Get
+                Set(value As String)
+                    m_strKillResetPy = value
+                End Set
+            End Property
+
             Public Overridable Property SimStartingPy() As String
                 Get
                     Return m_strSimStartingPy
@@ -188,6 +198,7 @@ Namespace DataObjects
                 m_strBeforeStepNeuralEnginePy = OrigNode.m_strBeforeStepNeuralEnginePy
                 m_strAfterStepNeuralEnginePy = OrigNode.m_strAfterStepNeuralEnginePy
                 m_strKillPy = OrigNode.m_strKillPy
+                m_strKillResetPy = OrigNode.m_strKillResetPy
                 m_strSimStartingPy = OrigNode.m_strSimStartingPy
                 m_strSimPausingPy = OrigNode.m_strSimPausingPy
                 m_strSimStoppingPy = OrigNode.m_strSimStoppingPy
@@ -225,7 +236,11 @@ Namespace DataObjects
 
                 If Not m_doStructure Is Nothing Then
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kill", m_strKillPy.GetType(), "KillPy", _
-                                                "Properties", "Python script to if the organism is killed.", _
+                                                "Properties", "Python script to run if the organism is killed.", _
+                                                m_strKillPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kill Reset", m_strKillResetPy.GetType(), "KillResetPy", _
+                                                "Properties", "Python script to run when a killed organism is reset to alive.", _
                                                 m_strKillPy, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
                 End If
 
@@ -255,6 +270,7 @@ Namespace DataObjects
                 m_strBeforeStepNeuralEnginePy = oXml.GetChildString("BeforeStepNeuralEnginePy", "")
                 m_strAfterStepNeuralEnginePy = oXml.GetChildString("AfterStepNeuralEnginePy", "")
                 m_strKillPy = oXml.GetChildString("KillPy", "")
+                m_strKillResetPy = oXml.GetChildString("KillResetPy", "")
                 m_strSimStartingPy = oXml.GetChildString("SimStartingPy", "")
                 m_strSimPausingPy = oXml.GetChildString("SimPausingPy", "")
                 m_strSimStoppingPy = oXml.GetChildString("SimStoppingPy", "")
@@ -276,6 +292,7 @@ Namespace DataObjects
                 oXml.AddChildElement("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy)
                 oXml.AddChildElement("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy)
                 oXml.AddChildElement("KillPy", m_strKillPy)
+                oXml.AddChildElement("KillResetPy", m_strKillResetPy)
                 oXml.AddChildElement("SimStartingPy", m_strSimStartingPy)
                 oXml.AddChildElement("SimPausingPy", m_strSimPausingPy)
                 oXml.AddChildElement("SimStoppingPy", m_strSimStoppingPy)
@@ -296,6 +313,7 @@ Namespace DataObjects
                 oXml.AddChildElement("BeforeStepNeuralEnginePy", m_strBeforeStepNeuralEnginePy)
                 oXml.AddChildElement("AfterStepNeuralEnginePy", m_strAfterStepNeuralEnginePy)
                 oXml.AddChildElement("KillPy", m_strKillPy)
+                oXml.AddChildElement("KillResetPy", m_strKillResetPy)
                 oXml.AddChildElement("SimStartingPy", m_strSimStartingPy)
                 oXml.AddChildElement("SimPausingPy", m_strSimPausingPy)
                 oXml.AddChildElement("SimStoppingPy", m_strSimStoppingPy)

@@ -13,6 +13,7 @@ namespace AnimatSimPy
 		std::string m_strBeforeStepNeuralEnginePy;
 		std::string m_strAfterStepNeuralEnginePy;
 		std::string m_strKillPy;
+		std::string m_strKillResetPy;
 		std::string m_strSimStartingPy;
 		std::string m_strSimPausingPy;
 		std::string m_strSimStoppingPy;
@@ -43,6 +44,9 @@ namespace AnimatSimPy
 
 		virtual void KillPy(std::string strVal);
 		virtual std::string KillPy();
+
+		virtual void KillResetPy(std::string strVal);
+		virtual std::string KillResetPy();
 
 		virtual void SimStartingPy(std::string strVal);
 		virtual std::string SimStartingPy();
