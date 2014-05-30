@@ -122,6 +122,8 @@ void RbFirmataController::Initialize()
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
 	if(!m_lpSim->InSimulation())
 	{
+		std::cout << "opening connection\r\n";
+		
 		//Try to connect to the arduino board.
 		if(!connect(m_strComPort, m_iBaudRate))
 			THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
@@ -137,6 +139,8 @@ void RbFirmataController::ProcessIO()
 	try
 	{
 		m_bIOThreadProcessing = true;
+		
+		std::cout << "Sending firmware version request\r\n";
 
 		//Need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called

@@ -759,6 +759,7 @@ void AnimatBase::Load(StdUtils::CStdXml &oXml)
 	m_strType = oXml.GetChildString("Type", m_strType);
 	m_strID = Std_CheckString(oXml.GetChildString("ID", m_strID));
 	m_strName = oXml.GetChildString("Name", m_strName);
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 	oXml.OutOfElem();
 
 	if(Std_IsBlank(m_strID)) 
