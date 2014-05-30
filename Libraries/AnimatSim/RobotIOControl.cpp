@@ -232,13 +232,18 @@ void RobotIOControl::StartIOThread()
 	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(500);
 
 	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
+
+	std::cout << "Waiting for IO thread return\r\n";
 	bool bWaitRet = m_WaitForIOSetupCond.timed_wait(lock, pt);
 
 	if(!bWaitRet)
 	{
+		std::cout << "IO thread Timed out\r\n";
 		ExitIOThread();
 		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 	}
+
+	std::cout << "IO thread returned\r\n";
 }
 
 void RobotIOControl::ExitIOThread()
@@ -273,7 +278,13 @@ void RobotIOControl::SetupIO()
 {
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->SetupIO();
+		if(m_aryParts[iIndex]->Enabled())
+		{
+			m_aryParts[iIndex]->SetupIO();
+			
+			//Give it just smidge of time to finish processing the last set of data so we do not overload the arduino's buffer and so it has time to process the requests.
+			boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+		}
 }
 
 /**
@@ -289,7 +300,8 @@ void RobotIOControl::StepIO()
 
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->StepIO();
+		if(m_aryParts[iIndex]->Enabled())
+			m_aryParts[iIndex]->StepIO();
 
 	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
@@ -307,7 +319,8 @@ void RobotIOControl::ShutdownIO()
 {
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->ShutdownIO();
+		if(m_aryParts[iIndex]->Enabled())
+			m_aryParts[iIndex]->ShutdownIO();
 }
 
 void RobotIOControl::Initialize()

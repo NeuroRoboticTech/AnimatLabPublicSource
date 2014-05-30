@@ -802,6 +802,7 @@
 <ModuleName>libRoboticsAnimatSim_debug.so</ModuleName>
 <Parts>
 <RobotPartInterface>
+<Enabled>True</Enabled>
 <Name>Analog Input</Name>
 <ID>3599a0f0-1fc4-4494-be46-8eb62e85218e</ID>
 <Type>FirmataAnalogInput</Type>
@@ -820,6 +821,7 @@
 </Gain>
 </RobotPartInterface>
 <RobotPartInterface>
+<Enabled>True</Enabled>
 <Name>Digital Input</Name>
 <ID>36394555-b6c9-427c-8129-fe6a042dd7ef</ID>
 <Type>FirmataDigitalInput</Type>
@@ -838,6 +840,7 @@
 </Gain>
 </RobotPartInterface>
 <RobotPartInterface>
+<Enabled>True</Enabled>
 <Name>Digital Output</Name>
 <ID>abd25c88-59f5-4272-8355-e29688fbc47d</ID>
 <Type>FirmataDigitalOutput</Type>
@@ -856,6 +859,7 @@
 </Gain>
 </RobotPartInterface>
 <RobotPartInterface>
+<Enabled>True</Enabled>
 <Name>PWM Output</Name>
 <ID>acab60ea-2949-4f36-ad58-4f1b0fec3954</ID>
 <Type>FirmataPWMOutput</Type>
@@ -874,6 +878,7 @@
 </Gain>
 </RobotPartInterface>
 <RobotPartInterface>
+<Enabled>True</Enabled>
 <Name>Hinge Servo</Name>
 <ID>effc0afc-81ce-4414-b828-cf57161b06d2</ID>
 <Type>FirmataHingeServo</Type>

@@ -311,6 +311,7 @@ void RobotPartInterface::Load(CStdXml &oXml)
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
+	
 	LinkedPartID(oXml.GetChildString("LinkedPartID", ""));
 	PropertyName(oXml.GetChildString("PropertyName", ""));
 	IOComponentID(oXml.GetChildInt("IOComponentID", m_iIOComponentID));

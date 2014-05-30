@@ -44,7 +44,7 @@
         <Command type="AfterBuild" command="cp Debug/animatsimulator_debug ../../../bin" />
       </CustomCommands>
     </CustomCommands>
-    <Commandlineparameters>/media/Ubuntu_Data/AnimatLabSDK/AnimatLabPrivateSource/Experiment/RobotArm/TestArm/TestArm_Standalone_Linux.asim</Commandlineparameters>
+    <Commandlineparameters>/media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Robotics_UnitTests/TestResources/BasicHingeTest_Firmata/BasicHingeTest_Linux.asim</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath>
