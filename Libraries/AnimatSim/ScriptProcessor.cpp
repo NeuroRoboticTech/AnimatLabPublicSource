@@ -36,9 +36,12 @@ namespace AnimatSim
 {
 
 std::string g_strLastScriptError;
+boost::mutex g_mtiScriptErrorLock;
+
 
 void SetLastScriptError(std::string strError)
 {
+	boost::unique_lock<boost::mutex> scriptLock(g_mtiScriptErrorLock);
 	g_strLastScriptError = strError;
 }
 

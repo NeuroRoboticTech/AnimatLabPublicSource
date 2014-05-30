@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>124c82d7-4dae-4f78-84ea-dcb3220c2b90</ID>
+<ID>8b5522b1-53f6-453b-ac94-79a3c4220a71</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>f9814ba4-1b7f-49d7-b046-201996c43b1a</ID>
+<ID>7a1f99c2-92d0-46f8-b50f-d08eb408534f</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -445,6 +445,7 @@ elbow.MotorInput(vel)
 <BeforeStepNeuralEnginePy/>
 <AfterStepNeuralEnginePy/>
 <KillPy/>
+<KillResetPy/>
 <SimStartingPy/>
 <SimPausingPy/>
 <SimStoppingPy/>
@@ -710,22 +711,6 @@ elbow.MotorInput(vel)
 <LongtitudeSegments>10</LongtitudeSegments>
 </Light>
 </Lights>
-<Script>
-<Name>Python Script</Name>
-<ID>d2e24053-221a-496e-8d4d-7bcd188a04ec</ID>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.Scripting.ScriptProcessorPy</ClassName>
-<InitPy/>
-<ResetSimPy/>
-<BeforeStepPhysicsEnginePy/>
-<AfterStepPhysicsEnginePy/>
-<BeforeStepNeuralEnginePy/>
-<AfterStepNeuralEnginePy/>
-<KillPy/>
-<SimStartingPy/>
-<SimPausingPy/>
-<SimStoppingPy/>
-</Script>
 </Environment>
 <ToolViewers>
 <ToolHolder>
@@ -781,8 +766,8 @@ elbow.MotorInput(vel)
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>f4f05e24-9c46-488c-bd28-0a9aee9f86a8</Name>
-<ID>f4f05e24-9c46-488c-bd28-0a9aee9f86a8</ID>
+<Name>7aa2eed7-0a88-40ef-a75b-ecd56481102f</Name>
+<ID>7aa2eed7-0a88-40ef-a75b-ecd56481102f</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -876,7 +861,7 @@ elbow.MotorInput(vel)
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/30/2014 11:19:19"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/30/2014 13:08:05"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -1309,7 +1294,7 @@ elbow.MotorInput(vel)
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="4" Unique="3" Space="100"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9e29cb55-d232-45c6-a0e9-cd94c7937f1e&lt;/ID&gt;
@@ -1324,7 +1309,7 @@ elbow.MotorInput(vel)
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;2a0ec1e3-5606-417f-9477-918a99015ba3&lt;/ID&gt;

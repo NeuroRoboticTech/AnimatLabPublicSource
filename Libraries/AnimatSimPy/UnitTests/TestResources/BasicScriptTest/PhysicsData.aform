@@ -109,20 +109,6 @@
 </DataColumn>
 </DataColumns>
 </Axis>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Y Axis 3</Name>
-<WorkingAxis>3</WorkingAxis>
-<DataColumns/>
-</Axis>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Y Axis 4</Name>
-<WorkingAxis>4</WorkingAxis>
-<DataColumns/>
-</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>

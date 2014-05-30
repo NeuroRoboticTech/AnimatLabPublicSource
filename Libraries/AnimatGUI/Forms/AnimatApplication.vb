@@ -6115,6 +6115,7 @@ Namespace Forms
         Protected Overridable Sub OnShutDownTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
             Try
                 m_timerShutdown.Enabled = False
+                RemoveHandler m_timerShutdown.Elapsed, AddressOf Me.OnShutDownTimer
 
                 If Me.InvokeRequired Then
                     Me.Invoke(New OnHandleShutdown(AddressOf HandleForceShutdown), Nothing)
@@ -6154,12 +6155,41 @@ Namespace Forms
                 Dim exInfo As New System.Exception(strError)
                 Util.DisplayError(exInfo)
 
-                RaiseEvent SimulationStopped()
+                m_timerShutdown = New System.Timers.Timer
+                m_timerShutdown.Interval = 100
+                m_timerShutdown.Enabled = True
+                AddHandler m_timerShutdown.Elapsed, AddressOf Me.OnStopSimTimer
 
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+
+        Private Delegate Sub OnStopSimTimerDel(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        ''' <summary> Executes the shut down timer action.</summary>
+        '''
+        ''' <remarks> This is only called from the shutdown timer from the OnHandleCriticalError event method. It shuts the app down.</remarks>
+        '''
+        ''' <param name="sender"> Source of the event.</param>
+        ''' <param name="eProps"> Event information to send to registered event handlers.</param>
+        Protected Overridable Sub OnStopSimTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+            Try
+                m_timerShutdown.Enabled = False
+
+                If Me.InvokeRequired Then
+                    Me.Invoke(New OnStopSimTimerDel(AddressOf OnStopSimTimer), New Object() {sender, eProps})
+                    Return
+                End If
+
+                RemoveHandler m_timerShutdown.Elapsed, AddressOf Me.OnStopSimTimer
+                RaiseEvent SimulationStopped()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         ''' \brief  Called when the simulation starting event is called.

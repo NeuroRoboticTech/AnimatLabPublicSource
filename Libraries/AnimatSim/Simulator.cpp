@@ -2829,7 +2829,7 @@ void Simulator::HandleNonCriticalError(std::string strError)
 {
 	this->ResetSimulation();
 	if(m_lpSimCallback)
-		m_lpSimCallback->HandleCriticalError(strError);
+		m_lpSimCallback->HandleNonCriticalError(strError);
 }
 
 void Simulator::StartSimulationStepTimer()

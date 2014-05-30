@@ -126,6 +126,14 @@ Namespace DataObjects
                     Me.RemoveFromSim(True)
                     Me.RemoveWorksapceTreeView()
                     If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
+
+                    If Me.Parent Is Util.Environment Then
+                        Util.Environment.Script = Nothing
+                    ElseIf Util.IsTypeOf(Me.Parent.GetType(), GetType(Physical.PhysicalStructure), False) Then
+                        Dim doStruct As Physical.PhysicalStructure = DirectCast(Me.Parent, Physical.PhysicalStructure)
+                        doStruct.Script = Nothing
+                    End If
+
                     Return True
                 Catch ex As Exception
                     Throw ex

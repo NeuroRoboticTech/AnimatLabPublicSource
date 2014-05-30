@@ -12,25 +12,10 @@
 <SetStartEndTime>True</SetStartEndTime>
 <CollectStartTime Value="0" Scale="None" Actual="0"/>
 <CollectEndTime Value="5" Scale="None" Actual="5"/>
-<AxisList>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Y Axis 1</Name>
-<WorkingAxis>0</WorkingAxis>
-<DataColumns/>
-</Axis>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Y Axis 4</Name>
-<WorkingAxis>1</WorkingAxis>
-<DataColumns/>
-</Axis>
-</AxisList>
+<AxisList/>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
-<PointsToKeep>24000</PointsToKeep>
+<PointsToKeep>12000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
 <GraphConfig ByteCount="8971"/>
 </Form>

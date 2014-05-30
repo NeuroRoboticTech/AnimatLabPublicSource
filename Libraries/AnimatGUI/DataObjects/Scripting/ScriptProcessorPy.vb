@@ -72,6 +72,7 @@ Namespace DataObjects
                     Return m_strInitPy
                 End Get
                 Set(value As String)
+                    SetSimData("InitPy", value, True)
                     m_strInitPy = value
                 End Set
             End Property
@@ -81,6 +82,7 @@ Namespace DataObjects
                     Return m_strResetSimPy
                 End Get
                 Set(value As String)
+                    SetSimData("ResetSimPy", value, True)
                     m_strResetSimPy = value
                 End Set
             End Property
@@ -90,6 +92,7 @@ Namespace DataObjects
                     Return m_strBeforeStepPhysicsEnginePy
                 End Get
                 Set(value As String)
+                    SetSimData("BeforeStepPhysicsEnginePy", value, True)
                     m_strBeforeStepPhysicsEnginePy = value
                 End Set
             End Property
@@ -99,6 +102,7 @@ Namespace DataObjects
                     Return m_strAfterStepPhysicsEnginePy
                 End Get
                 Set(value As String)
+                    SetSimData("AfterStepPhysicsEnginePy", value, True)
                     m_strAfterStepPhysicsEnginePy = value
                 End Set
             End Property
@@ -108,6 +112,7 @@ Namespace DataObjects
                     Return m_strBeforeStepNeuralEnginePy
                 End Get
                 Set(value As String)
+                    SetSimData("BeforeStepNeuralEnginePy", value, True)
                     m_strBeforeStepNeuralEnginePy = value
                 End Set
             End Property
@@ -117,6 +122,7 @@ Namespace DataObjects
                     Return m_strAfterStepNeuralEnginePy
                 End Get
                 Set(value As String)
+                    SetSimData("AfterStepNeuralEnginePy", value, True)
                     m_strAfterStepNeuralEnginePy = value
                 End Set
             End Property
@@ -126,6 +132,7 @@ Namespace DataObjects
                     Return m_strKillPy
                 End Get
                 Set(value As String)
+                    SetSimData("KillPy", value, True)
                     m_strKillPy = value
                 End Set
             End Property
@@ -135,6 +142,7 @@ Namespace DataObjects
                     Return m_strKillResetPy
                 End Get
                 Set(value As String)
+                    SetSimData("KillResetPy", value, True)
                     m_strKillResetPy = value
                 End Set
             End Property
@@ -144,6 +152,7 @@ Namespace DataObjects
                     Return m_strSimStartingPy
                 End Get
                 Set(value As String)
+                    SetSimData("SimStartingPy", value, True)
                     m_strSimStartingPy = value
                 End Set
             End Property
@@ -153,6 +162,7 @@ Namespace DataObjects
                     Return m_strSimPausingPy
                 End Get
                 Set(value As String)
+                    SetSimData("SimPausingPy", value, True)
                     m_strSimPausingPy = value
                 End Set
             End Property
@@ -162,6 +172,7 @@ Namespace DataObjects
                     Return m_strSimStoppingPy
                 End Get
                 Set(value As String)
+                    SetSimData("SimStoppingPy", value, True)
                     m_strSimStoppingPy = value
                 End Set
             End Property
