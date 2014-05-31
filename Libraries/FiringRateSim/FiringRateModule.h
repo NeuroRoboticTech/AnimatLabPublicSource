@@ -55,7 +55,7 @@ namespace FiringRateSim
 		
 		\return	.
 		**/
-		virtual std::string ModuleName() {return Nl_NeuralModuleName();};
+		virtual std::string ModuleName();
 
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();

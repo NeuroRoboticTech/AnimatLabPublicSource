@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7BAA9AB3-8A5C-1947-8162-221861B376DB}</ProjectGuid>
+    <ProjectGuid>{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -13,9 +13,11 @@
     </Compiler>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>.</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libAnimatSimPy.so</OutputName>
+    <OutputName>libAnimatSimPy_d.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <Externalconsole>true</Externalconsole>
     <Includes>
@@ -23,6 +25,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>../../../FiringRateSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -34,14 +37,25 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>FiringRateSim_debug</Lib>
+        <Lib>python27_d</Lib>
       </Libs>
     </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libAnimatSimPy_d.so ../../../bin" />
+        <Command type="AfterBuild" command="cp ../AnimatSimPy.py ../../../bin/AnimatSimPy.py" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
-    <OutputName>libPyAnimatSim.so</OutputName>
+    <OutputName>libAnimatSimPy.so</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <Externalconsole>true</Externalconsole>
@@ -50,6 +64,7 @@
         <Include>../../../../include</Include>
         <Include>../../../StdUtils</Include>
         <Include>../../../AnimatSim</Include>
+        <Include>../../../FiringRateSim</Include>
       </Includes>
     </Includes>
     <LibPaths>
@@ -61,14 +76,17 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
         <Lib>StdUtils</Lib>
         <Lib>AnimatSim</Lib>
+        <Lib>FiringRateSim</Lib>
+        <Lib>python27</Lib>
       </Libs>
     </Libs>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp Release/libAnimatSim.so ../../../bin/_PyAnimatSim.pyd" />
-        <Command type="AfterBuild" command="cp ../PyAnimatSim.py ../../../bin/PyAnimatSim.py" />
+        <Command type="AfterBuild" command="cp Release/libAnimatSimPy.so ../../../bin" />
+        <Command type="AfterBuild" command="cp ../AnimatSimPy.py ../../../bin/PyAnimatSimPy.py" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -92,6 +110,9 @@
   <ItemGroup>
     <Compile Include="..\AnimatSimPy.cpp">
       <Link>AnimatSimPy.cpp</Link>
+    </Compile>
+    <Compile Include="..\AnimatSimPy_wrap.cxx">
+      <Link>AnimatSimPy_wrap.cxx</Link>
     </Compile>
     <Compile Include="..\PyClassFactory.cpp">
       <Link>PyClassFactory.cpp</Link>

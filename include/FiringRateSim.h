@@ -25,42 +25,38 @@
 //Simulation Objects
 namespace FiringRateSim
 {
-	class CNlClassFactory;
-	class CNlNervousSystem;
-
-	namespace DataColumns
-	{
-		class CNlNeuronDataColumn;
-	}
-
-	namespace ExternalStimuli
-	{
-		class CNlCurrentInjection;
-	}
+	class ClassFactory;
+	class FiringRateModule;
 
 	namespace Neurons
 	{
-		class CNlNeuron;
-		class CNlPacemakerNeuron;
-		class CNlRandomNeuron;
-		class CNlTonicNeuron;
+		class Neuron;
+		class PacemakerNeuron;
+		class RandomNeuron;
+		class BistableNeuron;
+		class TonicNeuron;
 	}
 
 	namespace Synapses
 	{
-		class CNlCompoundSynapse;
-		class CNlGatedSynapse;
-		class CNlModulatedSynapse;
-		class CNlSynapse;
+		class GatedSynapse;
+		class ModulatedSynapse;
+		class Synapse;
 	}
 }
 
 using namespace FiringRateSim;
-using namespace FiringRateSim::DataColumns;
-using namespace FiringRateSim::ExternalStimuli;
 using namespace FiringRateSim::Neurons;
 using namespace FiringRateSim::Synapses;
 
-#include "NeuralUtils.h"
+#include "Neuron.h"
+#include "Synapse.h"
+#include "PacemakerNeuron.h"
+#include "RandomNeuron.h"
+#include "BistableNeuron.h"
+#include "TonicNeuron.h"
+#include "GatedSynapse.h"
+#include "ModulatedSynapse.h"
+#include "FiringRateModule.h"
 
 #endif // __FAST_NEURAL_NET_LIB_DLL_H__

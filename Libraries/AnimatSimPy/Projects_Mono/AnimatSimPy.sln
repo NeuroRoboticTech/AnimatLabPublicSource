@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimPy", "AnimatSimPy.cproj", "{7BAA9AB3-8A5C-1947-8162-221861B376DB}"
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "AnimatSimPy", "AnimatSimPy.cproj", "{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7BAA9AB3-8A5C-1947-8162-221861B376DB}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
-		{7BAA9AB3-8A5C-1947-8162-221861B376DB}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{7BAA9AB3-8A5C-1947-8162-221861B376DB}.Release|AnyCPU.ActiveCfg = Release|Any CPU
-		{7BAA9AB3-8A5C-1947-8162-221861B376DB}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1328,6 +1328,100 @@ class vector_SimulationThread(_object):
 vector_SimulationThread_swigregister = _AnimatSimPy.vector_SimulationThread_swigregister
 vector_SimulationThread_swigregister(vector_SimulationThread)
 
+class vector_Synapse(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, vector_Synapse, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, vector_Synapse, name)
+    __repr__ = _swig_repr
+    def iterator(self): return _AnimatSimPy.vector_Synapse_iterator(self)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(self): return _AnimatSimPy.vector_Synapse___nonzero__(self)
+    def __bool__(self): return _AnimatSimPy.vector_Synapse___bool__(self)
+    def __len__(self): return _AnimatSimPy.vector_Synapse___len__(self)
+    def pop(self): return _AnimatSimPy.vector_Synapse_pop(self)
+    def __getslice__(self, *args): return _AnimatSimPy.vector_Synapse___getslice__(self, *args)
+    def __setslice__(self, *args): return _AnimatSimPy.vector_Synapse___setslice__(self, *args)
+    def __delslice__(self, *args): return _AnimatSimPy.vector_Synapse___delslice__(self, *args)
+    def __delitem__(self, *args): return _AnimatSimPy.vector_Synapse___delitem__(self, *args)
+    def __getitem__(self, *args): return _AnimatSimPy.vector_Synapse___getitem__(self, *args)
+    def __setitem__(self, *args): return _AnimatSimPy.vector_Synapse___setitem__(self, *args)
+    def append(self, *args): return _AnimatSimPy.vector_Synapse_append(self, *args)
+    def empty(self): return _AnimatSimPy.vector_Synapse_empty(self)
+    def size(self): return _AnimatSimPy.vector_Synapse_size(self)
+    def clear(self): return _AnimatSimPy.vector_Synapse_clear(self)
+    def swap(self, *args): return _AnimatSimPy.vector_Synapse_swap(self, *args)
+    def get_allocator(self): return _AnimatSimPy.vector_Synapse_get_allocator(self)
+    def begin(self): return _AnimatSimPy.vector_Synapse_begin(self)
+    def end(self): return _AnimatSimPy.vector_Synapse_end(self)
+    def rbegin(self): return _AnimatSimPy.vector_Synapse_rbegin(self)
+    def rend(self): return _AnimatSimPy.vector_Synapse_rend(self)
+    def pop_back(self): return _AnimatSimPy.vector_Synapse_pop_back(self)
+    def erase(self, *args): return _AnimatSimPy.vector_Synapse_erase(self, *args)
+    def __init__(self, *args): 
+        this = _AnimatSimPy.new_vector_Synapse(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(self, *args): return _AnimatSimPy.vector_Synapse_push_back(self, *args)
+    def front(self): return _AnimatSimPy.vector_Synapse_front(self)
+    def back(self): return _AnimatSimPy.vector_Synapse_back(self)
+    def assign(self, *args): return _AnimatSimPy.vector_Synapse_assign(self, *args)
+    def resize(self, *args): return _AnimatSimPy.vector_Synapse_resize(self, *args)
+    def insert(self, *args): return _AnimatSimPy.vector_Synapse_insert(self, *args)
+    def reserve(self, *args): return _AnimatSimPy.vector_Synapse_reserve(self, *args)
+    def capacity(self): return _AnimatSimPy.vector_Synapse_capacity(self)
+    __swig_destroy__ = _AnimatSimPy.delete_vector_Synapse
+    __del__ = lambda self : None;
+vector_Synapse_swigregister = _AnimatSimPy.vector_Synapse_swigregister
+vector_Synapse_swigregister(vector_Synapse)
+
+class vector_Neuron(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, vector_Neuron, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, vector_Neuron, name)
+    __repr__ = _swig_repr
+    def iterator(self): return _AnimatSimPy.vector_Neuron_iterator(self)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(self): return _AnimatSimPy.vector_Neuron___nonzero__(self)
+    def __bool__(self): return _AnimatSimPy.vector_Neuron___bool__(self)
+    def __len__(self): return _AnimatSimPy.vector_Neuron___len__(self)
+    def pop(self): return _AnimatSimPy.vector_Neuron_pop(self)
+    def __getslice__(self, *args): return _AnimatSimPy.vector_Neuron___getslice__(self, *args)
+    def __setslice__(self, *args): return _AnimatSimPy.vector_Neuron___setslice__(self, *args)
+    def __delslice__(self, *args): return _AnimatSimPy.vector_Neuron___delslice__(self, *args)
+    def __delitem__(self, *args): return _AnimatSimPy.vector_Neuron___delitem__(self, *args)
+    def __getitem__(self, *args): return _AnimatSimPy.vector_Neuron___getitem__(self, *args)
+    def __setitem__(self, *args): return _AnimatSimPy.vector_Neuron___setitem__(self, *args)
+    def append(self, *args): return _AnimatSimPy.vector_Neuron_append(self, *args)
+    def empty(self): return _AnimatSimPy.vector_Neuron_empty(self)
+    def size(self): return _AnimatSimPy.vector_Neuron_size(self)
+    def clear(self): return _AnimatSimPy.vector_Neuron_clear(self)
+    def swap(self, *args): return _AnimatSimPy.vector_Neuron_swap(self, *args)
+    def get_allocator(self): return _AnimatSimPy.vector_Neuron_get_allocator(self)
+    def begin(self): return _AnimatSimPy.vector_Neuron_begin(self)
+    def end(self): return _AnimatSimPy.vector_Neuron_end(self)
+    def rbegin(self): return _AnimatSimPy.vector_Neuron_rbegin(self)
+    def rend(self): return _AnimatSimPy.vector_Neuron_rend(self)
+    def pop_back(self): return _AnimatSimPy.vector_Neuron_pop_back(self)
+    def erase(self, *args): return _AnimatSimPy.vector_Neuron_erase(self, *args)
+    def __init__(self, *args): 
+        this = _AnimatSimPy.new_vector_Neuron(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(self, *args): return _AnimatSimPy.vector_Neuron_push_back(self, *args)
+    def front(self): return _AnimatSimPy.vector_Neuron_front(self)
+    def back(self): return _AnimatSimPy.vector_Neuron_back(self)
+    def assign(self, *args): return _AnimatSimPy.vector_Neuron_assign(self, *args)
+    def resize(self, *args): return _AnimatSimPy.vector_Neuron_resize(self, *args)
+    def insert(self, *args): return _AnimatSimPy.vector_Neuron_insert(self, *args)
+    def reserve(self, *args): return _AnimatSimPy.vector_Neuron_reserve(self, *args)
+    def capacity(self): return _AnimatSimPy.vector_Neuron_capacity(self)
+    __swig_destroy__ = _AnimatSimPy.delete_vector_Neuron
+    __del__ = lambda self : None;
+vector_Neuron_swigregister = _AnimatSimPy.vector_Neuron_swigregister
+vector_Neuron_swigregister(vector_Neuron)
+
 class map_string_ActivatedItem(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, map_string_ActivatedItem, name, value)
@@ -2730,6 +2824,58 @@ class CStdPtrArray_SimulationThread(vector_SimulationThread):
         except: self.this = this
 CStdPtrArray_SimulationThread_swigregister = _AnimatSimPy.CStdPtrArray_SimulationThread_swigregister
 CStdPtrArray_SimulationThread_swigregister(CStdPtrArray_SimulationThread)
+
+class CStdPtrArray_Synapse(vector_Synapse):
+    __swig_setmethods__ = {}
+    for _s in [vector_Synapse]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CStdPtrArray_Synapse, name, value)
+    __swig_getmethods__ = {}
+    for _s in [vector_Synapse]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, CStdPtrArray_Synapse, name)
+    __repr__ = _swig_repr
+    __swig_destroy__ = _AnimatSimPy.delete_CStdPtrArray_Synapse
+    __del__ = lambda self : None;
+    def Add(self, *args): return _AnimatSimPy.CStdPtrArray_Synapse_Add(self, *args)
+    def clear(self): return _AnimatSimPy.CStdPtrArray_Synapse_clear(self)
+    def RemoveAll(self): return _AnimatSimPy.CStdPtrArray_Synapse_RemoveAll(self)
+    def RemoveAt(self, *args): return _AnimatSimPy.CStdPtrArray_Synapse_RemoveAt(self, *args)
+    def erase(self, *args): return _AnimatSimPy.CStdPtrArray_Synapse_erase(self, *args)
+    def SetSize(self, *args): return _AnimatSimPy.CStdPtrArray_Synapse_SetSize(self, *args)
+    def InsertAt(self, *args): return _AnimatSimPy.CStdPtrArray_Synapse_InsertAt(self, *args)
+    def GetSize(self): return _AnimatSimPy.CStdPtrArray_Synapse_GetSize(self)
+    def Clear(self): return _AnimatSimPy.CStdPtrArray_Synapse_Clear(self)
+    def __init__(self): 
+        this = _AnimatSimPy.new_CStdPtrArray_Synapse()
+        try: self.this.append(this)
+        except: self.this = this
+CStdPtrArray_Synapse_swigregister = _AnimatSimPy.CStdPtrArray_Synapse_swigregister
+CStdPtrArray_Synapse_swigregister(CStdPtrArray_Synapse)
+
+class CStdPtrArray_Neuron(vector_Neuron):
+    __swig_setmethods__ = {}
+    for _s in [vector_Neuron]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CStdPtrArray_Neuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [vector_Neuron]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, CStdPtrArray_Neuron, name)
+    __repr__ = _swig_repr
+    __swig_destroy__ = _AnimatSimPy.delete_CStdPtrArray_Neuron
+    __del__ = lambda self : None;
+    def Add(self, *args): return _AnimatSimPy.CStdPtrArray_Neuron_Add(self, *args)
+    def clear(self): return _AnimatSimPy.CStdPtrArray_Neuron_clear(self)
+    def RemoveAll(self): return _AnimatSimPy.CStdPtrArray_Neuron_RemoveAll(self)
+    def RemoveAt(self, *args): return _AnimatSimPy.CStdPtrArray_Neuron_RemoveAt(self, *args)
+    def erase(self, *args): return _AnimatSimPy.CStdPtrArray_Neuron_erase(self, *args)
+    def SetSize(self, *args): return _AnimatSimPy.CStdPtrArray_Neuron_SetSize(self, *args)
+    def InsertAt(self, *args): return _AnimatSimPy.CStdPtrArray_Neuron_InsertAt(self, *args)
+    def GetSize(self): return _AnimatSimPy.CStdPtrArray_Neuron_GetSize(self)
+    def Clear(self): return _AnimatSimPy.CStdPtrArray_Neuron_Clear(self)
+    def __init__(self): 
+        this = _AnimatSimPy.new_CStdPtrArray_Neuron()
+        try: self.this.append(this)
+        except: self.this = this
+CStdPtrArray_Neuron_swigregister = _AnimatSimPy.CStdPtrArray_Neuron_swigregister
+CStdPtrArray_Neuron_swigregister(CStdPtrArray_Neuron)
 
 class CStdCircularArray_float(CStdArray_float):
     __swig_setmethods__ = {}
@@ -6998,6 +7144,296 @@ SimulationMgr_CastToDerived = _AnimatSimPy.SimulationMgr_CastToDerived
 def ActiveSim(*args):
   return _AnimatSimPy.ActiveSim(*args)
 ActiveSim = _AnimatSimPy.ActiveSim
+class Neuron(Node):
+    __swig_setmethods__ = {}
+    for _s in [Node]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Neuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Node]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, Neuron, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_Neuron()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_Neuron
+    __del__ = lambda self : None;
+    def Cn(self, *args): return _AnimatSimPy.Neuron_Cn(self, *args)
+    def Gn(self, *args): return _AnimatSimPy.Neuron_Gn(self, *args)
+    def Vth(self, *args): return _AnimatSimPy.Neuron_Vth(self, *args)
+    def Fmin(self, *args): return _AnimatSimPy.Neuron_Fmin(self, *args)
+    def Gain(self, *args): return _AnimatSimPy.Neuron_Gain(self, *args)
+    def ExternalI(self, *args): return _AnimatSimPy.Neuron_ExternalI(self, *args)
+    def AddExternalI(self, *args): return _AnimatSimPy.Neuron_AddExternalI(self, *args)
+    def IntrinsicCurrent(self, *args): return _AnimatSimPy.Neuron_IntrinsicCurrent(self, *args)
+    def Vrest(self, *args): return _AnimatSimPy.Neuron_Vrest(self, *args)
+    def VNoiseMax(self, *args): return _AnimatSimPy.Neuron_VNoiseMax(self, *args)
+    def UseNoise(self, *args): return _AnimatSimPy.Neuron_UseNoise(self, *args)
+    def UseAccom(self, *args): return _AnimatSimPy.Neuron_UseAccom(self, *args)
+    def RelativeAccommodation(self, *args): return _AnimatSimPy.Neuron_RelativeAccommodation(self, *args)
+    def AccommodationTimeConstant(self, *args): return _AnimatSimPy.Neuron_AccommodationTimeConstant(self, *args)
+    def GainType(self, *args): return _AnimatSimPy.Neuron_GainType(self, *args)
+    def Vn(self): return _AnimatSimPy.Neuron_Vn(self)
+    def FiringFreq(self, *args): return _AnimatSimPy.Neuron_FiringFreq(self, *args)
+    def NeuronType(self): return _AnimatSimPy.Neuron_NeuronType(self)
+    def GetSynapses(self): return _AnimatSimPy.Neuron_GetSynapses(self)
+    def AddSynapse(self, *args): return _AnimatSimPy.Neuron_AddSynapse(self, *args)
+    def RemoveSynapse(self, *args): return _AnimatSimPy.Neuron_RemoveSynapse(self, *args)
+    def GetSynapse(self, *args): return _AnimatSimPy.Neuron_GetSynapse(self, *args)
+    def TotalSynapses(self): return _AnimatSimPy.Neuron_TotalSynapses(self)
+    def ClearSynapses(self): return _AnimatSimPy.Neuron_ClearSynapses(self)
+    def FindSynapseListPos(self, *args): return _AnimatSimPy.Neuron_FindSynapseListPos(self, *args)
+    def AddExternalNodeInput(self, *args): return _AnimatSimPy.Neuron_AddExternalNodeInput(self, *args)
+    def SetSystemPointers(self, *args): return _AnimatSimPy.Neuron_SetSystemPointers(self, *args)
+    def VerifySystemPointers(self): return _AnimatSimPy.Neuron_VerifySystemPointers(self)
+    def Initialize(self): return _AnimatSimPy.Neuron_Initialize(self)
+    def TimeStepModified(self): return _AnimatSimPy.Neuron_TimeStepModified(self)
+    def ResetSimulation(self): return _AnimatSimPy.Neuron_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.Neuron_StepSimulation(self)
+    def InjectCurrent(self, *args): return _AnimatSimPy.Neuron_InjectCurrent(self, *args)
+    def CalculateSnapshotByteSize(self): return _AnimatSimPy.Neuron_CalculateSnapshotByteSize(self)
+    def SaveKeyFrameSnapshot(self, *args): return _AnimatSimPy.Neuron_SaveKeyFrameSnapshot(self, *args)
+    def LoadKeyFrameSnapshot(self, *args): return _AnimatSimPy.Neuron_LoadKeyFrameSnapshot(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.Neuron_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.Neuron_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.Neuron_QueryProperties(self, *args)
+    def AddItem(self, *args): return _AnimatSimPy.Neuron_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.Neuron_RemoveItem(self, *args)
+    def Load(self, *args): return _AnimatSimPy.Neuron_Load(self, *args)
+Neuron_swigregister = _AnimatSimPy.Neuron_swigregister
+Neuron_swigregister(Neuron)
+
+class Synapse(Link):
+    __swig_setmethods__ = {}
+    for _s in [Link]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Synapse, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Link]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, Synapse, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_Synapse()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_Synapse
+    __del__ = lambda self : None;
+    def FromNeuron(self): return _AnimatSimPy.Synapse_FromNeuron(self)
+    def Weight(self, *args): return _AnimatSimPy.Synapse_Weight(self, *args)
+    def WeightPointer(self): return _AnimatSimPy.Synapse_WeightPointer(self)
+    def Modulation(self): return _AnimatSimPy.Synapse_Modulation(self)
+    def ModulationPointer(self): return _AnimatSimPy.Synapse_ModulationPointer(self)
+    def CalculateModulation(self, *args): return _AnimatSimPy.Synapse_CalculateModulation(self, *args)
+    def GetCompoundSynapse(self, *args): return _AnimatSimPy.Synapse_GetCompoundSynapse(self, *args)
+    def FindSynapseListPos(self, *args): return _AnimatSimPy.Synapse_FindSynapseListPos(self, *args)
+    def AddSynapse(self, *args): return _AnimatSimPy.Synapse_AddSynapse(self, *args)
+    def RemoveSynapse(self, *args): return _AnimatSimPy.Synapse_RemoveSynapse(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.Synapse_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.Synapse_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.Synapse_QueryProperties(self, *args)
+    def AddItem(self, *args): return _AnimatSimPy.Synapse_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.Synapse_RemoveItem(self, *args)
+    def SetSystemPointers(self, *args): return _AnimatSimPy.Synapse_SetSystemPointers(self, *args)
+    def VerifySystemPointers(self): return _AnimatSimPy.Synapse_VerifySystemPointers(self)
+    def ResetSimulation(self): return _AnimatSimPy.Synapse_ResetSimulation(self)
+    def Initialize(self): return _AnimatSimPy.Synapse_Initialize(self)
+    def Load(self, *args): return _AnimatSimPy.Synapse_Load(self, *args)
+Synapse_swigregister = _AnimatSimPy.Synapse_swigregister
+Synapse_swigregister(Synapse)
+
+class PacemakerNeuron(Neuron):
+    __swig_setmethods__ = {}
+    for _s in [Neuron]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PacemakerNeuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Neuron]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, PacemakerNeuron, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_PacemakerNeuron()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_PacemakerNeuron
+    __del__ = lambda self : None;
+    def Il(self, *args): return _AnimatSimPy.PacemakerNeuron_Il(self, *args)
+    def Ih(self, *args): return _AnimatSimPy.PacemakerNeuron_Ih(self, *args)
+    def Vssm(self, *args): return _AnimatSimPy.PacemakerNeuron_Vssm(self, *args)
+    def Mtl(self, *args): return _AnimatSimPy.PacemakerNeuron_Mtl(self, *args)
+    def Btl(self, *args): return _AnimatSimPy.PacemakerNeuron_Btl(self, *args)
+    def Th(self, *args): return _AnimatSimPy.PacemakerNeuron_Th(self, *args)
+    def ITime(self, *args): return _AnimatSimPy.PacemakerNeuron_ITime(self, *args)
+    def IntrinsicType(self, *args): return _AnimatSimPy.PacemakerNeuron_IntrinsicType(self, *args)
+    def NeuronType(self): return _AnimatSimPy.PacemakerNeuron_NeuronType(self)
+    def ResetSimulation(self): return _AnimatSimPy.PacemakerNeuron_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.PacemakerNeuron_StepSimulation(self)
+    def GetDataPointer(self, *args): return _AnimatSimPy.PacemakerNeuron_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.PacemakerNeuron_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.PacemakerNeuron_QueryProperties(self, *args)
+    def CalculateSnapshotByteSize(self): return _AnimatSimPy.PacemakerNeuron_CalculateSnapshotByteSize(self)
+    def SaveKeyFrameSnapshot(self, *args): return _AnimatSimPy.PacemakerNeuron_SaveKeyFrameSnapshot(self, *args)
+    def LoadKeyFrameSnapshot(self, *args): return _AnimatSimPy.PacemakerNeuron_LoadKeyFrameSnapshot(self, *args)
+    def Load(self, *args): return _AnimatSimPy.PacemakerNeuron_Load(self, *args)
+PacemakerNeuron_swigregister = _AnimatSimPy.PacemakerNeuron_swigregister
+PacemakerNeuron_swigregister(PacemakerNeuron)
+
+class RandomNeuron(Neuron):
+    __swig_setmethods__ = {}
+    for _s in [Neuron]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RandomNeuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Neuron]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RandomNeuron, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_RandomNeuron()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_RandomNeuron
+    __del__ = lambda self : None;
+    def ITime(self, *args): return _AnimatSimPy.RandomNeuron_ITime(self, *args)
+    def IntrinsicType(self, *args): return _AnimatSimPy.RandomNeuron_IntrinsicType(self, *args)
+    def IntrinsicCurrent(self, *args): return _AnimatSimPy.RandomNeuron_IntrinsicCurrent(self, *args)
+    def Il(self, *args): return _AnimatSimPy.RandomNeuron_Il(self, *args)
+    def Ilinit(self, *args): return _AnimatSimPy.RandomNeuron_Ilinit(self, *args)
+    def NeuronType(self): return _AnimatSimPy.RandomNeuron_NeuronType(self)
+    def CurrentDistribution(self, *args): return _AnimatSimPy.RandomNeuron_CurrentDistribution(self, *args)
+    def BurstLengthDistribution(self, *args): return _AnimatSimPy.RandomNeuron_BurstLengthDistribution(self, *args)
+    def InterbusrtLengthDistribution(self, *args): return _AnimatSimPy.RandomNeuron_InterbusrtLengthDistribution(self, *args)
+    def CalculateSnapshotByteSize(self): return _AnimatSimPy.RandomNeuron_CalculateSnapshotByteSize(self)
+    def SaveKeyFrameSnapshot(self, *args): return _AnimatSimPy.RandomNeuron_SaveKeyFrameSnapshot(self, *args)
+    def LoadKeyFrameSnapshot(self, *args): return _AnimatSimPy.RandomNeuron_LoadKeyFrameSnapshot(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.RandomNeuron_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.RandomNeuron_QueryProperties(self, *args)
+    def ResetSimulation(self): return _AnimatSimPy.RandomNeuron_ResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.RandomNeuron_Load(self, *args)
+RandomNeuron_swigregister = _AnimatSimPy.RandomNeuron_swigregister
+RandomNeuron_swigregister(RandomNeuron)
+
+class BistableNeuron(Neuron):
+    __swig_setmethods__ = {}
+    for _s in [Neuron]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, BistableNeuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Neuron]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, BistableNeuron, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_BistableNeuron()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_BistableNeuron
+    __del__ = lambda self : None;
+    def Vsth(self, *args): return _AnimatSimPy.BistableNeuron_Vsth(self, *args)
+    def IntrinsicCurrent(self, *args): return _AnimatSimPy.BistableNeuron_IntrinsicCurrent(self, *args)
+    def Il(self, *args): return _AnimatSimPy.BistableNeuron_Il(self, *args)
+    def Ih(self, *args): return _AnimatSimPy.BistableNeuron_Ih(self, *args)
+    def NeuronType(self): return _AnimatSimPy.BistableNeuron_NeuronType(self)
+    def SetData(self, *args): return _AnimatSimPy.BistableNeuron_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.BistableNeuron_QueryProperties(self, *args)
+    def ResetSimulation(self): return _AnimatSimPy.BistableNeuron_ResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.BistableNeuron_Load(self, *args)
+BistableNeuron_swigregister = _AnimatSimPy.BistableNeuron_swigregister
+BistableNeuron_swigregister(BistableNeuron)
+
+class TonicNeuron(Neuron):
+    __swig_setmethods__ = {}
+    for _s in [Neuron]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, TonicNeuron, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Neuron]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, TonicNeuron, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_TonicNeuron()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_TonicNeuron
+    __del__ = lambda self : None;
+    def Ih(self, *args): return _AnimatSimPy.TonicNeuron_Ih(self, *args)
+    def NeuronType(self): return _AnimatSimPy.TonicNeuron_NeuronType(self)
+    def SetData(self, *args): return _AnimatSimPy.TonicNeuron_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.TonicNeuron_QueryProperties(self, *args)
+    def Load(self, *args): return _AnimatSimPy.TonicNeuron_Load(self, *args)
+TonicNeuron_swigregister = _AnimatSimPy.TonicNeuron_swigregister
+TonicNeuron_swigregister(TonicNeuron)
+
+class GatedSynapse(Synapse):
+    __swig_setmethods__ = {}
+    for _s in [Synapse]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, GatedSynapse, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Synapse]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, GatedSynapse, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_GatedSynapse()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_GatedSynapse
+    __del__ = lambda self : None;
+    def InitialGateValue(self, *args): return _AnimatSimPy.GatedSynapse_InitialGateValue(self, *args)
+    def CalculateModulation(self, *args): return _AnimatSimPy.GatedSynapse_CalculateModulation(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.GatedSynapse_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.GatedSynapse_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.GatedSynapse_QueryProperties(self, *args)
+    def Load(self, *args): return _AnimatSimPy.GatedSynapse_Load(self, *args)
+GatedSynapse_swigregister = _AnimatSimPy.GatedSynapse_swigregister
+GatedSynapse_swigregister(GatedSynapse)
+
+class ModulatedSynapse(Synapse):
+    __swig_setmethods__ = {}
+    for _s in [Synapse]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ModulatedSynapse, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Synapse]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ModulatedSynapse, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_ModulatedSynapse()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_ModulatedSynapse
+    __del__ = lambda self : None;
+    def GetDataPointer(self, *args): return _AnimatSimPy.ModulatedSynapse_GetDataPointer(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.ModulatedSynapse_QueryProperties(self, *args)
+    def CalculateModulation(self, *args): return _AnimatSimPy.ModulatedSynapse_CalculateModulation(self, *args)
+ModulatedSynapse_swigregister = _AnimatSimPy.ModulatedSynapse_swigregister
+ModulatedSynapse_swigregister(ModulatedSynapse)
+
+class FrFiringRateModule(NeuralModule):
+    __swig_setmethods__ = {}
+    for _s in [NeuralModule]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FrFiringRateModule, name, value)
+    __swig_getmethods__ = {}
+    for _s in [NeuralModule]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, FrFiringRateModule, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_FrFiringRateModule()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_FrFiringRateModule
+    __del__ = lambda self : None;
+    def ModuleName(self): return _AnimatSimPy.FrFiringRateModule_ModuleName(self)
+    def Kill(self, bState=True): return _AnimatSimPy.FrFiringRateModule_Kill(self, bState)
+    def Initialize(self): return _AnimatSimPy.FrFiringRateModule_Initialize(self)
+    def ResetSimulation(self): return _AnimatSimPy.FrFiringRateModule_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.FrFiringRateModule_StepSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.FrFiringRateModule_Load(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.FrFiringRateModule_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.FrFiringRateModule_QueryProperties(self, *args)
+    def AddItem(self, *args): return _AnimatSimPy.FrFiringRateModule_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.FrFiringRateModule_RemoveItem(self, *args)
+    def AddNeuron(self, *args): return _AnimatSimPy.FrFiringRateModule_AddNeuron(self, *args)
+    def RemoveNeuron(self, *args): return _AnimatSimPy.FrFiringRateModule_RemoveNeuron(self, *args)
+    def FindNeuronListPos(self, *args): return _AnimatSimPy.FrFiringRateModule_FindNeuronListPos(self, *args)
+    def ActiveArray(self, *args): return _AnimatSimPy.FrFiringRateModule_ActiveArray(self, *args)
+    def InactiveArray(self, *args): return _AnimatSimPy.FrFiringRateModule_InactiveArray(self, *args)
+    def CalculateSnapshotByteSize(self): return _AnimatSimPy.FrFiringRateModule_CalculateSnapshotByteSize(self)
+    def SaveKeyFrameSnapshot(self, *args): return _AnimatSimPy.FrFiringRateModule_SaveKeyFrameSnapshot(self, *args)
+    def LoadKeyFrameSnapshot(self, *args): return _AnimatSimPy.FrFiringRateModule_LoadKeyFrameSnapshot(self, *args)
+FrFiringRateModule_swigregister = _AnimatSimPy.FrFiringRateModule_swigregister
+FrFiringRateModule_swigregister(FrFiringRateModule)
+
 # This file is compatible with both classic and new-style classes.
 
 

@@ -8,6 +8,7 @@ using namespace StdUtils;
 #define SWIG_SHARED_PTR_SUBNAMESPACE tr1
 #define STD_UTILS_PORT 
 #define ANIMAT_PORT 
+#define FAST_NET_PORT
 
 %include "std_vector.i"
 %include "std_string.i"
@@ -46,6 +47,9 @@ typedef float StdVector3[3];
 %template(vector_SimulationWindowPtr) std::vector<SimulationWindow *>;
 %template(vector_TypePropertyPtr) std::vector<TypeProperty *>;
 %template(vector_SimulationThread) std::vector<SimulationThread *>;
+
+%template(vector_Synapse) std::vector<Synapse *>;
+%template(vector_Neuron) std::vector<Neuron *>;
 
 %template(map_string_ActivatedItem) std::map<std::string, ActivatedItem *>;
 %template(map_string_AnimatBase) std::map<std::string, AnimatBase *>;
@@ -95,6 +99,8 @@ typedef float StdVector3[3];
 %template(CStdPtrArray_SimulationWindow) CStdPtrArray<SimulationWindow>;
 %template(CStdPtrArray_CollisionPair) CStdPtrArray<CollisionPair>;
 %template(CStdPtrArray_SimulationThread) CStdPtrArray<SimulationThread>;
+%template(CStdPtrArray_Synapse) CStdPtrArray<Synapse>;
+%template(CStdPtrArray_Neuron) CStdPtrArray<Neuron>;
 
 %template(CStdCircularArray_float) CStdCircularArray<float>;
 
@@ -303,4 +309,24 @@ typedef float StdVector3[3];
 %include "../AnimatSim/ScriptProcessor.h"
 %include "../AnimatSim/SimulationThread.h"
 %include "../AnimatSim/SimulationMgr.h"
+
+%rename(FrNeuron) FiringRateSim::Neuron;
+%rename(FrPacemakerNeuron) FiringRateSim::PacemakerNeuron;
+%rename(FrRandomNeuron) FiringRateSim::RandomNeuron;
+%rename(FrBistableNeuron) FiringRateSim::BistableNeuron;
+%rename(FrTonicNeuron) FiringRateSim::TonicNeuron;
+%rename(FrSynapse) FiringRateSim::Synapse;
+%rename(FrGatedSynapse) FiringRateSim::GatedSynapse;
+%rename(FrModulatedSynapse) FiringRateSim::ModulatedSynapse;
+%rename(FrFiringRateModule) FiringRateSim::FiringRateModule;
+
+%include "../FiringRateSim/Neuron.h"
+%include "../FiringRateSim/Synapse.h"
+%include "../FiringRateSim/PacemakerNeuron.h"
+%include "../FiringRateSim/RandomNeuron.h"
+%include "../FiringRateSim/BistableNeuron.h"
+%include "../FiringRateSim/TonicNeuron.h"
+%include "../FiringRateSim/GatedSynapse.h"
+%include "../FiringRateSim/ModulatedSynapse.h"
+%include "../FiringRateSim/FiringRateModule.h"
 

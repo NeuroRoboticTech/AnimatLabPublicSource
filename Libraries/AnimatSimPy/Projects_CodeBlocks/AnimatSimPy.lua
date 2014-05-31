@@ -1,4 +1,3 @@
-
 -- A solution contains projects, and defines the available configurations
 solution "AnimatSimPy"
 	configurations { "Debug", "Release" }
@@ -7,27 +6,39 @@ solution "AnimatSimPy"
 		language "C++"
 		kind     "SharedLib"
 		files  { "../*.h",
-				 "../*.cpp"}
+				"../*.cpp",
+				"../*.cxx"}
 		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
-					  "../../StdUtils" }
+			      "../../StdUtils", 
+		   	      "../../AnimatSim",
+		   	      "../../FiringRateSim"}
 		libdirs { "../../../bin" }
-		links { "dl", 
-				"boost_thread" }
+		links { "dl",
+				"boost_thread",
+				"boost_chrono"}
 	  
-		configuration { "Debug or Debug_Double", "linux" }
-			defines { "_DEBUG", "ANIMATLIBRARY_EXPORTS"	}
+		configuration { "Debug", "linux" }
+			defines { "_DEBUG"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("AnimatSim_debug")
-			links { "StdUtils_debug"}
-			postbuildcommands { "cp Debug/libAnimatSim_debug.so ../../../bin" }
+			targetname ("AnimatSimPy_d")
+			links { "StdUtils_debug", 
+					"AnimatSim_debug",
+					"FiringRateSim_debug",
+					"python27_d" }
+			postbuildcommands { "cp Debug/libAnimatSimPy_d.so ../../../bin",
+							    "cp ../AnimatSimPy.py ../../../bin/AnimatSimPy.py" }
 	 
-		configuration { "Release or Release_Double", "linux" }
-			defines { "NDEBUG", "ANIMATLIBRARY_EXPORTS" }
+		configuration { "Release", "linux" }
+			defines { "NDEBUG" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("AnimatSim")
-			links { "StdUtils"}
-			postbuildcommands { "cp Release/libAnimatSim.so ../../../bin" }
+			targetname ("AnimatSimPy")
+			links { "StdUtils",
+					"AnimatSim", 
+					"FiringRateSim",
+					"python27" }
+			postbuildcommands { "cp Release/libAnimatSimPy.so ../../../bin",
+							    "cp ../AnimatSimPy.py ../../../bin/PyAnimatSimPy.py" }
 

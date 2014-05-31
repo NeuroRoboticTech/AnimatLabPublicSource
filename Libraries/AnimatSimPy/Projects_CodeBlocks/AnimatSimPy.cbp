@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="Debug/libAnimatSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option output="Debug/libAnimatSimPy_d.so" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/Debug" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -17,24 +17,30 @@
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
-					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/FiringRateSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
 					<Add directory="../../../bin" />
 					<Add library="dl" />
 					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
 					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+					<Add library="FiringRateSim_debug" />
+					<Add library="python27_d" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Debug/libAnimatSim_debug.so ../../../bin" />
+					<Add after="cp Debug/libAnimatSimPy_d.so ../../../bin" />
+					<Add after="cp ../AnimatSimPy.py ../../../bin/AnimatSimPy.py" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Release">
-				<Option output="Release/libAnimatSim.so" prefix_auto="0" extension_auto="0" />
+				<Option output="Release/libAnimatSimPy.so" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/Release" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -44,10 +50,11 @@
 					<Add option="-O2" />
 					<Add option="-fPIC" />
 					<Add option="-DNDEBUG" />
-					<Add option="-DANIMATLIBRARY_EXPORTS" />
 					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/FiringRateSim" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -55,10 +62,15 @@
 					<Add directory="../../../bin" />
 					<Add library="dl" />
 					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
 					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+					<Add library="FiringRateSim" />
+					<Add library="python27" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cp Release/libAnimatSim.so ../../../bin" />
+					<Add after="cp Release/libAnimatSimPy.so ../../../bin" />
+					<Add after="cp ../AnimatSimPy.py ../../../bin/PyAnimatSimPy.py" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -90,6 +102,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdAfx.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../AnimatSimPy_wrap.cxx">
 			<Option virtualFolder="." />
 		</Unit>
 		<Extensions>

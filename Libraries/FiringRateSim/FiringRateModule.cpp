@@ -42,6 +42,8 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of FiringRateModule\r\n", "", -1, false, true);}
 }
 
+std::string FiringRateModule::ModuleName() {return Nl_NeuralModuleName();};
+
 /**
 \brief	Gets the active array.
 

@@ -14,6 +14,7 @@ solution "AnimatSimPy"
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
+						  "../../FiringRateSim",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
 						  "../../../../3rdParty/Python-2.7.6/PC"}	  
@@ -35,6 +36,7 @@ solution "AnimatSimPy"
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
+						  "../../FiringRateSim",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
 						  "../../../../3rdParty/Python-2.7.6/PC"}	  
@@ -62,6 +64,7 @@ solution "AnimatSimPy"
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
+						  "../../FiringRateSim",
 						  "../",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
@@ -81,6 +84,7 @@ solution "AnimatSimPy"
 			includedirs { "../../../include",
 						  "../../StdUtils",
 						  "../../AnimatSim",
+						  "../../FiringRateSim",
 						  "../",
 						  "../../../../3rdParty/boost_1_54_0",
 						  "../../../../3rdParty/Python-2.7.6/include",
