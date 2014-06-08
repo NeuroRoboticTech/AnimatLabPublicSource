@@ -20,7 +20,11 @@ namespace AnimatSim
 				/// The collsion mesh file. If the type is convex then we load in this file instead of the graphical one.
 				std::string m_strConvexMeshFile;
 
+				///The scale factor to use for this mesh
 				CStdFPoint m_vScale;
+
+				///The scale factor that is used for reporting to the GUI
+				CStdFPoint m_vReportScale;
 
 			public:
 				//This is a test comment.
@@ -40,11 +44,14 @@ namespace AnimatSim
 
 				virtual void SetMeshFile(std::string strXml);
 
+				virtual void SetBoundingBox(int iIdx, float fltVal);
+
 				virtual void Scale(CStdFPoint &vScale, bool bUpdateMatrix = true);
 				virtual void Scale(std::string strXml, bool bUpdateMatrix = true);
 				virtual void Scale(float fltX, float fltY, float fltZ, bool bUpdateMatrix = true); 
 				virtual CStdFPoint Scale();
 
+				virtual float *GetDataPointer(const std::string &strDataType);
 				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);

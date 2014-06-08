@@ -58,6 +58,18 @@ float BoundingBox::Height()
 	return Max.y - Min.y;
 }
 
+float BoundingBox::GetDimensionSize(int iAxis)
+{
+	if(iAxis == 0)
+		return Length();
+	else if(iAxis == 1)
+		return Height();
+	else if(iAxis == 2)
+		return Width();
+	else
+		return -1;
+}
+
 float BoundingBox::MaxDimension()
 {
 	float fltMax = -1;

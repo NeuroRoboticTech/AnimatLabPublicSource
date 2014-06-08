@@ -218,7 +218,7 @@ Namespace DataObjects.Physical.Bodies
 
 #Region " Events "
 
-        Protected Overridable Sub OnVelocityValueChanged()
+        Protected Overridable Sub OnVelocityValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("Velocity", m_svVelocity.GetSimulationXml("Velocity"), True)
                 Util.ProjectProperties.RefreshProperties()

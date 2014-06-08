@@ -89,6 +89,9 @@ osg::Node *OsgMeshMgr::AddMesh(std::string strFilename)
 {
 	osg::ref_ptr<osg::Node> lpTempMesh = osgDB::readNodeFile(strFilename.c_str());
 
+	osgUtil::SmoothingVisitor sv; 
+	lpTempMesh->accept(sv); 
+
 	if(lpTempMesh)
 	{
 		std::string strFileCreateTime = FileCreateTime(strFilename);

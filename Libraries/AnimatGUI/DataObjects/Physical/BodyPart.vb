@@ -180,6 +180,7 @@ Namespace DataObjects.Physical
                     If Not m_doInterface Is Nothing Then
                         RemoveHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
                         RemoveHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                        RemoveHandler m_doInterface.OnSizeChanged, AddressOf Me.OnSizeChanged
                         RemoveHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
                     End If
 

@@ -499,6 +499,9 @@
 #define Al_Err_lTimedOutInMicroWait -4088
 #define Al_Err_strTimedOutInMicroWait "Timed out in microwait."
 
+#define Al_Err_lInvalidMeshScaleParam -4089
+#define Al_Err_strInvalidMeshScaleParam "Invalid mesh scaling param specified."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

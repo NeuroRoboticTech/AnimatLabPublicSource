@@ -138,6 +138,9 @@ void BodyPart::Resize()
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Resize();
+
+	if(m_lpCallback)
+		m_lpCallback->SizeChanged();
 }
 
 #pragma endregion

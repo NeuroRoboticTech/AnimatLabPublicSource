@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include <stdarg.h>
+#include "OsgCalculateBoundingBox.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
 #include "OsgRigidBody.h"
@@ -671,17 +672,12 @@ BoundingBox OsgMovableItem::Physics_GetBoundingBox()
 {
  	BoundingBox abb;
 
-	osg::BoundingBox bb;
-	osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
-	if(osgGroup)
+	if(m_osgNode.valid())
 	{
-		bb = osgGroup->getBoundingBox();
+		OsgCalculateBoundingBox bbox ;
+		m_osgNode->accept( bbox  );
+		osg::BoundingBox bb = bbox.getBoundBox();
 		abb.Set(bb.xMin(), bb.yMin(), bb.zMin(), bb.xMax(), bb.yMax(), bb.zMax());
-	}
-	else if(m_osgNode.valid())
-	{
-		osg::BoundingSphere osgBound =	m_osgNode->getBound();
-		abb.Set(-osgBound.radius(), -osgBound.radius(), -osgBound.radius(), osgBound.radius(), osgBound.radius(), osgBound.radius()); 
 	}
 	else
 	{

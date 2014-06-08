@@ -185,6 +185,9 @@ void BlMeshBase::Physics_Resize()
 			//Now get base values, including mass and volume
 			GetBaseValues();
 		}
+
+		if(m_lpThisRB->Callback())
+			m_lpThisRB->Callback()->SizeChanged();
 	}
 }
 

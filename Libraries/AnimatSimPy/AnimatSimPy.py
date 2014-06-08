@@ -3717,6 +3717,7 @@ class IMovableItemCallback(_object):
     __del__ = lambda self : None;
     def PositionChanged(self): return _AnimatSimPy.IMovableItemCallback_PositionChanged(self)
     def RotationChanged(self): return _AnimatSimPy.IMovableItemCallback_RotationChanged(self)
+    def SizeChanged(self): return _AnimatSimPy.IMovableItemCallback_SizeChanged(self)
     def SelectionChanged(self, *args): return _AnimatSimPy.IMovableItemCallback_SelectionChanged(self, *args)
     def AddBodyClicked(self, *args): return _AnimatSimPy.IMovableItemCallback_AddBodyClicked(self, *args)
     def SelectedVertexChanged(self, *args): return _AnimatSimPy.IMovableItemCallback_SelectedVertexChanged(self, *args)
@@ -4213,6 +4214,7 @@ class MovableItem(_object):
     def PhysicsMovableItem(self, *args): return _AnimatSimPy.MovableItem_PhysicsMovableItem(self, *args)
     def GetBoundingRadius(self): return _AnimatSimPy.MovableItem_GetBoundingRadius(self)
     def GetBoundingBox(self): return _AnimatSimPy.MovableItem_GetBoundingBox(self)
+    def SetBoundingBox(self, *args): return _AnimatSimPy.MovableItem_SetBoundingBox(self, *args)
     def AllowTranslateDragX(self): return _AnimatSimPy.MovableItem_AllowTranslateDragX(self)
     def AllowTranslateDragY(self): return _AnimatSimPy.MovableItem_AllowTranslateDragY(self)
     def AllowTranslateDragZ(self): return _AnimatSimPy.MovableItem_AllowTranslateDragZ(self)

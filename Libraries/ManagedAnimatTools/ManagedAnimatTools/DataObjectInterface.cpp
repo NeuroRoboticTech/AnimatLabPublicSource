@@ -362,16 +362,17 @@ float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 {
 	try
 	{
-		if(m_lpMovable)
+		if(m_lpMovable && m_lpSim)
 		{
 			BoundingBox bb = m_lpMovable->GetBoundingBox();
+			float fltDist = m_lpSim->DistanceUnits();
 
 			if(iIndex == 0 && m_lpRotationX)
-				return bb.Length();
+				return (bb.Length()*fltDist);
 			else if(iIndex == 1 && m_lpRotationY)
-				return bb.Height();
+				return (bb.Height()*fltDist);
 			else if(iIndex == 2 && m_lpRotationZ)
-				return bb.Width();
+				return (bb.Width()*fltDist);
 			else
 				return 0;
 		}

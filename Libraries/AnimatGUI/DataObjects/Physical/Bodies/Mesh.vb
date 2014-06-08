@@ -175,6 +175,15 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        'Determines whether it is okay for this body part type to allow the user to change the bounding box. This really only
+        'makes sense for a few parts like meshes.
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowGuiBoundingBoxChange() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -421,12 +430,31 @@ Namespace DataObjects.Physical.Bodies
 
 #Region " Events "
 
-        Protected Overridable Sub OnScaleValueChanged()
+        Protected Overridable Sub OnScaleValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 If Not Util.ProjectProperties Is Nothing Then
                     SetScale(m_svScale, True)
                     Util.ProjectProperties.RefreshProperties()
                 End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub SizeChangedHandler()
+            Try
+
+                If Not m_doInterface Is Nothing Then
+
+                    m_svScale.IgnoreChangeValueEvents = True
+                    m_svScale.X.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.X"))
+                    m_svScale.Y.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.Y"))
+                    m_svScale.Z.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.Z"))
+                    m_svScale.IgnoreChangeValueEvents = False
+
+                    MyBase.SizeChangedHandler()
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

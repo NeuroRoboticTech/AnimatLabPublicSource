@@ -110,8 +110,8 @@ Namespace DataObjects.Physical.Bodies
 
             m_svSize = New ScaledVector2(Me, "Size", "Size of the visible plane.", "Meters", "m")
 
-            AddHandler m_svSize.ValueChanged, AddressOf Me.OnSizeChanged
-            AddHandler m_svSize.ValueChanging, AddressOf Me.OnSizeChanging
+            AddHandler m_svSize.ValueChanged, AddressOf Me.OnPlaneSizeChanged
+            AddHandler m_svSize.ValueChanging, AddressOf Me.OnPlaneSizeChanging
 
         End Sub
 
@@ -137,8 +137,8 @@ Namespace DataObjects.Physical.Bodies
             m_iWidthSegments = doOrig.m_iWidthSegments
             m_iLengthSegments = doOrig.m_iLengthSegments
 
-            AddHandler m_svSize.ValueChanged, AddressOf Me.OnSizeChanged
-            AddHandler m_svSize.ValueChanging, AddressOf Me.OnSizeChanging
+            AddHandler m_svSize.ValueChanged, AddressOf Me.OnPlaneSizeChanged
+            AddHandler m_svSize.ValueChanging, AddressOf Me.OnPlaneSizeChanging
 
         End Sub
 
@@ -274,7 +274,7 @@ Namespace DataObjects.Physical.Bodies
 
 #Region " Events "
 
-         Protected Overridable Sub OnSizeChanged()
+        Protected Overridable Sub OnPlaneSizeChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("Size", m_svSize.GetSimulationXml("Size"), True)
             Catch ex As System.Exception
@@ -282,7 +282,7 @@ Namespace DataObjects.Physical.Bodies
             End Try
         End Sub
 
-        Protected Overridable Sub OnSizeChanging(ByVal snParam As ScaledNumber, ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
+        Protected Overridable Sub OnPlaneSizeChanging(ByVal snParam As ScaledNumber, ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
             If dblNewVal <= 0 Then
                 Throw New System.Exception("The size of the plane cannot be less than or equal to zero.")
             End If

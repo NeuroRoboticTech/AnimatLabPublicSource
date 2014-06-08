@@ -83,6 +83,18 @@ namespace AnimatSim
 		float Height();
 
 		/**
+		\brief	Gets the size along the supplied dimension.
+
+		\author	dcofer
+		\date	3/24/2011
+
+		\param	iAxis	The axis along which we want the size. 
+
+		\return	size of bounding box along the given dimension.
+		**/
+		float GetDimensionSize(int iAxis);
+
+		/**
 		\brief	Gets the maximum dimension.
 
 		\author	dcofer

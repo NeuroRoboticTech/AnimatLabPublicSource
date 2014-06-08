@@ -174,6 +174,7 @@ CStdFPoint Mesh::Scale() {return m_vScale;}
 void Mesh::Scale(CStdFPoint &oPoint, bool bUpdateMatrix) 
 {
 	m_vScale = oPoint;
+	m_vReportScale = m_vScale;
 
 	if(m_lpPhysicsMovableItem && bUpdateMatrix)
 		m_lpPhysicsMovableItem->Physics_Resize();
@@ -227,6 +228,31 @@ void Mesh::Scale(std::string strXml, bool bUpdateMatrix)
 	Scale(vPos);
 }
 
+void Mesh::SetBoundingBox(int iIdx, float fltVal)
+{
+	if(iIdx >= 0 && iIdx <= 2 && fltVal > 0)
+	{
+		BoundingBox bb = GetBoundingBox();
+
+		//Calculate the scale change required.
+		float fltOldDim = bb.GetDimensionSize(iIdx);
+
+		if(fltOldDim > 0)
+		{
+			float fltNewDim = fltVal*m_lpSim->InverseDistanceUnits();
+			float fltConvert = fltNewDim / fltOldDim;
+
+			float fltNewX = m_vScale.x*fltConvert;
+			float fltNewY = m_vScale.y*fltConvert;
+			float fltNewZ = m_vScale.z*fltConvert;
+
+			Scale(fltNewX, fltNewY, fltNewZ);
+		}	
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidMeshScaleParam, Al_Err_strInvalidMeshScaleParam, "Data", fltVal);
+
+}
 
 void Mesh::SetMeshFile(std::string strXml)
 {
@@ -238,6 +264,25 @@ void Mesh::SetMeshFile(std::string strXml)
 	m_strMeshFile = oXml.GetChildString("MeshFile");
 	m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile", "");
 	CollisionMeshType(oXml.GetChildString("MeshType"));
+}
+
+float *Mesh::GetDataPointer(const std::string &strDataType)
+{
+	float *lpData=NULL;
+	std::string strType = Std_CheckString(strDataType);
+
+	float *lpVal = NULL; 
+
+	if(strType == "SCALE.X")
+		lpData = &m_vReportScale.x;
+	else if(strType == "SCALE.Y")
+		lpData = &m_vReportScale.y;
+	else if(strType == "SCALE.Z")
+		lpData = &m_vReportScale.z;
+	else
+		lpData = RigidBody::GetDataPointer(strDataType);
+
+	return lpData;
 }
 
 bool Mesh::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -311,9 +356,9 @@ void Mesh::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("ConvexMeshFile", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SetMeshFile", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Scale", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Scale.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Scale.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Scale.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale.X", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Scale.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Scale.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 }
 
 void Mesh::Load(CStdXml &oXml)
@@ -327,6 +372,7 @@ void Mesh::Load(CStdXml &oXml)
 	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile", ""));
 
 	Std_LoadPoint(oXml, "Scale", m_vScale, false);
+	m_vReportScale = m_vScale;
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

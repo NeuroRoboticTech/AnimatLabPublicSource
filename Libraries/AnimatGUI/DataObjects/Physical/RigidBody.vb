@@ -2092,7 +2092,7 @@ Namespace DataObjects.Physical
         Public Event ContactSensorRemoved()
 
         'These three events handlers are called whenever a user manually changes the value of the COM, Buoyancycenter or drag.
-        Protected Overridable Sub OnCOMValueChanged()
+        Protected Overridable Sub OnCOMValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("COM", m_svCOM.GetSimulationXml("COM"), True)
                 Util.ProjectProperties.RefreshProperties()
@@ -2101,7 +2101,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnBuoyancyCenterValueChanged()
+        Protected Overridable Sub OnBuoyancyCenterValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("BuoyancyCenter", m_svBuoyancyCenter.GetSimulationXml("BuoyancyCenter"), True)
                 Util.ProjectProperties.RefreshProperties()
@@ -2110,7 +2110,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnLinearDragValueChanged()
+        Protected Overridable Sub OnLinearDragValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("LinearDrag", m_svLinearDrag.GetSimulationXml("LinearDrag"), True)
                 Util.ProjectProperties.RefreshProperties()
@@ -2119,7 +2119,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnAngularDragValueChanged()
+        Protected Overridable Sub OnAngularDragValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("AngularDrag", m_svAngularDrag.GetSimulationXml("AngularDrag"), True)
                 Util.ProjectProperties.RefreshProperties()

@@ -1038,6 +1038,19 @@ BoundingBox MovableItem::GetBoundingBox()
 }
 
 /**
+\brief	Sets one dimension of the bounding box. This does nothing for all parts except a mesh.
+
+\author	dcofer
+\date	6/7/2014
+
+\return	The bounding box.
+**/
+void MovableItem::SetBoundingBox(int iIdx, float fltVal)
+{
+}
+
+
+/**
 \brief	Gets whether this body part can be translated along the x-axis by the user with the drag handlers.
 
 \author	dcofer
@@ -1320,6 +1333,24 @@ bool MovableItem::SetData(const std::string &strDataType, const std::string &str
 		Rotation(m_oReportRotation.x, m_oReportRotation.y, atof(strValue.c_str()));
 		return true;
 	}
+
+	if(strDataType == "BOUNDINGBOX.X")
+	{
+		SetBoundingBox(0, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "BOUNDINGBOX.Y")
+	{
+		SetBoundingBox(1, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "BOUNDINGBOX.Z")
+	{
+		SetBoundingBox(2, atof(strValue.c_str()));
+		return true;
+	}
 	
 	if(strDataType == "VISIBLE")
 	{
@@ -1504,6 +1535,9 @@ void MovableItem::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Rotation.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Rotation.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Rotation.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Visible", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("GraphicsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("CollisionAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));

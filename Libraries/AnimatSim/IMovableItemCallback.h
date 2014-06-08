@@ -48,6 +48,14 @@ namespace AnimatSim
 		virtual void RotationChanged() = 0;
 
 		/**
+		\brief	Called to signal to the GUI that the size of the body part changed.
+		
+		\author	dcofer
+		\date	6/7/2014
+		**/
+		virtual void SizeChanged() = 0;
+
+		/**
 		\brief	Called to signal to the GUI that the selected body part changed.
 		
 		\author	dcofer
