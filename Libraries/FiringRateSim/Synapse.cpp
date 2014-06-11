@@ -30,6 +30,8 @@ Synapse::Synapse()
 	m_fltWeight=0;
 	m_fltModulation=0;
 	m_strType = "REGULAR";
+	m_bHasDelay = false;
+	m_fltDelayInterval = 0;
 }
 
 /**
@@ -70,6 +72,120 @@ float Synapse::Weight()
 **/
 void Synapse::Weight(float fltVal)
 {m_fltWeight=fltVal;}
+
+/**
+\brief	Gets whether this synapse has a delay associated with it.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	True if there is a synaptic delay.
+**/
+bool Synapse::HasDelay() {return m_bHasDelay;}
+
+/**
+\brief	Sets whether this synapse has a delay associated with it.
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal	The new value. 
+**/
+void Synapse::HasDelay(bool bVal) 
+{
+	m_bHasDelay = bVal;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Gets the delay buffer size in time.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	delay buffer interval.
+**/
+float Synapse::DelayInterval() {return m_fltDelayInterval;}
+
+/**
+\brief	Sets the delay buffer interval.
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal	The new value. 
+**/
+void Synapse::DelayInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "DelayInterval", true);
+	m_fltDelayInterval = fltVal;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	If the time step is modified then we need to recalculate the length of the delay buffer.
+
+\discussion If a neural module has been assigned to this adapter then that is its target module and
+we need to use the time step associated with it to determine how big the delay buffer should be in length.
+If the module is NULL then the target for this adapter is the physics engine and we should use the physics time step instead.
+
+\author	dcofer
+\date	5/15/2014
+**/
+void Synapse::TimeStepModified()
+{
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Recalculates the size of the delay buffer required.
+
+\author	dcofer
+\date	6/11/2014
+
+**/
+void Synapse::SetDelayBufferSize()
+{
+	if(m_bHasDelay && m_lpFRModule)
+	{
+		float fltTimeStep = m_lpFRModule->TimeStep();
+
+		if(fltTimeStep > 0)
+		{
+			int iLength = (int) (m_fltDelayInterval/fltTimeStep);
+			m_aryDelayBuffer.SetSize(iLength);
+		}
+	}
+	else
+		m_aryDelayBuffer.RemoveAll();
+}
+
+/**
+\brief	Calculates the synaptic current for this synapse.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	Synaptic current.
+**/
+float Synapse::CalculateCurrent()
+{
+	int i=5;
+	if(Std_ToLower(m_strID) == "0c2c4eb0-5130-4a91-8e3b-6bc5fd0d4aa4")
+		i=6;
+
+	float fltI = (this->FromNeuron()->FiringFreq(m_lpFRModule) * this->Weight() * this->CalculateModulation(m_lpFRModule) );
+
+	if(m_bHasDelay)
+	{
+		float fltNextI = m_aryDelayBuffer.GetHead();
+		//Now set the current value into the buffer.
+		m_aryDelayBuffer.AddEnd(fltI);
+		return fltNextI;
+	}
+	else
+		return fltI;
+}
 
 /**
 \brief	Gets a pointer to the synaptic weight.
@@ -226,6 +342,8 @@ void Synapse::Initialize()
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_arySynapses[iIndex]->Initialize();
+
+	SetDelayBufferSize();
 }
 
 void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
@@ -275,6 +393,18 @@ bool Synapse::SetData(const std::string &strDataType, const std::string &strValu
 		return true;
 	}
 
+	if(strType == "HASDELAY")
+	{
+		HasDelay(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "DELAYINTERVAL")
+	{
+		DelayInterval(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -289,6 +419,8 @@ void Synapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("Weight", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("HasDelay", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DelayInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool Synapse::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
@@ -351,6 +483,9 @@ void Synapse::Load(CStdXml &oXml)
 
 	m_bEnabled = oXml.GetChildBool("Enabled", true);
 	m_fltWeight = oXml.GetChildFloat("Weight");
+
+	m_bHasDelay = oXml.GetChildBool("HasDelay", m_bHasDelay);
+	m_fltDelayInterval = oXml.GetChildFloat("DelayInterval", m_fltDelayInterval);
 
 	m_arySynapses.RemoveAll();
 

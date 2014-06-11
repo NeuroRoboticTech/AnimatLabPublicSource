@@ -50,6 +50,16 @@ namespace FiringRateSim
 			/// The pointer to post-synaptic neuron
 			Neuron *m_lpToNeuron;
 
+			//Determines whether this adapter uses a delay buffer. 
+			bool m_bHasDelay;
+
+			//The duration of the delay buffer.
+			float m_fltDelayInterval;
+
+			///This buffer is used if the adapter has been setup to have delays between calcuating values and 
+			///setting them in the target object. 
+			CStdCircularArray<float> m_aryDelayBuffer;
+
 			Synapse *LoadSynapse(CStdXml &oXml);
 
 		public:
@@ -69,6 +79,15 @@ namespace FiringRateSim
 			float Weight();
 			void Weight(float fltVal);
 			float *WeightPointer();
+			
+			virtual bool HasDelay();
+			virtual void HasDelay(bool bVal);
+
+			virtual void DelayInterval(float fltVal);
+			virtual float DelayInterval();
+
+			virtual void SetDelayBufferSize();
+			virtual float CalculateCurrent();
 
 			float Modulation();
 			float *ModulationPointer();
@@ -77,6 +96,7 @@ namespace FiringRateSim
 			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 			virtual void AddSynapse(std::string strXml, bool bDoNotInit);
 			virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+
 
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(const std::string &strDataType);
@@ -112,6 +132,7 @@ namespace FiringRateSim
 			virtual void VerifySystemPointers();
 			virtual void ResetSimulation();
 			virtual void Initialize();
+			virtual void TimeStepModified();
 			virtual void Load(CStdXml &oXml);
 		};
 

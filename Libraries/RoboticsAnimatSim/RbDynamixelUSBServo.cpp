@@ -693,12 +693,16 @@ void RbDynamixelUSBServo::InitMotorData()
 {
 	int iMinPos = GetCWAngleLimit_FP();
 	int iMaxPos = GetCCWAngleLimit_FP();
+	int iRetDelay = GetReturnDelayTime();
 
 	if(iMinPos != m_iMinSimPos)
 		SetCWAngleLimit_FP(m_iMinSimPos);
 
 	if(iMaxPos != m_iMaxSimPos)
 		SetCCWAngleLimit_FP(m_iMaxSimPos);
+
+	if(iRetDelay > 1)
+		SetReturnDelayTime(1);
 
 	SetMaximumVelocity();
 	SetGoalPosition(0);
@@ -774,7 +778,7 @@ void RbDynamixelUSBServo::ReadKeyParams()
 {
 	std::vector<int> aryData;
 
-	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 4, aryData) && aryData.size() == 4)
+	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 2, aryData) && aryData.size() == 4)
 	{
 		m_iPresentPos = dxl_makeword(aryData[0], aryData[1]);
 		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);

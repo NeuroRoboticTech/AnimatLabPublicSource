@@ -605,6 +605,11 @@ void Adapter::StepSimulation()
 {
 	if(m_bEnabled)
 	{
+		////Test code
+		//int i=5;
+		//if(Std_ToLower(m_strID) == "acacf97d-e5d7-41a0-b376-7f991f6462be" && m_lpSim->Time() > 1.8)
+		//	i=6;
+
 		//If we are trying to synch the adapters to match the IO charachteristics of a robot then we should only
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
 		if(!m_lpSim->RobotAdpaterSynch() || (m_lpSim->RobotAdpaterSynch() && !m_lpSim->RobotSynchTimeCount()))

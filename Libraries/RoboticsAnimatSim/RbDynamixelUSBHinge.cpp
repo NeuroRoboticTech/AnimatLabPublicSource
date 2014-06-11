@@ -134,25 +134,56 @@ void RbDynamixelUSBHinge::SetupIO()
 
 		//Set the next goal positions to the current ones.
 		m_iNextGoalPos = m_iLastGoalPos;
+
 		m_iNextGoalVelocity = m_iLastGoalVelocity;
 	}
 }
 
 void RbDynamixelUSBHinge::StepIO()
 {	
+	static int iTickCount=0;
+	static double dblTotalTime=0;
 	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 	if(!m_lpSim->InSimulation())
 	{
-		if(m_iUpdateIdx == m_iUpdateAllParamsCount)
-			ReadAllParams();
-		else
+		//if(m_iUpdateIdx == m_iUpdateAllParamsCount)
+		//{
+		//	unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
+		//	ReadAllParams();
+		//	lEnd = m_lpSim->GetTimerTick();
+		//	double dblTime = m_lpSim->TimerDiff_m(lStart, lEnd);
+		//	dblTotalTime += dblTime;
+		//	iTickCount++;
+		//	if(iTickCount == 20)
+		//	{
+		//		double dblAvg = dblTotalTime/20.0;
+		//		std::cout << m_lpSim->Time() << " Avg RadTime: " << dblAvg << "\r\n";
+		//		iTickCount=0;
+		//		dblTotalTime = 0;
+		//	}
+		//}
+		//else
+		//{
+			unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
 			ReadKeyParams();
+			lEnd = m_lpSim->GetTimerTick();
+			double dblTime = m_lpSim->TimerDiff_m(lStart, lEnd);
+			dblTotalTime += dblTime;
+			iTickCount++;
+			if(iTickCount == 20)
+			{
+				double dblAvg = dblTotalTime/20.0;
+				std::cout << m_lpSim->Time() << " Avg RadTime: " << dblAvg << "\r\n";
+				iTickCount=0;
+				dblTotalTime = 0;
+			}
+		//}
 
-		std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
+		//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
 		if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
 		{
-			std::cout << "************" << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
+			//std::cout << "************" << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
 
 			//If the next goal velocity was set to -1 then we are trying to set velocity to 0. So lets set the goal position to its current
 			//loctation and velocity to lowest value.

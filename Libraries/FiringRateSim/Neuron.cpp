@@ -759,7 +759,7 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFRModule)
 		lpSynapse = m_arySynapses[iSynapse];
 
 		if(lpSynapse->Enabled() && lpSynapse->FromNeuron())
-			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(m_lpFRModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(m_lpFRModule) ); 
+			fltSynapticI+= lpSynapse->CalculateCurrent(); 
 	}
 
 	return fltSynapticI;
