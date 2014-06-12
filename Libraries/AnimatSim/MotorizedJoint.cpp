@@ -902,7 +902,10 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorForceToA[2]);
     }
 	else if(strDataType == "MOTORFORCETOAMAGNITUDE")
+	{
+        EnableFeedback();
         return (&m_fltMotorForceAMagnitude);
+	}
 	else if(strDataType == "MOTORASSISTFORCETOAX")
         return (&m_vMotorAssistForceToAReport[0]);
 	else if(strDataType == "MOTORASSISTFORCETOAY")
@@ -925,7 +928,10 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorForceToB[2]);
     }
 	else if(strDataType == "MOTORFORCETOBMAGNITUDE")
+	{
+        EnableFeedback();
         return (&m_fltMotorForceBMagnitude);
+	}
 	else if(strDataType == "MOTORASSISTFORCETOBX")
         return (&m_vMotorAssistForceToBReport[0]);
 	else if(strDataType == "MOTORASSISTFORCETOBY")
@@ -948,7 +954,10 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorTorqueToA[2]);
     }
 	else if(strDataType == "MOTORTORQUETOAMAGNITUDE")
+	{
+        EnableFeedback();
         return (&m_fltMotorTorqueAMagnitude);
+	}
 	else if(strDataType == "MOTORASSISTTORQUETOAX")
         return (&m_vMotorAssistTorqueToAReport[0]);
 	else if(strDataType == "MOTORASSISTTORQUETOAY")
@@ -971,7 +980,10 @@ float *MotorizedJoint::GetDataPointer(const std::string &strDataType)
         return (&m_vMotorTorqueToB[2]);
     }
 	else if(strDataType == "MOTORTORQUETOBMAGNITUDE")
+	{
+        EnableFeedback();
         return (&m_fltMotorTorqueBMagnitude);
+	}
 	else if(strDataType == "MOTORASSISTTORQUETOBX")
         return (&m_vMotorAssistTorqueToBReport[0]);
 	else if(strDataType == "MOTORASSISTTORQUETOBY")

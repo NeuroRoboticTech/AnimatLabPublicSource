@@ -135,7 +135,11 @@ void RbDynamixelUSB::ProcessIO()
 			m_aryMotorData.RemoveAll();
 			StepIO();
 			SendSynchronousMoveCommand();
-			m_lpSim->MicroSleep(15000);
+
+#ifndef Win32
+		//Not needed in windows, not sure in linux. Keep it in till verify.
+		m_lpSim->MicroSleep(15000);
+#endif
 		}
 	}
 	catch(CStdErrorInfo oError)

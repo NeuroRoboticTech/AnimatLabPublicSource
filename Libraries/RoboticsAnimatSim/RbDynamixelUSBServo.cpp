@@ -693,7 +693,8 @@ void RbDynamixelUSBServo::InitMotorData()
 {
 	int iMinPos = GetCWAngleLimit_FP();
 	int iMaxPos = GetCCWAngleLimit_FP();
-	int iRetDelay = GetReturnDelayTime();
+	int iRetDelay = GetReturnDelayTime_FP();
+	int iRetTorqueLimit = GetTorqueLimit_FP();
 
 	if(iMinPos != m_iMinSimPos)
 		SetCWAngleLimit_FP(m_iMinSimPos);
@@ -702,7 +703,10 @@ void RbDynamixelUSBServo::InitMotorData()
 		SetCCWAngleLimit_FP(m_iMaxSimPos);
 
 	if(iRetDelay > 1)
-		SetReturnDelayTime(1);
+		SetReturnDelayTime_FP(1);
+
+	if(iRetTorqueLimit != 340)
+		SetTorqueLimit_FP(340);
 
 	SetMaximumVelocity();
 	SetGoalPosition(0);
@@ -908,7 +912,7 @@ std::string RbDynamixelUSBServo::GetCommStatus(int CommStatus)
 
 \param	iVal	delay time
 **/
-void RbDynamixelUSBServo::SetReturnDelayTime(int iVal)
+void RbDynamixelUSBServo::SetReturnDelayTime_FP(int iVal)
 {
 	if(iVal >= 0 && iVal < 256)
 		dxl_write_byte(m_iServoID, P_RETURN_DELAY_TIME, iVal);
@@ -922,7 +926,7 @@ void RbDynamixelUSBServo::SetReturnDelayTime(int iVal)
 
 \return	delay time 
 **/
-int RbDynamixelUSBServo::GetReturnDelayTime()
+int RbDynamixelUSBServo::GetReturnDelayTime_FP()
 {
 	return dxl_read_byte(m_iServoID, P_RETURN_DELAY_TIME);
 }
@@ -1112,6 +1116,33 @@ void RbDynamixelUSBServo::SetMaxSimPos(float fltVal)
 	if(m_iMaxSimPos > m_iMaxPos) m_iMaxSimPos = m_iMaxPos;
 
 	m_fltMaxSimPos = ConvertPosFPToRad(m_iMaxSimPos);
+}
+
+/**
+\brief	Sets the torque limit of the servo using fixed point value.
+
+\author	dcofer
+\date	6/12/2014
+
+\param	iVal	limit
+**/
+void RbDynamixelUSBServo::SetTorqueLimit_FP(int iVal)
+{
+	if(iVal >= m_iMinLoad && iVal <= m_iMaxLoad)
+		dxl_write_word(m_iServoID, P_MAX_TORQUE_L, iVal);
+}
+
+/**
+\brief	Gets the torque limit of the servo in fixed point value.
+
+\author	dcofer
+\date	6/12/2014
+
+\return	limit 
+**/
+int RbDynamixelUSBServo::GetTorqueLimit_FP()
+{
+	return dxl_read_word(m_iServoID, P_MAX_TORQUE_L);
 }
 
 			}	//DynamixelUSB

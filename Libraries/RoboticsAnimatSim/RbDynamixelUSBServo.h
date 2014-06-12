@@ -66,15 +66,22 @@ protected:
 	///ID used for communications with this servo
 	int m_iServoID;
 
-	///Minimum value that can be set for the poistion
+	///Minimum value that can be set for the position in fixed point number.
 	int m_iMinPos; 
 
-	///Maximum value that can be set for the position
+	///Maximum value that can be set for the position in fixed point number.
 	int m_iMaxPos; 
+
+	///Maximum angle the servo can move in fixed point number. m_iMaxPos - m_iMinPos
 	int m_iMaxAngle;
 
+	///Maximum angle the servo can move in floating point number. m_iMaxPos - m_iMinPos
 	float m_fltMaxAngle;
+
+	///Minimum value that can be set for the position in floating point number.
 	float m_fltMinPos;
+
+	///Maximum value that can be set for the position in floating point number.
 	float m_fltMaxPos;
 
 	///This is the minimum angle in fixed point that can be used for this servo as specified in the simulation.
@@ -89,23 +96,28 @@ protected:
 	///This is the maximum angle in radians that can be used for this servo as specified in the simulation.
 	float m_fltMaxSimPos;
 
-	///The conversion factor to convert radians to FP position.
+	///The conversion factor to convert FP position to radians.
 	float m_fltPosFPToRadSlope;
+
+	///The conversion factor to convert FP position to radians.
 	float m_fltPosFPToRadIntercept;
 
+	///The conversion factor to convert radians to FP position.
 	float m_fltPosRadToFPSlope;
+
+	///The conversion factor to convert radians to FP position.
 	float m_fltPosRadToFPIntercept;
 
 	///The center point value in fixed point numbers
 	int m_iCenterPosFP;
 
-	//The center point value in radians.
+	///The center point value in radians.
 	float m_fltCenterPos;
 
-	//Keeps track of the last servo goal position that we set
+	///Keeps track of the last servo goal position that we set
 	int m_iLastGoalPos;
 
-	//This is the goal position that you would like to use in the next time step.
+	///This is the goal position that you would like to use in the next time step.
 	int m_iNextGoalPos;
 
 	///Minimum value that can be set for the velocity
@@ -120,10 +132,10 @@ protected:
 	///The conversion factor to convert FP velocity value to rad/s.
 	float m_fltConvertFPToRadS;
 
-	//Keeps track of the last servo goal velocity that we set
+	///Keeps track of the last servo goal velocity that we set
 	int m_iLastGoalVelocity;
 
-	//This is the goal velocity that you would like to use in the next time step.
+	///This is the goal velocity that you would like to use in the next time step.
 	int m_iNextGoalVelocity;
 
 	///Minimum value that can be set for the load
@@ -132,37 +144,37 @@ protected:
 	///Maximum value that can be set for the load
 	int m_iMaxLoad; 
 
-	//Used to conver the load fixed point value back to a percentage of load
+	///Used to conver the load fixed point value back to a percentage of load
 	float m_fltConvertFPToLoad;
 
-	//The current position that was last read in for this servo.
+	///The current position that was last read in for this servo.
 	int m_iPresentPos;
 
-	//The current position that was last read in for this servo.
+	///The current position that was last read in for this servo.
 	float m_fltPresentPos;
 
-	//The current velocity that was last read in for this servo.
+	///The current velocity that was last read in for this servo.
 	int m_iPresentVelocity;
 
-	//The current velocity that was last read in for this servo.
+	///The current velocity that was last read in for this servo.
 	float m_fltPresentVelocity;
 
-	//The current load that was last read in for this servo.
+	///The current load that was last read in for this servo.
 	int m_iLoad;
 
-	//The current load that was last read in for this servo.
+	///The current load that was last read in for this servo.
 	float m_fltLoad;
 
-	//The current voltage that was last read in for this servo.
+	///The current voltage that was last read in for this servo.
 	int m_iVoltage;
 
-	//The current voltage that was last read in for this servo.
+	///The current voltage that was last read in for this servo.
 	float m_fltVoltage;
 
-	//The current temperature that was last read in for this servo.
+	///The current temperature that was last read in for this servo.
 	int m_iTemperature;
 	
-	//The current temperature that was last read in for this servo.
+	///The current temperature that was last read in for this servo.
 	float m_fltTemperature;
 
 public:
@@ -240,8 +252,8 @@ public:
 	virtual std::string GetErrorCode();
 	virtual std::string GetCommStatus(int CommStatus);
 
-	virtual void SetReturnDelayTime(int iVal);
-	virtual int GetReturnDelayTime();
+	virtual void SetReturnDelayTime_FP(int iVal);
+	virtual int GetReturnDelayTime_FP();
 
 	virtual void SetCWAngleLimit_FP(int iVal);
 	virtual void SetCWAngleLimit(float fltLimit);
@@ -260,6 +272,9 @@ public:
 	virtual int GetMaxSimPos_FP();
 	virtual float GetMaxSimPos();
 	virtual void SetMaxSimPos(float fltVal);	
+
+	virtual void SetTorqueLimit_FP(int iVal);
+	virtual int GetTorqueLimit_FP();
 	
 	virtual void MicroSleep(unsigned int iTime) = 0;
 };

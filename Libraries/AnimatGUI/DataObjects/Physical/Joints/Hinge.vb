@@ -191,13 +191,19 @@ Namespace DataObjects.Physical.Joints
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBY", "Motor Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBZ", "Motor Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
 
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAX", "Motor Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAY", "Motor Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAZ", "Motor Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAMagnitude", "Motor Force A Magnitude", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBMagnitude", "Motor Force B Magnitude", "Newtons", "N", -10, 10))
 
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBX", "Motor Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBY", "Motor Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBZ", "Motor Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAX", "Motor Torque Applied to Body A, X Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAY", "Motor Torque Applied to Body A, Y Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAZ", "Motor Torque Applied to Body A, Z Axis", "Newton-Meters", "Nm", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBX", "Motor Torque Applied to Body B, X Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBY", "Motor Torque Applied to Body B, Y Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBZ", "Motor Torque Applied to Body B, Z Axis", "Newton-Meters", "Nm", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAMagnitude", "Motor Torque A Magnitude", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBMagnitude", "Motor Torque B Magnitude", "Newton-Meters", "Nm", -10, 10))
             End If
 
             m_doAssistPID = New PidControl(Me)
