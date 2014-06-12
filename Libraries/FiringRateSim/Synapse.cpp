@@ -462,6 +462,10 @@ bool Synapse::RemoveItem(const std::string &strItemType, const std::string &strI
 
 void Synapse::ResetSimulation()
 {
+	int iSize = m_aryDelayBuffer.GetSize();
+	for(int iIdx=0; iIdx<iSize; iIdx++)
+		m_aryDelayBuffer[iIdx] = 0;
+
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_arySynapses[iIndex]->ResetSimulation();

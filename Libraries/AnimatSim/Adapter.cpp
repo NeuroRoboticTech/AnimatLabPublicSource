@@ -60,6 +60,7 @@ Adapter::Adapter()
 	m_fltDelayBufferInterval = 0;
 	m_eDelayBufferMode = NoDelayBuffer;
 	m_fltRobotIOScale = 1;
+	m_fltInitIODisableDuration = 0;
 }
 
 /**
@@ -377,6 +378,39 @@ void Adapter::RobotIOScale(float fltVal)
 	m_fltRobotIOScale = fltVal;
 }
 
+/**
+\brief	Gets the duration for how long this adapter is disabled at the start of the simulation. 
+
+\discussion It is sometimes useful to disable IO operations briefly at the start of the simulation to give neural systems a chance to stabilize.
+			This param defines how long it should disable IO for this adapter at the start of the sim..
+
+\author	dcofer
+\date	6/11/2014
+
+\return	duration for which IO is disabled at the start of the simulation. 
+**/
+float Adapter::InitIODisableDuration()
+{
+	return m_fltInitIODisableDuration;
+}
+
+/**
+\brief	Sets the duration for how long this adapter is disabled at the start of the simulation. 
+
+\discussion It is sometimes useful to disable IO operations briefly at the start of the simulation to give neural systems a chance to stabilize.
+			This param defines how long it should disable IO for this adapter at the start of the sim..
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal duration for which IO is disabled at the start of the simulation. 
+**/
+void Adapter::InitIODisableDuration(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "InitIODisableDuration", true);
+	m_fltInitIODisableDuration = fltVal;
+}
+
 void Adapter::DetachAdaptersFromSimulation()
 {
 	if(m_lpSim)
@@ -513,6 +547,12 @@ bool Adapter::SetData(const std::string &strDataType, const std::string &strValu
 		return true;
 	}
 
+	if(strType == "INITIODISABLEDURATION")
+	{
+		InitIODisableDuration(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
@@ -532,6 +572,7 @@ void Adapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("DelayBufferMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DelayBufferInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("RobotIOScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitIODisableDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -603,7 +644,7 @@ void Adapter::Initialize()
 
 void Adapter::StepSimulation()
 {
-	if(m_bEnabled)
+	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
 	{
 		////Test code
 		//int i=5;
@@ -663,6 +704,7 @@ void Adapter::Load(CStdXml &oXml)
 	DelayBufferInterval(oXml.GetChildFloat("DelayBufferInterval", m_fltDelayBufferInterval));
 
 	RobotIOScale(oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale));
+	InitIODisableDuration(oXml.GetChildFloat("InitIODisableDuration", m_fltInitIODisableDuration));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

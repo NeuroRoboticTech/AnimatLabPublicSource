@@ -42,6 +42,8 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected m_fltRobotIOScale As Single = 1
 
+        Protected m_snInitIODisableDuration As ScaledNumber
+
 #End Region
 
 #Region " Properties "
@@ -191,6 +193,22 @@ Namespace DataObjects.Behavior.Nodes
                 m_fltRobotIOScale = value
             End Set
         End Property
+
+        <Browsable(False)> _
+        Public Overridable Property InitIODisableDuration() As ScaledNumber
+            Get
+                Return m_snInitIODisableDuration
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The initial IO disable duration must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("InitIODisableDuration", Value.ActualValue.ToString, True)
+                m_snInitIODisableDuration.CopyData(Value)
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -220,6 +238,7 @@ Namespace DataObjects.Behavior.Nodes
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
 
                 m_snDelayBufferInterval = New AnimatGUI.Framework.ScaledNumber(Me, "DelayBufferInterval", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snInitIODisableDuration = New AnimatGUI.Framework.ScaledNumber(Me, "InitIODisableDuration", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
                 m_thDataTypes.DataTypes.Clear()
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
@@ -242,6 +261,7 @@ Namespace DataObjects.Behavior.Nodes
             m_gnGain = DirectCast(bnOrig.m_gnGain.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
             m_bEnabled = bnOrig.m_bEnabled
             m_snDelayBufferInterval = DirectCast(bnOrig.m_snDelayBufferInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snInitIODisableDuration = DirectCast(bnOrig.m_snInitIODisableDuration.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_eDelayBufferMode = bnOrig.m_eDelayBufferMode
             m_fltRobotIOScale = bnOrig.m_fltRobotIOScale
         End Sub
@@ -374,6 +394,12 @@ Namespace DataObjects.Behavior.Nodes
                                         "For example, motors are usually a little slower than in the simulation, so you would scale down the IO here to match your real motor. " & _
                                         "This is a percentage value of scaling with 1 as 100%", m_fltRobotIOScale))
 
+            pbNumberBag = m_snInitIODisableDuration.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Init IO Disable Duration", pbNumberBag.GetType(), "InitIODisableDuration", _
+                                        "Adapter Properties", "Sets the duration for how long this adapter is disabled at simulation startup. " & _
+                                        "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -381,6 +407,7 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_gnGain Is Nothing Then m_gnGain.ClearIsDirty()
             If Not m_snDelayBufferInterval Is Nothing Then m_snDelayBufferInterval.ClearIsDirty()
+            If Not m_snInitIODisableDuration Is Nothing Then m_snInitIODisableDuration.ClearIsDirty()
         End Sub
 
         Public Overrides Function Delete(Optional bAskToDelete As Boolean = True, Optional e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
@@ -511,6 +538,7 @@ Namespace DataObjects.Behavior.Nodes
             m_bEnabled = oXml.GetChildBool("Enabled", True)
             m_eDelayBufferMode = DirectCast([Enum].Parse(GetType(enumDelayBufferMode), oXml.GetChildString("DelayBufferMode", "NoDelayBuffer"), True), enumDelayBufferMode)
             m_snDelayBufferInterval.LoadData(oXml, "DelayBufferInterval", False)
+            m_snInitIODisableDuration.LoadData(oXml, "InitIODisableDuration", False)
             m_fltRobotIOScale = oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale)
 
             If oXml.FindChildElement("Gain", False) Then
@@ -667,6 +695,7 @@ Namespace DataObjects.Behavior.Nodes
 
             oXml.AddChildElement("DelayBufferMode", m_eDelayBufferMode.ToString)
             m_snDelayBufferInterval.SaveData(oXml, "DelayBufferInterval")
+            m_snInitIODisableDuration.SaveData(oXml, "InitIODisableDuration")
 
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)

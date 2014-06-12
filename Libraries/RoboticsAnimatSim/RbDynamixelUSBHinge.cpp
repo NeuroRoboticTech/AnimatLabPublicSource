@@ -166,6 +166,7 @@ void RbDynamixelUSBHinge::StepIO()
 		//else
 		//{
 			unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
+			//ReadAllParams();
 			ReadKeyParams();
 			lEnd = m_lpSim->GetTimerTick();
 			double dblTime = m_lpSim->TimerDiff_m(lStart, lEnd);

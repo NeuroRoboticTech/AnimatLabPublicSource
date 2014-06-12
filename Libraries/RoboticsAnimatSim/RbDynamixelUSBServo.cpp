@@ -778,13 +778,15 @@ void RbDynamixelUSBServo::ReadKeyParams()
 {
 	std::vector<int> aryData;
 
-	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 2, aryData) && aryData.size() == 4)
+	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 6, aryData) && aryData.size() == 6)
 	{
 		m_iPresentPos = dxl_makeword(aryData[0], aryData[1]);
 		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);
+		m_iLoad = dxl_makeword(aryData[4], aryData[5]);
 
 		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
+		m_fltLoad = ConvertFPLoad(m_iLoad);
 	}
 }
 

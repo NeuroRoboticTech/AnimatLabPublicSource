@@ -94,6 +94,10 @@ namespace AnimatSim
 			///robot. This is only so you can try and tune your simulation repsonse to more closely match the real robot response.
 			float m_fltRobotIOScale;
 
+			///It is sometimes useful to disable IO operations briefly at the start of the simulation to give neural systems a chance to stabilize.
+			///This param defines how long it should disable IO for this adapter at the start of the sim.
+			float m_fltInitIODisableDuration;
+
 			virtual void AddGain(std::string strXml);
 			virtual void SetOriginID(std::string strXml);
 			virtual void SetDestinationID(std::string strXml);
@@ -143,6 +147,9 @@ namespace AnimatSim
 
 			virtual float RobotIOScale();
 			virtual void RobotIOScale(float fltVal);
+
+			virtual float InitIODisableDuration();
+			virtual void InitIODisableDuration(float fltVal);
 
 			virtual void Initialize();
 			virtual void TimeStepModified();
