@@ -173,6 +173,7 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
                 oXml.AddChildElement("TargetModule", "AnimatLab")
                 oXml.AddChildElement("TargetID", bpProp.LinkedObject.Item.ID)
+                oXml.AddChildElement("TargetDataType", m_thTargetDataTypes.ID)
                 oXml.AddChildElement("PropertyName", bpProp.LinkedPropertyName)
                 oXml.AddChildElement("SetThreshold", bpProp.SetThreshold)
                 oXml.AddChildElement("InitialValue", bpProp.InitialValue)

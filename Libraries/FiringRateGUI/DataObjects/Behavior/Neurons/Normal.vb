@@ -241,7 +241,9 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.ID = "FiringFrequency"
 
-                m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano)
+                m_thIncomingDataTypes.DataTypes.Clear()
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
+                m_thIncomingDataTypes.ID = "ExternalCurrent"
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

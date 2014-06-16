@@ -41,8 +41,12 @@ namespace AnimatSim
 MotorizedJoint::MotorizedJoint(void)
 {
 	m_lpPhysicsMotorJoint = NULL;
+	m_fltSetPosition = 0;
+	m_fltDesiredPosition = 0;
+	m_fltReportSetPosition = 0;
 	m_fltSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
+	m_fltReportSetPosition = 0;
 	m_fltReportSetVelocity = 0;
 	m_fltMaxVelocity = 100;
 	m_fltPrevVelocity = -1000000;
@@ -275,6 +279,60 @@ void MotorizedJoint::MaxVelocity(float fltVal, bool bUseScaling)
 		m_fltMaxVelocity = fltVal * m_lpSim->InverseDistanceUnits();
 	else
 		m_fltMaxVelocity = fltVal;
+}
+
+/**
+\brief	Gets the position that is actually set using the physics method.
+
+\author	dcofer
+\date	6/16/2014
+
+\return	The position that was set.
+**/
+float MotorizedJoint::SetPosition() {return m_fltSetPosition;}
+
+/**
+\brief	Sets the Position that is actually set using the physics method.
+
+\author	dcofer
+\date	4/1/2011
+
+\param	fltVal	The new value. 
+**/
+void MotorizedJoint::SetPosition(float fltVal) 
+{
+	m_fltSetPosition = fltVal;
+
+	if(!UsesRadians())
+		m_fltReportSetPosition = m_fltSetPosition * m_lpSim->DistanceUnits();
+	else
+		m_fltReportSetPosition = m_fltSetPosition;
+}
+
+/**
+\brief	Gets the desired Position.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Desired Position.
+**/
+float MotorizedJoint::DesiredPosition() 
+{
+    return m_fltDesiredPosition;
+}
+
+/**
+\brief	Sets the desired Position.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltPosition	The new Position. 
+**/
+void MotorizedJoint::DesiredPosition(float fltPosition) 
+{
+	m_fltDesiredPosition = fltPosition;
 }
 
 /**
@@ -863,6 +921,10 @@ void MotorizedJoint::EnableLock(bool bOn, float fltPosition, float fltMaxLockFor
 void MotorizedJoint::ResetSimulation()
 {
 	Joint::ResetSimulation();
+
+	m_fltSetPosition = 0;
+	m_fltReportSetPosition = 0;
+	m_fltDesiredPosition = 0;
 
 	m_fltSetVelocity = 0;
 	m_fltReportSetVelocity = 0;

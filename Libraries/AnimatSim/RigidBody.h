@@ -369,7 +369,7 @@ namespace AnimatSim
 
 #pragma endregion
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void StepSimulation();
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();

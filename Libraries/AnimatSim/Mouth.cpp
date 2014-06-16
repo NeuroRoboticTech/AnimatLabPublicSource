@@ -255,7 +255,7 @@ float *Mouth::GetDataPointer(const std::string &strDataType)
 	return RigidBody::GetDataPointer(strDataType);
 }
 
-void Mouth::AddExternalNodeInput(float fltInput)
+void Mouth::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltEatingRate = fltInput;
 	if(m_fltEatingRate < 0)

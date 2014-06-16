@@ -128,6 +128,25 @@ void Node::Kill(bool bState)
 void Node::UpdateData()
 {}
 
+/**
+\brief	Used to convert a string target data type into an integer index.
+
+\details We do not want to be doing any string comparisons within the main simulation loop.
+To avoid this we need to convert the target data type into an index to use when AddExternalNodeInput
+is called so it knows to which input we are adding.
+
+\author	dcofer
+\date	6/16/2014
+
+\param	strDataType	String descriptor of the target data we want. 
+
+\return	index. Zero is the default. 
+**/
+int Node::GetTargetDataTypeIndex(const std::string &strDataType)
+{
+	return 0;
+}
+
 void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);

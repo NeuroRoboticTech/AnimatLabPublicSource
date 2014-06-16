@@ -32,7 +32,6 @@ namespace RoboticsAnimatSim
 RbHinge::RbHinge()
 {
 	SetThisPointers();
-	m_fltRotationDeg = 0;
 
 	m_lpUpperLimit = new RbHingeLimit();
 	m_lpLowerLimit = new RbHingeLimit();
@@ -143,6 +142,12 @@ float *RbHinge::GetDataPointer(const std::string &strDataType)
 		return &m_fltForce;
 	else if(strType == "JOINTROTATIONDEG")
 		return &m_fltRotationDeg;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTDESIREDPOSITIONDEG")
+		return &m_fltDesiredPositionDeg;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "JOINTDESIREDVELOCITY")
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
@@ -190,6 +195,9 @@ void RbHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("JointActualVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointForce", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPositionDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
@@ -201,12 +209,6 @@ void RbHinge::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
-}
-
-void RbHinge::UpdateData()
-{
-	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/RB_PI)*180);
 }
 
 void RbHinge::Physics_EnableLock(bool bOn, float fltPosition, float fltMaxLockForce)

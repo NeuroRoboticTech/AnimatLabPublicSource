@@ -326,7 +326,7 @@ float *Stomach::GetDataPointer(const std::string &strDataType)
 	return RigidBody::GetDataPointer(strDataType);
 }
 
-void Stomach::AddExternalNodeInput(float fltInput)
+void Stomach::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltAdapterConsumptionRate += fltInput;
 	if(m_fltAdapterConsumptionRate < 0)

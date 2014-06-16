@@ -13,6 +13,19 @@ namespace AnimatSim
 			/// The pointer to the physics joint instance.
 			IMotorizedJoint *m_lpPhysicsMotorJoint;
 
+			///This is set position for a servo motor. The motor must be set to servo and enabled.
+			///This will be set based on the desired position passed into the joint using the AddExternalInput method.
+			float m_fltSetPosition;
+
+			///This is the desired position of a motorized servo motor. IE the target position we are shooting for.
+			/// The Desired position must get reset at each time step to zero, so it can be added to using AddExternalInput for the
+			/// next time step. m_fltSetPosition then keeps track of what we set the position of the motor to be.
+			/// Positions can be in rad or m depending on the type of joint. UsesRadians lets you know whether it is using radians.
+			float m_fltDesiredPosition;
+
+			/// This is the variable that is reported to AnimatLab on what the set position was. 
+			float m_fltReportSetPosition;
+
 			///This is the velocity to use for the motorized joint. The motor must be enabled
 			///for this parameter to have any effect. 
 			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
@@ -157,6 +170,12 @@ namespace AnimatSim
 
 			virtual float MaxVelocity();
 			virtual void MaxVelocity(float fltVal, bool bUseScaling = true);
+
+			virtual float DesiredPosition();
+			virtual void DesiredPosition(float fltPosition);
+
+			virtual float SetPosition();
+			virtual void SetPosition(float fltVal);
 
 			virtual float DesiredVelocity();
 			virtual void DesiredVelocity(float fltVelocity);

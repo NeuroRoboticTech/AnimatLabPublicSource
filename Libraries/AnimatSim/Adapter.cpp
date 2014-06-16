@@ -61,6 +61,7 @@ Adapter::Adapter()
 	m_eDelayBufferMode = NoDelayBuffer;
 	m_fltRobotIOScale = 1;
 	m_fltInitIODisableDuration = 0;
+	m_iTargetDataType = 0;
 }
 
 /**
@@ -420,7 +421,7 @@ void Adapter::DetachAdaptersFromSimulation()
 	}
 }
 
-void Adapter::AddExternalNodeInput(float fltInput)
+void Adapter::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
 }
@@ -634,6 +635,10 @@ void Adapter::Initialize()
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
 
+	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
+	//systems use.
+	m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataType);
+
 	m_lpSim->AttachSourceAdapter(m_lpStructure, this);
 	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 
@@ -677,7 +682,7 @@ void Adapter::StepSimulation()
 		else
 			m_fltNextVal = m_fltCalculatedVal;
 
-		m_lpTargetNode->AddExternalNodeInput(m_fltNextVal);
+		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltNextVal);
 	}
 }
 
@@ -695,6 +700,7 @@ void Adapter::Load(CStdXml &oXml)
 	//Load Target Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
+	TargetDataType(oXml.GetChildString("TargetDataType"));
 
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 	

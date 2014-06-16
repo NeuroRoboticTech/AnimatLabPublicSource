@@ -177,7 +177,7 @@ bool Prismatic::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void Prismatic::AddExternalNodeInput(float fltInput)
+void Prismatic::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltDesiredVelocity += fltInput;
 }

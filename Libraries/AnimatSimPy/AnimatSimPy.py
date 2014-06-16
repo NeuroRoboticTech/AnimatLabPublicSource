@@ -4030,6 +4030,7 @@ class Node(AnimatBase):
     def Enabled(self, *args): return _AnimatSimPy.Node_Enabled(self, *args)
     def Kill(self, bState=True): return _AnimatSimPy.Node_Kill(self, bState)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.Node_AddExternalNodeInput(self, *args)
+    def GetTargetDataTypeIndex(self, *args): return _AnimatSimPy.Node_GetTargetDataTypeIndex(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.Node_ResetSimulation(self)
     def SetSystemPointers(self, *args): return _AnimatSimPy.Node_SetSystemPointers(self, *args)
     def VerifySystemPointers(self): return _AnimatSimPy.Node_VerifySystemPointers(self)
@@ -4336,6 +4337,7 @@ class Adapter(Node):
     def DelayBufferInterval(self, *args): return _AnimatSimPy.Adapter_DelayBufferInterval(self, *args)
     def DetachAdaptersFromSimulation(self): return _AnimatSimPy.Adapter_DetachAdaptersFromSimulation(self)
     def RobotIOScale(self, *args): return _AnimatSimPy.Adapter_RobotIOScale(self, *args)
+    def InitIODisableDuration(self, *args): return _AnimatSimPy.Adapter_InitIODisableDuration(self, *args)
     def Initialize(self): return _AnimatSimPy.Adapter_Initialize(self)
     def TimeStepModified(self): return _AnimatSimPy.Adapter_TimeStepModified(self)
     def ResetSimulation(self): return _AnimatSimPy.Adapter_ResetSimulation(self)
@@ -4588,6 +4590,8 @@ class MotorizedJoint(Joint):
     def MaxForce(self, *args): return _AnimatSimPy.MotorizedJoint_MaxForce(self, *args)
     def MaxForceNotScaled(self): return _AnimatSimPy.MotorizedJoint_MaxForceNotScaled(self)
     def MaxVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_MaxVelocity(self, *args)
+    def DesiredPosition(self, *args): return _AnimatSimPy.MotorizedJoint_DesiredPosition(self, *args)
+    def SetPosition(self, *args): return _AnimatSimPy.MotorizedJoint_SetPosition(self, *args)
     def DesiredVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_DesiredVelocity(self, *args)
     def SetVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_SetVelocity(self, *args)
     def PrevVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_PrevVelocity(self, *args)
@@ -4653,6 +4657,8 @@ def BallSocket_CastToDerived(*args):
   return _AnimatSimPy.BallSocket_CastToDerived(*args)
 BallSocket_CastToDerived = _AnimatSimPy.BallSocket_CastToDerived
 
+DESIRED_VELOCITY_TYPE = _AnimatSimPy.DESIRED_VELOCITY_TYPE
+DESIRED_POSITION_TYPE = _AnimatSimPy.DESIRED_POSITION_TYPE
 class Hinge(MotorizedJoint):
     __swig_setmethods__ = {}
     for _s in [MotorizedJoint]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4679,6 +4685,9 @@ class Hinge(MotorizedJoint):
     def GetLimitRange(self): return _AnimatSimPy.Hinge_GetLimitRange(self)
     def SetData(self, *args): return _AnimatSimPy.Hinge_SetData(self, *args)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.Hinge_AddExternalNodeInput(self, *args)
+    def GetTargetDataTypeIndex(self, *args): return _AnimatSimPy.Hinge_GetTargetDataTypeIndex(self, *args)
+    def UpdateData(self): return _AnimatSimPy.Hinge_UpdateData(self)
+    def ResetSimulation(self): return _AnimatSimPy.Hinge_ResetSimulation(self)
     def Load(self, *args): return _AnimatSimPy.Hinge_Load(self, *args)
 Hinge_swigregister = _AnimatSimPy.Hinge_swigregister
 Hinge_swigregister(Hinge)

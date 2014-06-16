@@ -137,7 +137,7 @@ namespace AnimatSim
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
 			virtual void StepSimulation();

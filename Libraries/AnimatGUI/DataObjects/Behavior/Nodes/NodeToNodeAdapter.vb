@@ -131,6 +131,7 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
                 oXml.AddChildElement("TargetModule", nmTarget.ModuleName)
                 oXml.AddChildElement("TargetID", bnDestination.ID)
+                oXml.AddChildElement("TargetDataType", m_thTargetDataTypes.ID)
                 oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
                 m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
                 oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)

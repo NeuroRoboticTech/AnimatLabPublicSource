@@ -39,9 +39,6 @@ namespace VortexAnimatSim
 				/// The vortex hinge class.
 				Vx::VxHinge *m_vxHinge;
 
-				/// The rotation of the hinge in degrees.
-				float m_fltRotationDeg;
-
 				//Graphics objects for the hinge drawing code
 				/// The osg cylinder geometry.
 				osg::ref_ptr<osg::Geometry> m_osgCylinder;
@@ -61,7 +58,6 @@ namespace VortexAnimatSim
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
 				virtual void SetupGraphics();
-				virtual void UpdateData();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
 				virtual void CreateCylinderGraphics();

@@ -172,7 +172,7 @@ void ExternalInputStimulus::StepSimulation()
 	{
 		m_lpEval->SetVariable("t", m_lpSim->Time());
 		m_fltInput = m_lpEval->Solve();
-		m_lpNode->AddExternalNodeInput(m_fltInput);
+		m_lpNode->AddExternalNodeInput(0, m_fltInput);
 	}
 	catch(...)
 	{

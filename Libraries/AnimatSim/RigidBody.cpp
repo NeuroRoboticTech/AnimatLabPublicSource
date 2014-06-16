@@ -1488,7 +1488,7 @@ void RigidBody::CreateChildJoints()
 		m_aryChildParts[iIndex]->CreateJoints();
 }
 
-void RigidBody::AddExternalNodeInput(float fltInput)
+void RigidBody::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 }
 

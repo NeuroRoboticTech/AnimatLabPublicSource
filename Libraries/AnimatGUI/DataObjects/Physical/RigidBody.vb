@@ -584,7 +584,9 @@ Namespace DataObjects.Physical
 
             m_thDataTypes.ID = "BodyForceX"
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.ID = "BodyForceX"
 
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")

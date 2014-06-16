@@ -345,7 +345,9 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("E", "E", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.ID = "MembraneVoltage"
 
-                m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano)
+                m_thIncomingDataTypes.DataTypes.Clear()
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
+                m_thIncomingDataTypes.ID = "ExternalCurrent"
 
                 m_aryIonChannels = New Collections.IonChannels(Me)
 

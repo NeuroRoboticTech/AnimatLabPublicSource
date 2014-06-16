@@ -92,9 +92,16 @@ Namespace DataObjects.Physical.Joints
                 m_bServoMotor = value
 
                 If m_bServoMotor Then
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Position", "Position", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredPosition"
+                    Me.SignalReloadTargetDataTypes()
                 Else
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredVelocity"
+                    Me.SignalReloadTargetDataTypes()
                 End If
 
             End Set
@@ -171,6 +178,8 @@ Namespace DataObjects.Physical.Joints
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotation", "Rotation", "Radians", "rad", -3.14, 3.14))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotationDeg", "Rotation (Deg)", "Degrees", "o", -180, 180))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredPosition", "Desired Rotation", "Radians/s", "rad/s", -3.14, 3.14))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredPositionDeg", "Desired Rotation (Deg)", "Deg/s", "o/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointActualVelocity", "Velocity", "Deg/s", "Deg/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredVelocity", "Desired Velocity", "Deg/s", "Deg/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointForce", "Force", "N", "N", -20, 20))

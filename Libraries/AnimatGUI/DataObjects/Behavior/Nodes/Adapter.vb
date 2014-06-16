@@ -32,10 +32,12 @@ Namespace DataObjects.Behavior.Nodes
         Protected m_gnGain As AnimatGUI.DataObjects.Gain
 
         'Only used during the loading process.
-        Protected m_strOriginID As String
-        Protected m_strDestinationID As String
-        Protected m_strDataTypeID As String
+        Protected m_strOriginID As String = ""
+        Protected m_strDestinationID As String = ""
+        Protected m_strDataTypeID As String = ""
+        Protected m_strTargetDataTypeID As String = ""
         Protected m_thSourceDataTypes As New TypeHelpers.DataTypeID(Me)
+        Protected m_thTargetDataTypes As New TypeHelpers.DataTypeID(Me)
 
         Protected m_eDelayBufferMode As enumDelayBufferMode
         Protected m_snDelayBufferInterval As ScaledNumber
@@ -115,13 +117,16 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overridable Property TargetDataTypes() As TypeHelpers.DataTypeID
             Get
-                If Not m_bnDestination Is Nothing Then
-                    Return m_bnDestination.IncomingDataType
-                End If
-                Return Nothing
+                Return m_thTargetDataTypes
             End Get
+            Set(ByVal Value As TypeHelpers.DataTypeID)
+                If Not Value Is Nothing Then
+                    m_thTargetDataTypes = Value
+                    Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
+                End If
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -308,6 +313,7 @@ Namespace DataObjects.Behavior.Nodes
             'If this is the Origin then get the destination from the other end
             If blLink.ActualOrigin Is Me Then
                 SetDestination(blLink.Destination, False)
+                Me.m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
             End If
 
             MyBase.AfterAddLink(blLink)
@@ -374,6 +380,11 @@ Namespace DataObjects.Behavior.Nodes
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Source Data Type ID", GetType(AnimatGUI.TypeHelpers.DataTypeID), "SourceDataTypes", _
                                         "Adapter Properties", "Sets the type of data to use as an input from the source node into the gain function.", m_thSourceDataTypes, _
+                                        GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                        GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Data Type ID", GetType(AnimatGUI.TypeHelpers.DataTypeID), "TargetDataTypes", _
+                                        "Adapter Properties", "Sets the type of data to set on the target node from the gain function.", m_thTargetDataTypes, _
                                         GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                         GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
 
@@ -535,6 +546,7 @@ Namespace DataObjects.Behavior.Nodes
             m_strOriginID = Util.LoadID(oXml, "Origin", True, "")
             m_strDestinationID = Util.LoadID(oXml, "Destination", True, "")
             m_strDataTypeID = Util.LoadID(oXml, "DataType", True, "")
+            m_strTargetDataTypeID = Util.LoadID(oXml, "TargetDataType", True, "")
             m_bEnabled = oXml.GetChildBool("Enabled", True)
             m_eDelayBufferMode = DirectCast([Enum].Parse(GetType(enumDelayBufferMode), oXml.GetChildString("DelayBufferMode", "NoDelayBuffer"), True), enumDelayBufferMode)
             m_snDelayBufferInterval.LoadData(oXml, "DelayBufferInterval", False)
@@ -582,6 +594,16 @@ Namespace DataObjects.Behavior.Nodes
                     If m_strDestinationID.Trim.Length > 0 Then
                         SetDestination(Me.Organism.FindBehavioralNode(m_strDestinationID), False)
                     End If
+
+                    If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
+                        m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                        If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
+                            If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
+                                Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
+                            End If
+                        End If
+                    End If
                 End If
 
                 MyBase.InitializeAfterLoad()
@@ -623,12 +645,14 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_bnOrigin Is Nothing Then
                 AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+                AddHandler m_bnOrigin.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
             End If
         End Sub
 
         Protected Sub DisconnectOriginEvents()
             If Not m_bnOrigin Is Nothing Then
                 RemoveHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+                RemoveHandler m_bnOrigin.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
             End If
         End Sub
 
@@ -659,12 +683,14 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_bnDestination Is Nothing Then
                 AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+                AddHandler m_bnDestination.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
         Protected Sub DisconnectDestinationEvents()
             If Not m_bnDestination Is Nothing Then
                 RemoveHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+                RemoveHandler m_bnDestination.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
@@ -687,6 +713,10 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_thSourceDataTypes Is Nothing Then
                 oXml.AddChildElement("DataTypeID", m_thSourceDataTypes.ID)
+            End If
+
+            If Not m_thTargetDataTypes Is Nothing Then
+                oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
             End If
 
             If Not m_gnGain Is Nothing Then
@@ -718,6 +748,33 @@ Namespace DataObjects.Behavior.Nodes
                         Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
                     End If
                 End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnReloadSourceDataTypes()
+            Try
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnReloadTargetDataTypes()
+            Try
+                If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
+                    Dim strSelID As String = m_thTargetDataTypes.ID
+
+                    m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                    If Not m_thTargetDataTypes Is Nothing AndAlso strSelID.Trim.Length > 0 Then
+                        If Me.m_thTargetDataTypes.DataTypes.Contains(strSelID) Then
+                            Me.m_thTargetDataTypes.ID = strSelID
+                        End If
+                    End If
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

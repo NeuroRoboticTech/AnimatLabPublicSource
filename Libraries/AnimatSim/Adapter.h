@@ -58,8 +58,13 @@ namespace AnimatSim
 			/// GUID ID of the target node.
 			std::string m_strTargetID;
 
-			/// DateType of the target variable that will be converted. This is retrieved using the GetDataPointer method.
+			/// DateType of the target variable that will be converted. 
+			///This is converted to an int and passed to AddExternalNodeInput to 
+			///define where the input should be routed.
 			std::string m_strTargetDataType;
+
+			///The m_strTargetDataType string is converted to an integer for use within the simulation loop to maximixe speed.
+			int m_iTargetDataType;
 
 			/// Pointer to the target node
 			Node *m_lpTargetNode;
@@ -154,7 +159,7 @@ namespace AnimatSim
 			virtual void Initialize();
 			virtual void TimeStepModified();
 			virtual void ResetSimulation();
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual float *GetDataPointer(const std::string &strDataType);

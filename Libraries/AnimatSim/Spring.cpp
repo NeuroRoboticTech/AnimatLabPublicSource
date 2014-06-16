@@ -224,7 +224,7 @@ void Spring::CalculateTension()
     }
 }
 
-void Spring::AddExternalNodeInput(float fltInput)
+void Spring::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	if(m_aryAttachmentPoints.GetSize() == 2)
 	{

@@ -54,6 +54,8 @@ Hinge::Hinge()
 	m_lpUpperLimit = NULL;
 	m_lpLowerLimit = NULL;
 	m_lpPosFlap = NULL;
+	m_fltRotationDeg = 0;
+	m_fltDesiredPositionDeg = 0;
 }
 
 /**
@@ -188,9 +190,37 @@ bool Hinge::SetData(const std::string &strDataType, const std::string &strValue,
 	return false;
 }
 
-void Hinge::AddExternalNodeInput(float fltInput)
+int Hinge::GetTargetDataTypeIndex(const std::string &strDataType)
 {
-	m_fltDesiredVelocity += fltInput;
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "DESIREDPOSITION")
+		return DESIRED_POSITION_TYPE;
+	else
+		return DESIRED_VELOCITY_TYPE;
+
+}
+
+void Hinge::AddExternalNodeInput(int iTargetDataType, float fltInput)
+{
+	if(iTargetDataType == DESIRED_POSITION_TYPE)
+		m_fltDesiredPosition += fltInput;
+	else
+		m_fltDesiredVelocity += fltInput;
+}
+
+void Hinge::ResetSimulation()
+{
+	MotorizedJoint::ResetSimulation();
+	m_fltRotationDeg = 0;
+	m_fltDesiredPositionDeg = 0;
+}
+
+void Hinge::UpdateData()
+{
+	MotorizedJoint::UpdateData();
+	m_fltRotationDeg = ((m_fltPosition/STD_PI)*180);
+	m_fltDesiredPositionDeg = ((m_fltDesiredPosition/STD_PI)*180);
 }
 
 void Hinge::Load(CStdXml &oXml)

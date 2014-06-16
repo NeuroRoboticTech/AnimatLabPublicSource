@@ -91,9 +91,14 @@ Namespace DataObjects.Physical.Joints
                 m_bServoMotor = value
 
                 If m_bServoMotor Then
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Position", "Position", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "Meters", "m", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredPosition"
                 Else
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredVelocity"
                 End If
 
             End Set

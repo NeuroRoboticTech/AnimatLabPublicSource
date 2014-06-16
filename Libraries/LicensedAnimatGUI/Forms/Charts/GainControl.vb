@@ -174,11 +174,12 @@ Namespace Forms.Charts
                 Dim doParent As AnimatGUI.DataObjects.DragObject = m_gnGain.DraggableParent
 
                 ctrlGraph.PeFont.FontSize = ProEssentials.Enums.FontSize.Medium
-                If m_gnGain.UseParentIncomingDataType AndAlso Not doParent Is Nothing AndAlso Not doParent.IncomingDataType Is Nothing AndAlso Not doParent.DataTypes.Value Is Nothing Then
+                If m_gnGain.UseParentIncomingDataType AndAlso Not doParent Is Nothing AndAlso Not doParent.IncomingDataTypes Is Nothing _
+                    AndAlso doParent.IncomingDataTypes.ID.Trim.Length > 0 AndAlso Not doParent.DataTypes.Value Is Nothing Then
                     ctrlGraph.PeString.XAxisLabel = doParent.DataTypes.Value.AxisTitle
-                    ctrlGraph.PeString.YAxisLabel = doParent.IncomingDataType.AxisTitle
+                    ctrlGraph.PeString.YAxisLabel = doParent.IncomingDataTypes.DataTypes(doParent.IncomingDataTypes.ID).AxisTitle
 
-                    ctrlGraph.PeString.MultiBottomTitles(0) = "|Y Axis: " & doParent.IncomingDataType.LimitText & "|"
+                    ctrlGraph.PeString.MultiBottomTitles(0) = "|Y Axis: " & doParent.IncomingDataTypes.DataTypes(doParent.IncomingDataTypes.ID).LimitText & "|"
                     ctrlGraph.PeString.MultiBottomTitles(1) = "|X Axis: " & doParent.DataTypes.Value.LimitText & "|"
                     ctrlGraph.PeString.MultiBottomTitles(2) = "|Maximum Suggested Ranges|"
                     ctrlGraph.PeString.MultiBottomTitles(3) = "|  |"

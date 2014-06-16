@@ -833,7 +833,7 @@ void Neuron::ResetSimulation()
 		m_arySynapses[iSynapse]->ResetSimulation();
 }
 
-void Neuron::AddExternalNodeInput(float fltInput)
+void Neuron::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltAdapterI += fltInput;
 	m_fltAdapterMemoryI = m_fltAdapterI;

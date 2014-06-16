@@ -1098,6 +1098,9 @@ Namespace Framework
         Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
+        Public Event ReloadSourceDataTypes()
+        Public Event ReloadTargetDataTypes()
+
         Public Overridable Sub SignalBeforePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
@@ -1128,6 +1131,14 @@ Namespace Framework
 
         Protected Overridable Sub SignalItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent ItemDeselected(doObject)
+        End Sub
+
+        Protected Overridable Sub SignalReloadSourceDataTypes()
+            RaiseEvent ReloadSourceDataTypes()
+        End Sub
+
+        Protected Overridable Sub SignalReloadTargetDataTypes()
+            RaiseEvent ReloadTargetDataTypes()
         End Sub
 
         Protected Overridable Sub OnApplicationExiting()

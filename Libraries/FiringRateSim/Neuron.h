@@ -203,7 +203,7 @@ namespace FiringRateSim
 			virtual void ClearSynapses();
 			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 
 			/**
 			\brief	Sets the system pointers.

@@ -193,7 +193,9 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.ID = "DesiredVelocity"
 
             m_snSize = New AnimatGUI.Framework.ScaledNumber(Me, "Size", 2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "Meters", "m")
 

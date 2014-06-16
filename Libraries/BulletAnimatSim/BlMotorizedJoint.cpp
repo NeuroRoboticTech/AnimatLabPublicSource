@@ -46,8 +46,9 @@ void BlMotorizedJoint::CalculateServoVelocity()
 	if(!m_btJoint)
 		return;
 
-	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredVelocity());
+	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
 	if(m_lpThisJoint->EnableLimits())
 	{
@@ -73,6 +74,7 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 
 		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
 		m_lpThisMotorJoint->DesiredVelocity(0);
+		m_lpThisMotorJoint->DesiredPosition(0);
 
         float fltHalfPercVel = fabs(fltSetVelocity * 0.01);
         //If the actual velocity matches the set velocity within 1% then lets set the predicted position based on 

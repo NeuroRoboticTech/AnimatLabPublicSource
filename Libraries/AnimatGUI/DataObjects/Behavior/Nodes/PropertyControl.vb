@@ -148,10 +148,12 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overrides Property IncomingDataTypes As TypeHelpers.DataTypeID
             Get
                 Return Nothing
             End Get
+            Set(value As TypeHelpers.DataTypeID)
+            End Set
         End Property
 
         <Browsable(False)> _

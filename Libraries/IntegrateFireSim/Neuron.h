@@ -374,7 +374,7 @@ namespace IntegrateFireSim
 		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddExternalNodeInput(float fltInput);
+		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void ResetSimulation();
 		//Node Overrides
 					
