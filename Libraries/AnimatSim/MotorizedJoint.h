@@ -7,6 +7,14 @@ namespace AnimatSim
 	namespace Environment
 	{
 
+		///The motor control type for this joint. 
+		enum eJointMotorType
+		{
+            VelocityControl,
+            PositionControl,
+            PositionVelocityControl
+		};
+
 		class ANIMAT_PORT MotorizedJoint : public Joint
 		{
 		protected:
@@ -25,6 +33,14 @@ namespace AnimatSim
 
 			/// This is the variable that is reported to AnimatLab on what the set position was. 
 			float m_fltReportSetPosition;
+
+			/// The previous position set for the motorized joint in the last time step.
+			/// Positions can be in rad or m depending on the type of joint. UsesRadians lets you know whether it is using radians.
+			float m_fltPrevSetPosition;
+
+			///Once a servo reaches its set position this is set to true to go to position only control to maintain that position.
+			///If the user sets a different target position then this is reset until it reaches that new location.
+			bool m_bReachedSetPos;
 
 			///This is the velocity to use for the motorized joint. The motor must be enabled
 			///for this parameter to have any effect. 
@@ -65,8 +81,8 @@ namespace AnimatSim
 			/// The gain of the servo motor.
 			float m_ftlServoGain;
 
-			/// true if this is a servo motor. A servo motor is position controlled instead of velocity controlled.
-			bool m_bServoMotor;
+			/// Determines the type of motor control this joint uses. The default is velocity controlled, but it can be position controlled, or both position and velocity controlled.
+			eJointMotorType m_eMotorType;
 
             /// Countdown timer till we can begin applying motor assist. Once a motor is turned on we wait for this
             /// many time steps before checking if its velocity matches the desired velocity. This is so the part
@@ -158,8 +174,8 @@ namespace AnimatSim
 			virtual bool EnableMotor();
 			virtual void EnableMotor(bool bVal);
 
-			virtual void ServoMotor(bool bServo);
-			virtual bool ServoMotor();
+			virtual void MotorType(eJointMotorType eServo);
+			virtual eJointMotorType MotorType();
 
 			virtual void ServoGain(float fltVal);
 			virtual float ServoGain();
@@ -176,6 +192,12 @@ namespace AnimatSim
 
 			virtual float SetPosition();
 			virtual void SetPosition(float fltVal);
+
+			virtual float PrevSetPosition();
+			virtual void PrevSetPosition(float fltVal);
+
+			virtual bool ReachedSetPosition();
+			virtual void ReachedSetPosition(bool bVal);
 
 			virtual float DesiredVelocity();
 			virtual void DesiredVelocity(float fltVelocity);

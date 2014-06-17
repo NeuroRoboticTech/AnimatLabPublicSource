@@ -50,20 +50,27 @@ void BlMotorizedJoint::CalculateServoVelocity()
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
-	if(m_lpThisJoint->EnableLimits())
+	if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || (m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
 	{
 		float fltProp = fltError / m_lpThisJoint->GetLimitRange();
 		m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
 	}
 	else
-		m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
+	{
+		//If we set the desired velocity and position then make sure the desired velocity is in the right direction
+		float fltDesiredVel = fabs(m_lpThisMotorJoint->DesiredVelocity()) * Std_Sign(fltError);
+		m_lpThisMotorJoint->DesiredVelocity(fltDesiredVel);
+
+		if(fabs(fltError) < 1e-3)
+			m_lpThisMotorJoint->ReachedSetPosition(true);
+	}
 }
 
 void BlMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
-		if(m_lpThisMotorJoint->ServoMotor())
+		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
 			CalculateServoVelocity();
 		
 		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();

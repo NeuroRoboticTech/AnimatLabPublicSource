@@ -14,6 +14,16 @@ Namespace DataObjects.Physical
     Public MustInherit Class Joint
         Inherits Physical.BodyPart
 
+#Region " Enums "
+
+        Public Enum enumJointMotorTypes
+            VelocityControl
+            PositionControl
+            PositionVelocityControl
+        End Enum
+
+#End Region
+
 #Region " Attributes "
 
         Protected m_snSize As AnimatGUI.Framework.ScaledNumber

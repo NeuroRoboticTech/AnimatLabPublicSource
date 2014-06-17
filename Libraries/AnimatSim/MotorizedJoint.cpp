@@ -44,6 +44,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_fltSetPosition = 0;
 	m_fltDesiredPosition = 0;
 	m_fltReportSetPosition = 0;
+	m_fltPrevSetPosition = 0;
 	m_fltSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
 	m_fltReportSetPosition = 0;
@@ -54,7 +55,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_bEnableMotorInit = false;
 	m_fltMaxForce = 1000;
     m_fltMaxForceNotScaled = 10;
-	m_bServoMotor = false;
+	m_eMotorType = eJointMotorType::VelocityControl;
 	m_ftlServoGain = 100;
 	m_lpPhysicsMotorJoint = NULL;
     m_lpAssistPid = NULL;
@@ -64,6 +65,7 @@ MotorizedJoint::MotorizedJoint(void)
     m_fltMotorAssistMagnitudeReport = 0;
 	m_fltTemperature = 0;
 	m_fltVoltage = 0;
+	m_bReachedSetPos = false;
 
 	m_fltMotorForceAMagnitude = 0;
 	m_fltMotorForceBMagnitude = 0;
@@ -150,27 +152,36 @@ void MotorizedJoint::EnableMotor(bool bVal)
 
 
 /**
-\brief	Sets whether this is a servo motor or not.
+\brief	Sets the type of motor to use for this joint.
 
-\details A servo motor is one where the position of the joint is specified instead of the velocity that is normally
-used to control the motor.
+\details The standard motor type is velocity controlled. A position controlled servo allows the user to specify the desired position and the 
+motor tries to get to that position as fast as possible. A position and velocity controlled servo allows the user to specify the desired positin and the
+desired velocity magnitude. The servo will attempt to move to the desired position at the specified speed. Once it reaches that position it will attemp to
+maintain it. Any supplied desired velocity values will use only the magnitude portion and determine the direction of movmeent based on the current position and
+desired position.
 
 \author	dcofer
-\date	3/24/2011
+\date	6/16/2014
 
-\param	bServo	true to set to be a servo motor. 
+\param	eServo	motor type. 
 **/
-void MotorizedJoint::ServoMotor(bool bServo) {m_bServoMotor = bServo;}
+void MotorizedJoint::MotorType(eJointMotorType eServo) {m_eMotorType = eServo;}
 
 /**
-\brief	Gets whether this is set to be a servo motor.
+\brief	Gets the type of motor to use for this joint.
+
+\details The standard motor type is velocity controlled. A position controlled servo allows the user to specify the desired position and the 
+motor tries to get to that position as fast as possible. A position and velocity controlled servo allows the user to specify the desired positin and the
+desired velocity magnitude. The servo will attempt to move to the desired position at the specified speed. Once it reaches that position it will attemp to
+maintain it. Any supplied desired velocity values will use only the magnitude portion and determine the direction of movmeent based on the current position and
+desired position.
 
 \author	dcofer
-\date	3/24/2011
+\date	6/16/2014
 
-\return	true if it is a servo motor, false otherwise.
+\return	motor type enum value.
 **/
-bool MotorizedJoint::ServoMotor() {return m_bServoMotor;}
+eJointMotorType MotorizedJoint::MotorType() {return m_eMotorType;}
 
 /**
 \brief	Sets the servo gain used to calculate the new velocity for maintaining a position with a servo motor.
@@ -301,12 +312,17 @@ float MotorizedJoint::SetPosition() {return m_fltSetPosition;}
 **/
 void MotorizedJoint::SetPosition(float fltVal) 
 {
+	m_fltPrevSetPosition = m_fltSetPosition;
 	m_fltSetPosition = fltVal;
 
 	if(!UsesRadians())
 		m_fltReportSetPosition = m_fltSetPosition * m_lpSim->DistanceUnits();
 	else
 		m_fltReportSetPosition = m_fltSetPosition;
+
+	//If we are changing the set position to a different value then reset the reached position flag.
+	if(fabs(m_fltPrevSetPosition-m_fltSetPosition) > 1e-3)
+		m_bReachedSetPos = false;
 }
 
 /**
@@ -326,7 +342,7 @@ float MotorizedJoint::DesiredPosition()
 \brief	Sets the desired Position.
 
 \author	dcofer
-\date	3/22/2011
+\date	6/17/2014
 
 \param	fltPosition	The new Position. 
 **/
@@ -334,6 +350,47 @@ void MotorizedJoint::DesiredPosition(float fltPosition)
 {
 	m_fltDesiredPosition = fltPosition;
 }
+
+/**
+\brief	Gets the previous set position.
+
+\author	dcofer
+\date	6/17/2014
+
+\return	previous set Position.
+**/
+float MotorizedJoint::PrevSetPosition() {return m_fltPrevSetPosition;}
+
+/**
+\brief	Sets the desired Position.
+
+\author	dcofer
+\date	6/17/2014
+
+\param	fltPosition	The prev Position. 
+**/
+void MotorizedJoint::PrevSetPosition(float fltVal) {m_fltPrevSetPosition = fltVal;}
+
+/**
+\brief	Gets whether the servo motor has reached its target position.
+If it has then it switches to position only control until the user sets a new target position.
+
+\author	dcofer
+\date	6/17/2014
+
+\return True if the motor has reached its target position.
+**/
+bool MotorizedJoint::ReachedSetPosition() {return m_bReachedSetPos;}
+
+/**
+\brief	whether the servo motor has reached its target position.
+
+\author	dcofer
+\date	6/17/2014
+
+\param	bVal	True when it has reached its target position. 
+**/
+void MotorizedJoint::ReachedSetPosition(bool bVal) {m_bReachedSetPos = bVal;}
 
 /**
 \brief	Gets the velocity that is actually set using the physics method.
@@ -925,6 +982,8 @@ void MotorizedJoint::ResetSimulation()
 	m_fltSetPosition = 0;
 	m_fltReportSetPosition = 0;
 	m_fltDesiredPosition = 0;
+	m_fltPrevSetPosition = 0;
+	m_bReachedSetPos = false;
 
 	m_fltSetVelocity = 0;
 	m_fltReportSetVelocity = 0;
@@ -1077,9 +1136,9 @@ bool MotorizedJoint::SetData(const std::string &strDataType, const std::string &
 		return true;
 	}
 
-	if(strType == "SERVOMOTOR")
+	if(strType == "MOTORTYPE")
 	{
-		ServoMotor(Std_ToBool(strValue));
+		MotorType((eJointMotorType) atoi(strValue.c_str()));
 		return true;
 	}
 	
@@ -1149,7 +1208,7 @@ void MotorizedJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 
 	aryProperties.Add(new TypeProperty("EnableMotor", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("ServoMotor", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MotorType", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("ServoGain", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
@@ -1210,7 +1269,7 @@ void MotorizedJoint::Load(CStdXml &oXml)
 	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));
 
 	MaxForce(oXml.GetChildFloat("MaxForce", m_fltMaxForce));
-	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
+	MotorType((eJointMotorType) oXml.GetChildInt("MotorType", m_eMotorType));
 	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
 
     if(oXml.FindChildElement("PID", false))

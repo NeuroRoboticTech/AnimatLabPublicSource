@@ -224,7 +224,7 @@ void RbDynamixelUSBHinge::StepSimulation()
 		{
 			//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
 			//Here we are setting the values that will be used the next time the IO is processed for this servo.
-			if(!m_lpHinge->ServoMotor())
+			if(m_lpHinge->MotorType() == eJointMotorType::PositionControl || m_lpHinge->MotorType() == eJointMotorType::PositionVelocityControl)
 			{
 				float fltSetVelocity = m_lpHinge->SetVelocity();
 				SetNextGoalVelocity(fltSetVelocity);

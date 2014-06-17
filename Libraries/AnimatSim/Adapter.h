@@ -15,6 +15,8 @@ namespace AnimatSim
 	namespace Adapters
 	{
 		
+		///The delay buffer mode for adapters. This lets the user specify if they want a delay buffer, and if so then should
+		///it only be active during the simulation or always?
 		enum eDelayBufferMode
 		{
 			NoDelayBuffer,

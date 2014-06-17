@@ -4567,6 +4567,9 @@ def Joint_CastToDerived(*args):
   return _AnimatSimPy.Joint_CastToDerived(*args)
 Joint_CastToDerived = _AnimatSimPy.Joint_CastToDerived
 
+VelocityControl = _AnimatSimPy.VelocityControl
+PositionControl = _AnimatSimPy.PositionControl
+PositionVelocityControl = _AnimatSimPy.PositionVelocityControl
 class MotorizedJoint(Joint):
     __swig_setmethods__ = {}
     for _s in [Joint]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4585,7 +4588,7 @@ class MotorizedJoint(Joint):
     if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MotorizedJoint_CastToDerived)
     def PhysicsMotorJoint(self, *args): return _AnimatSimPy.MotorizedJoint_PhysicsMotorJoint(self, *args)
     def EnableMotor(self, *args): return _AnimatSimPy.MotorizedJoint_EnableMotor(self, *args)
-    def ServoMotor(self, *args): return _AnimatSimPy.MotorizedJoint_ServoMotor(self, *args)
+    def MotorType(self, *args): return _AnimatSimPy.MotorizedJoint_MotorType(self, *args)
     def ServoGain(self, *args): return _AnimatSimPy.MotorizedJoint_ServoGain(self, *args)
     def MaxForce(self, *args): return _AnimatSimPy.MotorizedJoint_MaxForce(self, *args)
     def MaxForceNotScaled(self): return _AnimatSimPy.MotorizedJoint_MaxForceNotScaled(self)

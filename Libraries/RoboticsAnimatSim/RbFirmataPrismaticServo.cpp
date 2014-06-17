@@ -69,7 +69,7 @@ void RbFirmataPrismaticServo::StepSimulation()
 	//if(m_lpHinge)
 	//{
 	//	//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
-	//	if(!m_lpHinge->ServoMotor())
+	//	if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
 	//	{
 	//		float fltSetVelocity = m_lpHinge->SetVelocity();
 	//		SetGoalVelocity(fltSetVelocity);

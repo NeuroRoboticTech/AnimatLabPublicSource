@@ -61,7 +61,7 @@ void RbMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
-		if(m_lpThisMotorJoint->ServoMotor())
+		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
 		{
 			m_lpThisJoint->JointPosition(m_lpThisMotorJoint->DesiredVelocity());
 			m_lpThisMotorJoint->DesiredVelocity(0);

@@ -63,7 +63,7 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
-		if(m_lpThisMotorJoint->ServoMotor())
+		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
 			CalculateServoVelocity();
 		
 		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();

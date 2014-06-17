@@ -6,9 +6,6 @@
 
 #pragma once
 
-#define DESIRED_VELOCITY_TYPE 0
-#define DESIRED_POSITION_TYPE 1
-
 namespace AnimatSim
 {
 	namespace Environment

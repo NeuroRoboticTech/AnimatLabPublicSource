@@ -21,7 +21,7 @@ Namespace DataObjects.Physical.Joints
         Protected m_bEnableMotor As Boolean = False
         Protected m_snMaxForce As AnimatGUI.Framework.ScaledNumber
         Protected m_snMaxVelocity As AnimatGUI.Framework.ScaledNumber
-        Protected m_bServoMotor As Boolean = False
+        Protected m_eMotorType As Joint.enumJointMotorTypes = enumJointMotorTypes.VelocityControl
         Protected m_fltServoGain As Single = 100
 
         Protected m_doAssistPID As PidControl
@@ -83,18 +83,23 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-        Public Overridable Property ServoMotor() As Boolean
+        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
             Get
-                Return m_bServoMotor
+                Return m_eMotorType
             End Get
-            Set(ByVal value As Boolean)
-                SetSimData("ServoMotor", value.ToString, True)
-                m_bServoMotor = value
+            Set(ByVal value As Joint.enumJointMotorTypes)
+                SetSimData("MotorType", Convert.ToInt32(m_eMotorType).ToString(), True)
+                m_eMotorType = value
 
-                If m_bServoMotor Then
+                If m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then
                     m_thIncomingDataTypes.DataTypes.Clear()
                     m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                     m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredPosition"
+                    Me.SignalReloadTargetDataTypes()
+                ElseIf m_eMotorType = enumJointMotorTypes.PositionControl Then
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                     m_thIncomingDataTypes.ID = "DesiredPosition"
                     Me.SignalReloadTargetDataTypes()
                 Else
@@ -104,6 +109,9 @@ Namespace DataObjects.Physical.Joints
                     Me.SignalReloadTargetDataTypes()
                 End If
 
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
             End Set
         End Property
 
@@ -283,7 +291,7 @@ Namespace DataObjects.Physical.Joints
             m_doUpperLimit.IsLowerLimit = False
 
             m_bEnableMotor = doOrig.m_bEnableMotor
-            m_bServoMotor = doOrig.m_bServoMotor
+            m_eMotorType = doOrig.m_eMotorType
             m_fltServoGain = doOrig.ServoGain
             m_snMaxForce = DirectCast(doOrig.m_snMaxForce.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snMaxVelocity = DirectCast(doOrig.m_snMaxVelocity.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
@@ -350,11 +358,13 @@ Namespace DataObjects.Physical.Joints
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Motor", m_bEnableMotor.GetType(), "EnableMotor", _
                           "Motor Properties", "Sets whether the motor is enabled for this joint.", m_bEnableMotor))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Motor", m_bServoMotor.GetType(), "ServoMotor", _
-                          "Motor Properties", "Sets whether this is a servo or DC motor. If it is a servo then the Input specifies position, otherwise it specifies velocity.", m_bServoMotor))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Motor Type", m_eMotorType.GetType(), "MotorType", _
+                          "Motor Properties", "Sets the type for this motor.", m_eMotorType))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
-                          "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
+            If m_eMotorType = enumJointMotorTypes.PositionControl OrElse m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
+                              "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
+            End If
 
             If Util.Application.Physics.GenerateMotorAssist Then
                 pbNumberBag = m_doAssistPID.Properties
@@ -377,7 +387,14 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.LoadData(oXml, "MaxVelocity")
 
             EnableMotor = oXml.GetChildBool("EnableMotor", m_bEnableMotor)
-            ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
+
+            If oXml.FindChildElement("MotorType", False) Then
+                MotorType = DirectCast([Enum].Parse(GetType(Joint.enumJointMotorTypes), oXml.GetChildString("MotorType"), True), Joint.enumJointMotorTypes)
+            Else
+                Dim bServoMotor As Boolean = oXml.GetChildBool("ServoMotor", False)
+                If bServoMotor Then MotorType = enumJointMotorTypes.PositionControl
+            End If
+
             ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
 
             If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
@@ -399,7 +416,7 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.SaveData(oXml, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
-            oXml.AddChildElement("ServoMotor", m_bServoMotor)
+            oXml.AddChildElement("MotorType", m_eMotorType.ToString())
             oXml.AddChildElement("ServoGain", m_fltServoGain)
 
             If Not m_doAssistPID Is Nothing Then
@@ -422,7 +439,7 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.SaveSimulationXml(oXml, Me, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
-            oXml.AddChildElement("ServoMotor", m_bServoMotor)
+            oXml.AddChildElement("MotorType", Convert.ToInt32(m_eMotorType))
             oXml.AddChildElement("ServoGain", m_fltServoGain)
 
             If Not m_doAssistPID Is Nothing AndAlso Util.Application.Physics.GenerateMotorAssist Then
