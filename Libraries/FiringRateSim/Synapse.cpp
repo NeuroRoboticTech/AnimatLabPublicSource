@@ -183,9 +183,10 @@ void Synapse::Process(float &fltCurrent)
 **/
 float Synapse::CalculateCurrent()
 {
-	int i=5;
-	if(Std_ToLower(m_strID) == "3ce79124-1a4b-4a34-8399-56dfe1814515")
-		i=6;
+	//Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "3ce79124-1a4b-4a34-8399-56dfe1814515")
+	//	i=6;
 
 	float fltI = (this->FromNeuron()->FiringFreq(m_lpFRModule) * this->Weight() * this->CalculateModulation(m_lpFRModule) );
 

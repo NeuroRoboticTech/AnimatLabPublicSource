@@ -405,7 +405,11 @@ Namespace DataObjects.Physical.Joints
                 MotorType = DirectCast([Enum].Parse(GetType(Joint.enumJointMotorTypes), oXml.GetChildString("MotorType"), True), Joint.enumJointMotorTypes)
             Else
                 Dim bServoMotor As Boolean = oXml.GetChildBool("ServoMotor", False)
-                If bServoMotor Then MotorType = enumJointMotorTypes.PositionControl
+                If bServoMotor Then
+                    MotorType = enumJointMotorTypes.PositionControl
+                Else
+                    MotorType = enumJointMotorTypes.VelocityControl
+                End If
             End If
 
             ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)

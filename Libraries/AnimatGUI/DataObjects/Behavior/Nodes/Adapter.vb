@@ -594,16 +594,21 @@ Namespace DataObjects.Behavior.Nodes
                     If m_strDestinationID.Trim.Length > 0 Then
                         SetDestination(Me.Organism.FindBehavioralNode(m_strDestinationID), False)
                     End If
+                End If
 
-                    If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
-                        m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+                If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
+                    m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
 
-                        If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
-                            If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
-                                Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
-                            End If
+                    If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
+                        If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
+                            Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
                         End If
                     End If
+                End If
+
+                If Me.m_thTargetDataTypes Is Nothing OrElse Me.m_thTargetDataTypes.ID.Trim.Length = 0 Then
+                    m_bIsInitialized = False
+                    Return
                 End If
 
                 MyBase.InitializeAfterLoad()
