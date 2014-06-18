@@ -82,7 +82,10 @@ namespace FiringRateSim
 			bool m_bGainType; 
 
 			/// expon decline working factor for thresh accomm
-			float m_fltDCTH;      
+			float m_fltDCTH;
+
+			///If we are setting the accomodation time constant through modulation then this keeps track of it.
+			float m_fltAccomTimeMod;
 
 			/// The accomodation time constant tells how fast the neuron accomodates to a new membrane potential
 			float m_fltAccomTimeConst;
@@ -110,6 +113,9 @@ namespace FiringRateSim
 
 			///Initial firing frequency voltage threshold
 			float m_fltVthi;    
+
+			///The component added to Vthi for accomodation
+			float m_fltVthadd;
 
 			///Current and next threshold voltage. Vth
 			float m_aryVth[2];		

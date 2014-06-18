@@ -56,9 +56,11 @@ Neuron::Neuron()
 	m_fltVNoise = 0;
 
 	m_fltDCTH = 0;
+	m_fltAccomTimeMod = 0;
 	m_fltAccomTimeConst = (float) 100e-3;
 	m_fltRelativeAccom = 0;
 	m_bUseAccom = false;
+	m_fltVthadd = 0;
 
 	m_bGainType = true;
 }
@@ -161,6 +163,7 @@ void Neuron::Vth(float fltVal)
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 	m_aryVth[0] = fltDiff;
 	m_aryVth[1] = fltDiff;
+	m_fltVthadd = fltDiff;
 }
 
 /**
@@ -664,7 +667,13 @@ void Neuron::StepSimulation()
 		m_fltVndisp = m_fltVrest + m_fltVn;
 
 		if(m_bUseAccom)
-			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi + (m_aryVth[m_lpFRModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+		{
+			if(m_fltAccomTimeMod != 0 && m_lpFRModule)
+				m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeMod);
+
+			m_fltVthadd = (m_aryVth[m_lpFRModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi + m_fltVthadd;
+		}
 		else
 			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi;
 
@@ -759,7 +768,7 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFRModule)
 		lpSynapse = m_arySynapses[iSynapse];
 
 		if(lpSynapse->Enabled() && lpSynapse->FromNeuron())
-			fltSynapticI+= lpSynapse->CalculateCurrent(); 
+			lpSynapse->Process(fltSynapticI); 
 	}
 
 	return fltSynapticI;
@@ -827,6 +836,8 @@ void Neuron::ResetSimulation()
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 	m_aryVth[0] = m_aryVth[1] = m_fltVth;
+	m_fltAccomTimeMod = 0;
+	m_fltVthadd = 0;
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iSynapse=0; iSynapse<iCount; iSynapse++)
@@ -877,6 +888,9 @@ float *Neuron::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "VREST")
 		return &m_fltVrest;
+
+	if(strType == "ACCOMTIMEMOD")
+		return &m_fltAccomTimeMod;
 
 	//If it was not one of those above then we have a problem.
 	THROW_PARAM_ERROR(Nl_Err_lInvalidNeuronDataType, Nl_Err_strInvalidNeuronDataType, "Neuron Data Type", strDataType);
@@ -977,6 +991,7 @@ void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("FiringFrequency", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("NoiseVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Threshold", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AccomTimeMod", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("Cm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Gm", AnimatPropertyType::Float, AnimatPropertyDirection::Both));

@@ -4595,6 +4595,8 @@ class MotorizedJoint(Joint):
     def MaxVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_MaxVelocity(self, *args)
     def DesiredPosition(self, *args): return _AnimatSimPy.MotorizedJoint_DesiredPosition(self, *args)
     def SetPosition(self, *args): return _AnimatSimPy.MotorizedJoint_SetPosition(self, *args)
+    def PrevSetPosition(self, *args): return _AnimatSimPy.MotorizedJoint_PrevSetPosition(self, *args)
+    def ReachedSetPosition(self, *args): return _AnimatSimPy.MotorizedJoint_ReachedSetPosition(self, *args)
     def DesiredVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_DesiredVelocity(self, *args)
     def SetVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_SetVelocity(self, *args)
     def PrevVelocity(self, *args): return _AnimatSimPy.MotorizedJoint_PrevVelocity(self, *args)
@@ -4660,8 +4662,6 @@ def BallSocket_CastToDerived(*args):
   return _AnimatSimPy.BallSocket_CastToDerived(*args)
 BallSocket_CastToDerived = _AnimatSimPy.BallSocket_CastToDerived
 
-DESIRED_VELOCITY_TYPE = _AnimatSimPy.DESIRED_VELOCITY_TYPE
-DESIRED_POSITION_TYPE = _AnimatSimPy.DESIRED_POSITION_TYPE
 class Hinge(MotorizedJoint):
     __swig_setmethods__ = {}
     for _s in [MotorizedJoint]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -4725,6 +4725,7 @@ class Prismatic(MotorizedJoint):
     def UsesRadians(self): return _AnimatSimPy.Prismatic_UsesRadians(self)
     def SetData(self, *args): return _AnimatSimPy.Prismatic_SetData(self, *args)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.Prismatic_AddExternalNodeInput(self, *args)
+    def GetTargetDataTypeIndex(self, *args): return _AnimatSimPy.Prismatic_GetTargetDataTypeIndex(self, *args)
     def Load(self, *args): return _AnimatSimPy.Prismatic_Load(self, *args)
 Prismatic_swigregister = _AnimatSimPy.Prismatic_swigregister
 Prismatic_swigregister(Prismatic)
@@ -7248,6 +7249,7 @@ class Synapse(Link):
     def FindSynapseListPos(self, *args): return _AnimatSimPy.Synapse_FindSynapseListPos(self, *args)
     def AddSynapse(self, *args): return _AnimatSimPy.Synapse_AddSynapse(self, *args)
     def RemoveSynapse(self, *args): return _AnimatSimPy.Synapse_RemoveSynapse(self, *args)
+    def Process(self, *args): return _AnimatSimPy.Synapse_Process(self, *args)
     def GetDataPointer(self, *args): return _AnimatSimPy.Synapse_GetDataPointer(self, *args)
     def SetData(self, *args): return _AnimatSimPy.Synapse_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.Synapse_QueryProperties(self, *args)
@@ -7344,7 +7346,7 @@ class BistableNeuron(Neuron):
         except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_BistableNeuron
     __del__ = lambda self : None;
-    def Vsth(self, *args): return _AnimatSimPy.BistableNeuron_Vsth(self, *args)
+    def Vsthi(self, *args): return _AnimatSimPy.BistableNeuron_Vsthi(self, *args)
     def IntrinsicCurrent(self, *args): return _AnimatSimPy.BistableNeuron_IntrinsicCurrent(self, *args)
     def Il(self, *args): return _AnimatSimPy.BistableNeuron_Il(self, *args)
     def Ih(self, *args): return _AnimatSimPy.BistableNeuron_Ih(self, *args)
@@ -7352,6 +7354,7 @@ class BistableNeuron(Neuron):
     def SetData(self, *args): return _AnimatSimPy.BistableNeuron_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.BistableNeuron_QueryProperties(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.BistableNeuron_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.BistableNeuron_StepSimulation(self)
     def Load(self, *args): return _AnimatSimPy.BistableNeuron_Load(self, *args)
 BistableNeuron_swigregister = _AnimatSimPy.BistableNeuron_swigregister
 BistableNeuron_swigregister(BistableNeuron)
@@ -7420,6 +7423,31 @@ class ModulatedSynapse(Synapse):
     def CalculateModulation(self, *args): return _AnimatSimPy.ModulatedSynapse_CalculateModulation(self, *args)
 ModulatedSynapse_swigregister = _AnimatSimPy.ModulatedSynapse_swigregister
 ModulatedSynapse_swigregister(ModulatedSynapse)
+
+class ModulateNeuronPropSynapse(Synapse):
+    __swig_setmethods__ = {}
+    for _s in [Synapse]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ModulateNeuronPropSynapse, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Synapse]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ModulateNeuronPropSynapse, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_ModulateNeuronPropSynapse()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_ModulateNeuronPropSynapse
+    __del__ = lambda self : None;
+    def ModulationGain(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_ModulationGain(self, *args)
+    def PropertyName(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_PropertyName(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_QueryProperties(self, *args)
+    def Process(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_Process(self, *args)
+    def ResetSimulation(self): return _AnimatSimPy.ModulateNeuronPropSynapse_ResetSimulation(self)
+    def Initialize(self): return _AnimatSimPy.ModulateNeuronPropSynapse_Initialize(self)
+    def Load(self, *args): return _AnimatSimPy.ModulateNeuronPropSynapse_Load(self, *args)
+ModulateNeuronPropSynapse_swigregister = _AnimatSimPy.ModulateNeuronPropSynapse_swigregister
+ModulateNeuronPropSynapse_swigregister(ModulateNeuronPropSynapse)
 
 class FrFiringRateModule(NeuralModule):
     __swig_setmethods__ = {}

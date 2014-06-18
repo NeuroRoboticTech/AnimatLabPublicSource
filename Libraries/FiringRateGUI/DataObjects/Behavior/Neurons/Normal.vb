@@ -229,6 +229,7 @@ Namespace DataObjects.Behavior.Neurons
                 AddCompatibleLink(New Synapses.Normal(Nothing))
                 AddCompatibleLink(New Synapses.Gated(Nothing))
                 AddCompatibleLink(New Synapses.Modulated(Nothing))
+                AddCompatibleLink(New Synapses.ModulateNeuronProp(Nothing))
 
                 'Lets add the data types that this node understands.
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IntrinsicCurrent", "Intrinsic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
@@ -239,6 +240,7 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringFrequency", "Firing Frequency", "Hertz", "Hz", 0, 1000))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NoiseVoltage", "Noise Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AccomTimeMod", "Accom Time Modulation", "Time", "s", 0, 10, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                 m_thDataTypes.ID = "FiringFrequency"
 
                 m_thIncomingDataTypes.DataTypes.Clear()

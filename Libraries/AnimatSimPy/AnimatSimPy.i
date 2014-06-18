@@ -328,5 +328,6 @@ typedef float StdVector3[3];
 %include "../FiringRateSim/TonicNeuron.h"
 %include "../FiringRateSim/GatedSynapse.h"
 %include "../FiringRateSim/ModulatedSynapse.h"
+%include "../FiringRateSim/ModulateNeuronPropSynapse.h"
 %include "../FiringRateSim/FiringRateModule.h"
 

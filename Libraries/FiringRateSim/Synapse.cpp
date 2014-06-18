@@ -161,6 +161,19 @@ void Synapse::SetDelayBufferSize()
 }
 
 /**
+\brief	Processes this synapse.
+
+\author	dcofer
+\date	6/17/2014
+
+\return	Synaptic current.
+**/
+void Synapse::Process(float &fltCurrent)
+{
+	fltCurrent+=CalculateCurrent(); 
+}
+
+/**
 \brief	Calculates the synaptic current for this synapse.
 
 \author	dcofer
@@ -171,7 +184,7 @@ void Synapse::SetDelayBufferSize()
 float Synapse::CalculateCurrent()
 {
 	int i=5;
-	if(Std_ToLower(m_strID) == "0c2c4eb0-5130-4a91-8e3b-6bc5fd0d4aa4")
+	if(Std_ToLower(m_strID) == "3ce79124-1a4b-4a34-8399-56dfe1814515")
 		i=6;
 
 	float fltI = (this->FromNeuron()->FiringFreq(m_lpFRModule) * this->Weight() * this->CalculateModulation(m_lpFRModule) );

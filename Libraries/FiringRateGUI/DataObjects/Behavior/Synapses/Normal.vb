@@ -86,7 +86,7 @@ Namespace DataObjects.Behavior.Synapses
                 Return m_bHasDelay
             End Get
             Set(ByVal Value As Boolean)
-                SetSimData("HasDelay", m_bHasDelay.ToString, True)
+                SetSimData("HasDelay", Value.ToString, True)
                 m_bHasDelay = Value
             End Set
         End Property

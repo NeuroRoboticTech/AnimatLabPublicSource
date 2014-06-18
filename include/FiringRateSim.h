@@ -42,6 +42,7 @@ namespace FiringRateSim
 		class GatedSynapse;
 		class ModulatedSynapse;
 		class Synapse;
+		class ModulateNeuronPropSynapse;
 	}
 }
 
@@ -57,6 +58,7 @@ using namespace FiringRateSim::Synapses;
 #include "TonicNeuron.h"
 #include "GatedSynapse.h"
 #include "ModulatedSynapse.h"
+#include "ModulateNeuronPropSynapse.h"
 #include "FiringRateModule.h"
 
 #endif // __FAST_NEURAL_NET_LIB_DLL_H__

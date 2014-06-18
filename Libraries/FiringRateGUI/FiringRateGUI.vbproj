@@ -170,6 +170,7 @@
     <Compile Include="DataObjects\Behavior\Synapses\Gated.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\Synapses\ModulateNeuronProp.vb" />
     <Compile Include="DataObjects\Behavior\Synapses\Modulatory.vb">
       <SubType>Code</SubType>
     </Compile>

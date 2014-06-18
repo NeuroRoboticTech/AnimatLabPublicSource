@@ -97,6 +97,7 @@ namespace FiringRateSim
 			virtual void AddSynapse(std::string strXml, bool bDoNotInit);
 			virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
 
+			virtual void Process(float &fltCurrent);
 
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(const std::string &strDataType);

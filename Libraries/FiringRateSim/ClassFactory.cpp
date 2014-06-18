@@ -9,6 +9,7 @@
 #include "Synapse.h"
 #include "GatedSynapse.h"
 #include "ModulatedSynapse.h"
+#include "ModulateNeuronPropSynapse.h"
 #include "Neuron.h"
 #include "PacemakerNeuron.h"
 #include "TonicNeuron.h"
@@ -106,6 +107,8 @@ try
 		lpSynapse = new GatedSynapse;
 	else if(strType == "MODULATED")
 		lpSynapse = new ModulatedSynapse;
+	else if(strType == "MODULATENEURONPROP")
+		lpSynapse = new ModulateNeuronPropSynapse;
 	else
 	{
 		lpSynapse = NULL;
