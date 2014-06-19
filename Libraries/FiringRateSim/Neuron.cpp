@@ -671,6 +671,9 @@ void Neuron::StepSimulation()
 		if(m_fltInitTime > 0 && m_lpSim->Time() < m_fltInitTime)
 			m_fltIntrinsicI += m_fltIinit;
 
+		//if(m_fltInitTime > 0 && m_lpSim->Time() >= m_fltInitTime)
+		//	m_fltIntrinsicI = m_fltIntrinsicI; //For testing only comment out!!
+
 		if(m_bUseNoise)
 			m_fltVNoise = Std_FRand(-m_fltVNoiseMax, m_fltVNoiseMax);
 		

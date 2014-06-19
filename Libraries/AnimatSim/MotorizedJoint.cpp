@@ -321,7 +321,7 @@ void MotorizedJoint::SetPosition(float fltVal)
 		m_fltReportSetPosition = m_fltSetPosition;
 
 	//If we are changing the set position to a different value then reset the reached position flag.
-	if(fabs(m_fltPrevSetPosition-m_fltSetPosition) > 1e-3)
+	if(fabs(m_fltPrevSetPosition-m_fltSetPosition) > 1e-4)
 		m_bReachedSetPos = false;
 }
 

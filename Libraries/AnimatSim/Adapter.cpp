@@ -593,6 +593,8 @@ void Adapter::TimeStepModified()
 
 void Adapter::ResetSimulation()
 {
+	m_fltNextVal = 0;
+	m_fltCalculatedVal = 0;
 	int iSize = m_aryDelayBuffer.GetSize();
 	for(int iIdx=0; iIdx<iSize; iIdx++)
 		m_aryDelayBuffer[iIdx] = 0;
@@ -651,15 +653,15 @@ void Adapter::StepSimulation()
 {
 	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
 	{
-		////Test code
-		//int i=5;
-		//if(Std_ToLower(m_strID) == "acacf97d-e5d7-41a0-b376-7f991f6462be" && m_lpSim->Time() > 1.8)
-		//	i=6;
-
 		//If we are trying to synch the adapters to match the IO charachteristics of a robot then we should only
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
 		if(!m_lpSim->RobotAdpaterSynch() || (m_lpSim->RobotAdpaterSynch() && !m_lpSim->RobotSynchTimeCount()))
 		{
+			////Test code
+			//int i=5;
+			//if(Std_ToLower(m_strID) == "38b9edba-8753-4a65-91e5-89a2962a6859") // && m_lpSim->Time() > 1.8
+			//	i=6;
+
 			m_fltCalculatedVal = m_lpGain->CalculateGain(*m_lpSourceData);
 
 			//Scale the calculated value for robot performance matching if we are in simulation mode only.
