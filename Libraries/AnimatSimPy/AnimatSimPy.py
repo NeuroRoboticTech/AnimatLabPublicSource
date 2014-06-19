@@ -7190,6 +7190,8 @@ class Neuron(Node):
     def UseAccom(self, *args): return _AnimatSimPy.Neuron_UseAccom(self, *args)
     def RelativeAccommodation(self, *args): return _AnimatSimPy.Neuron_RelativeAccommodation(self, *args)
     def AccommodationTimeConstant(self, *args): return _AnimatSimPy.Neuron_AccommodationTimeConstant(self, *args)
+    def Iinit(self, *args): return _AnimatSimPy.Neuron_Iinit(self, *args)
+    def InitTime(self, *args): return _AnimatSimPy.Neuron_InitTime(self, *args)
     def GainType(self, *args): return _AnimatSimPy.Neuron_GainType(self, *args)
     def Vn(self): return _AnimatSimPy.Neuron_Vn(self)
     def FiringFreq(self, *args): return _AnimatSimPy.Neuron_FiringFreq(self, *args)

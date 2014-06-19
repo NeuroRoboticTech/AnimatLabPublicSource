@@ -129,6 +129,12 @@ namespace FiringRateSim
 			/// this is the theshold voltage that is reported back to animatlab.
 			float m_fltVthdisp;		
 
+			///The initialization current to turn on at the beginning of the simulation
+			float m_fltIinit;
+
+			///The duration for how long the Iinit current is on at the beginning of the simulation
+			float m_fltInitTime;
+
 			/// The array of synapses that are in-coming to this neuron
 			CStdPtrArray<Synapse> m_arySynapses;
 
@@ -181,6 +187,12 @@ namespace FiringRateSim
 
 			virtual float AccommodationTimeConstant();
 			virtual void AccommodationTimeConstant(float fltVal);
+
+			virtual float Iinit();
+			virtual void Iinit(float fltVal);
+
+			virtual float InitTime();
+			virtual void InitTime(float fltVal);
 
 			virtual bool GainType();
 			virtual void GainType(bool bVal);

@@ -63,6 +63,9 @@ Neuron::Neuron()
 	m_fltVthadd = 0;
 
 	m_bGainType = true;
+
+	m_fltIinit = 0;
+	m_fltInitTime = 0;
 }
 
 /**
@@ -422,6 +425,18 @@ void Neuron::AccommodationTimeConstant(float fltVal)
 		m_fltDCTH = 0;
 }
 
+float Neuron::Iinit() {return m_fltIinit;}
+
+void Neuron::Iinit(float fltVal) {m_fltIinit = fltVal;}
+
+float Neuron::InitTime() {return m_fltInitTime;}
+
+void Neuron::InitTime(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 10, fltVal, true, "InitTime");
+	m_fltInitTime = fltVal;
+}
+
 /**
 \brief	Gets the gain type. (Old way or new way)
 
@@ -651,6 +666,10 @@ void Neuron::StepSimulation()
 		//Lets get the Summation of synaptic inputs
 		m_fltSynapticI = CalculateSynapticCurrent(m_lpFRModule);
 		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFRModule, m_fltExternalI+m_fltSynapticI);
+
+		//If we need to apply an init current then do so.
+		if(m_fltInitTime > 0 && m_lpSim->Time() < m_fltInitTime)
+			m_fltIntrinsicI += m_fltIinit;
 
 		if(m_bUseNoise)
 			m_fltVNoise = Std_FRand(-m_fltVNoiseMax, m_fltVNoiseMax);
@@ -971,6 +990,18 @@ bool Neuron::SetData(const std::string &strDataType, const std::string &strValue
 		return true;
 	}
 
+	if(strType == "IINIT")
+	{
+		Iinit(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "INITTIME")
+	{
+		InitTime(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -1004,6 +1035,8 @@ void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("GainType", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AddExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Iinit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 bool Neuron::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
@@ -1111,6 +1144,8 @@ void Neuron::Load(CStdXml &oXml)
 	Gain(oXml.GetChildFloat("Gain"));
 	ExternalI(oXml.GetChildFloat("ExternalI"));
 	VNoiseMax(fabs(oXml.GetChildFloat("VNoiseMax", m_fltVNoiseMax)));
+	Iinit(oXml.GetChildFloat("Iinit", m_fltIinit));
+	InitTime(oXml.GetChildFloat("InitTime", m_fltInitTime));
 
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
