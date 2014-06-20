@@ -1,359 +1,227 @@
-<VisualStudioProject>
-    <VisualBasic
-        ProjectType = "Local"
-        ProductVersion = "7.10.3077"
-        SchemaVersion = "2.0"
-        ProjectGuid = "{5636378A-44A5-4CA4-AE01-511FA4EF9E29}"
-    >
-        <Build>
-            <Settings
-                ApplicationIcon = ""
-                AssemblyKeyContainerName = ""
-                AssemblyName = "AniimatWizard"
-                AssemblyOriginatorKeyFile = ""
-                AssemblyOriginatorKeyMode = "None"
-                DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
-                DefaultTargetSchema = "IE50"
-                DelaySign = "false"
-                OutputType = "WinExe"
-                OptionCompare = "Binary"
-                OptionExplicit = "On"
-                OptionStrict = "Off"
-                RootNamespace = "AniimatWizard"
-                StartupObject = "AniimatWizard.frmAnimatWizard"
-            >
-                <Config
-                    Name = "Debug"
-                    BaseAddress = "285212672"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = ""
-                    DefineDebug = "true"
-                    DefineTrace = "true"
-                    DebugSymbols = "true"
-                    IncrementalBuild = "true"
-                    Optimize = "false"
-                    OutputPath = "bin\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "1"
-                />
-                <Config
-                    Name = "Release"
-                    BaseAddress = "285212672"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = ""
-                    DefineDebug = "false"
-                    DefineTrace = "true"
-                    DebugSymbols = "false"
-                    IncrementalBuild = "false"
-                    Optimize = "true"
-                    OutputPath = "bin\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "1"
-                />
-            </Settings>
-            <References>
-                <Reference
-                    Name = "System"
-                    AssemblyName = "System"
-                />
-                <Reference
-                    Name = "System.Data"
-                    AssemblyName = "System.Data"
-                />
-                <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                />
-                <Reference
-                    Name = "System.Windows.Forms"
-                    AssemblyName = "System.Windows.Forms"
-                />
-                <Reference
-                    Name = "System.XML"
-                    AssemblyName = "System.Xml"
-                />
-            </References>
-            <Imports>
-                <Import Namespace = "Microsoft.VisualBasic" />
-                <Import Namespace = "System" />
-                <Import Namespace = "System.Collections" />
-                <Import Namespace = "System.Data" />
-                <Import Namespace = "System.Drawing" />
-                <Import Namespace = "System.Diagnostics" />
-                <Import Namespace = "System.Windows.Forms" />
-            </Imports>
-        </Build>
-        <Files>
-            <Include>
-                <File
-                    RelPath = "AnimatWizard.vb"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "AnimatWizard.resx"
-                    DependentUpon = "AnimatWizard.vb"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "AssemblyInfo.vb"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Templates\VB7\Default_Button.gif"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\Default_Large.gif"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\Default_TreeView.gif"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\Neuron.gif"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\Synapse.gif"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_CB_ClassLibrary.vbproj"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_AssemblyInfo.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_ClassLibrary.vbproj"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_Library.sln"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_NeuralModule.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_Neuron.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_NN_Synapse.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_PL_ClassLibrary.vbproj"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_PL_Muscle.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_PL_Sensor.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VB7\VB7_PL_Stimulus.vb"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_CB_ClassFactory.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_CB_ClassFactory.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_CB_Includes.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_CB_Library.vcproj"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_ClassFactory.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_ClassFactory.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_ConstantsTemplate.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_ExportTemplate.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Includes.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Library.sln"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Library.vcproj"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_main.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_NeuralModule.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_NeuralModule.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Neuron.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Neuron.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_NeuronData.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_NeuronData.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_StdAfx.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_StdAfx.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Synapse.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_NN_Synapse.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_ClassFactory.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_ClassFactory.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Includes.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Library.vcproj"
-                    SubType = "Code"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Muscle.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Muscle.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Sensor.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Sensor.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Stimulus.cpp"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VC7\VC7_PL_Stimulus.h"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_CB_ClassLibrary.csproj"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_AssemblyInfo.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_ClassLibrary.csproj"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_Library.sln"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_NeuralModule.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_Neuron.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_NN_Synapse.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_PL_ClassLibrary.csproj"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_PL_Muscle.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_PL_Sensor.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Templates\VCS7\VCS7_PL_Stimulus.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-            </Include>
-        </Files>
-    </VisualBasic>
-</VisualStudioProject>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>7.10.3077</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5636378A-44A5-4CA4-AE01-511FA4EF9E29}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>AniimatWizard</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>AniimatWizard</RootNamespace>
+    <StartupObject>AniimatWizard.frmAnimatWizard</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>AniimatWizard.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>AniimatWizard.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>none</DebugType>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="AnimatWizard.resx">
+      <DependentUpon>AnimatWizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\Default_Button.gif" />
+    <EmbeddedResource Include="Templates\VB7\Default_Large.gif" />
+    <EmbeddedResource Include="Templates\VB7\Default_TreeView.gif" />
+    <EmbeddedResource Include="Templates\VB7\Neuron.gif" />
+    <EmbeddedResource Include="Templates\VB7\Synapse.gif" />
+    <EmbeddedResource Include="Templates\VB7\VB7_CB_ClassLibrary.vbproj" />
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_ClassLibrary.vbproj">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_Library.sln" />
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_NeuralModule.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_Neuron.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_NN_Synapse.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_PL_ClassLibrary.vbproj" />
+    <EmbeddedResource Include="Templates\VB7\VB7_PL_Muscle.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_PL_Sensor.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VB7\VB7_PL_Stimulus.vb">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VC7\VC7_CB_ClassFactory.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_CB_ClassFactory.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_CB_Includes.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_CB_Library.vcproj">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_ClassFactory.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_ClassFactory.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_ConstantsTemplate.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_ExportTemplate.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Includes.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Library.sln" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Library.vcproj">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_main.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_NeuralModule.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_NeuralModule.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Neuron.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Neuron.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_NeuronData.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_NeuronData.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_StdAfx.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_StdAfx.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Synapse.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_NN_Synapse.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_ClassFactory.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_ClassFactory.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Includes.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Library.vcproj">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Muscle.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Muscle.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Sensor.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Sensor.h" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Stimulus.cpp" />
+    <EmbeddedResource Include="Templates\VC7\VC7_PL_Stimulus.h" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_CB_ClassLibrary.csproj" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_AssemblyInfo.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_ClassLibrary.csproj" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_Library.sln" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_NeuralModule.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_Neuron.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_NN_Synapse.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_PL_ClassLibrary.csproj" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_PL_Muscle.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_PL_Sensor.cs" />
+    <EmbeddedResource Include="Templates\VCS7\VCS7_PL_Stimulus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

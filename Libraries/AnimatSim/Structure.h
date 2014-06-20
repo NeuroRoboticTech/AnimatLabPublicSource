@@ -7,6 +7,9 @@
 #pragma once
 
 #include "ScriptProcessor.h"
+#include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
 
 namespace AnimatSim
 {
@@ -142,6 +145,8 @@ namespace AnimatSim
 
 			virtual float Size();
 			virtual void Size(float fltVal, bool bUseScaling = true);
+
+			virtual RobotInterface *GetRobotInterface() {return NULL;};
 
 			virtual bool AllowTranslateDragX();
 			virtual bool AllowTranslateDragY();

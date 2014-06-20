@@ -22,6 +22,8 @@ public:
 	RbFirmataPrismaticServo();
 	virtual ~RbFirmataPrismaticServo();
 
+	virtual bool IsMotorControl() {return true;};
+
 	virtual void SetupIO();
 	virtual void StepIO();
 

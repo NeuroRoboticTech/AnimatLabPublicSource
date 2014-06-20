@@ -502,6 +502,9 @@
 #define Al_Err_lInvalidMeshScaleParam -4089
 #define Al_Err_strInvalidMeshScaleParam "Invalid mesh scaling param specified."
 
+#define Al_Err_lMoreThanOneMotorControl -4090
+#define Al_Err_strMoreThanOneMotorControl "Cannot have more than one motor control method per motor."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

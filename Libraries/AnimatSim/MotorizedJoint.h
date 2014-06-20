@@ -158,6 +158,12 @@ namespace AnimatSim
 			//it is data that is available for robotic motors, so I am adding a hook here for setting and displaying it.
 			float m_fltVoltage;
 
+			///The RobotPartInterface responsible for motor control for this motorized joint
+			RobotPartInterface *m_lpRobotMotorControl;
+
+            virtual void AddRobotPartInterface(RobotPartInterface *lpPart);
+            virtual void RemoveRobotPartInterface(RobotPartInterface *lpPart);
+
             virtual void ClearAssistForces();
             virtual void ApplyMotorAssist();
             virtual void EnableFeedback();
@@ -268,6 +274,9 @@ namespace AnimatSim
 			virtual void Voltage(float fltVal);
 
 			virtual void MotorInput(float fltInput);
+
+			virtual void RobotMotorControl(RobotPartInterface *lpPart);
+			virtual RobotPartInterface *RobotMotorControl();
 
 			virtual void SetVelocityToDesired();
 			virtual void EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);

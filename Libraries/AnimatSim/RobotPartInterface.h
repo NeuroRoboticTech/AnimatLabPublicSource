@@ -11,7 +11,7 @@ namespace AnimatSim
 			RobotInterface *m_lpParentInterface;
 			RobotIOControl *m_lpParentIOControl;
 
-			AnimatBase *m_lpPart;
+			BodyPart *m_lpPart;
 			std::string m_strPartID;
 
 			float *m_lpProperty;
@@ -65,6 +65,11 @@ namespace AnimatSim
 			
 			virtual void PropertyName(std::string strName);
 			virtual std::string PropertyName();
+
+			virtual bool IsMotorControl();
+
+			virtual float QuantizeServoPosition(float fltPos);
+			virtual float QuantizeServoVelocity(float fltVel);
 
 			virtual Gain *GetGain();
 			virtual void SetGain(Gain *lpGain);

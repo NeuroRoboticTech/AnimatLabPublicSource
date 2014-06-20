@@ -116,6 +116,18 @@ void RbDynamixelUSBHinge::MicroSleep(unsigned int iTime)
 	m_lpSim->MicroSleep(iTime);
 }
 
+float RbDynamixelUSBHinge::QuantizeServoPosition(float fltPos)
+{
+	int iPos = ConvertPosRadToFP(fltPos);
+	return ConvertPosFPToRad(iPos);
+}
+
+float RbDynamixelUSBHinge::QuantizeServoVelocity(float fltVel)
+{
+	int iPos = (int) (fabs(fltVel)*m_fltConvertRadSToFP);
+	return iPos*m_fltConvertFPToRadS;
+}
+
 void RbDynamixelUSBHinge::Initialize()
 {
 	RobotPartInterface::Initialize();

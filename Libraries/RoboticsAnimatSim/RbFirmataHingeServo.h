@@ -42,6 +42,8 @@ public:
 	RbFirmataHingeServo();
 	virtual ~RbFirmataHingeServo();
 
+	virtual bool IsMotorControl() {return true;};
+
 	virtual int MaxPulse();
 	virtual void MaxPulse(int iPulse);
 

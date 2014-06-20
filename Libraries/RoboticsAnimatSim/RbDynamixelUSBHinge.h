@@ -32,10 +32,15 @@ public:
 	RbDynamixelUSBHinge();
 	virtual ~RbDynamixelUSBHinge();
 
+	virtual bool IsMotorControl() {return true;};
+
 	virtual void IOComponentID(int iID);
 
 	virtual void UpdateAllParamsCount(int iVal);
 	virtual int UpdateAllParamsCount();
+
+	virtual float QuantizeServoPosition(float fltPos);
+	virtual float QuantizeServoVelocity(float fltVel);
 
 #pragma region DataAccesMethods
 

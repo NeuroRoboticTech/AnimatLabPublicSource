@@ -66,6 +66,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_fltTemperature = 0;
 	m_fltVoltage = 0;
 	m_bReachedSetPos = false;
+	m_lpRobotMotorControl = NULL;
 
 	m_fltMotorForceAMagnitude = 0;
 	m_fltMotorForceBMagnitude = 0;
@@ -84,6 +85,8 @@ MotorizedJoint::~MotorizedJoint(void)
             delete m_lpAssistPid;
             m_lpAssistPid = NULL;
         }
+
+		m_lpRobotMotorControl = NULL;
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of BlMotorizMotorizedJointedJoint\r\n", "", -1, false, true);}
@@ -315,6 +318,13 @@ void MotorizedJoint::SetPosition(float fltVal)
 	m_fltPrevSetPosition = m_fltSetPosition;
 	m_fltSetPosition = fltVal;
 
+	if(m_lpRobotMotorControl && m_lpStructure && m_lpSim && m_lpSim->InSimulation() && m_lpStructure->GetRobotInterface() && m_lpStructure->GetRobotInterface()->SynchSim())
+	{
+		//If we have a robot interface and are synching with it then we need to quantize the position
+		//values to match what the real robot is capable of using.
+		m_fltSetPosition = m_lpRobotMotorControl->QuantizeServoPosition(m_fltSetPosition);	
+	}
+
 	if(!UsesRadians())
 		m_fltReportSetPosition = m_fltSetPosition * m_lpSim->DistanceUnits();
 	else
@@ -413,6 +423,17 @@ float MotorizedJoint::SetVelocity() {return m_fltSetVelocity;}
 void MotorizedJoint::SetVelocity(float fltVal) 
 {
 	m_fltSetVelocity = fltVal;
+
+	if(m_lpRobotMotorControl && m_lpStructure && m_lpSim && m_lpSim->InSimulation() && m_lpStructure->GetRobotInterface() && m_lpStructure->GetRobotInterface()->SynchSim())
+	{
+		int i = 5;
+		if(m_fltSetVelocity != 0)
+			i=6;
+
+		//If we have a robot interface and are synching with it then we need to quantize the position
+		//values to match what the real robot is capable of using.
+		m_fltSetVelocity = m_lpRobotMotorControl->QuantizeServoVelocity(m_fltSetVelocity);	
+	}
 
 	if(!UsesRadians())
 		m_fltReportSetVelocity = m_fltSetVelocity * m_lpSim->DistanceUnits();
@@ -924,7 +945,6 @@ void MotorizedJoint::Temperature(float fltVal)
 	m_fltTemperature = fltVal;
 }
 
-
 /**
  \brief Gets the motor voltage.
 
@@ -944,6 +964,42 @@ float MotorizedJoint::Voltage() {return m_fltVoltage;}
  \param [in]    fltVal    The voltage value.
  */
  void MotorizedJoint::Voltage(float fltVal) {m_fltVoltage = fltVal;}
+
+ /**
+ \brief Sets the robot motor control interface.
+
+ \author    David Cofer
+ \date  6/19/2014
+
+ \param [in]    lpPart    Pointer to the motor control interface.
+ */
+void MotorizedJoint::RobotMotorControl(RobotPartInterface *lpPart) {m_lpRobotMotorControl = lpPart;}
+
+/**
+ \brief Gets the robot motor control interface.
+
+ \author    David Cofer
+ \date  6/19/2014
+
+ \return    Pointer to the motor control interface.
+ */
+RobotPartInterface *MotorizedJoint::RobotMotorControl() {return m_lpRobotMotorControl;}
+
+void MotorizedJoint::AddRobotPartInterface(RobotPartInterface *lpPart)
+{
+	Joint::AddRobotPartInterface(lpPart);
+
+	if(lpPart && lpPart->IsMotorControl())
+		m_lpRobotMotorControl = lpPart;
+}
+
+void MotorizedJoint::RemoveRobotPartInterface(RobotPartInterface *lpPart)
+{
+	if(lpPart == m_lpRobotMotorControl)
+		m_lpRobotMotorControl = NULL;
+
+	Joint::RemoveRobotPartInterface(lpPart);
+}
 
 /**
 \brief	Sets the desired velocity to use for the motor.

@@ -61,6 +61,9 @@ RobotPartInterface::~RobotPartInterface(void)
 
 try
 {
+	if(m_lpPart)
+		m_lpPart->RemoveRobotPartInterface(this);
+
 	//We do not own any of these.
 	m_lpParentInterface = NULL;
 	m_lpParentIOControl = NULL;
@@ -114,6 +117,50 @@ void RobotPartInterface::PropertyName(std::string strName)
 }
 
 std::string RobotPartInterface::PropertyName() {return m_strPropertyName;}
+
+/**
+\brief	Returns true if this part interface is for controlling a motor.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Pointer to the gain.
+**/
+bool RobotPartInterface::IsMotorControl() {return false;}
+
+/**
+\brief	If this is a servo controller interface then it will take a continuous positon and return back a valid quantized position for that servo.
+
+\discussion Servos have discreet positions they can obtain based on the bit resolution of the goal position. So they can only be set to move to
+those positions. If we are trying to sync the sim to match this behavior then we need to only move the sim to these positions as well.
+You will need to override this method in your actual motor control part interface and implement for your motor model.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Quantized position.
+**/
+float RobotPartInterface::QuantizeServoPosition(float fltPos)
+{
+	return fltPos;
+}
+
+/**
+\brief	If this is a servo controller interface then it will take a continuous velocity and return back a valid quantized velocity for that servo.
+
+\discussion Servos have discreet velocity they can obtain based on the bit resolution of the goal velocity. So they can only be set to move at
+those velocity. If we are trying to sync the sim to match this behavior then we need to only move the sim to these velociies as well.
+You will need to override this method in your actual motor control part interface and implement for your motor model.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Quantized velocity.
+**/
+float RobotPartInterface::QuantizeServoVelocity(float fltVel)
+{
+	return fltVel;
+}
 
 /**
 \brief	Gets the poitner to the gain function.
@@ -284,7 +331,7 @@ void RobotPartInterface::Initialize()
 {
 	//We need to find the referenced body part and set its robot part interface to this one.
 	if(!Std_IsBlank(m_strPartID))
-		m_lpPart = dynamic_cast<AnimatBase *>(m_lpSim->FindByID(m_strPartID));
+		m_lpPart = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
 
 	if(m_lpPart)
 	{
@@ -292,6 +339,8 @@ void RobotPartInterface::Initialize()
 			m_lpProperty = m_lpPart->GetDataPointer(m_strPropertyName);
 		else
 			m_lpProperty = NULL;
+
+		m_lpPart->AddRobotPartInterface(this);
 	}
 	else
 		m_lpProperty = NULL;
