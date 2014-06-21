@@ -1,2 +1,0 @@
-TypeName   "Firing Rate Neuron"
-NeuronType  Regular
