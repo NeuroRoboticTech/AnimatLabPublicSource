@@ -43,7 +43,7 @@ void RbFirmataAnalogInput::SetupIO()
 		m_lpFirmata->sendAnalogPinReporting(m_iIOComponentID, ARD_ANALOG);
 }
 
-void RbFirmataAnalogInput::StepIO()
+void RbFirmataAnalogInput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{

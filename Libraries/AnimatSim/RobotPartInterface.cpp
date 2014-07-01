@@ -311,7 +311,7 @@ does the IO. Once that thread is ready to send/receive it uses that value to per
 \date	5/2/2014
 
 **/
-void RobotPartInterface::StepIO()
+void RobotPartInterface::StepIO(int iPartIdx)
 {
 }
 

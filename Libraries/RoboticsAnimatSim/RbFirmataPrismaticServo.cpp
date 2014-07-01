@@ -48,7 +48,7 @@ void RbFirmataPrismaticServo::SetupIO()
 {
 }
 
-void RbFirmataPrismaticServo::StepIO()
+void RbFirmataPrismaticServo::StepIO(int iPartIdx)
 {
 }
 

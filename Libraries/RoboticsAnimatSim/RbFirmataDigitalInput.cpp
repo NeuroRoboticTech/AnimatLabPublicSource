@@ -43,7 +43,7 @@ void RbFirmataDigitalInput::SetupIO()
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_INPUT);
 }
 
-void RbFirmataDigitalInput::StepIO()
+void RbFirmataDigitalInput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{

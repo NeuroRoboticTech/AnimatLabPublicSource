@@ -94,6 +94,31 @@ namespace AnimatSim
 			///setting them in the target object. 
 			CStdCircularArray<float> m_aryDelayBuffer;
 
+			///Determines whether the m_bRobotAdpaterSynch flag applies to this adapter. Adpaters between neural elements should not 
+			///need to be synched because they are not dependent on IO timing. This flag allows you to control this by setting it to false
+			///for adapters that do not need it.
+			bool m_bSynchWithRobot;
+
+			///This is how often we need to update this particular adapter
+			float m_fltSynchUpdateInterval;
+
+			///The number of ticks between each call to update for this adapter till the next update time.
+			int m_iSynchUpdateInterval;
+
+			///This determines the interval after IO Disable duration when the first update of this adapter takes place.
+			///This is primarily used to allow you to simulate IO updates are that are distributed over time, like in a round
+			///robin scheme. An example of this is the Dynamixel USB motors that get updated in a round robin. 
+			float m_fltSynchUpdateStartInterval;
+
+			///The number of ticks between the first call to update for this adapter till the next update time.
+			int m_iSynchUpdateStartInterval;
+
+			///The target count for synching
+			int m_iSynchTarget;
+
+			///Keeps track of the last time we did a synch for the robot.
+			int m_iSynchCount;
+
 			///If you are modeling a robot then you can use this to scale the IO of this adapter to match the real response of the robot.
 			///An example where this might be used is while simulating a motor. Real motors usually end up having a slightly slower response
 			///time than you get in the simulation. The value specified here is a percentage with 1 at 100%. To slow the simulated response time
@@ -105,11 +130,16 @@ namespace AnimatSim
 			///This param defines how long it should disable IO for this adapter at the start of the sim.
 			float m_fltInitIODisableDuration;
 
+			///Set to 1 each time the adapter was updated and 0 otherwise. Use to chart when the adpater was updated.
+			float m_fltUpdatedValue;
+
 			virtual void AddGain(std::string strXml);
 			virtual void SetOriginID(std::string strXml);
 			virtual void SetDestinationID(std::string strXml);
 
 			virtual void SetDelayBufferSize();
+
+			virtual bool NeedsRobotSynch();
 
 		public:
 			Adapter();
@@ -154,6 +184,15 @@ namespace AnimatSim
 
 			virtual float RobotIOScale();
 			virtual void RobotIOScale(float fltVal);
+
+			virtual bool SynchWithRobot();
+			virtual void SynchWithRobot(bool bVal);
+
+			virtual float SynchUpdateInterval();
+			virtual void SynchUpdateInterval(float fltVal);
+
+			virtual float SynchUpdateStartInterval();
+			virtual void SynchUpdateStartInterval(float fltVal);
 
 			virtual float InitIODisableDuration();
 			virtual void InitIODisableDuration(float fltVal);

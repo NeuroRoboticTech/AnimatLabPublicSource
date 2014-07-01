@@ -42,7 +42,7 @@ void RbFirmataAnalogOutput::SetupIO()
 
 }
 
-void RbFirmataAnalogOutput::StepIO()
+void RbFirmataAnalogOutput::StepIO(int iPartIdx)
 {
 }
 

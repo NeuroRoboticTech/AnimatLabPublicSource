@@ -25,7 +25,7 @@ public:
 	virtual bool IsMotorControl() {return true;};
 
 	virtual void SetupIO();
-	virtual void StepIO();
+	virtual void StepIO(int iPartIdx);
 
 	virtual void Initialize();
     virtual void StepSimulation();

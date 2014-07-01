@@ -44,6 +44,10 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected m_fltRobotIOScale As Single = 1
 
+        Protected m_bSynchWithRobot As Boolean = False
+        Protected m_snSynchUpdateInterval As ScaledNumber
+        Protected m_snSynchUpdateStartInterval As ScaledNumber
+
         Protected m_snInitIODisableDuration As ScaledNumber
 
 #End Region
@@ -199,6 +203,46 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        Public Overridable Property SynchWithRobot() As Boolean
+            Get
+                Return m_bSynchWithRobot
+            End Get
+            Set(value As Boolean)
+                SetSimData("SynchWithRobot", value.ToString, True)
+                m_bSynchWithRobot = value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property SynchUpdateInterval() As ScaledNumber
+            Get
+                Return m_snSynchUpdateInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The synch update interval must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("SynchUpdateInterval", Value.ActualValue.ToString, True)
+                m_snSynchUpdateInterval.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property SynchUpdateStartInterval() As ScaledNumber
+            Get
+                Return m_snSynchUpdateStartInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The synch update start interval must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("SynchUpdateStartInterval", Value.ActualValue.ToString, True)
+                m_snSynchUpdateStartInterval.CopyData(Value)
+            End Set
+        End Property
+
         <Browsable(False)> _
         Public Overridable Property InitIODisableDuration() As ScaledNumber
             Get
@@ -244,11 +288,14 @@ Namespace DataObjects.Behavior.Nodes
 
                 m_snDelayBufferInterval = New AnimatGUI.Framework.ScaledNumber(Me, "DelayBufferInterval", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
                 m_snInitIODisableDuration = New AnimatGUI.Framework.ScaledNumber(Me, "InitIODisableDuration", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snSynchUpdateInterval = New AnimatGUI.Framework.ScaledNumber(Me, "SynchUpdateInterval", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snSynchUpdateStartInterval = New AnimatGUI.Framework.ScaledNumber(Me, "SynchUpdateStartInterval", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
                 m_thDataTypes.DataTypes.Clear()
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("CalculatedVal", "Calculated Value", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NextVal", "Next Value", "", "", 0, 1))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("UpdatedValue", "Updated Value", "", "", 0, 1))
                 m_thDataTypes.ID = "Enable"
 
             Catch ex As System.Exception
@@ -267,6 +314,11 @@ Namespace DataObjects.Behavior.Nodes
             m_bEnabled = bnOrig.m_bEnabled
             m_snDelayBufferInterval = DirectCast(bnOrig.m_snDelayBufferInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snInitIODisableDuration = DirectCast(bnOrig.m_snInitIODisableDuration.Clone(Me, bCutData, doRoot), ScaledNumber)
+
+            m_bSynchWithRobot = bnOrig.m_bSynchWithRobot
+            m_snSynchUpdateInterval = DirectCast(bnOrig.m_snSynchUpdateInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snSynchUpdateStartInterval = DirectCast(bnOrig.m_snSynchUpdateStartInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+
             m_eDelayBufferMode = bnOrig.m_eDelayBufferMode
             m_fltRobotIOScale = bnOrig.m_fltRobotIOScale
         End Sub
@@ -308,12 +360,20 @@ Namespace DataObjects.Behavior.Nodes
                 SetOrigin(blLink.Origin, False)
                 Me.m_thSourceDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
                 SetGainLimits()
+
+                If Not blLink.ActualOrigin Is Nothing AndAlso blLink.ActualOrigin.IsSensorOrMotor Then
+                    Me.m_bSynchWithRobot = True
+                End If
             End If
 
             'If this is the Origin then get the destination from the other end
             If blLink.ActualOrigin Is Me Then
                 SetDestination(blLink.Destination, False)
                 Me.m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                If Not blLink.ActualDestination Is Nothing AndAlso blLink.ActualDestination.IsSensorOrMotor Then
+                    Me.m_bSynchWithRobot = True
+                End If
             End If
 
             MyBase.AfterAddLink(blLink)
@@ -400,16 +460,35 @@ Namespace DataObjects.Behavior.Nodes
                                         "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot IO Scale", GetType(Single), "RobotIOScale", _
-                                        "Adapter Properties", "If you are simulating a robot then use this to scale the IO output of this adpater in simulation mode to more closely match the robot output. " & _
-                                        "For example, motors are usually a little slower than in the simulation, so you would scale down the IO here to match your real motor. " & _
-                                        "This is a percentage value of scaling with 1 as 100%", m_fltRobotIOScale))
-
             pbNumberBag = m_snInitIODisableDuration.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Init IO Disable Duration", pbNumberBag.GetType(), "InitIODisableDuration", _
                                         "Adapter Properties", "Sets the duration for how long this adapter is disabled at simulation startup. " & _
                                         "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            'Only show this stuff if there is a robot interface defined for it.
+            If Not Me.Organism.RobotInterface Is Nothing Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SynchWithRobot", GetType(Boolean), "SynchWithRobot", _
+                                            "Robot Properties", "Determines whether this adapter is synched with a robot part during simulation." & _
+                                            "Note that this will only be applied if the synch with robot setting on the robot interface is true also.", m_bSynchWithRobot))
+
+                pbNumberBag = m_snSynchUpdateInterval.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Interval", pbNumberBag.GetType(), "SynchUpdateInterval", _
+                                            "Robot Properties", "Sets how often this adapter is updated when simulating a robot. " & _
+                                            "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                pbNumberBag = m_snSynchUpdateStartInterval.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Start Interval", pbNumberBag.GetType(), "SynchUpdateStartInterval", _
+                                            "Robot Properties", "Sets the interval after the disable duration when this adapter is first updated when simulating a robot. " & _
+                                            "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot IO Scale", GetType(Single), "RobotIOScale", _
+                                            "Robot Properties", "If you are simulating a robot then use this to scale the IO output of this adpater in simulation mode to more closely match the robot output. " & _
+                                            "For example, motors are usually a little slower than in the simulation, so you would scale down the IO here to match your real motor. " & _
+                                            "This is a percentage value of scaling with 1 as 100%", m_fltRobotIOScale))
+            End If
 
         End Sub
 
@@ -419,6 +498,8 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_gnGain Is Nothing Then m_gnGain.ClearIsDirty()
             If Not m_snDelayBufferInterval Is Nothing Then m_snDelayBufferInterval.ClearIsDirty()
             If Not m_snInitIODisableDuration Is Nothing Then m_snInitIODisableDuration.ClearIsDirty()
+            If Not m_snSynchUpdateInterval Is Nothing Then m_snSynchUpdateInterval.ClearIsDirty()
+            If Not m_snSynchUpdateStartInterval Is Nothing Then m_snSynchUpdateStartInterval.ClearIsDirty()
         End Sub
 
         Public Overrides Function Delete(Optional bAskToDelete As Boolean = True, Optional e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
@@ -562,6 +643,10 @@ Namespace DataObjects.Behavior.Nodes
                 m_gnGain = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Gain)
                 m_gnGain.LoadData(oXml, "Gain", "Gain")
             End If
+
+            m_bSynchWithRobot = oXml.GetChildBool("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.LoadData(oXml, "SynchUpdateInterval", False)
+            m_snSynchUpdateStartInterval.LoadData(oXml, "SynchUpdateStartInterval", False)
 
             oXml.OutOfElem()
 
@@ -734,6 +819,10 @@ Namespace DataObjects.Behavior.Nodes
 
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
+
+            oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.SaveData(oXml, "SynchUpdateInterval")
+            m_snSynchUpdateStartInterval.SaveData(oXml, "SynchUpdateStartInterval")
 
             oXml.OutOfElem() ' Outof Node Element
 

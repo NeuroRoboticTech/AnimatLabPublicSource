@@ -178,10 +178,6 @@ Simulator::Simulator()
     m_lpIOThread = NULL;
 
 	m_bRobotAdpaterSynch = false;
-	m_iRobotSynchTimeInterval = 0;
-	m_fltRobotSynchTimeInterval = 0;
-	m_iRobotSynchTimeCount = 0;
-
 	m_bForceNoWindows = false;
 
 	m_lpScript = NULL;
@@ -1148,12 +1144,6 @@ void Simulator::PhysicsTimeStep(float fltVal)
 
 		//Reset the physics substep time if required.
 		 m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
-
-		if(m_bRobotAdpaterSynch && m_fltTimeStep > 0)
-		{
-			m_iRobotSynchTimeInterval = m_fltRobotSynchTimeInterval/m_fltTimeStep;
-			m_iRobotSynchTimeCount = 0;
-		}
 	}
 }
 
@@ -1660,54 +1650,7 @@ bool Simulator::RobotAdpaterSynch() {return m_bRobotAdpaterSynch;}
 void Simulator::RobotAdpaterSynch(bool bVal)
 {
 	m_bRobotAdpaterSynch = bVal;
-
-	if(!bVal)
-	{
-		m_iRobotSynchTimeInterval = 0;
-		m_iRobotSynchTimeCount = 0;
-	}
 }
-
-/**
-\brief	Gets The time slice interval count to use when synching the adapter steps of the simulation to the robot.
-
-\author	dcofer
-\date	5/13/2014
-
-\return	time slice interval.
-**/
-int Simulator::RobotSynchTimeInterval() {return m_iRobotSynchTimeInterval;}
-
-/**
-\brief	Sets The time slice interval count to use when synching the adapter steps of the simulation to the robot.
-
-\description This uses the time value passed in to determine the number of time slices that are required.
-
-\author	dcofer
-\date	5/13/2014
-
-\param  fltVal	time value.
-**/
-void Simulator::RobotSynchTimeInterval(float fltVal)
-{
-	m_fltRobotSynchTimeInterval = fltVal;
-
-	if(m_fltTimeStep > 0)
-	{
-		m_iRobotSynchTimeInterval = fltVal/m_fltTimeStep;
-		m_iRobotSynchTimeCount = 0;
-	}
-}
-
-/**
-\brief	Gets the number of slices since the last time the physics adapters were updated .
-
-\author	dcofer
-\date	5/13/2014
-
-\return Slices since last update.
-**/
-int Simulator::RobotSynchTimeCount() {return m_iRobotSynchTimeCount;}
 
 /**
 \brief	Used to determine if we are running in a simulation, or in a real control mode.
@@ -2341,10 +2284,6 @@ void Simulator::Reset()
 	m_bShuttingDown = false;
 
 	m_bRobotAdpaterSynch = false;
-	m_iRobotSynchTimeInterval = 0;
-	m_fltRobotSynchTimeInterval = 0;
-	m_iRobotSynchTimeCount = 0;
-
 }
 
 /**
@@ -2366,7 +2305,6 @@ void Simulator::ResetSimulation()
 	m_fltMouseSpringForceMagnitude = 0;
 	m_fltMouseSpringDampingForceMagnitude = 0;
 	m_fltMouseSpringLengthMagnitude = 0;
-	m_iRobotSynchTimeCount = 0;
 
 	InitializeRandomNumbers();
 
@@ -2611,13 +2549,6 @@ void Simulator::Step()
 	StepDataCharts();
 
 	m_lTimeSlice++;
-
-	if(m_bRobotAdpaterSynch)
-	{
-		m_iRobotSynchTimeCount++;
-		if(m_iRobotSynchTimeCount >= m_iRobotSynchTimeInterval)
-			m_iRobotSynchTimeCount = 0;
-	}
 
 	m_fltTime = m_lTimeSlice*m_fltTimeStep;
 }

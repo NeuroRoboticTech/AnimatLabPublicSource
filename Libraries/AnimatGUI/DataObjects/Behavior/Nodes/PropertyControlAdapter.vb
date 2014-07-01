@@ -183,6 +183,10 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
                 m_snInitIODisableDuration.SaveSimulationXml(oXml, Me, "InitIODisableDuration")
 
+                oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+                m_snSynchUpdateInterval.SaveSimulationXml(oXml, Me, "SynchUpdateInterval")
+                m_snSynchUpdateStartInterval.SaveSimulationXml(oXml, Me, "SynchUpdateStartInterval")
+
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
 
                 oXml.OutOfElem() 'Outof Neuron

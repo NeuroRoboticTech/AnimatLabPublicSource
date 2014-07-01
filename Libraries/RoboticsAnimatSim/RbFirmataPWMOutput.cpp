@@ -43,7 +43,7 @@ void RbFirmataPWMOutput::SetupIO()
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_PWM);
 }
 
-void RbFirmataPWMOutput::StepIO()
+void RbFirmataPWMOutput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{

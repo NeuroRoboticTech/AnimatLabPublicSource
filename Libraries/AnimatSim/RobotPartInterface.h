@@ -67,6 +67,7 @@ namespace AnimatSim
 			virtual std::string PropertyName();
 
 			virtual bool IsMotorControl();
+			virtual bool IncludeInPartsCycle() {return false;}
 
 			virtual float QuantizeServoPosition(float fltPos);
 			virtual float QuantizeServoVelocity(float fltVel);
@@ -85,7 +86,7 @@ namespace AnimatSim
 #pragma endregion
 
 			virtual void SetupIO();
-			virtual void StepIO();
+			virtual void StepIO(int iPartIdx);
 			virtual void ShutdownIO();
 
 			virtual void Initialize();

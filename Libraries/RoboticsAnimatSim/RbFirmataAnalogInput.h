@@ -22,7 +22,7 @@ public:
 	virtual ~RbFirmataAnalogInput();
 
 	virtual void SetupIO();
-	virtual void StepIO();
+	virtual void StepIO(int iPartIdx);
 
     virtual void StepSimulation();
 };

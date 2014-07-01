@@ -34,6 +34,8 @@ RbDynamixelUSBHinge::RbDynamixelUSBHinge()
     m_lpHinge = NULL;
 	m_iUpdateAllParamsCount = 10;
 	m_iUpdateIdx = 0;
+	m_iUpdateQueueIndex = -1;
+	m_bQueryMotorData = true;
 }
 
 RbDynamixelUSBHinge::~RbDynamixelUSBHinge()
@@ -61,6 +63,14 @@ void RbDynamixelUSBHinge::UpdateAllParamsCount(int iVal)
 }
 
 int RbDynamixelUSBHinge::UpdateAllParamsCount() {return m_iUpdateAllParamsCount;}
+
+int RbDynamixelUSBHinge::UpdateQueueIndex() {return m_iUpdateQueueIndex;}
+
+void RbDynamixelUSBHinge::UpdateQueueIndex(int iVal)
+{
+	Std_IsAboveMin((int) -1, iVal, true, "UpdateQueueIndex", true);
+	m_iUpdateQueueIndex = iVal;
+}
 
 #pragma region DataAccesMethods
 
@@ -93,6 +103,18 @@ bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::str
 		return true;
 	}
 
+	if(strType == "UPDATEQUEUEINDEX")
+	{
+		UpdateQueueIndex((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "QUERYMOTORDATA")
+	{
+		QueryMotorData(Std_ToBool(strValue));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -106,6 +128,8 @@ void RbDynamixelUSBHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 
 	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("UpdateAllParamsCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpdateQueueIndex", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("QueryMotorData", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -127,6 +151,12 @@ float RbDynamixelUSBHinge::QuantizeServoVelocity(float fltVel)
 	int iPos = (int) (fabs(fltVel)*m_fltConvertRadSToFP);
 	return iPos*m_fltConvertFPToRadS;
 }
+
+void RbDynamixelUSBHinge::QueryMotorData(bool bVal) {m_bQueryMotorData = bVal;}
+
+bool RbDynamixelUSBHinge::QueryMotorData() {return m_bQueryMotorData;}
+
+bool RbDynamixelUSBHinge::IncludeInPartsCycle() {return m_bQueryMotorData;}
 
 void RbDynamixelUSBHinge::Initialize()
 {
@@ -151,7 +181,7 @@ void RbDynamixelUSBHinge::SetupIO()
 	}
 }
 
-void RbDynamixelUSBHinge::StepIO()
+void RbDynamixelUSBHinge::StepIO(int iPartIdx)
 {	
 	static int iTickCount=0;
 	static double dblTotalTime=0;
@@ -159,6 +189,8 @@ void RbDynamixelUSBHinge::StepIO()
 
 	if(!m_lpSim->InSimulation())
 	{
+		if(m_bQueryMotorData && m_iUpdateQueueIndex == iPartIdx)
+		{
 		//if(m_iUpdateIdx == m_iUpdateAllParamsCount)
 		//{
 		//	unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
@@ -192,6 +224,7 @@ void RbDynamixelUSBHinge::StepIO()
 				dblTotalTime = 0;
 			}
 		//}
+		}
 
 		//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
 		if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
@@ -275,6 +308,8 @@ void RbDynamixelUSBHinge::Load(StdUtils::CStdXml &oXml)
 
 	oXml.IntoElem();
 	UpdateAllParamsCount(oXml.GetChildInt("UpdateAllParamsCount", m_iUpdateAllParamsCount));
+	UpdateQueueIndex(oXml.GetChildInt("UpdateQueueIndex", m_iUpdateQueueIndex));
+	QueryMotorData(oXml.GetChildInt("QueryMotorData", m_bQueryMotorData));
 	oXml.OutOfElem();
 }
 

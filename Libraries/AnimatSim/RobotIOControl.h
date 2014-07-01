@@ -27,6 +27,12 @@ namespace AnimatSim
 			//The time it takes to perform a step of the IO for all parts in this control.
 			float m_fltStepIODuration;
 
+			///The total number of parts that are part of any round robin cycle of updates.
+			int m_iCyclePartCount;
+
+			///The index of the part that should be processed on the current step.
+			int m_iCyclePartIdx;
+
 			//Temporary if def to prevent this from showing up in ManagedAnimatTools. Will get rid of this
 			//once I get rid of that library.
 #ifndef STD_DO_NOT_ADD_BOOST

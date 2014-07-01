@@ -47,6 +47,8 @@ RobotIOControl::RobotIOControl(void)
 	m_bStopIO = false;
 	m_bIOThreadProcessing = false;
 	m_fltStepIODuration = 0;
+	m_iCyclePartIdx = 0;
+	m_iCyclePartCount = 0;
 }
 
 RobotIOControl::~RobotIOControl(void)
@@ -276,10 +278,14 @@ all the parts.
 **/
 void RobotIOControl::SetupIO()
 {
+	m_iCyclePartCount = 0;
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryParts[iIndex]->Enabled())
 		{
+			if(m_aryParts[iIndex]->IncludeInPartsCycle())
+				m_iCyclePartCount++;
+
 			m_aryParts[iIndex]->SetupIO();
 			
 			//Give it just smidge of time to finish processing the last set of data so we do not overload the arduino's buffer and so it has time to process the requests.
@@ -301,10 +307,14 @@ void RobotIOControl::StepIO()
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryParts[iIndex]->Enabled())
-			m_aryParts[iIndex]->StepIO();
+			m_aryParts[iIndex]->StepIO(m_iCyclePartIdx);
 
 	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
 	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
+
+	m_iCyclePartIdx++;
+	if(m_iCyclePartIdx >= m_iCyclePartCount)
+		m_iCyclePartIdx = 0;
 }
 
 /**
@@ -332,6 +342,7 @@ void RobotIOControl::Initialize()
 
 void RobotIOControl::ResetSimulation()
 {
+	m_iCyclePartIdx = 0;
 	int iCount = m_aryParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryParts[iIndex]->ResetSimulation();

@@ -136,6 +136,13 @@ Namespace DataObjects.Behavior.Nodes
 
         Public MustOverride ReadOnly Property BaseErrorType() As DiagramError.enumErrorTypes
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property IsSensorOrMotor() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

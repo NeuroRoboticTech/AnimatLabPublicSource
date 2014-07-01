@@ -117,12 +117,7 @@ void RobotInterface::SynchSim(bool bVal)
 		m_bSynchSim = bVal;
 
 		if(m_lpSim)
-		{
 			m_lpSim->RobotAdpaterSynch(bVal);
-
-			if(bVal)
-				m_lpSim->RobotSynchTimeInterval(this->m_fltPhysicsTimeStep);
-		}
 	}
 	else
 		m_lpSim->RobotAdpaterSynch(false);

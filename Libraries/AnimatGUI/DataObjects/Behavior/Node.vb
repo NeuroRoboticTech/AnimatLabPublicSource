@@ -688,6 +688,13 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property IsSensorOrMotor() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

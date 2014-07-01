@@ -54,7 +54,7 @@ public:
 	virtual void ResetToStartPos(bool bVal);
 
 	virtual void SetupIO();
-	virtual void StepIO();
+	virtual void StepIO(int iPartIdx);
 	
 	virtual float ConvertPosFPToRad(int iPos);
 	virtual int ConvertPosRadToFP(float fltPos);
