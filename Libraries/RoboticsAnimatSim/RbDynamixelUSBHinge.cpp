@@ -168,7 +168,7 @@ void RbDynamixelUSBHinge::Initialize()
 
 void RbDynamixelUSBHinge::SetupIO()
 {
-	if(!m_lpSim->InSimulation())
+	if(!m_lpSim->InSimulation() && m_lpHinge)
 	{
 		SetMinSimPos(m_lpHinge->LowerLimit()->LimitPos());
 		SetMaxSimPos(m_lpHinge->UpperLimit()->LimitPos());
@@ -189,7 +189,7 @@ void RbDynamixelUSBHinge::StepIO(int iPartIdx)
 
 	if(!m_lpSim->InSimulation())
 	{
-		if(m_bQueryMotorData && m_iUpdateQueueIndex == iPartIdx)
+		if(m_bQueryMotorData && (m_iUpdateQueueIndex == iPartIdx || m_iUpdateQueueIndex == -1))
 		{
 		//if(m_iUpdateIdx == m_iUpdateAllParamsCount)
 		//{
@@ -229,6 +229,7 @@ void RbDynamixelUSBHinge::StepIO(int iPartIdx)
 		//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
 		if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
 		{
+			//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
 			//std::cout << "************" << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
 
 			//If the next goal velocity was set to -1 then we are trying to set velocity to 0. So lets set the goal position to its current
@@ -265,11 +266,23 @@ void RbDynamixelUSBHinge::StepSimulation()
 	{
 		RobotPartInterface::StepSimulation();
 
+		////Test code
+		//int i=5;
+		//if(Std_ToLower(m_strID) == "600488ae-f6ce-44c9-bc01-c403d8b236de") // && m_lpSim->Time() > 1 
+		//	i=6;
+
 		if(m_lpHinge)
 		{
 			//Here we need to get the set velocity for this motor that is coming from the neural controller, and then make the real motor go that speed.
 			//Here we are setting the values that will be used the next time the IO is processed for this servo.
-			if(m_lpHinge->MotorType() == eJointMotorType::PositionControl || m_lpHinge->MotorType() == eJointMotorType::PositionVelocityControl)
+			if(m_lpHinge->MotorType() == eJointMotorType::PositionVelocityControl)
+			{
+				float fltSetPosition = m_lpHinge->SetPosition();
+				float fltSetVelocity = m_lpHinge->SetVelocity();
+				SetNextGoalPosition(fltSetPosition);
+				SetNextGoalVelocity(fltSetVelocity);
+			}
+			else if(m_lpHinge->MotorType() == eJointMotorType::PositionControl)
 			{
 				float fltSetVelocity = m_lpHinge->SetVelocity();
 				SetNextGoalVelocity(fltSetVelocity);
@@ -309,7 +322,7 @@ void RbDynamixelUSBHinge::Load(StdUtils::CStdXml &oXml)
 	oXml.IntoElem();
 	UpdateAllParamsCount(oXml.GetChildInt("UpdateAllParamsCount", m_iUpdateAllParamsCount));
 	UpdateQueueIndex(oXml.GetChildInt("UpdateQueueIndex", m_iUpdateQueueIndex));
-	QueryMotorData(oXml.GetChildInt("QueryMotorData", m_bQueryMotorData));
+	QueryMotorData(oXml.GetChildBool("QueryMotorData", m_bQueryMotorData));
 	oXml.OutOfElem();
 }
 

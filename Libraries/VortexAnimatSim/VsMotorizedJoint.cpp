@@ -46,16 +46,39 @@ void VsMotorizedJoint::CalculateServoVelocity()
 	if(!m_vxJoint)
 		return;
 
-	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredVelocity());
+	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
-	if(m_lpThisJoint->EnableLimits())
+	////Testing Code
+	//int i=5;
+	//if(m_lpThisMotorJoint->ID() == "0085EE18-89F7-4039-8648-EC51114BEEFF" && GetSimulator()->Time() >= 0.5 && fabs(fltTargetPos) > 0)
+	//	i=6;
+
+	if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || (m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
 	{
-		float fltProp = fltError / m_lpThisJoint->GetLimitRange();
-		m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
+		//Lock this joint position.
+		m_lpThisMotorJoint->DesiredVelocity(0); 
 	}
 	else
-		m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity()); 
+	{
+		//If we set the desired velocity and position then make sure the desired velocity is in the right direction
+		float fltDesiredVel = fabs(m_lpThisMotorJoint->DesiredVelocity()) * Std_Sign(fltError);
+
+		float fltPosError = fabs(fltError);
+		if(fltPosError > 0 && fltPosError < 0.05)
+		{
+			float fltDesiredVel2 = fltDesiredVel * (fabs(fltError)*m_lpThisMotorJoint->ServoGain());
+			//Only do this if the new desired velocity is less than the original one to slow it down. Never speed it up.
+			if(fabs(fltDesiredVel2) <= fabs(fltDesiredVel))
+				fltDesiredVel = fltDesiredVel2;
+		}
+
+		m_lpThisMotorJoint->DesiredVelocity(fltDesiredVel);
+
+		if(fabs(fltError) < 1e-4)
+			m_lpThisMotorJoint->ReachedSetPosition(true);
+	}
 }
 
 
@@ -80,6 +103,7 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 
 		m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
 		m_lpThisMotorJoint->DesiredVelocity(0);
+		m_lpThisMotorJoint->DesiredPosition(0);
 
 		//Only do anything if the velocity value has changed
 		if(m_vxJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)

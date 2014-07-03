@@ -816,10 +816,10 @@ void Adapter::StepSimulation()
 {
 	m_fltUpdatedValue = 0;
 
-	//Test code
-	int i=5;
-	if(Std_ToLower(m_strID) == "acacf97d-e5d7-41a0-b376-7f991f6462be") // && m_lpSim->Time() > 1.8
-		i=6;
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "1a63ef2a-c3f3-4dc8-8b83-076952fecc28") // && m_lpSim->Time() > 1.8
+	//	i=6;
 
 	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
 	{
@@ -831,10 +831,10 @@ void Adapter::StepSimulation()
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
 		if(!m_lpSim->RobotAdpaterSynch() || !m_bSynchWithRobot || (m_lpSim->RobotAdpaterSynch() && m_bSynchWithRobot && NeedsRobotSynch()))
 		{
-			//Test code
-			int i=5;
-			if(Std_ToLower(m_strID) == "acacf97d-e5d7-41a0-b376-7f991f6462be" && m_lpSim->Time() > 0.1) // 
-				i=6;
+			////Test code
+			//int i=5;
+			//if(Std_ToLower(m_strID) == "1a63ef2a-c3f3-4dc8-8b83-076952fecc28" && m_lpSim->Time() > 1) // 
+			//	i=6;
 
 			m_fltCalculatedVal = m_lpGain->CalculateGain(*m_lpSourceData);
 			m_fltUpdatedValue = 1;

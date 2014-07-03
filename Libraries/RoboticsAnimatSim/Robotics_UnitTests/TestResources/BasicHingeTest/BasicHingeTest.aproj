@@ -13,7 +13,7 @@
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="5.1" Scale="None" Actual="5.1"/>
+<SimEndTime Value="6.1" Scale="None" Actual="6.1"/>
 <PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
 <PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
 <Environment>
@@ -276,7 +276,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>6335c17d-127f-4516-a277-d60a4d7a8d8a</ID>
+<ID>ff78eff4-396f-429f-aa93-2afc1c1fd7d3</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -285,7 +285,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>03d380b7-71dd-48a9-af9a-e0fabb274df3</ID>
+<ID>6d815739-52ec-432f-9a1d-2454c8a8e3ae</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -322,7 +322,7 @@
 <MaxForce Value="100" Scale="None" Actual="100"/>
 <MaxVelocity Value="100" Scale="None" Actual="100"/>
 <EnableMotor>True</EnableMotor>
-<ServoMotor>False</ServoMotor>
+<MotorType>PositionVelocityControl</MotorType>
 <ServoGain>100</ServoGain>
 <PID>
 <ID>5e188d3b-2ab5-45fa-b8df-93837a603e78</ID>
@@ -1080,7 +1080,7 @@
 <Shape>Ellipse</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
 <Size Width="40" Height="40"/>
-<Text>D</Text>
+<Text>Pos</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
@@ -1107,6 +1107,8 @@
 <VNoiseMax Value="0" Scale="milli" Actual="0"/>
 <RelativeAccommodation Value="0" Scale="None" Actual="0"/>
 <AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<Iinit Value="0" Scale="nano" Actual="0"/>
+<InitTime Value="0" Scale="milli" Actual="0"/>
 <GainType>False</GainType>
 </Node>
 <Node>
@@ -1181,6 +1183,143 @@
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter</ClassName>
+<ID>3f0b177b-a086-48d2-894c-5ac4d0c12b38</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-360334</FillColor>
+<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="294.5" y="244.25"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Display</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>2</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>0029bb5e-b9e2-4228-b70c-4385c14a43dc</ID>
+</InLinks>
+<OutLinks>
+<ID>5a6b4fc2-0cf9-4b1e-ae6b-158b0a010966</ID>
+</OutLinks>
+<OriginID>45fa3f01-b79e-42d1-b04b-d352b31e154e</OriginID>
+<DestinationID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</DestinationID>
+<DataTypeID>FiringFrequency</DataTypeID>
+<TargetDataTypeID>DesiredVelocity</TargetDataTypeID>
+<Gain>
+<ID>2b37173e-4e55-445b-9554-31331f692d05</ID>
+<Type>Polynomial</Type>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="0" Scale="None" Actual="0"/>
+<UpperLimitScale Value="1" Scale="None" Actual="1"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="1" Scale="None" Actual="1"/>
+<IndependentUnits/>
+<DependentUnits>Output Variable</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="0" Scale="None" Actual="0"/>
+<C Value="1" Scale="None" Actual="1"/>
+<D Value="0" Scale="None" Actual="0"/>
+</Gain>
+<DelayBufferMode>DelayBufferInSimOnly</DelayBufferMode>
+<DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
+<InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
+<Enabled>True</Enabled>
+<RobotIOScale>1</RobotIOScale>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval Value="6" Scale="milli" Actual="0.006"/>
+<SynchUpdateStartInterval Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>FiringRateGUI.dll</AssemblyFile>
+<ClassName>FiringRateGUI.DataObjects.Behavior.Neurons.Normal</ClassName>
+<ID>45fa3f01-b79e-42d1-b04b-d352b31e154e</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-1</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="199" y="278"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Ellipse</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Vel</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks/>
+<OutLinks>
+<ID>0029bb5e-b9e2-4228-b70c-4385c14a43dc</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<Cm Value="10" Scale="nano" Actual="1e-008"/>
+<Gm Value="100" Scale="nano" Actual="1e-007"/>
+<Vth Value="-70" Scale="milli" Actual="-0.07"/>
+<Vrest Value="-70" Scale="milli" Actual="-0.07"/>
+<Fmin Value="0" Scale="None" Actual="0"/>
+<Gain Value="10" Scale="None" Actual="10"/>
+<VNoiseMax Value="0" Scale="milli" Actual="0"/>
+<RelativeAccommodation Value="0" Scale="None" Actual="0"/>
+<AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<Iinit Value="0" Scale="nano" Actual="0"/>
+<InitTime Value="0" Scale="milli" Actual="0"/>
+<GainType>False</GainType>
+</Node>
+<Node>
 <AssemblyFile>FiringRateGUI.dll</AssemblyFile>
 <ClassName>FiringRateGUI.DataObjects.Behavior.Neurons.Pacemaker</ClassName>
 <ID>5f6f483d-6d78-44cd-8303-c2f6ffc27244</ID>
@@ -1234,12 +1373,14 @@
 <VNoiseMax Value="0" Scale="milli" Actual="0"/>
 <RelativeAccommodation Value="0" Scale="None" Actual="0"/>
 <AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<Iinit Value="0" Scale="nano" Actual="0"/>
+<InitTime Value="0" Scale="milli" Actual="0"/>
 <GainType>False</GainType>
 <Il Value="-2" Scale="nano" Actual="-2e-009"/>
 <Ih Value="2" Scale="nano" Actual="2e-009"/>
 <Vssm Value="-69.9" Scale="milli" Actual="-0.0699"/>
 <Mtl Value="-1" Scale="None" Actual="-1"/>
-<Btl Value="1" Scale="None" Actual="1"/>
+<Btl Value="3" Scale="None" Actual="3"/>
 <Th Value="1" Scale="None" Actual="1"/>
 </Node>
 <Node>
@@ -1275,7 +1416,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>True</Transparent>
+<Transparent>False</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -1291,8 +1432,9 @@
 <OriginID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</OriginID>
 <DestinationID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</DestinationID>
 <DataTypeID>FiringFrequency</DataTypeID>
+<TargetDataTypeID>DesiredPosition</TargetDataTypeID>
 <Gain>
-<ID>3181d1a1-b982-43c8-b84d-8f4f0154c9b3</ID>
+<ID>6429507d-82cf-487a-81fb-2b26e08f84c8</ID>
 <Type>Polynomial</Type>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
@@ -1308,13 +1450,17 @@
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
-<C Value="2" Scale="None" Actual="2"/>
-<D Value="-1" Scale="None" Actual="-1"/>
+<C Value="1" Scale="None" Actual="1"/>
+<D Value="-0.5" Scale="None" Actual="-0.5"/>
 </Gain>
-<DelayBufferMode>NoDelayBuffer</DelayBufferMode>
+<DelayBufferMode>DelayBufferInSimOnly</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
-<Enabled>False</Enabled>
+<InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
+<Enabled>True</Enabled>
 <RobotIOScale>1</RobotIOScale>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="6" Scale="milli" Actual="0.006"/>
+<SynchUpdateStartInterval Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -1365,6 +1511,7 @@
 <OriginID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</OriginID>
 <DestinationID>c64831d6-af84-4253-935c-201f24a00c39</DestinationID>
 <DataTypeID>JointRotation</DataTypeID>
+<TargetDataTypeID>ExternalCurrent</TargetDataTypeID>
 <Gain>
 <ID>b0d23c92-2d4f-40d7-aebb-c3d3af473be6</ID>
 <Type>Polynomial</Type>
@@ -1387,8 +1534,12 @@
 </Gain>
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
+<InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
 <Enabled>True</Enabled>
 <RobotIOScale>1</RobotIOScale>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<SynchUpdateStartInterval Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
 <AssemblyFile>FiringRateGUI.dll</AssemblyFile>
@@ -1444,6 +1595,8 @@
 <VNoiseMax Value="0" Scale="milli" Actual="0"/>
 <RelativeAccommodation Value="0" Scale="None" Actual="0"/>
 <AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<Iinit Value="0" Scale="nano" Actual="0"/>
+<InitTime Value="0" Scale="milli" Actual="0"/>
 <GainType>False</GainType>
 </Node>
 <Node>
@@ -1495,6 +1648,7 @@
 <OriginID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</OriginID>
 <DestinationID>3bf95c30-4041-4ae1-be14-4059849ff44a</DestinationID>
 <DataTypeID>JointRotation</DataTypeID>
+<TargetDataTypeID>ExternalCurrent</TargetDataTypeID>
 <Gain>
 <ID>2f8c30ef-02ae-49d2-833c-b684e4a9fb5b</ID>
 <Type>Polynomial</Type>
@@ -1517,8 +1671,12 @@
 </Gain>
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
+<InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
 <Enabled>True</Enabled>
 <RobotIOScale>1</RobotIOScale>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<SynchUpdateStartInterval Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -1561,6 +1719,7 @@
 <YSizeable>True</YSizeable>
 <ZOrder>0</ZOrder>
 <InLinks>
+<ID>5a6b4fc2-0cf9-4b1e-ae6b-158b0a010966</ID>
 <ID>d0775c3f-93dc-4b7e-9d1a-411d4451360e</ID>
 </InLinks>
 <OutLinks>
@@ -1571,6 +1730,49 @@
 </Node>
 </Nodes>
 <Links>
+<Link>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>0029bb5e-b9e2-4228-b70c-4385c14a43dc</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>3f0b177b-a086-48d2-894c-5ac4d0c12b38</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>45fa3f01-b79e-42d1-b04b-d352b31e154e</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
 <Link>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.Links.Adapter</ClassName>
@@ -1692,6 +1894,49 @@
 <LineStyle>Polyline</LineStyle>
 <OrthogonalDynamic>True</OrthogonalDynamic>
 <OriginID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
+<Link>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>5a6b4fc2-0cf9-4b1e-ae6b-158b0a010966</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>dc7ca85e-0b8f-4fd2-8fe6-4b82b451c488</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>3f0b177b-a086-48d2-894c-5ac4d0c12b38</OriginID>
 <OrientedText>True</OrientedText>
 <Selectable>True</Selectable>
 <Stretchable>True</Stretchable>
@@ -1871,9 +2116,11 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <UserText/>
 <Weight Value="10" Scale="nano" Actual="1e-008"/>
+<HasDelay>False</HasDelay>
+<DelayInterval Value="100" Scale="milli" Actual="0.1"/>
 </Link>
 </Links>
 <DiagramXml><![CDATA[<Root>
@@ -1891,7 +2138,7 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="8" Links="7">
+<AddFlow Nodes="10" Links="9">
   <Version>1.5.0.1</Version>
   <Node Left="373" Top="159" Width="50" Height="50">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
@@ -1923,7 +2170,7 @@
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>D</Text>
+    <Text>Pos</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</Tag>
   </Node>
@@ -1936,19 +2183,18 @@
     <Jump>Arc</Jump>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
-    <Text>10 nA</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>f00bc5ed-4dc9-497b-a1d5-1f24ee716d4b</Tag>
   </Link>
   <Node Left="291.5" Top="161.5" Width="40" Height="40">
-    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Display" Orientation="so_0" />
     <FillColor>-360334</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Disabled</Text>
+    <Text>7</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6e47926e-2765-4212-b32a-2d2f608f46d9</Tag>
   </Node>
@@ -2064,6 +2310,50 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>67623ca4-2d1f-4966-84a4-ece71a591d95</Tag>
   </Link>
+  <Node Left="199" Top="278" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <FillColor>-1</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Vel</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>45fa3f01-b79e-42d1-b04b-d352b31e154e</Tag>
+  </Node>
+  <Node Left="294.5" Top="244.25" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Display" Orientation="so_0" />
+    <FillColor>-360334</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>2</Text>
+    <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>3f0b177b-a086-48d2-894c-5ac4d0c12b38</Tag>
+  </Node>
+  <Link Org="15" Dst="16">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>0029bb5e-b9e2-4228-b70c-4385c14a43dc</Tag>
+  </Link>
+  <Link Org="16" Dst="0">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>5a6b4fc2-0cf9-4b1e-ae6b-158b0a010966</Tag>
+  </Link>
 </AddFlow>
 </Diagram>
 </Root>
@@ -2076,15 +2366,49 @@
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotInterfaces.LANWirelessInterface</ClassName>
 <SynchSim>True</SynchSim>
-<PhysicsTimeStep Value="35" Scale="milli" Actual="0.035"/>
+<PhysicsTimeStep Value="6" Scale="milli" Actual="0.006"/>
 <IOControls>
 <RobotIOControl>
 <Name>DynamixelUSB</Name>
 <ID>4b23ac63-cbce-4ca2-949e-334da679eba1</ID>
 <AssemblyFile>RoboticsGUI.dll</AssemblyFile>
 <ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSB</ClassName>
-<Parts/>
-<PortNumber>6</PortNumber>
+<Parts>
+<RobotPartInterface>
+<Name>Left_ThoraxCoxa</Name>
+<ID>b6644ff2-17c6-46c9-82eb-3524a780bf60</ID>
+<AssemblyFile>RoboticsGUI.dll</AssemblyFile>
+<ClassName>RoboticsGUI.RobotIOControls.DynamixelUSB.DynamixelUSBHingeMotor</ClassName>
+<Enabled>True</Enabled>
+<IOComponentID>3</IOComponentID>
+<LinkedPartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</LinkedPartID>
+<PropertyName/>
+<Gain>
+<ID>eb9dd347-2628-4dc2-8e2c-100d60e2532c</ID>
+<Type>Polynomial</Type>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="0" Scale="None" Actual="0"/>
+<UpperLimitScale Value="1" Scale="None" Actual="1"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="1" Scale="None" Actual="1"/>
+<IndependentUnits/>
+<DependentUnits>Output Variable</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="0" Scale="None" Actual="0"/>
+<C Value="1" Scale="None" Actual="1"/>
+<D Value="0" Scale="None" Actual="0"/>
+</Gain>
+<UpdateAllParamsCount>10</UpdateAllParamsCount>
+<UpdateQueueIndex>-1</UpdateQueueIndex>
+<QueryMotorData>True</QueryMotorData>
+</RobotPartInterface>
+</Parts>
+<PortNumber>5</PortNumber>
 <BaudRate>1</BaudRate>
 </RobotIOControl>
 </IOControls>
@@ -2291,28 +2615,6 @@
 <Stimuli>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_FB</Name>
-<ID>2b5c9846-7394-4f4a-8a38-a164ad68af4e</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
-<NodeID>c64831d6-af84-4253-935c-201f24a00c39</NodeID>
-<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
 <Name>Motor_Up</Name>
 <ID>03d9ce57-6abf-4d6e-8bb0-f5a825b6bb01</ID>
@@ -2320,7 +2622,7 @@
 <EndTime Value="1" Scale="None" Actual="1"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
@@ -2330,20 +2632,25 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Motor_Down</Name>
-<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
-<StartTime Value="2" Scale="None" Actual="2"/>
-<EndTime Value="4" Scale="None" Actual="4"/>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Vel_A</Name>
+<ID>fc691cbd-9981-4ae5-9210-a16f9fe5f137</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
-<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
-<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
-<Velocity Value="-1" Scale="None" Actual="-1"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>45fa3f01-b79e-42d1-b04b-d352b31e154e</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2367,11 +2674,160 @@
 <BurstOnDuration Value="10" Scale="None" Actual="10"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Motor_Down</Name>
+<ID>968ddd3c-3128-4f7c-9e79-191776d43254</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<StructureID>8a70174d-6846-47b9-a9fd-5eef41743d98</StructureID>
+<PartID>ba1616eb-45ad-48b4-aee4-f47c6d19ba09</PartID>
+<Velocity Value="-1" Scale="None" Actual="-1"/>
+<DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Pos_A</Name>
+<ID>8af3ada4-5718-4b42-a2d0-1cd37dfbd3e9</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="2" Scale="None" Actual="2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Pos_C</Name>
+<ID>83c86a90-7590-4165-a320-2310f121273b</ID>
+<StartTime Value="4" Scale="None" Actual="4"/>
+<EndTime Value="6" Scale="None" Actual="6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_FB</Name>
+<ID>2b5c9846-7394-4f4a-8a38-a164ad68af4e</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>c64831d6-af84-4253-935c-201f24a00c39</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Pos_Sin</Name>
+<ID>386bbe83-7d04-4d10-8008-8f84c4f9afab</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Equation</ValueType>
+<Equation>5+5*sin(t)</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Pos_B</Name>
+<ID>f67200ca-6460-45de-b55a-71205a751132</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>2a6ecb22-b33b-4ecd-a748-daca3694cfd2</NodeID>
+<CurrentOn Value="7" Scale="nano" Actual="7e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Vel_B</Name>
+<ID>5158cb61-79b1-43f2-bfe0-88146b79bb34</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>8a70174d-6846-47b9-a9fd-5eef41743d98</OrganismID>
+<NodeID>45fa3f01-b79e-42d1-b04b-d352b31e154e</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>b69f27ea-4a85-482b-aa11-9b50633c8598</Name>
-<ID>b69f27ea-4a85-482b-aa11-9b50633c8598</ID>
+<Name>9f2d5351-57ec-43c4-9250-397f92307cf1</Name>
+<ID>9f2d5351-57ec-43c4-9250-397f92307cf1</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -2449,9 +2905,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <ID>6fcad2c8-bd22-4743-b156-6c84128c5b09</ID>
@@ -2465,7 +2921,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/24/2014 10:00:31"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="07/03/2014 05:11:18"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -2898,7 +3354,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="4" Unique="3" Space="100"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9e29cb55-d232-45c6-a0e9-cd94c7937f1e&lt;/ID&gt;
@@ -2927,7 +3383,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="NeuralData" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="NeuralData" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;8900d74b-8f82-44f0-a181-7f899da8bae6&lt;/ID&gt;

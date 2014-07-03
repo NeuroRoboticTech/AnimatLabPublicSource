@@ -67,7 +67,12 @@ void BlMotorizedJoint::CalculateServoVelocity()
 
 		float fltPosError = fabs(fltError);
 		if(fltPosError > 0 && fltPosError < 0.05)
-			fltDesiredVel *= (fabs(fltError)*m_lpThisMotorJoint->ServoGain());
+		{
+			float fltDesiredVel2 = fltDesiredVel * (fabs(fltError)*m_lpThisMotorJoint->ServoGain());
+			//Only do this if the new desired velocity is less than the original one to slow it down. Never speed it up.
+			if(fabs(fltDesiredVel2) <= fabs(fltDesiredVel))
+				fltDesiredVel = fltDesiredVel2;
+		}
 
 		m_lpThisMotorJoint->DesiredVelocity(fltDesiredVel);
 
@@ -86,6 +91,12 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
 		float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
 		float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+
+		if(fltDesiredVel>fltMaxVel)
+			fltDesiredVel = fltMaxVel;
+
+		if(fltDesiredVel < -fltMaxVel)
+			fltDesiredVel = -fltMaxVel;
 
 		float fltSetVelocity = fltDesiredVel;
 
