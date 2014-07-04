@@ -37,37 +37,21 @@ namespace RoboticsAnimatSim
 RbDynamixelUSBServo::RbDynamixelUSBServo() 
 {
 	m_iServoID = 0;
-	m_iMinPos = 0;
-	m_iMaxPos = 1023;
-	m_iMaxAngle = (m_iMaxPos - m_iMinPos);
-	m_iCenterPosFP = round(m_iMaxAngle/2.0);
-
-	m_fltMaxAngle = (float) ((300.0/180.0)*RB_PI);
-	m_fltMinPos = -(m_fltMaxAngle/2);
-	m_fltMaxPos = (m_fltMaxAngle/2);
-
-	m_iMinSimPos = m_iMinPos;
-	m_iMaxSimPos = m_iMaxPos;
-	m_fltMinSimPos = m_fltMinPos;
-	m_fltMaxSimPos = m_fltMaxPos;
-
-	m_fltPosFPToRadSlope = (m_fltMaxAngle/m_iMaxAngle);
-	m_fltPosFPToRadIntercept = -(m_fltPosFPToRadSlope*m_iCenterPosFP);
-
-	m_fltPosRadToFPSlope = (m_iMaxAngle/m_fltMaxAngle);
-	m_fltPosRadToFPIntercept = m_iCenterPosFP;
+	m_iMinPosFP = 0;
+	m_iMaxPosFP = 1023;
 
 	m_iLastGoalPos = -1;
 
-	m_iMinVelocity = 1;
-	m_iMaxVelocity = 1023;
-	m_fltConvertFPToRadS = 0.01162389281828223498231178051813f;  //0.111 rot/min = 0.0116 rad/s
-	m_fltConvertRadSToFP = 1/m_fltConvertFPToRadS;
+	m_iMinVelocityFP = 1;
+	m_iMaxVelocityFP = 1023;
+	m_fltMaxRotMin = 0.111;
 	m_iLastGoalVelocity = -10000;
 
-	m_iMinLoad = 0;
-	m_iMaxLoad = 1023;
-	m_fltConvertFPToLoad = 100.0/(m_iMaxLoad - m_iMinLoad);
+	m_fltMinAngle = -150;
+	m_fltMaxAngle = 150;
+
+	m_iMinLoadFP = 0;
+	m_iMaxLoadFP = 1023;
 
 	m_iNextGoalPos = 0;
 	m_iNextGoalVelocity = 0;
@@ -84,11 +68,128 @@ RbDynamixelUSBServo::RbDynamixelUSBServo()
 	m_fltVoltage = 0;
 	m_fltTemperature = 0;
 
+	m_fltReadParamTime = 0;
+
+	RecalculateParams();
 }
 
 RbDynamixelUSBServo::~RbDynamixelUSBServo()
 {
 }
+
+void RbDynamixelUSBServo::RecalculateParams()
+{
+	m_iTotalAngle = (m_iMaxPosFP - m_iMinPosFP);
+	m_iCenterPosFP = round(m_iTotalAngle/2.0);
+
+	m_fltTotalAngle = (float) (((m_fltMaxAngle-m_fltMinAngle)/180.0)*RB_PI);
+
+	m_iMinSimPos = m_iMinPosFP;
+	m_iMaxSimPos = m_iMaxPosFP;
+	m_fltMinSimPos = m_fltMinAngle;
+	m_fltMaxSimPos = m_fltMaxAngle;
+
+	if(m_iTotalAngle > 0)
+		m_fltPosFPToRadSlope = (m_fltTotalAngle/m_iTotalAngle);
+
+	m_fltPosFPToRadIntercept = -(m_fltPosFPToRadSlope*m_iCenterPosFP);
+
+	if(m_fltTotalAngle > 0)
+		m_fltPosRadToFPSlope = (m_iTotalAngle/m_fltTotalAngle);
+
+	m_fltPosRadToFPIntercept = m_iCenterPosFP;
+
+	m_fltMaxRadSec = (m_fltMaxRotMin*2*RB_PI)/60.0f; 
+	m_fltConvertFPToRadS = m_fltMaxRadSec; //0.01162389281828223498231178051813f;  //0.111 rot/min = 0.0116 rad/s
+
+	if(m_fltConvertFPToRadS > 0)
+		m_fltConvertRadSToFP = 1/m_fltConvertFPToRadS;
+
+	int iTotalLoad = (m_iMaxLoadFP - m_iMinLoadFP);
+	if(iTotalLoad > 0)
+		m_fltConvertFPToLoad = 100.0/iTotalLoad;
+}
+
+void RbDynamixelUSBServo::MinPosFP(int iVal)
+{
+	Std_IsBelowMax((int) m_iMaxPosFP, iVal, true, "MinPosFP");
+	m_iMinPosFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MinPosFP() {return m_iMinPosFP;}
+
+void RbDynamixelUSBServo::MaxPosFP(int iVal)
+{
+	Std_IsAboveMin((int) m_iMinPosFP, iVal, true, "MinPosFP");
+	m_iMaxPosFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MaxPosFP() {return m_iMaxPosFP;}
+
+void RbDynamixelUSBServo::MinAngle(float fltVal)
+{
+	Std_IsBelowMax((float) m_fltMaxAngle, fltVal, true, "MinAngle");
+	m_fltMinAngle = fltVal;
+	RecalculateParams();
+}
+
+float RbDynamixelUSBServo::MinAngle() {return m_fltMinAngle;}
+
+void RbDynamixelUSBServo::MaxAngle(float fltVal)
+{
+	Std_IsAboveMin((float) m_fltMinAngle, fltVal, true, "MaxAngle");
+	m_fltMaxAngle = fltVal;
+	RecalculateParams();
+}
+
+float RbDynamixelUSBServo::MaxAngle() {return m_fltMaxAngle;}
+
+void RbDynamixelUSBServo::MinVelocityFP(int iVal)
+{
+	Std_IsBelowMax((int) m_iMaxVelocityFP, iVal, true, "MinVelocityFP");
+	m_iMinVelocityFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MinVelocityFP() {return m_iMinVelocityFP;}
+
+void RbDynamixelUSBServo::MaxVelocityFP(int iVal)
+{
+	Std_IsAboveMin((int) m_iMinVelocityFP, iVal, true, "MaxVelocityFP");
+	m_iMaxVelocityFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MaxVelocityFP() {return m_iMaxVelocityFP;}
+
+void RbDynamixelUSBServo::MaxRotMin(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxRotMin");
+	m_fltMaxRotMin = fltVal;
+	RecalculateParams();
+}
+
+float RbDynamixelUSBServo::MaxRotMin() {return m_fltMaxRotMin;}
+
+void RbDynamixelUSBServo::MinLoadFP(int iVal)
+{
+	Std_IsBelowMax((int) m_iMaxLoadFP, iVal, true, "MinLoadFP");
+	m_iMinLoadFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MinLoadFP() {return m_iMinLoadFP;}
+
+void RbDynamixelUSBServo::MaxLoadFP(int iVal)
+{
+	Std_IsAboveMin((int) m_iMinLoadFP, iVal, true, "MaxLoadFP");
+	m_iMaxLoadFP = iVal;
+	RecalculateParams();
+}
+
+int RbDynamixelUSBServo::MaxLoadFP() {return m_iMaxLoadFP;}
 
 float RbDynamixelUSBServo::ConvertPosFPToRad(int iPos)
 {
@@ -139,8 +240,8 @@ then use the SetMaximumVelocity method.
 void RbDynamixelUSBServo::SetGoalVelocity_FP(int iVelocity)
 {
 	//Verify we are not putting invalid values in.
-	if(iVelocity < m_iMinVelocity) iVelocity = m_iMinVelocity;
-	if(iVelocity > m_iMaxVelocity) iVelocity = m_iMaxVelocity;
+	if(iVelocity < m_iMinVelocityFP) iVelocity = m_iMinVelocityFP;
+	if(iVelocity > m_iMaxVelocityFP) iVelocity = m_iMaxVelocityFP;
 
 	//If the velocity we are setting is the same as we just set then no point sending it.
 	if(m_iLastGoalVelocity == iVelocity)
@@ -162,8 +263,8 @@ void RbDynamixelUSBServo::SetGoalVelocity_FP(int iVelocity)
 void RbDynamixelUSBServo::SetNextGoalVelocity_FP(int iVelocity)
 {
 	//Verify we are not putting invalid values in.
-	if(iVelocity != -1 && iVelocity < m_iMinVelocity) iVelocity = m_iMinVelocity;
-	if(iVelocity != -1 && iVelocity > m_iMaxVelocity) iVelocity = m_iMaxVelocity;
+	if(iVelocity != -1 && iVelocity < m_iMinVelocityFP) iVelocity = m_iMinVelocityFP;
+	if(iVelocity != -1 && iVelocity > m_iMaxVelocityFP) iVelocity = m_iMaxVelocityFP;
 
 	m_iNextGoalVelocity = iVelocity;
 }
@@ -453,9 +554,9 @@ int RbDynamixelUSBServo::GetActualVelocity_FP()
 float RbDynamixelUSBServo::ConvertFPVelocity(int iVel)
 {
 	int iDir = 1;
-	if(iVel > m_iMaxVelocity)
+	if(iVel > m_iMaxVelocityFP)
 	{
-		iVel -= m_iMaxVelocity;
+		iVel -= m_iMaxVelocityFP;
 		iDir = -1;
 	}
 
@@ -504,9 +605,9 @@ int RbDynamixelUSBServo::GetActualLoad_FP()
 float RbDynamixelUSBServo::ConvertFPLoad(int iLoad)
 {
 	int iDir = -1;
-	if(iLoad > m_iMaxLoad)
+	if(iLoad > m_iMaxLoadFP)
 	{
-		iLoad -= m_iMaxLoad;
+		iLoad -= m_iMaxLoadFP;
 		iDir = 1;
 	}
 
@@ -754,6 +855,7 @@ speed, load, temperature, and voltage. It sets the corresponding internal variab
 void RbDynamixelUSBServo::ReadAllParams()
 {
 	std::vector<int> aryData;
+	unsigned long long lStart = GetSimulator()->GetTimerTick(), lEnd;
 
 	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 8, aryData) && aryData.size() == 8)
 	{
@@ -769,6 +871,9 @@ void RbDynamixelUSBServo::ReadAllParams()
 		m_fltVoltage = m_iVoltage/100.0;
 		m_fltTemperature = (float) m_iTemperature;
 	}
+
+	lEnd = GetSimulator()->GetTimerTick();
+	m_fltReadParamTime = GetSimulator()->TimerDiff_m(lStart, lEnd);
 }
 
 /**
@@ -781,17 +886,21 @@ It sets the corresponding internal variables.
 void RbDynamixelUSBServo::ReadKeyParams()
 {
 	std::vector<int> aryData;
+	unsigned long long lStart = GetSimulator()->GetTimerTick(), lEnd;
 
 	if(dxl_read_block(m_iServoID, P_PRESENT_POSITION_L, 6, aryData) && aryData.size() == 6)
 	{
 		m_iPresentPos = dxl_makeword(aryData[0], aryData[1]);
 		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);
 		m_iLoad = dxl_makeword(aryData[4], aryData[5]);
-
+		
 		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 		m_fltLoad = ConvertFPLoad(m_iLoad);
 	}
+
+	lEnd = GetSimulator()->GetTimerTick();
+	m_fltReadParamTime = GetSimulator()->TimerDiff_m(lStart, lEnd);
 }
 
 /**
@@ -942,7 +1051,7 @@ int RbDynamixelUSBServo::GetReturnDelayTime_FP()
 **/
 void RbDynamixelUSBServo::SetCCWAngleLimit_FP(int iVal)
 {
-	if(iVal >= m_iMinPos && iVal <= m_iMaxPos)
+	if(iVal >= m_iMinPosFP && iVal <= m_iMaxPosFP)
 		dxl_write_word(m_iServoID, P_CCW_ANGLE_LIMIT_L, iVal);
 }
 
@@ -997,7 +1106,7 @@ float RbDynamixelUSBServo::GetCCWAngleLimit()
 **/
 void RbDynamixelUSBServo::SetCWAngleLimit_FP(int iVal)
 {
-	if(iVal >= m_iMinPos && iVal <= m_iMaxPos)
+	if(iVal >= m_iMinPosFP && iVal <= m_iMaxPosFP)
 		dxl_write_word(m_iServoID, P_CW_ANGLE_LIMIT_L, iVal);
 }
 
@@ -1074,8 +1183,8 @@ void RbDynamixelUSBServo::SetMinSimPos(float fltVal)
 {
 	m_iMinSimPos = ConvertPosRadToFP(fltVal);
 
-	if(m_iMinSimPos < m_iMinPos) m_iMinSimPos = m_iMinPos;
-	if(m_iMinSimPos > m_iMaxPos) m_iMinSimPos = m_iMaxPos;
+	if(m_iMinSimPos < m_iMinPosFP) m_iMinSimPos = m_iMinPosFP;
+	if(m_iMinSimPos > m_iMaxPosFP) m_iMinSimPos = m_iMaxPosFP;
 
 	m_fltMinSimPos = ConvertPosFPToRad(m_iMinSimPos);
 }
@@ -1112,8 +1221,8 @@ void RbDynamixelUSBServo::SetMaxSimPos(float fltVal)
 {
 	m_iMaxSimPos = ConvertPosRadToFP(fltVal);
 
-	if(m_iMaxSimPos < m_iMinPos) m_iMaxSimPos = m_iMinPos;
-	if(m_iMaxSimPos > m_iMaxPos) m_iMaxSimPos = m_iMaxPos;
+	if(m_iMaxSimPos < m_iMinPosFP) m_iMaxSimPos = m_iMinPosFP;
+	if(m_iMaxSimPos > m_iMaxPosFP) m_iMaxSimPos = m_iMaxPosFP;
 
 	m_fltMaxSimPos = ConvertPosFPToRad(m_iMaxSimPos);
 }
@@ -1128,7 +1237,7 @@ void RbDynamixelUSBServo::SetMaxSimPos(float fltVal)
 **/
 void RbDynamixelUSBServo::SetTorqueLimit_FP(int iVal)
 {
-	if(iVal >= m_iMinLoad && iVal <= m_iMaxLoad)
+	if(iVal >= m_iMinLoadFP && iVal <= m_iMaxLoadFP)
 		dxl_write_word(m_iServoID, P_MAX_TORQUE_L, iVal);
 }
 

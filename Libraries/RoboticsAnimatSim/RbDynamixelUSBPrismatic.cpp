@@ -50,6 +50,11 @@ void RbDynamixelUSBPrismatic::MicroSleep(unsigned int iTime)
 	m_lpSim->MicroSleep(iTime);
 }
 
+Simulator *RbDynamixelUSBPrismatic::GetSimulator()
+{
+	return m_lpSim;
+}
+
 void RbDynamixelUSBPrismatic::StepSimulation()
 {
 	if(!m_lpSim->InSimulation())

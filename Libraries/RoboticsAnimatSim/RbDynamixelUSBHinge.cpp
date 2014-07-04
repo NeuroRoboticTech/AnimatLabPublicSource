@@ -78,10 +78,10 @@ float *RbDynamixelUSBHinge::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
-	return RobotPartInterface::GetDataPointer(strDataType);
+	if(strType == "READPARAMTIME")
+		return &m_fltReadParamTime;
+	else
+		return RobotPartInterface::GetDataPointer(strDataType);
 }
 
 bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -115,6 +115,60 @@ bool RbDynamixelUSBHinge::SetData(const std::string &strDataType, const std::str
 		return true;
 	}
 
+	if(strType == "MINPOSFP")
+	{
+		MinPosFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXPOSFP")
+	{
+		MaxPosFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MINANGLE")
+	{
+		MinAngle((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXANGLE")
+	{
+		MaxAngle((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MINVELOCITYFP")
+	{
+		MinVelocityFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXVELOCITYFP")
+	{
+		MaxVelocityFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXROTMIN")
+	{
+		MaxRotMin((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MINLOADFP")
+	{
+		MinLoadFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXLOADFP")
+	{
+		MaxLoadFP((int) atoi(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -126,10 +180,22 @@ void RbDynamixelUSBHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 {
 	RobotPartInterface::QueryProperties(aryProperties);
 
+	aryProperties.Add(new TypeProperty("ReadParamTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("UpdateAllParamsCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("UpdateQueueIndex", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("QueryMotorData", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("MinPosFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxPosFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinAngle", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxAngle", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinVelocityFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxVelocityFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxRotMin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -138,6 +204,11 @@ void RbDynamixelUSBHinge::MicroSleep(unsigned int iTime)
 {
 	if(m_lpSim)
 	m_lpSim->MicroSleep(iTime);
+}
+
+Simulator *RbDynamixelUSBHinge::GetSimulator()
+{
+	return m_lpSim;
 }
 
 float RbDynamixelUSBHinge::QuantizeServoPosition(float fltPos)
@@ -164,6 +235,8 @@ void RbDynamixelUSBHinge::Initialize()
 
 	m_lpHinge = dynamic_cast<Hinge *>(m_lpPart);
 	m_lpParentUSB = dynamic_cast<RbDynamixelUSB *>(m_lpParentIOControl);
+
+	RecalculateParams();
 }
 
 void RbDynamixelUSBHinge::SetupIO()
@@ -183,47 +256,16 @@ void RbDynamixelUSBHinge::SetupIO()
 
 void RbDynamixelUSBHinge::StepIO(int iPartIdx)
 {	
-	static int iTickCount=0;
-	static double dblTotalTime=0;
 	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 	if(!m_lpSim->InSimulation())
 	{
 		if(m_bQueryMotorData && (m_iUpdateQueueIndex == iPartIdx || m_iUpdateQueueIndex == -1))
 		{
-		//if(m_iUpdateIdx == m_iUpdateAllParamsCount)
-		//{
-		//	unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
-		//	ReadAllParams();
-		//	lEnd = m_lpSim->GetTimerTick();
-		//	double dblTime = m_lpSim->TimerDiff_m(lStart, lEnd);
-		//	dblTotalTime += dblTime;
-		//	iTickCount++;
-		//	if(iTickCount == 20)
-		//	{
-		//		double dblAvg = dblTotalTime/20.0;
-		//		std::cout << m_lpSim->Time() << " Avg RadTime: " << dblAvg << "\r\n";
-		//		iTickCount=0;
-		//		dblTotalTime = 0;
-		//	}
-		//}
-		//else
-		//{
-			unsigned long long lStart = m_lpSim->GetTimerTick(), lEnd;
-			//ReadAllParams();
-			ReadKeyParams();
-			lEnd = m_lpSim->GetTimerTick();
-			double dblTime = m_lpSim->TimerDiff_m(lStart, lEnd);
-			dblTotalTime += dblTime;
-			iTickCount++;
-			if(iTickCount == 20)
-			{
-				double dblAvg = dblTotalTime/20.0;
-				std::cout << m_lpSim->Time() << " Avg RadTime: " << dblAvg << "\r\n";
-				iTickCount=0;
-				dblTotalTime = 0;
-			}
-		//}
+			if(m_iUpdateIdx == m_iUpdateAllParamsCount)
+				ReadAllParams();
+			else
+				ReadKeyParams();
 		}
 
 		//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
@@ -291,9 +333,9 @@ void RbDynamixelUSBHinge::StepSimulation()
 				if(fltSetVelocity == 0)
 					SetNextGoalPosition_FP(m_iLastGoalPos);
 				else if(fltSetVelocity > 0)
-					SetNextGoalPosition_FP(m_iMaxPos);
+					SetNextGoalPosition_FP(m_iMaxPosFP);
 				else
-					SetNextGoalPosition_FP(m_iMinPos);
+					SetNextGoalPosition_FP(m_iMinPosFP);
 			}
 			else
 			{
@@ -315,6 +357,12 @@ void RbDynamixelUSBHinge::StepSimulation()
 	}
 }
 
+void RbDynamixelUSBHinge::ResetSimulation()
+{
+	AnimatSim::Robotics::RobotPartInterface::ResetSimulation();
+	m_fltReadParamTime = 0;
+}
+
 void RbDynamixelUSBHinge::Load(StdUtils::CStdXml &oXml)
 {
 	RobotPartInterface::Load(oXml);
@@ -323,6 +371,17 @@ void RbDynamixelUSBHinge::Load(StdUtils::CStdXml &oXml)
 	UpdateAllParamsCount(oXml.GetChildInt("UpdateAllParamsCount", m_iUpdateAllParamsCount));
 	UpdateQueueIndex(oXml.GetChildInt("UpdateQueueIndex", m_iUpdateQueueIndex));
 	QueryMotorData(oXml.GetChildBool("QueryMotorData", m_bQueryMotorData));
+
+    MinPosFP(oXml.GetChildInt("MinPosFP", m_iMinPosFP));
+    MaxPosFP(oXml.GetChildInt("MaxPosFP", m_iMaxPosFP));
+    MinAngle(oXml.GetChildFloat("MinAngle", m_fltMinAngle));
+    MaxAngle(oXml.GetChildFloat("MaxAngle", m_fltMaxAngle));
+    MinVelocityFP(oXml.GetChildInt("MinVelocityFP", m_iMinVelocityFP));
+    MaxVelocityFP(oXml.GetChildInt("MaxVelocityFP", m_iMaxVelocityFP));
+    MaxRotMin(oXml.GetChildFloat("MaxRotMin", m_fltMaxRotMin));
+    MinLoadFP(oXml.GetChildInt("MinLoadFP", m_iMinLoadFP));
+    MaxLoadFP(oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP));
+
 	oXml.OutOfElem();
 }
 

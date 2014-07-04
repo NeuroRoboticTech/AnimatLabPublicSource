@@ -67,22 +67,22 @@ protected:
 	int m_iServoID;
 
 	///Minimum value that can be set for the position in fixed point number.
-	int m_iMinPos; 
+	int m_iMinPosFP; 
 
 	///Maximum value that can be set for the position in fixed point number.
-	int m_iMaxPos; 
+	int m_iMaxPosFP; 
 
-	///Maximum angle the servo can move in fixed point number. m_iMaxPos - m_iMinPos
-	int m_iMaxAngle;
+	///Maximum angle the servo can move in fixed point number. m_iMaxPosFP - m_iMinPosFP
+	int m_iTotalAngle;
 
-	///Maximum angle the servo can move in floating point number. m_iMaxPos - m_iMinPos
-	float m_fltMaxAngle;
+	///Maximum angle the servo can move in floating point number. m_iMaxPosFP - m_iMinPosFP
+	float m_fltTotalAngle;
 
 	///Minimum value that can be set for the position in floating point number.
-	float m_fltMinPos;
+	float m_fltMinAngle;
 
 	///Maximum value that can be set for the position in floating point number.
-	float m_fltMaxPos;
+	float m_fltMaxAngle;
 
 	///This is the minimum angle in fixed point that can be used for this servo as specified in the simulation.
 	int m_iMinSimPos;
@@ -121,10 +121,16 @@ protected:
 	int m_iNextGoalPos;
 
 	///Minimum value that can be set for the velocity
-	int m_iMinVelocity; 
+	int m_iMinVelocityFP; 
 
 	///Maximum value that can be set for the velocity
-	int m_iMaxVelocity; 
+	int m_iMaxVelocityFP; 
+
+	///Stores the maximum rot/min for this motor
+	float m_fltMaxRotMin;
+
+	///Stores the maximum rad/sec for this motor
+	float m_fltMaxRadSec; 
 
 	///The conversion factor to convert rad/s to FP velocity.
 	float m_fltConvertRadSToFP;
@@ -139,10 +145,10 @@ protected:
 	int m_iNextGoalVelocity;
 
 	///Minimum value that can be set for the load
-	int m_iMinLoad; 
+	int m_iMinLoadFP; 
 
 	///Maximum value that can be set for the load
-	int m_iMaxLoad; 
+	int m_iMaxLoadFP; 
 
 	///Used to conver the load fixed point value back to a percentage of load
 	float m_fltConvertFPToLoad;
@@ -177,9 +183,41 @@ protected:
 	///The current temperature that was last read in for this servo.
 	float m_fltTemperature;
 
+	///The time taken to read the params of this motor for the current step
+	float m_fltReadParamTime;
+
+	virtual void RecalculateParams();
+
 public:
 	RbDynamixelUSBServo();
 	virtual ~RbDynamixelUSBServo();
+
+	virtual void MinPosFP(int iVal);
+	virtual int MinPosFP();
+
+	virtual void MaxPosFP(int iVal);
+	virtual int MaxPosFP();
+
+	virtual void MinAngle(float fltVal);
+	virtual float MinAngle();
+
+	virtual void MaxAngle(float fltVal);
+	virtual float MaxAngle();
+
+	virtual void MinVelocityFP(int iVal);
+	virtual int MinVelocityFP();
+
+	virtual void MaxVelocityFP(int iVal);
+	virtual int MaxVelocityFP();
+
+	virtual void MaxRotMin(float fltVal);
+	virtual float MaxRotMin();
+
+	virtual void MinLoadFP(int iVal);
+	virtual int MinLoadFP();
+
+	virtual void MaxLoadFP(int iVal);
+	virtual int MaxLoadFP();
 
 	virtual float ConvertPosFPToRad(int iPos);
 	virtual int ConvertPosRadToFP(float fltPos);
@@ -277,6 +315,7 @@ public:
 	virtual int GetTorqueLimit_FP();
 	
 	virtual void MicroSleep(unsigned int iTime) = 0;
+	virtual Simulator *GetSimulator() = 0;
 };
 
 			}	//DynamixelUSB

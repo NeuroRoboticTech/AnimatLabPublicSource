@@ -25,7 +25,8 @@ public:
 	virtual bool IsMotorControl() {return true;};
 
     virtual void StepSimulation();
-	virtual void MicroSleep(unsigned int iTime);    
+	virtual void MicroSleep(unsigned int iTime);
+	virtual Simulator *GetSimulator();
 };
 
 			}	//DynamixelUSB
