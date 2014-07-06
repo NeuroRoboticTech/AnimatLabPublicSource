@@ -291,7 +291,7 @@ void BlPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void BlPrismatic::StepSimulation()
 { 
-    //Test code
+    ////Test code
     //int iTest = 0;
     //if(m_lpSim->Time() >= 1.02)
     //    iTest = 1;

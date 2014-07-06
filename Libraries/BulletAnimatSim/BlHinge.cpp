@@ -317,7 +317,7 @@ void BlHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void BlHinge::StepSimulation()
 {
-    //Test code
+    ////Test code
     //int iTest = 0;
     //if(m_lpSim->Time() >= 0.2)
     //    iTest = 1;

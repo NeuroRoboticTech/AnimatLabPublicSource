@@ -306,13 +306,16 @@ Namespace DataObjects.Physical.Bodies
             MyBase.BeforeAddBody()
 
             Try
-                Dim frmMesh As New Forms.BodyPlan.SelectMesh
+                If Not Util.Application.BodyPasteInProgress Then
+                    'Only do this if we are adding a new part, not if we are pasting one.
+                    Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
-                frmMesh.txtMeshFile.Text = Me.MeshFile
-                frmMesh.m_bIsCollisionType = Me.IsCollisionObject
-                If frmMesh.ShowDialog() = DialogResult.OK Then
-                    m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
-                    Me.MeshFile = frmMesh.txtMeshFile.Text
+                    frmMesh.txtMeshFile.Text = Me.MeshFile
+                    frmMesh.m_bIsCollisionType = Me.IsCollisionObject
+                    If frmMesh.ShowDialog() = DialogResult.OK Then
+                        m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
+                        Me.MeshFile = frmMesh.txtMeshFile.Text
+                    End If
                 End If
 
             Catch ex As System.Exception

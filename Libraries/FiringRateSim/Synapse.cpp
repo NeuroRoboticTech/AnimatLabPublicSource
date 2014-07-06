@@ -183,7 +183,7 @@ void Synapse::Process(float &fltCurrent)
 **/
 float Synapse::CalculateCurrent()
 {
-	//Test code
+	////Test code
 	//int i=5;
 	//if(Std_ToLower(m_strID) == "3ce79124-1a4b-4a34-8399-56dfe1814515")
 	//	i=6;

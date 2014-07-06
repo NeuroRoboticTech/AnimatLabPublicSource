@@ -671,34 +671,34 @@ void OsgMovableItem::Physics_RotationChanged()
 BoundingBox OsgMovableItem::Physics_GetBoundingBox()
 {
  	BoundingBox abb;
+	osg::BoundingBox bb;
 
-	if(m_osgNode.valid())
+	osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
+	if(osgGroup)
 	{
-		OsgCalculateBoundingBox bbox ;
-		m_osgNode->accept( bbox  );
-		osg::BoundingBox bb = bbox.getBoundBox();
+		bb = osgGroup->getBoundingBox();
 		abb.Set(bb.xMin(), bb.yMin(), bb.zMin(), bb.xMax(), bb.yMax(), bb.zMax());
 	}
-	else
+	else if(m_osgNode.valid())
 	{
-		abb.Set(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5); 
+		osg::BoundingSphere osgBound =	m_osgNode->getBound();
+		abb.Set(-osgBound.radius(), -osgBound.radius(), -osgBound.radius(), osgBound.radius(), osgBound.radius(), osgBound.radius()); 
 	}
+	else
+		abb.Set(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5); 
 
 	return abb;
 }
 
 float OsgMovableItem::Physics_GetBoundingRadius()
 {
-	BoundingBox bb = Physics_GetBoundingBox();
-	return bb.MaxDimension();
+	if(m_osgNode.valid())
+	{
+		osg::BoundingSphere osgBound =	m_osgNode->getBound();
+		return osgBound.radius();
+	}
 
-	//if(m_osgNode.valid())
-	//{
-	//	osg::BoundingSphere osgBound =	m_osgNode->getBound();
-	//	return osgBound.radius();
-	//}
-
-	//return 0.5f;
+	return 0.5f;
 }
 
 void OsgMovableItem::SetTexture(std::string strTexture)

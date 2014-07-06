@@ -1379,6 +1379,11 @@ void RigidBody::Kill(bool bState)
 
 void RigidBody::ResetSimulation()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "b42f968f-0639-4a69-9974-9e0f411d40d8") // && m_lpSim->Time() > 1.8
+	//	i=6;
+
 	///It is <b>very</b> important that the physcis of the rigid body is reset
     /// before the joint and the child parts. The reason is that we want the position
     /// of this part to be rest first and then child parts because if we do not then

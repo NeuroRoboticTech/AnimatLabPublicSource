@@ -116,6 +116,11 @@ BlSimulator *BlRigidBody::GetBlSimulator()
 
 void BlRigidBody::Physics_UpdateNode()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_lpThisAB->ID()) == "b42f968f-0639-4a69-9974-9e0f411d40d8") // && m_lpSim->Time() > 1.8
+	//	i=6;
+
 	OsgBody::UpdatePositionAndRotationFromMatrix();
 
 	if(m_lpThisRB)
@@ -264,8 +269,9 @@ void BlRigidBody::CreateDynamicPart()
         float fltMass = 0;
 	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
-        //if(Std_ToLower(m_lpThisRB->ID()) == "b67866e6-3851-414a-b77e-d5a434254df5")  //Testing only
-        //    fltMass = 0;
+		////Test Code
+  //      if(Std_ToLower(m_lpThisRB->ID()) == "b42f968f-0639-4a69-9974-9e0f411d40d8")
+  //          fltMass = 0;
 
         if(m_lpThisRB->HasStaticChildren())
             CreateStaticChildren(vCom);
