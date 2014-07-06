@@ -50,12 +50,13 @@ void BlMotorizedJoint::CalculateServoVelocity()
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
-	////Testing Code
+	////Test Code
 	//int i=5;
-	//if(m_lpThisMotorJoint->ID() == "0085EE18-89F7-4039-8648-EC51114BEEFF" && GetSimulator()->Time() >= 0.5 && fabs(fltTargetPos) > 0)
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "3412a883-f6ff-4aad-a5e3-bf01cb5e7500" && GetSimulator()->Time() >= 2.5) // && fabs(fltTargetPos) > 0
 	//	i=6;
 
-	if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || (m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
+	AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
+	if(MotorType == eJointMotorType::PositionControl || (MotorType == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
 	{
 		//Lock this joint position.
 		m_lpThisMotorJoint->DesiredVelocity(0); 
@@ -84,8 +85,9 @@ void BlMotorizedJoint::CalculateServoVelocity()
 void BlMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	if(m_lpThisMotorJoint->EnableMotor())
-	{			
-		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
+	{		
+		AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
+		if(MotorType == eJointMotorType::PositionControl ||MotorType == eJointMotorType::PositionVelocityControl)
 			CalculateServoVelocity();
 		
 		float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();

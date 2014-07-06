@@ -50,7 +50,7 @@ void VsMotorizedJoint::CalculateServoVelocity()
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
-	////Testing Code
+	////Test Code
 	//int i=5;
 	//if(m_lpThisMotorJoint->ID() == "0085EE18-89F7-4039-8648-EC51114BEEFF" && GetSimulator()->Time() >= 0.5 && fabs(fltTargetPos) > 0)
 	//	i=6;

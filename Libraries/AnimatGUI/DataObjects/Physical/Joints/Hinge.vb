@@ -88,7 +88,7 @@ Namespace DataObjects.Physical.Joints
                 Return m_eMotorType
             End Get
             Set(ByVal value As Joint.enumJointMotorTypes)
-                SetSimData("MotorType", Convert.ToInt32(m_eMotorType).ToString(), True)
+                SetSimData("MotorType", Convert.ToInt32(value).ToString(), True)
                 m_eMotorType = value
 
                 If m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then

@@ -128,7 +128,7 @@ Namespace DataObjects.Behavior.Nodes
             Set(ByVal Value As TypeHelpers.DataTypeID)
                 If Not Value Is Nothing Then
                     m_thTargetDataTypes = Value
-                    Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
+                    Me.SetSimData("DestinationID", Me.GetSimulationXml("Adapter"), True)
                 End If
             End Set
         End Property

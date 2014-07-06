@@ -613,6 +613,7 @@ void Adapter::SetDestinationID(std::string strXml)
 	//Load Source Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
+	TargetDataType(oXml.GetChildString("TargetDataType"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 

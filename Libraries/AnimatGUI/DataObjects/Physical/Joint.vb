@@ -17,9 +17,9 @@ Namespace DataObjects.Physical
 #Region " Enums "
 
         Public Enum enumJointMotorTypes
-            VelocityControl
-            PositionControl
-            PositionVelocityControl
+            VelocityControl = 0
+            PositionControl = 1
+            PositionVelocityControl = 2
         End Enum
 
 #End Region

@@ -694,7 +694,7 @@ void BlRigidBody::ProcessContacts()
         float fltPhysicsDt = m_lpThisAB->GetSimulator()->PhysicsTimeStep();
         float fltRatio = (fMassUnits * fDisUnits) / fltPhysicsDt;
 
-		//Testing code
+		////Test code
 		//if(m_lpThisRB->GetSimulator()->Time() >= 6.758)
 		//	fltForceMag = 0;
 
