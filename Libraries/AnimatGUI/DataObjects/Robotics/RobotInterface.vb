@@ -132,6 +132,7 @@ Namespace DataObjects
 
                 Dim frmExport As New Forms.ExportStandaloneSim()
                 frmExport.Physics = Me.Physics
+                frmExport.chkShowGraphics.Checked = False
                 If frmExport.ShowDialog() <> Windows.Forms.DialogResult.OK Then
                     Return
                 End If
