@@ -5,7 +5,7 @@
 #include "StdAfx.h"
 #include "HiClassFactory.h"
 
-#include "HiSpike2Input.h"
+#include "HiSpike2.h"
 #include "HiC884Controller.h"
 #include "HiM110Actuator.h"
 
@@ -47,9 +47,9 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "SPIKE2INPUT")
+	if(strType == "SPIKE2")
 	{
-		lpControl = new HiSpike2Input;
+		lpControl = new HiSpike2;
 	}
 	else if(strType == "C884CONTROLLER")
 	{

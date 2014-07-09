@@ -34,7 +34,7 @@ namespace HybridInterfaceSim
 
     namespace Robotics
     {
-		class HiSpike2Input;
+		class HiSpike2;
 		class HiC884Controller;
 		class HiM110Actuator;
     }

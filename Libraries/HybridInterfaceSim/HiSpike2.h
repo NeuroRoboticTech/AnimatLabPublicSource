@@ -1,4 +1,4 @@
-// HiSpike2Input.h: interface for the HiSpike2Input class.
+// HiSpike2.h: interface for the HiSpike2 class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -9,7 +9,7 @@ namespace HybridInterfaceSim
 	namespace Robotics
 	{
 
-class HYBRID_PORT HiSpike2Input : public AnimatSim::Robotics::RobotIOControl
+class HYBRID_PORT HiSpike2 : public AnimatSim::Robotics::RobotIOControl
 {
 protected:
 	int m_iPortNumber;
@@ -18,8 +18,8 @@ protected:
 	virtual void ExitIOThread();
 
 public:
-	HiSpike2Input();
-	virtual ~HiSpike2Input();
+	HiSpike2();
+	virtual ~HiSpike2();
 
 	virtual void PortNumber(int iPort);
 	virtual int PortNumber();

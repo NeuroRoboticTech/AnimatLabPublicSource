@@ -39,7 +39,7 @@ namespace HybridInterfaceSim
     {
         namespace RobotInterfaces
         {
-			class HiSpike2Input;
+			class HiSpike2;
 			class HiC884Controller;
 			class HiM110Actuator;
         }
@@ -53,7 +53,7 @@ using namespace HybridInterfaceSim::Robotics;
 
 #include "HiClassFactory.h"
 
-#include "HiSpike2Input.h"
+#include "HiSpike2.h"
 #include "HiC884Controller.h"
 #include "HiM110Actuator.h"
 

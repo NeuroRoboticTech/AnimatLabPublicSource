@@ -1,10 +1,10 @@
-// HiSpike2Input.cpp: implementation of the HiSpike2Input class.
+// HiSpike2.cpp: implementation of the HiSpike2 class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
 #include <stdarg.h>
-#include "HiSpike2Input.h"
+#include "HiSpike2.h"
 
 namespace HybridInterfaceSim
 {
@@ -15,38 +15,38 @@ namespace HybridInterfaceSim
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-HiSpike2Input::HiSpike2Input() 
+HiSpike2::HiSpike2() 
 {
 	m_iPortNumber = 3;
 }
 
-HiSpike2Input::~HiSpike2Input()
+HiSpike2::~HiSpike2()
 {
 	try
 	{
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of HiSpike2Input\r\n", "", -1, false, true);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of HiSpike2\r\n", "", -1, false, true);}
 }
 
-void HiSpike2Input::PortNumber(int iPort)
+void HiSpike2::PortNumber(int iPort)
 {
 	Std_IsAboveMin((int) 0, iPort, true, "PortNumber", true);
 	m_iPortNumber = iPort;
 }
 
-int HiSpike2Input::PortNumber() {return m_iPortNumber;}
+int HiSpike2::PortNumber() {return m_iPortNumber;}
 
 #pragma region DataAccesMethods
 
-float *HiSpike2Input::GetDataPointer(const std::string &strDataType)
+float *HiSpike2::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
 	return RobotIOControl::GetDataPointer(strDataType);
 }
 
-bool HiSpike2Input::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+bool HiSpike2::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 	
@@ -66,7 +66,7 @@ bool HiSpike2Input::SetData(const std::string &strDataType, const std::string &s
 	return false;
 }
 
-void HiSpike2Input::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+void HiSpike2::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	RobotIOControl::QueryProperties(aryProperties);
 
@@ -75,7 +75,7 @@ void HiSpike2Input::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 #pragma endregion
 
-void HiSpike2Input::Initialize()
+void HiSpike2::Initialize()
 {
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
 	if(!m_lpSim->InSimulation())
@@ -87,7 +87,7 @@ void HiSpike2Input::Initialize()
 	RobotIOControl::Initialize();
 }
 
-void HiSpike2Input::ProcessIO()
+void HiSpike2::ProcessIO()
 {
 	try
 	{
@@ -120,7 +120,7 @@ void HiSpike2Input::ProcessIO()
 	m_bIOThreadProcessing = false;
 }
 
-void HiSpike2Input::ExitIOThread()
+void HiSpike2::ExitIOThread()
 {
 	RobotIOControl::ExitIOThread();
 
@@ -129,7 +129,7 @@ void HiSpike2Input::ExitIOThread()
 }
 
 
-void HiSpike2Input::Load(StdUtils::CStdXml &oXml)
+void HiSpike2::Load(StdUtils::CStdXml &oXml)
 {
 	RobotIOControl::Load(oXml);
 

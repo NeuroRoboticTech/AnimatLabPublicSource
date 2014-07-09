@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{4BFD83DC-9F17-FC40-A4E5-7BF2E544539D}</ProjectGuid>
+		<ProjectGuid>{D7D3C889-53EA-4D47-B75D-29AEDA7DB11F}</ProjectGuid>
 		<RootNamespace>HybridInterfaceSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -218,9 +218,8 @@
 	<ItemGroup>
 		<ClInclude Include="..\HiC884Controller.h" />
 		<ClInclude Include="..\HiClassFactory.h" />
-		<ClInclude Include="..\HiHybridInterface.h" />
 		<ClInclude Include="..\HiM110Actuator.h" />
-		<ClInclude Include="..\HiSpike2Input.h" />
+		<ClInclude Include="..\HiSpike2.h" />
 		<ClInclude Include="..\StdAfx.h" />
 	</ItemGroup>
 	<ItemGroup>
@@ -228,11 +227,9 @@
 		</ClCompile>
 		<ClCompile Include="..\HiClassFactory.cpp">
 		</ClCompile>
-		<ClCompile Include="..\HiHybridInterface.cpp">
-		</ClCompile>
 		<ClCompile Include="..\HiM110Actuator.cpp">
 		</ClCompile>
-		<ClCompile Include="..\HiSpike2Input.cpp">
+		<ClCompile Include="..\HiSpike2.cpp">
 		</ClCompile>
 		<ClCompile Include="..\HybridInterfaceSim.cpp">
 		</ClCompile>
