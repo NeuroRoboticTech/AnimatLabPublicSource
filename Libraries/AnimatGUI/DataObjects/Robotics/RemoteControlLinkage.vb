@@ -161,6 +161,27 @@ Namespace DataObjects
 
             End Sub
 
+            Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)
+                MyBase.New(doParent)
+
+                m_strName = strName
+
+                If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RemoteControl), False) Then
+                    m_doParentRemoteControl = DirectCast(doParent, RemoteControl)
+                    m_thSourceDataTypes = DirectCast(m_doParentRemoteControl.DataTypes.Clone(m_doParentRemoteControl.IncomingDataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
+                    m_thLinkedNode = New TypeHelpers.LinkedNode(m_doParentRemoteControl.Organism, Nothing)
+                Else
+                    m_thLinkedNode = New TypeHelpers.LinkedNode(Nothing, Nothing)
+                End If
+
+                If Not doGain Is Nothing Then
+                    m_gnGain = DirectCast(doGain.Clone(Me, False, Nothing), Gain)
+                End If
+
+                m_strSourceDataTypeID = strSourceDataTypeID
+
+            End Sub
+
             Public Overrides Sub ClearIsDirty()
                 MyBase.ClearIsDirty()
 

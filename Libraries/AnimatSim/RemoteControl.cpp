@@ -131,7 +131,9 @@ void RemoteControl::RemoveRemoteControlLinkage(std::string strID, bool bThrowErr
 
     RemoteControlLinkage *lpPart = m_aryLinks[iPos];
 
+	StartPause();
 	m_aryLinks.RemoveAt(iPos);
+	ExitPause();
 }
 
 

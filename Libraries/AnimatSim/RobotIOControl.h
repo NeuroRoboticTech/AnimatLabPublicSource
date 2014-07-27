@@ -17,13 +17,18 @@ namespace AnimatSim
 			//True while the io thread processing loop is going on.
 			bool m_bIOThreadProcessing;
 
-
 			///Set to true once the IO is setup correctly.
 			bool m_bSetupComplete;
 
 			///Flags the thread processing loop to exit.
 			bool m_bStopIO;
+
+			///Set to true to pause the IO processing. Set back to false to resume it.
+			bool m_bPauseIO;
 			
+			///Is set to true once the IO loop is paused.
+			bool m_bIOPaused;
+
 			//The time it takes to perform a step of the IO for all parts in this control.
 			float m_fltStepIODuration;
 
@@ -52,6 +57,10 @@ namespace AnimatSim
 			virtual void ProcessIO() = 0;
 			virtual void ExitIOThread();
 
+			virtual void WaitWhilePaused();
+			virtual void StartPause();
+			virtual void ExitPause();
+
 		public:
 			RobotIOControl(void);
 			virtual ~RobotIOControl(void);
@@ -63,6 +72,10 @@ namespace AnimatSim
 
 			virtual CStdPtrArray<RobotPartInterface>* Parts();
 			
+			virtual void PauseIO(bool bVal);
+			virtual bool PauseIO();
+			virtual bool IOPaused();
+
 			virtual float StepIODuration();
 
 			virtual float *GetDataPointer(const std::string &strDataType);

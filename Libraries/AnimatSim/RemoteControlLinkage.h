@@ -12,6 +12,9 @@ namespace AnimatSim
 			///Pointer tho the parent remote control
 			RemoteControl *m_lpParentRemoteControl;
 
+			///Target node we are inserting into
+			Node *m_lpTargetNode;
+
 			///ID of the source node. This is only used during loading.
 			std::string m_strLinkedNodeID;
 
@@ -21,8 +24,11 @@ namespace AnimatSim
 			///ID of the target data type. This is only used during loading.
 			std::string m_strTargetDataTypeID;
 
+			///integer index of the target data type
+			int m_iTargetDataType;
+
 			/// Pointer to the source data variable.
-			float *m_fltSourceData;
+			float *m_lpSourceData;
 			
 			/// Pointer to the Gain that will be used to convert the source value into the target value.
 			Gain *m_lpGain;
@@ -60,8 +66,6 @@ namespace AnimatSim
 
 			virtual void Initialize();
 			virtual void StepSimulation();
-			virtual void ResetSimulation();
-			virtual void AfterResetSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

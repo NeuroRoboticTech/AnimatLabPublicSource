@@ -319,7 +319,7 @@ Namespace DataObjects
                             If Not oMod Is Nothing Then
                                 ioControl = DirectCast(oMod, RobotIOControl)
                                 ioControl.LoadData(oXml)
-                                m_aryIOControls.Add(ioControl.ID, ioControl)
+                                m_aryIOControls.Add(ioControl.ID, ioControl, False)
                             End If
                         Next
                         oXml.OutOfElem() 'Outof IOControls Element

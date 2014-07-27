@@ -133,23 +133,23 @@ Namespace DataObjects
 
 #End Region
 
-#Region " Add-Remove to List Methods "
+            '#Region " Add-Remove to List Methods "
 
-            Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
-                If Not Me.Parent Is Nothing Then
-                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RemoteControl", Me.ID, Me.GetSimulationXml("RemoteControl"), bThrowError, bDoNotInit)
-                    InitializeSimulationReferences()
-                End If
-            End Sub
+            '            Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+            '                If Not Me.Parent Is Nothing Then
+            '                    Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RemoteControl", Me.ID, Me.GetSimulationXml("RemoteControl"), bThrowError, bDoNotInit)
+            '                    InitializeSimulationReferences()
+            '                End If
+            '            End Sub
 
-            Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
-                If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
-                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RemoteControl", Me.ID, bThrowError)
-                End If
-                m_doInterface = Nothing
-            End Sub
+            '            Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            '                If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+            '                    Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RemoteControl", Me.ID, bThrowError)
+            '                End If
+            '                m_doInterface = Nothing
+            '            End Sub
 
-#End Region
+            '#End Region
 
             Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
                 MyBase.InitializeSimulationReferences(bShowError)
@@ -186,7 +186,7 @@ Namespace DataObjects
                         If Not oMod Is Nothing Then
                             doPart = DirectCast(oMod, RemoteControlLinkage)
                             doPart.LoadData(oXml)
-                            m_aryLinks.Add(doPart.ID, doPart)
+                            m_aryLinks.Add(doPart.ID, doPart, False)
                         End If
                     Next
                     oXml.OutOfElem() 'Outof Parts Element

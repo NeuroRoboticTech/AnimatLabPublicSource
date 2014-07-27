@@ -49,6 +49,8 @@ RobotIOControl::RobotIOControl(void)
 	m_fltStepIODuration = 0;
 	m_iCyclePartIdx = 0;
 	m_iCyclePartCount = 0;
+	m_bPauseIO = false;
+	m_bIOPaused = false;
 }
 
 RobotIOControl::~RobotIOControl(void)
@@ -65,6 +67,16 @@ catch(...)
 void RobotIOControl::ParentInterface(RobotInterface *lpParent) {m_lpParentInterface = lpParent;}
 
 RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
+
+void RobotIOControl::PauseIO(bool bVal)
+{
+	m_bPauseIO = bVal;
+	m_bIOPaused = false;
+}
+
+bool RobotIOControl::PauseIO() {return m_bPauseIO;}
+
+bool RobotIOControl::IOPaused() {return m_bIOPaused;}
 
 /**
 \brief	Gets the array of IO controls.
@@ -302,6 +314,9 @@ void RobotIOControl::SetupIO()
 **/
 void RobotIOControl::StepIO()
 {
+	if(m_bPauseIO)
+		WaitWhilePaused();
+
 	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 	int iCount = m_aryParts.GetSize();
@@ -315,6 +330,50 @@ void RobotIOControl::StepIO()
 	m_iCyclePartIdx++;
 	if(m_iCyclePartIdx >= m_iCyclePartCount)
 		m_iCyclePartIdx = 0;
+
+}
+
+/**
+\brief	This method is waits until the m_bPauseIO flag is set back to false.
+
+\author	dcofer
+\date	5/12/2014
+
+**/
+void RobotIOControl::WaitWhilePaused()
+{
+	m_bIOPaused = true;
+	while(m_bPauseIO)		
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+	m_bIOPaused = false;
+}
+
+/**
+\brief	This method is waits until the m_bIOPaused flag is set to true.
+
+\author	dcofer
+\date	5/12/2014
+
+**/
+void RobotIOControl::StartPause()
+{
+	m_bPauseIO = true;
+	while(!m_bIOPaused)		
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+}
+
+/**
+\brief	This method is waits until the m_bIOPaused flag is set back to false.
+
+\author	dcofer
+\date	5/12/2014
+
+**/
+void RobotIOControl::ExitPause()
+{
+	m_bPauseIO = false;
+	while(m_bIOPaused)		
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 }
 
 /**

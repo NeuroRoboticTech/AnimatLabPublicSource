@@ -45,15 +45,17 @@ namespace AnimatSim
 RemoteControlLinkage::RemoteControlLinkage(void)
 {
 	m_lpParentRemoteControl = NULL;
-	m_fltSourceData = NULL;
+	m_lpSourceData = NULL;
 	m_lpGain = NULL;
+	m_lpTargetNode = NULL;
+	m_iTargetDataType = -1;
 }
 
 RemoteControlLinkage::~RemoteControlLinkage(void)
 {
 try
 {
-	m_fltSourceData = NULL;
+	m_lpSourceData = NULL;
 
 	if(m_lpGain)
 	{
@@ -114,7 +116,7 @@ std::string RemoteControlLinkage::LinkedNodeID() {return m_strLinkedNodeID;}
 **/
 void RemoteControlLinkage::LinkedNodeID(std::string strID)
 {
-	m_strLinkedNodeID = "";
+	m_strLinkedNodeID = strID;
 	m_strTargetDataTypeID = "";
 	Initialize();
 }
@@ -291,20 +293,29 @@ void RemoteControlLinkage::ShutdownIO()
 
 void RemoteControlLinkage::Initialize()
 {
-}
+	if(!Std_IsBlank(m_strLinkedNodeID))
+	{
+		m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strLinkedNodeID));
+		if(!m_lpTargetNode)
+			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strLinkedNodeID);
+	}
 
-void RemoteControlLinkage::ResetSimulation()
-{
-}
+	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
+	//systems use.
+	if(m_lpTargetNode && !Std_IsBlank(m_strTargetDataTypeID))
+		m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataTypeID);
 
-void RemoteControlLinkage::AfterResetSimulation()
-{
+	if(m_lpParentRemoteControl && !Std_IsBlank(m_strSourceDataTypeID))
+		m_lpSourceData = m_lpParentRemoteControl->GetDataPointer(m_strSourceDataTypeID);
 }
 
 void RemoteControlLinkage::StepSimulation()
 {
-    AnimatBase::StepSimulation();
-
+	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
+	{
+		float fltOutput = m_lpGain->CalculateGain(*m_lpSourceData);
+		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, fltOutput);
+	}
 }
 
 void RemoteControlLinkage::Load(CStdXml &oXml)
