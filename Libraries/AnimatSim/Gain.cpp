@@ -173,6 +173,19 @@ void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
 **/
 float Gain::UpperOutput() {return m_fltUpperOutput;}
 
+void Gain::Copy(CStdSerialize *lpSource)
+{
+	AnimatBase::Copy(lpSource);
+
+	Gain *lpOrig = dynamic_cast<Gain *>(lpSource);
+
+	m_bUseLimits = lpOrig->m_bUseLimits;
+	m_fltLowerLimit = lpOrig->m_fltLowerLimit;
+	m_fltLowerOutput = lpOrig->m_fltLowerOutput;
+	m_fltUpperLimit = lpOrig->m_fltUpperLimit;
+	m_fltUpperOutput = lpOrig->m_fltUpperOutput;
+}
+
 bool Gain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(AnimatBase::SetData(strDataType, strValue, false))

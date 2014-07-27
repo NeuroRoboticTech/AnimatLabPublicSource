@@ -155,6 +155,28 @@ float LengthTensionGain::SeRestLength() {return m_fltSeRestLength;}
 **/
 float LengthTensionGain::MinPeLength() {return m_fltMinPeLength;}
 
+void LengthTensionGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	LengthTensionGain *lpOrig = dynamic_cast<LengthTensionGain *>(lpSource);
+
+	m_fltRestingLength = lpOrig->m_fltRestingLength;
+	m_fltTLwidth = lpOrig->m_fltTLwidth;
+	m_fltTLc = lpOrig->m_fltTLc;
+	m_fltPeLengthPercentage = lpOrig->m_fltPeLengthPercentage;
+	m_fltMinPeLengthPercentage = lpOrig->m_fltMinPeLengthPercentage;
+	m_fltMinPeLength = lpOrig->m_fltMinPeLength;
+	m_fltSeRestLength = lpOrig->m_fltSeRestLength;
+}
+
+CStdSerialize *LengthTensionGain::Clone()
+{
+	CStdSerialize *lpClone = new LengthTensionGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 bool LengthTensionGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))

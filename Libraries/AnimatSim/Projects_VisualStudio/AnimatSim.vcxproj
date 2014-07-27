@@ -1,536 +1,550 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
-			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
-			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug_Double|Win32">
-			<Configuration>Debug_Double</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release_Double|Win32">
-			<Configuration>Release_Double</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-	</ItemGroup>
-	<PropertyGroup Label="Globals">
-		<ProjectGuid>{036831BE-B1D3-E040-A472-2D5975493793}</ProjectGuid>
-		<RootNamespace>AnimatSim</RootNamespace>
-		<Keyword>Win32Proj</Keyword>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<UseDebugLibraries>true</UseDebugLibraries>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
-		<ConfigurationType>DynamicLibrary</ConfigurationType>
-		<CharacterSet>MultiByte</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<UseDebugLibraries>false</UseDebugLibraries>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Label="ExtensionSettings">
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup>
-		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\x32\Debug\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AnimatSim_vc10D</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AnimatSim_vc10</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Debug\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">AnimatSim_vc10D</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
-		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Release\</OutDir>
-		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\</IntDir>
-		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">AnimatSim_vc10</TargetName>
-		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</IgnoreImportLibrary>
-		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
-	</PropertyGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)AnimatSim_vc10D.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\AnimatSim_vc10D.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)AnimatSim_vc10D.lib ..\..\..\lib\AnimatSim_vc10D.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\AnimatSim_vc10.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)AnimatSim_vc10.lib ..\..\..\lib\AnimatSim_vc10.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>true</MinimalRebuild>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<ProgramDataBaseFileName>$(OutDir)AnimatSim_vc10D.pdb</ProgramDataBaseFileName>
-			<ImportLibrary>Debug\AnimatSim_vc10D.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)AnimatSim_vc10D.lib ..\..\..\lib\AnimatSim_vc10D.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
-		<ClCompile>
-			<Optimization>Full</Optimization>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<MinimalRebuild>false</MinimalRebuild>
-			<StringPooling>true</StringPooling>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<FunctionLevelLinking>true</FunctionLevelLinking>
-			<PrecompiledHeader></PrecompiledHeader>
-			<WarningLevel>Level3</WarningLevel>
-		<ExceptionHandling>Async</ExceptionHandling>
-			<DebugInformationFormat></DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Link>
-			<OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
-			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-			<SubSystem>Windows</SubSystem>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<ImportLibrary>Release\AnimatSim_vc10.lib</ImportLibrary>
-			<TargetMachine>MachineX86</TargetMachine>
-		</Link>
-		<PostBuildEvent>
-			<Command>Copy $(OutDir)AnimatSim_vc10.lib ..\..\..\lib\AnimatSim_vc10.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin</Command>
-		</PostBuildEvent>
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<ClInclude Include="..\ActivatedItem.h" />
-		<ClInclude Include="..\ActivatedItemMgr.h" />
-		<ClInclude Include="..\Adapter.h" />
-		<ClInclude Include="..\AnimatBase.h" />
-		<ClInclude Include="..\AnimatLibraryIncludes.h" />
-		<ClInclude Include="..\AnimatUtils.h" />
-		<ClInclude Include="..\ArrayChart.h" />
-		<ClInclude Include="..\Attachment.h" />
-		<ClInclude Include="..\BallSocket.h" />
-		<ClInclude Include="..\BellGain.h" />
-		<ClInclude Include="..\BodyPart.h" />
-		<ClInclude Include="..\BoundingBox.h" />
-		<ClInclude Include="..\Box.h" />
-		<ClInclude Include="..\Cone.h" />
-		<ClInclude Include="..\ConstraintFriction.h" />
-		<ClInclude Include="..\ConstraintLimit.h" />
-		<ClInclude Include="..\ConstraintRelaxation.h" />
-		<ClInclude Include="..\ContactAdapter.h" />
-		<ClInclude Include="..\ContactSensor.h" />
-		<ClInclude Include="..\CurrentStimulus.h" />
-		<ClInclude Include="..\Cylinder.h" />
-		<ClInclude Include="..\DataChart.h" />
-		<ClInclude Include="..\DataChartMgr.h" />
-		<ClInclude Include="..\DataColumn.h" />
-		<ClInclude Include="..\DelayLine.h" />
-		<ClInclude Include="..\Ellipsoid.h" />
-		<ClInclude Include="..\EnablerStimulus.h" />
-		<ClInclude Include="..\EquationGain.h" />
-		<ClInclude Include="..\ExternalInputStimulus.h" />
-		<ClInclude Include="..\ExternalStimuliMgr.h" />
-		<ClInclude Include="..\ExternalStimulus.h" />
-		<ClInclude Include="..\FileChart.h" />
-		<ClInclude Include="..\FluidPlane.h" />
-		<ClInclude Include="..\ForceStimulus.h" />
-		<ClInclude Include="..\Gain.h" />
-		<ClInclude Include="..\Hinge.h" />
-		<ClInclude Include="..\Hud.h" />
-		<ClInclude Include="..\HudItem.h" />
-		<ClInclude Include="..\HudText.h" />
-		<ClInclude Include="..\IMotorizedJoint.h" />
-		<ClInclude Include="..\IMovableItemCallback.h" />
-		<ClInclude Include="..\InverseMuscleCurrent.h" />
-		<ClInclude Include="..\IPhysicsBody.h" />
-		<ClInclude Include="..\IPhysicsMovableItem.h" />
-		<ClInclude Include="..\ISimGUICallback.h" />
-		<ClInclude Include="..\Joint.h" />
-		<ClInclude Include="..\KeyFrame.h" />
-		<ClInclude Include="..\LengthTensionGain.h" />
-		<ClInclude Include="..\Light.h" />
-		<ClInclude Include="..\LightManager.h" />
-		<ClInclude Include="..\LinearHillMuscle.h" />
-		<ClInclude Include="..\LinearHillStretchReceptor.h" />
-		<ClInclude Include="..\LinearJoint.h" />
-		<ClInclude Include="..\LineBase.h" />
-		<ClInclude Include="..\Link.h" />
-		<ClInclude Include="..\Materials.h" />
-		<ClInclude Include="..\MaterialType.h" />
-		<ClInclude Include="..\MemoryChart.h" />
-		<ClInclude Include="..\Mesh.h" />
-		<ClInclude Include="..\ModuleThreadProcessor.h" />
-		<ClInclude Include="..\MotorizedJoint.h" />
-		<ClInclude Include="..\MotorVelocityStimulus.h" />
-		<ClInclude Include="..\Mouth.h" />
-		<ClInclude Include="..\MovableItem.h" />
-		<ClInclude Include="..\MuscleBase.h" />
-		<ClInclude Include="..\NervousSystem.h" />
-		<ClInclude Include="..\NeuralModule.h" />
-		<ClInclude Include="..\Node.h" />
-		<ClInclude Include="..\Odor.h" />
-		<ClInclude Include="..\OdorSensor.h" />
-		<ClInclude Include="..\OdorType.h" />
-		<ClInclude Include="..\Organism.h" />
-		<ClInclude Include="..\PhysicsNeuralModule.h" />
-		<ClInclude Include="..\PidControl.h" />
-		<ClInclude Include="..\Plane.h" />
-		<ClInclude Include="..\PolynomialGain.h" />
-		<ClInclude Include="..\Prismatic.h" />
-		<ClInclude Include="..\PropertyControlAdapter.h" />
-		<ClInclude Include="..\PropertyControlStimulus.h" />
-		<ClInclude Include="..\ReceptiveField.h" />
-		<ClInclude Include="..\ReceptiveFieldPair.h" />
-		<ClInclude Include="..\RigidBody.h" />
-		<ClInclude Include="..\RobotInterface.h" />
-		<ClInclude Include="..\RobotIOControl.h" />
-		<ClInclude Include="..\RobotPartInterface.h" />
-		<ClInclude Include="..\RPRO.h" />
-		<ClInclude Include="..\ScriptProcessor.h" />
-		<ClInclude Include="..\Sensor.h" />
-		<ClInclude Include="..\SigmoidGain.h" />
-		<ClInclude Include="..\SimulationMgr.h" />
-		<ClInclude Include="..\SimulationRecorder.h" />
-		<ClInclude Include="..\SimulationThread.h" />
-		<ClInclude Include="..\SimulationWindow.h" />
-		<ClInclude Include="..\SimulationWindowMgr.h" />
-		<ClInclude Include="..\Simulator.h" />
-		<ClInclude Include="..\Sphere.h" />
-		<ClInclude Include="..\Spring.h" />
-		<ClInclude Include="..\StdAfx.h" />
-		<ClInclude Include="..\Stomach.h" />
-		<ClInclude Include="..\Structure.h" />
-		<ClInclude Include="..\Terrain.h" />
-		<ClInclude Include="..\ThreadProcessor.h" />
-		<ClInclude Include="..\Torus.h" />
-		<ClInclude Include="..\TypeProperty.h" />
-		<ClInclude Include="..\VoltageClamp.h" />
-	</ItemGroup>
-	<ItemGroup>
-		<ClCompile Include="..\ActivatedItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ActivatedItemMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Adapter.cpp">
-		</ClCompile>
-		<ClCompile Include="..\AnimatBase.cpp">
-		</ClCompile>
-		<ClCompile Include="..\AnimatLibrary.cpp">
-		</ClCompile>
-		<ClCompile Include="..\AnimatUtils.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ArrayChart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Attachment.cpp">
-		</ClCompile>
-		<ClCompile Include="..\BallSocket.cpp">
-		</ClCompile>
-		<ClCompile Include="..\BellGain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\BodyPart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\BoundingBox.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Box.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Cone.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ConstraintFriction.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ConstraintLimit.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ConstraintRelaxation.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ContactAdapter.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ContactSensor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\CurrentStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Cylinder.cpp">
-		</ClCompile>
-		<ClCompile Include="..\DataChart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\DataChartMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\DataColumn.cpp">
-		</ClCompile>
-		<ClCompile Include="..\DelayLine.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Ellipsoid.cpp">
-		</ClCompile>
-		<ClCompile Include="..\EnablerStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\EquationGain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ExternalInputStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ExternalStimuliMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ExternalStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\FileChart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\FluidPlane.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ForceStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Gain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Hinge.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Hud.cpp">
-		</ClCompile>
-		<ClCompile Include="..\HudItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\HudText.cpp">
-		</ClCompile>
-		<ClCompile Include="..\IMotorizedJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\IMovableItemCallback.cpp">
-		</ClCompile>
-		<ClCompile Include="..\InverseMuscleCurrent.cpp">
-		</ClCompile>
-		<ClCompile Include="..\IPhysicsBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\IPhysicsMovableItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ISimGUICallback.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Joint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\KeyFrame.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LengthTensionGain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Light.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LightManager.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LinearHillMuscle.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LinearHillStretchReceptor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LinearJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\LineBase.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Link.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Materials.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MaterialType.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MemoryChart.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Mesh.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ModuleThreadProcessor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MotorizedJoint.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MotorVelocityStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Mouth.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MovableItem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\MuscleBase.cpp">
-		</ClCompile>
-		<ClCompile Include="..\NervousSystem.cpp">
-		</ClCompile>
-		<ClCompile Include="..\NeuralModule.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Node.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Odor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OdorSensor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\OdorType.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Organism.cpp">
-		</ClCompile>
-		<ClCompile Include="..\PhysicsNeuralModule.cpp">
-		</ClCompile>
-		<ClCompile Include="..\PidControl.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Plane.cpp">
-		</ClCompile>
-		<ClCompile Include="..\PolynomialGain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Prismatic.cpp">
-		</ClCompile>
-		<ClCompile Include="..\PropertyControlAdapter.cpp">
-		</ClCompile>
-		<ClCompile Include="..\PropertyControlStimulus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ReceptiveField.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ReceptiveFieldPair.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RigidBody.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RobotInterface.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RobotIOControl.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RobotPartInterface.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RPRO.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ScriptProcessor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Sensor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SigmoidGain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SimulationMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SimulationRecorder.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SimulationThread.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SimulationWindow.cpp">
-		</ClCompile>
-		<ClCompile Include="..\SimulationWindowMgr.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Simulator.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Sphere.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Spring.cpp">
-		</ClCompile>
-		<ClCompile Include="..\StdAfx.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Stomach.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Structure.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Terrrain.cpp">
-		</ClCompile>
-		<ClCompile Include="..\ThreadProcessor.cpp">
-		</ClCompile>
-		<ClCompile Include="..\Torus.cpp">
-		</ClCompile>
-		<ClCompile Include="..\TypeProperty.cpp">
-		</ClCompile>
-		<ClCompile Include="..\VoltageClamp.cpp">
-		</ClCompile>
-	</ItemGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-	<ImportGroup Label="ExtensionTargets">
-	</ImportGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Double|Win32">
+      <Configuration>Debug_Double</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_Double|Win32">
+      <Configuration>Release_Double</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{036831BE-B1D3-E040-A472-2D5975493793}</ProjectGuid>
+    <RootNamespace>AnimatSim</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\x32\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AnimatSim_vc10D</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AnimatSim_vc10</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">AnimatSim_vc10D</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">AnimatSim_vc10</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDataBaseFileName>$(OutDir)AnimatSim_vc10D.pdb</ProgramDataBaseFileName>
+      <ImportLibrary>Debug\AnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)AnimatSim_vc10D.lib ..\..\..\lib\AnimatSim_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>Release\AnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)AnimatSim_vc10.lib ..\..\..\lib\AnimatSim_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>$(OutDir)AnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDataBaseFileName>$(OutDir)AnimatSim_vc10D.pdb</ProgramDataBaseFileName>
+      <ImportLibrary>Debug\AnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)AnimatSim_vc10D.lib ..\..\..\lib\AnimatSim_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATLIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>Release\AnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy $(OutDir)AnimatSim_vc10.lib ..\..\..\lib\AnimatSim_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ActivatedItem.h" />
+    <ClInclude Include="..\ActivatedItemMgr.h" />
+    <ClInclude Include="..\Adapter.h" />
+    <ClInclude Include="..\AnimatBase.h" />
+    <ClInclude Include="..\AnimatLibraryIncludes.h" />
+    <ClInclude Include="..\AnimatUtils.h" />
+    <ClInclude Include="..\ArrayChart.h" />
+    <ClInclude Include="..\Attachment.h" />
+    <ClInclude Include="..\BallSocket.h" />
+    <ClInclude Include="..\BellGain.h" />
+    <ClInclude Include="..\BodyPart.h" />
+    <ClInclude Include="..\BoundingBox.h" />
+    <ClInclude Include="..\Box.h" />
+    <ClInclude Include="..\Cone.h" />
+    <ClInclude Include="..\ConstraintFriction.h" />
+    <ClInclude Include="..\ConstraintLimit.h" />
+    <ClInclude Include="..\ConstraintRelaxation.h" />
+    <ClInclude Include="..\ContactAdapter.h" />
+    <ClInclude Include="..\ContactSensor.h" />
+    <ClInclude Include="..\CurrentStimulus.h" />
+    <ClInclude Include="..\Cylinder.h" />
+    <ClInclude Include="..\DataChart.h" />
+    <ClInclude Include="..\DataChartMgr.h" />
+    <ClInclude Include="..\DataColumn.h" />
+    <ClInclude Include="..\DelayLine.h" />
+    <ClInclude Include="..\Ellipsoid.h" />
+    <ClInclude Include="..\EnablerStimulus.h" />
+    <ClInclude Include="..\EquationGain.h" />
+    <ClInclude Include="..\ExternalInputStimulus.h" />
+    <ClInclude Include="..\ExternalStimuliMgr.h" />
+    <ClInclude Include="..\ExternalStimulus.h" />
+    <ClInclude Include="..\FileChart.h" />
+    <ClInclude Include="..\FluidPlane.h" />
+    <ClInclude Include="..\ForceStimulus.h" />
+    <ClInclude Include="..\Gain.h" />
+    <ClInclude Include="..\Hinge.h" />
+    <ClInclude Include="..\Hud.h" />
+    <ClInclude Include="..\HudItem.h" />
+    <ClInclude Include="..\HudText.h" />
+    <ClInclude Include="..\IMotorizedJoint.h" />
+    <ClInclude Include="..\IMovableItemCallback.h" />
+    <ClInclude Include="..\InverseMuscleCurrent.h" />
+    <ClInclude Include="..\IPhysicsBody.h" />
+    <ClInclude Include="..\IPhysicsMovableItem.h" />
+    <ClInclude Include="..\ISimGUICallback.h" />
+    <ClInclude Include="..\Joint.h" />
+    <ClInclude Include="..\KeyFrame.h" />
+    <ClInclude Include="..\LengthTensionGain.h" />
+    <ClInclude Include="..\Light.h" />
+    <ClInclude Include="..\LightManager.h" />
+    <ClInclude Include="..\LinearHillMuscle.h" />
+    <ClInclude Include="..\LinearHillStretchReceptor.h" />
+    <ClInclude Include="..\LinearJoint.h" />
+    <ClInclude Include="..\LineBase.h" />
+    <ClInclude Include="..\Link.h" />
+    <ClInclude Include="..\Materials.h" />
+    <ClInclude Include="..\MaterialType.h" />
+    <ClInclude Include="..\MemoryChart.h" />
+    <ClInclude Include="..\Mesh.h" />
+    <ClInclude Include="..\ModuleThreadProcessor.h" />
+    <ClInclude Include="..\MotorizedJoint.h" />
+    <ClInclude Include="..\MotorVelocityStimulus.h" />
+    <ClInclude Include="..\Mouth.h" />
+    <ClInclude Include="..\MovableItem.h" />
+    <ClInclude Include="..\MuscleBase.h" />
+    <ClInclude Include="..\NervousSystem.h" />
+    <ClInclude Include="..\NeuralModule.h" />
+    <ClInclude Include="..\Node.h" />
+    <ClInclude Include="..\Odor.h" />
+    <ClInclude Include="..\OdorSensor.h" />
+    <ClInclude Include="..\OdorType.h" />
+    <ClInclude Include="..\Organism.h" />
+    <ClInclude Include="..\PhysicsNeuralModule.h" />
+    <ClInclude Include="..\PidControl.h" />
+    <ClInclude Include="..\Plane.h" />
+    <ClInclude Include="..\PolynomialGain.h" />
+    <ClInclude Include="..\Prismatic.h" />
+    <ClInclude Include="..\PropertyControlAdapter.h" />
+    <ClInclude Include="..\PropertyControlStimulus.h" />
+    <ClInclude Include="..\ReceptiveField.h" />
+    <ClInclude Include="..\ReceptiveFieldPair.h" />
+    <ClInclude Include="..\RemoteControl.h" />
+    <ClInclude Include="..\RemoteControlLinkage.h" />
+    <ClInclude Include="..\RigidBody.h" />
+    <ClInclude Include="..\RobotInterface.h" />
+    <ClInclude Include="..\RobotIOControl.h" />
+    <ClInclude Include="..\RobotPartInterface.h" />
+    <ClInclude Include="..\RPRO.h" />
+    <ClInclude Include="..\ScriptProcessor.h" />
+    <ClInclude Include="..\Sensor.h" />
+    <ClInclude Include="..\SigmoidGain.h" />
+    <ClInclude Include="..\SimulationMgr.h" />
+    <ClInclude Include="..\SimulationRecorder.h" />
+    <ClInclude Include="..\SimulationThread.h" />
+    <ClInclude Include="..\SimulationWindow.h" />
+    <ClInclude Include="..\SimulationWindowMgr.h" />
+    <ClInclude Include="..\Simulator.h" />
+    <ClInclude Include="..\Sphere.h" />
+    <ClInclude Include="..\Spring.h" />
+    <ClInclude Include="..\StdAfx.h" />
+    <ClInclude Include="..\Stomach.h" />
+    <ClInclude Include="..\Structure.h" />
+    <ClInclude Include="..\Terrain.h" />
+    <ClInclude Include="..\ThreadProcessor.h" />
+    <ClInclude Include="..\Torus.h" />
+    <ClInclude Include="..\TypeProperty.h" />
+    <ClInclude Include="..\VoltageClamp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ActivatedItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ActivatedItemMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Adapter.cpp">
+    </ClCompile>
+    <ClCompile Include="..\AnimatBase.cpp">
+    </ClCompile>
+    <ClCompile Include="..\AnimatLibrary.cpp">
+    </ClCompile>
+    <ClCompile Include="..\AnimatUtils.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ArrayChart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Attachment.cpp">
+    </ClCompile>
+    <ClCompile Include="..\BallSocket.cpp">
+    </ClCompile>
+    <ClCompile Include="..\BellGain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\BodyPart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\BoundingBox.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Box.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Cone.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ConstraintFriction.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ConstraintLimit.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ConstraintRelaxation.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ContactAdapter.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ContactSensor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\CurrentStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Cylinder.cpp">
+    </ClCompile>
+    <ClCompile Include="..\DataChart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\DataChartMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\DataColumn.cpp">
+    </ClCompile>
+    <ClCompile Include="..\DelayLine.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Ellipsoid.cpp">
+    </ClCompile>
+    <ClCompile Include="..\EnablerStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\EquationGain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ExternalInputStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ExternalStimuliMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ExternalStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\FileChart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\FluidPlane.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ForceStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Gain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Hinge.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Hud.cpp">
+    </ClCompile>
+    <ClCompile Include="..\HudItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\HudText.cpp">
+    </ClCompile>
+    <ClCompile Include="..\IMotorizedJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\IMovableItemCallback.cpp">
+    </ClCompile>
+    <ClCompile Include="..\InverseMuscleCurrent.cpp">
+    </ClCompile>
+    <ClCompile Include="..\IPhysicsBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\IPhysicsMovableItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ISimGUICallback.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Joint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\KeyFrame.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LengthTensionGain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Light.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LightManager.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LinearHillMuscle.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LinearHillStretchReceptor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LinearJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\LineBase.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Link.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Materials.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MaterialType.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MemoryChart.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Mesh.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ModuleThreadProcessor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MotorizedJoint.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MotorVelocityStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Mouth.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MovableItem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\MuscleBase.cpp">
+    </ClCompile>
+    <ClCompile Include="..\NervousSystem.cpp">
+    </ClCompile>
+    <ClCompile Include="..\NeuralModule.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Node.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Odor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OdorSensor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\OdorType.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Organism.cpp">
+    </ClCompile>
+    <ClCompile Include="..\PhysicsNeuralModule.cpp">
+    </ClCompile>
+    <ClCompile Include="..\PidControl.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Plane.cpp">
+    </ClCompile>
+    <ClCompile Include="..\PolynomialGain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Prismatic.cpp">
+    </ClCompile>
+    <ClCompile Include="..\PropertyControlAdapter.cpp">
+    </ClCompile>
+    <ClCompile Include="..\PropertyControlStimulus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ReceptiveField.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ReceptiveFieldPair.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RemoteControl.cpp" />
+    <ClCompile Include="..\RemoteControlLinkage.cpp" />
+    <ClCompile Include="..\RigidBody.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RobotInterface.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RobotIOControl.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RobotPartInterface.cpp">
+    </ClCompile>
+    <ClCompile Include="..\RPRO.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ScriptProcessor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Sensor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SigmoidGain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SimulationMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SimulationRecorder.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SimulationThread.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SimulationWindow.cpp">
+    </ClCompile>
+    <ClCompile Include="..\SimulationWindowMgr.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Simulator.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Sphere.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Spring.cpp">
+    </ClCompile>
+    <ClCompile Include="..\StdAfx.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Stomach.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Structure.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Terrrain.cpp">
+    </ClCompile>
+    <ClCompile Include="..\ThreadProcessor.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Torus.cpp">
+    </ClCompile>
+    <ClCompile Include="..\TypeProperty.cpp">
+    </ClCompile>
+    <ClCompile Include="..\VoltageClamp.cpp">
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

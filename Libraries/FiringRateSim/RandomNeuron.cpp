@@ -80,7 +80,10 @@ float RandomNeuron::ITime()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::ITime(float fltVal)
-{m_fltITime=fltVal;}
+{
+	m_fltITime=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the active intrinsic type (HI or LOW).
@@ -102,7 +105,10 @@ unsigned char RandomNeuron::IntrinsicType()
 \param	iVal	The new value. 
 **/
 void RandomNeuron::IntrinsicType(unsigned char iVal)
-{m_iIntrinsicType=iVal;}
+{
+	m_iIntrinsicType=iVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the active intrinsic current.
@@ -124,7 +130,10 @@ float RandomNeuron::IntrinsicCurrent()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::IntrinsicCurrent(float fltVal)
-{m_fltIntrinsic=fltVal;}
+{
+	m_fltIntrinsic=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the low current.
@@ -146,7 +155,10 @@ float RandomNeuron::Il()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::Il(float fltVal)
-{m_fltIl=fltVal;}
+{
+	m_fltIl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the low current init value.
@@ -171,6 +183,7 @@ void RandomNeuron::Ilinit(float fltVal)
 {
 	m_fltIlinit=fltVal;
 	m_fltIl = m_fltIlinit;
+	TemplateNodeChanged();
 }
 
 /**
@@ -183,6 +196,47 @@ void RandomNeuron::Ilinit(float fltVal)
 **/
 unsigned char RandomNeuron::NeuronType()
 {return RANDOM_NEURON;}
+
+void RandomNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	RandomNeuron *lpOrig = dynamic_cast<RandomNeuron *>(lpSource);
+
+	m_fltITime = lpOrig->m_fltITime;
+	m_iIntrinsicTypeDefault = lpOrig->m_iIntrinsicTypeDefault;
+	m_iIntrinsicType = lpOrig->m_iIntrinsicType;
+	m_fltIntrinsic = lpOrig->m_fltIntrinsic;
+	m_fltIlinit = lpOrig->m_fltIlinit;
+	m_fltIl = lpOrig->m_fltIl;
+
+	if(m_lpCurrentGraph)
+	{
+		delete m_lpCurrentGraph;
+		m_lpCurrentGraph = NULL;
+	}
+
+	if(lpOrig->m_lpCurrentGraph)
+		m_lpCurrentGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpCurrentGraph->Clone());
+
+	if(m_lpBurstGraph)
+	{
+		delete m_lpBurstGraph;
+		m_lpBurstGraph = NULL;
+	}
+
+	if(lpOrig->m_lpBurstGraph)
+		m_lpBurstGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpBurstGraph->Clone());
+
+	if(m_lpIBurstGraph)
+	{
+		delete m_lpIBurstGraph;
+		m_lpIBurstGraph = NULL;
+	}
+
+	if(lpOrig->m_lpIBurstGraph)
+		m_lpIBurstGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpIBurstGraph->Clone());
+}
 
 /**
 \brief	Sets the current distribution.
@@ -200,6 +254,7 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 			{delete m_lpCurrentGraph; m_lpCurrentGraph = NULL;}
 		m_lpCurrentGraph = lpGain;
 	}
+	TemplateNodeChanged();
 }
 
 /**

@@ -105,6 +105,8 @@ namespace RoboticsAnimatSim
 				class RbFirmataPrismaticServo;
 				class RbFirmataPWMOutput;
 			}
+
+			class RbXBeeCommander;
 		}
     }
 }

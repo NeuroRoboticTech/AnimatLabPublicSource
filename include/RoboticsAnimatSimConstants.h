@@ -243,6 +243,8 @@
 #define Rb_Err_lUnableToObtainFirmataPointer -4046
 #define Rb_Err_strUnableToObtainFirmataPointer "Unable to obtain a pointer to the Firmata controller."
 
+#define Rb_Err_lFailedUartSBeeConnection -4047
+#define Rb_Err_strFailedUartSBeeConnection "Failed to connect to the UartSBee."
 
 #define RB_PI 3.14159
 

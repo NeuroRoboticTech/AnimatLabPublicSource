@@ -109,6 +109,8 @@ namespace AnimatSim
 
 			float UpperOutput();
 			void UpperOutput(float fltVal);
+			
+			virtual void Copy(CStdSerialize *lpSource);
 
 			/**
 			\brief	Calculates the gain. 

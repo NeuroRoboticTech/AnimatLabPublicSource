@@ -32,6 +32,7 @@ namespace BulletAnimatSim
 		virtual NeuralModule *CreateNeuralModule(std::string strType, bool bThrowError = true);
 		virtual ConstraintRelaxation *CreateConstraintRelaxation(std::string strType, bool bThrowError = true);
 		virtual ConstraintFriction *CreateConstraintFriction(std::string strType, bool bThrowError = true);
+		virtual RemoteControlLinkage *CreateRemoteControlLinkage(std::string strType, bool bThrowError = true);
 
 		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};

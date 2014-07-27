@@ -814,10 +814,10 @@ void RbDynamixelUSBServo::InitMotorData()
 
 	do
 	{
-#ifdef Win32
+//#ifdef Win32
 		//Do not attempt to sleep in linux while in a spinlock. Windows is fine with it.
 		MicroSleep(5000);
-#endif
+//#endif
 	} while(GetIsMoving());
 
 	m_iLastGoalPos = GetActualPosition_FP();

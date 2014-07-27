@@ -127,6 +127,25 @@ float PolynomialGain::D() {return m_fltD;}
 **/
 void PolynomialGain::D(float fltVal) {m_fltD = fltVal;}
 
+void PolynomialGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	PolynomialGain *lpOrig = dynamic_cast<PolynomialGain *>(lpSource);
+
+	m_fltA = lpOrig->m_fltA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltD = lpOrig->m_fltD;
+}
+
+CStdSerialize *PolynomialGain::Clone()
+{
+	CStdSerialize *lpClone = new PolynomialGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float PolynomialGain::CalculateGain(float fltInput)
 {
 	//Gain = A*x^3 + B*x^2 + C*x + D

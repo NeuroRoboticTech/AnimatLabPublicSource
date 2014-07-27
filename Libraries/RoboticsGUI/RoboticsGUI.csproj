@@ -57,6 +57,7 @@
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataHingeServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPrismaticServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPWMOutput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\XbeeCommander.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

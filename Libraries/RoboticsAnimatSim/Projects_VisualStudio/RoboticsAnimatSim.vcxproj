@@ -274,6 +274,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbStructure.h" />
     <ClInclude Include="..\RbTorus.h" />
     <ClInclude Include="..\RbUniversal.h" />
+    <ClInclude Include="..\RbXBeeCommander.h" />
     <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +374,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbUniversal.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbXBeeCommander.cpp" />
     <ClCompile Include="..\RoboticsAnimatSim.cpp">
     </ClCompile>
     <ClCompile Include="..\StdAfx.cpp">

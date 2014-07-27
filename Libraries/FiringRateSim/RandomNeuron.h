@@ -77,6 +77,8 @@ namespace FiringRateSim
 			void Ilinit(float fltVal);
 
 			virtual unsigned char NeuronType();
+									
+			virtual void Copy(CStdSerialize *lpSource);
 
 			AnimatSim::Gains::Gain *CurrentDistribution() {return m_lpCurrentGraph;};
 			void CurrentDistribution(AnimatSim::Gains::Gain *lpGain);

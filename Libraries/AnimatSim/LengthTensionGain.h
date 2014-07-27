@@ -66,6 +66,9 @@ namespace AnimatSim
 
 				virtual float SeRestLength();
 				virtual float MinPeLength();
+											
+				virtual void Copy(CStdSerialize *lpSource);
+				virtual CStdSerialize *Clone();
 
 				virtual float CalculateGain(float fltInput);
 

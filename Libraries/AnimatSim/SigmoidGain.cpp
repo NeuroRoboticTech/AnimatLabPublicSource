@@ -127,6 +127,25 @@ float SigmoidGain::D() {return m_fltD;}
 **/
 void SigmoidGain::D(float fltVal) {m_fltD = fltVal;}
 
+void SigmoidGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	SigmoidGain *lpOrig = dynamic_cast<SigmoidGain *>(lpSource);
+
+	m_fltA = lpOrig->m_fltA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltD = lpOrig->m_fltD;
+}
+
+CStdSerialize *SigmoidGain::Clone()
+{
+	CStdSerialize *lpClone = new SigmoidGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float SigmoidGain::CalculateGain(float fltInput)
 {
 	if(InLimits(fltInput))

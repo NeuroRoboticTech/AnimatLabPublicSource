@@ -238,6 +238,7 @@
     <Compile Include="Collections\PhysicsEngines.vb" />
     <Compile Include="Collections\ReceptiveFieldPairs.vb" />
     <Compile Include="Collections\ReceptiveFields.vb" />
+    <Compile Include="Collections\RemoteControlLinkages.vb" />
     <Compile Include="Collections\RigidBodies.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -502,6 +503,8 @@
     <Compile Include="DataObjects\ProjectMigrations\Migrate_VortexToBullet.vb" />
     <Compile Include="DataObjects\Robotics\InputSystem.vb" />
     <Compile Include="DataObjects\Robotics\OutputSystem.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControl.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControlLinkage.vb" />
     <Compile Include="DataObjects\Robotics\RobotIOControl.vb" />
     <Compile Include="DataObjects\Robotics\MotorControlSystem.vb" />
     <Compile Include="DataObjects\Robotics\RobotInterface.vb" />

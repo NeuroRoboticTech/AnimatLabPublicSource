@@ -879,6 +879,46 @@ catch(...)
 
 // ************* Constraint Friction Type Conversion functions ******************************
 
+// ************* RemoteControlLinkage Conversion functions ******************************
+
+RemoteControlLinkage *VsClassFactory::CreateRemoteControlLinkage(std::string strType, bool bThrowError)
+{
+	RemoteControlLinkage *lpLink=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "REMOTECONTROLLINKAGE" || strType == "DEFAULT")
+	{
+		lpLink = new RemoteControlLinkage;
+	}
+	else
+	{
+		lpLink = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidFrictionType, Al_Err_strInvalidFrictionType, "Friction", strType);
+	}
+
+	return lpLink;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpLink) delete lpLink;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpLink) delete lpLink;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* RemoteControlLinkage Type Conversion functions ******************************
+
 
 // ************* IStdClassFactory functions ******************************
 
@@ -926,6 +966,8 @@ CStdSerialize *VsClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateConstraintRelaxation(strObjectType, bThrowError);
 	else if(strClassType == "CONSTRAINTFRICTION")
 		lpObject = CreateConstraintFriction(strObjectType, bThrowError);
+	else if(strClassType == "REMOTECONTROLLINKAGE")
+		lpObject = CreateRemoteControlLinkage(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

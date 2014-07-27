@@ -110,6 +110,7 @@ void Neuron::Cn(float fltVal)
 
 	m_fltCn=fltVal;
 	m_fltInvCn = 1/m_fltCn;
+	TemplateNodeChanged();
 }
 
 /**
@@ -136,6 +137,7 @@ void Neuron::Gn(float fltVal)
 	Std_IsAboveMin((float) 0, fltVal, true, "Cn");
 
 	m_fltGn=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -167,6 +169,7 @@ void Neuron::Vth(float fltVal)
 	m_aryVth[0] = fltDiff;
 	m_aryVth[1] = fltDiff;
 	m_fltVthadd = fltDiff;
+	TemplateNodeChanged();
 }
 
 /**
@@ -193,6 +196,7 @@ void Neuron::Fmin(float fltVal)
 	Std_IsAboveMin((float) 0, fltVal, true, "Fmin", true);
 
 	m_fltFmin=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -218,6 +222,7 @@ void Neuron::Gain(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "Gain");
 	m_fltGain=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -240,7 +245,10 @@ float Neuron::ExternalI()
 \param	fltVal	The new value. 
 **/
 void Neuron::ExternalI(float fltVal)
-{m_fltExternalI=fltVal;}
+{
+	m_fltExternalI=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Adds to the external current.
@@ -281,6 +289,7 @@ void Neuron::Vrest(float fltVal)
 
 	if(!m_lpSim->SimRunning())
 		m_fltVndisp = m_fltVrest;
+	TemplateNodeChanged();
 }
 
 /**
@@ -312,7 +321,11 @@ bool Neuron::UseNoise() {return m_bUseNoise;}
 
 \param	bVal	true to use noise. 
 **/
-void Neuron::UseNoise(bool bVal) {m_bUseNoise = bVal;}
+void Neuron::UseNoise(bool bVal) 
+{
+	m_bUseNoise = bVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets whether to use accommodation.
@@ -340,6 +353,7 @@ void Neuron::UseAccom(bool bVal)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
 }
 
 /**
@@ -358,6 +372,7 @@ void Neuron::VNoiseMax(float fltVal)
 		m_bUseNoise = true;
 	else
 		m_bUseNoise = false;
+	TemplateNodeChanged();
 }
 
 /**
@@ -394,6 +409,7 @@ void Neuron::RelativeAccommodation(float fltVal)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
 }
 
 /**
@@ -423,6 +439,7 @@ void Neuron::AccommodationTimeConstant(float fltVal)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
 }
 
 float Neuron::Iinit() {return m_fltIinit;}
@@ -435,6 +452,7 @@ void Neuron::InitTime(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 10, fltVal, true, "InitTime");
 	m_fltInitTime = fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -457,7 +475,10 @@ bool Neuron::GainType()
 \param	bVal	true to use new way, false to use old way.
 **/
 void Neuron::GainType(bool bVal)
-{m_bGainType = bVal;}
+{
+	m_bGainType = bVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the membrane voltage.
@@ -517,6 +538,48 @@ void Neuron::IntrinsicCurrent(float fltVal)
 **/
 unsigned char Neuron::NeuronType()
 {return RUGULAR_NEURON;}
+
+void Neuron::Copy(CStdSerialize *lpSource)
+{
+	Node::Copy(lpSource);
+
+	Neuron *lpOrig = dynamic_cast<Neuron *>(lpSource);
+
+	m_lpFRModule = lpOrig->m_lpFRModule;
+	m_fltCn = lpOrig->m_fltCn;
+	m_fltInvCn = lpOrig->m_fltInvCn;
+	m_fltGn = lpOrig->m_fltGn;
+	m_fltFmin = lpOrig->m_fltFmin;
+	m_fltGain = lpOrig->m_fltGain;
+	m_fltExternalI = lpOrig->m_fltExternalI;
+	m_fltIntrinsicI = lpOrig->m_fltIntrinsicI;
+	m_fltSynapticI = lpOrig->m_fltSynapticI;
+	m_fltAdapterI = lpOrig->m_fltAdapterI;
+	m_fltAdapterMemoryI = lpOrig->m_fltAdapterMemoryI;
+	m_fltTotalMemoryI = lpOrig->m_fltTotalMemoryI;
+	m_fltVNoiseMax = lpOrig->m_fltVNoiseMax;
+	m_bUseNoise = lpOrig->m_bUseNoise;
+	m_bGainType = lpOrig->m_bGainType;
+	m_fltDCTH = lpOrig->m_fltDCTH;
+	m_fltAccomTimeMod = lpOrig->m_fltAccomTimeMod;
+	m_fltAccomTimeConst = lpOrig->m_fltAccomTimeConst;
+	m_fltRelativeAccom = lpOrig->m_fltRelativeAccom;
+	m_bUseAccom = lpOrig->m_bUseAccom;
+	m_fltVn = lpOrig->m_fltVn;
+	m_fltFiringFreq = lpOrig->m_fltFiringFreq;
+	m_aryVn[0] = lpOrig->m_aryVn[0];
+	m_aryVn[1] = lpOrig->m_aryVn[1];
+	m_fltVNoise = lpOrig->m_fltVNoise;
+	m_fltVth = lpOrig->m_fltVth;
+	m_fltVthi = lpOrig->m_fltVthi;
+	m_fltVthadd = lpOrig->m_fltVthadd;
+	m_aryVth[0] = lpOrig->m_aryVth[0];
+	m_aryVth[1] = lpOrig->m_aryVth[1];
+	m_fltVrest = lpOrig->m_fltVrest;
+	m_fltVndisp = lpOrig->m_fltVndisp;
+	m_fltIinit = lpOrig->m_fltIinit;
+	m_fltInitTime = lpOrig->m_fltInitTime;
+}
 
 /**
 \brief	Gets a pointer to the synapses array.
@@ -870,6 +933,28 @@ void Neuron::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltAdapterI += fltInput;
 	m_fltAdapterMemoryI = m_fltAdapterI;
+}
+
+void Neuron::SetupTemplateNodes()
+{
+	//If we are re-creatng the nodes then make sure that any old ones are cleaned-up
+	DestroyTemplateNodes();
+
+	//Now loop through all the child nodes and create them.
+	//Remember that this node is node 1.
+	for(int iChild=1; iChild<m_iTemplateNodeCount; iChild++)
+	{
+		//Now create the new node and add it to the list
+		this->Clone();
+	}
+}
+
+void Neuron::DestroyTemplateNodes()
+{
+}
+
+void Neuron::TemplateNodeChanged()
+{
 }
 
 #pragma region DataAccesMethods

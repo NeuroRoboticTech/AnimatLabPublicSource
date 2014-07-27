@@ -144,6 +144,10 @@ namespace FiringRateSim
 
 			Synapse *LoadSynapse(CStdXml &oXml);
 
+			virtual void SetupTemplateNodes();
+			virtual void DestroyTemplateNodes();
+			virtual void TemplateNodeChanged();
+					
 		public:
 			Neuron();
 			virtual ~Neuron();
@@ -203,6 +207,8 @@ namespace FiringRateSim
 			virtual unsigned char NeuronType();
 
 			virtual CStdPtrArray<Synapse> *GetSynapses();
+
+			virtual void Copy(CStdSerialize *lpSource);
 
 			/**
 			\brief	Adds a synapse to this neuron. 

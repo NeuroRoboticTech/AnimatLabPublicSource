@@ -87,6 +87,8 @@ namespace AnimatSim
 		virtual bool Selected();
 		virtual void Selected(bool bValue, bool bSelectMultiple);
 
+		virtual void Copy(CStdSerialize *lpSource);
+
 #pragma region DataAccesMethods
 
 		/**

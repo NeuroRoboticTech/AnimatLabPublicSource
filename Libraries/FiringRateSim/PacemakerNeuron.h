@@ -79,6 +79,8 @@ namespace FiringRateSim
 			void IntrinsicType(unsigned char iVal);
 
 			virtual unsigned char NeuronType();
+						
+			virtual void Copy(CStdSerialize *lpSource);
 
 			virtual void ResetSimulation();
 			virtual void StepSimulation();

@@ -58,6 +58,8 @@
 #include "RbFirmataPrismaticServo.h"
 #include "RbFirmataPWMOutput.h"
 
+#include "RbXBeeCommander.h"
+
 #ifdef _WINDOWS
 	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
 #else
@@ -942,10 +944,10 @@ try
 	{
 		lpControl = new RbFirmataController;
 	}
-	//else if(strType == "SWITCHINPUTSENSOR")
-	//{
-	//	lpControl = new RbSwitchInputSensor;
-	//}
+	else if(strType == "XBEECOMMANDER")
+	{
+		lpControl = new RbXBeeCommander;
+	}
 	else
 	{
 		lpControl = NULL;
@@ -1045,6 +1047,47 @@ catch(...)
 
 // ************* Robot Part Interface Type Conversion functions ******************************
 
+// ************* RemoteControlLinkage Conversion functions ******************************
+
+RemoteControlLinkage *RbClassFactory::CreateRemoteControlLinkage(std::string strType, bool bThrowError)
+{
+	RemoteControlLinkage *lpLink=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "REMOTECONTROLLINKAGE" || strType == "DEFAULT")
+	{
+		lpLink = new RemoteControlLinkage;
+	}
+	else
+	{
+		lpLink = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidFrictionType, Al_Err_strInvalidFrictionType, "Friction", strType);
+	}
+
+	return lpLink;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpLink) delete lpLink;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpLink) delete lpLink;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* RemoteControlLinkage Type Conversion functions ******************************
+
+
 
 
 // ************* IStdClassFactory functions ******************************
@@ -1099,6 +1142,8 @@ CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateRobotIOControl(strObjectType, bThrowError);
 	else if(strClassType == "ROBOTPARTINTERFACE")
 		lpObject = CreateRobotPartInterface(strObjectType, bThrowError);
+	else if(strClassType == "REMOTECONTROLLINKAGE")
+		lpObject = CreateRemoteControlLinkage(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

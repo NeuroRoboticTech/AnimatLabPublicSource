@@ -38,6 +38,9 @@ namespace AnimatSim
 
 				virtual std::string GainEquation();
 				virtual void GainEquation(std::string strEquation);
+											
+				virtual void Copy(CStdSerialize *lpSource);
+				virtual CStdSerialize *Clone();
 
 				virtual float CalculateGain(float fltInput);
 

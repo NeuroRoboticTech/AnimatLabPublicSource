@@ -532,6 +532,10 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("Iinit", m_snIinit.ActualValue)
             oXml.AddChildElement("InitTime", m_snInitTime.ActualValue)
 
+            oXml.AddChildElement("TemplateNode", m_bTemplateNode)
+            oXml.AddChildElement("TemplateNodeCount", TemplateNodeCount)
+            oXml.AddChildElement("TemplateChangeScript", TemplateChangeScript)
+
             oXml.AddChildElement("GainType", m_bGainType)
 
             'If Me.Text = "LU Leg Forward" Then

@@ -19,11 +19,14 @@ have the ability to load, clone, save and trace.
 **/
 class STD_UTILS_PORT CStdSerialize  
 {
+protected:
+
 public:
 	CStdSerialize();
 	virtual ~CStdSerialize();
 	
 	virtual CStdSerialize *Clone();
+	virtual void Copy(CStdSerialize *lpSource);
 	virtual void Trace(std::ostream &oOs);
 	virtual void Load(CStdXml &oXml);
 	virtual void Save(CStdXml &oXml);

@@ -57,6 +57,8 @@ namespace FiringRateSim
 			void Ih(float fltVal);
 
 			virtual unsigned char NeuronType();
+			
+			virtual void Copy(CStdSerialize *lpSource);
 
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);

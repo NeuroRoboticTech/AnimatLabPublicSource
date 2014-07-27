@@ -34,8 +34,24 @@ namespace AnimatSim
 		///This is used for reporting the enabled state in a GetDataPointer call.
 		float m_fltEnabled;
 
+		///If this is true then this node represents a whole bunch of similar nodes.
+		///It creates these nodes when it is created and when it is modified it modifies all the other nodes
+		bool m_bTemplateNode;
+
+		///This tells how many nodes are represented by this node.
+		int m_iTemplateNodeCount;
+
+		///This is a python change script that is run any time this template node is modified.
+		std::string m_strTemplateChangeScript;
+
+		CStdArray<std::string> m_aryTemplateChildNodes;
+
 		virtual void UpdateData();
 
+		virtual void SetupTemplateNodes();
+		virtual void DestroyTemplateNodes();
+		virtual void TemplateNodeChanged();
+		
 	public:
 		Node();
 		virtual ~Node();
@@ -46,6 +62,17 @@ namespace AnimatSim
 		virtual void Enabled(bool bValue);
 
 		virtual void Kill(bool bState = true);
+
+		virtual bool TemplateNode();
+		virtual void TemplateNode(bool bVal);
+
+		virtual int TemplateNodeCount();
+		virtual void TemplateNodeCount(int iVal);
+
+		virtual std::string TemplateChangeScript();
+		virtual void TemplateChangeScript(std::string strVal);
+
+		virtual void Copy(CStdSerialize *lpSource);
 
 		/**
 		\brief	Adds an external node input.

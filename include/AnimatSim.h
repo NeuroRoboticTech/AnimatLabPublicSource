@@ -174,6 +174,9 @@ namespace AnimatSim
         class RobotInterface;
 		class RobotIOControl;
         class RobotPartInterface;
+		class RemoteControl;
+		class RemoteControlLinkage;
+
     }
 }
 
@@ -289,5 +292,11 @@ using namespace AnimatSim::Robotics;
 #include "Simulator.h"
 #include "SimulationThread.h"
 #include "SimulationMgr.h"
+
+#include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
+#include "RemoteControlLinkage.h"
+#include "RemoteControl.h"
 
 #endif // __ANIMAT_LIB_DLL_H__
