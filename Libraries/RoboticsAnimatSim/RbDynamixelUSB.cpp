@@ -176,7 +176,7 @@ bool RbDynamixelUSB::SendSynchronousMoveCommand()
 
 		for(int iServo=0; iServo<iServos; iServo++ )
 		{
-			RbDynamixelUSBMotorUpdateData *lpServo = m_aryMotorData[iServo];
+			RbDynamixelMotorUpdateData *lpServo = m_aryMotorData[iServo];
 
 			int iOffset = (2+(iDataPerServo+1)*iServo);
 			dxl_set_txpacket_parameter((iOffset+0), lpServo->m_iID);

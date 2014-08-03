@@ -13,29 +13,6 @@ namespace RoboticsAnimatSim
 			namespace DynamixelUSB
 			{
 
-class ROBOTICS_PORT RbDynamixelUSBMotorUpdateData
-{
-public:
-	int m_iID;
-	int m_iGoalPos;
-	int m_iGoalVelocity;
-
-	RbDynamixelUSBMotorUpdateData()
-	{
-		m_iID = 0;
-		m_iGoalPos = 0;
-		m_iGoalVelocity = 0;
-	}
-
-	RbDynamixelUSBMotorUpdateData(int iID, int iGoalPos, int iGoalVelocity)
-	{
-		m_iID = iID;
-		m_iGoalPos = iGoalPos;
-		m_iGoalVelocity = iGoalVelocity;
-	}
-
-};
-
 class ROBOTICS_PORT RbDynamixelUSB : public AnimatSim::Robotics::RobotIOControl
 {
 protected:
@@ -46,7 +23,7 @@ protected:
 	virtual void ExitIOThread();
 
 public:
-	CStdPtrArray<RbDynamixelUSBMotorUpdateData> m_aryMotorData;
+	CStdPtrArray<RbDynamixelMotorUpdateData> m_aryMotorData;
 
 	RbDynamixelUSB();
 	virtual ~RbDynamixelUSB();

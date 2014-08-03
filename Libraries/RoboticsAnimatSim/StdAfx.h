@@ -84,10 +84,12 @@ namespace RoboticsAnimatSim
 
         namespace RobotIOControls
         {
+			class RbDynamixelServo;
+			class RbDynamixelMotorUpdateData;
+
 			namespace DynamixelUSB
 			{
 				class RbDynamixelUSB;
-				class RbDynamixelUSBMotorUpdateData;
 				class RbDynamixelUSBServo;
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;

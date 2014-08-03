@@ -235,6 +235,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbConstraintFriction.h" />
     <ClInclude Include="..\RbConstraintRelaxation.h" />
     <ClInclude Include="..\RbCylinder.h" />
+    <ClInclude Include="..\RbDynamixelServo.h" />
     <ClInclude Include="..\RbDynamixelUSB.h" />
     <ClInclude Include="..\RbDynamixelUSBHinge.h" />
     <ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
@@ -296,6 +297,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbCylinder.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbDynamixelServo.cpp" />
     <ClCompile Include="..\RbDynamixelUSB.cpp">
     </ClCompile>
     <ClCompile Include="..\RbDynamixelUSBHinge.cpp">

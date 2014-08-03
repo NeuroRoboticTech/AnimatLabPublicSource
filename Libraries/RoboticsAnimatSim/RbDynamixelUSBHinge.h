@@ -33,9 +33,7 @@ protected:
 	///when that cycle comes around. This is for updating the motors in a round robin fashion.
 	int m_iUpdateQueueIndex;
 
-	///Keeps track of whether we want to pull the data back from this motor or not. 
-	///If we are only setting values in it then there is no reason to do an update for it.
-	bool m_bQueryMotorData;
+	virtual void AddMotorUpdate(int iServoID, int iPos, int iSpeed);
 
 public:
 	RbDynamixelUSBHinge();
@@ -53,9 +51,6 @@ public:
 
 	virtual float QuantizeServoPosition(float fltPos);
 	virtual float QuantizeServoVelocity(float fltVel);
-
-	virtual void QueryMotorData(bool bVal);
-	virtual bool QueryMotorData();
 
 	virtual bool IncludeInPartsCycle();
 
