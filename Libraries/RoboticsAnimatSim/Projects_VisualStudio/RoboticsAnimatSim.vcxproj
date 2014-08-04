@@ -246,6 +246,8 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbFirmataController.h" />
     <ClInclude Include="..\RbFirmataDigitalInput.h" />
     <ClInclude Include="..\RbFirmataDigitalOutput.h" />
+    <ClInclude Include="..\RbFirmataDynamixelHinge.h" />
+    <ClInclude Include="..\RbFirmataDynamixelServo.h" />
     <ClInclude Include="..\RbFirmataHingeServo.h" />
     <ClInclude Include="..\RbFirmataPart.h" />
     <ClInclude Include="..\RbFirmataPrismaticServo.h" />
@@ -318,6 +320,8 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbFirmataDigitalOutput.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbFirmataDynamixelHinge.cpp" />
+    <ClCompile Include="..\RbFirmataDynamixelServo.cpp" />
     <ClCompile Include="..\RbFirmataHingeServo.cpp">
     </ClCompile>
     <ClCompile Include="..\RbFirmataPart.cpp">

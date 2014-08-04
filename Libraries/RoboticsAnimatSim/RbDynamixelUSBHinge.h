@@ -33,7 +33,7 @@ protected:
 	///when that cycle comes around. This is for updating the motors in a round robin fashion.
 	int m_iUpdateQueueIndex;
 
-	virtual void AddMotorUpdate(int iServoID, int iPos, int iSpeed);
+	virtual void AddMotorUpdate(int iPos, int iSpeed);
 
 public:
 	RbDynamixelUSBHinge();

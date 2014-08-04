@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\RoboticsPhysicsEngine.cs" />
     <Compile Include="DataObjects\RobotInterfaces\LANWirelessInterface.cs" />
+    <Compile Include="DataObjects\RobotIOControls\DynamixelServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSB.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBHingeMotor.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBPrismaticMotor.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataController.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalInput.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalOutput.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDynamixelHingeServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataHingeServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPrismaticServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPWMOutput.cs" />

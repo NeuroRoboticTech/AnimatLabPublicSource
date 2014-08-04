@@ -45,7 +45,7 @@ RbDynamixelUSBHinge::~RbDynamixelUSBHinge()
         m_lpHinge = NULL;
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelUSBHinge\r\n", "", -1, false, true);}
 }
 
 void RbDynamixelUSBHinge::IOComponentID(int iID)
@@ -171,13 +171,14 @@ void RbDynamixelUSBHinge::SetupIO()
 	}
 }
 
-void RbDynamixelUSBHinge::AddMotorUpdate(int iServoID, int iPos, int iSpeed)
+void RbDynamixelUSBHinge::AddMotorUpdate(int iPos, int iSpeed)
 {
-	if(m_lpParentUSB)
+	if(!m_lpSim->InSimulation() && m_lpParentUSB)
 	{
-		m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelMotorUpdateData(iServoID, iPos, iSpeed));
-		m_fltIOValue = iSpeed;
+		m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelMotorUpdateData(m_iServoID, iPos, iSpeed));
 	}
+
+	m_fltIOValue = iSpeed;
 }
 
 void RbDynamixelUSBHinge::StepIO(int iPartIdx)

@@ -149,11 +149,18 @@ void RbFirmataController::ProcessIO()
 
 		while(!m_bStopIO)
 		{
+			//Update the firmata IO.
 			update();
 
 			//Do not try and step IO until it has been setup correctly.
 			if(m_bSetupComplete)
+			{
 				StepIO();
+
+				//Execute any synch moves that were setup for this IO loop in StepIO
+				//If none were setup it will ignore this call.
+				sendDynamixelSynchMoveExecute();
+			}
 
 			//platformstl::micro_sleep(5);
 		}

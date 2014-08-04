@@ -18,7 +18,7 @@ class ROBOTICS_PORT RbDynamixelUSBPrismatic : public AnimatSim::Robotics::RobotP
 protected:
     Prismatic *m_lpPrismatic;
 
-	virtual void AddMotorUpdate(int iServoID, int iPos, int iSpeed) {};
+	virtual void AddMotorUpdate(int iPos, int iSpeed) {};
 
 public:
 	RbDynamixelUSBPrismatic();

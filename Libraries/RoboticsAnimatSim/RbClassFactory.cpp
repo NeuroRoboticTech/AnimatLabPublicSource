@@ -58,6 +58,8 @@
 #include "RbFirmataPrismaticServo.h"
 #include "RbFirmataPWMOutput.h"
 
+#include "RbFirmataDynamixelServo.h"
+#include "RbFirmataDynamixelHinge.h"
 #include "RbXBeeCommander.h"
 
 #ifdef _WINDOWS
@@ -1020,6 +1022,10 @@ try
 	else if(strType == "FIRMATAPWMOUTPUT")
 	{
 		lpInterface = new RbFirmataPWMOutput;
+	}
+	else if(strType == "FIRMATADYNAMIXELHINGESERVO")
+	{
+		lpInterface = new RbFirmataDynamixelHinge;
 	}
 	else
 	{

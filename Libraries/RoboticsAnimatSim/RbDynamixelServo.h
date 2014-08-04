@@ -245,7 +245,7 @@ protected:
 	virtual void WriteTorqueLimit(int iServoID, int iVal) = 0;
 	virtual int ReadTorqueLimit(int iServoID) = 0;
 
-	virtual void AddMotorUpdate(int iServoID, int iPos, int iSpeed) = 0;
+	virtual void AddMotorUpdate(int iPos, int iSpeed) = 0;
 	virtual void SetMotorPosVel();
 
 	virtual float *GetDataPointer(const std::string &strDataType);

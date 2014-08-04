@@ -1111,7 +1111,7 @@ void RbDynamixelServo::SetMotorPosVel()
 		}
 
 		//Add a new update data so we can send the move command out synchronously to all motors.
-		AddMotorUpdate(m_iServoID, m_iNextGoalPos, m_iNextGoalVelocity);
+		AddMotorUpdate(m_iNextGoalPos, m_iNextGoalVelocity);
 		m_iLastGoalPos = m_iNextGoalPos;
 		m_iLastGoalVelocity = m_iNextGoalVelocity;
 	}
