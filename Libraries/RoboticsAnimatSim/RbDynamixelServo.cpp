@@ -820,13 +820,13 @@ void RbDynamixelServo::InitMotorData()
 	SetMaximumVelocity();
 	SetGoalPosition(0);
 
-	do
-	{
+	//do
+	//{
 //#ifdef Win32
 		//Do not attempt to sleep in linux while in a spinlock. Windows is fine with it.
 		MicroSleep(5000);
 //#endif
-	} while(GetIsMoving());
+	//} while(GetIsMoving());
 
 	m_iLastGoalPos = GetActualPosition_FP();
 

@@ -142,7 +142,11 @@ void RbFirmataController::ProcessIO()
 		
 		std::cout << "Sending firmware version request\r\n";
 
-		//Need to do this to init the pins, get the firmware version, and  call setupArduino.
+		//First reset firmata
+		sendReset();
+		boost::this_thread::sleep(boost::posix_time::microseconds(10));
+
+		//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called
 		//and we can start processing.
 		sendFirmwareVersionRequest();
@@ -161,8 +165,6 @@ void RbFirmataController::ProcessIO()
 				//If none were setup it will ignore this call.
 				sendDynamixelSynchMoveExecute();
 			}
-
-			//platformstl::micro_sleep(5);
 		}
 	}
 	catch(CStdErrorInfo oError)
