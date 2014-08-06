@@ -18,11 +18,25 @@ namespace RoboticsAnimatSim
 class ROBOTICS_PORT RbFirmataDynamixelServo : public RbDynamixelServo, public RbFirmataPart
 {
 protected:
+	///The tick when we start a servo update
+	unsigned long long m_lStartServoUpdateTick;
+
+	///Keeps track of the servos model number. This is updated once at the start of the sim and then used throughout
 	int m_iModelNum;
+
+	///Keeps track of the servos firmware version. This is updated once at the start of the sim and then used throughout
 	int m_iFirmwareVersion;
+
+	///Keeps track of the servos return delay time.
 	int m_iReturnDelayTime;
+
+	///Keeps track of the counter-clockwise limit.
 	int m_iCCWAngleLimit;
+
+	///Keeps track of the clockwise limit.
 	int m_iCWAngleLimit;
+
+	///Keeps track of the torque limit.
 	int m_iTorqueLimit;
 
 	virtual void WriteGoalPosition(int iServoID, int iPos) {};

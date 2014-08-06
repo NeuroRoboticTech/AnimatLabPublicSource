@@ -119,6 +119,12 @@ bool RobotIOControl::SetData(const std::string &strDataType, const std::string &
 	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -290,19 +296,22 @@ all the parts.
 **/
 void RobotIOControl::SetupIO()
 {
-	m_iCyclePartCount = 0;
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryParts[iIndex]->Enabled())
-		{
-			if(m_aryParts[iIndex]->IncludeInPartsCycle())
-				m_iCyclePartCount++;
+	if(m_bEnabled)
+	{
+		m_iCyclePartCount = 0;
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryParts[iIndex]->Enabled())
+			{
+				if(m_aryParts[iIndex]->IncludeInPartsCycle())
+					m_iCyclePartCount++;
 
-			m_aryParts[iIndex]->SetupIO();
+				m_aryParts[iIndex]->SetupIO();
 			
-			//Give it just smidge of time to finish processing the last set of data so we do not overload the arduino's buffer and so it has time to process the requests.
-			boost::this_thread::sleep(boost::posix_time::microseconds(1000));
-		}
+				//Give it just smidge of time to finish processing the last set of data so we do not overload the arduino's buffer and so it has time to process the requests.
+				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			}
+	}
 }
 
 /**
@@ -314,23 +323,25 @@ void RobotIOControl::SetupIO()
 **/
 void RobotIOControl::StepIO()
 {
-	if(m_bPauseIO)
-		WaitWhilePaused();
+	if(m_bEnabled)
+	{
+		if(m_bPauseIO)
+			WaitWhilePaused();
 
-	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+		unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryParts[iIndex]->Enabled())
-			m_aryParts[iIndex]->StepIO(m_iCyclePartIdx);
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryParts[iIndex]->Enabled())
+				m_aryParts[iIndex]->StepIO(m_iCyclePartIdx);
 
-	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
-	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
+		unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+		m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
 
-	m_iCyclePartIdx++;
-	if(m_iCyclePartIdx >= m_iCyclePartCount)
-		m_iCyclePartIdx = 0;
-
+		m_iCyclePartIdx++;
+		if(m_iCyclePartIdx >= m_iCyclePartCount)
+			m_iCyclePartIdx = 0;
+	}
 }
 
 /**
@@ -386,32 +397,44 @@ any required cleanup.
 **/
 void RobotIOControl::ShutdownIO()
 {
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryParts[iIndex]->Enabled())
-			m_aryParts[iIndex]->ShutdownIO();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryParts[iIndex]->Enabled())
+				m_aryParts[iIndex]->ShutdownIO();
+	}
 }
 
 void RobotIOControl::Initialize()
 {
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->Initialize();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryParts[iIndex]->Initialize();
+	}
 }
 
 void RobotIOControl::ResetSimulation()
 {
-	m_iCyclePartIdx = 0;
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->ResetSimulation();
+	if(m_bEnabled)
+	{
+		m_iCyclePartIdx = 0;
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryParts[iIndex]->ResetSimulation();
+	}
 }
 
 void RobotIOControl::AfterResetSimulation()
 {
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryParts[iIndex]->AfterResetSimulation();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryParts[iIndex]->AfterResetSimulation();
+	}
 }
 
 void RobotIOControl::SimStopping()
@@ -421,12 +444,15 @@ void RobotIOControl::SimStopping()
 
 void RobotIOControl::StepSimulation()
 {
-    AnimatBase::StepSimulation();
+	if(m_bEnabled)
+	{
+		AnimatBase::StepSimulation();
 
-	int iCount = m_aryParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryParts[iIndex]->Enabled())
-			m_aryParts[iIndex]->StepSimulation();
+		int iCount = m_aryParts.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryParts[iIndex]->Enabled())
+				m_aryParts[iIndex]->StepSimulation();
+	}
 }
 
 void RobotIOControl::Load(CStdXml &oXml)

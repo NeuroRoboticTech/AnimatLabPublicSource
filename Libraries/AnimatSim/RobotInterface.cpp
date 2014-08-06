@@ -141,6 +141,12 @@ bool RobotInterface::SetData(const std::string &strDataType, const std::string &
 {
 	std::string strType = Std_CheckString(strDataType);
 
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return true;
+	}
+
 	if(strType == "PHYSICSTIMESTEP")
 	{
 		PhysicsTimeStep((float) atof(strValue.c_str()));
@@ -277,23 +283,32 @@ int RobotInterface::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotInterface::Initialize()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->Initialize();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->Initialize();
+	}
 }
 
 void RobotInterface::ResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->ResetSimulation();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->ResetSimulation();
+	}
 }
 
 void RobotInterface::AfterResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->AfterResetSimulation();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->AfterResetSimulation();
+	}
 }
 
 void RobotInterface::StepSimulation()

@@ -31,6 +31,7 @@ namespace RoboticsAnimatSim
 
 RbFirmataDynamixelServo::RbFirmataDynamixelServo() 
 {
+	m_lStartServoUpdateTick= 0;
 	m_iModelNum = -1;
 	m_iFirmwareVersion = -1;
 	m_iReturnDelayTime = -1;
@@ -105,18 +106,18 @@ void RbFirmataDynamixelServo::InitMotorData()
 		m_EDynamixelTransmitError = m_lpFirmata->EDynamixelTransmitError.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelTransmitError, this, _1, _2));
 		m_EDynamixelGetRegister = m_lpFirmata->EDynamixelGetRegister.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelGetRegister, this, _1, _2, _3));
 
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MODEL_NUMBER_L, 2);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_FIRMWARE_VERSION, 1);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_RETURN_DELAY_TIME, 1);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CCW_ANGLE_LIMIT_L, 2);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CW_ANGLE_LIMIT_L, 2);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MAX_TORQUE_L, 2);
-		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MODEL_NUMBER_L, 2);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_FIRMWARE_VERSION, 1);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_RETURN_DELAY_TIME, 1);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CCW_ANGLE_LIMIT_L, 2);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CW_ANGLE_LIMIT_L, 2);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
+		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MAX_TORQUE_L, 2);
+		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
 
 		//If we are querying data from this motor then inform firmata it
 		//needs to send back constant updates.
@@ -176,7 +177,7 @@ void RbFirmataDynamixelServo::UpdateMotorData()
 
 void RbFirmataDynamixelServo::UpdateKeyMotorData()
 {
-	if(m_lpFirmata)
+	if(m_lpFirmata && m_lpSim)
 	{
 		m_iPresentPos = m_lpFirmata->_dynamixelServos[m_iServoID]._actualPosition;
 		m_iPresentVelocity = m_lpFirmata->_dynamixelServos[m_iServoID]._actualSpeed;
@@ -185,6 +186,12 @@ void RbFirmataDynamixelServo::UpdateKeyMotorData()
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 
 		m_lpFirmata->_dynamixelServos[m_iServoID]._keyChanged = false;
+
+		//Calculate time between updates.
+		unsigned long long lEndTick = m_lpSim->GetTimerTick();
+		m_fltReadParamTime = m_lpSim->TimerDiff_m(m_lStartServoUpdateTick, lEndTick); 
+		if(m_fltReadParamTime <= 0) m_fltReadParamTime = 0;
+		m_lStartServoUpdateTick = lEndTick;
 	}
 }
 

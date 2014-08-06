@@ -165,6 +165,8 @@ void RbFirmataController::ProcessIO()
 				//If none were setup it will ignore this call.
 				sendDynamixelSynchMoveExecute();
 			}
+
+			boost::this_thread::sleep(boost::posix_time::microseconds(100));
 		}
 	}
 	catch(CStdErrorInfo oError)

@@ -517,6 +517,7 @@ Namespace DataObjects
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleFilename)
                 oXml.AddChildElement("IOComponentID", m_iIOComponentID)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.Item Is Nothing Then
                     oXml.AddChildElement("LinkedPartID", m_thLinkedPart.Item.ID)

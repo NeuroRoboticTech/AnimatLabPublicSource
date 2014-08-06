@@ -311,6 +311,7 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 oXml.AddChildElement("Parts")
                 oXml.IntoElem()
@@ -334,6 +335,7 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleFilename)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 oXml.AddChildElement("Parts")
                 oXml.IntoElem()

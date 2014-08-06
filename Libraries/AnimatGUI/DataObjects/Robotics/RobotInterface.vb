@@ -359,6 +359,7 @@ Namespace DataObjects
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
                 oXml.AddChildElement("SynchSim", Me.SynchSim)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
 
@@ -385,6 +386,7 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleFilename)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
                 oXml.AddChildElement("SynchSim", Me.SynchSim)
