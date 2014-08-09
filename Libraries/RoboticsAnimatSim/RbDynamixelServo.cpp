@@ -72,6 +72,17 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_lpMotorJoint = NULL;
 
+	m_bIsHinge = true;
+	m_fltTranslationRange = 1;
+	m_fltFPToFloatTranslation = 1;
+	m_fltFloatToFPTranslation = 1;
+
+	m_fltHiLimit = RB_PI/2;
+	m_fltLowLimit = -RB_PI/2;
+
+	m_fltIOPos = 0;
+	m_fltIOVelocity = 0;
+
 	RecalculateParams();
 }
 
@@ -98,24 +109,39 @@ void RbDynamixelServo::RecalculateParams()
 	m_fltMaxSimPos = m_fltMaxAngle;
 
 	if(m_iTotalAngle > 0)
-		m_fltPosFPToRadSlope = (m_fltTotalAngle/m_iTotalAngle);
+		m_fltPosFPToFloatSlope = (m_fltTotalAngle/m_iTotalAngle);
 
-	m_fltPosFPToRadIntercept = -(m_fltPosFPToRadSlope*m_iCenterPosFP);
+	m_fltPosFPToFloatIntercept = -(m_fltPosFPToFloatSlope*m_iCenterPosFP);
 
 	if(m_fltTotalAngle > 0)
-		m_fltPosRadToFPSlope = (m_iTotalAngle/m_fltTotalAngle);
+		m_fltPosFloatToFPSlope = (m_iTotalAngle/m_fltTotalAngle);
 
-	m_fltPosRadToFPIntercept = m_iCenterPosFP;
+	m_fltPosFloatToFPIntercept = m_iCenterPosFP;
 
-	m_fltMaxRadSec = (m_fltMaxRotMin*2*RB_PI)/60.0f; 
-	m_fltConvertFPToRadS = m_fltMaxRadSec; //0.01162389281828223498231178051813f;  //0.111 rot/min = 0.0116 rad/s
+	m_fltMaxPosSec = (m_fltMaxRotMin*2*RB_PI)/60.0f; 
+	m_fltConvertFPToPosS = m_fltMaxPosSec; //0.01162389281828223498231178051813f;  //0.111 rot/min = 0.0116 rad/s
 
-	if(m_fltConvertFPToRadS > 0)
-		m_fltConvertRadSToFP = 1/m_fltConvertFPToRadS;
+	if(m_fltConvertFPToPosS > 0)
+		m_fltConvertPosSToFP = 1/m_fltConvertFPToPosS;
 
 	int iTotalLoad = (m_iMaxLoadFP - m_iMinLoadFP);
 	if(iTotalLoad > 0)
 		m_fltConvertFPToLoad = 100.0/iTotalLoad;
+
+	if(!m_bIsHinge)
+	{
+		if(m_fltTotalAngle >= 0)
+			m_fltFPToFloatTranslation = (m_fltTranslationRange / m_fltTotalAngle);
+
+		if(m_fltFPToFloatTranslation >= 0)
+			m_fltFloatToFPTranslation = 1 / m_fltFPToFloatTranslation;
+	}
+	else
+	{
+		m_fltFPToFloatTranslation = 1;
+		m_fltFloatToFPTranslation = 1;
+	}
+
 }
 
 void RbDynamixelServo::MinPosFP(int iVal)
@@ -199,15 +225,17 @@ void RbDynamixelServo::MaxLoadFP(int iVal)
 
 int RbDynamixelServo::MaxLoadFP() {return m_iMaxLoadFP;}
 
-float RbDynamixelServo::ConvertPosFPToRad(int iPos)
+float RbDynamixelServo::ConvertPosFPToFloat(int iPos)
 {
-	float fltPos = (m_fltPosFPToRadSlope*iPos) + m_fltPosFPToRadIntercept;
+	float fltAngle = (m_fltPosFPToFloatSlope*iPos) + m_fltPosFPToFloatIntercept;
+	float fltPos = m_fltFPToFloatTranslation * fltAngle;
 	return fltPos;
 }
 
-int RbDynamixelServo::ConvertPosRadToFP(float fltPos)
+int RbDynamixelServo::ConvertPosFloatToFP(float fltPos)
 {
-	int iPos = (m_fltPosRadToFPSlope*fltPos) + m_fltPosRadToFPIntercept;
+	float fltAngle = m_fltFloatToFPTranslation * fltPos;
+	int iPos = (m_fltPosFloatToFPSlope*fltAngle) + m_fltPosFloatToFPIntercept;
 	return iPos;
 }
 
@@ -325,6 +353,7 @@ int RbDynamixelServo::GetGoalVelocity_FP()
 	return iGoalVel;
 }
 
+
 /**
 \brief	Sets the floating point value of the servo velocity. This is the velocity in rad/s. It will be converted to a fixed
 point value based on the motor configuration and then used to set the velocity.
@@ -336,7 +365,7 @@ point value based on the motor configuration and then used to set the velocity.
 **/
 void RbDynamixelServo::SetGoalVelocity(float fltVelocity)
 {
-	int iVel = (int) (fabs(fltVelocity)*m_fltConvertRadSToFP);
+	int iVel = ConvertFloatVelocity(fltVelocity);
 
 	SetGoalVelocity_FP(iVel);
 }
@@ -352,7 +381,7 @@ point value based on the motor configuration and then used to set the velocity.
 **/
 void RbDynamixelServo::SetNextGoalVelocity(float fltVelocity)
 {
-	int iVel = (int) (fabs(fltVelocity)*m_fltConvertRadSToFP);
+	int iVel = ConvertFloatVelocity(fltVelocity);
 
 	//If the velocity is being set to 0 then code this special.
 	if(fltVelocity == 0)
@@ -373,7 +402,7 @@ float RbDynamixelServo::GetGoalVelocity()
 {
 	int iGoal = GetGoalVelocity_FP();
 
-	float fltPos = iGoal*m_fltConvertFPToRadS;
+	float fltPos = iGoal*m_fltConvertFPToPosS;
 
 	return fltPos;
 }
@@ -454,7 +483,7 @@ it uses +/- values on either side.
 **/
 void RbDynamixelServo::SetGoalPosition(float fltPos)
 {
-	int iPos = ConvertPosRadToFP(fltPos);
+	int iPos = ConvertPosFloatToFP(fltPos);
 
 	SetGoalPosition_FP(iPos);
 }
@@ -472,7 +501,7 @@ it uses +/- values on either side.
 **/
 void RbDynamixelServo::SetNextGoalPosition(float fltPos)
 {
-	int iPos = ConvertPosRadToFP(fltPos);
+	int iPos = ConvertPosFloatToFP(fltPos);
 
 	SetNextGoalPosition_FP(iPos);
 }
@@ -489,7 +518,7 @@ float RbDynamixelServo::GetGoalPosition()
 {
 	int iGoal = GetGoalPosition_FP();
 
-	float fltPos = ConvertPosFPToRad(iGoal);
+	float fltPos = ConvertPosFPToFloat(iGoal);
 
 	return fltPos;
 }
@@ -530,7 +559,7 @@ float RbDynamixelServo::GetActualPosition()
 {
 	int iPos = GetActualPosition_FP();
 
-	float fltPos = ConvertPosFPToRad(iPos);
+	float fltPos = ConvertPosFPToFloat(iPos);
 
 	return fltPos;
 }
@@ -568,9 +597,25 @@ float RbDynamixelServo::ConvertFPVelocity(int iVel)
 		iDir = -1;
 	}
 
-	float fltVel = iDir*iVel*m_fltConvertFPToRadS;
+	float fltVel = iDir*iVel*(m_fltFPToFloatTranslation*m_fltConvertFPToPosS);
 	return fltVel;
 }
+
+/**
+\brief	Gets the fixed point velocity form the floating point 
+
+\author	dcofer
+\date	4/25/2014
+
+\param	fltVelocity	Floating point value of velocity from the servo in rad/s.
+
+\return	The fixed point velocity. 
+**/
+int RbDynamixelServo::ConvertFloatVelocity(float fltVelocity)
+{
+	return (int) (fabs(fltVelocity)*(m_fltFloatToFPTranslation*m_fltConvertPosSToFP));
+}
+
 
 /**
 \brief	Gets the floating point value of the servo actual velocity. The fixed point value is retrieved from the servo and then converted to rad/s. 
@@ -905,8 +950,37 @@ void RbDynamixelServo::SetCCWAngleLimit_FP(int iVal)
 **/
 void RbDynamixelServo::SetCCWAngleLimit(float fltVal)
 {
-	int iPos = ConvertPosRadToFP(fltVal);
+	int iPos = ConvertPosFloatToFP(fltVal);
 	SetCCWAngleLimit_FP(iPos);
+}
+
+/**
+\brief	Gets the the total range of translation for a prismatic joint (meters).
+
+\author	dcofer
+\date	8/8/2014
+
+\return	range 
+**/
+float RbDynamixelServo::TranslationRange() {return m_fltTranslationRange;}
+
+/**
+\brief	Sets the total range for translation of a prismatic joint.
+
+\author	dcofer
+\date	8/8/2014
+
+\param	fltVal	range
+**/
+void RbDynamixelServo::TranslationRange(float fltVal)
+{
+	if(!m_bIsHinge)
+	{
+		Std_IsAboveMin((float) 0, fltVal, true, "TranslationRange", true);
+
+		m_fltTranslationRange = fltVal;
+		RecalculateParams();
+	}
 }
 
 /**
@@ -933,7 +1007,7 @@ int RbDynamixelServo::GetCCWAngleLimit_FP()
 float RbDynamixelServo::GetCCWAngleLimit()
 {
 	int iPos = GetCCWAngleLimit_FP();
-	return ConvertPosFPToRad(iPos);
+	return ConvertPosFPToFloat(iPos);
 }
 
 /**
@@ -960,7 +1034,7 @@ void RbDynamixelServo::SetCWAngleLimit_FP(int iVal)
 **/
 void RbDynamixelServo::SetCWAngleLimit(float fltVal)
 {
-	int iPos = ConvertPosRadToFP(fltVal);
+	int iPos = ConvertPosFloatToFP(fltVal);
 	SetCWAngleLimit_FP(iPos);
 }
 
@@ -988,7 +1062,7 @@ int RbDynamixelServo::GetCWAngleLimit_FP()
 float RbDynamixelServo::GetCWAngleLimit()
 {
 	int iPos = GetCWAngleLimit_FP();
-	return ConvertPosFPToRad(iPos);
+	return ConvertPosFPToFloat(iPos);
 }
 
 /**
@@ -1021,12 +1095,12 @@ float RbDynamixelServo::GetMinSimPos()  {return m_fltMinSimPos;}
 **/
 void RbDynamixelServo::SetMinSimPos(float fltVal)
 {
-	m_iMinSimPos = ConvertPosRadToFP(fltVal);
+	m_iMinSimPos = ConvertPosFloatToFP(fltVal);
 
 	if(m_iMinSimPos < m_iMinPosFP) m_iMinSimPos = m_iMinPosFP;
 	if(m_iMinSimPos > m_iMaxPosFP) m_iMinSimPos = m_iMaxPosFP;
 
-	m_fltMinSimPos = ConvertPosFPToRad(m_iMinSimPos);
+	m_fltMinSimPos = ConvertPosFPToFloat(m_iMinSimPos);
 }
 
 /**
@@ -1059,12 +1133,12 @@ float RbDynamixelServo::GetMaxSimPos()  {return m_fltMaxSimPos;}
 **/
 void RbDynamixelServo::SetMaxSimPos(float fltVal)
 {
-	m_iMaxSimPos = ConvertPosRadToFP(fltVal);
+	m_iMaxSimPos = ConvertPosFloatToFP(fltVal);
 
 	if(m_iMaxSimPos < m_iMinPosFP) m_iMaxSimPos = m_iMinPosFP;
 	if(m_iMaxSimPos > m_iMaxPosFP) m_iMaxSimPos = m_iMaxPosFP;
 
-	m_fltMaxSimPos = ConvertPosFPToRad(m_iMaxSimPos);
+	m_fltMaxSimPos = ConvertPosFPToFloat(m_iMaxSimPos);
 }
 
 /**
@@ -1114,19 +1188,22 @@ void RbDynamixelServo::SetMotorPosVel()
 		AddMotorUpdate(m_iNextGoalPos, m_iNextGoalVelocity);
 		m_iLastGoalPos = m_iNextGoalPos;
 		m_iLastGoalVelocity = m_iNextGoalVelocity;
+
+		m_fltIOPos = m_iNextGoalPos;
+		m_fltIOVelocity = m_iNextGoalVelocity;
 	}
 }
 
 float RbDynamixelServo::QuantizeServoPosition(float fltPos)
 {
-	int iPos = ConvertPosRadToFP(fltPos);
-	return ConvertPosFPToRad(iPos);
+	int iPos = ConvertPosFloatToFP(fltPos);
+	return ConvertPosFPToFloat(iPos);
 }
 
 float RbDynamixelServo::QuantizeServoVelocity(float fltVel)
 {
-	int iPos = (int) (fabs(fltVel)*m_fltConvertRadSToFP);
-	return iPos*m_fltConvertFPToRadS;
+	int iPos = (int) (fabs(fltVel)*m_fltConvertPosSToFP);
+	return iPos*m_fltConvertFPToPosS;
 }
 
 float *RbDynamixelServo::GetDataPointer(const std::string &strDataType)
@@ -1135,6 +1212,10 @@ float *RbDynamixelServo::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "READPARAMTIME")
 		return &m_fltReadParamTime;
+	else if(strType == "IOPOS")
+		return &m_fltIOPos;
+	else if(strType == "IOVELOCITY")
+		return &m_fltIOVelocity;
 	
 	return NULL;
 }
@@ -1209,12 +1290,20 @@ bool RbDynamixelServo::SetData(const std::string &strDataType, const std::string
 		return true;
 	}
 
+	if(strType == "TRANSLATIONRANGE")
+	{
+		TranslationRange(atof(strValue.c_str()));
+		return true;
+	}
+
 	return false;
 }
 
 void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	aryProperties.Add(new TypeProperty("ReadParamTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("IOPos", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("IOVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("ServoID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("QueryMotorData", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
@@ -1228,14 +1317,17 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 	aryProperties.Add(new TypeProperty("MaxRotMin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MinLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TranslationRange", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void RbDynamixelServo::StepSimulation()
 {
 	////Test code
-	//int i=5;
-	//if(Std_ToLower(m_strID) == "600488ae-f6ce-44c9-bc01-c403d8b236de") // && m_lpSim->Time() > 1 
+	int i=5;
+	//if(Std_ToLower(m_strID) == "5ed5e233-f132-4997-b737-54b47e4e058e") // && m_lpSim->Time() > 1 
 	//	i=6;
+	if(!m_bIsHinge) // && m_lpSim->Time() > 1 
+		i=6;
 
 	if(m_lpMotorJoint)
 	{
@@ -1252,7 +1344,6 @@ void RbDynamixelServo::StepSimulation()
 		{
 			float fltSetVelocity = m_lpMotorJoint->SetVelocity();
 			SetNextGoalVelocity(fltSetVelocity);
-			//m_fltIOValue = m_iNextGoalVelocity;
 
 			if(fltSetVelocity == 0)
 				SetNextGoalPosition_FP(m_iLastGoalPos);
@@ -1266,17 +1357,25 @@ void RbDynamixelServo::StepSimulation()
 			float fltSetPosition = m_lpMotorJoint->SetVelocity();
 			SetNextGoalPosition(fltSetPosition);
 			SetNextMaximumVelocity();
-
-			//m_fltIOValue = m_iNextGoalPos;
 		}
 
-		//Retrieve the values that we got from the last time the IO for this servo was read in.
-		m_lpMotorJoint->JointPosition(m_fltPresentPos);
-		m_lpMotorJoint->JointVelocity(m_fltPresentVelocity);
-		m_lpMotorJoint->Temperature(m_fltVoltage);
-		m_lpMotorJoint->Voltage(m_fltTemperature);
-		m_lpMotorJoint->MotorTorqueToAMagnitude(m_fltLoad);
-		m_lpMotorJoint->MotorTorqueToBMagnitude(m_fltLoad);
+		//only do this part if we are in a simulation
+		if(!GetSimulator()->InSimulation())
+		{
+			//Retrieve the values that we got from the last time the IO for this servo was read in.
+			m_lpMotorJoint->JointPosition(m_fltPresentPos);
+			m_lpMotorJoint->JointVelocity(m_fltPresentVelocity);
+			m_lpMotorJoint->Temperature(m_fltVoltage);
+			m_lpMotorJoint->Voltage(m_fltTemperature);
+			m_lpMotorJoint->MotorTorqueToAMagnitude(m_fltLoad);
+			m_lpMotorJoint->MotorTorqueToBMagnitude(m_fltLoad);
+		}
+		else
+		{
+			//If we are in a simulation then write out what the IO values should be
+			m_fltIOPos = m_iNextGoalPos;
+			m_fltIOVelocity = m_iNextGoalVelocity;
+		}
 	}
 }
 
@@ -1294,6 +1393,8 @@ void RbDynamixelServo::Load(StdUtils::CStdXml &oXml)
     MaxRotMin(oXml.GetChildFloat("MaxRotMin", m_fltMaxRotMin));
     MinLoadFP(oXml.GetChildInt("MinLoadFP", m_iMinLoadFP));
     MaxLoadFP(oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP));
+	m_bIsHinge = oXml.GetChildBool("IsHinge", m_bIsHinge);
+    TranslationRange(oXml.GetChildFloat("TranslationRange", m_fltTranslationRange));
 
 	oXml.OutOfElem();
 }

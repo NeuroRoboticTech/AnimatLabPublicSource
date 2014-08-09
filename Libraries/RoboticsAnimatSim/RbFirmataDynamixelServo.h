@@ -103,6 +103,7 @@ public:
 
 #pragma endregion
 
+    virtual void Initialize();
     virtual void StepSimulation();
 	virtual void ResetSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);

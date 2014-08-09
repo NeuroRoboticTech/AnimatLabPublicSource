@@ -182,7 +182,7 @@ void RbFirmataDynamixelServo::UpdateKeyMotorData()
 		m_iPresentPos = m_lpFirmata->_dynamixelServos[m_iServoID]._actualPosition;
 		m_iPresentVelocity = m_lpFirmata->_dynamixelServos[m_iServoID]._actualSpeed;
 		
-		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
+		m_fltPresentPos = ConvertPosFPToFloat(m_iPresentPos);
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 
 		m_lpFirmata->_dynamixelServos[m_iServoID]._keyChanged = false;
@@ -269,6 +269,31 @@ void RbFirmataDynamixelServo::AddMotorUpdate(int iPos, int iSpeed)
 	m_fltIOValue = iSpeed;
 }
 
+void RbFirmataDynamixelServo::Initialize()
+{
+	RbFirmataPart::Initialize();
+
+	m_lpMotorJoint = dynamic_cast<MotorizedJoint *>(m_lpPart);
+
+	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpPart);
+	if(lpHinge)
+	{
+		m_fltLowLimit = lpHinge->UpperLimit()->LimitPos();
+		m_fltHiLimit = lpHinge->LowerLimit()->LimitPos();
+	}
+	else
+	{
+		Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpPart);
+		if(lpPrismatic)
+		{
+			m_fltLowLimit = lpPrismatic->UpperLimit()->LimitPos();
+			m_fltHiLimit = lpPrismatic->LowerLimit()->LimitPos();
+		}
+	}
+
+	RecalculateParams();
+}
+
 //We need to get some key data when we first do setup so that info is available 
 //if queried
 void RbFirmataDynamixelServo::SetupIO()
@@ -278,6 +303,14 @@ void RbFirmataDynamixelServo::SetupIO()
 		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CW_ANGLE_LIMIT_L, 2);
 		MicroSleep(100);
 
+		SetMinSimPos(m_fltLowLimit);
+		SetMaxSimPos(m_fltHiLimit);
+		InitMotorData();
+
+		//Set the next goal positions to the current ones.
+		m_iNextGoalPos = m_iLastGoalPos;
+
+		m_iNextGoalVelocity = m_iLastGoalVelocity;
 	}
 }
 
@@ -300,17 +333,16 @@ void RbFirmataDynamixelServo::ShutdownIO()
 
 void RbFirmataDynamixelServo::StepSimulation()
 {
-	if(!m_lpSim->InSimulation())
-	{
-		RbFirmataPart::StepSimulation();
-		RbDynamixelServo::StepSimulation();
-	}
+	RbFirmataPart::StepSimulation();
+	RbDynamixelServo::StepSimulation();
 }
 
 void RbFirmataDynamixelServo::ResetSimulation()
 {
 	RbFirmataPart::ResetSimulation();
 	m_fltReadParamTime = 0;
+	m_fltIOPos = 0;
+	m_fltIOVelocity = 0;
 }
 
 void RbFirmataDynamixelServo::Load(StdUtils::CStdXml &oXml)

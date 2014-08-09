@@ -28,6 +28,8 @@ namespace RoboticsGUI
             protected int m_iMinLoadFP = 0;
             protected int m_iMaxLoadFP = 1023;
 
+            protected AnimatGUI.Framework.ScaledNumber m_snTranslationRange; 
+
             public override string ModuleName { get { return "RoboticsAnimatSim"; } }
             protected override System.Type GetLinkedPartDropDownTreeType() { return typeof(AnimatGUI.TypeHelpers.DropDownTreeEditorNoFirstSelect); }
 
@@ -144,6 +146,7 @@ namespace RoboticsGUI
                     m_iMinLoadFP = value;
                 }
             }
+
             public virtual int MaxLoadFP
             {
                 get { return m_iMaxLoadFP; }
@@ -156,6 +159,23 @@ namespace RoboticsGUI
                 }
             }
 
+            public virtual AnimatGUI.Framework.ScaledNumber TranslationRange
+            {
+                get { return m_snTranslationRange; }
+                set
+                {
+                    if (value.ActualValue <= 0)
+                        throw new System.Exception("The translation range must be greater than zero.");
+
+                    SetSimData("TranslationRange", value.ActualValue.ToString(), true);
+                    m_snTranslationRange.CopyData(ref value);
+                }
+            }
+
+            public virtual bool IsHinge
+            {
+                get { return true; }
+            }
 
             public DynamixelServo(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
@@ -163,6 +183,19 @@ namespace RoboticsGUI
                 m_strName = "Hinge Motor";
 
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("ReadParamTime", "Read Param Time", "Seconds", "s", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOPos", "IO Position", "", "", 0, 1024));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOVel", "IO Velocity", "", "", 0, 2048));
+
+                m_snTranslationRange = new AnimatGUI.Framework.ScaledNumber(this, "TranslationRange", "meters", "m");
+            }
+
+            public override void ClearIsDirty()
+            {
+                base.ClearIsDirty();
+
+                if (m_snTranslationRange != null)
+                    m_snTranslationRange.ClearIsDirty();
+
             }
 
             protected override void CloneInternal(AnimatGUI.Framework.DataObject doOriginal, bool bCutData, AnimatGUI.Framework.DataObject doRoot)
@@ -183,6 +216,8 @@ namespace RoboticsGUI
                 m_fltMaxRotMin = servo.m_fltMaxRotMin;
                 m_iMinLoadFP = servo.m_iMinLoadFP;
                 m_iMaxLoadFP = servo.m_iMaxLoadFP;
+                m_snTranslationRange = (AnimatGUI.Framework.ScaledNumber)servo.m_snTranslationRange.Clone(this, bCutData, doRoot);
+
             }
 
             public override void BuildProperties(ref AnimatGuiCtrls.Controls.PropertyTable propTable)
@@ -221,6 +256,14 @@ namespace RoboticsGUI
 
                 propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Load FP Max", this.MaxLoadFP.GetType(), "MaxLoadFP",
                     "Motor Properties", "This is the maximum fixed point load that the motor uses.", this.MaxLoadFP));
+
+                if (!IsHinge)
+                {
+                    AnimatGuiCtrls.Controls.PropertyBag pbNumberBag = m_snTranslationRange.Properties;
+                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Translation Range", pbNumberBag.GetType(), "TranslationRange",
+                                                "Motor Properties", "Sets the range of movement for a prismatic joint.", pbNumberBag,
+                                                "", typeof(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)));
+                }
             }
 
             public override void LoadData(ManagedAnimatInterfaces.IStdXml oXml)
@@ -239,6 +282,10 @@ namespace RoboticsGUI
                 m_fltMaxRotMin = oXml.GetChildFloat("MaxRotMin", m_fltMaxRotMin);
                 m_iMinLoadFP = oXml.GetChildInt("MinLoadFP", m_iMinLoadFP);
                 m_iMaxLoadFP = oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP);
+
+                if (!IsHinge && oXml.FindChildElement("TranslationRange", false))
+                    m_snTranslationRange.LoadData(oXml, "TranslationRange");
+
                 oXml.OutOfElem();
             }
 
@@ -258,6 +305,10 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MaxRotMin", m_fltMaxRotMin);
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
+
+                if (!IsHinge)
+                    m_snTranslationRange.SaveData(oXml, "TranslationRange");
+
                 oXml.OutOfElem();
             }
 
@@ -277,6 +328,11 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MaxRotMin", m_fltMaxRotMin);
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
+                oXml.AddChildElement("IsHinge", IsHinge);
+
+                if (!IsHinge)
+                    m_snTranslationRange.SaveSimulationXml(oXml, ref nmParentControl, "TranslationRange");
+
                 oXml.OutOfElem();
             }
         }

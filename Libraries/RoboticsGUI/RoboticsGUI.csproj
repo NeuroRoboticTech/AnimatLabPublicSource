@@ -56,6 +56,7 @@
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalInput.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDigitalOutput.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDynamixelHingeServo.cs" />
+    <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataDynamixelPrismaticServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataHingeServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPrismaticServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\Firmata\FirmataPWMOutput.cs" />

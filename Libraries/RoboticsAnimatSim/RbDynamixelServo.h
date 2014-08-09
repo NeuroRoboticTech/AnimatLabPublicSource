@@ -117,17 +117,29 @@ protected:
 	///This is the maximum angle in radians that can be used for this servo as specified in the simulation.
 	float m_fltMaxSimPos;
 
-	///The conversion factor to convert FP position to radians.
-	float m_fltPosFPToRadSlope;
+	///The conversion factor to convert FP position to floating point position.
+	float m_fltPosFPToFloatSlope;
 
-	///The conversion factor to convert FP position to radians.
-	float m_fltPosFPToRadIntercept;
-
-	///The conversion factor to convert radians to FP position.
-	float m_fltPosRadToFPSlope;
+	///The conversion factor to convert FP position to floating point position..
+	float m_fltPosFPToFloatIntercept;
 
 	///The conversion factor to convert radians to FP position.
-	float m_fltPosRadToFPIntercept;
+	float m_fltPosFloatToFPSlope;
+
+	///The conversion factor to convert radians to FP position.
+	float m_fltPosFloatToFPIntercept;
+
+	//true if a hinge joint, false otherwise.
+	bool m_bIsHinge;
+
+	///The total translation range over which a prismatic joint can move. This does not apply to hinge joints.
+	float m_fltTranslationRange;
+
+	///Conversion factor for when we are doing prismatic joints. Converts rotations to linear movements
+	float m_fltFPToFloatTranslation;
+
+	///Conversion factor for when we are doing prismatic joints. Converts rotations to linear movements
+	float m_fltFloatToFPTranslation;
 
 	///The center point value in fixed point numbers
 	int m_iCenterPosFP;
@@ -151,13 +163,13 @@ protected:
 	float m_fltMaxRotMin;
 
 	///Stores the maximum rad/sec for this motor
-	float m_fltMaxRadSec; 
+	float m_fltMaxPosSec; 
 
 	///The conversion factor to convert rad/s to FP velocity.
-	float m_fltConvertRadSToFP;
+	float m_fltConvertPosSToFP;
 
 	///The conversion factor to convert FP velocity value to rad/s.
-	float m_fltConvertFPToRadS;
+	float m_fltConvertFPToPosS;
 
 	///Keeps track of the last servo goal velocity that we set
 	int m_iLastGoalVelocity;
@@ -211,6 +223,18 @@ protected:
 	///If we are only setting values in it then there is no reason to do an update for it.
 	bool m_bQueryMotorData;
 	
+	//Hi constraint limit value
+	float m_fltHiLimit;
+
+	//Low constraint limit value
+	float m_fltLowLimit;
+
+	//Used to report back the IO position of the servo at each step
+	float m_fltIOPos;
+
+	//Used to report back the IO velocity of the servo at each step
+	float m_fltIOVelocity;
+
     MotorizedJoint *m_lpMotorJoint;
 
 	virtual void RecalculateParams();
@@ -288,10 +312,15 @@ public:
 	virtual void MaxLoadFP(int iVal);
 	virtual int MaxLoadFP();
 
-	virtual float ConvertPosFPToRad(int iPos);
-	virtual int ConvertPosRadToFP(float fltPos);
+	virtual float ConvertPosFPToFloat(int iPos);
+	virtual int ConvertPosFloatToFP(float fltPos);
+
+	virtual float TranslationRange();
+	virtual void TranslationRange(float fltVal);
 
 	virtual float ConvertFPVelocity(int iVel);
+	virtual int ConvertFloatVelocity(float fltVelocity);
+
 	virtual float ConvertFPLoad(int iLoad);
 
 	virtual void ServoID(int iID);

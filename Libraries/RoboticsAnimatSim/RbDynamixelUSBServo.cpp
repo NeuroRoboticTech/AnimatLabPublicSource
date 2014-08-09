@@ -62,7 +62,7 @@ void RbDynamixelUSBServo::ReadAllParams()
 		m_iVoltage = aryData[6];
 		m_iTemperature = aryData[7];
 
-		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
+		m_fltPresentPos = ConvertPosFPToFloat(m_iPresentPos);
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 		m_fltLoad = ConvertFPLoad(m_iLoad);
 		m_fltVoltage = m_iVoltage/100.0;
@@ -91,7 +91,7 @@ void RbDynamixelUSBServo::ReadKeyParams()
 		m_iPresentVelocity = dxl_makeword(aryData[2], aryData[3]);
 		m_iLoad = dxl_makeword(aryData[4], aryData[5]);
 		
-		m_fltPresentPos = ConvertPosFPToRad(m_iPresentPos);
+		m_fltPresentPos = ConvertPosFPToFloat(m_iPresentPos);
 		m_fltPresentVelocity = ConvertFPVelocity(m_iPresentVelocity);
 		m_fltLoad = ConvertFPLoad(m_iLoad);
 	}

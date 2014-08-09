@@ -30,11 +30,11 @@ protected:
 	float m_fltMinAngle;
 
 	///The conversion factor to convert radians to FP angle position.
-	float m_fltPosFPToRadSlope;
-	float m_fltPosFPToRadIntercept;
+	float m_fltPosFPToFloatSlope;
+	float m_fltPosFPToFloatIntercept;
 
-	float m_fltPosRadToFPSlope;
-	float m_fltPosRadToFPIntercept;
+	float m_fltPosFloatToFPSlope;
+	float m_fltPosFloatToFPIntercept;
 
 	int m_iLastGoalPos;
 
