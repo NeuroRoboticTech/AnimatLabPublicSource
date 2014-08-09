@@ -94,6 +94,7 @@ public:
 	virtual float QuantizeServoVelocity(float fltVel);
 
 	virtual void InitMotorData();
+	virtual void WaitForMoveToFinish() {};
 
 #pragma region DataAccesMethods
 

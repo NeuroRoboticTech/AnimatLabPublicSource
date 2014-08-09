@@ -275,21 +275,7 @@ void RbFirmataDynamixelServo::Initialize()
 
 	m_lpMotorJoint = dynamic_cast<MotorizedJoint *>(m_lpPart);
 
-	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpPart);
-	if(lpHinge)
-	{
-		m_fltLowLimit = lpHinge->UpperLimit()->LimitPos();
-		m_fltHiLimit = lpHinge->LowerLimit()->LimitPos();
-	}
-	else
-	{
-		Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpPart);
-		if(lpPrismatic)
-		{
-			m_fltLowLimit = lpPrismatic->UpperLimit()->LimitPos();
-			m_fltHiLimit = lpPrismatic->LowerLimit()->LimitPos();
-		}
-	}
+	GetLimitValues();
 
 	RecalculateParams();
 }

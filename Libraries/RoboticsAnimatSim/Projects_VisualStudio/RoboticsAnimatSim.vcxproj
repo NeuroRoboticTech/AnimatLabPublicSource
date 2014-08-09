@@ -237,8 +237,6 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbCylinder.h" />
     <ClInclude Include="..\RbDynamixelServo.h" />
     <ClInclude Include="..\RbDynamixelUSB.h" />
-    <ClInclude Include="..\RbDynamixelUSBHinge.h" />
-    <ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
     <ClInclude Include="..\RbDynamixelUSBServo.h" />
     <ClInclude Include="..\RbEllipsoid.h" />
     <ClInclude Include="..\RbFirmataAnalogInput.h" />
@@ -300,10 +298,6 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbDynamixelServo.cpp" />
     <ClCompile Include="..\RbDynamixelUSB.cpp">
-    </ClCompile>
-    <ClCompile Include="..\RbDynamixelUSBHinge.cpp">
-    </ClCompile>
-    <ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
     </ClCompile>
     <ClCompile Include="..\RbDynamixelUSBServo.cpp">
     </ClCompile>

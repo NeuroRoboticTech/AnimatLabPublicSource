@@ -837,6 +837,18 @@ int RbDynamixelServo::GetFirmwareVersion()
 	return iID;
 }
 
+void RbDynamixelServo::WaitForMoveToFinish()
+{
+	do
+	{
+//#ifdef Win32
+		//Do not attempt to sleep in linux while in a spinlock. Windows is fine with it.
+		MicroSleep(5000);
+//#endif
+	} while(GetIsMoving());
+}
+
+
 /**
 \brief	Initializes the internal data on position and velocity from the actual motor. 
 
@@ -865,13 +877,7 @@ void RbDynamixelServo::InitMotorData()
 	SetMaximumVelocity();
 	SetGoalPosition(0);
 
-	//do
-	//{
-//#ifdef Win32
-		//Do not attempt to sleep in linux while in a spinlock. Windows is fine with it.
-		MicroSleep(5000);
-//#endif
-	//} while(GetIsMoving());
+	WaitForMoveToFinish();
 
 	m_iLastGoalPos = GetActualPosition_FP();
 
@@ -1375,6 +1381,25 @@ void RbDynamixelServo::StepSimulation()
 			//If we are in a simulation then write out what the IO values should be
 			m_fltIOPos = m_iNextGoalPos;
 			m_fltIOVelocity = m_iNextGoalVelocity;
+		}
+	}
+}
+
+void RbDynamixelServo::GetLimitValues()
+{
+	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpMotorJoint);
+	if(lpHinge)
+	{
+		m_fltLowLimit = lpHinge->LowerLimit()->LimitPos();
+		m_fltHiLimit = lpHinge->UpperLimit()->LimitPos();
+	}
+	else
+	{
+		Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpMotorJoint);
+		if(lpPrismatic)
+		{
+			m_fltLowLimit = lpPrismatic->LowerLimit()->LimitPos();
+			m_fltHiLimit = lpPrismatic->UpperLimit()->LimitPos();
 		}
 	}
 }

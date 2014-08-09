@@ -10,15 +10,11 @@ namespace RoboticsGUI
         namespace DynamixelUSB
         {
 
-            public class DynamixelUSBHingeMotor : RoboticsGUI.RobotIOControls.DynamixelServo
+            public abstract class DynamixelUSBServo : RoboticsGUI.RobotIOControls.DynamixelServo
             {
                 protected int m_iUpdateAllParamsCount = 10;
                 protected int m_iUpdateQueueIndex = -1;
 
-                public override string Description {get {return "Controls a Dynamixel servo motor for a hinge joint using a USB to UART controller";}set { }}
-                public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.DynamixelSmall.gif";}}
-                public override string ButtonImageName {get {return "RoboticsGUI.Graphics.DynamixelLarge.gif";}}
-                public override string PartType {get { return "DynamixelUSBHinge"; }}
                 public override string ModuleName { get { return "RoboticsAnimatSim"; } }
                 protected override System.Type GetLinkedPartDropDownTreeType() { return typeof(AnimatGUI.TypeHelpers.DropDownTreeEditorNoFirstSelect); }
 
@@ -46,26 +42,17 @@ namespace RoboticsGUI
                     }
                 }
 
-                public DynamixelUSBHingeMotor(AnimatGUI.Framework.DataObject doParent)
+                public DynamixelUSBServo(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)
                 {
-                    m_strName = "Hinge Motor";
-
-                    m_aryCompatiblePartTypes.Clear();
-                    m_aryCompatiblePartTypes.Add(typeof(AnimatGUI.DataObjects.Physical.Joints.Hinge));
-                }
-
-                public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)
-                {
-                    DynamixelUSBHingeMotor doController = new DynamixelUSBHingeMotor(doParent);
-                    return doController;
+                    m_strName = "Servo";
                 }
 
                 protected override void CloneInternal(AnimatGUI.Framework.DataObject doOriginal, bool bCutData, AnimatGUI.Framework.DataObject doRoot)
                 {
                     base.CloneInternal(doOriginal, bCutData, doRoot);
 
-                    DynamixelUSBHingeMotor servo = (DynamixelUSBHingeMotor)doOriginal;
+                    DynamixelUSBServo servo = (DynamixelUSBServo)doOriginal;
 
                     m_iUpdateAllParamsCount = servo.m_iUpdateAllParamsCount;
                     m_iUpdateQueueIndex = servo.m_iUpdateQueueIndex;

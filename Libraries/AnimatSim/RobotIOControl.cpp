@@ -312,6 +312,9 @@ void RobotIOControl::SetupIO()
 				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 			}
 	}
+	else
+		//Give the wait thread a chance to start waiting if we are not enabled.
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 }
 
 /**

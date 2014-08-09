@@ -278,6 +278,8 @@ protected:
 	virtual void StepSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 
+	virtual void GetLimitValues();
+
 public:
 	RbDynamixelServo();
 	virtual ~RbDynamixelServo();
@@ -410,6 +412,8 @@ public:
 	
 	virtual void MicroSleep(unsigned int iTime) = 0;
 	virtual Simulator *GetSimulator() = 0;
+
+	virtual void WaitForMoveToFinish();
 };
 
 		}		//RobotIOControls

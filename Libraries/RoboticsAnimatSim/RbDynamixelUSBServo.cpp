@@ -12,6 +12,7 @@
 #include "RbHinge.h"
 #include "RbRigidBody.h"
 #include "RbStructure.h"
+#include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
 
 #define DYN_ID					(2)
@@ -36,10 +37,206 @@ namespace RoboticsAnimatSim
 
 RbDynamixelUSBServo::RbDynamixelUSBServo() 
 {
+	m_iUpdateAllParamsCount = 10;
+	m_iUpdateIdx = 0;
+	m_iUpdateQueueIndex = -1;
 }
 
 RbDynamixelUSBServo::~RbDynamixelUSBServo()
 {
+	try
+	{
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelUSBServo\r\n", "", -1, false, true);}
+}
+
+void RbDynamixelUSBServo::IOComponentID(int iID)
+{
+	Std_IsAboveMin((int) 0, iID, true, "ServoID");
+	RobotPartInterface::IOComponentID(iID);
+	RbDynamixelUSBServo::ServoID(iID);
+}
+
+void RbDynamixelUSBServo::UpdateAllParamsCount(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, true, "UpdateAllParamsCount");
+	m_iUpdateAllParamsCount = iVal;
+}
+
+int RbDynamixelUSBServo::UpdateAllParamsCount() {return m_iUpdateAllParamsCount;}
+
+int RbDynamixelUSBServo::UpdateQueueIndex() {return m_iUpdateQueueIndex;}
+
+void RbDynamixelUSBServo::UpdateQueueIndex(int iVal)
+{
+	Std_IsAboveMin((int) -1, iVal, true, "UpdateQueueIndex", true);
+	m_iUpdateQueueIndex = iVal;
+}
+
+#pragma region DataAccesMethods
+
+float *RbDynamixelUSBServo::GetDataPointer(const std::string &strDataType)
+{
+	float *fltVal = RbDynamixelServo::GetDataPointer(strDataType);
+	if(fltVal)
+		return fltVal;
+	else
+		return RobotPartInterface::GetDataPointer(strDataType);
+}
+
+bool RbDynamixelUSBServo::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+{
+	std::string strType = Std_CheckString(strDataType);
+	
+	if(RobotPartInterface::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strType == "UPDATEALLPARAMSCOUNT")
+	{
+		UpdateAllParamsCount((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "UPDATEQUEUEINDEX")
+	{
+		UpdateQueueIndex((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(RbDynamixelServo::SetData(strDataType, strValue))
+		return true;
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return false;
+}
+
+void RbDynamixelUSBServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+{
+	RobotPartInterface::QueryProperties(aryProperties);
+	RbDynamixelServo::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("UpdateAllParamsCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpdateQueueIndex", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+}
+
+#pragma endregion
+
+void RbDynamixelUSBServo::MicroSleep(unsigned int iTime)
+{
+	if(m_lpSim)
+	m_lpSim->MicroSleep(iTime);
+}
+
+Simulator *RbDynamixelUSBServo::GetSimulator()
+{
+	return m_lpSim;
+}
+
+float RbDynamixelUSBServo::QuantizeServoPosition(float fltPos)
+{
+	return RbDynamixelServo::QuantizeServoPosition(fltPos);
+}
+
+float RbDynamixelUSBServo::QuantizeServoVelocity(float fltVel)
+{
+	return RbDynamixelServo::QuantizeServoVelocity(fltVel);
+}
+
+bool RbDynamixelUSBServo::IncludeInPartsCycle() {return m_bQueryMotorData;}
+
+void RbDynamixelUSBServo::Initialize()
+{
+	RobotPartInterface::Initialize();
+
+	m_lpMotorJoint = dynamic_cast<MotorizedJoint *>(m_lpPart);
+	m_lpParentUSB = dynamic_cast<RbDynamixelUSB *>(m_lpParentIOControl);
+
+	GetLimitValues();
+	RecalculateParams();
+}
+
+void RbDynamixelUSBServo::SetupIO()
+{
+	if(!m_lpSim->InSimulation() && m_lpMotorJoint)
+	{
+		SetMinSimPos(m_fltLowLimit);
+		SetMaxSimPos(m_fltHiLimit);
+		InitMotorData();
+
+		//Set the next goal positions to the current ones.
+		m_iNextGoalPos = m_iLastGoalPos;
+
+		m_iNextGoalVelocity = m_iLastGoalVelocity;
+	}
+}
+
+void RbDynamixelUSBServo::AddMotorUpdate(int iPos, int iSpeed)
+{
+	if(!m_lpSim->InSimulation() && m_lpParentUSB)
+	{
+		m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelMotorUpdateData(m_iServoID, iPos, iSpeed));
+	}
+
+	m_fltIOValue = iSpeed;
+}
+
+void RbDynamixelUSBServo::StepIO(int iPartIdx)
+{	
+	unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+
+	if(!m_lpSim->InSimulation())
+	{
+		if(m_bQueryMotorData && (m_iUpdateQueueIndex == iPartIdx || m_iUpdateQueueIndex == -1))
+		{
+			if(m_iUpdateIdx == m_iUpdateAllParamsCount)
+				ReadAllParams();
+			else
+				ReadKeyParams();
+		}
+
+	}
+
+	SetMotorPosVel();
+
+	unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+	m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick); 
+
+	m_iUpdateIdx++;
+}
+
+void RbDynamixelUSBServo::ShutdownIO()
+{
+	ShutdownMotor();
+}
+
+void RbDynamixelUSBServo::StepSimulation()
+{
+	if(!m_lpSim->InSimulation())
+	{
+		RobotPartInterface::StepSimulation();
+		RbDynamixelServo::StepSimulation();
+	}
+}
+
+void RbDynamixelUSBServo::ResetSimulation()
+{
+	AnimatSim::Robotics::RobotPartInterface::ResetSimulation();
+	m_fltReadParamTime = 0;
+}
+
+void RbDynamixelUSBServo::Load(StdUtils::CStdXml &oXml)
+{
+	RobotPartInterface::Load(oXml);
+	RbDynamixelServo::Load(oXml);
+
+	oXml.IntoElem();
+	UpdateAllParamsCount(oXml.GetChildInt("UpdateAllParamsCount", m_iUpdateAllParamsCount));
+	UpdateQueueIndex(oXml.GetChildInt("UpdateQueueIndex", m_iUpdateQueueIndex));
+	oXml.OutOfElem();
 }
 
 /**

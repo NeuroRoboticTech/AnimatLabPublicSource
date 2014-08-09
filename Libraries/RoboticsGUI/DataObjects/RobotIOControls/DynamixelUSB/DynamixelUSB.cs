@@ -68,8 +68,8 @@ namespace RoboticsGUI
                     m_strName = "Dynamixel USB";
 
                     //Setup the parts that are available for this type of controller.
-                    m_aryAvailablePartTypes.Add(new DynamixelUSBHingeMotor(this));
-                    m_aryAvailablePartTypes.Add(new DynamixelUSBPrismaticMotor(this));
+                    m_aryAvailablePartTypes.Add(new DynamixelUSBHingeServo(this));
+                    m_aryAvailablePartTypes.Add(new DynamixelUSBPrismaticServo(this));
                 }
 
                 public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

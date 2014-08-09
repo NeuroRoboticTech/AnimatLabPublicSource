@@ -45,8 +45,6 @@
 #include "RbLANWirelessInterface.h"
 #include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
-#include "RbDynamixelUSBHinge.h"
-#include "RbDynamixelUSBPrismatic.h"
 
 #include "RbFirmataController.h"
 #include "RbFirmataPart.h"
@@ -988,11 +986,11 @@ try
 
 	if(strType == "DYNAMIXELUSBHINGE")
 	{
-		lpInterface = new RbDynamixelUSBHinge;
+		lpInterface = new RbDynamixelUSBServo;
 	}
 	else if(strType == "DYNAMIXELUSBPRISMATIC")
 	{
-		lpInterface = new RbDynamixelUSBPrismatic;
+		lpInterface = new RbDynamixelUSBServo;
 	}
 	else if(strType == "FIRMATAANALOGINPUT")
 	{
