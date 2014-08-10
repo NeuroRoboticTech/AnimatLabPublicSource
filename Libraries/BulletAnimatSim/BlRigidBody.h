@@ -92,6 +92,8 @@ namespace BulletAnimatSim
             btCompoundShape *m_btCompoundShape;
             CStdPtrArray<btCollisionShape> m_aryCompoundChildShapes;
 
+			btAnimatGeneric6DofConstraint *m_btStickyLock;
+
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
             BroadphaseNativeTypes m_eBodyType;
@@ -137,6 +139,7 @@ namespace BulletAnimatSim
 			virtual void CreateSensorPart();
             virtual void CreateStaticChildren(const CStdFPoint &vCom);
 			virtual void CreateDynamicPart();
+			virtual void CreateStickyLock();
             virtual void SetupOffsetCOM(const CStdFPoint &vCom);
 
             virtual void AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound, const CStdFPoint &vCom);
@@ -172,6 +175,7 @@ namespace BulletAnimatSim
 			virtual BlSimulator *GetBlSimulator();
 			
             virtual bool NeedCollision(BlRigidBody *lpTest);
+			virtual void SetSurfaceContactCount();
 
             virtual bool Physics_IsDefined();
             virtual bool Physics_IsGeometryDefined();
@@ -192,6 +196,7 @@ namespace BulletAnimatSim
             virtual void Physics_ContactSensorRemoved();
             virtual void Physics_ChildBodyAdded(RigidBody *lpChild);
             virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint);
+			virtual void Physics_DeleteStickyLock();
 
             virtual void Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
             virtual void Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);

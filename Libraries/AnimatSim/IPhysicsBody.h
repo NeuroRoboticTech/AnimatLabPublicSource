@@ -42,6 +42,7 @@ namespace AnimatSim
 
             virtual void Physics_ChildBodyAdded(RigidBody *lpChild) = 0;
             virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) = 0;
+			virtual void Physics_DeleteStickyLock() = 0;
 		};
 
 	}

@@ -315,6 +315,11 @@ float MotorizedJoint::SetPosition() {return m_fltSetPosition;}
 **/
 void MotorizedJoint::SetPosition(float fltVal) 
 {
+	//Test Code
+	int i=5;
+	if(Std_ToLower(m_strID) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
+		i=6;
+
 	m_fltPrevSetPosition = m_fltSetPosition;
 	m_fltSetPosition = fltVal;
 
@@ -331,7 +336,7 @@ void MotorizedJoint::SetPosition(float fltVal)
 		m_fltReportSetPosition = m_fltSetPosition;
 
 	//If we are changing the set position to a different value then reset the reached position flag.
-	if(fabs(m_fltPrevSetPosition-m_fltSetPosition) > 1e-4)
+	if(fabs(m_fltPrevSetPosition-m_fltSetPosition) > m_fltSetPositionDeltaCheck)
 		m_bReachedSetPos = false;
 }
 
@@ -1031,6 +1036,15 @@ void MotorizedJoint::EnableLock(bool bOn, float fltPosition, float fltMaxLockFor
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_EnableLock(bOn, fltPosition, fltMaxLockForce);
 }
+
+void MotorizedJoint::Initialize()
+{
+	Joint::Initialize();
+
+	if(!this->UsesRadians())
+		m_fltSetPositionDeltaCheck = 1e-4*m_lpSim->DistanceUnits();
+}
+
 void MotorizedJoint::ResetSimulation()
 {
 	Joint::ResetSimulation();
@@ -1050,6 +1064,9 @@ void MotorizedJoint::ResetSimulation()
 	m_fltMotorForceBMagnitude = 0;
 	m_fltMotorTorqueAMagnitude = 0;
 	m_fltMotorTorqueBMagnitude = 0;
+
+	if(!this->UsesRadians())
+		m_fltSetPositionDeltaCheck = 1e-4*m_lpSim->DistanceUnits();
 
 	EnableMotor(m_bEnableMotorInit);
 

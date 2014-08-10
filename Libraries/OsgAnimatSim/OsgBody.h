@@ -54,6 +54,7 @@ namespace OsgAnimatSim
 
 			virtual void Physics_UpdateNode() {};
 			virtual bool Physics_HasCollisionGeometry() {return false;};
+			virtual void Physics_DeleteStickyLock() {};
 		};
 
 	}			// Environment

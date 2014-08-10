@@ -77,6 +77,12 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AllowStickyParts As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property LibraryVersionPrefix() As String
             Get
                 If m_dtLibraryVersion.ID.ToUpper() = "DOUBLE" Then

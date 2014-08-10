@@ -160,6 +160,9 @@ namespace AnimatSim
 
 			///The RobotPartInterface responsible for motor control for this motorized joint
 			RobotPartInterface *m_lpRobotMotorControl;
+			
+			///Used to check whether the set position has changed
+			float m_fltSetPositionDeltaCheck;
 
             virtual void AddRobotPartInterface(RobotPartInterface *lpPart);
             virtual void RemoveRobotPartInterface(RobotPartInterface *lpPart);
@@ -281,6 +284,7 @@ namespace AnimatSim
 			virtual void SetVelocityToDesired();
 			virtual void EnableLock(bool bOn, float fltPosition, float fltMaxLockForce);
 
+            virtual void Initialize();
 			virtual void ResetSimulation();
 
 			virtual float *GetDataPointer(const std::string &strDataType);

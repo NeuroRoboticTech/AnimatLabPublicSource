@@ -117,6 +117,14 @@ namespace AnimatSim
 			///contact sensor. This is only used for sensors.
 			float m_fltSurfaceContactCount;
 
+			///If a part is a contact sensor then we can also make it be a sticky part.
+			///If this is enabled and the m_fltStickyOn is 1 then it will stick to any parts
+			///that it comes into contact with. When m_fltStickyOn goes to 0 it will release those parts.
+			bool m_bIsStickyPart;
+
+			///If this is a suction part then this controls when stickness is on
+			float m_fltStickyOn;
+
 			/// The pointer to a receptive field ContactSensor object. This is responsible for 
 			/// processing the receptive field contacts
 			ContactSensor *m_lpContactSensor;
@@ -260,6 +268,12 @@ namespace AnimatSim
 			virtual bool IsCollisionObject();
 			virtual void IsCollisionObject(bool bVal);
 			
+			virtual bool IsStickyPart();
+			virtual void IsStickyPart(bool bVal);
+
+			virtual float StickyOn();
+			virtual void StickyOn(float fltVal);
+
 			virtual bool IsRoot();
 			virtual bool HasStaticJoint();
             virtual bool HasStaticChildren();
@@ -369,6 +383,7 @@ namespace AnimatSim
 
 #pragma endregion
 
+			virtual int GetTargetDataTypeIndex(const std::string &strDataType);
 			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void StepSimulation();
 			virtual void ResetSimulation();

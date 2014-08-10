@@ -79,6 +79,9 @@ RigidBody::RigidBody()
 	m_fltReportMass = 0;
 	m_fltReportVolume = 0;
 
+	m_bIsStickyPart = false;
+	m_fltStickyOn = 0;
+
 	m_strMaterialID = "DEFAULTMATERIAL";
 
     m_bDisplayDebugCollisionGraphic = false;
@@ -470,6 +473,62 @@ bool RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 \param	bVal true if collision object, false else. 
 **/
 void RigidBody::IsCollisionObject(bool bVal) {m_bIsCollisionObject = bVal;}
+
+/**
+\brief	Query if this object acts as a sticky part. This only applies to contact sensors.
+If it is set to true and StickOn is true then when this part touches something else it will
+create a locked joint between those two parts. When StickOn goes to false then that joint
+will be removed. This allows the contact sensor to act as a kind of sticky pick up pad.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	true if sticky object, false if not. 
+**/
+bool RigidBody::IsStickyPart() {return m_bIsStickyPart;}
+
+/**
+\brief	Sets whether this part is a sticky part or not. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	bVal true if sticky object, false else. 
+**/
+void RigidBody::IsStickyPart(bool bVal) 
+{
+	m_bIsStickyPart = bVal;
+	StickyOn(false);
+
+	//If we are disabling stick parts then make sure to remove the sticky lock
+	if(m_lpPhysicsBody && !m_bIsStickyPart)
+		m_lpPhysicsBody->Physics_DeleteStickyLock();
+}
+
+/**
+\brief	Query if this stickyness is turned on or not. This only applies to contact sensors
+that also have IsStickyPart true.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	true if sticky on, false if not. 
+**/
+float RigidBody::StickyOn() {return m_fltStickyOn;}
+
+/**
+\brief	Sets whether this part has sticky on or not. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	bVal true if sticky is on, false else. 
+**/
+void RigidBody::StickyOn(float fltVal) 
+{
+	if(m_bIsStickyPart)
+		m_fltStickyOn = fltVal;
+}
 
 /**
 \brief	Query if this is the root rigid body of the structure or not.
@@ -1406,6 +1465,7 @@ void RigidBody::ResetSimulation()
 	m_fltFoodQuantity = m_fltFoodQuantityInit;
 	m_fltFoodEaten = 0;
 	m_fltSurfaceContactCount = 0;
+	StickyOn(false);
 }
 
 void RigidBody::AfterResetSimulation()
@@ -1497,8 +1557,31 @@ void RigidBody::CreateChildJoints()
 		m_aryChildParts[iIndex]->CreateJoints();
 }
 
+int RigidBody::GetTargetDataTypeIndex(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "BODYFORCEX")
+		return BODY_FORCE_X_TYPE;
+	else if(strType == "BODYFORCEY")
+		return BODY_FORCE_Y_TYPE;
+	else if(strType == "BODYFORCEZ")
+		return BODY_FORCE_Z_TYPE;
+	else if(strType == "STICKYON")
+		return STICKY_ON_TYPE;
+	else 
+		return -1;
+
+}
+
 void RigidBody::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
+	if(iTargetDataType == STICKY_ON_TYPE)
+		m_fltStickyOn += fltInput;
+
+	//Test Code
+	if(m_fltStickyOn > 0.8)
+		fltInput = fltInput;
 }
 
 void RigidBody::StepSimulation()
@@ -1530,6 +1613,7 @@ void RigidBody::StepSimulation()
 	if(m_lpJointToParent)
 		m_lpJointToParent->StepSimulation();
 
+	m_fltStickyOn = 0;
 }
 
 #pragma region DataAccesMethods
@@ -1560,6 +1644,10 @@ float *RigidBody::GetDataPointer(const std::string &strDataType)
 	{
 		GetVolume();
 		return &m_fltReportVolume;
+	}
+	if(strType == "STICKYON")
+	{
+		return &m_fltStickyOn;
 	}
 
 	float *lpData = NULL;
@@ -1725,6 +1813,12 @@ bool RigidBody::SetData(const std::string &strDataType, const std::string &strVa
 		return true;
 	}
 
+	if(strDataType == "ISSTICKYPART")
+	{
+		IsStickyPart(Std_ToBool(strValue));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -1740,6 +1834,7 @@ void RigidBody::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("ContactCount", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Volume", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("StickyOn", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("Freeze", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Density", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
@@ -1765,6 +1860,7 @@ void RigidBody::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Magnus", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("EnableFluids", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaterialTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IsStickyPart", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 bool RigidBody::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
@@ -2032,6 +2128,7 @@ void RigidBody::Load(CStdXml &oXml)
 	Freeze(oXml.GetChildBool("Freeze", m_bFreeze), false);
 	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
 	IsCollisionObject(oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject));
+	IsStickyPart(oXml.GetChildBool("IsStickyPart", m_bIsStickyPart));
 
 	IsFoodSource(oXml.GetChildBool("FoodSource", m_bFoodSource));
 	FoodQuantity(oXml.GetChildFloat("FoodQuantity", m_fltFoodQuantity));

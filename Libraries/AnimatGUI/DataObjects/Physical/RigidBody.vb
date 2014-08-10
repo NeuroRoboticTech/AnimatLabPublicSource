@@ -29,6 +29,7 @@ Namespace DataObjects.Physical
         Protected m_bFreeze As Boolean = False
         Protected m_bContactSensor As Boolean = False
         Protected m_bIsCollisionObject As Boolean = False
+        Protected m_bIsStickyPart As Boolean = False
         Protected m_snDensity As ScaledNumber
         Protected m_snMass As ScaledNumber
         Protected m_snVolume As ScaledNumber
@@ -520,6 +521,21 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property IsStickyPart() As Boolean
+            Get
+                Return m_bIsStickyPart
+            End Get
+            Set(value As Boolean)
+                'You can only set a part as sticky if it is a contact sensor
+                If m_bContactSensor Then
+                    SetSimData("IsStickyPart", value.ToString(), True)
+                    m_bIsStickyPart = value
+                    SetupIncomingDataTypes()
+                End If
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -582,11 +598,13 @@ Namespace DataObjects.Physical
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ContactCount", "Contact Count", "", "", 0, 1))
 
+            If Util.Application.Physics.AllowStickyParts Then
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOn", "Sticky On", "", "", 0, 1))
+            End If
+
             m_thDataTypes.ID = "BodyForceX"
 
-            m_thIncomingDataTypes.DataTypes.Clear()
-            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
-            m_thIncomingDataTypes.ID = "BodyForceX"
+            SetupIncomingDataTypes()
 
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")
@@ -628,6 +646,17 @@ Namespace DataObjects.Physical
             m_doReceptiveFieldSensor = Nothing
             m_vSelectedVertex = Nothing
 
+        End Sub
+
+        Protected Overloads Sub SetupIncomingDataTypes()
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceY", "Body Force Y", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceZ", "Body Force Z", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            If m_bIsStickyPart AndAlso Util.Application.Physics.AllowStickyParts Then
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOn", "Sticky On", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            End If
+            m_thIncomingDataTypes.ID = "BodyForceX"
         End Sub
 
         Protected Overridable Sub UpdateMassVolumeDensity()
@@ -1023,7 +1052,11 @@ Namespace DataObjects.Physical
                         propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
                                                     "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
                                                     "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
-
+                    End If
+                Else
+                    If Util.Application.Physics.AllowStickyParts Then
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Sticky Part", m_bIsStickyPart.GetType(), "IsStickyPart", _
+                                                    "Part Properties", "True if this is a sticky part.", m_bIsStickyPart))
                     End If
                 End If
 
@@ -1041,14 +1074,13 @@ Namespace DataObjects.Physical
                                "Part Properties", "The material to be used for this part.", _
                                m_thMaterialType, GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                GetType(AnimatGUI.TypeHelpers.LinkedMaterialTypeConverter)))
-            Else
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
-                                            "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor, True))
             End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Collision Object", m_bIsCollisionObject.GetType(), "IsCollisionObject", _
                                         "Part Properties", "If this is true then it is a collision object.", m_bIsCollisionObject, True))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
+                                        "Part Properties", "If true this part can detect contacts.", m_bContactSensor, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Odor Sources", m_aryOdorSources.GetType(), "OdorSources", _
                                         "Odor Properties", "Edit the odor sources that this part can emit.", m_aryOdorSources, _
@@ -1470,8 +1502,13 @@ Namespace DataObjects.Physical
                 End Try
             End If
 
+            If Util.Application.Physics.AllowStickyParts Then
+                m_bIsStickyPart = oXml.GetChildBool("IsStickyPart", False)
+            End If
+
             oXml.OutOfElem() 'Outof RigidBody Element
 
+            SetupIncomingDataTypes()
         End Sub
 
         Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -1481,6 +1518,10 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
+
+            If Util.Application.Physics.AllowStickyParts Then
+                oXml.AddChildElement("IsStickyPart", m_bIsStickyPart)
+            End If
 
             m_svBuoyancyCenter.SaveData(oXml, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
@@ -1566,6 +1607,10 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
+
+            If Util.Application.Physics.AllowStickyParts Then
+                oXml.AddChildElement("IsStickyPart", m_bIsStickyPart)
+            End If
 
             m_svBuoyancyCenter.SaveSimulationXml(oXml, Me, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)

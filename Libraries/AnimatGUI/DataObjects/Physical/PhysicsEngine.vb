@@ -49,6 +49,7 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
+        Public MustOverride ReadOnly Property AllowStickyParts() As Boolean
 
         Public Overridable ReadOnly Property LibraryPrefix() As String
             Get

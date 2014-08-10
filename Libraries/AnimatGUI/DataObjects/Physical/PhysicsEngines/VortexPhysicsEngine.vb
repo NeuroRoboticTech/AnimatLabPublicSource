@@ -77,6 +77,12 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AllowStickyParts As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property LibraryVersionPrefix() As String
             Get
                 Return ""

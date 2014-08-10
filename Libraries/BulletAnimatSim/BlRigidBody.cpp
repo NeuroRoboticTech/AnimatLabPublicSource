@@ -38,6 +38,8 @@ BlRigidBody::BlRigidBody()
 
 	m_lpMaterial = NULL;
     m_lpVsSim = NULL;
+
+	m_btStickyLock = NULL;
 }
 
 BlRigidBody::~BlRigidBody()
@@ -528,6 +530,8 @@ void BlRigidBody::DeletePhysics(bool bIncludeChildren)
 
         if(bIncludeChildren)
             DeleteChildPhysics();
+
+		Physics_DeleteStickyLock();
 	}
 }
 
@@ -544,6 +548,18 @@ void BlRigidBody::DeleteChildPhysics()
                 lpVsChild->DeletePhysics(true);
         }
     }
+}
+
+void BlRigidBody::Physics_DeleteStickyLock()
+{
+	if(m_btStickyLock)
+	{
+		if(GetBlSimulator() && GetBlSimulator()->DynamicsWorld())
+			GetBlSimulator()->DynamicsWorld()->removeConstraint(m_btStickyLock);
+
+		delete m_btStickyLock;
+		m_btStickyLock = NULL;
+	}
 }
 
 void BlRigidBody::DeleteAttachedJointPhysics()
@@ -673,6 +689,60 @@ void BlRigidBody::Physics_ChildBodyRemoved(bool bHasStaticJoint)
     ResizePhysicsGeometry();
 }
 
+void BlRigidBody::CreateStickyLock()
+{
+	BlRigidBody *lpParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
+	BlRigidBody *lpChild = m_aryContactPoints[0]->m_lpContacted;
+
+	if(lpChild && lpParent)
+	{
+		osg::Matrix mtParent = lpParent->GetWorldMatrix();
+		osg::Matrix mtChild = lpChild->GetWorldMatrix();
+
+		osg::Matrix mtLocalRelToParent = mtChild * osg::Matrix::inverse(mtParent);
+
+		btTransform mtJointRelToParent = osgbCollision::asBtTransform(mtLocalRelToParent);
+		btTransform mtJointRelToChild = osgbCollision::asBtTransform(osg::Matrixd::identity());
+
+		m_btStickyLock = new btAnimatGeneric6DofConstraint(*lpParent->Part(), *lpChild->Part(), mtJointRelToParent, mtJointRelToChild, false); 
+
+		//Lock the linear and angular limits to prevent movement
+		btVector3 vLowerLimit, vUpperLimit;
+		vLowerLimit[0] = vLowerLimit[1] = vLowerLimit[2] = 0;
+		vUpperLimit[0] = vUpperLimit[1] = vUpperLimit[2] = 0;
+
+		m_btStickyLock->setLinearLowerLimit(vLowerLimit);
+		m_btStickyLock->setLinearUpperLimit(vUpperLimit);
+		m_btStickyLock->setAngularLowerLimit(vLowerLimit);
+		m_btStickyLock->setAngularUpperLimit(vUpperLimit);
+					
+		GetBlSimulator()->DynamicsWorld()->addConstraint(m_btStickyLock, true);
+	}
+
+}
+
+void BlRigidBody::SetSurfaceContactCount()
+{
+	if(m_lpThisRB)
+	{
+		m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
+
+		//if(m_lpThisRB->ID() == "4672039D-2716-4276-A7C2-CB83D2697673" && m_aryContactPoints.size() > 0 && 
+		//	m_aryContactPoints[0]->m_lpContacted && m_aryContactPoints[0]->m_lpContacted->m_lpThisRB->ID() == "3AC540B5-F0D6-41D4-ABD6-0ECA575AC204")
+		//if(m_lpThisRB->ID() == "18165913-2BF6-457C-A501-1DC40EE887F9" && m_aryContactPoints.size() > 0 && 
+		//	m_aryContactPoints[0]->m_lpContacted && m_aryContactPoints[0]->m_lpContacted->m_lpThisRB->ID() == "71FE27FB-121A-4007-AAFA-2771EE816558")
+		if(m_lpThisRB->IsStickyPart() &&  m_aryContactPoints.size() > 0 && m_aryContactPoints[0]->m_lpContacted && m_lpThisRB->Parent())
+		{
+			//If we have a lock and the sticky on value goes below 1 then disable it by removing the lock
+			if(m_btStickyLock && m_lpThisRB->StickyOn() < 1)
+				Physics_DeleteStickyLock();
+			//If we do not have a lock and sticky on goes to 1 or above then create a new lock.
+			else if(!m_btStickyLock && m_lpThisRB->StickyOn() >= 1)
+				CreateStickyLock();
+		}
+	}
+}
+
 void BlRigidBody::ProcessContacts()
 {
     ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
@@ -683,7 +753,7 @@ void BlRigidBody::ProcessContacts()
     //If this is a contact sensor then we do not care about processing the force and position.
     //We only care about the contact number.
     if(m_lpThisRB->IsContactSensor())
-        m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
+        SetSurfaceContactCount(); //m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
     else if(m_aryContactPoints.size() > 0 && m_btPart && lpSensor)
     {
 		int iPartIdx=0;
