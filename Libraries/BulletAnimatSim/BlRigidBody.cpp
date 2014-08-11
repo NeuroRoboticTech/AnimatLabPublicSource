@@ -727,10 +727,6 @@ void BlRigidBody::SetSurfaceContactCount()
 	{
 		m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
 
-		//if(m_lpThisRB->ID() == "4672039D-2716-4276-A7C2-CB83D2697673" && m_aryContactPoints.size() > 0 && 
-		//	m_aryContactPoints[0]->m_lpContacted && m_aryContactPoints[0]->m_lpContacted->m_lpThisRB->ID() == "3AC540B5-F0D6-41D4-ABD6-0ECA575AC204")
-		//if(m_lpThisRB->ID() == "18165913-2BF6-457C-A501-1DC40EE887F9" && m_aryContactPoints.size() > 0 && 
-		//	m_aryContactPoints[0]->m_lpContacted && m_aryContactPoints[0]->m_lpContacted->m_lpThisRB->ID() == "71FE27FB-121A-4007-AAFA-2771EE816558")
 		if(m_lpThisRB->IsStickyPart() &&  m_aryContactPoints.size() > 0 && m_aryContactPoints[0]->m_lpContacted && m_lpThisRB->Parent())
 		{
 			//If we have a lock and the sticky on value goes below 1 then disable it by removing the lock

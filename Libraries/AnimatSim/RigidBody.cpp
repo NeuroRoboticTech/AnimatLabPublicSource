@@ -1557,6 +1557,13 @@ void RigidBody::CreateChildJoints()
 		m_aryChildParts[iIndex]->CreateJoints();
 }
 
+void RigidBody::SimPausing()
+{
+	//If the simulation is pausing then we need to remove any sticky locks
+	if(m_lpPhysicsBody && m_bIsStickyPart)
+		m_lpPhysicsBody->Physics_DeleteStickyLock();
+}
+
 int RigidBody::GetTargetDataTypeIndex(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
@@ -1579,9 +1586,9 @@ void RigidBody::AddExternalNodeInput(int iTargetDataType, float fltInput)
 	if(iTargetDataType == STICKY_ON_TYPE)
 		m_fltStickyOn += fltInput;
 
-	//Test Code
-	if(m_fltStickyOn > 0.8)
-		fltInput = fltInput;
+	////Test Code
+	//if(m_fltStickyOn > 0.8)
+	//	fltInput = fltInput;
 }
 
 void RigidBody::StepSimulation()

@@ -14,7 +14,7 @@ namespace RoboticsGUI
             #region " Attributes "
 
             protected string m_strPort = "COM3";
-            protected int m_iBaudRate = 1;
+            protected int m_iBaudRate = 38400;
 
             #endregion
 
@@ -85,18 +85,21 @@ namespace RoboticsGUI
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doWalkV = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "WalkV", "WalkV", doGain);
+                doWalkV.SourceDataTypes.ID = "WalkV";
                 m_aryLinks.Add(doWalkV.ID, doWalkV, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doWalkH = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "WalkH", "WalkH", doGain);
+                doWalkH.SourceDataTypes.ID = "WalkH";
                 m_aryLinks.Add(doWalkH.ID, doWalkH, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLookV = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LookV", "LookV", doGain);
+                doLookV.SourceDataTypes.ID = "LookV";
                 m_aryLinks.Add(doLookV.ID, doLookV, false);
 
                 doWalkV.SourceDataTypes.ID = "LookH";
@@ -104,46 +107,55 @@ namespace RoboticsGUI
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLookH = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LookH", "LookH", doGain);
+                doLookH.SourceDataTypes.ID = "LookH";
                 m_aryLinks.Add(doLookH.ID, doLookH, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR1 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R1", "R1", doGain);
+                doR1.SourceDataTypes.ID = "R1";
                 m_aryLinks.Add(doR1.ID, doR1, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR2 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R2", "R2", doGain);
+                doR2.SourceDataTypes.ID = "R2";
                 m_aryLinks.Add(doR2.ID, doR2, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR3 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R3", "R3", doGain);
+                doR3.SourceDataTypes.ID = "R3";
                 m_aryLinks.Add(doR3.ID, doR3, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL4 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L4", "L4", doGain);
+                doL4.SourceDataTypes.ID = "L4";
                 m_aryLinks.Add(doL4.ID, doL4, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL5 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L5", "L5", doGain);
+                doL5.SourceDataTypes.ID = "L5";
                 m_aryLinks.Add(doL5.ID, doL5, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL6 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L6", "L6", doGain);
+                doL6.SourceDataTypes.ID = "L6";
                 m_aryLinks.Add(doL6.ID, doL6, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doRT = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "RT", "RT", doGain);
+                doRT.SourceDataTypes.ID = "RT";
                 m_aryLinks.Add(doRT.ID, doRT, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
                 AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLT = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LT", "LT", doGain);
+                doLT.SourceDataTypes.ID = "LT";
                 m_aryLinks.Add(doLT.ID, doLT, false);
             }
 

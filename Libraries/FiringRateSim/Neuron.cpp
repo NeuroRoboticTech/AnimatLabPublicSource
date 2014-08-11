@@ -726,6 +726,11 @@ void Neuron::StepSimulation()
 
 	if(m_bEnabled)
 	{
+		////Test code
+		//int i=5;
+		//if(m_strID == "742CB5DC-6BFB-4BAB-8CC2-36A4725A33D5")
+		//	i=6;	
+
 		//Lets get the Summation of synaptic inputs
 		m_fltSynapticI = CalculateSynapticCurrent(m_lpFRModule);
 		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFRModule, m_fltExternalI+m_fltSynapticI);

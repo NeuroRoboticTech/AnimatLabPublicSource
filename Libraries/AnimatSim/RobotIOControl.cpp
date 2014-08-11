@@ -328,7 +328,7 @@ void RobotIOControl::StepIO()
 {
 	if(m_bEnabled)
 	{
-		if(m_bPauseIO)
+		if(m_bPauseIO || m_lpSim->Paused())
 			WaitWhilePaused();
 
 		unsigned long long lStepStartTick = m_lpSim->GetTimerTick();

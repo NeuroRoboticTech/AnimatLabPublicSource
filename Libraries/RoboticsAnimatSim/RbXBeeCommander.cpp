@@ -183,6 +183,9 @@ void RbXBeeCommander::SimStarting()
 	//If we have not opened the port yet give it another try.
 	if(!m_Port.isInitialized())
 		Initialize();
+
+	//Clear out anything that happened the first time we got stuff.
+	m_Port.flush();
 }
 
 void RbXBeeCommander::ProcessIO()
@@ -213,77 +216,80 @@ void RbXBeeCommander::ProcessIO()
 
 void RbXBeeCommander::StepIO()
 {
-	while(m_Port.available() > 0)
+	if(!m_lpSim->Paused())
 	{
-		if(index == -1)
-		{         // looking for new packet
-			if(m_Port.readByte() == 0xff)
-			{
-				index = 0;
-				checksum = 0;
-			}
-		}
-		else if(index == 0)
+		while(m_Port.available() > 0)
 		{
-			vals[index] = (unsigned char) m_Port.readByte();
-			if(vals[index] != 0xff)
-			{            
+			if(index == -1)
+			{         // looking for new packet
+				if(m_Port.readByte() == 0xff)
+				{
+					index = 0;
+					checksum = 0;
+				}
+			}
+			else if(index == 0)
+			{
+				vals[index] = (unsigned char) m_Port.readByte();
+				if(vals[index] != 0xff)
+				{            
+					checksum += (int) vals[index];
+					index++;
+				}
+			}
+			else
+			{
+				vals[index] = (unsigned char) m_Port.readByte();
 				checksum += (int) vals[index];
 				index++;
-			}
-		}
-		else
-		{
-			vals[index] = (unsigned char) m_Port.readByte();
-			checksum += (int) vals[index];
-			index++;
-			if(index == 7)
-			{ // packet complete
-				if(checksum%256 != 255)
-				{
-					// packet error!
-					index = -1;
-					return; // 0
-				}
-				else
-				{
-					if((status&0x01) > 0)
-					{     // SouthPaw
-						m_fltWalkV = (float) ((signed char)( (int)vals[0]-128 ));
-						m_fltWalkH = (float) ((signed char)( (int)vals[1]-128 ));
-						m_fltLookV = (float) ((signed char)( (int)vals[2]-128 ));
-						m_fltLookH = (float) ((signed char)( (int)vals[3]-128 ));
+				if(index == 7)
+				{ // packet complete
+					if(checksum%256 != 255)
+					{
+						// packet error!
+						index = -1;
+						return; // 0
 					}
 					else
 					{
-						m_fltLookV = (float) ((signed char)( (int)vals[0]-128 ));
-						m_fltLookH = (float) ((signed char)( (int)vals[1]-128 ));
-						m_fltWalkV = (float) ((signed char)( (int)vals[2]-128 ));
-						m_fltWalkH = (float) ((signed char)( (int)vals[3]-128 ));
+						if((status&0x01) > 0)
+						{     // SouthPaw
+							m_fltWalkV = (float) ((signed char)( (int)vals[0]-128 ));
+							m_fltWalkH = (float) ((signed char)( (int)vals[1]-128 ) + 2);
+							m_fltLookV = (float) ((signed char)( (int)vals[2]-128 ));
+							m_fltLookH = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+						}
+						else
+						{
+							m_fltLookV = (float) ((signed char)( (int)vals[0]-128 ));
+							m_fltLookH = (float) ((signed char)( (int)vals[1]-128 ) + 2);
+							m_fltWalkV = (float) ((signed char)( (int)vals[2]-128 ));
+							m_fltWalkH = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+						}
+						m_fltPan = (float) ((vals[0]<<8) + vals[1]);
+						m_fltTilt = (float) ((vals[2]<<8) + vals[3]);
+						m_iButtons = vals[4];
+						m_iExt = vals[5];
+
+						m_fltR1 = (m_iButtons & BUT_R1);
+						m_fltR2 = (m_iButtons & BUT_R2);
+						m_fltR3 = (m_iButtons & BUT_R3);
+						m_fltL4 = (m_iButtons & BUT_L4);
+						m_fltL5 = (m_iButtons & BUT_L5);
+						m_fltL6 = (m_iButtons & BUT_L6);
+						m_fltRT = (m_iButtons & BUT_RT);
+						m_fltLT = (m_iButtons & BUT_LT);
 					}
-					m_fltPan = (float) ((vals[0]<<8) + vals[1]);
-					m_fltTilt = (float) ((vals[2]<<8) + vals[3]);
-					m_iButtons = vals[4];
-					m_iExt = vals[5];
 
-					m_fltR1 = (m_iButtons & BUT_R1);
-					m_fltR2 = (m_iButtons & BUT_R2);
-					m_fltR3 = (m_iButtons & BUT_R3);
-					m_fltL4 = (m_iButtons & BUT_L4);
-					m_fltL5 = (m_iButtons & BUT_L5);
-					m_fltL6 = (m_iButtons & BUT_L6);
-					m_fltRT = (m_iButtons & BUT_RT);
-					m_fltLT = (m_iButtons & BUT_LT);
+					index = -1;
+					m_Port.flush();
+					return; // 1
 				}
-
-				index = -1;
-				m_Port.flush();
-				return; // 1
 			}
 		}
-	}
 
-	AnimatSim::Robotics::RemoteControl::StepIO();
+		AnimatSim::Robotics::RemoteControl::StepIO();
+	}
 
     return; // 0
 }

@@ -315,10 +315,10 @@ float MotorizedJoint::SetPosition() {return m_fltSetPosition;}
 **/
 void MotorizedJoint::SetPosition(float fltVal) 
 {
-	//Test Code
-	int i=5;
-	if(Std_ToLower(m_strID) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
-		i=6;
+	////Test Code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
+	//	i=6;
 
 	m_fltPrevSetPosition = m_fltSetPosition;
 	m_fltSetPosition = fltVal;

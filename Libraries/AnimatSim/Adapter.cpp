@@ -817,10 +817,10 @@ void Adapter::StepSimulation()
 {
 	m_fltUpdatedValue = 0;
 
-	//Test code
-	int i=5;
-	if(Std_ToLower(m_strID) == "e9f4342f-8e7a-41f5-9b6f-532dc577b877" && m_lpSim->Time() > 2.5) //
-		i=6;
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "e9f4342f-8e7a-41f5-9b6f-532dc577b877" && m_lpSim->Time() > 2.5) //
+	//	i=6;
 
 	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
 	{

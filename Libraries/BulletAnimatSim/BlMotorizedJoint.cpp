@@ -50,10 +50,10 @@ void BlMotorizedJoint::CalculateServoVelocity()
 	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
-	//Test Code
-	int i=5;
-	if(Std_ToLower(m_lpThisMotorJoint->ID()) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
-		i=6;
+	////Test Code
+	//int i=5;
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
+	//	i=6;
 
 	AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
 	if(MotorType == eJointMotorType::PositionControl || (MotorType == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )

@@ -383,6 +383,7 @@ namespace AnimatSim
 
 #pragma endregion
 
+			virtual void SimPausing();
 			virtual int GetTargetDataTypeIndex(const std::string &strDataType);
 			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void StepSimulation();
