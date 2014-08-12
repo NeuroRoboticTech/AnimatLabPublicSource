@@ -23,10 +23,13 @@ Namespace DataObjects
 
 #Region " Properties "
 
-            Public Overridable ReadOnly Property Links As Collections.SortedRemoteControlLinkages
+            Public Overridable Property Links As Collections.SortedRemoteControlLinkages
                 Get
                     Return m_aryLinks
                 End Get
+                Set(value As Collections.SortedRemoteControlLinkages)
+                    'Do nothing here.
+                End Set
             End Property
 
 #End Region
@@ -56,17 +59,6 @@ Namespace DataObjects
 
 #Region " Workspace TreeView "
 
-            Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                           ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                           Optional ByVal bRootObject As Boolean = False)
-                MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
-
-                For Each deEntry As DictionaryEntry In m_aryLinks
-                    Dim doPart As RemoteControlLinkage = DirectCast(deEntry.Value, RemoteControlLinkage)
-                    doPart.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
-                Next
-            End Sub
-
             Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
                                                            ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                            ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
@@ -86,10 +78,9 @@ Namespace DataObjects
                     ' Create the popup menu object
                     Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Robotics.RobotInterface.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
 
-                    Dim mcAddPart As New System.Windows.Forms.ToolStripMenuItem("Add Link", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddRobotInterface.gif"), New EventHandler(AddressOf Me.OnAddLinkage))
                     Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Remote Control", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
 
-                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddPart, mcDelete})
+                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete})
 
                     Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
@@ -132,6 +123,16 @@ Namespace DataObjects
             End Function
 
 #End Region
+
+            Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+                MyBase.BuildProperties(propTable)
+
+                Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_aryLinks.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Links", pbNumberBag.GetType(), "Links", _
+                                            "Properties", "The list of remote control linkages.", pbNumberBag, _
+                                            GetType(AnimatGUI.TypeHelpers.RemoteControlLinkagesEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
+
+            End Sub
 
             '#Region " Add-Remove to List Methods "
 

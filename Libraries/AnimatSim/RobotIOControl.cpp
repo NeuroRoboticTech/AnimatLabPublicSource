@@ -372,6 +372,10 @@ void RobotIOControl::WaitWhilePaused()
 void RobotIOControl::StartPause()
 {
 	m_bPauseIO = true;
+
+	if(!m_bEnabled || (m_lpSim->InSimulation() && m_lpSim->Paused()))
+		m_bIOPaused = true;
+
 	while(!m_bIOPaused)		
 		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 }
@@ -386,6 +390,10 @@ void RobotIOControl::StartPause()
 void RobotIOControl::ExitPause()
 {
 	m_bPauseIO = false;
+
+	if(!m_bEnabled || (m_lpSim->InSimulation() && m_lpSim->Paused()))
+		m_bIOPaused = false;
+
 	while(m_bIOPaused)		
 		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 }

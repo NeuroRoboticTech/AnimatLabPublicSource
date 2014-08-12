@@ -549,9 +549,11 @@ Namespace Framework
                         Dim lModificationCount As Long = Util.ModificationHistory.ModificationCount
                         origValue = GetOriginalValueForHistory(oRoot, propInfo)
 
-                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
-                                           ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
-                                           propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        If Not e.Value Is Nothing Then
+                            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
+                                               ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
+                                               propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        End If
 
                         SignalBeforePropertyChanged(doRoot, propInfo)
 

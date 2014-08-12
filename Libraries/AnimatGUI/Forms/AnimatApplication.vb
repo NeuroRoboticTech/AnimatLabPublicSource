@@ -1134,6 +1134,7 @@ Namespace Forms
         Protected m_aryRobotInterfaces As New Collections.RobotInterfaces(Nothing)
         Protected m_aryRobotIOControls As New Collections.RobotIOControls(Nothing)
         Protected m_aryScriptProcessors As New Collections.ScriptProcessors(Nothing)
+        Protected m_aryRemoteControlLinkages As New Collections.RemoteControlLinkages(Nothing)
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1641,6 +1642,14 @@ Namespace Forms
                 Return m_aryScriptProcessors
             End Get
         End Property
+
+        Public Overridable ReadOnly Property RemoteControlLinkages() As Collections.RemoteControlLinkages
+            Get
+                Return m_aryRemoteControlLinkages
+            End Get
+        End Property
+
+
 
         'Public Overridable Property SimWindowLocation() As System.Drawing.Point
         '    Get
@@ -2274,6 +2283,7 @@ Namespace Forms
                 m_aryRobotIOControls.Clear()
                 m_aryScriptProcessors.Clear()
                 m_aryProjectMigrations.Clear()
+                m_aryRemoteControlLinkages.Clear()
 
                 DataObjects.Physical.MaterialType.ClearRegisteredMaterialTypes()
 
@@ -2494,6 +2504,13 @@ Namespace Forms
                                 Dim doConv As DataObjects.Scripting.ScriptProcessor = CreateScriptProcessor(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
                                     m_aryScriptProcessors.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.RemoteControlLinkage), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.RemoteControlLinkage")
+                                Dim doConv As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = CreateRemoteControlLinkage(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryRemoteControlLinkages.Add(doConv)
                                     m_aryAllDataTypes.Add(doConv)
                                 End If
                             End If
@@ -2820,6 +2837,22 @@ Namespace Forms
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
                     Util.ShowMessage("CreateScriptProcessor: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateRemoteControlLinkage(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), AnimatGUI.DataObjects.Robotics.RemoteControlLinkage)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateRemoteControlLinkage: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try

@@ -679,6 +679,9 @@
     <Compile Include="Forms\RelabelSelected.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Robotics\EditRemoteLinkages.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\SelectMacro.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -865,6 +868,7 @@
     <Compile Include="TypeHelpers\OdorTypeEditor.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\RemoteControlLinkagesEditor.vb" />
     <Compile Include="TypeHelpers\RobotTreePruner.vb" />
     <Compile Include="TypeHelpers\TreeListPruner.vb" />
     <Compile Include="TypeHelpers\UnitsTypeConverter.vb">
@@ -936,6 +940,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelabelSelected.resx">
       <DependentUpon>RelabelSelected.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Robotics\EditRemoteLinkages.resx">
+      <DependentUpon>EditRemoteLinkages.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectMacro.resx">
       <DependentUpon>SelectMacro.vb</DependentUpon>

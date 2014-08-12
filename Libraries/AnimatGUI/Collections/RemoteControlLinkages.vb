@@ -159,6 +159,42 @@ Namespace Collections
             Return aryList
         End Function
 
+        Public Overridable ReadOnly Property Properties() As AnimatGuiCtrls.Controls.PropertyBag
+            Get
+                Dim ptTable As New AnimatGuiCtrls.Controls.PropertyTable
+
+                ptTable.Tag = Me
+                AddHandler ptTable.GetValue, AddressOf Me.OnGetPropValue
+
+                Dim iIndex As Integer = 0
+                For Each deEntry As DictionaryEntry In Me
+                    Dim doLink As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Robotics.RemoteControlLinkage)
+
+                    iIndex = iIndex + 1
+
+                    ptTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Link " & iIndex, GetType(String), (iIndex - 1).ToString(), _
+                                           "Linkages", "One of the remote control linkages.", doLink.Name, True))
+                Next
+
+                Return ptTable
+            End Get
+        End Property
+
+        Protected Sub OnGetPropValue(ByVal sender As Object, ByVal e As AnimatGuiCtrls.Controls.PropertySpecEventArgs)
+            Try
+                Dim iIndex As Integer = Integer.Parse(e.Property.PropertyName)
+
+                Dim doLink As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = DirectCast(Me(iIndex), AnimatGUI.DataObjects.Robotics.RemoteControlLinkage)
+                e.Value = doLink.Name
+
+            Catch ex As System.Exception
+
+            End Try
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return "Click to edit"
+        End Function
     End Class
 
 End Namespace

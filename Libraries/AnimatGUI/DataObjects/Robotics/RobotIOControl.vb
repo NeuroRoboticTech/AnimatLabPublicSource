@@ -178,6 +178,7 @@ Namespace DataObjects
                     doPart.CreateDataItemTreeView(frmDataItem, tnNode, tpTemplatePartType)
                 Next
 
+                Return tnNode
             End Function
 
 #End Region

@@ -145,7 +145,7 @@ Namespace DataObjects
             Public Sub New(ByVal doParent As Framework.DataObject)
                 MyBase.New(doParent)
 
-                m_strName = "RemoteControlLinkage"
+                m_strName = "Remote Control Link"
 
 
                 If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RemoteControl), False) Then
