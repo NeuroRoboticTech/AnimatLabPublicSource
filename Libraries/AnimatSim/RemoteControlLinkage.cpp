@@ -46,7 +46,6 @@ RemoteControlLinkage::RemoteControlLinkage(void)
 {
 	m_lpParentRemoteControl = NULL;
 	m_lpSourceData = NULL;
-	m_lpGain = NULL;
 	m_lpTargetNode = NULL;
 	m_iTargetDataType = -1;
 }
@@ -56,12 +55,6 @@ RemoteControlLinkage::~RemoteControlLinkage(void)
 try
 {
 	m_lpSourceData = NULL;
-
-	if(m_lpGain)
-	{
-		delete m_lpGain;
-		m_lpGain = NULL;
-	}
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RemoteControlLinkage\r\n", "", -1, false, true);}
@@ -145,46 +138,6 @@ void RemoteControlLinkage::TargetDataTypeID(std::string strTypeID)
 	Initialize();
 }
 
-/**
-\brief	Gets the poitner to the gain function.
-
-\author	dcofer
-\date	3/18/2011
-
-\return	Pointer to the gain.
-**/
-Gain *RemoteControlLinkage::GetGain() {return m_lpGain;}
-
-void RemoteControlLinkage::SetGain(Gain *lpGain)
-{
-	if(m_lpGain)
-	{
-		delete m_lpGain;
-		m_lpGain = NULL;
-	}
-
-	m_lpGain = lpGain;
-	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
-}
-
-/**
-\brief	Creates and adds a gain object. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strXml	The xml data packet for loading the gain. 
-**/
-void RemoteControlLinkage::AddGain(std::string strXml)
-{
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("Gain");
-
-	SetGain(LoadGain(m_lpSim, "Gain", oXml));
-}
-
 #pragma region DataAccesMethods
 
 float *RemoteControlLinkage::GetDataPointer(const std::string &strDataType)
@@ -226,11 +179,6 @@ bool RemoteControlLinkage::SetData(const std::string &strDataType, const std::st
 		LinkedNodeID(strValue);
 		return true;
 	}
-	else if(strType == "GAIN")
-	{
-		AddGain(strValue);
-		return true;
-	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -247,7 +195,6 @@ void RemoteControlLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 	aryProperties.Add(new TypeProperty("SourceDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TargetDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("LinkedNodeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -309,15 +256,6 @@ void RemoteControlLinkage::Initialize()
 		m_lpSourceData = m_lpParentRemoteControl->GetDataPointer(m_strSourceDataTypeID);
 }
 
-void RemoteControlLinkage::StepSimulation()
-{
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
-	{
-		float fltOutput = m_lpGain->CalculateGain(*m_lpSourceData);
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, fltOutput);
-	}
-}
-
 void RemoteControlLinkage::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
@@ -327,9 +265,6 @@ void RemoteControlLinkage::Load(CStdXml &oXml)
 	LinkedNodeID(oXml.GetChildString("LinkedNodeID", ""));
 	SourceDataTypeID(oXml.GetChildString("SourceDataTypeID", ""));
 	TargetDataTypeID(oXml.GetChildString("TargetDataTypeID", ""));
-
-	if(oXml.FindChildElement("Gain", false))
-		SetGain(LoadGain(m_lpSim, "Gain", oXml));
 
 	oXml.OutOfElem(); //OutOf Link Element
 }

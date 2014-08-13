@@ -294,6 +294,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\OdorSensor.h" />
     <ClInclude Include="..\OdorType.h" />
     <ClInclude Include="..\Organism.h" />
+    <ClInclude Include="..\PassThroughLinkage.h" />
     <ClInclude Include="..\PhysicsNeuralModule.h" />
     <ClInclude Include="..\PidControl.h" />
     <ClInclude Include="..\Plane.h" />
@@ -301,6 +302,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\Prismatic.h" />
     <ClInclude Include="..\PropertyControlAdapter.h" />
     <ClInclude Include="..\PropertyControlStimulus.h" />
+    <ClInclude Include="..\PulsedLinkage.h" />
     <ClInclude Include="..\ReceptiveField.h" />
     <ClInclude Include="..\ReceptiveFieldPair.h" />
     <ClInclude Include="..\RemoteControl.h" />
@@ -475,6 +477,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\Organism.cpp">
     </ClCompile>
+    <ClCompile Include="..\PassThroughLinkage.cpp" />
     <ClCompile Include="..\PhysicsNeuralModule.cpp">
     </ClCompile>
     <ClCompile Include="..\PidControl.cpp">
@@ -489,6 +492,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\PropertyControlStimulus.cpp">
     </ClCompile>
+    <ClCompile Include="..\PulsedLinkage.cpp" />
     <ClCompile Include="..\ReceptiveField.cpp">
     </ClCompile>
     <ClCompile Include="..\ReceptiveFieldPair.cpp">

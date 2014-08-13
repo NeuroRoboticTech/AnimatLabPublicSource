@@ -176,7 +176,8 @@ namespace AnimatSim
         class RobotPartInterface;
 		class RemoteControl;
 		class RemoteControlLinkage;
-
+		class PassThroughLinkage;
+		class PulsedLinkage;
     }
 }
 
@@ -297,6 +298,8 @@ using namespace AnimatSim::Robotics;
 #include "RobotIOControl.h"
 #include "RobotPartInterface.h"
 #include "RemoteControlLinkage.h"
+#include "PassThroughLinkage.h"
+#include "PulsedLinkage.h"
 #include "RemoteControl.h"
 
 #endif // __ANIMAT_LIB_DLL_H__

@@ -29,11 +29,6 @@ namespace AnimatSim
 
 			/// Pointer to the source data variable.
 			float *m_lpSourceData;
-			
-			/// Pointer to the Gain that will be used to convert the source value into the target value.
-			Gain *m_lpGain;
-
-			virtual void AddGain(std::string strXml);
 
 		public:
 			RemoteControlLinkage(void);
@@ -53,9 +48,6 @@ namespace AnimatSim
 			virtual std::string LinkedNodeID();
 			virtual void LinkedNodeID(std::string strID);
 
-			virtual Gain *GetGain();
-			virtual void SetGain(Gain *lpGain);
-
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
@@ -65,7 +57,6 @@ namespace AnimatSim
 			virtual void ShutdownIO();
 
 			virtual void Initialize();
-			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

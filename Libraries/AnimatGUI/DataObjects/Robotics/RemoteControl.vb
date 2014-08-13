@@ -235,22 +235,6 @@ Namespace DataObjects
 
 #End Region
 
-#Region " Events "
-
-            Protected Overridable Sub OnAddLinkage(ByVal sender As Object, ByVal e As System.EventArgs)
-                Try
-
-                    Dim doLink As New Robotics.RemoteControlLinkage(Me)
-                    doLink.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
-                    m_aryLinks.Add(doLink.ID, doLink)
-
-                Catch ex As System.Exception
-                    AnimatGUI.Framework.Util.DisplayError(ex)
-                End Try
-            End Sub
-
-#End Region
-
         End Class
 
     End Namespace

@@ -84,21 +84,21 @@ namespace RoboticsGUI
                 AnimatGUI.DataObjects.Gains.Polynomial doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doWalkV = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "WalkV", "WalkV", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doWalkV = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "WalkV", "WalkV", doGain);
                 doWalkV.SourceDataTypes.ID = "WalkV";
                 m_aryLinks.Add(doWalkV.ID, doWalkV, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doWalkH = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "WalkH", "WalkH", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doWalkH = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "WalkH", "WalkH", doGain);
                 doWalkH.SourceDataTypes.ID = "WalkH";
                 m_aryLinks.Add(doWalkH.ID, doWalkH, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLookV = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LookV", "LookV", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doLookV = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "LookV", "LookV", doGain);
                 doLookV.SourceDataTypes.ID = "LookV";
                 m_aryLinks.Add(doLookV.ID, doLookV, false);
 
@@ -106,55 +106,55 @@ namespace RoboticsGUI
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 0.0390625;
                 doGain.D.Scale = ScaledNumber.enumNumericScale.nano; doGain.D.Value = 5;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLookH = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LookH", "LookH", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doLookH = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "LookH", "LookH", doGain);
                 doLookH.SourceDataTypes.ID = "LookH";
                 m_aryLinks.Add(doLookH.ID, doLookH, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR1 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R1", "R1", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doR1 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "R1", "R1", doGain);
                 doR1.SourceDataTypes.ID = "R1";
                 m_aryLinks.Add(doR1.ID, doR1, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR2 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R2", "R2", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doR2 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "R2", "R2", doGain);
                 doR2.SourceDataTypes.ID = "R2";
                 m_aryLinks.Add(doR2.ID, doR2, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doR3 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "R3", "R3", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doR3 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "R3", "R3", doGain);
                 doR3.SourceDataTypes.ID = "R3";
                 m_aryLinks.Add(doR3.ID, doR3, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL4 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L4", "L4", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doL4 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "L4", "L4", doGain);
                 doL4.SourceDataTypes.ID = "L4";
                 m_aryLinks.Add(doL4.ID, doL4, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL5 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L5", "L5", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doL5 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "L5", "L5", doGain);
                 doL5.SourceDataTypes.ID = "L5";
                 m_aryLinks.Add(doL5.ID, doL5, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doL6 = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "L6", "L6", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doL6 = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "L6", "L6", doGain);
                 doL6.SourceDataTypes.ID = "L6";
                 m_aryLinks.Add(doL6.ID, doL6, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doRT = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "RT", "RT", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doRT = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "RT", "RT", doGain);
                 doRT.SourceDataTypes.ID = "RT";
                 m_aryLinks.Add(doRT.ID, doRT, false);
 
                 doGain = new AnimatGUI.DataObjects.Gains.Polynomial(null, "Gain", "", "Current", false);
                 doGain.C.Scale = ScaledNumber.enumNumericScale.nano; doGain.C.Value = 10;
-                AnimatGUI.DataObjects.Robotics.RemoteControlLinkage doLT = new AnimatGUI.DataObjects.Robotics.RemoteControlLinkage(this, "LT", "LT", doGain);
+                AnimatGUI.DataObjects.Robotics.PassThroughLinkage doLT = new AnimatGUI.DataObjects.Robotics.PassThroughLinkage(this, "LT", "LT", doGain);
                 doLT.SourceDataTypes.ID = "LT";
                 m_aryLinks.Add(doLT.ID, doLT, false);
             }

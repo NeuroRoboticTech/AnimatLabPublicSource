@@ -901,9 +901,13 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REMOTECONTROLLINKAGE" || strType == "DEFAULT")
+	if(strType == "PASSTHROUGHLINKAGE")
 	{
-		lpLink = new RemoteControlLinkage;
+		lpLink = new PassThroughLinkage;
+	}
+	else if(strType == "PULSEDLINKAGE")
+	{
+		lpLink = new PulsedLinkage;
 	}
 	else
 	{
