@@ -124,7 +124,6 @@ Namespace DataObjects
 
                 m_strName = "Remote Control Link"
 
-
                 If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RemoteControl), False) Then
                     m_doParentRemoteControl = DirectCast(doParent, RemoteControl)
                     m_thSourceDataTypes = DirectCast(m_doParentRemoteControl.DataTypes.Clone(m_doParentRemoteControl.IncomingDataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)

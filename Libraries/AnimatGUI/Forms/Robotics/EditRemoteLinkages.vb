@@ -229,6 +229,9 @@ Namespace Forms
                     If frmSelInterface.ShowDialog() = DialogResult.OK Then
                         'Then create the new one.
                         Dim doLink As DataObjects.Robotics.RemoteControlLinkage = DirectCast(frmSelInterface.Selected.Clone(m_doRemoteControl, False, Nothing), DataObjects.Robotics.RemoteControlLinkage)
+                        doLink.LinkedNode.Organism = m_doRemoteControl.Organism
+                        doLink.SourceDataTypes = DirectCast(m_doRemoteControl.DataTypes.Clone(doLink, False, Nothing), TypeHelpers.DataTypeID)
+                        doLink.Name = "New " + doLink.Name
                         m_doRemoteControl.Links.Add(doLink.ID, doLink)
                         Dim liItem As New ListViewItem(doLink.ToString)
                         liItem.Tag = doLink
