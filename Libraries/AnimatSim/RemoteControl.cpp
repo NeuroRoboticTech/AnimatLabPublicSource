@@ -182,11 +182,15 @@ void RemoteControl::SetupIO()
 {
 	RobotIOControl::SetupIO();
 
-	int iCount = m_aryLinks.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryLinks[iIndex]->Enabled())
-			m_aryLinks[iIndex]->SetupIO();
+	if(m_bEnabled)
+	{
+		int iCount = m_aryLinks.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryLinks[iIndex]->Enabled())
+				m_aryLinks[iIndex]->SetupIO();
+	}
 }
+
 
 /**
 \brief	This method is called from within the IO thread. It calls StepIO for each part.
@@ -197,16 +201,22 @@ void RemoteControl::SetupIO()
 **/
 void RemoteControl::StepIO()
 {
-	//unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
-	RobotIOControl::StepIO();
+	if(m_bEnabled)
+	{
+		if(m_bPauseIO || m_lpSim->Paused())
+			WaitWhilePaused();
 
-	int iCount = m_aryLinks.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryLinks[iIndex]->Enabled())
-			m_aryLinks[iIndex]->StepIO();
+		//unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
+		RobotIOControl::StepIO();
 
-	//unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
-	//m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
+		int iCount = m_aryLinks.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			if(m_aryLinks[iIndex]->Enabled())
+				m_aryLinks[iIndex]->StepIO();
+
+		//unsigned long long lEndStartTick = m_lpSim->GetTimerTick();
+		//m_fltStepIODuration = m_lpSim->TimerDiff_m(lStepStartTick, lEndStartTick);
+	}
 }
 
 /**

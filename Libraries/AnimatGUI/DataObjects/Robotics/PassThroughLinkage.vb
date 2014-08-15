@@ -81,8 +81,6 @@ Namespace DataObjects
                 m_strName = "Pass Through Link"
 
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
-
-
             End Sub
 
             Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)

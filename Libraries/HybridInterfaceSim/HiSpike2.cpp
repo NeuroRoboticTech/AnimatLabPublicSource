@@ -18,6 +18,9 @@ namespace HybridInterfaceSim
 HiSpike2::HiSpike2() 
 {
 	m_iPortNumber = 3;
+	m_iCounter = 0;
+	m_iInternalData = 0;
+	m_fltData = 0;
 }
 
 HiSpike2::~HiSpike2()
@@ -43,14 +46,17 @@ float *HiSpike2::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	return RobotIOControl::GetDataPointer(strDataType);
+	if(strType == "DATA")
+		return &m_fltData;
+
+	return RemoteControl::GetDataPointer(strDataType);
 }
 
 bool HiSpike2::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 	
-	if(RobotIOControl::SetData(strDataType, strValue, false))
+	if(RemoteControl::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strType == "PORTNUMBER")
@@ -68,7 +74,9 @@ bool HiSpike2::SetData(const std::string &strDataType, const std::string &strVal
 
 void HiSpike2::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RobotIOControl::QueryProperties(aryProperties);
+	RemoteControl::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("Data", AnimatPropertyType::Integer, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("PortNumber", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
@@ -77,61 +85,65 @@ void HiSpike2::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void HiSpike2::Initialize()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpSim->InSimulation())
-	{
+	OpenIO();
 
-		StartIOThread();
-	}
+	StartIOThread();
 
-	RobotIOControl::Initialize();
+	RemoteControl::Initialize();
 }
 
-void HiSpike2::ProcessIO()
+void HiSpike2::ResetSimulation()
 {
-	try
+	RemoteControl::ResetSimulation();
+
+	m_iCounter = 0;
+	m_iInternalData = 0;
+	m_fltData = 0;
+}
+
+bool HiSpike2::OpenIO()
+{
+	//Open spike 2 communications ports here
+	return true;
+}
+
+void HiSpike2::CloseIO()
+{
+	//Close spike 2 communications ports here
+}
+
+void HiSpike2::StepIO()
+{
+	if(m_bEnabled && !m_lpSim->Paused())
 	{
-		m_bIOThreadProcessing = true;
 
-		SetupIO();
+		//This is just test code to demonstrate how it will only fire when m_fltData matches
+		//a speicfic value. You just need to set m_fltData to the unsigned int value that you
+		//get from spike 2. We are using floats here instead of ints because of the generic 
+		//method I use within animatlab to get data.
+		m_fltData = 0;
+		m_iCounter++;
 
-		m_bSetupComplete = true;
-		m_WaitForIOSetupCond.notify_all();
-
-		while(!m_bStopIO)
+		if(m_iCounter == 10)
 		{
-			StepIO();
-
-#ifndef Win32
-		//Not needed in windows, not sure in linux. Keep it in till verify.
-		m_lpSim->MicroSleep(15000);
-#endif
+			m_iInternalData++;
+			m_fltData = (float) m_iInternalData;
+			m_iCounter = 0;
 		}
-	}
-	catch(CStdErrorInfo oError)
-	{
-		m_bIOThreadProcessing = false;
-	}
-	catch(...)
-	{
-		m_bIOThreadProcessing = false;
+
+		if(m_iInternalData == 10)
+			m_iInternalData = 0;
 	}
 
-	m_bIOThreadProcessing = false;
+	//Temp code to slow this down like there was real communication
+	boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+
+	RemoteControl::StepIO();
 }
-
-void HiSpike2::ExitIOThread()
-{
-	RobotIOControl::ExitIOThread();
-
-//	if(!m_lpSim->InSimulation())
-//		dxl_terminate();
-}
-
 
 void HiSpike2::Load(StdUtils::CStdXml &oXml)
 {
-	RobotIOControl::Load(oXml);
+	RemoteControl::Load(oXml);
 
 	oXml.IntoElem();
 	PortNumber(oXml.GetChildInt("PortNumber", m_iPortNumber));

@@ -65,19 +65,60 @@ namespace RoboticsGUI
                 m_strName = "XBee Commander";
 
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkV", "Walk Vertical", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkVStart", "Walk Vertical Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkVStop", "Walk Vertical Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkH", "Walk Horizontal", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkHStart", "Walk Horizontal Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("WalkHStop", "Walk Horizontal Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookV", "Look Vertical", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookVStart", "Look Vertical Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookVStop", "Look Vertical Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookH", "Look Horizontal", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookHStart", "Look Horizontal Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LookHStop", "Look Horizontal Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("Pan", "Pan", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("PanStart", "Pan Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("PanStop", "Pan Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("Tilt", "Tilt", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("TiltStart", "Tilt Start", "", "", -128, 128));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("TiltStop", "Tilt Stop", "", "", -128, 128));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R1", "R1", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R1Start", "R1 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R1Stop", "R1 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R2", "R2", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R2Start", "R2 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R2Stop", "R2 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R3", "R3", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R3Start", "R3 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("R3Stop", "R3 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L4", "L4", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L4Start", "L4 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L4Stop", "L4 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L5", "L5", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L5Start", "L5 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L5Stop", "L5 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L6", "L6", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L6Start", "L6 Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("L6Stop", "L6 Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("RT", "RT", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("RTStart", "RT Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("RTStop", "RT Stop", "", "", 0, 1));
+
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LT", "LT", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LTStart", "LT Start", "", "", 0, 1));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("LTStop", "LT Stop", "", "", 0, 1));
 
                 m_aryLinks.Clear();
 

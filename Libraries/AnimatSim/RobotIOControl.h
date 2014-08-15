@@ -54,8 +54,10 @@ namespace AnimatSim
 			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
 			virtual void StartIOThread();
-			virtual void ProcessIO() = 0;
+			virtual void ProcessIO();
 			virtual void ExitIOThread();
+			virtual bool OpenIO() = 0;
+			virtual void CloseIO() = 0;
 
 			virtual void WaitWhilePaused();
 			virtual void StartPause();

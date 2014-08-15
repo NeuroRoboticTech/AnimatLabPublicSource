@@ -48,6 +48,7 @@ RemoteControlLinkage::RemoteControlLinkage(void)
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
 	m_iTargetDataType = -1;
+	m_fltAppliedCurrent = 0;
 }
 
 RemoteControlLinkage::~RemoteControlLinkage(void)
@@ -144,9 +145,9 @@ float *RemoteControlLinkage::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	//if(strType == "STEPIODURATION")
-	//	return &m_fltStepIODuration;
-	//else
+	if(strType == "APPLIEDCURRENT")
+		return &m_fltAppliedCurrent;
+	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	return NULL;
@@ -195,6 +196,8 @@ void RemoteControlLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 	aryProperties.Add(new TypeProperty("SourceDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TargetDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("LinkedNodeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("AppliedCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion

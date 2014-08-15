@@ -14,8 +14,8 @@ class HYBRID_PORT HiC884Controller : public AnimatSim::Robotics::RobotIOControl
 protected:
 	int m_iPortNumber;
 
-	virtual void ProcessIO();
-	virtual void ExitIOThread();
+	virtual bool OpenIO();
+	virtual void CloseIO();
 
 public:
 	HiC884Controller();

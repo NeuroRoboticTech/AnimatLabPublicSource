@@ -9,7 +9,7 @@ namespace HybridInterfaceGUI
     namespace RobotIOControls
     {
 
-        public class Spike2 : AnimatGUI.DataObjects.Robotics.RobotIOControl
+        public class Spike2 : AnimatGUI.DataObjects.Robotics.RemoteControl
         {
             #region " Attributes "
 
@@ -46,6 +46,8 @@ namespace HybridInterfaceGUI
                 : base(doParent)
             {
                 m_strName = "Spike2";
+
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("Data", "Data", "", "", 0, 1));
             }
 
             public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

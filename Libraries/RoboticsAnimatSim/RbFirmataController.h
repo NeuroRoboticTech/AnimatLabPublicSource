@@ -30,7 +30,8 @@ protected:
 	virtual void analogPinChanged(const int & pinNum);
 	virtual void setupArduino(const int & version);
 	virtual void ProcessIO();
-	virtual void ExitIOThread();
+	virtual bool OpenIO();
+	virtual void CloseIO();
 
 public:
 	RbFirmataController();
@@ -50,7 +51,6 @@ public:
 
 #pragma endregion
 
-	virtual void Initialize();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 

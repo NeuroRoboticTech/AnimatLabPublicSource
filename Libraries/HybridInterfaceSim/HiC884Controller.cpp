@@ -78,57 +78,22 @@ void HiC884Controller::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 
 void HiC884Controller::Initialize()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpSim->InSimulation())
-	{
-		//if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
-		//	THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
+	OpenIO();
 
-		StartIOThread();
-	}
+	StartIOThread();
 
 	RobotIOControl::Initialize();
 }
 
-void HiC884Controller::ProcessIO()
+bool HiC884Controller::OpenIO()
 {
-	try
-	{
-		m_bIOThreadProcessing = true;
-
-		SetupIO();
-
-		m_bSetupComplete = true;
-		m_WaitForIOSetupCond.notify_all();
-
-		while(!m_bStopIO)
-		{
-			StepIO();
-
-#ifndef Win32
-		//Not needed in windows, not sure in linux. Keep it in till verify.
-		m_lpSim->MicroSleep(15000);
-#endif
-		}
-	}
-	catch(CStdErrorInfo oError)
-	{
-		m_bIOThreadProcessing = false;
-	}
-	catch(...)
-	{
-		m_bIOThreadProcessing = false;
-	}
-
-	m_bIOThreadProcessing = false;
+	//Open acuator communications ports here
+	return true;
 }
 
-void HiC884Controller::ExitIOThread()
+void HiC884Controller::CloseIO()
 {
-	RobotIOControl::ExitIOThread();
-
-	//if(!m_lpSim->InSimulation())
-	//	dxl_terminate();
+	//Close acuator communications ports here
 }
 
 void HiC884Controller::Load(StdUtils::CStdXml &oXml)

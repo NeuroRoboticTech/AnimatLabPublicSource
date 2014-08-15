@@ -93,6 +93,8 @@ Namespace DataObjects
 
                 m_snPulseDuration = New AnimatGUI.Framework.ScaledNumber(Me, "PulseDuration", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
                 m_snPulseCurrent = New AnimatGUI.Framework.ScaledNumber(Me, "PulseCurrent", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amp", "A")
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Matches", "Matches", "", "", 0, 1))
             End Sub
 
             Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)
@@ -100,6 +102,8 @@ Namespace DataObjects
 
                 m_snPulseDuration = New AnimatGUI.Framework.ScaledNumber(Me, "PulseDuration", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
                 m_snPulseCurrent = New AnimatGUI.Framework.ScaledNumber(Me, "PulseCurrent", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amp", "A")
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Matches", "Matches", "", "", 0, 1))
             End Sub
 
             Public Overrides Sub ClearIsDirty()
@@ -116,6 +120,7 @@ Namespace DataObjects
 
                 m_snPulseDuration = DirectCast(OrigNode.m_snPulseDuration.Clone(Me, bCutData, doRoot), ScaledNumber)
                 m_snPulseCurrent = DirectCast(OrigNode.m_snPulseCurrent.Clone(Me, bCutData, doRoot), ScaledNumber)
+                m_iMatchValue = OrigNode.m_iMatchValue
             End Sub
 
             Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -148,6 +153,7 @@ Namespace DataObjects
 
                 oXml.IntoElem()  'Into RobotInterface Element
 
+                m_iMatchValue = oXml.GetChildInt("MatchValue", m_iMatchValue)
                 m_snPulseDuration.LoadData(oXml, "PulseDuration")
                 m_snPulseCurrent.LoadData(oXml, "PulseCurrent")
 
@@ -160,6 +166,7 @@ Namespace DataObjects
 
                 oXml.IntoElem()
 
+                oXml.AddChildElement("MatchValue", m_iMatchValue)
                 m_snPulseDuration.SaveData(oXml, "PulseDuration")
                 m_snPulseCurrent.SaveData(oXml, "PulseCurrent")
 
@@ -172,6 +179,7 @@ Namespace DataObjects
 
                 oXml.IntoElem()
 
+                oXml.AddChildElement("MatchValue", m_iMatchValue)
                 m_snPulseDuration.SaveSimulationXml(oXml, Me, "PulseDuration")
                 m_snPulseCurrent.SaveSimulationXml(oXml, Me, "PulseCurrent")
 

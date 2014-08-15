@@ -29,6 +29,9 @@ namespace AnimatSim
 
 			/// Pointer to the source data variable.
 			float *m_lpSourceData;
+			
+			///The total current applied during a time step
+			float m_fltAppliedCurrent;
 
 		public:
 			RemoteControlLinkage(void);

@@ -9,13 +9,16 @@ namespace HybridInterfaceSim
 	namespace Robotics
 	{
 
-class HYBRID_PORT HiSpike2 : public AnimatSim::Robotics::RobotIOControl
+class HYBRID_PORT HiSpike2 : public AnimatSim::Robotics::RemoteControl
 {
 protected:
 	int m_iPortNumber;
+	int m_iCounter;
+	int m_iInternalData;
+	float m_fltData;
 
-	virtual void ProcessIO();
-	virtual void ExitIOThread();
+	virtual bool OpenIO();
+	virtual void CloseIO();
 
 public:
 	HiSpike2();
@@ -32,7 +35,10 @@ public:
 
 #pragma endregion
 
+	virtual void StepIO();
+
 	virtual void Initialize();
+	virtual void ResetSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 

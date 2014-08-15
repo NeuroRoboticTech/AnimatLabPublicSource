@@ -20,7 +20,8 @@ protected:
 	int m_iBaudRate;
 
 	virtual void ProcessIO();
-	virtual void ExitIOThread();
+	virtual bool OpenIO();
+	virtual void CloseIO();
 
 public:
 	CStdPtrArray<RbDynamixelMotorUpdateData> m_aryMotorData;
@@ -44,7 +45,6 @@ public:
 
 #pragma endregion
 
-	virtual void Initialize();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 

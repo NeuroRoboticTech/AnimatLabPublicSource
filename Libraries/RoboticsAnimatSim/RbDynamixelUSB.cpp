@@ -105,18 +105,18 @@ void RbDynamixelUSB::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 #pragma endregion
 
-void RbDynamixelUSB::Initialize()
+bool RbDynamixelUSB::OpenIO()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
+	if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
+		THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
+
+	return true;
+}
+
+void RbDynamixelUSB::CloseIO()
+{
 	if(!m_lpSim->InSimulation())
-	{
-		if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
-			THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
-
-		StartIOThread();
-	}
-
-	RobotIOControl::Initialize();
+		dxl_terminate();
 }
 
 void RbDynamixelUSB::ProcessIO()
@@ -152,14 +152,6 @@ void RbDynamixelUSB::ProcessIO()
 	}
 
 	m_bIOThreadProcessing = false;
-}
-
-void RbDynamixelUSB::ExitIOThread()
-{
-	RobotIOControl::ExitIOThread();
-
-	if(!m_lpSim->InSimulation())
-		dxl_terminate();
 }
 
 bool RbDynamixelUSB::SendSynchronousMoveCommand()

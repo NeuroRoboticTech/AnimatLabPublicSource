@@ -117,21 +117,18 @@ void RbFirmataController::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 
 #pragma endregion
 
-void RbFirmataController::Initialize()
+bool RbFirmataController::OpenIO()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpSim->InSimulation())
-	{
-		std::cout << "opening connection\r\n";
-		
-		//Try to connect to the arduino board.
-		if(!connect(m_strComPort, m_iBaudRate))
-			THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
+	//Try to connect to the arduino board.
+	if(!connect(m_strComPort, m_iBaudRate))
+		THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
 
-		StartIOThread();
-	}
+	return true;
+}
 
-	RobotIOControl::Initialize();
+void RbFirmataController::CloseIO()
+{
+	_port.close();
 }
 
 void RbFirmataController::ProcessIO()
@@ -225,13 +222,6 @@ void RbFirmataController::setupArduino(const int & version)
 	//m_EAnalogPinChanged = this->EAnalogPinChanged.connect(boost::bind(&RbFirmataController::analogPinChanged, this, _1));
 
 	m_WaitForIOSetupCond.notify_all();
-}
-
-void RbFirmataController::ExitIOThread()
-{
-	RobotIOControl::ExitIOThread();
-
-	_port.close();
 }
 
 // digital pin event handler, called whenever a digital pin value has changed

@@ -30,26 +30,7 @@ RbXBeeCommander::RbXBeeCommander()
 	m_strPort = "COM3";
 	m_iBaudRate = 38400; 
 
-    m_fltWalkV = 0;
-	m_fltWalkH = 0;
-	m_fltLookV = 0;
-	m_fltLookH = 0;
-	m_fltPan = 0;
-    m_fltTilt = 0;
-    m_iButtons = 0;
-	m_iExt = 0;
-
-	m_fltR1 = 0;
-	m_fltR2 = 0;
-	m_fltR3 = 0;
-	m_fltL4 = 0;
-	m_fltL5 = 0;
-	m_fltL6 = 0;
-	m_fltRT = 0;
-	m_fltLT = 0;
-
-    index = -1;
-    status = 0;
+	ResetData();
 }
 
 RbXBeeCommander::~RbXBeeCommander()
@@ -83,33 +64,89 @@ float *RbXBeeCommander::GetDataPointer(const std::string &strDataType)
 	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "WALKV")
-		return &m_fltWalkV;
+		return &m_ButtonData[BUT_ID_WALKV].m_fltValue;
+	else if(strType == "WALKVSTART")
+		return &m_ButtonData[BUT_ID_WALKV].m_fltStart;
+	else if(strType == "WALKVSTOP")
+		return &m_ButtonData[BUT_ID_WALKV].m_fltStop;
 	else if(strType == "WALKH")
-		return &m_fltWalkH;
+		return &m_ButtonData[BUT_ID_WALKH].m_fltValue;
+	else if(strType == "WALKHSTART")
+		return &m_ButtonData[BUT_ID_WALKH].m_fltStart;
+	else if(strType == "WALKHSTOP")
+		return &m_ButtonData[BUT_ID_WALKH].m_fltStop;
 	else if(strType == "LOOKV")
-		return &m_fltLookV;
+		return &m_ButtonData[BUT_ID_LOOKV].m_fltValue;
+	else if(strType == "LOOKVSTART")
+		return &m_ButtonData[BUT_ID_LOOKV].m_fltStart;
+	else if(strType == "LOOKVSTOP")
+		return &m_ButtonData[BUT_ID_LOOKV].m_fltStop;
 	else if(strType == "LOOKH")
-		return &m_fltLookH;
+		return &m_ButtonData[BUT_ID_LOOKH].m_fltValue;
+	else if(strType == "LOOKHSTART")
+		return &m_ButtonData[BUT_ID_LOOKH].m_fltStart;
+	else if(strType == "LOOKHSTOP")
+		return &m_ButtonData[BUT_ID_LOOKH].m_fltStop;
 	else if(strType == "PAN")
-		return &m_fltPan;
+		return &m_ButtonData[BUT_ID_PAN].m_fltValue;
+	else if(strType == "PANSTART")
+		return &m_ButtonData[BUT_ID_PAN].m_fltStart;
+	else if(strType == "PANSTOP")
+		return &m_ButtonData[BUT_ID_PAN].m_fltStop;
 	else if(strType == "TILT")
-		return &m_fltTilt;
+		return &m_ButtonData[BUT_ID_TILT].m_fltValue;
+	else if(strType == "TILTSTART")
+		return &m_ButtonData[BUT_ID_TILT].m_fltStart;
+	else if(strType == "TILTSTOP")
+		return &m_ButtonData[BUT_ID_TILT].m_fltStop;
 	else if(strType == "R1")
-		return &m_fltR1;
+		return &m_ButtonData[BUT_ID_R1].m_fltValue;
+	else if(strType == "R1START")
+		return &m_ButtonData[BUT_ID_R1].m_fltStart;
+	else if(strType == "R1STOP")
+		return &m_ButtonData[BUT_ID_R1].m_fltStop;
 	else if(strType == "R2")
-		return &m_fltR2;
+		return &m_ButtonData[BUT_ID_R2].m_fltValue;
+	else if(strType == "R2START")
+		return &m_ButtonData[BUT_ID_R2].m_fltStart;
+	else if(strType == "R2STOP")
+		return &m_ButtonData[BUT_ID_R2].m_fltStop;
 	else if(strType == "R3")
-		return &m_fltR3;
+		return &m_ButtonData[BUT_ID_R3].m_fltValue;
+	else if(strType == "R3START")
+		return &m_ButtonData[BUT_ID_R3].m_fltStart;
+	else if(strType == "R3STOP")
+		return &m_ButtonData[BUT_ID_R3].m_fltStop;
 	else if(strType == "L4")
-		return &m_fltL4;
+		return &m_ButtonData[BUT_ID_L4].m_fltValue;
+	else if(strType == "L4START")
+		return &m_ButtonData[BUT_ID_L4].m_fltStart;
+	else if(strType == "L4STOP")
+		return &m_ButtonData[BUT_ID_L4].m_fltStop;
 	else if(strType == "L5")
-		return &m_fltL5;
+		return &m_ButtonData[BUT_ID_L5].m_fltValue;
+	else if(strType == "L5START")
+		return &m_ButtonData[BUT_ID_L5].m_fltStart;
+	else if(strType == "L5STOP")
+		return &m_ButtonData[BUT_ID_L5].m_fltStop;
 	else if(strType == "L6")
-		return &m_fltL6;
+		return &m_ButtonData[BUT_ID_L6].m_fltValue;
+	else if(strType == "L6START")
+		return &m_ButtonData[BUT_ID_L6].m_fltStart;
+	else if(strType == "L6STOP")
+		return &m_ButtonData[BUT_ID_L6].m_fltStop;
 	else if(strType == "RT")
-		return &m_fltRT;
+		return &m_ButtonData[BUT_ID_RT].m_fltValue;
+	else if(strType == "RTSTART")
+		return &m_ButtonData[BUT_ID_RT].m_fltStart;
+	else if(strType == "RTSTOP")
+		return &m_ButtonData[BUT_ID_RT].m_fltStop;
 	else if(strType == "LT")
-		return &m_fltLT;
+		return &m_ButtonData[BUT_ID_LT].m_fltValue;
+	else if(strType == "LTSTART")
+		return &m_ButtonData[BUT_ID_LT].m_fltStart;
+	else if(strType == "LTSTOP")
+		return &m_ButtonData[BUT_ID_LT].m_fltStop;
 
 	return AnimatSim::Robotics::RemoteControl::GetDataPointer(strDataType);
 }
@@ -148,19 +185,60 @@ void RbXBeeCommander::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("BaudRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 
 	aryProperties.Add(new TypeProperty("WalkV", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WalkVStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WalkVStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("WalkH", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WalkHStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WalkHStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("LookV", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LookVStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LookVStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("LookH", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LookHStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LookHStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Pan", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PanStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PanStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("Tilt", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TiltStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TiltStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("R1", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R1Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R1Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("R2", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R2Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R2Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("R3", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R3Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("R3Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("L4", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L4Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L4Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("L5", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L5Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L5Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("L6", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L6Start", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("L6Stop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("RT", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RTStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RTStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
 	aryProperties.Add(new TypeProperty("LT", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LTStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("LTStop", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion
@@ -170,12 +248,40 @@ void RbXBeeCommander::Initialize()
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
 	if(m_bEnabled)
 	{
-		if(m_Port.setup(m_strPort, m_iBaudRate))
+		if(OpenIO())
 		{
 			StartIOThread();
 			AnimatSim::Robotics::RemoteControl::Initialize();
 		}
 	}
+}
+
+bool RbXBeeCommander::OpenIO()
+{
+	return m_Port.setup(m_strPort, m_iBaudRate);
+}
+
+void RbXBeeCommander::CloseIO()
+{
+	m_Port.close();
+}
+
+void RbXBeeCommander::ResetData()
+{
+	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+		m_ButtonData[iIdx].ClearData();
+
+	m_iButtons = 0;
+	m_iExt = 0;
+
+    index = -1;
+    status = 0;
+}
+
+void RbXBeeCommander::ResetSimulation()
+{
+	RemoteControl::ResetSimulation();
+	ResetData();
 }
 
 void RbXBeeCommander::SimStarting()
@@ -188,30 +294,70 @@ void RbXBeeCommander::SimStarting()
 	m_Port.flush();
 }
 
-void RbXBeeCommander::ProcessIO()
+void RbXBeeCommanderButtonData::CheckStartedStopped()
 {
-	try
+	if(m_fltValue == m_fltPrev)
+		m_iCount++;
+	else
+		m_iCount = 0;
+
+	if(m_iCount == 3)
 	{
-		m_bIOThreadProcessing = true;
+		if(!m_bStarted && m_fltValue != 0)
+		{
+			m_fltStart = 1;
+			m_bStarted = true;
+			OutputDebugString("Start");
+		}
+		else if(m_bStarted && m_fltValue == 0)
+		{
+			m_fltStop = 1;
+			m_bStarted = false;
+			OutputDebugString("Stop");
+		}
 
-		SetupIO();
-
-		m_bSetupComplete = true;
-		m_WaitForIOSetupCond.notify_all();
-
-		while(!m_bStopIO)
-			StepIO();
+		m_iCount = 0;
 	}
-	catch(CStdErrorInfo oError)
+
+	m_fltPrev = m_fltValue;
+
+	//std::string strVal = "Val: " + STR((int) m_fltValue) + " Prev: " + STR((int) m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
+	//OutputDebugString(strVal.c_str());
+}
+
+void RbXBeeCommander::CheckStartedStopped()
+{
+	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+	//	m_ButtonData[iIdx].CheckStartedStopped();
+
+	m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
+}
+
+void RbXBeeCommanderButtonData::ClearStartStops()
+{
+	if((m_fltStart > 0 || m_fltStop > 0))
 	{
-		m_bIOThreadProcessing = false;
-	}
-	catch(...)
-	{
-		m_bIOThreadProcessing = false;
-	}
+		if(m_iSimStepped >= 5)
+		{
+			if(m_fltStart > 0)
+				OutputDebugString("Cleared Start");
+			if(m_fltStop > 0)
+				OutputDebugString("Cleared Stop");
 
-	m_bIOThreadProcessing = false;
+			m_fltStart = 0;
+			m_fltStop = 0;
+			m_iSimStepped = 0;
+		}
+		else
+			m_iSimStepped++;
+	}
+}
+
+void RbXBeeCommander::ClearStartStops()
+{
+	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+	//	m_ButtonData[iIdx].ClearStartStops();
+	m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
 }
 
 void RbXBeeCommander::StepIO()
@@ -254,31 +400,31 @@ void RbXBeeCommander::StepIO()
 					{
 						if((status&0x01) > 0)
 						{     // SouthPaw
-							m_fltWalkV = (float) ((signed char)( (int)vals[0]-128 ));
-							m_fltWalkH = (float) ((signed char)( (int)vals[1]-128 ) + 2);
-							m_fltLookV = (float) ((signed char)( (int)vals[2]-128 ));
-							m_fltLookH = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
+							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 2);
+							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
+							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ));
 						}
 						else
 						{
-							m_fltLookV = (float) ((signed char)( (int)vals[0]-128 ));
-							m_fltLookH = (float) ((signed char)( (int)vals[1]-128 ) + 2);
-							m_fltWalkV = (float) ((signed char)( (int)vals[2]-128 ));
-							m_fltWalkH = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
+							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ));
+							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
+							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 2);
 						}
-						m_fltPan = (float) ((vals[0]<<8) + vals[1]);
-						m_fltTilt = (float) ((vals[2]<<8) + vals[3]);
+						m_ButtonData[BUT_ID_PAN].m_fltValue = (float) ((vals[0]<<8) + vals[1]);
+						m_ButtonData[BUT_ID_TILT].m_fltValue = (float) ((vals[2]<<8) + vals[3]);
 						m_iButtons = vals[4];
 						m_iExt = vals[5];
 
-						m_fltR1 = (m_iButtons & BUT_R1);
-						m_fltR2 = (m_iButtons & BUT_R2);
-						m_fltR3 = (m_iButtons & BUT_R3);
-						m_fltL4 = (m_iButtons & BUT_L4);
-						m_fltL5 = (m_iButtons & BUT_L5);
-						m_fltL6 = (m_iButtons & BUT_L6);
-						m_fltRT = (m_iButtons & BUT_RT);
-						m_fltLT = (m_iButtons & BUT_LT);
+						m_ButtonData[BUT_ID_R1].m_fltValue = (m_iButtons & BUT_R1);
+						m_ButtonData[BUT_ID_R2].m_fltValue = (m_iButtons & BUT_R2);
+						m_ButtonData[BUT_ID_R3].m_fltValue = (m_iButtons & BUT_R3);
+						m_ButtonData[BUT_ID_L4].m_fltValue = (m_iButtons & BUT_L4);
+						m_ButtonData[BUT_ID_L5].m_fltValue = (m_iButtons & BUT_L5);
+						m_ButtonData[BUT_ID_L6].m_fltValue = (m_iButtons & BUT_L6);
+						m_ButtonData[BUT_ID_RT].m_fltValue = (m_iButtons & BUT_RT);
+						m_ButtonData[BUT_ID_LT].m_fltValue = (m_iButtons & BUT_LT);
 					}
 
 					index = -1;
@@ -286,6 +432,8 @@ void RbXBeeCommander::StepIO()
 					return; // 1
 				}
 			}
+
+			CheckStartedStopped();
 		}
 
 		AnimatSim::Robotics::RemoteControl::StepIO();
@@ -294,11 +442,16 @@ void RbXBeeCommander::StepIO()
     return; // 0
 }
 
-void RbXBeeCommander::ExitIOThread()
+void RbXBeeCommander::StepSimulation()
 {
-	AnimatSim::Robotics::RemoteControl::ExitIOThread();
+	RemoteControl::StepSimulation();
 
-	m_Port.close();
+	int i=4;
+	if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
+		i=6;
+
+
+	ClearStartStops();
 }
 
 void RbXBeeCommander::Load(StdUtils::CStdXml &oXml)

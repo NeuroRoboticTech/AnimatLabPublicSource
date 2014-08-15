@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HybridInterfaceGUI", "Hybri
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HybridInterfaceSim", "..\HybridInterfaceSim\Projects_VisualStudio\HybridInterfaceSim.vcxproj", "{3B98D8D8-4BEA-E642-88E4-A33BE887B3D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "..\AnimatSim\Projects_VisualStudio\AnimatSim.vcxproj", "{036831BE-B1D3-E040-A472-2D5975493793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Double|Any CPU = Debug_Double|Any CPU
@@ -61,6 +63,26 @@ Global
 		{3B98D8D8-4BEA-E642-88E4-A33BE887B3D2}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{3B98D8D8-4BEA-E642-88E4-A33BE887B3D2}.Release|Win32.ActiveCfg = Release|Win32
 		{3B98D8D8-4BEA-E642-88E4-A33BE887B3D2}.Release|Win32.Build.0 = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Any CPU.ActiveCfg = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Mixed Platforms.ActiveCfg = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Mixed Platforms.Build.0 = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Win32.ActiveCfg = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Debug|Win32.Build.0 = Debug|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Any CPU.ActiveCfg = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Mixed Platforms.ActiveCfg = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Mixed Platforms.Build.0 = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release_Double|Win32.Build.0 = Release_Double|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Any CPU.ActiveCfg = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Win32.ActiveCfg = Release|Win32
+		{036831BE-B1D3-E040-A472-2D5975493793}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

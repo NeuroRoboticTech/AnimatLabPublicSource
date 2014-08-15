@@ -58,7 +58,6 @@ RobotIOControl::~RobotIOControl(void)
 try
 {
 	m_aryParts.RemoveAll();
-	ExitIOThread();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RobotIOControl\r\n", "", -1, false, true);}
@@ -266,10 +265,37 @@ void RobotIOControl::StartIOThread()
 	std::cout << "IO thread returned\r\n";
 }
 
+void RobotIOControl::ProcessIO()
+{
+	try
+	{
+		m_bIOThreadProcessing = true;
+
+		SetupIO();
+
+		m_bSetupComplete = true;
+		m_WaitForIOSetupCond.notify_all();
+
+		while(!m_bStopIO)
+			StepIO();
+	}
+	catch(CStdErrorInfo oError)
+	{
+		m_bIOThreadProcessing = false;
+	}
+	catch(...)
+	{
+		m_bIOThreadProcessing = false;
+	}
+
+	m_bIOThreadProcessing = false;
+}
+
 void RobotIOControl::ExitIOThread()
 {
 	if(m_bIOThreadProcessing)
 	{
+		CloseIO();
 		m_bStopIO = true;
 
 	bool bTryJoin = false;
@@ -421,6 +447,14 @@ void RobotIOControl::Initialize()
 {
 	if(m_bEnabled)
 	{
+		// Open device. Do this before calling the Initialize on the parts so they can have communications.
+		if(!m_lpSim->InSimulation())
+		{
+			OpenIO();
+
+			StartIOThread();
+		}
+
 		int iCount = m_aryParts.GetSize();
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 			m_aryParts[iIndex]->Initialize();

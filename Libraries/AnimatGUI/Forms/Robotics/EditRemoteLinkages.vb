@@ -78,6 +78,7 @@ Namespace Forms
                 Me.lvLinkages.MultiSelect = False
                 Me.lvLinkages.Name = "lvLinkages"
                 Me.lvLinkages.Size = New System.Drawing.Size(134, 412)
+                Me.lvLinkages.Sorting = System.Windows.Forms.SortOrder.Ascending
                 Me.lvLinkages.TabIndex = 14
                 Me.lvLinkages.UseCompatibleStateImageBehavior = False
                 Me.lvLinkages.View = System.Windows.Forms.View.Details
@@ -170,21 +171,6 @@ Namespace Forms
             Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
 
                 Try
-                    'If txtProjectName.Text.Trim.Length = 0 Then
-                    '    Throw New System.Exception("You must specify a file name.")
-                    'End If
-
-                    'If Not txtProjectName.Text.EndsWith(".asim") Then
-                    '    Throw New System.Exception("Simulation files must end with a .asim extension")
-                    'End If
-
-                    'Dim doPhysics As Physical.PhysicsEngine = DirectCast(cboPhysicsEngine.SelectedItem, Physical.PhysicsEngine)
-                    'm_doPhysics = DirectCast(doPhysics.Clone(Nothing, False, Nothing), Physical.PhysicsEngine)
-                    'm_doPhysics.BinaryMode = DirectCast([Enum].Parse(GetType(Physical.PhysicsEngine.enumBinaryMode), cboBinaryType.SelectedItem.ToString(), True), Physical.PhysicsEngine.enumBinaryMode)
-                    'Dim dtData As DataType = DirectCast(cboLibraryVersion.SelectedItem, DataType)
-                    'm_doPhysics.SetLibraryVersion(dtData.ID, True)
-                    'm_doPhysics.OperatingSystem = DirectCast([Enum].Parse(GetType(Physical.PhysicsEngine.enumOperatingSystem), cboOS.SelectedItem.ToString(), True), Physical.PhysicsEngine.enumOperatingSystem)
-
                     Me.DialogResult = DialogResult.OK
                     Me.Close()
 

@@ -132,7 +132,8 @@ Namespace DataObjects
                     m_thLinkedNode = New TypeHelpers.LinkedNode(Nothing, Nothing)
                 End If
 
-
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AppliedCurrent", "Applied Current", "Amps", "A", 0, 1))
+                m_thDataTypes.ID = "AppliedCurrent"
             End Sub
 
             Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)
@@ -150,6 +151,8 @@ Namespace DataObjects
 
                 m_strSourceDataTypeID = strSourceDataTypeID
 
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AppliedCurrent", "Applied Current", "Amps", "A", 0, 1))
+                m_thDataTypes.ID = "AppliedCurrent"
             End Sub
 
             Public Overrides Sub ClearIsDirty()

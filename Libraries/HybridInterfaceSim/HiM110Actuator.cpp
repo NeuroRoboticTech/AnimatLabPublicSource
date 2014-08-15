@@ -83,23 +83,25 @@ void HiM110Actuator::Initialize()
 
 void HiM110Actuator::SetupIO()
 {
-	//if(!m_lpSim->InSimulation() && m_lpHinge)
-	//{
-	//}
+	//Put setup code here if needed.
 }
 
 void HiM110Actuator::StepIO(int iPartIdx)
 {	
+	//Send actual move commands here.
 }
 
 void HiM110Actuator::ShutdownIO()
 {
+	//If you need to do motor specific shutdown it goes here.
 }
 
 void HiM110Actuator::StepSimulation()
 {
 	RobotPartInterface::StepSimulation();
 
+	//Transfer data from the motor back to the sim and 
+	//sim data that will go to the motor here.
 }
 
 void HiM110Actuator::ResetSimulation()

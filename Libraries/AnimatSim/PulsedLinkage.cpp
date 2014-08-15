@@ -48,12 +48,16 @@ PulsedLinkage::PulsedLinkage(void)
 	m_iMatchValue = 0;
 	m_fltPulseDuration = 0;
 	m_fltPulseCurrent = 0;
+	m_iMatches = 0;
+	m_fltMatchesReport = 0;
+	m_aryPulses.clear();
 }
 
 PulsedLinkage::~PulsedLinkage(void)
 {
 try
 {
+	m_aryPulses.clear();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PulsedLinkage\r\n", "", -1, false, true);}
@@ -78,6 +82,16 @@ void PulsedLinkage::PulseCurrent(float fltVal)
 }
 
 float PulsedLinkage::PulseCurrent() {return m_fltPulseCurrent;}
+
+float *PulsedLinkage::GetDataPointer(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "MATCHES")
+		return &m_fltMatchesReport;
+
+	return AnimatSim::Robotics::RemoteControlLinkage::GetDataPointer(strDataType);
+}
 
 bool PulsedLinkage::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
@@ -115,17 +129,87 @@ void PulsedLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("MatchValue", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PulseDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PulseCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("Matches", AnimatPropertyType::Integer, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion
 
+void PulsedLinkage::ResetSimulation()
+{
+	m_iMatches = 0; 
+	m_aryPulses.clear();
+}
+
+float PulsedLinkage::CalculateAppliedCurrent()
+{
+	float fltTotal = 0;
+	int iCount = m_aryPulses.size();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+	{
+		fltTotal += m_fltPulseCurrent;
+		m_aryPulses[iIdx] -= m_lpSim->PhysicsTimeStep(); 
+	}
+
+	return fltTotal;
+}
+
+void PulsedLinkage::CullPulses()
+{
+	bool bDone = false;
+	while(!bDone)
+	{
+		int iCount = m_aryPulses.size();
+		int iDeleteID = -1;
+		for(int iIdx=0; iIdx<iCount && iDeleteID == -1; iIdx++)
+			if(m_aryPulses[iIdx] <= 0)
+				iDeleteID = iIdx;
+
+		if(iDeleteID > -1)
+		{
+			//If we found one to delete then get rid of it.
+			m_aryPulses.RemoveAt(iDeleteID);
+		}
+		else
+			bDone = true;
+	}
+}
+
+void PulsedLinkage::StepIO()
+{
+	if(m_bEnabled && !m_lpSim->Paused())
+	{
+		unsigned int iSource = (unsigned int) *m_lpSourceData;
+		if(iSource == m_iMatchValue)
+			m_iMatches++;
+	}
+}
+
 void PulsedLinkage::StepSimulation()
 {
-	//if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
-	//{
-	//	float fltOutput = m_lpGain->CalculateGain(*m_lpSourceData);
-	//	m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, fltOutput);
-	//}
+	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1)
+	{
+		//Set the reporting value
+		m_fltMatchesReport = m_iMatches;
+
+		//If we have a match then add a new pulse
+		if(m_iMatches > 0)
+		{
+			for(int iIdx=0; iIdx<m_iMatches; iIdx++)
+				m_aryPulses.Add(m_fltPulseDuration);
+
+			//Reset matches for next time.
+			m_iMatches = 0;
+		}
+
+		//Now loop through the pulses list and add up the total current to apply
+		m_fltAppliedCurrent = CalculateAppliedCurrent();
+
+		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltAppliedCurrent);
+
+		if(m_aryPulses.size() > 0)
+			CullPulses();
+	}
 }
 
 void PulsedLinkage::Load(CStdXml &oXml)
