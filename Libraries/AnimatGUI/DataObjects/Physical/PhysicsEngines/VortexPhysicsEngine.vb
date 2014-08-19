@@ -283,6 +283,18 @@ Namespace DataObjects.Physical.PhysicsEngines
             Return New ConstraintLimit(doParent)
         End Function
 
+        Public Overrides Function CompatibleWith(ByVal doObject As Framework.DataObject) As Boolean
+            If Not doObject Is Nothing Then
+                If Util.IsTypeOf(doObject.GetType(), GetType(ConstraintRelaxationBullet), False) Then
+                    Return False
+                ElseIf Util.IsTypeOf(doObject.GetType(), GetType(MaterialTypeBullet), False) Then
+                    Return False
+                End If
+            End If
+
+            Return True
+        End Function
+
 #End Region
 
     End Class

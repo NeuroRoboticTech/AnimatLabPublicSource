@@ -796,6 +796,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TypeHelpers\ConstraintLimitTypeConverter.vb" />
+    <Compile Include="TypeHelpers\ContactSensorPruner.vb" />
     <Compile Include="TypeHelpers\DataTypeID.vb">
       <SubType>Code</SubType>
     </Compile>

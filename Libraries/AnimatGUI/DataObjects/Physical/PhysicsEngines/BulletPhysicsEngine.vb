@@ -227,6 +227,18 @@ Namespace DataObjects.Physical.PhysicsEngines
             End If
         End Function
 
+        Public Overrides Function CompatibleWith(ByVal doObject As Framework.DataObject) As Boolean
+            If Not doObject Is Nothing Then
+                If Util.IsTypeOf(doObject.GetType(), GetType(ConstraintRelaxationVortex), False) Then
+                    Return False
+                ElseIf Util.IsTypeOf(doObject.GetType(), GetType(MaterialTypeVortex), False) Then
+                    Return False
+                End If
+            End If
+
+            Return True
+        End Function
+
 #End Region
 
     End Class

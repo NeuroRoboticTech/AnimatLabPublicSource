@@ -216,6 +216,10 @@ Namespace DataObjects.Physical
             SetLibraryVersion("Double", True)
         End Sub
 
+        Public Overridable Function CompatibleWith(ByVal doObject As Framework.DataObject) As Boolean
+            Return True
+        End Function
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strName.GetType(), "Name", _
