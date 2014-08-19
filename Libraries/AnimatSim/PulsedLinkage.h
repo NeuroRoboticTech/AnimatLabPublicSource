@@ -10,15 +10,24 @@ namespace AnimatSim
 		{
 		protected:
 #ifndef STD_DO_NOT_ADD_BOOST
-			///Counts the number of matches found in StepIO to let the sim know
-			boost::atomic_int m_iMatches;
+			///mutex used to try and access matches variable.
+			boost::interprocess::interprocess_mutex m_AccessMatchesMutex;
 #endif
+
+			///Counts the number of matches found in StepIO to let the sim know
+			int m_iMatches;
 
 			///Used to report up the number of matches
 			float m_fltMatchesReport;
 
 			///The value we are trying to match in order to apply a pulse
-			unsigned int m_iMatchValue;
+			int m_iMatchValue;
+
+			///If true then it will only performa a match check when the value has changed.
+			bool m_bMatchOnChange;
+
+			///Keeps track of the previous source value for the change check
+			unsigned int m_iPrevValue;
 
 			///The duration for which a single pulse should be applied
 			float m_fltPulseDuration;
@@ -34,6 +43,7 @@ namespace AnimatSim
 
 			float CalculateAppliedCurrent();
 			void CullPulses();
+			void IncrementMatches();
 
 		public:
 			PulsedLinkage(void);
@@ -41,8 +51,11 @@ namespace AnimatSim
 						
 			static PulsedLinkage *CastToDerived(AnimatBase *lpBase) {return static_cast<PulsedLinkage*>(lpBase);}
 
-			virtual void MatchValue(unsigned int iVal);
-			virtual unsigned int MatchValue();
+			virtual void MatchValue(int iVal);
+			virtual int MatchValue();
+
+			virtual void MatchOnChange(bool bVal);
+			virtual bool MatchOnChange();
 
 			virtual void PulseDuration(float fltVal);
 			virtual float PulseDuration();

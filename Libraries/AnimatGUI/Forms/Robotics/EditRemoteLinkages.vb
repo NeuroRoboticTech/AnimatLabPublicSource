@@ -222,6 +222,9 @@ Namespace Forms
                         Dim liItem As New ListViewItem(doLink.ToString)
                         liItem.Tag = doLink
                         lvLinkages.Items.Add(liItem)
+
+                        lvLinkages.SelectedItems.Clear()
+                        liItem.Selected = True
                     End If
 
                 Catch ex As System.Exception
@@ -263,6 +266,16 @@ Namespace Forms
                     m_liSelectedItem = Nothing
                     pgLinkProperties.SelectedObject = Nothing
 
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Private Sub pgLinkProperties_PropertyValueChanged(s As System.Object, e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles pgLinkProperties.PropertyValueChanged
+                Try
+                    If Not m_liSelectedItem Is Nothing AndAlso e.ChangedItem.Label = "Name" Then
+                        m_liSelectedItem.Text = m_doSelectedLink.Name
+                    End If
                 Catch ex As System.Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

@@ -20,6 +20,7 @@ Namespace DataObjects
             Protected m_iMatchValue As Integer = 0
             Protected m_snPulseDuration As AnimatGUI.Framework.ScaledNumber
             Protected m_snPulseCurrent As AnimatGUI.Framework.ScaledNumber
+            Protected m_bMatchOnChange As Boolean = True
 
 #End Region
 
@@ -43,10 +44,6 @@ Namespace DataObjects
                     Return m_iMatchValue
                 End Get
                 Set(value As Integer)
-                    If value <= 0 Then
-                        Throw New System.Exception("The match value must be greater than or equal to zero.")
-                    End If
-
                     SetSimData("MatchValue", value.ToString, True)
                     m_iMatchValue = value
                 End Set
@@ -82,6 +79,16 @@ Namespace DataObjects
                 End Set
             End Property
 
+            <Browsable(False)> _
+            Public Overridable Property MatchOnChange As Boolean
+                Get
+                    Return m_bMatchOnChange
+                End Get
+                Set(value As Boolean)
+                    SetSimData("MatchOnChange", value.ToString, True)
+                    m_bMatchOnChange = value
+                End Set
+            End Property
 #End Region
 
 #Region " Methods "
@@ -121,6 +128,7 @@ Namespace DataObjects
                 m_snPulseDuration = DirectCast(OrigNode.m_snPulseDuration.Clone(Me, bCutData, doRoot), ScaledNumber)
                 m_snPulseCurrent = DirectCast(OrigNode.m_snPulseCurrent.Clone(Me, bCutData, doRoot), ScaledNumber)
                 m_iMatchValue = OrigNode.m_iMatchValue
+                m_bMatchOnChange = OrigNode.m_bMatchOnChange
             End Sub
 
             Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -136,6 +144,9 @@ Namespace DataObjects
 
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Match Value", m_iMatchValue.GetType(), "MatchValue", _
                                             "Properties", "The value from the remote control that we will be checking for.", m_iMatchValue))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Match On Change", m_bMatchOnChange.GetType(), "MatchOnChange", _
+                                            "Properties", "If true it will only do a match comparison when the value changes.", m_bMatchOnChange))
 
                 Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPulseDuration.Properties
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Pulse Duration", pbNumberBag.GetType(), "PulseDuration", _
@@ -154,6 +165,7 @@ Namespace DataObjects
                 oXml.IntoElem()  'Into RobotInterface Element
 
                 m_iMatchValue = oXml.GetChildInt("MatchValue", m_iMatchValue)
+                m_bMatchOnChange = oXml.GetChildBool("MatchOnChange", m_bMatchOnChange)
                 m_snPulseDuration.LoadData(oXml, "PulseDuration")
                 m_snPulseCurrent.LoadData(oXml, "PulseCurrent")
 
@@ -167,6 +179,7 @@ Namespace DataObjects
                 oXml.IntoElem()
 
                 oXml.AddChildElement("MatchValue", m_iMatchValue)
+                oXml.AddChildElement("MatchOnChange", m_bMatchOnChange)
                 m_snPulseDuration.SaveData(oXml, "PulseDuration")
                 m_snPulseCurrent.SaveData(oXml, "PulseCurrent")
 
@@ -180,6 +193,7 @@ Namespace DataObjects
                 oXml.IntoElem()
 
                 oXml.AddChildElement("MatchValue", m_iMatchValue)
+                oXml.AddChildElement("MatchOnChange", m_bMatchOnChange)
                 m_snPulseDuration.SaveSimulationXml(oXml, Me, "PulseDuration")
                 m_snPulseCurrent.SaveSimulationXml(oXml, Me, "PulseCurrent")
 

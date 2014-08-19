@@ -162,6 +162,12 @@ Namespace DataObjects
 
                     popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddPart, mcDelete})
 
+                    If Me.CanBeCharted AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                        ' Create the menu items
+                        Dim mcAddToChart As New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
+                        popup.Items.Add(mcAddToChart)
+                    End If
+
                     Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                     Return True

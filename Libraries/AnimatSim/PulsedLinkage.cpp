@@ -50,6 +50,8 @@ PulsedLinkage::PulsedLinkage(void)
 	m_fltPulseCurrent = 0;
 	m_iMatches = 0;
 	m_fltMatchesReport = 0;
+	m_bMatchOnChange = true;
+	m_iPrevValue = 0;
 	m_aryPulses.clear();
 }
 
@@ -63,9 +65,13 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PulsedLinkage\r\n", "", -1, false, true);}
 }
 
-void PulsedLinkage::MatchValue(unsigned int iVal) {m_iMatchValue = iVal;}
+void PulsedLinkage::MatchValue(int iVal) {m_iMatchValue = iVal;}
 
-unsigned int PulsedLinkage::MatchValue() {return m_iMatchValue;}
+int PulsedLinkage::MatchValue() {return m_iMatchValue;}
+
+void PulsedLinkage::MatchOnChange(bool bVal) {m_bMatchOnChange = bVal;}
+
+bool PulsedLinkage::MatchOnChange() {return m_bMatchOnChange;}
 
 void PulsedLinkage::PulseDuration(float fltVal)
 {
@@ -102,7 +108,7 @@ bool PulsedLinkage::SetData(const std::string &strDataType, const std::string &s
 
 	if(strType == "MATCHVALUE")
 	{
-		MatchValue((unsigned int) atoi(strValue.c_str()));
+		MatchValue(atoi(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "PULSEDURATION")
@@ -113,6 +119,11 @@ bool PulsedLinkage::SetData(const std::string &strDataType, const std::string &s
 	else if(strType == "PULSECURRENT")
 	{
 		PulseCurrent(atof(strValue.c_str()));
+		return true;
+	}
+	else if(strType == "MATCHONCHANGE")
+	{
+		MatchOnChange(Std_ToBool(strValue));
 		return true;
 	}
 
@@ -129,6 +140,7 @@ void PulsedLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("MatchValue", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PulseDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("PulseCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MatchOnChange", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 
 	aryProperties.Add(new TypeProperty("Matches", AnimatPropertyType::Integer, AnimatPropertyDirection::Get));
 }
@@ -175,13 +187,24 @@ void PulsedLinkage::CullPulses()
 	}
 }
 
+void  PulsedLinkage::IncrementMatches()
+{
+	m_AccessMatchesMutex.lock();
+	m_iMatches++;
+	m_AccessMatchesMutex.unlock();
+}
+
 void PulsedLinkage::StepIO()
 {
 	if(m_bEnabled && !m_lpSim->Paused())
 	{
-		unsigned int iSource = (unsigned int) *m_lpSourceData;
-		if(iSource == m_iMatchValue)
-			m_iMatches++;
+		int iSource = (int) *m_lpSourceData;
+		if(m_bMatchOnChange && iSource != m_iPrevValue && iSource == m_iMatchValue)
+			IncrementMatches();
+		else if(!m_bMatchOnChange && iSource == m_iMatchValue)
+			IncrementMatches();
+
+		m_iPrevValue = iSource;
 	}
 }
 
@@ -193,13 +216,27 @@ void PulsedLinkage::StepSimulation()
 		m_fltMatchesReport = m_iMatches;
 
 		//If we have a match then add a new pulse
-		if(m_iMatches > 0)
+		if(m_AccessMatchesMutex.try_lock())
 		{
-			for(int iIdx=0; iIdx<m_iMatches; iIdx++)
-				m_aryPulses.Add(m_fltPulseDuration);
 
-			//Reset matches for next time.
-			m_iMatches = 0;
+			if(m_iMatches > 0)
+			{
+				//Limit to a total of 100 pulses active at any one time
+				if(m_aryPulses.size() < 100)
+				{	
+					int iMatches = m_iMatches;
+					if(iMatches+m_aryPulses.size() > 100)
+						iMatches = 100 -m_aryPulses.size();
+
+					for(int iIdx=0; iIdx<iMatches; iIdx++)
+						m_aryPulses.Add(m_fltPulseDuration);
+				}
+
+				//Reset matches for next time.
+				m_iMatches = 0;
+			}
+
+			m_AccessMatchesMutex.unlock();
 		}
 
 		//Now loop through the pulses list and add up the total current to apply
@@ -219,6 +256,7 @@ void PulsedLinkage::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into Link Element
 
 	MatchValue(oXml.GetChildInt("MatchValue", m_iMatchValue));
+	MatchOnChange(oXml.GetChildInt("MatchOnChange", m_bMatchOnChange));
 	PulseDuration(oXml.GetChildFloat("PulseDuration", m_fltPulseDuration));
 	PulseCurrent(oXml.GetChildFloat("PulseCurrent", m_fltPulseCurrent));
 

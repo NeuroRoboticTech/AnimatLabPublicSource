@@ -48,6 +48,7 @@ public:
 	float m_fltPrev;
 	int m_iCount;
 	bool m_bStarted;
+	int m_iStartDir;
 
 	///This keeps track of whether the sim has already stepped over a change or not.
 	///The first time start or stop is set and sim is called we do not want to reset it to zero
@@ -69,6 +70,7 @@ public:
 		m_iCount = 0;
 		m_bStarted = 0;
 		m_iSimStepped = 0;
+		m_iStartDir = 1;
 	}
 
 	void CheckStartedStopped();

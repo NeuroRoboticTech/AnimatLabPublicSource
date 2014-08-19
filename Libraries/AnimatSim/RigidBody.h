@@ -125,6 +125,9 @@ namespace AnimatSim
 			///If this is a suction part then this controls when stickness is on
 			float m_fltStickyOn;
 
+			///If we are doing a sticky lock then this is the child part that was locked on.
+			RigidBody *m_lpStickyChild;
+
 			/// The pointer to a receptive field ContactSensor object. This is responsible for 
 			/// processing the receptive field contacts
 			ContactSensor *m_lpContactSensor;
@@ -273,6 +276,9 @@ namespace AnimatSim
 
 			virtual float StickyOn();
 			virtual void StickyOn(float fltVal);
+
+			virtual RigidBody *StickyChild();
+			virtual void StickyChild(RigidBody *lpChild);
 
 			virtual bool IsRoot();
 			virtual bool HasStaticJoint();

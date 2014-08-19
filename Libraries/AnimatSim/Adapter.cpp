@@ -832,13 +832,13 @@ void Adapter::StepSimulation()
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
 		if(!m_lpSim->RobotAdpaterSynch() || !m_bSynchWithRobot || (m_lpSim->RobotAdpaterSynch() && m_bSynchWithRobot && NeedsRobotSynch()))
 		{
-			////Test code
-			//int i=5;
-			//if(Std_ToLower(m_strID) == "1a63ef2a-c3f3-4dc8-8b83-076952fecc28" && m_lpSim->Time() > 1) // 
-			//	i=6;
-
 			m_fltCalculatedVal = m_lpGain->CalculateGain(*m_lpSourceData);
 			m_fltUpdatedValue = 1;
+
+			////Test code
+			//int i=5;
+			//if(Std_ToLower(m_strID) == "3953f16f-99aa-41e7-adaf-e0ca153d65ec" && m_fltCalculatedVal > 0.6 ) // && m_lpSim->Time() > 1
+			//	i=6;
 
 			//Scale the calculated value for robot performance matching if we are in simulation mode only.
 			if(m_lpSim->InSimulation())

@@ -81,6 +81,7 @@ RigidBody::RigidBody()
 
 	m_bIsStickyPart = false;
 	m_fltStickyOn = 0;
+	m_lpStickyChild = NULL;
 
 	m_strMaterialID = "DEFAULTMATERIAL";
 
@@ -108,6 +109,8 @@ try
 		m_lpJointToParent->Child(NULL);
 		delete m_lpJointToParent;
 	}
+
+	m_lpStickyChild = NULL;
 
 	if(m_lpContactSensor) delete m_lpContactSensor;
 	m_aryChildParts.RemoveAll();
@@ -527,7 +530,34 @@ float RigidBody::StickyOn() {return m_fltStickyOn;}
 void RigidBody::StickyOn(float fltVal) 
 {
 	if(m_bIsStickyPart)
-		m_fltStickyOn = fltVal;
+		if(fltVal)
+			m_fltStickyOn = 1;
+		else
+			m_fltStickyOn = 0;
+}
+
+/**
+\brief	Gets the child body part we are stuck to for a sticky part.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	Pointer to stuck child.. 
+**/
+RigidBody *RigidBody::StickyChild() {return m_lpStickyChild;}
+
+/**
+\brief	Sets the child part that we are stuck to if this is a sticky part. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	pointer to stuck child part. 
+**/
+void RigidBody::StickyChild(RigidBody *lpChild) 
+{
+	if(m_bIsStickyPart)
+		m_lpStickyChild = lpChild;
 }
 
 /**
@@ -1576,6 +1606,8 @@ int RigidBody::GetTargetDataTypeIndex(const std::string &strDataType)
 		return BODY_FORCE_Z_TYPE;
 	else if(strType == "STICKYON")
 		return STICKY_ON_TYPE;
+	else if(strType == "STICKYOFF")
+		return STICKY_OFF_TYPE;
 	else 
 		return -1;
 
@@ -1583,8 +1615,10 @@ int RigidBody::GetTargetDataTypeIndex(const std::string &strDataType)
 
 void RigidBody::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
-	if(iTargetDataType == STICKY_ON_TYPE)
-		m_fltStickyOn += fltInput;
+	if(iTargetDataType == STICKY_ON_TYPE && fltInput > 0.5)
+		m_fltStickyOn = 1;
+	else if(iTargetDataType == STICKY_OFF_TYPE && fltInput > 0.5)
+		m_fltStickyOn = 0;
 
 	////Test Code
 	//if(m_fltStickyOn > 0.8)
@@ -1619,8 +1653,6 @@ void RigidBody::StepSimulation()
 
 	if(m_lpJointToParent)
 		m_lpJointToParent->StepSimulation();
-
-	m_fltStickyOn = 0;
 }
 
 #pragma region DataAccesMethods

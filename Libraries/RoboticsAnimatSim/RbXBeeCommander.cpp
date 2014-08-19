@@ -305,15 +305,16 @@ void RbXBeeCommanderButtonData::CheckStartedStopped()
 	{
 		if(!m_bStarted && m_fltValue != 0)
 		{
-			m_fltStart = 1;
+			m_iStartDir = Std_Sign(m_fltValue);
+			m_fltStart = 1*m_iStartDir;
 			m_bStarted = true;
-			OutputDebugString("Start");
+			//OutputDebugString("Start");
 		}
 		else if(m_bStarted && m_fltValue == 0)
 		{
-			m_fltStop = 1;
+			m_fltStop = m_iStartDir;
 			m_bStarted = false;
-			OutputDebugString("Stop");
+			//OutputDebugString("Stop");
 		}
 
 		m_iCount = 0;
@@ -339,10 +340,10 @@ void RbXBeeCommanderButtonData::ClearStartStops()
 	{
 		if(m_iSimStepped >= 5)
 		{
-			if(m_fltStart > 0)
-				OutputDebugString("Cleared Start");
-			if(m_fltStop > 0)
-				OutputDebugString("Cleared Stop");
+			//if(m_fltStart > 0)
+			//	OutputDebugString("Cleared Start");
+			//if(m_fltStop > 0)
+			//	OutputDebugString("Cleared Stop");
 
 			m_fltStart = 0;
 			m_fltStop = 0;
@@ -364,7 +365,9 @@ void RbXBeeCommander::StepIO()
 {
 	if(!m_lpSim->Paused())
 	{
-		while(m_Port.available() > 0)
+		bool bFound = false;
+
+		while(m_Port.available() > 0 && !bFound)
 		{
 			if(index == -1)
 			{         // looking for new packet
@@ -429,17 +432,15 @@ void RbXBeeCommander::StepIO()
 
 					index = -1;
 					m_Port.flush();
-					return; // 1
+					bFound = true;
 				}
 			}
 
-			CheckStartedStopped();
 		}
 
+		CheckStartedStopped();
 		AnimatSim::Robotics::RemoteControl::StepIO();
 	}
-
-    return; // 0
 }
 
 void RbXBeeCommander::StepSimulation()

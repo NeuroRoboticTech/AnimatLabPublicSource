@@ -93,6 +93,7 @@ namespace BulletAnimatSim
             CStdPtrArray<btCollisionShape> m_aryCompoundChildShapes;
 
 			btAnimatGeneric6DofConstraint *m_btStickyLock;
+			btAnimatGeneric6DofConstraint *m_btStickyLock2;
 
             btRigidBody *m_btPart;
             osgbDynamics::MotionState *m_osgbMotion;
@@ -141,6 +142,7 @@ namespace BulletAnimatSim
 			virtual void CreateDynamicPart();
 			virtual void CreateStickyLock();
             virtual void SetupOffsetCOM(const CStdFPoint &vCom);
+			virtual btAnimatGeneric6DofConstraint *AddDynamicJoint(BlRigidBody *lpParent, BlRigidBody *lpChild);
 
             virtual void AddStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound, const CStdFPoint &vCom);
             virtual void RemoveStaticGeometry(BlRigidBody *lpChild, btCompoundShape *btCompound);
