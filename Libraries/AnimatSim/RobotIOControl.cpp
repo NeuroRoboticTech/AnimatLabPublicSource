@@ -277,7 +277,12 @@ void RobotIOControl::ProcessIO()
 		m_WaitForIOSetupCond.notify_all();
 
 		while(!m_bStopIO)
-			StepIO();
+		{
+			if(m_bPauseIO || m_lpSim->Paused())
+				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			else
+				StepIO();
+		}
 	}
 	catch(CStdErrorInfo oError)
 	{
@@ -354,9 +359,6 @@ void RobotIOControl::StepIO()
 {
 	if(m_bEnabled)
 	{
-		if(m_bPauseIO || m_lpSim->Paused())
-			WaitWhilePaused();
-
 		unsigned long long lStepStartTick = m_lpSim->GetTimerTick();
 
 		int iCount = m_aryParts.GetSize();

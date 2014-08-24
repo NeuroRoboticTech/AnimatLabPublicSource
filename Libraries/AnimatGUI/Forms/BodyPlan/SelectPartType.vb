@@ -277,23 +277,25 @@ Namespace Forms.BodyPlan
                                 If Util.IsTypeOf(m_tpPartType, GetType(Physical.RigidBody)) OrElse (Util.IsTypeOf(m_tpPartType, GetType(Physical.Joint)) AndAlso _
                                                                                                     Not m_rbChildBody Is Nothing AndAlso _
                                                                                                     Util.Application.CanAddPartAsChild(m_rbChildBody.GetType, doPart.GetType)) Then
-                                    If Not doPart.ButtonImage Is Nothing Then
-                                        m_mgrIconImages.AddImage(doPart.ButtonImageName, doPart.ButtonImage)
-                                        If doPart.ButtonImage.Width > iMaxWidth Then iMaxWidth = doPart.ButtonImage.Width
-                                        If doPart.ButtonImage.Height > iMaxHeight Then iMaxHeight = doPart.ButtonImage.Height
+                                    If Util.Application.Physics.CompatibleWith(doPart) Then
+                                        If Not doPart.ButtonImage Is Nothing Then
+                                            m_mgrIconImages.AddImage(doPart.ButtonImageName, doPart.ButtonImage)
+                                            If doPart.ButtonImage.Width > iMaxWidth Then iMaxWidth = doPart.ButtonImage.Width
+                                            If doPart.ButtonImage.Height > iMaxHeight Then iMaxHeight = doPart.ButtonImage.Height
+                                        End If
+
+                                        Dim liItem As New ListViewItem
+                                        liItem.Text = doPart.BodyPartName
+
+                                        If Not doPart.ButtonImage Is Nothing Then
+                                            liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.ButtonImageName)
+                                        Else
+                                            liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
+                                        End If
+
+                                        liItem.Tag = doPart
+                                        aryList.Add(liItem)
                                     End If
-
-                                    Dim liItem As New ListViewItem
-                                    liItem.Text = doPart.BodyPartName
-
-                                    If Not doPart.ButtonImage Is Nothing Then
-                                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.ButtonImageName)
-                                    Else
-                                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
-                                    End If
-
-                                    liItem.Tag = doPart
-                                    aryList.Add(liItem)
                                 End If
                             End If
                         End If

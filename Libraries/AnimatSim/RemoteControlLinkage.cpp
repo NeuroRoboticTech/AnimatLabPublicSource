@@ -111,7 +111,7 @@ std::string RemoteControlLinkage::LinkedNodeID() {return m_strLinkedNodeID;}
 void RemoteControlLinkage::LinkedNodeID(std::string strID)
 {
 	m_strLinkedNodeID = strID;
-	m_strTargetDataTypeID = "";
+	//m_strTargetDataTypeID = "";
 	Initialize();
 }
 

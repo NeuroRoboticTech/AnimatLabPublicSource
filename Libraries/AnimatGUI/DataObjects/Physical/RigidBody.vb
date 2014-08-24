@@ -655,6 +655,7 @@ Namespace DataObjects.Physical
             m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceZ", "Body Force Z", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
             If m_bIsStickyPart AndAlso Util.Application.Physics.AllowStickyParts Then
                 m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOn", "Sticky On", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOff", "Sticky Off", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
             End If
             m_thIncomingDataTypes.ID = "BodyForceX"
         End Sub
