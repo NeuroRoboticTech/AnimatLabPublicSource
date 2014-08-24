@@ -38,6 +38,9 @@ RbFirmataDynamixelServo::RbFirmataDynamixelServo()
 	m_iCCWAngleLimit = -1;
 	m_iCWAngleLimit = -1;
 	m_iTorqueLimit = -1;
+	m_iIsMoving = -1;
+	m_iLED = -1;
+	m_iAlarm = -1;
 }
 
 RbFirmataDynamixelServo::~RbFirmataDynamixelServo()
@@ -59,6 +62,40 @@ void RbFirmataDynamixelServo::IOComponentID(int iID)
 	Std_IsAboveMin((int) 0, iID, true, "ServoID");
 	RbFirmataPart::IOComponentID(iID);
 	RbDynamixelServo::ServoID(iID);
+}
+
+int RbFirmataDynamixelServo::ReadIsMoving(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		//If we have made the call then m_iIsMoving = -2, so do not make it again till we get a response.
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MOVING, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iIsMoving;
+}
+
+int RbFirmataDynamixelServo::ReadLED(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_LED, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iLED;
+}
+
+int RbFirmataDynamixelServo::ReadAlarmShutdown(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_ALARM_SHUTDOWN, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iAlarm;
 }
 
 void RbFirmataDynamixelServo::WriteReturnDelayTime(int iServoID, int iVal)
@@ -97,12 +134,30 @@ void RbFirmataDynamixelServo::WriteTorqueLimit(int iServoID, int iVal)
 	}
 }
 
+void RbFirmataDynamixelServo::WriteGoalPosition(int iServoID, int iPos) 
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_GOAL_POSITION_L, 2, iPos);
+		m_iLastGoalPos = iPos;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteMovingSpeed(int iServoID, int iVelocity)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_MOVING_SPEED_L, 2, iVelocity);
+		m_iLastGoalVelocity = iVelocity;
+	}
+}
+
 void RbFirmataDynamixelServo::InitMotorData()
 {
 	if(m_lpFirmata)
 	{
 		//Hook up the dynamixel events to notify this servo object.
-		//m_EDynamixelReceived = m_lpFirmata->EDynamixelReceived.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelRecieved, this, _1));
+		//m_EDynamixelReceived = m_lpFirmata->EDynamixelKeyReceived.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelRecieved, this, _1));
 		m_EDynamixelTransmitError = m_lpFirmata->EDynamixelTransmitError.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelTransmitError, this, _1, _2));
 		m_EDynamixelGetRegister = m_lpFirmata->EDynamixelGetRegister.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelGetRegister, this, _1, _2, _3));
 
@@ -127,6 +182,16 @@ void RbFirmataDynamixelServo::InitMotorData()
 		RbDynamixelServo::InitMotorData();
 	}
 }
+
+void RbFirmataDynamixelServo::WaitForMoveToFinish() 
+{
+	//Reset the value for a new wait sequence
+	m_iIsMoving = -1;
+
+	RbDynamixelServo::WaitForMoveToFinish();
+	//Just sleep for a quarter second to let it move. 
+	MicroSleep(95000);
+};
 
 #pragma region DataAccesMethods
 
@@ -213,14 +278,15 @@ void RbFirmataDynamixelServo::UpdateAllMotorData()
 	}
 }
 
-//
-//void RbFirmataDynamixelServo::DynamixelRecieved(const int &iServoID) 
-//{
-//	if(iServoID == m_iServoID)
-//	{
-//
-//	}
-//}
+
+void RbFirmataDynamixelServo::DynamixelRecieved(const int &iServoID) 
+{
+	if(iServoID == 1 && m_iServoID == 1)
+	{
+		//std::cout << "Servo: " << iServoID << ", Pos: " <<  m_iPresentPos << ", Vel: " <<  m_iPresentVelocity << "\r\n";
+		//std::cout << "Servo: " << iServoID << ", Pos: " <<  m_lpFirmata->_dynamixelServos[m_iServoID]._actualPosition << ", Vel: " <<  m_lpFirmata->_dynamixelServos[m_iServoID]._actualSpeed << "\r\n";
+	}
+}
 
 void RbFirmataDynamixelServo::DynamixelTransmitError(const int &iCmd, const int &iServoID) 
 {
@@ -234,7 +300,7 @@ void RbFirmataDynamixelServo::DynamixelGetRegister(const unsigned char &iServoID
 {
 	if(iServoID == m_iServoID)
 	{
-		std::cout << "Get Register Servo: " << iServoID << ", Reg: " << iReg << ", Value: " << iValue << "\r\n";
+		//std::cout << "Get Register Servo: " << iServoID << ", Reg: " << iReg << ", Value: " << iValue << "\r\n";
 
 		switch(iReg)
 		{
@@ -255,6 +321,15 @@ void RbFirmataDynamixelServo::DynamixelGetRegister(const unsigned char &iServoID
 			break;
 		case P_MAX_TORQUE_L:
 			m_iTorqueLimit = iValue;
+			break;
+		case P_MOVING:
+			m_iIsMoving = iValue;
+			break;
+		case P_LED:
+			m_iLED = iValue;
+			break;
+		case P_ALARM_SHUTDOWN:
+			m_iAlarm = iValue;
 			break;
 		}
 

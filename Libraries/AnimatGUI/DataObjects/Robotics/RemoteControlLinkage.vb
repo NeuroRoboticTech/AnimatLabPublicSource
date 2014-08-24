@@ -128,6 +128,8 @@ Namespace DataObjects
                     m_doParentRemoteControl = DirectCast(doParent, RemoteControl)
                     m_thSourceDataTypes = DirectCast(m_doParentRemoteControl.DataTypes.Clone(m_doParentRemoteControl.IncomingDataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
                     m_thLinkedNode = New TypeHelpers.LinkedNode(m_doParentRemoteControl.Organism, Nothing)
+
+                    AddHandler m_doParentRemoteControl.BeforeRemoveItem, AddressOf Me.OnBeforeParentRemoveFromList
                 Else
                     m_thLinkedNode = New TypeHelpers.LinkedNode(Nothing, Nothing)
                 End If
@@ -251,6 +253,11 @@ Namespace DataObjects
                     Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "RemoteControlLinkage", Me.ID, bThrowError)
                 End If
                 m_doInterface = Nothing
+            End Sub
+
+            Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+                MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
+                DisconnectLinkedNodeEvents()
             End Sub
 
 #End Region
@@ -390,6 +397,15 @@ Namespace DataObjects
                     If Not Me.ParentRemoteControl Is Nothing AndAlso Not Me.ParentRemoteControl.Organism Is Nothing Then
                         Me.LinkedNode = New TypeHelpers.LinkedNode(Me.ParentRemoteControl.Organism, Nothing)
                     End If
+                Catch ex As Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+                Try
+                    DisconnectLinkedNodeEvents()
+                    MyBase.OnBeforeParentRemoveFromList(doObject)
                 Catch ex As Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

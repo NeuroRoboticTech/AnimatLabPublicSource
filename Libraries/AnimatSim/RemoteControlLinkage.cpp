@@ -249,6 +249,11 @@ void RemoteControlLinkage::Initialize()
 		if(!m_lpTargetNode)
 			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strLinkedNodeID);
 	}
+	else
+	{
+		m_lpTargetNode = NULL;
+		m_lpSourceData = NULL;
+	}
 
 	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
 	//systems use.

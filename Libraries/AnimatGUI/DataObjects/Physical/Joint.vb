@@ -63,16 +63,10 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property ScaleUnits() As String
             Get
                 If Me.UsesRadians Then
-                    Return "rad/s"
+                    Return "rad"
                 Else
-                    Return "m/s"
+                    Return "m"
                 End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property InputStimulus() As String
-            Get
-                Return "Velocity"
             End Get
         End Property
 

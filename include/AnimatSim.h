@@ -149,7 +149,7 @@ namespace AnimatSim
 		class VoltageClamp;
 		class InverseMuscleCurrent;
 		class PropertyControlStimulus;
-        class MotorVelocityStimulus;
+        class MotorStimulus;
         class ForceStimulus;
 	}
 
@@ -276,7 +276,7 @@ using namespace AnimatSim::Robotics;
 #include "VoltageClamp.h"
 #include "InverseMuscleCurrent.h"
 #include "PropertyControlStimulus.h"
-#include "MotorVelocityStimulus.h"
+#include "MotorStimulus.h"
 #include "ForceStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"

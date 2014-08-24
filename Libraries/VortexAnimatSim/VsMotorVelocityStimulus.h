@@ -17,6 +17,7 @@ namespace VortexAnimatSim
 			std::string m_strStructureID;
 			std::string m_strJointID;
 			MotorizedJoint *m_lpJoint;
+			int m_iTargetID;
 
 			float *m_lpPosition;
 			float *m_lpVelocity;
@@ -44,6 +45,10 @@ namespace VortexAnimatSim
 
 			bool DisableMotorWhenDone() {return m_bDisableMotorWhenDone;};
 			void DisableMotorWhenDone(bool bVal) {m_bDisableMotorWhenDone = bVal;};
+			
+			int TargetID() {return m_iTargetID;}
+			void TargetID(int iID);
+			void TargetID(std::string strID);
 
 			virtual void Load(CStdXml &oXml);
 

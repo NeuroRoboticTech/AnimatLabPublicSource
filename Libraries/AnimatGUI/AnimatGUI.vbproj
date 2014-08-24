@@ -366,6 +366,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\ExternalStimuli\InverseMuscleCurrent.vb" />
+    <Compile Include="DataObjects\ExternalStimuli\MotorPosition.vb" />
     <Compile Include="DataObjects\ExternalStimuli\MotorVelocity.vb">
       <SubType>Code</SubType>
     </Compile>

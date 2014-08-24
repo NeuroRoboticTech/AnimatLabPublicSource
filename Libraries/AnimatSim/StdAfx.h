@@ -140,7 +140,7 @@ namespace AnimatSim
 		class EnablerStimulus;
 		class VoltageClamp;
 		class InverseMuscleCurrent;
-        class MotorVelocityStimulus;
+        class MotorStimulus;
 	}
 
 	namespace Gains

@@ -752,10 +752,10 @@ bool RbDynamixelServo::GetIsMoving()
 {
 	int iMoving = ReadIsMoving(m_iServoID);
 
-	if(iMoving)
-		return true;
-	else
+	if(iMoving == 0)
 		return false;
+	else
+		return true;
 }
 
 /**
@@ -1329,11 +1329,11 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 void RbDynamixelServo::StepSimulation()
 {
 	////Test code
-	int i=5;
+	//int i=5;
 	//if(Std_ToLower(m_strID) == "5ed5e233-f132-4997-b737-54b47e4e058e") // && m_lpSim->Time() > 1 
 	//	i=6;
-	if(!m_bIsHinge) // && m_lpSim->Time() > 1 
-		i=6;
+	//if(!m_bIsHinge) // && m_lpSim->Time() > 1 
+	//	i=6;
 
 	if(m_lpMotorJoint)
 	{

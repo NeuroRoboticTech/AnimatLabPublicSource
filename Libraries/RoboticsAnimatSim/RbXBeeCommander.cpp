@@ -251,14 +251,22 @@ void RbXBeeCommander::Initialize()
 		if(OpenIO())
 		{
 			StartIOThread();
-			AnimatSim::Robotics::RemoteControl::Initialize();
+
+			int iCount = m_aryLinks.GetSize();
+			for(int iIndex=0; iIndex<iCount; iIndex++)
+				m_aryLinks[iIndex]->Initialize();
 		}
 	}
 }
 
 bool RbXBeeCommander::OpenIO()
 {
-	return m_Port.setup(m_strPort, m_iBaudRate);
+	bool bOpen = m_Port.setup(m_strPort, m_iBaudRate);
+
+	if(!m_lpSim->InSimulation() && !bOpen)
+		THROW_PARAM_ERROR(Rb_Err_lFailedUartSBeeConnection, Rb_Err_strFailedUartSBeeConnection, "ComPort", m_strPort);
+
+	return bOpen;
 }
 
 void RbXBeeCommander::CloseIO()
@@ -361,6 +369,14 @@ void RbXBeeCommander::ClearStartStops()
 	m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
 }
 
+void RbXBeeCommander::WaitForThreadNotifyReady()
+{
+	RobotIOControl::WaitForThreadNotifyReady();
+
+	//Give it just a bit of time to start waiting if required.
+	boost::this_thread::sleep(boost::posix_time::microseconds(10000));
+}
+
 void RbXBeeCommander::StepIO()
 {
 	if(!m_lpSim->Paused())
@@ -447,10 +463,10 @@ void RbXBeeCommander::StepSimulation()
 {
 	RemoteControl::StepSimulation();
 
-	int i=4;
-	if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
-		i=6;
-
+	////Test Code
+	//int i=4;
+	//if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
+	//	i=6;
 
 	ClearStartStops();
 }

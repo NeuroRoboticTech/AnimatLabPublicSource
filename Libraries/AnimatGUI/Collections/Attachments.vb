@@ -311,18 +311,18 @@ Namespace Collections
         Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Physical.Bodies.Attachment = DirectCast(Me(key), AnimatGUI.DataObjects.Physical.Bodies.Attachment)
 
-            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.Remove(key)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 
         Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Physical.Bodies.Attachment = DirectCast(Me.GetByIndex(index), AnimatGUI.DataObjects.Physical.Bodies.Attachment)
 
-            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.RemoveAt(index)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 

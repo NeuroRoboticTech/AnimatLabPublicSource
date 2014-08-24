@@ -505,6 +505,9 @@
 #define Al_Err_lMoreThanOneMotorControl -4090
 #define Al_Err_strMoreThanOneMotorControl "Cannot have more than one motor control method per motor."
 
+#define Al_Err_lInvalidTargetID -4091
+#define Al_Err_strInvalidTargetID "Invalid target ID."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

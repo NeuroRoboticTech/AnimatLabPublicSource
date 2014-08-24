@@ -73,13 +73,15 @@ int RbFirmataController::BaudRate() {return m_iBaudRate;}
 float *RbFirmataController::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
+	
+	return RobotIOControl::GetDataPointer(strDataType);
 
 	//if(strType == "LIMITPOS")
 	//	return &m_fltLimitPos;
 	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
+	//	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
-	return NULL;
+	//return NULL;
 }
 
 bool RbFirmataController::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -140,8 +142,8 @@ void RbFirmataController::ProcessIO()
 		std::cout << "Sending firmware version request\r\n";
 
 		//First reset firmata
-		sendReset();
-		boost::this_thread::sleep(boost::posix_time::microseconds(10));
+		//sendReset();
+		//boost::this_thread::sleep(boost::posix_time::microseconds(10));
 
 		//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called
@@ -163,7 +165,7 @@ void RbFirmataController::ProcessIO()
 				sendDynamixelSynchMoveExecute();
 			}
 
-			boost::this_thread::sleep(boost::posix_time::microseconds(100));
+			//boost::this_thread::sleep(boost::posix_time::microseconds(300));
 		}
 	}
 	catch(CStdErrorInfo oError)

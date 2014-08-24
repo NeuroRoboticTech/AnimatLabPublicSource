@@ -3239,6 +3239,7 @@ class CStdSerialize(_object):
     __swig_destroy__ = _AnimatSimPy.delete_CStdSerialize
     __del__ = lambda self : None;
     def Clone(self): return _AnimatSimPy.CStdSerialize_Clone(self)
+    def Copy(self, *args): return _AnimatSimPy.CStdSerialize_Copy(self, *args)
     def Trace(self, *args): return _AnimatSimPy.CStdSerialize_Trace(self, *args)
     def Load(self, *args): return _AnimatSimPy.CStdSerialize_Load(self, *args)
     def Save(self, *args): return _AnimatSimPy.CStdSerialize_Save(self, *args)
@@ -3778,6 +3779,7 @@ class AnimatBase(CStdSerialize):
     def Name(self, *args): return _AnimatSimPy.AnimatBase_Name(self, *args)
     def Type(self, *args): return _AnimatSimPy.AnimatBase_Type(self, *args)
     def Selected(self, *args): return _AnimatSimPy.AnimatBase_Selected(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.AnimatBase_Copy(self, *args)
     def SetSystemPointers(self, *args): return _AnimatSimPy.AnimatBase_SetSystemPointers(self, *args)
     def VerifySystemPointers(self): return _AnimatSimPy.AnimatBase_VerifySystemPointers(self)
     def GetDataPointer(self, *args): return _AnimatSimPy.AnimatBase_GetDataPointer(self, *args)
@@ -3844,6 +3846,7 @@ class Gain(AnimatBase):
     def UpperLimit(self, *args): return _AnimatSimPy.Gain_UpperLimit(self, *args)
     def LowerOutput(self, *args): return _AnimatSimPy.Gain_LowerOutput(self, *args)
     def UpperOutput(self, *args): return _AnimatSimPy.Gain_UpperOutput(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.Gain_Copy(self, *args)
     def CalculateGain(self, *args): return _AnimatSimPy.Gain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.Gain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.Gain_QueryProperties(self, *args)
@@ -3879,6 +3882,8 @@ class BellGain(Gain):
     def B(self, *args): return _AnimatSimPy.BellGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.BellGain_C(self, *args)
     def D(self, *args): return _AnimatSimPy.BellGain_D(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.BellGain_Copy(self, *args)
+    def Clone(self): return _AnimatSimPy.BellGain_Clone(self)
     def CalculateGain(self, *args): return _AnimatSimPy.BellGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.BellGain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.BellGain_QueryProperties(self, *args)
@@ -3907,6 +3912,8 @@ class EquationGain(Gain):
     __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.EquationGain_CastToDerived
     if _newclass:CastToDerived = staticmethod(_AnimatSimPy.EquationGain_CastToDerived)
     def GainEquation(self, *args): return _AnimatSimPy.EquationGain_GainEquation(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.EquationGain_Copy(self, *args)
+    def Clone(self): return _AnimatSimPy.EquationGain_Clone(self)
     def CalculateGain(self, *args): return _AnimatSimPy.EquationGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.EquationGain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.EquationGain_QueryProperties(self, *args)
@@ -3938,6 +3945,8 @@ class PolynomialGain(Gain):
     def B(self, *args): return _AnimatSimPy.PolynomialGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.PolynomialGain_C(self, *args)
     def D(self, *args): return _AnimatSimPy.PolynomialGain_D(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.PolynomialGain_Copy(self, *args)
+    def Clone(self): return _AnimatSimPy.PolynomialGain_Clone(self)
     def CalculateGain(self, *args): return _AnimatSimPy.PolynomialGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.PolynomialGain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.PolynomialGain_QueryProperties(self, *args)
@@ -3969,6 +3978,8 @@ class SigmoidGain(Gain):
     def B(self, *args): return _AnimatSimPy.SigmoidGain_B(self, *args)
     def C(self, *args): return _AnimatSimPy.SigmoidGain_C(self, *args)
     def D(self, *args): return _AnimatSimPy.SigmoidGain_D(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.SigmoidGain_Copy(self, *args)
+    def Clone(self): return _AnimatSimPy.SigmoidGain_Clone(self)
     def CalculateGain(self, *args): return _AnimatSimPy.SigmoidGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.SigmoidGain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.SigmoidGain_QueryProperties(self, *args)
@@ -4003,6 +4014,8 @@ class LengthTensionGain(Gain):
     def MinPeLengthPercentage(self, *args): return _AnimatSimPy.LengthTensionGain_MinPeLengthPercentage(self, *args)
     def SeRestLength(self): return _AnimatSimPy.LengthTensionGain_SeRestLength(self)
     def MinPeLength(self): return _AnimatSimPy.LengthTensionGain_MinPeLength(self)
+    def Copy(self, *args): return _AnimatSimPy.LengthTensionGain_Copy(self, *args)
+    def Clone(self): return _AnimatSimPy.LengthTensionGain_Clone(self)
     def CalculateGain(self, *args): return _AnimatSimPy.LengthTensionGain_CalculateGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.LengthTensionGain_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.LengthTensionGain_QueryProperties(self, *args)
@@ -4029,6 +4042,10 @@ class Node(AnimatBase):
     if _newclass:CastToDerived = staticmethod(_AnimatSimPy.Node_CastToDerived)
     def Enabled(self, *args): return _AnimatSimPy.Node_Enabled(self, *args)
     def Kill(self, bState=True): return _AnimatSimPy.Node_Kill(self, bState)
+    def TemplateNode(self, *args): return _AnimatSimPy.Node_TemplateNode(self, *args)
+    def TemplateNodeCount(self, *args): return _AnimatSimPy.Node_TemplateNodeCount(self, *args)
+    def TemplateChangeScript(self, *args): return _AnimatSimPy.Node_TemplateChangeScript(self, *args)
+    def Copy(self, *args): return _AnimatSimPy.Node_Copy(self, *args)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.Node_AddExternalNodeInput(self, *args)
     def GetTargetDataTypeIndex(self, *args): return _AnimatSimPy.Node_GetTargetDataTypeIndex(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.Node_ResetSimulation(self)
@@ -4145,6 +4162,7 @@ class IPhysicsBody(_object):
     def Physics_StepHydrodynamicSimulation(self): return _AnimatSimPy.IPhysicsBody_Physics_StepHydrodynamicSimulation(self)
     def Physics_ChildBodyAdded(self, *args): return _AnimatSimPy.IPhysicsBody_Physics_ChildBodyAdded(self, *args)
     def Physics_ChildBodyRemoved(self, *args): return _AnimatSimPy.IPhysicsBody_Physics_ChildBodyRemoved(self, *args)
+    def Physics_DeleteStickyLock(self): return _AnimatSimPy.IPhysicsBody_Physics_DeleteStickyLock(self)
 IPhysicsBody_swigregister = _AnimatSimPy.IPhysicsBody_swigregister
 IPhysicsBody_swigregister(IPhysicsBody)
 
@@ -4627,6 +4645,7 @@ class MotorizedJoint(Joint):
     def RobotMotorControl(self, *args): return _AnimatSimPy.MotorizedJoint_RobotMotorControl(self, *args)
     def SetVelocityToDesired(self): return _AnimatSimPy.MotorizedJoint_SetVelocityToDesired(self)
     def EnableLock(self, *args): return _AnimatSimPy.MotorizedJoint_EnableLock(self, *args)
+    def Initialize(self): return _AnimatSimPy.MotorizedJoint_Initialize(self)
     def ResetSimulation(self): return _AnimatSimPy.MotorizedJoint_ResetSimulation(self)
     def GetDataPointer(self, *args): return _AnimatSimPy.MotorizedJoint_GetDataPointer(self, *args)
     def SetData(self, *args): return _AnimatSimPy.MotorizedJoint_SetData(self, *args)
@@ -4922,6 +4941,9 @@ class RigidBody(BodyPart):
     def Freeze(self, *args): return _AnimatSimPy.RigidBody_Freeze(self, *args)
     def IsContactSensor(self, *args): return _AnimatSimPy.RigidBody_IsContactSensor(self, *args)
     def IsCollisionObject(self, *args): return _AnimatSimPy.RigidBody_IsCollisionObject(self, *args)
+    def IsStickyPart(self, *args): return _AnimatSimPy.RigidBody_IsStickyPart(self, *args)
+    def StickyOn(self, *args): return _AnimatSimPy.RigidBody_StickyOn(self, *args)
+    def StickyChild(self, *args): return _AnimatSimPy.RigidBody_StickyChild(self, *args)
     def IsRoot(self): return _AnimatSimPy.RigidBody_IsRoot(self)
     def HasStaticJoint(self): return _AnimatSimPy.RigidBody_HasStaticJoint(self)
     def HasStaticChildren(self): return _AnimatSimPy.RigidBody_HasStaticChildren(self)
@@ -4974,6 +4996,8 @@ class RigidBody(BodyPart):
     def QueryProperties(self, *args): return _AnimatSimPy.RigidBody_QueryProperties(self, *args)
     def AddItem(self, *args): return _AnimatSimPy.RigidBody_AddItem(self, *args)
     def RemoveItem(self, *args): return _AnimatSimPy.RigidBody_RemoveItem(self, *args)
+    def SimPausing(self): return _AnimatSimPy.RigidBody_SimPausing(self)
+    def GetTargetDataTypeIndex(self, *args): return _AnimatSimPy.RigidBody_GetTargetDataTypeIndex(self, *args)
     def AddExternalNodeInput(self, *args): return _AnimatSimPy.RigidBody_AddExternalNodeInput(self, *args)
     def StepSimulation(self): return _AnimatSimPy.RigidBody_StepSimulation(self)
     def ResetSimulation(self): return _AnimatSimPy.RigidBody_ResetSimulation(self)
@@ -6543,42 +6567,43 @@ def PropertyControlStimulus_CastToDerived(*args):
   return _AnimatSimPy.PropertyControlStimulus_CastToDerived(*args)
 PropertyControlStimulus_CastToDerived = _AnimatSimPy.PropertyControlStimulus_CastToDerived
 
-class MotorVelocityStimulus(ExternalStimulus):
+class MotorStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
     for _s in [ExternalStimulus]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, MotorVelocityStimulus, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, MotorStimulus, name, value)
     __swig_getmethods__ = {}
     for _s in [ExternalStimulus]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, MotorVelocityStimulus, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, MotorStimulus, name)
     __repr__ = _swig_repr
     def __init__(self): 
-        this = _AnimatSimPy.new_MotorVelocityStimulus()
+        this = _AnimatSimPy.new_MotorStimulus()
         try: self.this.append(this)
         except: self.this = this
-    __swig_destroy__ = _AnimatSimPy.delete_MotorVelocityStimulus
+    __swig_destroy__ = _AnimatSimPy.delete_MotorStimulus
     __del__ = lambda self : None;
-    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MotorVelocityStimulus_CastToDerived
-    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MotorVelocityStimulus_CastToDerived)
-    def StructureID(self, *args): return _AnimatSimPy.MotorVelocityStimulus_StructureID(self, *args)
-    def JointID(self, *args): return _AnimatSimPy.MotorVelocityStimulus_JointID(self, *args)
-    def VelocityEquation(self, *args): return _AnimatSimPy.MotorVelocityStimulus_VelocityEquation(self, *args)
-    def DisableMotorWhenDone(self, *args): return _AnimatSimPy.MotorVelocityStimulus_DisableMotorWhenDone(self, *args)
-    def Load(self, *args): return _AnimatSimPy.MotorVelocityStimulus_Load(self, *args)
-    def Type(self): return _AnimatSimPy.MotorVelocityStimulus_Type(self)
-    def Initialize(self): return _AnimatSimPy.MotorVelocityStimulus_Initialize(self)
-    def Activate(self): return _AnimatSimPy.MotorVelocityStimulus_Activate(self)
-    def ResetSimulation(self): return _AnimatSimPy.MotorVelocityStimulus_ResetSimulation(self)
-    def StepSimulation(self): return _AnimatSimPy.MotorVelocityStimulus_StepSimulation(self)
-    def Deactivate(self): return _AnimatSimPy.MotorVelocityStimulus_Deactivate(self)
-    def GetDataPointer(self, *args): return _AnimatSimPy.MotorVelocityStimulus_GetDataPointer(self, *args)
-    def SetData(self, *args): return _AnimatSimPy.MotorVelocityStimulus_SetData(self, *args)
-    def QueryProperties(self, *args): return _AnimatSimPy.MotorVelocityStimulus_QueryProperties(self, *args)
-MotorVelocityStimulus_swigregister = _AnimatSimPy.MotorVelocityStimulus_swigregister
-MotorVelocityStimulus_swigregister(MotorVelocityStimulus)
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.MotorStimulus_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.MotorStimulus_CastToDerived)
+    def StructureID(self, *args): return _AnimatSimPy.MotorStimulus_StructureID(self, *args)
+    def JointID(self, *args): return _AnimatSimPy.MotorStimulus_JointID(self, *args)
+    def Equation(self, *args): return _AnimatSimPy.MotorStimulus_Equation(self, *args)
+    def TargetID(self, *args): return _AnimatSimPy.MotorStimulus_TargetID(self, *args)
+    def DisableMotorWhenDone(self, *args): return _AnimatSimPy.MotorStimulus_DisableMotorWhenDone(self, *args)
+    def Load(self, *args): return _AnimatSimPy.MotorStimulus_Load(self, *args)
+    def Type(self): return _AnimatSimPy.MotorStimulus_Type(self)
+    def Initialize(self): return _AnimatSimPy.MotorStimulus_Initialize(self)
+    def Activate(self): return _AnimatSimPy.MotorStimulus_Activate(self)
+    def ResetSimulation(self): return _AnimatSimPy.MotorStimulus_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.MotorStimulus_StepSimulation(self)
+    def Deactivate(self): return _AnimatSimPy.MotorStimulus_Deactivate(self)
+    def GetDataPointer(self, *args): return _AnimatSimPy.MotorStimulus_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.MotorStimulus_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.MotorStimulus_QueryProperties(self, *args)
+MotorStimulus_swigregister = _AnimatSimPy.MotorStimulus_swigregister
+MotorStimulus_swigregister(MotorStimulus)
 
-def MotorVelocityStimulus_CastToDerived(*args):
-  return _AnimatSimPy.MotorVelocityStimulus_CastToDerived(*args)
-MotorVelocityStimulus_CastToDerived = _AnimatSimPy.MotorVelocityStimulus_CastToDerived
+def MotorStimulus_CastToDerived(*args):
+  return _AnimatSimPy.MotorStimulus_CastToDerived(*args)
+MotorStimulus_CastToDerived = _AnimatSimPy.MotorStimulus_CastToDerived
 
 class ForceStimulus(ExternalStimulus):
     __swig_setmethods__ = {}
@@ -7165,6 +7190,256 @@ SimulationMgr_CastToDerived = _AnimatSimPy.SimulationMgr_CastToDerived
 def ActiveSim(*args):
   return _AnimatSimPy.ActiveSim(*args)
 ActiveSim = _AnimatSimPy.ActiveSim
+class RobotInterface(AnimatBase):
+    __swig_setmethods__ = {}
+    for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RobotInterface, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RobotInterface, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_RobotInterface()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_RobotInterface
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RobotInterface_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RobotInterface_CastToDerived)
+    def IOControls(self): return _AnimatSimPy.RobotInterface_IOControls(self)
+    def PhysicsTimeStep(self, *args): return _AnimatSimPy.RobotInterface_PhysicsTimeStep(self, *args)
+    def SynchSim(self, *args): return _AnimatSimPy.RobotInterface_SynchSim(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.RobotInterface_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.RobotInterface_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.RobotInterface_QueryProperties(self, *args)
+    def AddItem(self, *args): return _AnimatSimPy.RobotInterface_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.RobotInterface_RemoveItem(self, *args)
+    def Initialize(self): return _AnimatSimPy.RobotInterface_Initialize(self)
+    def StepSimulation(self): return _AnimatSimPy.RobotInterface_StepSimulation(self)
+    def ResetSimulation(self): return _AnimatSimPy.RobotInterface_ResetSimulation(self)
+    def AfterResetSimulation(self): return _AnimatSimPy.RobotInterface_AfterResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.RobotInterface_Load(self, *args)
+RobotInterface_swigregister = _AnimatSimPy.RobotInterface_swigregister
+RobotInterface_swigregister(RobotInterface)
+
+def RobotInterface_CastToDerived(*args):
+  return _AnimatSimPy.RobotInterface_CastToDerived(*args)
+RobotInterface_CastToDerived = _AnimatSimPy.RobotInterface_CastToDerived
+
+class RobotIOControl(AnimatBase):
+    __swig_setmethods__ = {}
+    for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RobotIOControl, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RobotIOControl, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _AnimatSimPy.delete_RobotIOControl
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RobotIOControl_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RobotIOControl_CastToDerived)
+    def ParentInterface(self, *args): return _AnimatSimPy.RobotIOControl_ParentInterface(self, *args)
+    def Parts(self): return _AnimatSimPy.RobotIOControl_Parts(self)
+    def PauseIO(self, *args): return _AnimatSimPy.RobotIOControl_PauseIO(self, *args)
+    def IOPaused(self): return _AnimatSimPy.RobotIOControl_IOPaused(self)
+    def StepIODuration(self): return _AnimatSimPy.RobotIOControl_StepIODuration(self)
+    def GetDataPointer(self, *args): return _AnimatSimPy.RobotIOControl_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.RobotIOControl_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.RobotIOControl_QueryProperties(self, *args)
+    def AddItem(self, *args): return _AnimatSimPy.RobotIOControl_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.RobotIOControl_RemoveItem(self, *args)
+    def SetupIO(self): return _AnimatSimPy.RobotIOControl_SetupIO(self)
+    def StepIO(self): return _AnimatSimPy.RobotIOControl_StepIO(self)
+    def ShutdownIO(self): return _AnimatSimPy.RobotIOControl_ShutdownIO(self)
+    def Initialize(self): return _AnimatSimPy.RobotIOControl_Initialize(self)
+    def SimStopping(self): return _AnimatSimPy.RobotIOControl_SimStopping(self)
+    def StepSimulation(self): return _AnimatSimPy.RobotIOControl_StepSimulation(self)
+    def ResetSimulation(self): return _AnimatSimPy.RobotIOControl_ResetSimulation(self)
+    def AfterResetSimulation(self): return _AnimatSimPy.RobotIOControl_AfterResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.RobotIOControl_Load(self, *args)
+RobotIOControl_swigregister = _AnimatSimPy.RobotIOControl_swigregister
+RobotIOControl_swigregister(RobotIOControl)
+
+def RobotIOControl_CastToDerived(*args):
+  return _AnimatSimPy.RobotIOControl_CastToDerived(*args)
+RobotIOControl_CastToDerived = _AnimatSimPy.RobotIOControl_CastToDerived
+
+class RobotPartInterface(AnimatBase):
+    __swig_setmethods__ = {}
+    for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RobotPartInterface, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RobotPartInterface, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_RobotPartInterface()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_RobotPartInterface
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RobotPartInterface_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RobotPartInterface_CastToDerived)
+    def ParentIOControl(self, *args): return _AnimatSimPy.RobotPartInterface_ParentIOControl(self, *args)
+    def IOComponentID(self, *args): return _AnimatSimPy.RobotPartInterface_IOComponentID(self, *args)
+    def IOValue(self, *args): return _AnimatSimPy.RobotPartInterface_IOValue(self, *args)
+    def IOValueInt(self, *args): return _AnimatSimPy.RobotPartInterface_IOValueInt(self, *args)
+    def Changed(self, *args): return _AnimatSimPy.RobotPartInterface_Changed(self, *args)
+    def LinkedPartID(self, *args): return _AnimatSimPy.RobotPartInterface_LinkedPartID(self, *args)
+    def PropertyName(self, *args): return _AnimatSimPy.RobotPartInterface_PropertyName(self, *args)
+    def IsMotorControl(self): return _AnimatSimPy.RobotPartInterface_IsMotorControl(self)
+    def IncludeInPartsCycle(self): return _AnimatSimPy.RobotPartInterface_IncludeInPartsCycle(self)
+    def QuantizeServoPosition(self, *args): return _AnimatSimPy.RobotPartInterface_QuantizeServoPosition(self, *args)
+    def QuantizeServoVelocity(self, *args): return _AnimatSimPy.RobotPartInterface_QuantizeServoVelocity(self, *args)
+    def GetGain(self): return _AnimatSimPy.RobotPartInterface_GetGain(self)
+    def SetGain(self, *args): return _AnimatSimPy.RobotPartInterface_SetGain(self, *args)
+    def StepIODuration(self): return _AnimatSimPy.RobotPartInterface_StepIODuration(self)
+    def GetDataPointer(self, *args): return _AnimatSimPy.RobotPartInterface_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.RobotPartInterface_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.RobotPartInterface_QueryProperties(self, *args)
+    def SetupIO(self): return _AnimatSimPy.RobotPartInterface_SetupIO(self)
+    def StepIO(self, *args): return _AnimatSimPy.RobotPartInterface_StepIO(self, *args)
+    def ShutdownIO(self): return _AnimatSimPy.RobotPartInterface_ShutdownIO(self)
+    def Initialize(self): return _AnimatSimPy.RobotPartInterface_Initialize(self)
+    def ResetSimulation(self): return _AnimatSimPy.RobotPartInterface_ResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.RobotPartInterface_Load(self, *args)
+RobotPartInterface_swigregister = _AnimatSimPy.RobotPartInterface_swigregister
+RobotPartInterface_swigregister(RobotPartInterface)
+
+def RobotPartInterface_CastToDerived(*args):
+  return _AnimatSimPy.RobotPartInterface_CastToDerived(*args)
+RobotPartInterface_CastToDerived = _AnimatSimPy.RobotPartInterface_CastToDerived
+
+class RemoteControlLinkage(AnimatBase):
+    __swig_setmethods__ = {}
+    for _s in [AnimatBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RemoteControlLinkage, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RemoteControlLinkage, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_RemoteControlLinkage()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_RemoteControlLinkage
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RemoteControlLinkage_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RemoteControlLinkage_CastToDerived)
+    def ParentRemoteControl(self, *args): return _AnimatSimPy.RemoteControlLinkage_ParentRemoteControl(self, *args)
+    def SourceDataTypeID(self, *args): return _AnimatSimPy.RemoteControlLinkage_SourceDataTypeID(self, *args)
+    def TargetDataTypeID(self, *args): return _AnimatSimPy.RemoteControlLinkage_TargetDataTypeID(self, *args)
+    def LinkedNodeID(self, *args): return _AnimatSimPy.RemoteControlLinkage_LinkedNodeID(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.RemoteControlLinkage_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.RemoteControlLinkage_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.RemoteControlLinkage_QueryProperties(self, *args)
+    def SetupIO(self): return _AnimatSimPy.RemoteControlLinkage_SetupIO(self)
+    def StepIO(self): return _AnimatSimPy.RemoteControlLinkage_StepIO(self)
+    def ShutdownIO(self): return _AnimatSimPy.RemoteControlLinkage_ShutdownIO(self)
+    def Initialize(self): return _AnimatSimPy.RemoteControlLinkage_Initialize(self)
+    def Load(self, *args): return _AnimatSimPy.RemoteControlLinkage_Load(self, *args)
+RemoteControlLinkage_swigregister = _AnimatSimPy.RemoteControlLinkage_swigregister
+RemoteControlLinkage_swigregister(RemoteControlLinkage)
+
+def RemoteControlLinkage_CastToDerived(*args):
+  return _AnimatSimPy.RemoteControlLinkage_CastToDerived(*args)
+RemoteControlLinkage_CastToDerived = _AnimatSimPy.RemoteControlLinkage_CastToDerived
+
+class PassThroughLinkage(RemoteControlLinkage):
+    __swig_setmethods__ = {}
+    for _s in [RemoteControlLinkage]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PassThroughLinkage, name, value)
+    __swig_getmethods__ = {}
+    for _s in [RemoteControlLinkage]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, PassThroughLinkage, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_PassThroughLinkage()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_PassThroughLinkage
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PassThroughLinkage_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PassThroughLinkage_CastToDerived)
+    def GetGain(self): return _AnimatSimPy.PassThroughLinkage_GetGain(self)
+    def SetGain(self, *args): return _AnimatSimPy.PassThroughLinkage_SetGain(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.PassThroughLinkage_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.PassThroughLinkage_QueryProperties(self, *args)
+    def StepSimulation(self): return _AnimatSimPy.PassThroughLinkage_StepSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.PassThroughLinkage_Load(self, *args)
+PassThroughLinkage_swigregister = _AnimatSimPy.PassThroughLinkage_swigregister
+PassThroughLinkage_swigregister(PassThroughLinkage)
+
+def PassThroughLinkage_CastToDerived(*args):
+  return _AnimatSimPy.PassThroughLinkage_CastToDerived(*args)
+PassThroughLinkage_CastToDerived = _AnimatSimPy.PassThroughLinkage_CastToDerived
+
+class PulsedLinkage(RemoteControlLinkage):
+    __swig_setmethods__ = {}
+    for _s in [RemoteControlLinkage]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PulsedLinkage, name, value)
+    __swig_getmethods__ = {}
+    for _s in [RemoteControlLinkage]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, PulsedLinkage, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _AnimatSimPy.new_PulsedLinkage()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _AnimatSimPy.delete_PulsedLinkage
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.PulsedLinkage_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.PulsedLinkage_CastToDerived)
+    def MatchValue(self, *args): return _AnimatSimPy.PulsedLinkage_MatchValue(self, *args)
+    def MatchOnChange(self, *args): return _AnimatSimPy.PulsedLinkage_MatchOnChange(self, *args)
+    def PulseDuration(self, *args): return _AnimatSimPy.PulsedLinkage_PulseDuration(self, *args)
+    def PulseCurrent(self, *args): return _AnimatSimPy.PulsedLinkage_PulseCurrent(self, *args)
+    def GetDataPointer(self, *args): return _AnimatSimPy.PulsedLinkage_GetDataPointer(self, *args)
+    def SetData(self, *args): return _AnimatSimPy.PulsedLinkage_SetData(self, *args)
+    def QueryProperties(self, *args): return _AnimatSimPy.PulsedLinkage_QueryProperties(self, *args)
+    def StepIO(self): return _AnimatSimPy.PulsedLinkage_StepIO(self)
+    def ResetSimulation(self): return _AnimatSimPy.PulsedLinkage_ResetSimulation(self)
+    def StepSimulation(self): return _AnimatSimPy.PulsedLinkage_StepSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.PulsedLinkage_Load(self, *args)
+PulsedLinkage_swigregister = _AnimatSimPy.PulsedLinkage_swigregister
+PulsedLinkage_swigregister(PulsedLinkage)
+
+def PulsedLinkage_CastToDerived(*args):
+  return _AnimatSimPy.PulsedLinkage_CastToDerived(*args)
+PulsedLinkage_CastToDerived = _AnimatSimPy.PulsedLinkage_CastToDerived
+
+class RemoteControl(RobotIOControl):
+    __swig_setmethods__ = {}
+    for _s in [RobotIOControl]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RemoteControl, name, value)
+    __swig_getmethods__ = {}
+    for _s in [RobotIOControl]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RemoteControl, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _AnimatSimPy.delete_RemoteControl
+    __del__ = lambda self : None;
+    __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RemoteControl_CastToDerived
+    if _newclass:CastToDerived = staticmethod(_AnimatSimPy.RemoteControl_CastToDerived)
+    def Links(self): return _AnimatSimPy.RemoteControl_Links(self)
+    def AddItem(self, *args): return _AnimatSimPy.RemoteControl_AddItem(self, *args)
+    def RemoveItem(self, *args): return _AnimatSimPy.RemoteControl_RemoveItem(self, *args)
+    def SetupIO(self): return _AnimatSimPy.RemoteControl_SetupIO(self)
+    def StepIO(self): return _AnimatSimPy.RemoteControl_StepIO(self)
+    def ShutdownIO(self): return _AnimatSimPy.RemoteControl_ShutdownIO(self)
+    def Initialize(self): return _AnimatSimPy.RemoteControl_Initialize(self)
+    def StepSimulation(self): return _AnimatSimPy.RemoteControl_StepSimulation(self)
+    def ResetSimulation(self): return _AnimatSimPy.RemoteControl_ResetSimulation(self)
+    def AfterResetSimulation(self): return _AnimatSimPy.RemoteControl_AfterResetSimulation(self)
+    def Load(self, *args): return _AnimatSimPy.RemoteControl_Load(self, *args)
+RemoteControl_swigregister = _AnimatSimPy.RemoteControl_swigregister
+RemoteControl_swigregister(RemoteControl)
+
+def RemoteControl_CastToDerived(*args):
+  return _AnimatSimPy.RemoteControl_CastToDerived(*args)
+RemoteControl_CastToDerived = _AnimatSimPy.RemoteControl_CastToDerived
+
 class Neuron(Node):
     __swig_setmethods__ = {}
     for _s in [Node]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -7200,6 +7475,7 @@ class Neuron(Node):
     def FiringFreq(self, *args): return _AnimatSimPy.Neuron_FiringFreq(self, *args)
     def NeuronType(self): return _AnimatSimPy.Neuron_NeuronType(self)
     def GetSynapses(self): return _AnimatSimPy.Neuron_GetSynapses(self)
+    def Copy(self, *args): return _AnimatSimPy.Neuron_Copy(self, *args)
     def AddSynapse(self, *args): return _AnimatSimPy.Neuron_AddSynapse(self, *args)
     def RemoveSynapse(self, *args): return _AnimatSimPy.Neuron_RemoveSynapse(self, *args)
     def GetSynapse(self, *args): return _AnimatSimPy.Neuron_GetSynapse(self, *args)
@@ -7292,6 +7568,7 @@ class PacemakerNeuron(Neuron):
     def ITime(self, *args): return _AnimatSimPy.PacemakerNeuron_ITime(self, *args)
     def IntrinsicType(self, *args): return _AnimatSimPy.PacemakerNeuron_IntrinsicType(self, *args)
     def NeuronType(self): return _AnimatSimPy.PacemakerNeuron_NeuronType(self)
+    def Copy(self, *args): return _AnimatSimPy.PacemakerNeuron_Copy(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.PacemakerNeuron_ResetSimulation(self)
     def StepSimulation(self): return _AnimatSimPy.PacemakerNeuron_StepSimulation(self)
     def GetDataPointer(self, *args): return _AnimatSimPy.PacemakerNeuron_GetDataPointer(self, *args)
@@ -7324,6 +7601,7 @@ class RandomNeuron(Neuron):
     def Il(self, *args): return _AnimatSimPy.RandomNeuron_Il(self, *args)
     def Ilinit(self, *args): return _AnimatSimPy.RandomNeuron_Ilinit(self, *args)
     def NeuronType(self): return _AnimatSimPy.RandomNeuron_NeuronType(self)
+    def Copy(self, *args): return _AnimatSimPy.RandomNeuron_Copy(self, *args)
     def CurrentDistribution(self, *args): return _AnimatSimPy.RandomNeuron_CurrentDistribution(self, *args)
     def BurstLengthDistribution(self, *args): return _AnimatSimPy.RandomNeuron_BurstLengthDistribution(self, *args)
     def InterbusrtLengthDistribution(self, *args): return _AnimatSimPy.RandomNeuron_InterbusrtLengthDistribution(self, *args)
@@ -7356,6 +7634,7 @@ class BistableNeuron(Neuron):
     def Il(self, *args): return _AnimatSimPy.BistableNeuron_Il(self, *args)
     def Ih(self, *args): return _AnimatSimPy.BistableNeuron_Ih(self, *args)
     def NeuronType(self): return _AnimatSimPy.BistableNeuron_NeuronType(self)
+    def Copy(self, *args): return _AnimatSimPy.BistableNeuron_Copy(self, *args)
     def SetData(self, *args): return _AnimatSimPy.BistableNeuron_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.BistableNeuron_QueryProperties(self, *args)
     def ResetSimulation(self): return _AnimatSimPy.BistableNeuron_ResetSimulation(self)
@@ -7380,6 +7659,7 @@ class TonicNeuron(Neuron):
     __del__ = lambda self : None;
     def Ih(self, *args): return _AnimatSimPy.TonicNeuron_Ih(self, *args)
     def NeuronType(self): return _AnimatSimPy.TonicNeuron_NeuronType(self)
+    def Copy(self, *args): return _AnimatSimPy.TonicNeuron_Copy(self, *args)
     def SetData(self, *args): return _AnimatSimPy.TonicNeuron_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.TonicNeuron_QueryProperties(self, *args)
     def Load(self, *args): return _AnimatSimPy.TonicNeuron_Load(self, *args)

@@ -105,6 +105,7 @@ protected:
 	virtual void CheckStartedStopped();
 
 	virtual void ClearStartStops();
+	virtual void WaitForThreadNotifyReady();
 
 public:
 	RbXBeeCommander();

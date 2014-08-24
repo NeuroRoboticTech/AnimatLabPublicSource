@@ -35,6 +35,7 @@ VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 	m_bDisableMotorWhenDone = false;
 	m_lpPosition = NULL;
 	m_lpVelocity = NULL;
+	m_iTargetID = DESIRED_VELOCITY_TYPE;
 }
 
 /**
@@ -78,6 +79,26 @@ void VsMotorVelocityStimulus::VelocityEquation(std::string strVal)
 	m_lpEval->Equation(m_strVelocityEquation);
 }
 
+void VsMotorVelocityStimulus::TargetID(int iID) 
+{
+	if(iID == DESIRED_VELOCITY_TYPE || iID == DESIRED_POSITION_TYPE)
+		m_iTargetID = iID;
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidTargetID, Al_Err_strInvalidTargetID, "ID", iID);
+}
+
+void VsMotorVelocityStimulus::TargetID(std::string strID)
+{
+	std::string strId = Std_CheckString(strID);
+
+	if(strId == "VELOCITY")
+		m_iTargetID = DESIRED_VELOCITY_TYPE;
+	else if(strId == "POSITION")
+		m_iTargetID = DESIRED_POSITION_TYPE;
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidTargetID, Al_Err_strInvalidTargetID, "ID", strID);
+}
+
 void VsMotorVelocityStimulus::ResetSimulation()
 {
 	ExternalStimulus::ResetSimulation();
@@ -106,7 +127,9 @@ void VsMotorVelocityStimulus::Activate()
 	if(m_bEnabled)
 	{
 		m_lpJoint->EnableMotor(true);
-		m_lpJoint->DesiredVelocity(0);
+
+		if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+			m_lpJoint->DesiredVelocity(0);
 	}
 }
 
@@ -139,7 +162,10 @@ void VsMotorVelocityStimulus::StepSimulation()
 				if(!m_lpJoint->UsesRadians())
 					m_fltVelocity *= m_lpSim->InverseDistanceUnits();
 
-				m_lpJoint->DesiredVelocity(m_fltVelocity);
+				if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+					m_lpJoint->DesiredVelocity(m_fltVelocity);
+				else if(m_iTargetID == DESIRED_POSITION_TYPE)
+					m_lpJoint->DesiredPosition(m_fltVelocity);
 			}
 		}
 	}
@@ -156,7 +182,9 @@ void VsMotorVelocityStimulus::Deactivate()
 
 	if(m_bEnabled)
 	{
-		m_lpJoint->DesiredVelocity(0);
+		if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+			m_lpJoint->DesiredVelocity(0);
+
 		if(m_bDisableMotorWhenDone)
 			m_lpJoint->EnableMotor(false);
 	}
@@ -167,7 +195,7 @@ float *VsMotorVelocityStimulus::GetDataPointer(const std::string &strDataType)
 	float *lpData=NULL;
 	std::string strType = Std_CheckString(strDataType);
 
-	if(strType == "VELOCITY")
+	if(strType == "VELOCITY" || strType == "VALUE")
 		lpData = &m_fltVelocityReport;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "StimulusName: " + STR(m_strName) + "  DataType: " + strDataType);
@@ -193,6 +221,12 @@ bool VsMotorVelocityStimulus::SetData(const std::string &strDataType, const std:
 		DisableMotorWhenDone(Std_ToBool(strValue));
 		return true;
 	}
+	
+	if(strType == "TARGETID")
+	{
+		TargetID(strValue);
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -208,6 +242,7 @@ void VsMotorVelocityStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryPro
 	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DisableMotorWhenDone", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TargetID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void VsMotorVelocityStimulus::Load(CStdXml &oXml)
@@ -226,6 +261,7 @@ void VsMotorVelocityStimulus::Load(CStdXml &oXml)
 
 	VelocityEquation(oXml.GetChildString("Velocity"));
 	DisableMotorWhenDone(oXml.GetChildBool("DisableMotorWhenDone", m_bDisableMotorWhenDone));
+	TargetID(oXml.GetChildString("TargetID", "Velocity"));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 }

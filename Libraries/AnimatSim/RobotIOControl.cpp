@@ -51,6 +51,7 @@ RobotIOControl::RobotIOControl(void)
 	m_iCyclePartCount = 0;
 	m_bPauseIO = false;
 	m_bIOPaused = false;
+	m_bWaitingForThreadNotify = false;
 }
 
 RobotIOControl::~RobotIOControl(void)
@@ -246,13 +247,15 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotIOControl::StartIOThread()
 {
-	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
-
-	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(500);
+	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(30);
 
 	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
 
+	m_bWaitingForThreadNotify = false;
+	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
+
 	std::cout << "Waiting for IO thread return\r\n";
+	m_bWaitingForThreadNotify = true;
 	bool bWaitRet = m_WaitForIOSetupCond.timed_wait(lock, pt);
 
 	if(!bWaitRet)
@@ -265,6 +268,13 @@ void RobotIOControl::StartIOThread()
 	std::cout << "IO thread returned\r\n";
 }
 
+void RobotIOControl::WaitForThreadNotifyReady()
+{
+	//Wait to fire the signal until we get notification that it is waiting.
+	while(!m_bWaitingForThreadNotify)
+		boost::this_thread::sleep(boost::posix_time::microseconds(500));
+}
+
 void RobotIOControl::ProcessIO()
 {
 	try
@@ -274,6 +284,10 @@ void RobotIOControl::ProcessIO()
 		SetupIO();
 
 		m_bSetupComplete = true;
+
+		WaitForThreadNotifyReady();
+
+		//Notify it back that we are ready.
 		m_WaitForIOSetupCond.notify_all();
 
 		while(!m_bStopIO)

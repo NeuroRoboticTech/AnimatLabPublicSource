@@ -283,7 +283,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\Mesh.h" />
     <ClInclude Include="..\ModuleThreadProcessor.h" />
     <ClInclude Include="..\MotorizedJoint.h" />
-    <ClInclude Include="..\MotorVelocityStimulus.h" />
+    <ClInclude Include="..\MotorStimulus.h" />
     <ClInclude Include="..\Mouth.h" />
     <ClInclude Include="..\MovableItem.h" />
     <ClInclude Include="..\MuscleBase.h" />
@@ -455,8 +455,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\MotorizedJoint.cpp">
     </ClCompile>
-    <ClCompile Include="..\MotorVelocityStimulus.cpp">
-    </ClCompile>
+    <ClCompile Include="..\MotorStimulus.cpp" />
     <ClCompile Include="..\Mouth.cpp">
     </ClCompile>
     <ClCompile Include="..\MovableItem.cpp">

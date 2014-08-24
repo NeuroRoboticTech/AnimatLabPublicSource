@@ -189,6 +189,8 @@ Namespace DataObjects
                 If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RobotIOControl), False) Then
                     m_bpParentIO = DirectCast(doParent, RobotIOControl)
                     Me.Organism = m_bpParentIO.Organism
+
+                    AddHandler m_bpParentIO.BeforeRemoveItem, AddressOf Me.OnBeforeParentRemoveFromList
                 End If
 
                 m_thLinkedPart = CreatePartList(m_doOrganism, Nothing)
@@ -375,6 +377,11 @@ Namespace DataObjects
                 m_gnGain.RemoveFromSim(True)
             End Sub
 
+            Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+                MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
+                DiconnectLinkedPartEvents()
+            End Sub
+
 #End Region
 
             Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
@@ -550,6 +557,15 @@ Namespace DataObjects
             Private Sub OnAfterRemoveLinkedPart(ByRef doObject As Framework.DataObject)
                 Try
                     Me.LinkedPart = CreatePartList(m_doOrganism, Nothing)
+                Catch ex As Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+                Try
+                    DiconnectLinkedPartEvents()
+                    MyBase.OnBeforeParentRemoveFromList(doObject)
                 Catch ex As Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

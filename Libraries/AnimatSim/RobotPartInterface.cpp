@@ -332,6 +332,11 @@ void RobotPartInterface::Initialize()
 	//We need to find the referenced body part and set its robot part interface to this one.
 	if(!Std_IsBlank(m_strPartID))
 		m_lpPart = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
+	else
+	{
+		m_lpPart = NULL;
+		m_lpProperty = NULL;
+	}
 
 	if(m_lpPart)
 	{
