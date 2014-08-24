@@ -139,7 +139,10 @@ void VsMotorVelocityStimulus::StepSimulation()
 				if(!m_lpJoint->UsesRadians())
 					m_fltVelocity *= m_lpSim->InverseDistanceUnits();
 
-				m_lpJoint->DesiredVelocity(m_fltVelocity);
+				if(m_lpJoint->MotorType() == eJointMotorType::PositionControl)
+					m_lpJoint->DesiredPosition(m_fltVelocity);
+				else
+					m_lpJoint->DesiredVelocity(m_fltVelocity);
 			}
 		}
 	}
