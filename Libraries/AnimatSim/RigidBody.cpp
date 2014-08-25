@@ -1302,7 +1302,7 @@ void RigidBody::SetSurfaceContactCount(int iCount)
     if(iCount >= 0)
         m_fltSurfaceContactCount = iCount;
 
-	//Test code
+	////Test code
 	//if(iCount > 0)
 	//	iCount = iCount;
 }

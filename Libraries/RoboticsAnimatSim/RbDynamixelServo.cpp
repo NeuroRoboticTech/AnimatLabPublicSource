@@ -1330,7 +1330,7 @@ void RbDynamixelServo::StepSimulation()
 {
 	////Test code
 	//int i=5;
-	//if(Std_ToLower(m_strID) == "5ed5e233-f132-4997-b737-54b47e4e058e") // && m_lpSim->Time() > 1 
+	//if(m_iServoID == 3 && GetSimulator()->Time() > 1) // &&  
 	//	i=6;
 	//if(!m_bIsHinge) // && m_lpSim->Time() > 1 
 	//	i=6;
@@ -1346,7 +1346,7 @@ void RbDynamixelServo::StepSimulation()
 			SetNextGoalPosition(fltSetPosition);
 			SetNextGoalVelocity(fltSetVelocity);
 		}
-		else if(m_lpMotorJoint->MotorType() == eJointMotorType::PositionControl)
+		else if(m_lpMotorJoint->MotorType() == eJointMotorType::VelocityControl)
 		{
 			float fltSetVelocity = m_lpMotorJoint->SetVelocity();
 			SetNextGoalVelocity(fltSetVelocity);
@@ -1360,7 +1360,7 @@ void RbDynamixelServo::StepSimulation()
 		}
 		else
 		{
-			float fltSetPosition = m_lpMotorJoint->SetVelocity();
+			float fltSetPosition = m_lpMotorJoint->SetPosition();
 			SetNextGoalPosition(fltSetPosition);
 			SetNextMaximumVelocity();
 		}

@@ -184,7 +184,7 @@ namespace RoboticsGUI
 
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("ReadParamTime", "Read Param Time", "Seconds", "s", 0, 1));
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOPos", "IO Position", "", "", 0, 1024));
-                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOVel", "IO Velocity", "", "", 0, 2048));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOVelocity", "IO Velocity", "", "", 0, 2048));
 
                 m_snTranslationRange = new AnimatGUI.Framework.ScaledNumber(this, "TranslationRange", "meters", "m");
             }

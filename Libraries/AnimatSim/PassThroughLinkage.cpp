@@ -135,14 +135,13 @@ void PassThroughLinkage::StepSimulation()
 {
 	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
 	{
-		//Test Code
-		int i=5;
-		if(Std_ToLower(m_strID) == "b801ef39-9146-4bab-8a36-bbf2b0eb98ee" && fabs(*m_lpSourceData) > 0) //  && GetSimulator()->Time() >= 2.5
-			i=6;
-		
+		////Test Code
+		//int i=5;
+		//if(Std_ToLower(m_strID) == "658a922d-f752-4202-adca-0893f7f9c919" && fabs(*m_lpSourceData) > 0  && GetSimulator()->Time() >= 0.2) // 
+		//	i=6;
 
-		float fltOutput = m_lpGain->CalculateGain(*m_lpSourceData);
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, fltOutput);
+		m_fltAppliedCurrent = m_lpGain->CalculateGain(*m_lpSourceData);
+		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltAppliedCurrent);
 	}
 }
 

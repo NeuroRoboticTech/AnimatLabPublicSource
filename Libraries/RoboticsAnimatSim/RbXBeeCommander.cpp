@@ -336,10 +336,10 @@ void RbXBeeCommanderButtonData::CheckStartedStopped()
 
 void RbXBeeCommander::CheckStartedStopped()
 {
-	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-	//	m_ButtonData[iIdx].CheckStartedStopped();
+	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+		m_ButtonData[iIdx].CheckStartedStopped();
 
-	m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
+	//m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
 }
 
 void RbXBeeCommanderButtonData::ClearStartStops()
@@ -364,9 +364,9 @@ void RbXBeeCommanderButtonData::ClearStartStops()
 
 void RbXBeeCommander::ClearStartStops()
 {
-	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-	//	m_ButtonData[iIdx].ClearStartStops();
-	m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
+	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+		m_ButtonData[iIdx].ClearStartStops();
+	//m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
 }
 
 void RbXBeeCommander::WaitForThreadNotifyReady()
@@ -382,6 +382,9 @@ void RbXBeeCommander::StepIO()
 	if(!m_lpSim->Paused())
 	{
 		bool bFound = false;
+
+		////Test Code
+		//m_ButtonData[BUT_ID_WALKV].m_fltValue = -127;
 
 		while(m_Port.available() > 0 && !bFound)
 		{
