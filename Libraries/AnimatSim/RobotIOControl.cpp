@@ -479,6 +479,8 @@ void RobotIOControl::Initialize()
 
 void RobotIOControl::ResetSimulation()
 {
+	AnimatBase::ResetSimulation();
+
 	if(m_bEnabled)
 	{
 		m_iCyclePartIdx = 0;
@@ -490,6 +492,8 @@ void RobotIOControl::ResetSimulation()
 
 void RobotIOControl::AfterResetSimulation()
 {
+	AnimatBase::AfterResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryParts.GetSize();
@@ -500,6 +504,8 @@ void RobotIOControl::AfterResetSimulation()
 
 void RobotIOControl::SimStopping()
 {
+	AnimatBase::SimStopping();
+
 	ExitIOThread();
 }
 

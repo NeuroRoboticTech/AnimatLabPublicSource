@@ -80,6 +80,7 @@ namespace VortexAnimatSim
 
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 			virtual void ChildOffsetMatrix(osg::Matrix osgMT);
+			virtual float GetCurrentVxJointPos();
 
 		public:
 			VsJoint();

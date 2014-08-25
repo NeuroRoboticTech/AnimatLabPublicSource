@@ -721,6 +721,8 @@ void Joint::AddExternalNodeInput(int iTargetDataType, float fltInput) {}
 
 void Joint::ResetSimulation()
 {
+	BodyPart::ResetSimulation();
+
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_ResetSimulation();
 

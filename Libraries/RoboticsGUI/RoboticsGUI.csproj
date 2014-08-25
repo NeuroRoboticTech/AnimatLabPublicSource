@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\RoboticsPhysicsEngine.cs" />
     <Compile Include="DataObjects\RobotInterfaces\LANWirelessInterface.cs" />
+    <Compile Include="DataObjects\RobotInterfaces\StandardInterface.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSB.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBHingeServo.cs" />

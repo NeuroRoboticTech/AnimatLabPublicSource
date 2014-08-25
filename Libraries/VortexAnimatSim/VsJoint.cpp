@@ -81,6 +81,17 @@ void VsJoint::UpdatePosition()
 	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 }
 
+float VsJoint::GetCurrentVxJointPos()
+{
+	float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
+	if(m_vxJoint->isAngular(m_iCoordID) == true)
+		return m_vxJoint->getCoordinateCurrentPosition (m_iCoordID); 
+	else
+		return m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits; 
+}
+
 void VsJoint::Physics_CollectData()
 {
 	if(m_lpThisJoint && m_vxJoint)

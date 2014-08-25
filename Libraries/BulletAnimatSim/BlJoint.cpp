@@ -122,39 +122,45 @@ void BlJoint::DeletePhysics(bool bIncludeChildren)
 	m_btJoint = NULL;
 }
 
+float BlJoint::GetCurrentBtPositionScaled()
+{
+	float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
+    float fltCurrentJointPos = GetCurrentBtPosition();
+
+    //if(GetSimulator()->Time() > 5.64)
+    //    fltCurrentJointPos = fltCurrentJointPos;
+
+    //If this joint uses radians then at the +/- PI boundaries the sign can flip. 
+    //So we need to keep an internal representation of its position and update this with a delta of the change in position
+    // that the physics engine is telling us. This allows the joint position to roll-over past 2PI so we have a steady velocity
+    // and position without discontinuties. It also allows us to see how many times the joint has finished a complete revolution.
+    if(m_lpThisJoint->UsesRadians())
+    {
+        int iPrevPosSign = Std_Sign(m_fltPrevBtJointPos);
+        float fltDelta = 0;
+        if(Std_Sign(fltCurrentJointPos) != iPrevPosSign && fabs(fltCurrentJointPos - m_fltPrevBtJointPos) > 0.1)
+            fltDelta = fltCurrentJointPos - (-m_fltPrevBtJointPos);
+        else
+            fltDelta = fltCurrentJointPos - m_fltPrevBtJointPos;
+
+        fltCurrentJointPos =  m_lpThisJoint->JointPosition() + fltDelta;
+    }
+
+	if(!m_lpThisJoint->UsesRadians())
+        fltCurrentJointPos *= fltDistanceUnits;
+
+	return fltCurrentJointPos;
+}
+
 void BlJoint::Physics_CollectData()
 {
     OsgJoint::Physics_CollectData();
 
 	if(m_lpThisJoint && m_btJoint && m_lpThisJoint->GetSimulator())
 	{
-		float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-		float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-
-        float fltCurrentJointPos = GetCurrentBtPosition();
-
-        //if(GetSimulator()->Time() > 5.64)
-        //    fltCurrentJointPos = fltCurrentJointPos;
-
-        //If this joint uses radians then at the +/- PI boundaries the sign can flip. 
-        //So we need to keep an internal representation of its position and update this with a delta of the change in position
-        // that the physics engine is telling us. This allows the joint position to roll-over past 2PI so we have a steady velocity
-        // and position without discontinuties. It also allows us to see how many times the joint has finished a complete revolution.
-        if(m_lpThisJoint->UsesRadians())
-        {
-            int iPrevPosSign = Std_Sign(m_fltPrevBtJointPos);
-            float fltDelta = 0;
-            if(Std_Sign(fltCurrentJointPos) != iPrevPosSign && fabs(fltCurrentJointPos - m_fltPrevBtJointPos) > 0.1)
-                fltDelta = fltCurrentJointPos - (-m_fltPrevBtJointPos);
-            else
-                fltDelta = fltCurrentJointPos - m_fltPrevBtJointPos;
-
-           fltCurrentJointPos =  m_lpThisJoint->JointPosition() + fltDelta;
-        }
-
-		if(!m_lpThisJoint->UsesRadians())
-            fltCurrentJointPos *= fltDistanceUnits;
-
+		float fltCurrentJointPos = GetCurrentBtPositionScaled();
         float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/(m_lpThisJoint->GetSimulator()->PhysicsTimeStep());
 
         m_fltPrevBtJointPos = GetCurrentBtPosition();

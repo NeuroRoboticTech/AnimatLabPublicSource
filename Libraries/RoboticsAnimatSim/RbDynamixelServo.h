@@ -159,7 +159,7 @@ protected:
 	///Maximum value that can be set for the velocity
 	int m_iMaxVelocityFP; 
 
-	///Stores the maximum rot/min for this motor
+	///Stores the maximum rot/min for this motor. The max rotations (rad) per fixed point unit.
 	float m_fltMaxRotMin;
 
 	///Stores the maximum rad/sec for this motor

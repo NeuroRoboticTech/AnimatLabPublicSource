@@ -729,6 +729,8 @@ If the module is NULL then the target for this adapter is the physics engine and
 **/
 void Adapter::TimeStepModified()
 {
+	Node::TimeStepModified();
+
 	SetDelayBufferSize();
 	SynchUpdateInterval(m_fltSynchUpdateInterval);
 	SynchUpdateStartInterval(m_fltSynchUpdateStartInterval);
@@ -751,6 +753,8 @@ bool Adapter::NeedsRobotSynch()
 
 void Adapter::ResetSimulation()
 {
+	Node::ResetSimulation();
+
 	m_fltNextVal = 0;
 	m_fltCalculatedVal = 0;
 	m_iSynchCount = 0;

@@ -219,6 +219,8 @@ void Stomach::CreateParts()
 
 void Stomach::ResetSimulation()
 {
+	RigidBody::ResetSimulation();
+
 	m_fltEnergyLevel = m_fltInitEnergyLevel;
 	m_fltConsumptionRate = 0;
 	m_fltAdapterConsumptionRate = 0;

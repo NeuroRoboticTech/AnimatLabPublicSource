@@ -42,7 +42,7 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_iMinVelocityFP = 1;
 	m_iMaxVelocityFP = 1023;
-	m_fltMaxRotMin = 0.111;
+	m_fltMaxRotMin = 0.111;  //max rotations (rad) per fixed point unit.
 	m_iLastGoalVelocity = -10000;
 
 	m_fltMinAngle = -150;
@@ -871,8 +871,8 @@ void RbDynamixelServo::InitMotorData()
 	if(iRetDelay > 1)
 		SetReturnDelayTime_FP(1);
 
-	if(iRetTorqueLimit != 340)
-		SetTorqueLimit_FP(340);
+	if(iRetTorqueLimit != 1023)
+		SetTorqueLimit_FP(1023);
 
 	SetMaximumVelocity();
 	SetGoalPosition(0);

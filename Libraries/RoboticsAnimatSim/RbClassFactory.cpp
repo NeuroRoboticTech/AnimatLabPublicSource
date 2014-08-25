@@ -894,7 +894,11 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "LANWIRELESSINTERFACE" || strType == "DEFAULT")
+	if(strType == "STANDARDINTERFACE" || strType == "DEFAULT")
+	{
+		lpInterface = new AnimatSim::Robotics::RobotInterface;
+	}
+	else if(strType == "LANWIRELESSINTERFACE")
 	{
 		lpInterface = new RbLANWirelessInterface;
 	}

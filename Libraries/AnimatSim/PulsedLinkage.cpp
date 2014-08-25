@@ -149,6 +149,7 @@ void PulsedLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void PulsedLinkage::ResetSimulation()
 {
+	RemoteControlLinkage::ResetSimulation();
 	m_iMatches = 0; 
 	m_aryPulses.clear();
 }
