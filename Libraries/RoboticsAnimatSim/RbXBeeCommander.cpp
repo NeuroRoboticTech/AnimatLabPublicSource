@@ -384,7 +384,7 @@ void RbXBeeCommander::StepIO()
 		bool bFound = false;
 
 		////Test Code
-		//m_ButtonData[BUT_ID_WALKV].m_fltValue = -127;
+		//m_ButtonData[BUT_ID_WALKH].m_fltValue = 50;
 
 		while(m_Port.available() > 0 && !bFound)
 		{

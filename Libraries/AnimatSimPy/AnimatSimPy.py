@@ -4273,12 +4273,17 @@ class BodyPart(Node,MovableItem):
     def AddRobotPartInterface(self, *args): return _AnimatSimPy.BodyPart_AddRobotPartInterface(self, *args)
     def RemoveRobotPartInterface(self, *args): return _AnimatSimPy.BodyPart_RemoveRobotPartInterface(self, *args)
     def FindRobotPartListIndex(self, *args): return _AnimatSimPy.BodyPart_FindRobotPartListIndex(self, *args)
+    def SynchWithRobot(self, *args): return _AnimatSimPy.BodyPart_SynchWithRobot(self, *args)
+    def SynchUpdateInterval(self, *args): return _AnimatSimPy.BodyPart_SynchUpdateInterval(self, *args)
     def Resize(self): return _AnimatSimPy.BodyPart_Resize(self)
     def SetSystemPointers(self, *args): return _AnimatSimPy.BodyPart_SetSystemPointers(self, *args)
     def GetDataPointer(self, *args): return _AnimatSimPy.BodyPart_GetDataPointer(self, *args)
     def SetData(self, *args): return _AnimatSimPy.BodyPart_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.BodyPart_QueryProperties(self, *args)
     def UpdateExtraData(self): return _AnimatSimPy.BodyPart_UpdateExtraData(self)
+    def Initialize(self): return _AnimatSimPy.BodyPart_Initialize(self)
+    def ResetSimulation(self): return _AnimatSimPy.BodyPart_ResetSimulation(self)
+    def TimeStepModified(self): return _AnimatSimPy.BodyPart_TimeStepModified(self)
     def Selected(self, *args): return _AnimatSimPy.BodyPart_Selected(self, *args)
     def AddBodyClicked(self, *args): return _AnimatSimPy.BodyPart_AddBodyClicked(self, *args)
     def VisualSelectionModeChanged(self, *args): return _AnimatSimPy.BodyPart_VisualSelectionModeChanged(self, *args)
@@ -7318,11 +7323,8 @@ class RemoteControlLinkage(AnimatBase):
     __swig_getmethods__ = {}
     for _s in [AnimatBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, RemoteControlLinkage, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _AnimatSimPy.new_RemoteControlLinkage()
-        try: self.this.append(this)
-        except: self.this = this
     __swig_destroy__ = _AnimatSimPy.delete_RemoteControlLinkage
     __del__ = lambda self : None;
     __swig_getmethods__["CastToDerived"] = lambda x: _AnimatSimPy.RemoteControlLinkage_CastToDerived
@@ -7366,7 +7368,6 @@ class PassThroughLinkage(RemoteControlLinkage):
     def SetGain(self, *args): return _AnimatSimPy.PassThroughLinkage_SetGain(self, *args)
     def SetData(self, *args): return _AnimatSimPy.PassThroughLinkage_SetData(self, *args)
     def QueryProperties(self, *args): return _AnimatSimPy.PassThroughLinkage_QueryProperties(self, *args)
-    def StepSimulation(self): return _AnimatSimPy.PassThroughLinkage_StepSimulation(self)
     def Load(self, *args): return _AnimatSimPy.PassThroughLinkage_Load(self, *args)
 PassThroughLinkage_swigregister = _AnimatSimPy.PassThroughLinkage_swigregister
 PassThroughLinkage_swigregister(PassThroughLinkage)

@@ -47,6 +47,7 @@ RemoteControlLinkage::RemoteControlLinkage(void)
 	m_lpParentRemoteControl = NULL;
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
+	m_lpExternalCurrent = NULL;
 	m_iTargetDataType = -1;
 	m_fltAppliedCurrent = 0;
 }
@@ -56,6 +57,8 @@ RemoteControlLinkage::~RemoteControlLinkage(void)
 try
 {
 	m_lpSourceData = NULL;
+	m_lpTargetNode = NULL;
+	m_lpExternalCurrent = NULL;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RemoteControlLinkage\r\n", "", -1, false, true);}
@@ -255,13 +258,45 @@ void RemoteControlLinkage::Initialize()
 		m_lpSourceData = NULL;
 	}
 
+	if(m_lpTargetNode)
+		m_lpExternalCurrent = m_lpTargetNode->GetDataPointer("ExternalCurrent");
+	else
+		m_lpExternalCurrent = NULL;
+
 	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
 	//systems use.
-	if(m_lpTargetNode && !Std_IsBlank(m_strTargetDataTypeID))
-		m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataTypeID);
+	//if(m_lpTargetNode && !Std_IsBlank(m_strTargetDataTypeID))
+	//	m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataTypeID);
 
 	if(m_lpParentRemoteControl && !Std_IsBlank(m_strSourceDataTypeID))
 		m_lpSourceData = m_lpParentRemoteControl->GetDataPointer(m_strSourceDataTypeID);
+	else
+		m_lpSourceData = NULL;
+}
+
+void RemoteControlLinkage::ApplyCurrent()
+{
+	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_lpExternalCurrent)
+	{	
+		////Test Code
+		//int i=5;
+		//if(Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85") //   && GetSimulator()->Time() >= 0.2  && fabs(*m_lpSourceData) > 0
+		//	i=6;
+
+		//Remove any previously applied current from this linkage.
+		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltAppliedCurrent;
+
+		//Calculate the new current to apply.
+		m_fltAppliedCurrent = CalculateAppliedCurrent();
+
+		//Add the new applied current
+		*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltAppliedCurrent;
+	}
+}
+
+void RemoteControlLinkage::StepSimulation()
+{
+	ApplyCurrent();
 }
 
 void RemoteControlLinkage::Load(CStdXml &oXml)

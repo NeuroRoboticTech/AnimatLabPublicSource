@@ -211,7 +211,7 @@ void PulsedLinkage::StepIO()
 
 void PulsedLinkage::StepSimulation()
 {
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1)
+	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_lpExternalCurrent)
 	{
 		//Set the reporting value
 		m_fltMatchesReport = m_iMatches;
@@ -240,10 +240,7 @@ void PulsedLinkage::StepSimulation()
 			m_AccessMatchesMutex.unlock();
 		}
 
-		//Now loop through the pulses list and add up the total current to apply
-		m_fltAppliedCurrent = CalculateAppliedCurrent();
-
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltAppliedCurrent);
+		ApplyCurrent();
 
 		if(m_aryPulses.size() > 0)
 			CullPulses();

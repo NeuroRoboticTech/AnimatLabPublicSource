@@ -79,7 +79,7 @@ catch(...)
 **/
 void BodyPart::UpdateData()
 {
-	if(m_lpPhysicsMovableItem && NeedsRobotSynch())
+	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_CollectData();
 }
 

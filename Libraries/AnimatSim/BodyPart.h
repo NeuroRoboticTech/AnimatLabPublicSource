@@ -48,8 +48,6 @@ namespace AnimatSim
 			int m_iSynchCount;
 
 			virtual void UpdateData();
-			
-			virtual bool NeedsRobotSynch();
 
 		public:
 			BodyPart(void);
@@ -84,6 +82,7 @@ namespace AnimatSim
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
             virtual void UpdateExtraData();
+			virtual bool NeedsRobotSynch();
 
 #pragma endregion
 

@@ -98,8 +98,9 @@ void VsJoint::Physics_CollectData()
 	{
 		UpdatePosition();
 
+		//Only update the joints data when we need to do robot synch, but still update our internal data.
 		//Only attempt to make these calls if the coordinate ID is a valid number.
-		if(m_iCoordID >= 0)
+		if(m_iCoordID >= 0) //&& m_lpThisJoint->NeedsRobotSynch()
 		{
 			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();

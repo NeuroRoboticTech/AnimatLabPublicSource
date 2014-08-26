@@ -131,18 +131,12 @@ void PassThroughLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 
 #pragma endregion
 
-void PassThroughLinkage::StepSimulation()
+float PassThroughLinkage::CalculateAppliedCurrent()
 {
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
-	{
-		////Test Code
-		//int i=5;
-		//if(Std_ToLower(m_strID) == "658a922d-f752-4202-adca-0893f7f9c919" && fabs(*m_lpSourceData) > 0  && GetSimulator()->Time() >= 0.2) // 
-		//	i=6;
-
-		m_fltAppliedCurrent = m_lpGain->CalculateGain(*m_lpSourceData);
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltAppliedCurrent);
-	}
+	if(m_lpGain)
+		return m_lpGain->CalculateGain(*m_lpSourceData);
+	else
+		return 0;
 }
 
 void PassThroughLinkage::Load(CStdXml &oXml)

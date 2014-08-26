@@ -141,6 +141,10 @@ Simulator::Simulator()
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
 	m_fltRemainingStepTime = 0;
+	m_fltTotalMicroSleepTime = 0;
+	m_fltTotalMicroSleepCount = 0;
+	m_fltTotalMicroWaitTime = 0;
+	m_fltTotalMicroWaitCount = 0;
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
@@ -2199,6 +2203,10 @@ void Simulator::Reset()
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
 	m_fltRemainingStepTime = 0;
+	m_fltTotalMicroSleepTime = 0;
+	m_fltTotalMicroSleepCount = 0;
+	m_fltTotalMicroWaitTime = 0;
+	m_fltTotalMicroWaitCount = 0;
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
@@ -2364,6 +2372,7 @@ void Simulator::MicroWait(unsigned int iMicroTime)
 		iRemaining = iMicroTime - (unsigned int) TimerDiff_u(lStart, GetTimerTick());
 
 		iCount++;
+		m_fltTotalMicroWaitCount++;
 		if(iCount == 1000)
 			THROW_ERROR(Al_Err_lTimedOutInMicroWait, Al_Err_strTimedOutInMicroWait);
 	}
@@ -2390,11 +2399,22 @@ void Simulator::StepPlaybackControl()
 			if(dblRemainingTime > 0)
 			{
 				if(dblRemainingTime > m_fltDesiredFrameStep)
+				{
+					m_fltTotalMicroSleepTime+=m_fltDesiredFrameStep;
+					m_fltTotalMicroSleepCount++;
 					MicroSleep(m_fltDesiredFrameStep*1000000);
+				}
 				else if(dblRemainingTime > 100e-6)
+				{
+					m_fltTotalMicroSleepTime+=dblRemainingTime;
+					m_fltTotalMicroSleepCount++;
 					MicroSleep(dblRemainingTime*1000000);
+				}
 				else
+				{
+					m_fltTotalMicroWaitTime+=dblRemainingTime;
 					MicroWait(dblRemainingTime*1000000);
+				}
 			}
 
 			StepVideoFrame();
@@ -2776,6 +2796,10 @@ void Simulator::RecordSimulationStepTimer()
 	m_fltSimulationRealTimeToStep = (float) TimerDiff_s(m_lStepStartTick, m_lStepSimEndTick);
 
 	m_fltPlaybackAdditionRealTimeToStep = 0;
+	m_fltTotalMicroSleepTime = 0;
+	m_fltTotalMicroSleepCount = 0;
+	m_fltTotalMicroWaitTime = 0;
+	m_fltTotalMicroWaitCount = 0;
 }
 
 void Simulator::RecordSimulationTotalStepTimer()
@@ -4590,6 +4614,14 @@ float *Simulator::GetDataPointer(const std::string &strDataType)
 		lpData = &m_fltMouseSpringDampingForceMagnitude;
 	else if(strType == "MOUSESPRINGLENGTHMAGNITUDE")
 		lpData = &m_fltMouseSpringLengthMagnitude;
+	else if(strType == "TOTALMICROSLEEPTIME")
+		lpData = &m_fltTotalMicroSleepTime;
+	else if(strType == "TOTALMICROSLEEPCOUNT")
+		lpData = &m_fltTotalMicroSleepCount;
+	else if(strType == "TOTALMICROWAITTIME")
+		lpData = &m_fltTotalMicroWaitTime;
+	else if(strType == "TOTALMICROWAITCOUNT")
+		lpData = &m_fltTotalMicroWaitCount;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 

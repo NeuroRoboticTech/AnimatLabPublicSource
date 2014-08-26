@@ -27,7 +27,7 @@ Namespace DataObjects
             Protected m_strSourceDataTypeID As String = ""
             Protected m_strTargetDataTypeID As String = ""
             Protected m_thSourceDataTypes As New TypeHelpers.DataTypeID(Me)
-            Protected m_thTargetDataTypes As New TypeHelpers.DataTypeID(Me)
+            'Protected m_thTargetDataTypes As New TypeHelpers.DataTypeID(Me)
 
 #End Region
 
@@ -66,18 +66,18 @@ Namespace DataObjects
                 End Set
             End Property
 
-            <Browsable(False)> _
-            Public Overridable Property TargetDataTypes() As TypeHelpers.DataTypeID
-                Get
-                    Return m_thTargetDataTypes
-                End Get
-                Set(ByVal Value As TypeHelpers.DataTypeID)
-                    If Not Value Is Nothing Then
-                        m_thTargetDataTypes = Value
-                        Me.SetSimData("TargetDataTypeID", m_thTargetDataTypes.ID, True)
-                    End If
-                End Set
-            End Property
+            '<Browsable(False)> _
+            'Public Overridable Property TargetDataTypes() As TypeHelpers.DataTypeID
+            '    Get
+            '        Return m_thTargetDataTypes
+            '    End Get
+            '    Set(ByVal Value As TypeHelpers.DataTypeID)
+            '        If Not Value Is Nothing Then
+            '            m_thTargetDataTypes = Value
+            '            Me.SetSimData("TargetDataTypeID", m_thTargetDataTypes.ID, True)
+            '        End If
+            '    End Set
+            'End Property
 
 #Region "DragObject Properties"
 
@@ -171,7 +171,7 @@ Namespace DataObjects
 
                 m_thLinkedNode = DirectCast(OrigNode.m_thLinkedNode.Clone(Me, bCutData, Nothing), TypeHelpers.LinkedNode)
                 m_thSourceDataTypes = DirectCast(OrigNode.m_thSourceDataTypes.Clone(Me, bCutData, Nothing), TypeHelpers.DataTypeID)
-                m_thTargetDataTypes = DirectCast(OrigNode.m_thTargetDataTypes.Clone(Me, bCutData, Nothing), TypeHelpers.DataTypeID)
+                'm_thTargetDataTypes = DirectCast(OrigNode.m_thTargetDataTypes.Clone(Me, bCutData, Nothing), TypeHelpers.DataTypeID)
             End Sub
 
 #Region " Workspace TreeView "
@@ -227,10 +227,10 @@ Namespace DataObjects
                                             GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                             GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
 
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Data Type ID", GetType(AnimatGUI.TypeHelpers.DataTypeID), "TargetDataTypes", _
-                                            "Properties", "Sets the type of data to add to on the target.", m_thTargetDataTypes, _
-                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
-                                            GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
+                'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Data Type ID", GetType(AnimatGUI.TypeHelpers.DataTypeID), "TargetDataTypes", _
+                '                            "Properties", "Sets the type of data to add to on the target.", m_thTargetDataTypes, _
+                '                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                '                            GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
 
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linked Node", GetType(AnimatGUI.TypeHelpers.LinkedNode), "LinkedNode", _
                                             "Properties", "Sets the node that this associated with this linkage.", m_thLinkedNode, _
@@ -263,11 +263,11 @@ Namespace DataObjects
 #End Region
 
             Protected Overridable Sub SetTargetDataTypes()
-                If Not m_thLinkedNode.Node Is Nothing AndAlso Not m_thLinkedNode.Node.IncomingDataTypes Is Nothing Then
-                    Me.TargetDataTypes = DirectCast(m_thLinkedNode.Node.IncomingDataTypes.Clone(m_thLinkedNode.Node.IncomingDataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
-                Else
-                    Me.TargetDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
-                End If
+                'If Not m_thLinkedNode.Node Is Nothing AndAlso Not m_thLinkedNode.Node.IncomingDataTypes Is Nothing Then
+                '    Me.TargetDataTypes = DirectCast(m_thLinkedNode.Node.IncomingDataTypes.Clone(m_thLinkedNode.Node.IncomingDataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
+                'Else
+                '    Me.TargetDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
+                'End If
             End Sub
 
             Protected Sub ConnectLinkedNodeEvents()
@@ -305,15 +305,15 @@ Namespace DataObjects
                         End If
                     End If
 
-                    If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
-                        m_thTargetDataTypes = DirectCast(Me.LinkedNode.Node.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+                    'If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                    '    m_thTargetDataTypes = DirectCast(Me.LinkedNode.Node.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
 
-                        If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
-                            If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
-                                Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
-                            End If
-                        End If
-                    End If
+                    '    If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
+                    '        If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
+                    '            Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
+                    '        End If
+                    '    End If
+                    'End If
 
                     m_bIsInitialized = True
                 End If
@@ -331,7 +331,7 @@ Namespace DataObjects
                 m_strLinkedNodeID = Util.LoadID(oXml, "LinkedNode", True, "")
 
                 m_strSourceDataTypeID = Util.LoadID(oXml, "SourceDataType", True, "")
-                m_strTargetDataTypeID = Util.LoadID(oXml, "TargetDataType", True, "")
+                'm_strTargetDataTypeID = Util.LoadID(oXml, "TargetDataType", True, "")
 
                 oXml.OutOfElem()
 
@@ -355,9 +355,9 @@ Namespace DataObjects
                     oXml.AddChildElement("SourceDataTypeID", m_thSourceDataTypes.ID)
                 End If
 
-                If Not m_thTargetDataTypes Is Nothing Then
-                    oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
-                End If
+                'If Not m_thTargetDataTypes Is Nothing Then
+                '    oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
+                'End If
 
                 oXml.OutOfElem()
 
@@ -380,9 +380,9 @@ Namespace DataObjects
                     oXml.AddChildElement("SourceDataTypeID", m_thSourceDataTypes.ID)
                 End If
 
-                If Not m_thTargetDataTypes Is Nothing Then
-                    oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
-                End If
+                'If Not m_thTargetDataTypes Is Nothing Then
+                '    oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
+                'End If
 
                 oXml.OutOfElem()
 

@@ -13,6 +13,7 @@ namespace AnimatSim
 			Gain *m_lpGain;
 
 			virtual void AddGain(std::string strXml);
+			virtual float CalculateAppliedCurrent();
 
 		public:
 			PassThroughLinkage(void);
@@ -26,7 +27,6 @@ namespace AnimatSim
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
-			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 
