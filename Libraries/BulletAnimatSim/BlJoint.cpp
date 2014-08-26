@@ -163,15 +163,15 @@ void BlJoint::Physics_CollectData()
 		float fltCurrentJointPos = GetCurrentBtPositionScaled();
         float fltJointVel = (fltCurrentJointPos - m_fltPrevJointPos)/(m_lpThisJoint->GetSimulator()->PhysicsTimeStep());
 
-        m_fltPrevBtJointPos = GetCurrentBtPosition();
-        m_fltPrevJointPos = fltCurrentJointPos;
-
 		//Only update the joints data when we need to do robot synch, but still update our internal data.
 		//if(m_lpThisJoint->NeedsRobotSynch())
 		//{
 			m_lpThisJoint->JointPosition(fltCurrentJointPos); 
 			m_lpThisJoint->JointVelocity(fltJointVel);
 		//}
+
+        m_fltPrevBtJointPos = GetCurrentBtPosition();
+        m_fltPrevJointPos = fltCurrentJointPos;
     }
 }
 

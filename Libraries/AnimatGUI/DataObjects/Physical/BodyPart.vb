@@ -166,23 +166,23 @@ Namespace DataObjects.Physical
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
-            'Only show this stuff if there is a robot interface defined for it.
-            If Not Me.ParentStructure Is Nothing AndAlso Util.IsTypeOf(Me.ParentStructure.GetType, GetType(Organism), False) Then
-                Dim doOrg As Organism = DirectCast(Me.ParentStructure, Organism)
+            ''Only show this stuff if there is a robot interface defined for it.
+            'If Not Me.ParentStructure Is Nothing AndAlso Util.IsTypeOf(Me.ParentStructure.GetType, GetType(Organism), False) Then
+            '    Dim doOrg As Organism = DirectCast(Me.ParentStructure, Organism)
 
-                If Not doOrg Is Nothing AndAlso Not doOrg.RobotInterface Is Nothing Then
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SynchWithRobot", GetType(Boolean), "SynchWithRobot", _
-                                                "Robot Properties", "Determines whether this part is synched with a robot part during simulation." & _
-                                                "Note that this will only be applied if the synch with robot setting on the robot interface is true also.", m_bSynchWithRobot))
+            '    If Not doOrg Is Nothing AndAlso Not doOrg.RobotInterface Is Nothing Then
+            '        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SynchWithRobot", GetType(Boolean), "SynchWithRobot", _
+            '                                    "Robot Properties", "Determines whether this part is synched with a robot part during simulation." & _
+            '                                    "Note that this will only be applied if the synch with robot setting on the robot interface is true also.", m_bSynchWithRobot))
 
-                    Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snSynchUpdateInterval.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Interval", pbNumberBag.GetType(), "SynchUpdateInterval", _
-                                                "Robot Properties", "Sets how often this part is updated when simulating a robot. " & _
-                                                "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            '        Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snSynchUpdateInterval.Properties
+            '        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Interval", pbNumberBag.GetType(), "SynchUpdateInterval", _
+            '                                    "Robot Properties", "Sets how often this part is updated when simulating a robot. " & _
+            '                                    "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+            '                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                End If
-            End If
+            '    End If
+            'End If
 
         End Sub
 
