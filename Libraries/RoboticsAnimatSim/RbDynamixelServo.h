@@ -223,17 +223,24 @@ protected:
 	///If we are only setting values in it then there is no reason to do an update for it.
 	bool m_bQueryMotorData;
 	
-	//Hi constraint limit value
+	///Hi constraint limit value
 	float m_fltHiLimit;
 
-	//Low constraint limit value
+	///Low constraint limit value
 	float m_fltLowLimit;
 
-	//Used to report back the IO position of the servo at each step
+	///Used to report back the IO position of the servo at each step
 	float m_fltIOPos;
 
-	//Used to report back the IO velocity of the servo at each step
+	///Used to report back the IO velocity of the servo at each step
 	float m_fltIOVelocity;
+
+	///Used to keep track of whether we need to set the stop position when doing
+	///velocity control and the velocity is set to 0
+	bool m_bNeedSetVelStopPos;
+
+	///Keeps track of whether we have already set velocity to stop when doing velocity control
+	bool m_bVelStopPosSet;
 
     MotorizedJoint *m_lpMotorJoint;
 
@@ -279,6 +286,8 @@ protected:
 	virtual void Load(StdUtils::CStdXml &oXml);
 
 	virtual void GetLimitValues();
+
+	virtual void ResetSimulation();
 
 public:
 	RbDynamixelServo();
@@ -346,6 +355,8 @@ public:
 	virtual void SetGoalPosition(float fltPos);
 	virtual void SetNextGoalPosition(float fltPos);
 	virtual float GetGoalPosition();
+
+	virtual void Stop();
 
 	virtual int LastGoalPosition_FP();
 

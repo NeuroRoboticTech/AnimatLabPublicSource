@@ -101,6 +101,8 @@ public:
 
 	virtual float QuantizeServoPosition(float fltPos);
 	virtual float QuantizeServoVelocity(float fltVel);
+	
+	virtual void Stop();
 
 	virtual void InitMotorData();
 	virtual void WaitForMoveToFinish();

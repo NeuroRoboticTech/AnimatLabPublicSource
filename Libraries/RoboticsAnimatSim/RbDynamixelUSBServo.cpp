@@ -225,7 +225,7 @@ void RbDynamixelUSBServo::StepSimulation()
 void RbDynamixelUSBServo::ResetSimulation()
 {
 	AnimatSim::Robotics::RobotPartInterface::ResetSimulation();
-	m_fltReadParamTime = 0;
+	RbDynamixelServo::ResetSimulation();
 }
 
 void RbDynamixelUSBServo::Load(StdUtils::CStdXml &oXml)

@@ -292,6 +292,13 @@ void RbFirmataDynamixelServo::DynamixelTransmitError(const int &iCmd, const int 
 {
 	if(iServoID == m_iServoID)
 	{
+		switch(iCmd)
+		{
+		case SYSEX_DYNAMIXEL_STOP:
+			Stop();
+			break;
+		}
+
 		std::cout << "Transmit error Cmd: " << iCmd << ", servo: " << iServoID << "\r\n";
 	}
 }
@@ -342,6 +349,27 @@ void RbFirmataDynamixelServo::AddMotorUpdate(int iPos, int iSpeed)
 		m_lpFirmata->sendDynamixelSynchMoveAdd(m_iServoID, iPos, iSpeed);
 
 	m_fltIOValue = iSpeed;
+}
+
+///For the Firmata dynamixel we do not need to try and set the current position. It is more
+///efficient to use the stop command built into the ArbotixFirmata sketch.
+void RbFirmataDynamixelServo::Stop()
+{
+	if(!m_lpSim->InSimulation() && m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelStop(m_iServoID);
+
+		//Set the next and goal pos to the current pos so we do not
+		//attempt to resend a servo command.
+		m_iNextGoalPos = m_iPresentPos;
+		m_iLastGoalPos = m_iPresentPos;
+
+		//Do a similar thing with the velocity values so it thinks it is at 0 velocity.
+		m_iNextGoalVelocity = -1;
+		m_iLastGoalVelocity = 1;
+	}
+	else
+		RbDynamixelServo::Stop();
 }
 
 void RbFirmataDynamixelServo::Initialize()
@@ -401,9 +429,7 @@ void RbFirmataDynamixelServo::StepSimulation()
 void RbFirmataDynamixelServo::ResetSimulation()
 {
 	RbFirmataPart::ResetSimulation();
-	m_fltReadParamTime = 0;
-	m_fltIOPos = 0;
-	m_fltIOVelocity = 0;
+	RbDynamixelServo::ResetSimulation();
 }
 
 void RbFirmataDynamixelServo::Load(StdUtils::CStdXml &oXml)

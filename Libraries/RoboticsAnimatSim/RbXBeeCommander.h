@@ -14,20 +14,20 @@
 #define BUT_RT      0x40
 #define BUT_LT      0x80
 
-#define BUT_ID_WALKV	1
-#define BUT_ID_WALKH	2
-#define BUT_ID_LOOKV	3
-#define BUT_ID_LOOKH	4
-#define BUT_ID_PAN		5
-#define BUT_ID_TILT		6
-#define BUT_ID_R1		7
-#define BUT_ID_R2		8
-#define BUT_ID_R3		9
-#define BUT_ID_L4		10
-#define BUT_ID_L5		11
-#define BUT_ID_L6		12
-#define BUT_ID_RT		13
-#define BUT_ID_LT		14
+#define BUT_ID_WALKV	0
+#define BUT_ID_WALKH	1
+#define BUT_ID_LOOKV	2
+#define BUT_ID_LOOKH	3
+#define BUT_ID_PAN		4
+#define BUT_ID_TILT		5
+#define BUT_ID_R1		6
+#define BUT_ID_R2		7
+#define BUT_ID_R3		8
+#define BUT_ID_L4		9
+#define BUT_ID_L5		10
+#define BUT_ID_L6		11
+#define BUT_ID_RT		12
+#define BUT_ID_LT		13
 #define BUT_ID_TOTAL	14
 
 namespace RoboticsAnimatSim

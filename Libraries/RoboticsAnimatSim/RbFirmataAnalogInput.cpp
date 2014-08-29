@@ -50,7 +50,7 @@ void RbFirmataAnalogInput::StepIO(int iPartIdx)
 		int iValue = m_lpFirmata->getAnalog(m_iIOComponentID);
 		if(iValue != -1 && m_iIOValue != iValue)
 		{
-			std::cout << "Analog In: " << iValue << "\r\n";
+			//std::cout << "Analog In: " << iValue << "\r\n";
 
 			m_iIOValue = iValue;
 			m_bChanged = true;
