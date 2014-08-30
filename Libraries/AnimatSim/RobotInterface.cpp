@@ -247,6 +247,9 @@ void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
 
     RobotIOControl *lpControl = m_aryIOControls[iPos];
 
+	if(lpControl)
+		lpControl->ShutdownIO();
+
 	m_aryIOControls.RemoveAt(iPos);
 }
 

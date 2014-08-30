@@ -267,6 +267,7 @@ bool RbXBeeCommander::OpenIO()
 		THROW_PARAM_ERROR(Rb_Err_lFailedUartSBeeConnection, Rb_Err_strFailedUartSBeeConnection, "ComPort", m_strPort);
 
 	return bOpen;
+	//return false;
 }
 
 void RbXBeeCommander::CloseIO()

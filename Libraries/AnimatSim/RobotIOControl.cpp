@@ -261,7 +261,7 @@ void RobotIOControl::StartIOThread()
 	if(!bWaitRet)
 	{
 		std::cout << "IO thread Timed out\r\n";
-		ExitIOThread();
+		ShutdownIO();
 		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 	}
 
@@ -323,8 +323,6 @@ void RobotIOControl::ExitIOThread()
 #else
 	m_ioThread.join();
 #endif
-
-		ShutdownIO();
 	}
 }
 
@@ -457,6 +455,8 @@ void RobotIOControl::ShutdownIO()
 			if(m_aryParts[iIndex]->Enabled())
 				m_aryParts[iIndex]->ShutdownIO();
 	}
+
+	ExitIOThread();
 }
 
 void RobotIOControl::Initialize()
@@ -506,7 +506,7 @@ void RobotIOControl::SimStopping()
 {
 	AnimatBase::SimStopping();
 
-	ExitIOThread();
+	ShutdownIO();
 }
 
 void RobotIOControl::StepSimulation()
