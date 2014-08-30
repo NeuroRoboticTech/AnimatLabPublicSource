@@ -35,6 +35,13 @@ Namespace DataObjects
 
 #Region " Properties "
 
+            'For the moment lets turn this off because embedded python scripting is just not ready.
+            Public Overrides ReadOnly Property AllowUserAdd As Boolean
+                Get
+                    Return False
+                End Get
+            End Property
+
             Public Overrides ReadOnly Property WorkspaceImageName As String
                 Get
                     Return "AnimatGUI.PythonSmall.gif"

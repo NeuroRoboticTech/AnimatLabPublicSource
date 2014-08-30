@@ -86,13 +86,6 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property AllowUserAdd() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overridable ReadOnly Property TotalSubChildren() As Integer
             Get
                 Return 0

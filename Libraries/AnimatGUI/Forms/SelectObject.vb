@@ -200,23 +200,25 @@ Namespace Forms
                 Dim iMaxHeight As Integer = imgDefault.Height
                 Dim aryList As New ArrayList
                 For Each doObject As Framework.DataObject In m_aryObjects
-                    If Not doObject.ButtonImage Is Nothing Then
-                        m_mgrIconImages.AddImage(doObject.ButtonImageName, doObject.ButtonImage)
-                        If doObject.ButtonImage.Width > iMaxWidth Then iMaxWidth = doObject.ButtonImage.Width
-                        If doObject.ButtonImage.Height > iMaxHeight Then iMaxHeight = doObject.ButtonImage.Height
+                    If doObject.AllowUserAdd Then
+                        If Not doObject.ButtonImage Is Nothing Then
+                            m_mgrIconImages.AddImage(doObject.ButtonImageName, doObject.ButtonImage)
+                            If doObject.ButtonImage.Width > iMaxWidth Then iMaxWidth = doObject.ButtonImage.Width
+                            If doObject.ButtonImage.Height > iMaxHeight Then iMaxHeight = doObject.ButtonImage.Height
+                        End If
+
+                        Dim liItem As New ListViewItem
+                        liItem.Text = doObject.Name
+
+                        If Not doObject.ButtonImage Is Nothing Then
+                            liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doObject.ButtonImageName)
+                        Else
+                            liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
+                        End If
+
+                        liItem.Tag = doObject
+                        aryList.Add(liItem)
                     End If
-
-                    Dim liItem As New ListViewItem
-                    liItem.Text = doObject.Name
-
-                    If Not doObject.ButtonImage Is Nothing Then
-                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doObject.ButtonImageName)
-                    Else
-                        liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
-                    End If
-
-                    liItem.Tag = doObject
-                    aryList.Add(liItem)
                 Next
 
                 'I have to sort the list like this because when I set the large imag list next it resorts it badly. So I 

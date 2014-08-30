@@ -292,6 +292,13 @@ Namespace Framework
         End Property
 
         <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowUserAdd() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property ButtonImageName() As String
             Get
                 Return ""
