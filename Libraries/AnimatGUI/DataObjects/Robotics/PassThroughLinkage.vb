@@ -61,7 +61,13 @@ Namespace DataObjects
 
             Public Overrides ReadOnly Property WorkspaceImageName As String
                 Get
-                    Return "AnimatGUI.RobotIO.gif"
+                    Return "AnimatGUI.PassthroughLinkageSmall.gif"
+                End Get
+            End Property
+
+            Public Overrides ReadOnly Property ButtonImageName As String
+                Get
+                    Return "AnimatGUI.PassthroughLinkageLarge.gif"
                 End Get
             End Property
 

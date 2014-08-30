@@ -21,8 +21,8 @@ namespace RoboticsGUI
             #region " Attributes "
 
             public override string Description {get {return "Performs wireless IO using an UartSBee to communicate with the Commander remote control.";} set { }}
-            public override string ButtonImageName {get {return "RoboticsGUI.Graphics.DynamixelUSB.gif";}}
-            public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.DynamixelUSBSmall.gif";}}
+            public override string ButtonImageName {get {return "RoboticsGUI.Graphics.XBeeCommanderLarge.gif";}}
+            public override string WorkspaceImageName { get { return "RoboticsGUI.Graphics.XBeeCommanderSmall.gif"; } }
             public override string PartType {get { return "XBeeCommander"; }}
             public override string ModuleName { get { return "RoboticsAnimatSim"; } }
 

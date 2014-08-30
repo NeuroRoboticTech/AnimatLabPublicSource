@@ -37,7 +37,13 @@ Namespace DataObjects
 
             Public Overrides ReadOnly Property WorkspaceImageName As String
                 Get
-                    Return "AnimatGUI.RobotInterface.gif"
+                    Return "AnimatGUI.PythonSmall.gif"
+                End Get
+            End Property
+
+            Public Overrides ReadOnly Property ButtonImageName As String
+                Get
+                    Return "AnimatGUI.PythonLarge.gif"
                 End Get
             End Property
 

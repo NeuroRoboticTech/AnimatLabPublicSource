@@ -1497,6 +1497,16 @@
     <EmbeddedResource Include="Graphics\AddRobotIOControl.gif" />
     <EmbeddedResource Include="Graphics\RobotIO.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PythonLarge.gif" />
+    <EmbeddedResource Include="Graphics\PythonSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PassthroughLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PassthroughLinkageSmall.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageSmall.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />
