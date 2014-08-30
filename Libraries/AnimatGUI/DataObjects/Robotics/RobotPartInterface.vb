@@ -203,6 +203,7 @@ Namespace DataObjects
 
                 m_thDataTypes.DataTypes.Clear()
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IOValue", "IO Value", "", "", 0, 1))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IOScaledValue", "IO Scaled Value", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StepIODuration", "IO Duration", "Seconds", "s", 0, 1))
                 m_thDataTypes.ID = "IOValue"
 

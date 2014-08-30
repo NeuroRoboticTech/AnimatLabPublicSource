@@ -425,12 +425,12 @@ void RbXBeeCommander::StepIO()
 							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
 							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 1);
 							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
-							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ));
 						}
 						else
 						{
 							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
-							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 2);
+							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ));
 							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
 							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 1);
 						}

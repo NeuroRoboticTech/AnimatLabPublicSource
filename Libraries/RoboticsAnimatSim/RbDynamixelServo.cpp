@@ -1202,7 +1202,7 @@ void RbDynamixelServo::SetMotorPosVel()
 
 	if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
 	{
-		std::cout << GetSimulator()->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
+		//std::cout << GetSimulator()->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
 		//std::cout << "************" << GetSimulator()->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
 
 		//If the next goal velocity was set to -1 then we are trying to set velocity to 0. So lets set the goal position to its current
@@ -1393,7 +1393,7 @@ void RbDynamixelServo::StepSimulation()
 					m_bNeedSetVelStopPos = true;
 
 					//if(m_iServoID == 3)
-					std::cout << "Time: " << GetSimulator()->TimeSlice() << " Servo: " << m_iServoID << " Pos: " <<  m_iPresentPos << "\r\n";
+					//std::cout << "Time: " << GetSimulator()->TimeSlice() << " Servo: " << m_iServoID << " Pos: " <<  m_iPresentPos << "\r\n";
 				}
 			}
 			else if(fltSetVelocity > 0)

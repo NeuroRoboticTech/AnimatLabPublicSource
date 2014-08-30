@@ -201,7 +201,7 @@ void RbFirmataHingeServo::SetupIO()
 		if(m_bResetToStartPos)
 		{
 			SetGoalPosition_FP(m_iCenterAngle);
-			m_iIOValue = m_iCenterAngle;
+			IOValue(m_iCenterAngle);
 		}
 	}
 }

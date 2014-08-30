@@ -51,6 +51,7 @@ RobotPartInterface::RobotPartInterface(void)
 	m_iIOComponentID = 0;
 	m_fltIOValue = 0;
 	m_iIOValue = 0;
+	m_fltIOScaledValue = 0;
 	m_lpGain = NULL;
 	m_bChanged= false;
 	m_fltStepIODuration = 0;
@@ -91,11 +92,23 @@ void RobotPartInterface::IOComponentID(int iID) {m_iIOComponentID = iID;}
 
 float RobotPartInterface::IOValue() {return m_fltIOValue;}
 
-void RobotPartInterface::IOValue(float fltVal) {m_fltIOValue = fltVal;}
+void RobotPartInterface::IOValue(float fltVal) 
+{
+	m_fltIOValue = fltVal;
+	m_iIOValue = (int) fltVal;
+}
 						
 int RobotPartInterface::IOValueInt() {return m_iIOValue;}
 
-void RobotPartInterface::IOValueInt(int iVal) {m_iIOValue = iVal;}
+void RobotPartInterface::IOValueInt(int iVal) 
+{
+	m_iIOValue = iVal;
+	m_fltIOValue = (float) iVal;
+}
+
+float RobotPartInterface::IOScaledValue() {return m_fltIOScaledValue;}
+
+void RobotPartInterface::IOScaledValue(float fltVal) {m_fltIOScaledValue = fltVal;}
 			
 bool RobotPartInterface::Changed() {return m_bChanged;}
 
@@ -220,6 +233,8 @@ float *RobotPartInterface::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "IOVALUE")
 		return &m_fltIOValue;
+	else if(strType == "IOSCALEDVALUE")
+		return &m_fltIOScaledValue;
 	else if(strType == "STEPIODURATION")
 		return &m_fltStepIODuration;
 	else
@@ -277,6 +292,7 @@ void RobotPartInterface::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 	AnimatBase::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("IOValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("IOScaledValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("StepIODuration", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("IOComponentID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
@@ -357,6 +373,7 @@ void RobotPartInterface::ResetSimulation()
 
 	m_fltIOValue = 0;
 	m_iIOValue = 0;
+	m_fltIOScaledValue = 0;
 	m_bChanged= false;
 }
 
