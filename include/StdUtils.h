@@ -91,7 +91,13 @@
 	#include <boost/interprocess/sync/interprocess_mutex.hpp>
 	#include <boost/interprocess/sync/interprocess_condition.hpp>
 	#include <boost/interprocess/sync/scoped_lock.hpp>
+
+#if BOOST_VERSION > 105300
+	#include <boost/atomic.hpp>
+#else
 	#include <boost/interprocess/detail/atomic.hpp>
+#endif
+
 #endif
 
 #ifdef WIN32
