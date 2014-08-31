@@ -25,6 +25,8 @@ Namespace DataObjects.Behavior.Neurons
         Protected m_snVNoiseMax As AnimatGUI.Framework.ScaledNumber
         Protected m_snRelativeAccom As AnimatGUI.Framework.ScaledNumber
         Protected m_snAccomTimeConstant As AnimatGUI.Framework.ScaledNumber
+        Protected m_snIinit As AnimatGUI.Framework.ScaledNumber
+        Protected m_snInitTime As AnimatGUI.Framework.ScaledNumber
 
         Protected m_bGainType As Boolean = False
 
@@ -147,6 +149,31 @@ Namespace DataObjects.Behavior.Neurons
             End Set
         End Property
 
+        Public Overridable Property Iinit() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snIinit
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+
+                SetSimData("Iinit", Value.ActualValue.ToString, True)
+                m_snIinit.CopyData(Value)
+            End Set
+        End Property
+
+        Public Overridable Property InitTime() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snInitTime
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 10 Then
+                    Throw New System.Exception("The initialization time constant must be between the range 0 and 10 s.")
+                End If
+
+                SetSimData("InitTime", Value.ActualValue.ToString, True)
+                m_snInitTime.CopyData(Value)
+            End Set
+        End Property
+
         Public Overridable Property Gain() As AnimatGUI.Framework.ScaledNumber
             Get
                 Return m_snGain
@@ -210,6 +237,8 @@ Namespace DataObjects.Behavior.Neurons
                 m_snVNoiseMax = New AnimatGUI.Framework.ScaledNumber(Me, "VNoiseMax", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Volts", "V")
                 m_snRelativeAccom = New AnimatGUI.Framework.ScaledNumber(Me, "RelativeAccommodation", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
                 m_snAccomTimeConstant = New AnimatGUI.Framework.ScaledNumber(Me, "AccommodationTimeConstant", 30, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snIinit = New AnimatGUI.Framework.ScaledNumber(Me, "Iinit", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
+                m_snInitTime = New AnimatGUI.Framework.ScaledNumber(Me, "InitTime", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
                 Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Ellipse
                 Size = New SizeF(40, 40)
@@ -229,6 +258,7 @@ Namespace DataObjects.Behavior.Neurons
                 AddCompatibleLink(New Synapses.Normal(Nothing))
                 AddCompatibleLink(New Synapses.Gated(Nothing))
                 AddCompatibleLink(New Synapses.Modulated(Nothing))
+                AddCompatibleLink(New Synapses.ModulateNeuronProp(Nothing))
 
                 'Lets add the data types that this node understands.
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IntrinsicCurrent", "Intrinsic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
@@ -239,9 +269,12 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringFrequency", "Firing Frequency", "Hertz", "Hz", 0, 1000))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NoiseVoltage", "Noise Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AccomTimeMod", "Accom Time Modulation", "Time", "s", 0, 10, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                 m_thDataTypes.ID = "FiringFrequency"
 
-                m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano)
+                m_thIncomingDataTypes.DataTypes.Clear()
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
+                m_thIncomingDataTypes.ID = "ExternalCurrent"
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -280,6 +313,8 @@ Namespace DataObjects.Behavior.Neurons
             m_snVNoiseMax = DirectCast(bnOrig.m_snVNoiseMax.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snRelativeAccom = DirectCast(bnOrig.m_snRelativeAccom.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snAccomTimeConstant = DirectCast(bnOrig.m_snAccomTimeConstant.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snIinit = DirectCast(bnOrig.m_snIinit.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snInitTime = DirectCast(bnOrig.m_snInitTime.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_bGainType = bnOrig.m_bGainType
 
         End Sub
@@ -379,6 +414,17 @@ Namespace DataObjects.Behavior.Neurons
                                         "Neural Properties", "When the neural model was created I implemented the gain function incorrectly. " & _
                                         "If this is true then it uses the original gain model. If it is false then it uses the new method.", m_bGainType))
 
+            pbNumberBag = m_snIinit.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Iinit", pbNumberBag.GetType(), "Iinit", _
+                                        "Neural Properties", "Sets the current that is on " & _
+                                        "durint Init Time at the start of the simulation.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snInitTime.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Init Time", pbNumberBag.GetType(), "InitTime", _
+                                        "Neural Properties", "Sets the duration for how long the Iinit current is active at the beginning of the simulation. Acceptable values are in the range 1 to 10 seconds.", _
+                                        pbNumberBag, "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -393,6 +439,8 @@ Namespace DataObjects.Behavior.Neurons
             If Not m_snVNoiseMax Is Nothing Then m_snVNoiseMax.ClearIsDirty()
             If Not m_snRelativeAccom Is Nothing Then m_snRelativeAccom.ClearIsDirty()
             If Not m_snAccomTimeConstant Is Nothing Then m_snAccomTimeConstant.ClearIsDirty()
+            If Not m_snIinit Is Nothing Then m_snIinit.ClearIsDirty()
+            If Not m_snInitTime Is Nothing Then m_snInitTime.ClearIsDirty()
 
         End Sub
 
@@ -417,6 +465,11 @@ Namespace DataObjects.Behavior.Neurons
             If oXml.FindChildElement("RelativeAccommodation", False) Then
                 m_snRelativeAccom.LoadData(oXml, "RelativeAccommodation")
                 m_snAccomTimeConstant.LoadData(oXml, "AccommodationTimeConstant")
+            End If
+
+            If oXml.FindChildElement("Iinit", False) Then
+                m_snIinit.LoadData(oXml, "Iinit")
+                m_snInitTime.LoadData(oXml, "InitTime")
             End If
 
             m_snVth.LoadData(oXml, "Vth")
@@ -447,6 +500,8 @@ Namespace DataObjects.Behavior.Neurons
             m_snVNoiseMax.SaveData(oXml, "VNoiseMax")
             m_snRelativeAccom.SaveData(oXml, "RelativeAccommodation")
             m_snAccomTimeConstant.SaveData(oXml, "AccommodationTimeConstant")
+            m_snIinit.SaveData(oXml, "Iinit")
+            m_snInitTime.SaveData(oXml, "InitTime")
 
             oXml.AddChildElement("GainType", m_bGainType)
 
@@ -474,6 +529,12 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("VNoiseMax", m_snVNoiseMax.ActualValue)
             oXml.AddChildElement("RelativeAccom", m_snRelativeAccom.ActualValue)
             oXml.AddChildElement("AccomTimeConst", m_snAccomTimeConstant.ActualValue)
+            oXml.AddChildElement("Iinit", m_snIinit.ActualValue)
+            oXml.AddChildElement("InitTime", m_snInitTime.ActualValue)
+
+            oXml.AddChildElement("TemplateNode", m_bTemplateNode)
+            oXml.AddChildElement("TemplateNodeCount", TemplateNodeCount)
+            oXml.AddChildElement("TemplateChangeScript", TemplateChangeScript)
 
             oXml.AddChildElement("GainType", m_bGainType)
 

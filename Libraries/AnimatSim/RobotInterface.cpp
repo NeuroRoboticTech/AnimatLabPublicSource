@@ -117,12 +117,7 @@ void RobotInterface::SynchSim(bool bVal)
 		m_bSynchSim = bVal;
 
 		if(m_lpSim)
-		{
 			m_lpSim->RobotAdpaterSynch(bVal);
-
-			if(bVal)
-				m_lpSim->RobotSynchTimeInterval(this->m_fltPhysicsTimeStep);
-		}
 	}
 	else
 		m_lpSim->RobotAdpaterSynch(false);
@@ -145,6 +140,12 @@ float *RobotInterface::GetDataPointer(const std::string &strDataType)
 bool RobotInterface::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return true;
+	}
 
 	if(strType == "PHYSICSTIMESTEP")
 	{
@@ -246,6 +247,9 @@ void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
 
     RobotIOControl *lpControl = m_aryIOControls[iPos];
 
+	if(lpControl)
+		lpControl->ShutdownIO();
+
 	m_aryIOControls.RemoveAt(iPos);
 }
 
@@ -282,23 +286,38 @@ int RobotInterface::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotInterface::Initialize()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->Initialize();
+	AnimatBase::Initialize();
+
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->Initialize();
+	}
 }
 
 void RobotInterface::ResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->ResetSimulation();
+	AnimatBase::ResetSimulation();
+
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->ResetSimulation();
+	}
 }
 
 void RobotInterface::AfterResetSimulation()
 {
-	int iCount = m_aryIOControls.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryIOControls[iIndex]->AfterResetSimulation();
+	AnimatBase::AfterResetSimulation();
+
+	if(m_bEnabled)
+	{
+		int iCount = m_aryIOControls.GetSize();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryIOControls[iIndex]->AfterResetSimulation();
+	}
 }
 
 void RobotInterface::StepSimulation()

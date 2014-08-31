@@ -48,6 +48,12 @@ namespace AnimatSim
 				/// Pointer to a constraint that is used to represent the position flap.
 				ConstraintLimit *m_lpPosFlap;
 
+				/// The rotation of the hinge in degrees.
+				float m_fltRotationDeg;
+
+				/// The desired rotation of the hinge in degrees.
+				float m_fltDesiredPositionDeg;
+
 			public:
 				Hinge();
 				virtual ~Hinge();
@@ -67,7 +73,10 @@ namespace AnimatSim
 				virtual float GetLimitRange();
 
 				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
+				virtual int GetTargetDataTypeIndex(const std::string &strDataType);
+				virtual void UpdateData();
+				virtual void ResetSimulation();
 
 				virtual void Load(CStdXml &oXml);
 			};

@@ -43,7 +43,7 @@ void RbFirmataDigitalInput::SetupIO()
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_INPUT);
 }
 
-void RbFirmataDigitalInput::StepIO()
+void RbFirmataDigitalInput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{
@@ -52,7 +52,7 @@ void RbFirmataDigitalInput::StepIO()
 		if(iValue != -1 && iValue != m_iIOValue)
 		{
 			m_bChanged = true;
-			m_iIOValue = iValue;
+			IOValue(iValue);
 
 			if(iValue)
 				std::cout << "Pin " << m_iIOComponentID << " Turned ON." << "\r\n";
@@ -71,15 +71,15 @@ void RbFirmataDigitalInput::StepSimulation()
 		m_bChanged = false;
 
 		//Calculate the gain of the IO value.
-		float fltValue = m_lpGain->CalculateGain((float) m_iIOValue);
+		float fltValue = m_lpGain->CalculateGain(m_fltIOValue);
 
 		//Remove any previously added value from the param
-		*m_lpProperty -= m_fltIOValue;
+		*m_lpProperty -= m_fltIOScaledValue;
 
-		m_fltIOValue = fltValue;
+		m_fltIOScaledValue = fltValue;
 
 		//Add the value back.
-		*m_lpProperty += m_fltIOValue;
+		*m_lpProperty += m_fltIOScaledValue;
 	}
 }
 

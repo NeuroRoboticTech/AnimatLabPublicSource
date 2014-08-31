@@ -51,6 +51,7 @@ RobotPartInterface::RobotPartInterface(void)
 	m_iIOComponentID = 0;
 	m_fltIOValue = 0;
 	m_iIOValue = 0;
+	m_fltIOScaledValue = 0;
 	m_lpGain = NULL;
 	m_bChanged= false;
 	m_fltStepIODuration = 0;
@@ -61,6 +62,9 @@ RobotPartInterface::~RobotPartInterface(void)
 
 try
 {
+	if(m_lpPart)
+		m_lpPart->RemoveRobotPartInterface(this);
+
 	//We do not own any of these.
 	m_lpParentInterface = NULL;
 	m_lpParentIOControl = NULL;
@@ -88,11 +92,23 @@ void RobotPartInterface::IOComponentID(int iID) {m_iIOComponentID = iID;}
 
 float RobotPartInterface::IOValue() {return m_fltIOValue;}
 
-void RobotPartInterface::IOValue(float fltVal) {m_fltIOValue = fltVal;}
+void RobotPartInterface::IOValue(float fltVal) 
+{
+	m_fltIOValue = fltVal;
+	m_iIOValue = (int) fltVal;
+}
 						
 int RobotPartInterface::IOValueInt() {return m_iIOValue;}
 
-void RobotPartInterface::IOValueInt(int iVal) {m_iIOValue = iVal;}
+void RobotPartInterface::IOValueInt(int iVal) 
+{
+	m_iIOValue = iVal;
+	m_fltIOValue = (float) iVal;
+}
+
+float RobotPartInterface::IOScaledValue() {return m_fltIOScaledValue;}
+
+void RobotPartInterface::IOScaledValue(float fltVal) {m_fltIOScaledValue = fltVal;}
 			
 bool RobotPartInterface::Changed() {return m_bChanged;}
 
@@ -114,6 +130,50 @@ void RobotPartInterface::PropertyName(std::string strName)
 }
 
 std::string RobotPartInterface::PropertyName() {return m_strPropertyName;}
+
+/**
+\brief	Returns true if this part interface is for controlling a motor.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Pointer to the gain.
+**/
+bool RobotPartInterface::IsMotorControl() {return false;}
+
+/**
+\brief	If this is a servo controller interface then it will take a continuous positon and return back a valid quantized position for that servo.
+
+\discussion Servos have discreet positions they can obtain based on the bit resolution of the goal position. So they can only be set to move to
+those positions. If we are trying to sync the sim to match this behavior then we need to only move the sim to these positions as well.
+You will need to override this method in your actual motor control part interface and implement for your motor model.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Quantized position.
+**/
+float RobotPartInterface::QuantizeServoPosition(float fltPos)
+{
+	return fltPos;
+}
+
+/**
+\brief	If this is a servo controller interface then it will take a continuous velocity and return back a valid quantized velocity for that servo.
+
+\discussion Servos have discreet velocity they can obtain based on the bit resolution of the goal velocity. So they can only be set to move at
+those velocity. If we are trying to sync the sim to match this behavior then we need to only move the sim to these velociies as well.
+You will need to override this method in your actual motor control part interface and implement for your motor model.
+
+\author	dcofer
+\date	6/19/2014
+
+\return	Quantized velocity.
+**/
+float RobotPartInterface::QuantizeServoVelocity(float fltVel)
+{
+	return fltVel;
+}
 
 /**
 \brief	Gets the poitner to the gain function.
@@ -173,6 +233,8 @@ float *RobotPartInterface::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "IOVALUE")
 		return &m_fltIOValue;
+	else if(strType == "IOSCALEDVALUE")
+		return &m_fltIOScaledValue;
 	else if(strType == "STEPIODURATION")
 		return &m_fltStepIODuration;
 	else
@@ -230,6 +292,7 @@ void RobotPartInterface::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 	AnimatBase::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("IOValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("IOScaledValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("StepIODuration", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("IOComponentID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
@@ -264,7 +327,7 @@ does the IO. Once that thread is ready to send/receive it uses that value to per
 \date	5/2/2014
 
 **/
-void RobotPartInterface::StepIO()
+void RobotPartInterface::StepIO(int iPartIdx)
 {
 }
 
@@ -284,7 +347,12 @@ void RobotPartInterface::Initialize()
 {
 	//We need to find the referenced body part and set its robot part interface to this one.
 	if(!Std_IsBlank(m_strPartID))
-		m_lpPart = dynamic_cast<AnimatBase *>(m_lpSim->FindByID(m_strPartID));
+		m_lpPart = dynamic_cast<BodyPart *>(m_lpSim->FindByID(m_strPartID));
+	else
+	{
+		m_lpPart = NULL;
+		m_lpProperty = NULL;
+	}
 
 	if(m_lpPart)
 	{
@@ -292,6 +360,8 @@ void RobotPartInterface::Initialize()
 			m_lpProperty = m_lpPart->GetDataPointer(m_strPropertyName);
 		else
 			m_lpProperty = NULL;
+
+		m_lpPart->AddRobotPartInterface(this);
 	}
 	else
 		m_lpProperty = NULL;
@@ -303,6 +373,7 @@ void RobotPartInterface::ResetSimulation()
 
 	m_fltIOValue = 0;
 	m_iIOValue = 0;
+	m_fltIOScaledValue = 0;
 	m_bChanged= false;
 }
 

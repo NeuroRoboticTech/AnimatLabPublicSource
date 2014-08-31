@@ -57,6 +57,25 @@ bool BlMesh::Freeze()
         return true;
 }
 
+BoundingBox BlMesh::Physics_GetBoundingBox()
+{
+ 	BoundingBox abb;
+
+	if(m_osgNode.valid())
+	{
+		OsgCalculateBoundingBox bbox ;
+		m_osgNode->accept( bbox  );
+		osg::BoundingBox bb = bbox.getBoundBox();
+		abb.Set(bb.xMin(), bb.yMin(), bb.zMin(), bb.xMax(), bb.yMax(), bb.zMax());
+	}
+	else
+	{
+		abb.Set(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5); 
+	}
+
+	return abb;
+}
+
 void BlMesh::CreateParts()
 {
 	CreateGeometry();

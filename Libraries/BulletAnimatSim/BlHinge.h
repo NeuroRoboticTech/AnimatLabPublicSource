@@ -35,16 +35,12 @@ namespace BulletAnimatSim
 				/// The bullet hinge class.
                 btAnimatGeneric6DofConstraint *m_btHinge;
 
-				/// The rotation of the hinge in degrees.
-				float m_fltRotationDeg;
-
                 float m_fltChildMassWithChildren;
 
                 float m_fltBounce;
 
     			virtual void DeleteJointGraphics();
                 virtual void CreateJointGraphics();
-				virtual void UpdateData();
 
                 virtual bool NeedApplyAssist();
                 virtual void ApplyMotorAssist();

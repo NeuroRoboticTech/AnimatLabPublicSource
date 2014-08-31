@@ -59,47 +59,31 @@ void RbMotorizedJoint::CalculateServoVelocity()
 
 void RbMotorizedJoint::Physics_SetVelocityToDesired()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "0085ee18-89f7-4039-8648-ec51114beeff") // && m_lpSim->Time() > 1 
+	//	i=6;
+
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
-		if(m_lpThisMotorJoint->ServoMotor())
+		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl)
 		{
-			m_lpThisJoint->JointPosition(m_lpThisMotorJoint->DesiredVelocity());
+			m_lpThisJoint->JointPosition(m_lpThisMotorJoint->DesiredPosition());
 			m_lpThisMotorJoint->DesiredVelocity(0);
 		}
 		else
 		{
-			float fltDesiredVel = m_lpThisMotorJoint->DesiredVelocity();
-			float fltMaxVel = m_lpThisMotorJoint->MaxVelocity();
-			float fltMaxForce = m_lpThisMotorJoint->MaxForce();
+			float fltSetPos = m_lpThisMotorJoint->DesiredPosition();
+			float fltSetVel = m_lpThisMotorJoint->DesiredVelocity();
 
-			float fltSetVelocity = fltDesiredVel;
+			if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl)
+				m_lpThisMotorJoint->SetPosition(fltSetPos);
 
-			m_lpThisMotorJoint->SetVelocity(fltSetVelocity);
+			m_lpThisMotorJoint->SetVelocity(fltSetVel);
 			m_lpThisMotorJoint->DesiredVelocity(0);
+			m_lpThisMotorJoint->DesiredPosition(0);
 
-			float fltHalfPercVel = fabs(fltSetVelocity * 0.01);
-            m_fltPredictedPos = m_fltNextPredictedPos;
-            m_fltNextPredictedPos = m_fltPredictedPos +  (fltSetVelocity*m_lpThisAB->GetSimulator()->PhysicsTimeStep());
-
-			m_lpThisJoint->JointPosition(m_fltNextPredictedPos);
-
-			float fltJointVel = m_lpThisJoint->JointVelocity();
-
-			if(!m_lpThisJoint->UsesRadians())
-				fltJointVel *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();;
-
-			float fltVelDiff = fabs(fltJointVel - fltSetVelocity);
-
-			//Only do anything if the velocity value has changed
-			if(fltVelDiff > 1e-4)
-			{
-				if(fabs(fltSetVelocity) > 1e-4)
-					Physics_EnableMotor(true, fltSetVelocity, fltMaxForce, false);
-				else if(!m_bJointLocked)
-					Physics_EnableLock(true, m_lpThisJoint->JointPosition(), fltMaxForce);
-			}
-
-			m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
+			m_lpThisMotorJoint->PrevVelocity(fltSetVel);
 		}
 	}
 }

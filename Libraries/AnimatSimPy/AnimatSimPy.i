@@ -292,7 +292,7 @@ typedef float StdVector3[3];
 %include "../AnimatSim/VoltageClamp.h"
 %include "../AnimatSim/InverseMuscleCurrent.h"
 %include "../AnimatSim/PropertyControlStimulus.h"
-%include "../AnimatSim/MotorVelocityStimulus.h"
+%include "../AnimatSim/MotorStimulus.h"
 %include "../AnimatSim/ForceStimulus.h"
 %include "../AnimatSim/KeyFrame.h"
 %include "../AnimatSim/SimulationRecorder.h"
@@ -309,6 +309,15 @@ typedef float StdVector3[3];
 %include "../AnimatSim/ScriptProcessor.h"
 %include "../AnimatSim/SimulationThread.h"
 %include "../AnimatSim/SimulationMgr.h"
+
+
+%include "../AnimatSim/RobotInterface.h"
+%include "../AnimatSim/RobotIOControl.h"
+%include "../AnimatSim/RobotPartInterface.h"
+%include "../AnimatSim/RemoteControlLinkage.h"
+%include "../AnimatSim/PassThroughLinkage.h"
+%include "../AnimatSim/PulsedLinkage.h"
+%include "../AnimatSim/RemoteControl.h"
 
 %rename(FrNeuron) FiringRateSim::Neuron;
 %rename(FrPacemakerNeuron) FiringRateSim::PacemakerNeuron;
@@ -328,5 +337,6 @@ typedef float StdVector3[3];
 %include "../FiringRateSim/TonicNeuron.h"
 %include "../FiringRateSim/GatedSynapse.h"
 %include "../FiringRateSim/ModulatedSynapse.h"
+%include "../FiringRateSim/ModulateNeuronPropSynapse.h"
 %include "../FiringRateSim/FiringRateModule.h"
 

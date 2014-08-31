@@ -43,6 +43,11 @@ void BlBox::CreateGraphicsGeometry()
 
 void BlBox::CreatePhysicsGeometry()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "b42f968f-0639-4a69-9974-9e0f411d40d8") // && m_lpSim->Time() > 1.8
+	//	i=6;
+
 	if(IsCollisionObject())
     {
         DeleteCollisionGeometry();

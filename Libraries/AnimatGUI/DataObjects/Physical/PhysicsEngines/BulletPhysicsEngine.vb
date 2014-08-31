@@ -77,6 +77,12 @@ Namespace DataObjects.Physical.PhysicsEngines
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AllowStickyParts As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property LibraryVersionPrefix() As String
             Get
                 If m_dtLibraryVersion.ID.ToUpper() = "DOUBLE" Then
@@ -219,6 +225,18 @@ Namespace DataObjects.Physical.PhysicsEngines
             Else
                 Return Nothing
             End If
+        End Function
+
+        Public Overrides Function CompatibleWith(ByVal doObject As Framework.DataObject) As Boolean
+            If Not doObject Is Nothing Then
+                If Util.IsTypeOf(doObject.GetType(), GetType(ConstraintRelaxationVortex), False) Then
+                    Return False
+                ElseIf Util.IsTypeOf(doObject.GetType(), GetType(MaterialTypeVortex), False) Then
+                    Return False
+                End If
+            End If
+
+            Return True
         End Function
 
 #End Region

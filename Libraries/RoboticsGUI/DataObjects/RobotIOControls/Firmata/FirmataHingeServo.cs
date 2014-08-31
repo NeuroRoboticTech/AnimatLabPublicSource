@@ -73,7 +73,7 @@ namespace RoboticsGUI
                 public FirmataHingeServo(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)
                 {
-                    m_strName = "Hinge Servo";
+                    m_strName = "Standard Hinge Servo";
 
                     m_aryCompatiblePartTypes.Clear();
                     m_aryCompatiblePartTypes.Add(typeof(AnimatGUI.DataObjects.Physical.Joints.Hinge));

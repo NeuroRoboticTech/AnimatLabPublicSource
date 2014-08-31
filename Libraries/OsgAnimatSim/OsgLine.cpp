@@ -164,8 +164,8 @@ void OsgLine::StepLineSimulation(bool bEnabled, float fltTension)
 {
 	if(bEnabled)
 	{
-        //Testing code
-  //      int iTest = 0;
+        ////Test code
+		//int iTest = 0;
 		//if(m_lpLineBase->GetSimulator()->Time() >= 0.15)
 		//	iTest = iTest;
 

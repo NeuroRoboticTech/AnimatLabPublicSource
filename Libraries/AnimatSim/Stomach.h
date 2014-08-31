@@ -86,7 +86,7 @@ namespace AnimatSim
 				virtual void CreateParts();
 
 				//Node Overrides
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 				virtual float *GetDataPointer(const std::string &strDataType);
 				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);

@@ -43,7 +43,7 @@ void RbFirmataDigitalOutput::SetupIO()
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_OUTPUT);
 }
 
-void RbFirmataDigitalOutput::StepIO()
+void RbFirmataDigitalOutput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{
@@ -68,13 +68,11 @@ void RbFirmataDigitalOutput::StepSimulation()
 	//send it if the value has changed.
 	if(m_lpProperty &&m_lpGain && m_lpFirmata)
 	{
-		float fltValue = m_lpGain->CalculateGain(*m_lpProperty);
+		m_fltIOScaledValue = m_lpGain->CalculateGain(*m_lpProperty);
 
-		m_iIOValue = 0;
-		if(fltValue > 0.5f)
-			m_iIOValue = 1;
-
-		m_fltIOValue = m_iIOValue;
+		IOValue(0);
+		if(m_fltIOScaledValue > 0.5f)
+			IOValue(1);
 	}
 }
 

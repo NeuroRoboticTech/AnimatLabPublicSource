@@ -35,6 +35,7 @@ namespace RoboticsAnimatSim
 		virtual RobotInterface *CreateRobotInterface(std::string strType, bool bThrowError = true);
 		virtual RobotIOControl *CreateRobotIOControl(std::string strType, bool bThrowError = true);
 		virtual RobotPartInterface *CreateRobotPartInterface(std::string strType, bool bThrowError = true);
+		virtual RemoteControlLinkage *CreateRemoteControlLinkage(std::string strType, bool bThrowError = true);
 
 		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};

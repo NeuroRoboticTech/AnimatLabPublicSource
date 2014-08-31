@@ -38,6 +38,9 @@ BlRigidBody::BlRigidBody()
 
 	m_lpMaterial = NULL;
     m_lpVsSim = NULL;
+
+	m_btStickyLock = NULL;
+	m_btStickyLock2 = NULL;
 }
 
 BlRigidBody::~BlRigidBody()
@@ -116,6 +119,11 @@ BlSimulator *BlRigidBody::GetBlSimulator()
 
 void BlRigidBody::Physics_UpdateNode()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_lpThisAB->ID()) == "b42f968f-0639-4a69-9974-9e0f411d40d8") // && m_lpSim->Time() > 1.8
+	//	i=6;
+
 	OsgBody::UpdatePositionAndRotationFromMatrix();
 
 	if(m_lpThisRB)
@@ -264,8 +272,9 @@ void BlRigidBody::CreateDynamicPart()
         float fltMass = 0;
 	    CStdFPoint vCom = m_lpThisRB->CenterOfMassWithStaticChildren();
 
-        //if(Std_ToLower(m_lpThisRB->ID()) == "b67866e6-3851-414a-b77e-d5a434254df5")  //Testing only
-        //    fltMass = 0;
+		////Test Code
+  //      if(Std_ToLower(m_lpThisRB->ID()) == "b42f968f-0639-4a69-9974-9e0f411d40d8")
+  //          fltMass = 0;
 
         if(m_lpThisRB->HasStaticChildren())
             CreateStaticChildren(vCom);
@@ -522,6 +531,8 @@ void BlRigidBody::DeletePhysics(bool bIncludeChildren)
 
         if(bIncludeChildren)
             DeleteChildPhysics();
+
+		Physics_DeleteStickyLock();
 	}
 }
 
@@ -667,6 +678,130 @@ void BlRigidBody::Physics_ChildBodyRemoved(bool bHasStaticJoint)
     ResizePhysicsGeometry();
 }
 
+btAnimatGeneric6DofConstraint *BlRigidBody::AddDynamicJoint(BlRigidBody *lpParent, BlRigidBody *lpChild)
+{
+	osg::Matrix mtParent = lpParent->GetWorldMatrix();
+	osg::Matrix mtChild = lpChild->GetWorldMatrix();
+
+	osg::Matrix mtChildRelToParent = mtChild * osg::Matrix::inverse(mtParent);
+
+	btTransform mtJointRelToParent = osgbCollision::asBtTransform(mtChildRelToParent);
+	btTransform mtJointRelToChild = osgbCollision::asBtTransform(osg::Matrixd::identity());
+
+	btAnimatGeneric6DofConstraint *btStickyLock = new btAnimatGeneric6DofConstraint(*lpParent->Part(), *lpChild->Part(), mtJointRelToParent, mtJointRelToChild, false); 
+
+	//Lock the linear and angular limits to prevent movement
+	btVector3 vLowerLimit, vUpperLimit;
+
+	//enable translation limits
+	vLowerLimit[0] = vLowerLimit[1] = vLowerLimit[2] = 0;
+	vUpperLimit[0] = vUpperLimit[1] = vUpperLimit[2] = 0;
+
+	btStickyLock->setLinearLowerLimit(vLowerLimit);
+	btStickyLock->setLinearUpperLimit(vUpperLimit);
+	btStickyLock->setAngularLowerLimit(vLowerLimit);
+	btStickyLock->setAngularUpperLimit(vUpperLimit);
+
+	GetBlSimulator()->DynamicsWorld()->addConstraint(btStickyLock, true);
+
+	return btStickyLock;
+}
+
+void BlRigidBody::CreateStickyLock()
+{
+	static bool bDisabledColls = false;
+	BlRigidBody *lpParent = dynamic_cast<BlRigidBody *>(m_lpThisRB->Parent());
+	BlRigidBody *lpChild = m_aryContactPoints[0]->m_lpContacted;
+
+	if(lpChild && lpParent)
+	{
+		BlRigidBody *lpRightGrip = dynamic_cast<BlRigidBody *>(GetSimulator()->FindByID("ac233f7b-8f8f-4d03-9d4f-21e363a19bc2"));
+		BlRigidBody *lpLeftGrip = dynamic_cast<BlRigidBody *>(GetSimulator()->FindByID("35b1ffff-ebbc-4bdb-8108-5d44aea2a1c5"));
+
+		m_btStickyLock = AddDynamicJoint(lpLeftGrip, lpChild);
+		//m_btStickyLock2 = AddDynamicJoint(lpRightGrip, lpChild);
+
+		//lpRightGrip->Part()->addConstraintRef(m_btStickyLock);
+		//lpChild->Part()->addConstraintRef(m_btStickyLock);
+		//lpRightGrip->m_lpThisRB->DisableCollision(lpChild->m_lpThisRB);
+		
+		m_lpThisRB->StickyChild(lpChild->m_lpThisRB);
+
+		//if(!bDisabledColls)
+		//{
+		//	RigidBody *lpRightGrip = dynamic_cast<RigidBody *>(GetSimulator()->FindByID("ac233f7b-8f8f-4d03-9d4f-21e363a19bc2"));
+		//	RigidBody *lpBlock1 = dynamic_cast<RigidBody *>(GetSimulator()->FindByID("110be62c-6c10-4a4e-aef7-983cd8fb457d"));
+		//	RigidBody *lpBlock2 = dynamic_cast<RigidBody *>(GetSimulator()->FindByID("71fe27fb-121a-4007-aafa-2771ee816558"));
+		//	RigidBody *lpBall = dynamic_cast<RigidBody *>(GetSimulator()->FindByID("5586751b-3da0-4956-ac1d-1b77b41442b1"));
+		//	lpRightGrip->DisableCollision(lpBlock1);
+		//	lpRightGrip->DisableCollision(lpBlock2);
+		//	lpRightGrip->DisableCollision(lpBall);
+		//	bDisabledColls = true;
+		//}
+	}
+
+}
+
+void BlRigidBody::Physics_DeleteStickyLock()
+{
+	if(m_btStickyLock)
+	{
+		if(GetBlSimulator() && GetBlSimulator()->DynamicsWorld())
+		{
+			if(m_lpThisRB->StickyChild())
+			{
+				BlRigidBody *lpRightGrip = dynamic_cast<BlRigidBody *>(GetSimulator()->FindByID("ac233f7b-8f8f-4d03-9d4f-21e363a19bc2"));
+				//lpRightGrip->Part()->removeConstraintRef(m_btStickyLock);
+				//Part()->removeConstraintRef(m_btStickyLock);
+
+				m_lpThisRB->StickyChild(NULL);
+				
+				/*lpRightGrip->m_lpThisRB->EnableCollision(m_lpThisRB->StickyChild());
+
+				lpParent->m_lpThisRB->EnableCollision(m_lpThisRB->StickyChild());
+				m_lpThisRB->StickyChild(NULL);
+
+				RigidBody *lpTest = dynamic_cast<RigidBody *>(GetSimulator()->FindByID("ac233f7b-8f8f-4d03-9d4f-21e363a19bc2"));
+				lpTest->DisableCollision(m_lpThisRB->StickyChild());*/
+			}
+
+			GetBlSimulator()->DynamicsWorld()->removeConstraint(m_btStickyLock);
+
+			delete m_btStickyLock;
+			m_btStickyLock = NULL;
+		}
+	}
+
+	if(m_btStickyLock2)
+	{
+		if(GetBlSimulator() && GetBlSimulator()->DynamicsWorld())
+		{
+			GetBlSimulator()->DynamicsWorld()->removeConstraint(m_btStickyLock2);
+
+			delete m_btStickyLock2;
+			m_btStickyLock2 = NULL;
+		}
+	}
+}
+
+void BlRigidBody::SetSurfaceContactCount()
+{
+	if(m_lpThisRB)
+	{
+		m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
+
+		if(m_lpThisRB->IsStickyPart() &&  m_aryContactPoints.size() > 0 && m_aryContactPoints[0]->m_lpContacted && m_lpThisRB->Parent())
+		{
+			//If we have a lock and the sticky on value goes below 1 then disable it by removing the lock
+			if(m_btStickyLock && m_lpThisRB->StickyOn() < 1)
+				Physics_DeleteStickyLock();
+			//If we do not have a lock and sticky on goes to 1 or above then create a new lock.
+			else if(!m_btStickyLock && m_lpThisRB->StickyOn() >= 1)
+				CreateStickyLock();
+		}
+	}
+}
+
 void BlRigidBody::ProcessContacts()
 {
     ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
@@ -677,7 +812,7 @@ void BlRigidBody::ProcessContacts()
     //If this is a contact sensor then we do not care about processing the force and position.
     //We only care about the contact number.
     if(m_lpThisRB->IsContactSensor())
-        m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
+        SetSurfaceContactCount(); //m_lpThisRB->SetSurfaceContactCount(m_aryContactPoints.size());
     else if(m_aryContactPoints.size() > 0 && m_btPart && lpSensor)
     {
 		int iPartIdx=0;
@@ -688,7 +823,7 @@ void BlRigidBody::ProcessContacts()
         float fltPhysicsDt = m_lpThisAB->GetSimulator()->PhysicsTimeStep();
         float fltRatio = (fMassUnits * fDisUnits) / fltPhysicsDt;
 
-		//Testing code
+		////Test code
 		//if(m_lpThisRB->GetSimulator()->Time() >= 6.758)
 		//	fltForceMag = 0;
 
@@ -855,6 +990,8 @@ void BlRigidBody::Physics_ResetSimulation()
 		m_vLinearAcceleration[i] = 0;
 		m_vAngularAcceleration[i] = 0;
 	}
+
+	Physics_DeleteStickyLock();
 }
 
 void BlRigidBody::Physics_EnableCollision(RigidBody *lpBody)

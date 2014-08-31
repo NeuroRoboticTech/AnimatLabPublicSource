@@ -46,6 +46,10 @@ namespace AnimatSim
 BodyPart::BodyPart(void)
 {
 	m_lpPhysicsBody = NULL;
+	m_bSynchWithRobot = false;
+	m_fltSynchUpdateInterval = 0;
+	m_iSynchUpdateInterval = 0;
+	m_iSynchCount = 0;
 }
 
 /**
@@ -138,6 +142,69 @@ void BodyPart::Resize()
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Resize();
+
+	if(m_lpCallback)
+		m_lpCallback->SizeChanged();
+}
+
+/**
+\brief	Gets whether the m_bRobotAdpaterSynch flag applies to this adapter.
+
+\discussion Adpaters between neural elements should not need to be synched because 
+			they are not dependent on IO timing. This flag allows you to control this by setting it to false
+			for adapters that do not need it.
+
+\author	dcofer
+\date	6/30/2014
+
+\return	Synch status of this adapter. 
+**/
+bool BodyPart::SynchWithRobot() {return m_bSynchWithRobot;}
+
+/**
+\brief	Determines whether the m_bRobotAdpaterSynch flag applies to this adapter. 
+
+\author	dcofer
+\date	6/30/2014
+
+\param	bVal Synch status of this adapter. 
+**/
+void BodyPart::SynchWithRobot(bool bVal) {m_bSynchWithRobot = bVal;}
+
+/**
+\brief	This is how often we need to update this particular adapter.
+
+\discussion For example, if you are using a round robin scheme with a robot IO update time of 5 ms with 4 motors, then you would set this to be 20 ms.
+
+\author	dcofer
+\date	6/30/2014
+
+\return	interval. 
+**/
+float BodyPart::SynchUpdateInterval() {return m_fltSynchUpdateInterval;}
+
+/**
+\brief	Determines how often we need to update this particular adapter.
+
+\author	dcofer
+\date	6/30/2014
+
+\param	fltVal interval. 
+**/
+void BodyPart::SynchUpdateInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "SynchUpdateInterval", true);
+	m_fltSynchUpdateInterval = fltVal;
+
+	if(m_lpSim)
+	{
+		float fltTimeStep = m_lpSim->PhysicsTimeStep();
+
+		if(fltTimeStep > 0)
+			m_iSynchUpdateInterval = (int) ((m_fltSynchUpdateInterval/fltTimeStep) + 0.5);
+		else
+			m_iSynchUpdateInterval = 0;
+	}
 }
 
 #pragma endregion
@@ -198,6 +265,20 @@ bool BodyPart::SetData(const std::string &strDataType, const std::string &strVal
 
 	if(MovableItem::SetData(strDataType, strValue, false))
 		return true;
+	
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "SYNCHWITHROBOT")
+	{
+		SynchWithRobot(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "SYNCHUPDATEINTERVAL")
+	{
+		SynchUpdateInterval(atof(strValue.c_str()));
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -210,6 +291,8 @@ void BodyPart::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Node::QueryProperties(aryProperties);
 	MovableItem::QueryProperties(aryProperties);
+	aryProperties.Add(new TypeProperty("SynchWithRobot", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynchUpdateInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -274,6 +357,53 @@ int BodyPart::FindRobotPartListIndex(std::string strID, bool bThrowError)
 #pragma endregion
 
 /**
+\brief	If the time step is modified then we need to recalculate the length of the delay buffer.
+
+\discussion If a neural module has been assigned to this adapter then that is its target module and
+we need to use the time step associated with it to determine how big the delay buffer should be in length.
+If the module is NULL then the target for this adapter is the physics engine and we should use the physics time step instead.
+
+\author	dcofer
+\date	5/15/2014
+**/
+void BodyPart::TimeStepModified()
+{
+	Node::TimeStepModified();
+	SynchUpdateInterval(m_fltSynchUpdateInterval);
+}
+
+bool BodyPart::NeedsRobotSynch()
+{
+	if(!m_lpSim->InSimulation() || !m_lpSim->RobotAdpaterSynch() || !m_bSynchWithRobot || m_iSynchUpdateInterval <= 0)
+		return true;
+	
+	bool bRet = false;
+
+	if(m_iSynchCount == m_iSynchUpdateInterval)
+	{
+		m_iSynchCount = 0;
+		bRet = true;
+	}
+	else
+		m_iSynchCount++;
+
+	return bRet;
+}
+
+void BodyPart::ResetSimulation()
+{
+	Node::ResetSimulation();
+
+	m_iSynchCount = 0;
+}
+
+void BodyPart::Initialize()
+{
+	Node::Initialize();
+	SynchUpdateInterval(m_fltSynchUpdateInterval);
+}
+
+/**
 \brief	Updates the physics position from graphics.
 
 \details This updates the position of the physcis node directly
@@ -291,6 +421,13 @@ void BodyPart::Load(CStdXml &oXml)
 {
 	Node::Load(oXml);
 	MovableItem::Load(oXml);
+
+	oXml.IntoElem();  //Into BodyPart Element
+
+	SynchWithRobot(oXml.GetChildBool("SynchWithRobot", m_bSynchWithRobot));
+	SynchUpdateInterval(oXml.GetChildFloat("SynchUpdateInterval", m_fltSynchUpdateInterval));
+
+	oXml.OutOfElem(); //OutOf BodyPart Element
 }
 
 	}			//Environment

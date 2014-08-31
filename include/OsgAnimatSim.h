@@ -108,6 +108,7 @@ namespace OsgAnimatSim
 	class OsgMeshMgr;
     class OsgMatrixUtils;
     class OsgSimulator;
+	class OsgCalculateBoundingBox;
 
 	namespace Environment
 	{
@@ -164,6 +165,7 @@ using namespace OsgAnimatSim::Visualization;
 
 #include "OsgMatrixUtil.h"
 #include "OsgMeshMgr.h"
+#include "OsgCalculateBoundingBox.h"
 
 #include "OsgMovableItem.h"
 #include "OsgBody.h"

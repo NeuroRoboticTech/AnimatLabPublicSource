@@ -16,6 +16,7 @@ namespace RoboticsGUI
         public override bool UseHydrodynamicsMagnus { get { return false; } }
         public override bool ProvidesJointForceFeedback { get { return true; } }
         public override bool GenerateMotorAssist { get { return false; } }
+        public override bool AllowStickyParts { get { return false; } }
 
         public override string LibraryVersionPrefix
         {

@@ -82,7 +82,10 @@ namespace FiringRateSim
 			bool m_bGainType; 
 
 			/// expon decline working factor for thresh accomm
-			float m_fltDCTH;      
+			float m_fltDCTH;
+
+			///If we are setting the accomodation time constant through modulation then this keeps track of it.
+			float m_fltAccomTimeMod;
 
 			/// The accomodation time constant tells how fast the neuron accomodates to a new membrane potential
 			float m_fltAccomTimeConst;
@@ -111,6 +114,9 @@ namespace FiringRateSim
 			///Initial firing frequency voltage threshold
 			float m_fltVthi;    
 
+			///The component added to Vthi for accomodation
+			float m_fltVthadd;
+
 			///Current and next threshold voltage. Vth
 			float m_aryVth[2];		
 
@@ -123,6 +129,12 @@ namespace FiringRateSim
 			/// this is the theshold voltage that is reported back to animatlab.
 			float m_fltVthdisp;		
 
+			///The initialization current to turn on at the beginning of the simulation
+			float m_fltIinit;
+
+			///The duration for how long the Iinit current is on at the beginning of the simulation
+			float m_fltInitTime;
+
 			/// The array of synapses that are in-coming to this neuron
 			CStdPtrArray<Synapse> m_arySynapses;
 
@@ -132,6 +144,10 @@ namespace FiringRateSim
 
 			Synapse *LoadSynapse(CStdXml &oXml);
 
+			virtual void SetupTemplateNodes();
+			virtual void DestroyTemplateNodes();
+			virtual void TemplateNodeChanged();
+					
 		public:
 			Neuron();
 			virtual ~Neuron();
@@ -176,6 +192,12 @@ namespace FiringRateSim
 			virtual float AccommodationTimeConstant();
 			virtual void AccommodationTimeConstant(float fltVal);
 
+			virtual float Iinit();
+			virtual void Iinit(float fltVal);
+
+			virtual float InitTime();
+			virtual void InitTime(float fltVal);
+
 			virtual bool GainType();
 			virtual void GainType(bool bVal);
 
@@ -185,6 +207,8 @@ namespace FiringRateSim
 			virtual unsigned char NeuronType();
 
 			virtual CStdPtrArray<Synapse> *GetSynapses();
+
+			virtual void Copy(CStdSerialize *lpSource);
 
 			/**
 			\brief	Adds a synapse to this neuron. 
@@ -203,7 +227,7 @@ namespace FiringRateSim
 			virtual void ClearSynapses();
 			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 
 			/**
 			\brief	Sets the system pointers.

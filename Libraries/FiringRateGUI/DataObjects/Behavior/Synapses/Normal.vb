@@ -19,6 +19,9 @@ Namespace DataObjects.Behavior.Synapses
         Protected m_strUserText As String = ""
         Protected m_snWeight As AnimatGUI.Framework.ScaledNumber
 
+        Protected m_bHasDelay As Boolean = False
+        Protected m_snDelayInterval As ScaledNumber
+
 #End Region
 
 #Region " Properties "
@@ -77,6 +80,32 @@ Namespace DataObjects.Behavior.Synapses
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property HasDelay() As Boolean
+            Get
+                Return m_bHasDelay
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("HasDelay", Value.ToString, True)
+                m_bHasDelay = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property DelayInterval() As ScaledNumber
+            Get
+                Return m_snDelayInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 0.5 Then
+                    Throw New System.Exception("The time step must be between the range 0 to 500 ms.")
+                End If
+
+                SetSimData("DelayInterval", Value.ActualValue.ToString, True)
+                m_snDelayInterval.CopyData(Value)
+            End Set
+        End Property
+
         Public Overrides ReadOnly Property SynapseType() As String
             Get
                 Return "Regular"
@@ -125,6 +154,8 @@ Namespace DataObjects.Behavior.Synapses
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Weight", "Weight", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
             m_thDataTypes.ID = "Weight"
 
+            m_snDelayInterval = New AnimatGUI.Framework.ScaledNumber(Me, "DelayInterval", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -144,6 +175,8 @@ Namespace DataObjects.Behavior.Synapses
             m_bEnabled = bnLink.m_bEnabled
             m_strUserText = bnLink.m_strUserText
             m_snWeight = DirectCast(bnLink.m_snWeight.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_bHasDelay = bnLink.m_bHasDelay
+            m_snDelayInterval = DirectCast(bnLink.m_snDelayInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -162,6 +195,8 @@ Namespace DataObjects.Behavior.Synapses
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("FromID", fnNeuron.ID)
             oXml.AddChildElement("Weight", m_snWeight.ActualValue)
+            oXml.AddChildElement("HasDelay", m_bHasDelay)
+            oXml.AddChildElement("DelayInterval", m_snDelayInterval.ActualValue)
 
             oXml.AddChildElement("CompoundSynapses")
             oXml.IntoElem()
@@ -270,12 +305,22 @@ Namespace DataObjects.Behavior.Synapses
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", GetType(Boolean), "Enabled", _
                                         "Synapse Properties", "Determines if this synapse is enabled or not.", m_bEnabled))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Has Delay", m_bHasDelay.GetType(), "HasDelay", _
+                                        "Synapse Properties", "Determines if this synapse has a delay.", m_bHasDelay))
+
+            pbNumberBag = m_snDelayInterval.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Delay Interval", pbNumberBag.GetType(), "DelayInterval", _
+                                        "Synapse Properties", "Sets the time interval to use for a delay buffer if one is enabled. " & _
+                                        "Acceptable values are in the range 0 to 500 ms.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
             If Not m_snWeight Is Nothing Then m_snWeight.ClearIsDirty()
+            If Not m_snDelayInterval Is Nothing Then m_snDelayInterval.ClearIsDirty()
         End Sub
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -288,6 +333,10 @@ Namespace DataObjects.Behavior.Synapses
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
                 m_strUserText = oXml.GetChildString("UserText")
                 m_snWeight.LoadData(oXml, "Weight")
+                m_bHasDelay = oXml.GetChildBool("HasDelay", m_bHasDelay)
+                If oXml.FindChildElement("DelayInterval", False) Then
+                    m_snDelayInterval.LoadData(oXml, "DelayInterval")
+                End If
 
                 oXml.OutOfElem()
             Catch ex As System.Exception
@@ -306,6 +355,8 @@ Namespace DataObjects.Behavior.Synapses
                 oXml.AddChildElement("Enabled", m_bEnabled)
                 oXml.AddChildElement("UserText", m_strUserText)
                 m_snWeight.SaveData(oXml, "Weight")
+                oXml.AddChildElement("HasDelay", m_bHasDelay)
+                m_snDelayInterval.SaveData(oXml, "DelayInterval")
 
                 oXml.OutOfElem() ' Outof Node Element
 

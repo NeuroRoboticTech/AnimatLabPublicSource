@@ -31,7 +31,6 @@ BlHinge::BlHinge()
 {
 	SetThisPointers();
 	m_btHinge = NULL;
-	m_fltRotationDeg = 0;
     m_fltChildMassWithChildren = 0;
     m_fltBounce = 1;
 
@@ -253,6 +252,12 @@ float *BlHinge::GetDataPointer(const std::string &strDataType)
 		return &m_fltForce;
 	else if(strType == "JOINTROTATIONDEG")
 		return &m_fltRotationDeg;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTDESIREDPOSITIONDEG")
+		return &m_fltDesiredPositionDeg;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "JOINTDESIREDVELOCITY")
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
@@ -300,6 +305,9 @@ void BlHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("JointActualVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointForce", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPositionDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
@@ -309,20 +317,14 @@ void BlHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void BlHinge::StepSimulation()
 {
-    //Test code
+    ////Test code
     //int iTest = 0;
-    //if(m_lpSim->Time() >= 0.2)
+    //if(Std_ToLower(m_strID) == "efb767d8-8361-466e-99b8-2f8bf6681243")
     //    iTest = 1;
 
 	UpdateData();
 	SetVelocityToDesired();
     ApplyMotorAssist();
-}
-
-void BlHinge::UpdateData()
-{
-	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/osg::PI)*180);
 }
 
 bool BlHinge::JointIsLocked()

@@ -69,7 +69,10 @@ float PacemakerNeuron::Il()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Il(float fltVal)
-{m_fltIl=fltVal;}
+{
+	m_fltIl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the high intrinsic current value.
@@ -91,7 +94,10 @@ float PacemakerNeuron::Ih()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Ih(float fltVal)
-{m_fltIh=fltVal;}
+{
+	m_fltIh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the lower steady state threshold.
@@ -113,7 +119,10 @@ float PacemakerNeuron::Vssm()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Vssm(float fltVal)
-{m_fltVssm=fltVal;}
+{
+	m_fltVssm=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the slope used to calculate length of time that Il current remains active.
@@ -135,7 +144,10 @@ float PacemakerNeuron::Mtl()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Mtl(float fltVal)
-{m_fltMtl=fltVal;}
+{
+	m_fltMtl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the intercept used to calculate length of time that Il current remains active.
@@ -157,7 +169,10 @@ float PacemakerNeuron::Btl()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Btl(float fltVal)
-{m_fltBtl=fltVal;}
+{
+	m_fltBtl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the time that the high current is active.
@@ -179,7 +194,10 @@ float PacemakerNeuron::Th()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Th(float fltVal)
-{m_fltTh=fltVal;}
+{
+	m_fltTh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the duration for the current mode.
@@ -201,7 +219,10 @@ float PacemakerNeuron::ITime()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::ITime(float fltVal)
-{m_fltITime=fltVal;}
+{
+	m_fltITime=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the intrinsic current type. (HI or LOW)
@@ -223,7 +244,10 @@ unsigned char PacemakerNeuron::IntrinsicType()
 \param	iVal	The new value. 
 **/
 void PacemakerNeuron::IntrinsicType(unsigned char iVal)
-{m_iIntrinsicType=iVal;}
+{
+	m_iIntrinsicType=iVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the neuron type.
@@ -235,6 +259,24 @@ void PacemakerNeuron::IntrinsicType(unsigned char iVal)
 **/
 unsigned char PacemakerNeuron::NeuronType()
 {return PACEMAKER_NEURON;}
+
+void PacemakerNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	PacemakerNeuron *lpOrig = dynamic_cast<PacemakerNeuron *>(lpSource);
+
+	m_fltIl = lpOrig->m_fltIl;
+	m_fltIh = lpOrig->m_fltIh;
+	m_fltVssm = lpOrig->m_fltVssm;
+	m_fltMtl = lpOrig->m_fltMtl;
+	m_fltBtl = lpOrig->m_fltBtl;
+	m_fltTh = lpOrig->m_fltTh;
+	m_fltITime = lpOrig->m_fltITime;
+	m_fltInterburstInterval = lpOrig->m_fltInterburstInterval;
+	m_fltVss = lpOrig->m_fltVss;
+	m_iIntrinsicType = lpOrig->m_iIntrinsicType;
+}
 
 float PacemakerNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
 {

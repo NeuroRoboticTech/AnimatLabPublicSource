@@ -91,6 +91,32 @@ void EquationGain::GainEquation(std::string strEquation)
 	m_lpEval = lpEval;
 }
 
+void EquationGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	EquationGain *lpOrig = dynamic_cast<EquationGain *>(lpSource);
+
+	m_strGainEquation = lpOrig->m_strGainEquation;
+
+	if(m_lpEval)
+	{
+		delete m_lpEval;
+		m_lpEval = NULL;
+	}
+
+	//TODO Need to clone this.
+	//if(lpOrig->m_lpEval)
+	//	m_lpEval = lpOrig->m_l
+}
+
+CStdSerialize *EquationGain::Clone()
+{
+	CStdSerialize *lpClone = new EquationGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float EquationGain::CalculateGain(float fltInput)
 {
 	if(InLimits(fltInput))

@@ -50,6 +50,9 @@ namespace AnimatSim
 
 				float D();
 				void D(float fltVal);
+											
+				virtual void Copy(CStdSerialize *lpSource);
+				virtual CStdSerialize *Clone();
 
 				virtual float CalculateGain(float fltInput);
 

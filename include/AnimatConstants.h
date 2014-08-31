@@ -499,6 +499,15 @@
 #define Al_Err_lTimedOutInMicroWait -4088
 #define Al_Err_strTimedOutInMicroWait "Timed out in microwait."
 
+#define Al_Err_lInvalidMeshScaleParam -4089
+#define Al_Err_strInvalidMeshScaleParam "Invalid mesh scaling param specified."
+
+#define Al_Err_lMoreThanOneMotorControl -4090
+#define Al_Err_strMoreThanOneMotorControl "Cannot have more than one motor control method per motor."
+
+#define Al_Err_lInvalidTargetID -4091
+#define Al_Err_strInvalidTargetID "Invalid target ID."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 
@@ -528,5 +537,13 @@
 #define ANIMAT_X_AXIS 0
 #define ANIMAT_Y_AXIS 1
 #define ANIMAT_Z_AXIS 2
+
+#define DESIRED_VELOCITY_TYPE 0
+#define DESIRED_POSITION_TYPE 1
+#define STICKY_ON_TYPE 2
+#define STICKY_OFF_TYPE 3
+#define BODY_FORCE_X_TYPE 4
+#define BODY_FORCE_Y_TYPE 5
+#define BODY_FORCE_Z_TYPE 6
 
 #endif // __ANIMAT_CONSTANTS_H__

@@ -265,6 +265,22 @@ or not is done in the GUI project workspace.
 **/
 void AnimatBase::Selected(bool bValue, bool bSelectMultiple) {m_bSelected = bValue;}
 
+void AnimatBase::Copy(CStdSerialize *lpSource)
+{
+	CStdSerialize::Copy(lpSource);
+
+	AnimatBase *lpOrig = dynamic_cast<AnimatBase *>(lpSource);
+
+	m_bEnabled = lpOrig->m_bEnabled;
+	m_lpSim = lpOrig->m_lpSim;
+	m_lpStructure = lpOrig->m_lpStructure;
+	m_lpModule = lpOrig->m_lpModule;
+	m_lpNode = lpOrig->m_lpNode;
+	m_strID = lpOrig->m_strID;
+	m_strType = lpOrig->m_strType;
+	m_strName = lpOrig->m_strName;
+	m_bSelected = lpOrig->m_bSelected;
+}
 
 #pragma region DataAccesMethods
 

@@ -11,7 +11,7 @@ namespace AnimatSim
 			RobotInterface *m_lpParentInterface;
 			RobotIOControl *m_lpParentIOControl;
 
-			AnimatBase *m_lpPart;
+			BodyPart *m_lpPart;
 			std::string m_strPartID;
 
 			float *m_lpProperty;
@@ -30,6 +30,10 @@ namespace AnimatSim
 
 			///This stores the temporary IO value to be used later in IO calculations. 
 			int m_iIOValue;
+
+			///This is a generic variable that keeps track of the data that was sent/received AFTER it has been scled
+			///using the gain function.
+			float m_fltIOScaledValue;
 
 			///True when the value changes.
 			bool m_bChanged;
@@ -57,6 +61,9 @@ namespace AnimatSim
 			virtual int IOValueInt();
 			virtual void IOValueInt(int iVal);
 			
+			virtual float IOScaledValue();
+			virtual void IOScaledValue(float fltVal);
+			
 			virtual bool Changed();
 			virtual void Changed(bool bVal);
 
@@ -65,6 +72,12 @@ namespace AnimatSim
 			
 			virtual void PropertyName(std::string strName);
 			virtual std::string PropertyName();
+
+			virtual bool IsMotorControl();
+			virtual bool IncludeInPartsCycle() {return false;}
+
+			virtual float QuantizeServoPosition(float fltPos);
+			virtual float QuantizeServoVelocity(float fltVel);
 
 			virtual Gain *GetGain();
 			virtual void SetGain(Gain *lpGain);
@@ -80,7 +93,7 @@ namespace AnimatSim
 #pragma endregion
 
 			virtual void SetupIO();
-			virtual void StepIO();
+			virtual void StepIO(int iPartIdx);
 			virtual void ShutdownIO();
 
 			virtual void Initialize();

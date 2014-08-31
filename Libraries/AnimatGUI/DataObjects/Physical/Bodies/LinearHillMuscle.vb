@@ -142,7 +142,9 @@ Namespace DataObjects.Physical.Bodies
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Tl", "Tension-Length Percentage", "%", "%", 0, 1000))
             m_thDataTypes.ID = "Tension"
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli)
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
+            m_thIncomingDataTypes.ID = "MembraneVoltage"
 
             m_snMaxTension = New AnimatGUI.Framework.ScaledNumber(Me, "MaxTension", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snKse = New AnimatGUI.Framework.ScaledNumber(Me, "Kse", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons per meter", "N/m")

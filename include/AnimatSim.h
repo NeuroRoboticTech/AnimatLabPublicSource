@@ -149,7 +149,7 @@ namespace AnimatSim
 		class VoltageClamp;
 		class InverseMuscleCurrent;
 		class PropertyControlStimulus;
-        class MotorVelocityStimulus;
+        class MotorStimulus;
         class ForceStimulus;
 	}
 
@@ -174,6 +174,10 @@ namespace AnimatSim
         class RobotInterface;
 		class RobotIOControl;
         class RobotPartInterface;
+		class RemoteControl;
+		class RemoteControlLinkage;
+		class PassThroughLinkage;
+		class PulsedLinkage;
     }
 }
 
@@ -272,7 +276,7 @@ using namespace AnimatSim::Robotics;
 #include "VoltageClamp.h"
 #include "InverseMuscleCurrent.h"
 #include "PropertyControlStimulus.h"
-#include "MotorVelocityStimulus.h"
+#include "MotorStimulus.h"
 #include "ForceStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
@@ -289,5 +293,13 @@ using namespace AnimatSim::Robotics;
 #include "Simulator.h"
 #include "SimulationThread.h"
 #include "SimulationMgr.h"
+
+#include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
+#include "RemoteControlLinkage.h"
+#include "PassThroughLinkage.h"
+#include "PulsedLinkage.h"
+#include "RemoteControl.h"
 
 #endif // __ANIMAT_LIB_DLL_H__

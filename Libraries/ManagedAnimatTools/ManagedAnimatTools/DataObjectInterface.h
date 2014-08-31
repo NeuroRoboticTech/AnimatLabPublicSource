@@ -131,6 +131,7 @@ namespace AnimatGUI
 
 			virtual event ManagedAnimatInterfaces::IDataObjectInterface::PositionChangedHandler^ OnPositionChanged;
 			virtual event ManagedAnimatInterfaces::IDataObjectInterface::RotationChangedHandler^ OnRotationChanged;
+			virtual event ManagedAnimatInterfaces::IDataObjectInterface::SizeChangedHandler^ OnSizeChanged;
 			virtual event ManagedAnimatInterfaces::IDataObjectInterface::SelectionChangedHandler^ OnSelectionChanged;
 			virtual event ManagedAnimatInterfaces::IDataObjectInterface::AddBodyClickedHandler^ OnAddBodyClicked;
 			virtual event ManagedAnimatInterfaces::IDataObjectInterface::SelectedVertexChangedHandler^ OnSelectedVertexChanged;
@@ -152,6 +153,18 @@ namespace AnimatGUI
 				try
 				{
 					OnRotationChanged();
+				}
+				catch(...)
+				{
+					//If we get an error here just eat it.
+				}
+			}
+
+			virtual void FireSizeChangedEvent()    
+			{
+				try
+				{
+					OnSizeChanged();
 				}
 				catch(...)
 				{

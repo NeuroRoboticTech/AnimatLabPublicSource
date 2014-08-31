@@ -101,7 +101,7 @@ Namespace DataObjects.ExternalStimuli
 
         Public Overrides Property Description() As String
             Get
-                Return "This stimulus sets the velocity/position of a motorized joint."
+                Return "This stimulus sets the velocity of a motorized joint."
             End Get
             Set(value As String)
             End Set
@@ -116,6 +116,12 @@ Namespace DataObjects.ExternalStimuli
         Public Overrides ReadOnly Property DragImageName() As String
             Get
                 Return "AnimatGUI.MotorVelocity_Large.gif"
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property StimulusType() As String
+            Get
+                Return "Velocity"
             End Get
         End Property
 
@@ -168,6 +174,9 @@ Namespace DataObjects.ExternalStimuli
                 Dim doJoint As AnimatGUI.DataObjects.Physical.Joint = DirectCast(m_doBodyPart, AnimatGUI.DataObjects.Physical.Joint)
 
                 Dim strUnits As String = doJoint.ScaleUnits
+
+                If StimulusType() = "Velocity" Then strUnits = strUnits & "/s"
+
                 m_snVelocity.SetScaleUnits(strUnits, strUnits)
             End If
 
@@ -241,8 +250,11 @@ Namespace DataObjects.ExternalStimuli
             oXml.AddChildElement("StartTime", m_snStartTime.ActualValue)
             oXml.AddChildElement("EndTime", m_snEndTime.ActualValue)
 
+
+            oXml.AddChildElement("TargetID", StimulusType())
+
             If m_eValueType = enumValueType.Constant Then
-                oXml.AddChildElement("Velocity", m_snVelocity.ActualValue)
+                oXml.AddChildElement("Equation", m_snVelocity.ActualValue)
             Else
                 'We need to convert the infix equation to postfix
                 Dim oMathEval As New MathStringEval
@@ -251,7 +263,7 @@ Namespace DataObjects.ExternalStimuli
                 oMathEval.AddVariable("v")
                 oMathEval.Equation = m_strEquation
                 oMathEval.Parse()
-                oXml.AddChildElement("Velocity", oMathEval.PostFix)
+                oXml.AddChildElement("Equation", oMathEval.PostFix)
             End If
 
             oXml.AddChildElement("DisableMotorWhenDone", m_bDisableWhenDone)
@@ -264,15 +276,6 @@ Namespace DataObjects.ExternalStimuli
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
-            Dim strInputStim As String
-            If Not m_doBodyPart Is Nothing AndAlso TypeOf m_doBodyPart Is AnimatGUI.DataObjects.Physical.Joint Then
-                Dim doJoint As AnimatGUI.DataObjects.Physical.Joint = DirectCast(m_doBodyPart, AnimatGUI.DataObjects.Physical.Joint)
-                strInputStim = doJoint.InputStimulus
-                SetVelocityUnits()
-            Else
-                strInputStim = "Velocity"
-            End If
-
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Value Type", m_eValueType.GetType(), "ValueType", _
                                         "Stimulus Properties", "Determines if a constant or an equation is used to determine the velocity/position.", m_eValueType))
 
@@ -281,13 +284,16 @@ Namespace DataObjects.ExternalStimuli
                                             "Stimulus Properties", "If setup to use equations, then this is the one used.", m_strEquation))
             Else
                 Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snVelocity.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(strInputStim, pbNumberBag.GetType(), "Velocity", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(StimulusType(), pbNumberBag.GetType(), "Velocity", _
                                             "Stimulus Properties", "The velocity/position to move the motorized joint.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Disable When Done", m_bDisableWhenDone.GetType(), "DisableWhenDone", _
                                         "Stimulus Properties", "If this is true then the motor is disabled at the end of the simulus period.", m_bDisableWhenDone))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stim Type", StimulusType().GetType(), "StimulusType", _
+                                        "Stimulus Properties", "Tells if it is a velocity or position motor stimulus.", StimulusType(), True))
 
         End Sub
 

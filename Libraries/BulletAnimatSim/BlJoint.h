@@ -55,6 +55,8 @@ namespace BulletAnimatSim
             virtual void CalculateRelativeJointMatrices(CStdFPoint vAdditionalRot, btTransform &mtJointRelToParent, btTransform &mtJointRelToChild);
             virtual void InitBaseJointPointers(RigidBody *lpParent, RigidBody *lpChild, ConstraintRelaxation **aryRelaxations, int iDisallowSpringIndex);
 
+			virtual float GetCurrentBtPositionScaled();
+
 		public:
 			BlJoint();
 			virtual ~BlJoint();

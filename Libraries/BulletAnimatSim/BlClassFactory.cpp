@@ -537,8 +537,8 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "MOTORVELOCITY")
-		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
+	if(strType == "MOTORVELOCITY" || strType == "MOTORPOSITION")
+		lpStimulus = new AnimatSim::ExternalStimuli::MotorStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
 	else if(strType == "NODEINPUT")
@@ -891,6 +891,50 @@ catch(...)
 
 // ************* Constraint Friction Type Conversion functions ******************************
 
+// ************* RemoteControlLinkage Conversion functions ******************************
+
+RemoteControlLinkage *BlClassFactory::CreateRemoteControlLinkage(std::string strType, bool bThrowError)
+{
+	RemoteControlLinkage *lpLink=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "PASSTHROUGHLINKAGE")
+	{
+		lpLink = new PassThroughLinkage;
+	}
+	else if(strType == "PULSEDLINKAGE")
+	{
+		lpLink = new PulsedLinkage;
+	}
+	else
+	{
+		lpLink = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidFrictionType, Al_Err_strInvalidFrictionType, "Friction", strType);
+	}
+
+	return lpLink;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpLink) delete lpLink;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpLink) delete lpLink;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* RemoteControlLinkage Type Conversion functions ******************************
+
 
 // ************* IStdClassFactory functions ******************************
 
@@ -938,6 +982,8 @@ CStdSerialize *BlClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateConstraintRelaxation(strObjectType, bThrowError);
 	else if(strClassType == "CONSTRAINTFRICTION")
 		lpObject = CreateConstraintFriction(strObjectType, bThrowError);
+	else if(strClassType == "REMOTECONTROLLINKAGE")
+		lpObject = CreateRemoteControlLinkage(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

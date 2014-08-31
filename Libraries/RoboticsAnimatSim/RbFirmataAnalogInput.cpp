@@ -43,16 +43,16 @@ void RbFirmataAnalogInput::SetupIO()
 		m_lpFirmata->sendAnalogPinReporting(m_iIOComponentID, ARD_ANALOG);
 }
 
-void RbFirmataAnalogInput::StepIO()
+void RbFirmataAnalogInput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{
 		int iValue = m_lpFirmata->getAnalog(m_iIOComponentID);
 		if(iValue != -1 && m_iIOValue != iValue)
 		{
-			std::cout << "Analog In: " << iValue << "\r\n";
+			//std::cout << "Analog In: " << iValue << "\r\n";
 
-			m_iIOValue = iValue;
+			IOValue(iValue);
 			m_bChanged = true;
 		}
 	}
@@ -67,15 +67,18 @@ void RbFirmataAnalogInput::StepSimulation()
 		m_bChanged = false;
 
 		//Calculate the gain of the IO value.
-		float fltValue = m_lpGain->CalculateGain((float) m_iIOValue);
+		float fltValue = m_lpGain->CalculateGain(m_fltIOValue);
+
+		if(fltValue >= 1)
+			fltValue = fltValue;
 
 		//Remove any previously added value from the param
-		*m_lpProperty -= m_fltIOValue;
+		*m_lpProperty -= m_fltIOScaledValue;
 
-		m_fltIOValue = fltValue;
+		m_fltIOScaledValue = fltValue;
 
 		//Add the value back.
-		*m_lpProperty += m_fltIOValue;
+		*m_lpProperty += m_fltIOScaledValue;
 	}
 }
 

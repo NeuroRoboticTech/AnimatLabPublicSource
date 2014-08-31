@@ -26,6 +26,7 @@ BistableNeuron::BistableNeuron()
 {
 	m_fltIntrinsic=0;
 	m_fltVsth = 0.010f;
+	m_fltVsthi = m_fltVsth;
 	m_fltIl=0;
 	m_fltIh = 0;
 }
@@ -66,7 +67,10 @@ float BistableNeuron::IntrinsicCurrent()
 \param	fltVal	The new value. 
 **/
 void BistableNeuron::IntrinsicCurrent(float fltVal)
-{m_fltIntrinsic=fltVal;}
+{
+	m_fltIntrinsic=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the low current.
@@ -88,7 +92,10 @@ float BistableNeuron::Il()
 \param	fltVal	The new value. 
 **/
 void BistableNeuron::Il(float fltVal)
-{m_fltIl=fltVal;}
+{
+	m_fltIl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the high current.
@@ -110,7 +117,10 @@ float BistableNeuron::Ih()
 \param	fltVal	The new value. 
 **/
 void BistableNeuron::Ih(float fltVal)
-{m_fltIh=fltVal;}
+{
+	m_fltIh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the threshold voltage.
@@ -120,8 +130,8 @@ void BistableNeuron::Ih(float fltVal)
 
 \return	threshold voltage.
 **/
-float BistableNeuron::Vsth()
-{return m_fltVsth;}
+float BistableNeuron::Vsthi()
+{return m_fltVsthi;}
 
 /**
 \brief	Sets the threshold voltage.
@@ -131,8 +141,11 @@ float BistableNeuron::Vsth()
 
 \param	fltVal	The new value. 
 **/
-void BistableNeuron::Vsth(float fltVal)
-{m_fltVsth=fltVal;}
+void BistableNeuron::Vsthi(float fltVal)
+{
+	m_fltVsthi=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the neuron type.
@@ -144,6 +157,19 @@ void BistableNeuron::Vsth(float fltVal)
 **/
 unsigned char BistableNeuron::NeuronType()
 {return BISTABLE_NEURON;}
+
+void BistableNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	BistableNeuron *lpOrig = dynamic_cast<BistableNeuron *>(lpSource);
+
+	m_fltIntrinsic = lpOrig->m_fltIntrinsic;
+	m_fltVsthi = lpOrig->m_fltVsthi;
+	m_fltVsth = lpOrig->m_fltVsth;
+	m_fltIl = lpOrig->m_fltIl;
+	m_fltIh = lpOrig->m_fltIh;
+}
 
 float BistableNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
 {
@@ -160,6 +186,15 @@ void BistableNeuron::ResetSimulation()
 	Neuron::ResetSimulation();
 
 	m_fltIntrinsic=0;
+	m_fltVsth = m_fltVsthi;
+}
+
+void BistableNeuron::StepSimulation()
+{
+	Neuron::StepSimulation();
+
+	//modify the switch threshold to move the same as the regular threshold using accomodation.
+	m_fltVsth = m_fltVsthi + m_fltVthadd;
 }
 
 #pragma region DataAccesMethods
@@ -173,7 +208,7 @@ bool BistableNeuron::SetData(const std::string &strDataType, const std::string &
 
 	if(strType == "VSTH")
 	{
-		Vsth(atof(strValue.c_str()));
+		Vsthi(atof(strValue.c_str()));
 		return true;
 	}
 
@@ -213,7 +248,7 @@ void BistableNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	Vsth(oXml.GetChildFloat("Vsth"));
+	Vsthi(oXml.GetChildFloat("Vsth"));
 	Il(oXml.GetChildFloat("Il"));
 	Ih(oXml.GetChildFloat("Ih"));
 

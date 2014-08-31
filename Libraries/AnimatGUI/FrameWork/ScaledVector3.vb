@@ -102,9 +102,9 @@ Namespace Framework
             m_snY = New ScaledNumber(Me, "Y", 0, ScaledNumber.enumNumericScale.None, strUnits, strUnitAbbrev)
             m_snZ = New ScaledNumber(Me, "Z", 0, ScaledNumber.enumNumericScale.None, strUnits, strUnitAbbrev)
 
-            AddHandler m_snX.ValueChanged, AddressOf Me.OnValueChanged
-            AddHandler m_snY.ValueChanged, AddressOf Me.OnValueChanged
-            AddHandler m_snZ.ValueChanged, AddressOf Me.OnValueChanged
+            AddHandler m_snX.ValueChanged, AddressOf Me.OnXValueChanged
+            AddHandler m_snY.ValueChanged, AddressOf Me.OnYValueChanged
+            AddHandler m_snZ.ValueChanged, AddressOf Me.OnZValueChanged
 
             AddHandler m_snX.ValueChanging, AddressOf Me.OnXValueChanging
             AddHandler m_snY.ValueChanging, AddressOf Me.OnYValueChanging
@@ -149,9 +149,9 @@ Namespace Framework
             m_snY = DirectCast(svOrig.m_snY.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_snZ = DirectCast(svOrig.m_snZ.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
 
-            AddHandler m_snX.ValueChanged, AddressOf Me.OnValueChanged
-            AddHandler m_snY.ValueChanged, AddressOf Me.OnValueChanged
-            AddHandler m_snZ.ValueChanged, AddressOf Me.OnValueChanged
+            AddHandler m_snX.ValueChanged, AddressOf Me.OnXValueChanged
+            AddHandler m_snY.ValueChanged, AddressOf Me.OnYValueChanged
+            AddHandler m_snZ.ValueChanged, AddressOf Me.OnZValueChanged
 
             AddHandler m_snX.ValueChanging, AddressOf Me.OnXValueChanging
             AddHandler m_snY.ValueChanging, AddressOf Me.OnYValueChanging
@@ -178,7 +178,7 @@ Namespace Framework
                 m_snY.ActualValue = fltY
                 m_snZ.ActualValue = fltZ
 
-                If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged(-1, Nothing)
                 If bSetIsDirty Then
                     Me.IsDirty = True
                 End If
@@ -198,7 +198,7 @@ Namespace Framework
                 m_snY.CopyData(svVec3.m_snY)
                 m_snZ.CopyData(svVec3.m_snZ)
 
-                If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged(-1, Nothing)
                 If bSetIsDirty Then
                     Me.IsDirty = True
                 End If
@@ -251,18 +251,50 @@ Namespace Framework
 #Region " Events "
 
         Public Event ValueChanging(ByVal snParam As ScaledNumber, ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
-        Public Event ValueChanged()
+        Public Event ValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
 
         'If one of the scaled numbers value changed then raise our value changed event unless we 
         'are inside a copydata call. Then we want to suppress the events from the scaled numbers
         'and only raise the event once within our copydata
-        Protected Overridable Sub OnValueChanged()
+        Protected Overridable Sub OnXValueChanged()
             Try
                 If m_bInsideCopyData Then
                     Return
                 End If
 
-                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged(0, m_snX)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        'If one of the scaled numbers value changed then raise our value changed event unless we 
+        'are inside a copydata call. Then we want to suppress the events from the scaled numbers
+        'and only raise the event once within our copydata
+        Protected Overridable Sub OnYValueChanged()
+            Try
+                If m_bInsideCopyData Then
+                    Return
+                End If
+
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged(1, m_snY)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        'If one of the scaled numbers value changed then raise our value changed event unless we 
+        'are inside a copydata call. Then we want to suppress the events from the scaled numbers
+        'and only raise the event once within our copydata
+        Protected Overridable Sub OnZValueChanged()
+            Try
+                If m_bInsideCopyData Then
+                    Return
+                End If
+
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged(2, m_snZ)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

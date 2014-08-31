@@ -32,15 +32,23 @@ Namespace DataObjects.Behavior.Nodes
         Protected m_gnGain As AnimatGUI.DataObjects.Gain
 
         'Only used during the loading process.
-        Protected m_strOriginID As String
-        Protected m_strDestinationID As String
-        Protected m_strDataTypeID As String
+        Protected m_strOriginID As String = ""
+        Protected m_strDestinationID As String = ""
+        Protected m_strDataTypeID As String = ""
+        Protected m_strTargetDataTypeID As String = ""
         Protected m_thSourceDataTypes As New TypeHelpers.DataTypeID(Me)
+        Protected m_thTargetDataTypes As New TypeHelpers.DataTypeID(Me)
 
         Protected m_eDelayBufferMode As enumDelayBufferMode
         Protected m_snDelayBufferInterval As ScaledNumber
 
         Protected m_fltRobotIOScale As Single = 1
+
+        Protected m_bSynchWithRobot As Boolean = False
+        Protected m_snSynchUpdateInterval As ScaledNumber
+        Protected m_snSynchUpdateStartInterval As ScaledNumber
+
+        Protected m_snInitIODisableDuration As ScaledNumber
 
 #End Region
 
@@ -113,13 +121,16 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overridable Property TargetDataTypes() As TypeHelpers.DataTypeID
             Get
-                If Not m_bnDestination Is Nothing Then
-                    Return m_bnDestination.IncomingDataType
-                End If
-                Return Nothing
+                Return m_thTargetDataTypes
             End Get
+            Set(ByVal Value As TypeHelpers.DataTypeID)
+                If Not Value Is Nothing Then
+                    m_thTargetDataTypes = Value
+                    Me.SetSimData("DestinationID", Me.GetSimulationXml("Adapter"), True)
+                End If
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -191,6 +202,69 @@ Namespace DataObjects.Behavior.Nodes
                 m_fltRobotIOScale = value
             End Set
         End Property
+
+        Public Overridable Property SynchWithRobot() As Boolean
+            Get
+                Return m_bSynchWithRobot
+            End Get
+            Set(value As Boolean)
+                SetSimData("SynchWithRobot", value.ToString, True)
+                m_bSynchWithRobot = value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property SynchUpdateInterval() As ScaledNumber
+            Get
+                Return m_snSynchUpdateInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The synch update interval must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("SynchUpdateInterval", Value.ActualValue.ToString, True)
+                m_snSynchUpdateInterval.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property SynchUpdateStartInterval() As ScaledNumber
+            Get
+                Return m_snSynchUpdateStartInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The synch update start interval must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("SynchUpdateStartInterval", Value.ActualValue.ToString, True)
+                m_snSynchUpdateStartInterval.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property InitIODisableDuration() As ScaledNumber
+            Get
+                Return m_snInitIODisableDuration
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The initial IO disable duration must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("InitIODisableDuration", Value.ActualValue.ToString, True)
+                m_snInitIODisableDuration.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowTemplateNode() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -220,11 +294,15 @@ Namespace DataObjects.Behavior.Nodes
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
 
                 m_snDelayBufferInterval = New AnimatGUI.Framework.ScaledNumber(Me, "DelayBufferInterval", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snInitIODisableDuration = New AnimatGUI.Framework.ScaledNumber(Me, "InitIODisableDuration", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snSynchUpdateInterval = New AnimatGUI.Framework.ScaledNumber(Me, "SynchUpdateInterval", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+                m_snSynchUpdateStartInterval = New AnimatGUI.Framework.ScaledNumber(Me, "SynchUpdateStartInterval", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
                 m_thDataTypes.DataTypes.Clear()
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("CalculatedVal", "Calculated Value", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NextVal", "Next Value", "", "", 0, 1))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("UpdatedValue", "Updated Value", "", "", 0, 1))
                 m_thDataTypes.ID = "Enable"
 
             Catch ex As System.Exception
@@ -242,6 +320,12 @@ Namespace DataObjects.Behavior.Nodes
             m_gnGain = DirectCast(bnOrig.m_gnGain.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
             m_bEnabled = bnOrig.m_bEnabled
             m_snDelayBufferInterval = DirectCast(bnOrig.m_snDelayBufferInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snInitIODisableDuration = DirectCast(bnOrig.m_snInitIODisableDuration.Clone(Me, bCutData, doRoot), ScaledNumber)
+
+            m_bSynchWithRobot = bnOrig.m_bSynchWithRobot
+            m_snSynchUpdateInterval = DirectCast(bnOrig.m_snSynchUpdateInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snSynchUpdateStartInterval = DirectCast(bnOrig.m_snSynchUpdateStartInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
+
             m_eDelayBufferMode = bnOrig.m_eDelayBufferMode
             m_fltRobotIOScale = bnOrig.m_fltRobotIOScale
         End Sub
@@ -283,11 +367,20 @@ Namespace DataObjects.Behavior.Nodes
                 SetOrigin(blLink.Origin, False)
                 Me.m_thSourceDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
                 SetGainLimits()
+
+                If Not blLink.ActualOrigin Is Nothing AndAlso blLink.ActualOrigin.IsSensorOrMotor Then
+                    Me.m_bSynchWithRobot = True
+                End If
             End If
 
             'If this is the Origin then get the destination from the other end
             If blLink.ActualOrigin Is Me Then
                 SetDestination(blLink.Destination, False)
+                Me.m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                If Not blLink.ActualDestination Is Nothing AndAlso blLink.ActualDestination.IsSensorOrMotor Then
+                    Me.m_bSynchWithRobot = True
+                End If
             End If
 
             MyBase.AfterAddLink(blLink)
@@ -357,6 +450,11 @@ Namespace DataObjects.Behavior.Nodes
                                         GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                         GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Data Type ID", GetType(AnimatGUI.TypeHelpers.DataTypeID), "TargetDataTypes", _
+                                        "Adapter Properties", "Sets the type of data to set on the target node from the gain function.", m_thTargetDataTypes, _
+                                        GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                        GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", GetType(Boolean), "Enabled", _
                                         "Adapter Properties", "Determines if this adapter is enabled or not.", m_bEnabled))
 
@@ -369,10 +467,35 @@ Namespace DataObjects.Behavior.Nodes
                                         "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot IO Scale", GetType(Single), "RobotIOScale", _
-                                        "Adapter Properties", "If you are simulating a robot then use this to scale the IO output of this adpater in simulation mode to more closely match the robot output. " & _
-                                        "For example, motors are usually a little slower than in the simulation, so you would scale down the IO here to match your real motor. " & _
-                                        "This is a percentage value of scaling with 1 as 100%", m_fltRobotIOScale))
+            pbNumberBag = m_snInitIODisableDuration.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Init IO Disable Duration", pbNumberBag.GetType(), "InitIODisableDuration", _
+                                        "Adapter Properties", "Sets the duration for how long this adapter is disabled at simulation startup. " & _
+                                        "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            'Only show this stuff if there is a robot interface defined for it.
+            If Not Me.Organism.RobotInterface Is Nothing Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SynchWithRobot", GetType(Boolean), "SynchWithRobot", _
+                                            "Robot Properties", "Determines whether this adapter is synched with a robot part during simulation." & _
+                                            "Note that this will only be applied if the synch with robot setting on the robot interface is true also.", m_bSynchWithRobot))
+
+                pbNumberBag = m_snSynchUpdateInterval.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Interval", pbNumberBag.GetType(), "SynchUpdateInterval", _
+                                            "Robot Properties", "Sets how often this adapter is updated when simulating a robot. " & _
+                                            "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                pbNumberBag = m_snSynchUpdateStartInterval.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Start Interval", pbNumberBag.GetType(), "SynchUpdateStartInterval", _
+                                            "Robot Properties", "Sets the interval after the disable duration when this adapter is first updated when simulating a robot. " & _
+                                            "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot IO Scale", GetType(Single), "RobotIOScale", _
+                                            "Robot Properties", "If you are simulating a robot then use this to scale the IO output of this adpater in simulation mode to more closely match the robot output. " & _
+                                            "For example, motors are usually a little slower than in the simulation, so you would scale down the IO here to match your real motor. " & _
+                                            "This is a percentage value of scaling with 1 as 100%", m_fltRobotIOScale))
+            End If
 
         End Sub
 
@@ -381,6 +504,9 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_gnGain Is Nothing Then m_gnGain.ClearIsDirty()
             If Not m_snDelayBufferInterval Is Nothing Then m_snDelayBufferInterval.ClearIsDirty()
+            If Not m_snInitIODisableDuration Is Nothing Then m_snInitIODisableDuration.ClearIsDirty()
+            If Not m_snSynchUpdateInterval Is Nothing Then m_snSynchUpdateInterval.ClearIsDirty()
+            If Not m_snSynchUpdateStartInterval Is Nothing Then m_snSynchUpdateStartInterval.ClearIsDirty()
         End Sub
 
         Public Overrides Function Delete(Optional bAskToDelete As Boolean = True, Optional e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
@@ -508,9 +634,11 @@ Namespace DataObjects.Behavior.Nodes
             m_strOriginID = Util.LoadID(oXml, "Origin", True, "")
             m_strDestinationID = Util.LoadID(oXml, "Destination", True, "")
             m_strDataTypeID = Util.LoadID(oXml, "DataType", True, "")
+            m_strTargetDataTypeID = Util.LoadID(oXml, "TargetDataType", True, "")
             m_bEnabled = oXml.GetChildBool("Enabled", True)
             m_eDelayBufferMode = DirectCast([Enum].Parse(GetType(enumDelayBufferMode), oXml.GetChildString("DelayBufferMode", "NoDelayBuffer"), True), enumDelayBufferMode)
             m_snDelayBufferInterval.LoadData(oXml, "DelayBufferInterval", False)
+            m_snInitIODisableDuration.LoadData(oXml, "InitIODisableDuration", False)
             m_fltRobotIOScale = oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale)
 
             If oXml.FindChildElement("Gain", False) Then
@@ -522,6 +650,10 @@ Namespace DataObjects.Behavior.Nodes
                 m_gnGain = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Gain)
                 m_gnGain.LoadData(oXml, "Gain", "Gain")
             End If
+
+            m_bSynchWithRobot = oXml.GetChildBool("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.LoadData(oXml, "SynchUpdateInterval", False)
+            m_snSynchUpdateStartInterval.LoadData(oXml, "SynchUpdateStartInterval", False)
 
             oXml.OutOfElem()
 
@@ -554,6 +686,21 @@ Namespace DataObjects.Behavior.Nodes
                     If m_strDestinationID.Trim.Length > 0 Then
                         SetDestination(Me.Organism.FindBehavioralNode(m_strDestinationID), False)
                     End If
+                End If
+
+                If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
+                    m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                    If Not m_thTargetDataTypes Is Nothing AndAlso m_strTargetDataTypeID.Trim.Length > 0 AndAlso m_strTargetDataTypeID.Trim.Length > 0 Then
+                        If Me.m_thTargetDataTypes.DataTypes.Contains(m_strTargetDataTypeID) Then
+                            Me.m_thTargetDataTypes.ID = m_strTargetDataTypeID
+                        End If
+                    End If
+                End If
+
+                If Me.m_thTargetDataTypes Is Nothing OrElse Me.m_thTargetDataTypes.ID.Trim.Length = 0 Then
+                    m_bIsInitialized = False
+                    Return
                 End If
 
                 MyBase.InitializeAfterLoad()
@@ -595,12 +742,14 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_bnOrigin Is Nothing Then
                 AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+                AddHandler m_bnOrigin.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
             End If
         End Sub
 
         Protected Sub DisconnectOriginEvents()
             If Not m_bnOrigin Is Nothing Then
                 RemoveHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+                RemoveHandler m_bnOrigin.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
             End If
         End Sub
 
@@ -631,12 +780,14 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_bnDestination Is Nothing Then
                 AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+                AddHandler m_bnDestination.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
         Protected Sub DisconnectDestinationEvents()
             If Not m_bnDestination Is Nothing Then
                 RemoveHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+                RemoveHandler m_bnDestination.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
@@ -661,15 +812,24 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("DataTypeID", m_thSourceDataTypes.ID)
             End If
 
+            If Not m_thTargetDataTypes Is Nothing Then
+                oXml.AddChildElement("TargetDataTypeID", m_thTargetDataTypes.ID)
+            End If
+
             If Not m_gnGain Is Nothing Then
                 m_gnGain.SaveData(oXml, "Gain")
             End If
 
             oXml.AddChildElement("DelayBufferMode", m_eDelayBufferMode.ToString)
             m_snDelayBufferInterval.SaveData(oXml, "DelayBufferInterval")
+            m_snInitIODisableDuration.SaveData(oXml, "InitIODisableDuration")
 
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
+
+            oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.SaveData(oXml, "SynchUpdateInterval")
+            m_snSynchUpdateStartInterval.SaveData(oXml, "SynchUpdateStartInterval")
 
             oXml.OutOfElem() ' Outof Node Element
 
@@ -689,6 +849,33 @@ Namespace DataObjects.Behavior.Nodes
                         Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
                     End If
                 End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnReloadSourceDataTypes()
+            Try
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnReloadTargetDataTypes()
+            Try
+                If Not m_bnDestination Is Nothing AndAlso Not m_bnDestination.IncomingDataTypes Is Nothing Then
+                    Dim strSelID As String = m_thTargetDataTypes.ID
+
+                    m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                    If Not m_thTargetDataTypes Is Nothing AndAlso strSelID.Trim.Length > 0 Then
+                        If Me.m_thTargetDataTypes.DataTypes.Contains(strSelID) Then
+                            Me.m_thTargetDataTypes.ID = strSelID
+                        End If
+                    End If
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -722,6 +909,16 @@ Namespace DataObjects.Behavior.Nodes
                 If m_bIsInitialized AndAlso Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
                     SetDestination(blLink.Destination, True)
                 End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectOriginEvents()
+                DisconnectDestinationEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

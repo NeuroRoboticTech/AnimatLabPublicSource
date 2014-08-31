@@ -717,10 +717,12 @@ void Joint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Friction", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
-void Joint::AddExternalNodeInput(float fltInput) {}
+void Joint::AddExternalNodeInput(int iTargetDataType, float fltInput) {}
 
 void Joint::ResetSimulation()
 {
+	BodyPart::ResetSimulation();
+
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_ResetSimulation();
 

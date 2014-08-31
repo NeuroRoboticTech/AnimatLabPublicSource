@@ -324,17 +324,6 @@ namespace AnimatSim
 			///adapters with the same frequency as would happen in the real robot.
 			bool m_bRobotAdpaterSynch;
 
-			///If m_bAdapterRobotSynch is true then we will use this to determine how many time slices to go through
-			///before allowing the physics adapters to step.
-			int m_iRobotSynchTimeInterval;
-
-			///If m_bAdapterRobotSynch is true then we will use this to determine how many time slices to go through
-			///before allowing the physics adapters to step.
-			float m_fltRobotSynchTimeInterval;
-
-			///This keeps track of how many slices have occurred since the last robot physics adapter update.
-			int m_iRobotSynchTimeCount;
-
 #pragma endregion
 
 #pragma region TimingVariables
@@ -411,6 +400,18 @@ namespace AnimatSim
 			/// This is the time left over from subtracting all the calculated times form the total time for the step.
 			/// This is primarily used for debuggin purposes to make sure that I have not missed anything.
 			float m_fltRemainingStepTime;
+
+			///Total time we were in microsleep during playback pause calculations;
+			float m_fltTotalMicroSleepTime;
+
+			///Total number of times we called microsleep during playback pause calculations
+			float m_fltTotalMicroSleepCount;
+
+			///Total time we were in microwait during playback pause calculations;
+			float m_fltTotalMicroWaitTime;
+
+			///Total number of loop iterations for microwait during playback pause calculations
+			float m_fltTotalMicroWaitCount;
 
 			///This is a temp variable for measuring sim time for a set period for each simulation
 			double m_dblTotalStepTime;
@@ -835,11 +836,6 @@ namespace AnimatSim
 
 			virtual bool RobotAdpaterSynch();
 			virtual void RobotAdpaterSynch(bool bVal);
-
-			virtual int RobotSynchTimeInterval();
-			virtual void RobotSynchTimeInterval(float fltVal);
-
-			virtual int RobotSynchTimeCount();
 
 			virtual bool InSimulation();
 

@@ -27,7 +27,11 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ScriptProcessorPy\r\n", "", -1, false, true);}
 }
 
-void ScriptProcessorPy::InitPy(std::string strVal) {m_strInitPy = strVal;}
+void ScriptProcessorPy::InitPy(std::string strVal) 
+{
+	m_strInitPy = strVal;
+	Initialize();
+}
 
 std::string ScriptProcessorPy::InitPy() {return m_strInitPy;}
 
@@ -154,11 +158,11 @@ bool ScriptProcessorPy::SetData(const std::string &strDataType, const std::strin
 		return true;
 
 	if(strType == "ENABLED")
-	{
+	{  
 		Enabled(Std_ToBool(strValue));
 		return true;
 	}
-
+	 
 	if(strType == "RESETSIMPY")
 	{
 		ResetSimPy(strValue);
@@ -186,6 +190,12 @@ bool ScriptProcessorPy::SetData(const std::string &strDataType, const std::strin
 	if(strType == "AFTERSTEPNEURALENGINEPY")
 	{
 		AfterStepNeuralEnginePy(strValue);
+		return true;
+	}
+	
+	if(strType == "INITPY")
+	{
+		InitPy(strValue);
 		return true;
 	}
 

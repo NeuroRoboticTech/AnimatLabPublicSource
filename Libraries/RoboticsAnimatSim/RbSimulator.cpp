@@ -150,7 +150,7 @@ void RbSimulator::Initialize(int argc, const char **argv)
 
 void RbSimulator::StepSimulation()
 {
-	//Test Code
+	////Test Code
 	//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
 	//	m_timePeriod.StartTimer();
 

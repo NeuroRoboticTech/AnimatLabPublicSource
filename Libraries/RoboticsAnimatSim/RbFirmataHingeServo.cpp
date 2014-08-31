@@ -43,11 +43,11 @@ RbFirmataHingeServo::RbFirmataHingeServo()
 	m_fltMaxAngle = RB_PI/2;
 	m_fltMinAngle = -RB_PI/2;
 
-	m_fltPosRadToFPSlope = (m_iMaxAngle-m_iMinAngle+1)/(m_fltMaxAngle-m_fltMinAngle);
-	m_fltPosRadToFPIntercept = m_iCenterAngle;
+	m_fltPosFloatToFPSlope = (m_iMaxAngle-m_iMinAngle+1)/(m_fltMaxAngle-m_fltMinAngle);
+	m_fltPosFloatToFPIntercept = m_iCenterAngle;
 
-	m_fltPosFPToRadSlope = 1/m_fltPosRadToFPSlope;
-	m_fltPosFPToRadIntercept = -(m_fltPosFPToRadSlope*m_iCenterAngle);
+	m_fltPosFPToFloatSlope = 1/m_fltPosFloatToFPSlope;
+	m_fltPosFPToFloatIntercept = -(m_fltPosFPToFloatSlope*m_iCenterAngle);
 
 	m_iLastGoalPos = -1;
 }
@@ -86,13 +86,13 @@ void RbFirmataHingeServo::ResetToStartPos(bool bVal) {m_bResetToStartPos = bVal;
 
 float RbFirmataHingeServo::ConvertPosFPToRad(int iPos)
 {
-	float fltPos = (m_fltPosFPToRadSlope*iPos) + m_fltPosFPToRadIntercept;
+	float fltPos = (m_fltPosFPToFloatSlope*iPos) + m_fltPosFPToFloatIntercept;
 	return fltPos;
 }
 
 int RbFirmataHingeServo::ConvertPosRadToFP(float fltPos)
 {
-	int iPos = (m_fltPosRadToFPSlope*fltPos) + m_fltPosRadToFPIntercept;
+	int iPos = (m_fltPosFloatToFPSlope*fltPos) + m_fltPosFloatToFPIntercept;
 	return iPos;
 }
 /**
@@ -201,12 +201,12 @@ void RbFirmataHingeServo::SetupIO()
 		if(m_bResetToStartPos)
 		{
 			SetGoalPosition_FP(m_iCenterAngle);
-			m_iIOValue = m_iCenterAngle;
+			IOValue(m_iCenterAngle);
 		}
 	}
 }
 
-void RbFirmataHingeServo::StepIO()
+void RbFirmataHingeServo::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation() && m_iIOValue != m_iLastGoalPos)
 		SetGoalPosition_FP(m_iIOValue);

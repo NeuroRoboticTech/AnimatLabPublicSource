@@ -45,8 +45,6 @@
 #include "RbLANWirelessInterface.h"
 #include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
-#include "RbDynamixelUSBHinge.h"
-#include "RbDynamixelUSBPrismatic.h"
 
 #include "RbFirmataController.h"
 #include "RbFirmataPart.h"
@@ -57,6 +55,9 @@
 #include "RbFirmataHingeServo.h"
 #include "RbFirmataPrismaticServo.h"
 #include "RbFirmataPWMOutput.h"
+
+#include "RbFirmataDynamixelServo.h"
+#include "RbXBeeCommander.h"
 
 #ifdef _WINDOWS
 	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
@@ -550,8 +551,8 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "MOTORVELOCITY")
-		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
+	if(strType == "MOTORVELOCITY" || strType == "MOTORPOSITION")
+		lpStimulus = new AnimatSim::ExternalStimuli::MotorStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
 	else if(strType == "NODEINPUT")
@@ -893,7 +894,11 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "LANWIRELESSINTERFACE" || strType == "DEFAULT")
+	if(strType == "STANDARDINTERFACE" || strType == "DEFAULT")
+	{
+		lpInterface = new AnimatSim::Robotics::RobotInterface;
+	}
+	else if(strType == "LANWIRELESSINTERFACE")
 	{
 		lpInterface = new RbLANWirelessInterface;
 	}
@@ -942,10 +947,10 @@ try
 	{
 		lpControl = new RbFirmataController;
 	}
-	//else if(strType == "SWITCHINPUTSENSOR")
-	//{
-	//	lpControl = new RbSwitchInputSensor;
-	//}
+	else if(strType == "XBEECOMMANDER")
+	{
+		lpControl = new RbXBeeCommander;
+	}
 	else
 	{
 		lpControl = NULL;
@@ -985,11 +990,11 @@ try
 
 	if(strType == "DYNAMIXELUSBHINGE")
 	{
-		lpInterface = new RbDynamixelUSBHinge;
+		lpInterface = new RbDynamixelUSBServo;
 	}
 	else if(strType == "DYNAMIXELUSBPRISMATIC")
 	{
-		lpInterface = new RbDynamixelUSBPrismatic;
+		lpInterface = new RbDynamixelUSBServo;
 	}
 	else if(strType == "FIRMATAANALOGINPUT")
 	{
@@ -1019,6 +1024,14 @@ try
 	{
 		lpInterface = new RbFirmataPWMOutput;
 	}
+	else if(strType == "FIRMATADYNAMIXELHINGESERVO")
+	{
+		lpInterface = new RbFirmataDynamixelServo;
+	}
+	else if(strType == "FIRMATADYNAMIXELPRISMATICSERVO")
+	{
+		lpInterface = new RbFirmataDynamixelServo;
+	}
 	else
 	{
 		lpInterface = NULL;
@@ -1044,6 +1057,51 @@ catch(...)
 
 
 // ************* Robot Part Interface Type Conversion functions ******************************
+
+// ************* RemoteControlLinkage Conversion functions ******************************
+
+RemoteControlLinkage *RbClassFactory::CreateRemoteControlLinkage(std::string strType, bool bThrowError)
+{
+	RemoteControlLinkage *lpLink=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "PASSTHROUGHLINKAGE")
+	{
+		lpLink = new PassThroughLinkage;
+	}
+	else if(strType == "PULSEDLINKAGE")
+	{
+		lpLink = new PulsedLinkage;
+	}
+	else
+	{
+		lpLink = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidFrictionType, Al_Err_strInvalidFrictionType, "Friction", strType);
+	}
+
+	return lpLink;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpLink) delete lpLink;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpLink) delete lpLink;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* RemoteControlLinkage Type Conversion functions ******************************
+
 
 
 
@@ -1099,6 +1157,8 @@ CStdSerialize *RbClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateRobotIOControl(strObjectType, bThrowError);
 	else if(strClassType == "ROBOTPARTINTERFACE")
 		lpObject = CreateRobotPartInterface(strObjectType, bThrowError);
+	else if(strClassType == "REMOTECONTROLLINKAGE")
+		lpObject = CreateRemoteControlLinkage(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

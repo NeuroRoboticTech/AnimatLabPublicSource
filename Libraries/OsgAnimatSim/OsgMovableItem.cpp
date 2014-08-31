@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include <stdarg.h>
+#include "OsgCalculateBoundingBox.h"
 #include "OsgMovableItem.h"
 #include "OsgBody.h"
 #include "OsgRigidBody.h"
@@ -670,8 +671,8 @@ void OsgMovableItem::Physics_RotationChanged()
 BoundingBox OsgMovableItem::Physics_GetBoundingBox()
 {
  	BoundingBox abb;
-
 	osg::BoundingBox bb;
+
 	osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
 	if(osgGroup)
 	{
@@ -684,25 +685,20 @@ BoundingBox OsgMovableItem::Physics_GetBoundingBox()
 		abb.Set(-osgBound.radius(), -osgBound.radius(), -osgBound.radius(), osgBound.radius(), osgBound.radius(), osgBound.radius()); 
 	}
 	else
-	{
 		abb.Set(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5); 
-	}
 
 	return abb;
 }
 
 float OsgMovableItem::Physics_GetBoundingRadius()
 {
-	BoundingBox bb = Physics_GetBoundingBox();
-	return bb.MaxDimension();
+	if(m_osgNode.valid())
+	{
+		osg::BoundingSphere osgBound =	m_osgNode->getBound();
+		return osgBound.radius();
+	}
 
-	//if(m_osgNode.valid())
-	//{
-	//	osg::BoundingSphere osgBound =	m_osgNode->getBound();
-	//	return osgBound.radius();
-	//}
-
-	//return 0.5f;
+	return 0.5f;
 }
 
 void OsgMovableItem::SetTexture(std::string strTexture)

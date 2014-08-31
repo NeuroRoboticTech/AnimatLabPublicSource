@@ -30,10 +30,6 @@ namespace RoboticsAnimatSim
 			class ROBOTICS_PORT RbHinge : public RbMotorizedJoint, public AnimatSim::Environment::Joints::Hinge     
 			{
 			protected:
-				/// The rotation of the hinge in degrees.
-				float m_fltRotationDeg;
-
-				virtual void UpdateData();
                 virtual void TurnMotorOff();
 
 			public:

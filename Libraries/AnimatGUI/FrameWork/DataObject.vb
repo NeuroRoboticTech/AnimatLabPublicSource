@@ -292,6 +292,13 @@ Namespace Framework
         End Property
 
         <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowUserAdd() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property ButtonImageName() As String
             Get
                 Return ""
@@ -369,6 +376,10 @@ Namespace Framework
 
             If Not Util.Application Is Nothing Then
                 AddHandler Util.Application.ApplicationExiting, AddressOf Me.OnApplicationExiting
+            End If
+
+            If Not m_doParent Is Nothing Then
+                AddHandler m_doParent.BeforeRemoveItem, AddressOf Me.OnBeforeParentRemoveFromList
             End If
 
             If Not Util.Logger Is Nothing Then Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Finished Dataobject: " & Me.GetType().ToString)
@@ -549,9 +560,11 @@ Namespace Framework
                         Dim lModificationCount As Long = Util.ModificationHistory.ModificationCount
                         origValue = GetOriginalValueForHistory(oRoot, propInfo)
 
-                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
-                                           ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
-                                           propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        If Not e.Value Is Nothing Then
+                            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
+                                               ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
+                                               propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        End If
 
                         SignalBeforePropertyChanged(doRoot, propInfo)
 
@@ -1098,6 +1111,9 @@ Namespace Framework
         Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
+        Public Event ReloadSourceDataTypes()
+        Public Event ReloadTargetDataTypes()
+
         Public Overridable Sub SignalBeforePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
@@ -1130,12 +1146,29 @@ Namespace Framework
             RaiseEvent ItemDeselected(doObject)
         End Sub
 
+        Protected Overridable Sub SignalReloadSourceDataTypes()
+            RaiseEvent ReloadSourceDataTypes()
+        End Sub
+
+        Protected Overridable Sub SignalReloadTargetDataTypes()
+            RaiseEvent ReloadTargetDataTypes()
+        End Sub
+
         Protected Overridable Sub OnApplicationExiting()
             Try
                 'Lets clear out the interface pointer becase the simulation will be shutdown and any pointers will no longer be valid.
                 m_doInterface = Nothing
             Catch ex As Exception
 
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                'Tell everyone I am also being deleted
+                Me.SignalBeforeRemoveItem(Me)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 

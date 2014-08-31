@@ -235,9 +235,8 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbConstraintFriction.h" />
     <ClInclude Include="..\RbConstraintRelaxation.h" />
     <ClInclude Include="..\RbCylinder.h" />
+    <ClInclude Include="..\RbDynamixelServo.h" />
     <ClInclude Include="..\RbDynamixelUSB.h" />
-    <ClInclude Include="..\RbDynamixelUSBHinge.h" />
-    <ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
     <ClInclude Include="..\RbDynamixelUSBServo.h" />
     <ClInclude Include="..\RbEllipsoid.h" />
     <ClInclude Include="..\RbFirmataAnalogInput.h" />
@@ -245,6 +244,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbFirmataController.h" />
     <ClInclude Include="..\RbFirmataDigitalInput.h" />
     <ClInclude Include="..\RbFirmataDigitalOutput.h" />
+    <ClInclude Include="..\RbFirmataDynamixelServo.h" />
     <ClInclude Include="..\RbFirmataHingeServo.h" />
     <ClInclude Include="..\RbFirmataPart.h" />
     <ClInclude Include="..\RbFirmataPrismaticServo.h" />
@@ -274,6 +274,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\RbStructure.h" />
     <ClInclude Include="..\RbTorus.h" />
     <ClInclude Include="..\RbUniversal.h" />
+    <ClInclude Include="..\RbXBeeCommander.h" />
     <ClInclude Include="..\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -295,11 +296,8 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbCylinder.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbDynamixelServo.cpp" />
     <ClCompile Include="..\RbDynamixelUSB.cpp">
-    </ClCompile>
-    <ClCompile Include="..\RbDynamixelUSBHinge.cpp">
-    </ClCompile>
-    <ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
     </ClCompile>
     <ClCompile Include="..\RbDynamixelUSBServo.cpp">
     </ClCompile>
@@ -315,6 +313,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbFirmataDigitalOutput.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbFirmataDynamixelServo.cpp" />
     <ClCompile Include="..\RbFirmataHingeServo.cpp">
     </ClCompile>
     <ClCompile Include="..\RbFirmataPart.cpp">
@@ -373,6 +372,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\RbUniversal.cpp">
     </ClCompile>
+    <ClCompile Include="..\RbXBeeCommander.cpp" />
     <ClCompile Include="..\RoboticsAnimatSim.cpp">
     </ClCompile>
     <ClCompile Include="..\StdAfx.cpp">

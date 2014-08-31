@@ -93,7 +93,7 @@ namespace AnimatSim
 				\param [in,out]	fltA	The required activation level. 
 				**/
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 
 				virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 				virtual void VerifySystemPointers();

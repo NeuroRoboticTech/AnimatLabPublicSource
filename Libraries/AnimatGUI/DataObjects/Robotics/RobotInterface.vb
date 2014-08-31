@@ -132,6 +132,7 @@ Namespace DataObjects
 
                 Dim frmExport As New Forms.ExportStandaloneSim()
                 frmExport.Physics = Me.Physics
+                frmExport.chkShowGraphics.Checked = False
                 If frmExport.ShowDialog() <> Windows.Forms.DialogResult.OK Then
                     Return
                 End If
@@ -182,6 +183,12 @@ Namespace DataObjects
                     Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Robot Interface", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
 
                     popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddIOControl, mcDelete})
+
+                    If Me.CanBeCharted AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                        ' Create the menu items
+                        Dim mcAddToChart As New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
+                        popup.Items.Add(mcAddToChart)
+                    End If
 
                     Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
@@ -255,7 +262,10 @@ Namespace DataObjects
                     End If
 
                     Util.Application.AppIsBusy = True
+                    Me.SignalBeforeRemoveItem(Me)
                     Me.RemoveFromSim(True)
+                    Me.SignalAfterRemoveItem(Me)
+
                     m_doOrganism.RobotInterface = Nothing
                     Me.RemoveWorksapceTreeView()
                     If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
@@ -318,7 +328,7 @@ Namespace DataObjects
                             If Not oMod Is Nothing Then
                                 ioControl = DirectCast(oMod, RobotIOControl)
                                 ioControl.LoadData(oXml)
-                                m_aryIOControls.Add(ioControl.ID, ioControl)
+                                m_aryIOControls.Add(ioControl.ID, ioControl, False)
                             End If
                         Next
                         oXml.OutOfElem() 'Outof IOControls Element
@@ -358,6 +368,7 @@ Namespace DataObjects
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
                 oXml.AddChildElement("SynchSim", Me.SynchSim)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
 
@@ -384,6 +395,7 @@ Namespace DataObjects
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.PartType)
                 oXml.AddChildElement("ModuleName", Me.ModuleFilename)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 m_snPhysicsTimeStep.SaveSimulationXml(oXml, Me, "PhysicsTimeStep")
                 oXml.AddChildElement("SynchSim", Me.SynchSim)

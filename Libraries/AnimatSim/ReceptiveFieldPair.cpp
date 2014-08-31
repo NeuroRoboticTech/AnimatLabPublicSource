@@ -104,7 +104,7 @@ void ReceptiveFieldPair::Initialize()
 void ReceptiveFieldPair::StepSimulation()
 {
 	if(m_lpField && m_lpNode)
-		m_lpNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
+		m_lpNode->AddExternalNodeInput(0, m_lpField->m_fltCurrent);
 }
 
 

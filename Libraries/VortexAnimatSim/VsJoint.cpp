@@ -81,14 +81,26 @@ void VsJoint::UpdatePosition()
 	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 }
 
+float VsJoint::GetCurrentVxJointPos()
+{
+	float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
+	if(m_vxJoint->isAngular(m_iCoordID) == true)
+		return m_vxJoint->getCoordinateCurrentPosition (m_iCoordID); 
+	else
+		return m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits; 
+}
+
 void VsJoint::Physics_CollectData()
 {
 	if(m_lpThisJoint && m_vxJoint)
 	{
 		UpdatePosition();
 
+		//Only update the joints data when we need to do robot synch, but still update our internal data.
 		//Only attempt to make these calls if the coordinate ID is a valid number.
-		if(m_iCoordID >= 0)
+		if(m_iCoordID >= 0) //&& m_lpThisJoint->NeedsRobotSynch()
 		{
 			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();

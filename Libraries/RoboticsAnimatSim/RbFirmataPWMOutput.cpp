@@ -43,7 +43,7 @@ void RbFirmataPWMOutput::SetupIO()
 		m_lpFirmata->sendDigitalPinMode(m_iIOComponentID, ARD_PWM);
 }
 
-void RbFirmataPWMOutput::StepIO()
+void RbFirmataPWMOutput::StepIO(int iPartIdx)
 {
 	if(!m_lpSim->InSimulation())
 	{
@@ -65,13 +65,13 @@ void RbFirmataPWMOutput::StepSimulation()
 	//send it if the value has changed.
 	if(m_lpProperty &&m_lpGain && m_lpFirmata)
 	{
-		float fltValue = m_lpGain->CalculateGain(*m_lpProperty);
+		m_fltIOScaledValue = m_lpGain->CalculateGain(*m_lpProperty);
 
-		if(fltValue < 0) fltValue = 0;
-		if(fltValue > 255) fltValue = 255;
+		if(m_fltIOScaledValue < 0) m_fltIOScaledValue = 0;
+		if(m_fltIOScaledValue > 255) m_fltIOScaledValue = 255;
 
-		m_iIOValue = (int) fltValue;
-		m_fltIOValue = fltValue;
+		m_iIOValue = (int) m_fltIOScaledValue;
+		m_fltIOValue = m_fltIOScaledValue;
 	}
 }
 

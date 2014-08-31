@@ -40,6 +40,17 @@ CStdSerialize::~CStdSerialize()
 \brief	Makes a deep copy of this object.
 
 \author	dcofer
+\date	7/25/2014
+
+\param [in,out]	lpOrig	The original source that we are copying. 
+**/
+void CStdSerialize::Copy(CStdSerialize *lpSource)
+{}
+
+/**
+\brief	Makes a deep copy of this object.
+
+\author	dcofer
 \date	5/3/2011
 
 \return	null if it fails, else a copy of this object.

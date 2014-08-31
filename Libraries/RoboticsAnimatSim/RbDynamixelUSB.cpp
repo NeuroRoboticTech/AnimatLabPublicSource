@@ -105,18 +105,18 @@ void RbDynamixelUSB::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 #pragma endregion
 
-void RbDynamixelUSB::Initialize()
+bool RbDynamixelUSB::OpenIO()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
+	if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
+		THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
+
+	return true;
+}
+
+void RbDynamixelUSB::CloseIO()
+{
 	if(!m_lpSim->InSimulation())
-	{
-		if(!dxl_initialize(m_iPortNumber, m_iBaudRate))
-			THROW_PARAM_ERROR(Rb_Err_lFailedDynamixelConnection, Rb_Err_strFailedDynamixelConnection, "Port", m_iPortNumber);
-
-		StartIOThread();
-	}
-
-	RobotIOControl::Initialize();
+		dxl_terminate();
 }
 
 void RbDynamixelUSB::ProcessIO()
@@ -135,7 +135,11 @@ void RbDynamixelUSB::ProcessIO()
 			m_aryMotorData.RemoveAll();
 			StepIO();
 			SendSynchronousMoveCommand();
-			m_lpSim->MicroSleep(15000);
+
+#ifndef Win32
+		//Not needed in windows, not sure in linux. Keep it in till verify.
+		m_lpSim->MicroSleep(15000);
+#endif
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -148,14 +152,6 @@ void RbDynamixelUSB::ProcessIO()
 	}
 
 	m_bIOThreadProcessing = false;
-}
-
-void RbDynamixelUSB::ExitIOThread()
-{
-	RobotIOControl::ExitIOThread();
-
-	if(!m_lpSim->InSimulation())
-		dxl_terminate();
 }
 
 bool RbDynamixelUSB::SendSynchronousMoveCommand()
@@ -172,7 +168,7 @@ bool RbDynamixelUSB::SendSynchronousMoveCommand()
 
 		for(int iServo=0; iServo<iServos; iServo++ )
 		{
-			RbDynamixelUSBMotorUpdateData *lpServo = m_aryMotorData[iServo];
+			RbDynamixelMotorUpdateData *lpServo = m_aryMotorData[iServo];
 
 			int iOffset = (2+(iDataPerServo+1)*iServo);
 			dxl_set_txpacket_parameter((iOffset+0), lpServo->m_iID);

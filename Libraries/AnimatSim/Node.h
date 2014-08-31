@@ -34,8 +34,24 @@ namespace AnimatSim
 		///This is used for reporting the enabled state in a GetDataPointer call.
 		float m_fltEnabled;
 
+		///If this is true then this node represents a whole bunch of similar nodes.
+		///It creates these nodes when it is created and when it is modified it modifies all the other nodes
+		bool m_bTemplateNode;
+
+		///This tells how many nodes are represented by this node.
+		int m_iTemplateNodeCount;
+
+		///This is a python change script that is run any time this template node is modified.
+		std::string m_strTemplateChangeScript;
+
+		CStdArray<std::string> m_aryTemplateChildNodes;
+
 		virtual void UpdateData();
 
+		virtual void SetupTemplateNodes();
+		virtual void DestroyTemplateNodes();
+		virtual void TemplateNodeChanged();
+		
 	public:
 		Node();
 		virtual ~Node();
@@ -47,20 +63,36 @@ namespace AnimatSim
 
 		virtual void Kill(bool bState = true);
 
+		virtual bool TemplateNode();
+		virtual void TemplateNode(bool bVal);
+
+		virtual int TemplateNodeCount();
+		virtual void TemplateNodeCount(int iVal);
+
+		virtual std::string TemplateChangeScript();
+		virtual void TemplateChangeScript(std::string strVal);
+
+		virtual void Copy(CStdSerialize *lpSource);
+
 		/**
 		\brief	Adds an external node input.
 		
 		\details This is used by the adapter to add a new external value to this node. It is up to the
 		node to interpret what that value means. For example, if it is a neuron then it can interpret it
 		to be a current. This value is added to the current total so that multiple adapters can call this
-		in a given time step. It is cleared out to zero at the beginning of the time step. 
+		in a given time step. It is cleared out to zero at the beginning of the time step. You can now also 
+		specify which data you are adding to for this method call. This allows adapters to be setup to change
+		multiple different variables in the system.
 		
 		\author	dcofer
-		\date	3/4/2011
+		\date	6/16/2014
 		
+		\param	iTargetDataType	The index of the target data type we are adding to. 
 		\param	fltInput	The new input. 
 		**/
-		virtual void AddExternalNodeInput(float fltInput) = 0;
+		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput) = 0;
+
+		virtual int GetTargetDataTypeIndex(const std::string &strDataType);
 
 		virtual void ResetSimulation();
 

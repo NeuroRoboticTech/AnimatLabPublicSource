@@ -22,6 +22,10 @@ Public Class DataObjectInterfaceMock
 
     End Sub
 
+    Public Sub FireSizeChangedEvent() Implements IDataObjectInterface.FireSizeChangedEvent
+
+    End Sub
+
     Public Sub FireSelectedVertexChangedEvent(fltPosX As Single, fltPosY As Single, fltPosZ As Single) Implements IDataObjectInterface.FireSelectedVertexChangedEvent
 
     End Sub
@@ -58,6 +62,8 @@ Public Class DataObjectInterfaceMock
     Public Event OnPositionChanged() Implements IDataObjectInterface.OnPositionChanged
 
     Public Event OnRotationChanged() Implements IDataObjectInterface.OnRotationChanged
+
+    Public Event OnSizeChanged() Implements IDataObjectInterface.OnSizeChanged
 
     Public Event OnSelectedVertexChanged(fltPosX As Single, fltPosY As Single, fltPosZ As Single) Implements IDataObjectInterface.OnSelectedVertexChanged
 

@@ -49,6 +49,7 @@ Namespace DataObjects.Physical
         Public MustOverride ReadOnly Property UseHydrodynamicsMagnus() As Boolean
         Public MustOverride ReadOnly Property ProvidesJointForceFeedback() As Boolean
         Public MustOverride ReadOnly Property GenerateMotorAssist() As Boolean
+        Public MustOverride ReadOnly Property AllowStickyParts() As Boolean
 
         Public Overridable ReadOnly Property LibraryPrefix() As String
             Get
@@ -214,6 +215,10 @@ Namespace DataObjects.Physical
         Public Overridable Sub SetDefaultLibraryVersion()
             SetLibraryVersion("Double", True)
         End Sub
+
+        Public Overridable Function CompatibleWith(ByVal doObject As Framework.DataObject) As Boolean
+            Return True
+        End Function
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 

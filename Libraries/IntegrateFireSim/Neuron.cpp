@@ -1231,7 +1231,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 
 //Node Overrides
 
-void Neuron::AddExternalNodeInput(float fltInput)
+void Neuron::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	if(!m_bZapped)
 	{

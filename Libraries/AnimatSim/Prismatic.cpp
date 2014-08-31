@@ -177,9 +177,23 @@ bool Prismatic::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void Prismatic::AddExternalNodeInput(float fltInput)
+int Prismatic::GetTargetDataTypeIndex(const std::string &strDataType)
 {
-	m_fltDesiredVelocity += fltInput;
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "DESIREDPOSITION")
+		return DESIRED_POSITION_TYPE;
+	else
+		return DESIRED_VELOCITY_TYPE;
+
+}
+
+void Prismatic::AddExternalNodeInput(int iTargetDataType, float fltInput)
+{
+	if(iTargetDataType == DESIRED_POSITION_TYPE)
+		m_fltDesiredPosition += fltInput;
+	else
+		m_fltDesiredVelocity += fltInput;
 }
 
 void Prismatic::Load(CStdXml &oXml)

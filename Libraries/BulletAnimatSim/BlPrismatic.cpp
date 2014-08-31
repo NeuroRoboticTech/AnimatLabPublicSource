@@ -120,6 +120,7 @@ void BlPrismatic::SetLimitValues()
 
 void BlPrismatic::TimeStepModified()
 {
+	Prismatic::TimeStepModified();
     SetLimitValues();
 }
 
@@ -229,6 +230,10 @@ float *BlPrismatic::GetDataPointer(const std::string &strDataType)
 		return &m_fltVelocity;
 	else if(strType == "JOINTFORCE")
 		return &m_fltForce;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "JOINTDESIREDVELOCITY")
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
@@ -276,6 +281,8 @@ void BlPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("JointActualVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointForce", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
@@ -285,7 +292,7 @@ void BlPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 void BlPrismatic::StepSimulation()
 { 
-    //Test code
+    ////Test code
     //int iTest = 0;
     //if(m_lpSim->Time() >= 1.02)
     //    iTest = 1;

@@ -58,7 +58,10 @@ float TonicNeuron::Ih()
 \param	fltVal	The new value. 
 **/
 void TonicNeuron::Ih(float fltVal)
-{m_fltIh=fltVal;}
+{
+	m_fltIh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the neuron type.
@@ -70,6 +73,15 @@ void TonicNeuron::Ih(float fltVal)
 **/
 unsigned char TonicNeuron::NeuronType()
 {return TONIC_NEURON;}
+
+void TonicNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	TonicNeuron *lpOrig = dynamic_cast<TonicNeuron *>(lpSource);
+
+	m_fltIh = lpOrig->m_fltIh;
+}
 
 float TonicNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
 {return m_fltIh;}

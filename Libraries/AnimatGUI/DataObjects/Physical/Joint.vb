@@ -14,6 +14,16 @@ Namespace DataObjects.Physical
     Public MustInherit Class Joint
         Inherits Physical.BodyPart
 
+#Region " Enums "
+
+        Public Enum enumJointMotorTypes
+            VelocityControl = 0
+            PositionControl = 1
+            PositionVelocityControl = 2
+        End Enum
+
+#End Region
+
 #Region " Attributes "
 
         Protected m_snSize As AnimatGUI.Framework.ScaledNumber
@@ -53,16 +63,10 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property ScaleUnits() As String
             Get
                 If Me.UsesRadians Then
-                    Return "rad/s"
+                    Return "rad"
                 Else
-                    Return "m/s"
+                    Return "m"
                 End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property InputStimulus() As String
-            Get
-                Return "Velocity"
             End Get
         End Property
 
@@ -193,7 +197,9 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.ID = "DesiredVelocity"
 
             m_snSize = New AnimatGUI.Framework.ScaledNumber(Me, "Size", 2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "Meters", "m")
 

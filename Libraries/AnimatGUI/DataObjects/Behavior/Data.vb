@@ -480,6 +480,16 @@ Namespace DataObjects.Behavior
 
         End Sub
 
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                ConnectOrganismEvents()
+                ConnectDiagramEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 #End Region
 
     End Class

@@ -73,13 +73,15 @@ int RbFirmataController::BaudRate() {return m_iBaudRate;}
 float *RbFirmataController::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
+	
+	return RobotIOControl::GetDataPointer(strDataType);
 
 	//if(strType == "LIMITPOS")
 	//	return &m_fltLimitPos;
 	//else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
+	//	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
-	return NULL;
+	//return NULL;
 }
 
 bool RbFirmataController::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -117,21 +119,18 @@ void RbFirmataController::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 
 #pragma endregion
 
-void RbFirmataController::Initialize()
+bool RbFirmataController::OpenIO()
 {
-	// Open device. Do this before calling the Initialize on the parts so they can have communications.
-	if(!m_lpSim->InSimulation())
-	{
-		std::cout << "opening connection\r\n";
-		
-		//Try to connect to the arduino board.
-		if(!connect(m_strComPort, m_iBaudRate))
-			THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
+	//Try to connect to the arduino board.
+	if(!connect(m_strComPort, m_iBaudRate))
+		THROW_PARAM_ERROR(Rb_Err_lErrorConnectingToArduino, Rb_Err_strErrorConnectingToArduino, "ComPort", m_strComPort);
 
-		StartIOThread();
-	}
+	return true;
+}
 
-	RobotIOControl::Initialize();
+void RbFirmataController::CloseIO()
+{
+	_port.close();
 }
 
 void RbFirmataController::ProcessIO()
@@ -142,20 +141,31 @@ void RbFirmataController::ProcessIO()
 		
 		std::cout << "Sending firmware version request\r\n";
 
-		//Need to do this to init the pins, get the firmware version, and  call setupArduino.
+		//First reset firmata
+		//sendReset();
+		//boost::this_thread::sleep(boost::posix_time::microseconds(10));
+
+		//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called
 		//and we can start processing.
 		sendFirmwareVersionRequest();
 
 		while(!m_bStopIO)
 		{
+			//Update the firmata IO.
 			update();
 
 			//Do not try and step IO until it has been setup correctly.
 			if(m_bSetupComplete)
+			{
 				StepIO();
 
-			//platformstl::micro_sleep(5);
+				//Execute any synch moves that were setup for this IO loop in StepIO
+				//If none were setup it will ignore this call.
+				sendDynamixelSynchMoveExecute();
+			}
+
+			//boost::this_thread::sleep(boost::posix_time::microseconds(300));
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -214,13 +224,6 @@ void RbFirmataController::setupArduino(const int & version)
 	//m_EAnalogPinChanged = this->EAnalogPinChanged.connect(boost::bind(&RbFirmataController::analogPinChanged, this, _1));
 
 	m_WaitForIOSetupCond.notify_all();
-}
-
-void RbFirmataController::ExitIOThread()
-{
-	RobotIOControl::ExitIOThread();
-
-	_port.close();
 }
 
 // digital pin event handler, called whenever a digital pin value has changed

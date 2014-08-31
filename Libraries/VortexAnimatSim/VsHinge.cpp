@@ -36,7 +36,6 @@ VsHinge::VsHinge()
 {
 	SetThisPointers();
 	m_vxHinge = NULL;
-	m_fltRotationDeg = 0;
 
 	m_lpUpperLimit = new VsHingeLimit();
 	m_lpLowerLimit = new VsHingeLimit();
@@ -325,10 +324,16 @@ float *VsHinge::GetDataPointer(const std::string &strDataType)
 		return &m_fltForce;
 	else if(strType == "JOINTROTATIONDEG")
 		return &m_fltRotationDeg;
+	else if(strType == "JOINTDESIREDPOSITIONDEG")
+		return &m_fltDesiredPositionDeg;
 	else if(strType == "JOINTDESIREDVELOCITY")
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
 		return &m_fltReportSetVelocity;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
 	else if(strType == "MOTORFORCETOAX")
@@ -395,6 +400,9 @@ void VsHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPositionDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("MotorForceToAX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("MotorForceToAY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
@@ -416,12 +424,6 @@ void VsHinge::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
-}
-
-void VsHinge::UpdateData()
-{
-	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/VX_PI)*180);
 }
 
 		}		//Joints

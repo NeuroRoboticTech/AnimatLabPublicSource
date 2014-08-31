@@ -17,15 +17,26 @@ namespace AnimatSim
 			//True while the io thread processing loop is going on.
 			bool m_bIOThreadProcessing;
 
-
 			///Set to true once the IO is setup correctly.
 			bool m_bSetupComplete;
 
 			///Flags the thread processing loop to exit.
 			bool m_bStopIO;
+
+			///Set to true to pause the IO processing. Set back to false to resume it.
+			bool m_bPauseIO;
 			
+			///Is set to true once the IO loop is paused.
+			bool m_bIOPaused;
+
 			//The time it takes to perform a step of the IO for all parts in this control.
 			float m_fltStepIODuration;
+
+			///The total number of parts that are part of any round robin cycle of updates.
+			int m_iCyclePartCount;
+
+			///The index of the part that should be processed on the current step.
+			int m_iCyclePartIdx;
 
 			//Temporary if def to prevent this from showing up in ManagedAnimatTools. Will get rid of this
 			//once I get rid of that library.
@@ -37,14 +48,24 @@ namespace AnimatSim
 			boost::interprocess::interprocess_condition  m_WaitForIOSetupCond;
 #endif
 
+			///Used to signal to the IO thread that we are waiting for their return signal.
+			bool m_bWaitingForThreadNotify;
+
 			virtual RobotPartInterface *LoadPartInterface(CStdXml &oXml);
 			virtual RobotPartInterface *AddPartInterface(std::string strXml);
 			virtual void RemovePartInterface(std::string strID, bool bThrowError = true);
 			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
 			virtual void StartIOThread();
-			virtual void ProcessIO() = 0;
+			virtual void ProcessIO();
 			virtual void ExitIOThread();
+			virtual bool OpenIO() = 0;
+			virtual void CloseIO() = 0;
+
+			virtual void WaitWhilePaused();
+			virtual void WaitForThreadNotifyReady();
+			virtual void StartPause();
+			virtual void ExitPause();
 
 		public:
 			RobotIOControl(void);
@@ -57,6 +78,10 @@ namespace AnimatSim
 
 			virtual CStdPtrArray<RobotPartInterface>* Parts();
 			
+			virtual void PauseIO(bool bVal);
+			virtual bool PauseIO();
+			virtual bool IOPaused();
+
 			virtual float StepIODuration();
 
 			virtual float *GetDataPointer(const std::string &strDataType);

@@ -60,6 +60,16 @@ Adapter::Adapter()
 	m_fltDelayBufferInterval = 0;
 	m_eDelayBufferMode = NoDelayBuffer;
 	m_fltRobotIOScale = 1;
+	m_fltInitIODisableDuration = 0;
+	m_iTargetDataType = 0;
+	m_bSynchWithRobot = false;
+	m_fltSynchUpdateInterval = 0;
+	m_iSynchUpdateInterval = 0;
+	m_fltSynchUpdateStartInterval = 0;
+	m_iSynchUpdateStartInterval = 0;
+	m_iSynchCount = 0;
+	m_iSynchTarget = -1;
+	m_fltUpdatedValue = 0;
 }
 
 /**
@@ -377,6 +387,147 @@ void Adapter::RobotIOScale(float fltVal)
 	m_fltRobotIOScale = fltVal;
 }
 
+/**
+\brief	Gets whether the m_bRobotAdpaterSynch flag applies to this adapter.
+
+\discussion Adpaters between neural elements should not need to be synched because 
+			they are not dependent on IO timing. This flag allows you to control this by setting it to false
+			for adapters that do not need it.
+
+\author	dcofer
+\date	6/30/2014
+
+\return	Synch status of this adapter. 
+**/
+bool Adapter::SynchWithRobot() {return m_bSynchWithRobot;}
+
+/**
+\brief	Determines whether the m_bRobotAdpaterSynch flag applies to this adapter. 
+
+\author	dcofer
+\date	6/30/2014
+
+\param	bVal Synch status of this adapter. 
+**/
+void Adapter::SynchWithRobot(bool bVal) {m_bSynchWithRobot = bVal;}
+
+/**
+\brief	This is how often we need to update this particular adapter.
+
+\discussion For example, if you are using a round robin scheme with a robot IO update time of 5 ms with 4 motors, then you would set this to be 20 ms.
+
+\author	dcofer
+\date	6/30/2014
+
+\return	interval. 
+**/
+float Adapter::SynchUpdateInterval() {return m_fltSynchUpdateInterval;}
+
+/**
+\brief	Determines how often we need to update this particular adapter.
+
+\author	dcofer
+\date	6/30/2014
+
+\param	fltVal interval. 
+**/
+void Adapter::SynchUpdateInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "SynchUpdateInterval", true);
+	m_fltSynchUpdateInterval = fltVal;
+
+	if(m_lpSim)
+	{
+		float fltTimeStep = m_lpSim->PhysicsTimeStep();
+		if(m_lpModule)
+			fltTimeStep = m_lpModule->TimeStep();
+
+		if(fltTimeStep > 0)
+			m_iSynchUpdateInterval = (int) ((m_fltSynchUpdateInterval/fltTimeStep) + 0.5);
+		else
+			m_iSynchUpdateInterval = 0;
+	}
+}
+
+/**
+\brief	This is the interval that this adapter waits the first time before doing its update.
+
+\discussion For example, if you are using a round robin scheme with a robot IO update time of 5 ms with 4 motors, 
+then the update interval would be set to 20 ms. You would set the start interval of motor 1 to 0, motor 2 to 5 ms, 
+motor 3 to 10 ms, and motor 4 to 15 ms. This would stagger them in a round robin fashion the same way it was being
+processed on the real robot.
+
+\author	dcofer
+\date	6/30/2014
+
+\return	interval. 
+**/
+float Adapter::SynchUpdateStartInterval() {return m_fltSynchUpdateStartInterval;}
+
+/**
+\brief	This is the interval that this adapter waits the first time before doing its update.
+
+\discussion For example, if you are using a round robin scheme with a robot IO update time of 5 ms with 4 motors, 
+then the update interval would be set to 20 ms. You would set the start interval of motor 1 to 0, motor 2 to 5 ms, 
+motor 3 to 10 ms, and motor 4 to 15 ms. This would stagger them in a round robin fashion the same way it was being
+processed on the real robot.
+
+\author	dcofer
+\date	6/30/2014
+
+\param	fltVal interval. 
+**/
+void Adapter::SynchUpdateStartInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "SynchUpdateStartInterval", true);
+	m_fltSynchUpdateStartInterval = fltVal;
+
+	if(m_lpSim)
+	{
+		float fltTimeStep = m_lpSim->PhysicsTimeStep();
+		if(m_lpModule)
+			fltTimeStep = m_lpModule->TimeStep();
+
+		if(fltTimeStep > 0)
+			m_iSynchUpdateStartInterval = (int) ((m_fltSynchUpdateStartInterval/fltTimeStep) + 0.5);
+		else
+			m_iSynchUpdateStartInterval = 0;
+	}
+}
+
+/**
+\brief	Gets the duration for how long this adapter is disabled at the start of the simulation. 
+
+\discussion It is sometimes useful to disable IO operations briefly at the start of the simulation to give neural systems a chance to stabilize.
+			This param defines how long it should disable IO for this adapter at the start of the sim..
+
+\author	dcofer
+\date	6/11/2014
+
+\return	duration for which IO is disabled at the start of the simulation. 
+**/
+float Adapter::InitIODisableDuration()
+{
+	return m_fltInitIODisableDuration;
+}
+
+/**
+\brief	Sets the duration for how long this adapter is disabled at the start of the simulation. 
+
+\discussion It is sometimes useful to disable IO operations briefly at the start of the simulation to give neural systems a chance to stabilize.
+			This param defines how long it should disable IO for this adapter at the start of the sim..
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal duration for which IO is disabled at the start of the simulation. 
+**/
+void Adapter::InitIODisableDuration(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "InitIODisableDuration", true);
+	m_fltInitIODisableDuration = fltVal;
+}
+
 void Adapter::DetachAdaptersFromSimulation()
 {
 	if(m_lpSim)
@@ -386,7 +537,7 @@ void Adapter::DetachAdaptersFromSimulation()
 	}
 }
 
-void Adapter::AddExternalNodeInput(float fltInput)
+void Adapter::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
 }
@@ -403,6 +554,8 @@ float *Adapter::GetDataPointer(const std::string &strDataType)
 		return &m_fltCalculatedVal;
 	else if(strType == "NEXTVAL")
 		return &m_fltNextVal;
+	else if(strType == "UPDATEDVALUE")
+		return &m_fltUpdatedValue;
 
 	return AnimatBase::GetDataPointer(strDataType);
 }
@@ -460,6 +613,7 @@ void Adapter::SetDestinationID(std::string strXml)
 	//Load Source Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
+	TargetDataType(oXml.GetChildString("TargetDataType"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 
@@ -513,6 +667,30 @@ bool Adapter::SetData(const std::string &strDataType, const std::string &strValu
 		return true;
 	}
 
+	if(strType == "SYNCHWITHROBOT")
+	{
+		SynchWithRobot(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "SYNCHUPDATEINTERVAL")
+	{
+		SynchUpdateInterval(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "SYNCHUPDATESTARTINTERVAL")
+	{
+		SynchUpdateStartInterval(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "INITIODISABLEDURATION")
+	{
+		InitIODisableDuration(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
@@ -527,11 +705,16 @@ void Adapter::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("CalculatedVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("NextVal", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("UpdatedValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
 	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DelayBufferMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DelayBufferInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("RobotIOScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynchWithRobot", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynchUpdateInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynchUpdateStartInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitIODisableDuration", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -546,11 +729,37 @@ If the module is NULL then the target for this adapter is the physics engine and
 **/
 void Adapter::TimeStepModified()
 {
+	Node::TimeStepModified();
+
 	SetDelayBufferSize();
+	SynchUpdateInterval(m_fltSynchUpdateInterval);
+	SynchUpdateStartInterval(m_fltSynchUpdateStartInterval);
+}
+
+bool Adapter::NeedsRobotSynch()
+{
+	if(!m_bSynchWithRobot || m_iSynchUpdateInterval <= 0)
+		return true;
+
+	if(m_iSynchCount == m_iSynchTarget)
+	{
+		m_iSynchTarget = m_iSynchUpdateInterval;
+		m_iSynchCount = 0;
+		return true;
+	}
+	else
+		return false;
 }
 
 void Adapter::ResetSimulation()
 {
+	Node::ResetSimulation();
+
+	m_fltNextVal = 0;
+	m_fltCalculatedVal = 0;
+	m_iSynchCount = 0;
+	m_iSynchTarget = -1;
+	m_fltUpdatedValue = 0;
 	int iSize = m_aryDelayBuffer.GetSize();
 	for(int iIdx=0; iIdx<iSize; iIdx++)
 		m_aryDelayBuffer[iIdx] = 0;
@@ -593,23 +802,47 @@ void Adapter::Initialize()
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
 
+	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
+	//systems use.
+	m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataType);
+
 	m_lpSim->AttachSourceAdapter(m_lpStructure, this);
 	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 
 	m_bConnectedToPhysics = m_lpSim->IsPhysicsAdapter(this);
 
+	//Reset times now that we are initialized
 	SetDelayBufferSize();
+	SynchUpdateInterval(m_fltSynchUpdateInterval);
+	SynchUpdateStartInterval(m_fltSynchUpdateStartInterval);
 }
 
 void Adapter::StepSimulation()
 {
-	if(m_bEnabled)
+	m_fltUpdatedValue = 0;
+
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "8a07c86e-3972-43f8-b91d-9b4b58605a82" && m_lpSim->Time() > 0.2) //
+	//	i=6;
+
+	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
 	{
+		//If this is the first time we are coming in here then setup the first update correctly 
+		if(m_bSynchWithRobot && m_iSynchTarget < 0)
+			m_iSynchTarget = m_iSynchUpdateStartInterval;
+
 		//If we are trying to synch the adapters to match the IO charachteristics of a robot then we should only
 		//calcualte the value from the source data based on the robot synch interval. Otherwise, use the value we calculated last time.
-		if(!m_lpSim->RobotAdpaterSynch() || (m_lpSim->RobotAdpaterSynch() && !m_lpSim->RobotSynchTimeCount()))
+		if(!m_lpSim->RobotAdpaterSynch() || !m_bSynchWithRobot || (m_lpSim->RobotAdpaterSynch() && m_bSynchWithRobot && NeedsRobotSynch()))
 		{
 			m_fltCalculatedVal = m_lpGain->CalculateGain(*m_lpSourceData);
+			m_fltUpdatedValue = 1;
+
+			////Test code
+			//int i=5;
+			//if(Std_ToLower(m_strID) == "3953f16f-99aa-41e7-adaf-e0ca153d65ec" && m_fltCalculatedVal > 0.6 ) // && m_lpSim->Time() > 1
+			//	i=6;
 
 			//Scale the calculated value for robot performance matching if we are in simulation mode only.
 			if(m_lpSim->InSimulation())
@@ -631,7 +864,9 @@ void Adapter::StepSimulation()
 		else
 			m_fltNextVal = m_fltCalculatedVal;
 
-		m_lpTargetNode->AddExternalNodeInput(m_fltNextVal);
+		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltNextVal);
+
+		m_iSynchCount++;
 	}
 }
 
@@ -649,6 +884,7 @@ void Adapter::Load(CStdXml &oXml)
 	//Load Target Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
+	TargetDataType(oXml.GetChildString("TargetDataType"));
 
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 	
@@ -658,6 +894,10 @@ void Adapter::Load(CStdXml &oXml)
 	DelayBufferInterval(oXml.GetChildFloat("DelayBufferInterval", m_fltDelayBufferInterval));
 
 	RobotIOScale(oXml.GetChildFloat("RobotIOScale", m_fltRobotIOScale));
+	SynchWithRobot(oXml.GetChildBool("SynchWithRobot", m_bSynchWithRobot));
+	SynchUpdateInterval(oXml.GetChildFloat("SynchUpdateInterval", m_fltSynchUpdateInterval));
+	SynchUpdateStartInterval(oXml.GetChildFloat("SynchUpdateStartInterval", m_fltSynchUpdateStartInterval));
+	InitIODisableDuration(oXml.GetChildFloat("InitIODisableDuration", m_fltInitIODisableDuration));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

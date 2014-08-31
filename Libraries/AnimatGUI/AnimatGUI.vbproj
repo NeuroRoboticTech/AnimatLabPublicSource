@@ -238,6 +238,7 @@
     <Compile Include="Collections\PhysicsEngines.vb" />
     <Compile Include="Collections\ReceptiveFieldPairs.vb" />
     <Compile Include="Collections\ReceptiveFields.vb" />
+    <Compile Include="Collections\RemoteControlLinkages.vb" />
     <Compile Include="Collections\RigidBodies.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -365,6 +366,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\ExternalStimuli\InverseMuscleCurrent.vb" />
+    <Compile Include="DataObjects\ExternalStimuli\MotorPosition.vb" />
     <Compile Include="DataObjects\ExternalStimuli\MotorVelocity.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -502,6 +504,10 @@
     <Compile Include="DataObjects\ProjectMigrations\Migrate_VortexToBullet.vb" />
     <Compile Include="DataObjects\Robotics\InputSystem.vb" />
     <Compile Include="DataObjects\Robotics\OutputSystem.vb" />
+    <Compile Include="DataObjects\Robotics\PassThroughLinkage.vb" />
+    <Compile Include="DataObjects\Robotics\PulsedLinkage.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControl.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControlLinkage.vb" />
     <Compile Include="DataObjects\Robotics\RobotIOControl.vb" />
     <Compile Include="DataObjects\Robotics\MotorControlSystem.vb" />
     <Compile Include="DataObjects\Robotics\RobotInterface.vb" />
@@ -676,6 +682,9 @@
     <Compile Include="Forms\RelabelSelected.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Robotics\EditRemoteLinkages.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\SelectMacro.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -788,6 +797,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TypeHelpers\ConstraintLimitTypeConverter.vb" />
+    <Compile Include="TypeHelpers\ContactSensorPruner.vb" />
     <Compile Include="TypeHelpers\DataTypeID.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -862,6 +872,7 @@
     <Compile Include="TypeHelpers\OdorTypeEditor.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\RemoteControlLinkagesEditor.vb" />
     <Compile Include="TypeHelpers\RobotTreePruner.vb" />
     <Compile Include="TypeHelpers\TreeListPruner.vb" />
     <Compile Include="TypeHelpers\UnitsTypeConverter.vb">
@@ -933,6 +944,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelabelSelected.resx">
       <DependentUpon>RelabelSelected.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Robotics\EditRemoteLinkages.resx">
+      <DependentUpon>EditRemoteLinkages.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectMacro.resx">
       <DependentUpon>SelectMacro.vb</DependentUpon>
@@ -1482,6 +1496,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\AddRobotIOControl.gif" />
     <EmbeddedResource Include="Graphics\RobotIO.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PythonLarge.gif" />
+    <EmbeddedResource Include="Graphics\PythonSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PassthroughLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PassthroughLinkageSmall.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageSmall.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

@@ -173,9 +173,15 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
                 oXml.AddChildElement("TargetModule", "AnimatLab")
                 oXml.AddChildElement("TargetID", bpPart.LinkedPart.BodyPart.ID())
+                oXml.AddChildElement("TargetDataType", m_thTargetDataTypes.ID)
                 oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
                 m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
                 oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
+                m_snInitIODisableDuration.SaveSimulationXml(oXml, Me, "InitIODisableDuration")
+
+                oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+                m_snSynchUpdateInterval.SaveSimulationXml(oXml, Me, "SynchUpdateInterval")
+                m_snSynchUpdateStartInterval.SaveSimulationXml(oXml, Me, "SynchUpdateStartInterval")
 
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
 

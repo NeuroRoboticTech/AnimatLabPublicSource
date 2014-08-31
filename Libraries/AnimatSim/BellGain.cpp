@@ -126,6 +126,25 @@ float BellGain::D() {return m_fltD;}
 **/
 void BellGain::D(float fltVal) {m_fltD = fltVal;}
 
+void BellGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	BellGain *lpOrig = dynamic_cast<BellGain *>(lpSource);
+
+	m_fltA = lpOrig->m_fltA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltD = lpOrig->m_fltD;
+}
+
+CStdSerialize *BellGain::Clone()
+{
+	CStdSerialize *lpClone = new BellGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float BellGain::CalculateGain(float fltInput)
 {
 	float fltVal = 0;

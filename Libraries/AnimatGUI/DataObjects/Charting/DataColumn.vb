@@ -76,9 +76,9 @@ Namespace DataObjects.Charting
                         End If
                     Else
                         m_thDataType = New TypeHelpers.DataTypeID(Me)
-                        If Not Value.IncomingDataType Is Nothing Then
-                            m_thDataType.DataTypes.Add(DirectCast(Value.IncomingDataType.Clone(Value, False, Nothing), DataObjects.DataType))
-                            m_thDataType.ID = Value.IncomingDataType.ID
+                        If Not Value.IncomingDataTypes Is Nothing AndAlso Value.IncomingDataTypes.ID.Trim.Length > 0 Then
+                            m_thDataType.DataTypes.Add(DirectCast(Value.IncomingDataTypes.DataTypes(Value.IncomingDataTypes.ID).Clone(Value, False, Nothing), DataObjects.DataType))
+                            m_thDataType.ID = Value.IncomingDataTypes.ID
                         End If
                     End If
 
@@ -721,6 +721,15 @@ Namespace DataObjects.Charting
                         Me.DataItemName = m_doItem.ItemName
                     End If
                 End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectItemEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

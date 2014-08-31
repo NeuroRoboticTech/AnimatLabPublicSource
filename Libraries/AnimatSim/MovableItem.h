@@ -208,6 +208,7 @@ namespace AnimatSim
 
 			virtual float GetBoundingRadius();
 			virtual BoundingBox GetBoundingBox();
+			virtual void SetBoundingBox(int iIdx, float fltVal);
 
 			virtual bool AllowTranslateDragX();
 			virtual bool AllowTranslateDragY();
