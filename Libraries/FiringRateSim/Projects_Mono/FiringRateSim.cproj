@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B4FBABC1-FCD8-DC46-ABB1-843BF2BE6FF9}</ProjectGuid>
+    <ProjectGuid>{A59724AE-8C21-B84B-BE03-46A7837EB249}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_debug.so</OutputName>
@@ -47,8 +46,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim.so</OutputName>
@@ -82,8 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim_debug.so</OutputName>
@@ -115,8 +112,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG FASTNEURALNET_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libFiringRateSim.so</OutputName>
@@ -164,6 +160,12 @@
     <None Include="..\GatedSynapse.h">
       <Link>GatedSynapse.h</Link>
     </None>
+    <None Include="..\ModulateNeuronPropSynapse.h">
+      <Link>ModulateNeuronPropSynapse.h</Link>
+    </None>
+    <None Include="..\ModulatePropSynapse - Copy.h">
+      <Link>ModulatePropSynapse - Copy.h</Link>
+    </None>
     <None Include="..\ModulatedSynapse.h">
       <Link>ModulatedSynapse.h</Link>
     </None>
@@ -204,6 +206,12 @@
     </Compile>
     <Compile Include="..\GatedSynapse.cpp">
       <Link>GatedSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\ModulateNeuronPropSynapse.cpp">
+      <Link>ModulateNeuronPropSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\ModulatePropSynapse - Copy.cpp">
+      <Link>ModulatePropSynapse - Copy.cpp</Link>
     </Compile>
     <Compile Include="..\ModulatedSynapse.cpp">
       <Link>ModulatedSynapse.cpp</Link>

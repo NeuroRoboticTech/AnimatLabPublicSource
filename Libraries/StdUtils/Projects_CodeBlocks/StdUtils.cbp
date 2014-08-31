@@ -166,9 +166,6 @@
 		<Unit filename="../StdUtilFunctions.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../StdUtils_python_wrap.h">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../StdUtils_wrap.h">
 			<Option virtualFolder="." />
 		</Unit>
