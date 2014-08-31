@@ -17,7 +17,11 @@
     #endif          // _WIN64
 #endif          // _FAST_NEURAL_NET_LIB_DLL_NOFORCELIBS
 
-#define FAST_NET_PORT __declspec( dllimport )
+#ifdef WIN32	
+	#define FAST_NET_PORT __declspec( dllimport )
+#else
+	#define FAST_NET_PORT
+#endif
 
 #include "StdUtils.h"
 #include "FiringRateSimConstants.h"
