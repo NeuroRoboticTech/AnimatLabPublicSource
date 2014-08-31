@@ -296,7 +296,11 @@ void MotorStimulus::Load(CStdXml &oXml)
 	if(Std_IsBlank(m_strStructureID)) 
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
 
-	Equation(oXml.GetChildString("Equation"));
+	if(oXml.FindChildElement("Velocity", false))
+		Equation(oXml.GetChildString("Velocity"));
+	else
+		Equation(oXml.GetChildString("Equation"));
+
 	DisableMotorWhenDone(oXml.GetChildBool("DisableMotorWhenDone", m_bDisableMotorWhenDone));
 	TargetID(oXml.GetChildString("TargetID", "Velocity"));
 

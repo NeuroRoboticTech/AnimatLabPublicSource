@@ -248,8 +248,6 @@ std::string Adapter::TargetDataType() {return m_strTargetDataType;}
 **/
 void Adapter::TargetDataType(std::string strType)
 {
-	if(Std_IsBlank(strType)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target DataType");
 	m_strTargetDataType = strType;
 }
 
@@ -884,7 +882,7 @@ void Adapter::Load(CStdXml &oXml)
 	//Load Target Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
-	TargetDataType(oXml.GetChildString("TargetDataType"));
+	TargetDataType(oXml.GetChildString("TargetDataType", ""));
 
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 	
