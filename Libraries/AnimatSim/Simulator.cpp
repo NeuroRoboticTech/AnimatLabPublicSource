@@ -2364,7 +2364,7 @@ void Simulator::MicroWait(unsigned int iMicroTime)
 		iRemaining = iMicroTime - (unsigned int) TimerDiff_u(lStart, GetTimerTick());
 
 		iCount++;
-		if(iCount == 1000)
+		if(iCount == 10000)
 			THROW_ERROR(Al_Err_lTimedOutInMicroWait, Al_Err_strTimedOutInMicroWait);
 	}
 
