@@ -1,5 +1,5 @@
 /**
-\file	MotorVelocityStimulus.h
+\file	MotorStimulus.h
 
 \brief	Declares the vs motor velocity stimulus class.
 **/
@@ -11,29 +11,30 @@ namespace AnimatSim
 	namespace ExternalStimuli
 	{
 
-		class ANIMAT_PORT MotorVelocityStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
+		class ANIMAT_PORT MotorStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			std::string m_strStructureID;
 			std::string m_strJointID;
 			MotorizedJoint *m_lpJoint;
+			int m_iTargetID;
 
 			float *m_lpPosition;
 			float *m_lpVelocity;
 
-			std::string m_strVelocityEquation;
+			std::string m_strEquation;
 			CStdPostFixEval *m_lpEval;
 
 			bool m_bDisableMotorWhenDone;
 
-			float m_fltVelocity;
-			float m_fltVelocityReport;
+			float m_fltValue;
+			float m_fltValueReport;
 
 		public:
-			MotorVelocityStimulus();
-			virtual ~MotorVelocityStimulus();
+			MotorStimulus();
+			virtual ~MotorStimulus();
 
-			static MotorVelocityStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<MotorVelocityStimulus*>(lpBase);}
+			static MotorStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<MotorStimulus*>(lpBase);}
 
 			std::string StructureID() {return m_strStructureID;};
 			void StructureID(std::string strVal) {m_strStructureID = strVal;};
@@ -41,8 +42,12 @@ namespace AnimatSim
 			std::string JointID() {return m_strJointID;};
 			void JointID(std::string strVal) {m_strJointID = strVal;};
 
-			std::string VelocityEquation() {return m_strVelocityEquation;};
-			void VelocityEquation(std::string strVal);
+			std::string Equation() {return m_strEquation;};
+			void Equation(std::string strVal);
+
+			int TargetID() {return m_iTargetID;}
+			void TargetID(int iID);
+			void TargetID(std::string strID);
 
 			bool DisableMotorWhenDone() {return m_bDisableMotorWhenDone;};
 			void DisableMotorWhenDone(bool bVal) {m_bDisableMotorWhenDone = bVal;};

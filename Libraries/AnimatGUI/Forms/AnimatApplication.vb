@@ -1223,7 +1223,7 @@ Namespace Forms
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
-        Protected m_doPhysics As DataObjects.Physical.PhysicsEngine = New DataObjects.Physical.PhysicsEngines.VortexPhysicsEngine(Nothing)
+        Protected m_doPhysics As DataObjects.Physical.PhysicsEngine = New DataObjects.Physical.PhysicsEngines.BulletPhysicsEngine(Nothing)
 
 #End Region
 

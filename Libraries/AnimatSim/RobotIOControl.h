@@ -48,6 +48,9 @@ namespace AnimatSim
 			boost::interprocess::interprocess_condition  m_WaitForIOSetupCond;
 #endif
 
+			///Used to signal to the IO thread that we are waiting for their return signal.
+			bool m_bWaitingForThreadNotify;
+
 			virtual RobotPartInterface *LoadPartInterface(CStdXml &oXml);
 			virtual RobotPartInterface *AddPartInterface(std::string strXml);
 			virtual void RemovePartInterface(std::string strID, bool bThrowError = true);
@@ -60,6 +63,7 @@ namespace AnimatSim
 			virtual void CloseIO() = 0;
 
 			virtual void WaitWhilePaused();
+			virtual void WaitForThreadNotifyReady();
 			virtual void StartPause();
 			virtual void ExitPause();
 

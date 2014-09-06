@@ -18,7 +18,7 @@ namespace RoboticsGUI
             public LANWirelessInterface(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
             {
-                m_strName = "LANWirelessInterface";
+                m_strName = "LAN Wireless Interface";
 
                 m_doPhysics = new RoboticsGUI.RoboticsPhysicsEngine(this);
                 m_doPhysics.SetLibraryVersion("Double", true);

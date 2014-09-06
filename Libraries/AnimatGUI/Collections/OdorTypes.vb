@@ -138,9 +138,9 @@ Namespace Collections
         Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Physical.OdorType = DirectCast(Me(DirectCast(key, String)), AnimatGUI.DataObjects.Physical.OdorType)
 
-            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Dictionary.Remove(key)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 

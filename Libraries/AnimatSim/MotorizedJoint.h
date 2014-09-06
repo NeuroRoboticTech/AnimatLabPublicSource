@@ -47,6 +47,9 @@ namespace AnimatSim
 			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
 			float m_fltSetVelocity;
 
+			/// The previous velocity set for the motorized joint in the last time step.
+			float m_fltPrevSetVelocity;
+
 			/// This is the desired velocity of the motorized joint. IE the target we are shooting for.
 			/// The Desired velocity must get reset at each time step to zero, so it can be added to using AddExternalInput for the
 			/// next time step. m_fltSetVelocity then keeps track of what we set the velocity of the motor to be.
@@ -213,6 +216,9 @@ namespace AnimatSim
 
 			virtual float SetVelocity();
 			virtual void SetVelocity(float fltVal);
+
+			virtual float PrevSetVelocity();
+			virtual void PrevSetVelocity(float fltVal);
 
 			virtual float PrevVelocity();
 			virtual void PrevVelocity(float fltVal);

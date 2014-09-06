@@ -551,8 +551,8 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "MOTORVELOCITY")
-		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
+	if(strType == "MOTORVELOCITY" || strType == "MOTORPOSITION")
+		lpStimulus = new AnimatSim::ExternalStimuli::MotorStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
 	else if(strType == "NODEINPUT")
@@ -894,7 +894,11 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "LANWIRELESSINTERFACE" || strType == "DEFAULT")
+	if(strType == "STANDARDINTERFACE" || strType == "DEFAULT")
+	{
+		lpInterface = new AnimatSim::Robotics::RobotInterface;
+	}
+	else if(strType == "LANWIRELESSINTERFACE")
 	{
 		lpInterface = new RbLANWirelessInterface;
 	}

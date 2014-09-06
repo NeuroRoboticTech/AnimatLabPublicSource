@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\RoboticsPhysicsEngine.cs" />
     <Compile Include="DataObjects\RobotInterfaces\LANWirelessInterface.cs" />
+    <Compile Include="DataObjects\RobotInterfaces\StandardInterface.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelServo.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSB.cs" />
     <Compile Include="DataObjects\RobotIOControls\DynamixelUSB\DynamixelUSBHingeServo.cs" />
@@ -119,6 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\AnalogInputLarge.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\XBeeCommanderLarge.gif" />
+    <EmbeddedResource Include="Graphics\XBeeCommanderSmall.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

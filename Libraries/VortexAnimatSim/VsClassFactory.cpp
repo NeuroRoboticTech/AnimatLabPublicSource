@@ -525,7 +525,7 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "MOTORVELOCITY")
+	if(strType == "MOTORVELOCITY" || strType == "MOTORPOSITION")
 		lpStimulus = new VsMotorVelocityStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new VsForceStimulus;

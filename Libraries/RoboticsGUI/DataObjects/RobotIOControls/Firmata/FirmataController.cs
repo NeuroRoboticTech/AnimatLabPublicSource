@@ -16,7 +16,7 @@ namespace RoboticsGUI
                 #region " Attributes "
 
                 protected string m_strComPort = "COM4";
-                protected int m_iBaudRate = 57600;
+                protected int m_iBaudRate = 230400;
 
                 #endregion
 

@@ -1283,6 +1283,16 @@ Namespace DataObjects.Behavior
         Protected Overridable Sub OnOriginModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         End Sub
 
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectNodeEvents()
+                DisconnectDiagramEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 #End Region
 
     End Class

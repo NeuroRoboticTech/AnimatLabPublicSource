@@ -47,12 +47,15 @@ void BlMotorizedJoint::CalculateServoVelocity()
 		return;
 
 	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
-	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	//For calculating the error we need to get the actual current position of the joint, not the value that was obtained last
+	//time it called CollectData. If the motor is being synched with the robot for sim then this could be delayed. However, in the
+	//real system this type of error correction would be taking place within the actual servo's motor loop.
+	float fltError = fltTargetPos - GetCurrentBtPositionScaled();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
 	////Test Code
 	//int i=5;
-	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "c868a91a-285d-4d00-91b2-6410aead9fe8" && GetSimulator()->Time() >= 1.2) // && fabs(fltTargetPos) > 0  
 	//	i=6;
 
 	AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
@@ -153,7 +156,7 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 void BlMotorizedJoint::Physics_CollectExtraData()
 {
     OsgSimulator *lpSim = GetOsgSimulator();
-	if(m_btJoint && lpSim && m_lpThisMotorJoint)
+	if(m_btJoint && lpSim && m_lpThisMotorJoint && m_lpThisJoint && m_lpThisJoint->NeedsRobotSynch())
 	{
 	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();

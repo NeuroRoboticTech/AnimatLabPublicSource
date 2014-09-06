@@ -46,6 +46,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_fltReportSetPosition = 0;
 	m_fltPrevSetPosition = 0;
 	m_fltSetVelocity = 0;
+	m_fltPrevSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
 	m_fltReportSetPosition = 0;
 	m_fltReportSetVelocity = 0;
@@ -377,12 +378,12 @@ void MotorizedJoint::DesiredPosition(float fltPosition)
 float MotorizedJoint::PrevSetPosition() {return m_fltPrevSetPosition;}
 
 /**
-\brief	Sets the desired Position.
+\brief	Sets the previous desired Position.
 
 \author	dcofer
 \date	6/17/2014
 
-\param	fltPosition	The prev Position. 
+\param	fltVal	The prev Position. 
 **/
 void MotorizedJoint::PrevSetPosition(float fltVal) {m_fltPrevSetPosition = fltVal;}
 
@@ -427,6 +428,7 @@ float MotorizedJoint::SetVelocity() {return m_fltSetVelocity;}
 **/
 void MotorizedJoint::SetVelocity(float fltVal) 
 {
+	m_fltPrevSetVelocity = m_fltSetVelocity;
 	m_fltSetVelocity = fltVal;
 
 	if(m_lpRobotMotorControl && m_lpStructure && m_lpSim && m_lpSim->InSimulation() && m_lpStructure->GetRobotInterface() && m_lpStructure->GetRobotInterface()->SynchSim())
@@ -445,6 +447,26 @@ void MotorizedJoint::SetVelocity(float fltVal)
 	else
 		m_fltReportSetVelocity = m_fltSetVelocity;
 }
+
+/**
+\brief	Gets the previous set etVelocity.
+
+\author	dcofer
+\date	6/17/2014
+
+\return	previous set etVelocity.
+**/
+float MotorizedJoint::PrevSetVelocity() {return m_fltPrevSetVelocity;}
+
+/**
+\brief	Sets the previous desired velocity.
+
+\author	dcofer
+\date	8/27/2014
+
+\param	fltVal	The prev etVelocity. 
+**/
+void MotorizedJoint::PrevSetVelocity(float fltVal) {m_fltPrevSetVelocity = fltVal;}
 
 /**
 \brief	Gets the desired velocity.

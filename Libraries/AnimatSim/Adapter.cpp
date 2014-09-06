@@ -248,8 +248,6 @@ std::string Adapter::TargetDataType() {return m_strTargetDataType;}
 **/
 void Adapter::TargetDataType(std::string strType)
 {
-	if(Std_IsBlank(strType)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target DataType");
 	m_strTargetDataType = strType;
 }
 
@@ -729,6 +727,8 @@ If the module is NULL then the target for this adapter is the physics engine and
 **/
 void Adapter::TimeStepModified()
 {
+	Node::TimeStepModified();
+
 	SetDelayBufferSize();
 	SynchUpdateInterval(m_fltSynchUpdateInterval);
 	SynchUpdateStartInterval(m_fltSynchUpdateStartInterval);
@@ -751,6 +751,8 @@ bool Adapter::NeedsRobotSynch()
 
 void Adapter::ResetSimulation()
 {
+	Node::ResetSimulation();
+
 	m_fltNextVal = 0;
 	m_fltCalculatedVal = 0;
 	m_iSynchCount = 0;
@@ -819,7 +821,7 @@ void Adapter::StepSimulation()
 
 	////Test code
 	//int i=5;
-	//if(Std_ToLower(m_strID) == "e9f4342f-8e7a-41f5-9b6f-532dc577b877" && m_lpSim->Time() > 2.5) //
+	//if(Std_ToLower(m_strID) == "8a07c86e-3972-43f8-b91d-9b4b58605a82" && m_lpSim->Time() > 0.2) //
 	//	i=6;
 
 	if(m_bEnabled && m_lpSim->Time() >= m_fltInitIODisableDuration)
@@ -880,7 +882,7 @@ void Adapter::Load(CStdXml &oXml)
 	//Load Target Data
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
-	TargetDataType(oXml.GetChildString("TargetDataType"));
+	TargetDataType(oXml.GetChildString("TargetDataType", ""));
 
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 	

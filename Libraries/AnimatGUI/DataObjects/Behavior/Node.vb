@@ -1561,6 +1561,16 @@ Namespace DataObjects.Behavior
         Protected Overridable Sub OnDestinationModified(ByVal blLink As Link)
         End Sub
 
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectLinkEvents()
+                DisconnectDiagramEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 #End Region
 
 

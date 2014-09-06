@@ -247,6 +247,9 @@ void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
 
     RobotIOControl *lpControl = m_aryIOControls[iPos];
 
+	if(lpControl)
+		lpControl->ShutdownIO();
+
 	m_aryIOControls.RemoveAt(iPos);
 }
 
@@ -283,6 +286,8 @@ int RobotInterface::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotInterface::Initialize()
 {
+	AnimatBase::Initialize();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();
@@ -293,6 +298,8 @@ void RobotInterface::Initialize()
 
 void RobotInterface::ResetSimulation()
 {
+	AnimatBase::ResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();
@@ -303,6 +310,8 @@ void RobotInterface::ResetSimulation()
 
 void RobotInterface::AfterResetSimulation()
 {
+	AnimatBase::AfterResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();

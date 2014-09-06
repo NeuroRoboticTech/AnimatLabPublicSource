@@ -261,7 +261,7 @@ Namespace DataObjects.Behavior.Nodes
         <Browsable(False)> _
         Public Overrides ReadOnly Property AllowTemplateNode() As Boolean
             Get
-                Return True
+                Return False
             End Get
         End Property
 
@@ -909,6 +909,16 @@ Namespace DataObjects.Behavior.Nodes
                 If m_bIsInitialized AndAlso Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
                     SetDestination(blLink.Destination, True)
                 End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectOriginEvents()
+                DisconnectDestinationEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

@@ -56,12 +56,6 @@ namespace BulletAnimatSim
 	class BlClassFactory;
 	class BlSimulator;
 
-	namespace ExternalStimuli
-	{
-		class BlForceStimulus;
-		class BlMotorVelocityStimulus;
-	}
-
 	namespace Environment
 	{
 		class BlJoint;
@@ -93,12 +87,6 @@ namespace BulletAnimatSim
 		}
 	}
 
-	namespace ExternalStimuli
-	{
-		class BlForceStimulus;
-		class BlMotorVelocityStimulus;
-	}
-
 	//namespace Recording
 	//{
 	//	namespace KeyFrames
@@ -117,7 +105,6 @@ namespace BulletAnimatSim
 }
 
 using namespace BulletAnimatSim;
-using namespace BulletAnimatSim::ExternalStimuli;
 using namespace BulletAnimatSim::Environment;
 using namespace BulletAnimatSim::Environment::Bodies;
 using namespace BulletAnimatSim::Environment::Joints;

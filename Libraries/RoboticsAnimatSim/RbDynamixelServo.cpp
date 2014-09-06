@@ -42,7 +42,7 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_iMinVelocityFP = 1;
 	m_iMaxVelocityFP = 1023;
-	m_fltMaxRotMin = 0.111;
+	m_fltMaxRotMin = 0.111;  //max rotations (rad) per fixed point unit.
 	m_iLastGoalVelocity = -10000;
 
 	m_fltMinAngle = -150;
@@ -82,6 +82,9 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_fltIOPos = 0;
 	m_fltIOVelocity = 0;
+
+	m_bNeedSetVelStopPos = false;
+	m_bVelStopPosSet = false;
 
 	RecalculateParams();
 }
@@ -752,10 +755,10 @@ bool RbDynamixelServo::GetIsMoving()
 {
 	int iMoving = ReadIsMoving(m_iServoID);
 
-	if(iMoving)
-		return true;
-	else
+	if(iMoving == 0)
 		return false;
+	else
+		return true;
 }
 
 /**
@@ -848,6 +851,16 @@ void RbDynamixelServo::WaitForMoveToFinish()
 	} while(GetIsMoving());
 }
 
+/**
+\brief	Attempts to stop the motor at its current position. 
+
+\author	dcofer
+\date	8/28/2014
+**/
+void RbDynamixelServo::Stop()
+{
+	SetNextGoalPosition_FP(m_iPresentPos);
+}
 
 /**
 \brief	Initializes the internal data on position and velocity from the actual motor. 
@@ -871,8 +884,8 @@ void RbDynamixelServo::InitMotorData()
 	if(iRetDelay > 1)
 		SetReturnDelayTime_FP(1);
 
-	if(iRetTorqueLimit != 340)
-		SetTorqueLimit_FP(340);
+	if(iRetTorqueLimit != 1023)
+		SetTorqueLimit_FP(1023);
 
 	SetMaximumVelocity();
 	SetGoalPosition(0);
@@ -1177,10 +1190,20 @@ int RbDynamixelServo::GetTorqueLimit_FP()
 void RbDynamixelServo::SetMotorPosVel()
 {
 	//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
+
+	if(m_bNeedSetVelStopPos && !m_bVelStopPosSet)
+	{
+		m_bVelStopPosSet = true;
+
+		//Only set the goal position to the present position when the velocity
+		//is changing to zero. If you keep setting it then the part skates.
+		Stop();
+	}
+
 	if(m_iNextGoalPos != m_iLastGoalPos ||  ( (m_iNextGoalVelocity != m_iLastGoalVelocity) && !(m_iNextGoalVelocity == -1 && m_iLastGoalVelocity == 1))  )
 	{
-		//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
-		//std::cout << "************" << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
+		//std::cout << GetSimulator()->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
+		//std::cout << "************" << GetSimulator()->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", Vel: " << m_iNextGoalVelocity << "\r\n";
 
 		//If the next goal velocity was set to -1 then we are trying to set velocity to 0. So lets set the goal position to its current
 		//loctation and velocity to lowest value.
@@ -1192,6 +1215,7 @@ void RbDynamixelServo::SetMotorPosVel()
 
 		//Add a new update data so we can send the move command out synchronously to all motors.
 		AddMotorUpdate(m_iNextGoalPos, m_iNextGoalVelocity);
+
 		m_iLastGoalPos = m_iNextGoalPos;
 		m_iLastGoalVelocity = m_iNextGoalVelocity;
 
@@ -1326,14 +1350,23 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 	aryProperties.Add(new TypeProperty("TranslationRange", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
+void RbDynamixelServo::ResetSimulation()
+{
+	m_fltReadParamTime = 0;
+	m_fltIOPos = 0;
+	m_fltIOVelocity = 0;
+	m_bNeedSetVelStopPos = false;
+	m_bVelStopPosSet = false;
+}
+
 void RbDynamixelServo::StepSimulation()
 {
 	////Test code
-	int i=5;
-	//if(Std_ToLower(m_strID) == "5ed5e233-f132-4997-b737-54b47e4e058e") // && m_lpSim->Time() > 1 
+	//int i=5;
+	//if(m_iServoID == 3 && GetSimulator()->Time() > 1) // &&  
 	//	i=6;
-	if(!m_bIsHinge) // && m_lpSim->Time() > 1 
-		i=6;
+	//if(!m_bIsHinge) // && m_lpSim->Time() > 1 
+	//	i=6;
 
 	if(m_lpMotorJoint)
 	{
@@ -1346,21 +1379,39 @@ void RbDynamixelServo::StepSimulation()
 			SetNextGoalPosition(fltSetPosition);
 			SetNextGoalVelocity(fltSetVelocity);
 		}
-		else if(m_lpMotorJoint->MotorType() == eJointMotorType::PositionControl)
+		else if(m_lpMotorJoint->MotorType() == eJointMotorType::VelocityControl)
 		{
 			float fltSetVelocity = m_lpMotorJoint->SetVelocity();
+			float fltPrevSetVel = m_lpMotorJoint->PrevSetVelocity();
 			SetNextGoalVelocity(fltSetVelocity);
 
-			if(fltSetVelocity == 0)
-				SetNextGoalPosition_FP(m_iLastGoalPos);
+
+			if(fabs(fltSetVelocity) < 1e-4)
+			{
+				if(!m_bNeedSetVelStopPos)
+				{
+					m_bNeedSetVelStopPos = true;
+
+					//if(m_iServoID == 3)
+					//std::cout << "Time: " << GetSimulator()->TimeSlice() << " Servo: " << m_iServoID << " Pos: " <<  m_iPresentPos << "\r\n";
+				}
+			}
 			else if(fltSetVelocity > 0)
+			{
 				SetNextGoalPosition_FP(m_iMaxPosFP);
+				m_bNeedSetVelStopPos = false;
+				m_bVelStopPosSet = false;
+			}
 			else
+			{
 				SetNextGoalPosition_FP(m_iMinPosFP);
+				m_bNeedSetVelStopPos = false;
+				m_bVelStopPosSet = false;
+			}
 		}
 		else
 		{
-			float fltSetPosition = m_lpMotorJoint->SetVelocity();
+			float fltSetPosition = m_lpMotorJoint->SetPosition();
 			SetNextGoalPosition(fltSetPosition);
 			SetNextMaximumVelocity();
 		}

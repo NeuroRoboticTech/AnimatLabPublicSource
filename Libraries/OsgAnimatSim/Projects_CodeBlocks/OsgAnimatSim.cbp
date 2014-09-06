@@ -191,6 +191,9 @@
 		<Unit filename="../OsgBody.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../OsgCalculateBoundingBox.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../OsgCameraManipulator.h">
 			<Option virtualFolder="." />
 		</Unit>

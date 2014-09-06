@@ -366,6 +366,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\ExternalStimuli\InverseMuscleCurrent.vb" />
+    <Compile Include="DataObjects\ExternalStimuli\MotorPosition.vb" />
     <Compile Include="DataObjects\ExternalStimuli\MotorVelocity.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -1495,6 +1496,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\AddRobotIOControl.gif" />
     <EmbeddedResource Include="Graphics\RobotIO.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PythonLarge.gif" />
+    <EmbeddedResource Include="Graphics\PythonSmall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\PassthroughLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PassthroughLinkageSmall.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageLarge.gif" />
+    <EmbeddedResource Include="Graphics\PulsedLinkageSmall.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

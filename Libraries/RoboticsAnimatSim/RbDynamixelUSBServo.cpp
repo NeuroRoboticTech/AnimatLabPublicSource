@@ -181,7 +181,7 @@ void RbDynamixelUSBServo::AddMotorUpdate(int iPos, int iSpeed)
 		m_lpParentUSB->m_aryMotorData.Add(new RbDynamixelMotorUpdateData(m_iServoID, iPos, iSpeed));
 	}
 
-	m_fltIOValue = iSpeed;
+	IOValue(iSpeed);
 }
 
 void RbDynamixelUSBServo::StepIO(int iPartIdx)
@@ -225,7 +225,7 @@ void RbDynamixelUSBServo::StepSimulation()
 void RbDynamixelUSBServo::ResetSimulation()
 {
 	AnimatSim::Robotics::RobotPartInterface::ResetSimulation();
-	m_fltReadParamTime = 0;
+	RbDynamixelServo::ResetSimulation();
 }
 
 void RbDynamixelUSBServo::Load(StdUtils::CStdXml &oXml)

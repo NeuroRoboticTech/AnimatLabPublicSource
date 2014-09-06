@@ -262,7 +262,10 @@ Namespace DataObjects
                     End If
 
                     Util.Application.AppIsBusy = True
+                    Me.SignalBeforeRemoveItem(Me)
                     Me.RemoveFromSim(True)
+                    Me.SignalAfterRemoveItem(Me)
+
                     m_doOrganism.RobotInterface = Nothing
                     Me.RemoveWorksapceTreeView()
                     If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True

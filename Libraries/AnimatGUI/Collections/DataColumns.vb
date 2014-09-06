@@ -126,9 +126,9 @@ Namespace Collections
         Public Overloads Sub Remove(ByVal key As [String], Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Charting.DataColumn = Me(key)
 
-            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.Remove(key)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Remove
 
@@ -137,7 +137,7 @@ Namespace Collections
 
             value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.RemoveAt(iIndex)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
 
         End Sub

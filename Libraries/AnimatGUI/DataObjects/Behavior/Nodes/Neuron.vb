@@ -19,7 +19,7 @@ Namespace DataObjects.Behavior.Nodes
         <Browsable(False)> _
         Public Overrides ReadOnly Property AllowTemplateNode() As Boolean
             Get
-                Return True
+                Return False
             End Get
         End Property
 

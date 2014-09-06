@@ -319,7 +319,7 @@ void BlHinge::StepSimulation()
 {
     ////Test code
     //int iTest = 0;
-    //if(m_lpSim->Time() >= 0.2)
+    //if(Std_ToLower(m_strID) == "efb767d8-8361-466e-99b8-2f8bf6681243")
     //    iTest = 1;
 
 	UpdateData();

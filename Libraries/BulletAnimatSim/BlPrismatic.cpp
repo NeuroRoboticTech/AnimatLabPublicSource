@@ -120,6 +120,7 @@ void BlPrismatic::SetLimitValues()
 
 void BlPrismatic::TimeStepModified()
 {
+	Prismatic::TimeStepModified();
     SetLimitValues();
 }
 

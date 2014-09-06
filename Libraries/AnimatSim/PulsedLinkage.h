@@ -41,7 +41,7 @@ namespace AnimatSim
 			///Once the value goes below zero then that element will be removed.
 			CStdArray<float> m_aryPulses;
 
-			float CalculateAppliedCurrent();
+			virtual float CalculateAppliedCurrent();
 			void CullPulses();
 			void IncrementMatches();
 

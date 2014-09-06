@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C6311205-70FD-E34D-8646-8E59C9A1FC8C}</ProjectGuid>
+    <ProjectGuid>{6C6AA8CF-5548-1149-891E-17A9DC9087EF}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -14,8 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_debug.so</OutputName>
@@ -46,8 +45,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim.so</OutputName>
@@ -80,8 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>Debug</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>_DEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim_debug.so</OutputName>
@@ -112,8 +109,7 @@
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
-    <OutputPath>Release</OutputPath>
-    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
     <DefineSymbols>NDEBUG ANIMATLIBRARY_EXPORTS</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
     <OutputName>libAnimatSim.so</OutputName>
@@ -325,8 +321,8 @@
     <None Include="..\ModuleThreadProcessor.h">
       <Link>ModuleThreadProcessor.h</Link>
     </None>
-    <None Include="..\MotorVelocityStimulus.h">
-      <Link>MotorVelocityStimulus.h</Link>
+    <None Include="..\MotorStimulus.h">
+      <Link>MotorStimulus.h</Link>
     </None>
     <None Include="..\MotorizedJoint.h">
       <Link>MotorizedJoint.h</Link>
@@ -361,6 +357,9 @@
     <None Include="..\Organism.h">
       <Link>Organism.h</Link>
     </None>
+    <None Include="..\PassThroughLinkage.h">
+      <Link>PassThroughLinkage.h</Link>
+    </None>
     <None Include="..\PhysicsNeuralModule.h">
       <Link>PhysicsNeuralModule.h</Link>
     </None>
@@ -382,6 +381,9 @@
     <None Include="..\PropertyControlStimulus.h">
       <Link>PropertyControlStimulus.h</Link>
     </None>
+    <None Include="..\PulsedLinkage.h">
+      <Link>PulsedLinkage.h</Link>
+    </None>
     <None Include="..\RPRO.h">
       <Link>RPRO.h</Link>
     </None>
@@ -390,6 +392,12 @@
     </None>
     <None Include="..\ReceptiveFieldPair.h">
       <Link>ReceptiveFieldPair.h</Link>
+    </None>
+    <None Include="..\RemoteControl.h">
+      <Link>RemoteControl.h</Link>
+    </None>
+    <None Include="..\RemoteControlLinkage.h">
+      <Link>RemoteControlLinkage.h</Link>
     </None>
     <None Include="..\RigidBody.h">
       <Link>RigidBody.h</Link>
@@ -642,8 +650,8 @@
     <Compile Include="..\ModuleThreadProcessor.cpp">
       <Link>ModuleThreadProcessor.cpp</Link>
     </Compile>
-    <Compile Include="..\MotorVelocityStimulus.cpp">
-      <Link>MotorVelocityStimulus.cpp</Link>
+    <Compile Include="..\MotorStimulus.cpp">
+      <Link>MotorStimulus.cpp</Link>
     </Compile>
     <Compile Include="..\MotorizedJoint.cpp">
       <Link>MotorizedJoint.cpp</Link>
@@ -678,6 +686,9 @@
     <Compile Include="..\Organism.cpp">
       <Link>Organism.cpp</Link>
     </Compile>
+    <Compile Include="..\PassThroughLinkage.cpp">
+      <Link>PassThroughLinkage.cpp</Link>
+    </Compile>
     <Compile Include="..\PhysicsNeuralModule.cpp">
       <Link>PhysicsNeuralModule.cpp</Link>
     </Compile>
@@ -699,6 +710,9 @@
     <Compile Include="..\PropertyControlStimulus.cpp">
       <Link>PropertyControlStimulus.cpp</Link>
     </Compile>
+    <Compile Include="..\PulsedLinkage.cpp">
+      <Link>PulsedLinkage.cpp</Link>
+    </Compile>
     <Compile Include="..\RPRO.cpp">
       <Link>RPRO.cpp</Link>
     </Compile>
@@ -707,6 +721,12 @@
     </Compile>
     <Compile Include="..\ReceptiveFieldPair.cpp">
       <Link>ReceptiveFieldPair.cpp</Link>
+    </Compile>
+    <Compile Include="..\RemoteControl.cpp">
+      <Link>RemoteControl.cpp</Link>
+    </Compile>
+    <Compile Include="..\RemoteControlLinkage.cpp">
+      <Link>RemoteControlLinkage.cpp</Link>
     </Compile>
     <Compile Include="..\RigidBody.cpp">
       <Link>RigidBody.cpp</Link>

@@ -47,7 +47,10 @@ void VsMotorizedJoint::CalculateServoVelocity()
 		return;
 
 	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
-	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	//For calculating the error we need to get the actual current position of the joint, not the value that was obtained last
+	//time it called CollectData. If the motor is being synched with the robot for sim then this could be delayed. However, in the
+	//real system this type of error correction would be taking place within the actual servo's motor loop.
+	float fltError = fltTargetPos - GetCurrentVxJointPos();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
 	////Test Code
