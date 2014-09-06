@@ -30,8 +30,8 @@ namespace RoboticsAnimatSim
 
 RbFirmataController::RbFirmataController() 
 {
-	m_strComPort = "COM3";
-	m_iBaudRate = 57600;
+	m_strComPort = "COM4";
+	m_iBaudRate = 115200;
 
 	// listen for EInitialized notification. this indicates that
 	// the arduino is ready to receive commands and it is safe to

@@ -11,7 +11,7 @@ namespace RoboticsGUI
         public class StandardInterface : AnimatGUI.DataObjects.Robotics.RobotInterface
         {
             public override string Description{get {return "Interfaces with a robot using standalone simulation files.";} set { }}
-            public override string ButtonImageName{get {return "RoboticsGUI.Graphics.LANWirelessInterface.gif";}}
+            public override string ButtonImageName{get {return "RoboticsGUI.Graphics.RobotInterface.gif";}}
             public override string PartType {get { return "StandardInterface"; }}
             public override string ModuleName {get {return "RoboticsAnimatSim";}}
 

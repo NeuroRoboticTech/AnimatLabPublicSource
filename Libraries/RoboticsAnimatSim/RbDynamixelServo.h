@@ -242,6 +242,10 @@ protected:
 	///Keeps track of whether we have already set velocity to stop when doing velocity control
 	bool m_bVelStopPosSet;
 
+	///If true then we should reset to the start position at the beginning of the simulation.
+	bool m_bResetToStartPos;
+
+	///Pointer to an associated motorized joint.
     MotorizedJoint *m_lpMotorJoint;
 
 	virtual void RecalculateParams();
@@ -417,10 +421,13 @@ public:
 
 	virtual void SetTorqueLimit_FP(int iVal);
 	virtual int GetTorqueLimit_FP();
+	
+	virtual bool ResetToStartPos();
+	virtual void ResetToStartPos(bool bVal);
 
 	virtual float QuantizeServoPosition(float fltPos);
 	virtual float QuantizeServoVelocity(float fltVel);
-	
+
 	virtual void MicroSleep(unsigned int iTime) = 0;
 	virtual Simulator *GetSimulator() = 0;
 

@@ -43,18 +43,12 @@ namespace RoboticsAnimatSim
 
 	namespace Environment
 	{
-		class RbMovableItem;
-		class RbBody;
 		class RbJoint;
 		class RbMotorizedJoint;
-		class RbLine;
 		class RbMaterialType;
         class RbConstraintRelaxation;
         class RbConstraintFriction;
-		class RbOrganism;
 		class RbRigidBody;
-		class RbStructure;
-        class RbMatrixUtil;
 
 		namespace Bodies
 		{
@@ -66,13 +60,6 @@ namespace RoboticsAnimatSim
 			class RbPlane;
 			class RbSphere;
 			class RbSpring;
-			class RbTorus;
-			class RbEllipsoid;
-			class RbMouth;
-			class RbFluidPlane;
-			class RbMeshBase;
-			class RbMesh;
-			class RbTerrain;
 		}
 
 		namespace Joints
@@ -82,12 +69,13 @@ namespace RoboticsAnimatSim
 			class RbHingeLimit;
 			class RbPrismatic;
 			class RbPrismaticLimit;
-			class RbUniversal;
 		}
 	}
 
 	namespace ExternalStimuli
 	{
+		class RbForceStimulus;
+		class RbMotorVelocityStimulus;
 	}
 
     namespace Robotics
@@ -99,10 +87,12 @@ namespace RoboticsAnimatSim
 
         namespace RobotIOControls
         {
+			class RbDynamixelServo;
+			class RbDynamixelMotorUpdateData;
+
 			namespace DynamixelUSB
 			{
 				class RbDynamixelUSB;
-				class RbDynamixelUSBMotorUpdateData;
 				class RbDynamixelUSBServo;
 				class RbDynamixelUSBHinge;
 				class RbDynamixelUSBPrismatic;
@@ -120,6 +110,8 @@ namespace RoboticsAnimatSim
 				class RbFirmataPrismaticServo;
 				class RbFirmataPWMOutput;
 			}
+
+			class RbXBeeCommander;
 		}
     }
 }
@@ -171,8 +163,6 @@ using namespace RoboticsAnimatSim::Robotics::RobotIOControls::Firmata;
 #include "RbLANWirelessInterface.h"
 #include "RbDynamixelUSB.h"
 #include "RbDynamixelUSBServo.h"
-#include "RbDynamixelUSBHinge.h"
-#include "RbDynamixelUSBPrismatic.h"
 
 #include "RbFirmataController.h"
 #include "RbFirmataPart.h"

@@ -292,7 +292,7 @@ Namespace DataObjects
                                             "Properties", "Determines whether or not the IO update of the simulation is synched with the time step of the robot.", m_bSynchSim))
 
                 Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                             "Properties", "Overrides the physics step set in the simulation for the robot. " & _
                                             "This allows you to set a different physics time step for the robotic simulation.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))

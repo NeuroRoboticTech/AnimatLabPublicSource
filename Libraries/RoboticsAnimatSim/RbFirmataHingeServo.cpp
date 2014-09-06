@@ -34,7 +34,7 @@ RbFirmataHingeServo::RbFirmataHingeServo()
     m_lpJoint = NULL;
 	m_iMaxPulse = 2400;
 	m_iMinPulse = 544;
-	m_bResetToStartPos = true;
+	m_bResetToStartPos = false;
 
 	m_iMaxAngle = 179;
 	m_iMinAngle  = 0;

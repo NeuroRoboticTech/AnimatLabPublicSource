@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include <boost/test/unit_test.hpp> 
 #include <boost/shared_ptr.hpp>
-#include <platformstl/synch/sleep_functions.h>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/thread/thread.hpp> 
 
 BOOST_AUTO_TEST_SUITE( Rotation_Suite )
 
@@ -436,10 +437,8 @@ BOOST_AUTO_TEST_CASE( SimulationMgr_CreateModifyShutdownWithWindow )
 #else
 	strProjFile = strExecutablePath + "../Tutorials/Examples/StandAloneSimTest/Bullet_Single_x32.asim";
 #endif
-
-	SimulationMgr *lpSimMgr = new SimulationMgr();
 	
-	SimulationThread *lpThread = lpSimMgr->CreateSimulation(strProjFile);
+	SimulationThread *lpThread = SimulationMgr::Instance().CreateSimulation(strProjFile);
 
 	AnimatBase *lpNeuron = lpThread->Sim()->FindByID("0825d6e6-ebc4-4d4e-8c87-1fd06f821916");
 
@@ -452,16 +451,13 @@ BOOST_AUTO_TEST_CASE( SimulationMgr_CreateModifyShutdownWithWindow )
 
 		while(lpThread->Sim()->SimRunning())
 		{
-			platformstl::micro_sleep(1000);
+			boost::this_thread::sleep(boost::posix_time::milliseconds(100));
 		}
 
 		fltVth-=-0.02;
 	}
 
-	lpSimMgr->ShutdownAllSimulations();
-
-    if(lpSimMgr)
-        delete lpSimMgr;
+	SimulationMgr::Instance().ShutdownAllSimulations();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

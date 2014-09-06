@@ -14,11 +14,12 @@ typedef int (*RunLibrary)(int argc, const char **argv);
 \param	strFullPath	   	Full pathname of the string full file. 
 
 **/
-bool FileExists(std::string strFullPath)
+bool FileExists(std::string &strFullPath)
 {
     try 
     {
-	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
+		boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
+		strFullPath = path.generic_string();
         return true;
     } 
     catch(const boost::filesystem::filesystem_error& e)
@@ -33,10 +34,13 @@ bool FileExists(std::string strFullPath)
     }
 }
 
-int FindRunLibrary(const std::string &strSimFile, std::string &strRunLibrary)
+int FindRunLibrary(std::string &strSimFile, std::string &strRunLibrary)
 {
     std::ifstream ifSimFile;
     char sBuffer[1000]; 
+
+	const boost::filesystem::path &base = boost::filesystem::current_path();
+	std::cout << "Current Path: " << base << "\n";
 
     if(!FileExists(strSimFile))
     {

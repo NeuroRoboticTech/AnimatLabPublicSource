@@ -12,7 +12,7 @@ namespace RoboticsGUI
             /// <summary>
             /// If true then when the simulation starts it will always reset the position of the servo to 0 to begin with.
             /// </summary>
-            protected bool m_bResetToStartPos = true;
+            protected bool m_bResetToStartPos = false;
 
             protected bool m_bQueryMotorData = true;
 

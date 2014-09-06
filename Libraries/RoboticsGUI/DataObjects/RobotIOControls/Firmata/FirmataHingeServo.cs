@@ -19,7 +19,7 @@ namespace RoboticsGUI
                 /// <summary>
                 /// If true then when the simulation starts it will always reset the position of the servo to 0 to begin with.
                 /// </summary>
-                protected bool m_bResetToStartPos = true;
+                protected bool m_bResetToStartPos = false;
 
                 public override string Description {get {return "Controls a standard servo motor for a hinge joint using a Firmata controller";}set { }}
                 public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.HingeServoSmall.gif";}}

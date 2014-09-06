@@ -887,10 +887,13 @@ void RbDynamixelServo::InitMotorData()
 	if(iRetTorqueLimit != 1023)
 		SetTorqueLimit_FP(1023);
 
-	SetMaximumVelocity();
-	SetGoalPosition(0);
+	if(m_bResetToStartPos)
+	{
+		SetMaximumVelocity();
+		SetGoalPosition(0);
 
-	WaitForMoveToFinish();
+		WaitForMoveToFinish();
+	}
 
 	m_iLastGoalPos = GetActualPosition_FP();
 
@@ -1187,6 +1190,10 @@ int RbDynamixelServo::GetTorqueLimit_FP()
 	return ReadTorqueLimit(m_iServoID);
 }
 
+bool RbDynamixelServo::ResetToStartPos() {return m_bResetToStartPos;}
+
+void RbDynamixelServo::ResetToStartPos(bool bVal) {m_bResetToStartPos = bVal;}
+
 void RbDynamixelServo::SetMotorPosVel()
 {
 	//std::cout << m_lpSim->Time() << ", servo: " << m_iServoID <<  ", Pos: " << m_iNextGoalPos << ", LasPos: " << m_iLastGoalPos << ", Vel: " << m_iNextGoalVelocity << ", LastVel: " << m_iLastGoalVelocity << "\r\n";
@@ -1325,6 +1332,12 @@ bool RbDynamixelServo::SetData(const std::string &strDataType, const std::string
 		TranslationRange(atof(strValue.c_str()));
 		return true;
 	}
+	
+	if(strType == "RESETTOSTARTPOS")
+	{
+		ResetToStartPos(Std_ToBool(strValue));
+		return true;
+	}
 
 	return false;
 }
@@ -1348,6 +1361,7 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 	aryProperties.Add(new TypeProperty("MinLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TranslationRange", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ResetToStartPos", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void RbDynamixelServo::ResetSimulation()
@@ -1471,6 +1485,7 @@ void RbDynamixelServo::Load(StdUtils::CStdXml &oXml)
     MaxLoadFP(oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP));
 	m_bIsHinge = oXml.GetChildBool("IsHinge", m_bIsHinge);
     TranslationRange(oXml.GetChildFloat("TranslationRange", m_fltTranslationRange));
+	ResetToStartPos(oXml.GetChildBool("ResetToStartPos", m_bResetToStartPos));
 
 	oXml.OutOfElem();
 }

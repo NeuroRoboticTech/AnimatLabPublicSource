@@ -2373,7 +2373,7 @@ void Simulator::MicroWait(unsigned int iMicroTime)
 
 		iCount++;
 		m_fltTotalMicroWaitCount++;
-		if(iCount == 1000)
+		if(iCount == 10000)
 			THROW_ERROR(Al_Err_lTimedOutInMicroWait, Al_Err_strTimedOutInMicroWait);
 	}
 
@@ -2766,10 +2766,13 @@ void Simulator::SimStopping()
 		if(lpBase != this)
 			lpBase->SimStopping();
 	}
+
+	WriteToConsole("Simulation stopped. Time: " + STR(m_fltTime));
 }
 
 void Simulator::HandleCriticalError(std::string strError)
 {
+	WriteToConsole("Critical error occurred: " + strError);
 	this->ShutdownSimulation();
 	if(m_lpSimCallback)
 		m_lpSimCallback->HandleCriticalError(Al_Err_strCriticalSimError);
@@ -2778,6 +2781,7 @@ void Simulator::HandleCriticalError(std::string strError)
 
 void Simulator::HandleNonCriticalError(std::string strError)
 {
+	WriteToConsole("Non critical error occurred: " + strError);
 	this->ResetSimulation();
 	if(m_lpSimCallback)
 		m_lpSimCallback->HandleNonCriticalError(strError);
