@@ -997,6 +997,10 @@ Namespace DataObjects.Physical
                     doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                     doScript.AddToSim(True)
                     m_doScript = doScript
+
+                    If Not doScript.WorkspaceNode Is Nothing Then
+                        doScript.SelectItem()
+                    End If
                 End If
 
 

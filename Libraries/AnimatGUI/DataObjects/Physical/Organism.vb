@@ -724,6 +724,10 @@ Namespace DataObjects.Physical
                     m_doRobotInterface = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotInterface)
                     m_doRobotInterface.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                     m_doRobotInterface.AddToSim(True)
+
+                    If Not m_doRobotInterface.WorkspaceNode Is Nothing Then
+                        m_doRobotInterface.SelectItem()
+                    End If
                 End If
 
             Catch ex As System.Exception

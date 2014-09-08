@@ -185,7 +185,7 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Protected Overridable Function GetBodyPartListDropDownType() As System.Type
-            Return GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor)
+            Return GetType(AnimatGUI.TypeHelpers.DropDownTreeEditorNoFirstSelect)
         End Function
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

@@ -1765,6 +1765,7 @@ Namespace DataObjects.Physical
                 doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms)
                 doOrganism.WorkspaceNode.ExpandAll()
                 Util.ProjectWorkspace.TreeView.SelectedNode = doOrganism.WorkspaceNode
+                doOrganism.SelectItem()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1836,6 +1837,10 @@ Namespace DataObjects.Physical
                     doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                     doScript.AddToSim(True)
                     m_doScript = doScript
+
+                    If Not doScript.WorkspaceNode Is Nothing Then
+                        doScript.SelectItem()
+                    End If
                 End If
 
             Catch ex As System.Exception

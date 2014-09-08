@@ -431,6 +431,10 @@ Namespace DataObjects
                         Dim doIOControl As Robotics.RobotIOControl = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotIOControl)
                         doIOControl.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                         m_aryIOControls.Add(doIOControl.ID, doIOControl)
+
+                        If Not doIOControl.WorkspaceNode Is Nothing Then
+                            doIOControl.SelectItem()
+                        End If
                     End If
 
                 Catch ex As System.Exception

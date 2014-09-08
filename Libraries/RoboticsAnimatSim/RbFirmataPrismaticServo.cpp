@@ -41,7 +41,7 @@ RbFirmataPrismaticServo::~RbFirmataPrismaticServo()
         m_lpHinge = NULL;
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of RbFirmataHingeServo\r\n", "", -1, false, true);}
 }
 
 void RbFirmataPrismaticServo::SetupIO()

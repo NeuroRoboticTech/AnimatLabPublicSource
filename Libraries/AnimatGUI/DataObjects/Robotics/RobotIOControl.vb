@@ -374,6 +374,10 @@ Namespace DataObjects
                         Dim doPart As Robotics.RobotPartInterface = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotPartInterface)
                         doPart.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                         m_aryParts.Add(doPart.ID, doPart)
+
+                        If Not doPart.WorkspaceNode Is Nothing Then
+                            doPart.SelectItem()
+                        End If
                     End If
 
                 Catch ex As System.Exception

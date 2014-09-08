@@ -383,6 +383,10 @@ Namespace DataObjects.Physical
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex
 
                 Util.Simulation.ProjectStimuli.Add(doStimulus.ID, doStimulus)
+
+                If Not doStimulus.WorkspaceNode Is Nothing Then
+                    doStimulus.SelectItem()
+                End If
             End If
         End Sub
 

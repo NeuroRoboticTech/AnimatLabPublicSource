@@ -101,6 +101,8 @@ namespace RoboticsGUI
 
                     propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Min Pulse", this.MinPulse.GetType(), "MinPulse", "Properties", "Minimum pulse duration of servo", this.MinPulse));
                     propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Max Pulse", this.MaxPulse.GetType(), "MaxPulse", "Properties", "Maximum pulse duration of servo", this.MaxPulse));
+                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Reset To Start Pos", this.ResetToStartPos.GetType(), "ResetToStartPos",
+                        "Properties", "If true then it will reset the joint to a known position at the start the simulation", this.ResetToStartPos));
                 }
 
                 public override void LoadData(ManagedAnimatInterfaces.IStdXml oXml)
@@ -110,6 +112,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     m_iMaxPulse = oXml.GetChildInt("MaxPulse", m_iMaxPulse);
                     m_iMinPulse = oXml.GetChildInt("MinPulse", m_iMinPulse);
+                    m_bResetToStartPos = oXml.GetChildBool("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
 
@@ -120,6 +123,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     oXml.AddChildElement("MaxPulse", m_iMaxPulse);
                     oXml.AddChildElement("MinPulse", m_iMinPulse);
+                    oXml.AddChildElement("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
 
@@ -130,6 +134,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     oXml.AddChildElement("MaxPulse", m_iMaxPulse);
                     oXml.AddChildElement("MinPulse", m_iMinPulse);
+                    oXml.AddChildElement("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
             }
