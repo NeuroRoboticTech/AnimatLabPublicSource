@@ -142,8 +142,8 @@ void RbFirmataController::ProcessIO()
 		std::cout << "Sending firmware version request\r\n";
 
 		//First reset firmata
-		//sendReset();
-		//boost::this_thread::sleep(boost::posix_time::microseconds(10));
+		sendReset();
+		boost::this_thread::sleep(boost::posix_time::microseconds(10));
 
 		//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
 		//Will stay in update loop looking for signal. When it arrives Setup will be called

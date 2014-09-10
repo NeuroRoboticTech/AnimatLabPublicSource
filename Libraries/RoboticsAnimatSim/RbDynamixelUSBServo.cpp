@@ -73,6 +73,20 @@ void RbDynamixelUSBServo::UpdateQueueIndex(int iVal)
 	Std_IsAboveMin((int) -1, iVal, true, "UpdateQueueIndex", true);
 	m_iUpdateQueueIndex = iVal;
 }
+	
+void RbDynamixelUSBServo::SetRegister(unsigned char reg, unsigned char length, unsigned int value)
+{
+	if(m_lpParentUSB)
+		m_lpParentUSB->SetRegister(m_iServoID, reg, length, value);
+}
+
+int RbDynamixelUSBServo::GetRegister(unsigned char reg, unsigned char length)
+{
+	if(m_lpParentUSB)
+		return m_lpParentUSB->GetRegister(m_iServoID, reg, length);
+	else
+		return -1;
+}
 
 #pragma region DataAccesMethods
 

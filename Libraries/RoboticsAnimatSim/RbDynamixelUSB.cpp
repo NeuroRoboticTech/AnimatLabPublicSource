@@ -60,6 +60,22 @@ void RbDynamixelUSB::BaudRate(int iRate)
 }
 
 int RbDynamixelUSB::BaudRate() {return m_iBaudRate;}
+			
+void RbDynamixelUSB::SetRegister(unsigned char iServo, unsigned char reg, unsigned char length, unsigned int value)
+{
+	if(length == 2)
+		dxl_write_word(iServo, reg, value);
+	else
+		dxl_write_byte(iServo, reg, value);
+}
+
+int RbDynamixelUSB::GetRegister(unsigned char iServo, unsigned char reg, unsigned char length)
+{
+	if(length == 2)
+		return dxl_read_word(iServo, reg);
+	else
+		return dxl_read_byte(iServo, reg);
+}
 
 #pragma region DataAccesMethods
 

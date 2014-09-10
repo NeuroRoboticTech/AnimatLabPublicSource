@@ -36,6 +36,9 @@ public:
 	virtual int BaudRate();
 
 	virtual bool SendSynchronousMoveCommand();
+			
+	virtual void SetRegister(unsigned char iServo, unsigned char reg, unsigned char length, unsigned int value);
+	virtual int GetRegister(unsigned char iServo, unsigned char reg, unsigned char length);
 
 #pragma region DataAccesMethods
 

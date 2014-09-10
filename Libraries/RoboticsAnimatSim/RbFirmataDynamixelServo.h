@@ -48,6 +48,12 @@ protected:
 	///Keeps track of alarm Status
 	int m_iAlarm;
 
+	//Stores the last reg id returned by a get register callback
+	unsigned int m_iLastGetRegisterID;
+
+	//Stores the last value returned by a get register callback
+	unsigned int m_iLastGetRegisterValue;
+
 	virtual void WriteGoalPosition(int iServoID, int iPos);
 	virtual int ReadGoalPosition(int iServoID)  {return m_iLastGoalPos;};
 	virtual int ReadPresentPosition(int iServoID)  {return m_iPresentPos;};
@@ -90,6 +96,9 @@ protected:
 	virtual void UpdateMotorData();
 	virtual void UpdateAllMotorData();
 	virtual void UpdateKeyMotorData();
+	
+	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value);
+	virtual int GetRegister(unsigned char reg, unsigned char length);
 
 public:
 	RbFirmataDynamixelServo();

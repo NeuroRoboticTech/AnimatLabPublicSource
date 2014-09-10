@@ -85,6 +85,7 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_bNeedSetVelStopPos = false;
 	m_bVelStopPosSet = false;
+	m_bResetToStartPos = false;
 
 	RecalculateParams();
 }
@@ -890,7 +891,13 @@ void RbDynamixelServo::InitMotorData()
 	if(m_bResetToStartPos)
 	{
 		SetMaximumVelocity();
+		boost::this_thread::sleep(boost::posix_time::microseconds(100));
+		  
 		SetGoalPosition(0);
+		boost::this_thread::sleep(boost::posix_time::microseconds(100));
+
+		//unsigned int iGoalPos = GetRegister(P_GOAL_POSITION_L, 2);
+		//unsigned int iPos = GetRegister(P_PRESENT_POSITION_L, 2);
 
 		WaitForMoveToFinish();
 	}

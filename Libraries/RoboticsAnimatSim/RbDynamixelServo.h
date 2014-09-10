@@ -292,6 +292,9 @@ protected:
 	virtual void GetLimitValues();
 
 	virtual void ResetSimulation();
+	
+	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value) = 0;
+	virtual int GetRegister(unsigned char reg, unsigned char length) = 0;
 
 public:
 	RbDynamixelServo();

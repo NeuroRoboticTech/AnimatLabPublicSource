@@ -259,7 +259,11 @@ void VsMotorVelocityStimulus::Load(CStdXml &oXml)
 	if(Std_IsBlank(m_strStructureID)) 
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
 
-	VelocityEquation(oXml.GetChildString("Velocity"));
+	if(oXml.FindChildElement("Velocity", false))
+		VelocityEquation(oXml.GetChildString("Velocity"));
+	else
+		VelocityEquation(oXml.GetChildString("Equation"));
+
 	DisableMotorWhenDone(oXml.GetChildBool("DisableMotorWhenDone", m_bDisableMotorWhenDone));
 	TargetID(oXml.GetChildString("TargetID", "Velocity"));
 
