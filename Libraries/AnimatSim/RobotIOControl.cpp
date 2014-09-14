@@ -43,6 +43,7 @@ namespace AnimatSim
 RobotIOControl::RobotIOControl(void)
 {
 	m_lpParentInterface = NULL;
+	m_bSetupStarted = false;
 	m_bSetupComplete	= false;	// flag so we setup when its ready, you don't need to touch this :)
 	m_bStopIO = false;
 	m_bIOThreadProcessing = false;
@@ -247,7 +248,12 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotIOControl::StartIOThread()
 {
-	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(30);
+	int iWaitTime = 30;
+#ifdef _DEBUG
+	iWaitTime = 200;
+#endif
+
+	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(iWaitTime);
 
 	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
 
@@ -314,7 +320,16 @@ void RobotIOControl::ExitIOThread()
 {
 	if(m_bIOThreadProcessing)
 	{
+		//Prevent any more attempts to write to the comm channel.
+		m_bPauseIO = true;
+
+		//Sleep to let the other thread get the pause message.
+		boost::this_thread::sleep(boost::posix_time::microseconds(200));
+
+		//Close the comm channel.
 		CloseIO();
+
+		//Tell the IO thread to shutdown
 		m_bStopIO = true;
 
 	bool bTryJoin = false;

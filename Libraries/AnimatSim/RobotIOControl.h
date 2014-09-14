@@ -17,6 +17,9 @@ namespace AnimatSim
 			//True while the io thread processing loop is going on.
 			bool m_bIOThreadProcessing;
 
+			///Set to true once the IO begins its setup.
+			bool m_bSetupStarted;
+
 			///Set to true once the IO is setup correctly.
 			bool m_bSetupComplete;
 

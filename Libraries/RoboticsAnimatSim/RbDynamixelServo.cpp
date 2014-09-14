@@ -617,7 +617,14 @@ float RbDynamixelServo::ConvertFPVelocity(int iVel)
 **/
 int RbDynamixelServo::ConvertFloatVelocity(float fltVelocity)
 {
-	return (int) (fabs(fltVelocity)*(m_fltFloatToFPTranslation*m_fltConvertPosSToFP));
+	int iVel = (int) (fabs(fltVelocity)*(m_fltFloatToFPTranslation*m_fltConvertPosSToFP));
+
+	if(iVel < m_iMinVelocityFP)
+		iVel = m_iMinVelocityFP;
+	if(iVel > m_iMaxVelocityFP)
+		iVel = m_iMaxVelocityFP;
+
+	return iVel;
 }
 
 
@@ -845,10 +852,10 @@ void RbDynamixelServo::WaitForMoveToFinish()
 {
 	do
 	{
-//#ifdef Win32
+#ifdef Win32
 		//Do not attempt to sleep in linux while in a spinlock. Windows is fine with it.
 		MicroSleep(5000);
-//#endif
+#endif
 	} while(GetIsMoving());
 }
 
@@ -864,12 +871,30 @@ void RbDynamixelServo::Stop()
 }
 
 /**
-\brief	Initializes the internal data on position and velocity from the actual motor. 
+\brief	Moves the motor to the specified position at the given speed. 
 
 \author	dcofer
-\date	4/25/2014
+\date	9/11/2014
 **/
-void RbDynamixelServo::InitMotorData()
+void RbDynamixelServo::Move(float fltPos, float fltVel)
+{
+	if(fltVel < 0)
+		SetMaximumVelocity();
+	else
+		SetGoalVelocity(fltVel);
+	boost::this_thread::sleep(boost::posix_time::microseconds(100));
+		  
+	SetGoalPosition(fltPos);
+	boost::this_thread::sleep(boost::posix_time::microseconds(100));
+}
+
+/**
+\brief	Checks the current limits on the motor and sets them according to the simulation params. 
+
+\author	dcofer
+\date	9/11/2014
+**/
+void RbDynamixelServo::ConfigureServo()
 {
 	int iMinPos = GetCWAngleLimit_FP();
 	int iMaxPos = GetCCWAngleLimit_FP();
@@ -887,18 +912,22 @@ void RbDynamixelServo::InitMotorData()
 
 	if(iRetTorqueLimit != 1023)
 		SetTorqueLimit_FP(1023);
+}
+
+/**
+\brief	Initializes the internal data on position and velocity from the actual motor. 
+
+\author	dcofer
+\date	4/25/2014
+**/
+void RbDynamixelServo::InitMotorData()
+{
+	ConfigureServo();
 
 	if(m_bResetToStartPos)
 	{
-		SetMaximumVelocity();
-		boost::this_thread::sleep(boost::posix_time::microseconds(100));
-		  
-		SetGoalPosition(0);
-		boost::this_thread::sleep(boost::posix_time::microseconds(100));
-
-		//unsigned int iGoalPos = GetRegister(P_GOAL_POSITION_L, 2);
-		//unsigned int iPos = GetRegister(P_PRESENT_POSITION_L, 2);
-
+		//Move to the reset pos at max speed.
+		Move(0, -1);
 		WaitForMoveToFinish();
 	}
 
@@ -907,7 +936,7 @@ void RbDynamixelServo::InitMotorData()
 	//Reset the goal velocity to the minimum value.
 	SetGoalVelocity_FP(1);
 
-	std::cout << "Reset Position: " << m_iLastGoalPos << "\r\n";
+	std::cout << "Reset Servo " << m_iServoID << " Position: " << m_iLastGoalPos << "\r\n";
 }
 
 /**

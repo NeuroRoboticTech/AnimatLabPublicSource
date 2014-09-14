@@ -296,6 +296,8 @@ protected:
 	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value) = 0;
 	virtual int GetRegister(unsigned char reg, unsigned char length) = 0;
 
+	virtual void ConfigureServo();
+
 public:
 	RbDynamixelServo();
 	virtual ~RbDynamixelServo();
@@ -434,6 +436,7 @@ public:
 	virtual void MicroSleep(unsigned int iTime) = 0;
 	virtual Simulator *GetSimulator() = 0;
 
+	virtual void Move(float fltPos, float fltVel);
 	virtual void WaitForMoveToFinish();
 };
 
