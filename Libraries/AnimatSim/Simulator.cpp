@@ -2402,18 +2402,18 @@ void Simulator::StepPlaybackControl()
 				{
 					m_fltTotalMicroSleepTime+=m_fltDesiredFrameStep;
 					m_fltTotalMicroSleepCount++;
-					MicroSleep(m_fltDesiredFrameStep*1000000);
+					//MicroSleep(m_fltDesiredFrameStep*1000000);
 				}
 				else if(dblRemainingTime > 100e-6)
 				{
 					m_fltTotalMicroSleepTime+=dblRemainingTime;
 					m_fltTotalMicroSleepCount++;
-					MicroSleep(dblRemainingTime*1000000);
+					//MicroSleep(dblRemainingTime*1000000);
 				}
 				else
 				{
 					m_fltTotalMicroWaitTime+=dblRemainingTime;
-					MicroWait(dblRemainingTime*1000000);
+					//MicroWait(dblRemainingTime*1000000);
 				}
 			}
 

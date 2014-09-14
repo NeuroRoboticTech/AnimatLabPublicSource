@@ -1,3 +1,9 @@
+/**
+\file	RobotInterface.cpp
+
+\brief	Base class for the robotics interface for AnimatLab.
+**/
+
 #include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -41,12 +47,24 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotInterface::RobotInterface(void)
 {
 	m_bSynchSim = true;
 	m_fltPhysicsTimeStep = 0.02f;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotInterface::~RobotInterface(void)
 {
 
