@@ -100,6 +100,10 @@ protected:
 	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value);
 	virtual int GetRegister(unsigned char reg, unsigned char length);
 
+	virtual void Move(float fltPos, float fltVel);
+	
+	virtual void ConfigureServo();
+
 public:
 	RbFirmataDynamixelServo();
 	virtual ~RbFirmataDynamixelServo();

@@ -141,31 +141,53 @@ void RbFirmataController::ProcessIO()
 		
 		std::cout << "Sending firmware version request\r\n";
 
+		//First lets flush the buffer.
+		_port.flush();
+
 		//First reset firmata
 		sendReset();
 		boost::this_thread::sleep(boost::posix_time::microseconds(10));
 
-		//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
-		//Will stay in update loop looking for signal. When it arrives Setup will be called
-		//and we can start processing.
 		sendFirmwareVersionRequest();
 
+		//Loop through to do the innitial setup
+		int iSendFirmwareCount=0;
+		while(!(m_bStopIO || m_bSetupComplete))
+		{
+			if(!_firmwareReceived)
+			{
+				update();
+
+				//if(iSendFirmwareCount <= 0 && !_firmwareReceived)
+				//{
+				//	//Then need to do this to init the pins, get the firmware version, and  call setupArduino.
+				//	//Will stay in update loop looking for signal. When it arrives Setup will be called
+				//	//and we can start processing.
+				//	iSendFirmwareCount = 1000;
+				//}
+
+				//iSendFirmwareCount--;
+				boost::this_thread::sleep(boost::posix_time::microseconds(300));
+			}
+		}
+
+		//Now that setup has compled lets do our main loop
 		while(!m_bStopIO)
 		{
-			//Update the firmata IO.
-			update();
-
-			//Do not try and step IO until it has been setup correctly.
-			if(m_bSetupComplete)
+			if(m_bPauseIO || m_lpSim->Paused())
+				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			else
 			{
+				//Update the firmata IO.
+				update();
+
+				//Do not try and step IO until it has been setup correctly.
 				StepIO();
 
 				//Execute any synch moves that were setup for this IO loop in StepIO
 				//If none were setup it will ignore this call.
 				sendDynamixelSynchMoveExecute();
 			}
-
-			//boost::this_thread::sleep(boost::posix_time::microseconds(300));
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -185,14 +207,21 @@ void RbFirmataController::setupArduino(const int & version)
 {
 	m_EInitializedConnection.disconnect();
     
-    // it is now safe to send commands to the Arduino
-    m_bSetupComplete = true;
+	//Only do setup once. This is in case it gets called.
+	if(m_bSetupStarted)
+		return;
+
+	//Signal that we are starting setup.
+	m_bSetupStarted = true;
 
     // print firmware name and version to the console
-    std::cout << this->getFirmwareName(); 
-	std::cout << "firmata v" << this->getMajorFirmwareVersion() << "." << this->getMinorFirmwareVersion();
+    //std::cout << this->getFirmwareName(); 
+	//std::cout << "firmata v" << this->getMajorFirmwareVersion() << "." << this->getMinorFirmwareVersion() << "\r\n";
 
 	SetupIO();
+
+    // it is now safe to send commands to the Arduino
+    m_bSetupComplete = true;
 
  //       
  //   // Note: pins A0 - A5 can be used as digital input and output.
