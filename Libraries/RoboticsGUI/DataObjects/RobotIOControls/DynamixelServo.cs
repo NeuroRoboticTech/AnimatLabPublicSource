@@ -38,8 +38,8 @@ namespace RoboticsGUI
                 get { return m_bResetToStartPos; }
                 set
                 {
-                    SetSimData("ResetToStartPos", m_bResetToStartPos.ToString(), true);
-                    m_bResetToStartPos = true;
+                    SetSimData("ResetToStartPos", value.ToString(), true);
+                    m_bResetToStartPos = value;
                 }
             }
 
