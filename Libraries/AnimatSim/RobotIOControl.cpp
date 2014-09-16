@@ -1,3 +1,9 @@
+/**
+\file	RobotIOControl.cpp
+
+\brief	Implements the base class for Robot IO controllers.
+**/
+
 #include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -40,6 +46,12 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotIOControl::RobotIOControl(void)
 {
 	m_lpParentInterface = NULL;
@@ -55,6 +67,13 @@ RobotIOControl::RobotIOControl(void)
 	m_bWaitingForThreadNotify = false;
 }
 
+
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotIOControl::~RobotIOControl(void)
 {
 try
@@ -65,10 +84,34 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RobotIOControl\r\n", "", -1, false, true);}
 }
 
+/**
+\brief	Sets the parent robot interface pointer. 
+
+\author	dcofer
+\date	9/8/2014
+
+\param	lpParent	pointer to parent robot interface
+**/
 void RobotIOControl::ParentInterface(RobotInterface *lpParent) {m_lpParentInterface = lpParent;}
 
+/**
+\brief	Gets the parent robot interface pointer. 
+
+\author	dcofer
+\date	9/8/2014
+
+\return	pointer to parent robot interface. 
+**/
 RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
 
+/**
+\brief	Gets the array of IO controls. 
+
+\author	dcofer
+\date	9/8/2014
+
+\return	pointer to array of IO controls. 
+**/
 void RobotIOControl::PauseIO(bool bVal)
 {
 	m_bPauseIO = bVal;
