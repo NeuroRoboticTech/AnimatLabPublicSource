@@ -41,6 +41,8 @@ class ROBOTICS_PORT RbXBeeCommanderButtonData
 {
 public:
     // joystick values are -125 to 125
+
+	///The array index of this button
 	int m_iButtonID;
 	float m_fltStart;
     float m_fltValue;      // vertical stick movement = forward speed
@@ -55,9 +57,13 @@ public:
 	///right then so that the rest of the app can see it. We do want to reset it the next time though.
 	int m_iSimStepped;
 
+	///The number of simulation time slices to keep a start/stop signal active.
+	int m_iChangeSimStepCount;
+
 	RbXBeeCommanderButtonData()
 	{
 		m_iButtonID = -1;
+		m_iChangeSimStepCount = 5;
 		ClearData();
 	}
 
@@ -80,12 +86,19 @@ public:
 class ROBOTICS_PORT RbXBeeCommander : public AnimatSim::Robotics::RemoteControl
 {
 protected:
+	///The serial port this Xbee communicates on.
 	std::string m_strPort;
-	int m_iBaudRate;
 
+	///The baud rate of communications for this XBee
+	int m_iBaudRate;
+	
+	///The number of simulation time slices to keep a start/stop signal active.
+	int m_iChangeSimStepCount;
+
+	///Array of button information to keep track of incoming data.
 	RbXBeeCommanderButtonData m_ButtonData[BUT_ID_TOTAL];
 
-	// buttons are 0 or 1 (PRESSED), and bitmapped
+	/// buttons are 0 or 1 (PRESSED), and bitmapped
     unsigned char m_iButtons;  // 
     unsigned char m_iExt;      // Extended function set
 
@@ -116,6 +129,9 @@ public:
 
 	virtual void BaudRate(int iRate);
 	virtual int BaudRate();
+
+	virtual void ChangeSimStepCount(int iRate);
+	virtual int ChangeSimStepCount();
 
 #pragma region DataAccesMethods
 
