@@ -617,6 +617,9 @@ float RbDynamixelServo::ConvertFPVelocity(int iVel)
 **/
 int RbDynamixelServo::ConvertFloatVelocity(float fltVelocity)
 {
+	if(fltVelocity < -0.4)
+		fltVelocity = fltVelocity;
+
 	int iVel = (int) (fabs(fltVelocity)*(m_fltFloatToFPTranslation*m_fltConvertPosSToFP));
 
 	if(iVel < m_iMinVelocityFP)
@@ -1466,7 +1469,7 @@ void RbDynamixelServo::StepSimulation()
 			SetNextMaximumVelocity();
 		}
 
-		//only do this part if we are in a simulation
+		//only do this part if we are not in a simulation
 		if(!GetSimulator()->InSimulation())
 		{
 			//Retrieve the values that we got from the last time the IO for this servo was read in.

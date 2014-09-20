@@ -131,6 +131,8 @@ bool RbDynamixelUSB::OpenIO()
 
 void RbDynamixelUSB::CloseIO()
 {
+	TRACE_DEBUG("CloseIO.");
+
 	if(!m_lpSim->InSimulation())
 		dxl_terminate();
 }
@@ -148,9 +150,19 @@ void RbDynamixelUSB::ProcessIO()
 
 		while(!m_bStopIO)
 		{
-			m_aryMotorData.RemoveAll();
-			StepIO();
-			SendSynchronousMoveCommand();
+			if(m_bPauseIO || m_lpSim->Paused())
+			{
+				m_bIOPaused = true;
+				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			}
+			else
+			{
+				m_bIOPaused = false;
+
+				m_aryMotorData.RemoveAll();
+				StepIO();
+				SendSynchronousMoveCommand();
+			}
 
 #ifndef Win32
 		//Not needed in windows, not sure in linux. Keep it in till verify.

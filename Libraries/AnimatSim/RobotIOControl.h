@@ -96,6 +96,7 @@ namespace AnimatSim
 			virtual void CloseIO() = 0;
 
 			virtual void WaitWhilePaused();
+			virtual void WaitTillPaused();
 			virtual void WaitForThreadNotifyReady();
 			virtual void StartPause();
 			virtual void ExitPause();

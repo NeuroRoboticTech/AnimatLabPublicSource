@@ -175,9 +175,14 @@ void RbFirmataController::ProcessIO()
 		while(!m_bStopIO)
 		{
 			if(m_bPauseIO || m_lpSim->Paused())
+			{
+				m_bIOPaused = true;
 				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			}
 			else
 			{
+				m_bIOPaused = false;
+
 				//Update the firmata IO.
 				update();
 

@@ -342,9 +342,15 @@ void RobotIOControl::ProcessIO()
 		while(!m_bStopIO)
 		{
 			if(m_bPauseIO || m_lpSim->Paused())
+			{
+				m_bIOPaused = true;
 				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			}
 			else
+			{
+				m_bIOPaused = false;
 				StepIO();
+			}
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -361,19 +367,17 @@ void RobotIOControl::ProcessIO()
 
 void RobotIOControl::ExitIOThread()
 {
+	TRACE_DEBUG("ExitIOThread.");
+
 	if(m_bIOThreadProcessing)
 	{
-		//Prevent any more attempts to write to the comm channel.
-		m_bPauseIO = true;
-
-		//Sleep to let the other thread get the pause message.
-		boost::this_thread::sleep(boost::posix_time::microseconds(200));
-
 		//Close the comm channel.
 		CloseIO();
 
 		//Tell the IO thread to shutdown
 		m_bStopIO = true;
+
+		TRACE_DEBUG("Joint Thread.\r\n");
 
 	bool bTryJoin = false;
 #if (BOOST_VERSION >= 105000)
@@ -464,6 +468,19 @@ void RobotIOControl::WaitWhilePaused()
 \brief	This method is waits until the m_bIOPaused flag is set to true.
 
 \author	dcofer
+\date	9/20/2014
+
+**/
+void RobotIOControl::WaitTillPaused()
+{
+	while(!m_bIOPaused)		
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+}
+
+/**
+\brief	This method is waits until the m_bIOPaused flag is set to true.
+
+\author	dcofer
 \date	5/12/2014
 
 **/
@@ -506,12 +523,22 @@ any required cleanup.
 **/
 void RobotIOControl::ShutdownIO()
 {
+	//Prevent any more attempts to write to the comm channel.
+	if(m_bIOThreadProcessing)
+	{
+		StartPause();
+		WaitTillPaused();
+	}
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryParts.GetSize();
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 			if(m_aryParts[iIndex]->Enabled())
+			{
+				TRACE_DEBUG("Shutting down IO: " + m_aryParts[iIndex]->Name());
 				m_aryParts[iIndex]->ShutdownIO();
+			}
 	}
 
 	ExitIOThread();
