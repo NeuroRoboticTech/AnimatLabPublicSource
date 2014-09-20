@@ -40,6 +40,9 @@ public:
 	virtual void SetRegister(unsigned char iServo, unsigned char reg, unsigned char length, unsigned int value);
 	virtual int GetRegister(unsigned char iServo, unsigned char reg, unsigned char length);
 
+	virtual std::string GetErrorCode();
+	virtual std::string GetCommStatus(int CommStatus);
+
 #pragma region DataAccesMethods
 
 	virtual float *GetDataPointer(const std::string &strDataType);

@@ -212,16 +212,82 @@ bool RbDynamixelUSB::SendSynchronousMoveCommand()
 		int CommStatus = dxl_get_result();
 		if( CommStatus == COMM_RXSUCCESS )
 			return true;
-		//else
-		//{
-		//	PrintCommStatus(CommStatus);
-		//	break;
-		//}
-
+		else
+		{
+			std::cout << GetCommStatus(CommStatus);
+		}
 	}
 
 	return false;
 }			
+
+/**
+\brief	Checks the error code and returns an associated error message.
+
+\author	dcofer
+\date	5/7/2014
+
+\return	Error message. 
+**/
+std::string RbDynamixelUSB::GetErrorCode()
+{
+	if(dxl_get_rxpacket_error(ERRBIT_VOLTAGE) == 1)
+		return "Input voltage error!";
+
+	if(dxl_get_rxpacket_error(ERRBIT_ANGLE) == 1)
+		return "Angle limit error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_OVERHEAT) == 1)
+		return "Overheat error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_RANGE) == 1)
+		return "Out of range error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_CHECKSUM) == 1)
+		return "Checksum error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_OVERLOAD) == 1)
+		return "Overload error!\n";
+
+	if(dxl_get_rxpacket_error(ERRBIT_INSTRUCTION) == 1)
+		return "Instruction code error!\n";	
+
+	return "Unknown error";
+}
+
+std::string RbDynamixelUSB::GetCommStatus(int CommStatus)
+{
+	switch(CommStatus)
+	{
+	case COMM_TXFAIL:
+		return "COMM_TXFAIL: Failed transmit instruction packet!\r\n";
+		break;
+
+	case COMM_TXERROR:
+		return "COMM_TXERROR: Incorrect instruction packet!\r\n";
+		break;
+
+	case COMM_RXFAIL:
+		return "COMM_RXFAIL: Failed get status packet from device!\r\n";
+		break;
+
+	case COMM_RXWAITING:
+		return "COMM_RXWAITING: Now recieving status packet!\r\n";
+		break;
+
+	case COMM_RXTIMEOUT:
+		return "COMM_RXTIMEOUT: There is no status packet!\r\n";
+		break;
+
+	case COMM_RXCORRUPT:
+		return "COMM_RXCORRUPT: Incorrect status packet!\r\n";
+		break;
+
+	default:
+		return "This is unknown error code!\r\n";
+		break;
+	}
+}
 
 void RbDynamixelUSB::Load(StdUtils::CStdXml &oXml)
 {
