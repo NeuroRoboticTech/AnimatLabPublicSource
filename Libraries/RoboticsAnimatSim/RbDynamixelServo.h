@@ -160,7 +160,7 @@ protected:
 	int m_iMaxVelocityFP; 
 
 	///Stores the maximum rot/min for this motor. The max rotations (rad) per fixed point unit.
-	float m_fltMaxRotMin;
+	float m_fltRPMPerFPUnit;
 
 	///Stores the maximum rad/sec for this motor
 	float m_fltMaxPosSec; 
@@ -323,8 +323,8 @@ public:
 	virtual void MaxVelocityFP(int iVal);
 	virtual int MaxVelocityFP();
 
-	virtual void MaxRotMin(float fltVal);
-	virtual float MaxRotMin();
+	virtual void RPMPerFPUnit(float fltVal);
+	virtual float RPMPerFPUnit();
 
 	virtual void MinLoadFP(int iVal);
 	virtual int MinLoadFP();
