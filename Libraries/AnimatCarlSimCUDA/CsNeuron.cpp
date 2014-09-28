@@ -21,7 +21,7 @@ namespace AnimatCarlSim
 **/
 CsNeuron::CsNeuron()
 {
-	m_lpCsModule = NULL;
+	//m_lpCsModule = NULL;
 
 	m_bEnabled = true;
 }
@@ -87,7 +87,7 @@ void CsNeuron::Copy(CStdSerialize *lpSource)
 
 	CsNeuron *lpOrig = dynamic_cast<CsNeuron *>(lpSource);
 
-	m_lpCsModule = lpOrig->m_lpCsModule;
+	//m_lpCsModule = lpOrig->m_lpCsModule;
 }
 
 
@@ -109,7 +109,7 @@ void CsNeuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Neura
 {
 	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
-	m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
+	//m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
@@ -118,8 +118,8 @@ void CsNeuron::VerifySystemPointers()
 {
 	Node::VerifySystemPointers();
 
-	if(!m_lpCsModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
+	//if(!m_lpCsModule)
+	//	THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);

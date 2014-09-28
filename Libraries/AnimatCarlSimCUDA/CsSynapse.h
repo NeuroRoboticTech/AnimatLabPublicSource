@@ -23,7 +23,7 @@ namespace AnimatCarlSim
 	{
 	protected:
 		/// Pointer to parent CsNeuralModule.
-		CsNeuralModule *m_lpCsModule;
+		//CsNeuralModule *m_lpCsModule;
 
 		/// GUID ID of the pre-synaptic neruon.
 		std::string m_strFromID;
