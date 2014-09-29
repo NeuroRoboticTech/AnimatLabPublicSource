@@ -37,6 +37,7 @@ namespace AnimatCarlSim
 		CStdPtrArray<CsSynapse> m_arySynapses;
 
 		CsNeuron *LoadNeuron(CStdXml &oXml);
+		CsSynapse *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
 
 	public:
@@ -69,6 +70,25 @@ namespace AnimatCarlSim
 		virtual void AddNeuron(std::string strXml, bool bDoNotInit = false);
 		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
 		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
+
+		virtual CStdPtrArray<CsSynapse> *GetSynapses();
+		/**
+		\brief	Adds a synapse to this module. 
+
+		\author	dcofer
+		\date	9/28/2014
+
+		\param [in,out]	lpSynapse	Pointer to the synapse to add. 
+		**/
+		virtual void AddSynapse(CsSynapse *lpSynapse);
+		virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapse(int iIndex);
+		virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+		virtual CsSynapse *GetSynapse(int iIndex);
+		virtual int TotalSynapses();
+		virtual void ClearSynapses();
+		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
+
 	};
 
 }				//FiringRateSim

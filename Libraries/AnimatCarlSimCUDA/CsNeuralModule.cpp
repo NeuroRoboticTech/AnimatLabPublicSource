@@ -173,6 +173,137 @@ void CsNeuralModule::RemoveNeuron(std::string strID, bool bThrowError)
 	int iPos = FindNeuronListPos(strID, bThrowError);
 	m_aryNeurons.RemoveAt(iPos);
 }
+/**
+\brief	Gets a pointer to the synapses array.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Pointer to the synapses.
+**/
+CStdPtrArray<CsSynapse> *CsNeuralModule::GetSynapses()
+{return &m_arySynapses;}
+
+
+void CsNeuralModule::AddSynapse(CsSynapse *lpSynapse)
+{
+	if(!lpSynapse) 
+		THROW_ERROR(Nl_Err_lSynapseToAddNull, Nl_Err_strSynapseToAddNull);
+	m_arySynapses.Add(lpSynapse);
+}
+
+/**
+\brief	Adds a synapse using an xml packet. 
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml of the synapse to add. 
+**/
+void CsNeuralModule::AddSynapse(std::string strXml, bool bDoNotInit)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Synapse");
+
+	CsSynapse *lpSynapse = LoadSynapse(oXml);
+	if(!bDoNotInit)
+		lpSynapse->Initialize();
+}
+
+/**
+\brief	Removes the synapse described by iIndex.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iIndex	Zero-based index of the synapse in the array. 
+**/
+void CsNeuralModule::RemoveSynapse(int iIndex)
+{
+	if( iIndex<0 || iIndex>=m_arySynapses.GetSize() ) 
+		THROW_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex);
+	m_arySynapses.RemoveAt(iIndex);
+}
+
+/**
+\brief	Removes the synapse by the GUID ID.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID for the synapse to remove. 
+\param	bThrowError	true to throw error if synaspe not found. 
+**/
+void CsNeuralModule::RemoveSynapse(std::string strID, bool bThrowError)
+{
+	int iPos = FindSynapseListPos(strID, bThrowError);
+	m_arySynapses.RemoveAt(iPos);
+}
+
+/**
+\brief	Gets a synapse by its index in the array.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iIndex	Zero-based index of the synaspe to return. 
+
+\return	null if it fails, else the synapse.
+**/
+CsSynapse *CsNeuralModule::GetSynapse(int iIndex)
+{
+	if( iIndex<0 || iIndex>=m_arySynapses.GetSize() ) 
+		THROW_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex);
+	return m_arySynapses[iIndex];
+}
+
+/**
+\brief	Searches for a synapse with the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID of the synapse to find. 
+\param	bThrowError	true to throw error if no synapse is found. 
+
+\return	The found synapse list position.
+**/
+int CsNeuralModule::FindSynapseListPos(std::string strID, bool bThrowError)
+{
+	std::string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_arySynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_arySynapses[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Nl_Err_lSynapseNotFound, Nl_Err_strSynapseNotFound, "ID");
+
+	return -1;
+}
+
+/**
+\brief	Gets the total number of synapses.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	The total number of synapses.
+**/
+int CsNeuralModule::TotalSynapses()
+{return m_arySynapses.GetSize();}
+
+/**
+\brief	Clears the synapses list.
+
+\author	dcofer
+\date	3/29/2011
+**/
+void CsNeuralModule::ClearSynapses()
+{m_arySynapses.RemoveAll();}
 
 bool CsNeuralModule::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
@@ -183,7 +314,11 @@ bool CsNeuralModule::AddItem(const std::string &strItemType, const std::string &
 		AddNeuron(strXml, bDoNotInit);
 		return true;
 	}
-	//Synapses are stored in the destination neuron. They will be added there.
+	else if(strType == "SYNAPSE")
+	{
+		AddSynapse(strXml, bDoNotInit);
+		return true;
+	}
 
 
 	//If it was not one of those above then we have a problem.
@@ -202,7 +337,11 @@ bool CsNeuralModule::RemoveItem(const std::string &strItemType, const std::strin
 		RemoveNeuron(strID, bThrowError);
 		return true;
 	}
-	//Synapses are stored in the destination neuron. They will be removed there.
+	else if(strType == "SYNAPSE")
+	{
+		RemoveSynapse(strID, bThrowError);
+		return true;
+	}
 
 
 	//If it was not one of those above then we have a problem.
@@ -219,9 +358,6 @@ void CsNeuralModule::Load(CStdXml &oXml)
 	VerifySystemPointers();
 
 	CStdXml oNetXml;
-
-	//if(Std_IsBlank(m_strProjectPath)) 
-	//	THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
 
 	m_arySourceAdapters.RemoveAll();
 	m_aryTargetAdapters.RemoveAll();
@@ -271,6 +407,23 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 
 	oXml.OutOfElem();
 	//*** End Loading Neurons. *****
+
+	//*** Begin Loading Synapses. *****
+	if(oXml.FindChildElement("Synapses", false))
+	{
+		oXml.IntoElem();  //Into Synapses Element
+
+		int iCount = oXml.NumberOfChildren();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+		{
+			oXml.FindChildByIndex(iIndex);
+			LoadSynapse(oXml);
+		}
+
+		oXml.OutOfElem();
+	}
+	//*** End Loading Synapses. *****
+
 }
 
 /**
@@ -314,6 +467,51 @@ catch(CStdErrorInfo oError)
 catch(...)
 {
 	if(lpNeuron) delete lpNeuron;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+/**
+\brief	Loads a synapse.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the created synapse.
+**/
+CsSynapse *CsNeuralModule::LoadSynapse(CStdXml &oXml)
+{
+	std::string strType;
+	CsSynapse *lpSynapse=NULL;
+
+try
+{
+	oXml.IntoElem();  //Into Synapse Element
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Synapse Element
+
+	lpSynapse = dynamic_cast<CsSynapse *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Synapse", strType));
+	if(!lpSynapse)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
+
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, this, true);
+	lpSynapse->Load(oXml);
+	AddSynapse(lpSynapse);
+
+	return lpSynapse;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpSynapse) delete lpSynapse;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpSynapse) delete lpSynapse;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }

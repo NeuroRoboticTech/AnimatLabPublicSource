@@ -69,7 +69,6 @@ float BistableNeuron::IntrinsicCurrent()
 void BistableNeuron::IntrinsicCurrent(float fltVal)
 {
 	m_fltIntrinsic=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -94,7 +93,6 @@ float BistableNeuron::Il()
 void BistableNeuron::Il(float fltVal)
 {
 	m_fltIl=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -119,7 +117,6 @@ float BistableNeuron::Ih()
 void BistableNeuron::Ih(float fltVal)
 {
 	m_fltIh=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -144,7 +141,6 @@ float BistableNeuron::Vsthi()
 void BistableNeuron::Vsthi(float fltVal)
 {
 	m_fltVsthi=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
