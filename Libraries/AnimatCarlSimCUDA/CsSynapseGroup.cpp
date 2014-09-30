@@ -69,13 +69,19 @@ void CsSynapseGroup::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructur
 
 void CsSynapseGroup::VerifySystemPointers()
 {
-	Link::VerifySystemPointers();
+	AnimatBase::VerifySystemPointers();
 
-	if(!m_lpCsModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
+
+	if(!m_lpModule) 
+		THROW_PARAM_ERROR(Al_Err_lNeuralModuleNotDefined, Al_Err_strNeuralModuleNotDefined, "Link: ", m_strID);
+
+	if(!m_lpCsModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 }
 
 #pragma region DataAccesMethods

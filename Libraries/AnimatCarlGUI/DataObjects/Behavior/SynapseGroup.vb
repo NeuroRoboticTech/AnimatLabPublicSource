@@ -112,18 +112,21 @@ Namespace DataObjects.Behavior
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             'Only save this as a synapse if the origin node is another FastNeuralNet neuron
-            If Not Util.IsTypeOf(Me.Origin.GetType(), GetType(SynapseGroup), False) Then
+            If Not Util.IsTypeOf(Me.Origin.GetType(), GetType(NeuronGroup), False) Then
                 Return
             End If
 
-            Dim fnNeuron As NeuronGroup = DirectCast(Me.Origin, NeuronGroup)
+            Dim fnFrom As NeuronGroup = DirectCast(Me.Origin, NeuronGroup)
+            Dim fnTo As NeuronGroup = DirectCast(Me.Destination, NeuronGroup)
 
             oXml.AddChildElement("Synapse")
             oXml.IntoElem()
 
             oXml.AddChildElement("ID", m_strID)
+            oXml.AddChildElement("Type", "SynapseGroup")
             oXml.AddChildElement("Enabled", m_bEnabled)
-            oXml.AddChildElement("FromID", fnNeuron.ID)
+            oXml.AddChildElement("FromID", fnFrom.ID)
+            oXml.AddChildElement("ToID", fnTo.ID)
 
             oXml.OutOfElem()
 
@@ -131,13 +134,22 @@ Namespace DataObjects.Behavior
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+            'Synpases are stored in the destination neuron object.
+            If Not Me.NeuralModule Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), bThrowError, bDoNotInit)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             'Synpases are stored in the destination neuron object.
-            'If Not Me.Destination Is Nothing AndAlso Not m_doInterface Is Nothing Then
-            '    Util.Application.SimulationInterface.RemoveItem(Me.Destination.ID, "Synapse", Me.ID, bThrowError)
-            '    m_doInterface = Nothing
-            'End If
+            If Not Me.NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "Synapse", Me.ID, bThrowError)
+                m_doInterface = Nothing
+            End If
         End Sub
+
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)

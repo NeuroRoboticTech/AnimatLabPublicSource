@@ -2588,6 +2588,7 @@ void CpuSNN::setupNetwork(int simType, int ithGPU, bool removeTempMem)
     allocateSNN_GPU(ithGPU);
 }
 
+//DWC: Used to determine when to call the spike monitors
 bool CpuSNN::updateTime()
 {
   bool finishedOneSec = false;
