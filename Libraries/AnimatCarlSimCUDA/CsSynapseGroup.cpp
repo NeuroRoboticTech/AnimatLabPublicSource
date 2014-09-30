@@ -6,8 +6,8 @@
 
 #include "StdAfx.h"
 
-#include "CsSynapse.h"
-#include "CsNeuron.h"
+#include "CsSynapseGroup.h"
+#include "CsNeuronGroup.h"
 #include "CsNeuralModule.h"
 
 namespace AnimatCarlSim
@@ -19,9 +19,9 @@ namespace AnimatCarlSim
 \author	dcofer
 \date	3/29/2011
 **/
-CsSynapse::CsSynapse()
+CsSynapseGroup::CsSynapseGroup()
 {
-	//m_lpCsModule = NULL;
+	m_lpCsModule = NULL;
 
 	m_lpFromNeuron = NULL;
 	m_lpToNeuron = NULL;
@@ -35,7 +35,7 @@ CsSynapse::CsSynapse()
 \author	dcofer
 \date	3/29/2011
 **/
-CsSynapse::~CsSynapse()
+CsSynapseGroup::~CsSynapseGroup()
 {
 
 try
@@ -45,30 +45,34 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, false, true);}
 }
 
-void CsSynapse::Initialize()
+void CsSynapseGroup::Initialize()
 {
 	Link::Initialize();
 
-	m_lpFromNeuron = dynamic_cast<CsNeuron *>(m_lpSim->FindByID(m_strFromID));
+	m_lpFromNeuron = dynamic_cast<CsNeuronGroup *>(m_lpSim->FindByID(m_strFromID));
 	if(!m_lpFromNeuron)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strFromID);
+
+	m_lpToNeuron = dynamic_cast<CsNeuronGroup *>(m_lpSim->FindByID(m_strToID));
+	if(!m_lpToNeuron)
+		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strToID);
 }
 
-void CsSynapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
+void CsSynapseGroup::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, false);
 
-	//m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
+	m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
 
-void CsSynapse::VerifySystemPointers()
+void CsSynapseGroup::VerifySystemPointers()
 {
 	Link::VerifySystemPointers();
 
-	//if(!m_lpCsModule)
-	//	THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
+	if(!m_lpCsModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
@@ -76,7 +80,7 @@ void CsSynapse::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-bool CsSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+bool CsSynapseGroup::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 		
@@ -96,7 +100,7 @@ bool CsSynapse::SetData(const std::string &strDataType, const std::string &strVa
 	return false;
 }
 
-void CsSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+void CsSynapseGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Link::QueryProperties(aryProperties);
 
@@ -104,19 +108,19 @@ void CsSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 #pragma endregion
 
-void CsSynapse::Load(CStdXml &oXml)
+void CsSynapseGroup::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
-
-	m_lpToNeuron = dynamic_cast<CsNeuron *>(m_lpNode);
-	if(!m_lpToNeuron)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNodeToDesiredType, Al_Err_strUnableToCastNodeToDesiredType, "ID: ", m_lpNode->ID());
 
 	oXml.IntoElem();  //Into Synapse Element
 
 	m_strFromID = oXml.GetChildString("FromID");
 	if(Std_IsBlank(m_strFromID)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: FromID");
+
+	m_strToID = oXml.GetChildString("ToID");
+	if(Std_IsBlank(m_strToID)) 
+		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: ToID");
 
 	oXml.OutOfElem(); //OutOf Synapse Element
 }

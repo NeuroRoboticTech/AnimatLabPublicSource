@@ -19,24 +19,27 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsSynapse : public AnimatSim::Link   
+	class ANIMAT_CARL_SIM_PORT CsSynapseGroup : public AnimatSim::Link   
 	{
 	protected:
 		/// Pointer to parent CsNeuralModule.
-		//CsNeuralModule *m_lpCsModule;
+		CsNeuralModule *m_lpCsModule;
 
 		/// GUID ID of the pre-synaptic neruon.
 		std::string m_strFromID;
 
+		/// GUID ID of the pre-synaptic neruon.
+		std::string m_strToID;
+
 		/// The pointer to pre-synaptic neuron
-		CsNeuron *m_lpFromNeuron;
+		CsNeuronGroup *m_lpFromNeuron;
 
 		/// The pointer to post-synaptic neuron
-		CsNeuron *m_lpToNeuron;
+		CsNeuronGroup *m_lpToNeuron;
 
 	public:
-		CsSynapse();
-		virtual ~CsSynapse();
+		CsSynapseGroup();
+		virtual ~CsSynapseGroup();
 
 		/**
 		\brief	Gets the pre-synaptic neuron.
@@ -46,7 +49,7 @@ namespace AnimatCarlSim
 			
 		\return	Pointer to the neuron.
 		**/
-		CsNeuron *FromNeuron() {return m_lpFromNeuron;};
+		CsNeuronGroup *FromNeuron() {return m_lpFromNeuron;};
 
 #pragma region DataAccesMethods
 		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

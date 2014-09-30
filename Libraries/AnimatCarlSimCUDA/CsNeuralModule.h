@@ -31,13 +31,13 @@ namespace AnimatCarlSim
 	{
 	protected:
 		/// The array of neurons in this module.
-		CStdPtrArray<CsNeuron> m_aryNeurons;
+		CStdPtrArray<CsNeuronGroup> m_aryNeurons;
 
 		/// The array of synapses in this module.
-		CStdPtrArray<CsSynapse> m_arySynapses;
+		CStdPtrArray<CsSynapseGroup> m_arySynapses;
 
-		CsNeuron *LoadNeuron(CStdXml &oXml);
-		CsSynapse *LoadSynapse(CStdXml &oXml);
+		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
+		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
 
 	public:
@@ -71,7 +71,7 @@ namespace AnimatCarlSim
 		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
 		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
 
-		virtual CStdPtrArray<CsSynapse> *GetSynapses();
+		virtual CStdPtrArray<CsSynapseGroup> *GetSynapses();
 		/**
 		\brief	Adds a synapse to this module. 
 
@@ -80,11 +80,11 @@ namespace AnimatCarlSim
 
 		\param [in,out]	lpSynapse	Pointer to the synapse to add. 
 		**/
-		virtual void AddSynapse(CsSynapse *lpSynapse);
+		virtual void AddSynapse(CsSynapseGroup *lpSynapse);
 		virtual void AddSynapse(std::string strXml, bool bDoNotInit);
 		virtual void RemoveSynapse(int iIndex);
 		virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
-		virtual CsSynapse *GetSynapse(int iIndex);
+		virtual CsSynapseGroup *GetSynapse(int iIndex);
 		virtual int TotalSynapses();
 		virtual void ClearSynapses();
 		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);

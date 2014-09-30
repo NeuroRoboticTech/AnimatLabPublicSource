@@ -6,8 +6,8 @@
 
 #include "StdAfx.h"
 
-#include "CsSynapse.h"
-#include "CsNeuron.h"
+#include "CsSynapseGroup.h"
+#include "CsNeuronGroup.h"
 #include "CsNeuralModule.h"
 
 namespace AnimatCarlSim
@@ -19,9 +19,9 @@ namespace AnimatCarlSim
 \author	dcofer
 \date	3/29/2011
 **/
-CsNeuron::CsNeuron()
+CsNeuronGroup::CsNeuronGroup()
 {
-	//m_lpCsModule = NULL;
+	m_lpCsModule = NULL;
 
 	m_bEnabled = true;
 }
@@ -32,14 +32,14 @@ CsNeuron::CsNeuron()
 \author	dcofer
 \date	3/29/2011
 **/
-CsNeuron::~CsNeuron()
+CsNeuronGroup::~CsNeuronGroup()
 {
 
 try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CsNeuron\r\n", "", -1, false, true);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CsNeuronGroup\r\n", "", -1, false, true);}
 }
 
 ///**
@@ -50,7 +50,7 @@ catch(...)
 //
 //\return	membrane capacitance.
 //**/
-//float CsNeuron::Cn()
+//float CsNeuronGroup::Cn()
 //{return m_fltCn;}
 //
 ///**
@@ -61,7 +61,7 @@ catch(...)
 //
 //\param	fltVal	The new value. 
 //**/
-//void CsNeuron::Cn(float fltVal)
+//void CsNeuronGroup::Cn(float fltVal)
 //{
 //	Std_IsAboveMin((float) 0, fltVal, true, "Cn");
 //
@@ -71,55 +71,55 @@ catch(...)
 //}
 
 ///**
-//\brief	Gets the CsNeuron type.
+//\brief	Gets the CsNeuronGroup type.
 //
 //\author	dcofer
 //\date	3/29/2011
 //
-//\return	CsNeuron type.
+//\return	CsNeuronGroup type.
 //**/
-//unsigned char CsNeuron::CsNeuronType()
-//{return RUGULAR_CsNeuron;}
+//unsigned char CsNeuronGroup::CsNeuronGroupType()
+//{return RUGULAR_CsNeuronGroup;}
 
-void CsNeuron::Copy(CStdSerialize *lpSource)
+void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 {
 	Node::Copy(lpSource);
 
-	CsNeuron *lpOrig = dynamic_cast<CsNeuron *>(lpSource);
+	CsNeuronGroup *lpOrig = dynamic_cast<CsNeuronGroup *>(lpSource);
 
-	//m_lpCsModule = lpOrig->m_lpCsModule;
+	m_lpCsModule = lpOrig->m_lpCsModule;
 }
 
 
-void CsNeuron::Initialize()
+void CsNeuronGroup::Initialize()
 {
 	Node::Initialize();
 }
 
-void CsNeuron::StepSimulation()
+void CsNeuronGroup::StepSimulation()
 {
 
 }
 
-void CsNeuron::AddExternalNodeInput(int iTargetDataType, float fltInput)
+void CsNeuronGroup::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 }
 
-void CsNeuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
+void CsNeuronGroup::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
-	//m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
+	m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
 
-void CsNeuron::VerifySystemPointers()
+void CsNeuronGroup::VerifySystemPointers()
 {
 	Node::VerifySystemPointers();
 
-	//if(!m_lpCsModule)
-	//	THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
+	if(!m_lpCsModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
@@ -127,7 +127,7 @@ void CsNeuron::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-bool CsNeuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 	
@@ -147,7 +147,7 @@ bool CsNeuron::SetData(const std::string &strDataType, const std::string &strVal
 	return false;
 }
 
-void CsNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	Node::QueryProperties(aryProperties);
 
@@ -155,7 +155,7 @@ void CsNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 #pragma endregion
 
-void CsNeuron::Load(CStdXml &oXml)
+void CsNeuronGroup::Load(CStdXml &oXml)
 {
 	Node::Load(oXml);
 

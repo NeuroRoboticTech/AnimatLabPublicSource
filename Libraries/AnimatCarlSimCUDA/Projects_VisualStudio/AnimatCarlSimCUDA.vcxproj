@@ -23,8 +23,8 @@
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
     <ClInclude Include="..\config.h" />
-    <ClInclude Include="..\CsNeuron.h" />
-    <ClInclude Include="..\CsSynapse.h" />
+    <ClInclude Include="..\CsNeuronGroup.h" />
+    <ClInclude Include="..\CsSynapseGroup.h" />
     <ClInclude Include="..\CUDAVersionControl.h" />
     <ClInclude Include="..\errorCode.h" />
     <ClInclude Include="..\gpu.h" />
@@ -43,8 +43,8 @@
     <ClCompile Include="..\CarlSim.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
-    <ClCompile Include="..\CsNeuron.cpp" />
-    <ClCompile Include="..\CsSynapse.cpp" />
+    <ClCompile Include="..\CsNeuronGroup.cpp" />
+    <ClCompile Include="..\CsSynapseGroup.cpp" />
     <ClCompile Include="..\mtrand.cpp" />
     <ClCompile Include="..\printSNNInfo.cpp" />
     <ClCompile Include="..\PropagatedSpikeBuffer.cpp" />

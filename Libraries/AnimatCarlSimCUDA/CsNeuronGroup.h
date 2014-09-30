@@ -1,7 +1,7 @@
 /**
-\file	CsNeuron.h
+\file	CsNeuronGroup.h
 
-\brief	Declares the CsNeuron class.
+\brief	Declares the CsNeuronGroup class.
 **/
 
 #pragma once
@@ -25,15 +25,15 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuron : public AnimatSim::Node   
+	class ANIMAT_CARL_SIM_PORT CsNeuronGroup : public AnimatSim::Node   
 	{
 	protected:
 		/// Pointer to parent CsNeuralModule.
-		//CsNeuralModule *m_lpCsModule;
+		CsNeuralModule *m_lpCsModule;
 					
 	public:
-		CsNeuron();
-		virtual ~CsNeuron();
+		CsNeuronGroup();
+		virtual ~CsNeuronGroup();
 		
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);

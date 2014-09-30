@@ -7,8 +7,8 @@
 #include "StdAfx.h"
 
 #include "CsNeuralModule.h"
-#include "CsNeuron.h"
-#include "CsSynapse.h"
+#include "CsNeuronGroup.h"
+#include "CsSynapseGroup.h"
 #include "CsClassFactory.h"
 
 namespace AnimatCarlSim
@@ -36,16 +36,16 @@ CsClassFactory::~CsClassFactory()
 
 }
 
-CsNeuron *CsClassFactory::CreateNeuron(std::string strType, bool bThrowError)
+CsNeuronGroup *CsClassFactory::CreateNeuron(std::string strType, bool bThrowError)
 {
-	CsNeuron *lpNeuron=NULL;
+	CsNeuronGroup *lpNeuron=NULL;
 
 try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REGULAR")
-		lpNeuron = new CsNeuron;
+	if(strType == "NEURONGROUP")
+		lpNeuron = new CsNeuronGroup;
 	else 
 	{
 		lpNeuron = NULL;
@@ -76,16 +76,16 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-CsSynapse *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
+CsSynapseGroup *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
 {
-	CsSynapse *lpSynapse=NULL;
+	CsSynapseGroup *lpSynapse=NULL;
 
 try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REGULAR")
-		lpSynapse = new CsSynapse;
+	if(strType == "SYNAPSEGROUP")
+		lpSynapse = new CsSynapseGroup;
 	else
 	{
 		lpSynapse = NULL;

@@ -6,8 +6,8 @@
 
 #include "StdAfx.h"
 
-#include "CsNeuron.h"
-#include "CsSynapse.h"
+#include "CsNeuronGroup.h"
+#include "CsSynapseGroup.h"
 #include "CsNeuralModule.h"
 #include "CsClassFactory.h"
 
@@ -154,7 +154,7 @@ void CsNeuralModule::AddNeuron(std::string strXml, bool bDoNotInit)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Neuron");
 
-	CsNeuron *lpNeuron = LoadNeuron(oXml);
+	CsNeuronGroup *lpNeuron = LoadNeuron(oXml);
 	if(!bDoNotInit)
 		lpNeuron->Initialize();
 }
@@ -181,14 +181,14 @@ void CsNeuralModule::RemoveNeuron(std::string strID, bool bThrowError)
 
 \return	Pointer to the synapses.
 **/
-CStdPtrArray<CsSynapse> *CsNeuralModule::GetSynapses()
+CStdPtrArray<CsSynapseGroup> *CsNeuralModule::GetSynapses()
 {return &m_arySynapses;}
 
 
-void CsNeuralModule::AddSynapse(CsSynapse *lpSynapse)
+void CsNeuralModule::AddSynapse(CsSynapseGroup *lpSynapse)
 {
 	if(!lpSynapse) 
-		THROW_ERROR(Nl_Err_lSynapseToAddNull, Nl_Err_strSynapseToAddNull);
+		THROW_ERROR(Cs_Err_lSynapseToAddNull, Cs_Err_strSynapseToAddNull);
 	m_arySynapses.Add(lpSynapse);
 }
 
@@ -207,7 +207,7 @@ void CsNeuralModule::AddSynapse(std::string strXml, bool bDoNotInit)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Synapse");
 
-	CsSynapse *lpSynapse = LoadSynapse(oXml);
+	CsSynapseGroup *lpSynapse = LoadSynapse(oXml);
 	if(!bDoNotInit)
 		lpSynapse->Initialize();
 }
@@ -252,7 +252,7 @@ void CsNeuralModule::RemoveSynapse(std::string strID, bool bThrowError)
 
 \return	null if it fails, else the synapse.
 **/
-CsSynapse *CsNeuralModule::GetSynapse(int iIndex)
+CsSynapseGroup *CsNeuralModule::GetSynapse(int iIndex)
 {
 	if( iIndex<0 || iIndex>=m_arySynapses.GetSize() ) 
 		THROW_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex);
@@ -280,7 +280,7 @@ int CsNeuralModule::FindSynapseListPos(std::string strID, bool bThrowError)
 			return iIndex;
 
 	if(bThrowError)
-		THROW_TEXT_ERROR(Nl_Err_lSynapseNotFound, Nl_Err_strSynapseNotFound, "ID");
+		THROW_TEXT_ERROR(Cs_Err_lSynapseNotFound, Cs_Err_strSynapseNotFound, "ID");
 
 	return -1;
 }
@@ -436,9 +436,9 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 
 \return	Pointer to the loaded neuron.
 **/
-CsNeuron *CsNeuralModule::LoadNeuron(CStdXml &oXml)
+CsNeuronGroup *CsNeuralModule::LoadNeuron(CStdXml &oXml)
 {
-	CsNeuron *lpNeuron=NULL;
+	CsNeuronGroup *lpNeuron=NULL;
 	std::string strType;
 
 try
@@ -448,7 +448,7 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Neuron Element
 
-	lpNeuron = dynamic_cast<CsNeuron *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Neuron", strType));
+	lpNeuron = dynamic_cast<CsNeuronGroup *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Neuron", strType));
 	if(!lpNeuron)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Neuron");
 
@@ -482,10 +482,10 @@ catch(...)
 
 \return	Pointer to the created synapse.
 **/
-CsSynapse *CsNeuralModule::LoadSynapse(CStdXml &oXml)
+CsSynapseGroup *CsNeuralModule::LoadSynapse(CStdXml &oXml)
 {
 	std::string strType;
-	CsSynapse *lpSynapse=NULL;
+	CsSynapseGroup *lpSynapse=NULL;
 
 try
 {
@@ -493,11 +493,11 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Synapse Element
 
-	lpSynapse = dynamic_cast<CsSynapse *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Synapse", strType));
+	lpSynapse = dynamic_cast<CsSynapseGroup *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Synapse", strType));
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, this, true);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
 	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
 
