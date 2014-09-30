@@ -117,8 +117,9 @@
       <AdditionalLibraryDirectories>../../../lib;../../../../3rdParty/boost_1_54_0/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+      <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"
+Copy $(OutDir)AnimatCarlSimCUDA_vc10D.lib ..\..\..\lib\AnimatCarlSimCUDA_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CodeGeneration>compute_20,sm_20</CodeGeneration>
@@ -159,8 +160,9 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+      <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"
+Copy $(OutDir)AnimatCarlSimCUDA_vc10.lib ..\..\..\lib\AnimatCarlSimCUDA_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

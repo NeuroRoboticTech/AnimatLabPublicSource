@@ -37,8 +37,8 @@ Namespace DataObjects.Behavior
         Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
 
-            m_strModuleName = "FiringRateSim"
-            m_strModuleType = "FiringRateSimModule"
+            m_strModuleName = "AnimatCarlSimCUDA"
+            m_strModuleType = "CarlSimNeuralModule"
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

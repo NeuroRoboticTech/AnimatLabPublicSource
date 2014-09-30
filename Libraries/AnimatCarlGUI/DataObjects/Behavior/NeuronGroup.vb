@@ -34,7 +34,7 @@ Namespace DataObjects.Behavior
 
         Public Overridable ReadOnly Property NeuronType() As String
             Get
-                Return "Regular"
+                Return "NeuronGroup"
             End Get
         End Property
 
@@ -71,7 +71,7 @@ Namespace DataObjects.Behavior
                 myAssembly = System.Reflection.Assembly.Load("AnimatCarlGUI")
 
                 Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatCarlGUI.NormalNeuron.gif", False)
-                Me.Name = "Firing Rate Neuron"
+                Me.Name = "Neuron Group"
 
                 Me.Font = New Font("Arial", 14, FontStyle.Bold)
                 Me.Description = "A group of Izhikevich spiking neurons."
