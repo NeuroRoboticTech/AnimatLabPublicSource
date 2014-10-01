@@ -22,6 +22,8 @@ namespace AnimatCarlSim
 CsNeuralModule::CsNeuralModule()
 {
 	m_lpClassFactory =  new AnimatCarlSim::CsClassFactory;
+	m_lpSNN = NULL;
+	m_iSimMode = GPU_MODE;
 }
 
 /**
@@ -43,6 +45,16 @@ catch(...)
 }
 
 std::string CsNeuralModule::ModuleName() {return "AnimatCarlSimCUDA";};
+
+void CsNeuralModule::SimMode(int iMode)
+{
+	if(!iMode)
+		m_iSimMode = CPU_MODE;
+	else
+		m_iSimMode = GPU_MODE;
+}
+
+int CsNeuralModule::SimMode() {return m_iSimMode;}
 
 void CsNeuralModule::Kill(bool bState)
 {
@@ -76,6 +88,66 @@ int CsNeuralModule::FindNeuronListPos(std::string strID, bool bThrowError)
 		THROW_TEXT_ERROR(Cs_Err_lNeuronNotFound, Cs_Err_strNeuronNotFound, "ID");
 
 	return -1;
+}
+
+void CsNeuralModule::SetCARLSimulation()
+{
+	if(m_lpSNN)
+	{
+		delete m_lpSNN;
+		m_lpSNN = NULL;
+	}
+
+	m_lpSNN = new CpuSNN(m_strID.c_str());
+
+	//Go through each of the neuron group items and set them up
+	int iCount = m_aryNeurons.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryNeurons[iIndex])
+			m_aryNeurons[iIndex]->SetCARLSimulation();
+
+	//Then go through each of the connections and set them up
+	iCount = m_arySynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_arySynapses[iIndex])
+			m_arySynapses[iIndex]->SetCARLSimulation();
+
+	//Initalize the network
+	m_lpSNN->runNetwork(0, 0, GPU_MODE);
+}
+
+void CsNeuralModule::StepThread()
+{
+}
+
+void CsNeuralModule::CloseThread()
+{
+}
+
+/**
+\brief	When the simulation is starting we need to configure our NN and start our processing thread.
+
+\discussion When the simulation starts we need to re-run our configuration to setup the neural network in CARLsim and 
+then start our processing loop. 
+
+\author	dcofer
+\date	10/1/2014
+**/
+void CsNeuralModule::SimStarting()
+{
+	SetCARLSimulation();
+	StartThread();
+}
+
+/**
+\brief	When the simulation ends we need to shutdown our processing thread and exit CARLsim.
+
+\author	dcofer
+\date	10/1/2014
+**/
+void CsNeuralModule::SimStopping()
+{
+	ShutdownThread();
 }
 
 void CsNeuralModule::ResetSimulation()
@@ -122,6 +194,12 @@ bool CsNeuralModule::SetData(const std::string &strDataType, const std::string &
 	if(strType == "TIMESTEP")
 	{
 		TimeStep(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "SIMMODE")
+	{
+		SimMode(atoi(strValue.c_str()));
 		return true;
 	}
 
@@ -351,6 +429,7 @@ bool CsNeuralModule::RemoveItem(const std::string &strItemType, const std::strin
 	return false;
 }
 
+
 #pragma endregion
 
 void CsNeuralModule::Load(CStdXml &oXml)
@@ -518,14 +597,4 @@ catch(...)
 }
 
 }				//AnimatCarlSim
-
-#ifdef WIN32
-extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
-#else
-extern "C" IStdClassFactory* GetStdClassFactory() 
-#endif
-{
-	IStdClassFactory *lpFactory = new CsClassFactory;
-	return lpFactory;
-}
 

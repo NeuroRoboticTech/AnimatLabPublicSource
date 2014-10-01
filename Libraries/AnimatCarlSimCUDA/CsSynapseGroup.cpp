@@ -45,6 +45,10 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, false, true);}
 }
 
+void CsSynapseGroup::SetCARLSimulation()
+{
+}
+
 void CsSynapseGroup::Initialize()
 {
 	Link::Initialize();

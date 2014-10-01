@@ -30,11 +30,80 @@ namespace AnimatCarlSim
 	protected:
 		/// Pointer to parent CsNeuralModule.
 		CsNeuralModule *m_lpCsModule;
+
+		///The number of neurons in this group
+		unsigned int m_uiNeuronCount;
+
+		//The type of these neurons. Either EXCITATORY_NEURON or INHIBITORY_NEURON
+		int m_iNeuronType;
+
+		///The group ID of this set of neurons
+		int m_iGroupID;
+
+		///The Izhikevich A parameter
+		float m_fltA;
+
+		///The standard deviation for Izhikevich parameter A
+		float m_fltStdA;
+
+		///The Izhikevich B parameter
+		float m_fltB;
+
+		///The standard deviation for Izhikevich parameter B
+		float m_fltStdB;
+
+		///The Izhikevich C parameter
+		float m_fltC;
+
+		///The standard deviation for Izhikevich parameter C
+		float m_fltStdC;
+
+		///The Izhikevich D parameter
+		float m_fltD;
+
+		///The standard deviation for Izhikevich parameter D
+		float m_fltStdD;
+		
 					
 	public:
 		CsNeuronGroup();
 		virtual ~CsNeuronGroup();
-		
+
+		virtual void SetCARLSimulation();
+
+		virtual void NeuronCount(unsigned int iVal);
+		virtual unsigned int NeuronCount();
+
+		virtual void NeuronType(int iVal);
+		virtual int NeuronType();
+
+		virtual void GroupID(int iVal);
+		virtual int GroupID();
+
+		virtual void A(float fltVal);
+		virtual int A();
+
+		virtual void StdA(float fltVal);
+		virtual int StdA();
+
+		virtual void B(float fltVal);
+		virtual int B();
+
+		virtual void StdB(float fltVal);
+		virtual int StdB();
+
+		virtual void C(float fltVal);
+		virtual int C();
+
+		virtual void StdC(float fltVal);
+		virtual int StdC();
+
+		virtual void D(float fltVal);
+		virtual int D();
+
+		virtual void StdD(float fltVal);
+		virtual int StdD();
+
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);
 

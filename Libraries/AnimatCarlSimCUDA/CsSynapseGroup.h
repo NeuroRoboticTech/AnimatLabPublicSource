@@ -51,6 +51,8 @@ namespace AnimatCarlSim
 		**/
 		CsNeuronGroup *FromNeuron() {return m_lpFromNeuron;};
 
+		virtual void SetCARLSimulation();
+
 #pragma region DataAccesMethods
 		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);

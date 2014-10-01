@@ -327,6 +327,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     <ClInclude Include="..\Stomach.h" />
     <ClInclude Include="..\Structure.h" />
     <ClInclude Include="..\Terrain.h" />
+    <ClInclude Include="..\ThreadedModule.h" />
     <ClInclude Include="..\ThreadProcessor.h" />
     <ClInclude Include="..\Torus.h" />
     <ClInclude Include="..\TypeProperty.h" />
@@ -538,6 +539,7 @@ Copy $(TargetPath) ..\..\..\bin</Command>
     </ClCompile>
     <ClCompile Include="..\Terrrain.cpp">
     </ClCompile>
+    <ClCompile Include="..\ThreadedModule.cpp" />
     <ClCompile Include="..\ThreadProcessor.cpp">
     </ClCompile>
     <ClCompile Include="..\Torus.cpp">

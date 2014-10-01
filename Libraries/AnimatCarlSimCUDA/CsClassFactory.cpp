@@ -178,3 +178,13 @@ CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::strin
 // ************* IStdCsClassFactory functions ******************************
 
 }				//AnimatCarlSim
+
+#ifdef WIN32
+extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
+{
+	IStdClassFactory *lpFactory = new CsClassFactory;
+	return lpFactory;
+}

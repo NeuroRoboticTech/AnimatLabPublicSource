@@ -5,6 +5,7 @@
 **/
 
 #pragma once
+#include "snn.h"
 
 /**
 \brief	Contains all of the classes that imlement the firing rate neural model.
@@ -27,7 +28,7 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::NeuralModule  
+	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::ThreadedModule  
 	{
 	protected:
 		/// The array of neurons in this module.
@@ -36,9 +37,20 @@ namespace AnimatCarlSim
 		/// The array of synapses in this module.
 		CStdPtrArray<CsSynapseGroup> m_arySynapses;
 
+		///Pointer to the CARLsim simulator
+		CpuSNN *m_lpSNN;
+
+		///The mode of the simulation. GPU vs CPU
+		int m_iSimMode;
+
 		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
+
+		virtual void StepThread();
+		virtual void CloseThread();
+
+		virtual void SetCARLSimulation();
 
 	public:
 		CsNeuralModule();
@@ -53,6 +65,11 @@ namespace AnimatCarlSim
 		\return	.
 		**/
 		virtual std::string ModuleName();
+
+		virtual CpuSNN *SNN() {return m_lpSNN;};
+
+		virtual void SimMode(int iMode);
+		virtual int SimMode();
 
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
@@ -89,6 +106,8 @@ namespace AnimatCarlSim
 		virtual void ClearSynapses();
 		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
+		virtual void SimStarting();
+		virtual void SimStopping();
 	};
 
 }				//FiringRateSim
