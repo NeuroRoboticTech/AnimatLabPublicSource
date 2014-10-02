@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="/home/odroid/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/RoboticsAnimatSim/Robotics_UnitTests/TestResources/BasicHingeTest/BasicHingeTest_Linux_Debug.asim" />
+				<Option parameters="/home/ubuntu/AnimatLabSDK/AnimatLabPrivateSource/Experiment/RobotArmTestRig/RobotArm_Firmata/RobotArm_Standalone_Linux_Debug.asim" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
