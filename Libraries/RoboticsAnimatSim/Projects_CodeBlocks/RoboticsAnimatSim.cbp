@@ -182,13 +182,10 @@
 		<Unit filename="../RbCylinder.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbDynamixelServo.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbDynamixelUSB.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../RbDynamixelUSBHinge.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../RbDynamixelUSBPrismatic.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbDynamixelUSBServo.h">
@@ -210,6 +207,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFirmataDigitalOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDynamixelServo.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFirmataHingeServo.h">
@@ -299,6 +299,9 @@
 		<Unit filename="../RbUniversal.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbXBeeCommander.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdAfx.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -329,13 +332,10 @@
 		<Unit filename="../RbCylinder.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../RbDynamixelServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbDynamixelUSB.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../RbDynamixelUSBHinge.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../RbDynamixelUSBPrismatic.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbDynamixelUSBServo.cpp">
@@ -357,6 +357,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFirmataDigitalOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDynamixelServo.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbFirmataHingeServo.cpp">
@@ -444,6 +447,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbUniversal.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbXBeeCommander.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RoboticsAnimatSim.cpp">

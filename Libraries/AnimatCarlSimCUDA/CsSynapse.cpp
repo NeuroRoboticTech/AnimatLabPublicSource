@@ -21,7 +21,7 @@ namespace AnimatCarlSim
 **/
 CsSynapse::CsSynapse()
 {
-	m_lpCsModule = NULL;
+	//m_lpCsModule = NULL;
 
 	m_lpFromNeuron = NULL;
 	m_lpToNeuron = NULL;
@@ -58,7 +58,7 @@ void CsSynapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, Ne
 {
 	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, false);
 
-	m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
+	//m_lpCsModule = dynamic_cast<CsNeuralModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
@@ -67,8 +67,8 @@ void CsSynapse::VerifySystemPointers()
 {
 	Link::VerifySystemPointers();
 
-	if(!m_lpCsModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
+	//if(!m_lpCsModule)
+	//	THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
