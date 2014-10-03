@@ -7,6 +7,11 @@
 #pragma once
 #include "snn.h"
 
+#include "CsNeuronGroup.h"
+#include "CsSynapseGroup.h"
+#include "CsSynapseIndividual.h"
+#include "CsConnectionGenerator.h"
+
 /**
 \brief	Contains all of the classes that imlement the firing rate neural model.
 **/
@@ -36,6 +41,10 @@ namespace AnimatCarlSim
 
 		/// The array of synapses in this module.
 		CStdPtrArray<CsSynapseGroup> m_arySynapses;
+
+		/// This is a list of connection generators for building individual 
+		///connections between populations of neurons.
+		CStdPtrMap<std::string, CsConnectionGenerator> m_aryGenerators;
 
 		///Pointer to the CARLsim simulator
 		CpuSNN *m_lpSNN;
@@ -71,6 +80,9 @@ namespace AnimatCarlSim
 		virtual void SimMode(int iMode);
 		virtual int SimMode();
 
+		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
+		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);
+		
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
 		virtual void ResetSimulation();

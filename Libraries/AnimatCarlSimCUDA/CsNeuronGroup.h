@@ -64,6 +64,21 @@ namespace AnimatCarlSim
 		///The standard deviation for Izhikevich parameter D
 		float m_fltStdD;
 		
+		///Enables or disables conductance based neuron modelling.
+		///If false the neurons in this group will use current based modelling.
+		bool m_bEnableCOBA;
+
+		///Time constant of AMPA decay (ms); for example, 5.0 
+		float m_fltT_AMPA;
+
+		///Time constant of NMDA decay (ms); for example, 150.0 
+		float m_fltT_NMDA;
+
+		///Time constant of GABAa decay (ms); for example, 6.0  
+		float m_fltT_GABAa;
+
+		///Time constant of GABAb decay (ms); for example, 150.0
+		float m_fltT_GABAb;
 					
 	public:
 		CsNeuronGroup();
@@ -81,28 +96,43 @@ namespace AnimatCarlSim
 		virtual int GroupID();
 
 		virtual void A(float fltVal);
-		virtual int A();
+		virtual float A();
 
 		virtual void StdA(float fltVal);
-		virtual int StdA();
+		virtual float StdA();
 
 		virtual void B(float fltVal);
-		virtual int B();
+		virtual float B();
 
 		virtual void StdB(float fltVal);
-		virtual int StdB();
+		virtual float StdB();
 
 		virtual void C(float fltVal);
-		virtual int C();
+		virtual float C();
 
 		virtual void StdC(float fltVal);
-		virtual int StdC();
+		virtual float StdC();
 
 		virtual void D(float fltVal);
-		virtual int D();
+		virtual float D();
 
 		virtual void StdD(float fltVal);
-		virtual int StdD();
+		virtual float StdD();
+
+		virtual void EnableCOBA(bool bVal);
+		virtual bool EnableCOBA();
+
+		virtual void T_AMPA(float fltVal);
+		virtual float T_AMPA();
+
+		virtual void T_NMDA(float fltVal);
+		virtual float T_NMDA();
+
+		virtual void T_GABAa(float fltVal);
+		virtual float T_GABAa();
+
+		virtual void T_GABAb(float fltVal);
+		virtual float T_GABAb();
 
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);

@@ -77,7 +77,7 @@ Namespace DataObjects.Behavior
                 Me.Description = "A group of Izhikevich spiking neurons."
 
                 AddCompatibleLink(New AnimatGUI.DataObjects.Behavior.Links.Adapter(Nothing))
-                AddCompatibleLink(New SynapseGroup(Nothing))
+                AddCompatibleLink(New SynapseTypes.OneToOneSynapse(Nothing))
 
                 'Lets add the data types that this node understands.
                 'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IntrinsicCurrent", "Intrinsic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))

@@ -9,6 +9,10 @@
 #include "CsNeuralModule.h"
 #include "CsNeuronGroup.h"
 #include "CsSynapseGroup.h"
+#include "CsSynapseOneToOne.h"
+#include "CsSynapseFull.h"
+#include "CsSynapseRandom.h"
+#include "CsSynapseIndividual.h"
 #include "CsClassFactory.h"
 
 namespace AnimatCarlSim
@@ -84,8 +88,14 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "SYNAPSEGROUP")
-		lpSynapse = new CsSynapseGroup;
+	if(strType == "ONETOONESYNAPSE")
+		lpSynapse = new CsSynapseOneToOne;
+	else if(strType == "FULLSYNAPSE")
+		lpSynapse = new CsSynapseFull;
+	else if(strType == "RANDOMSYNAPSE")
+		lpSynapse = new CsSynapseRandom;
+	else if(strType == "INDIVIDUALSYNAPSE")
+		lpSynapse = new CsSynapseIndividual;
 	else
 	{
 		lpSynapse = NULL;

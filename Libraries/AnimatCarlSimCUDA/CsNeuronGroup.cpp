@@ -37,6 +37,12 @@ CsNeuronGroup::CsNeuronGroup()
 	m_fltStdC = 0;
 	m_fltD = 8.0f;
 	m_fltStdD = 0;
+
+	m_bEnableCOBA = true;
+	m_fltT_AMPA = 5;
+	m_fltT_NMDA = 150;
+	m_fltT_GABAa = 6;
+	m_fltT_GABAb = 150;
 }
 
 /**
@@ -85,35 +91,55 @@ int CsNeuronGroup::GroupID() {return m_iGroupID;}
 
 void CsNeuronGroup::A(float fltVal) {m_fltA = fltVal;}
 
-int CsNeuronGroup::A() {return m_fltA;}
+float CsNeuronGroup::A() {return m_fltA;}
 
 void CsNeuronGroup::StdA(float fltVal) {m_fltStdA = fltVal;}
 
-int CsNeuronGroup::StdA() {return m_fltStdA;}
+float CsNeuronGroup::StdA() {return m_fltStdA;}
 
 void CsNeuronGroup::B(float fltVal) {m_fltB = fltVal;}
 
-int CsNeuronGroup::B() {return m_fltB;}
+float CsNeuronGroup::B() {return m_fltB;}
 
 void CsNeuronGroup::StdB(float fltVal) {m_fltStdB = fltVal;}
 
-int CsNeuronGroup::StdB() {return m_fltStdB;}
+float CsNeuronGroup::StdB() {return m_fltStdB;}
 
 void CsNeuronGroup::C(float fltVal) {m_fltC = fltVal;}
 
-int CsNeuronGroup::C() {return m_fltC;}
+float CsNeuronGroup::C() {return m_fltC;}
 
 void CsNeuronGroup::StdC(float fltVal) {m_fltStdC = fltVal;}
 
-int CsNeuronGroup::StdC() {return m_fltStdC;}
+float CsNeuronGroup::StdC() {return m_fltStdC;}
 
 void CsNeuronGroup::D(float fltVal) {m_fltD = fltVal;}
 
-int CsNeuronGroup::D() {return m_fltD;}
+float CsNeuronGroup::D() {return m_fltD;}
 
 void CsNeuronGroup::StdD(float fltVal) {m_fltStdD = fltVal;}
 
-int CsNeuronGroup::StdD() {return m_fltStdD;}
+float CsNeuronGroup::StdD() {return m_fltStdD;}
+
+void CsNeuronGroup::EnableCOBA(bool bVal) {m_bEnableCOBA = bVal;}
+
+bool CsNeuronGroup::EnableCOBA() {return m_bEnableCOBA;}
+
+void CsNeuronGroup::T_AMPA(float fltVal) {m_fltT_AMPA = fltVal;}
+
+float CsNeuronGroup::T_AMPA() {return m_fltT_AMPA;}
+
+void CsNeuronGroup::T_NMDA(float fltVal) {m_fltT_NMDA = fltVal;}
+
+float CsNeuronGroup::T_NMDA() {return m_fltT_NMDA;}
+
+void CsNeuronGroup::T_GABAa(float fltVal) {m_fltT_GABAa = fltVal;}
+
+float CsNeuronGroup::T_GABAa() {return m_fltT_GABAa;}
+
+void CsNeuronGroup::T_GABAb(float fltVal) {m_fltT_GABAb = fltVal;}
+
+float CsNeuronGroup::T_GABAb() {return m_fltT_GABAb;}
 
 void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 {
@@ -126,14 +152,20 @@ void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 	m_iNeuronType  = lpOrig->m_iNeuronType;
 	m_iGroupID  = lpOrig->m_iGroupID;
 
-	m_fltA  = lpOrig->m_fltA;
-	m_fltStdA  = lpOrig->m_fltStdA;
-	m_fltB  = lpOrig->m_fltB;
-	m_fltStdB  = lpOrig->m_fltStdB;
-	m_fltC  = lpOrig->m_fltC;
-	m_fltStdC  = lpOrig->m_fltStdC;
-	m_fltD  = lpOrig->m_fltD;
-	m_fltStdD  = lpOrig->m_fltStdD;
+	m_fltA = lpOrig->m_fltA;
+	m_fltStdA = lpOrig->m_fltStdA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltStdB = lpOrig->m_fltStdB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltStdC = lpOrig->m_fltStdC;
+	m_fltD = lpOrig->m_fltD;
+	m_fltStdD = lpOrig->m_fltStdD;
+
+	m_bEnableCOBA = lpOrig->m_bEnableCOBA;
+	m_fltT_AMPA = lpOrig->m_fltT_AMPA;
+	m_fltT_NMDA = lpOrig->m_fltT_NMDA;
+	m_fltT_GABAa = lpOrig->m_fltT_GABAa;
+	m_fltT_GABAb = lpOrig->m_fltT_GABAb;
 }
 
 void CsNeuronGroup::SetCARLSimulation()
@@ -142,6 +174,7 @@ void CsNeuronGroup::SetCARLSimulation()
 	{
 		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuronType);
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
+		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltT_AMPA, m_fltT_NMDA, m_fltT_GABAa, m_fltT_GABAb);
 	}
 }
 
@@ -248,6 +281,36 @@ bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &s
 		return true;
 	}
 
+	if(strType == "ENABLECOBA")
+	{
+		EnableCOBA(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "T_AMPA")
+	{
+		T_AMPA(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "T_NMDA")
+	{
+		T_NMDA(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "T_GABAA")
+	{
+		T_GABAa(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "T_GABAB")
+	{
+		T_GABAb(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -269,6 +332,11 @@ void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("StdC", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("StdD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnableCOBA", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("T_AMPA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("T_NMDA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("T_GABAa", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("T_GABAb", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -291,6 +359,12 @@ void CsNeuronGroup::Load(CStdXml &oXml)
 	StdC(oXml.GetChildFloat("StdC", m_fltStdC));
 	D(oXml.GetChildFloat("D", m_fltD));
 	StdD(oXml.GetChildFloat("StdD", m_fltStdD));
+
+	EnableCOBA(oXml.GetChildBool("EnableCOBA", m_bEnableCOBA));
+	T_AMPA(oXml.GetChildFloat("T_AMPA", m_fltT_AMPA));
+	T_NMDA(oXml.GetChildFloat("T_NMDA", m_fltT_NMDA));
+	T_GABAa(oXml.GetChildFloat("T_GABAa", m_fltT_GABAa));
+	T_GABAb(oXml.GetChildFloat("T_GABAb", m_fltT_GABAb));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

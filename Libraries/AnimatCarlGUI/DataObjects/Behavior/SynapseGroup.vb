@@ -11,7 +11,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Behavior
 
-    Public Class SynapseGroup
+    Public MustInherit Class SynapseGroup
         Inherits AnimatGUI.DataObjects.Behavior.Links.Synapse
 
 #Region " Attributes "
@@ -21,12 +21,6 @@ Namespace DataObjects.Behavior
 #End Region
 
 #Region " Properties "
-
-        Public Overrides ReadOnly Property TypeName() As String
-            Get
-                Return "Synapse Group"
-            End Get
-        End Property
 
         Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
@@ -47,20 +41,6 @@ Namespace DataObjects.Behavior
                 '    Me.Text = m_snWeight.Text
                 'End If
             End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property SimClassName() As String
-            Get
-                Return "SynapseGroup"
-            End Get
-        End Property
-
-
-        Public Overrides ReadOnly Property WorkspaceImageName() As String
-            Get
-                Return "AnimatCarlGUI.ExcitatorySynapse.gif"
-            End Get
         End Property
 
 #End Region
@@ -91,14 +71,6 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                        ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim oNewLink As New SynapseGroup(doParent)
-            oNewLink.CloneInternal(Me, bCutData, doRoot)
-            If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewLink.AfterClone(Me, bCutData, doRoot, oNewLink)
-            Return oNewLink
-        End Function
-
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
@@ -123,7 +95,7 @@ Namespace DataObjects.Behavior
             oXml.IntoElem()
 
             oXml.AddChildElement("ID", m_strID)
-            oXml.AddChildElement("Type", "SynapseGroup")
+            oXml.AddChildElement("Type", SimClassName())
             oXml.AddChildElement("Enabled", m_bEnabled)
             oXml.AddChildElement("FromID", fnFrom.ID)
             oXml.AddChildElement("ToID", fnTo.ID)

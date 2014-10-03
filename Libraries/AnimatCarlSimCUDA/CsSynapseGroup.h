@@ -37,6 +37,27 @@ namespace AnimatCarlSim
 		/// The pointer to post-synaptic neuron
 		CsNeuronGroup *m_lpToNeuron;
 
+		/// initial weight strength (arbitrary units); should be negative for inhibitory connections 
+		float m_fltInitWt;
+
+		///upper bound on weight strength (arbitrary units); should be negative for inhibitory connections 
+		float m_fltMaxWt;
+
+		///connection probability 
+		float m_fltPconnect;
+
+		///the minimum delay allowed (ms) 
+		unsigned char m_iMinDelay;
+
+		///the maximum delay allowed (ms) 
+		unsigned char m_iMaxDelay;
+
+		///connection type, either SYN_FIXED or SYN_PLASTIC
+		bool m_bPlastic;
+
+		///The total number of synapses created.
+		int m_iSynapsesCreated;
+
 	public:
 		CsSynapseGroup();
 		virtual ~CsSynapseGroup();
@@ -50,6 +71,28 @@ namespace AnimatCarlSim
 		\return	Pointer to the neuron.
 		**/
 		CsNeuronGroup *FromNeuron() {return m_lpFromNeuron;};
+
+		virtual void InitWt(float fltVal);
+		virtual float InitWt();
+
+		virtual void MaxWt(float fltVal);
+		virtual float MaxWt();
+
+		virtual void Pconnect(float fltVal);
+		virtual float Pconnect();
+
+		virtual void MinDelay(unsigned char iVal);
+		virtual unsigned char MinDelay();
+
+		virtual void MaxDelay(unsigned char iVal);
+		virtual unsigned char MaxDelay();
+
+		virtual void Plastic(bool bVal);
+		virtual bool Plastic();
+
+		virtual int SynapsesCreated();
+
+		virtual std::string GeneratorKey();
 
 		virtual void SetCARLSimulation();
 

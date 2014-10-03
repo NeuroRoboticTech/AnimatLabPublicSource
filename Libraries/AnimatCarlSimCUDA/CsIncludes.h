@@ -17,6 +17,11 @@ namespace AnimatCarlSim
 	class CsNeuralModule;
 	class CsNeuronGroup;
 	class CsSynapseGroup;
+	class CsSynapseOneToOne;
+	class CsSynapseRandom;
+	class CsSynapseFull;
+	class CsSynapseIndividual;
+	class CsConnectionGenerator;
 }
 
 using namespace AnimatCarlSim;

@@ -19,12 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CsConnectionGenerator.h" />
     <ClInclude Include="..\CsIncludes.h" />
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
     <ClInclude Include="..\config.h" />
     <ClInclude Include="..\CsNeuronGroup.h" />
+    <ClInclude Include="..\CsSynapseFull.h" />
     <ClInclude Include="..\CsSynapseGroup.h" />
+    <ClInclude Include="..\CsSynapseIndividual.h" />
+    <ClInclude Include="..\CsSynapseOneToOne.h" />
+    <ClInclude Include="..\CsSynapseRandom.h" />
     <ClInclude Include="..\CUDAVersionControl.h" />
     <ClInclude Include="..\errorCode.h" />
     <ClInclude Include="..\gpu.h" />
@@ -41,10 +46,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CarlSim.cpp" />
+    <ClCompile Include="..\CsConnectionGenerator.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
     <ClCompile Include="..\CsNeuronGroup.cpp" />
+    <ClCompile Include="..\CsSynapseFull.cpp" />
     <ClCompile Include="..\CsSynapseGroup.cpp" />
+    <ClCompile Include="..\CsSynapseIndividual.cpp" />
+    <ClCompile Include="..\CsSynapseOneToOne.cpp" />
+    <ClCompile Include="..\CsSynapseRandom.cpp" />
     <ClCompile Include="..\mtrand.cpp" />
     <ClCompile Include="..\printSNNInfo.cpp" />
     <ClCompile Include="..\PropagatedSpikeBuffer.cpp" />

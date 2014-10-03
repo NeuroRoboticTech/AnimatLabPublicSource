@@ -149,6 +149,7 @@
     <Compile Include="DataObjects\Behavior\SynapseGroup.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\SynapseTypes\OneToOneSynapse.vb" />
     <EmbeddedResource Include="Graphics\BistableNeuron.gif" />
     <EmbeddedResource Include="Graphics\ExcitatorySynapse.gif" />
     <EmbeddedResource Include="Graphics\GatedSynapse.gif" />

@@ -6,8 +6,6 @@
 
 #include "StdAfx.h"
 
-#include "CsNeuronGroup.h"
-#include "CsSynapseGroup.h"
 #include "CsNeuralModule.h"
 #include "CsClassFactory.h"
 
@@ -55,6 +53,44 @@ void CsNeuralModule::SimMode(int iMode)
 }
 
 int CsNeuralModule::SimMode() {return m_iSimMode;}
+
+
+/**
+\brief	Searches for an item with the specified ID and sets its index in the array. 
+
+\author	dcofer
+\date	10/2/2014
+
+\param	strID			ID of item to find. 
+\param	bThrowError		true to throw error if not found. 
+
+\return	If bThrowError is false and item is not found it returns NULL, otherwise
+if it is found then it returns pointer to the item.
+\exception If bThrowError is true and no item with the specified ID is found then
+an exception is thrown.
+**/
+CsConnectionGenerator *CsNeuralModule::FindConnectionGenerator(std::string strID, bool bThrowError)
+{
+	CsConnectionGenerator *lpItem = NULL;
+	CStdMap<std::string, CsConnectionGenerator *>::iterator oPos;
+	oPos = m_aryGenerators.find(Std_CheckString(strID));
+
+	if(oPos != m_aryGenerators.end())
+		lpItem =  oPos->second;
+	else if(bThrowError)
+		THROW_TEXT_ERROR(Cs_Err_lConnectionGeneratorIDNotFound, Cs_Err_strConnectionGeneratorIDNotFound, " Connection Generator ID: " + strID);
+
+	return lpItem;
+}
+
+void CsNeuralModule::AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen)
+{
+	if(lpGen)
+	{
+		if(!FindConnectionGenerator(strID, false))
+			m_aryGenerators.Add(strID, lpGen);
+	}
+}
 
 void CsNeuralModule::Kill(bool bState)
 {
@@ -111,6 +147,16 @@ void CsNeuralModule::SetCARLSimulation()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_arySynapses[iIndex])
 			m_arySynapses[iIndex]->SetCARLSimulation();
+
+	//Now run through each of the connection generators and set them up.
+	CsConnectionGenerator *lpGen = NULL;
+	CStdPtrMap<std::string, CsConnectionGenerator>::iterator oPos;
+	for(oPos=m_aryGenerators.begin(); oPos!=m_aryGenerators.end(); ++oPos)
+	{
+		lpGen = oPos->second;
+		lpGen->SetCARLSimulation();
+	}
+
 
 	//Initalize the network
 	m_lpSNN->runNetwork(0, 0, GPU_MODE);
