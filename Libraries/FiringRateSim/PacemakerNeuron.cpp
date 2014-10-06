@@ -71,7 +71,6 @@ float PacemakerNeuron::Il()
 void PacemakerNeuron::Il(float fltVal)
 {
 	m_fltIl=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -96,7 +95,6 @@ float PacemakerNeuron::Ih()
 void PacemakerNeuron::Ih(float fltVal)
 {
 	m_fltIh=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -121,7 +119,6 @@ float PacemakerNeuron::Vssm()
 void PacemakerNeuron::Vssm(float fltVal)
 {
 	m_fltVssm=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -146,7 +143,6 @@ float PacemakerNeuron::Mtl()
 void PacemakerNeuron::Mtl(float fltVal)
 {
 	m_fltMtl=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -171,7 +167,6 @@ float PacemakerNeuron::Btl()
 void PacemakerNeuron::Btl(float fltVal)
 {
 	m_fltBtl=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -196,7 +191,6 @@ float PacemakerNeuron::Th()
 void PacemakerNeuron::Th(float fltVal)
 {
 	m_fltTh=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -221,7 +215,6 @@ float PacemakerNeuron::ITime()
 void PacemakerNeuron::ITime(float fltVal)
 {
 	m_fltITime=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -246,7 +239,6 @@ unsigned char PacemakerNeuron::IntrinsicType()
 void PacemakerNeuron::IntrinsicType(unsigned char iVal)
 {
 	m_iIntrinsicType=iVal;
-	TemplateNodeChanged();
 }
 
 /**

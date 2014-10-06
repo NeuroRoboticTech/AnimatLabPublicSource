@@ -2264,7 +2264,6 @@ Namespace Forms
 
                 m_aryAllDataTypes.Clear()
                 m_aryNeuralModules.Clear()
-                m_aryNeuralModules.Clear()
                 m_aryPlugInAssemblies.Clear()
                 m_aryBehavioralNodes.Clear()
                 m_aryBehavioralLinks.Clear()

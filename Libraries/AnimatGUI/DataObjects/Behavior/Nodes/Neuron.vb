@@ -16,13 +16,6 @@ Namespace DataObjects.Behavior.Nodes
     Public MustInherit Class Neuron
         Inherits DataObjects.Behavior.Node
 
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property AllowTemplateNode() As Boolean
-            Get
-                Return False
-            End Get
-        End Property
-
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
         End Sub

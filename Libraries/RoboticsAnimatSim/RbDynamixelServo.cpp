@@ -42,7 +42,7 @@ RbDynamixelServo::RbDynamixelServo()
 
 	m_iMinVelocityFP = 1;
 	m_iMaxVelocityFP = 1023;
-	m_fltMaxRotMin = 0.111;  //max rotations (rad) per fixed point unit.
+	m_fltRPMPerFPUnit = 0.111;  //max rotations (rad) per fixed point unit.
 	m_iLastGoalVelocity = -10000;
 
 	m_fltMinAngle = -150;
@@ -122,7 +122,7 @@ void RbDynamixelServo::RecalculateParams()
 
 	m_fltPosFloatToFPIntercept = m_iCenterPosFP;
 
-	m_fltMaxPosSec = (m_fltMaxRotMin*2*RB_PI)/60.0f; 
+	m_fltMaxPosSec = (m_fltRPMPerFPUnit*2*RB_PI)/60.0f; 
 	m_fltConvertFPToPosS = m_fltMaxPosSec; //0.01162389281828223498231178051813f;  //0.111 rot/min = 0.0116 rad/s
 
 	if(m_fltConvertFPToPosS > 0)
@@ -202,14 +202,14 @@ void RbDynamixelServo::MaxVelocityFP(int iVal)
 
 int RbDynamixelServo::MaxVelocityFP() {return m_iMaxVelocityFP;}
 
-void RbDynamixelServo::MaxRotMin(float fltVal)
+void RbDynamixelServo::RPMPerFPUnit(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, true, "MaxRotMin");
-	m_fltMaxRotMin = fltVal;
+	Std_IsAboveMin((float) 0, fltVal, true, "RPMPerFPUnit");
+	m_fltRPMPerFPUnit = fltVal;
 	RecalculateParams();
 }
 
-float RbDynamixelServo::MaxRotMin() {return m_fltMaxRotMin;}
+float RbDynamixelServo::RPMPerFPUnit() {return m_fltRPMPerFPUnit;}
 
 void RbDynamixelServo::MinLoadFP(int iVal)
 {
@@ -1348,9 +1348,9 @@ bool RbDynamixelServo::SetData(const std::string &strDataType, const std::string
 		return true;
 	}
 
-	if(strType == "MAXROTMIN")
+	if(strType == "RPMPERFPUNIT")
 	{
-		MaxRotMin((float) atof(strValue.c_str()));
+		RPMPerFPUnit((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -1396,7 +1396,7 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 	aryProperties.Add(new TypeProperty("MaxAngle", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MinVelocityFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxVelocityFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("MaxRotMin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RPMPerFPUnit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MinLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TranslationRange", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
@@ -1519,7 +1519,7 @@ void RbDynamixelServo::Load(StdUtils::CStdXml &oXml)
     MaxAngle(oXml.GetChildFloat("MaxAngle", m_fltMaxAngle));
     MinVelocityFP(oXml.GetChildInt("MinVelocityFP", m_iMinVelocityFP));
     MaxVelocityFP(oXml.GetChildInt("MaxVelocityFP", m_iMaxVelocityFP));
-    MaxRotMin(oXml.GetChildFloat("MaxRotMin", m_fltMaxRotMin));
+    RPMPerFPUnit(oXml.GetChildFloat("RPMPerFPUnit", m_fltRPMPerFPUnit));
     MinLoadFP(oXml.GetChildInt("MinLoadFP", m_iMinLoadFP));
     MaxLoadFP(oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP));
 	m_bIsHinge = oXml.GetChildBool("IsHinge", m_bIsHinge);

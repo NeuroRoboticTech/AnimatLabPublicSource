@@ -52,6 +52,8 @@ namespace AnimatSim
 
 			virtual AnimatBase *TargetObject();
 			
+			virtual void TargetID(std::string strID);
+
 			virtual void PropertyName(std::string strPropName);
 			virtual std::string PropertyName();
 
