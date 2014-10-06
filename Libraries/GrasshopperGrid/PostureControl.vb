@@ -144,7 +144,7 @@ Namespace DataObjects.ExternalStimuli
         <Browsable(False)> _
         Public Overrides ReadOnly Property StimulusModuleName() As String
             Get
-                Return "GrasshopperPosture_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return "GrasshopperPosture" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
             End Get
         End Property
 
