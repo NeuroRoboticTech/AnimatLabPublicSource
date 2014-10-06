@@ -465,7 +465,11 @@ CpuSNN::CpuSNN(const string& _name, int _numConfig, int _randSeed, int _mode)
   fpParam = fopen("param.txt", "w");
   if (fpParam==NULL) {
     fprintf(stderr, "WARNING !!! Unable to open/create parameter file 'param.txt'; check if current directory is writable \n");
+#ifdef USE_EXCEPTIONS
+	throw std::exception("WARNING !!! Unable to open/create parameter file 'param.txt'; check if current directory is writable \n");
+#else
     exit(1);
+#endif
     return;
   }
   fprintf(fpParam, "// *****************************************\n");
@@ -492,6 +496,8 @@ CpuSNN::CpuSNN(const string& _name, int _numConfig, int _randSeed, int _mode)
 
   // initialize parameters needed in snn_gpu.cu
   CpuSNNinitGPUparams();
+
+  stepFeedback = NULL;
 }
 
 void CpuSNN::deleteObjects()
@@ -589,10 +595,17 @@ void CpuSNN::deleteObjects()
     }
 }
 
-void CpuSNN::exitSimulation(int val)
+void CpuSNN::exitSimulation(int val, const char *errorString)
 {
+  fprintf(stderr, errorString);
+
   deleteObjects();
-  exit(val);
+
+#ifdef USE_EXCEPTIONS
+	throw std::exception(errorString);
+#else
+	exit(val);
+#endif
 }
 
 CpuSNN::~CpuSNN()
@@ -767,9 +780,7 @@ int CpuSNN::createGroup(const string& _name, unsigned int _numN, int _nType, int
 
     if ( (!(_nType&TARGET_AMPA) && !(_nType&TARGET_NMDA) &&
 	  !(_nType&TARGET_GABAa) && !(_nType&TARGET_GABAb)) || (_nType&POISSON_NEURON)) {
-      fprintf(stderr, "Invalid type using createGroup...\n");
-      fprintf(stderr, "can not create poisson generators here...\n");
-      exitSimulation(1);
+      exitSimulation(1, "Invalid type using createGroup...\ncan not create poisson generators here...\n");
     }
 
     grp_Info[numGrp].SizeN  	= _numN;
@@ -989,7 +1000,13 @@ void CpuSNN::resetNeuron(unsigned int nid, int grpId)
   if (grp_Info2[grpId].IzhGen == NULL) {
     if (grp_Info2[grpId].Izh_a == -1) {
       printf("setNeuronParameters must be called for group %s (%d)\n",grp_Info2[grpId].Name.c_str(),grpId);
+#ifdef USE_EXCEPTIONS
+	  std::ostringstream stringStream;
+	  stringStream << "setNeuronParameters must be called for group " << grp_Info2[grpId].Name.c_str() << "(" << grpId << ")\n";
+	  throw std::exception(stringStream.str().c_str());
+#else
       exit(-1);
+#endif
     }
 
     Izh_a[nid] = grp_Info2[grpId].Izh_a + grp_Info2[grpId].Izh_a_sd*(float)getRandClosed();
@@ -1621,8 +1638,7 @@ int CpuSNN::connect(int grpId1, int grpId2, const string& _type, float initWt, f
       newInfo->numPreSynapses	= 1;
     }
     else {
-      fprintf(stderr, "Invalid connection type (should be 'random', 'full', 'one-to-one', or 'full-no-direct')\n");
-      exitSimulation(-1);
+      exitSimulation(-1, "Invalid connection type (should be 'random', 'full', 'one-to-one', or 'full-no-direct')\n");
     }
 
     if (newInfo->numPostSynapses > MAX_numPostSynapses) {
@@ -1684,8 +1700,7 @@ int CpuSNN::updateSpikeTables()
   //		maxSpikesD2 = (maxSpikesD2 == 0)? 1 : maxSpikesD2;
 
   if ((maxSpikesD1+maxSpikesD2) < (numNExcReg+numNInhReg+numNPois)*UNKNOWN_NEURON_MAX_FIRING_RATE) {
-    fprintf(stderr, "Insufficient amount of buffer allocated...\n");
-    exitSimulation(1);
+    exitSimulation(1, "Insufficient amount of buffer allocated...\n");
   }
 
   //		maxSpikesD2 = (maxSpikesD1 > maxSpikesD2)?maxSpikesD1:maxSpikesD2;
@@ -2635,9 +2650,10 @@ int CpuSNN::runNetwork(int _nsec, int _nmsec, int simType, int ithGPU, bool enab
 
   CUDA_START_TIMER(timer);
 
+  bool end_stepping = false;
   // if nsec=0, simTimeMs=10, we need to run the simulator for 10 timeStep;
   // if nsec=1, simTimeMs=10, we need to run the simulator for 1*1000+10, time Step;
-  for(int i=0; i < runDuration; i++) {
+  for(int i=0; i < runDuration && !end_stepping; i++) {
 
     //			initThalInput();
 
@@ -2674,6 +2690,9 @@ int CpuSNN::runNetwork(int _nsec, int _nmsec, int simType, int ithGPU, bool enab
     if(enableGPUSpikeCntPtr==true && simType == GPU_MODE){
       copyFiringStateFromGPU();
     }
+
+	if(stepFeedback)
+		end_stepping = stepFeedback->stepUpdate(this, i);
   }
   if(copyState) {
      // copy the state from GPU to GPU
@@ -3388,8 +3407,9 @@ void CpuSNN::updateParameters(int* curN, int* numPostSynapses, int* numPreSynaps
   //  about the group (numN, numPostSynapses, numPreSynapses and others).
   for(int g=0; g < numGrp; g++)  {
     if (grp_Info[g].Type==UNKNOWN_NEURON) {
-      fprintf(stderr, "Unknown group for %d (%s)\n", g, grp_Info2[g].Name.c_str());
-      exitSimulation(1);
+	  std::ostringstream stringStream;
+	  stringStream << "Unknown group for " << g << "(" << grp_Info2[g].Name << ")\n";
+      exitSimulation(1, stringStream.str().c_str());
     }
 
     if      (IS_INHIBITORY_TYPE(grp_Info[g].Type) && !(grp_Info[g].Type&POISSON_NEURON))
@@ -3906,7 +3926,13 @@ void CpuSNN::setSpikeMonitor(int gid, const string& fname, int configId) {
 #endif
 		    if (status==-1 && errno!=EEXIST) {
 		      fprintf(stderr,"ERROR %d: could not create spike file '%s', directory '%%CARLSIM_ROOT%%/results/' does not exist\n",errno,fname.c_str());
-		      exit(1);
+#ifdef USE_EXCEPTIONS
+  	          std::ostringstream stringStream;
+	          stringStream << "ERROR " << errno << ": could not create spike file '" << fname << "', directory '%%CARLSIM_ROOT%%/results/' does not exist\n";
+	          throw std::exception(stringStream.str().c_str());
+#else
+              exit(1);
+#endif
 		      return;
 		    }
 
@@ -3917,7 +3943,14 @@ void CpuSNN::setSpikeMonitor(int gid, const string& fname, int configId) {
 		    fprintf(stderr,"ERROR: File \"%s\" could not be opened, please check if it exists.\n",fname.c_str());
 		    fprintf(stderr,"       Enable option CREATE_SPIKEDIR_IF_NOT_EXISTS in config.h to attempt creating the "
 			    "specified subdirectory automatically.\n");
-		    exit(1);
+
+#ifdef USE_EXCEPTIONS
+  	        std::ostringstream stringStream;
+	        stringStream << "ERROR " << errno << " File \"" << fname << "\" could not be opened, please check if it exists.\n       Enable option CREATE_SPIKEDIR_IF_NOT_EXISTS in config.h to attempt creating thespecified subdirectory automatically.\n";
+	        throw std::exception(stringStream.str().c_str());
+#else
+			exit(1);
+#endif			
 		    return;
 #endif
 		    }

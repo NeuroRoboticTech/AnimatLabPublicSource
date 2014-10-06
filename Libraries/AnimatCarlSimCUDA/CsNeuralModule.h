@@ -33,7 +33,7 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::ThreadedModule  
+	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::ThreadedModule, StepFeedback  
 	{
 	protected:
 		/// The array of neurons in this module.
@@ -76,6 +76,8 @@ namespace AnimatCarlSim
 		virtual std::string ModuleName();
 
 		virtual CpuSNN *SNN() {return m_lpSNN;};
+
+		virtual bool stepCarlSimUpdate(CpuSNN* s, int step);
 
 		virtual void SimMode(int iMode);
 		virtual int SimMode();

@@ -136,6 +136,8 @@ void CsNeuralModule::SetCARLSimulation()
 
 	m_lpSNN = new CpuSNN(m_strID.c_str());
 
+	m_lpSNN->setStepFeedback(this);
+
 	//Go through each of the neuron group items and set them up
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -159,11 +161,32 @@ void CsNeuralModule::SetCARLSimulation()
 
 
 	//Initalize the network
-	m_lpSNN->runNetwork(0, 0, GPU_MODE);
+	m_lpSNN->runNetwork(0, 0, m_iSimMode);
 }
+
+bool CsNeuralModule::stepCarlSimUpdate(CpuSNN* s, int step)
+{
+	//If we have been told to stop then exit immediately
+	if(m_bStopThread)
+		return true;
+
+	//If we have been told to pause then lets loop till we can continue
+	while(m_bPauseThread || m_lpSim->Paused())
+	{
+		m_bThreadPaused = true;
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+	}
+
+	//Otherwise keep going.
+	return false;
+}
+
+
 
 void CsNeuralModule::StepThread()
 {
+	if(m_lpSNN)
+		m_lpSNN->runNetwork(100, 0, m_iSimMode);
 }
 
 void CsNeuralModule::CloseThread()

@@ -175,9 +175,28 @@ inline bool isInhibitoryNeuron (unsigned int& nid, unsigned int& numNInhPois, un
 //!< Used for in the function getConnectionId
 #define CHECK_CONNECTION_ID(n,total) { assert(n >= 0); assert(n < total); }
 
+///Use exceptions instead of exiting.
+#define USE_EXCEPTIONS 1
+
 //Various callback functions
 
 class CpuSNN;
+
+//! used for fine-grained control over the stepping behavior during a runNetwork execution
+/*!
+ * If this callback is set then the using application is notified each time the simulation is stepped
+   and if it passes back a true then then stepping stops at that point and the runNetwork call exists.
+ */
+class StepFeedback {
+ public:
+  StepFeedback() {};
+
+  //! specifies which synaptic connections (per group, per neuron, per synapse) should be made
+  /*! \attention The virtual method should never be called directly */
+  virtual bool stepUpdate(CpuSNN* s, int step) { assert(false); return false;}; // the virtual method should never be called directly
+};
+
+
 
 //! used for fine-grained control over spike generation, using a callback mechanism
 /*! Spike generation can be performed using spike generators. Spike generators are dummy-neurons that have their spikes
@@ -919,6 +938,8 @@ class CpuSNN
   //! Utility function to clear spike counts in the GPU code.
   void resetSpikeCnt_GPU(int _startGrp, int _endGrp);
 
+  void setStepFeedback(StepFeedback *feedback) {stepFeedback = feedback;};
+
  private:
   void setGrpTimeSlice(int grpId, int timeSlice); //!< used for the Poisson generator.  It can probably be further optimized...
 
@@ -994,7 +1015,7 @@ class CpuSNN
   void connectOneToOne(grpConnectInfo_t* info);
   void connectFromMatrix(SparseWeightDelayMatrix* mat, int connProp);
 
-  void exitSimulation(int val);
+  void exitSimulation(int val, const char *errorString);
 
   void deleteObjects(); //!< deallocates all used data structures in snn_cpu.cpp
   void deleteObjectsGPU(); //!< deallocates all used data structures in snn_gpu.cu
@@ -1347,6 +1368,8 @@ class CpuSNN
   group_info2_t		grp_Info2[MAX_GRP_PER_SNN];
   float*			testVar, *testVar2;
   uint32_t*	spikeGenBits;
+
+  StepFeedback *stepFeedback;
 
 
   /* these are deprecated, and replaced by writeNetwork(FILE*)
