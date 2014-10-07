@@ -19,6 +19,8 @@ Namespace DataObjects.ExternalStimuli
         Protected m_snVelocity As ScaledNumber
         Protected m_bDisableWhenDone As Boolean = False
 
+        Protected m_doJoint As DataObjects.Physical.Joint
+
 #End Region
 
 #Region " Properties "
@@ -121,7 +123,17 @@ Namespace DataObjects.ExternalStimuli
 
         Public Overridable ReadOnly Property StimulusType() As String
             Get
-                Return "Velocity"
+                'We have a separate MotorPosition stimulus now, but this code is here mainly to handle cases
+                'where we are loading in an old project file. It still needs to be able to handle this edge case.
+                If Not m_doJoint Is Nothing AndAlso m_doJoint.IsMotorized Then
+                    If m_doJoint.MotorType = Physical.Joint.enumJointMotorTypes.PositionControl Then
+                        Return "Position"
+                    Else
+                        Return "Velocity"
+                    End If
+                Else
+                    Return "Velocity"
+                End If
             End Get
         End Property
 
@@ -204,6 +216,14 @@ Namespace DataObjects.ExternalStimuli
             MyBase.ClearIsDirty()
 
             m_snVelocity.ClearIsDirty()
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            If Not Me.StimulatedItem Is Nothing AndAlso Util.IsTypeOf(Me.StimulatedItem.GetType(), GetType(DataObjects.Physical.Joint), False) Then
+                m_doJoint = DirectCast(Me.StimulatedItem, DataObjects.Physical.Joint)
+            End If
         End Sub
 
         Public Overrides Function GetSimulationXml(ByVal strName As String, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing) As String

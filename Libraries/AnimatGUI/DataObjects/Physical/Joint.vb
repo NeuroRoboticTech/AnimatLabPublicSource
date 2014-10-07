@@ -190,6 +190,21 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable ReadOnly Property IsMotorized() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
+        'Default to velocity control but you need to look at IsMotorized to see if this is a motorized joint or not.
+        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
+            Get
+                Return enumJointMotorTypes.VelocityControl
+            End Get
+            Set(ByVal value As Joint.enumJointMotorTypes)
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
