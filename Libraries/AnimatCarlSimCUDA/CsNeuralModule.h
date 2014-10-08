@@ -5,7 +5,6 @@
 **/
 
 #pragma once
-#include "snn.h"
 
 #include "CsNeuronGroup.h"
 #include "CsSynapseGroup.h"

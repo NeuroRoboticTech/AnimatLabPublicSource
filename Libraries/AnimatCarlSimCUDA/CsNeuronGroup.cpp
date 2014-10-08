@@ -175,7 +175,25 @@ void CsNeuronGroup::SetCARLSimulation()
 		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuronType);
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
 		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltT_AMPA, m_fltT_NMDA, m_fltT_GABAa, m_fltT_GABAb);
+
+		//Set this up as a spike monitor.
+		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
 	}
+}
+
+void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsigned int *timeCounts)
+{
+	int pos = 0;
+    for (int t=0; t<1000; t++)
+    {
+        for (int i=0; i<timeCounts[t]; i++)
+        {
+			int id = NeuronIds[pos];
+			if (id==5)
+				std::cout << "Neuron ID 50 spiked at " << t << "ms." << endl;
+			pos++;
+        }
+    }
 }
 
 void CsNeuronGroup::Initialize()

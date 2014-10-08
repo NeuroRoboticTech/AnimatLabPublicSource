@@ -184,6 +184,8 @@ bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 
 void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
 {
+	int i = 5;
+	i=10;
 }
 
 void CsNeuralModule::StepThread()

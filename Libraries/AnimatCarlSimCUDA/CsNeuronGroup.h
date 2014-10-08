@@ -25,7 +25,7 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuronGroup : public AnimatSim::Node   
+	class ANIMAT_CARL_SIM_PORT CsNeuronGroup : public AnimatSim::Node, SpikeMonitor   
 	{
 	protected:
 		/// Pointer to parent CsNeuralModule.
@@ -133,6 +133,8 @@ namespace AnimatCarlSim
 
 		virtual void T_GABAb(float fltVal);
 		virtual float T_GABAb();
+
+		virtual void update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsigned int *timeCounts);
 
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);

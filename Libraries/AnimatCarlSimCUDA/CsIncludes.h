@@ -9,6 +9,7 @@
 
 #include "AnimatSim.h"
 #include "AnimatCarlSimConstants.h"
+#include "snn.h"
 
 //Simulation Objects
 namespace AnimatCarlSim
@@ -16,6 +17,7 @@ namespace AnimatCarlSim
 	class CsClassFactory;
 	class CsNeuralModule;
 	class CsNeuronGroup;
+	class CsSpikeGeneratorGroup;
 	class CsSynapseGroup;
 	class CsSynapseOneToOne;
 	class CsSynapseRandom;

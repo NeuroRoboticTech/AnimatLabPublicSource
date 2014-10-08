@@ -146,6 +146,7 @@
     <Compile Include="DataObjects\Behavior\NeuronGroup.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\SpikeGeneratorGroup.vb" />
     <Compile Include="DataObjects\Behavior\SynapseGroup.vb">
       <SubType>Code</SubType>
     </Compile>
