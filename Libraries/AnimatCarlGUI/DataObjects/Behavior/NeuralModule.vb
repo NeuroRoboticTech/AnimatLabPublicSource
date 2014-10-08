@@ -39,6 +39,8 @@ Namespace DataObjects.Behavior
 
             m_strModuleName = "AnimatCarlSimCUDA"
             m_strModuleType = "CarlSimNeuralModule"
+
+            m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -63,11 +65,36 @@ Namespace DataObjects.Behavior
             Next
             oXml.OutOfElem()
 
+            Dim blSynpase As SynapseGroup
+            oXml.AddChildElement("Neurons")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryNodes
+                blSynpase = DirectCast(deEntry.Value, SynapseGroup)
+                blSynpase.SaveSimulationXml(oXml, Me)
+            Next
+            oXml.OutOfElem()
+
             oXml.OutOfElem()  'neuralmodule xml
 
         End Sub
 
 #Region " DataObject Methods "
+
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+            MyBase.BuildProperties(propTable)
+
+            If propTable.Properties.Contains("Time Step") Then propTable.Properties.Remove("Time Step")
+
+            'Make sure time step is readonly.
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snTimeStep.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Time Step", pbNumberBag.GetType(), "TimeStep", _
+                                        "Module Properties", "Sets integration time step determines the speed and accuracy of the calculation. " & _
+                                        "The smaller the value, the more accurate but the slower the calculation.  " & _
+                                        "If the value is too large, the calculation may become unstable. " & _
+                                        "Acceptable values are in the range 0.0001 to 50 ms.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+
+        End Sub
 
 #End Region
 

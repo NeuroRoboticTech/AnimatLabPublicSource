@@ -664,6 +664,10 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub InitializeAfterLoad()
 
+            If Me.ID.ToLower = "507b20a7-8084-4ea5-acad-cce3369a1485" Then
+                Dim i As Integer = 5
+            End If
+
             Try
                 If m_bnOrigin Is Nothing Then
                     If m_strOriginID.Trim.Length > 0 Then
@@ -701,7 +705,7 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
 
-                If Not (Not m_bnDestination Is Nothing AndAlso m_bnDestination.IncomingDataTypes Is Nothing) Then
+                If Not (Not m_bnDestination Is Nothing AndAlso m_bnDestination.IncomingDataTypes Is Nothing AndAlso m_bnDestination.IsInitialized) Then
                     If Me.m_thTargetDataTypes Is Nothing OrElse Me.m_thTargetDataTypes.ID.Trim.Length = 0 Then
                         m_bIsInitialized = False
                         Return

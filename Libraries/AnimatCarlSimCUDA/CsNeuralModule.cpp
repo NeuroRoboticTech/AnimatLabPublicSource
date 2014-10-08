@@ -22,6 +22,8 @@ CsNeuralModule::CsNeuralModule()
 	m_lpClassFactory =  new AnimatCarlSim::CsClassFactory;
 	m_lpSNN = NULL;
 	m_iSimMode = GPU_MODE;
+	m_uiUpdateSteps = 10;
+	m_fltTimeStep = 0.001f;
 }
 
 /**
@@ -54,6 +56,15 @@ void CsNeuralModule::SimMode(int iMode)
 
 int CsNeuralModule::SimMode() {return m_iSimMode;}
 
+
+void CsNeuralModule::UpdateSteps(unsigned int uiVal) {m_uiUpdateSteps = uiVal;};
+
+unsigned int CsNeuralModule::UpdateSteps() {return m_uiUpdateSteps;};
+
+void CsNeuralModule::TimeStep(float fltVal)
+{
+	///Do not allow them to change the time step. It is ALWAYS 1 ms for CarlSim.
+}
 
 /**
 \brief	Searches for an item with the specified ID and sets its index in the array. 
@@ -135,7 +146,8 @@ void CsNeuralModule::SetCARLSimulation()
 	}
 
 	m_lpSNN = new CpuSNN(m_strID.c_str());
-
+	
+	m_lpSNN->setMonitorUpdateSteps(10);
 	m_lpSNN->setStepFeedback(this);
 
 	//Go through each of the neuron group items and set them up
@@ -164,16 +176,18 @@ void CsNeuralModule::SetCARLSimulation()
 	m_lpSNN->runNetwork(0, 0, m_iSimMode);
 }
 
-bool CsNeuralModule::stepCarlSimUpdate(CpuSNN* s, int step)
+bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 {
-	//If we have been told to stop then exit immediately
-	if(m_bStopThread)
-		return true;
-
+	
 	//If we have been told to pause then lets loop till we can continue
 	while(m_bPauseThread || m_lpSim->Paused())
 	{
 		m_bThreadPaused = true;
+
+		//If we have been told to stop then exit immediately
+		if(m_bStopThread)
+			return true;
+
 		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 	}
 
@@ -181,7 +195,11 @@ bool CsNeuralModule::stepCarlSimUpdate(CpuSNN* s, int step)
 	return false;
 }
 
-
+void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
+{
+	int i = 5;
+	i=10;
+}
 
 void CsNeuralModule::StepThread()
 {
@@ -204,23 +222,21 @@ then start our processing loop.
 **/
 void CsNeuralModule::SimStarting()
 {
-	SetCARLSimulation();
-	StartThread();
-}
+	NeuralModule::SimStarting();
 
-/**
-\brief	When the simulation ends we need to shutdown our processing thread and exit CARLsim.
-
-\author	dcofer
-\date	10/1/2014
-**/
-void CsNeuralModule::SimStopping()
-{
-	ShutdownThread();
+	//Do not do this again if the thread is already running. For example, if we pause the sim and hit play again.
+	if(!m_bThreadProcessing)
+	{
+		SetCARLSimulation();
+		StartThread();
+	}
 }
 
 void CsNeuralModule::ResetSimulation()
 {
+	NeuralModule::ResetSimulation();
+	ShutdownThread();
+
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
@@ -272,6 +288,12 @@ bool CsNeuralModule::SetData(const std::string &strDataType, const std::string &
 		return true;
 	}
 
+	if(strType == "UPDATESTEPS")
+	{
+		UpdateSteps((unsigned int) atoi(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -284,6 +306,8 @@ void CsNeuralModule::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	NeuralModule::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("TimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpdateSteps", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -536,9 +560,11 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 	ID(oXml.GetChildString("ID", m_strID));
 	Type(oXml.GetChildString("Type", m_strType));
 	Name(oXml.GetChildString("Name", m_strName));
+	SimMode(oXml.GetChildInt("SimMode", m_iSimMode));
+	UpdateSteps(oXml.GetChildInt("UpdateSteps", m_uiUpdateSteps));
 
-	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
-	m_fltTimeStep = oXml.GetChildFloat("TimeStep", m_fltTimeStep);
+	///The time step for carl sim model is always 1 ms.
+	m_fltTimeStep = 0.001f;
 
 	//This will add this object to the object list of the simulation.
 	m_lpSim->AddToObjectList(this);

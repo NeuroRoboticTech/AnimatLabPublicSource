@@ -5,7 +5,6 @@
 **/
 
 #pragma once
-#include "snn.h"
 
 #include "CsNeuronGroup.h"
 #include "CsSynapseGroup.h"
@@ -52,6 +51,8 @@ namespace AnimatCarlSim
 		///The mode of the simulation. GPU vs CPU
 		int m_iSimMode;
 
+		unsigned int m_uiUpdateSteps;
+
 		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
@@ -77,16 +78,23 @@ namespace AnimatCarlSim
 
 		virtual CpuSNN *SNN() {return m_lpSNN;};
 
-		virtual bool stepCarlSimUpdate(CpuSNN* s, int step);
+		virtual bool stepUpdate(CpuSNN* s, int step);
+		virtual void updateMonitors(CpuSNN* s, int step);
 
 		virtual void SimMode(int iMode);
 		virtual int SimMode();
+
+		virtual void UpdateSteps(unsigned int uiVal);
+		virtual unsigned int UpdateSteps();
+
+		virtual void TimeStep(float fltVal);
 
 		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
 		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);
 		
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
+		virtual void SimStarting();
 		virtual void ResetSimulation();
 		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
@@ -119,9 +127,6 @@ namespace AnimatCarlSim
 		virtual int TotalSynapses();
 		virtual void ClearSynapses();
 		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
-
-		virtual void SimStarting();
-		virtual void SimStopping();
 	};
 
 }				//FiringRateSim
