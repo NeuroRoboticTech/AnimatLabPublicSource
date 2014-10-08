@@ -110,6 +110,18 @@ void CpuSNN::resetPointers()
   fpProgLog = stderr;
   fpTuningLog = NULL;
   cntTuning  = 0;
+
+  Npre_plastic=NULL;
+  cumulativePre=NULL;
+  cumulativePost=NULL;
+  curSpike=NULL;
+  nSpikeCnt=NULL;
+  intrinsicWeight=NULL;
+  preSynapticIds=NULL;
+  tmp_SynapticDelay=NULL;
+  timeTableD2=NULL;
+  timeTableD1=NULL;
+  pbuf=NULL;
 }
 
 void CpuSNN::resetCurrent()
@@ -507,6 +519,8 @@ void CpuSNN::deleteObjects()
 
       if(simulatorDeleted)
 	return;
+
+	monitor_update_steps  = 1000;
 
       if(fpLog) {
 	printSimSummary(fpLog); // TODO: can fpLog be stdout? In this case printSimSummary is executed twice
@@ -2610,7 +2624,7 @@ bool CpuSNN::updateTime()
 
   // done one second worth of simulation
   // update relevant parameters...now
-  if(++simTimeMs == 1000) {
+  if(++simTimeMs == monitor_update_steps) {
     simTimeMs = 0;
     simTimeSec++;
     finishedOneSec = true;
@@ -4033,7 +4047,7 @@ void CpuSNN::updateSpikeMonitor()
   for(int k=0; k < 2; k++) {
     unsigned int* timeTablePtr = (k==0)?timeTableD2:timeTableD1;
     unsigned int* fireTablePtr = (k==0)?firingTableD2:firingTableD1;
-    for(int t=0; t < 1000; t++) {
+    for(int t=0; t < monitor_update_steps; t++) {
       for(int i=timeTablePtr[t+D]; i<timeTablePtr[t+D+1];i++) {
 	/* retrieve the neuron id */
 	int nid   = fireTablePtr[i];
@@ -4068,11 +4082,13 @@ void CpuSNN::updateSpikeMonitor()
   for (int grpId=0;grpId<numGrp;grpId++) {
     int monitorId = grp_Info[grpId].MonitorId;
     if(monitorId!= -1) {
-      fprintf(stderr, "Spike Monitor for Group %s has %d spikes (%f Hz)\n",grp_Info2[grpId].Name.c_str(),monBufferPos[monitorId],((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN));
+		unsigned int total_spikes = monBufferPos[monitorId];
+		float firing_rate = ((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN);
+      fprintf(stderr, "Spike Monitor for Group %s has %d spikes (%f Hz)\n",grp_Info2[grpId].Name.c_str(),total_spikes,firing_rate);
 
       // call the callback function
       if (monBufferCallback[monitorId])
-	monBufferCallback[monitorId]->update(this,grpId,monBufferFiring[monitorId],monBufferTimeCnt[monitorId]);
+	monBufferCallback[monitorId]->update(this,grpId,monBufferFiring[monitorId],monBufferTimeCnt[monitorId], total_spikes, firing_rate);
     }
   }
 }

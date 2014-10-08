@@ -70,7 +70,7 @@ void CsSpikeGeneratorGroup::SetCARLSimulation()
 
 		// set Poisson rates for all neurons
 		m_lpSpikeRates = new PoissonRate(m_uiNeuronCount);
-		for (int i=0; i<100; i++)
+		for (int i=0; i<m_uiNeuronCount; i++)
 			m_lpSpikeRates->rates[i] = 50.0f;
 		m_lpCsModule->SNN()->setSpikeRate(m_iGroupID, m_lpSpikeRates, m_uiRefPeriod);
 	}

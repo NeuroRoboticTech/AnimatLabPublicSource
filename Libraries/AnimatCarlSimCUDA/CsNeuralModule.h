@@ -51,6 +51,8 @@ namespace AnimatCarlSim
 		///The mode of the simulation. GPU vs CPU
 		int m_iSimMode;
 
+		unsigned int m_uiUpdateSteps;
+
 		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
@@ -81,6 +83,11 @@ namespace AnimatCarlSim
 
 		virtual void SimMode(int iMode);
 		virtual int SimMode();
+
+		virtual void UpdateSteps(unsigned int uiVal);
+		virtual unsigned int UpdateSteps();
+
+		virtual void TimeStep(float fltVal);
 
 		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
 		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);

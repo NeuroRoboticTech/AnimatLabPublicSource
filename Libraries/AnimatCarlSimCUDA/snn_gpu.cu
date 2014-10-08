@@ -2460,6 +2460,9 @@ void CpuSNN::CpuSNNinitGPUparams() {
   generatedSpikesI=0;
   receivedSpikesE=0;
   receivedSpikesI=0;
+
+  testVar = NULL;
+  testVar2 = NULL;
 }
 
 

@@ -252,7 +252,7 @@ class SpikeMonitor {
 
   //! Controls actions that are performed when certain neurons fire (user-defined).
   /*! \attention The virtual method should never be called directly */
-  virtual void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts) {};
+  virtual void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts, unsigned int total_spikes, float firing_Rate) {};
 };
 
 
@@ -605,7 +605,7 @@ class CpuSNN
  public:
 
   const static unsigned int MAJOR_VERSION = 2; //!< major release version, as in CARLsim X
-  const static unsigned int MINOR_VERSION = 2; //!< minor release version, as in CARLsim 2.X
+  const static unsigned int MINOR_VERSION = 3; //!< minor release version, as in CARLsim 2.X
 
   CpuSNN(const string& _name, int _numConfig = 1, int randomize = 0, int mode=CPU_MODE);
   ~CpuSNN();
@@ -939,6 +939,10 @@ class CpuSNN
   void resetSpikeCnt_GPU(int _startGrp, int _endGrp);
 
   void setStepFeedback(StepFeedback *feedback) {stepFeedback = feedback;};
+  
+  void setMonitorUpdateSteps(unsigned int steps) {monitor_update_steps = steps;};
+
+  unsigned int getMonitorUpdateSteps() {return monitor_update_steps;};
 
  private:
   void setGrpTimeSlice(int grpId, int timeSlice); //!< used for the Poisson generator.  It can probably be further optimized...
@@ -1165,8 +1169,6 @@ class CpuSNN
 
   void setupNetwork(int simType=CPU_MODE, int ithGPU=0, bool removeTempMemory=true);
 
-
-
  private:
   SparseWeightDelayMatrix* tmp_SynapseMatrix_fixed;
   SparseWeightDelayMatrix* tmp_SynapseMatrix_plastic;
@@ -1370,6 +1372,8 @@ class CpuSNN
   uint32_t*	spikeGenBits;
 
   StepFeedback *stepFeedback;
+
+  unsigned int monitor_update_steps;
 
 
   /* these are deprecated, and replaced by writeNetwork(FILE*)

@@ -43,6 +43,9 @@ CsNeuronGroup::CsNeuronGroup()
 	m_fltT_NMDA = 150;
 	m_fltT_GABAa = 6;
 	m_fltT_GABAb = 150;
+
+	m_fltGroupFiringRate = 0;
+	m_fltGroupTotalSpikes = 0;
 }
 
 /**
@@ -181,19 +184,25 @@ void CsNeuronGroup::SetCARLSimulation()
 	}
 }
 
-void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsigned int *timeCounts)
+void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsigned int *timeCounts, unsigned int total_spikes, float firing_Rate)
 {
-	int pos = 0;
-    for (int t=0; t<1000; t++)
-    {
-        for (int i=0; i<timeCounts[t]; i++)
-        {
-			int id = NeuronIds[pos];
-			if (id==5)
-				std::cout << "Neuron ID 50 spiked at " << t << "ms." << endl;
-			pos++;
-        }
-    }
+	m_fltGroupFiringRate = firing_Rate;
+	m_fltGroupTotalSpikes = total_spikes;
+
+	if(total_spikes > 0)
+	{
+		int pos = 0;
+		for (int t=0; t<10; t++)
+		{
+			for (int i=0; i<timeCounts[t]; i++)
+			{
+				int id = NeuronIds[pos];
+				if (id==5)
+					std::cout << "Neuron ID 50 spiked at " << t << "ms." << endl;
+				pos++;
+			}
+		}
+	}
 }
 
 void CsNeuronGroup::Initialize()
@@ -204,6 +213,14 @@ void CsNeuronGroup::Initialize()
 void CsNeuronGroup::StepSimulation()
 {
 
+}
+
+void CsNeuronGroup::ResetSimulation()
+{
+	Node::ResetSimulation();
+
+	m_fltGroupFiringRate = 0;
+	m_fltGroupTotalSpikes = 0;
 }
 
 void CsNeuronGroup::AddExternalNodeInput(int iTargetDataType, float fltInput)
