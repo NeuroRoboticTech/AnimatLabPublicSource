@@ -374,6 +374,22 @@ void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("T_GABAb", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
+float *CsNeuronGroup::GetDataPointer(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	float *lpData = NULL;
+
+	if(strType == "ENABLE")
+		return &m_fltEnabled;
+	else if(strType == "FIRINGRATE")
+		return &m_fltGroupFiringRate;
+	else if(strType == "TOTALSPIKES")
+		return &m_fltGroupTotalSpikes;
+
+	return Node::GetDataPointer(strDataType);
+}
+
 #pragma endregion
 
 void CsNeuronGroup::Load(CStdXml &oXml)

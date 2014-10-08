@@ -154,6 +154,7 @@ namespace AnimatCarlSim
 #pragma region DataAccesMethods
 		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+		virtual float *GetDataPointer(const std::string &strDataType);
 #pragma endregion
 
 		virtual void Load(CStdXml &oXml);
