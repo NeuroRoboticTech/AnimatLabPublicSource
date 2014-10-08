@@ -178,7 +178,7 @@ void CsNeuralModule::SetCARLSimulation()
 
 bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 {
-	/*
+	
 	//If we have been told to pause then lets loop till we can continue
 	while(m_bPauseThread || m_lpSim->Paused())
 	{
@@ -190,7 +190,7 @@ bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 
 		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 	}
-*/
+
 	//Otherwise keep going.
 	return false;
 }
@@ -203,8 +203,8 @@ void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
 
 void CsNeuralModule::StepThread()
 {
-	//if(m_lpSNN)
-	//	m_lpSNN->runNetwork(100, 0, m_iSimMode);
+	if(m_lpSNN)
+		m_lpSNN->runNetwork(100, 0, m_iSimMode);
 }
 
 void CsNeuralModule::CloseThread()
