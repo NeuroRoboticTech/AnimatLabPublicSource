@@ -63,6 +63,15 @@ Namespace DataObjects.Behavior
             Next
             oXml.OutOfElem()
 
+            Dim blSynpase As SynapseGroup
+            oXml.AddChildElement("Neurons")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryNodes
+                blSynpase = DirectCast(deEntry.Value, SynapseGroup)
+                blSynpase.SaveSimulationXml(oXml, Me)
+            Next
+            oXml.OutOfElem()
+
             oXml.OutOfElem()  'neuralmodule xml
 
         End Sub

@@ -25,7 +25,7 @@ CsNeuronGroup::CsNeuronGroup()
 
 	m_bEnabled = true;
 
-	m_uiNeuronCount = 0;
+	m_uiNeuronCount = 10;
 	m_iNeuronType = EXCITATORY_NEURON;
 	m_iGroupID = -1;
 

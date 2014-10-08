@@ -108,7 +108,7 @@ float *ThreadedModule::GetDataPointer(const std::string &strDataType)
 	if(strType == "STEPTHREADDURATION")
 		return &m_fltStepThreadDuration;
 	else
-		NeuralModule::GetDataPointer(strDataType);
+		return NeuralModule::GetDataPointer(strDataType);
 
 	return NULL;
 }

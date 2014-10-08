@@ -2681,7 +2681,10 @@ int CpuSNN::runNetwork(int _nsec, int _nmsec, int simType, int ithGPU, bool enab
 	updateStateAndFiringTable();
       else
 	updateStateAndFiringTable_GPU();
-    }
+
+	if(stepFeedback)
+		stepFeedback->updateMonitors(this, i);
+	}
 
     if(enableGPUSpikeCntPtr==true && simType == CPU_MODE){
       fprintf(stderr,"Error: the enableGPUSpikeCntPtr flag cannot be set in CPU_MODE\n");

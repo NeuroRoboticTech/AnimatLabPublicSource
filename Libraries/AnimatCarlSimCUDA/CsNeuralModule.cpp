@@ -164,16 +164,17 @@ void CsNeuralModule::SetCARLSimulation()
 	m_lpSNN->runNetwork(0, 0, m_iSimMode);
 }
 
-bool CsNeuralModule::stepCarlSimUpdate(CpuSNN* s, int step)
+bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 {
-	//If we have been told to stop then exit immediately
-	if(m_bStopThread)
-		return true;
-
 	//If we have been told to pause then lets loop till we can continue
 	while(m_bPauseThread || m_lpSim->Paused())
 	{
 		m_bThreadPaused = true;
+
+		//If we have been told to stop then exit immediately
+		if(m_bStopThread)
+			return true;
+
 		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 	}
 
@@ -181,7 +182,9 @@ bool CsNeuralModule::stepCarlSimUpdate(CpuSNN* s, int step)
 	return false;
 }
 
-
+void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
+{
+}
 
 void CsNeuralModule::StepThread()
 {
@@ -204,23 +207,21 @@ then start our processing loop.
 **/
 void CsNeuralModule::SimStarting()
 {
-	SetCARLSimulation();
-	StartThread();
-}
+	NeuralModule::SimStarting();
 
-/**
-\brief	When the simulation ends we need to shutdown our processing thread and exit CARLsim.
-
-\author	dcofer
-\date	10/1/2014
-**/
-void CsNeuralModule::SimStopping()
-{
-	ShutdownThread();
+	//Do not do this again if the thread is already running. For example, if we pause the sim and hit play again.
+	if(!m_bThreadProcessing)
+	{
+		SetCARLSimulation();
+		StartThread();
+	}
 }
 
 void CsNeuralModule::ResetSimulation()
 {
+	NeuralModule::ResetSimulation();
+	ShutdownThread();
+
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])

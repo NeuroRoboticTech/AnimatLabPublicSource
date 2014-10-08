@@ -191,9 +191,9 @@ class StepFeedback {
  public:
   StepFeedback() {};
 
-  //! specifies which synaptic connections (per group, per neuron, per synapse) should be made
   /*! \attention The virtual method should never be called directly */
   virtual bool stepUpdate(CpuSNN* s, int step) { assert(false); return false;}; // the virtual method should never be called directly
+  virtual void updateMonitors(CpuSNN* s, int step) { assert(false);}; // the virtual method should never be called directly
 };
 
 

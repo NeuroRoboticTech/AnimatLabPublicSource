@@ -77,7 +77,8 @@ namespace AnimatCarlSim
 
 		virtual CpuSNN *SNN() {return m_lpSNN;};
 
-		virtual bool stepCarlSimUpdate(CpuSNN* s, int step);
+		virtual bool stepUpdate(CpuSNN* s, int step);
+		virtual void updateMonitors(CpuSNN* s, int step);
 
 		virtual void SimMode(int iMode);
 		virtual int SimMode();
@@ -87,6 +88,7 @@ namespace AnimatCarlSim
 		
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
+		virtual void SimStarting();
 		virtual void ResetSimulation();
 		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
@@ -119,9 +121,6 @@ namespace AnimatCarlSim
 		virtual int TotalSynapses();
 		virtual void ClearSynapses();
 		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
-
-		virtual void SimStarting();
-		virtual void SimStopping();
 	};
 
 }				//FiringRateSim
