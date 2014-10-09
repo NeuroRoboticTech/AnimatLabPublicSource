@@ -223,8 +223,8 @@ void CsNeuralModule::WaitForPhysicsToCatchUp()
 
 	m_bWaitingForPhysicsToCatchUp = false;
 
-	std::string strMessage = "P:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
-	OutputDebugString(strMessage.c_str());
+	//std::string strMessage = "P:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
+	//OutputDebugString(strMessage.c_str());
 	//std::cout << "Neural: " << m_fltNeuralTime << ", Physics: " << m_lpSim->Time() << "\r\n";
 }
 
@@ -241,8 +241,8 @@ void CsNeuralModule::WaitForNeuralToCatchUp()
 
 	m_bWaitingForNeuralToCatchUp = false;
 
-	std::string strMessage = "N:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
-	OutputDebugString(strMessage.c_str());
+	//std::string strMessage = "N:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
+	//OutputDebugString(strMessage.c_str());
 	//std::cout << "Neural: " << m_fltNeuralTime << ", Physics: " << m_lpSim->Time() << "\r\n";
 }
 
@@ -275,8 +275,12 @@ void CsNeuralModule::SimStarting()
 	//Do not do this again if the thread is already running. For example, if we pause the sim and hit play again.
 	if(!m_bThreadProcessing)
 	{
-		SetCARLSimulation();
-		StartThread();
+		//Only bother running the simulation if there are some synpases in it.
+		if(m_arySynapses.size() > 0)
+		{
+			SetCARLSimulation();
+			StartThread();
+		}
 	}
 }
 
@@ -306,6 +310,11 @@ void CsNeuralModule::Initialize()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->Initialize();
+
+	iCount = m_arySynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_arySynapses[iIndex])
+			m_arySynapses[iIndex]->Initialize();
 }
 
 void CsNeuralModule::StepSimulation()
@@ -317,7 +326,7 @@ void CsNeuralModule::StepSimulation()
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->StepSimulation();
 
-	if(!m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
+	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
 		WaitForNeuralToCatchUp();
 }
 
