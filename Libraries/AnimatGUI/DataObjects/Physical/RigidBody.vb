@@ -29,6 +29,7 @@ Namespace DataObjects.Physical
         Protected m_bFreeze As Boolean = False
         Protected m_bContactSensor As Boolean = False
         Protected m_bIsCollisionObject As Boolean = False
+        Protected m_bIsStickyPart As Boolean = False
         Protected m_snDensity As ScaledNumber
         Protected m_snMass As ScaledNumber
         Protected m_snVolume As ScaledNumber
@@ -37,7 +38,10 @@ Namespace DataObjects.Physical
 
         Protected m_svBuoyancyCenter As ScaledVector3
         Protected m_fltBuoyancyScale As Single = 1
-        Protected m_svDrag As ScaledVector3
+        Protected m_svLinearDrag As ScaledVector3
+        Protected m_svAngularDrag As ScaledVector3
+        Protected m_snMaxHydroForce As ScaledNumber
+        Protected m_snMaxHydroTorque As ScaledNumber
         Protected m_fltMagnus As Single = 0
         Protected m_bEnableFluids As Boolean = False
 
@@ -154,10 +158,29 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The density can not be less than or equal to zero.")
                 End If
 
-                Me.SetSimData("Density", Value.ToString, True)
-                m_snDensity.CopyData(Value)
+                'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
+                'what we are using as a key param based on application settings.
+                If Not Util.Application.Physics.UseMassForRigidBodyDefinitions Then
+                    Me.SetSimData("Density", Value.ToString, True)
+                    m_snDensity.CopyData(Value)
+                    UpdateMassVolumeDensity()
+                Else
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
 
-                UpdateMassAndVolume()
+                    If m_snVolume.ActualValue > 0 Then
+                        Dim fltMass As Double = CSng(Value.ActualValue * m_snVolume.ActualValue)
+
+                        'Value above uses the display units value, while volume is always in m^3. We need to do a conversion to get them to match correctly.
+                        fltMass = fltMass / (Util.Environment.DisplayDistanceUnitValue ^ 3)
+                        Dim snNewVal As New ScaledNumber(Me, "Mass", 1, ScaledNumber.enumNumericScale.Kilo, "g", "g")
+                        snNewVal.ActualValue = fltMass
+
+                        Me.Mass = snNewVal
+                    Else
+                        Throw New System.Exception("The volume has not been defined yet.")
+                    End If
+                End If
+
             End Set
         End Property
 
@@ -170,18 +193,25 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The mass can not be less than or equal to zero.")
                 End If
 
-                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
-
-                If m_snVolume.ActualValue > 0 Then
-                    'Dim fltMassKg As Single = CSng(Value.ActualValue / 1000) 'The mass we get in here will ALWAYS be in grams. Must convert to Kg
-                    Dim fltDensityGramsPerMeterCube As Single = CSng(Value.ActualValue / m_snVolume.ActualValue)
-                    Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
-
-                    Dim snNewVal As New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
-                    snNewVal.ActualValue = fltDensityGramPerDistUnitCube
-                    Me.Density = snNewVal
+                'The bullet physics engine uses mass as its key value to define a rigid body, but vortex uses density. So we need to alter
+                'what we are using as a key param based on application settings.
+                If Util.Application.Physics.UseMassForRigidBodyDefinitions Then
+                    Me.SetSimData("Mass", Value.ToString, True)
+                    m_snMass.CopyData(Value)
+                    UpdateMassVolumeDensity()
                 Else
-                    Throw New System.Exception("The volume has not been defined yet.")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+
+                    If m_snVolume.ActualValue > 0 Then
+                        Dim fltDensityGramsPerMeterCube As Single = CSng(Value.ActualValue / m_snVolume.ActualValue)
+                        Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
+
+                        Dim snNewVal As New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
+                        snNewVal.ActualValue = fltDensityGramPerDistUnitCube
+                        Me.Density = snNewVal
+                    Else
+                        Throw New System.Exception("The volume has not been defined yet.")
+                    End If
                 End If
 
             End Set
@@ -217,16 +247,53 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property Drag() As Framework.ScaledVector3
+        Public Overridable Property LinearDrag() As Framework.ScaledVector3
             Get
-                Return m_svDrag
+                Return m_svLinearDrag
             End Get
             Set(ByVal value As Framework.ScaledVector3)
-                Me.SetSimData("Drag", value.GetSimulationXml("Drag"), True)
-                m_svDrag.CopyData(value)
+                Me.SetSimData("LinearDrag", value.GetSimulationXml("LinearDrag"), True)
+                m_svLinearDrag.CopyData(value)
             End Set
         End Property
 
+        Public Overridable Property AngularDrag() As Framework.ScaledVector3
+            Get
+                Return m_svAngularDrag
+            End Get
+            Set(ByVal value As Framework.ScaledVector3)
+                Me.SetSimData("AngularDrag", value.GetSimulationXml("AngularDrag"), True)
+                m_svAngularDrag.CopyData(value)
+            End Set
+        End Property
+
+        Public Overridable Property MaxHydroForce() As ScaledNumber
+            Get
+                Return m_snMaxHydroForce
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The maximum hydrodynamic force can not be less than zero.")
+                End If
+                Me.SetSimData("MaxHydroForce", Value.ToString, True)
+
+                m_snMaxHydroForce.CopyData(Value)
+            End Set
+        End Property
+
+        Public Overridable Property MaxHydroTorque() As ScaledNumber
+            Get
+                Return m_snMaxHydroTorque
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The maximum hydrodynamic torque can not be less than zero.")
+                End If
+                Me.SetSimData("MaxHydroTorque", Value.ToString, True)
+
+                m_snMaxHydroTorque.CopyData(Value)
+            End Set
+        End Property
 
         Public Overridable Property Magnus() As Single
             Get
@@ -265,6 +332,30 @@ Namespace DataObjects.Physical
                 Else
                     Return False
                 End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property HasStaticJoint() As Boolean
+            Get
+                If Not Me.JointToParent Is Nothing AndAlso Util.IsTypeOf(Me.JointToParent.GetType(), GetType(Joints.StaticJoint), False) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property HasStaticChild() As Boolean
+            Get
+                Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
+                For Each deEntry As DictionaryEntry In m_aryChildBodies
+                    dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
+                    If dbChild.HasStaticJoint Then
+                        Return True
+                    End If
+                Next
+
+                Return False
             End Get
         End Property
 
@@ -430,6 +521,21 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property IsStickyPart() As Boolean
+            Get
+                Return m_bIsStickyPart
+            End Get
+            Set(value As Boolean)
+                'You can only set a part as sticky if it is a contact sensor
+                If m_bContactSensor Then
+                    SetSimData("IsStickyPart", value.ToString(), True)
+                    m_bIsStickyPart = value
+                    SetupIncomingDataTypes()
+                End If
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -471,6 +577,8 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAngularAccelerationY", "Angular Acceleration Y Axis", "rad/s^2", "rad/s^2", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAngularAccelerationZ", "Angular Acceleration Z Axis", "rad/s^2", "rad/s^2", -5, 5))
 
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyBuoyancy", "Buoyancy", "Newtons", "N", -100, 100))
+
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragForceX", "Drag Force X Axis", "Newtons", "N", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragForceY", "Drag Force Y Axis", "Newtons", "N", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyDragForceZ", "Drag Force Z Axis", "Newtons", "N", -100, 100))
@@ -490,14 +598,23 @@ Namespace DataObjects.Physical
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ContactCount", "Contact Count", "", "", 0, 1))
 
+            If Util.Application.Physics.AllowStickyParts Then
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOn", "Sticky On", "", "", 0, 1))
+            End If
+
             m_thDataTypes.ID = "BodyForceX"
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+            SetupIncomingDataTypes()
 
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")
-            m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
-            m_svDrag.CopyData(1, 1, 1, True)
+            m_svLinearDrag = New ScaledVector3(Me, "LinearDrag", "Linear drag coefficients of this part.", "", "")
+            m_svLinearDrag.CopyData(1, 1, 1, True)
+            m_svAngularDrag = New ScaledVector3(Me, "AngularDrag", "Angular drag coefficients of this part.", "", "")
+            m_svAngularDrag.CopyData(0.05, 0.05, 0.05, True)
+
+            m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 50, ScaledNumber.enumNumericScale.None, "Netwons", "N")
+            m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 20, ScaledNumber.enumNumericScale.None, "Netwon-Meters", "Nm")
 
             If Not Util.Simulation Is Nothing AndAlso Not Util.Simulation.Environment Is Nothing AndAlso Not Util.Simulation.Environment.MaterialTypes Is Nothing AndAlso _
                 Util.Simulation.Environment.MaterialTypes.ContainsKey("DEFAULTMATERIAL") Then
@@ -508,7 +625,8 @@ Namespace DataObjects.Physical
 
             AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
             AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
-            AddHandler m_svDrag.ValueChanged, AddressOf Me.OnDragValueChanged
+            AddHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            AddHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
 
             If Not Util.Environment Is Nothing Then
                 m_snDensity = Util.Environment.DefaultDensity
@@ -530,11 +648,48 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub UpdateMassAndVolume()
-            m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
-            m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+        Protected Overloads Sub SetupIncomingDataTypes()
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceY", "Body Force Y", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceZ", "Body Force Z", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            If m_bIsStickyPart AndAlso Util.Application.Physics.AllowStickyParts Then
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOn", "Sticky On", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StickyOff", "Sticky Off", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            End If
+            m_thIncomingDataTypes.ID = "BodyForceX"
+        End Sub
 
-            Util.ProjectProperties.RefreshProperties()
+        Protected Overridable Sub UpdateMassVolumeDensity()
+
+            If Not Me.SimInterface Is Nothing Then
+                If Util.Application.Physics.UseMassForRigidBodyDefinitions Then
+                    'If the mass was loaded in as less than zero then we need to get it again from the simulation.
+                    If m_snMass.ActualValue < 0 Then
+                        m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                    End If
+
+                    m_snDensity.ActualValue = Me.SimInterface.GetDataValueImmediate("Density")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                Else
+                    m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+                    m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+                End If
+            End If
+
+            'If this is a static joint then update the parent body mass volume density as well.
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions AndAlso Me.HasStaticJoint Then
+                If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody), False) Then
+                    Dim doParentBody As RigidBody = DirectCast(Me.Parent, RigidBody)
+                    If Not doParentBody Is Nothing Then
+                        doParentBody.UpdateMassVolumeDensity()
+                    End If
+                End If
+            End If
+
+            If Not Util.ProjectProperties Is Nothing Then
+                Util.ProjectProperties.RefreshProperties()
+            End If
         End Sub
 
         Public Overrides Sub InitAfterAppStart()
@@ -548,7 +703,10 @@ Namespace DataObjects.Physical
             m_aryChildBodies.ClearIsDirty()
             m_aryOdorSources.ClearIsDirty()
             m_svBuoyancyCenter.ClearIsDirty()
-            m_svDrag.ClearIsDirty()
+            m_svLinearDrag.ClearIsDirty()
+            m_svAngularDrag.ClearIsDirty()
+            m_snMaxHydroForce.ClearIsDirty()
+            m_snMaxHydroTorque.ClearIsDirty()
             m_svCOM.ClearIsDirty()
             m_snDensity.ClearIsDirty()
             m_snMass.ClearIsDirty()
@@ -844,13 +1002,36 @@ Namespace DataObjects.Physical
                                        "applied to the buoyancy force which accounts for the fact that a given volume might actually have holes " & _
                                        "or concavity in it which would affect the buoyancy force on the object.", m_fltBuoyancyScale))
 
-                    pbNumberBag = m_svDrag.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "Drag", _
-                                                "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+                    If Util.Application.Physics.UseHydrodynamicsMagnus Then
+                        pbNumberBag = m_svLinearDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "LinearDrag", _
+                                                    "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Magnus", m_fltMagnus.GetType(), "Magnus", _
-                                     "Hydrodynamics", "The Magnus coefficient for the body.", m_fltMagnus))
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Magnus", m_fltMagnus.GetType(), "Magnus", _
+                                         "Hydrodynamics", "The Magnus coefficient for the body.", m_fltMagnus))
+                    Else
+                        pbNumberBag = m_svLinearDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Drag", pbNumberBag.GetType(), "LinearDrag", _
+                                                    "Hydrodynamics", "This is the linear drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+
+                        pbNumberBag = m_svAngularDrag.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Drag", pbNumberBag.GetType(), "AngularDrag", _
+                                                    "Hydrodynamics", "This is the angular drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
+
+                        pbNumberBag = m_snMaxHydroForce.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Force", pbNumberBag.GetType(), "MaxHydroForce", _
+                                                    "Hydrodynamics", "Sets the maximum hydrodynamic force that can be applied to this part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                        pbNumberBag = m_snMaxHydroTorque.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Torque", pbNumberBag.GetType(), "MaxHydroTorque", _
+                                                    "Hydrodynamics", "Sets the maximum hydrodynamic torque that can be applied to this part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                    End If
+
 
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Fluids", m_bEnableFluids.GetType(), "EnableFluids", _
                                      "Hydrodynamics", "Enables fluid interactions for this specific body.", m_bEnableFluids))
@@ -862,15 +1043,22 @@ Namespace DataObjects.Physical
                                                 "Mass Properties", "Sets the density of this body part.", pbNumberBag, _
                                                 "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                    pbNumberBag = m_snMass.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
-                                                "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                    If Util.Application.Physics.UseMassForRigidBodyDefinitions OrElse Not Me.HasStaticJoint Then
+                        pbNumberBag = m_snMass.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
+                                                    "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                    pbNumberBag = m_snVolume.Properties
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
-                                                "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
-                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                        pbNumberBag = m_snVolume.Properties
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
+                                                    "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
+                                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
+                    End If
+                Else
+                    If Util.Application.Physics.AllowStickyParts Then
+                        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Sticky Part", m_bIsStickyPart.GetType(), "IsStickyPart", _
+                                                    "Part Properties", "True if this is a sticky part.", m_bIsStickyPart))
+                    End If
                 End If
 
                 'Center Of Mass
@@ -887,14 +1075,13 @@ Namespace DataObjects.Physical
                                "Part Properties", "The material to be used for this part.", _
                                m_thMaterialType, GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                GetType(AnimatGUI.TypeHelpers.LinkedMaterialTypeConverter)))
-            Else
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
-                                            "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor, True))
             End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Collision Object", m_bIsCollisionObject.GetType(), "IsCollisionObject", _
                                         "Part Properties", "If this is true then it is a collision object.", m_bIsCollisionObject, True))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
+                                        "Part Properties", "If true this part can detect contacts.", m_bContactSensor, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Odor Sources", m_aryOdorSources.GetType(), "OdorSources", _
                                         "Odor Properties", "Edit the odor sources that this part can emit.", m_aryOdorSources, _
@@ -964,6 +1151,12 @@ Namespace DataObjects.Physical
                 m_JointToParent = Nothing
             End If
 
+            'Remove the old change handlers.
+            If Not m_svCOM Is Nothing Then RemoveHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
+            If Not m_svBuoyancyCenter Is Nothing Then RemoveHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
+            If Not m_svLinearDrag Is Nothing Then RemoveHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            If Not m_svAngularDrag Is Nothing Then RemoveHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
+
             m_bFreeze = doOrigPart.m_bFreeze
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
@@ -979,7 +1172,10 @@ Namespace DataObjects.Physical
 
             m_svBuoyancyCenter = DirectCast(doOrigPart.m_svBuoyancyCenter.Clone(Me, bCutData, doRoot), ScaledVector3)
             m_fltBuoyancyScale = doOrigPart.m_fltBuoyancyScale
-            m_svDrag = DirectCast(doOrigPart.m_svDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_svLinearDrag = DirectCast(doOrigPart.m_svLinearDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_svAngularDrag = DirectCast(doOrigPart.m_svAngularDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_snMaxHydroForce = DirectCast(doOrigPart.m_snMaxHydroForce.Clone(doOrigPart.m_snMaxHydroForce.Parent, bCutData, doRoot), ScaledNumber)
+            m_snMaxHydroTorque = DirectCast(doOrigPart.m_snMaxHydroTorque.Clone(doOrigPart.m_snMaxHydroTorque.Parent, bCutData, doRoot), ScaledNumber)
             m_fltMagnus = doOrigPart.m_fltMagnus
             m_bEnableFluids = doOrigPart.m_bEnableFluids
 
@@ -990,6 +1186,12 @@ Namespace DataObjects.Physical
             m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate.Clone(doOrigPart.m_snFoodReplenishRate.Parent, bCutData, doRoot), ScaledNumber)
             m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent.Clone(doOrigPart.m_snFoodEnergyContent.Parent, bCutData, doRoot), ScaledNumber)
             m_svCOM = DirectCast(doOrigPart.m_svCOM.Clone(Me, bCutData, doRoot), ScaledVector3)
+
+            'Add new change handlers.
+            AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
+            AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
+            AddHandler m_svLinearDrag.ValueChanged, AddressOf Me.OnLinearDragValueChanged
+            AddHandler m_svAngularDrag.ValueChanged, AddressOf Me.OnAngularDragValueChanged
 
             Me.MaterialType = DirectCast(doOrigPart.m_thMaterialType.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedMaterialType)
 
@@ -1096,13 +1298,18 @@ Namespace DataObjects.Physical
             Me.Name = doExisting.Name
             Me.ID = doExisting.ID
             Me.Density = doExisting.Density
+            Me.Mass = doExisting.Mass
+            Me.m_snVolume.ActualValue = doExisting.m_snVolume.ActualValue
             Me.Ambient = doExisting.Ambient
             Me.Diffuse = doExisting.Diffuse
             Me.Specular = doExisting.Specular
             Me.Shininess = doExisting.Shininess
             Me.m_svBuoyancyCenter = doExisting.m_svBuoyancyCenter
             Me.m_fltBuoyancyScale = doExisting.m_fltBuoyancyScale
-            Me.m_svDrag = doExisting.m_svDrag
+            Me.m_svLinearDrag = doExisting.m_svLinearDrag
+            Me.m_svAngularDrag = doExisting.m_svAngularDrag
+            Me.m_snMaxHydroForce = doExisting.m_snMaxHydroForce
+            Me.m_snMaxHydroTorque = doExisting.m_snMaxHydroTorque
             Me.m_fltMagnus = doExisting.m_fltMagnus
             Me.m_bEnableFluids = doExisting.m_bEnableFluids
             Me.Description = doExisting.Description
@@ -1154,8 +1361,7 @@ Namespace DataObjects.Physical
                     AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
                     AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
 
-                    m_snMass.ActualValue = m_doInterface.GetDataValueImmediate("Mass")
-                    m_snVolume.ActualValue = m_doInterface.GetDataValueImmediate("Volume")
+                    UpdateMassVolumeDensity()
                 End If
 
                 If Not m_JointToParent Is Nothing Then
@@ -1206,12 +1412,29 @@ Namespace DataObjects.Physical
             m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
             m_snDensity.LoadData(oXml, "Density")
+            If oXml.FindChildElement("Mass", False) Then
+                m_snMass.LoadData(oXml, "Mass")
+            ElseIf Util.Application.Physics.UseMassForRigidBodyDefinitions Then
+                'If we could not load the mass in and we need that for the definition then lets save
+                'that here temporarrily as -1 to let the sim know this is invalid and needs to be calculated
+                'directly. Then we will reload it from the simulation later.
+                m_snMass.ActualValue = -1
+            End If
 
             m_svCOM.LoadData(oXml, "COM", False)
 
             m_svBuoyancyCenter.LoadData(oXml, "BuoyancyCenter", False)
             m_fltBuoyancyScale = oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.LoadData(oXml, "Drag", False)
+
+            If oXml.FindChildElement("Drag", False) Then
+                m_svLinearDrag.LoadData(oXml, "Drag", False)
+            Else
+                m_svLinearDrag.LoadData(oXml, "LinearDrag", False)
+                m_svAngularDrag.LoadData(oXml, "AngularDrag", False)
+                m_snMaxHydroForce.LoadData(oXml, "MaxHydroForce", False)
+                m_snMaxHydroTorque.LoadData(oXml, "MaxHydroTorque", False)
+            End If
+
             m_fltMagnus = oXml.GetChildFloat("Magnus", m_fltMagnus)
             m_bEnableFluids = oXml.GetChildBool("EnableFluids", m_bEnableFluids)
 
@@ -1280,8 +1503,13 @@ Namespace DataObjects.Physical
                 End Try
             End If
 
+            If Util.Application.Physics.AllowStickyParts Then
+                m_bIsStickyPart = oXml.GetChildBool("IsStickyPart", False)
+            End If
+
             oXml.OutOfElem() 'Outof RigidBody Element
 
+            SetupIncomingDataTypes()
         End Sub
 
         Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -1292,13 +1520,33 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
+            If Util.Application.Physics.AllowStickyParts Then
+                oXml.AddChildElement("IsStickyPart", m_bIsStickyPart)
+            End If
+
             m_svBuoyancyCenter.SaveData(oXml, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.SaveData(oXml, "Drag")
+            m_svLinearDrag.SaveData(oXml, "LinearDrag")
+            m_svAngularDrag.SaveData(oXml, "AngularDrag")
+            m_snMaxHydroForce.SaveData(oXml, "MaxHydroForce")
+            m_snMaxHydroTorque.SaveData(oXml, "MaxHydroTorque")
             oXml.AddChildElement("Magnus", m_fltMagnus)
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveData(oXml, "Density")
+
+            'If we are using density (IE: Vortex) and this body either has static children or is a static child then we 
+            'need to get the estimated mass and save that out instead of the mass shown. The reason is that the mass for
+            'static children for vortex is shown as 0 and added to the mass of the parent. If we try and convert this project
+            'then it will load up in bullet incorrectly with a mass of 0, so we use the estimated masses.
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions AndAlso (Me.HasStaticJoint OrElse Me.HasStaticChild OrElse Me.Mass.ActualValue = 0) Then
+                Dim snMass As ScaledNumber = DirectCast(m_snMass.Clone(m_snMass.Parent, False, Me), ScaledNumber)
+                snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("EstimatedMass")
+                snMass.SaveData(oXml, "Mass")
+            Else
+                m_snMass.SaveData(oXml, "Mass")
+            End If
+
             m_svCOM.SaveData(oXml, "COM")
 
             If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
@@ -1361,13 +1609,21 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
+            If Util.Application.Physics.AllowStickyParts Then
+                oXml.AddChildElement("IsStickyPart", m_bIsStickyPart)
+            End If
+
             m_svBuoyancyCenter.SaveSimulationXml(oXml, Me, "BuoyancyCenter")
             oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
-            m_svDrag.SaveSimulationXml(oXml, Me, "Drag")
+            m_svLinearDrag.SaveSimulationXml(oXml, Me, "LinearDrag")
+            m_svAngularDrag.SaveSimulationXml(oXml, Me, "AngularDrag")
+            m_snMaxHydroForce.SaveSimulationXml(oXml, Me, "MaxHydroForce")
+            m_snMaxHydroTorque.SaveSimulationXml(oXml, Me, "MaxHydroTorque")
             oXml.AddChildElement("Magnus", m_fltMagnus)
             oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
+            m_snMass.SaveSimulationXml(oXml, Me, "Mass")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
 
             oXml.AddChildElement("Freeze", m_bFreeze)
@@ -1503,7 +1759,7 @@ Namespace DataObjects.Physical
 
                 'Now, if it needs a joint then select the joint type to use
                 If rbNew.UsesAJoint Then
-                    If Not rbNew.SelectJointType(vPos, vNorm) Then
+                    If Not rbNew.SelectJointType(Me, vPos, vNorm) Then
                         Return False
                     End If
                 End If
@@ -1563,13 +1819,14 @@ Namespace DataObjects.Physical
             'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.AddBodyPartEvent(doStruct.BodyEditor, doStruct, Me, rbChildBody))
         End Sub
 
-        Protected Overridable Function SelectJointType(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Protected Overridable Function SelectJointType(ByVal doParent As RigidBody, ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
 
             'First Select the new rigid body part type
             Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
             frmSelectParts.PartType = GetType(Physical.Joint)
             frmSelectParts.IsRoot = False
             frmSelectParts.ParentBody = Me
+            frmSelectParts.ChildBody = doParent
 
             If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
@@ -1635,12 +1892,15 @@ Namespace DataObjects.Physical
                                           ByVal fltDistanceChange As Single)
 
             Dim iDistDiff As Integer = CInt(Util.Environment.DisplayDistanceUnits) - CInt(Util.Environment.DisplayDistanceUnits(ePrevDistance))
-            Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
 
-            Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
-            Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
-            Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
-            Me.Density = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
+            If Not Util.Application.Physics.UseMassForRigidBodyDefinitions Then
+                Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
+
+                Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
+                Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
+                Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
+                Me.Density = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
+            End If
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
@@ -1880,7 +2140,7 @@ Namespace DataObjects.Physical
         Public Event ContactSensorRemoved()
 
         'These three events handlers are called whenever a user manually changes the value of the COM, Buoyancycenter or drag.
-        Protected Overridable Sub OnCOMValueChanged()
+        Protected Overridable Sub OnCOMValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("COM", m_svCOM.GetSimulationXml("COM"), True)
                 Util.ProjectProperties.RefreshProperties()
@@ -1889,7 +2149,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnBuoyancyCenterValueChanged()
+        Protected Overridable Sub OnBuoyancyCenterValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("BuoyancyCenter", m_svBuoyancyCenter.GetSimulationXml("BuoyancyCenter"), True)
                 Util.ProjectProperties.RefreshProperties()
@@ -1898,9 +2158,18 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnDragValueChanged()
+        Protected Overridable Sub OnLinearDragValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
-                Me.SetSimData("Drag", m_svDrag.GetSimulationXml("Drag"), True)
+                Me.SetSimData("LinearDrag", m_svLinearDrag.GetSimulationXml("LinearDrag"), True)
+                Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnAngularDragValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
+            Try
+                Me.SetSimData("AngularDrag", m_svAngularDrag.GetSimulationXml("AngularDrag"), True)
                 Util.ProjectProperties.RefreshProperties()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

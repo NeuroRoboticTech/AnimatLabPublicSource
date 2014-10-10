@@ -20,12 +20,12 @@ class VORTEX_PORT VsScriptedSimulationWindow : public VsSimulationWindow
 		BodyPart *m_lpOriginalTrackBody;
 		//This is the body part that we will switch to once sim starts.
 		BodyPart *m_lpDefaultTrackBody;
-		string m_strDefaultPartID;
+		std::string m_strDefaultPartID;
 
 		CStdFPoint m_vDefaultPosition;
 
-		virtual void AddCameraPath(string strXml);
-		virtual void RemoveCameraPath(string strID, BOOL bThrowError = TRUE);
+		virtual void AddCameraPath(std::string strXml);
+		virtual void RemoveCameraPath(std::string strID, bool bThrowError = true);
 		virtual OsgLinearPath *LoadCameraPath(CStdXml &oXml);
 		virtual void TrackCamera();
 		virtual void FindNextCameraPath();
@@ -34,24 +34,24 @@ class VORTEX_PORT VsScriptedSimulationWindow : public VsSimulationWindow
 		VsScriptedSimulationWindow(void);
 		virtual ~VsScriptedSimulationWindow(void);
 
-		virtual string DefaultPartID();
-		virtual void DefaultPartID(string strID);
+		virtual std::string DefaultPartID();
+		virtual void DefaultPartID(std::string strID);
 
 		virtual CStdFPoint DefaultPosition();
-		virtual void DefaultPosition(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-		virtual void DefaultPosition(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-		virtual void DefaultPosition(string strXml, BOOL bUseScaling = TRUE);
+		virtual void DefaultPosition(CStdFPoint &oPoint, bool bUseScaling = true);
+		virtual void DefaultPosition(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+		virtual void DefaultPosition(std::string strXml, bool bUseScaling = true);
 
-		virtual int FindCameraPath(string strID, BOOL bThrowError = TRUE);
+		virtual int FindCameraPath(std::string strID, bool bThrowError = true);
 		virtual void SortPaths();
 
 		virtual void SimStarting();
 
 		virtual void Update();
 
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 		virtual void Initialize();
 		virtual void ResetSimulation();
 		virtual void Load(CStdXml &oXml);

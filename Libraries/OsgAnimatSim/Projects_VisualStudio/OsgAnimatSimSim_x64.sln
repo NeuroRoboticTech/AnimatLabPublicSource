@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgAnimatSim_x64", "OsgAnimatSim_x64.vcxproj", "{04450129-7C42-BC4E-A327-07BF17C4A315}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_x64|x64 = Debug_x64|x64
+		Release_x64|x64 = Release_x64|x64
+		Debug_Double_x64|x64 = Debug_Double_x64|x64
+		Release_Double_x64|x64 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Release_x64|x64.Build.0 = Release_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{04450129-7C42-BC4E-A327-07BF17C4A315}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

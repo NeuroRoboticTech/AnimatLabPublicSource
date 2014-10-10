@@ -63,20 +63,20 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 			case(GUIEventAdapter::RELEASE):
 			{
-				VsMouseSpring::GetInstance()->Visible(FALSE);
+				VsMouseSpring::GetInstance()->Visible(false);
 
 				if(!m_bInDrag)
 				{
 					if(m_lpPicked && m_lpSim && m_lpSim->VisualSelectionMode() != SIMULATION_SELECTION_MODE)
 					{
 						//Change the selected vertex of the selected part.
-						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), TRUE, TRUE);
+						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), true, true);
 
 						if(m_lpSim->AddBodiesMode())
 							m_lpPicked->AddBodyClicked(m_vPickPoint.x(), m_vPickPoint.y(), m_vPickPoint.z(), 
 													   m_vPickNormal.x(), m_vPickNormal.y(), m_vPickNormal.z());
 						else
-							m_lpPicked->Selected(TRUE, m_bControlDown);
+							m_lpPicked->Selected(true, m_bControlDown);
 					}
 				}
 
@@ -113,7 +113,7 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 			case(GUIEventAdapter::KEYDOWN):
 			{
-				//string strText = "Key Down" + STR(ea.getKey());
+				//std::string strText = "Key Down" + STR(ea.getKey());
 				//OutputDebugString(strText.c_str());
 				if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Shift_L)
 				{
@@ -137,7 +137,7 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 			case(GUIEventAdapter::KEYUP):
 			{
-				//string strText = "Key Up" + STR(ea.getKey());
+				//std::string strText = "Key Up" + STR(ea.getKey());
 				//OutputDebugString(strText.c_str());
 				if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Shift_L)
 				{
@@ -171,9 +171,9 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 	}  //Eat any erorrs here.
 	catch(CStdErrorInfo oError)
-	{return FALSE;}
+	{return false;}
 	catch(...)
-	{return FALSE;}
+	{return false;}
 
 	return bHandled;
 }
@@ -247,8 +247,8 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 						case COLLISION_SELECTION_MODE:
 							//if(lpBody)
 							//{ //For debugging.
-							//	BOOL bManip = lpBody->AllowMouseManipulation();
-							//	BOOL bVisible = lpBody->IsVisible();
+							//	bool bManip = lpBody->AllowMouseManipulation();
+							//	bool bVisible = lpBody->IsVisible();
 							//	int iType = lpBody->VisualSelectionType();
 							//	int iMode = m_lpSim->VisualSelectionMode();
                             //  iMode=iType;
@@ -368,38 +368,38 @@ void VsCameraManipulator::GetPickedFace(int iIndex, osg::Geometry *osgGeo)
 }
 */
 
-BOOL VsCameraManipulator::CanDoMouseSpring()
+bool VsCameraManipulator::CanDoMouseSpring()
 {
 	VsRigidBody *osgRBBody = VsMouseSpring::GetInstance()->GetRigidBody();
 
 	if (!osgRBBody)
-		return FALSE;
+		return false;
 
 	RigidBody *rbBody = dynamic_cast<RigidBody *>(osgRBBody);
 	
 	if (!rbBody)
-		return FALSE;
+		return false;
 
-	return TRUE;
+	return true;
 }
 
-BOOL VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
+bool VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, float y)
 {	
-	VsMouseSpring::GetInstance()->Visible(FALSE);
+	VsMouseSpring::GetInstance()->Visible(false);
 
 	VsRigidBody *osgRBBody = VsMouseSpring::GetInstance()->GetRigidBody();
 
 	if (!osgRBBody)
-		return FALSE;
+		return false;
 
 	RigidBody *rbBody = dynamic_cast<RigidBody *>(osgRBBody);
 	
 	if (!rbBody)
-		return FALSE;
+		return false;
 
-	VsMouseSpring::GetInstance()->Visible(TRUE);
+	VsMouseSpring::GetInstance()->Visible(true);
 
-	char strDest[150];
+	//char strDest[150];
 
 	//get the grab position on the body
 	osg::Vec3 vGrabPos = VsMouseSpring::GetInstance()->GetGrabPosition() *osgRBBody->GetCameraMatrixTransform()->getWorldMatrices().at(0);
@@ -413,25 +413,25 @@ BOOL VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, floa
 	osg::Vec3 vSpringLength = ((v3End - vGrabPos)); 
 	osg::Vec3 vSpringForce = vSpringLength * m_lpSim->MouseSpringStiffness();
 
-	sprintf(strDest, "Spring Force: (%3.3f, %3.3f, %3.3f)\n", vSpringForce[0], vSpringForce[1], vSpringForce[2]);
-	OutputDebugString(strDest);
+	//sprintf(strDest, "Spring Force: (%3.3f, %3.3f, %3.3f)\n", vSpringForce[0], vSpringForce[1], vSpringForce[2]);
+	//OutputDebugString(strDest);
 
 	//And the force from damping of the spring.
 	CStdFPoint fpBodyVel = rbBody->GetVelocityAtPoint(vGrabPos.x(), vGrabPos.y(), vGrabPos.z());
 	osg::Vec3 v3BodyVel(fpBodyVel.x, fpBodyVel.y, fpBodyVel.z);
 	osg::Vec3 v3DampForce = (v3BodyVel) * m_lpSim->MouseSpringDamping();
 
-	sprintf(strDest, "Damping Force: (%3.3f, %3.3f, %3.3f)\n", v3DampForce[0], v3DampForce[1], v3DampForce[2]);
-	OutputDebugString(strDest);
+	//sprintf(strDest, "Damping Force: (%3.3f, %3.3f, %3.3f)\n", v3DampForce[0], v3DampForce[1], v3DampForce[2]);
+	//OutputDebugString(strDest);
 
 	//Then the total force = Spring force - damping force
 	osg::Vec3 vTotalForce = vSpringForce - v3DampForce;
-	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), FALSE);
+	rbBody->AddForceAtWorldPos(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), false);
 
-	sprintf(strDest, "Length: (%3.3f, %3.3f, %3.3f)   MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n\n", vSpringLength[0], vSpringLength[1], vSpringLength[2], vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
-	OutputDebugString(strDest);
+	//sprintf(strDest, "Length: (%3.3f, %3.3f, %3.3f)   MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n\n", vSpringLength[0], vSpringLength[1], vSpringLength[2], vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
+	//OutputDebugString(strDest);
 
-	return TRUE;
+	return true;
 }
 
 osg::Vec3 VsCameraManipulator::ConvertMouseTo3D(const GUIEventAdapter& ea, int x, int y, osg::Vec3 vGrabPos)

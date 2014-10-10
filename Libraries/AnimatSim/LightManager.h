@@ -32,12 +32,14 @@ namespace AnimatSim
 			Light *LoadLight(CStdXml &oXml);
 
 			virtual void SetupLights();
-			virtual void AddLight(string strXml);
-			virtual void RemoveLight(string strID, BOOL bThrowError = TRUE);
+			virtual void AddLight(std::string strXml);
+			virtual void RemoveLight(std::string strID, bool bThrowError = true);
 
 		public:
 			LightManager(void);
 			virtual ~LightManager(void);
+									
+			static LightManager *CastToDerived(AnimatBase *lpBase) {return static_cast<LightManager*>(lpBase);}
 
 #pragma region AccessorMutators
 
@@ -55,9 +57,9 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
-			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
+			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
 #pragma endregion
 

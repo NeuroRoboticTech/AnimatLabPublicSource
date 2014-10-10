@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug_x64|x64">
+			<Configuration>Debug_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release_x64|x64">
+			<Configuration>Release_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug_Double_x64|x64">
+			<Configuration>Debug_Double_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release_Double_x64|x64">
+			<Configuration>Release_Double_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{ADD12C4D-F7EB-CC47-9D29-4024D2C77FFA}</ProjectGuid>
+		<RootNamespace>BootstrapLoader_x64</RootNamespace>
+		<Keyword>Win32Proj</Keyword>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings">
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup>
+		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">Debug_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">obj\x64\Debug_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">BootstrapLoader_vc10D_x64</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">Release_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">obj\x64\Release_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">BootstrapLoader_vc10_x64</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">false</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">Debug_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">obj\x64\Debug_Double_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">BootstrapLoader_vc10D_x64</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">Release_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">obj\x64\Release_Double_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">BootstrapLoader_vc10_x64</TargetName>
+		<IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">false</IgnoreImportLibrary>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>OldStyle</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<OutputFile>$(OutDir)BootstrapLoader_vc10D_x64.dll</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Windows</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)BootstrapLoader_vc10D_x64.pdb</ProgramDataBaseFileName>
+			<ImportLibrary>Debug_x64\BootstrapLoader_vc10D_x64.lib</ImportLibrary>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+		<PostBuildEvent>
+			<Command>Copy $(OutDir)BootstrapLoader_vc10D_x64.lib ..\..\..\lib\BootstrapLoader_vc10D_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<OutputFile>$(OutDir)BootstrapLoader_vc10_x64.dll</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Windows</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<ImportLibrary>Release_x64\BootstrapLoader_vc10_x64.lib</ImportLibrary>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+		<PostBuildEvent>
+			<Command>Copy $(OutDir)BootstrapLoader_vc10_x64.lib ..\..\..\lib\BootstrapLoader_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>OldStyle</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<OutputFile>$(OutDir)BootstrapLoader_vc10D_x64.dll</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Windows</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)BootstrapLoader_vc10D_x64.pdb</ProgramDataBaseFileName>
+			<ImportLibrary>Debug_x64\BootstrapLoader_vc10D_x64.lib</ImportLibrary>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+		<PostBuildEvent>
+			<Command>Copy $(OutDir)BootstrapLoader_vc10D_x64.lib ..\..\..\lib\BootstrapLoader_vc10D_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BOOTSTRAPLOADER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<OutputFile>$(OutDir)BootstrapLoader_vc10_x64.dll</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\3rdParty\boost_1_54_0\lib_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Windows</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<ImportLibrary>Release_x64\BootstrapLoader_vc10_x64.lib</ImportLibrary>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+		<PostBuildEvent>
+			<Command>Copy $(OutDir)BootstrapLoader_vc10_x64.lib ..\..\..\lib\BootstrapLoader_vc10_x64.lib&#x0D;&#x0A;Copy $(TargetPath) ..\..\..\bin_x64</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="..\stdafx.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="..\BootstrapLoader.cpp">
+		</ClCompile>
+		<ClCompile Include="..\stdafx.cpp">
+		</ClCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+	</ImportGroup>
+</Project>

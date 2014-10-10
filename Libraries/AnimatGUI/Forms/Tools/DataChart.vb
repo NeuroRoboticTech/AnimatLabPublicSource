@@ -503,23 +503,53 @@ Namespace Forms.Tools
             End If
         End Function
 
+        Public Overridable Function ExportDataFilenameWithPhysicsEngine(ByVal strPhysicsEngine As String, ByVal bTestIfExists As Boolean, Optional ByVal strPrefix As String = "", Optional ByVal strPath As String = "") As String
+            Dim strFile As String = ""
+            Dim strFileWithPhysics As String = ""
+            If strPath.Trim.Length > 0 Then
+                strFile = strPath & "\" & strPrefix & Me.Title & ".txt"
+                strFileWithPhysics = strPath & "\" & strPhysicsEngine & "_" & strPrefix & Me.Title & ".txt"
+            Else
+                strFile = Util.Application.ProjectPath & strPrefix & Me.Title & ".txt"
+                strFileWithPhysics = Util.Application.ProjectPath & strPhysicsEngine & "_" & strPrefix & Me.Title & ".txt"
+            End If
+
+            If bTestIfExists Then
+                If System.IO.File.Exists(strFileWithPhysics) Then
+                    Return strFileWithPhysics
+                Else
+                    Return strFile
+                End If
+            Else
+                'If the physics engine is vortex then do not add it as a prefix because default data files without a physics engine are vortex files.
+                If strPhysicsEngine.Trim.Length > 0 AndAlso Not strPhysicsEngine = "Vortex" Then
+                    Return strFileWithPhysics
+                Else
+                    Return strFile
+                End If
+            End If
+        End Function
+
         Public Overridable Function ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "") As Boolean
 
         End Function
 
-        Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
+        Public Overridable Sub CopyChartData(ByVal strPhysicsEngine As String, Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
             'If the file already exists then delete it.
-            If System.IO.File.Exists(Me.ExportDataFilename(strPrefix, strPath)) Then
-                System.IO.File.Delete(Me.ExportDataFilename(strPrefix, strPath))
+            Dim strFile As String = Me.ExportDataFilenameWithPhysicsEngine(strPhysicsEngine, False, strPrefix, strPath)
+
+            If System.IO.File.Exists(strFile) Then
+                System.IO.File.Delete(strFile)
             End If
 
             'Now copy the other file over.
             Dim strFrom As String = Me.ExportDataFilename("")
-            Dim strTo As String = Me.ExportDataFilename(strPrefix, strPath)
+            Dim strTo As String = strFile
             System.IO.File.Copy(strFrom, strTo, True)
         End Sub
 
-        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
+        Public Overridable Sub CompareExportedData(ByVal strPhysicsEngine As String, ByVal strPrefix As String, ByVal strTemplatePath As String, _
+                                                   ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
 
             'Lets try and load the original file and then the new test file.
             Dim aryTemplateColumns() As String
@@ -537,7 +567,7 @@ Namespace Forms.Tools
 
             'Load the template file data using the test columns as the template to make sure we 
             'get only the comparable data columns.
-            Dim strTempFile As String = Me.ExportDataFilename(strPrefix, strTemplatePath)
+            Dim strTempFile As String = Me.ExportDataFilenameWithPhysicsEngine(strPhysicsEngine, True, strPrefix, strTemplatePath)
             Util.ReadCSVFileToArrayUsingTemplate(strTempFile, aryTestColumns, aryTemplateColumns, aryTemplateData)
 
             If aryTemplateColumns Is Nothing OrElse aryTemplateData Is Nothing Then

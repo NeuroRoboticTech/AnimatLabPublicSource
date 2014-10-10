@@ -22,15 +22,15 @@ namespace VortexAnimatSim
 				float m_fltUserDefinedRadius;
 
 			public:
-				VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
-					      BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ, float fltUserDefinedRadius);
+				VsDragger(VsMovableItem *lpParent, bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ, 
+					      bool bAllowRotateX, bool bAllowRotateY, bool bAllowRotateZ, float fltUserDefinedRadius);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();
 
 				virtual void AddToScene();
 				virtual void RemoveFromScene();
-				virtual BOOL IsInScene();
+				virtual bool IsInScene();
 				virtual void SetupMatrix();
 		};
 

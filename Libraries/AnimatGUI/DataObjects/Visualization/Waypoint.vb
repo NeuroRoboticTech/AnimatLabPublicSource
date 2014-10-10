@@ -427,7 +427,7 @@ Namespace DataObjects.Visualization
 
         'These three events handlers are called whenever a user manually changes the value of the position or rotation.
         'This is different from the OnPositionChanged event. Those events come up from the simulation.
-        Protected Overridable Sub OnPositionValueChanged()
+        Protected Overridable Sub OnPositionValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 If Not Util.ProjectProperties Is Nothing Then
                     Me.SetSimData("Position", m_svPosition.GetSimulationXml("Position"), True)

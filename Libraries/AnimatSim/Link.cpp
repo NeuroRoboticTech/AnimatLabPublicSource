@@ -4,7 +4,7 @@
 \brief	Implements the link class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -51,7 +51,7 @@ Link::Link()
 {
 	m_lpOrganism = NULL;
 
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_fltEnabled = 0;
 }
 
@@ -68,7 +68,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Link\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Link\r\n", "", -1, false, true);}
 }
 
 /**
@@ -79,7 +79,7 @@ catch(...)
 
 \return	true if enabled, false if not. 
 **/
-BOOL Link::Enabled() {return m_bEnabled;};
+bool Link::Enabled() {return m_bEnabled;};
 
 /**
 \brief	Sets whether the link is Enabled. 
@@ -89,7 +89,7 @@ BOOL Link::Enabled() {return m_bEnabled;};
 
 \param	bValue	true to enable. 
 **/
-void Link::Enabled(BOOL bValue) 
+void Link::Enabled(bool bValue) 
 {
 	m_bEnabled = bValue;
 	m_fltEnabled = (float) m_bEnabled;
@@ -104,9 +104,9 @@ void Link::Enabled(BOOL bValue)
 void Link::UpdateData()
 {}
 
-void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
@@ -130,32 +130,31 @@ void Link::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lNodeNotDefined, Al_Err_strNodeNotDefined, "Link: ", m_strID);
 }
 
-BOOL Link::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Link::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
+	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Link::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Link::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
 }
 
 }			//AnimatSim

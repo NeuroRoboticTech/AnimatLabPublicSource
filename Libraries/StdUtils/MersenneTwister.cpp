@@ -41,7 +41,7 @@
    email: matumoto@math.keio.ac.jp
 */
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 /* Period parameters */  
 #define N 624

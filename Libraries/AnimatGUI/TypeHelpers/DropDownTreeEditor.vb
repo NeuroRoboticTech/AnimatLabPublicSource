@@ -67,13 +67,17 @@ Namespace TypeHelpers
             Return value
         End Function
 
+        Protected Overridable Function EnforceFirstSelet() As Boolean
+            Return True
+        End Function
+
         Private Sub handleSelection(ByVal sender As System.Object, ByVal e As System.EventArgs)
             If Me.edSvc Is Nothing Then Return
 
             'This event is called when the treeview is first displayed. I obviously do not 
             'want it to close right then so I check if this is the first time it is called and
             'if so then I jump out of this routine.
-            If m_bFirstSelect Then
+            If EnforceFirstSelet() AndAlso m_bFirstSelect Then
                 m_bFirstSelect = False
                 Return
             End If
@@ -86,6 +90,15 @@ Namespace TypeHelpers
             End If
         End Sub
 
+    End Class
+
+
+    Public Class DropDownTreeEditorNoFirstSelect
+        Inherits DropDownTreeEditor
+
+        Protected Overrides Function EnforceFirstSelet() As Boolean
+            Return False
+        End Function
     End Class
 
 End Namespace

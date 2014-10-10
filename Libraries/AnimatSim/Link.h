@@ -20,10 +20,6 @@ namespace AnimatSim
 		/// The pointer to this link's organism
 		Organism *m_lpOrganism;
 
-		///Determines if this Link is enabled. This will only have any effect if this Link can be disabled.
-		///The majority of Links, like rigid bodies, can not be disabled.
-		BOOL m_bEnabled;
-
 		///This is for reporting purposes.
 		float m_fltEnabled;
 
@@ -33,16 +29,18 @@ namespace AnimatSim
 		Link();
 		virtual ~Link();
 
-		virtual BOOL Enabled();
-		virtual void Enabled(BOOL bValue);
+		static Link *CastToDerived(AnimatBase *lpBase) {return static_cast<Link*>(lpBase);}
+
+		virtual bool Enabled();
+		virtual void Enabled(bool bValue);
 
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 	};

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4DD90132-3E67-8E4E-BC30-0B487082EEEE}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libVortexAnimatSim_vc10D.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libVortexAnimatSim_vc10D.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Debug/libVortexAnimatSim_vc10D.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG VORTEXANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libVortexAnimatSim_vc10.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_vc10</Lib>
+        <Lib>AnimatSim_vc10</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libVortexAnimatSim_vc10.so ../../../bin" />
+        <Command type="AfterBuild" command="cp Release/libVortexAnimatSim_vc10.so ../../../unit_test_bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\MeshMinVertexDistanceVisitor.h">
+      <Link>MeshMinVertexDistanceVisitor.h</Link>
+    </None>
+    <None Include="..\OsgGeometry.h">
+      <Link>OsgGeometry.h</Link>
+    </None>
+    <None Include="..\OsgLinearPath.h">
+      <Link>OsgLinearPath.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+    <None Include="..\VsAttachment.h">
+      <Link>VsAttachment.h</Link>
+    </None>
+    <None Include="..\VsAutoTransform.h">
+      <Link>VsAutoTransform.h</Link>
+    </None>
+    <None Include="..\VsBallSocket.h">
+      <Link>VsBallSocket.h</Link>
+    </None>
+    <None Include="..\VsBody.h">
+      <Link>VsBody.h</Link>
+    </None>
+    <None Include="..\VsBox.h">
+      <Link>VsBox.h</Link>
+    </None>
+    <None Include="..\VsBoxTest.h">
+      <Link>VsBoxTest.h</Link>
+    </None>
+    <None Include="..\VsCameraManipulator.h">
+      <Link>VsCameraManipulator.h</Link>
+    </None>
+    <None Include="..\VsClassFactory.h">
+      <Link>VsClassFactory.h</Link>
+    </None>
+    <None Include="..\VsCone.h">
+      <Link>VsCone.h</Link>
+    </None>
+    <None Include="..\VsConstraintFriction.h">
+      <Link>VsConstraintFriction.h</Link>
+    </None>
+    <None Include="..\VsConstraintRelaxation.h">
+      <Link>VsConstraintRelaxation.h</Link>
+    </None>
+    <None Include="..\VsCylinder.h">
+      <Link>VsCylinder.h</Link>
+    </None>
+    <None Include="..\VsDistanceJoint.h">
+      <Link>VsDistanceJoint.h</Link>
+    </None>
+    <None Include="..\VsDragger.h">
+      <Link>VsDragger.h</Link>
+    </None>
+    <None Include="..\VsDraggerHandler.h">
+      <Link>VsDraggerHandler.h</Link>
+    </None>
+    <None Include="..\VsEllipsoid.h">
+      <Link>VsEllipsoid.h</Link>
+    </None>
+    <None Include="..\VsFluidPlane.h">
+      <Link>VsFluidPlane.h</Link>
+    </None>
+    <None Include="..\VsForceStimulus.h">
+      <Link>VsForceStimulus.h</Link>
+    </None>
+    <None Include="..\VsFreeJoint.h">
+      <Link>VsFreeJoint.h</Link>
+    </None>
+    <None Include="..\VsHinge.h">
+      <Link>VsHinge.h</Link>
+    </None>
+    <None Include="..\VsHingeLimit.h">
+      <Link>VsHingeLimit.h</Link>
+    </None>
+    <None Include="..\VsHud.h">
+      <Link>VsHud.h</Link>
+    </None>
+    <None Include="..\VsHudText.h">
+      <Link>VsHudText.h</Link>
+    </None>
+    <None Include="..\VsIntersectionEvent.h">
+      <Link>VsIntersectionEvent.h</Link>
+    </None>
+    <None Include="..\VsJoint.h">
+      <Link>VsJoint.h</Link>
+    </None>
+    <None Include="..\VsLight.h">
+      <Link>VsLight.h</Link>
+    </None>
+    <None Include="..\VsLine.h">
+      <Link>VsLine.h</Link>
+    </None>
+    <None Include="..\VsLinearHillMuscle.h">
+      <Link>VsLinearHillMuscle.h</Link>
+    </None>
+    <None Include="..\VsLinearHillStretchReceptor.h">
+      <Link>VsLinearHillStretchReceptor.h</Link>
+    </None>
+    <None Include="..\VsMaterialType.h">
+      <Link>VsMaterialType.h</Link>
+    </None>
+    <None Include="..\VsMesh.h">
+      <Link>VsMesh.h</Link>
+    </None>
+    <None Include="..\VsMeshBase.h">
+      <Link>VsMeshBase.h</Link>
+    </None>
+    <None Include="..\VsMeshMgr.h">
+      <Link>VsMeshMgr.h</Link>
+    </None>
+    <None Include="..\VsMotorVelocityStimulus.h">
+      <Link>VsMotorVelocityStimulus.h</Link>
+    </None>
+    <None Include="..\VsMotorizedJoint.h">
+      <Link>VsMotorizedJoint.h</Link>
+    </None>
+    <None Include="..\VsMouseSpring.h">
+      <Link>VsMouseSpring.h</Link>
+    </None>
+    <None Include="..\VsMouth.h">
+      <Link>VsMouth.h</Link>
+    </None>
+    <None Include="..\VsMovableItem.h">
+      <Link>VsMovableItem.h</Link>
+    </None>
+    <None Include="..\VsOdorSensor.h">
+      <Link>VsOdorSensor.h</Link>
+    </None>
+    <None Include="..\VsOrganism.h">
+      <Link>VsOrganism.h</Link>
+    </None>
+    <None Include="..\VsOsgUserData.h">
+      <Link>VsOsgUserData.h</Link>
+    </None>
+    <None Include="..\VsOsgUserDataVisitor.h">
+      <Link>VsOsgUserDataVisitor.h</Link>
+    </None>
+    <None Include="..\VsPlane.h">
+      <Link>VsPlane.h</Link>
+    </None>
+    <None Include="..\VsPlaneTest.h">
+      <Link>VsPlaneTest.h</Link>
+    </None>
+    <None Include="..\VsPrismatic.h">
+      <Link>VsPrismatic.h</Link>
+    </None>
+    <None Include="..\VsPrismaticLimit.h">
+      <Link>VsPrismaticLimit.h</Link>
+    </None>
+    <None Include="..\VsRPRO.h">
+      <Link>VsRPRO.h</Link>
+    </None>
+    <None Include="..\VsRigidBody.h">
+      <Link>VsRigidBody.h</Link>
+    </None>
+    <None Include="..\VsScriptedSimulationWindow.h">
+      <Link>VsScriptedSimulationWindow.h</Link>
+    </None>
+    <None Include="..\VsSimulationWindow.h">
+      <Link>VsSimulationWindow.h</Link>
+    </None>
+    <None Include="..\VsSimulationWindowMgr.h">
+      <Link>VsSimulationWindowMgr.h</Link>
+    </None>
+    <None Include="..\VsSimulator.h">
+      <Link>VsSimulator.h</Link>
+    </None>
+    <None Include="..\VsSphere.h">
+      <Link>VsSphere.h</Link>
+    </None>
+    <None Include="..\VsSpring.h">
+      <Link>VsSpring.h</Link>
+    </None>
+    <None Include="..\VsStructure.h">
+      <Link>VsStructure.h</Link>
+    </None>
+    <None Include="..\VsTerrain.h">
+      <Link>VsTerrain.h</Link>
+    </None>
+    <None Include="..\VsTorus.h">
+      <Link>VsTorus.h</Link>
+    </None>
+    <None Include="..\VsTrackballDragger.h">
+      <Link>VsTrackballDragger.h</Link>
+    </None>
+    <None Include="..\VsTranslateAxisDragger.h">
+      <Link>VsTranslateAxisDragger.h</Link>
+    </None>
+    <None Include="..\VsUniversal.h">
+      <Link>VsUniversal.h</Link>
+    </None>
+    <None Include="..\WorldCoordinateNodeVisitor.h">
+      <Link>WorldCoordinateNodeVisitor.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\MeshMinVertexDistanceVisitor.cpp">
+      <Link>MeshMinVertexDistanceVisitor.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgGeometry.cpp">
+      <Link>OsgGeometry.cpp</Link>
+    </Compile>
+    <Compile Include="..\OsgLinearPath.cpp">
+      <Link>OsgLinearPath.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+    <Compile Include="..\VortexAnimatSim.cpp">
+      <Link>VortexAnimatSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsAttachment.cpp">
+      <Link>VsAttachment.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsAutoTransform.cpp">
+      <Link>VsAutoTransform.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsBallSocket.cpp">
+      <Link>VsBallSocket.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsBody.cpp">
+      <Link>VsBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsBox.cpp">
+      <Link>VsBox.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsBoxTest.cpp">
+      <Link>VsBoxTest.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsCameraManipulator.cpp">
+      <Link>VsCameraManipulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsClassFactory.cpp">
+      <Link>VsClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsCone.cpp">
+      <Link>VsCone.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsConstraintFriction.cpp">
+      <Link>VsConstraintFriction.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsConstraintRelaxation.cpp">
+      <Link>VsConstraintRelaxation.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsCylinder.cpp">
+      <Link>VsCylinder.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsDistanceJoint.cpp">
+      <Link>VsDistanceJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsDragger.cpp">
+      <Link>VsDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsDraggerHandler.cpp">
+      <Link>VsDraggerHandler.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsEllipsoid.cpp">
+      <Link>VsEllipsoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsFluidPlane.cpp">
+      <Link>VsFluidPlane.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsForceStimulus.cpp">
+      <Link>VsForceStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsFreeJoint.cpp">
+      <Link>VsFreeJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsHinge.cpp">
+      <Link>VsHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsHingeLimit.cpp">
+      <Link>VsHingeLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsHud.cpp">
+      <Link>VsHud.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsHudText.cpp">
+      <Link>VsHudText.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsIntersectionEvent.cpp">
+      <Link>VsIntersectionEvent.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsJoint.cpp">
+      <Link>VsJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsLight.cpp">
+      <Link>VsLight.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsLine.cpp">
+      <Link>VsLine.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsLinearHillMuscle.cpp">
+      <Link>VsLinearHillMuscle.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsLinearHillStretchReceptor.cpp">
+      <Link>VsLinearHillStretchReceptor.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMaterialType.cpp">
+      <Link>VsMaterialType.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMesh.cpp">
+      <Link>VsMesh.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMeshBase.cpp">
+      <Link>VsMeshBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMeshMgr.cpp">
+      <Link>VsMeshMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMotorVelocityStimulus.cpp">
+      <Link>VsMotorVelocityStimulus.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMotorizedJoint.cpp">
+      <Link>VsMotorizedJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMouseSpring.cpp">
+      <Link>VsMouseSpring.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMouth.cpp">
+      <Link>VsMouth.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsMovableItem.cpp">
+      <Link>VsMovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsOdorSensor.cpp">
+      <Link>VsOdorSensor.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsOrganism.cpp">
+      <Link>VsOrganism.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsOsgUserData.cpp">
+      <Link>VsOsgUserData.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsOsgUserDataVisitor.cpp">
+      <Link>VsOsgUserDataVisitor.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsPlane.cpp">
+      <Link>VsPlane.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsPlaneTest.cpp">
+      <Link>VsPlaneTest.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsPrismatic.cpp">
+      <Link>VsPrismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsPrismaticLimit.cpp">
+      <Link>VsPrismaticLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsRPRO.cpp">
+      <Link>VsRPRO.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsRigidBody.cpp">
+      <Link>VsRigidBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsScriptedSimulationWindow.cpp">
+      <Link>VsScriptedSimulationWindow.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsSimulationWindow.cpp">
+      <Link>VsSimulationWindow.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsSimulationWindowMgr.cpp">
+      <Link>VsSimulationWindowMgr.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsSimulator.cpp">
+      <Link>VsSimulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsSphere.cpp">
+      <Link>VsSphere.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsSpring.cpp">
+      <Link>VsSpring.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsStructure.cpp">
+      <Link>VsStructure.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsTerrain.cpp">
+      <Link>VsTerrain.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsTorus.cpp">
+      <Link>VsTorus.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsTrackballDragger.cpp">
+      <Link>VsTrackballDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsTranslateAxisDragger.cpp">
+      <Link>VsTranslateAxisDragger.cpp</Link>
+    </Compile>
+    <Compile Include="..\VsUniversal.cpp">
+      <Link>VsUniversal.cpp</Link>
+    </Compile>
+    <Compile Include="..\WorldCoordinateNodeVisitor.cpp">
+      <Link>WorldCoordinateNodeVisitor.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

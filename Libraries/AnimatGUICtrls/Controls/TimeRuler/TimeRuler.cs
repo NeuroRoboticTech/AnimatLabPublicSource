@@ -933,7 +933,7 @@ namespace AnimatGuiCtrls.Controls
 			get {return CalculateValue(_iMousePosition); }
 		}
 
-		[Description("TRUE if a line is displayed to track the current position of the mouse and events are generated as the mouse moves.")]
+		[Description("true if a line is displayed to track the current position of the mouse and events are generated as the mouse moves.")]
 		[Category("Ruler")]
 		public bool MouseTrackingOn
 		{

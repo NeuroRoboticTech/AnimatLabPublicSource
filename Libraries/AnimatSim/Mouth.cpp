@@ -4,7 +4,7 @@
 \brief	Implements the mouth class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -69,7 +69,7 @@ Mouth::~Mouth()
 		m_lpStomach = NULL;
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, false, true);}
 }
 
 /**
@@ -84,9 +84,9 @@ float Mouth::EatingRate() {return m_fltEatingRate;}
 
 float Mouth::MinFoodRadius() {return m_fltMinFoodRadius;}
 
-void Mouth::MinFoodRadius(float fltVal, BOOL bUseScaling)
+void Mouth::MinFoodRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Mouth.MinFoodRadius", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Mouth.MinFoodRadius", true);
 	if(bUseScaling)
 		m_fltMinFoodRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -101,7 +101,7 @@ void Mouth::MinFoodRadius(float fltVal, BOOL bUseScaling)
 
 \param	strID	Identifier for the stomach.
 **/
-void Mouth::StomachID(string strID)
+void Mouth::StomachID(std::string strID)
 {
 	SetStomachPointer(strID);
 	m_strStomachID = strID;
@@ -115,7 +115,7 @@ void Mouth::StomachID(string strID)
 
 \return	ID.
 **/
-string Mouth::StomachID() {return m_strStomachID;}
+std::string Mouth::StomachID() {return m_strStomachID;}
 
 /**
 \brief	Sets the stomach pointer.
@@ -125,7 +125,7 @@ string Mouth::StomachID() {return m_strStomachID;}
 
 \param	strID	Identifier for the stomach.
 **/
-void Mouth::SetStomachPointer(string strID)
+void Mouth::SetStomachPointer(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		m_lpStomach = NULL;
@@ -170,7 +170,8 @@ void Mouth::StepSimulation()
 		//Now lets find the closest food source.
         CStdArray<RigidBody *> arySources;
         CStdArray<float> aryDistances;
-		m_lpSim->FindClosestFoodSources(this->GetCurrentPosition(), m_fltMinFoodRadius, arySources, aryDistances);
+        CStdFPoint oPos = this->GetCurrentPosition();
+		m_lpSim->FindClosestFoodSources(oPos, m_fltMinFoodRadius, arySources, aryDistances);
 
         int iSources = arySources.GetSize();
 		if(iSources > 0)
@@ -204,46 +205,46 @@ void Mouth::StepSimulation()
 	}
 }
 
-BOOL Mouth::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Mouth::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Sensor::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Sensor::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "STOMACHID")
 	{
 		StomachID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINIMUMFOODRADIUS")
 	{
-		MinFoodRadius(atof(strValue.c_str()));
-		return TRUE;
+		MinFoodRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Mouth::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Sensor::QueryProperties(aryNames, aryTypes);
+	Sensor::QueryProperties(aryProperties);
 
-	aryNames.Add("StomachID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("EatingRate", AnimatPropertyType::String, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("FoodDistance", AnimatPropertyType::String, AnimatPropertyDirection::Get));
 
-	aryNames.Add("MinimumFoodRadius");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("StomachID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinimumFoodRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
-float *Mouth::GetDataPointer(const string &strDataType)
+float *Mouth::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "EATINGRATE")
 		return &m_fltEatingRate;
@@ -254,7 +255,7 @@ float *Mouth::GetDataPointer(const string &strDataType)
 	return RigidBody::GetDataPointer(strDataType);
 }
 
-void Mouth::AddExternalNodeInput(float fltInput)
+void Mouth::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltEatingRate = fltInput;
 	if(m_fltEatingRate < 0)

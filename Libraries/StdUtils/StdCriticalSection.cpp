@@ -31,48 +31,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
+#include "StdCriticalSectionInternal.h"
 
 namespace StdUtils
 {
-
-/**
-\brief	Constructor.
-
-\details  For internal use by CStdCriticalSection
-This locks access to the internal variables of
-an instance of CStdCriticalSection from other threads
- 
-\author	dcofer
-\date	5/3/2011
-
-\param	plBusy	The busy flag. 
-**/
-CStdCriticalSection::InternalLocker::InternalLocker(LPLONG plBusy) :
-   m_plBusy(NULL)
-{
-   while (::InterlockedExchange(plBusy, 1) != 0)
-   {
-      Sleep(0);
-   }
-   m_plBusy = plBusy;
-}
-
-/**
-\brief	Destructor.
-
-\details For internal use by CStdCriticalSection
-This unlocks the lock the constructor of this
-class gained.
-
-\author	dcofer
-\date	5/3/2011
-**/
-CStdCriticalSection::InternalLocker::~InternalLocker()
-{
-   ::InterlockedExchange(m_plBusy, 0); //lint !e534
-   m_plBusy = NULL;
-}
 
 /**
 \brief	Default constructor.
@@ -80,10 +43,7 @@ CStdCriticalSection::InternalLocker::~InternalLocker()
 \author	dcofer
 \date	5/3/2011
 **/
-CStdCriticalSection::CStdCriticalSection() :
-   m_lBusy(0),
-   m_dwOwner(0),
-   m_ulRefCnt(0)
+CStdCriticalSection::CStdCriticalSection()
 {
 }
 
@@ -98,117 +58,14 @@ with a TryEnter call
 **/
 CStdCriticalSection::~CStdCriticalSection()
 {
-   Leave(); //lint !e534
+   //Leave(); //lint !e534
 }
 
-//TryEnter
-
-
-/**
-\brief	Gets the try enter.
-
-\details This locks the critical section for the current thread if
-no other thread already owns the critical section.  If the
-current thread already owns the critical section and this
-is reentry, the current thread is allowed to pass
-
-\author	dcofer
-\date	5/3/2011
-
-\return	true if it succeeds, false if it fails.
-**/
-bool CStdCriticalSection::TryEnter()
+CStdCriticalSection STD_UTILS_PORT *Std_GetCriticalSection()
 {
-   bool bRet(false);
-   InternalLocker locker(&m_lBusy);
-   if (m_dwOwner == 0)
-   {
-      //Nobody owns this cs, so the current will gain ownership
-      //ATLASSERT(m_ulRefCnt == 0);
-      m_dwOwner = ::GetCurrentThreadId();
-      m_ulRefCnt = 1;
-      bRet = true;
-   }
-   else if (m_dwOwner == ::GetCurrentThreadId())
-   {
-      //The current thread already owns this cs
-      //ATLASSERT(m_ulRefCnt > 0);
-      m_ulRefCnt++;
-      bRet = true;
-   }
-
-   //If we return false, some other thread already owns this cs, so
-   // we will not increment the recursive ownership count (m_ulRefCnt)
-   return bRet;
+    return new CStdCriticalSectionInternal;
 }
 
-/**
-\brief	Try's to enter the critical section. Waits until it can get in, or until timeout.
-
-\author	dcofer
-\date	5/3/2011
-
-\param	lMilliTimeout	The milli timeout. 
-
-\return	true if it succeeds, false if it fails.
-**/
-bool CStdCriticalSection::Enter(long lMilliTimeout)
-{
-	bool bDone = false;
-	long lTotal = 0;
-
-	while(!bDone)
-	{
-		bDone = TryEnter();
-
-		if(!bDone)
-		{
-			Sleep(10);
-			lTotal+=10;
-
-			if(lMilliTimeout > 0 && lTotal >= lMilliTimeout)
-				return false;
-		}
-	}
-
-	return true;
-}
-
-
-/**
-\brief	Leaves this critical section.
-
-\details This unlocks the critical section for the current thread if
-the current thread already owns the critical section and it only
-has one "lock" on the critical section.  If the lock count (the
-number of times the same thread has it locked) is greater than one,
-then the count is simply decremented.
-
-\author	dcofer
-\date	5/3/2011
-
-\return	true if it succeeds, false if it fails.
-**/
-bool CStdCriticalSection::Leave()
-{
-   InternalLocker locker(&m_lBusy);
-   //If the current thread owns this cs
-   if (m_dwOwner == ::GetCurrentThreadId())
-   {
-      //and if decrementing the recursive ownership count results in
-      // a recursive ownership count of zero, then the current thread
-      // should no longer own this cs
-      //ATLASSERT(m_ulRefCnt > 0);
-      if (--m_ulRefCnt == 0)
-      {
-         //By setting m_dwOwner to zero, we're stating that no thread owns
-         // this cs
-         m_dwOwner = 0;
-      }
-      return true;
-   }
-   return false;
-}
 
 }				//StdUtils
 

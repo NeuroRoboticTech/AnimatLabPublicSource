@@ -31,22 +31,24 @@ namespace AnimatSim
 				float m_fltDiffusionConstant;
 
 				/// The array of odor sources of this type within the environment.
-				CStdMap<string, Odor *> m_aryOdorSources;
+				CStdMap<std::string, Odor *> m_aryOdorSources;
 
 		public:
 			OdorType();
 			virtual ~OdorType();
 
-			virtual float DiffusionConstant();
-			virtual void DiffusionConstant(float fltVal, BOOL bUseScaling = TRUE);
+			static OdorType *CastToDerived(AnimatBase *lpBase) {return static_cast<OdorType*>(lpBase);}
 
-			virtual Odor *FindOdorSource(string strOdorID, BOOL bThrowError = TRUE);
+			virtual float DiffusionConstant();
+			virtual void DiffusionConstant(float fltVal, bool bUseScaling = true);
+
+			virtual Odor *FindOdorSource(std::string strOdorID, bool bThrowError = true);
 			virtual void AddOdorSource(Odor *lpOdor);
 			
 			virtual float CalculateOdorValue(CStdFPoint &oSensorPos);
 			
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
 		};

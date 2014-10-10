@@ -98,13 +98,6 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property ModuleName() As String
-            Get
-                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
-            End Get
-        End Property
-
         'Stomach does not have a physical interface that can be moved.
         <Browsable(False)> _
         Public Overrides ReadOnly Property IsMovable() As Boolean

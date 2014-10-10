@@ -23,9 +23,6 @@ namespace IntegrateFireSim
 		/// The initial inactivation
 		float m_fltHInit;
 
-		/// true to enable, false to disable
-		BOOL m_bEnabled;
-
 		/// The maximum conductance
 		float m_fltGmax;
 
@@ -90,8 +87,8 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void Enabled(BOOL bVal);
-		BOOL Enabled();
+		virtual void Enabled(bool bVal);
+		virtual bool Enabled();
 
 		void Gmax(float fltVal);
 		float Gmax();
@@ -122,27 +119,27 @@ namespace IntegrateFireSim
 
 		AnimatSim::Gains::Gain *Minf();
 		void Minf(AnimatSim::Gains::Gain *lpGain);
-		void Minf(string strXml);
+		void Minf(std::string strXml);
 
 		AnimatSim::Gains::Gain *Tm();
 		void Tm(AnimatSim::Gains::Gain *lpGain);
-		void Tm(string strXml);
+		void Tm(std::string strXml);
 
 		AnimatSim::Gains::Gain *Hinf();
 		void Hinf(AnimatSim::Gains::Gain *lpGain);
-		void Hinf(string strXml);
+		void Hinf(std::string strXml);
 
 		AnimatSim::Gains::Gain *Th();
 		void Th(AnimatSim::Gains::Gain *lpGain);
-		void Th(string strXml);
+		void Th(std::string strXml);
 
 #pragma endregion
 
 #pragma region DataAccesMethods
 
-		virtual float *GetDataPointer(const string &strDataType);
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+		virtual float *GetDataPointer(const std::string &strDataType);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 

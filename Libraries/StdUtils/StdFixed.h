@@ -1096,7 +1096,7 @@ public:
 	
 	\return	true if the parameters are considered equivalent.
 	**/
-	BOOL operator==(const float fltVal)
+	bool operator==(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator==(fxB);		
@@ -1112,7 +1112,7 @@ public:
 	
 	\return	true if the parameters are considered equivalent.
 	**/
-	BOOL operator==(const double dblVal)
+	bool operator==(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator==(fxB);		
@@ -1128,7 +1128,7 @@ public:
 	
 	\return	true if the parameters are considered equivalent.
 	**/
-	BOOL operator==(const int iVal)
+	bool operator==(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator==(fxB);		
@@ -1144,7 +1144,7 @@ public:
 	
 	\return	true if the parameters are considered equivalent.
 	**/
-	BOOL operator==(const long lVal)
+	bool operator==(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator==(fxB);		
@@ -1160,15 +1160,15 @@ public:
 	
 	\return	true if the parameters are considered equivalent.
 	**/
-	BOOL operator==(CStdFixed &fxB)
+	bool operator==(CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA == dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 
@@ -1184,7 +1184,7 @@ public:
 	
 	\return	true if the first parameter is less than the second.
 	**/
-	BOOL operator<(const float fltVal)
+	bool operator<(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator<(fxB);		
@@ -1200,7 +1200,7 @@ public:
 	
 	\return	true if the first parameter is less than the second.
 	**/
-	BOOL operator<(const double dblVal)
+	bool operator<(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator<(fxB);		
@@ -1216,7 +1216,7 @@ public:
 	
 	\return	true if the first parameter is less than the second.
 	**/
-	BOOL operator<(const int iVal)
+	bool operator<(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator<(fxB);		
@@ -1232,7 +1232,7 @@ public:
 	
 	\return	true if the first parameter is less than the second.
 	**/
-	BOOL operator<(const long lVal)
+	bool operator<(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator<(fxB);		
@@ -1248,15 +1248,15 @@ public:
 	
 	\return	true if the first parameter is less than the second.
 	**/
-	BOOL operator<( CStdFixed &fxB)
+	bool operator<( CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA < dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 	//<= operators
@@ -1271,7 +1271,7 @@ public:
 	
 	\return	true if the first parameter is less than or equal to the second.
 	**/
-	BOOL operator<=(const float fltVal)
+	bool operator<=(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator<=(fxB);		
@@ -1287,7 +1287,7 @@ public:
 	
 	\return	true if the first parameter is less than or equal to the second.
 	**/
-	BOOL operator<=(const double dblVal)
+	bool operator<=(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator<=(fxB);		
@@ -1303,7 +1303,7 @@ public:
 	
 	\return	true if the first parameter is less than or equal to the second.
 	**/
-	BOOL operator<=(const int iVal)
+	bool operator<=(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator<=(fxB);		
@@ -1319,7 +1319,7 @@ public:
 	
 	\return	true if the first parameter is less than or equal to the second.
 	**/
-	BOOL operator<=(const long lVal)
+	bool operator<=(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator<=(fxB);		
@@ -1335,15 +1335,15 @@ public:
 	
 	\return	true if the first parameter is less than or equal to the second.
 	**/
-	BOOL operator<=( CStdFixed &fxB)
+	bool operator<=( CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA <= dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 
@@ -1360,7 +1360,7 @@ public:
 	
 	\return	true if the first parameter is greater than to the second.
 	**/
-	BOOL operator>(const float fltVal)
+	bool operator>(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator>(fxB);		
@@ -1376,7 +1376,7 @@ public:
 	
 	\return	true if the first parameter is greater than to the second.
 	**/
-	BOOL operator>(const double dblVal)
+	bool operator>(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator>(fxB);		
@@ -1392,7 +1392,7 @@ public:
 	
 	\return	true if the first parameter is greater than to the second.
 	**/
-	BOOL operator>(const int iVal)
+	bool operator>(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator>(fxB);		
@@ -1408,7 +1408,7 @@ public:
 	
 	\return	true if the first parameter is greater than to the second.
 	**/
-	BOOL operator>(const long lVal)
+	bool operator>(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator>(fxB);		
@@ -1424,15 +1424,15 @@ public:
 	
 	\return	true if the first parameter is greater than to the second.
 	**/
-	BOOL operator>( CStdFixed &fxB)
+	bool operator>( CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA > dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 
@@ -1449,7 +1449,7 @@ public:
 	
 	\return	true if the first parameter is greater than or equal to the second.
 	**/
-	BOOL operator>=(const float fltVal)
+	bool operator>=(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator>=(fxB);		
@@ -1465,7 +1465,7 @@ public:
 	
 	\return	true if the first parameter is greater than or equal to the second.
 	**/
-	BOOL operator>=(const double dblVal)
+	bool operator>=(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator>=(fxB);		
@@ -1481,7 +1481,7 @@ public:
 	
 	\return	true if the first parameter is greater than or equal to the second.
 	**/
-	BOOL operator>=(const int iVal)
+	bool operator>=(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator>=(fxB);		
@@ -1497,7 +1497,7 @@ public:
 	
 	\return	true if the first parameter is greater than or equal to the second.
 	**/
-	BOOL operator>=(const long lVal)
+	bool operator>=(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator>=(fxB);		
@@ -1513,15 +1513,15 @@ public:
 	
 	\return	true if the first parameter is greater than or equal to the second.
 	**/
-	BOOL operator>=( CStdFixed &fxB)
+	bool operator>=( CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA >= dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 
@@ -1538,7 +1538,7 @@ public:
 	
 	\return	true if the parameters are not considered equivalent.
 	**/
-	BOOL operator!=(const float fltVal)
+	bool operator!=(const float fltVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (double) fltVal);
 		return this->operator!=(fxB);		
@@ -1554,7 +1554,7 @@ public:
 	
 	\return	true if the parameters are not considered equivalent.
 	**/
-	BOOL operator!=(const double dblVal)
+	bool operator!=(const double dblVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, dblVal);
 		return this->operator!=(fxB);		
@@ -1570,7 +1570,7 @@ public:
 	
 	\return	true if the parameters are not considered equivalent.
 	**/
-	BOOL operator!=(const int iVal)
+	bool operator!=(const int iVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, (long) iVal);
 		return this->operator!=(fxB);		
@@ -1586,7 +1586,7 @@ public:
 	
 	\return	true if the parameters are not considered equivalent.
 	**/
-	BOOL operator!=(const long lVal)
+	bool operator!=(const long lVal)
 	{
 		CStdFixed fxB(m_iM, m_iN, lVal);
 		return this->operator!=(fxB);		
@@ -1602,15 +1602,15 @@ public:
 	
 	\return	true if the parameters are not considered equivalent.
 	**/
-	BOOL operator!=( CStdFixed &fxB)
+	bool operator!=( CStdFixed &fxB)
 	{
 		double dblA = (double) *this;
 		double dblB = (double) fxB;
 
 		if( dblA != dblB )
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 
 	/**
@@ -1623,7 +1623,7 @@ public:
 	
 	\return	The output stream.
 	**/
-	ostream& operator<<(ostream& output) {return output;};
+	std::ostream& operator<<(std::ostream& output) {return output;};
 
 };
 

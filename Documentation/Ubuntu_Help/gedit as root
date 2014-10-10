@@ -1,0 +1,11 @@
+If you don't want to use a terminal, you can invoke a GUI program as root thus (this example is for Gedit):
+
+    Hit Alt+F2 to bring up the Run dialog.
+
+    Type gksudo followed by the executable name of your program (which might be different from the name displayed by the GUI). For example:
+
+    gksudo gedit
+
+    Hit Enter.
+
+

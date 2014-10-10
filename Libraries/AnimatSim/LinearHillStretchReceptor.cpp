@@ -4,7 +4,7 @@
 \brief	Implements the linear hill stretch receptor class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -60,7 +60,7 @@ namespace AnimatSim
 **/
 LinearHillStretchReceptor::LinearHillStretchReceptor()
 {
-	m_bApplyTension = FALSE;
+	m_bApplyTension = false;
 	m_fltIaDischargeConstant = 100;
 	m_fltIIDischargeConstant = 100;
 	m_fltIaRate = 0;
@@ -85,7 +85,7 @@ LinearHillStretchReceptor::~LinearHillStretchReceptor()
 
 \return	true to apply tension, false to not.
 **/
-BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
+bool LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
 
 /**
 \brief	Sets wheter tension is applied by the receptor or not.
@@ -95,7 +95,7 @@ BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
 
 \param	bVal	true to apply tension.
 **/
-void LinearHillStretchReceptor::ApplyTension(BOOL bVal) {m_bApplyTension = bVal;}
+void LinearHillStretchReceptor::ApplyTension(bool bVal) {m_bApplyTension = bVal;}
 
 /**
 \brief	Gets the ia discharge constant.
@@ -117,7 +117,7 @@ float LinearHillStretchReceptor::IaDischargeConstant() {return m_fltIaDischargeC
 **/
 void LinearHillStretchReceptor::IaDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IaDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IaDischargeConstant");
 	m_fltIaDischargeConstant = fltVal;
 }
 
@@ -141,7 +141,7 @@ float LinearHillStretchReceptor::IIDischargeConstant() {return m_fltIIDischargeC
 **/
 void LinearHillStretchReceptor::IIDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IIDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IIDischargeConstant");
 	m_fltIIDischargeConstant = fltVal;
 }
 
@@ -181,9 +181,9 @@ void LinearHillStretchReceptor::ResetSimulation()
 	m_fltIIRate = 0;
 }
 
-float *LinearHillStretchReceptor::GetDataPointer(const string &strDataType)
+float *LinearHillStretchReceptor::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -199,7 +199,7 @@ float *LinearHillStretchReceptor::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearHillStretchReceptor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(LinearHillMuscle::SetData(strDataType, strValue, false))
 		return true;
@@ -212,13 +212,13 @@ BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string 
 
 	if(strDataType == "IADISCHARGE")
 	{
-		IaDischargeConstant(atof(strValue.c_str()));
+		IaDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "IIDISCHARGE")
 	{
-		IIDischargeConstant(atof(strValue.c_str()));
+		IIDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -226,21 +226,19 @@ BOOL LinearHillStretchReceptor::SetData(const string &strDataType, const string 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void LinearHillStretchReceptor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LinearHillStretchReceptor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LinearHillMuscle::QueryProperties(aryNames, aryTypes);
+	LinearHillMuscle::QueryProperties(aryProperties);
 
-	aryNames.Add("ApplyTension");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Ia", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("II", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 
-	aryNames.Add("IaDischarge");
-	aryTypes.Add("Float");
-
-	aryNames.Add("IIDischarge");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("ApplyTension", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IaDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IIDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void LinearHillStretchReceptor::Load(CStdXml &oXml)

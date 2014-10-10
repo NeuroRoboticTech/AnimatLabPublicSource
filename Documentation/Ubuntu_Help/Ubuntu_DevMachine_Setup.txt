@@ -1,0 +1,206 @@
+1. Install windows 7 ultimate 64 bit. License key THHMR-3QWYF-CJBGK-86TYK-GWBMF
+2. Insert ASUS install disk and install intel chipset drivers
+3. Install realteck hidef driver 6.0.1.6657 x64
+4. Instal Intel management engine
+5. Install Asmedia ASM106x SATA host controller driver
+6. Install Asmedia ASM104x USB 3.0 driver
+7. Install intel rapid storage technology driver
+8. Had to go to the disk and find the LAN Win7 driver and install.
+   Did not see an option for it through the DVD app.
+9. Open properties of computer annd activate windows.
+10. Start widows updates
+11. Download firefox
+12. Download chrome
+13. Installed video driver
+14. Started to install msi afterburer, but stopped it.
+15. I made an image (/dev/sdb1) space in use 76.7 Gb
+16. hooked up second sata bay.
+installed glview. Ran at 1366x768 pixeols, 32 bit, 60 Hz.
+   Desktop system for 3.0 test: 5879 FPS
+   Laptop system  for 3.0 test: 739 FPS
+Downloaded gpu caps viewer.
+
+17. Installing ubuntu. 
+    Selected  download updates and install 3rd party
+18. Choose "Install other option"
+19. Create logical partition, swap, 65534 Gb (2Xmem size)
+20. Create logical partition, ex4, mount /, 15,000 GB
+21. Create logical partition, ex4, mount /home, remaining
+22. Install (/dev/sdd)
+23. Choose user name and passwords.
+24. get latest updates
+None of this worked. Would not boot again into ubuntu.
+Instead, I ran the ubuntu installer directly form win7 and installed
+onto sdd. Removed extra partitions first.
+
+25. Made an image of both ubuntu and win7 disks
+26. using software center installed fglrx-amdcccle (failed for some reason. I believe because the base drivers have not been installed yet.)
+27. I found a utube video and it said to start "Additional drivers"
+28. Then clicked on "ATI/AMD proprietary FGLRX graphics driver (Post-release updates)"
+    and clicked activate.
+29. installed "synaptic Package Manager" using software center
+30. Checked the "additional driver" again and it says "No propriatary drivers in use"
+    Also, says "Drivers activated but not in use"
+31. Downloaded "amd-driver-installer-catalyst-13.4-linux-x86_64.zip" from amd website
+32. Extrat .run file.
+32. Right click on it "Properties". 
+33. Go to permissions and check "Allow executing file as program"
+34. dbl click on file and select "Run in terminal"
+35. Died because it said previous attempt at drivers was already there. need to roll them back.
+36. Started additional drivers again and removed the post-release updates driver.
+37. rebooted.
+38. Ran the downloaded drivers. (ran this time)
+39. open terminal: dmesg | grep fglrx | grep module
+Shows something similar to with different vrsion
+[    3.768319] fglrx: module license 'Proprietary. (C) 2002 - ATI Technologies, Starnberg, GERMANY' taints kernel.
+[    3.839422] [fglrx] module loaded - fglrx 12.10.5 [March 28 2013] with 1 minors
+40. fglrxinfo
+shows
+display: :0  screen: 0
+OpenGL vendor string: Advanced Micro Devices, Inc.
+OpenGL renderer string: ATI Mobility Radeon HD 7900 Series 
+OpenGL version string: 4.2.12217 Compatibility Profile Context 12.104
+
+41. used software center to install glmark2 and mesa gl utilities
+42. My gl mark2 score is 2267. This seems really low compared to other scores I see on the net.
+
+43. using software center I am installing xfce with optional add-ons. I want to see the graphics
+performance with a lighter weight desktop without unity. I choose not to start HDD daemon on boot.
+44. My glmark2 score in xfce is 2968. Better, but still not in the 8000's like other were reporting.
+
+
+I screwed up when I was configuring the SATA connectors. The 2.5" disks were not connected
+as disk 0 and 1. The data disk was disk 0, so even though I installed windows onto the 2.5" disk
+it still put the MBR onto the data disk. So as it stands now I cannot boot without also making a
+copy of the data disk that matches. I am going to reconnect the drives so that the 2.5" windows 
+disk is drive 0 and then try and do a repair on the windows. I will most likely have to re-install
+ubuntu at that point.
+
+STARTING OVER
+1. I put only one of the 2.5" disks in and installed windows on it.
+It created 2 partitions autmatically. A system restore partition (1) and a regular (2)
+2. Installed windows 7 as above.
+3. Made a copy of the HD and tested. I also tested booting from second slot.
+4. Installed drivers listed above. (2-14)
+5. Installed LG Blue ray suite. However, do not install LG Toolkit anymore. Had to uninstall it.
+It was causing a popup every time I rebooted.
+6. Installed mcafee anti-virus from school. Took a long time to update. 
+7. Removed mcafee anti-virus from school. It is too old and no longer supported. Will have to do something else
+8. Installed ubuntu. Tried to install xubuntu desktop, but it failed. instead, installed regular ubuntu desktop.
+9. (Keep ubuntu disk in when rebooting after install on windows and choose Install ubuntu)
+10. Selected install 3rd padrty components and optional addins.
+    Selected install alongside windows. Installed on sdb, kept default partitions
+    It automatically ejects disk when done.
+11. Installed glmark2 and tested with score of ~2300
+12. Installed fxce4 with options
+13. extracted AMT-APP-SDK. and ran it. I got an error about not being able to form a link
+to libopencl.so. So there may be a problem with this.
+14. I used synaptic to install the opencl headers
+15. I shutdown, swapped the windows and ubuntu HDs and was able to reboot.
+
+Windows
+16. Installing visual studio 10 to C drive
+17. Installed MS SQL Server 2008 R2 on C. Had the data storage folders point to F drive though
+18. Installed Visio 2013
+19. Installed office 2013
+20. Installed git
+21. Installed tortisegit
+22. Installed inno setup
+23. Installed mcafee anti-virus
+24. Installed updates and updates and updates
+
+Ubuntu
+25. Access mounted drive through terminal. cd /media/Win7_Data
+26. found out that I need to do a special mount of the win7_data drive in order to be able 
+to execute scripts and stuff. Otherwise the permissions are all screwed up
+(Command to find which drive) df
+sudo mkdir /media/Win7_Data
+sudo mount -t ntfs -o fmask=0022,dmask=0000,uid=1000,gid=1000 /dev/sdd1 /media/Win7_Data
+27. Copied Openscenegraph-2.8.3 folder from animatlabpublicsource to /home/dcofer and tried to run ./configure
+For some reason it would not run directly. I had to actually take the command out of the file and run it by hand.
+It seemed to work. However, when I did a make it only got to about a 11% and then had an error stating it could not 
+find libGL.so. I was eventually able to find that this lib was in the mesa folder and it had a broken link. I fixed it
+and dev-pkg was able to find it. However, when I tried to run make again it still failed.
+I found out that if I delete the CmakeCache.txt it will cause cmake to rerun again. This time
+it said it found libGL.so, but have not tried to run it again because a bunch of other stuff was missing.
+28. Installed cmake-qt-gui using software center
+29. used synaptics to install 
+   libtiff4-dev
+   libjpeg8-dev
+   libgif-dev
+   libpng12-dev
+   libxml2-dev
+   libfreetype6-dev
+   curl
+   libgdal1-1.7.0
+   libgdal1-dev
+   python-gdal
+   libopenal1
+   libopenal-data
+   libopenal-dev
+   librsvg-2-dev
+30. I figured out that the libGL.so problem was real. Both of the files in /usr/lib/x86.../libGL.so and 
+/usr/lib/x86.../mesa.libGL.so were broken links. Looks like fglrx renamed this so it was not used.
+There is a valid version in the /usr/lib/fglrx folder. I initially tried to fix the links to point to this version
+but could not figure it out. Instead, I just pointed cmake to this version of libGL.so and it started compiling
+31. OSG compile got to about %80 and then died on the curl plugin. It was referencing a #include <curl/types.> file that
+has been deprecated and removed in later versions. I found some documentation about this online that said to just
+remove that include. I opened ReaderWriterCurl.cpp and commented out that line
+32. OSG compile completed successfully.
+33. I tried to install some microsoft core true type fonts and it hosed my gui. Completely locked up
+I had to use ctr+Alt+F2 to get to command line and then do a sudo reboot.
+34. The true type fonts were actually in the osg data lib, I just did not set the osg lib path correctly.
+I did that and now can run the examples.
+35. However, after making it halfway through the examples I was no longer able to open anymore. I got a
+Maximum number of clients reached. not sure what is causing this right now
+36. Redid cmake with the debug version and rebuilt OSG and installed it, and did ldconfig
+37. Used software center to download doxygen with all options and installed
+38. Ran cmake for osgworks2 and had it build into ubuntu_build folder.
+39. Having trouble building the debug version. Even setting the build type manually to debug is not working.
+40. Used software center to install regexxer search tool. 
+41. I tried to manaully run cmake and specify the debug version, but it still failed. I am going to have ask someone on a forum or something.
+42. Installed Automake from software center
+43. Installed libtool
+44. Installed libglew1.6-dev from synaptics
+45. installed through synaptics
+     libcppunit-1.12-1
+	 libcppunit-doc
+	 libcppunit-dev
+46. Installed eclipse-cdt through synaptics
+47. I think cmake was actually creating the debug version of the libraries, but just not putting on an extension
+I found a CMAKE_DEBUG_POSTIFX=_debug setting that seemed to fix this.
+
+cmake . -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXTRAS=on -DBUILD_DEMOS=on -DINSTALL_LIBS=on -DCMAKE_DEBUG_POSTFIX=_debug
+cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_EXTRAS=on -DBUILD_DEMOS=on -DINSTALL_LIBS=on
+48. Figured out some more on how to use cmake gui. I can do the same thing as above if I simply add a new value to the cmake
+for the CMAKE_DEBUG_POSTFIX=_debug setting. Then I can generate out the make files using the gui.
+49. One problem I ran into was that the linker for apps would not link correctly if it had a postfix on it. Not sure why.
+I had to go in and to the link.txt files and manually change them to point to the location of the compiled .a/.so debug files
+This allowed them to finish linking. Did not need to do this with the release versions.
+50. used "sudo make install" to install each one of them.
+51. To get admin rights in file explorer you need to run "sudo nautilus" from the command line.
+To get to the home directory then use the go to menu item with location and specify /home/dcofer
+
+
+Switched back to Windows
+52. Downloaded git-credential-winstore.exe to store git credentials and ran it.
+I needed to also add the prog files x86/git/cmd and git/bin dirs to my path
+53. Regenerated .cproj files and booted back into ubuntu.
+
+Swithced to Ubuntu
+54. I had to comment out a few lines of code in the /usr/local/include/osg/math file to get rid of the 
+isNaN error I found earlier. I added DWC comments on it. This allowed me to compile OsgAnimatSim fine.
+55. I had to add /usr/local/include/bullet to the include files for BulletAnimatSim manually. Some of the
+OsgBullet code was referencing it without the bullet/ extension and could not find it otherwise.
+56. Found a crappy problem. When I tried to link BulletAnimatSim it gave me an error:
+Relocaton R_X86_64_325 against 'vtable for osgbDynamics::MotionState' can not be used when makeing a shared object; recompile with -fPIC
+I did some research and found out that if you want to compile a static library into a dynamic one then you need to
+compile the static lib with the -fPIC option. It has to do with the ability of the code to be relocated correctly.
+So I will need to recompile OsgWorks, Bullet and OsgBullet now. Ughh!!
+In cmake I had to set the CXXFlags to -fPIC. This seemed to work.
+However, I had to stop part way. I was part way through doing OsgWorks debug
+57. I had to convert all the projects to remove the using namespace std; This was to prevent an
+error when linking to osg on ubuntu. It had a namespace collision if you just included std generally.
+58. Found out that I need to link AnimatSimulator with both dl and pthread for it to be able to 
+open a dynamic library using dlopen. It locked up when calling dlopen if I did not have those libs.
+59. 

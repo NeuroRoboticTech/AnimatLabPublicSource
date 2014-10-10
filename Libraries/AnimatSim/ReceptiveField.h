@@ -31,14 +31,16 @@ namespace AnimatSim
 			ReceptiveField(float fltX, float fltY, float fltZ, float fltStim);
 			virtual ~ReceptiveField();
 
+			static ReceptiveField *CastToDerived(AnimatBase *lpBase) {return static_cast<ReceptiveField*>(lpBase);}
+
 			void SetVertex(CStdFPoint vPoint);
 
-			BOOL operator<(ReceptiveField *lpItem);
-			BOOL operator>(ReceptiveField *lpItem);
-			BOOL operator==(ReceptiveField *lpItem);
-			BOOL LessThanThan(float fltX, float fltY, float fltZ);
-			BOOL GreaterThanThan(float fltX, float fltY, float fltZ);
-			BOOL Equals(float fltX, float fltY, float fltZ);
+			bool operator<(ReceptiveField *lpItem);
+			bool operator>(ReceptiveField *lpItem);
+			bool operator==(ReceptiveField *lpItem);
+			bool LessThanThan(float fltX, float fltY, float fltZ);
+			bool GreaterThanThan(float fltX, float fltY, float fltZ);
+			bool Equals(float fltX, float fltY, float fltZ);
 
 			virtual void Load(CStdXml &oXml);
 		};

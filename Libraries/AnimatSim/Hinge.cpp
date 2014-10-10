@@ -4,7 +4,7 @@
 \brief	Implements the hinge class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMotorizedJoint.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -54,6 +54,8 @@ Hinge::Hinge()
 	m_lpUpperLimit = NULL;
 	m_lpLowerLimit = NULL;
 	m_lpPosFlap = NULL;
+	m_fltRotationDeg = 0;
+	m_fltDesiredPositionDeg = 0;
 }
 
 /**
@@ -85,7 +87,7 @@ try
 	}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Hinge\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Hinge\r\n", "", -1, false, true);}
 }
 
 /**
@@ -127,7 +129,7 @@ float Hinge::FlapWidth()
 	return m_fltSize * 0.05f;
 };
 
-void Hinge::Enabled(BOOL bValue) 
+void Hinge::Enabled(bool bValue) 
 {
 	EnableMotor(m_bEnableMotorInit);
 	m_bEnabled = bValue;
@@ -174,23 +176,51 @@ float Hinge::GetLimitRange()
 		return -1;
 }
 
-BOOL Hinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Hinge::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(MotorizedJoint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(MotorizedJoint::SetData(strType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Hinge::AddExternalNodeInput(float fltInput)
+int Hinge::GetTargetDataTypeIndex(const std::string &strDataType)
 {
-	m_fltDesiredVelocity += fltInput;
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "DESIREDPOSITION")
+		return DESIRED_POSITION_TYPE;
+	else
+		return DESIRED_VELOCITY_TYPE;
+
+}
+
+void Hinge::AddExternalNodeInput(int iTargetDataType, float fltInput)
+{
+	if(iTargetDataType == DESIRED_POSITION_TYPE)
+		m_fltDesiredPosition += fltInput;
+	else
+		m_fltDesiredVelocity += fltInput;
+}
+
+void Hinge::ResetSimulation()
+{
+	MotorizedJoint::ResetSimulation();
+	m_fltRotationDeg = 0;
+	m_fltDesiredPositionDeg = 0;
+}
+
+void Hinge::UpdateData()
+{
+	MotorizedJoint::UpdateData();
+	m_fltRotationDeg = ((m_fltPosition/STD_PI)*180);
+	m_fltDesiredPositionDeg = ((m_fltDesiredPosition/STD_PI)*180);
 }
 
 void Hinge::Load(CStdXml &oXml)
@@ -199,8 +229,8 @@ void Hinge::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
-	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
 	m_lpUpperLimit->Load(oXml, "UpperLimit");

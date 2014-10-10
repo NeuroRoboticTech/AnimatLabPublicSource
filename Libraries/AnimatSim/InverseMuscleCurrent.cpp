@@ -1,7 +1,7 @@
 // InverseMuscleCurrent.cpp: implementation of the InverseMuscleCurrent class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <iostream>
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -85,13 +85,13 @@ try
 	m_aryVelocity.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of InverseMuscleCurrent\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of InverseMuscleCurrent\r\n", "", -1, false, true);}
 }
 
 
 void InverseMuscleCurrent::RestPotential(float fltV)
 {
-	Std_IsAboveMin((float) 0, fltV, FALSE, "RestPotential");
+	Std_IsAboveMin((float) 0, fltV, false, "RestPotential");
 
 	m_fltRestPotential = fltV;
 }
@@ -100,14 +100,14 @@ float InverseMuscleCurrent::RestPotential() {return m_fltRestPotential;}
 
 void InverseMuscleCurrent::Conductance(float fltG)
 {
-	Std_IsAboveMin((float) 0, fltG, FALSE, "Conductance");
+	Std_IsAboveMin((float) 0, fltG, false, "Conductance");
 
 	m_fltConductance = fltG;
 }
 
 float InverseMuscleCurrent::Conductance() {return m_fltConductance;}
 
-void InverseMuscleCurrent::MuscleID(string strID)
+void InverseMuscleCurrent::MuscleID(std::string strID)
 {
 	m_strMuscleID = strID;
 
@@ -117,11 +117,11 @@ void InverseMuscleCurrent::MuscleID(string strID)
 		m_lpMuscle = dynamic_cast<LinearHillMuscle *>( m_lpSim->FindByID(m_strMuscleID));
 }
 
-string InverseMuscleCurrent::MuscleID() {return m_strMuscleID;}
+std::string InverseMuscleCurrent::MuscleID() {return m_strMuscleID;}
 
 LinearHillMuscle *InverseMuscleCurrent::Muscle() {return m_lpMuscle;}
 
-void InverseMuscleCurrent::MuscleLengthData(string strFilename)
+void InverseMuscleCurrent::MuscleLengthData(std::string strFilename)
 {
 	m_strMuscleLengthData = strFilename;
 
@@ -145,7 +145,7 @@ void InverseMuscleCurrent::MuscleLengthData(string strFilename)
 			THROW_TEXT_ERROR(Al_Err_lMuscleLengthTimeStep, Al_Err_strMuscleLengthTimeStep, " File Time Step: " + STR(fltStep) + " Physics Time Step: " + STR(m_lpSim->PhysicsTimeStep()) );
 
 		//Set the start and end times using the data file
-		m_bLoadedTime = TRUE;
+		m_bLoadedTime = true;
 		m_fltStartTime = m_aryTime[0];
 		m_fltEndTime = m_aryTime[m_aryTime.GetSize()-1];
 
@@ -154,9 +154,9 @@ void InverseMuscleCurrent::MuscleLengthData(string strFilename)
 	}
 }
 
-string InverseMuscleCurrent::MuscleLengthData() {return m_strMuscleLengthData;}
+std::string InverseMuscleCurrent::MuscleLengthData() {return m_strMuscleLengthData;}
 
-void InverseMuscleCurrent::TargetNodeID(string strID)
+void InverseMuscleCurrent::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		THROW_TEXT_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank, "Muscle ID is missing.");
@@ -164,7 +164,7 @@ void InverseMuscleCurrent::TargetNodeID(string strID)
 	m_strTargetNodeID = strID;
 }
 
-string InverseMuscleCurrent::TargetNodeID() {return m_strTargetNodeID;}
+std::string InverseMuscleCurrent::TargetNodeID() {return m_strTargetNodeID;}
 
 Node *InverseMuscleCurrent::TargetNode() {return m_lpTargetNode;}
 
@@ -257,10 +257,10 @@ void InverseMuscleCurrent::Deactivate()
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltCurrent;
 }
 
-float *InverseMuscleCurrent::GetDataPointer(const string &strDataType)
+float *InverseMuscleCurrent::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "A")
 		lpData = &m_fltA;
@@ -274,20 +274,20 @@ float *InverseMuscleCurrent::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool InverseMuscleCurrent::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "RESTPOTENTIAL")
 	{
-		RestPotential(atof(strValue.c_str()));
+		RestPotential((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "CONDUCTANCE")
 	{
-		Conductance(atof(strValue.c_str()));
+		Conductance((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -307,24 +307,21 @@ BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strV
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void InverseMuscleCurrent::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void InverseMuscleCurrent::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("RestPotential");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Vm", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Current", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Conductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MuscleID");
-	aryTypes.Add("String");
-
-	aryNames.Add("MuscleLengthData");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("RestPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MuscleID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MuscleLengthData", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void InverseMuscleCurrent::Load(CStdXml &oXml)
@@ -353,15 +350,15 @@ void InverseMuscleCurrent::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Simulus Element
 }
 
-void InverseMuscleCurrent::LoadMuscleData(string strFilename)
+void InverseMuscleCurrent::LoadMuscleData(std::string strFilename)
 {
-	ifstream fsFile(strFilename.c_str());
+	std::ifstream fsFile(strFilename.c_str());
 
 	if(fsFile.fail())
 		THROW_TEXT_ERROR(Al_Err_lOpenFile, Al_Err_strOpenFile, "File: " + strFilename);
 
 	//Read off the top column name line
-	CStdArray<string> aryParts;
+	CStdArray<std::string> aryParts;
 	char sLine[300];
 	fsFile.getline(sLine, 300);
 

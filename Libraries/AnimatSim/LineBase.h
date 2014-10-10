@@ -32,39 +32,44 @@ namespace AnimatSim
 				float m_fltPrevLength;
 
 				///The ID's of the attachment points for this muscle. This is used during the load/initialization process.
-				CStdArray<string> m_aryAttachmentPointIDs;
+				CStdArray<std::string> m_aryAttachmentPointIDs;
 
 				///A pointer to the primary attachment part.
 				CStdArray<Attachment *> m_aryAttachmentPoints;
 
 				virtual void LoadAttachments(CStdXml &oXml);
 				virtual void InitializeAttachments();
-				virtual void AttachedPartMovedOrRotated(string strID);
+				virtual void AttachedPartMovedOrRotated(std::string strID);
 
 			public:
 				LineBase();
 				virtual ~LineBase();
 
-				virtual void Enabled(BOOL bValue);
+				static LineBase *CastToDerived(AnimatBase *lpBase) {return static_cast<LineBase*>(lpBase);}
+
+				virtual void Enabled(bool bValue);
 
 				virtual float Length();
 				virtual float PrevLength();
 
-				virtual BOOL AllowMouseManipulation();
-				virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+                //Line parts are never static joints.
+                virtual bool HasStaticJoint() {return false;};
+
+				virtual bool AllowMouseManipulation();
+				virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 				virtual void AbsolutePosition(CStdFPoint &oPoint);
 				virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 
 				CStdArray<Attachment *> *AttachmentPoints();
-				virtual void AttachmentPoints(string srXml);
+				virtual void AttachmentPoints(std::string srXml);
 
 				virtual void Resize();
 				virtual float CalculateLength();
 				virtual void AfterResetSimulation();
 
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual float *GetDataPointer(const std::string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				
 				virtual void CreateParts();
 				virtual void CreateJoints();

@@ -38,13 +38,13 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		virtual osg::Viewport* GetViewport();
 		virtual osgViewer::Viewer *Viewer() {return m_osgViewer.get();};
 
-		virtual void SetupTrackCamera(BOOL bResetEyePos);
-		virtual void SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos);
+		virtual void SetupTrackCamera(bool bResetEyePos);
+		virtual void SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos);
 		virtual void SetCameraPositionAndLookAt(CStdFPoint oCameraPos, CStdFPoint oTarget);
 		virtual void SetCameraPositionAndLookAt(osg::Vec3d vCameraPos, osg::Vec3d vTarget);
 		virtual void SetCameraPostion(CStdFPoint vCameraPos);
 
-		virtual float *GetDataPointer(const string &strDataType);
+		virtual float *GetDataPointer(const std::string &strDataType);
 
 		virtual void UpdateBackgroundColor();
 

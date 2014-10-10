@@ -4,7 +4,7 @@
 \brief	Implements the sphere class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -65,9 +65,9 @@ Sphere::~Sphere()
 
 float Sphere::Radius() {return m_fltRadius;}
 
-void Sphere::Radius(float fltVal, BOOL bUseScaling)
+void Sphere::Radius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Sphere.Radius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Sphere.Radius");
 	if(bUseScaling)
 		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -86,7 +86,7 @@ void Sphere::Radius(float fltVal, BOOL bUseScaling)
 **/
 void Sphere::LatitudeSegments(int iVal) 
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LatitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Sphere.LatitudeSegments", true);
 	m_iLatitudeSegments = iVal;
 	Resize();
 }
@@ -111,7 +111,7 @@ int Sphere::LatitudeSegments() {return m_iLatitudeSegments;}
 **/
 void Sphere::LongtitudeSegments(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LongtitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Sphere.LongtitudeSegments", true);
 	m_iLongtitudeSegments = iVal;
 	Resize();
 }
@@ -126,50 +126,45 @@ void Sphere::LongtitudeSegments(int iVal)
 **/
 int Sphere::LongtitudeSegments() {return m_iLongtitudeSegments;}
 
-BOOL Sphere::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Sphere::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "RADIUS")
 	{
-		Radius(atof(strValue.c_str()));
-		return TRUE;
+		Radius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "LATITUDESEGMENTS")
 	{
 		LatitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LONGTITUDESEGMENTS")
 	{
 		LongtitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Sphere::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Sphere::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Radius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LatitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("LongtitudeSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Radius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LatitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LongtitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Sphere::Load(CStdXml &oXml)

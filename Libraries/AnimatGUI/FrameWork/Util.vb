@@ -65,7 +65,10 @@ Namespace Framework
         Protected Shared m_bExportStimsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
-        Protected Shared m_strVersionNumber As String = "2.0.7"
+        Protected Shared m_bExportWindowsToFile As Boolean = False 'Determines if windows are saved to a file or kept in memory for sim.
+        Protected Shared m_doExportRobotInterface As DataObjects.Robotics.RobotInterface
+        Protected Shared m_doExportPhysicsEngine As DataObjects.Physical.PhysicsEngine
+        Protected Shared m_strVersionNumber As String = "2.1.1"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
 
@@ -229,6 +232,33 @@ Namespace Framework
             End Get
             Set(ByVal Value As Boolean)
                 m_bExportChartsToFile = Value
+            End Set
+        End Property
+
+        Public Shared Property ExportWindowsToFile() As Boolean
+            Get
+                Return m_bExportWindowsToFile
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bExportWindowsToFile = Value
+            End Set
+        End Property
+
+        Public Shared Property ExportRobotInterface As DataObjects.Robotics.RobotInterface
+            Get
+                Return m_doExportRobotInterface
+            End Get
+            Set(ByVal Value As DataObjects.Robotics.RobotInterface)
+                m_doExportRobotInterface = Value
+            End Set
+        End Property
+
+        Public Shared Property ExportPhysicsEngine As AnimatGUI.DataObjects.Physical.PhysicsEngine
+            Get
+                Return m_doExportPhysicsEngine
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Physical.PhysicsEngine)
+                m_doExportPhysicsEngine = Value
             End Set
         End Property
 
@@ -1630,6 +1660,46 @@ Namespace Framework
             Return obj
         End Function
 
+        Public Shared Sub GetParentObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String, ByRef oRoot As Object, ByRef doRoot As DataObject, ByRef strRootPropName As String)
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+
+            If aryPropPath.Count > 1 Then
+                Dim iIdx As Integer = 0
+                Dim piAutomationPropInfo As PropertyInfo
+                For Each strPropName As String In aryPropPath
+                    piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                    If piAutomationPropInfo Is Nothing Then
+                        Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                    End If
+
+                    iIdx = iIdx + 1
+                    'Dont get the obj on the last one.
+                    If iIdx < aryPropPath.Length Then
+                        oObj = piAutomationPropInfo.GetValue(oObj, Nothing)
+                    Else
+                        oRoot = oObj
+                        If Util.IsTypeOf(oObj.GetType(), GetType(DataObject), False) Then
+                            doRoot = DirectCast(oObj, DataObject)
+                        Else
+                            doRoot = Nothing
+                        End If
+                        strRootPropName = strPropName
+                    End If
+                Next
+            Else
+                oRoot = oObj
+                If Util.IsTypeOf(oObj.GetType(), GetType(DataObject), False) Then
+                    doRoot = DirectCast(oObj, DataObject)
+                Else
+                    doRoot = Nothing
+                End If
+                strRootPropName = strPropertyName
+            End If
+
+        End Sub
+
         Public Shared Sub LoadClassModuleName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                               ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
 
@@ -1850,7 +1920,7 @@ Namespace Framework
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strText)
             If Not tnParent Is Nothing Then
-                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnParent.Nodes.Add(tnNode)
             End If
 
             If Not mgrImageMgr Is Nothing Then

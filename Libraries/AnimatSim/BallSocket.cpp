@@ -4,7 +4,7 @@
 \brief	Implements the ball socket class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -48,7 +48,7 @@ namespace AnimatSim
 **/
 BallSocket::BallSocket()
 {
-	//m_fltConstraintAngle = (float) (0.25*PI);
+	//m_fltConstraintAngle = (float) (0.25*STD_PI);
 	//m_fltStiffness = AL_INFINITY;
 	//m_fltDamping = AL_INFINITY;
 }
@@ -112,7 +112,7 @@ void BallSocket::Load(CStdXml &oXml)
 	//Std_LoadPoint(oXml, "ConstraintAxis", m_oConstraintAxis);
 	//m_fltConstraintAngle = oXml.GetChildFloat("ConstraintHalfAngle");
 
-	//Std_IsAboveMin((float) 0, m_fltConstraintAngle, TRUE, "ConstraintAngle");
+	//Std_IsAboveMin((float) 0, m_fltConstraintAngle, true, "ConstraintAngle");
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

@@ -94,8 +94,8 @@ namespace VortexAnimatSim
 			virtual void SetBody();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
-			virtual BOOL Physics_SetData(const string &strDataType, const string &strValue);
-			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool Physics_SetData(const std::string &strDataType, const std::string &strValue);
+			virtual void Physics_QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void Physics_Resize();
 
 			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
@@ -108,14 +108,16 @@ namespace VortexAnimatSim
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
 			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
 			virtual void Physics_DisableCollision(RigidBody *lpBody) {};
-			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits) {};
-			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits) {};
+			virtual void Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};
+			virtual void Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits) {};
+			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits) {};
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint v; return v;};
 			virtual float Physics_GetMass() {return 0;};
-			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+            virtual float Physics_GetDensity() {return 0;};
+			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 		};
 

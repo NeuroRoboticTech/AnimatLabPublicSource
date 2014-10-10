@@ -44,7 +44,7 @@ namespace AnimatSim
 			RigidBody *m_lpChild;
 
 			/// If true then any ConstraintLimits for this joint are enabled.
-			BOOL m_bEnableLimits;
+			bool m_bEnableLimits;
 
 			/// The current position of the joint. This value can be in radians or meters 
 			/// depending on the type of joint. UsesRadians lets you know whether it is using radians.
@@ -60,69 +60,57 @@ namespace AnimatSim
 			///Scales the size of the graphics for this joint.
 			float m_fltSize;
 
-            ///The relaxation for the primary displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation1;
-
-            ///The relaxation for the secondary displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation2;
-
-            ///The relaxation for the third displacement relaxation
-            ConstraintRelaxation *m_lpRelaxation3;
-
-            ///The relaxation for the secondary rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation4;
-
-            ///The relaxation for the third rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation5;
-
-            ///The relaxation for the third rotation relaxation
-            ConstraintRelaxation *m_lpRelaxation6;
+            ///The relaxations for the constraints
+            ConstraintRelaxation *m_aryRelaxations[6];
 
             ///The friction for this joint
             ConstraintFriction *m_lpFriction;
 
-            ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, string strName);
-            ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
+            virtual ConstraintRelaxation *LoadConstraintRelaxation(CStdXml &oXml, std::string strName);
+            virtual ConstraintFriction *LoadConstraintFriction(CStdXml &oXml);
+            virtual void ClearRelaxations();
 
 		public:
 			Joint();
 			virtual ~Joint();
+						
+			static Joint *CastToDerived(AnimatBase *lpBase) {return static_cast<Joint*>(lpBase);}
 
-			virtual BOOL UsesRadians();
+			virtual bool UsesRadians();
 
 			virtual float Size();
-			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Size(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL EnableLimits();
-			virtual void EnableLimits(BOOL bVal);
+			virtual bool EnableLimits();
+			virtual void EnableLimits(bool bVal);
 
             virtual ConstraintRelaxation *Relaxation1();
             virtual void Relaxation1(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation1(string strXml);
+			virtual void Relaxation1(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation2();
             virtual void Relaxation2(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation2(string strXml);
+			virtual void Relaxation2(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation3();
             virtual void Relaxation3(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation3(string strXml);
+			virtual void Relaxation3(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation4();
             virtual void Relaxation4(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation4(string strXml);
+			virtual void Relaxation4(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation5();
             virtual void Relaxation5(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation5(string strXml);
+			virtual void Relaxation5(std::string strXml);
 
             virtual ConstraintRelaxation *Relaxation6();
             virtual void Relaxation6(ConstraintRelaxation *lpRelax);
-			virtual void Relaxation6(string strXml);
+			virtual void Relaxation6(std::string strXml);
 
             virtual ConstraintFriction *Friction();
             virtual void Friction(ConstraintFriction *lpFriction);
-			virtual void Friction(string strXml);
+			virtual void Friction(std::string strXml);
 
 			virtual float GetPositionWithinLimits(float fltPos);
 			virtual float GetLimitRange();
@@ -139,15 +127,17 @@ namespace AnimatSim
 			virtual float JointForce();
 			virtual void JointForce(float fltForce);
 
-			virtual void CreateJoint();
+            virtual void WakeDynamics();
+
+            virtual void CreateJoint();
 			virtual void UpdatePhysicsPosFromGraphics();
             virtual void Initialize();
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
 			virtual void StepSimulation();

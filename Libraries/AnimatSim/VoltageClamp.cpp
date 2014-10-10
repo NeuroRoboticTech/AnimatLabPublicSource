@@ -4,7 +4,7 @@
 \brief	Implements the voltage clamp class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -80,10 +80,10 @@ try
 	m_lpGm = NULL;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, false, true);}
 }
 
-string VoltageClamp::Type() {return "VoltageClamp";}
+std::string VoltageClamp::Type() {return "VoltageClamp";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be enabled. 
@@ -93,7 +93,7 @@ string VoltageClamp::Type() {return "VoltageClamp";}
 
 \return	GUID ID of the node. 
 **/
-string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
+std::string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the target node to enable. 
@@ -103,7 +103,7 @@ string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void VoltageClamp::TargetNodeID(string strID)
+void VoltageClamp::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -184,10 +184,10 @@ void VoltageClamp::ResetSimulation()
 	m_fltActiveCurrent = 0;
 }
 
-float *VoltageClamp::GetDataPointer(const string &strDataType)
+float *VoltageClamp::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "CLAMPCURRENT")
 		lpData = &m_fltActiveCurrent;
@@ -197,32 +197,33 @@ float *VoltageClamp::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VoltageClamp::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VoltageClamp::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VTARGET")
 	{
-		Vtarget(atof(strValue.c_str()));
-		return TRUE;
+		Vtarget((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VoltageClamp::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VoltageClamp::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("Vtarget");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("ClampCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("Vtarget", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void VoltageClamp::Load(CStdXml &oXml)

@@ -64,6 +64,8 @@ namespace AnimatSim
 				Box();
 				virtual ~Box();
 
+				static Box *CastToDerived(AnimatBase *lpBase) {return static_cast<Box*>(lpBase);}
+
 				/**
 				\brief	Gets the length of the box. 
 
@@ -83,7 +85,7 @@ namespace AnimatSim
 				\param	fltVal		The new length value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Length(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Length(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the width of the box. 
@@ -104,7 +106,7 @@ namespace AnimatSim
 				\param	fltVal		The new width value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Width(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Width(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the height of the box. 
@@ -125,7 +127,7 @@ namespace AnimatSim
 				\param	fltVal		The new height value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/				
-				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Height(float fltVal, bool bUseScaling = true);
 
 				virtual void LengthSections(int iVal);
 				virtual int LengthSections();
@@ -140,8 +142,8 @@ namespace AnimatSim
 				virtual float WidthSegmentSize();
 				virtual float HeightSegmentSize();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

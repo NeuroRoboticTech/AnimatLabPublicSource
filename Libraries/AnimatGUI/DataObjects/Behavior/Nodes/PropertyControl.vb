@@ -148,10 +148,12 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overrides Property IncomingDataTypes As TypeHelpers.DataTypeID
             Get
                 Return Nothing
             End Get
+            Set(value As TypeHelpers.DataTypeID)
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -179,7 +181,7 @@ Namespace DataObjects.Behavior.Nodes
                     Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
                 End If
 
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value, False, True)
             End Set
         End Property
 
@@ -193,7 +195,7 @@ Namespace DataObjects.Behavior.Nodes
             Try
 
                 m_thLinkedObject = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(Nothing)
-                m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+                m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
 
                 Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Losange
                 Size = New System.Drawing.SizeF(50, 50)
@@ -242,7 +244,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected Overridable Sub RemoveLinkages(ByVal thOldLink As AnimatGUI.TypeHelpers.LinkedDataObjectTree, ByVal thNewLink As AnimatGUI.TypeHelpers.LinkedDataObjectTree)
 
-            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
 
             'If the user changes the item this node is linked to directly in the diagram after it
             'has already been connected up then we need to change the inlink/outlinks for all nodes
@@ -297,7 +299,7 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             If Not thNewLink Is Nothing Then
-                m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(thNewLink.Item)
+                m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(thNewLink.Item, False, True)
             End If
 
         End Sub
@@ -336,7 +338,7 @@ Namespace DataObjects.Behavior.Nodes
                     End If
 
                     If m_strLinkedObjectProperty.Trim.Length > 0 AndAlso Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
-                        m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, m_strLinkedObjectProperty)
+                        m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, m_strLinkedObjectProperty, False, True)
                     End If
                 End If
 

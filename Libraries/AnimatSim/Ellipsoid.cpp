@@ -4,7 +4,7 @@
 \brief	Implements the Ellipsoid class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -66,9 +66,9 @@ Ellipsoid::~Ellipsoid()
 
 float Ellipsoid::MajorRadius() {return m_fltMajorRadius;}
 
-void Ellipsoid::MajorRadius(float fltVal, BOOL bUseScaling)
+void Ellipsoid::MajorRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Ellipsoid.MajorRadius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Ellipsoid.MajorRadius");
 
 	if(bUseScaling)
 		m_fltMajorRadius = fltVal * m_lpSim->InverseDistanceUnits();
@@ -80,9 +80,9 @@ void Ellipsoid::MajorRadius(float fltVal, BOOL bUseScaling)
 
 float Ellipsoid::MinorRadius() {return m_fltMinorRadius;}
 
-void Ellipsoid::MinorRadius(float fltVal, BOOL bUseScaling)
+void Ellipsoid::MinorRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Ellipsoid.MinorRadius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Ellipsoid.MinorRadius");
 
 	if(bUseScaling)
 		m_fltMinorRadius = fltVal * m_lpSim->InverseDistanceUnits();
@@ -102,7 +102,7 @@ void Ellipsoid::MinorRadius(float fltVal, BOOL bUseScaling)
 **/
 void Ellipsoid::LatSegments(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Ellipsoid.LatSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Ellipsoid.LatSegments", true);
 	m_iLatSegments = iVal;
 
 	Resize();
@@ -128,7 +128,7 @@ int Ellipsoid::LatSegments() {return m_iLatSegments;}
 **/
 void Ellipsoid::LongSegments(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Ellipsoid.LongSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Ellipsoid.LongSegments", true);
 	m_iLongSegments = iVal;
 
 	Resize();
@@ -144,59 +144,52 @@ void Ellipsoid::LongSegments(int iVal)
 **/
 int Ellipsoid::LongSegments() {return m_iLongSegments;}
 
-BOOL Ellipsoid::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Ellipsoid::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "MAJORRADIUS")
 	{
-		MajorRadius(atof(strValue.c_str()));
-		return TRUE;
+		MajorRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "MINORRADIUS")
 	{
-		MinorRadius(atof(strValue.c_str()));
-		return TRUE;
+		MinorRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "LATITUDESEGMENTS")
 	{
-		LatSegments(atof(strValue.c_str()));
-		return TRUE;
+		LatSegments((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "LONGTITUDESEGMENTS")
 	{
 		LongSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Ellipsoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Ellipsoid::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("MajorRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MinorRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LatitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("LongtitudeSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("MajorRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MinorRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LatitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LongtitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Ellipsoid::Load(CStdXml &oXml)

@@ -1,7 +1,11 @@
 #ifndef __FAST_NET_INCLUDES_H__
 #define __FAST_NET_INCLUDES_H__
 
-#define FAST_NET_PORT __declspec( dllexport )
+#ifdef WIN32
+	#define FAST_NET_PORT __declspec( dllexport )
+#else
+	#define FAST_NET_PORT
+#endif
 
 #include "AnimatSim.h"
 #include "FiringRateSimConstants.h"

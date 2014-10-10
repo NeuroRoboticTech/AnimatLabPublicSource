@@ -19,7 +19,7 @@ Namespace DataObjects
         Protected m_DragImage As System.Drawing.Image
 
         Protected m_thDataTypes As New TypeHelpers.DataTypeID(Me)
-        Protected m_thIncomingDataType As AnimatGUI.DataObjects.DataType
+        Protected m_thIncomingDataTypes As New TypeHelpers.DataTypeID(Me)
 
 
 #End Region
@@ -122,10 +122,18 @@ Namespace DataObjects
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overridable Property IncomingDataTypes() As TypeHelpers.DataTypeID
             Get
-                Return m_thIncomingDataType
+                Return m_thIncomingDataTypes
             End Get
+            Set(ByVal Value As TypeHelpers.DataTypeID)
+                If Not Value Is Nothing Then
+                    Try
+                        m_thIncomingDataTypes.ID = Value.ID
+                    Catch ex As System.Exception
+                    End Try
+                End If
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -176,9 +184,7 @@ Namespace DataObjects
 
             'If a template part type is supplied and this part is not one of those template types then do not add it to the tree view
             If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
-                Dim myAssembly As System.Reflection.Assembly
-                myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
-                frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
+                frmDataItem.ImageManager.AddImage(Me.WorkspaceImageName)
 
                 Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
                 If tnParent Is Nothing Then

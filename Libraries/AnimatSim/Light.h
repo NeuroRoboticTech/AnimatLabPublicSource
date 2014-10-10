@@ -23,9 +23,6 @@ namespace AnimatSim
 		class ANIMAT_PORT Light : public AnimatBase, public MovableItem
 		{
 		protected:
-			///Determines if light is enabled or not.
-			BOOL m_bEnabled;
-
 			/// The radius of the sphere
 			float m_fltRadius;
 
@@ -52,11 +49,13 @@ namespace AnimatSim
 		public:
 			Light(void);
 			virtual ~Light(void);
+						
+			static Light *CastToDerived(AnimatBase *lpBase) {return static_cast<Light*>(lpBase);}
 
 #pragma region AccessorMutators
 
-			virtual BOOL Enabled();
-			virtual void Enabled(BOOL bValue);
+			virtual bool Enabled();
+			virtual void Enabled(bool bValue);
 
 			virtual void Resize();
 
@@ -79,7 +78,7 @@ namespace AnimatSim
 			\param	fltVal		The new value. 
 			\param	bUseScaling	true to use unit scaling on entered value. 
 			**/
-			virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Radius(float fltVal, bool bUseScaling = true);
 
 			virtual void LatitudeSegments(int iVal);
 			virtual int LatitudeSegments();
@@ -93,24 +92,23 @@ namespace AnimatSim
 			virtual void ConstantAttenRatio(float fltVal);
 			virtual float ConstantAttenRatio();
 
-			virtual void LinearAttenDistance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearAttenDistance(float fltVal, bool bUseScaling = true);
 			virtual float LinearAttenDistance();
 
-			virtual void QuadraticAttenDistance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void QuadraticAttenDistance(float fltVal, bool bUseScaling = true);
 			virtual float QuadraticAttenDistance();
 
 #pragma endregion
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void Create();
 

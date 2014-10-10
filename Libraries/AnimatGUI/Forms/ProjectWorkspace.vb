@@ -158,9 +158,9 @@ Namespace Forms
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strName)
             If Not tnParent Is Nothing Then
-                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnParent.Nodes.Add(tnNode)
             Else
-                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode, Not m_bLoadInProgress)
+                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode)
             End If
 
             tnNode.ImageIndex = Util.Application.WorkspaceImages.GetImageIndex(strImage)
@@ -393,6 +393,21 @@ Namespace Forms
 
         End Sub
 
+        Public Sub FindSelectedSubNodes(ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal aryList As Collections.DataObjects)
+
+            For Each tnChild As Crownwood.DotNetMagic.Controls.Node In tnParent.Nodes
+                If tnChild.IsSelected Then
+                    If Not tnChild.Tag Is Nothing AndAlso Util.IsTypeOf(tnChild.Tag.GetType(), GetType(Framework.DataObject)) Then
+                        Dim doChild As Framework.DataObject = DirectCast(tnChild.Tag, Framework.DataObject)
+                        aryList.Add(doChild)
+                    End If
+                End If
+
+                FindSelectedSubNodes(tnChild, aryList)
+            Next
+
+        End Sub
+
 #End Region
 
 #Region " Events "
@@ -414,7 +429,7 @@ Namespace Forms
                     Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
                 End If
 
-                ctrlTreeView.Sort()
+                'ctrlTreeView.Sort()
 
                 ctrlTreeView.ExpandAll()
 
@@ -422,6 +437,25 @@ Namespace Forms
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
                 m_bLoadInProgress = False
+            End Try
+        End Sub
+
+        Private Sub ctrlTreeView_BeforeCollapse(tc As Crownwood.DotNetMagic.Controls.TreeControl, e As Crownwood.DotNetMagic.Controls.CancelNodeEventArgs) Handles ctrlTreeView.BeforeCollapse
+            Try
+                'When we do a collapse and multiple items are selected then it goes through and individually deselects them.
+                'This sets up a long loop where it regenerates the multiple selection over and over again. So I am short-circuiting
+                ' this by deselecting everything within the collapsed node myself first.
+                If ctrlTreeView.SelectedNodes.Count > 1 Then
+
+                    Dim arySelectedNodesInCollapse As New Collections.DataObjects(Nothing)
+                    Dim aryToAdd As New Collections.DataObjects(Nothing)
+                    FindSelectedSubNodes(e.Node, arySelectedNodesInCollapse)
+
+                    AddRemoveIndividualItems(aryToAdd, arySelectedNodesInCollapse)
+
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 

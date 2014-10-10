@@ -37,10 +37,12 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This clamps the voltage of a neuron at a target level."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         <Browsable(False)> _

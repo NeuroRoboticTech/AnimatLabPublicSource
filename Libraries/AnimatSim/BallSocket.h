@@ -45,6 +45,8 @@ namespace AnimatSim
 			public:
 				BallSocket();
 				virtual ~BallSocket();
+										
+				static BallSocket *CastToDerived(AnimatBase *lpBase) {return static_cast<BallSocket*>(lpBase);}
 
 				float CylinderRadius();
 				float CylinderHeight();

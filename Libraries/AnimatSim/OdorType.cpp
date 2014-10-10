@@ -4,7 +4,7 @@
 \brief	Implements the odor type class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -63,7 +63,7 @@ try
 	m_aryOdorSources.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, false, true);}
 }
 
 /**
@@ -85,9 +85,9 @@ float OdorType::DiffusionConstant() {return m_fltDiffusionConstant;};
 \param	fltVal	   	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void OdorType::DiffusionConstant(float fltVal, BOOL bUseScaling) 
+void OdorType::DiffusionConstant(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Diffusion Constant");
+	Std_IsAboveMin((float) 0, fltVal, true, "Diffusion Constant");
 
 	if(bUseScaling)
 		fltVal = fltVal/(m_lpSim->DistanceUnits()*m_lpSim->DistanceUnits()); //Our diffusion constant is in m^2/s. We need to convert its distance units appropriately.
@@ -106,10 +106,10 @@ void OdorType::DiffusionConstant(float fltVal, BOOL bUseScaling)
 
 \return	null if Odor is not found and bThrowError=False, else the found odor source.
 **/
-Odor *OdorType::FindOdorSource(string strOdorID, BOOL bThrowError)
+Odor *OdorType::FindOdorSource(std::string strOdorID, bool bThrowError)
 {
 	Odor *lpOdor = NULL;
-	CStdMap<string, Odor *>::iterator oPos;
+	CStdMap<std::string, Odor *>::iterator oPos;
 	oPos = m_aryOdorSources.find(Std_CheckString(strOdorID));
 
 	if(oPos != m_aryOdorSources.end())
@@ -130,7 +130,7 @@ Odor *OdorType::FindOdorSource(string strOdorID, BOOL bThrowError)
 **/
 void OdorType::AddOdorSource(Odor *lpOdor)
 {
-	if(!FindOdorSource(lpOdor->ID(), FALSE))
+	if(!FindOdorSource(lpOdor->ID(), false))
 	{
 		m_aryOdorSources.Add(lpOdor->ID(), lpOdor);
 	}
@@ -153,7 +153,7 @@ sensor. This is the total odor strength for the sensor.
 float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 {
 	//Loop through each of the associated odors and calculate the value for each one.
-	CStdMap<string, Odor *>::iterator oIterator;
+	CStdMap<std::string, Odor *>::iterator oIterator;
 	Odor *lpOdor = NULL;
 	float fltVal = 0;
 
@@ -168,32 +168,31 @@ float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-BOOL OdorType::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OdorType::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "DIFFUSIONCONSTANT")
 	{
-		DiffusionConstant(atof(strValue.c_str()));
-		return TRUE;
+		DiffusionConstant((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void OdorType::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OdorType::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("DiffusionConstant");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("DiffusionConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void OdorType::Load(CStdXml &oXml)

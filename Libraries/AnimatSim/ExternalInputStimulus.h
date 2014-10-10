@@ -15,10 +15,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the target node to enable.
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 
 			/// The post-fix equation that controls the input values to the node.
-			string m_strInputEquation;
+			std::string m_strInputEquation;
 
 			/// Pointer to the post-fix evaluator.
 			CStdPostFixEval *m_lpEval;
@@ -30,16 +30,18 @@ namespace AnimatSim
 			ExternalInputStimulus();
 			virtual ~ExternalInputStimulus();
 			
-			virtual string Type();
+			static ExternalInputStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<ExternalInputStimulus*>(lpBase);}
+			
+			virtual std::string Type();
 
-			virtual string TargetNodeID();
-			virtual void TargetNodeID(string strID);
+			virtual std::string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
 			
 			virtual float Input();
 			virtual void Input(float fltVal);
 
-			virtual string InputEquation();
-			virtual void InputEquation(string strVal);
+			virtual std::string InputEquation();
+			virtual void InputEquation(std::string strVal);
 
 			virtual void Load(CStdXml &oXml);
 
@@ -48,9 +50,9 @@ namespace AnimatSim
 			virtual void StepSimulation();
 			virtual void Deactivate();
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 		};
 
 	}			//ExternalStimuli

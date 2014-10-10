@@ -49,9 +49,9 @@ namespace AnimatSim
 			///regular rotation information so it can be used during a simulation reset.
 			CStdFPoint m_oReportRotation;
 
-			///Determines if this body is physically seen or not. If this is FALSE then 
+			///Determines if this body is physically seen or not. If this is false then 
 			///whatever geometry this is, like a box, is not seen in the graphics.
-			BOOL m_bIsVisible;
+			bool m_bIsVisible;
 
 			//Used to report back if visible.
 			float m_fltReportIsVisible;
@@ -88,7 +88,7 @@ namespace AnimatSim
 			float m_fltShininess;
 
 			///An optional texture to apply to the rigid body.
-			string m_strTexture;
+			std::string m_strTexture;
 
 			/// The relative position of the selected vertex
 			CStdFPoint m_vSelectedVertex;
@@ -105,6 +105,9 @@ namespace AnimatSim
 			/// User defined drag handle radius. If this is -1 then the user has not set the value and the default is used.
 			float m_fltUserDefinedDraggerRadius;
 
+            ///Keeps track of whether this movable item has been selected or not.
+            bool m_bIsSelected;
+
 			virtual void LoadPosition(CStdXml &oXml);
 			virtual void LoadRotation(CStdXml &oXml);
 
@@ -118,12 +121,12 @@ namespace AnimatSim
 			void Parent(RigidBody *lpValue);
 
 			virtual int VisualSelectionType() ;
-			virtual BOOL AllowMouseManipulation();
+			virtual bool AllowMouseManipulation();
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Position(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Position(string strXml, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Position(float fltX, float fltY, float fltZ, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Position(std::string strXml, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint AbsolutePosition();
 			virtual void AbsolutePosition(CStdFPoint &oPoint);
@@ -141,16 +144,18 @@ namespace AnimatSim
 			virtual CStdFPoint GetCurrentPosition();
 
 			virtual CStdFPoint Rotation();
-			virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-			virtual void Rotation(string strXml, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Rotation(CStdFPoint &oPoint, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Rotation(float fltX, float fltY, float fltZ, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
+			virtual void Rotation(std::string strXml, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual CStdFPoint ReportRotation();
 			virtual void ReportRotation(CStdFPoint &oPoint);
 			virtual void ReportRotation(float fltX, float fltY, float fltZ);
 
-			virtual BOOL IsVisible();
-			virtual void IsVisible(BOOL bVal);
+            virtual std::string LocalTransformationMatrixString();
+
+			virtual bool IsVisible();
+			virtual void IsVisible(bool bVal);
 
 			virtual float GraphicsAlpha();
 			virtual void GraphicsAlpha(float fltVal);
@@ -173,27 +178,27 @@ namespace AnimatSim
 			virtual CStdColor *Ambient();
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Ambient(float *aryColor);
-			virtual void Ambient(string strXml);
+			virtual void Ambient(std::string strXml);
 
 			virtual CStdColor *Diffuse();
 			virtual void Diffuse(CStdColor &aryColor);
 			virtual void Diffuse(float *aryColor);
-			virtual void Diffuse(string strXml);
+			virtual void Diffuse(std::string strXml);
 
 			virtual CStdColor *Specular();
 			virtual void Specular(CStdColor &aryColor);
 			virtual void Specular(float *aryColor);
-			virtual void Specular(string strXml);
+			virtual void Specular(std::string strXml);
 
 			virtual float Shininess();
 			virtual void Shininess(float fltVal);
 
-			virtual string Texture();
-			virtual void Texture(string strValue);
+			virtual std::string Texture();
+			virtual void Texture(std::string strValue);
 	
 			virtual CStdFPoint SelectedVertex();
-			virtual void SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
-			virtual void SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
+			virtual void SelectedVertex(CStdFPoint &vPoint, bool bFireChangeEvent = false, bool bUpdatePhysics = true);
+			virtual void SelectedVertex(float fltX, float fltY, float fltZ, bool bFireChangeEvent = false, bool bUpdatePhysics = true);
 
 			virtual IMovableItemCallback *Callback();
 			virtual void Callback(IMovableItemCallback *lpCallback);
@@ -203,33 +208,36 @@ namespace AnimatSim
 
 			virtual float GetBoundingRadius();
 			virtual BoundingBox GetBoundingBox();
+			virtual void SetBoundingBox(int iIdx, float fltVal);
 
-			virtual BOOL AllowTranslateDragX();
-			virtual BOOL AllowTranslateDragY();
-			virtual BOOL AllowTranslateDragZ();
+			virtual bool AllowTranslateDragX();
+			virtual bool AllowTranslateDragY();
+			virtual bool AllowTranslateDragZ();
 
-			virtual BOOL AllowRotateDragX();
-			virtual BOOL AllowRotateDragY();
-			virtual BOOL AllowRotateDragZ();
+			virtual bool AllowRotateDragX();
+			virtual bool AllowRotateDragY();
+			virtual bool AllowRotateDragZ();
 
 			virtual void UserDefinedDraggerRadius(float fltRadius);
 			virtual float UserDefinedDraggerRadius();
+
+            virtual bool IsSelected();
 
 #pragma endregion
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
-			virtual BOOL CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			virtual bool CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 			virtual void Load(CStdXml &oXml);
 		};

@@ -4,7 +4,7 @@
 \brief	Implements the constraint limit class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
@@ -53,8 +53,8 @@ ConstraintLimit::ConstraintLimit()
 	m_fltDamping = 0;
 	m_fltRestitution = 0;
 	m_fltStiffness = 0;
-	m_bIsLowerLimit = TRUE;
-	m_bIsShowPosition = FALSE;
+	m_bIsLowerLimit = true;
+	m_bIsShowPosition = false;
 }
 
 /**
@@ -69,7 +69,7 @@ ConstraintLimit::~ConstraintLimit()
 
 float ConstraintLimit::LimitPos() {return m_fltLimitPos;}
 
-void ConstraintLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck) 
+void ConstraintLimit::LimitPos(float fltVal, bool bUseScaling, bool bOverrideSameCheck) 
 {
 	//If the values are the same then skip setting this step to preven having to
 	//recalculate the matrix positions repeatedly. Only do this when the new position is
@@ -87,14 +87,14 @@ void ConstraintLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSam
 
 float ConstraintLimit::Damping() {return m_fltDamping;};
 
-void ConstraintLimit::Damping(float fltVal, BOOL bUseScaling)
+void ConstraintLimit::Damping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Damping", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
-		//fltVal = fltVal/m_lpSim->DisplayMassUnits();
-	m_fltDamping = fltVal;
+
+    m_fltDamping = fltVal;
 	SetLimitValues();
 }
 
@@ -102,16 +102,16 @@ float ConstraintLimit::Restitution() {return m_fltRestitution;};
 
 void ConstraintLimit::Restitution(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Restitution", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Restitution", true);
 	m_fltRestitution = fltVal;
 	SetLimitValues();
 }
 
 float ConstraintLimit::Stiffness() {return m_fltStiffness;};
 
-void ConstraintLimit::Stiffness(float fltVal, BOOL bUseScaling)
+void ConstraintLimit::Stiffness(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Stiffness", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Constraint::Stiffness", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
@@ -154,7 +154,7 @@ CStdColor *ConstraintLimit::Color() {return &m_vColor;}
 
 \param	strXml	The xml packet to use when loading the new color info. 
 **/
-void ConstraintLimit::Color(string strXml)
+void ConstraintLimit::Color(std::string strXml)
 {
 	m_vColor.Load(strXml, "Color");
 }
@@ -169,7 +169,7 @@ float ConstraintLimit::Alpha() {return m_vColor.a();}
 
 \param	bVal	true if lower limit. 
 **/
-void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
+void ConstraintLimit::IsLowerLimit(bool bVal) {m_bIsLowerLimit = bVal;}
 
 /**
 \brief	Query if this object is lower limit.
@@ -179,7 +179,7 @@ void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
 
 \return	true if lower limit, false if not.
 **/
-BOOL ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
+bool ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
 
 /**
 \brief	Sets whether this contstraint is actually just being used to show the current position of the joint,
@@ -190,7 +190,7 @@ as opposed to being used to show the limit of a constraint..
 
 \param	bVal	true to set this to be a position limit.
 **/
-void ConstraintLimit::IsShowPosition(BOOL bVal) {m_bIsShowPosition = bVal;}
+void ConstraintLimit::IsShowPosition(bool bVal) {m_bIsShowPosition = bVal;}
 
 /**
 \brief	Gets whether this contstraint is actually just being used to show the current position of the joint,
@@ -201,7 +201,7 @@ as opposed to being used to show the limit of a constraint..
 
 \return	true if show position, false if not.
 **/
-BOOL ConstraintLimit::IsShowPosition() {return m_bIsShowPosition;}
+bool ConstraintLimit::IsShowPosition() {return m_bIsShowPosition;}
 
 /**
 \brief	Sets the system pointers.
@@ -225,9 +225,9 @@ be safely used throughout the rest of the system.
 \param [in,out]	lpNode		The pointer to the parent node. 
 \param	bVerify				true to call VerifySystemPointers. 
 **/
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	m_lpJoint = dynamic_cast<Joint *>(lpNode);
 
 	if(bVerify) VerifySystemPointers();
@@ -246,7 +246,7 @@ void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure
 \param	fltPosition		   	The new position. 
 \param	bVerify			   	true to verify. 
 **/
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, bool bVerify)
 {
 	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	LimitPos(fltPosition);
@@ -265,9 +265,9 @@ void ConstraintLimit::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *ConstraintLimit::GetDataPointer(const string &strDataType)
+float *ConstraintLimit::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "LIMITPOS")
 		return &m_fltLimitPos;
@@ -277,31 +277,31 @@ float *ConstraintLimit::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ConstraintLimit::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "LIMITPOS")
 	{
-		LimitPos(atof(strValue.c_str()));
+		LimitPos((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "RESTITUTION")
 	{
-		Restitution(atof(strValue.c_str()));
+		Restitution((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "STIFFNESS")
 	{
-		Stiffness(atof(strValue.c_str()));
+		Stiffness((float) atof(strValue.c_str()));
 		return true;
 	}
 	else if(strType == "COLOR")
@@ -311,7 +311,7 @@ BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 	}
 	else if(strType == "ALPHA")
 	{
-		Alpha(atof(strValue.c_str()));
+		Alpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -319,30 +319,19 @@ BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue,
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ConstraintLimit::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("LimitPos");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Restitution");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Stiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Color");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Alpha");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("LimitPos", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Restitution", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Color", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -356,7 +345,7 @@ void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<str
 \param [in,out]	oXml	The xml packet to load. 
 \param	strName			Name of the xml element to load in. 
 **/
-void ConstraintLimit::Load(CStdXml &oXml, string strName)
+void ConstraintLimit::Load(CStdXml &oXml, std::string strName)
 {
 	oXml.FindChildElement(strName);
 

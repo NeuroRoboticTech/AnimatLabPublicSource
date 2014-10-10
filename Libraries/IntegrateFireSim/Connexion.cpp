@@ -151,7 +151,7 @@ double Connexion::Delay() {return m_dDelay;}
 
 \return	synapse type identifier.
 **/
-string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
+std::string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
 
 /**
 \brief	Sets the synapse type identifier.
@@ -161,7 +161,7 @@ string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
 
 \param	strID	Synapse Type ID. 
 **/
-void Connexion::SynapseTypeID(string strID) {m_strSynapseTypeID = strID;}
+void Connexion::SynapseTypeID(std::string strID) {m_strSynapseTypeID = strID;}
 
 /**
 \brief	Gets the source neuron ID.
@@ -171,7 +171,7 @@ void Connexion::SynapseTypeID(string strID) {m_strSynapseTypeID = strID;}
 
 \return	ID.
 **/
-string Connexion::SourceID() {return m_strSourceID;}
+std::string Connexion::SourceID() {return m_strSourceID;}
 
 /**
 \brief	Sets the source neuron ID.
@@ -181,7 +181,7 @@ string Connexion::SourceID() {return m_strSourceID;}
 
 \param	strID	ID.
 **/
-void Connexion::SourceID(string strID) {m_strSourceID = strID;}
+void Connexion::SourceID(std::string strID) {m_strSourceID = strID;}
 
 /**
 \brief	Gets the target neuron ID.
@@ -191,7 +191,7 @@ void Connexion::SourceID(string strID) {m_strSourceID = strID;}
 
 \return	ID.
 **/
-string Connexion::TargetID() {return m_strTargetID;}
+std::string Connexion::TargetID() {return m_strTargetID;}
 
 /**
 \brief	Sets the target neuron ID.
@@ -201,7 +201,7 @@ string Connexion::TargetID() {return m_strTargetID;}
 
 \param	strID	ID. 
 **/
-void Connexion::TargetID(string strID) {m_strTargetID = strID;}
+void Connexion::TargetID(std::string strID) {m_strTargetID = strID;}
 
 /**
 \brief	Resets the IDs of the synapse types.
@@ -294,7 +294,7 @@ void Connexion::DecrementFacilitation()
 
 \return	true if it is voltage dependent, false else.
 **/
-BOOL Connexion::VoltDep()
+bool Connexion::VoltDep()
 {
 	if(m_lpSynType)
 	{
@@ -302,11 +302,11 @@ BOOL Connexion::VoltDep()
 		if(lpSyn)
 			return lpSyn->VoltDep();
 		else
-			return FALSE;
+			return false;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": VoltDep");
-	return FALSE;
+	return false;
 }
 
 /**
@@ -317,7 +317,7 @@ BOOL Connexion::VoltDep()
 
 \return	true if it is hebbian, false else.
 **/
-BOOL Connexion::Hebbian()
+bool Connexion::Hebbian()
 {
 	if(m_lpSynType)
 	{
@@ -325,11 +325,11 @@ BOOL Connexion::Hebbian()
 		if(lpSyn)
 			return lpSyn->Hebbian();
 		else
-			return FALSE;
+			return false;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": Hebbian");
-	return FALSE;
+	return false;
 }
 
 /**
@@ -409,7 +409,7 @@ double Connexion::MaxGHebb()
 
 \return	true if forgetting is allowed, false else.
 **/
-BOOL Connexion::AllowForgetting()
+bool Connexion::AllowForgetting()
 {
 	if(m_lpSynType)
 	{
@@ -417,11 +417,11 @@ BOOL Connexion::AllowForgetting()
 		if(lpSyn)
 			return lpSyn->AllowForgetting();
 		else
-			return FALSE;
+			return false;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": AllowForgetting");
-	return FALSE;
+	return false;
 }
 
 /**
@@ -527,7 +527,7 @@ void Connexion::Load(CStdXml &oXml)
 \param	dt			  	The time step. 
 \param	FreezeLearning	true to freeze learning. 
 **/
-void Connexion::DecrementLatencies(double dt,BOOL FreezeLearning)
+void Connexion::DecrementLatencies(double dt,bool FreezeLearning)
 {
 	double *pTimeToNext;
 	while (1) 
@@ -540,7 +540,7 @@ void Connexion::DecrementLatencies(double dt,BOOL FreezeLearning)
 	
 	if (Hebbian() && !FreezeLearning)
 	{
-		BOOL bTimedOut=FALSE;
+		bool bTimedOut=false;
 		while (1) 
 		{			// decrease time marker latency for all previous Hebb events
 			pTimeToNext=m_HebbList.Iterate();
@@ -549,9 +549,9 @@ void Connexion::DecrementLatencies(double dt,BOOL FreezeLearning)
 //TRACE("decrementing Hebbian time window\n");
 			(*pTimeToNext)-=dt;
 			if ((*pTimeToNext)<=0)		// can't delete now because resets iterator
-				bTimedOut=TRUE;
+				bTimedOut=true;
 		}
-		if (bTimedOut==TRUE)
+		if (bTimedOut==true)
 		{
 //TRACE("a Hebb input timed out; deleting from list\n");
 			m_HebbList.Del();
@@ -604,7 +604,7 @@ void Connexion::IncrementHebbian()
 
 \return	.
 **/
-double Connexion::ProcessOutput(BOOL bFreezeHebb)
+double Connexion::ProcessOutput(bool bFreezeHebb)
 {
 // if allowing forgetting, decrement Hebb augmentation by fraction of ForgettingWindow
 // since last Hebb augmentation event
@@ -626,7 +626,7 @@ double Connexion::ProcessOutput(BOOL bFreezeHebb)
 	}
 
 	double G;
-	G=max(0,m_dGFacilCx);	// get conductance, if not facil below 0
+	G=STD_MAX((double) 0,m_dGFacilCx);	// get conductance, if not facil below 0
 	m_dGFacilCx=(m_dGFacilCx-m_dG)+(m_dG*RelFacil());	// facilitate next response
 	m_TransitCx.Del();				// remove spike from list
 
@@ -655,7 +655,7 @@ double Connexion::ProcessOutput(BOOL bFreezeHebb)
 
 \return	The prospective condutance.
 **/
-double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
+double Connexion::GetProspectiveCond(bool bFreezeHebb)
 {
 	double G=m_dGFacilCx;
 // if allowing forgetting, decrement Hebb augmentation by fraction of ForgettingWindow
@@ -676,7 +676,7 @@ double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
 	}
 
 //TRACE("GetProspectiveCond = %lf\n",G);
-	return(max(0,G));	// get conductance, if not facil below 0
+	return(STD_MAX((double) 0,G));	// get conductance, if not facil below 0
 }
 
 void Connexion::ResetSimulation()
@@ -687,9 +687,9 @@ void Connexion::ResetSimulation()
 	m_HebbList.Release();
 }
 
-void Connexion::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Connexion::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 	
 	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
 
@@ -706,9 +706,9 @@ void Connexion::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Connexion::GetDataPointer(const string &strDataType)
+float *Connexion::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "CONDUCTANCE")
 		return &m_fltGReport;
@@ -722,51 +722,49 @@ float *Connexion::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL Connexion::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Connexion::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 				
-	if(Link::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Link::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "SYNAPTICCONDUCTANCE")
 	{
 		BaseConductance(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONDUCTIONDELAY")
 	{
 		Delay(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SYNAPSETYPEID")
 	{
 		SynapseTypeID(strValue);
 		m_lpIGFModule->PreCalc();
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Connexion::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Connexion::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Link::QueryProperties(aryNames, aryTypes);
+	Link::QueryProperties(aryProperties);
 
-	aryNames.Add("SynapticConductance");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Facilitation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("ConductionDelay");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SynapseTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("SynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConductionDelay", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynapseTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

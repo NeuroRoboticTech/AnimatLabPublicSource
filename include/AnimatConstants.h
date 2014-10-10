@@ -463,11 +463,50 @@
 #define Al_Err_lInvalidFrictionType -4076
 #define Al_Err_strInvalidFrictionType "An invalid constraint friction type was specified."
 
+#define Al_Err_lSimFileNotFound -4077
+#define Al_Err_strSimFileNotFound "The specified simulation file was not found."
+
+#define Al_Err_lInvalidRobotInterfaceType -4078
+#define Al_Err_strInvalidRobotInterfaceType "An invalid robot interface type was specified."
+
+#define Al_Err_lInvalidRobotPartInterfaceType -4079
+#define Al_Err_strInvalidRobotPartInterfaceType "An invalid robot part interface type was specified."
+
+#define Al_Err_lInvalidRobotIOControlType -4080
+#define Al_Err_strInvalidRobotIOControlType "An invalid robot IO control type was specified."
+
+#define Al_Err_lAnimatModuleTagNotFound -4081
+#define Al_Err_strAnimatModuleTagNotFound "<AnimatModule> tag was not found within the first 1000 characters of the simulation file."
+
+#define Al_Err_lIOControlIDNotFound -4082
+#define Al_Err_strIOControlIDNotFound "IO Control not found."
+
+#define Al_Err_lPartInterfaceIDNotFound -4083
+#define Al_Err_strPartInterfaceIDNotFound "Part interface not found."
+
+#define Al_Err_lRobotInterfaceIDNotFound -4083
+#define Al_Err_strRobotInterfaceIDNotFound "Robot interface ID not found."
+
+#define Al_Err_lErrorSettingUpIOThread -4085
+#define Al_Err_strErrorSettingUpIOThread "Timed out waiting for IO thread to finish setup."
+
+#define Al_Err_lTimedOutWaitingForSimToStop -4086
+#define Al_Err_strTimedOutWaitingForSimToStop "Timed out waiting for the simulation to stop."
+
+#define Al_Err_lUnknownError -4087
+#define Al_Err_strUnknownError "An unknown error occurred."
+
+#define Al_Err_lTimedOutInMicroWait -4088
+#define Al_Err_strTimedOutInMicroWait "Timed out in microwait."
+
+#define Al_Err_lInvalidMeshScaleParam -4089
+#define Al_Err_strInvalidMeshScaleParam "Invalid mesh scaling param specified."
+
+#define Al_Err_lMoreThanOneMotorControl -4090
+#define Al_Err_strMoreThanOneMotorControl "Cannot have more than one motor control method per motor."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
-#define PI 3.14159
-#define PI_2 6.28319
-#define PI_HALF 1.570796f
 
 #define ERROR_THRESHOLD 0.0001
 
@@ -495,5 +534,13 @@
 #define ANIMAT_X_AXIS 0
 #define ANIMAT_Y_AXIS 1
 #define ANIMAT_Z_AXIS 2
+
+#define DESIRED_VELOCITY_TYPE 0
+#define DESIRED_POSITION_TYPE 1
+#define STICKY_ON_TYPE 2
+#define STICKY_OFF_TYPE 3
+#define BODY_FORCE_X_TYPE 4
+#define BODY_FORCE_Y_TYPE 5
+#define BODY_FORCE_Z_TYPE 6
 
 #endif // __ANIMAT_CONSTANTS_H__

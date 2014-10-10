@@ -12,12 +12,16 @@
 
 
 // Insert your headers here
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 
-#include <windows.h>
+#ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+
+	#include <windows.h>
+	
+	#pragma comment(lib, "Vfw32.lib")
+#endif
+
 #include "StdIncludes.h"
-
-#pragma comment(lib, "Vfw32.lib")
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

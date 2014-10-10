@@ -30,11 +30,12 @@ Namespace TypeHelpers
 
         Public Sub New(ByVal doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure, _
                        ByVal bpBodyPart As AnimatGUI.DataObjects.Physical.BodyPart, _
-                       ByVal tpBodyPartType As System.Type)
+                       ByVal tpBodyPartType As System.Type, Optional ByVal doPruner As TreeListPruner = Nothing)
             MyBase.New(doStructure)
             m_doStructure = doStructure
             m_bpBodyPart = bpBodyPart
             m_tpBodyPartType = tpBodyPartType
+            m_doPruner = doPruner
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -79,6 +80,11 @@ Namespace TypeHelpers
             If Not lbSelectedItem Is Nothing Then lbList.SelectedItem = lbSelectedItem
             lbList.DisplayMember = "Display"
             lbList.ValueMember = "Value"
+
+
+            If Not m_doPruner Is Nothing Then
+                m_doPruner.PruneList(lbList)
+            End If
 
             MyBase.FormatDropDownList(lbList)
 

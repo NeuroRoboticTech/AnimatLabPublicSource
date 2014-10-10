@@ -30,7 +30,9 @@ namespace AnimatSim
 				LinearJoint();
 				virtual ~LinearJoint();
 
-				virtual void LinearType(string strType);
+				static LinearJoint *CastToDerived(AnimatBase *lpBase) {return static_cast<LinearJoint*>(lpBase);}
+
+				virtual void LinearType(std::string strType);
 				virtual void LinearType(int iType);
 				virtual int LinearType();
 
@@ -42,8 +44,8 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 #pragma endregion
 

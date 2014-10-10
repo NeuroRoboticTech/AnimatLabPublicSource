@@ -31,21 +31,23 @@ namespace AnimatSim
 				OdorType *m_lpOdorType;
 
 				/// Identifier for the odor type
-				string m_strOdorTypeID;
+				std::string m_strOdorTypeID;
 
-				virtual void SetOdorTypePointer(string strID);
+				virtual void SetOdorTypePointer(std::string strID);
 
 			public:
 				OdorSensor();
 				virtual ~OdorSensor();
 
-				virtual void OdorTypeID(string strID);
-				virtual string OdorTypeID();
+				static OdorSensor *CastToDerived(AnimatBase *lpBase) {return static_cast<OdorSensor*>(lpBase);}
+
+				virtual void OdorTypeID(std::string strID);
+				virtual std::string OdorTypeID();
 
 				virtual void ResetSimulation();
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-				virtual float *GetDataPointer(const string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+				virtual float *GetDataPointer(const std::string &strDataType);
 				virtual void StepSimulation();
 				virtual void Load(CStdXml &oXml);
 			};

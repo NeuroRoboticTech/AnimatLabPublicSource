@@ -1,0 +1,51 @@
+Ubuntu setup
+1. Install mono from the software center
+1. Install Monodevelop from the software center
+2. Install monodevelop-debugger-gdb using synaptics
+2. Install GNU G++ compiler
+3. Install Eclipse from software center
+4. Install git
+5. Ran into a problem trying to install cola-git.
+   Depends on python-qt4
+      depends on libqt4-designer
+      depends on libqt4-help
+	  depends on libqt4-scripttools
+      depends on libqt4-test
+	  
+	  I used synaptics to install the libqt4 stuff and then
+	  python-qt4. It forced me to downgrade and remove some stuff
+6. Install cola-git
+7. installed freeglut3, freeglut3-dbg, and freeglut3-dev (Dev is needed to get the include files and such for opengl)
+8. installed mesa-utils (for glxinfo)
+9. installed glmark2 and glmark2-data for opengl benchmark testing
+
+10. I installed File backup manager and then lucky backup. File backup manager was not what I wanted, but lucky was.
+So in the future I suggest only installing that.
+
+11. Install libsdl, libsdl-dev, and libsdl-dbg using synapics (required to get vortex to compile)
+12. Setup vortex 6 in the thirdparty folder
+13. install cmake using synaptics
+14. dependecy walker for ubuntu. ldd /path/to/your_executable
+  
+15. Test that open gl is working on system
+glxinfo
+glxgears
+
+    sudo amdcccle  --supposed to be able to run this to config amd graphics properties. Did not attempt yet.
+
+16. Took a snapshot labeled "before_Ldconfig_bin" 
+17. Pulled the latest code and got it compiling.
+18. got the vortex_5_1 code to compile, but it would not run because it was unable to find the necessary dlls. 
+19. I created a new Animat.config file that had the following in it
+/home/dcofer/Projects/AnimatLabPublicSource/bin
+I used gksudo gedit to open editor in admin mode and saved it into the /etc/ld.so.conf.d folder and ran the sudo ldconfig
+This adds all the dll's in the bin folder to the path of so files that it will load
+
+20. Got the vortex code to run and it showed the screen and stuff, but did not work correctly becuase I had  no license on this box.
+19. I ran into an issue where dlopen is locking up when trying to load OsgAnimatSim or VortexAnimatSim, but it can load the other libs.
+I have not found a way to determine why it is locking up. I am going to try and get the vortex_unit_test running since it links statically
+to those libs
+20. Tried to do a bunch of computer updates and the system would not reboot correctly. I had to go back to my before_ldconfig_Bin backup and work
+my way back to here.
+
+	  

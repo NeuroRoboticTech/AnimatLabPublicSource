@@ -36,7 +36,7 @@ VsCylinder::~VsCylinder()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsCylinder\r\n", "", -1, false, true);}
 }
 
 void VsCylinder::CreateGraphicsGeometry()
@@ -48,10 +48,20 @@ void VsCylinder::CreateGraphicsGeometry()
 	GeometryRotationMatrix(SetupMatrix(vPos, vRot));
 }
 
+void VsCylinder::CalculateEstimatedMassAndVolume()
+{
+    float fltVolume = osg::PI * m_fltRadius * m_fltRadius * m_fltHeight;
+
+    m_fltEstimatedVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);;
+    m_fltEstimatedMass = (m_fltDensity * fltVolume) * m_lpSim->DisplayMassUnits();
+}
+
 void VsCylinder::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
+
+    CalculateEstimatedMassAndVolume();
 }
 
 void VsCylinder::CreateParts()
@@ -83,6 +93,8 @@ void VsCylinder::ResizePhysicsGeometry()
 		
 		vxCylinder->setRadius(m_fltRadius);
 		vxCylinder->setHeight(m_fltHeight);
+        
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

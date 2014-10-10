@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{82CE7FE6-405B-E342-ACAA-05A13F1B890B}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Robotics_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>dxl_debug</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Robotics_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>dxl</Lib>
+        <Lib>openFrameworksArduino</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Robotics_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>dxl_debug</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>../../../../bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Robotics_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/RoboticsAnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>dxl</Lib>
+        <Lib>openFrameworksArduino</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\Robotics_UnitTests\stdafx.h">
+      <Link>Robotics_UnitTests/stdafx.h</Link>
+    </None>
+    <None Include="..\Robotics_UnitTests\targetver.h">
+      <Link>Robotics_UnitTests/targetver.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Robotics_UnitTests\Robotics_UnitTests.cpp">
+      <Link>Robotics_UnitTests/Robotics_UnitTests.cpp</Link>
+    </Compile>
+    <Compile Include="..\Robotics_UnitTests\Rotation_Tests.cpp">
+      <Link>Robotics_UnitTests/Rotation_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\Robotics_UnitTests\stdafx.cpp">
+      <Link>Robotics_UnitTests/stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

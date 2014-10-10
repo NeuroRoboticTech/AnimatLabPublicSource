@@ -22,7 +22,7 @@ VsMouseSpring::~VsMouseSpring(void)
 {
 }
 
-void VsMouseSpring::Visible(BOOL bVal)
+void VsMouseSpring::Visible(bool bVal)
 {
 	if(bVal)
 		m_gdeLine->setNodeMask(0x1);
@@ -70,7 +70,7 @@ void VsMouseSpring::Initialize()
     m_gdeLine->setStateSet(ss);
 
 	//Initially not visible.
-	Visible(FALSE);
+	Visible(false);
 }
 
 void VsMouseSpring::SetStart(osg::Vec3 v3Start)

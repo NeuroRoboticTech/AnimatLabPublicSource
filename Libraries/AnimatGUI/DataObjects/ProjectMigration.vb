@@ -34,9 +34,10 @@ Namespace DataObjects
 
         Protected m_hashRigidBodies As New Hashtable
         Protected m_hashJoints As New Hashtable
+        Protected m_hashIonChannels As New Hashtable
 
-        Public MustOverride ReadOnly Property ConvertFrom() As Integer
-        Public MustOverride ReadOnly Property ConvertTo() As Integer
+        Public MustOverride ReadOnly Property ConvertFrom() As String
+        Public MustOverride ReadOnly Property ConvertTo() As String
 
         Sub New()
 
@@ -48,31 +49,44 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Sub ConvertFiles(ByVal strProjectFile As String)
+        Public Overridable Function ConvertFiles(ByVal strProjectFile As String, ByRef strPhysics As String, ByVal bSkipBackup As Boolean) As Boolean
 
-            Dim strProjectFilename As String
-            Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
-            m_strProjectName = strProjectFilename.Replace(".aproj", "")
+            Try
+                Util.Application.AppIsBusy = True
 
-            'Remove the last \ if it is there.
-            If m_strProjectPath(m_strProjectPath.Length - 1) = "\" Then m_strProjectPath = m_strProjectPath.Remove(m_strProjectPath.Length - 1, 1)
+                Dim strProjectFilename As String
+                Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
+                m_strProjectName = strProjectFilename.Replace(".aproj", "")
 
-            If File.Exists(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj") Then
-                File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
-            End If
+                'Remove the last \ if it is there.
+                If m_strProjectPath(m_strProjectPath.Length - 1) = "\" Then m_strProjectPath = m_strProjectPath.Remove(m_strProjectPath.Length - 1, 1)
 
-            BackupFiles()
+                If File.Exists(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj") Then
+                    File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
+                End If
 
-            For Each strProjFile As String In m_aryAPROJ_Files
-                ConvertProject(strProjFile)
-            Next
+                PopulateProjectFiles()
+                If Not bSkipBackup AndAlso Not BackupFiles() Then
+                    Return False
+                End If
 
-            RemoveOldFiles()
+                For Each strProjFile As String In m_aryAPROJ_Files
+                    Util.Application.AppStatusText = "Converting " & strProjectFile
+                    ConvertProject(strProjFile, strPhysics)
+                Next
 
-        End Sub
+                RemoveOldFiles()
 
-        Protected Sub BackupFiles()
+                Return True
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
 
+        End Function
+
+        Protected Overridable Sub PopulateProjectFiles()
             If Not Directory.Exists(m_strProjectPath) Then
                 Throw New System.Exception("The specified project directory does not exist: '" & m_strProjectPath & "'.")
             End If
@@ -90,11 +104,64 @@ Namespace DataObjects
             m_aryAFNN_Files = Directory.GetFiles(m_strProjectPath, "*.afnn")
             m_aryARNN_Files = Directory.GetFiles(m_strProjectPath, "*.arnn")
             m_aryAFORM_Files = Directory.GetFiles(m_strProjectPath, "*.aform")
+        End Sub
+
+        Protected Overridable Function BackupFiles() As Boolean
+
+            Dim strBackupIndex As String
+
+            If Not FindBackupIndex(m_strProjectPath, strBackupIndex) Then
+                Return False
+            End If
 
             'Copy all files in the current directory to the new one.
-            Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup", False)
+            Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup" & strBackupIndex, False)
 
+            Return True
+        End Function
+
+        Protected Overridable Sub RemoveOldBackupFiles(ByVal strPath As String)
+            System.IO.Directory.Delete(strPath, True)
+
+            If Directory.Exists(strPath) Then
+                Throw New System.Exception("Failed to delete the backup directory '" & strPath & "'")
+            End If
         End Sub
+
+        Protected Overridable Function FindBackupIndex(ByVal strProjectPath As String, ByRef strBackupIndex As String) As Boolean
+
+            Dim strBackupPath As String = strProjectPath & "\Backup"
+            strBackupIndex = ""
+
+            If Directory.Exists(strBackupPath) Then
+
+                Dim eResult As System.Windows.Forms.DialogResult = Util.ShowMessage("A backup directory already exists for this project. Would you like to remove that directory and replace it? If not a new backup directory will be created.", _
+                                     "Duplicate Backup Directory", MessageBoxButtons.YesNoCancel)
+                If eResult = DialogResult.Cancel Then
+                    Return False
+                End If
+
+                If eResult = DialogResult.Yes Then
+                    RemoveOldBackupFiles(strBackupPath)
+                    strBackupIndex = ""
+                    Return True
+                End If
+
+                Dim bFound As Boolean = False
+                Dim iBackupIdx As Integer = 1
+                While Not bFound
+                    strBackupIndex = iBackupIdx.ToString()
+                    strBackupPath = strProjectPath & "\Backup" & strBackupIndex
+
+                    If Not Directory.Exists(strBackupPath) Then
+                        bFound = True
+                    End If
+                End While
+
+            End If
+
+            Return True
+        End Function
 
         Protected Sub CopyFiles(ByVal aryFiles() As String)
 
@@ -134,18 +201,18 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub ConvertProject(ByVal strProjFile As String)
+        Protected Overridable Sub ConvertProject(ByVal strProjFile As String, ByRef strPhysics As String)
 
             m_xnProjectXml.Load(strProjFile)
 
             Dim xnProjectNode As XmlNode = m_xnProjectXml.GetRootNode("Project")
 
-            ConvertProjectNode(xnProjectNode)
+            ConvertProjectNode(xnProjectNode, strPhysics)
 
             m_xnProjectXml.Save(strProjFile)
         End Sub
 
-        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+        Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
         End Sub
 

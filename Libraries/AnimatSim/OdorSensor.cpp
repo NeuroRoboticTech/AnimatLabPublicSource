@@ -4,7 +4,7 @@
 \brief	Implements the odor sensor class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -72,7 +72,7 @@ OdorSensor::~OdorSensor()
 
 \param	strID	Identifier for the odor type.
 **/
-void OdorSensor::OdorTypeID(string strID)
+void OdorSensor::OdorTypeID(std::string strID)
 {
 	SetOdorTypePointer(strID);
 	m_strOdorTypeID = strID;
@@ -86,7 +86,7 @@ void OdorSensor::OdorTypeID(string strID)
 
 \return	ID.
 **/
-string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
+std::string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
 
 /**
 \brief	Sets the odor type pointer.
@@ -96,7 +96,7 @@ string OdorSensor::OdorTypeID() {return m_strOdorTypeID;}
 
 \param	strID	Identifier for the odor type.
 **/
-void OdorSensor::SetOdorTypePointer(string strID)
+void OdorSensor::SetOdorTypePointer(std::string strID)
 {
 	if(Std_IsBlank(strID))
 		m_lpOdorType = NULL;
@@ -113,37 +113,38 @@ void OdorSensor::ResetSimulation()
 	m_fltOdorValue = 0;
 }
 
-BOOL OdorSensor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool OdorSensor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Sensor::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Sensor::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ODORTYPEID")
 	{
 		OdorTypeID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void OdorSensor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Sensor::QueryProperties(aryNames, aryTypes);
+	Sensor::QueryProperties(aryProperties);
 
-	aryNames.Add("OdorTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("OdorValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("OdorTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
-float *OdorSensor::GetDataPointer(const string &strDataType)
+float *OdorSensor::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "ODORVALUE")
 		return &m_fltOdorValue;

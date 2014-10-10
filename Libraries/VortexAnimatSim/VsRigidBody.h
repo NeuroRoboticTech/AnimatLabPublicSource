@@ -72,9 +72,7 @@ namespace VortexAnimatSim
 			//We need these arrays to store body data that could potentially be charted.
 			//this may be scaled so we need to store it in here instead of just using the
 			//body data directly from the physics engine.
-			BOOL m_bCollectExtraData;
 			CStdFPoint m_vPos;
-
 			//float m_vPosition[3];
 			//float m_vRotation[3];
 			float m_vLinearVelocity[3];
@@ -83,6 +81,19 @@ namespace VortexAnimatSim
 			float m_vAngularAcceleration[3];
 			float m_vForce[3];
 			float m_vTorque[3];
+
+            /// Static parts do not have their mass/volume computed for them by vortex. This presents a problem when
+            /// trying to convert them to another physics engine like bullet that uses mass instead. When we are saving
+            /// out the mass of the part then we need to be able to get some reliable estimate of what it is if it is static.
+            /// We use these estimations for that purpose.
+            float m_fltEstimatedMass;
+
+            /// The estimated volume. See m_fltEstimatedMass desciption.
+            float m_fltEstimatedVolume;
+
+			///Used to send back 0 for variables that are supported in other physics
+			///engines but not in this one.
+			float m_fltBlank;
 
 			virtual void SetThisPointers();
 
@@ -103,6 +114,8 @@ namespace VortexAnimatSim
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();
+
+            virtual void CalculateEstimatedMassAndVolume() {};
 
 		public:
 			VsRigidBody();
@@ -127,11 +140,13 @@ namespace VortexAnimatSim
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
-			virtual float *Physics_GetDataPointer(const string &strDataType);
+            virtual void Physics_CollectExtraData();
+			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 			virtual void Physics_UpdateMatrix();
-			virtual void Physics_SetFreeze(BOOL bVal);
+			virtual void Physics_SetFreeze(bool bVal);
 			virtual void Physics_SetDensity(float fltVal);
-			virtual void Physics_SetMaterialID(string strID);
+            virtual void Physics_SetMass(float fltVal) {};
+			virtual void Physics_SetMaterialID(std::string strID);
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular);
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz);
 			virtual void Physics_SetColor();
@@ -141,12 +156,17 @@ namespace VortexAnimatSim
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos);
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex();
 			virtual void Physics_FluidDataChanged();
+            virtual bool Physics_IsDefined();
+            virtual bool Physics_IsGeometryDefined();
+            virtual void Physics_WakeDynamics();
 
-			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+            virtual void Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+            virtual void Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
-			virtual BOOL Physics_HasCollisionGeometry();
+            virtual float Physics_GetDensity();
+			virtual bool Physics_HasCollisionGeometry();
 		};
 
 	}			// Environment

@@ -10,13 +10,15 @@
 #pragma once
 #endif 
 
-
-// Insert your headers here
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
- 
-#include <windows.h>
-
-#define ANIMAT_PORT __declspec( dllexport )
+#ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+	 
+	#include <windows.h>
+	
+	#define ANIMAT_PORT __declspec( dllexport )
+#else
+	#define ANIMAT_PORT	
+#endif
 
 #define STD_TRACING_ON
 
@@ -26,7 +28,6 @@
 //	#define STD_TRACE_DETAIL
 //#endif
 
-//#include "NeuralLibrary.h"
 #include "StdUtils.h"
 #include "AnimatConstants.h"
 #include "AnimatUtils.h"
@@ -45,6 +46,9 @@ namespace AnimatSim
 	class SimulationWindow;
 	class SimulationWindowMgr;
 	class BoundingBox;
+    class ThreadProcessor;
+    class ModuleThreadProcessor;
+	class TypeProperty;
 
 	namespace Adapters
 	{
@@ -136,6 +140,7 @@ namespace AnimatSim
 		class EnablerStimulus;
 		class VoltageClamp;
 		class InverseMuscleCurrent;
+        class MotorVelocityStimulus;
 	}
 
 	namespace Gains
@@ -152,6 +157,13 @@ namespace AnimatSim
 		class KeyFrame;
 		class SimulationRecorder;
 	}
+
+    namespace Robotics
+    {
+        class RobotInterface;
+		class RobotIOControl;
+        class RobotPartInterface;
+    }
 }
 
 using namespace AnimatSim;
@@ -164,6 +176,7 @@ using namespace AnimatSim::Environment::Joints;
 using namespace AnimatSim::ExternalStimuli;
 using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
+using namespace AnimatSim::Robotics;
 
 
 #include "AnimatUtils.h"

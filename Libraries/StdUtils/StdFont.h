@@ -18,7 +18,7 @@ class STD_UTILS_PORT CStdFont
 {
 public:
 	/// Name of the font
-	string m_strName;
+	std::string m_strName;
 
 	/// Size of the font
 	float m_fltSize;
@@ -42,8 +42,8 @@ public:
 	CStdFont();
 	virtual ~CStdFont();
 
-	virtual void Load(CStdXml &oXml, string strParamName, bool bThrowError = false);
-	virtual void Save(CStdXml &oXml, string strParamName);
+	virtual void Load(CStdXml &oXml, std::string strParamName, bool bThrowError = false);
+	virtual void Save(CStdXml &oXml, std::string strParamName);
 };
 
 }				//StdUtils

@@ -12,10 +12,12 @@ Namespace DataObjects
 
 #Region " Properties "
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "Creates a set of configuration files for running experiments on a grid system."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
 #End Region

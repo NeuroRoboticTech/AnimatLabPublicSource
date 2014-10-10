@@ -4,7 +4,7 @@
 \brief	Implements the line base class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -54,7 +54,7 @@ namespace AnimatSim
 **/
 LineBase::LineBase()
 {
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 
 	m_fltDensity = 0;
 	m_lpJointToParent = NULL;
@@ -77,10 +77,10 @@ LineBase::~LineBase()
 		m_aryAttachmentPoints.Clear();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, false, true);}
 }
 
-void  LineBase::Enabled(BOOL bValue)
+void  LineBase::Enabled(bool bValue)
 {
 	RigidBody::Enabled(bValue);
 
@@ -109,10 +109,10 @@ float LineBase::Length() {return m_fltLength;}
 **/
 float LineBase::PrevLength() {return m_fltPrevLength;}
 
-BOOL LineBase::AllowMouseManipulation() {return FALSE;}
+bool LineBase::AllowMouseManipulation() {return false;}
 
 //Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
-void  LineBase::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void  LineBase::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {}
 
 //Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
@@ -144,7 +144,7 @@ then initializes the list again to find those points for the line.
 
 \param	strXml		 	The xml to load.
 **/
-void LineBase::AttachmentPoints(string strXml)
+void LineBase::AttachmentPoints(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -182,14 +182,17 @@ float LineBase::CalculateLength()
 	for(int iIndex=1; iIndex<iCount; iIndex++)
 	{
 		lpAttach2 = m_aryAttachmentPoints[iIndex];
-		fltLength += Std_CalculateDistance(lpAttach1->GetCurrentPosition(), lpAttach2->GetCurrentPosition());
+		CStdFPoint oPos1 = lpAttach1->GetCurrentPosition();
+		CStdFPoint oPos2 = lpAttach2->GetCurrentPosition();
+		
+		fltLength += Std_CalculateDistance(oPos1, oPos2);
 		lpAttach1 = lpAttach2;
 	}
 
 	return (fltLength * m_lpSim->DistanceUnits());
 }
 
-void LineBase::AttachedPartMovedOrRotated(string strID)
+void LineBase::AttachedPartMovedOrRotated(std::string strID)
 {
 	//Redraw the line.
 	Resize();
@@ -213,9 +216,9 @@ void LineBase::AfterResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *LineBase::GetDataPointer(const string &strDataType)
+float *LineBase::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -229,9 +232,9 @@ float *LineBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LineBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LineBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	if(RigidBody::SetData(strDataType, strValue, FALSE))
+	if(RigidBody::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "ATTACHMENTPOINTS")
@@ -256,21 +259,20 @@ BOOL LineBase::SetData(const string &strDataType, const string &strValue, BOOL b
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void LineBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LineBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("AttachmentPoints");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MuscleLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Length", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AttachedPartMovedOrRotated");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("AttachmentPoints", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("AttachedPartMovedOrRotated", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -289,7 +291,7 @@ void LineBase::InitializeAttachments()
 {
 	m_aryAttachmentPoints.Clear();
 
-	string strID;
+	std::string strID;
 	Attachment *lpAttachment=NULL;
 	int iCount = m_aryAttachmentPointIDs.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -300,7 +302,7 @@ void LineBase::InitializeAttachments()
 	}
 
 	if(m_aryAttachmentPoints.GetSize() < 2)
-		Enabled(FALSE);
+		Enabled(false);
 
 	//Get the current length of the muscle.
 	m_fltLength = CalculateLength();
@@ -351,11 +353,11 @@ void LineBase::Load(CStdXml &oXml)
 void LineBase::LoadAttachments(CStdXml &oXml)
 {
 	m_aryAttachmentPointIDs.Clear();
-	if(oXml.FindChildElement("Attachments", FALSE))
+	if(oXml.FindChildElement("Attachments", false))
 	{
 		oXml.IntoElem();
 		int iCount = oXml.NumberOfChildren();
-		string strID;
+		std::string strID;
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
@@ -366,7 +368,7 @@ void LineBase::LoadAttachments(CStdXml &oXml)
 	}
 
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
-		Enabled(FALSE);
+		Enabled(false);
 }
 
 		}		//Bodies

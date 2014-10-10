@@ -72,10 +72,10 @@ try
 	if(m_lpTorqueZEval) delete m_lpTorqueZEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, false, true);}
 }
 
-CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
+CStdPostFixEval *VsForceStimulus::SetupEquation(std::string strEquation)
 {
 	CStdPostFixEval *lpEquation = NULL;
 
@@ -108,7 +108,7 @@ void VsForceStimulus::RelativePositionZ(float fltVal)
 	m_oRelativePosition.z = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
-void VsForceStimulus::ForceXEquation(string strVal)
+void VsForceStimulus::ForceXEquation(std::string strVal)
 {
 	if(m_lpForceXEval) 
 	{delete m_lpForceXEval; m_lpForceXEval = NULL;}
@@ -117,7 +117,7 @@ void VsForceStimulus::ForceXEquation(string strVal)
 	m_lpForceXEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::ForceYEquation(string strVal)
+void VsForceStimulus::ForceYEquation(std::string strVal)
 {
 	if(m_lpForceYEval) 
 	{delete m_lpForceYEval; m_lpForceYEval = NULL;}
@@ -126,7 +126,7 @@ void VsForceStimulus::ForceYEquation(string strVal)
 	m_lpForceYEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::ForceZEquation(string strVal)
+void VsForceStimulus::ForceZEquation(std::string strVal)
 {
 	if(m_lpForceZEval) 
 	{delete m_lpForceZEval; m_lpForceZEval = NULL;}
@@ -135,7 +135,7 @@ void VsForceStimulus::ForceZEquation(string strVal)
 	m_lpForceZEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueXEquation(string strVal)
+void VsForceStimulus::TorqueXEquation(std::string strVal)
 {
 	if(m_lpTorqueXEval) 
 	{delete m_lpTorqueXEval; m_lpTorqueXEval = NULL;}
@@ -144,7 +144,7 @@ void VsForceStimulus::TorqueXEquation(string strVal)
 	m_lpTorqueXEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueYEquation(string strVal)
+void VsForceStimulus::TorqueYEquation(std::string strVal)
 {
 	if(m_lpTorqueYEval) 
 	{delete m_lpTorqueYEval; m_lpTorqueYEval = NULL;}
@@ -153,7 +153,7 @@ void VsForceStimulus::TorqueYEquation(string strVal)
 	m_lpTorqueYEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::TorqueZEquation(string strVal)
+void VsForceStimulus::TorqueZEquation(std::string strVal)
 {
 	if(m_lpTorqueZEval) 
 	{delete m_lpTorqueZEval; m_lpTorqueZEval = NULL;}
@@ -279,10 +279,10 @@ void VsForceStimulus::Deactivate()
 		m_lpVsBody->Part()->wakeDynamics();
 }
 
-float *VsForceStimulus::GetDataPointer(const string &strDataType)
+float *VsForceStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "FORCEX")
 		lpData = &m_fltForceReportX;
@@ -302,104 +302,87 @@ float *VsForceStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VsForceStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsForceStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strType == "POSITIONX")
 	{
 		RelativePositionX(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "POSITIONY")
 	{
 		RelativePositionY(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "POSITIONZ")
 	{
 		RelativePositionZ(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEX")
 	{
 		ForceXEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEY")
 	{
 		ForceYEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORCEZ")
 	{
 		ForceZEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEX")
 	{
 		TorqueXEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEY")
 	{
 		TorqueYEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TORQUEZ")
 	{
 		TorqueZEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VsForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsForceStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("PositionX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PositionY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PositionZ");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ForceZ");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueX");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueY");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TorqueZ");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("PositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceX", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("ForceY", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("ForceZ", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueX", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueY", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TorqueZ", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 }
 
 void VsForceStimulus::Load(CStdXml &oXml)

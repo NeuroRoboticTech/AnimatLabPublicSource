@@ -30,31 +30,30 @@ namespace AnimatSim
 
 			/// If this is true then the food quantity of the parent RigidBody is used to calculate
 			/// the odor strength instead of the m_fltQuantity of this odor object.
-			BOOL m_bUseFoodQuantity;
-
-			//Enable the odor
-			BOOL m_bEnabled;
+			bool m_bUseFoodQuantity;
 
 		public:
 			Odor(RigidBody *lpParent);
 			virtual ~Odor();
 
-			virtual void Enabled(BOOL bEnabled);
-			virtual BOOL Enabled();
+			static Odor *CastToDerived(AnimatBase *lpBase) {return static_cast<Odor*>(lpBase);}
 
-			virtual void SetOdorType(string strType);
+			virtual void Enabled(bool bEnabled);
+			virtual bool Enabled();
+
+			virtual void SetOdorType(std::string strType);
 			virtual OdorType  *GetOdorType();
 
 			virtual float Quantity();
 			virtual void Quantity(float fltVal);
 
-			virtual BOOL UseFoodQuantity();
-			virtual void UseFoodQuantity(BOOL bVal);
+			virtual bool UseFoodQuantity();
+			virtual void UseFoodQuantity(bool bVal);
 			
 			virtual float CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos);
 						
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
 		};

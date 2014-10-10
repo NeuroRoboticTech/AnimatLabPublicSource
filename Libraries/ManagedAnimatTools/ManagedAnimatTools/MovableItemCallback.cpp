@@ -33,7 +33,12 @@ void MovableItemCallback::RotationChanged()
 	m_doObj->FireRotationChangedEvent();
 }
 
-void MovableItemCallback::SelectionChanged(BOOL bSelected, BOOL bSelectMultiple)
+void MovableItemCallback::SizeChanged()
+{
+	m_doObj->FireSizeChangedEvent();
+}
+
+void MovableItemCallback::SelectionChanged(bool bSelected, bool bSelectMultiple)
 {
 	m_doObj->FireSelectionChangedEvent(bSelected, bSelectMultiple);
 }

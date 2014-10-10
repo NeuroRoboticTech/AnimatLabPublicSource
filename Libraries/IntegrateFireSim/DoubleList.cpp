@@ -127,7 +127,7 @@ double *DoubleList::Iterate(void)
 **/
 double DoubleList::RemoveHead()
 {
-	//ASSERT(IsEmpty()==FALSE);
+	//ASSERT(IsEmpty()==false);
 	double d=head->data;
 	listelem* temp=head;
 	cursor=head=head->next;

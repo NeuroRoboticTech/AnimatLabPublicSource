@@ -32,15 +32,18 @@ Namespace DataObjects
 
             Protected m_arySubsystemIDs As New ArrayList
 
-            Public Overrides ReadOnly Property ConvertFrom As Integer
+            'Keeps track of each mesh name as it is used so we do not duplicate any.
+            Protected m_aryUsedMeshNames As New ArrayList
+
+            Public Overrides ReadOnly Property ConvertFrom As String
                 Get
-                    Return 1
+                    Return "1"
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As Integer
+            Public Overrides ReadOnly Property ConvertTo As String
                 Get
-                    Return 3
+                    Return "3"
                 End Get
             End Property
 
@@ -91,16 +94,18 @@ Namespace DataObjects
                 Return aryReplaceText
             End Function
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
-                m_iSimInterface.CreateStandAloneSim("VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
+                m_iSimInterface.CreateStandAloneSim(Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension,
                                                     Application.ExecutablePath)
                 m_iSimInterface.SetProjectPath(m_strProjectPath & "\")
 
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsClassName", False)
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
                 m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
+
+                strPhysics = m_xnProjectXml.GetSingleNodeValue(xnProject, "Physics", False, "Vortex")
 
                 m_xnProjectXml.RemoveNode(xnProject, "DockingForms", False)
                 m_xnProjectXml.RemoveNode(xnProject, "ChildForms", False)
@@ -142,7 +147,9 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySimNode(ByVal xnSimulation As XmlNode)
 
-                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
+                Util.Application.AppStatusText = "Converting simulation nodes"
+
+                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension)
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
@@ -230,6 +237,9 @@ Namespace DataObjects
                 m_xnMouth = Nothing
                 m_xnStomach = Nothing
 
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnStructure, "Name", False)
+                Util.Application.AppStatusText = "Converting organism/structure " & strName & " body"
+
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
                 m_xnProjectXml.RemoveNode(xnStructure, "Reference", False)
@@ -275,6 +285,9 @@ Namespace DataObjects
                 If Not m_xnProjectXml.GetNode(xnRigidBody, "Converter", False) Is Nothing Then
                     Return
                 End If
+
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Name", False)
+                Util.Application.AppStatusText = "Converting body part " & strName
 
                 m_xnProjectXml.AddTransparency(xnRigidBody, 0, 0, 50, 50, 0)
 
@@ -647,12 +660,15 @@ Namespace DataObjects
 
                 Dim strMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "MeshFile", False, "")
                 Dim strExt As String = Util.GetFileExtension(strMeshFileOld)
-                Dim strMeshFile As String = strMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strBaseMeshName As String = strMeshFileOld.Replace("." & strExt, "")
                 Dim strCollisionMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshFile", False, "")
                 strExt = Util.GetFileExtension(strCollisionMeshFileOld)
-                Dim strCollisionMeshFile As String = strCollisionMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strBaseColliosionMeshName As String = strCollisionMeshFileOld.Replace("." & strExt, "")
                 Dim strCollisionMeshType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshType", False, "Convex")
                 Dim strTexture As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Texture", False, "")
+
+                Dim strMeshFile As String = EnsureUniqueMeshName(strBaseMeshName) & ".osg"
+                Dim strCollisionMeshFile As String = EnsureUniqueMeshName(strBaseColliosionMeshName) & ".osg"
 
                 If strCollisionMeshType = "Regular" Then
                     strCollisionMeshType = "Triangular"
@@ -706,6 +722,22 @@ Namespace DataObjects
 
             End Sub
 
+            Protected Function EnsureUniqueMeshName(ByVal strBaseMeshName As String, Optional ByVal iIndex As Integer = 0) As String
+
+                Dim strTestName As String = strBaseMeshName
+                If iIndex > 0 Then
+                    strTestName = strTestName & iIndex
+                End If
+
+                If m_aryUsedMeshNames.Contains(strTestName) Then
+                    Return EnsureUniqueMeshName(strBaseMeshName, iIndex + 1)
+                Else
+                    m_aryUsedMeshNames.Add(strTestName)
+                    Return strTestName
+                End If
+
+            End Function
+
             Protected Sub ConvertV1MeshFile(ByVal strOldFile As String, ByVal strNewFile As String, ByVal strTexture As String)
 
                 m_iSimInterface.ConvertV1MeshFile(strOldFile, strNewFile, strTexture)
@@ -751,7 +783,7 @@ Namespace DataObjects
                                         "<Specular Red=""0.25098"" Green=""0.25098"" Blue=""0.25098"" Alpha=""1""/>" & vbCrLf & _
                                         "<Shininess>64</Shininess>" & vbCrLf & _
                                         "<Texture/>" & _
-                                        "<ModuleName>VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
+                                        "<ModuleName>VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
                                         "<LocalPosition>" & vbCrLf & _
                                         "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
                                         "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
@@ -832,7 +864,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", Util.Application.Physics.LibraryPrefix & "VortexAnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension)
 
                 m_xnStomach = xnRigidBody
 
@@ -1068,6 +1100,8 @@ Namespace DataObjects
 
             Protected Overridable Sub AddLight(ByVal xnEnvironment As XmlNode)
 
+                Util.Application.AppStatusText = "Adding lights"
+
                 Dim fltDistY As Single = 20 * m_fltDistanceUnits
                 Dim fltDistXZ As Single = 10 * m_fltDistanceUnits
                 Dim fltAttenuation As Single = 750 * m_fltDistanceUnits
@@ -1147,6 +1181,8 @@ Namespace DataObjects
 
             Protected Overridable Sub AddDefaultMaterial(ByVal xnEnvironment As XmlNode)
 
+                Util.Application.AppStatusText = "Adding default materials"
+
                 Dim strXml As String = "<MaterialType>" & vbCrLf & _
                             "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & vbCrLf & _
                             "<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>" & vbCrLf & _
@@ -1184,6 +1220,8 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySurface(ByVal strType As String, ByVal xnEnvironment As XmlNode, ByVal xnStructs As XmlNode, ByVal aryReplaceText As Hashtable, ByVal bIsFluidPlane As Boolean)
 
+                Util.Application.AppStatusText = "Modifying " & strType & " surface"
+
                 Dim xnGround As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, strType & "Surface", False)
                 If Not xnGround Is Nothing Then
 
@@ -1199,6 +1237,9 @@ Namespace DataObjects
 #Region "Modify Nervous System"
 
             Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
+
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnOrganism, "Name", False)
+                Util.Application.AppStatusText = "Converting organism " & strName & " nervous system"
 
                 m_arySubsystemIDs.Clear()
 
@@ -1453,6 +1494,9 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySubSystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnSubSystem As XmlNode)
 
+                Dim strName As String = m_xnProjectXml.GetSingleNodeValue(xnBodyFile, "PageName", False)
+                Util.Application.AppStatusText = "Converting neural subsystem " & strName
+
                 Dim strSubSystemID As String = m_xnProjectXml.GetSingleNodeValue(xnSubSystem, "SubsystemID")
                 m_arySubsystemIDs.Add(strSubSystemID.ToLower)
 
@@ -1540,6 +1584,29 @@ Namespace DataObjects
                     End If
                 End If
 
+                'If this neural node has ion channels then loop through them and check their IDs.
+                'The old version of AnimatLab had a bug in it that would duplicate IDs of Ion channels
+                ' when they were copied. We need to check for this here and replace any duplicate IDs
+                Dim xnIonChannels As XmlNode = m_xnProjectXml.GetNode(xnNode, "IonChannels", False)
+                If Not xnIonChannels Is Nothing Then
+                    For Each xnIon As XmlNode In xnIonChannels
+                        ModifyIonChannel(xnNode, xnIon)
+                    Next
+                End If
+
+            End Sub
+
+            Protected Sub ModifyIonChannel(ByVal xnNode As XmlNode, ByVal xnIon As XmlNode)
+
+                Dim strID As String = m_xnProjectXml.GetSingleNodeValue(xnIon, "ID", False, "")
+
+                If m_hashIonChannels.ContainsKey(strID) Then
+                    strID = System.Guid.NewGuid.ToString
+                    m_xnProjectXml.UpdateSingleNodeValue(xnIon, "ID", strID)
+                End If
+
+                m_hashIonChannels.Add(strID, xnIon)
+
             End Sub
 
             Protected Sub VerifyAllDiagramsConverted(ByVal xnBodyFile As Framework.XmlDom, ByVal xnRootSubNodes As XmlNode, ByVal xnOldDiagrams As XmlNode)
@@ -1574,6 +1641,8 @@ Namespace DataObjects
 #Region "Stimuli Modifiers"
 
             Protected Overridable Sub ModifyStimuli(ByVal xnProjectNode As XmlNode, ByVal xnSimNode As XmlNode)
+
+                Util.Application.AppStatusText = "Converting stimuli"
 
                 Dim xnStimuli As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "Stimuli")
 

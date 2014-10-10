@@ -30,12 +30,6 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
-        Public Overrides ReadOnly Property ModuleFilename() As String
-            Get
-                Return "FiringRateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
-            End Get
-        End Property
-
 #End Region
 
 #Region " Methods "

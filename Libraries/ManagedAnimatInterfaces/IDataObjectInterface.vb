@@ -5,6 +5,7 @@ Public Interface IDataObjectInterface
 
     Delegate Sub PositionChangedHandler()
     Delegate Sub RotationChangedHandler()
+    Delegate Sub SizeChangedHandler()
     Delegate Sub SelectionChangedHandler(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
     Delegate Sub AddBodyClickedHandler(ByVal fltPosX As Single, ByVal fltPosY As Single, ByVal fltPosZ As Single, _
                                        ByVal fltNormX As Single, ByVal fltNormY As Single, ByVal fltNormZ As Single)
@@ -23,7 +24,7 @@ Public Interface IDataObjectInterface
 #Region "Methods"
 
     Function SetData(ByVal sDataType As String, ByVal sValue As String, ByVal bThrowError As Boolean) As Boolean
-    Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList)
+    Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList, ByVal aryDirections As System.Collections.ArrayList)
     Sub SelectItem(ByVal bVal As Boolean, ByVal bSelectMultiple As Boolean)
 
     Sub GetDataPointer(ByVal sData As String)
@@ -39,18 +40,22 @@ Public Interface IDataObjectInterface
     Sub EnableCollisions(ByVal strOtherBodyID As String)
     Sub DisableCollisions(ByVal strOtherBodyID As String)
 
+    Function GetLocalTransformMatrixString() As String
+
 #End Region
 
 #Region "Events"
 
     Event OnPositionChanged As PositionChangedHandler
     Event OnRotationChanged As RotationChangedHandler
+    Event OnSizeChanged As SizeChangedHandler
     Event OnSelectionChanged As SelectionChangedHandler
     Event OnAddBodyClicked As AddBodyClickedHandler
     Event OnSelectedVertexChanged As SelectedVertexChangedHandler
 
     Sub FirePositionChangedEvent()
     Sub FireRotationChangedEvent()
+    Sub FireSizeChangedEvent()
     Sub FireSelectionChangedEvent(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
     Sub FireAddBodyClickedEvent(ByVal fltPosX As Single, ByVal fltPosY As Single, ByVal fltPosZ As Single, _
                                 ByVal fltNormX As Single, ByVal fltNormY As Single, ByVal fltNormZ As Single)

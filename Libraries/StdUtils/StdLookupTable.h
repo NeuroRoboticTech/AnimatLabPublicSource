@@ -42,10 +42,10 @@ protected:
 	double *m_aryB;
 
 	/// true to use low limit value
-	BOOL m_bUseLowLimitValue;
+	bool m_bUseLowLimitValue;
 
 	/// true to use high limit value
-	BOOL m_bUseHighLimitValue;
+	bool m_bUseHighLimitValue;
 
 	/// The double low limit value
 	double m_dblLowLimitValue;
@@ -127,7 +127,7 @@ public:
 	
 	\return	true if it succeeds, false if it fails.
 	**/
-	BOOL UseLowLimitValue() {return m_bUseLowLimitValue;};
+	bool UseLowLimitValue() {return m_bUseLowLimitValue;};
 
 	/**
 	\brief	Sets the use low limit value.
@@ -137,7 +137,7 @@ public:
 	
 	\param	bVal	true to value. 
 	**/
-	void UseLowLimitValue(BOOL bVal) {m_bUseLowLimitValue = bVal;};
+	void UseLowLimitValue(bool bVal) {m_bUseLowLimitValue = bVal;};
 
 	/**
 	\brief	Gets the use high limit value.
@@ -147,7 +147,7 @@ public:
 	
 	\return	true if it succeeds, false if it fails.
 	**/
-	BOOL UseHighLimitValue() {return m_bUseHighLimitValue;};
+	bool UseHighLimitValue() {return m_bUseHighLimitValue;};
 
 	/**
 	\brief	Sets the use high limit value.
@@ -157,7 +157,7 @@ public:
 	
 	\param	bVal	true to value. 
 	**/
-	void UseHighLimitValue(BOOL bVal) {m_bUseHighLimitValue = bVal;};
+	void UseHighLimitValue(bool bVal) {m_bUseHighLimitValue = bVal;};
 
 	/**
 	\brief	Gets the low limit value.
@@ -204,8 +204,8 @@ public:
 	void Clear();
 	double Evaluate(double dblX);
 
-	virtual void Load(CStdXml &oXml, string strParamName, bool bThrowError = false);
-	virtual void Save(CStdXml &oXml, string strParamName);
+	virtual void Load(CStdXml &oXml, std::string strParamName, bool bThrowError = false);
+	virtual void Save(CStdXml &oXml, std::string strParamName);
 };
 
 }				//StdUtils

@@ -98,7 +98,7 @@ Namespace DataObjects
 
         Public ReadOnly Property AnimatModule() As String
             Get
-                Return "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
+                Return Util.Application.Physics.LibraryPrefix & Util.Application.Physics.Name & "AnimatSim" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.LibraryVersionPrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
             End Get
         End Property
 
@@ -208,6 +208,21 @@ Namespace DataObjects
             Get
                 Return m_nodePlaybackControl
             End Get
+        End Property
+
+        Public Overridable ReadOnly Property SimPhysicsSystem() As String
+            Get
+                Return Util.Application.Physics.Name
+            End Get
+        End Property
+
+        Public Overridable Property SimPhysicsLibraryVersion() As TypeHelpers.DataTypeID
+            Get
+                Return Util.Application.Physics.LibraryVersion
+            End Get
+            Set(value As TypeHelpers.DataTypeID)
+                Util.Application.Physics.LibraryVersion = value
+            End Set
         End Property
 
         Public Overridable Property SetSimulationEnd() As Boolean
@@ -375,6 +390,9 @@ Namespace DataObjects
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RemainingStepTime", "Remaining Step Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringForceMangitude", "Mouse Spring Force Magnitude", "Newtons", "N", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringDampingForceMangitude", "Mouse Spring Damping Force Magnitude", "Newtons", "N", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringLengthMangitude", "Mouse Spring Length Magnitude", "Meters", "m", 0, 1))
             m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
@@ -409,6 +427,9 @@ Namespace DataObjects
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RemainingStepTime", "Remaining Step Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringForceMagnitude", "Mouse Spring Force Magnitude", "Newtons", "N", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringDampingForceMagnitude", "Mouse Spring Damping Force Magnitude", "Newtons", "N", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MouseSpringLengthMagnitude", "Mouse Spring Length Magnitude", "Meters", "m", 0, 1))
             m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
@@ -810,6 +831,18 @@ Namespace DataObjects
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics", SimPhysicsSystem.GetType(), "SimPhysicsSystem", _
+                                        "Settings", "The physics system for this simulation.", SimPhysicsSystem, True))
+
+            Dim bLibVersionsReadonly As Boolean = True
+            If Util.Application.Physics.AvailableLibraryVersions.Count > 1 Then bLibVersionsReadonly = False
+            Dim aryTypes As Collections.DataTypes = Util.Application.Physics.AvailableLibraryVersions
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Library Version", GetType(AnimatGUI.TypeHelpers.DataTypeID), "SimPhysicsLibraryVersion", _
+                                        "Settings", "Sets the version of the library to use for the physics simulation.", aryTypes, _
+                                        GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                        GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter), bLibVersionsReadonly))
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("API File", m_strAPI_File.GetType(), "APIFile", _
                                         "Settings", "APIFile", m_strAPI_File))
 
@@ -1096,7 +1129,10 @@ Namespace DataObjects
 
             For Each deEntry As DictionaryEntry In m_aryProjectStimuli
                 doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                doStim.SaveSimulationXml(oXml)
+
+                If Util.ExportRobotInterface Is Nothing OrElse Util.ExportRobotInterface.Organism Is doStim.PhysicalStructure Then
+                    doStim.SaveSimulationXml(oXml)
+                End If
             Next
 
             oXml.OutOfElem()
@@ -1115,25 +1151,43 @@ Namespace DataObjects
         End Sub
 
         Protected Overridable Sub SaveSimWindowMgr(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
-            oXml.AddChildElement("WindowMgr")
-            oXml.IntoElem()   'Into WindowMgr element
 
-            oXml.AddChildElement("Hud")
-            oXml.IntoElem()   'Into Hud element
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("WindowMgr")
+                oXml.IntoElem()   'Into WindowMgr element
 
-            oXml.AddChildElement("Type", "Hud")
+                oXml.AddChildElement("Hud")
+                oXml.IntoElem()   'Into Hud element
 
-            oXml.AddChildElement("HudItems")
-            oXml.IntoElem()   'Into Hud Items element
+                oXml.AddChildElement("Type", "Hud")
 
-            For Each deItem As DictionaryEntry In m_aryHudItems
-                Dim hudItem As DataObjects.Visualization.HudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
-                hudItem.SaveSimulationXml(oXml)
-            Next
+                oXml.AddChildElement("HudItems")
+                oXml.IntoElem()   'Into Hud Items element
 
-            oXml.OutOfElem()    'Outof Hud Items element
-            oXml.OutOfElem()    'Outof Hud element
-            oXml.OutOfElem()    'Outof WindowMgr element
+                For Each deItem As DictionaryEntry In m_aryHudItems
+                    Dim hudItem As DataObjects.Visualization.HudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
+                    hudItem.SaveSimulationXml(oXml)
+                Next
+
+                oXml.OutOfElem()    'Outof Hud Items element
+                oXml.OutOfElem()    'Outof Hud element
+
+                oXml.AddChildElement("Windows")
+                oXml.IntoElem()  'Into Windows element
+
+                If Util.ExportWindowsToFile Then
+                    For Each animatForm As Form In Util.Application.ChildForms
+                        If Util.IsTypeOf(animatForm.GetType(), "AnimatGUI.Forms.SimulationWindow", False) Then
+                            Dim simWindow As AnimatGUI.Forms.SimulationWindow = DirectCast(animatForm, AnimatGUI.Forms.SimulationWindow)
+                            simWindow.GenerateSimWindowXml(oXml)
+                        End If
+                    Next
+                End If
+
+                oXml.OutOfElem()    'Outof Windows element
+
+                oXml.OutOfElem()    'Outof WindowMgr element
+            End If
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -1156,7 +1210,12 @@ Namespace DataObjects
             oXml.AddChildElement("APIFile", m_strAPI_File)
             m_snSimEndTime.SaveSimulationXml(oXml, Me, "SimEndTime")
 
-            Dim iVal As Integer = CType(m_ePlaybackControlMode, Integer)
+            Dim ePlaybackMode As enumPlaybackControlMode = m_ePlaybackControlMode
+            If Not Util.ExportRobotInterface Is Nothing Then
+                ePlaybackMode = enumPlaybackControlMode.MatchPhysicsStep
+            End If
+
+            Dim iVal As Integer = CType(ePlaybackMode, Integer)
             oXml.AddChildElement("PlaybackControlMode", iVal)
             m_snPresetPlaybackTimeStep.SaveSimulationXml(oXml, Me, "PresetPlaybackTimeStep")
 

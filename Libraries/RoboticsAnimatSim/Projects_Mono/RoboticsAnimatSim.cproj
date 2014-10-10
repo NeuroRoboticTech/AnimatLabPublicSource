@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{484EBAD4-5C31-5F4B-8A30-5A06F553D58F}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG ROBOTICSANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libRoboticsAnimatSim_debug.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>dxl_debug</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG ROBOTICSANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libRoboticsAnimatSim.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>OsgAnimatSim</Lib>
+        <Lib>dxl</Lib>
+        <Lib>openFrameworksArduino</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libRoboticsAnimatSim.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG ROBOTICSANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libRoboticsAnimatSim_debug.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>dxl_debug</Lib>
+        <Lib>openFrameworksArduinoD</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG ROBOTICSANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libRoboticsAnimatSim.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../../../3rdParty/DynamixelSDK/linux/include</Include>
+        <Include>../../../../../3rdParty/openFrameworksArduino/src</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>osg</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>OsgAnimatSim</Lib>
+        <Lib>dxl</Lib>
+        <Lib>openFrameworksArduino</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libRoboticsAnimatSim.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\RbAttachment.h">
+      <Link>RbAttachment.h</Link>
+    </None>
+    <None Include="..\RbBallSocket.h">
+      <Link>RbBallSocket.h</Link>
+    </None>
+    <None Include="..\RbBody.h">
+      <Link>RbBody.h</Link>
+    </None>
+    <None Include="..\RbBox.h">
+      <Link>RbBox.h</Link>
+    </None>
+    <None Include="..\RbClassFactory.h">
+      <Link>RbClassFactory.h</Link>
+    </None>
+    <None Include="..\RbCone.h">
+      <Link>RbCone.h</Link>
+    </None>
+    <None Include="..\RbConstraintFriction.h">
+      <Link>RbConstraintFriction.h</Link>
+    </None>
+    <None Include="..\RbConstraintRelaxation.h">
+      <Link>RbConstraintRelaxation.h</Link>
+    </None>
+    <None Include="..\RbCylinder.h">
+      <Link>RbCylinder.h</Link>
+    </None>
+    <None Include="..\RbDynamixelUSB.h">
+      <Link>RbDynamixelUSB.h</Link>
+    </None>
+    <None Include="..\RbDynamixelUSBHinge.h">
+      <Link>RbDynamixelUSBHinge.h</Link>
+    </None>
+    <None Include="..\RbDynamixelUSBPrismatic.h">
+      <Link>RbDynamixelUSBPrismatic.h</Link>
+    </None>
+    <None Include="..\RbDynamixelUSBServo.h">
+      <Link>RbDynamixelUSBServo.h</Link>
+    </None>
+    <None Include="..\RbEllipsoid.h">
+      <Link>RbEllipsoid.h</Link>
+    </None>
+    <None Include="..\RbFirmataAnalogInput.h">
+      <Link>RbFirmataAnalogInput.h</Link>
+    </None>
+    <None Include="..\RbFirmataAnalogOutput.h">
+      <Link>RbFirmataAnalogOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataController.h">
+      <Link>RbFirmataController.h</Link>
+    </None>
+    <None Include="..\RbFirmataDigitalInput.h">
+      <Link>RbFirmataDigitalInput.h</Link>
+    </None>
+    <None Include="..\RbFirmataDigitalOutput.h">
+      <Link>RbFirmataDigitalOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataHingeServo.h">
+      <Link>RbFirmataHingeServo.h</Link>
+    </None>
+    <None Include="..\RbFirmataPWMOutput.h">
+      <Link>RbFirmataPWMOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataPart.h">
+      <Link>RbFirmataPart.h</Link>
+    </None>
+    <None Include="..\RbFirmataPrismaticServo.h">
+      <Link>RbFirmataPrismaticServo.h</Link>
+    </None>
+    <None Include="..\RbFreeJoint.h">
+      <Link>RbFreeJoint.h</Link>
+    </None>
+    <None Include="..\RbHinge.h">
+      <Link>RbHinge.h</Link>
+    </None>
+    <None Include="..\RbHingeLimit.h">
+      <Link>RbHingeLimit.h</Link>
+    </None>
+    <None Include="..\RbJoint.h">
+      <Link>RbJoint.h</Link>
+    </None>
+    <None Include="..\RbLANWirelessInterface.h">
+      <Link>RbLANWirelessInterface.h</Link>
+    </None>
+    <None Include="..\RbLine.h">
+      <Link>RbLine.h</Link>
+    </None>
+    <None Include="..\RbLinearHillMuscle.h">
+      <Link>RbLinearHillMuscle.h</Link>
+    </None>
+    <None Include="..\RbLinearHillStretchReceptor.h">
+      <Link>RbLinearHillStretchReceptor.h</Link>
+    </None>
+    <None Include="..\RbMaterialType.h">
+      <Link>RbMaterialType.h</Link>
+    </None>
+    <None Include="..\RbMesh.h">
+      <Link>RbMesh.h</Link>
+    </None>
+    <None Include="..\RbMotorizedJoint.h">
+      <Link>RbMotorizedJoint.h</Link>
+    </None>
+    <None Include="..\RbMouth.h">
+      <Link>RbMouth.h</Link>
+    </None>
+    <None Include="..\RbMovableItem.h">
+      <Link>RbMovableItem.h</Link>
+    </None>
+    <None Include="..\RbOdorSensor.h">
+      <Link>RbOdorSensor.h</Link>
+    </None>
+    <None Include="..\RbOrganism.h">
+      <Link>RbOrganism.h</Link>
+    </None>
+    <None Include="..\RbPrismatic.h">
+      <Link>RbPrismatic.h</Link>
+    </None>
+    <None Include="..\RbPrismaticLimit.h">
+      <Link>RbPrismaticLimit.h</Link>
+    </None>
+    <None Include="..\RbRPRO.h">
+      <Link>RbRPRO.h</Link>
+    </None>
+    <None Include="..\RbRigidBody.h">
+      <Link>RbRigidBody.h</Link>
+    </None>
+    <None Include="..\RbSimulator.h">
+      <Link>RbSimulator.h</Link>
+    </None>
+    <None Include="..\RbSphere.h">
+      <Link>RbSphere.h</Link>
+    </None>
+    <None Include="..\RbSpring.h">
+      <Link>RbSpring.h</Link>
+    </None>
+    <None Include="..\RbStructure.h">
+      <Link>RbStructure.h</Link>
+    </None>
+    <None Include="..\RbTorus.h">
+      <Link>RbTorus.h</Link>
+    </None>
+    <None Include="..\RbUniversal.h">
+      <Link>RbUniversal.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\RbAttachment.cpp">
+      <Link>RbAttachment.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbBallSocket.cpp">
+      <Link>RbBallSocket.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbBody.cpp">
+      <Link>RbBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbBox.cpp">
+      <Link>RbBox.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbClassFactory.cpp">
+      <Link>RbClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbCone.cpp">
+      <Link>RbCone.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbConstraintFriction.cpp">
+      <Link>RbConstraintFriction.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbConstraintRelaxation.cpp">
+      <Link>RbConstraintRelaxation.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbCylinder.cpp">
+      <Link>RbCylinder.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbDynamixelUSB.cpp">
+      <Link>RbDynamixelUSB.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbDynamixelUSBHinge.cpp">
+      <Link>RbDynamixelUSBHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbDynamixelUSBPrismatic.cpp">
+      <Link>RbDynamixelUSBPrismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbDynamixelUSBServo.cpp">
+      <Link>RbDynamixelUSBServo.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbEllipsoid.cpp">
+      <Link>RbEllipsoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataAnalogInput.cpp">
+      <Link>RbFirmataAnalogInput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataAnalogOutput.cpp">
+      <Link>RbFirmataAnalogOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataController.cpp">
+      <Link>RbFirmataController.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataDigitalInput.cpp">
+      <Link>RbFirmataDigitalInput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataDigitalOutput.cpp">
+      <Link>RbFirmataDigitalOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataHingeServo.cpp">
+      <Link>RbFirmataHingeServo.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPWMOutput.cpp">
+      <Link>RbFirmataPWMOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPart.cpp">
+      <Link>RbFirmataPart.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataPrismaticServo.cpp">
+      <Link>RbFirmataPrismaticServo.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFreeJoint.cpp">
+      <Link>RbFreeJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbHinge.cpp">
+      <Link>RbHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbHingeLimit.cpp">
+      <Link>RbHingeLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbJoint.cpp">
+      <Link>RbJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbLANWirelessInterface.cpp">
+      <Link>RbLANWirelessInterface.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbLine.cpp">
+      <Link>RbLine.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbLinearHillMuscle.cpp">
+      <Link>RbLinearHillMuscle.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbLinearHillStretchReceptor.cpp">
+      <Link>RbLinearHillStretchReceptor.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbMaterialType.cpp">
+      <Link>RbMaterialType.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbMesh.cpp">
+      <Link>RbMesh.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbMotorizedJoint.cpp">
+      <Link>RbMotorizedJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbMouth.cpp">
+      <Link>RbMouth.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbMovableItem.cpp">
+      <Link>RbMovableItem.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbOdorSensor.cpp">
+      <Link>RbOdorSensor.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbOrganism.cpp">
+      <Link>RbOrganism.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbPrismatic.cpp">
+      <Link>RbPrismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbPrismaticLimit.cpp">
+      <Link>RbPrismaticLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbRPRO.cpp">
+      <Link>RbRPRO.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbRigidBody.cpp">
+      <Link>RbRigidBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbSimulator.cpp">
+      <Link>RbSimulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbSphere.cpp">
+      <Link>RbSphere.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbSpring.cpp">
+      <Link>RbSpring.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbStructure.cpp">
+      <Link>RbStructure.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbTorus.cpp">
+      <Link>RbTorus.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbUniversal.cpp">
+      <Link>RbUniversal.cpp</Link>
+    </Compile>
+    <Compile Include="..\RoboticsAnimatSim.cpp">
+      <Link>RoboticsAnimatSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

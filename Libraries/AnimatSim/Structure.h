@@ -6,6 +6,11 @@
 
 #pragma once
 
+#include "ScriptProcessor.h"
+#include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
+
 namespace AnimatSim
 {
 
@@ -34,9 +39,9 @@ namespace AnimatSim
 		{
 		public:
 			/// GUID ID of the first part of the collision pair.
-			string m_strPart1ID;
+			std::string m_strPart1ID;
 			/// GUID ID of the second part of the collision pair.
-			string m_strPart2ID;
+			std::string m_strPart2ID;
 
 			/**
 			\brief	Default constructor.
@@ -87,14 +92,14 @@ namespace AnimatSim
 			///destroyed by this list. It is used primarily for finding
 			///rigid bodies and ensuring that only unique ID's are used
 			///for the rigid bodies.
-			CStdMap<string, RigidBody *> m_aryRigidBodies;
+			CStdMap<std::string, RigidBody *> m_aryRigidBodies;
 
 			///A list of joints contained within this structure.
 			///The objects in this list are references only. They are not
 			///destroyed by this list. It is used primarily for finding
 			///joints and ensuring that only unique ID's are used
 			///for the joints.
-			CStdMap<string, Joint *> m_aryJoints;
+			CStdMap<std::string, Joint *> m_aryJoints;
 
 			///This is the list of other body part ID's to exclude from collision tests.
 			CStdPtrArray<CollisionPair> m_aryExcludeCollisionList;
@@ -108,18 +113,27 @@ namespace AnimatSim
 			/// The radius of the graphical sphere shown for the structure position.
 			float m_fltSize;
 
+			///Script processor for running python or other scripting systems related to this structure.
+			ScriptProcessor *m_lpScript;
+
 			virtual void LoadLayout(CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
 
-			virtual void AddRoot(string strXml);
-			virtual void RemoveRoot(string strID, BOOL bThrowError = TRUE);
-			
+			virtual void AddRoot(std::string strXml);
+			virtual void RemoveRoot(std::string strID, bool bThrowError = true);
+
+			virtual ScriptProcessor *LoadScript(CStdXml &oXml);
+			virtual void AddScript(std::string strXml);
+			virtual void RemoveScript(std::string strID, bool bThrowError = true);
+
 			virtual void UpdateData();
 
 		public:
 			Structure();
 			virtual ~Structure();
+						
+			static Structure *CastToDerived(AnimatBase *lpBase) {return static_cast<Structure*>(lpBase);}
 
 			void Sim(Simulator *lpSim);
 
@@ -127,70 +141,60 @@ namespace AnimatSim
 			virtual RigidBody *Body();
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 
 			virtual float Size();
-			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Size(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL AllowTranslateDragX();
-			virtual BOOL AllowTranslateDragY();
-			virtual BOOL AllowTranslateDragZ();
+			virtual RobotInterface *GetRobotInterface() {return NULL;};
 
-			virtual BOOL AllowRotateDragX();
-			virtual BOOL AllowRotateDragY();
-			virtual BOOL AllowRotateDragZ();
+			virtual bool AllowTranslateDragX();
+			virtual bool AllowTranslateDragY();
+			virtual bool AllowTranslateDragZ();
+
+			virtual bool AllowRotateDragX();
+			virtual bool AllowRotateDragY();
+			virtual bool AllowRotateDragZ();
 
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
-			virtual void AddCollisionPair(string strID1, string strID2);
+			virtual void AddCollisionPair(std::string strID1, std::string strID2);
 
 			virtual void MinTimeStep(float &fltMin);
 
-			/**
-			\fn	virtual void Structure::*Assembly() = 0;
-			
-			\brief	Gets the assembly pointer.
-
-			\details This is a pure virtual method that is used in the derived class to return 
-			a pointer to the vortex assembly object. 
-			
-			\author	dcofer
-			\date	2/25/2011
-			
-			\return	null if it fails, else. 
-			**/
-			virtual void *Assembly() = 0;
-
-			virtual void Create();
+            virtual void Create();
 			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
 
 			void AddJoint(Joint *lpJoint);
-			void RemoveJoint(string strID);
+			void RemoveJoint(std::string strID);
 			void AddRigidBody(RigidBody *lpBody);
-			void RemoveRigidBody(string strID);
+			void RemoveRigidBody(std::string strID);
 
-			virtual Joint *FindJoint(string strJointID, BOOL bThrowError = TRUE);
-			virtual RigidBody *FindRigidBody(string strBodyID, BOOL bThrowError = TRUE);
-			virtual Node *FindNode(string strID, BOOL bThrowError = TRUE);
-			//virtual AnimatBase *FindCollisionPair(string strID, BOOL bThrowError = TRUE);
+			virtual Joint *FindJoint(std::string strJointID, bool bThrowError = true);
+			virtual RigidBody *FindRigidBody(std::string strBodyID, bool bThrowError = true);
+			virtual Node *FindNode(std::string strID, bool bThrowError = true);
+			//virtual AnimatBase *FindCollisionPair(std::string strID, bool bThrowError = true);
 
-			virtual void EnableMotor(string strJointID, BOOL bVal);
-			virtual void SetMotorInput(string strJointID, float fltInput);
+			virtual void EnableMotor(std::string strJointID, bool bVal);
+			virtual void SetMotorInput(std::string strJointID, float fltInput);
 
 			virtual void EnableCollision(RigidBody *lpCollisionBody);
 			virtual void DisableCollision(RigidBody *lpCollisionBody);
 
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void UpdatePhysicsPosFromGraphics();
+
+			virtual void Script(ScriptProcessor *lpScript);
+			virtual ScriptProcessor *Script();
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 
@@ -199,6 +203,12 @@ namespace AnimatSim
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
+
+			virtual void Initialize();
+			virtual void Kill(bool bState = true);
+			virtual void SimStarting();
+			virtual void SimPausing();
+			virtual void SimStopping();
 
 			virtual void Load(CStdXml &oXml);
 		};

@@ -36,7 +36,7 @@ namespace FiringRateSim
 
 		\return	Pointer to created object.
 		**/
-		virtual Neuron *CreateNeuron(string strType, BOOL bThrowError = TRUE);
+		virtual Neuron *CreateNeuron(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a synapse.
@@ -49,7 +49,7 @@ namespace FiringRateSim
 
 		\return	Pointer to created object.
 		**/
-		virtual Synapse *CreateSynapse(string strType, BOOL bThrowError = TRUE);
+		virtual Synapse *CreateSynapse(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a data column.
@@ -62,7 +62,7 @@ namespace FiringRateSim
 
 		\return	Pointer to created object.
 		**/
-		virtual DataColumn *CreateDataColumn(string strType, BOOL bThrowError = TRUE);
+		virtual DataColumn *CreateDataColumn(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates an external stimulus.
@@ -75,7 +75,7 @@ namespace FiringRateSim
 
 		\return	Pointer to created object.
 		**/
-		virtual ExternalStimulus *CreateExternalStimulus(string strType, BOOL bThrowError = TRUE);
+		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a neural module.
@@ -83,14 +83,14 @@ namespace FiringRateSim
 		\author	dcofer
 		\date	3/30/2011
 
-		\param	strType	   	Type of the string. 
+		\param	strType	   	Type of the std::string. 
 		\param	bThrowError	true to throw error. 
 
 		\return	null if it fails, else.
 		**/
-		virtual NeuralModule *CreateNeuralModule(string strType, BOOL bThrowError = TRUE);
+		virtual NeuralModule *CreateNeuralModule(std::string strType, bool bThrowError = true);
 
-		virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, BOOL bThrowError = TRUE);
+		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};
 
 }				//FiringRateSim

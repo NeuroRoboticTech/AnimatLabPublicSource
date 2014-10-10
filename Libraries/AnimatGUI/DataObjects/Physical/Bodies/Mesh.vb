@@ -90,7 +90,13 @@ Namespace DataObjects.Physical.Bodies
                     SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, Me.ActiveMeshFile), True)
                     m_strMeshFile = value
 
-                    UpdateMassAndVolume()
+                    UpdateMassVolumeDensity()
+
+                    'If dynamic triangle meshes are not allowed disable it here.
+                    If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then
+                        Me.Freeze = True
+                    End If
+
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -125,7 +131,13 @@ Namespace DataObjects.Physical.Bodies
                     SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, Me.ActiveMeshFile), True)
                     m_eMeshType = value
 
-                    UpdateMassAndVolume()
+                    UpdateMassVolumeDensity()
+
+                    'If dynamic triangle meshes are not allowed disable it here.
+                    If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso value = enumMeshType.Triangular Then
+                        Me.Freeze = True
+                    End If
+
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -147,6 +159,29 @@ Namespace DataObjects.Physical.Bodies
             Set(ByVal value As Framework.ScaledVector3)
                 SetScale(value)
             End Set
+        End Property
+
+        Public Overrides Property Freeze() As Boolean
+            Get
+                Return m_bFreeze
+            End Get
+            Set(ByVal Value As Boolean)
+                If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular AndAlso Value = False Then
+                    Throw New System.Exception("Dynamic triangular meshes are not allowed for this physics engine.")
+                End If
+
+                Me.SetSimData("Freeze", Value.ToString, True)
+                m_bFreeze = Value
+            End Set
+        End Property
+
+        'Determines whether it is okay for this body part type to allow the user to change the bounding box. This really only
+        'makes sense for a few parts like meshes.
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowGuiBoundingBoxChange() As Boolean
+            Get
+                Return True
+            End Get
         End Property
 
 #End Region
@@ -182,7 +217,7 @@ Namespace DataObjects.Physical.Bodies
                     m_svPrevScale.CopyData(m_svScale, True)
                     m_svScale.CopyData(value, bIgnoreEvents)
 
-                    UpdateMassAndVolume()
+                    UpdateMassVolumeDensity()
                 End If
             Catch ex As Exception
                 Try
@@ -240,7 +275,7 @@ Namespace DataObjects.Physical.Bodies
 
                 If m_eMeshType = enumMeshType.Convex Then
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Convex Mesh File", m_strConvexMeshFile.GetType(), "ConvexMeshFile", _
-                                                "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile))
+                                                "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile, True))
                 End If
             End If
 
@@ -248,6 +283,13 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Scale", pbNumberBag.GetType(), "Scale", _
                                         "Part Properties", "Sets the scale of this body part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+
+            'Make freeze readonly if the type is triangular mesh and dynamic meshes are not allowed for this physics engine.
+            If Not Util.Application.Physics.AllowDynamicTriangleMesh AndAlso m_eMeshType = enumMeshType.Triangular Then '
+                If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
+                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze, True))
+            End If
 
         End Sub
 
@@ -264,13 +306,16 @@ Namespace DataObjects.Physical.Bodies
             MyBase.BeforeAddBody()
 
             Try
-                Dim frmMesh As New Forms.BodyPlan.SelectMesh
+                If Not Util.Application.BodyPasteInProgress Then
+                    'Only do this if we are adding a new part, not if we are pasting one.
+                    Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
-                frmMesh.txtMeshFile.Text = Me.MeshFile
-                frmMesh.m_bIsCollisionType = Me.IsCollisionObject
-                If frmMesh.ShowDialog() = DialogResult.OK Then
-                    m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
-                    Me.MeshFile = frmMesh.txtMeshFile.Text
+                    frmMesh.txtMeshFile.Text = Me.MeshFile
+                    frmMesh.m_bIsCollisionType = Me.IsCollisionObject
+                    If frmMesh.ShowDialog() = DialogResult.OK Then
+                        m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
+                        Me.MeshFile = frmMesh.txtMeshFile.Text
+                    End If
                 End If
 
             Catch ex As System.Exception
@@ -386,15 +431,33 @@ Namespace DataObjects.Physical.Bodies
             Return oXml.Serialize()
         End Function
 
-
 #Region " Events "
 
-        Protected Overridable Sub OnScaleValueChanged()
+        Protected Overridable Sub OnScaleValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 If Not Util.ProjectProperties Is Nothing Then
                     SetScale(m_svScale, True)
                     Util.ProjectProperties.RefreshProperties()
                 End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub SizeChangedHandler()
+            Try
+
+                If Not m_doInterface Is Nothing Then
+
+                    m_svScale.IgnoreChangeValueEvents = True
+                    m_svScale.X.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.X"))
+                    m_svScale.Y.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.Y"))
+                    m_svScale.Z.ActualValue = CSng(m_doInterface.GetDataValueImmediate("Scale.Z"))
+                    m_svScale.IgnoreChangeValueEvents = False
+
+                    MyBase.SizeChangedHandler()
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

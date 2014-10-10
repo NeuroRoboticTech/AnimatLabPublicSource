@@ -4,7 +4,7 @@
 \brief	Implements the gated synapse class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "GatedSynapse.h"
@@ -72,9 +72,9 @@ float GatedSynapse::CalculateModulation(FiringRateModule *lpModule)
 
 #pragma region DataAccesMethods
 
-float *GatedSynapse::GetDataPointer(const string &strDataType)
+float *GatedSynapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;
@@ -82,32 +82,33 @@ float *GatedSynapse::GetDataPointer(const string &strDataType)
 	return Synapse::GetDataPointer(strDataType);
 }
 
-BOOL GatedSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool GatedSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Synapse::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Synapse::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "GATEINITIALLYON")
 	{
 		InitialGateValue(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void GatedSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void GatedSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Synapse::QueryProperties(aryNames, aryTypes);
+	Synapse::QueryProperties(aryProperties);
 
-	aryNames.Add("GateInitiallyOn");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("GateInitiallyOn", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimPy", "AnimatSimPy.vcxproj", "{A2FC190E-4E37-894F-BDF2-5FC179F5E39E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimPyTests", "AnimatSimPyTests.vcxproj", "{189AA465-F71E-7B48-8D34-3F3D711727B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2FC190E-4E37-894F-BDF2-5FC179F5E39E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2FC190E-4E37-894F-BDF2-5FC179F5E39E}.Debug|Win32.Build.0 = Debug|Win32
+		{A2FC190E-4E37-894F-BDF2-5FC179F5E39E}.Release|Win32.ActiveCfg = Release|Win32
+		{A2FC190E-4E37-894F-BDF2-5FC179F5E39E}.Release|Win32.Build.0 = Release|Win32
+		{189AA465-F71E-7B48-8D34-3F3D711727B4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{189AA465-F71E-7B48-8D34-3F3D711727B4}.Debug|Win32.Build.0 = Debug|Win32
+		{189AA465-F71E-7B48-8D34-3F3D711727B4}.Release|Win32.ActiveCfg = Release|Win32
+		{189AA465-F71E-7B48-8D34-3F3D711727B4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

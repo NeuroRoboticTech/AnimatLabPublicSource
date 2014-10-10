@@ -4,7 +4,7 @@
 \brief	Implements the terrrain class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -52,7 +52,7 @@ namespace AnimatSim
 Terrain::Terrain()
 {
 	m_fltDensity = 0;
-	m_bFreeze = TRUE;
+	m_bFreeze = true;
 	m_strCollisionMeshType = "TERRAIN";
 	m_fltSegmentWidth = 1;
 	m_fltSegmentLength = 1;
@@ -74,9 +74,9 @@ Terrain::~Terrain()
 
 float Terrain::SegmentWidth() {return m_fltSegmentWidth;}
 
-void Terrain::SegmentWidth(float fltVal, BOOL bUseScaling)
+void Terrain::SegmentWidth(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.SegmentWidth");
+	Std_IsAboveMin((float) 0, fltVal, true, "Terrain.SegmentWidth");
 	if(bUseScaling)
 		m_fltSegmentWidth = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -87,9 +87,9 @@ void Terrain::SegmentWidth(float fltVal, BOOL bUseScaling)
 
 float Terrain::SegmentLength() {return m_fltSegmentLength;}
 
-void Terrain::SegmentLength(float fltVal, BOOL bUseScaling)
+void Terrain::SegmentLength(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.SegmentLength");
+	Std_IsAboveMin((float) 0, fltVal, true, "Terrain.SegmentLength");
 	if(bUseScaling)
 		m_fltSegmentLength = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -100,9 +100,9 @@ void Terrain::SegmentLength(float fltVal, BOOL bUseScaling)
 
 float Terrain::MaxHeight() {return m_fltMaxHeight;}
 
-void Terrain::MaxHeight(float fltVal, BOOL bUseScaling)
+void Terrain::MaxHeight(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.MaxHeight");
+	Std_IsAboveMin((float) 0, fltVal, true, "Terrain.MaxHeight");
 	if(bUseScaling)
 		m_fltMaxHeight = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -116,7 +116,7 @@ int Terrain::TextureLengthSegments()
 
 void Terrain::TextureLengthSegments(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "Terrain.TextureLengthSegments");
+	Std_IsAboveMin((int) 0, iVal, true, "Terrain.TextureLengthSegments");
 	m_iTextureLengthSegments = iVal;
 
 	//Reset the texture
@@ -128,81 +128,72 @@ int Terrain::TextureWidthSegments()
 
 void Terrain::TextureWidthSegments(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "Terrain.TextureWidthSegments");
+	Std_IsAboveMin((int) 0, iVal, true, "Terrain.TextureWidthSegments");
 	m_iTextureWidthSegments = iVal;
 
 	//Reset the texture
 	Texture(m_strTexture);
 }
 
-BOOL Terrain::AllowRotateDragX() {return FALSE;}
+bool Terrain::AllowRotateDragX() {return false;}
 
-BOOL Terrain::AllowRotateDragY() {return FALSE;}
+bool Terrain::AllowRotateDragY() {return false;}
 
-BOOL Terrain::AllowRotateDragZ() {return FALSE;}
+bool Terrain::AllowRotateDragZ() {return false;}
 
-BOOL Terrain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Terrain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Mesh::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Mesh::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "SEGMENTWIDTH")
 	{
-		SegmentWidth(atof(strValue.c_str()));
-		return TRUE;
+		SegmentWidth((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "SEGMENTLENGTH")
 	{
-		SegmentLength(atof(strValue.c_str()));
-		return TRUE;
+		SegmentLength((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "MAXHEIGHT")
 	{
-		MaxHeight(atof(strValue.c_str()));
-		return TRUE;
+		MaxHeight((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "TEXTURELENGTHSEGMENTS")
 	{
 		TextureLengthSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TEXTUREWIDTHSEGMENTS")
 	{
 		TextureWidthSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Terrain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Terrain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Mesh::QueryProperties(aryNames, aryTypes);
+	Mesh::QueryProperties(aryProperties);
 
-	aryNames.Add("SegmentWidth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SegmentLength");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxHeight");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TextureLengthSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("TextureWidthSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("SegmentWidth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SegmentLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHeight", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TextureLengthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TextureWidthSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Terrain::Load(CStdXml &oXml)
@@ -223,7 +214,7 @@ void Terrain::Load(CStdXml &oXml)
 	m_fltDensity = 0;
 
 	//This part type is always frozen
-	m_bFreeze = TRUE;
+	m_bFreeze = true;
 }
 
 

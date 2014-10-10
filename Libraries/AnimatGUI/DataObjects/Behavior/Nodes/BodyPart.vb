@@ -109,13 +109,18 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property IncomingDataType() As AnimatGUI.DataObjects.DataType
+        Public Overrides Property IncomingDataTypes As TypeHelpers.DataTypeID
             Get
                 If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
-                    Return m_thLinkedPart.BodyPart.IncomingDataType
+                    Return m_thLinkedPart.BodyPart.IncomingDataTypes
                 End If
                 Return Nothing
             End Get
+            Set(value As TypeHelpers.DataTypeID)
+                If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                    m_thLinkedPart.BodyPart.IncomingDataTypes = value
+                End If
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -130,6 +135,13 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         Public MustOverride ReadOnly Property BaseErrorType() As DiagramError.enumErrorTypes
+
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property IsSensorOrMotor() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
 
 #End Region
 
@@ -357,12 +369,16 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                 AddHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+                AddHandler m_thLinkedPart.BodyPart.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
+                AddHandler m_thLinkedPart.BodyPart.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
         Protected Overridable Sub DiconnectLinkedPartEvents()
             If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                 RemoveHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+                RemoveHandler m_thLinkedPart.BodyPart.ReloadSourceDataTypes, AddressOf Me.OnReloadSourceDataTypes
+                RemoveHandler m_thLinkedPart.BodyPart.ReloadTargetDataTypes, AddressOf Me.OnReloadTargetDataTypes
             End If
         End Sub
 
@@ -416,6 +432,31 @@ Namespace DataObjects.Behavior.Nodes
         Private Sub OnAfterRemoveLinkedPart(ByRef doObject As Framework.DataObject)
             Try
                 Me.LinkedPart = CreateBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnReloadSourceDataTypes()
+            Try
+                If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                    SetDataType()
+                    SignalReloadSourceDataTypes()
+                End If
+
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnReloadTargetDataTypes()
+            Try
+                If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                    SetDataType()
+                    SignalReloadTargetDataTypes()
+                End If
+
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

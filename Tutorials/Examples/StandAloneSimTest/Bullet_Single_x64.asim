@@ -1,0 +1,1049 @@
+<Simulation>
+<ProjectPath/>
+<AnimatModule>BulletAnimatSim_VC10_single_x64.dll</AnimatModule>
+<UpdateDataInterval>250</UpdateDataInterval>
+<StartPaused>False</StartPaused>
+<EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>True</SetSimEnd>
+<APIFile/>
+<SimEndTime>6.2</SimEndTime>
+<PlaybackControlMode>1</PlaybackControlMode>
+<PresetPlaybackTimeStep>0</PresetPlaybackTimeStep>
+<Environment>
+<PhysicsTimeStep>0.0001</PhysicsTimeStep>
+<PhysicsSubsteps>1</PhysicsSubsteps>
+<Gravity>-9.81</Gravity>
+<MouseSpringStiffness>30</MouseSpringStiffness>
+<MouseSpringDamping>30</MouseSpringDamping>
+<StabilityScale>1</StabilityScale>
+<RecFieldSelRadius>0.005</RecFieldSelRadius>
+<BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
+<AlphaThreshold>0.2</AlphaThreshold>
+<SimulateHydrodynamics>False</SimulateHydrodynamics>
+<MassUnits>Decagrams</MassUnits>
+<DistanceUnits>Meters</DistanceUnits>
+<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<Materials>
+<MaterialTypes>
+<MaterialType>
+<ID>DEFAULTMATERIAL</ID>
+<Name>Default</Name>
+<Type>Default</Type>
+<FrictionLinearPrimary>1</FrictionLinearPrimary>
+<FrictionAngularPrimary>0</FrictionAngularPrimary>
+<Restitution>0</Restitution>
+</MaterialType>
+</MaterialTypes>
+</Materials>
+<Organisms>
+<Organism>
+<Name>BalanceBeam</Name>
+<ID>c7da16ed-a926-4315-8f81-5afcb96d7d95</ID>
+<Description>
+          </Description>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="0" Blue="0" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="1" Green="0" Blue="0" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.43556" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>6d54b7d1-e947-4411-a99b-1999b3e17727</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>3571</Density>
+<Mass>100</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<ChildBodies>
+<RigidBody>
+<Name>Attach_Root_Left</Name>
+<ID>605a983a-61a1-4241-ab27-e146df025596</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-1.5" y="2" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>0</Density>
+<Mass>0</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>0.15</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+<RigidBody>
+<Name>Attach_Root_Right</Name>
+<ID>b98d86ff-ccdb-44ee-bad2-fce722142bf7</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="1.5" y="2" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>0</Density>
+<Mass>0</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>0.15</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+<RigidBody>
+<Name>Arm</Name>
+<ID>d808ef2f-3477-4c1d-a89d-8730e420ea60</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>500</Density>
+<Mass>100</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Joint>
+<Name>Hinge</Name>
+<ID>0854af91-cef9-48ce-9dba-545daf873a15</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="0"/>
+<Rotation x="3.141" y="-1.571" z="3.141"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<Size>0.05</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>6daae031-d502-4c4f-842b-296e9fe480b8</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5e+007</Damping>
+<MinLimit>-0.1</MinLimit>
+<MaxLimit>0.1</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation1>
+<Relaxation2>
+<ID>942d5b54-1082-430e-af46-2f9c850d64a8</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5e+007</Damping>
+<MinLimit>-0.1</MinLimit>
+<MaxLimit>0.1</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation2>
+<Relaxation3>
+<ID>6dc4aa59-479b-4c43-ac6d-ad51a62da414</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5e+007</Damping>
+<MinLimit>-0.1</MinLimit>
+<MaxLimit>0.1</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation3>
+<Relaxation4>
+<ID>f2cff765-35e8-4eea-a860-f9241a520780</ID>
+<Name>Z Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>200</Stiffness>
+<Damping>5e+008</Damping>
+<MinLimit>-0.3</MinLimit>
+<MaxLimit>0.3</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation4>
+<Relaxation5>
+<ID>72d443a9-fe1e-4a47-a2b5-48b3a1661b2b</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5e+007</Damping>
+<MinLimit>-0.3</MinLimit>
+<MaxLimit>0.3</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation5>
+<Relaxation6>
+<ID>0ba1fd4d-8bb0-48e7-a6e1-bd2de9e9f7dd</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>5</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5e+007</Damping>
+<MinLimit>-0.3</MinLimit>
+<MaxLimit>0.3</MaxLimit>
+<EqPos>0</EqPos>
+</Relaxation6>
+<Friction>
+<ID>f4e83473-6f45-4ff4-af94-312a643ab6b7</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>True</Enabled>
+<Coefficient>2e-005</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>cef5365f-df6a-41e9-bdd4-895d90a1dcb2</Name>
+<ID>cef5365f-df6a-41e9-bdd4-895d90a1dcb2</ID>
+<LimitPos>-2.96706</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>6ecc414f-0e66-43b0-8509-2ae51390ce9a</Name>
+<ID>6ecc414f-0e66-43b0-8509-2ae51390ce9a</ID>
+<LimitPos>2.96706</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<ServoMotor>False</ServoMotor>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>8d6862d5-b690-4aea-819b-960d3bfa5bf8</ID>
+<Type>PidControl</Type>
+<ModuleName/>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp>20</Kp>
+<Ki>0</Ki>
+<Kd>1</Kd>
+<RangeMax>1</RangeMax>
+<RangeMin>-1</RangeMin>
+<ARWBound>0</ARWBound>
+<RampGradient>45</RampGradient>
+</PID>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Attach_Arm_Left</Name>
+<ID>1c5239fa-e2fd-441d-9c12-8b5c2f48080c</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-1.5" y="0" z="0"/>
+<Rotation x="3.142" y="0" z="3.142"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>0</Density>
+<Mass>0</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>0.15</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+<RigidBody>
+<Name>Muscle_Left</Name>
+<ID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</ID>
+<Type>LinearHillMuscle</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle</PartType>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Enabled>True</Enabled>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Attachments>
+<AttachID>605a983a-61a1-4241-ab27-e146df025596</AttachID>
+<AttachID>1c5239fa-e2fd-441d-9c12-8b5c2f48080c</AttachID>
+</Attachments>
+<StimulusTension>
+<ID>09d916dc-97be-4083-bd7f-95a4248da161</ID>
+<Type>StimulusTension</Type>
+<UseLimits>False</UseLimits>
+<A>-0.03</A>
+<B>15</B>
+<C>300</C>
+<D>0</D>
+</StimulusTension>
+<LengthTension>
+<ID>4f1f74c4-42e5-4682-a883-ad2a8ed7bd6b</ID>
+<Type>LengthTension</Type>
+<UseLimits>False</UseLimits>
+<RestingLength>2.06155</RestingLength>
+<Lwidth>0.6</Lwidth>
+<PeLength>90</PeLength>
+<MinPeLength>5</MinPeLength>
+</LengthTension>
+<MaximumTension>10</MaximumTension>
+<Kse>10</Kse>
+<Kpe>20</Kpe>
+<B>10</B>
+<IbDischarge>100</IbDischarge>
+</RigidBody>
+<RigidBody>
+<Name>Attach_Arm_Right</Name>
+<ID>318f3e1b-385f-4e14-b7e0-b56f234de84b</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="1.5" y="0" z="0"/>
+<Rotation x="3.142" y="0" z="3.142"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>0</Density>
+<Mass>0</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>0.15</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+<RigidBody>
+<Name>Muscle_Right</Name>
+<ID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</ID>
+<Type>LinearHillMuscle</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle</PartType>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Enabled>True</Enabled>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Attachments>
+<AttachID>b98d86ff-ccdb-44ee-bad2-fce722142bf7</AttachID>
+<AttachID>318f3e1b-385f-4e14-b7e0-b56f234de84b</AttachID>
+</Attachments>
+<StimulusTension>
+<ID>e8fd68cf-b40f-48ca-8fe1-6fd4f1c74b44</ID>
+<Type>StimulusTension</Type>
+<UseLimits>False</UseLimits>
+<A>-0.03</A>
+<B>15</B>
+<C>300</C>
+<D>0</D>
+</StimulusTension>
+<LengthTension>
+<ID>fd2740df-c65d-4591-8d0e-b291cdad7b0f</ID>
+<Type>LengthTension</Type>
+<UseLimits>False</UseLimits>
+<RestingLength>2.06155</RestingLength>
+<Lwidth>0.6</Lwidth>
+<PeLength>90</PeLength>
+<MinPeLength>5</MinPeLength>
+</LengthTension>
+<MaximumTension>10</MaximumTension>
+<Kse>10</Kse>
+<Kpe>20</Kpe>
+<B>10</B>
+<IbDischarge>100</IbDischarge>
+</RigidBody>
+<RigidBody>
+<Name>Spring_Left</Name>
+<ID>d39464f7-899d-4ebc-810c-3422f894f3c6</ID>
+<Type>Spring</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Spring</PartType>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Enabled>False</Enabled>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.870588" Blue="0.678431" Alpha="1"/>
+<Attachments>
+<AttachID>605a983a-61a1-4241-ab27-e146df025596</AttachID>
+<AttachID>318f3e1b-385f-4e14-b7e0-b56f234de84b</AttachID>
+</Attachments>
+<NaturalLength>1.8</NaturalLength>
+<Stiffness>100</Stiffness>
+<Damping>8000</Damping>
+</RigidBody>
+<RigidBody>
+<Name>Spring_Right</Name>
+<ID>d41ea6c7-ad6e-45ea-88b4-0bde77597efe</ID>
+<Type>Spring</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Spring</PartType>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Enabled>False</Enabled>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.870588" Blue="0.678431" Alpha="1"/>
+<Attachments>
+<AttachID>b98d86ff-ccdb-44ee-bad2-fce722142bf7</AttachID>
+<AttachID>318f3e1b-385f-4e14-b7e0-b56f234de84b</AttachID>
+</Attachments>
+<NaturalLength>1.5</NaturalLength>
+<Stiffness>100</Stiffness>
+<Damping>8000</Damping>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Length>5</Length>
+<Width>0.2</Width>
+<Height>0.2</Height>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Length>0.2</Length>
+<Width>0.2</Width>
+<Height>0.7</Height>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<CollisionExclusionPairs/>
+<NervousSystem>
+<NeuralModules>
+<NeuralModule>
+<ID>59b71e77-71d4-45ff-ac76-1b0819a54678</ID>
+<ModuleName>FiringRateSim</ModuleName>
+<ModuleFileName>FiringRateSim_VC10_x64.dll</ModuleFileName>
+<Type>FiringRateSimModule</Type>
+<TimeStep>0.002</TimeStep>
+<Neurons>
+<Neuron>
+<ID>0825d6e6-ebc4-4d4e-8c87-1fd06f821916</ID>
+<Name>Right</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-008</Cn>
+<Gn>1e-007</Gn>
+<Vth>-0.07</Vth>
+<Vrest>-0.07</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<ID>33c7a55d-68e6-4e38-bc3d-9486cae93ff0</ID>
+<Name>Left</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-008</Cn>
+<Gn>1e-007</Gn>
+<Vth>-0.07</Vth>
+<Vrest>-0.07</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+</Neurons>
+</NeuralModule>
+<NeuralModule>
+<ID>864b6be6-b040-4072-b8ec-df57f87cfed1</ID>
+<ModuleName>PhysicsModule</ModuleName>
+<ModuleFileName>BulletAnimatSim_VC10_single_x64.dll</ModuleFileName>
+<Type>PhysicsNeuralModule</Type>
+<TimeStep>0.0001</TimeStep>
+<Adapters>
+<Adapter>
+<ID>bbe9ac6d-a9e1-4b90-a9f3-385a606ff571</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<Type>NodeToPhysical</Type>
+<SourceModule>FiringRateSim</SourceModule>
+<SourceID>33c7a55d-68e6-4e38-bc3d-9486cae93ff0</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</TargetID>
+<Gain>
+<ID>fc2bc280-b284-41e4-989f-5eae7b12663a</ID>
+<Type>Polynomial</Type>
+<UseLimits>False</UseLimits>
+<A>0</A>
+<B>0</B>
+<C>1</C>
+<D>0</D>
+</Gain>
+</Adapter>
+<Adapter>
+<ID>33d928b9-3db4-4f75-8f37-ed9aa419712c</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<Type>NodeToPhysical</Type>
+<SourceModule>FiringRateSim</SourceModule>
+<SourceID>0825d6e6-ebc4-4d4e-8c87-1fd06f821916</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</TargetID>
+<Gain>
+<ID>25713b08-e266-4854-b3bf-cea9187b05e6</ID>
+<Type>Polynomial</Type>
+<UseLimits>False</UseLimits>
+<A>0</A>
+<B>0</B>
+<C>1</C>
+<D>0</D>
+</Gain>
+</Adapter>
+</Adapters>
+</NeuralModule>
+</NeuralModules>
+</NervousSystem>
+</Organism>
+</Organisms>
+<Structures>
+<Structure>
+<Name>Structure_1</Name>
+<ID>22659213-c177-42c0-9ba6-e9d5cd45eb65</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.78925" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>628d73e8-7382-4c2c-b910-7e2b471d63c4</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>1</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture>checkerboard.bmp</Texture>
+<Position x="0" y="-0.78925" z="0"/>
+<Rotation x="-1.571" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Plane</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>0</Density>
+<Mass>1000</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>True</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Size x="100" y="100"/>
+<WidthSegments>10</WidthSegments>
+<LengthSegments>10</LengthSegments>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>
+</Structures>
+<Lights>
+<Light>
+<Name>Light_1</Name>
+<ID>2c6fcef1-4b8e-4c98-8fc5-475312f53e6b</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="10" y="20" z="10"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Light</Type>
+<Enabled>True</Enabled>
+<Radius>0.05</Radius>
+<ConstantAttenuation>0</ConstantAttenuation>
+<LinearAttenuationDistance>0</LinearAttenuationDistance>
+<QuadraticAttenuationDistance>750</QuadraticAttenuationDistance>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+<Light>
+<Name>Light_2</Name>
+<ID>4b8ffe0e-aec3-4a6b-b13f-48b18ead4b04</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-10" y="20" z="-10"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Light</Type>
+<Enabled>True</Enabled>
+<Radius>0.05</Radius>
+<ConstantAttenuation>0.7</ConstantAttenuation>
+<LinearAttenuationDistance>0</LinearAttenuationDistance>
+<QuadraticAttenuationDistance>0</QuadraticAttenuationDistance>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+</Lights>
+</Environment>
+<ExternalStimuli>
+<Stimulus>
+<ID>33478ee3-cc72-4002-b30e-aaef612485ec</ID>
+<Name>Left_Muscle</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<Type>Current</Type>
+<CurrentType>Tonic</CurrentType>
+<OrganismID>c7da16ed-a926-4315-8f81-5afcb96d7d95</OrganismID>
+<TargetNodeID>33c7a55d-68e6-4e38-bc3d-9486cae93ff0</TargetNodeID>
+<StartTime>0</StartTime>
+<EndTime>5</EndTime>
+<CycleOnDuration>5</CycleOnDuration>
+<CycleOffDuration>0</CycleOffDuration>
+<BurstOnDuration>5</BurstOnDuration>
+<BurstOffDuration>0</BurstOffDuration>
+<CurrentOn>1e-008</CurrentOn>
+<CurrentOff>0</CurrentOff>
+<CurrentBurstOff>0</CurrentBurstOff>
+</Stimulus>
+<Stimulus>
+<ID>2667eb90-4156-4c74-9f5e-da012673d82e</ID>
+<Name>Right_Muscle</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<Type>Current</Type>
+<CurrentType>Tonic</CurrentType>
+<OrganismID>c7da16ed-a926-4315-8f81-5afcb96d7d95</OrganismID>
+<TargetNodeID>0825d6e6-ebc4-4d4e-8c87-1fd06f821916</TargetNodeID>
+<StartTime>0</StartTime>
+<EndTime>3</EndTime>
+<CycleOnDuration>3</CycleOnDuration>
+<CycleOffDuration>0</CycleOffDuration>
+<BurstOnDuration>3</BurstOnDuration>
+<BurstOffDuration>0</BurstOffDuration>
+<CurrentOn>2e-008</CurrentOn>
+<CurrentOff>0</CurrentOff>
+<CurrentBurstOff>0</CurrentBurstOff>
+</Stimulus>
+<Stimulus>
+<ID>a9e0bc4f-9390-4767-bc21-725a56d048ab</ID>
+<Name>CounterClock</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ModuleName/>
+<Type>ForceInput</Type>
+<StructureID>c7da16ed-a926-4315-8f81-5afcb96d7d95</StructureID>
+<BodyID>d808ef2f-3477-4c1d-a89d-8730e420ea60</BodyID>
+<StartTime>0.5</StartTime>
+<EndTime>5</EndTime>
+<RelativePosition x="0.2" y="0" z="0"/>
+<ForceX>0</ForceX>
+<ForceY>2</ForceY>
+<ForceZ>0</ForceZ>
+<TorqueX>0</TorqueX>
+<TorqueY>0</TorqueY>
+<TorqueZ>0</TorqueZ>
+</Stimulus>
+<Stimulus>
+<ID>2368bfb5-f7f9-41c2-b3ef-14c108b20f6b</ID>
+<Name>Stimulus_1</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ModuleName/>
+<Type>MotorVelocity</Type>
+<StructureID>c7da16ed-a926-4315-8f81-5afcb96d7d95</StructureID>
+<JointID>0854af91-cef9-48ce-9dba-545daf873a15</JointID>
+<StartTime>0</StartTime>
+<EndTime>1</EndTime>
+<Velocity>1</Velocity>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<ID>0c42edb9-12b5-49e2-a0b2-8d7c33d10d46</ID>
+<Name>Clock</Name>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ModuleName/>
+<Type>ForceInput</Type>
+<StructureID>c7da16ed-a926-4315-8f81-5afcb96d7d95</StructureID>
+<BodyID>d808ef2f-3477-4c1d-a89d-8730e420ea60</BodyID>
+<StartTime>0.02</StartTime>
+<EndTime>5</EndTime>
+<RelativePosition x="-1.5" y="0" z="0"/>
+<ForceX>0</ForceX>
+<ForceY>10</ForceY>
+<ForceZ>0</ForceZ>
+<TorqueX>0</TorqueX>
+<TorqueY>0</TorqueY>
+<TorqueZ>0</TorqueZ>
+</Stimulus>
+</ExternalStimuli>
+<DataCharts>
+<DataChart>
+<ID>6761bf2b-95ed-421f-910d-0b0c674684cd</ID>
+<Type>FileChart</Type>
+<OutputFilename>BodyData.txt</OutputFilename>
+<Name>BodyData</Name>
+<SetStartEndTime>True</SetStartEndTime>
+<CollectTimeWindow>-1</CollectTimeWindow>
+<AlwaysActive>False</AlwaysActive>
+<StartTime>0</StartTime>
+<EndTime>6</EndTime>
+<CollectInterval>0.0005</CollectInterval>
+<DataColumns>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>9cc01ca1-3aa2-4a11-acea-110ec13586ca</ID>
+<ColumnName>Hinge</ColumnName>
+<DataType>JointRotationDeg</DataType>
+<TargetID>0854af91-cef9-48ce-9dba-545daf873a15</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>5207ba57-f686-4de9-b217-f483f57d0558</ID>
+<ColumnName>Mrt</ColumnName>
+<DataType>Tension</DataType>
+<TargetID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>5770fc40-4e4b-40d0-8db5-caafcaf346b9</ID>
+<ColumnName>Mlt</ColumnName>
+<DataType>Tension</DataType>
+<TargetID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>6ee061d8-88c5-40c3-a218-cc612ae6935d</ID>
+<ColumnName>Mrl</ColumnName>
+<DataType>MuscleLength</DataType>
+<TargetID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>871e53c9-8c25-40ad-b43d-5aef565a3f56</ID>
+<ColumnName>Mll</ColumnName>
+<DataType>MuscleLength</DataType>
+<TargetID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>09e3afc4-6062-4bbf-9148-e6ee701d692b</ID>
+<ColumnName>Mlvavg</ColumnName>
+<DataType>AvgVmuscle</DataType>
+<TargetID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>6f4859ba-d4c0-445f-8d9b-39d4f6e9b83c</ID>
+<ColumnName>Mrv</ColumnName>
+<DataType>Vmuscle</DataType>
+<TargetID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>7c45c89c-32f7-4d29-9bc3-bb29a83f4875</ID>
+<ColumnName>Mlv</ColumnName>
+<DataType>Vmuscle</DataType>
+<TargetID>1cb85ea6-9e41-46c6-ba41-f311fe45892a</TargetID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>DataColumn</Type>
+<ID>a4955004-abc4-43fe-b98a-2972a76dd51f</ID>
+<ColumnName>Mrvavg</ColumnName>
+<DataType>AvgVmuscle</DataType>
+<TargetID>6f7d301d-7255-448f-a0ae-17f2b52a1ab0</TargetID>
+</DataColumn>
+</DataColumns>
+</DataChart>
+</DataCharts>
+<WindowMgr>
+<Hud>
+<Type>Hud</Type>
+<HudItems>
+<HudItem>
+<ModuleName/>
+<Type>HudText</Type>
+<Name>3e529edc-446e-4101-98e1-f60403f2d878</Name>
+<ID>3e529edc-446e-4101-98e1-f60403f2d878</ID>
+<Type>HudText</Type>
+<CharSize>30</CharSize>
+<Text>Time: %3.3f</Text>
+<DisplayTargetID>Simulator</DisplayTargetID>
+<DisplayDataType>Time</DisplayDataType>
+<UpdateTargetID>Simulator</UpdateTargetID>
+<UpdateDataType>RealTime</UpdateDataType>
+<UpdateInterval>1</UpdateInterval>
+<Position x="10" y="10"/>
+<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+</HudItem>
+</HudItems>
+</Hud>
+<Windows>
+<Window>
+<Name>BalanceBeam Body</Name>
+<ID>4c686b2f-cb21-4323-8e21-91e41000085a</ID>
+<Type>Basic</Type>
+<StandAlone>True</StandAlone>
+<TrackCamera>True</TrackCamera>
+<LookAtStructureID>c7da16ed-a926-4315-8f81-5afcb96d7d95</LookAtStructureID>
+<LookAtBodyID>6d54b7d1-e947-4411-a99b-1999b3e17727</LookAtBodyID>
+<Position x="100" y="100" z="0"/>
+<Size x="640" y="480" z="0"/>
+</Window>
+</Windows>
+</WindowMgr>
+</Simulation>

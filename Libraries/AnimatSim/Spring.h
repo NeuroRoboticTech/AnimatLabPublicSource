@@ -26,7 +26,7 @@ namespace AnimatSim
 			{
 			protected:
 				///Keeps track of the initial state of the enabled flag.
-				BOOL m_bInitEnabled;
+				bool m_bInitEnabled;
 
 				/// The natural length of the spring. 
 				float m_fltNaturalLength;
@@ -43,6 +43,9 @@ namespace AnimatSim
 				/// The damping of the spring
 				float m_fltDamping;
 
+				/// The damping of the spring
+				float m_fltDampingNotScaled;
+
 				/// The current displacement of the spring from its natural length
 				float m_fltDisplacement;
 
@@ -52,11 +55,44 @@ namespace AnimatSim
 				/// The current energy contained in the spring
 				float m_fltEnergy;
 
+                ///The velocity of the spring length change
+                float m_fltVelocity;
+
+                /// The rolling average velocity over the last 5 steps
+                float m_fltAvgVelocity;
+
+                /// circular array for calculating the rolling average of the velocity.
+                CStdCircularArray<float> m_aryVelocityAvg;
+
+                //Tension derived only from the stifness portion of the equation.
+                float m_fltStiffnessTension;
+
+                //Tension derived only from the damping portion of the equation.
+                float m_fltDampingTension;
+
+                /**
+				\brief	Calculates the tension. 
+				
+				\author	dcofer
+				\date	3/10/2011
+				**/
+				virtual void CalculateTension();
+
+                /**
+                 \brief Clears the velocity average circular queue.
+                
+                 \author    David Cofer
+                 \date  2/2/2014
+                 */
+                virtual void ClearVelocityAverage();
+
 			public:
 				Spring();
 				virtual ~Spring();
+						
+				static Spring *CastToDerived(AnimatBase *lpBase) {return static_cast<Spring*>(lpBase);}
 
-				virtual BOOL InitEnabled();
+				virtual bool InitEnabled();
 
 				/**
 				\brief	Gets the natural length of the spring. 
@@ -77,7 +113,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void NaturalLength(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void NaturalLength(float fltVal, bool bUseScaling = true);
 				
 				/**
 				\brief	Gets the stiffness of the spring. 
@@ -98,7 +134,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Stiffness(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the damping of the spring. 
@@ -119,17 +155,19 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
-				
+				virtual void Damping(float fltVal, bool bUseScaling = true);
+
 				virtual float Displacement();
 				virtual float Tension();
 				virtual float Energy();
+				virtual float Velocity();
 
+				virtual void ResetSimulation();
 				virtual void CreateParts();
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual float *GetDataPointer(const std::string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 				virtual void Load(CStdXml &oXml);
 			};
 

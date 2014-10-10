@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RoboticsAnimatSim" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/libRoboticsAnimatSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug/RoboticsAnimatSim" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DROBOTICSANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
+					<Add library="osg" />
+					<Add library="OpenThreads" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+					<Add library="dxl_debug" />
+					<Add library="openFrameworksArduinoD" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/libRoboticsAnimatSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release/RoboticsAnimatSim" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DROBOTICSANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
+					<Add library="osg" />
+					<Add library="OpenThreads" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+					<Add library="OsgAnimatSim" />
+					<Add library="dxl" />
+					<Add library="openFrameworksArduino" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libRoboticsAnimatSim.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Debug_Double">
+				<Option output="Debug/libRoboticsAnimatSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug_Double/RoboticsAnimatSim" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DROBOTICSANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
+					<Add library="osg" />
+					<Add library="OpenThreads" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+					<Add library="dxl_debug" />
+					<Add library="openFrameworksArduinoD" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libRoboticsAnimatSim_debug.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release_Double">
+				<Option output="Release/libRoboticsAnimatSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release_Double/RoboticsAnimatSim" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DROBOTICSANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../../3rdParty/DynamixelSDK/linux/include" />
+					<Add directory="../../../../3rdParty/openFrameworksArduino/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="boost_thread" />
+					<Add library="boost_chrono" />
+					<Add library="osg" />
+					<Add library="OpenThreads" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+					<Add library="OsgAnimatSim" />
+					<Add library="dxl" />
+					<Add library="openFrameworksArduino" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libRoboticsAnimatSim.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="../RbAttachment.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBallSocket.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBody.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBox.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbClassFactory.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbCone.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbConstraintFriction.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbConstraintRelaxation.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbCylinder.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSB.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBHinge.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBPrismatic.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBServo.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbEllipsoid.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogInput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataController.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalInput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataHingeServo.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPart.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPrismaticServo.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPWMOutput.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFreeJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbHinge.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbHingeLimit.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLANWirelessInterface.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLine.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLinearHillMuscle.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLinearHillStretchReceptor.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMaterialType.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMesh.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMotorizedJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMouth.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMovableItem.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbOdorSensor.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbOrganism.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbPrismatic.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbPrismaticLimit.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbRigidBody.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbRPRO.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSimulator.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSphere.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSpring.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbStructure.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbTorus.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbUniversal.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbAttachment.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBallSocket.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBody.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbBox.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbClassFactory.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbCone.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbConstraintFriction.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbConstraintRelaxation.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbCylinder.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSB.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBHinge.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBPrismatic.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbDynamixelUSBServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbEllipsoid.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogInput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataAnalogOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataController.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalInput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataDigitalOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataHingeServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPart.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPrismaticServo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFirmataPWMOutput.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbFreeJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbHinge.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbHingeLimit.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLANWirelessInterface.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLine.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLinearHillMuscle.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbLinearHillStretchReceptor.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMaterialType.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMesh.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMotorizedJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMouth.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbMovableItem.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbOdorSensor.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbOrganism.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbPrismatic.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbPrismaticLimit.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbRigidBody.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbRPRO.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSimulator.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSphere.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbSpring.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbStructure.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbTorus.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbUniversal.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RoboticsAnimatSim.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+

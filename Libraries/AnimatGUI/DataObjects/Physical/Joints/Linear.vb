@@ -65,13 +65,6 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property ModuleName() As String
-            Get
-                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
-            End Get
-        End Property
-
         Public Overrides ReadOnly Property AllowUserAdd As Boolean
             Get
                 'TODO: This part does not work yet so I am disabling the ability for users to add it.

@@ -36,23 +36,22 @@ VsHinge::VsHinge()
 {
 	SetThisPointers();
 	m_vxHinge = NULL;
-	m_fltRotationDeg = 0;
 
 	m_lpUpperLimit = new VsHingeLimit();
 	m_lpLowerLimit = new VsHingeLimit();
 	m_lpPosFlap = new VsHingeLimit();
 
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
-	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(0.25*VX_PI, false);
+	m_lpLowerLimit->LimitPos(-0.25*VX_PI, false);
+	m_lpPosFlap->LimitPos(Hinge::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(1, 0, 0, 1);
 	m_lpLowerLimit->Color(1, 1, 1, 1);
 	m_lpPosFlap->Color(0, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -70,10 +69,10 @@ VsHinge::~VsHinge()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, false, true);}
 }
 
-void VsHinge::EnableLimits(BOOL bVal)
+void VsHinge::EnableLimits(bool bVal)
 {
 	Hinge::EnableLimits(bVal);
 
@@ -262,8 +261,6 @@ void VsHinge::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
@@ -280,8 +277,7 @@ void VsHinge::SetupPhysics()
 	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxHinge->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
-	GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
+    GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
 
 	//Disable collisions between this object and its parent
 	m_lpChild->DisableCollision(m_lpParent);
@@ -313,10 +309,10 @@ void VsHinge::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *VsHinge::GetDataPointer(const string &strDataType)
+float *VsHinge::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "JOINTROTATION")
 		return &m_fltPosition;
@@ -328,12 +324,42 @@ float *VsHinge::GetDataPointer(const string &strDataType)
 		return &m_fltForce;
 	else if(strType == "JOINTROTATIONDEG")
 		return &m_fltRotationDeg;
+	else if(strType == "JOINTDESIREDPOSITIONDEG")
+		return &m_fltDesiredPositionDeg;
 	else if(strType == "JOINTDESIREDVELOCITY")
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
 		return &m_fltReportSetVelocity;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
+	else if(strType == "MOTORFORCETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBZ")
+		return &m_fltNullReport;
 	else if(strType == "CONTACTCOUNT")
 		THROW_PARAM_ERROR(Al_Err_lMustBeContactBodyToGetCount, Al_Err_strMustBeContactBodyToGetCount, "JointID", m_strName);
 	else
@@ -347,25 +373,49 @@ float *VsHinge::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsHinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsHinge::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Hinge::SetData(strDataType, strValue, FALSE))
+	if(Hinge::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VsHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsHinge::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Hinge::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	Hinge::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("JointRotation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointActualVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointForce", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPositionDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion
@@ -374,12 +424,6 @@ void VsHinge::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
-}
-
-void VsHinge::UpdateData()
-{
-	Hinge::UpdateData();
-	m_fltRotationDeg = ((m_fltPosition/VX_PI)*180);
 }
 
 		}		//Joints

@@ -333,7 +333,7 @@ void  VsJoint::BuildLocalMatrix()
 	VsBody::BuildLocalMatrix();
 }
 
-void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -380,11 +380,11 @@ void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string 
 	}
 }
 
-BOOL VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	VsMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
-	if(lpParent)
+	if(lpParent && m_lpVsChild)
 	{
 		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
 		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
@@ -393,12 +393,8 @@ BOOL VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWor
 		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
 		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
 
-		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
-
-		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
-
 		//Get the parent object.
-		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
+		osg::Matrix osgInverse = osg::Matrix::inverse(m_lpVsChild->GetWorldMatrix());
 
 		osg::Matrix osgCalc = osgWorldPos * osgInverse;
 
@@ -407,10 +403,10 @@ BOOL VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWor
 				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
 				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
 		
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 void VsJoint::Physics_ResetSimulation()
@@ -427,7 +423,7 @@ void VsJoint::Physics_ResetSimulation()
 }
 
 
-BOOL VsJoint::Physics_SetData(const string &strDataType, const string &strValue)
+bool VsJoint::Physics_SetData(const std::string &strDataType, const std::string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
@@ -436,10 +432,10 @@ BOOL VsJoint::Physics_SetData(const string &strDataType, const string &strValue)
 		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-void VsJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsJoint::Physics_QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 }
 

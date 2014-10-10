@@ -64,7 +64,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Length", value.ActualValue.ToString, True)
                 m_snLength.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -79,7 +79,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Width", value.ActualValue.ToString, True)
                 m_snWidth.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -94,7 +94,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Height", value.ActualValue.ToString, True)
                 m_snHeight.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 

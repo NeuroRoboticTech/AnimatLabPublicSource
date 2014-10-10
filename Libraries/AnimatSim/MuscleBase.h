@@ -59,6 +59,8 @@ namespace AnimatSim
 				MuscleBase();
 				virtual ~MuscleBase();
 
+				static MuscleBase *CastToDerived(AnimatBase *lpBase) {return static_cast<MuscleBase*>(lpBase);}
+
 				float Tension();
 				void Tension(float fltVal);
 
@@ -69,14 +71,14 @@ namespace AnimatSim
 				float Tdot();
 				float PrevTension();
 
-				virtual BOOL Enabled();
-				virtual void Enabled(BOOL bVal);
+				virtual bool Enabled();
+				virtual void Enabled(bool bVal);
 
 				virtual SigmoidGain *StimTension();
-				virtual void StimTension(string strXml);
+				virtual void StimTension(std::string strXml);
 
 				virtual LengthTensionGain *LengthTension();
-				virtual void LengthTension(string strXml);
+				virtual void LengthTension(std::string strXml);
 
 				/**
 				\brief	Calculates the activation needed for a given tension value. 
@@ -91,16 +93,16 @@ namespace AnimatSim
 				\param [in,out]	fltA	The required activation level. 
 				**/
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 
-				virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+				virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 				virtual void VerifySystemPointers();
 
 				virtual void ResetSimulation();
 
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual float *GetDataPointer(const std::string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 				virtual void Load(CStdXml &oXml);
 			};

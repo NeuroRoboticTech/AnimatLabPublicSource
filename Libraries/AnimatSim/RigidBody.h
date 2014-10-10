@@ -73,18 +73,24 @@ namespace AnimatSim
 			///Specifies if the part should frozen in place to the world. If a rigid body 
 			///is frozen then it is as if it is nailed in place and can not move. Gravity and 
 			///and other forces will not act on it.
-			BOOL m_bFreeze;
+			bool m_bFreeze;
 
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
-			//The mass of the object
+            /// The density value reported to the GUI
+            float m_fltReportDensity;
+
+			///The mass of the object
 			float m_fltMass;
 
-			//The mass of the object to report to GUI
+			///The mass of the object to report to GUI
 			float m_fltReportMass;
 
-			//The volume of the object to report to GUI.
+            /// The volume for the rigid body
+            float m_fltVolume;
+
+			///The volume of the object to report to GUI.
 			float m_fltReportVolume;
 
 			///A list of child parts that are connected to this part through
@@ -98,18 +104,29 @@ namespace AnimatSim
 
 			///Some body parts like contact sensors and muscle attachments do not have joints. If not then we should not 
 			///attempt to load them.
-			BOOL m_bUsesJoint;
+			bool m_bUsesJoint;
 
-			///This determines whether or not this is a contact sensor. If this is TRUE then
+			///This determines whether or not this is a contact sensor. If this is true then
 			///this object does not take part in collisions and such, it is a contact sensor only.
-			BOOL m_bIsContactSensor;
+			bool m_bIsContactSensor;
 
 			///This determines whether the object is a collision geometry object
-			BOOL m_bIsCollisionObject;
+			bool m_bIsCollisionObject;
 
 			///This keeps track of the current number of surface contacts that are occuring for this
 			///contact sensor. This is only used for sensors.
 			float m_fltSurfaceContactCount;
+
+			///If a part is a contact sensor then we can also make it be a sticky part.
+			///If this is enabled and the m_fltStickyOn is 1 then it will stick to any parts
+			///that it comes into contact with. When m_fltStickyOn goes to 0 it will release those parts.
+			bool m_bIsStickyPart;
+
+			///If this is a suction part then this controls when stickness is on
+			float m_fltStickyOn;
+
+			///If we are doing a sticky lock then this is the child part that was locked on.
+			RigidBody *m_lpStickyChild;
 
 			/// The pointer to a receptive field ContactSensor object. This is responsible for 
 			/// processing the receptive field contacts
@@ -122,10 +139,10 @@ namespace AnimatSim
 			float m_fltAngularVelocityDamping;
 
 			/// The array odor sources attached to this part.
-			CStdPtrMap<string, Odor> m_aryOdorSources;
+			CStdPtrMap<std::string, Odor> m_aryOdorSources;
 			
 			///Tells if this body is considered a food source.
-			BOOL m_bFoodSource;  
+			bool m_bFoodSource;  
 			
 			/// The quantity of food that this part contains
 			float m_fltFoodQuantity;
@@ -149,7 +166,7 @@ namespace AnimatSim
 			long m_lEatTime;
 
 			/// Identifier for the material type this part will use.
-			string m_strMaterialID;
+			std::string m_strMaterialID;
 
 			//Hyrdrodynamic properties
 			///This is the relative position to the center of the buoyancy in the body.
@@ -161,72 +178,115 @@ namespace AnimatSim
 			float m_fltBuoyancyScale;
 
 			///This is the drag coefficients for the three axises for the body.
-			CStdFPoint m_vDrag;
+			CStdFPoint m_vLinearDrag;
+
+			///This is the drag coefficients for the three axises for the body.
+			CStdFPoint m_vAngularDrag;
+
+            /// The maximum hyrdodynamic force that can be applied
+            float m_fltMaxHydroForce;
+
+            /// The maximum hyrdodynamic torque that can be applied
+            float m_fltMaxHydroTorque;
 
 			///The Magnus coefficient for the body. This is defaulted to zero because it almost always negligble for most body parts.
 			float m_fltMagnus;
 			
 			/// true to enable fluid interactions.
-			BOOL m_bEnableFluids;
+			bool m_bEnableFluids;
+
+            /// Determines whether a debug graphics of the rigid body is shown or not.
+            /// This will show the exact placement of the rigid body in the physics engine.
+            bool m_bDisplayDebugCollisionGraphic;
+
+            ///This is the list of other  parts that this part is excluded from colliding with.
+            std::unordered_set<RigidBody *> m_aryExcludeCollisionSet;
 
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
 
 			virtual void LoadPosition(CStdXml &oXml);
 
-			virtual void AddRigidBody(string strXml);
-			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
-			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
+			virtual RigidBody *AddRigidBody(std::string strXml);
+			virtual void RemoveRigidBody(std::string strID, bool bThrowError = true);
+			virtual int FindChildListPos(std::string strID, bool bThrowError = true);
 
-			virtual void AddContactSensor(string strXml);
-			virtual void RemoveContactSensor(string strID, BOOL bThrowError = TRUE);
+			virtual void AddContactSensor(std::string strXml);
+			virtual void RemoveContactSensor(std::string strID, bool bThrowError = true);
 			virtual void LoadContactSensor(CStdXml &oXml);
 
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
-			virtual void AddOdor(string strXml, BOOL bDoNotInit);
-			virtual void RemoveOdor(string strID, BOOL bThrowError = TRUE);
+			virtual void AddOdor(std::string strXml, bool bDoNotInit);
+			virtual void RemoveOdor(std::string strID, bool bThrowError = true);
+
+			virtual void Mass(float fltVal, bool bUseScaling, bool bPhysicsCallback);
+			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling, bool bPhysicsCallback);
+			virtual void Freeze(bool bVal, bool bPhysicsCallback);
+
+            virtual void RemoveCollisionExclusions();
 
 		public:
 			RigidBody();
 			virtual ~RigidBody();
+						
+			static RigidBody *CastToDerived(AnimatBase *lpBase) {return static_cast<RigidBody*>(lpBase);}
 
 #pragma region AccessorMutators
 
 			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+			virtual void Position(CStdFPoint &oPoint, bool bUseScaling = true, bool bFireChangeEvent = false, bool bUpdateMatrix = true);
 			
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();
-			virtual void CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling = TRUE);
-			virtual void CenterOfMass(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-			virtual void CenterOfMass(string strXml, BOOL bUseScaling = TRUE);
+			virtual CStdFPoint CenterOfMassWithStaticChildren();
+			virtual void CenterOfMass(CStdFPoint &vPoint, bool bUseScaling = true);
+			virtual void CenterOfMass(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+			virtual void CenterOfMass(std::string strXml, bool bUseScaling = true);
 
 			virtual CStdPtrArray<RigidBody>* ChildParts();
 
 			virtual Joint *JointToParent();
 			virtual void JointToParent(Joint *lpValue);
 
-			virtual ContactSensor *ContactSensor();
+			virtual ContactSensor *GetContactSensor();
 
 			virtual float Density();
-			virtual void Density(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Density(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL Freeze();
-			virtual void Freeze(BOOL bVal);
+			virtual float Mass();
+			virtual void Mass(float fltVal, bool bUseScaling = true);
+            virtual float MassWithChildren();
 
-			virtual BOOL IsContactSensor();
-			virtual void IsContactSensor(BOOL bVal);
+			virtual float Volume();
+			virtual void Volume(float fltVal, bool bUseScaling = true);
 
-			virtual BOOL IsCollisionObject();
-			virtual void IsCollisionObject(BOOL bVal);
+			virtual bool Freeze();
+			virtual void Freeze(bool bVal);
+
+			virtual bool IsContactSensor();
+			virtual void IsContactSensor(bool bVal);
+
+			virtual bool IsCollisionObject();
+			virtual void IsCollisionObject(bool bVal);
 			
-			virtual BOOL IsRoot();
-			virtual BOOL HasStaticJoint();
+			virtual bool IsStickyPart();
+			virtual void IsStickyPart(bool bVal);
 
-			virtual BOOL IsFoodSource();
-			virtual void IsFoodSource(BOOL bVal);
+			virtual float StickyOn();
+			virtual void StickyOn(float fltVal);
+
+			virtual RigidBody *StickyChild();
+			virtual void StickyChild(RigidBody *lpChild);
+
+			virtual bool IsRoot();
+			virtual bool HasStaticJoint();
+            virtual bool HasStaticChildren();
+            virtual float StaticChildrenMass();
+
+			virtual bool IsFoodSource();
+			virtual void IsFoodSource(bool bVal);
 
 			virtual float FoodQuantity();
 			virtual void FoodQuantity(float fltVal);
@@ -244,34 +304,51 @@ namespace AnimatSim
 			virtual void MaxFoodQuantity(float fltVal);
 
 			virtual float LinearVelocityDamping();
-			virtual void LinearVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void LinearVelocityDamping(float fltVal, bool bUseScaling = true);
 
 			virtual float AngularVelocityDamping();
-			virtual void AngularVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void AngularVelocityDamping(float fltVal, bool bUseScaling = true);
 
-			virtual string MaterialID();
-			virtual void MaterialID(string strID);
+			virtual std::string MaterialID();
+			virtual void MaterialID(std::string strID);
 
 			virtual CStdFPoint BuoyancyCenter();
-			virtual void BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-			virtual void BuoyancyCenter(string strXml, BOOL bUseScaling = TRUE);
+			virtual void BuoyancyCenter(CStdFPoint &oPoint, bool bUseScaling = true);
+			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+			virtual void BuoyancyCenter(std::string strXml, bool bUseScaling = true);
 
 			virtual float BuoyancyScale();
 			virtual void BuoyancyScale(float fltVal);
 
-			virtual CStdFPoint Drag();
-			virtual void Drag(CStdFPoint &oPoint);
-			virtual void Drag(float fltX, float fltY, float fltZ);
-			virtual void Drag(string strXml);
+			virtual CStdFPoint LinearDrag();
+			virtual void LinearDrag(CStdFPoint &oPoint);
+			virtual void LinearDrag(float fltX, float fltY, float fltZ);
+			virtual void LinearDrag(std::string strXml);
+
+			virtual CStdFPoint AngularDrag();
+			virtual void AngularDrag(CStdFPoint &oPoint);
+			virtual void AngularDrag(float fltX, float fltY, float fltZ);
+			virtual void AngularDrag(std::string strXml);
+
+			virtual float MaxHydroForce();
+			virtual void MaxHydroForce(float fltVal, bool bUseScaling = true);
+
+			virtual float MaxHydroTorque();
+			virtual void MaxHydroTorque(float fltVal, bool bUseScaling = true);
 
 			virtual float Magnus();
 			virtual void Magnus(float fltVal);
 
-			virtual BOOL EnableFluids();
-			virtual void EnableFluids(BOOL bVal);
+			virtual bool EnableFluids();
+			virtual void EnableFluids(bool bVal);
 
-			virtual BOOL HasCollisionGeometry();
+			virtual bool HasCollisionGeometry();
+
+            virtual bool DisplayDebugCollisionGraphic() {return m_bDisplayDebugCollisionGraphic;}
+            virtual void DisplayDebugCollisionGraphic(bool bVal) {m_bDisplayDebugCollisionGraphic = bVal;}
+
+            virtual std::unordered_set<RigidBody *> *GetExclusionCollisionSet() {return &m_aryExcludeCollisionSet;};
+            virtual bool FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError = true);
 
 #pragma endregion
 
@@ -280,12 +357,17 @@ namespace AnimatSim
 			virtual void Eat(float fltBiteSize, long lTimeSlice);
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);
-			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+            virtual void SetSurfaceContactCount(int iCount);
+			virtual void AddForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void AddForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits);
+			virtual void AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
+			virtual float GetMassValueWithStaticChildren();
+			virtual float GetDensity();
 			virtual float GetMass();
 			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();
+            virtual void UpdateChildPhysicsPosFromGraphics();
 
 			virtual RigidBody *ParentWithCollisionGeometry();
 
@@ -293,23 +375,27 @@ namespace AnimatSim
 			virtual void DisableCollision(RigidBody *lpBody);
 
 			virtual void CreateParts();
+            virtual void CreateChildParts();
 			virtual void CreateJoints();
+            virtual void CreateChildJoints();
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 
-			virtual void AddExternalNodeInput(float fltInput);
+			virtual void SimPausing();
+			virtual int GetTargetDataTypeIndex(const std::string &strDataType);
+			virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 			virtual void StepSimulation();
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
-			virtual void Kill(BOOL bState = TRUE);
+			virtual void Kill(bool bState = true);
 			virtual void Load(CStdXml &oXml);
 		};
 

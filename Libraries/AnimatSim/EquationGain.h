@@ -25,7 +25,7 @@ namespace AnimatSim
 			{
 			protected:
 				/// The post-fix gain equation
-				string m_strGainEquation;
+				std::string m_strGainEquation;
 
 				/// The pointer to the postfix equation evaluator
 				CStdPostFixEval *m_lpEval;
@@ -33,14 +33,19 @@ namespace AnimatSim
 			public:
 				EquationGain();
 				virtual ~EquationGain();
+			
+				static EquationGain *CastToDerived(AnimatBase *lpBase) {return static_cast<EquationGain*>(lpBase);}
 
-				virtual string GainEquation();
-				virtual void GainEquation(string strEquation);
+				virtual std::string GainEquation();
+				virtual void GainEquation(std::string strEquation);
+											
+				virtual void Copy(CStdSerialize *lpSource);
+				virtual CStdSerialize *Clone();
 
 				virtual float CalculateGain(float fltInput);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

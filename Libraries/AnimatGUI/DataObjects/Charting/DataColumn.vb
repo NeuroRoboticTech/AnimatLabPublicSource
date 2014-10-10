@@ -76,9 +76,9 @@ Namespace DataObjects.Charting
                         End If
                     Else
                         m_thDataType = New TypeHelpers.DataTypeID(Me)
-                        If Not Value.IncomingDataType Is Nothing Then
-                            m_thDataType.DataTypes.Add(DirectCast(Value.IncomingDataType.Clone(Value, False, Nothing), DataObjects.DataType))
-                            m_thDataType.ID = Value.IncomingDataType.ID
+                        If Not Value.IncomingDataTypes Is Nothing AndAlso Value.IncomingDataTypes.ID.Trim.Length > 0 Then
+                            m_thDataType.DataTypes.Add(DirectCast(Value.IncomingDataTypes.DataTypes(Value.IncomingDataTypes.ID).Clone(Value, False, Nothing), DataObjects.DataType))
+                            m_thDataType.ID = Value.IncomingDataTypes.ID
                         End If
                     End If
 

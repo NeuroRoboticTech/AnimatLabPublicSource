@@ -44,10 +44,10 @@ namespace AnimatSim
 			short m_iTimeStepCount;
 
 			/// Full pathname of the string project file for this module.
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			/// The string neural network file name
-			string m_strNeuralNetworkFile;
+			std::string m_strNeuralNetworkFile;
 
 			/// The pointer to the class factory for this module
 			IStdClassFactory *m_lpClassFactory;
@@ -61,11 +61,13 @@ namespace AnimatSim
 			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
-			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError = true);
 
 		public:
 			NeuralModule();
 			virtual ~NeuralModule();
+
+			static NeuralModule *CastToDerived(AnimatBase *lpBase) {return static_cast<NeuralModule*>(lpBase);}
 
 			/**
 			\brief	Gets the module name.
@@ -75,7 +77,7 @@ namespace AnimatSim
 			
 			\return	Module name.
 			**/
-			virtual string ModuleName() = 0;
+			virtual std::string ModuleName() = 0;
 
 			virtual short TimeStepInterval();
 			virtual void TimeStepInterval(short iVal);
@@ -111,7 +113,7 @@ namespace AnimatSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 
 			/**
@@ -162,10 +164,10 @@ namespace AnimatSim
 			**/
 			virtual void RemoveTargetAdapter(Adapter *lpAdapter);
 
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual float *GetDataPointer(const std::string &strDataType);
 
 			virtual void Initialize();
-			virtual BOOL NeedToStep(BOOL bIncrement);
+			virtual bool NeedToStep(bool bIncrement);
 			virtual void ResetStepCounter();
 			virtual void StepSimulation();
 

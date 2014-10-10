@@ -40,35 +40,35 @@ namespace GrasshopperPosture
 			RigidBody *m_lpRightSol;
 
 
-			string m_strStructureID;
-			string m_strTorsoID;
-			string m_strTorsoAlignID;
+			std::string m_strStructureID;
+			std::string m_strTorsoID;
+			std::string m_strTorsoAlignID;
 
-			string m_strLeftHipID;
-			string m_strLeftKneeID;
-			string m_strLeftAnkleID;
+			std::string m_strLeftHipID;
+			std::string m_strLeftKneeID;
+			std::string m_strLeftAnkleID;
 
-			string m_strRightHipID;
-			string m_strRightKneeID;
-			string m_strRightAnkleID;
+			std::string m_strRightHipID;
+			std::string m_strRightKneeID;
+			std::string m_strRightAnkleID;
 
-			string m_strLeftBasmID;
-			string m_strLeftIPID;
-			string m_strLeftRFID;
-			string m_strLeftVastID;
-			string m_strLeftBpstID;
-			string m_strLeftGastID;
-			string m_strLeftPtfID;
-			string m_strLeftSolID;
+			std::string m_strLeftBasmID;
+			std::string m_strLeftIPID;
+			std::string m_strLeftRFID;
+			std::string m_strLeftVastID;
+			std::string m_strLeftBpstID;
+			std::string m_strLeftGastID;
+			std::string m_strLeftPtfID;
+			std::string m_strLeftSolID;
 
-			string m_strRightBasmID;
-			string m_strRightIPID;
-			string m_strRightRFID;
-			string m_strRightVastID;
-			string m_strRightBpstID;
-			string m_strRightGastID;
-			string m_strRightPtfID;
-			string m_strRightSolID;
+			std::string m_strRightBasmID;
+			std::string m_strRightIPID;
+			std::string m_strRightRFID;
+			std::string m_strRightVastID;
+			std::string m_strRightBpstID;
+			std::string m_strRightGastID;
+			std::string m_strRightPtfID;
+			std::string m_strRightSolID;
 
 			float *m_lpfltLeftHipRotation;
 			float *m_lpfltLeftKneeRotation;
@@ -125,10 +125,10 @@ namespace GrasshopperPosture
 			virtual void Load(Simulator *lpSim, CStdXml &oXml);
 			virtual void Save(Simulator *lpSim, CStdXml &oXml);
 
-			virtual float *GetDataPointer(string strDataType);
+			virtual float *GetDataPointer(std::string strDataType);
 
 			//ActiveItem overrides
-			virtual string Type() {return "SynergyFitnessEveal";};
+			virtual std::string Type() {return "SynergyFitnessEveal";};
 			virtual void Initialize();
 			virtual void Activate();
 			virtual void ResetSimulation();  

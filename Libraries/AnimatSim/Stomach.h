@@ -50,10 +50,10 @@ namespace AnimatSim
 				float m_fltConsumptionForStep;
 
 				/// If this is true then if the energy level reaches zero then the organism is killed.
-				BOOL m_bKillOrganism;
+				bool m_bKillOrganism;
 
 				/// Set to true if the organism is killed.
-				BOOL m_bKilled;
+				bool m_bKilled;
 
 				/// Used to report in GetDataPointer if the organism was killed.
 				float m_fltReportAlive;
@@ -61,6 +61,8 @@ namespace AnimatSim
 			public:
 				Stomach();
 				virtual ~Stomach();
+						
+				static Stomach *CastToDerived(AnimatBase *lpBase) {return static_cast<Stomach*>(lpBase);}
 
 				virtual float EnergyLevel();
 				virtual void EnergyLevel(float fltVal);
@@ -75,16 +77,19 @@ namespace AnimatSim
 				virtual float MaxEnergyLevel();
 				virtual void MaxEnergyLevel(float fltVal);
 
-				virtual BOOL KillOrganism();
-				virtual void KillOrganism(BOOL bVal);
+				virtual bool KillOrganism();
+				virtual void KillOrganism(bool bVal);
+
+				//Stomach parts are never static joints.
+				virtual bool HasStaticJoint() {return false;};
 
 				virtual void CreateParts();
 
 				//Node Overrides
-				virtual void AddExternalNodeInput(float fltInput);
-				virtual float *GetDataPointer(const string &strDataType);
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
+				virtual float *GetDataPointer(const std::string &strDataType);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void StepSimulation();
 				virtual void ResetSimulation();
 				virtual void Load(CStdXml &oXml);

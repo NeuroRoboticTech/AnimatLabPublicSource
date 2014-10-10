@@ -29,7 +29,8 @@ namespace FiringRateSim
 			virtual ~ModulatedSynapse();
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 #pragma endregion
 
 			virtual float CalculateModulation(FiringRateModule *lpModule);

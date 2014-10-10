@@ -36,6 +36,9 @@ namespace AnimatSim
 	class ANIMAT_PORT AnimatBase : public CStdSerialize 
 	{
 	protected:
+		/// Tells if this item is enabled or not. If it is not enabled then it is not run.
+		bool m_bEnabled;
+
 		 /// The pointer to a Simulation
 		Simulator *m_lpSim;
 
@@ -49,16 +52,16 @@ namespace AnimatSim
 		Node *m_lpNode; 
 
 		///The unique Id for this object. 
-		string m_strID;  
+		std::string m_strID;  
 
 		///The type for this object. Examples are Box, Plane, Neuron, etc.. 
-		string m_strType;  
+		std::string m_strType;  
 
 		///The name for this object. 
-		string m_strName;  
+		std::string m_strName;  
 
 		///Tells whether the object is selected or not
-		BOOL m_bSelected;
+		bool m_bSelected;
 
 	public:
 		AnimatBase();
@@ -69,29 +72,24 @@ namespace AnimatSim
 		virtual NeuralModule *GetNeuralModule();
 		virtual Node *GetNode();
 
-		virtual string ID() ;
-		virtual void ID(string strValue);
+		virtual void Enabled(bool bVal);
+		virtual bool Enabled();
 
-		virtual string Name();
-		virtual void Name(string strValue);
+		virtual std::string ID() ;
+		virtual void ID(std::string strValue);
 
-		virtual string Type();
-		virtual void Type(string strValue);
+		virtual std::string Name();
+		virtual void Name(std::string strValue);
 
-		virtual BOOL Selected();
-		virtual void Selected(BOOL bValue, BOOL bSelectMultiple);
+		virtual std::string Type();
+		virtual void Type(std::string strValue);
+
+		virtual bool Selected();
+		virtual void Selected(bool bValue, bool bSelectMultiple);
+
+		virtual void Copy(CStdSerialize *lpSource);
 
 #pragma region DataAccesMethods
-
-       enum AnimatPropertyType
-        {
-            Invalid,
-            Boolean,
-            Integer,
-			Float,
-			String,
-			Xml
-        };
 
 		/**
 		\brief	Sets the system pointers.
@@ -115,15 +113,20 @@ namespace AnimatSim
 		\param [in,out]	lpNode		The pointer to the parent node. 
 		\param	bVerify				true to call VerifySystemPointers. 
 		**/
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 		virtual void VerifySystemPointers();
-		virtual float *GetDataPointer(const string &strDataType);
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL HasProperty(const string &strName);
-		virtual AnimatPropertyType PropertyType(const string &strName);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual float *GetDataPointer(const std::string &strDataType);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual bool SetData(const std::string &strDataType, const float fltValue, bool bThrowError = true);
+		virtual bool SetData(const std::string &strDataType, const long lValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+		virtual bool HasProperty(const std::string &strName);
+		virtual AnimatPropertyType PropertyType(const std::string &strName);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
+
+        virtual void RigidBodyAdded(std::string strID) {};
+        virtual void RigidBodyRemoved(std::string strID) {};
 
 #pragma endregion
 
@@ -134,7 +137,7 @@ namespace AnimatSim
 		virtual void ResetSimulation();
 		virtual void AfterResetSimulation();
 		virtual void ReInitialize();
-		virtual void Kill(BOOL bState = TRUE);
+		virtual void Kill(bool bState = true);
 		virtual void StepSimulation();
 
 		virtual void SimStarting();

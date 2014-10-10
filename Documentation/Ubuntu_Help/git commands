@@ -1,0 +1,4 @@
+
+git config --global user.name "NeuroRoboticTech"
+git config --global user.email "dcofer@NeuroRoboticTech.com"
+git config credential.helper 'cache --timeout=10800'

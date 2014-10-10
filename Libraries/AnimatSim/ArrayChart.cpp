@@ -4,7 +4,7 @@
 \brief	Implements the array chart class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -67,10 +67,10 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, false, true);}
 }
 
-string ArrayChart::Type() {return "ArrayChart";}
+std::string ArrayChart::Type() {return "ArrayChart";}
 
 /**
 \brief	Sets the Current row.

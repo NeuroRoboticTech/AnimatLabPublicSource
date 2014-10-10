@@ -4,7 +4,7 @@
 \brief	Implements the Torus class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -66,9 +66,9 @@ Torus::~Torus()
 
 float Torus::OutsideRadius() {return m_fltOutsideRadius;}
 
-void Torus::OutsideRadius(float fltVal, BOOL bUseScaling)
+void Torus::OutsideRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Torus.OutsideRadius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Torus.OutsideRadius");
 
 	if(bUseScaling)
 		m_fltOutsideRadius = fltVal * m_lpSim->InverseDistanceUnits();
@@ -80,9 +80,9 @@ void Torus::OutsideRadius(float fltVal, BOOL bUseScaling)
 
 float Torus::InsideRadius() {return m_fltInsideRadius;}
 
-void Torus::InsideRadius(float fltVal, BOOL bUseScaling)
+void Torus::InsideRadius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Torus.InsideRadius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Torus.InsideRadius");
 
 	if(bUseScaling)
 		m_fltInsideRadius = fltVal * m_lpSim->InverseDistanceUnits();
@@ -102,7 +102,7 @@ void Torus::InsideRadius(float fltVal, BOOL bUseScaling)
 **/
 void Torus::Sides(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Torus.Sides", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Torus.Sides", true);
 	m_iSides = iVal;
 
 	Resize();
@@ -128,7 +128,7 @@ int Torus::Sides() {return m_iSides;}
 **/
 void Torus::Rings(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Torus.Rings", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Torus.Rings", true);
 	m_iRings = iVal;
 
 	Resize();
@@ -144,59 +144,52 @@ void Torus::Rings(int iVal)
 **/
 int Torus::Rings() {return m_iRings;}
 
-BOOL Torus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Torus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "OUTSIDERADIUS")
 	{
-		OutsideRadius(atof(strValue.c_str()));
-		return TRUE;
+		OutsideRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "INSIDERADIUS")
 	{
-		InsideRadius(atof(strValue.c_str()));
-		return TRUE;
+		InsideRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "SIDES")
 	{
 		Sides(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RINGS")
 	{
 		Rings(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Torus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Torus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("OutsideRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("InsideRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Sides");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("Rings");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("OutsideRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InsideRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Sides", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rings", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Torus::Load(CStdXml &oXml)

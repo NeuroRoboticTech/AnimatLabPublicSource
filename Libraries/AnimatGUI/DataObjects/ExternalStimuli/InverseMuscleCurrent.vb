@@ -119,10 +119,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This generates a stimulus current using the inverse dynamics of a muscle and a set predicted muscle length data. This is mainly for use in generating the gamma signal to drive a stretch receptor."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property StimulusClassType() As String

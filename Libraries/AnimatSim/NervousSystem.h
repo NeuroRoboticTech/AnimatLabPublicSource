@@ -32,7 +32,7 @@ namespace AnimatSim
 			Organism *m_lpOrganism;
 
 			/// The array of neural modules used within this nervous system.
-			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
+			CStdPtrMap<std::string, NeuralModule> m_aryNeuralModules;
 			
 			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
@@ -44,11 +44,13 @@ namespace AnimatSim
 			NervousSystem();
 			virtual ~NervousSystem();
 
-			virtual NeuralModule *FindNeuralModule(string strModuleName, BOOL bThrowError = TRUE);
-			virtual void AddNeuralModule(string strXml);
-			virtual void RemoveNeuralModule(string strID);
+			static NervousSystem *CastToDerived(AnimatBase *lpBase) {return static_cast<NervousSystem*>(lpBase);}
 
-			virtual void Kill(BOOL bState = TRUE);
+			virtual NeuralModule *FindNeuralModule(std::string strModuleName, bool bThrowError = true);
+			virtual void AddNeuralModule(std::string strXml);
+			virtual void RemoveNeuralModule(std::string strID);
+
+			virtual void Kill(bool bState = true);
 			virtual void ResetSimulation();
 			virtual void MinTimeStep(float &fltMin);
 
@@ -74,7 +76,7 @@ namespace AnimatSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void StepSimulation();

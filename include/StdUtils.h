@@ -2,24 +2,65 @@
 #define __STD_UTILS_DLL_H__
 
 #ifndef _STD_UTILS_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "StdUtils_vc10D.lib")
-	#else
-		#pragma comment(lib, "StdUtils_vc10.lib")
-	#endif          
+    #ifndef _WIN64
+        #ifdef _DEBUG
+		    #pragma comment(lib, "StdUtils_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "StdUtils_vc10.lib")
+	    #endif      // _DEBUG      
+    #else
+        #ifdef _DEBUG
+		    #pragma comment(lib, "StdUtils_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "StdUtils_vc10_x64.lib")
+	    #endif      // _DEBUG      
+    #endif          // _WIN64
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 
-#define STD_UTILS_PORT __declspec( dllimport )
+#define _SCL_SECURE_NO_WARNINGS
+
+#ifdef WIN32
+	#define STD_UTILS_PORT __declspec( dllimport )
+#else
+	#define STD_UTILS_PORT 
+#endif
 
 #pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482 4996)
 
-#ifndef _WIN32_WCE
-	#include <conio.h>
-	#include <sys/types.h>
-	#include <sys/timeb.h>
-	#include <io.h>
+#define STD_PI 3.14159
+#define STD_PI_2 6.28319
+#define STD_PI_HALF 1.570796f
+
+#ifdef WIN32
+	#ifndef _WIN32_WCE
+		#include <conio.h>
+		#include <io.h>
+		#include <tchar.h> 
+	#endif
+	
 	#include <direct.h>
+	#include <wtypes.h>
+#else
+	#include <linux/types.h>
+	#include <stdbool.h>
+	#include <dlfcn.h>
+    #include <utime.h>
+    #include <sys/stat.h>
+    #include <unistd.h>
+	
+	#define DWORD unsigned long
+	#define LPCSTR const char *
+	#define LONG long
+	#define ULONG unsigned long
+	#define LPLONG long *
+	#define __int64 int64_t
+	#define LPCTSTR const char*
+	#define byte unsigned char
+	#define HWND long
 #endif
+
+#include <sys/types.h>
+#include <sys/timeb.h>
 
 #include <exception>
 #include <string>
@@ -33,17 +74,33 @@
 #include <stack>
 #include <map>
 #include <list>
+#include <unordered_set>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cctype>
 #include <math.h>
 #include <memory.h>
 #include <algorithm>
-#include <tchar.h> 
 #include <string.h>
-#include <wtypes.h>
-#include <vfw.h>
-using namespace std;
+
+#ifndef STD_DO_NOT_ADD_BOOST
+	#include "boost/format.hpp"
+	#include <boost/thread.hpp>
+	#include <boost/algorithm/string.hpp>
+	#include <boost/filesystem.hpp>
+	#include <boost/interprocess/sync/interprocess_mutex.hpp>
+	#include <boost/interprocess/sync/interprocess_condition.hpp>
+	#include <boost/interprocess/sync/scoped_lock.hpp>
+	#include <boost/atomic.hpp>
+#endif
+
+#ifdef WIN32
+	//For some reason this is not in math.h on windows.
+	inline double round( double d )
+	{
+		return floor( d + 0.5 );
+	}
+#endif
 
 #define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
@@ -62,13 +119,31 @@ namespace StdUtils
 	class CMarkupSTL;
 	class CStdXml;
 	class CStdCriticalSection;
-	class CStdBitmap;
-	class CStdAvi;
-}
+	class CStdErrorInfo;
+    class CStdPID;
 
 #ifndef THROW_ERROR
-	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__)
+	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__, "")
 #endif
+	
+	void STD_UTILS_PORT Std_RelayError(CStdErrorInfo oInfo, std::string strSourceFile, long lSourceLine);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, unsigned char iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, unsigned short iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, int iVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, long lVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, float fltVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, double dblVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strValueName, std::string strVal);
+	void STD_UTILS_PORT Std_ThrowError(long lError, std::string strError, std::string strSourceFile, long lSourceLine, 
+																		 std::string strText);
+}
 
 #include "tree.hh"
 #include "tree_util.hh"
@@ -87,20 +162,12 @@ namespace StdUtils
 #include "StdVariant.h"
 #include "StdClassFactory.h"
 #include "StdLookupTable.h"
-#include "StdCriticalSection.h"
 #include "StdFixed.h"
-#include "StdBitmap.h"
-#include "StdAvi.h"
 #include "StdColor.h"
-#include "StdTimer.h"
-
-#ifndef _WIN32_WCE
-	#define STRING_TYPE LPCSTR
-#else
-	#define STRING_TYPE LPCWSTR
-	#include "StdLogFile.h"
-#endif
+#include "StdCriticalSection.h"
+#include "StdPID.h"
 
 using namespace StdUtils;
+
 
 #endif // __STD_UTILS_DLL_H__

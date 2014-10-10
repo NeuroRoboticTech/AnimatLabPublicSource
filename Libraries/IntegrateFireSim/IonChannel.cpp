@@ -4,7 +4,7 @@
 \brief	Implements the ion channel class.
 **/
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "IonChannel.h"
 #include "SynapseType.h"
 #include "Connexion.h"
@@ -28,7 +28,7 @@ namespace IntegrateFireSim
 **/
 IonChannel::IonChannel()
 {
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_fltGmax = 0;
 	m_fltG = 0;
 	m_fltMPower = 0;
@@ -74,7 +74,7 @@ try
 	if(m_lpTh) delete m_lpTh;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of IonChannel\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of IonChannel\r\n", "", -1, false, true);}
 }
 
 
@@ -88,7 +88,7 @@ catch(...)
 
 \param	bVal	true to enable. 
 **/
-void  IonChannel::Enabled(BOOL bVal) {m_bEnabled = bVal;}
+void  IonChannel::Enabled(bool bVal) {m_bEnabled = bVal;}
 
 /**
 \brief	Gets whether this channel is enabled.
@@ -98,7 +98,7 @@ void  IonChannel::Enabled(BOOL bVal) {m_bEnabled = bVal;}
 
 \return	true if enabled, false else.
 **/
-BOOL  IonChannel::Enabled() {return m_bEnabled;}
+bool  IonChannel::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Sets maximum conductance.
@@ -337,7 +337,7 @@ void IonChannel::Minf(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Minf(string strXml)
+void IonChannel::Minf(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -383,7 +383,7 @@ void IonChannel::Tm(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Tm(string strXml)
+void IonChannel::Tm(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -429,7 +429,7 @@ void IonChannel::Hinf(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Hinf(string strXml)
+void IonChannel::Hinf(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -475,7 +475,7 @@ void IonChannel::Th(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void IonChannel::Th(string strXml)
+void IonChannel::Th(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -541,9 +541,9 @@ void IonChannel::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *IonChannel::GetDataPointer(const string &strDataType)
+float *IonChannel::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "G")
 		return &m_fltG;
@@ -578,149 +578,132 @@ float *IonChannel::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL IonChannel::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool IonChannel::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GMAX")
 	{
 		Gmax(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GINIT")
 	{
 		Ginit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINIT")
 	{
 		Minit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HINIT")
 	{
 		Hinit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MPOWER")
 	{
 		MPower(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HPOWER")
 	{
 		HPower(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{
 		EquilibriumPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "NM")
 	{
 		Nm(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "NH")
 	{
 		Nh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MINF")
 	{
 		Minf(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TM")
 	{
 		Tm(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HINF")
 	{
 		Hinf(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TH")
 	{
 		Th(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void IonChannel::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void IonChannel::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("G", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("M", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("H", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("I", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Act", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tm", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Th", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tinf", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Hinf", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Gmax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ginit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Minit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Hinit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MPower");
-	aryTypes.Add("Float");
-
-	aryNames.Add("HPower");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EquilibriumPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Nm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Nh");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Minf");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Tm");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Hinf");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Th");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Gmax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ginit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Minit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hinit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MPower", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HPower", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EquilibriumPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Nm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Nh", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Minf", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Tm", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hinf", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Th", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -744,15 +727,15 @@ void IonChannel::Load(CStdXml &oXml)
 
 	//Load Minf
 	oXml.IntoChildElement("Minf");
-	string strModuleName = oXml.GetChildString("ModuleName", "");
-	string strType = oXml.GetChildString("Type");
+	std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	std::string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
 	m_lpMinf = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpMinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpMinf->Load(oXml);
 
 	//Load Tm
@@ -765,7 +748,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTm)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpTm->Load(oXml);
 
 	Hinit(oXml.GetChildFloat("Hinit"));
@@ -781,7 +764,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpHinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpHinf->Load(oXml);
 
 	//Load Th
@@ -794,7 +777,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTh)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
+	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, true);
 	m_lpTh->Load(oXml);
 
 	oXml.OutOfElem(); //OutOf IonChannel Element

@@ -4,7 +4,7 @@
 \brief	Implements the structure class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMotorizedJoint.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -55,6 +55,7 @@ Structure::Structure()
 	m_lpBody = NULL;
 	m_lpPhysicsMovableItem = NULL;
 	m_fltSize = 0.02f;
+	m_lpScript = NULL;
 }
 
 /**
@@ -72,9 +73,10 @@ try
 	m_aryJoints.RemoveAll();
 	m_aryExcludeCollisionList.RemoveAll();
 	if(m_lpBody) delete m_lpBody;
+	if(m_lpScript) delete m_lpScript;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Structure\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Structure\r\n", "", -1, false, true);}
 }
 
 /**
@@ -114,13 +116,18 @@ RigidBody *Structure::Body()
 
 CStdFPoint Structure::Position() {return MovableItem::Position();}
 
-void Structure::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void Structure::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	MovableItem::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 
 	///When we change the position of the structure we need to let the rigid body know that.
-	if(bUpdateMatrix && m_lpBody && m_lpBody->PhysicsMovableItem())
-		m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
+	if(m_lpBody && m_lpBody->PhysicsMovableItem())
+    {
+	    if(bUpdateMatrix)
+		    m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
+        else if(bFireChangeEvent)
+            m_lpBody->Callback()->PositionChanged();
+    }
 }
 
 /**
@@ -142,34 +149,46 @@ float Structure::Size() {return m_fltSize;};
 \param	fltVal	   	The new size value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Structure::Size(float fltVal, BOOL bUseScaling)
+void Structure::Size(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Structure.Size");
+	Std_IsAboveMin((float) 0, fltVal, true, "Structure.Size");
 	if(bUseScaling)
 		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
 	else
 		m_fltSize = fltVal;
 }
 
-void Structure::Selected(BOOL bValue, BOOL bSelectMultiple)
+void Structure::Selected(bool bValue, bool bSelectMultiple)
 {
 	AnimatBase::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
 }
 
 //The structure is not manipulated directly through the editor window. Instead, the root rigid body is moved/rotated.
-BOOL Structure::AllowTranslateDragX() {return FALSE;}
+bool Structure::AllowTranslateDragX() {return false;}
 
-BOOL Structure::AllowTranslateDragY() {return FALSE;}
+bool Structure::AllowTranslateDragY() {return false;}
 
-BOOL Structure::AllowTranslateDragZ() {return FALSE;}
+bool Structure::AllowTranslateDragZ() {return false;}
 
-BOOL Structure::AllowRotateDragX() {return FALSE;}
+bool Structure::AllowRotateDragX() {return false;}
 
-BOOL Structure::AllowRotateDragY() {return FALSE;}
+bool Structure::AllowRotateDragY() {return false;}
 
-BOOL Structure::AllowRotateDragZ() {return FALSE;}
+bool Structure::AllowRotateDragZ() {return false;}
 
+void Structure::Script(ScriptProcessor *lpScript) 
+{
+	if(m_lpScript)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+
+	m_lpScript = lpScript;
+}
+
+ScriptProcessor *Structure::Script() {return m_lpScript;}
 
 /**
 \brief	Gets the collision exclusion list as an array.
@@ -234,13 +253,17 @@ void Structure::ResetSimulation()
 	if(m_lpBody)
 	{
 		m_lpBody->ResetSimulation();
-		
+		m_lpBody->UpdatePhysicsPosFromGraphics();
+
 		UpdateData();
 
 		//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items
 		//already being reset to their original positions. So they must be done first and then these items get reset.
 		m_lpBody->AfterResetSimulation();
 	}
+
+	if(m_lpScript)
+		m_lpScript->ResetSimulation();
 }
 
 void Structure::MinTimeStep(float &fltMin) {}
@@ -261,11 +284,42 @@ occurrs within this loop will lead to major impacts on the ultimate performance 
 **/
 void Structure::StepPhysicsEngine()
 {
+	if(m_lpScript)
+		m_lpScript->BeforeStepPhysicsEngine();
+
 	if(m_lpBody)
 	{
 		m_lpBody->StepSimulation();
 		UpdateData();
 	}
+
+	if(m_lpScript)
+		m_lpScript->AfterStepPhysicsEngine();
+}
+
+void Structure::Initialize()
+{
+	AnimatBase::Initialize();
+	if(m_lpScript)
+		m_lpScript->Initialize();
+}
+
+void Structure::Kill(bool bState)
+{
+	if(m_lpScript)
+		m_lpScript->Kill(bState);
+}
+
+void Structure::SimStarting()
+{
+}
+
+void Structure::SimPausing()
+{
+}
+
+void Structure::SimStopping()
+{
 }
 
 /**
@@ -311,7 +365,7 @@ void Structure::AddJoint(Joint *lpJoint)
 \param	strID	ID of the joint to remove
 \exception If ID is not found.
 **/
-void Structure::RemoveJoint(string strID)
+void Structure::RemoveJoint(std::string strID)
 {
 	try
 	{
@@ -368,7 +422,7 @@ void Structure::AddRigidBody(RigidBody *lpBody)
 \param	strID	ID of the body to remove
 \exception If ID is not found.
 **/
-void Structure::RemoveRigidBody(string strID)
+void Structure::RemoveRigidBody(std::string strID)
 {
 	try
 	{
@@ -394,15 +448,15 @@ it will either throw an exception or return NULL based on the bThrowError parame
 \date	2/25/2011
 
 \param	strJointID	ID of the joint to find. This is not case sensitive.
-\param	bThrowError	If this is TRUE and the ID is not found then an
-exception is thrown. If this is FALSE and the ID is not found then NULL is returned.
+\param	bThrowError	If this is true and the ID is not found then an
+exception is thrown. If this is false and the ID is not found then NULL is returned.
 
 \return	null if it fails and bThrowError is false, else the pointer to the found joint. 
 **/
-Joint *Structure::FindJoint(string strJointID, BOOL bThrowError)
+Joint *Structure::FindJoint(std::string strJointID, bool bThrowError)
 {
 	Joint *lpJoint = NULL;
-	CStdMap<string, Joint *>::iterator oPos;
+	CStdMap<std::string, Joint *>::iterator oPos;
 	oPos = m_aryJoints.find(Std_CheckString(strJointID));
 
 	if(oPos != m_aryJoints.end())
@@ -426,15 +480,15 @@ it will either throw an exception or return NULL based on the bThrowError parame
 \date	2/25/2011
 
 \param	strBodyID	ID of the body to find. This is not case sensitive.
-\param	bThrowError	If this is TRUE and the ID is not found then an
-exception is thrown. If this is FALSE and the ID is not found then NULL is returned.
+\param	bThrowError	If this is true and the ID is not found then an
+exception is thrown. If this is false and the ID is not found then NULL is returned.
 
 \return	null if it fails and bThrowError is false, else the pointer to the found rigid body. 
 **/
-RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
+RigidBody *Structure::FindRigidBody(std::string strBodyID, bool bThrowError)
 {
 	RigidBody *lpBody = NULL;
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	oPos = m_aryRigidBodies.find(Std_CheckString(strBodyID));
 
 	if(oPos != m_aryRigidBodies.end())
@@ -457,14 +511,14 @@ RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
 
 \return	null if it fails and bThrowError=false, else the found node. 
 **/
-Node *Structure::FindNode(string strID, BOOL bThrowError)
+Node *Structure::FindNode(std::string strID, bool bThrowError)
 {
-	Node *lpNode = FindRigidBody(strID, FALSE);
+	Node *lpNode = FindRigidBody(strID, false);
 
 	if(lpNode)
 		return lpNode;
 
-	lpNode = FindJoint(strID, FALSE);
+	lpNode = FindJoint(strID, false);
 
 	if(lpNode)
 		return lpNode;
@@ -477,16 +531,16 @@ Node *Structure::FindNode(string strID, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
-void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
 }
 
-float *Structure::GetDataPointer(const string &strDataType)
+float *Structure::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	lpData = MovableItem::GetDataPointer(strDataType);
 	if(lpData)
@@ -497,61 +551,73 @@ float *Structure::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL Structure::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Structure::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
-	if(MovableItem::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(MovableItem::SetData(strDataType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Structure::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
-	MovableItem::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
+	MovableItem::QueryProperties(aryProperties);
 }
 
-BOOL Structure::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Structure::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		AddRoot(strXml);
-		return TRUE;
+		return true;
+	}
+
+	if(strType == "SCRIPT")
+	{
+		AddScript(strXml);
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Structure::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Structure::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		RemoveRoot(strID);
-		return TRUE;
+		return true;
+	}
+
+	if(strType == "SCRIPT")
+	{
+		RemoveScript(strID);
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -566,7 +632,7 @@ body part. It then initializes it and calls CreateParts, and CreateJoints.
 
 \param	strXml	The xml configuration data packet. 
 **/
-void Structure::AddRoot(string strXml)
+void Structure::AddRoot(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -581,6 +647,9 @@ void Structure::AddRoot(string strXml)
 
 	//Then create all of the joints between the models.
 	m_lpBody->CreateJoints();
+
+    if(m_lpSim && m_lpBody)
+        m_lpSim->NotifyRigidBodyAdded(m_lpBody->ID());
 }
 
 /**
@@ -597,12 +666,80 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void Structure::RemoveRoot(string strID, BOOL bThrowError)
+void Structure::RemoveRoot(std::string strID, bool bThrowError)
 {
 	if(m_lpBody && m_lpBody->ID() == strID)
 	{
 		delete m_lpBody;
 		m_lpBody = NULL;
+
+        if(m_lpSim && m_lpBody)
+            m_lpSim->NotifyRigidBodyRemoved(strID);
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
+}
+
+/**
+\brief	Creates and adds a scripting object to this structure. 
+
+\details This method is primarily used by the GUI to add a new script objects to the structure.
+It creates the ScriptProcessor from info in the XML packet and then uses the XML to load in the new
+script.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strXml	The xml configuration data packet. 
+**/
+void Structure::AddScript(std::string strXml)
+{
+	ScriptProcessor *lpScript = NULL;
+	try
+	{
+		CStdXml oXml;
+		oXml.Deserialize(strXml);
+		oXml.FindElement("Root");
+		oXml.FindChildElement("Script");
+
+		lpScript = LoadScript(oXml);
+		lpScript->Initialize();
+		m_lpScript = lpScript;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	}
+}
+
+/**
+\brief	Removes the script based on ID. 
+
+\details This is primarily used by the GUI to remove the script from the structure when 
+the user does this in the GUI.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strID	GUI ID of the script to remove
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+
+\return	true if it succeeds, false if it fails. 
+**/
+void Structure::RemoveScript(std::string strID, bool bThrowError)
+{
+	if(m_lpScript && m_lpScript->ID() == strID)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
 	}
 	else
 		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
@@ -619,7 +756,7 @@ void Structure::RemoveRoot(string strID, BOOL bThrowError)
 \param	strJointID	GUID ID of the joint. 
 \param	bVal		Enable/disable value. 
 **/
-void Structure::EnableMotor(string strJointID, BOOL bVal)
+void Structure::EnableMotor(std::string strJointID, bool bVal)
 {
 	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
 	if(lpJoint)
@@ -641,7 +778,7 @@ The velocity will only have any effect if the motor for that joint has been enab
 \param	strJointID	The ID of the joint.
 \param	fltInput	The velocity to set this joint to use.
 **/
-void Structure::SetMotorInput(string strJointID, float fltInput)
+void Structure::SetMotorInput(std::string strJointID, float fltInput)
 {
 	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
 	if(lpJoint)
@@ -663,7 +800,7 @@ rigid bodies in the structure.
 **/
 void Structure::EnableCollision(RigidBody *lpCollisionBody)
 {
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
@@ -686,7 +823,7 @@ rigid bodies in the structure.
 **/
 void Structure::DisableCollision(RigidBody *lpCollisionBody)
 {
-	CStdMap<string, RigidBody *>::iterator oPos;
+	CStdMap<std::string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
@@ -757,6 +894,9 @@ void Structure::Load(CStdXml &oXml)
 
 	LoadLayout(oXml);
 
+	if(oXml.FindChildElement("Script", false))
+		Script(LoadScript(oXml));
+
 	oXml.OutOfElem(); //OutOf Layout Element
 }
 
@@ -770,7 +910,7 @@ void Structure::Load(CStdXml &oXml)
 \param	strID1	GUID ID of the first rigid body in the pair. 
 \param	strID2	GUID ID of the second rigid body in the pair. 
 **/
-void Structure::AddCollisionPair(string strID1, string strID2)
+void Structure::AddCollisionPair(std::string strID1, std::string strID2)
 {
 	CollisionPair *lpPair = new CollisionPair();
 	lpPair->m_strPart1ID = strID1;
@@ -790,7 +930,7 @@ void Structure::AddCollisionPair(string strID1, string strID2)
 void Structure::LoadCollisionPair(CStdXml &oXml)
 {
 	CollisionPair *lpPair = NULL;
-	string strID1, strID2;
+	std::string strID1, strID2;
 
 try
 {
@@ -833,22 +973,22 @@ file.
 
 void Structure::LoadLayout(CStdXml &oXml)
 {
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 
-	BOOL bFound = FALSE;
-	if(oXml.FindChildElement("Body", FALSE))
-		bFound = TRUE;
-	else if(oXml.FindChildElement("RigidBody", FALSE))
-		bFound = TRUE;
+	bool bFound = false;
+	if(oXml.FindChildElement("Body", false))
+		bFound = true;
+	else if(oXml.FindChildElement("RigidBody", false))
+		bFound = true;
 
 	if(bFound)
 	{
 		LoadRoot(oXml);
 
-		if(oXml.FindChildElement("CollisionExclusionPairs", FALSE))
+		if(oXml.FindChildElement("CollisionExclusionPairs", false))
 		{
 			oXml.IntoElem();  //Into CollisionExclusionPairs Element
 			int iChildCount = oXml.NumberOfChildren();
@@ -878,8 +1018,8 @@ void Structure::LoadLayout(CStdXml &oXml)
 **/
 RigidBody *Structure::LoadRoot(CStdXml &oXml)
 {
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -894,7 +1034,7 @@ try
 	Body(lpBody);
 
 	m_lpBody->Parent(NULL);
-	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
+	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
 
 	m_lpBody->Load(oXml);
 	AddRigidBody(m_lpBody);
@@ -912,6 +1052,56 @@ catch(...)
 {
 	if(m_lpBody) delete m_lpBody;
 	m_lpBody = NULL;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+/**
+\brief	Loads the script. 
+
+\author	dcofer
+\date	5/23/2014
+
+\param [in,out]	oXml The xml data packet to load. 
+
+\return	The script. 
+**/
+ScriptProcessor *Structure::LoadScript(CStdXml &oXml)
+{
+	std::string strModule;
+	std::string strType;
+	ScriptProcessor *lpScript = NULL;
+
+try
+{
+	oXml.IntoElem(); //Into Child Element
+	strModule = oXml.GetChildString("ModuleName", "");
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Child Element
+
+	lpScript = dynamic_cast<ScriptProcessor *>(m_lpSim->CreateObject(strModule, "ScriptProcessor", strType));
+	if(!lpScript)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Script");
+
+	lpScript->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
+
+	lpScript->Load(oXml);
+
+	return lpScript;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }

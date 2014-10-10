@@ -4,7 +4,7 @@
 \brief	Implements the organism class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -48,8 +48,9 @@
 **/
 Organism::Organism()
 {
-	m_bDead = FALSE;
+	m_bDead = false;
 	m_lpNervousSystem = NULL;
+    m_lpRobot = NULL;
 }
 
 /**
@@ -64,13 +65,19 @@ Organism::~Organism()
 try
 {
 	if(m_lpNervousSystem) 
-		{
-			delete m_lpNervousSystem; 
-			m_lpNervousSystem = NULL;
+	{
+		delete m_lpNervousSystem; 
+		m_lpNervousSystem = NULL;
 	}
+
+    if(m_lpRobot)
+    {
+        delete m_lpRobot;
+        m_lpRobot = NULL;
+    }
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, false, true);}
 }
 
 /**
@@ -81,11 +88,13 @@ catch(...)
 
 \return	true if dead, false if not. 
 **/
-BOOL Organism::IsDead() 
+bool Organism::IsDead() 
 {return m_bDead;}
 
-void Organism::Kill(BOOL bState)
+void Organism::Kill(bool bState)
 {
+	Structure::Kill(bState);
+
 	m_bDead = bState;
 	
 	if(m_lpBody)
@@ -99,7 +108,11 @@ void Organism::Initialize()
 {
 	Structure::Initialize();
 
-	m_lpNervousSystem->Initialize();
+    if(m_lpNervousSystem)
+    	m_lpNervousSystem->Initialize();
+
+    if(m_lpRobot)
+        m_lpRobot->Initialize();
 }
 
 void Organism::ResetSimulation()
@@ -107,9 +120,13 @@ void Organism::ResetSimulation()
 	Structure::ResetSimulation();
 
 	//Make sure to reset us from being killed if it happend during the sim.
-	Kill(FALSE);
+	Kill(false);
 
-	m_lpNervousSystem->ResetSimulation();
+    if(m_lpNervousSystem)   
+    	m_lpNervousSystem->ResetSimulation();
+
+    if(m_lpRobot)
+        m_lpRobot->ResetSimulation();
 }
 
 /**
@@ -123,7 +140,23 @@ void Organism::ResetSimulation()
 void Organism::StepNeuralEngine()
 {
 	if(!m_bDead)
+	{
+		if(m_lpScript)
+			m_lpScript->BeforeStepPhysicsEngine();
+
 		m_lpNervousSystem->StepSimulation();
+
+		if(m_lpScript)
+			m_lpScript->AfterStepPhysicsEngine();
+	}
+}
+
+void Organism::StepPhysicsEngine()
+{
+    Structure::StepPhysicsEngine();
+
+    if(m_lpRobot && m_lpRobot->Enabled())
+        m_lpRobot->StepSimulation();
 }
 
 void Organism::MinTimeStep(float &fltMin) 
@@ -133,39 +166,81 @@ void Organism::MinTimeStep(float &fltMin)
 
 #pragma region DataAccesMethods
 
-BOOL Organism::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Organism::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Structure::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Structure::SetData(strDataType, strValue, false))
+		return true;
 
 	//if(strType == "TIMESTEP")
 	//{
-	//	TimeStep(atof(strValue.c_str()));
-	//	return TRUE;
+	//	TimeStep((float) atof(strValue.c_str()));
+	//	return true;
 	//}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Organism::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
-{
-	string strType = Std_CheckString(strItemType);
 
-	if(Structure::AddItem(strItemType, strXml, FALSE))
-		return TRUE;
+/**
+\brief	Creates and adds a robot interface control. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the control node. 
+**/
+RobotInterface *Organism::AddRobotInterface(std::string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("RobotInterface");
+
+	RobotInterface *lpInterface = LoadRobotInterface(oXml);
+
+	lpInterface->Initialize();
+
+    return lpInterface;
+}
+
+/**
+\brief	Removes the robot interface with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the body to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void Organism::RemoveRobotInterface(std::string strID, bool bThrowError)
+{
+	if(!m_lpRobot || Std_CheckString(m_lpRobot->ID()) != Std_CheckString(strID))
+		THROW_PARAM_ERROR(Al_Err_lRobotInterfaceIDNotFound, Al_Err_strRobotInterfaceIDNotFound, "ID", strID);
+
+	delete m_lpRobot;
+	m_lpRobot = NULL;
+}
+
+bool Organism::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
+{
+	std::string strType = Std_CheckString(strItemType);
+
+	if(Structure::AddItem(strItemType, strXml, false))
+		return true;
 
 	if(strType == "NEURALMODULE")
 	{
 		try
 		{
 			m_lpNervousSystem->AddNeuralModule(strXml);
-			return TRUE;
+			return true;
 		}
 		catch(CStdErrorInfo oError)
 		{
@@ -174,27 +249,32 @@ BOOL Organism::AddItem(const string &strItemType, const string &strXml, BOOL bTh
 		}
 	}
 
+	if(strType == "ROBOTINTERFACE")
+	{
+		AddRobotInterface(strXml);
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Organism::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 	
-	if(Structure::RemoveItem(strItemType, strID, FALSE))
-		return TRUE;
+	if(Structure::RemoveItem(strItemType, strID, false))
+		return true;
 
 	if(strType == "NEURALMODULE")
 	{
 		try
 		{
 			m_lpNervousSystem->RemoveNeuralModule(strID);
-			return TRUE;
+			return true;
 		}
 		catch(CStdErrorInfo oError)
 		{
@@ -203,11 +283,17 @@ BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL b
 		}
 	}
 
+	if(strType == "ROBOTINTERFACE")
+	{
+		RemoveRobotInterface(strID, bThrowError);
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -222,7 +308,7 @@ BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL b
 
 \return	Pointer to the nervous system. 
 **/
-AnimatSim::Behavior::NervousSystem *Organism::NervousSystem()
+AnimatSim::Behavior::NervousSystem *Organism::GetNervousSystem()
 {return m_lpNervousSystem;}
 
 long Organism::CalculateSnapshotByteSize()
@@ -234,11 +320,66 @@ void Organism::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 void Organism::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {m_lpNervousSystem->LoadKeyFrameSnapshot(aryBytes, lIndex);}
 
+/**
+\brief	Loads a robot interface Control. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oXml	The xml data definition of the part to load. 
+
+\return	null if it fails, else the IO control. 
+**/
+
+RobotInterface *Organism::LoadRobotInterface(CStdXml &oXml)
+{
+	RobotInterface *lpInterface = NULL;
+	std::string strType;
+
+try
+{
+    if(oXml.FindChildElement("RobotInterface", false))
+    {
+		if(m_lpRobot)
+		{
+			delete m_lpRobot;
+			m_lpRobot = NULL;
+		}
+
+	    oXml.IntoChildElement("RobotInterface");
+	    std::string strModuleName = oXml.GetChildString("ModuleName", "");
+	    std::string strType = oXml.GetChildString("Type");
+	    oXml.OutOfElem(); //OutOf RobotInterface Element
+
+	    lpInterface = dynamic_cast<RobotInterface *>(m_lpSim->CreateObject(strModuleName, "RobotInterface", strType));
+	    if(!lpInterface)
+		    THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RobotInterface");
+        lpInterface->SetSystemPointers(m_lpSim, this, m_lpModule, NULL, true);
+        lpInterface->Load(oXml);
+		m_lpRobot = lpInterface;
+    }
+
+	return m_lpRobot;
+}
+catch(CStdErrorInfo oError)
+{
+	if(m_lpRobot) delete m_lpRobot;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(m_lpRobot) delete m_lpRobot;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
 void Organism::Load(CStdXml &oXml)
 {
 	Structure::Load(oXml);
 
-	oXml.IntoElem();  //Into Layout Element
+	oXml.IntoElem();  //Into Structure Element
 
 	//dwc convert. Need to have a method to remove a nervous system. It needs to remove any added
 	//modules from the list in the simulator.
@@ -247,10 +388,12 @@ void Organism::Load(CStdXml &oXml)
 
 	oXml.IntoChildElement("NervousSystem");
 
-	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
+	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, true);
 	m_lpNervousSystem->Load(oXml);
 
-	oXml.OutOfElem();
+	oXml.OutOfElem(); //OutOf NervousSystem Element
 
-	oXml.OutOfElem(); //OutOf Layout Element
+	LoadRobotInterface(oXml);
+
+	oXml.OutOfElem(); //OutOf Structure Element
 }

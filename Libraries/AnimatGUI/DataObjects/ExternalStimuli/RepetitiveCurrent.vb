@@ -75,12 +75,14 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus applies an on and off current in repetitive cycles. So you could have an " & _
                        "On current of 20 na for 50ms and then have an off current of -10na for 20 ms. You can apply " & _
                        "the current for a spefic duration, or continuously."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property DragImageName() As String

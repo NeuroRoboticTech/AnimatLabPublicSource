@@ -34,19 +34,21 @@ namespace AnimatSim
 			public:
 				Terrain();
 				virtual ~Terrain();
+						
+				static Terrain *CastToDerived(AnimatBase *lpBase) {return static_cast<Terrain*>(lpBase);}
 
-				virtual BOOL AllowRotateDragX();
-				virtual BOOL AllowRotateDragY();
-				virtual BOOL AllowRotateDragZ();
+				virtual bool AllowRotateDragX();
+				virtual bool AllowRotateDragY();
+				virtual bool AllowRotateDragZ();
 
 				virtual float SegmentWidth();							
-				virtual void SegmentWidth(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void SegmentWidth(float fltVal, bool bUseScaling = true);
 
 				virtual float SegmentLength();							
-				virtual void SegmentLength(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void SegmentLength(float fltVal, bool bUseScaling = true);
 
 				virtual float MaxHeight();							
-				virtual void MaxHeight(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void MaxHeight(float fltVal, bool bUseScaling = true);
 
 				virtual int TextureLengthSegments();
 				virtual void TextureLengthSegments(int iVal);
@@ -54,8 +56,8 @@ namespace AnimatSim
 				virtual int TextureWidthSegments();
 				virtual void TextureWidthSegments(int iVal);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

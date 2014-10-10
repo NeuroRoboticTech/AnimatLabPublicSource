@@ -30,14 +30,14 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the neuron we are stimulating.
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 
 			/// Pointer to the float data value within the neruon where we will be adding the new current.
 			/// This is obtained using the GetDataPointer method.
 			float *m_lpExternalCurrent;
 
 			/// The post-fix string current equation
-			string m_strCurrentEquation;
+			std::string m_strCurrentEquation;
 
 			/// Pointer to the post-fix equation evaluator.
 			CStdPostFixEval *m_lpCurrentOnEval;
@@ -93,10 +93,10 @@ namespace AnimatSim
 			long m_lBurstStart;
 
 			/// Tells whether a cycle is on or not.
-			BOOL m_bCycleOn;
+			bool m_bCycleOn;
 
 			/// Tells whether a burst is on or not.
-			BOOL m_bBurstOn;
+			bool m_bBurstOn;
 
 			virtual float GetCurrentOn();
 			virtual void SetSliceData();
@@ -105,14 +105,16 @@ namespace AnimatSim
 			CurrentStimulus();
 			virtual ~CurrentStimulus();
 			
-			//virtual int Type();
-			virtual string Type();
-			virtual void Type(string strValue);
+			static CurrentStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<CurrentStimulus*>(lpBase);}
 			
-			virtual void AlwaysActive(BOOL bVal);
+			//virtual int Type();
+			virtual std::string Type();
+			virtual void Type(std::string strValue);
+			
+			virtual void AlwaysActive(bool bVal);
 
-			virtual string TargetNodeID();
-			virtual void TargetNodeID(string strID);
+			virtual std::string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
 
 			virtual float CurrentOn();
 			virtual void CurrentOn(float fltVal);
@@ -135,8 +137,8 @@ namespace AnimatSim
 			virtual float BurstOffDuration();
 			virtual void BurstOffDuration(float fltVal);
 
-			virtual string CurrentEquation();
-			virtual void CurrentEquation(string strEquation);
+			virtual std::string CurrentEquation();
+			virtual void CurrentEquation(std::string strEquation);
 
 			virtual void Load(CStdXml &oXml);
 
@@ -147,9 +149,9 @@ namespace AnimatSim
 			virtual void StepSimulation();
 			virtual void Deactivate();
 
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 		};
 
 	}			//ExternalStimuli

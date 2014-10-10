@@ -36,7 +36,7 @@ VsSimulator::VsSimulator()
 	m_vsWinMgr = NULL;
 	m_vsWinMgr = new VsSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
-	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, true);
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
 	m_dblTotalStepTime = 0;
@@ -60,7 +60,7 @@ try
 		m_lpMeshMgr = NULL;
 	}
 
-	m_bShuttingDown = TRUE;
+	m_bShuttingDown = true;
 
 	//Set this to NULL so all of the DeletePhysics calls will not try and remove
 	//entities from the universe when shutting down.
@@ -69,7 +69,7 @@ try
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
 VxUniverse *VsSimulator::Universe()
@@ -95,37 +95,37 @@ void VsSimulator::StabilityScale(float fltVal)
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearCompliance(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearCompliance(float fltVal, bool bUseScaling)
 {
 	Simulator::LinearCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularCompliance(float fltVal, bool bUseScaling)
 {
 	Simulator::AngularCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearDamping(float fltVal, bool bUseScaling)
 {
 	Simulator::LinearDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularDamping(float fltVal, bool bUseScaling)
 {
 	Simulator::AngularDamping(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::LinearKineticLoss(float fltVal, BOOL bUseScaling)
+void VsSimulator::LinearKineticLoss(float fltVal, bool bUseScaling)
 {
 	Simulator::LinearKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
 }
 
-void VsSimulator::AngularKineticLoss(float fltVal, BOOL bUseScaling)
+void VsSimulator::AngularKineticLoss(float fltVal, bool bUseScaling)
 {
 	Simulator::AngularKineticLoss(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
@@ -142,7 +142,7 @@ void VsSimulator::PhysicsTimeStep(float fltVal)
 	}
 }
 
-void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
+void VsSimulator::Gravity(float fltVal, bool bUseScaling)
 {
 	Simulator::Gravity(fltVal, bUseScaling);
 
@@ -150,7 +150,7 @@ void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
 		m_uUniverse->setGravity(0, m_fltGravity, 0);
 }
 
-int VsSimulator::GetMaterialID(string strID)
+int VsSimulator::GetMaterialID(std::string strID)
 {
 	if(m_vxFrame)
 	{
@@ -203,7 +203,7 @@ void VsSimulator::ResetSimulation()
 		m_uUniverse->resetDynamics();
 		m_uUniverse->resetContacts();
 	}
-	m_bSimRunning = FALSE;
+	m_bSimRunning = false;
 }
 
 void VsSimulator::ToggleSimulation()
@@ -221,7 +221,7 @@ void VsSimulator::StopSimulation()
 	SimStopping();
 	if(!m_bPaused)
 		ToggleSimulation();
-	m_bSimRunning = FALSE;
+	m_bSimRunning = false;
 }
 
 void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
@@ -240,7 +240,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 
 	//Ensure that our exe path is the only place it will attempt to find library files.
 	osgDB::FilePathList aryList = osgDB::getLibraryFilePathList();
-	string strPath = m_strExecutablePath.substr(0, m_strExecutablePath.length()-1);
+	std::string strPath = m_strExecutablePath.substr(0, m_strExecutablePath.length()-1);
 	aryList.clear();
 	aryList.push_front(strPath);
 	osgDB::setLibraryFilePathList(aryList);
@@ -250,7 +250,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
     osgDB::getDataFilePathList().push_front("../Resources");
     osgDB::getDataFilePathList().push_front("../../Resources");
 
-	string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
+	std::string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
@@ -408,12 +408,12 @@ we will use this new file instead of the original one.
 \param	strOriginalMeshFile 	The original mesh file. 
 \param	strCollisionMeshFile	The new collision mesh file. 
 **/
-void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
+void VsSimulator::GenerateCollisionMeshFile(std::string strOriginalMeshFile, std::string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
 {
 	//First load the original mesh in.
-	string strPath = this->ProjectPath();
-	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
-	string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
+	std::string strPath = this->ProjectPath();
+	std::string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	std::string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
 
 	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
 
@@ -447,18 +447,18 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	Std_SetFileTime(strNewFile);
 }
 
-void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)
+void VsSimulator::ConvertV1MeshFile(std::string strOriginalMeshFile, std::string strNewMeshFile, std::string strTexture)
 {
 	//First load the original mesh in.
-	string strPath = this->ProjectPath();
-	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
-	string strNewFile = AnimatSim::GetFilePath(strPath, strNewMeshFile);
-	string strTextFile = "";
+	std::string strPath = this->ProjectPath();
+	std::string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	std::string strNewFile = AnimatSim::GetFilePath(strPath, strNewMeshFile);
+	std::string strTextFile = "";
 	
 	if(!Std_IsBlank(strTexture))
 		strTextFile = AnimatSim::GetFilePath(strPath, strTexture);
 
-	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
+	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
 
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())
@@ -466,14 +466,6 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
 	ApplyVertexTransform(osgNode.get(), SetupMatrix(vPos, vRot));
-
-	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
-	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
-	////CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	//CStdFPoint vPos(0, 0, 0), vRot( 0, 0, 0);
-	//m_osgRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-
-	//m_osgRotateMT->addChild(osgNode.get());
 
 	AddNodeTexture(osgNode.get(), strTextFile, GL_TEXTURE_2D);
 
@@ -539,7 +531,7 @@ double VsSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lE
 void VsSimulator::MicroSleep(unsigned int iMicroTime)
 {OpenThreads::Thread::microSleep(iMicroTime);}
 
-void VsSimulator::WriteToConsole(string strMessage)
+void VsSimulator::WriteToConsole(std::string strMessage)
 {
 	osg::notify(osg::NOTICE) << strMessage << std::endl;
 }
@@ -557,13 +549,13 @@ void VsSimulator::Initialize(int argc, const char **argv)
 	//realize the osg viewer
 	m_vsWinMgr->Realize();
 
-	m_bInitialized = TRUE;
+	m_bInitialized = true;
 }
 
 void VsSimulator::StepSimulation()
 {
-	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
-		m_timePeriod.StartTimer();
+	//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
+	//	m_timePeriod.StartTimer();
 
 
 	try
@@ -577,6 +569,8 @@ void VsSimulator::StepSimulation()
 			m_vxFrame->step();
 			double dblVal = TimerDiff_s(lStart, GetTimerTick());
 			m_fltPhysicsStepTime += dblVal;
+
+			AfterStepSimulation();
 
 			if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
 			{
@@ -596,7 +590,7 @@ void VsSimulator::StepSimulation()
 	}
 	catch(CStdErrorInfo oError)
 	{
-		string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
 	}
 
@@ -634,30 +628,30 @@ void VsSimulator::SimulateEnd()
 void VsSimulator::ShutdownSimulation()
 {
 	SimStopping();
-	m_bForceSimulationStop = TRUE;
+	m_bForceSimulationStop = true;
 }
 
-BOOL VsSimulator::PauseSimulation()
+bool VsSimulator::PauseSimulation()
 {
 	SimPausing();
-	m_bPaused = TRUE;
-	return TRUE;
+	m_bPaused = true;
+	return true;
 }
 
-BOOL VsSimulator::StartSimulation()
+bool VsSimulator::StartSimulation()
 {
 	m_lStartSimTick = GetTimerTick();
 
 	SimStarting();
-	m_bSimRunning = TRUE;
-	m_bPaused = FALSE;
-	return TRUE;
+	m_bSimRunning = true;
+	m_bPaused = false;
+	return true;
 }
 
-float *VsSimulator::GetDataPointer(const string &strDataType)
+float *VsSimulator::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	//if(strType == "FRAMEDT")
 	//	lpData = &m_fltFrameDt;
@@ -696,10 +690,10 @@ VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
 	return lpVsSim;
 }
 
-void VsSimulator::Save(string strFile) 
+void VsSimulator::Save(std::string strFile) 
 {
-	string strOsgFile = strFile + ".osg";
-	string strVxFile = strFile + ".vxf";
+	std::string strOsgFile = strFile + ".osg";
+	std::string strVxFile = strFile + ".vxf";
 	std::string strUcon = strFile + ".ucon";
 
 	//Temp code. Lets save it out and make sure the collision stuff is actually correct.

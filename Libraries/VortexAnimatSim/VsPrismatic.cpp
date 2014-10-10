@@ -40,17 +40,17 @@ VsPrismatic::VsPrismatic()
 	m_lpLowerLimit = new VsPrismaticLimit();
 	m_lpPosFlap = new VsPrismaticLimit();
 
-	m_lpUpperLimit->LimitPos(1, FALSE);
-	m_lpLowerLimit->LimitPos(-1, FALSE);
-	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
-	m_lpPosFlap->IsShowPosition(TRUE);
+	m_lpUpperLimit->LimitPos(1, false);
+	m_lpLowerLimit->LimitPos(-1, false);
+	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), false);
+	m_lpPosFlap->IsShowPosition(true);
 
 	m_lpUpperLimit->Color(0, 0, 1, 1);
 	m_lpLowerLimit->Color(1, 1, 0.333, 1);
 	m_lpPosFlap->Color(1, 0, 1, 1);
 
-	m_lpLowerLimit->IsLowerLimit(TRUE);
-	m_lpUpperLimit->IsLowerLimit(FALSE);
+	m_lpLowerLimit->IsLowerLimit(true);
+	m_lpUpperLimit->IsLowerLimit(false);
 }
 
 /**
@@ -68,11 +68,11 @@ VsPrismatic::~VsPrismatic()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPrismatic/\r\n", "", -1, false, true);}
 }
 
 
-void VsPrismatic::EnableLimits(BOOL bVal)
+void VsPrismatic::EnableLimits(bool bVal)
 {
 	Prismatic::EnableLimits(bVal);
 
@@ -219,12 +219,10 @@ void VsPrismatic::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
+	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
 	Vx::VxTransform vTrans(vMT);
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
@@ -237,7 +235,6 @@ void VsPrismatic::SetupPhysics()
 	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxPrismatic->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxPrismatic);
 	GetVsSimulator()->Universe()->addConstraint(m_vxPrismatic);
 
 	//Disable collisions between this object and its parent
@@ -270,10 +267,10 @@ void VsPrismatic::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *VsPrismatic::GetDataPointer(const string &strDataType)
+float *VsPrismatic::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "JOINTROTATION")
 		return &m_fltPosition;
@@ -287,8 +284,36 @@ float *VsPrismatic::GetDataPointer(const string &strDataType)
 		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
 		return &m_fltReportSetVelocity;
+	else if(strType == "JOINTDESIREDPOSITION")
+		return &m_fltReportSetPosition;
+	else if(strType == "JOINTSETPOSITION")
+		return &m_fltReportSetPosition;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
+	else if(strType == "MOTORFORCETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORFORCETOBZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOAZ")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBX")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBY")
+		return &m_fltNullReport;
+	else if(strType == "MOTORTORQUETOBZ")
+		return &m_fltNullReport;
 	else if(strType == "CONTACTCOUNT")
 		THROW_PARAM_ERROR(Al_Err_lMustBeContactBodyToGetCount, Al_Err_strMustBeContactBodyToGetCount, "JointID", m_strName);
 	else
@@ -302,25 +327,48 @@ float *VsPrismatic::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL VsPrismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsPrismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(Prismatic::SetData(strDataType, strValue, FALSE))
+	if(Prismatic::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VsPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsPrismatic::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	Prismatic::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	Prismatic::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("JointRotation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointActualVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointForce", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointRotationDeg", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetPosition", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointDesiredVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("JointSetVelocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToAZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorForceToBZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToAZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MotorTorqueToBZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion

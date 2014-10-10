@@ -1,0 +1,529 @@
+How to get to drives
+cd .. (Gets to home)
+cd .. (gets to root)
+cd media/Ubuntu_Data/Projects/AnimatLabSDK
+
+installed openscengraph-3.0.1.2 from synaptics
+(Need to test it)
+
+libopenscenegraph-dev 
+libopenscenegraph80 
+openscenegraph 
+openscenegraph-doc 
+openscenegraph-examples 
+libopenthreads-dev 
+libopenthreads14 
+
+Tried to build boost_1_54, but got command not found error. Found out that I need to get the source from the tarball instead of the zip because it keeps the linux permissions. Other option was to use chmod 755 bootstrap.sh to change permissions.
+
+tried to build boost using the following command and got this error
+
+/usr/include/features.h:324:26: fatal error: bits/predefs.h: No such file or directory 
+
+
+building boost
+./bootstrap.sh
+
+
+3/22/14
+I was having trouble getting StdUtil unit tests to compile. It turned out it was because I got rid of the DYN_LINK define so it would compile in VS. I added this back with a ndef WIN32 define and it compiled on ubuntu now.
+ 
+I got AnimatSim, BoostrapLoader, FiringRate, and IGF all compiling.
+
+I tried to get OsgAnimatSim to compile and ran into an issue. It compiled fine, but it should not have. I installed osg 3.0.1.2 from synaptics, so it should have died because it did not have the MatrixManipulator class. So that meant it was not using the right includes and libs. When I did an ldd I confirmed that it was using the old 2.8.3 libs. The new include and lib files are directly in /usr/include and /usr/lib. The old ones are in /usr/local/include and /usr/local/lib64. I did some research and according to this page (http://gcc.gnu.org/onlinedocs/gcc-4.1.1/cpp/Search-Path.html#Search-Path) it does search local first. This is a problem because if someone has an old version of osg installed how do I ensure they link with the correct version? For the moment I have renamed all osg, osgworks, bullet and osgbullet include files under local with the prefix test_. I also moved all osg libs into a test_lib64 folder under /usr/local. Doing this I was able to compile and link OsgAnimatSim and confirmed that it is linking to the correct libs. However, one other annoying problem is that I have no debug libs to link against. The deb package only has the release versions.
+
+I got RoboticsAnimatSim to compile and link.
+
+Now I start working on Bullet, OsgWorks, and OsgBullet.
+
+Start with Bullet 2.8.2
+Open cmake gui from search tool
+Path: /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82
+build: /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/build/mono_single
+Hit configure
+Selet Unix makefiles, use default native compiler
+Under Build make sure all are selected.
+
+Under build select BUILD_NVIDIA_OPENCL_DEMOS
+
+Build failed. Started over.
+cd to bullet/build
+
+mkdir single_debug
+cd single_debug
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../../../bullet-2.82/bin  -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_DEBUG_POSTFIX=_single_debug -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+make install
+
+mkdir double_debug
+cd double_debug
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../../../3rdParty/bullet-2.82/bin  -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_DEBUG_POSTFIX=_double_debug -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+make install
+
+
+mkdir single_release
+cd single_release
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../../../bullet-2.82/bin  -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_RELEASE_POSTFIX=_single -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+make install
+
+
+mkdir double_release
+cd double_release
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../../../bullet-2.82/bin  -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_RELEASE_POSTFIX=_double -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+make install
+
+
+Switch to OsgWorks
+Crap. cmake is not running. It says it requires minimum of 2.8.8, but the one installed from synaptics is 2.8.7. I tried to downgrade it in the cmakelist.txt file, but it required dependencies from 2.8.8. I will look at installing cmake 2.8.12.2, the latest version.
+
+install cmake 2.8.12.2
+Downloaded tarball from http://www.cmake.org/cmake/resources/software.html
+Unzipped to root, Ran cmake gui on it with default config and generated.
+cd'ed into build folder and ran
+make -j4
+sudo make install
+
+If you do not have cmake already installed then you need to run these from cmake dir
+./bootstrap
+make 
+make install
+
+It still did not change the version for the cmake-gui
+
+FOR STATIC LIB
+
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/
+cd build
+mkdir debug
+cd debug
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=off -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_DEBUG_POSTFIX=_animat_debug -DCMAKE_INSTALL_PREFIX=../../../osgWorks_03_00_00/bin -DCMAKE_CXX_FLAGS=-fPIC
+make install
+
+cd build
+mkdir release
+cd release
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_RELEASE_POSTFIX=_animat -DCMAKE_INSTALL_PREFIX=../../../osgWorks_03_00_00/bin -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+
+Switch to OsgBullet
+For some reason I have to run these cmake commands twice. The first time I get a config error about the bullet include dir not being found. The second time it configures it and compiles though. Not sure why.
+
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgBullet_03_00_00/build
+mkdir single_debug
+cd single_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=off -DCMAKE_DEBUG_POSTFIX=_single_debug -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=off -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_single_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+mkdir double_debug
+cd double_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=off -DCMAKE_DEBUG_POSTFIX=_double_debug -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_double_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+mkdir single_release
+cd single_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DCMAKE_RELEASE_POSTFIX=_single -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_single_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+mkdir double_release
+cd double_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DCMAKE_RELEASE_POSTFIX=_double -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_double_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+rebuilt BulletAnimatSim project files and trying to rebuild
+Getting an error
+g++  -MMD "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/BlAnimatCollisionDispatcher.cpp" -g -fPIC -O0 -std=c++0x -Wl,-rpath,$ORIGIN -D_DEBUG -DOSGBULLET_STATIC -DBULLETANIMATLIBRARY_EXPORTS -I"../../../../include" -I"../../../../../3rdParty/osgWorks_03_00_00/include" -I"../../../../../3rdParty/Bullet-2.82/src" -I"../../../../../3rdParty/osgBullet_03_00_00/include" -I"../../../StdUtils" -I"../../../AnimatSim" -I"../../../OsgAnimatSim" -I"/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Projects_Mono/.prec/Debug"  -c -o "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Projects_Mono/Debug/BlAnimatCollisionDispatcher.o"
+In file included from /media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/StdAfx.h:27:0,
+                 from /media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/BlAnimatCollisionDispatcher.cpp:5:
+../../../../../3rdParty/osgBullet_03_00_00/include/osgbDynamics/MotionState.h:28:37: fatal error: btBulletCollisionCommon.h: No such file or directory
+compilation terminated.
+
+-I is including Bullet, so it should be working.
+I changed just the path to Bullet/src to be absolute and it is trying to compile now.
+
+3/24/14
+I was able to get AnimatSimulator rebuilt as well and I am trying to debug. However, it is not loading the bullet library.
+I reran sudo ldconfig to try and get the libraries setup for reading. However, still not working.
+
+printed a list of cached libraries.
+ldconfig -p >ldconfig.txt
+
+It shows the library as being in the correct spot, so there is a different problem of some kind.
+
+3/25/14
+I can now dynamically load all the libraries except bulletanimatsim. I get a segmentation fault, so something is not compiled correctly with it. I am going to go back and rebuild osgworks and osg bullet as shared libs and hopefully test each of them. I was unable to build the apps and examples for osgbullet before, so it could be that is not compiling correctly.
+
+FOR SHARED LIB
+
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/
+cd build
+mkdir debug
+cd debug
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_DEBUG_POSTFIX=_animat_debug -DCMAKE_INSTALL_PREFIX=../../../osgWorks_03_00_00/bin_debug
+make install
+
+cd build
+mkdir release
+cd release
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DCMAKE_RELEASE_POSTFIX=_animat -DCMAKE_INSTALL_PREFIX=../../../osgWorks_03_00_00/bin 
+make install
+
+Need to make the path available to ld config. Copy them from bin into animat bin and then run ldconfig
+cp /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_30_00_00/bin_debug/lib/x86_64-linux-gnu/*.so /media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/bin_debug
+cp *.so /media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/bin
+sudo ldconfig
+ldconfig -p >ldconfig.txt
+
+-DCMAKE_DEBUG_POSTFIX=_single_debug 
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgBullet_03_00_00/build
+mkdir single_debug   
+cd single_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_single_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=ON -DOSGBULLET_BUILD_APPLICATIONS=ON 
+make install
+
+mkdir double_debug
+cd double_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=off -DCMAKE_DEBUG_POSTFIX=_double_debug -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_double_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+mkdir single_release
+cd single_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DCMAKE_RELEASE_POSTFIX=_single -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_single_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+mkdir double_release
+cd double_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DCMAKE_RELEASE_POSTFIX=_double -DOPENGL_gl_LIBRARY=/usr/lib/fglrx/fglrx-libGL.so.1.2 -DosgWorks_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON -DBULLET_INCLUDE_DIR=/media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/bullet-2.82/src -DBULLET_COLLISION_LIBRARY=../../../bullet-2.82/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=../../../bullet-2.82/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=../../../bullet-2.82/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=../../../bullet-2.82/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=../../../bullet-2.82/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=../../../bullet-2.82/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=../../../bullet-2.82/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=../../../bullet-2.82/libBulletSoftBody_double_debug.a -DCMAKE_INSTALL_PREFIX=../../../osgBullet_03_00_00/bin -DOSGBULLET_BUILD_EXAMPLES=OFF -DOSGBULLET_BUILD_APPLICATIONS=OFF -DCMAKE_CXX_FLAGS=-fPIC 
+make install
+
+
+Okay. Trying to do static linking is not working. I am going to start over with bullet and try and do dynamics linking and install them to /usr/local like they were designed for.
+
+bullet 2.8.2
+
+cd to bullet/build
+
+mkdir single_debug
+cd single_debug
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+sudo make install
+
+mkdir double_debug
+cd double_debug
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+sudo make install
+
+
+mkdir single_release
+cd single_release
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_single -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+sudo make install
+
+
+mkdir double_release
+cd double_release
+cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_double -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+make -j4
+make install
+
+Switch to OsgWorks
+
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgWorks_03_00_00/
+cd build
+mkdir debug
+cd debug
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_animat_debug
+make install
+
+cd build
+mkdir release
+cd release
+cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_animat
+make install
+
+
+switch to osgBullet
+
+cd /media/Ubuntu_Data/Projects/AnimatLabSDK/3rdParty/osgBullet_03_00_00/build
+mkdir single_debug
+cd single_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DosgWorks_DIR=~/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+make install
+
+mkdir double_debug
+cd double_debug
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DosgWorks_DIR=~/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+make install
+
+mkdir single_release
+cd single_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_single -DosgWorks_DIR=~/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+make install
+
+mkdir double_release
+cd double_release
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_double -DosgWorks_DIR=~/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+make -j4
+sudo make install
+
+
+
+
+When I tried to make it I ran into a problem with the compile of patch-lowlevel
+Building CXX object src/plugins/osgdb_osgbDynamics/CMakeFiles/osgdb_osgbdynamics.dir/dotosgConstraints.cpp.o
+/usr/local/lib/libBulletSoftBody_double_debug.a(btSoftBody.o): In function `PolarDecompose':
+/home/david/AnimatLabSDK/3rdParty/bullet-2.82/src/BulletSoftBody/btSoftBodyInternals.h:618: undefined reference to `btPolarDecomposition::DEFAULT_MAX_ITERATIONS'
+/home/david/AnimatLabSDK/3rdParty/bullet-2.82/src/BulletSoftBody/btSoftBodyInternals.h:618: undefined reference to `btPolarDecomposition::DEFAULT_TOLERANCE'
+
+
+To get around this for now I removed patch lowlevel from the make list by editing the Examples/CMakeList.txt file to remove that ADD_SUBDIRECTORY command. Should not be a big deal since I am not messing with soft body stuff at this point. It compiled and installed fine. I then tried to run an example, but it closed saying it could not find the osg data path. I downloaded the data zip file from http://www.openscenegraph.org/index.php/download-section/data.
+export OSG_FILE_PATH=~/OpenSceneGraph-Data-3.0.0/
+run examples.
+Had to copy osgBullet/data files to OSG data folder.
+
+I was unable to delete the single_debug directory. The folder permissions were locked.
+sudo rm -r -f /path/
+
+The -r makes it delete the folder (and subfolders), even if it is non-empty, -f is for force (this might be unnecessary).
+
+
+Attempted to compile and run animat, but when I tried the static build of the simulator I got undefined references in bullet code. I tried adding bullet static lib references back into both the bulletanimatsim lib and animatsim app directly, but it still had the reference errors. I then tried running the non-static version and got the segmentation fault again. I am going to fall back and try and build a pure default version of all the dependencies and see if I can get that running.
+
+
+Installing boost from synaptics. I need to try and reduce dependencies I have to build myself. 
+
+libboost1.48-dbg
+libboost1.48-all-dev
+libboost1.48-doc
+libboost1.48-dev
+
+3/27/14
+Tried to get the stuff to compile, but I ran into a few problems. First, I had to change all references to boost::atomic to std::atomic. There was a problem with this because I was using an enum in the atomic operation and that was not working with std. I had to modify it to only use int instead. This got past the compile problem, but there was then a link problem. When I use the installed boost lib it no longer does static linking, but uses dynamic instead. So I had to add boost_thread-mt to StdUtils and StdUtils_tester. 
+
+I then tried to link the debug_static profile of AnimatSimulator and had a bunch of undefined references. I finally figured out that I needed to link with BulletCollision_single_debug, BulletDynamics_single_debug, and LinearMath_single_debug. It appears that in Ubuntu the static library must be linked to the final target. Since I was explicitly linking in BulletAnimatsim it needed the static linkage as well even though I was already statically linking it to BulletAnimatSim.
+
+Next, I tried to run it and got an error about unable to find the shared lib. I got the AnimatLab.conf from the other dev machine and applied it to the test one.
+
+I got the code to run, but there were a few problems. The osg window would not show up. It showed a window being opened with a big question mark and would not show anything and had no title. However, it looks like it ran because the data was created and it shut down correctly. Also, the first time I ran it I got a failure because it could not load the bmp file. It said it could not find the correct plug-in. I temporarilly took out the texture on the sim and get it to do what I described above.
+
+3/28/14
+Made some progress. I found that if I had it start full screen then osg would run correctly. I also found out that I was manually specifying the plug-in search path and it was incorrect for this machine. When I set it to the correct path it was able to load the textures again. However, I will need to think about how to handle this to make sure I can get something generic across machines.
+
+I tried a different method of opening the graphics window that was in one of the examples. However, if did not work. I think tried compiling and running the example directly from osg site and it did the same thing. So something is screwed up here.
+
+
+Installing virtualbox on my system to test creating debian packages.
+
+
+STARTING WITH VIRTUAL MACHINE (off of base_install)
+Install synaptics from software center
+
+Setup video drivers
+http://www.dedoimedo.com/computers/ubuntu-quetzal-nvidia.html
+
+sudo apt-get install build-essential linux-source
+(I tried this with linux-headers, but it always failes. Do this first and then get the headers.)
+sudo apt-get install linux-headers-`uname -r`
+
+(Install current nvidia drivers.)
+sudo apt-get install nvidia-current
+
+(REBOOT)
+
+(Test if it is installed.)
+sudo /sbin/lsmod | grep nvidia
+For some reason this did not show nvidia as being configured for the virtual machine. I am not sure if that is because it is a virtual machine or if there. I ran jockey and it showed only x86 virtualization solution - guest addition module source for dkms. I activated that to see what would happen. 
+
+
+
+
+On work laptop it gave me an error:
+
+ nvidia-current : Depends: xorg-video-abi-11
+                  Depends: xserver-xorg-core (>= 2:1.10.99.901)
+Had to run this command first
+sudo apt-get install xorg-video-abi-11 xserver-xorg-core
+
+
+Attempting to re-install ATI graphics drivers on dev machine
+sudo apt-get install ia32-libs
+(Gave me errors so skipped)
+sudo sh /usr/share/ati/fglrx-uninstall.sh
+sudo apt-get remove --purge fglrx fglrx_* fglrx-amdcccle* fglrx-dev*
+sudo rm /etc/X11/xorg.conf
+
+sudo apt-get install ia32-libs
+(Reran it now and worked)
+
+sudo apt-get install --reinstall libgl1-mesa-glx:i386 libgl1-mesa-glx:amd64 libgl1-mesa-dri:i386 libgl1-mesa-dri:amd64 xserver-xorg-core
+
+None of this crap worked. I cannot get it to uninstall the old driver. I have decided to try reinstalling a fresh copy of the OS and start over.
+
+After installing fresh ubuntu I installed synaptic and then checked jockey. This time it listed an option AMD/ATI FGLRX drivers with postrelease updates in addition to the main and beta releases. I choose that and activated and it worked without issue. I then had it do 422 updates and when it rebooted it still worked!!! Also, it looks like the libGL.so link is correct now.
+
+I tried installing the animatsimulator package I created, but it failed with dependency issues as it should. I have not added build-essential to the dependency list yet. I want to see if it will compile and run without that. I will installl boost and osg next.
+
+I installed only boost dependencies libboost-filesystem1.48.0, libboost-system1.48.0, libboost-thread1.48.0. However, when I tried to install animatsimulator again it still said boost systems were not found. I investigated a little more and found out that I was not specifying the package names correctly. I had to change it to what you see above. I reran it and the boost packages were found, but it died on the osg stuff. I changede the osg dependecies to be: libOpenThreads14, libopenscenegraph80. I then installed just openscenegraph (3.0.12) in synaptics. I reran the animatsimulator installer and it says it installed correctly. I tried to run the app, but it said that it could not find the shared libs. I looked in ldconfig and they were not configured. I reran sudo ldconfig and they were, then I was able to run the app succesffully!!
+
+I need to create a postinst script to go into DEBIAN directory to run ldconfig. I did this, but when I try and compile it again it gives me an error about the file permission state. Using following command to change it. I added it and it ran great after doing the dpgk install. Woo Hoo!
+
+
+Testing path independent cmake for bullet
+cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_single -DosgWorks_DIR=../../../osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+make install
+
+
+Does not work. relative path to osgworks does not work. Will need to specify full path in description.
+
+
+Testing to get AnimatLab Installer running on Ubuntu
+1. Configure your video drivers. AnimatSimulator will not run, and you will not be able to properly install the prerequisites packages unless you have your actual video drivers installed and configured correctly. The default drivers that come with the Ubuntu installation will not work.
+2. Use the software center to install Synaptic package manager (Or any other package manager you would prefer to use.)
+3. Use Synaptic to install required boost files.
+   libboost-filesystem1.48.0
+   libboost-system1.48.0
+   libboost-thread1.48.0 
+4. Use Syanptic to install openscenegraph
+   openscenegraph
+5. Install animatsimulator. Download animatsimulator_2.1.1_amd64.deb.
+   dpkg -i ./animatsimulator_2.1.1_amd64.deb
+6. It should install with no errors. To run simulations you will need a sim file generated from the GUI, or by hand, that uses the linux libraries. You can export any simulation in the GUI and set the operating system to Linux to save out the correct file. Once you have a file then you can run the simulation as shown below, where sim_file is the path to the simulation file.
+   ./animatsimulator sim_file
+
+4/1/2014
+Testing Ubuntu SDK. Starting from fresh install.
+
+Initial Setup
+1. Install synaptic from software center.
+2. Install build-essentials
+   sudo apt-get install build-essential linux-source
+   sudo apt-get install linux-headers-`uname -r`
+
+3. Use software center install git, Cola git GUI (or whatever git GUI you want to use) 
+4. Install mono runtime, and Monodevelop from the software center
+5. Install monodevelop-debugger-gdb using synaptics
+6. Install boost packages using synaptics
+   libboost1.48-dbg
+   libboost1.48-all-dev
+   libboost1.48-doc
+   libboost1.48-dev
+7. Install Openscenegraph packages using synaptics
+   openscenegraph 
+   openscenegraph-doc 
+   openscenegraph-examples 
+   libopenscenegraph-dev 
+   libopenscenegraph80 
+   libopenthreads-dev 
+   libopenthreads14 
+8. Downloaded the OpenSceneGraph-Data-3.0.0.zip file from http://www.openscenegraph.org/index.php/download-section/data. Extract it to your home directory. You can place this anywhere, but make sure you point to the correct path in step 10.
+9. Open gedit as root user. Start a terminal
+   gksudo gedit
+10. Open the file /etc/environment and add the following line. (You will need to reboot before this will take effect.)
+   OSG_FILE_PATH=home/OpenSceneGraph-Data-3.0.0/
+11. Download and extract AnimatLabSDK.tar.gz. You can place this anywhere you want it. However, please note that the cmake commands used below on Bullet, osgWorks, and osgBullet cannot use relative paths, so if you want to debug them then you will want to place the SDK where it will finally reside, or you will need to regenerate these.
+12. Get the latest code. In a terminal, cd into AnimatLabPublicSource and run:
+   git pull
+13. Download cmake-2.8.12.2.tar.gz from http://www.cmake.org/cmake/resources/software.html Unzip it. (You cannot simply use the one available in apt-get because we need a later version.)
+14. cd into cmake folder, compile, and install it.
+   ./bootstrap
+   make 
+   sudo make install
+
+Build Bullet
+1. cd to bullet/build
+2. create build directories
+   mkdir single_debug
+   mkdir double_debug
+   mkdir single_release
+   mkdir double_release
+3. Build single_debug
+   cd single_debug
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+4. Build double_debug
+   cd double_debug
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+5. Build single_release
+   cd single_release
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_single -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   sudo make install
+6. Build double_release
+   cd double_release
+   cmake ../../../bullet-2.82/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBS=ON -DBUILD_EXTRAS=ON -DBUILD_MULTITHREADING=ON -DCMAKE_RELEASE_POSTFIX=_double -DUSE_DOUBLE_PRECISION=ON -DCMAKE_CXX_FLAGS=-fPIC
+   make -j4
+   make install
+
+Build osgWorks
+1. cd osgWorks_03_00_00/build
+2. create build directories
+   mkdir debug
+   mkdir release
+3. Build debug
+   cd debug
+   cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_animat_debug
+   make 
+   sudo make install
+4. Build release
+   cd release
+   cmake ../../../osgWorks_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_animat
+   make 
+   sudo make install
+
+Build osgBullet
+1. cd osgBullet_03_00_00/build
+2. create build directories
+   mkdir single_debug
+   mkdir double_debug
+   mkdir single_release
+   mkdir double_release
+3. Build single_debug (Please note in all of these cmakes that the path to osgWorks_DIR is absolute, not relative. You must replace this with the correct path for where you installed AnimatLabSDK.) Also, the first time you run the cmake command it will tell you it cannot find the bullet include directory. I am not sure why it does this, but if you run the same command again it will find it and compile.
+   cd single_debug
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_single_debug -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+   make 
+   sudo make install
+4. Build double_debug
+   cd double_debug
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=ON -DCMAKE_DEBUG_POSTFIX=_double_debug -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/debug/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+   make
+   sudo make install
+5. Build single_release
+   cd single_release
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_single -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=OFF  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_single.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_single_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_single.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_single_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_single.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_single_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_single.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_single_debug.a 
+   make
+   sudo make install
+6. Build double_release
+   cd double_release
+   cmake ../../../osgBullet_03_00_00/ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_RELEASE_POSTFIX=_double -DosgWorks_DIR=/media/Ubuntu_Data/AnimatLabSDK/3rdParty/osgWorks_03_00_00/build/release/lib/x86_64-linux-gnu -DOSGBULLET_USE_DOUBLE_PRECISION=ON  -DBULLET_INCLUDE_DIR=/usr/local/include/bullet -DBULLET_COLLISION_LIBRARY=/usr/local/lib/libBulletCollision_double.a -DBULLET_COLLISION_LIBRARY_DEBUG=/usr/local/lib/libBulletCollision_double_debug.a -DBULLET_DYNAMICS_LIBRARY=/usr/local/lib/libBulletDynamics_double.a -DBULLET_DYNAMICS_LIBRARY_DEBUG=/usr/local/lib/libBulletDynamics_double_debug.a -DBULLET_MATH_LIBRARY=/usr/local/lib/libLinearMath_double.a -DBULLET_MATH_LIBRARY_DEBUG=/usr/local/lib/libLinearMath_double_debug.a -DBULLET_SOFTBODY_LIBRARY=/usr/local/lib/libBulletSoftBody_double.a -DBULLET_SOFTBODY_LIBRARY_DEBUG=/usr/local/lib/libBulletSoftBody_double_debug.a
+   make
+   sudo make install
+
+Build AnimatSimulator
+2. Go to AnimatLabSDK/AnimatLabPublicSource/Projects_Mono and open AnimatLabSimCode.sln file in monodevelop (right click and open in).
+3. Make sure the configuration is set to debug and then do a rebuild all
+4. Change configuration to debug_double and rebuild BulletAnimatSim
+5. Change configuration to release and rebuild all
+6. Change configuration to release_double and rebuild BulletAnimatSim
+7. Open /AnimatLabPublicSource/Documentation/Ubuntu_help/AnimatLab.conf file
+8. Edit the file path to point to the location where you installed AnimatLabSDK/AnimatLabPublicSource/bin
+9. Copy AnimatLab.conf into ld config
+   sudo cp Animatlab.conf /etc/ld.so.conf.d/AnimatLab.conf
+10. Refresh shared library list
+   sudo ldconfig
+11. Test all AnimatSimulator configurations
+   ./animatsimulator_debug /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux_Debug.asim
+   ./animatsimulator_debug /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Double_Linux_Debug.asim
+   ./animatsimulator /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Single_Linux.asim
+   ./animatsimulator /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Double_Linux.asim
+
+
+

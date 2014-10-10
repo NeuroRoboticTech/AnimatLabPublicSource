@@ -77,18 +77,20 @@ namespace FiringRateSim
 			void Ilinit(float fltVal);
 
 			virtual unsigned char NeuronType();
+									
+			virtual void Copy(CStdSerialize *lpSource);
 
 			AnimatSim::Gains::Gain *CurrentDistribution() {return m_lpCurrentGraph;};
 			void CurrentDistribution(AnimatSim::Gains::Gain *lpGain);
-			void CurrentDistribution(string strXml);
+			void CurrentDistribution(std::string strXml);
 
 			AnimatSim::Gains::Gain *BurstLengthDistribution() {return m_lpBurstGraph;};
 			void BurstLengthDistribution(AnimatSim::Gains::Gain *lpGain);
-			void BurstLengthDistribution(string strXml);
+			void BurstLengthDistribution(std::string strXml);
 
 			AnimatSim::Gains::Gain *InterbusrtLengthDistribution() {return m_lpIBurstGraph;};
 			void InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain);
-			void InterbusrtLengthDistribution(string strXml);
+			void InterbusrtLengthDistribution(std::string strXml);
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
@@ -96,8 +98,8 @@ namespace FiringRateSim
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void ResetSimulation();
 
 			virtual void Load(CStdXml &oXml);

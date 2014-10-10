@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EC55BB7C-B599-5A43-AD49-1D8BEA87B0C1}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libAnimatSimPy_d.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../FiringRateSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>FiringRateSim_debug</Lib>
+        <Lib>python27_d</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libAnimatSimPy_d.so ../../../bin" />
+        <Command type="AfterBuild" command="cp ../AnimatSimPy.py ../../../bin/AnimatSimPy.py" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libAnimatSimPy.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../FiringRateSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>FiringRateSim</Lib>
+        <Lib>python27</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libAnimatSimPy.so ../../../bin" />
+        <Command type="AfterBuild" command="cp ../AnimatSimPy.py ../../../bin/PyAnimatSimPy.py" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\AnimatSimPy_wrap.h">
+      <Link>AnimatSimPy_wrap.h</Link>
+    </None>
+    <None Include="..\PyClassFactory.h">
+      <Link>PyClassFactory.h</Link>
+    </None>
+    <None Include="..\PyEmbedder.h">
+      <Link>PyEmbedder.h</Link>
+    </None>
+    <None Include="..\ScriptProcessorPy.h">
+      <Link>ScriptProcessorPy.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AnimatSimPy.cpp">
+      <Link>AnimatSimPy.cpp</Link>
+    </Compile>
+    <Compile Include="..\AnimatSimPy_wrap.cxx">
+      <Link>AnimatSimPy_wrap.cxx</Link>
+    </Compile>
+    <Compile Include="..\PyClassFactory.cpp">
+      <Link>PyClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\PyEmbedder.cpp">
+      <Link>PyEmbedder.cpp</Link>
+    </Compile>
+    <Compile Include="..\ScriptProcessorPy.cpp">
+      <Link>ScriptProcessorPy.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

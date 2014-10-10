@@ -7,7 +7,7 @@
 objects in the AnimatLab simulation environment.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -61,7 +61,8 @@ AnimatBase::AnimatBase()
 	m_lpModule = NULL;
 	m_lpNode = NULL;
 	m_strID = Std_CreateAppID();
-	m_bSelected = FALSE;
+	m_bSelected = false;
+	m_bEnabled = true;
 }
 
 /**
@@ -85,8 +86,30 @@ try
 		m_lpSim->RemoveFromObjectList(this);
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, false, true);}
 }
+
+/**
+\brief	Tells whether this item is enabled or not. This is not actually used for all objects, only specific ones.
+I am putting it in the base class though to prevent numerous duplications.
+
+\author	dcofer
+\date	2/24/2011
+
+\param bVal	Sets whether this item is enabled. 
+**/
+void AnimatBase::Enabled(bool bVal) {m_bEnabled = bVal;}
+
+/**
+\brief	Tells whether this item is enabled or not. This is not actually used for all objects, only specific ones.
+I am putting it in the base class though to prevent numerous duplications.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	Whether this item is enabled. 
+**/
+bool AnimatBase::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Gets the simulator pointer. 
@@ -140,7 +163,7 @@ Node *AnimatBase::GetNode() {return m_lpNode;}
 		
 \return	string ID GUID. 
 **/
-string AnimatBase::ID() {return m_strID;}
+std::string AnimatBase::ID() {return m_strID;}
 
 /**
 \brief	Sets the unique GUID ID of the object.
@@ -152,7 +175,7 @@ string AnimatBase::ID() {return m_strID;}
 
 \param	strID	new ID string value. 
 **/
-void AnimatBase::ID(string strID) 
+void AnimatBase::ID(std::string strID) 
 {
 	if(Std_IsBlank(strID))
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
@@ -168,7 +191,7 @@ void AnimatBase::ID(string strID)
 
 \return	string name. 
 **/
-string AnimatBase::Name() {return m_strName;}
+std::string AnimatBase::Name() {return m_strName;}
 
 /**
 \brief	Sets the name of the object. Blank is acceptable. 
@@ -178,7 +201,7 @@ string AnimatBase::Name() {return m_strName;}
 
 \param	strValue	The name value. 
 **/
-void AnimatBase::Name(string strValue) {m_strName = strValue;}
+void AnimatBase::Name(std::string strValue) {m_strName = strValue;}
 
 /**
 \brief	returns the string type name of this object.
@@ -194,7 +217,7 @@ not mandatory and can be used how the class developer requires.
 
 \return	string of assigned class type. 
 **/
-string AnimatBase::Type() {return m_strType;}
+std::string AnimatBase::Type() {return m_strType;}
 
 /**
 \brief	Sets the class type for this object. 
@@ -204,7 +227,7 @@ string AnimatBase::Type() {return m_strType;}
 
 \param	strValue	The string value. 
 **/
-void AnimatBase::Type(string strValue) {m_strType = strValue;}
+void AnimatBase::Type(std::string strValue) {m_strType = strValue;}
 
 /**
 \brief	Tells if this items is selected or not.
@@ -221,7 +244,7 @@ it know that a part has been selected.
 
 \return	true if it selected, false if not. 
 **/
-BOOL AnimatBase::Selected() {return m_bSelected;}
+bool AnimatBase::Selected() {return m_bSelected;}
 
 /**
 \brief	Selects this object.
@@ -240,15 +263,31 @@ or not is done in the GUI project workspace.
 \param	bSelectMultiple	If true then this items is added as part of a group. If false then it is
 						removed from a group. 
 **/
-void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bValue;}
+void AnimatBase::Selected(bool bValue, bool bSelectMultiple) {m_bSelected = bValue;}
 
+void AnimatBase::Copy(CStdSerialize *lpSource)
+{
+	CStdSerialize::Copy(lpSource);
+
+	AnimatBase *lpOrig = dynamic_cast<AnimatBase *>(lpSource);
+
+	m_bEnabled = lpOrig->m_bEnabled;
+	m_lpSim = lpOrig->m_lpSim;
+	m_lpStructure = lpOrig->m_lpStructure;
+	m_lpModule = lpOrig->m_lpModule;
+	m_lpNode = lpOrig->m_lpNode;
+	m_strID = lpOrig->m_strID;
+	m_strType = lpOrig->m_strType;
+	m_strName = lpOrig->m_strName;
+	m_bSelected = lpOrig->m_bSelected;
+}
 
 #pragma region DataAccesMethods
 
 
 //Don't know why, but the documentation for this has to be in the .h file. When I try and put it here
 //it is not processed by doxygen. ????
-void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	m_lpSim = lpSim;
 	m_lpStructure = lpStructure;
@@ -297,7 +336,7 @@ array.
 \return	float pointer of the data item. If not found then it throws an exception. 
 \exception	If	DataType is not found. 
 **/
-float *AnimatBase::GetDataPointer(const string &strDataType)
+float *AnimatBase::GetDataPointer(const std::string &strDataType)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
@@ -328,25 +367,66 @@ developers responsibilty to know what type of data is needed and to process it a
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool AnimatBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(strDataType == "NAME")
 	{
 		Name(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "CALL_INIT")
 	{
 		this->Initialize();
-		return TRUE;
+		return true;
 	}
 
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
-	return FALSE;
+	return false;
 }
+
+/**
+\brief	Set a variable based on a string data type name.
+
+\details This is a helper method for the string version. 
+
+\author	dcofer
+\date	2/22/2011
+
+\param	strDataType	string name of the data type to set. 
+\param	fltValue	float value that will be converted to a string. 
+\param	bThrowError	true to throw error if there is a problem. If false then it will not return
+					an error, just return false. 
+
+\return	true if it succeeds, false if it fails. 
+**/
+bool AnimatBase::SetData(const std::string &strDataType, const float fltValue, bool bThrowError)
+{
+	return SetData(strDataType, Std_ToStr(fltValue), bThrowError);
+}
+
+/**
+\brief	Set a variable based on a string data type name.
+
+\details This is a helper method for the string version. 
+
+\author	dcofer
+\date	2/22/2011
+
+\param	strDataType	string name of the data type to set. 
+\param	fltValue	long value that will be converted to a string. 
+\param	bThrowError	true to throw error if there is a problem. If false then it will not return
+					an error, just return false. 
+
+\return	true if it succeeds, false if it fails. 
+**/
+bool AnimatBase::SetData(const std::string &strDataType, const long lValue, bool bThrowError)
+{
+	return SetData(strDataType, Std_ToStr(lValue), bThrowError);
+}
+
 
 /**
 \brief	Queries this object for a list of properties that can be changed using SetData.
@@ -363,10 +443,9 @@ are Boolean, Float, Integer, and Xml.
 
 \return	Nothing. 
 **/
-void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void AnimatBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	aryNames.Add("Name");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Name", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -381,45 +460,31 @@ void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 
 \return	True if a property with that exact name is found. Capilalization is not important. 
 **/
-BOOL AnimatBase::HasProperty(const string &strName)
+bool AnimatBase::HasProperty(const std::string &strName)
 {
-	CStdArray<string> aryNames, aryTypes;
-	QueryProperties(aryNames, aryTypes);
+	CStdPtrArray<TypeProperty> aryProperties;
+	QueryProperties(aryProperties);
 
-	string strCheck = Std_CheckString(strName);
-	int iCount = aryNames.GetSize();
+	std::string strCheck = Std_CheckString(strName);
+	int iCount = aryProperties.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
-		if(Std_CheckString(aryNames[iIdx]) == strCheck)
-			return TRUE;
+		if(Std_CheckString(aryProperties[iIdx]->m_strName) == strCheck)
+			return true;
 
-	return FALSE;
+	return false;
 }
 
 
-AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const string &strName)
+AnimatPropertyType AnimatBase::PropertyType(const std::string &strName)
 {
-	CStdArray<string> aryNames, aryTypes;
-	QueryProperties(aryNames, aryTypes);
+	CStdPtrArray<TypeProperty> aryProperties;
+	QueryProperties(aryProperties);
 
-	string strCheck = Std_CheckString(strName);
-	int iCount = aryNames.GetSize();
+	std::string strCheck = Std_CheckString(strName);
+	int iCount = aryProperties.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
-		if(Std_CheckString(aryNames[iIdx]) == strCheck)
-		{
-			string strType = Std_CheckString(aryTypes[iIdx]);
-			if(strType == "BOOLEAN")
-				return AnimatPropertyType::Boolean;
-			else if(strType == "INTEGER")
-				return AnimatPropertyType::Integer;
-			else if(strType == "FLOAT")
-				return AnimatPropertyType::Float;
-			else if(strType == "STRING")
-				return AnimatPropertyType::String;
-			else if(strType == "XML")
-				return AnimatPropertyType::Xml;
-			else
-				return AnimatPropertyType::Invalid;
-		}
+		if(Std_CheckString(aryProperties[iIdx]->m_strName) == strCheck)
+			return aryProperties[iIdx]->m_eType;
 
 	return AnimatPropertyType::Invalid;
 }
@@ -444,12 +509,12 @@ needed initialization and adds it to the parent.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool AnimatBase::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lItemTypeInvalid, Al_Err_strItemTypeInvalid, ("ID: " + m_strID + " ItemType: " + strItemType));
-	return FALSE;
+	return false;
 }
 
 /**
@@ -469,12 +534,12 @@ part, etc.. The ID is then used to delete that specific item.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool AnimatBase::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lItemNotFound, Al_Err_strItemNotFound, ("ID: " + m_strID));
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -558,7 +623,7 @@ called.
 
 \param	bState	true to state. 
 **/
-void AnimatBase::Kill(BOOL bState) {};
+void AnimatBase::Kill(bool bState) {};
 
 /**
 \brief	Step the simulation for this object.
@@ -710,6 +775,7 @@ void AnimatBase::Load(StdUtils::CStdXml &oXml)
 	m_strType = oXml.GetChildString("Type", m_strType);
 	m_strID = Std_CheckString(oXml.GetChildString("ID", m_strID));
 	m_strName = oXml.GetChildString("Name", m_strName);
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 	oXml.OutOfElem();
 
 	if(Std_IsBlank(m_strID)) 

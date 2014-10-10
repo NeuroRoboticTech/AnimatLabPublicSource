@@ -32,13 +32,13 @@ namespace AnimatSim
 		{
 		protected:
 			/// Full pathname of the project file
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			/// Filename of the configuration file
-			string m_strConfigFilename;
+			std::string m_strConfigFilename;
 
 			/// true to set the start and end time. If false then the chart collects continuously.
-			BOOL m_bSetStartEndTime;
+			bool m_bSetStartEndTime;
 
 			/// Tells what the time slice step interval to use when collecting data. This is 
 			short m_iCollectInterval;
@@ -54,7 +54,7 @@ namespace AnimatSim
 
 			/// The array of datacolumns columns. This is a sorted map that is used to get columns based on their ID.
 			// The columns added to this map are copies of the pointer. They are <b>not</b> deleted.
-			CStdMap<string, DataColumn *> m_aryColumnsMap;
+			CStdMap<std::string, DataColumn *> m_aryColumnsMap;
 
 			/// The primary array of data columns. This array deletes the columns when destructed.
 			CStdPtrArray<DataColumn> m_aryDataColumns;
@@ -79,19 +79,21 @@ namespace AnimatSim
 
 			virtual long CalculateChartColumnCount();
 			DataColumn *LoadDataColumn(CStdXml &oXml);
-			virtual DataColumn *FindColumn(string strID, int &iIndex, BOOL bThrowError);
+			virtual DataColumn *FindColumn(std::string strID, int &iIndex, bool bThrowError);
 
 		public:
 			DataChart();
 			virtual ~DataChart();
+			
+			static DataChart *CastToDerived(AnimatBase *lpBase) {return static_cast<DataChart*>(lpBase);}
 
-			virtual string Type();
+			virtual std::string Type();
 
-			virtual void StartTime(float fltVal, BOOL bReInit = TRUE);
-			virtual void EndTime(float fltVal, BOOL bReInit = TRUE);
+			virtual void StartTime(float fltVal, bool bReInit = true);
+			virtual void EndTime(float fltVal, bool bReInit = true);
 
-			virtual BOOL SetStartEndTime();
-			virtual void SetStartEndTime(BOOL bVal);
+			virtual bool SetStartEndTime();
+			virtual void SetStartEndTime(bool bVal);
 
 			virtual long BufferSize();
 			virtual long UsedBufferSize();
@@ -103,42 +105,42 @@ namespace AnimatSim
 			virtual float *DataBuffer();
 
 			virtual int CollectInterval();
-			virtual void CollectInterval(int iVal, BOOL bReInit = TRUE);
-			virtual void CollectInterval(float fltVal, BOOL bReInit = TRUE);
+			virtual void CollectInterval(int iVal, bool bReInit = true);
+			virtual void CollectInterval(float fltVal, bool bReInit = true);
 
 			virtual long CollectTimeWindow();
-			virtual void CollectTimeWindow(long lVal, BOOL bReInit = TRUE);
-			virtual void CollectTimeWindow(float fltVal, BOOL bReInit = TRUE);
+			virtual void CollectTimeWindow(long lVal, bool bReInit = true);
+			virtual void CollectTimeWindow(float fltVal, bool bReInit = true);
 
-			virtual string ProjectPath();
-			virtual void ProjectPath(string strVal);
+			virtual std::string ProjectPath();
+			virtual void ProjectPath(std::string strVal);
 
 			virtual long ColumnCount();
 
 			virtual long CurrentRow();
 			virtual void CurrentRow(long iVal);
 
-			virtual BOOL Lock();
+			virtual bool Lock();
 			virtual void Unlock();
 
 			virtual void AddData(int iColumn, int iRow, float fltVal);
 
-			virtual void Load(string strProjectPath, string strConfigFile);
+			virtual void Load(std::string strProjectPath, std::string strConfigFile);
 			virtual void Load(CStdXml &oXml);
 
 			virtual void AddColumn(DataColumn *lpColumn);
-			virtual void AddColumn(string strXml, BOOL bDoNotInit);
-			virtual void RemoveColumn(string strID, BOOL bThrowError = TRUE);
-			virtual DataColumn *FindColumn(string strID, BOOL bThrowError = TRUE);
+			virtual void AddColumn(std::string strXml, bool bDoNotInit);
+			virtual void RemoveColumn(std::string strID, bool bThrowError = true);
+			virtual DataColumn *FindColumn(std::string strID, bool bThrowError = true);
 
 #pragma region DataAccesMethods
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-			virtual BOOL operator<(ActivatedItem *lpItem);
+			virtual bool operator<(ActivatedItem *lpItem);
 			virtual void Initialize();
 			virtual void ReInitialize();
 			virtual void ResetSimulation();

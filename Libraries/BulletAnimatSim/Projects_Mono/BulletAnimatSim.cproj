@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4C4E998-FDCF-3749-8020-00E9B3F888D4}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBulletAnimatSim_debug_single.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>OsgAnimatSim_debug</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+        <Lib>osgbDynamics_single_debug</Lib>
+        <Lib>osgbCollision_single_debug</Lib>
+        <Lib>osgwQuery_animat_debug</Lib>
+        <Lib>osgwTools_animat_debug</Lib>
+        <Lib>BulletCollision_single_debug</Lib>
+        <Lib>BulletDynamics_single_debug</Lib>
+        <Lib>LinearMath_single_debug</Lib>
+        <Lib>BulletSoftBody_single_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libBulletAnimatSim_debug_single.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBulletAnimatSim_single.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>OsgAnimatSim</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+        <Lib>osgbDynamics_single</Lib>
+        <Lib>osgbCollision_single</Lib>
+        <Lib>osgwQuery_animat</Lib>
+        <Lib>osgwTools_animat</Lib>
+        <Lib>BulletCollision_single</Lib>
+        <Lib>BulletDynamics_single</Lib>
+        <Lib>LinearMath_single</Lib>
+        <Lib>BulletSoftBody_single</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim_single.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBulletAnimatSim_debug_double.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+        <Lib>OsgAnimatSim_debug</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+        <Lib>osgbDynamics_double_debug</Lib>
+        <Lib>osgbCollision_double_debug</Lib>
+        <Lib>osgwQuery_animat_debug</Lib>
+        <Lib>osgwTools_animat_debug</Lib>
+        <Lib>BulletCollision_double_debug</Lib>
+        <Lib>BulletDynamics_double_debug</Lib>
+        <Lib>LinearMath_double_debug</Lib>
+        <Lib>BulletSoftBody_double_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libBulletAnimatSim_debug_double.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG OSGBULLET_STATIC BULLETANIMATLIBRARY_EXPORTS BT_USE_DOUBLE_PRECISION</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libBulletAnimatSim_double.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+        <Include>../../../OsgAnimatSim</Include>
+        <Include>/usr/local/include/bullet</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+        <Lib>OsgAnimatSim</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+        <Lib>osgbDynamics_double</Lib>
+        <Lib>osgbCollision_double</Lib>
+        <Lib>osgwQuery_animat</Lib>
+        <Lib>osgwTools_animat</Lib>
+        <Lib>BulletCollision_double</Lib>
+        <Lib>BulletDynamics_double</Lib>
+        <Lib>LinearMath_double</Lib>
+        <Lib>BulletSoftBody_double</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libBulletAnimatSim_double.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\BlAnimatCollisionDispatcher.h">
+      <Link>BlAnimatCollisionDispatcher.h</Link>
+    </None>
+    <None Include="..\BlBallSocket.h">
+      <Link>BlBallSocket.h</Link>
+    </None>
+    <None Include="..\BlBox.h">
+      <Link>BlBox.h</Link>
+    </None>
+    <None Include="..\BlClassFactory.h">
+      <Link>BlClassFactory.h</Link>
+    </None>
+    <None Include="..\BlCone.h">
+      <Link>BlCone.h</Link>
+    </None>
+    <None Include="..\BlConstraintFriction.h">
+      <Link>BlConstraintFriction.h</Link>
+    </None>
+    <None Include="..\BlConstraintRelaxation.h">
+      <Link>BlConstraintRelaxation.h</Link>
+    </None>
+    <None Include="..\BlCylinder.h">
+      <Link>BlCylinder.h</Link>
+    </None>
+    <None Include="..\BlDistanceJoint.h">
+      <Link>BlDistanceJoint.h</Link>
+    </None>
+    <None Include="..\BlEllipsoid.h">
+      <Link>BlEllipsoid.h</Link>
+    </None>
+    <None Include="..\BlFluidPlane.h">
+      <Link>BlFluidPlane.h</Link>
+    </None>
+    <None Include="..\BlHinge.h">
+      <Link>BlHinge.h</Link>
+    </None>
+    <None Include="..\BlHingeLimit.h">
+      <Link>BlHingeLimit.h</Link>
+    </None>
+    <None Include="..\BlJoint.h">
+      <Link>BlJoint.h</Link>
+    </None>
+    <None Include="..\BlLine.h">
+      <Link>BlLine.h</Link>
+    </None>
+    <None Include="..\BlLinearHillMuscle.h">
+      <Link>BlLinearHillMuscle.h</Link>
+    </None>
+    <None Include="..\BlLinearHillStretchReceptor.h">
+      <Link>BlLinearHillStretchReceptor.h</Link>
+    </None>
+    <None Include="..\BlMaterialType.h">
+      <Link>BlMaterialType.h</Link>
+    </None>
+    <None Include="..\BlMesh.h">
+      <Link>BlMesh.h</Link>
+    </None>
+    <None Include="..\BlMeshBase.h">
+      <Link>BlMeshBase.h</Link>
+    </None>
+    <None Include="..\BlMotorizedJoint.h">
+      <Link>BlMotorizedJoint.h</Link>
+    </None>
+    <None Include="..\BlOsgGeometry.h">
+      <Link>BlOsgGeometry.h</Link>
+    </None>
+    <None Include="..\BlPlane.h">
+      <Link>BlPlane.h</Link>
+    </None>
+    <None Include="..\BlPrismatic.h">
+      <Link>BlPrismatic.h</Link>
+    </None>
+    <None Include="..\BlPrismaticLimit.h">
+      <Link>BlPrismaticLimit.h</Link>
+    </None>
+    <None Include="..\BlRPRO.h">
+      <Link>BlRPRO.h</Link>
+    </None>
+    <None Include="..\BlRigidBody.h">
+      <Link>BlRigidBody.h</Link>
+    </None>
+    <None Include="..\BlSimulator.h">
+      <Link>BlSimulator.h</Link>
+    </None>
+    <None Include="..\BlSphere.h">
+      <Link>BlSphere.h</Link>
+    </None>
+    <None Include="..\BlSpring.h">
+      <Link>BlSpring.h</Link>
+    </None>
+    <None Include="..\BlTerrain.h">
+      <Link>BlTerrain.h</Link>
+    </None>
+    <None Include="..\BlTorus.h">
+      <Link>BlTorus.h</Link>
+    </None>
+    <None Include="..\BlUniversal.h">
+      <Link>BlUniversal.h</Link>
+    </None>
+    <None Include="..\StdAfx.h">
+      <Link>StdAfx.h</Link>
+    </None>
+    <None Include="..\btAnimatGeneric6DofConstraint.h">
+      <Link>btAnimatGeneric6DofConstraint.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\BlAnimatCollisionDispatcher.cpp">
+      <Link>BlAnimatCollisionDispatcher.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlBallSocket.cpp">
+      <Link>BlBallSocket.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlBox.cpp">
+      <Link>BlBox.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlClassFactory.cpp">
+      <Link>BlClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlCone.cpp">
+      <Link>BlCone.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlConstraintFriction.cpp">
+      <Link>BlConstraintFriction.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlConstraintRelaxation.cpp">
+      <Link>BlConstraintRelaxation.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlCylinder.cpp">
+      <Link>BlCylinder.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlDistanceJoint.cpp">
+      <Link>BlDistanceJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlEllipsoid.cpp">
+      <Link>BlEllipsoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlFluidPlane.cpp">
+      <Link>BlFluidPlane.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlHinge.cpp">
+      <Link>BlHinge.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlHingeLimit.cpp">
+      <Link>BlHingeLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlJoint.cpp">
+      <Link>BlJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlLine.cpp">
+      <Link>BlLine.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlLinearHillMuscle.cpp">
+      <Link>BlLinearHillMuscle.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlLinearHillStretchReceptor.cpp">
+      <Link>BlLinearHillStretchReceptor.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlMaterialType.cpp">
+      <Link>BlMaterialType.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlMesh.cpp">
+      <Link>BlMesh.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlMeshBase.cpp">
+      <Link>BlMeshBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlMotorizedJoint.cpp">
+      <Link>BlMotorizedJoint.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlOsgGeometry.cpp">
+      <Link>BlOsgGeometry.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlPlane.cpp">
+      <Link>BlPlane.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlPrismatic.cpp">
+      <Link>BlPrismatic.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlPrismaticLimit.cpp">
+      <Link>BlPrismaticLimit.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlRPRO.cpp">
+      <Link>BlRPRO.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlRigidBody.cpp">
+      <Link>BlRigidBody.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlSimulator.cpp">
+      <Link>BlSimulator.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlSphere.cpp">
+      <Link>BlSphere.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlSpring.cpp">
+      <Link>BlSpring.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlTerrain.cpp">
+      <Link>BlTerrain.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlTorus.cpp">
+      <Link>BlTorus.cpp</Link>
+    </Compile>
+    <Compile Include="..\BlUniversal.cpp">
+      <Link>BlUniversal.cpp</Link>
+    </Compile>
+    <Compile Include="..\BulletAnimatSim.cpp">
+      <Link>BulletAnimatSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdAfx.cpp">
+      <Link>StdAfx.cpp</Link>
+    </Compile>
+    <Compile Include="..\btAnimatGeneric6DofConstraint.cpp">
+      <Link>btAnimatGeneric6DofConstraint.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

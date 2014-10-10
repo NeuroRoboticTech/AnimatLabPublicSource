@@ -114,11 +114,16 @@ Namespace DataObjects.Physical.Bodies
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SpringLength", "Spring Length", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Displacement", "Displacement", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Tension", "Tension", "Newtons", "N", -1000, 1000))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StiffnessTension", "Stiffness Tension", "Newtons", "N", -1000, 1000))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DampingTension", "Damping Tension", "Newtons", "N", -1000, 1000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Energy", "Energy", "Joules", "J", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Velocity", "Velocity", "m/s", "m/s", -10, 10))
             m_thDataTypes.ID = "SpringLength"
 
-            m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Enabled", "Enabled", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+            m_thIncomingDataTypes.DataTypes.Clear()
+            m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enabled", "Enabled", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+            m_thIncomingDataTypes.ID = "Enabled"
 
             m_snNaturalLength = New AnimatGUI.Framework.ScaledNumber(Me, "NaturalLength", 1, ScaledNumber.enumNumericScale.None, "meters", "m")
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "N/m", "N/m")

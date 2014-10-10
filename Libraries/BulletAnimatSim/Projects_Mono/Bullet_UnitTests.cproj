@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{782934ED-9960-434B-889C-B833011BB15E}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG OSGBULLET_STATIC</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Bullet_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/OsgAnimatSim</Include>
+        <Include>../Libraries/BulletAnimatSim</Include>
+        <Include>../../3rdParty/boost_1_54_0</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>StdUtils_vc10D</Lib>
+        <Lib>AnimatSim_vc10D</Lib>
+        <Lib>OsgAnimatSim_vc10D</Lib>
+        <Lib>BulletAnimatSim_vc10D</Lib>
+        <Lib>OpenThreadsd</Lib>
+        <Lib>osgAnimationd</Lib>
+        <Lib>osgd</Lib>
+        <Lib>osgDBd</Lib>
+        <Lib>osgFXd</Lib>
+        <Lib>osgGAd</Lib>
+        <Lib>osgManipulatord</Lib>
+        <Lib>osgParticled</Lib>
+        <Lib>osgShadowd</Lib>
+        <Lib>osgSimd</Lib>
+        <Lib>osgTerraind</Lib>
+        <Lib>osgTextd</Lib>
+        <Lib>osgUtild</Lib>
+        <Lib>osgViewerd</Lib>
+        <Lib>osgVolumed</Lib>
+        <Lib>osgWidgetd</Lib>
+        <Lib>osgbDynamicsd</Lib>
+        <Lib>osgbCollisiond</Lib>
+        <Lib>osgwControlsd</Lib>
+        <Lib>osgwQueryd</Lib>
+        <Lib>osgwToolsd</Lib>
+        <Lib>BulletDynamics_debug</Lib>
+        <Lib>BulletCollision_debug</Lib>
+        <Lib>LinearMath_debug</Lib>
+        <Lib>BulletSoftBody_debug</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\..\..\bin</OutputPath><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments><ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG OSGBULLET_STATIC</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Bullet_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../include</Include>
+        <Include>../Libraries/StdUtils</Include>
+        <Include>../Libraries/AnimatSim</Include>
+        <Include>../Libraries/OsgAnimatSim</Include>
+        <Include>../Libraries/BulletAnimatSim</Include>
+        <Include>../../3rdParty/boost_1_54_0</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>.</LibPath>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>StdUtils_vc10</Lib>
+        <Lib>AnimatSim_vc10</Lib>
+        <Lib>OsgAnimatSim_vc10</Lib>
+        <Lib>BulletAnimatSim_vc10</Lib>
+        <Lib>OpenThreads</Lib>
+        <Lib>osgAnimation</Lib>
+        <Lib>osg</Lib>
+        <Lib>osgDB</Lib>
+        <Lib>osgFX</Lib>
+        <Lib>osgGA</Lib>
+        <Lib>osgManipulator</Lib>
+        <Lib>osgParticle</Lib>
+        <Lib>osgShadow</Lib>
+        <Lib>osgSim</Lib>
+        <Lib>osgTerrain</Lib>
+        <Lib>osgText</Lib>
+        <Lib>osgUtil</Lib>
+        <Lib>osgViewer</Lib>
+        <Lib>osgVolume</Lib>
+        <Lib>osgWidget</Lib>
+        <Lib>osgbDynamics</Lib>
+        <Lib>osgbCollision</Lib>
+        <Lib>osgwControls</Lib>
+        <Lib>osgwQuery</Lib>
+        <Lib>osgwTools</Lib>
+        <Lib>BulletDynamics</Lib>
+        <Lib>BulletCollision</Lib>
+        <Lib>LinearMath</Lib>
+        <Lib>BulletSoftBody</Lib>
+      </Libs>
+    </Libs>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\Bullet_UnitTests\stdafx.h">
+      <Link>Bullet_UnitTests\stdafx.h</Link>
+    </None>
+    <None Include="..\Bullet_UnitTests\targetver.h">
+      <Link>Bullet_UnitTests\targetver.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Bullet_UnitTests\Bullet_UnitTests.cpp">
+      <Link>Bullet_UnitTests\Bullet_UnitTests.cpp</Link>
+    </Compile>
+    <Compile Include="..\Bullet_UnitTests\Rotation_Tests.cpp">
+      <Link>Bullet_UnitTests\Rotation_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\Bullet_UnitTests\stdafx.cpp">
+      <Link>Bullet_UnitTests\stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

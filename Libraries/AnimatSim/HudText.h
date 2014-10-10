@@ -12,25 +12,27 @@ namespace AnimatSim
 	class ANIMAT_PORT HudText : public HudItem 
 	{
 	protected:
-		string m_strDisplayTargetID;
-		string m_strDisplayDataType;
-		string m_strUpdateTargetID;
-		string m_strUpdateDataType;
+		std::string m_strDisplayTargetID;
+		std::string m_strDisplayDataType;
+		std::string m_strUpdateTargetID;
+		std::string m_strUpdateDataType;
 
 		float m_fltUpdateInterval;
 
 		CStdColor m_aryColor;
 		CStdFPoint m_ptPosition;
-		string m_strFont;
+		std::string m_strFont;
 		int m_iCharSize;
-		string m_strText;
+		std::string m_strText;
 		float *m_lpDisplayData;
 		float *m_lpUpdateData;
 
 	public:
 		HudText();
-		HudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval);
+		HudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval);
 		virtual ~HudText();
+			
+		static HudText *CastToDerived(AnimatBase *lpBase) {return static_cast<HudText*>(lpBase);}
 
 		virtual void Initialize(void *lpVoidProjection);
 		virtual void Load(CStdXml &oXml);

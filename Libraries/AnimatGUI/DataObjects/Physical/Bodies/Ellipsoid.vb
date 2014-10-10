@@ -60,7 +60,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("MajorRadius", value.ActualValue.ToString, True)
                 m_snMajorAxisRadius.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -75,7 +75,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("MinorRadius", value.ActualValue.ToString, True)
                 m_snMinorAxisRadius.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -90,7 +90,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("LatitudeSegments", value.ToString, True)
                 m_iLatitudeSegments = value
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 
@@ -105,7 +105,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("LongtitudeSegments", value.ToString, True)
                 m_iLongtitudeSegments = value
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 

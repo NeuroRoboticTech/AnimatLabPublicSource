@@ -15,7 +15,7 @@ namespace VortexAnimatSim
 				virtual ~VsTranslateAxisDragger(void);
 
 			public:
-				VsTranslateAxisDragger(BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ);
+				VsTranslateAxisDragger(bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();

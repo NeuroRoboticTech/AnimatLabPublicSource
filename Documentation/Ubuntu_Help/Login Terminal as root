@@ -1,0 +1,9 @@
+This should make you root after you enter your user's password, assuming you were the first account to be created. Be careful when you're root. Only login as root when you really need to, and logout as soon as you're done.
+
+sudo su -
+
+Alternatively you can run specific commands with root privileges by prepending them with sudo. For example:
+
+sudo cp -p foo bar/
+
+

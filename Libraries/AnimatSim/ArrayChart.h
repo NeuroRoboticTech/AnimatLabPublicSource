@@ -25,8 +25,10 @@ namespace AnimatSim
 		public:
 			ArrayChart();
 			virtual ~ArrayChart();
+										
+			static ArrayChart *CastToDerived(AnimatBase *lpBase) {return static_cast<ArrayChart*>(lpBase);}
 
-			virtual string Type();
+			virtual std::string Type();
 			virtual void CurrentRow(long iVal);
 
 			virtual void Initialize();

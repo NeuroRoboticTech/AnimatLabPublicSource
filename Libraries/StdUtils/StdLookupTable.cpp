@@ -4,7 +4,7 @@
 \brief	Implements the standard lookup table class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 
 namespace StdUtils
@@ -25,8 +25,8 @@ CStdLookupTable::CStdLookupTable()
 	m_aryM = NULL;
 	m_aryB = NULL;
 
-	m_bUseLowLimitValue = TRUE;
-	m_bUseHighLimitValue = TRUE;
+	m_bUseLowLimitValue = true;
+	m_bUseHighLimitValue = true;
 	m_dblLowLimitValue = 0;
 	m_dblHighLimitValue = 0;
 }
@@ -44,7 +44,7 @@ CStdLookupTable::~CStdLookupTable()
 		Clear();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of CStdLookupTable\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of CStdLookupTable\r\n", "", -1, false, true);}
 }
 
 /**
@@ -90,12 +90,12 @@ void CStdLookupTable::AddPoint(double dblX, double dblY)
 
 \return	true if point1.x less than point2.x, false else.
 **/
-BOOL CompareDataPoints(CStdDPoint oPoint1, CStdDPoint oPoint2)
+bool CompareDataPoints(CStdDPoint oPoint1, CStdDPoint oPoint2)
 {
 	if(oPoint1.x<oPoint2.x)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -227,7 +227,7 @@ double CStdLookupTable::Evaluate(double dblX)
 \param	strParamName	Name of the xml parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
+void CStdLookupTable::Load(CStdXml &oXml, std::string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -243,8 +243,8 @@ void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 			m_aryInitialPoints.Add(oPoint);
 		}
 
-		m_bUseLowLimitValue = (BOOL) oXml.GetChildBool("UseLowLimitValue", m_bUseLowLimitValue);
-		m_bUseHighLimitValue = (BOOL) oXml.GetChildBool("UseHighLimitValue", m_bUseHighLimitValue);
+		m_bUseLowLimitValue = (bool) oXml.GetChildBool("UseLowLimitValue", m_bUseLowLimitValue);
+		m_bUseHighLimitValue = (bool) oXml.GetChildBool("UseHighLimitValue", m_bUseHighLimitValue);
 		m_dblLowLimitValue = oXml.GetChildDouble("LowLimitValue", m_dblLowLimitValue);
 		m_dblHighLimitValue = oXml.GetChildDouble("HighLimitValue", m_dblHighLimitValue);
 
@@ -261,7 +261,7 @@ void CStdLookupTable::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 \param [in,out]	oXml	The xml to save. 
 \param	strParamName	Name of the xml parameter. 
 **/
-void CStdLookupTable::Save(CStdXml &oXml, string strParamName)
+void CStdLookupTable::Save(CStdXml &oXml, std::string strParamName)
 {
 }
 

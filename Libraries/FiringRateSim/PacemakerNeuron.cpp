@@ -4,7 +4,7 @@
 \brief	Implements the pacemaker neuron class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"
@@ -69,7 +69,10 @@ float PacemakerNeuron::Il()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Il(float fltVal)
-{m_fltIl=fltVal;}
+{
+	m_fltIl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the high intrinsic current value.
@@ -91,7 +94,10 @@ float PacemakerNeuron::Ih()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Ih(float fltVal)
-{m_fltIh=fltVal;}
+{
+	m_fltIh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the lower steady state threshold.
@@ -113,7 +119,10 @@ float PacemakerNeuron::Vssm()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Vssm(float fltVal)
-{m_fltVssm=fltVal;}
+{
+	m_fltVssm=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the slope used to calculate length of time that Il current remains active.
@@ -135,7 +144,10 @@ float PacemakerNeuron::Mtl()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Mtl(float fltVal)
-{m_fltMtl=fltVal;}
+{
+	m_fltMtl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the intercept used to calculate length of time that Il current remains active.
@@ -157,7 +169,10 @@ float PacemakerNeuron::Btl()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Btl(float fltVal)
-{m_fltBtl=fltVal;}
+{
+	m_fltBtl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the time that the high current is active.
@@ -179,7 +194,10 @@ float PacemakerNeuron::Th()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::Th(float fltVal)
-{m_fltTh=fltVal;}
+{
+	m_fltTh=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the duration for the current mode.
@@ -201,7 +219,10 @@ float PacemakerNeuron::ITime()
 \param	fltVal	The new value. 
 **/
 void PacemakerNeuron::ITime(float fltVal)
-{m_fltITime=fltVal;}
+{
+	m_fltITime=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the intrinsic current type. (HI or LOW)
@@ -223,7 +244,10 @@ unsigned char PacemakerNeuron::IntrinsicType()
 \param	iVal	The new value. 
 **/
 void PacemakerNeuron::IntrinsicType(unsigned char iVal)
-{m_iIntrinsicType=iVal;}
+{
+	m_iIntrinsicType=iVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the neuron type.
@@ -235,6 +259,24 @@ void PacemakerNeuron::IntrinsicType(unsigned char iVal)
 **/
 unsigned char PacemakerNeuron::NeuronType()
 {return PACEMAKER_NEURON;}
+
+void PacemakerNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	PacemakerNeuron *lpOrig = dynamic_cast<PacemakerNeuron *>(lpSource);
+
+	m_fltIl = lpOrig->m_fltIl;
+	m_fltIh = lpOrig->m_fltIh;
+	m_fltVssm = lpOrig->m_fltVssm;
+	m_fltMtl = lpOrig->m_fltMtl;
+	m_fltBtl = lpOrig->m_fltBtl;
+	m_fltTh = lpOrig->m_fltTh;
+	m_fltITime = lpOrig->m_fltITime;
+	m_fltInterburstInterval = lpOrig->m_fltInterburstInterval;
+	m_fltVss = lpOrig->m_fltVss;
+	m_iIntrinsicType = lpOrig->m_iIntrinsicType;
+}
 
 float PacemakerNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
 {
@@ -338,9 +380,9 @@ long PacemakerNeuron::CalculateSnapshotByteSize()
 
 #pragma region DataAccesMethods
 
-float *PacemakerNeuron::GetDataPointer(const string &strDataType)
+float *PacemakerNeuron::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "STEADYSTATEVOLTAGE")
 		return &m_fltVss;
@@ -354,77 +396,70 @@ float *PacemakerNeuron::GetDataPointer(const string &strDataType)
 	return Neuron::GetDataPointer(strDataType);
 }
 
-BOOL PacemakerNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PacemakerNeuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Neuron::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Neuron::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VSSM")
 	{
 		Vssm(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BTL")
 	{
 		Btl(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MTL")
 	{
 		Mtl(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "TH")
 	{
 		Th(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "IL")
 	{
 		Il(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "IH")
 	{
 		Ih(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void PacemakerNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PacemakerNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Vssm");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("SteadStateVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("InterburstInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("InterburstTimer", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Btl");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Mtl");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Th");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Il");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ih");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Vssm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Btl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Mtl", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Th", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Il", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ih", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

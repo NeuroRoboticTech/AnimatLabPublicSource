@@ -12,14 +12,14 @@ namespace AnimatGUI
 		{
 			try
 			{
-				string strPrefix = Std_GetLogFilePrefix();
+				std::string strPrefix = Std_GetLogFilePrefix();
 				System::String ^strVal = gcnew System::String(strPrefix.c_str());
 				return strVal;
 			}
 			catch(CStdErrorInfo oError)
 			{
-				string strError = "An error occurred while get_LogPrefix.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				std::string strError = "An error occurred while get_LogPrefix.\nError: " + oError.m_strError;
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to get_LogPrefix.");}
@@ -29,7 +29,7 @@ namespace AnimatGUI
 		{
 			try
 			{ 
-				string strLogFile = Util::StringToStd(sLogFile);
+				std::string strLogFile = Util::StringToStd(sLogFile);
 	 
 				Std_TraceMsg(0, ("LogFile: " + strLogFile), __FILE__, __LINE__, STD_TRACE_TO_FILE, true);
 						 
@@ -37,8 +37,8 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				string strError = "An error occurred while SetLogPrefix.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				std::string strError = "An error occurred while SetLogPrefix.\nError: " + oError.m_strError;
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to SetLogPrefix.");}
@@ -53,8 +53,8 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				string strError = "An error occurred while Std_SetTraceLevel.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				std::string strError = "An error occurred while Std_SetTraceLevel.\nError: " + oError.m_strError;
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to Std_SetTraceLevel."); return ManagedAnimatInterfaces::ILogger::enumLogLevel::None;}
@@ -68,8 +68,8 @@ namespace AnimatGUI
 			}
 			catch(CStdErrorInfo oError)
 			{
-				string strError = "An error occurred while TraceLevel.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				std::string strError = "An error occurred while TraceLevel.\nError: " + oError.m_strError;
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to TraceLevel.");}
@@ -79,13 +79,13 @@ namespace AnimatGUI
 		{
 			try
 			{
-				string strMessage = Util::StringToStd(sMessage);
-				Std_LogMsg((int)eLevel, strMessage, "", -1, TRUE);
+				std::string strMessage = Util::StringToStd(sMessage);
+				Std_LogMsg((int)eLevel, strMessage, "", -1, true);
 			}
 			catch(CStdErrorInfo oError)
 			{
-				string strError = "An error occurred while LogMsg.\nError: " + oError.m_strError;
-				throw gcnew System::Exception(gcnew String(strError.c_str()));
+				std::string strError = "An error occurred while LogMsg.\nError: " + oError.m_strError;
+				throw gcnew System::Exception(gcnew System::String(strError.c_str()));
 			}
 			catch(...)
 			{throw gcnew System::Exception("An unknown error occurred while attempting to LogMsg.");}

@@ -6,3 +6,4 @@ del IntegrateFireGUI.dll /F /Q
 del LicensedAnimatGUI.dll /F /Q
 del ManagedAnimatInterfaces.dll /F /Q
 del ManagedAnimatTools.dll /F /Q
+del RoboticsGUI.dll /F /Q

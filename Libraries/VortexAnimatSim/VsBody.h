@@ -28,17 +28,28 @@ namespace VortexAnimatSim
 			VsBody();
 			virtual ~VsBody();
 
-			virtual void Physics_SetFreeze(BOOL bVal) {};
+			virtual void Physics_SetFreeze(bool bVal) {};
 			virtual void Physics_SetDensity(float fltVal) {};
-			virtual void Physics_SetMaterialID(string strID) {};
+            virtual void Physics_SetMass(float fltVal) {};
+			virtual void Physics_SetMaterialID(std::string strID) {};
 			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) {};
 			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) {};
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() {};
 			virtual void Physics_FluidDataChanged() {};
-			virtual void SetBody() = 0;
+            virtual bool Physics_IsDefined() {return false;};
+            virtual bool Physics_IsGeometryDefined() {return false;};
+            virtual void Physics_WakeDynamics() {};
+            virtual void Physics_ContactSensorAdded(ContactSensor *lpSensor) {};
+            virtual void Physics_ContactSensorRemoved() {};
+            virtual void Physics_ChildBodyAdded(RigidBody *lpChild) {};
+            virtual void Physics_ChildBodyRemoved(bool bHasStaticJoint) {};
+            virtual void Physics_StepHydrodynamicSimulation() {};
+
+            virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};
-			virtual BOOL Physics_HasCollisionGeometry() {return FALSE;};
+			virtual bool Physics_HasCollisionGeometry() {return false;};
+			virtual void Physics_DeleteStickyLock() {};
 		};
 
 	}			// Environment

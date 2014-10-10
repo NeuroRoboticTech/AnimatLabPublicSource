@@ -204,6 +204,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\HudItems.vb" />
+    <Compile Include="Collections\InputSensorSystems.vb" />
     <Compile Include="Collections\Joints.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -215,6 +216,7 @@
     <Compile Include="Collections\MetaDocuments.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\MotorControlSystems.vb" />
     <Compile Include="Collections\NeuralModules.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -233,11 +235,17 @@
     <Compile Include="Collections\Macros.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\PhysicsEngines.vb" />
     <Compile Include="Collections\ReceptiveFieldPairs.vb" />
     <Compile Include="Collections\ReceptiveFields.vb" />
+    <Compile Include="Collections\RemoteControlLinkages.vb" />
     <Compile Include="Collections\RigidBodies.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\RobotInterfacess.vb" />
+    <Compile Include="Collections\RobotIOControls.vb" />
+    <Compile Include="Collections\RobotPartInterfaces.vb" />
+    <Compile Include="Collections\ScriptProcessors.vb" />
     <Compile Include="Collections\Stimuli.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -406,6 +414,9 @@
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
     <Compile Include="DataObjects\Physical\Bodies\FluidPlane.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintLimit.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintRelaxationBullet.vb" />
+    <Compile Include="DataObjects\Physical\ConstraintRelaxationVortex.vb" />
     <Compile Include="DataObjects\Physical\ContactSensor.vb" />
     <Compile Include="DataObjects\Physical\ConstraintFriction.vb" />
     <Compile Include="DataObjects\Physical\ConstraintRelaxation.vb" />
@@ -432,7 +443,6 @@
     <Compile Include="DataObjects\Physical\CollisionPair.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Physical\ConstrainLimit.vb" />
     <Compile Include="DataObjects\Physical\Environment.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -446,8 +456,10 @@
     <Compile Include="DataObjects\Physical\Joints\Distance.vb" />
     <Compile Include="DataObjects\Physical\Joints\FreeJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
+    <Compile Include="DataObjects\Physical\Joints\HingeLimitBullet.vb" />
     <Compile Include="DataObjects\Physical\Joints\Linear.vb" />
     <Compile Include="DataObjects\Physical\Joints\Prismatic.vb" />
+    <Compile Include="DataObjects\Physical\Joints\PrismaticLimitBullet.vb" />
     <Compile Include="DataObjects\Physical\Joints\RPRO.vb" />
     <Compile Include="DataObjects\Physical\Joints\StaticJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Universal.vb" />
@@ -455,6 +467,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Physical\MaterialType.vb" />
+    <Compile Include="DataObjects\Physical\MaterialTypeBullet.vb" />
+    <Compile Include="DataObjects\Physical\MaterialTypeVortex.vb" />
     <Compile Include="DataObjects\Physical\MovableItem.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
       <SubType>Code</SubType>
@@ -468,6 +482,9 @@
     <Compile Include="DataObjects\Physical\PhysicalStructure.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Physical\PhysicsEngine.vb" />
+    <Compile Include="DataObjects\Physical\PhysicsEngines\BulletPhysicsEngine.vb" />
+    <Compile Include="DataObjects\Physical\PhysicsEngines\VortexPhysicsEngine.vb" />
     <Compile Include="DataObjects\Physical\ReceptiveField.vb" />
     <Compile Include="DataObjects\Physical\ReceptiveFieldPair.vb">
       <SubType>Code</SubType>
@@ -478,9 +495,24 @@
     <Compile Include="DataObjects\Macro.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\PidControl.vb" />
     <Compile Include="DataObjects\ProjectMigration.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_BulletToVortex.vb" />
     <Compile Include="DataObjects\ProjectMigrations\Migrate_V1.vb" />
     <Compile Include="DataObjects\ProjectMigrations\Migrate_V2.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_VortexToBullet.vb" />
+    <Compile Include="DataObjects\Robotics\InputSystem.vb" />
+    <Compile Include="DataObjects\Robotics\OutputSystem.vb" />
+    <Compile Include="DataObjects\Robotics\PassThroughLinkage.vb" />
+    <Compile Include="DataObjects\Robotics\PulsedLinkage.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControl.vb" />
+    <Compile Include="DataObjects\Robotics\RemoteControlLinkage.vb" />
+    <Compile Include="DataObjects\Robotics\RobotIOControl.vb" />
+    <Compile Include="DataObjects\Robotics\MotorControlSystem.vb" />
+    <Compile Include="DataObjects\Robotics\RobotInterface.vb" />
+    <Compile Include="DataObjects\Robotics\RobotPartInterface.vb" />
+    <Compile Include="DataObjects\Scripting\ScriptProcessor.vb" />
+    <Compile Include="DataObjects\Scripting\ScriptProcessorPy.vb" />
     <Compile Include="DataObjects\Simulation.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -589,10 +621,19 @@
     <Compile Include="Forms\ConfirmRelabel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ConvertPhysics.Designer.vb">
+      <DependentUpon>ConvertPhysics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConvertPhysics.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ErrorDisplay.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Errors.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExportStandaloneSim.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ExternalFileForm.vb">
@@ -640,7 +681,13 @@
     <Compile Include="Forms\RelabelSelected.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Robotics\EditRemoteLinkages.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\SelectMacro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectObject.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\SimulationController.vb">
@@ -749,6 +796,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TypeHelpers\ConstraintLimitTypeConverter.vb" />
+    <Compile Include="TypeHelpers\ContactSensorPruner.vb" />
     <Compile Include="TypeHelpers\DataTypeID.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -823,6 +871,9 @@
     <Compile Include="TypeHelpers\OdorTypeEditor.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\RemoteControlLinkagesEditor.vb" />
+    <Compile Include="TypeHelpers\RobotTreePruner.vb" />
+    <Compile Include="TypeHelpers\TreeListPruner.vb" />
     <Compile Include="TypeHelpers\UnitsTypeConverter.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -851,14 +902,23 @@
     <EmbeddedResource Include="Forms\BodyPlan\ReplaceMaterialType.resx">
       <DependentUpon>ReplaceMaterialType.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SelectByType.resx">
+      <DependentUpon>SelectByType.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfirmRelabel.resx">
       <DependentUpon>ConfirmRelabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConvertPhysics.resx">
+      <DependentUpon>ConvertPhysics.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorDisplay.resx">
       <DependentUpon>ErrorDisplay.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Errors.resx">
       <DependentUpon>Errors.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExportStandaloneSim.resx">
+      <DependentUpon>ExportStandaloneSim.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExternalStimuli\SelectStimulusType.resx">
       <DependentUpon>SelectStimulusType.vb</DependentUpon>
@@ -884,9 +944,15 @@
     <EmbeddedResource Include="Forms\RelabelSelected.resx">
       <DependentUpon>RelabelSelected.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Robotics\EditRemoteLinkages.resx">
+      <DependentUpon>EditRemoteLinkages.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectMacro.resx">
       <DependentUpon>SelectMacro.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectObject.resx">
+      <DependentUpon>SelectObject.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SimulationController.resx">
       <DependentUpon>SimulationController.vb</DependentUpon>
@@ -1190,9 +1256,6 @@
     <EmbeddedResource Include="Forms\BodyPlan\Relabel.resx">
       <DependentUpon>Relabel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BodyPlan\SelectByType.resx">
-      <DependentUpon>SelectByType.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\SelectPartType.resx">
       <DependentUpon>SelectPartType.vb</DependentUpon>
     </EmbeddedResource>
@@ -1321,7 +1384,6 @@
     <EmbeddedResource Include="Graphics\Lightbulb_Small.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataObjects\ProgramModules\" />
     <Folder Include="Forms\ProgramModules\" />
     <Folder Include="My Project\" />
   </ItemGroup>
@@ -1425,6 +1487,14 @@
     <EmbeddedResource Include="Graphics\Splash_Frog.jpg" />
     <EmbeddedResource Include="Graphics\Splash_Locust.jpg" />
     <EmbeddedResource Include="Graphics\Splash_Robot.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddRobotInterface.gif" />
+    <EmbeddedResource Include="Graphics\RobotInterface.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddRobotIOControl.gif" />
+    <EmbeddedResource Include="Graphics\RobotIO.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

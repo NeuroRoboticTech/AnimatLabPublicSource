@@ -4,7 +4,7 @@
 \brief	Implements the external stimuli manager class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -76,7 +76,7 @@ ExternalStimuliMgr::~ExternalStimuliMgr()
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL ExternalStimuliMgr::AddStimulus(string strXml)
+bool ExternalStimuliMgr::AddStimulus(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -85,7 +85,7 @@ BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 	ExternalStimulus *lpStim = LoadExternalStimuli(oXml);
 	lpStim->Initialize();
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -98,13 +98,13 @@ BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL ExternalStimuliMgr::RemoveStimulus(string strID)
+bool ExternalStimuliMgr::RemoveStimulus(std::string strID)
 {
 	Remove(strID);
-	return TRUE;
+	return true;
 }
 /*
-void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
+void ExternalStimuliMgr::Load(std::string strProjectPath, std::string strFileName)
 {
 	CStdXml oXml;
 
@@ -127,7 +127,7 @@ void ExternalStimuliMgr::Load(CStdXml &oXml)
 
 	Reset();
 
-	if(oXml.FindChildElement("ExternalStimuli", FALSE))
+	if(oXml.FindChildElement("ExternalStimuli", false))
 	{
 		oXml.IntoElem(); //Into ExternalStimuli Element
 
@@ -156,7 +156,7 @@ void ExternalStimuliMgr::Load(CStdXml &oXml)
 ExternalStimulus *ExternalStimuliMgr::LoadExternalStimuli(CStdXml &oXml)
 {
 	ExternalStimulus *lpStimulus = NULL;
-	string strModuleName, strType, strFilename;
+	std::string strModuleName, strType, strFilename;
 
 try
 {
@@ -169,7 +169,7 @@ try
 	if(!lpStimulus)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ExternalStimulus");
 
-	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpStimulus->Load(oXml);
 
 	Add(lpStimulus);

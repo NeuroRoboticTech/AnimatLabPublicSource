@@ -15,10 +15,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// Full pathname of the string project file
-			string m_strProjectPath;
+			std::string m_strProjectPath;
 
 			/// Filename of the string configuration file
-			string m_strConfigFilename;
+			std::string m_strConfigFilename;
 
 			/// Zero-based index of the collect interval
 			short m_iCollectInterval;
@@ -26,6 +26,8 @@ namespace AnimatSim
 		public:
 			KeyFrame();
 			virtual ~KeyFrame();
+						
+			static KeyFrame *CastToDerived(AnimatBase *lpBase) {return static_cast<KeyFrame*>(lpBase);}
 
 			int CollectInterval();
 			void CollectInterval(int iVal);
@@ -34,7 +36,7 @@ namespace AnimatSim
 
 			virtual void Load(CStdXml &oXml);
 
-			virtual BOOL operator<(ActivatedItem *lpItem);
+			virtual bool operator<(ActivatedItem *lpItem);
 
 			/**
 			\brief	Enables the video playback.
@@ -102,7 +104,7 @@ namespace AnimatSim
 			
 			\param	strPath	Full pathname of the string file. 
 			**/
-			virtual void SaveVideo(string strPath) = 0;
+			virtual void SaveVideo(std::string strPath) = 0;
 
 			/**
 			\brief	Makes the current frame.
@@ -112,8 +114,6 @@ namespace AnimatSim
 			**/
 			virtual void MakeCurrentFrame() = 0;
 		};
-
-		BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
 
 	}			//Recording
 }				//AnimatSim

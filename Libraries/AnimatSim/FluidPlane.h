@@ -38,18 +38,22 @@ namespace AnimatSim
 			public:
 				FluidPlane();
 				virtual ~FluidPlane();
+			
+				static FluidPlane *CastToDerived(AnimatBase *lpBase) {return static_cast<FluidPlane*>(lpBase);}
 
-				virtual BOOL AllowRotateDragX();
-				virtual BOOL AllowRotateDragY();
-				virtual BOOL AllowRotateDragZ();
+				virtual bool AllowRotateDragX();
+				virtual bool AllowRotateDragY();
+				virtual bool AllowRotateDragZ();
+
+                virtual float Height() {return 0;};
 
 				virtual CStdFPoint Velocity();
-				virtual void Velocity(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
-				virtual void Velocity(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
-				virtual void Velocity(string strXml, BOOL bUseScaling = TRUE);
+				virtual void Velocity(CStdFPoint &oPoint, bool bUseScaling = true);
+				virtual void Velocity(float fltX, float fltY, float fltZ, bool bUseScaling = true);
+				virtual void Velocity(std::string strXml, bool bUseScaling = true);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

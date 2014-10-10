@@ -15,15 +15,15 @@ Namespace DataObjects
         Public Class Migrate_V2
             Inherits ProjectMigration
 
-            Public Overrides ReadOnly Property ConvertFrom As Integer
+            Public Overrides ReadOnly Property ConvertFrom As String
                 Get
-                    Return 2
+                    Return "2"
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As Integer
+            Public Overrides ReadOnly Property ConvertTo As String
                 Get
-                    Return 3
+                    Return "3"
                 End Get
             End Property
 
@@ -31,9 +31,11 @@ Namespace DataObjects
                 MyBase.New()
             End Sub
 
-            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+            Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode, ByRef strPhysics As String)
 
                 m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
+
+                strPhysics = m_xnProjectXml.GetSingleNodeValue(xnProject, "Physics", False, "Vortex")
 
                 Dim xnSimNode As XmlNode = m_xnProjectXml.GetNode(xnProject, "Simulation")
                 Dim xmlEnv As XmlNode = m_xnProjectXml.GetNode(xnSimNode, "Environment")

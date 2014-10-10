@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE2DBB80-E0BE-D74C-B880-1DC0475D8197}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>StdUtils_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/StdUtils_UnitTests ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>Release\libStdUtils.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/StdUtils_UnitTests ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>StdUtils_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/StdUtils_UnitTests ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>StdUtils_UnitTests</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../../../3rdParty/stlsoft-1.9.117/include</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>boost_system</Lib>
+        <Lib>boost_filesystem</Lib>
+        <Lib>boost_unit_test_framework</Lib>
+        <Lib>boost_thread</Lib>
+        <Lib>Release\libStdUtils.so</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/StdUtils_UnitTests ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\StdUtils_UnitTests\stdafx.h">
+      <Link>StdUtils_UnitTests\stdafx.h</Link>
+    </None>
+    <None Include="..\StdUtils_UnitTests\targetver.h">
+      <Link>StdUtils_UnitTests\targetver.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\StdUtils_UnitTests\ClassFactory_Tests.cpp">
+      <Link>StdUtils_UnitTests\ClassFactory_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\StdUtils_UnitTests.cpp">
+      <Link>StdUtils_UnitTests\StdUtils_UnitTests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\Tree_Tests.cpp">
+      <Link>StdUtils_UnitTests\Tree_Tests.cpp</Link>
+    </Compile>
+    <Compile Include="..\StdUtils_UnitTests\stdafx.cpp">
+      <Link>StdUtils_UnitTests\stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -27,7 +27,7 @@ namespace VortexAnimatSim
 VsTerrain::VsTerrain()
 {
 	SetThisPointers();
-	m_bCullBackfaces = TRUE; //we want back face culling on by default for Terrains.
+	m_bCullBackfaces = true; //we want back face culling on by default for Terrains.
 	m_osgHeightField = NULL;
 	m_vxHeightField = NULL;
 }
@@ -40,21 +40,21 @@ VsTerrain::~VsTerrain()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsTerrain/\r\n", "", -1, false, true);}
 }
 
 void VsTerrain::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, FALSE);
+	m_osgGeometry = CreatePlaneGeometry(-1, -1, 2, 2, 2, 2, false);
 }
 
-void VsTerrain::SetTexture(string strTexture)
+void VsTerrain::SetTexture(std::string strTexture)
 {
 	if(m_osgMeshNode.valid())
 	{
 		if(!Std_IsBlank(strTexture))
 		{
-			string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
+			std::string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
 			osg::ref_ptr<osg::Image> image = osgDB::readImageFile(strFile);
 			if(!image)
 				THROW_PARAM_ERROR(Vs_Err_lTextureLoad, Vs_Err_strTextureLoad, "Image File", strFile);
@@ -98,9 +98,9 @@ void VsTerrain::Physics_FluidDataChanged()
 
 void VsTerrain::LoadMeshNode()
 {
-	string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
-	string strMeshFile = m_lpThisMesh->MeshFile();
-	string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
+	std::string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
+	std::string strMeshFile = m_lpThisMesh->MeshFile();
+	std::string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
 
 	//Get the terrain node loaded in.
 	m_osgBaseMeshNode = CreateHeightField(strFile, m_fltSegmentWidth, m_fltSegmentLength, m_fltMaxHeight, &m_osgHeightField);

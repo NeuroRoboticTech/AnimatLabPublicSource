@@ -18,19 +18,19 @@ namespace VortexAnimatSim
 	class VORTEX_PORT VsMeshMgr   
 	{
 	protected:
-		CStdMap<string, pair<string, osg::ref_ptr<osg::Node>> > m_aryMeshes;
+		CStdMap<std::string, std::pair<std::string, osg::ref_ptr<osg::Node>> > m_aryMeshes;
 
-		string FileCreateTime(string strFilename);
-		osg::Node *AddMesh(string strFilename);
+		std::string FileCreateTime(std::string strFilename);
+		osg::Node *AddMesh(std::string strFilename);
 
 	public:
 		VsMeshMgr();
 		virtual ~VsMeshMgr();
 
-		osg::Node *LoadMesh(string strFilename);
-		void ReleaseMesh(string strFilename);
-		bool ContainesMesh(string strFilename);
-		bool VsMeshMgr::FindMesh(string strFilename, pair<string, osg::ref_ptr<osg::Node>> &MeshPair, BOOL bThrowError = TRUE);
+		osg::Node *LoadMesh(std::string strFilename);
+		void ReleaseMesh(std::string strFilename);
+		bool ContainesMesh(std::string strFilename);
+		bool VsMeshMgr::FindMesh(std::string strFilename, std::pair<std::string, osg::ref_ptr<osg::Node>> &MeshPair, bool bThrowError = true);
 	};
 
 }				//VortexAnimatSim

@@ -51,7 +51,7 @@ class VsMouseSpring
 		void SetRigidBody (VsRigidBody *osgRB) {m_osgRB = osgRB;};
 		VsRigidBody* GetRigidBody() {return m_osgRB;};
 
-		void Visible(BOOL bVal);
+		void Visible(bool bVal);
 		void Initialize();
 };
 

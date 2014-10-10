@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "RobotPartInterface.h"
+
 namespace AnimatSim
 {
 	namespace Environment
@@ -28,16 +30,26 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsBody *m_lpPhysicsBody;
 
+            /// Array of pointers to robot part interfaces connected to this body part.
+            CStdArray<RobotPartInterface *> m_aryRobotParts;
+
 			virtual void UpdateData();
 
 		public:
 			BodyPart(void);
 			virtual ~BodyPart(void);
+																	
+			static BodyPart *CastToDerived(AnimatBase *lpBase) {return static_cast<BodyPart*>(lpBase);}
 
 #pragma region AccessorMutators
 
 			virtual IPhysicsBody *PhysicsBody();
 			virtual void PhysicsBody(IPhysicsBody *lpBody);
+
+            virtual CStdArray<RobotPartInterface *> *GetRobotPartInterfaces();
+            virtual void AddRobotPartInterface(RobotPartInterface *lpPart);
+            virtual void RemoveRobotPartInterface(RobotPartInterface *lpPart);
+			virtual int FindRobotPartListIndex(std::string strID, bool bThrowError = true);
 
 			virtual void Resize();
 
@@ -45,17 +57,19 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+            virtual void UpdateExtraData();
 
 #pragma endregion
 
-			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Selected(bool bValue, bool bSelectMultiple); 
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void UpdatePhysicsPosFromGraphics();
+            virtual void WakeDynamics();
 
 			virtual void Load(CStdXml &oXml);
 		};

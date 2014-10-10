@@ -25,11 +25,13 @@ namespace AnimatSim
 		public:
 			ExternalStimuliMgr();
 			virtual ~ExternalStimuliMgr();
+			
+			static ExternalStimuliMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<ExternalStimuliMgr*>(lpBase);}
 
-			virtual BOOL AddStimulus(string strXml);
-			virtual BOOL RemoveStimulus(string strID);
+			virtual bool AddStimulus(std::string strXml);
+			virtual bool RemoveStimulus(std::string strID);
 
-			//virtual void Load(string strProjectPath, string strFileName);
+			//virtual void Load(std::string strProjectPath, std::string strFileName);
 			virtual void Load(CStdXml &oXml);
 		};
 

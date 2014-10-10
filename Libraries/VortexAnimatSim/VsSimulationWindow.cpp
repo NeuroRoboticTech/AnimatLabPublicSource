@@ -68,7 +68,7 @@ void VsSimulationWindow::Update()
 	m_osgViewer->frame(); 
 }
 
-void VsSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
+void VsSimulationWindow::SetupTrackCamera(bool bResetEyePos)
 {
 	if(m_bTrackCamera)
 	{
@@ -99,7 +99,7 @@ void VsSimulationWindow::SetupTrackCamera(BOOL bResetEyePos)
 	}
 }
 
-void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, BOOL bResetEyePos)
+void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget, bool bResetEyePos)
 {
 	VxVector3 position(oTarget.x, oTarget.y, oTarget.z);
 
@@ -288,7 +288,7 @@ void VsSimulationWindow::Initialize()
 {
 	SimulationWindow::Initialize();
 
-	m_lpWinMgr = dynamic_cast<VsSimulationWindowMgr *>(m_lpSim->WindowMgr());
+	m_lpWinMgr = dynamic_cast<VsSimulationWindowMgr *>(m_lpSim->GetWindowMgr());
 	if(!m_lpWinMgr)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsWinMgr, Vs_Err_strUnableToConvertToVsWinMgr);
 
@@ -301,7 +301,7 @@ void VsSimulationWindow::Initialize()
 	else
 		InitStandalone(m_lpSim, lpVsSim);
 
-	SetupTrackCamera(TRUE);
+	SetupTrackCamera(true);
 }
 
 
@@ -322,10 +322,10 @@ void VsSimulationWindow::OnLoseFocus()
 {
 }
 
-float *VsSimulationWindow::GetDataPointer(const string &strDataType)
+float *VsSimulationWindow::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	GetCameraPosition();
 

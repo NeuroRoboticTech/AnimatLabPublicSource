@@ -37,16 +37,16 @@ SpikingChemicalSynapse::SpikingChemicalSynapse() : SynapseType()
 	m_dRelFacil = 0;
 	m_dFacilDecay = 0;
 
-	m_bVoltDep = FALSE;
+	m_bVoltDep = false;
 	m_dMaxRelCond = 0;
 	m_dSatPSPot = 0;
 	m_dThreshPSPot = 0;
 
-	m_bHebbian = FALSE;
+	m_bHebbian = false;
 	m_dMaxAugCond = 0;
 	m_dLearningInc = 0;
 	m_dLearningTime = 0;
-	m_bAllowForget = FALSE;
+	m_bAllowForget = false;
 	m_dForgetTime = 0;
 	m_dConsolidation = 0;
 }
@@ -174,7 +174,7 @@ double SpikingChemicalSynapse::RelFacil() {return m_dRelFacil;}
 **/
 void SpikingChemicalSynapse::FacilitationDecay(double dVal) 
 {
-	Std_IsAboveMin((double) 0, dVal, TRUE, "FacilitationDecay");
+	Std_IsAboveMin((double) 0, dVal, true, "FacilitationDecay");
 	m_dFacilDecay = dVal;
 	m_dFacilD = exp(-m_lpModule->TimeStep()/m_dFacilDecay);
 }
@@ -207,7 +207,7 @@ double SpikingChemicalSynapse::FacilDecay() {return m_dFacilDecay;}
 
 \param	bVal	true if voltage dependent. 
 **/
-void SpikingChemicalSynapse::VoltageDependent(BOOL bVal) {m_bVoltDep = bVal;}
+void SpikingChemicalSynapse::VoltageDependent(bool bVal) {m_bVoltDep = bVal;}
 
 /**
 \brief	Gets whether this synapse is voltage dependent.
@@ -217,7 +217,7 @@ void SpikingChemicalSynapse::VoltageDependent(BOOL bVal) {m_bVoltDep = bVal;}
 
 \return	true if voltage dependent, false else.
 **/
-BOOL SpikingChemicalSynapse::VoltageDependent() {return m_bVoltDep;}
+bool SpikingChemicalSynapse::VoltageDependent() {return m_bVoltDep;}
 
 /**
 \brief	Gets whether this synapse is voltage dependent.
@@ -227,7 +227,7 @@ BOOL SpikingChemicalSynapse::VoltageDependent() {return m_bVoltDep;}
 
 \return	true if voltage dependent, false else.
 **/
-BOOL SpikingChemicalSynapse::VoltDep() {return m_bVoltDep;}
+bool SpikingChemicalSynapse::VoltDep() {return m_bVoltDep;}
 
 /**
 \brief	Sets the maximum relative conductance.
@@ -327,7 +327,7 @@ double SpikingChemicalSynapse::ThreshPSPot() {return m_dThreshPSPot;}
 
 \param	bVal	true to use Hebbian learning. 
 **/
-void SpikingChemicalSynapse::Hebbian(BOOL bVal) {m_bHebbian = bVal;}
+void SpikingChemicalSynapse::Hebbian(bool bVal) {m_bHebbian = bVal;}
 
 /**
 \brief	Gets whether this synapse uses Hebbian learning.
@@ -337,7 +337,7 @@ void SpikingChemicalSynapse::Hebbian(BOOL bVal) {m_bHebbian = bVal;}
 
 \return	true if it uses Hebbian learning, false else.
 **/
-BOOL SpikingChemicalSynapse::Hebbian() {return m_bHebbian;}
+bool SpikingChemicalSynapse::Hebbian() {return m_bHebbian;}
 
 /**
 \brief	Sets the maximum augmented conductance.
@@ -437,7 +437,7 @@ double SpikingChemicalSynapse::HebbTimeWindow() {return m_dLearningTime;}
 
 \param	bVal	true to allow forgetting. 
 **/
-void SpikingChemicalSynapse::AllowForgetting(BOOL bVal) {m_bAllowForget = bVal;}
+void SpikingChemicalSynapse::AllowForgetting(bool bVal) {m_bAllowForget = bVal;}
 
 /**
 \brief	Gets whether forgetting is allowed.
@@ -447,7 +447,7 @@ void SpikingChemicalSynapse::AllowForgetting(BOOL bVal) {m_bAllowForget = bVal;}
 
 \return	true if forgetting allowed, false else.
 **/
-BOOL SpikingChemicalSynapse::AllowForgetting() {return m_bAllowForget;}
+bool SpikingChemicalSynapse::AllowForgetting() {return m_bAllowForget;}
 
 /**
 \brief	Gets whether forgetting is allowed.
@@ -457,7 +457,7 @@ BOOL SpikingChemicalSynapse::AllowForgetting() {return m_bAllowForget;}
 
 \return	true if forgetting allowed, false else.
 **/
-BOOL SpikingChemicalSynapse::AllowForget() {return m_bAllowForget;}
+bool SpikingChemicalSynapse::AllowForget() {return m_bAllowForget;}
 
 /**
 \brief	Sets the forgetting time window.
@@ -524,167 +524,136 @@ double SpikingChemicalSynapse::Consolidation() {return m_dConsolidation;}
 #pragma region DataAccesMethods
 
 
-BOOL SpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool SpikingChemicalSynapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{
 		EquilibriumPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SYNAPTICCONDUCTANCE")
 	{
 		SynapticConductance(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DECAYRATE")
 	{
 		DecayRate(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RELATIVEFACILITATION")
 	{
 		RelativeFacilitation(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FACILITATIONDECAY")
 	{
 		FacilitationDecay(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "VOLTAGEDEPENDENT")
 	{
 		VoltageDependent(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MAXRELATIVECONDUCTANCE")
 	{
 		MaxRelativeConductance(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SATURATEPOTENTIAL")
 	{
 		SaturatePotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "THRESHOLDPOTENTIAL")
 	{
 		ThresholdPotential(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HEBBIAN")
 	{
 		Hebbian(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MAXAUGMENTEDCONDUCTANCE")
 	{
 		MaxAugmentedConductance(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LEARNINGINCREMENT")
 	{
 		LearningIncrement(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LEARNINGTIMEWINDOW")
 	{
 		LearningTimeWindow(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ALLOWFORGETTING")
 	{
 		AllowForgetting(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FORGETTINGTIMEWINDOW")
 	{
 		ForgettingTimeWindow(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONSOLIDATIONFACTOR")
 	{
 		ConsolidationFactor(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void SpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void SpikingChemicalSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("EquilibriumPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SynapticConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("DecayRate");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeFacilitation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FacilitationDecay");
-	aryTypes.Add("Float");
-
-	aryNames.Add("VoltageDependent");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxRelativeConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SaturatePotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ThresholdPotential");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Hebbian");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxAugmentedConductance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LearningIncrement");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LearningTimeWindow");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AllowForgetting");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ForgettingTimeWindow");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ConsolidationFactor");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("EquilibriumPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SynapticConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DecayRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RelativeFacilitation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FacilitationDecay", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("VoltageDependent", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxRelativeConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SaturatePotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ThresholdPotential", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Hebbian", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxAugmentedConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LearningIncrement", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LearningTimeWindow", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AllowForgetting", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForgettingTimeWindow", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConsolidationFactor", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

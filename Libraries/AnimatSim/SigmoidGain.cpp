@@ -4,7 +4,7 @@
 \brief	Implements the sigmoid gain class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of SigmoidGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of SigmoidGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -127,6 +127,25 @@ float SigmoidGain::D() {return m_fltD;}
 **/
 void SigmoidGain::D(float fltVal) {m_fltD = fltVal;}
 
+void SigmoidGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	SigmoidGain *lpOrig = dynamic_cast<SigmoidGain *>(lpSource);
+
+	m_fltA = lpOrig->m_fltA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltD = lpOrig->m_fltD;
+}
+
+CStdSerialize *SigmoidGain::Clone()
+{
+	CStdSerialize *lpClone = new SigmoidGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float SigmoidGain::CalculateGain(float fltInput)
 {
 	if(InLimits(fltInput))
@@ -136,32 +155,32 @@ float SigmoidGain::CalculateGain(float fltInput)
 }
 
 
-BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool SigmoidGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "A")
 	{
-		A(atof(strValue.c_str()));
+		A((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "B")
 	{
-		B(atof(strValue.c_str()));
+		B((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "C")
 	{
-		C(atof(strValue.c_str()));
+		C((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "D")
 	{
-		D(atof(strValue.c_str()));
+		D((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -169,24 +188,17 @@ BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void SigmoidGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void SigmoidGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("A");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("C");
-	aryTypes.Add("Float");
-
-	aryNames.Add("D");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("C", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void SigmoidGain::Load(CStdXml &oXml)

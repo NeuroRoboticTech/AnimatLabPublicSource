@@ -39,7 +39,7 @@ VsBox::~VsBox()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsBox\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsBox\r\n", "", -1, false, true);}
 }
 
 void VsBox::CreateGraphicsGeometry()
@@ -47,10 +47,18 @@ void VsBox::CreateGraphicsGeometry()
 	m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
 }
 
+void VsBox::CalculateEstimatedMassAndVolume()
+{
+    m_fltEstimatedVolume = (m_fltLength * m_fltHeight * m_fltWidth)*pow(m_lpSim->DistanceUnits(), (float) 3.0);;
+    m_fltEstimatedMass = (m_fltDensity * m_fltLength * m_fltHeight * m_fltWidth) * m_lpSim->DisplayMassUnits();
+}
+
 void VsBox::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
+
+    CalculateEstimatedMassAndVolume();
 }
 
 void VsBox::CreateParts()
@@ -81,6 +89,8 @@ void VsBox::ResizePhysicsGeometry()
 			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
 		
 		vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

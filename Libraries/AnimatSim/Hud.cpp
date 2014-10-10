@@ -62,7 +62,7 @@ try
 	m_aryHudItems.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Hud\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Hud\r\n", "", -1, false, true);}
 }
 
 void Hud::Reset()
@@ -120,7 +120,7 @@ void Hud::Load(CStdXml &oXml)
 HudItem *Hud::LoadHudItem(CStdXml &oXml)
 {
 	HudItem *lpItem=NULL;
-	string strModuleName, strType;
+	std::string strModuleName, strType;
 
 try
 {
@@ -133,7 +133,7 @@ try
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "HudItem");
 
-	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpItem->Load(oXml);
 
 	return lpItem;

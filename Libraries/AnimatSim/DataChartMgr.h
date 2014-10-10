@@ -28,13 +28,15 @@ namespace AnimatSim
 		public:
 			DataChartMgr();
 			virtual ~DataChartMgr();
+			
+			static DataChartMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<DataChartMgr*>(lpBase);}
 
-			virtual BOOL AddDataChart(string strXml);
-			virtual BOOL RemoveDataChart(string strID);
+			virtual bool AddDataChart(std::string strXml);
+			virtual bool RemoveDataChart(std::string strID);
 
-			virtual void AddDataColumn(string strChartKey, DataColumn *lpColumn);
-			virtual void RemoveDataColumn(string strChartKey, string strColumnName, BOOL bThrowError = TRUE);
-			virtual DataColumn *FindDataColumn(string strChartKey, string strColumnName, BOOL bThrowError = TRUE);
+			virtual void AddDataColumn(std::string strChartKey, DataColumn *lpColumn);
+			virtual void RemoveDataColumn(std::string strChartKey, std::string strColumnName, bool bThrowError = true);
+			virtual DataColumn *FindDataColumn(std::string strChartKey, std::string strColumnName, bool bThrowError = true);
 
 			virtual void Load(CStdXml &oXml);
 		};

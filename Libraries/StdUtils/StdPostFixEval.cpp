@@ -4,7 +4,7 @@
 \brief	Implements the standard post fix equation evaluation class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -50,7 +50,7 @@ double CStdPostFixEval::Solution()
 
 \return	post-fix equation.
 **/
-string CStdPostFixEval::Equation()
+std::string CStdPostFixEval::Equation()
 {return m_strEquation;}
 
 /**
@@ -61,7 +61,7 @@ string CStdPostFixEval::Equation()
 
 \param	strVal	The new equation. 
 **/
-void CStdPostFixEval::Equation(string strVal)
+void CStdPostFixEval::Equation(std::string strVal)
 {
 	SavePostFixInArray(strVal);
 	m_strEquation = strVal;
@@ -75,7 +75,7 @@ void CStdPostFixEval::Equation(string strVal)
 
 \param	strVarName	Name of the variable. 
 **/
-void CStdPostFixEval::AddVariable(string strVarName)
+void CStdPostFixEval::AddVariable(std::string strVarName)
 {
 	CStdVariable *lpVar = FindVariable(strVarName);
 	if(lpVar) 
@@ -95,7 +95,7 @@ void CStdPostFixEval::AddVariable(string strVarName)
 \param	strVarName	Name of the variable. 
 \param	dblVal	  	The new value. 
 **/
-void CStdPostFixEval::SetVariable(string strVarName, double dblVal)
+void CStdPostFixEval::SetVariable(std::string strVarName, double dblVal)
 {
 	CStdVariable *lpVar = FindVariable(strVarName);
 	if(!lpVar) 
@@ -114,7 +114,7 @@ void CStdPostFixEval::SetVariable(string strVarName, double dblVal)
 
 \return	Pointer to found variable.
 **/
-CStdVariable *CStdPostFixEval::FindVariable(string strVarName)
+CStdVariable *CStdPostFixEval::FindVariable(std::string strVarName)
 {
 	int iSize = m_aryVariables.GetSize(), i;
 	CStdVariable *lpVar=NULL;
@@ -136,10 +136,10 @@ CStdVariable *CStdPostFixEval::FindVariable(string strVarName)
 
 \param [in,out]	aryPostFix	The post-fix array. 
 **/
-void CStdPostFixEval::FillInVariables(CStdArray<string> &aryPostFix)
+void CStdPostFixEval::FillInVariables(CStdArray<std::string> &aryPostFix)
 {
 	int iSize=aryPostFix.GetSize(), i;
-	string strTemp;
+	std::string strTemp;
 	CStdVariable *lpVar=NULL;
 
 	for(i=0; i<iSize; i++)
@@ -147,7 +147,7 @@ void CStdPostFixEval::FillInVariables(CStdArray<string> &aryPostFix)
 		lpVar = FindVariable(aryPostFix[i]);
 		if(lpVar)
 		{
-			strTemp = Std_Format("%f", lpVar->m_dblValue);
+			strTemp = str( boost::format("%f") % (float) lpVar->m_dblValue );
 			aryPostFix[i] = strTemp;
 		}
 	}
@@ -163,10 +163,10 @@ void CStdPostFixEval::FillInVariables(CStdArray<string> &aryPostFix)
 **/
 double CStdPostFixEval::Solve()
 {
-	CStdArray<string> aryPostFix;
+	CStdArray<std::string> aryPostFix;
 	double dblVal, dblLeft, dblRight;
 	long lSize, i;
-	string strTemp;
+	std::string strTemp;
 
 	aryPostFix = m_aryPostFix;
 	FillInVariables(aryPostFix);
@@ -276,7 +276,8 @@ double CStdPostFixEval::Solve()
 	}
 
 	//If there is more than one entry in the stack then something is wrong
-	if(m_aryStack.GetSize() != 1) THROW_ERROR(Std_Err_lToManyParamsLeft, Std_Err_strToManyParamsLeft);
+	if(m_aryStack.GetSize() != 1) 
+		THROW_ERROR(Std_Err_lToManyParamsLeft, Std_Err_strToManyParamsLeft);
 	dblVal = m_aryStack.Pop();
 
 	return dblVal;
@@ -290,11 +291,11 @@ double CStdPostFixEval::Solve()
 
 \param [in,out]	strEqu	The equation. 
 **/
-void CStdPostFixEval::SavePostFixInArray(string &strEqu)
+void CStdPostFixEval::SavePostFixInArray(std::string &strEqu)
 {
 	long lSize = strEqu.length();
 	int i;
-	string strTemp;
+	std::string strTemp;
 	
 	m_aryPostFix.RemoveAll();
 

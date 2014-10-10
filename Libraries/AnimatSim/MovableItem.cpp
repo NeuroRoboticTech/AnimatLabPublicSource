@@ -4,7 +4,7 @@
 \brief	Implements the body part class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -45,7 +45,7 @@ namespace AnimatSim
 **/
 MovableItem::MovableItem(void)
 {
-	m_bIsVisible = TRUE;
+	m_bIsVisible = true;
 	m_fltReportIsVisible = 1;
 	m_lpCallback = NULL;
 	m_lpParent = NULL;
@@ -64,6 +64,7 @@ MovableItem::MovableItem(void)
 	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
 	m_fltShininess = 64;
 	m_fltUserDefinedDraggerRadius = -1;
+    m_bIsSelected = false;
 }
 
 /**
@@ -129,7 +130,7 @@ int MovableItem::VisualSelectionType() {return 0;}
 
 \return	true if it can be manipulated, false if not. 
 **/
-BOOL MovableItem::AllowMouseManipulation() {return TRUE;}
+bool MovableItem::AllowMouseManipulation() {return true;}
 
 /**
 \brief	Gets the local position. (m_oPosition) 
@@ -157,7 +158,7 @@ CStdFPoint MovableItem::Position() {return m_oPosition;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	if(bUseScaling)
 		m_oPosition = oPoint * m_lpMovableSim->InverseDistanceUnits();
@@ -193,7 +194,7 @@ void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChang
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(float fltX, float fltY, float fltZ, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Position(float fltX, float fltY, float fltZ, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Position(vPos, bUseScaling, bFireChangeEvent);
@@ -216,7 +217,7 @@ reset the local position using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Position(string strXml, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void MovableItem::Position(std::string strXml, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -382,7 +383,7 @@ CStdFPoint MovableItem::Rotation()	{return m_oRotation;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Rotation(CStdFPoint &oPoint, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	m_oRotation = oPoint;
 	m_oReportRotation = m_oRotation;
@@ -410,7 +411,7 @@ void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpda
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void MovableItem::Rotation(float fltX, float fltY, float fltZ, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Rotation(vPos, bFireChangeEvent);
@@ -423,7 +424,7 @@ by the GUI to reset the rotation using an xml data packet.
 \author	dcofer
 \date	3/2/2011
 
-\param	strXml				The xml string used to load the rotation. 
+\param	strXml				The xml std::string used to load the rotation. 
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->RotationChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
@@ -431,7 +432,7 @@ by the GUI to reset the rotation using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void MovableItem::Rotation(string strXml, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void MovableItem::Rotation(std::string strXml, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -476,6 +477,23 @@ void MovableItem::ReportRotation(CStdFPoint &oPoint) {m_oReportRotation = oPoint
 void MovableItem::ReportRotation(float fltX, float fltY, float fltZ) {m_oReportRotation.Set(fltX, fltY, fltZ);}
 
 /**
+\brief	Returns a string representation of the transformation matrix of this object. This is primarily used 
+to save off the transform matrix into the project file. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	String of transform matrix for saving. 
+**/
+std::string MovableItem::LocalTransformationMatrixString()
+{
+	if(m_lpPhysicsMovableItem)
+		return m_lpPhysicsMovableItem->Physics_GetLocalTransformMatrixString();
+    else
+        return "";
+}
+
+/**
 \brief	Query if this object is visible. 
 
 \author	dcofer
@@ -483,7 +501,7 @@ void MovableItem::ReportRotation(float fltX, float fltY, float fltZ) {m_oReportR
 
 \return	true if visible, false if not. 
 **/
-BOOL MovableItem::IsVisible() {return m_bIsVisible;}
+bool MovableItem::IsVisible() {return m_bIsVisible;}
 
 /**
 \brief	Sets whether this part is visible or not. 
@@ -493,7 +511,7 @@ BOOL MovableItem::IsVisible() {return m_bIsVisible;}
 
 \param	bVal	true to make visible, false to make invisible. 
 **/
-void MovableItem::IsVisible(BOOL bVal) 
+void MovableItem::IsVisible(bool bVal) 
 {
 	m_bIsVisible = bVal;
 	m_fltReportIsVisible = (float) bVal;
@@ -523,7 +541,7 @@ float MovableItem::GraphicsAlpha() {return m_fltGraphicsAlpha;}
 **/
 void MovableItem::GraphicsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "GraphicsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "GraphicsAlpha");
 
 	m_fltGraphicsAlpha = fltVal;
 
@@ -552,7 +570,7 @@ float MovableItem::CollisionsAlpha() {return m_fltCollisionsAlpha;}
 **/
 void MovableItem::CollisionsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "CollisionsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "CollisionsAlpha");
 
 	m_fltCollisionsAlpha = fltVal;
 
@@ -581,7 +599,7 @@ float MovableItem::JointsAlpha() {return m_fltJointsAlpha;}
 **/
 void MovableItem::JointsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "JointsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "JointsAlpha");
 
 	m_fltJointsAlpha = fltVal;
 
@@ -610,7 +628,7 @@ float MovableItem::ReceptiveFieldsAlpha() {return m_fltReceptiveFieldsAlpha;}
 **/
 void MovableItem::ReceptiveFieldsAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "ReceptiveFieldsAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "ReceptiveFieldsAlpha");
 
 	m_fltReceptiveFieldsAlpha = fltVal;
 
@@ -639,7 +657,7 @@ float MovableItem::SimulationAlpha() {return m_fltSimulationAlpha;}
 **/
 void MovableItem::SimulationAlpha(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "SimulationAlpha");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "SimulationAlpha");
 
 	m_fltSimulationAlpha = fltVal;
 
@@ -671,7 +689,7 @@ float MovableItem::Alpha() {return m_fltAlpha;}
 **/
 void MovableItem::Alpha(float fltAlpha) 
 {
-	Std_InValidRange((float) 0, (float) 1, fltAlpha, TRUE, "Alpha");
+	Std_InValidRange((float) 0, (float) 1, fltAlpha, true, "Alpha");
 
 	m_fltAlpha = fltAlpha;
 }
@@ -723,7 +741,7 @@ void MovableItem::Ambient(float *aryColor)
 \param	strXml	The color data in an xml data packet
 **/
 
-void MovableItem::Ambient(string strXml)
+void MovableItem::Ambient(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -776,7 +794,7 @@ void MovableItem::Diffuse(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-void MovableItem::Diffuse(string strXml)
+void MovableItem::Diffuse(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -829,7 +847,7 @@ void MovableItem::Specular(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-void MovableItem::Specular(string strXml)
+void MovableItem::Specular(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -857,7 +875,7 @@ float MovableItem::Shininess() {return m_fltShininess;}
 **/
 void MovableItem::Shininess(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
+	Std_InValidRange((float) 0, (float) 128, fltVal, true, "Shininess");
 	m_fltShininess = fltVal;
 	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
 }
@@ -870,7 +888,7 @@ void MovableItem::Shininess(float fltVal)
 
 \return	Texture filename. 
 **/
-string MovableItem::Texture() {return m_strTexture;}
+std::string MovableItem::Texture() {return m_strTexture;}
 
 /**
 \brief	Sets the Texture filename. 
@@ -880,7 +898,7 @@ string MovableItem::Texture() {return m_strTexture;}
 
 \param	strValue	The texture filename. 
 **/
-void MovableItem::Texture(string strValue)
+void MovableItem::Texture(std::string strValue)
 {
 	m_strTexture = strValue;
 	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_TextureChanged();
@@ -908,7 +926,7 @@ CStdFPoint MovableItem::SelectedVertex() {return m_vSelectedVertex;}
 							then this callback will be skipped. 
 \param bUpdatePhysics		If true then the physcis object is also updated.
 **/
-void MovableItem::SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+void MovableItem::SelectedVertex(CStdFPoint &vPoint, bool bFireChangeEvent, bool bUpdatePhysics) 
 {
 	m_vSelectedVertex = vPoint;
 	
@@ -933,7 +951,7 @@ void MovableItem::SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent, BOOL
 							then this callback will be skipped. 
 \param bUpdatePhysics		If true then the physcis object is also updated.
 **/
-void MovableItem::SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+void MovableItem::SelectedVertex(float fltX, float fltY, float fltZ, bool bFireChangeEvent, bool bUpdatePhysics) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	SelectedVertex(vPos, bFireChangeEvent, bUpdatePhysics);
@@ -1020,6 +1038,19 @@ BoundingBox MovableItem::GetBoundingBox()
 }
 
 /**
+\brief	Sets one dimension of the bounding box. This does nothing for all parts except a mesh.
+
+\author	dcofer
+\date	6/7/2014
+
+\return	The bounding box.
+**/
+void MovableItem::SetBoundingBox(int iIdx, float fltVal)
+{
+}
+
+
+/**
 \brief	Gets whether this body part can be translated along the x-axis by the user with the drag handlers.
 
 \author	dcofer
@@ -1027,7 +1058,7 @@ BoundingBox MovableItem::GetBoundingBox()
 
 \return	true if can drag along x-axis.
 **/
-BOOL MovableItem::AllowTranslateDragX() {return TRUE;}
+bool MovableItem::AllowTranslateDragX() {return true;}
 
 
 /**
@@ -1038,7 +1069,7 @@ BOOL MovableItem::AllowTranslateDragX() {return TRUE;}
 
 \return	true if can drag along y-axis.
 **/
-BOOL MovableItem::AllowTranslateDragY() {return TRUE;}
+bool MovableItem::AllowTranslateDragY() {return true;}
 
 /**
 \brief	Gets whether this body part can be translated along the z-axis by the user with the drag handlers.
@@ -1048,7 +1079,7 @@ BOOL MovableItem::AllowTranslateDragY() {return TRUE;}
 
 \return	true if can drag along z-axis.
 **/
-BOOL MovableItem::AllowTranslateDragZ() {return TRUE;}
+bool MovableItem::AllowTranslateDragZ() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the x-axis by the user with the drag handlers.
@@ -1058,7 +1089,7 @@ BOOL MovableItem::AllowTranslateDragZ() {return TRUE;}
 
 \return	true if can rotate along x-axis.
 **/
-BOOL MovableItem::AllowRotateDragX() {return TRUE;}
+bool MovableItem::AllowRotateDragX() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the y-axis by the user with the drag handlers.
@@ -1068,7 +1099,7 @@ BOOL MovableItem::AllowRotateDragX() {return TRUE;}
 
 \return	true if can rotate along y-axis.
 **/
-BOOL MovableItem::AllowRotateDragY() {return TRUE;}
+bool MovableItem::AllowRotateDragY() {return true;}
 
 /**
 \brief	Gets whether this body part can be rotated along the z-axis by the user with the drag handlers.
@@ -1078,9 +1109,16 @@ BOOL MovableItem::AllowRotateDragY() {return TRUE;}
 
 \return	true if can rotate along z-axis.
 **/
-BOOL MovableItem::AllowRotateDragZ() {return TRUE;}
+bool MovableItem::AllowRotateDragZ() {return true;}
 
+/**
+ \brief User defined dragger radius.
 
+ \author    David Cofer
+ \date  10/8/2013
+
+ \param fltRadius   Sets the user defined drag radius.
+ */
 void MovableItem::UserDefinedDraggerRadius(float fltRadius)
 {
 	if(fltRadius <= 0)
@@ -1091,15 +1129,35 @@ void MovableItem::UserDefinedDraggerRadius(float fltRadius)
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_ResizeDragHandler(m_fltUserDefinedDraggerRadius);
 }
-		
 
+/**
+ \brief Gets the user defined dragger radius.
+
+ \author    David Cofer
+ \date  10/8/2013
+
+ \return    .
+ */
 float MovableItem::UserDefinedDraggerRadius()
 {return m_fltUserDefinedDraggerRadius;}
 
+/**
+ \brief Query if this object is selected.
+
+ \author    David Cofer
+ \date  10/8/2013
+
+ \return    true if selected, false if not.
+ */
+bool MovableItem::IsSelected()
+{return m_bIsSelected;}
+
 #pragma endregion
 
-void MovableItem::Selected(BOOL bValue, BOOL bSelectMultiple)
+void MovableItem::Selected(bool bValue, bool bSelectMultiple)
 {
+    m_bIsSelected = bValue;
+
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Selected(bValue, bSelectMultiple);
 
@@ -1180,18 +1238,18 @@ void MovableItem::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, flo
 
 \return	The calculated local position for world position.
 **/
-BOOL MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	if(m_lpPhysicsMovableItem)
 		return m_lpPhysicsMovableItem->Physics_CalculateLocalPosForWorldPos(fltWorldX, fltWorldY, fltWorldZ, vLocalPos);
-	return FALSE;
+	return false;
 }
 
 #pragma region DataAccesMethods
 
-float *MovableItem::GetDataPointer(const string &strDataType)
+float *MovableItem::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "WORLDPOSITIONX")
 		return &m_oReportWorldPosition.x;
@@ -1226,7 +1284,7 @@ float *MovableItem::GetDataPointer(const string &strDataType)
 	return 0;
 }
 
-BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MovableItem::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(strDataType == "POSITION")
 	{
@@ -1275,6 +1333,24 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 		Rotation(m_oReportRotation.x, m_oReportRotation.y, atof(strValue.c_str()));
 		return true;
 	}
+
+	if(strDataType == "BOUNDINGBOX.X")
+	{
+		SetBoundingBox(0, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "BOUNDINGBOX.Y")
+	{
+		SetBoundingBox(1, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "BOUNDINGBOX.Z")
+	{
+		SetBoundingBox(2, atof(strValue.c_str()));
+		return true;
+	}
 	
 	if(strDataType == "VISIBLE")
 	{
@@ -1284,259 +1360,208 @@ BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOO
 
 	if(strDataType == "GRAPHICSALPHA")
 	{
-		GraphicsAlpha(atof(strValue.c_str()));
+		GraphicsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "COLLISIONALPHA")
 	{
-		CollisionsAlpha(atof(strValue.c_str()));
+		CollisionsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "JOINTSALPHA")
 	{
-		JointsAlpha(atof(strValue.c_str()));
+		JointsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "RECEPTIVEFIELDSALPHA")
 	{
-		ReceptiveFieldsAlpha(atof(strValue.c_str()));
+		ReceptiveFieldsAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "SIMULATIONALPHA")
 	{
-		SimulationAlpha(atof(strValue.c_str()));
+		SimulationAlpha((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "AMBIENT")
 	{
 		Ambient(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.GREEN")
 	{
-		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {m_vAmbient.r(), (float) atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.BLUE")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), (float) atof(strValue.c_str()), m_vAmbient.a()};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "AMBIENT.ALPHA")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), (float) atof(strValue.c_str())};
 		Ambient(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "DIFFUSE")
 	{
 		Diffuse(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.GREEN")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
+		float aryVal[4] = {m_vDiffuse.r(), (float) atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.BLUE")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), atof(strValue.c_str()), m_vDiffuse.a()};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), (float) atof(strValue.c_str()), m_vDiffuse.a()};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "DIFFUSE.ALPHA")
 	{
-		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), (float) atof(strValue.c_str())};
 		Diffuse(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "SPECULAR")
 	{
 		Specular(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.GREEN")
 	{
-		float aryVal[4] = {m_vSpecular.r(), atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
+		float aryVal[4] = {m_vSpecular.r(), (float) atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.BLUE")
 	{
-		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), atof(strValue.c_str()), m_vSpecular.a()};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), (float) atof(strValue.c_str()), m_vSpecular.a()};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 
 	if(strDataType == "SPECULAR.ALPHA")
 	{
-		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), (float) atof(strValue.c_str())};
 		Specular(aryVal);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "SHININESS")
 	{
-		Shininess(atof(strValue.c_str()));
-		return TRUE;
+		Shininess((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strDataType == "TEXTURE")
 	{
 		Texture(strValue);
-		return TRUE;
+		return true;
 	}
 	
 	if(strDataType == "DRAGGERRADIUS")
 	{
-		UserDefinedDraggerRadius(atof(strValue.c_str()));
-		return TRUE;
+		UserDefinedDraggerRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void MovableItem::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MovableItem::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	aryNames.Add("Position");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("WorldPositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WorldPositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("WorldPositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PositionZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationX", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationY", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RotationZ", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Position.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Position.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Rotation.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Rotation.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Visible");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("GraphicsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CollisionAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("JointsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("ReceptiveFieldsAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SimulationAlpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Ambient.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Ambient.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Diffuse.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Diffuse.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Specular.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Specular.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Shininess");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Texture");
-	aryTypes.Add("String");
-
-	aryNames.Add("DraggerRadius");
-	aryTypes.Add("Float");
-
+	aryProperties.Add(new TypeProperty("Position", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Position.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Rotation.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BoundingBox.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Visible", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("GraphicsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CollisionAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("JointsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ReceptiveFieldsAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SimulationAlpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Ambient.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Diffuse.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Specular.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Shininess", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Texture", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DraggerRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion
@@ -1557,12 +1582,7 @@ void MovableItem::LoadPosition(CStdXml &oXml)
 	CStdFPoint vTemp;
 
 	Std_LoadPoint(oXml, "Position", vTemp);
-	Position(vTemp, TRUE, FALSE, FALSE);	
-
-	//if(!m_lpParent)
-	//	AbsolutePosition(m_oPosition);
-	//else
-	//	AbsolutePosition( m_lpParent->AbsolutePosition() + m_oPosition);
+	Position(vTemp, true, false, false);	
 }
 
 /**
@@ -1579,20 +1599,15 @@ void MovableItem::LoadRotation(CStdXml &oXml)
 {
 	CStdFPoint vTemp;
 	Std_LoadPoint(oXml, "Rotation", vTemp);
-	Rotation(vTemp, FALSE, FALSE);	
+	Rotation(vTemp, false, false);	
 }
 
 void MovableItem::Load(CStdXml &oXml)
 {
 	oXml.IntoElem();  //Into Element
 	
-	if(oXml.FindChildElement("TransformMatrix", false) && m_lpPhysicsMovableItem)
-		m_lpPhysicsMovableItem->Physics_LoadTransformMatrix(oXml);
-	else
-	{
-		LoadPosition(oXml);
-		LoadRotation(oXml);
-	}
+	LoadPosition(oXml);
+	LoadRotation(oXml);
 
 	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 	GraphicsAlpha(oXml.GetChildFloat("GraphicsAlpha", m_fltGraphicsAlpha));

@@ -6,6 +6,7 @@
 
 #pragma once
 
+
 namespace AnimatSim
 {
 	namespace Environment
@@ -34,13 +35,24 @@ namespace AnimatSim
 			NervousSystem *m_lpNervousSystem;
 
 			/// Tells if the organism is dead or not
-			BOOL m_bDead;
+			bool m_bDead;
+
+            /// Pointer to a robot interface node to allow the organism to be hooked to a robot.
+            RobotInterface *m_lpRobot;
+
+			virtual RobotInterface *AddRobotInterface(std::string strXml);
+			virtual void RemoveRobotInterface(std::string strID, bool bThrowError = true);
+			virtual RobotInterface *LoadRobotInterface(CStdXml &oXml);
 
 		public:
 			Organism();
 			virtual ~Organism();
 
-			virtual BOOL IsDead();
+			static Organism *CastToDerived(AnimatBase *lpBase) {return static_cast<Organism*>(lpBase);}
+
+			virtual bool IsDead();
+
+            virtual RobotInterface *GetRobotInterface() {return m_lpRobot;};
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
@@ -49,19 +61,20 @@ namespace AnimatSim
 #pragma endregion
 
 #pragma region DataAccesMethods
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
 			virtual void Initialize();
 			virtual void StepNeuralEngine();
+			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
-			virtual void Kill(BOOL bState = TRUE);
+			virtual void Kill(bool bState = true);
 			virtual void MinTimeStep(float &fltMin);
 
 			virtual void Load(CStdXml &oXml);
-			virtual AnimatSim::Behavior::NervousSystem *NervousSystem();
+			virtual AnimatSim::Behavior::NervousSystem *GetNervousSystem();
 		};
 
 	}			// Environment

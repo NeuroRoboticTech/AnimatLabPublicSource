@@ -4,7 +4,7 @@
 \brief	Implements the standard error information class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -32,7 +32,7 @@ CStdErrorInfo::CStdErrorInfo()
 \param	strSourceFile	The source filename. 
 \param	lSourceLine  	Source line number. 
 **/
-CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile, long lSourceLine)
+CStdErrorInfo::CStdErrorInfo(long lError, std::string strError, std::string strSourceFile, long lSourceLine)
 {
 	m_lError = lError;
 	m_strError = strError;
@@ -46,7 +46,7 @@ CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile,
 \author	dcofer
 \date	5/3/2011
 **/
-CStdErrorInfo::~CStdErrorInfo()
+CStdErrorInfo::~CStdErrorInfo() throw()
 {
 
 try
@@ -54,7 +54,7 @@ try
 	m_aryCallChain.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CStdErrorInfo\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CStdErrorInfo\n", "", -1, false, true);}
 }
 
 /**
@@ -65,9 +65,9 @@ catch(...)
 
 \return	.
 **/
-string CStdErrorInfo::Log()
+std::string CStdErrorInfo::Log()
 {
-	string strText;
+	std::string strText;
 
 	strText = "\r\nErrorNum: " + STR(m_lError) + "\r\n" + 
 						"ErrorMsg: " + STR(m_strError) + "\r\n" +
@@ -84,9 +84,9 @@ string CStdErrorInfo::Log()
 	return strText;
 }
 
-string CStdErrorInfo::StackTrace()
+std::string CStdErrorInfo::StackTrace()
 {
-	string strOut = "Source file: " + m_strSourceFile + "\r\nSource Line: " + STR(m_lSourceLine) + "\r\nStack Trace: \r\n";
+	std::string strOut = "Source file: " + m_strSourceFile + "\r\nSource Line: " + STR(m_lSourceLine) + "\r\nStack Trace: \r\n";
 	int iCount = m_aryCallChain.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
 		strOut += m_aryCallChain[iIdx];

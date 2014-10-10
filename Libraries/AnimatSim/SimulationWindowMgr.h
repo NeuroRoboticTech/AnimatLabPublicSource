@@ -39,8 +39,10 @@ protected:
 public:
 	SimulationWindowMgr(void);
 	~SimulationWindowMgr(void);
+						
+	static SimulationWindowMgr *CastToDerived(AnimatBase *lpBase) {return static_cast<SimulationWindowMgr*>(lpBase);}
 
-	virtual BOOL HasContainedWindow();
+	virtual bool HasContainedWindow();
 
 	/**
 	\brief	Gets the windows array.
@@ -52,7 +54,7 @@ public:
 	**/
 	virtual CStdPtrArray<SimulationWindow> *Windows() {return &m_aryWindows;};
 
-	virtual BOOL Update();	
+	virtual bool Update();	
 
 	/**
 	\brief	Shows the windows.
@@ -66,10 +68,10 @@ public:
 
 	virtual void UpdateBackgroundColor();
 
-	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError = TRUE);
+	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, bool bThrowError = true);
 
 	virtual void ResetSimulation();
-	virtual SimulationWindow *AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strHudXml);
+	virtual SimulationWindow *AddSimulationWindow(std::string strModule, std::string strType, bool bInit, HWND win, std::string strHudXml);
 	virtual void RemoveSimulationWindow(HWND win);
 	virtual void CloseAllWindows();
 	virtual void Load(CStdXml &oXml);

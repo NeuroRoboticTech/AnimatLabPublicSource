@@ -48,23 +48,23 @@ namespace AnimatSim
 				/// Pointer to a constraint that is used to represent the position flap.
 				ConstraintLimit *m_lpPosFlap;
 
-				/**
-				\brief	Creates the cylinder graphics for the visible hinge.
-				
-				\author	dcofer
-				\date	3/24/2011
-				**/
-				virtual void CreateCylinderGraphics() = 0;
+				/// The rotation of the hinge in degrees.
+				float m_fltRotationDeg;
+
+				/// The desired rotation of the hinge in degrees.
+				float m_fltDesiredPositionDeg;
 
 			public:
 				Hinge();
 				virtual ~Hinge();
+			
+				static Hinge *CastToDerived(AnimatBase *lpBase) {return static_cast<Hinge*>(lpBase);}
 
 				float CylinderRadius();
 				float CylinderHeight();
 				float FlapWidth();
 
-				virtual void Enabled(BOOL bValue);
+				virtual void Enabled(bool bValue);
 
 				virtual ConstraintLimit *UpperLimit() ;
 				virtual ConstraintLimit *LowerLimit();
@@ -72,8 +72,11 @@ namespace AnimatSim
 				virtual float GetPositionWithinLimits(float fltPos);
 				virtual float GetLimitRange();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
+				virtual int GetTargetDataTypeIndex(const std::string &strDataType);
+				virtual void UpdateData();
+				virtual void ResetSimulation();
 
 				virtual void Load(CStdXml &oXml);
 			};

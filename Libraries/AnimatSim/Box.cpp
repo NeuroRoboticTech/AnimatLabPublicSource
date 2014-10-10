@@ -4,7 +4,7 @@
 \brief	Implements the box class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -68,9 +68,9 @@ Box::~Box()
 
 float Box::Length() {return m_fltLength;}
 
-void Box::Length(float fltVal, BOOL bUseScaling)
+void Box::Length(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BoxSize.Length");
+	Std_IsAboveMin((float) 0, fltVal, true, "BoxSize.Length");
 	if(bUseScaling)
 		m_fltLength = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -81,9 +81,9 @@ void Box::Length(float fltVal, BOOL bUseScaling)
 
 float Box::Width() {return m_fltWidth;}
 
-void Box::Width(float fltVal, BOOL bUseScaling)
+void Box::Width(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BoxSize.Width");
+	Std_IsAboveMin((float) 0, fltVal, true, "BoxSize.Width");
 	if(bUseScaling)
 		m_fltWidth = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -94,9 +94,9 @@ void Box::Width(float fltVal, BOOL bUseScaling)
 
 float Box::Height() {return m_fltHeight;}
 
-void Box::Height(float fltVal, BOOL bUseScaling)
+void Box::Height(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BoxSize.Height");
+	Std_IsAboveMin((float) 0, fltVal, true, "BoxSize.Height");
 	if(bUseScaling)
 		m_fltHeight = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -115,7 +115,7 @@ void Box::Height(float fltVal, BOOL bUseScaling)
 **/
 void Box::LengthSections(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.LengthSections");
+	Std_IsAboveMin((int) 0, iVal, true, "BoxSize.LengthSections");
 	m_iLengthSections = iVal;
 
 	Resize();
@@ -141,7 +141,7 @@ int Box::LengthSections() {return m_iLengthSections;}
 **/
 void Box::WidthSections(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.WidthSections");
+	Std_IsAboveMin((int) 0, iVal, true, "BoxSize.WidthSections");
 	m_iWidthSections = iVal;
 
 	Resize();
@@ -167,7 +167,7 @@ int Box::WidthSections() {return m_iWidthSections;}
 **/
 void Box::HeightSections(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.HeightSections");
+	Std_IsAboveMin((int) 0, iVal, true, "BoxSize.HeightSections");
 	m_iHeightSections = iVal;
 
 	Resize();
@@ -214,77 +214,66 @@ float Box::WidthSegmentSize() {return m_fltWidth/(float) m_iWidthSections;}
 float Box::HeightSegmentSize() {return m_fltHeight/(float) m_iHeightSections;}
 
 
-BOOL Box::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Box::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "LENGTH")
 	{
-		Length(atof(strValue.c_str()));
-		return TRUE;
+		Length((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "WIDTH")
 	{
-		Width(atof(strValue.c_str()));
-		return TRUE;
+		Width((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "HEIGHT")
 	{
-		Height(atof(strValue.c_str()));
-		return TRUE;
+		Height((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "LENGTHSECTIONS")
 	{
 		LengthSections(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "WIDTHSECTIONS")
 	{
 		WidthSections(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "HEIGHTSECTIONS")
 	{
 		HeightSections(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Box::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Box::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Length");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Width");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Height");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LengthSections");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("WidthSections");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("HeightSections");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Length", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Width", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Height", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LengthSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("WidthSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("HeightSections", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Box::Load(CStdXml &oXml)

@@ -19,31 +19,34 @@ have the ability to load, clone, save and trace.
 **/
 class STD_UTILS_PORT CStdSerialize  
 {
+protected:
+
 public:
 	CStdSerialize();
 	virtual ~CStdSerialize();
 	
 	virtual CStdSerialize *Clone();
-	virtual void Trace(ostream &oOs);
+	virtual void Copy(CStdSerialize *lpSource);
+	virtual void Trace(std::ostream &oOs);
 	virtual void Load(CStdXml &oXml);
 	virtual void Save(CStdXml &oXml);
 };
 
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdSerialize *lpObj);
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdIPoint oPoint);
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdLPoint oPoint);
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdFPoint oPoint);
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint);
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdSerialize *lpObj);
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdIPoint oPoint);
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdLPoint oPoint);
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdFPoint oPoint);
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdDPoint oPoint);
 
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPoint);
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPoint);
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPoint);
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPoint);
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdIPoint &oPoint);
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdLPoint &oPoint);
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdFPoint &oPoint);
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdDPoint &oPoint);
 
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPoint, bool bThrowError = true);
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPoint, bool bThrowError = true);
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPoint, bool bThrowError = true);
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPoint, bool bThrowError = true);
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdIPoint &oPoint, bool bThrowError = true);
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdLPoint &oPoint, bool bThrowError = true);
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdFPoint &oPoint, bool bThrowError = true);
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdDPoint &oPoint, bool bThrowError = true);
 
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdIPoint &oPoint);
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdLPoint &oPoint);

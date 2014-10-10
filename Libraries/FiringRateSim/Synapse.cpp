@@ -4,7 +4,7 @@
 \brief	Implements the synapse class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"
@@ -30,6 +30,8 @@ Synapse::Synapse()
 	m_fltWeight=0;
 	m_fltModulation=0;
 	m_strType = "REGULAR";
+	m_bHasDelay = false;
+	m_fltDelayInterval = 0;
 }
 
 /**
@@ -46,7 +48,7 @@ try
 	m_arySynapses.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, false, true);}
 }
 
 /**
@@ -70,6 +72,134 @@ float Synapse::Weight()
 **/
 void Synapse::Weight(float fltVal)
 {m_fltWeight=fltVal;}
+
+/**
+\brief	Gets whether this synapse has a delay associated with it.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	True if there is a synaptic delay.
+**/
+bool Synapse::HasDelay() {return m_bHasDelay;}
+
+/**
+\brief	Sets whether this synapse has a delay associated with it.
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal	The new value. 
+**/
+void Synapse::HasDelay(bool bVal) 
+{
+	m_bHasDelay = bVal;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Gets the delay buffer size in time.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	delay buffer interval.
+**/
+float Synapse::DelayInterval() {return m_fltDelayInterval;}
+
+/**
+\brief	Sets the delay buffer interval.
+
+\author	dcofer
+\date	6/11/2014
+
+\param	fltVal	The new value. 
+**/
+void Synapse::DelayInterval(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "DelayInterval", true);
+	m_fltDelayInterval = fltVal;
+	SetDelayBufferSize();
+}
+
+/**
+\brief	If the time step is modified then we need to recalculate the length of the delay buffer.
+
+\discussion If a neural module has been assigned to this adapter then that is its target module and
+we need to use the time step associated with it to determine how big the delay buffer should be in length.
+If the module is NULL then the target for this adapter is the physics engine and we should use the physics time step instead.
+
+\author	dcofer
+\date	5/15/2014
+**/
+void Synapse::TimeStepModified()
+{
+	SetDelayBufferSize();
+}
+
+/**
+\brief	Recalculates the size of the delay buffer required.
+
+\author	dcofer
+\date	6/11/2014
+
+**/
+void Synapse::SetDelayBufferSize()
+{
+	if(m_bHasDelay && m_lpFRModule)
+	{
+		float fltTimeStep = m_lpFRModule->TimeStep();
+
+		if(fltTimeStep > 0)
+		{
+			int iLength = (int) (m_fltDelayInterval/fltTimeStep);
+			m_aryDelayBuffer.SetSize(iLength);
+		}
+	}
+	else
+		m_aryDelayBuffer.RemoveAll();
+}
+
+/**
+\brief	Processes this synapse.
+
+\author	dcofer
+\date	6/17/2014
+
+\return	Synaptic current.
+**/
+void Synapse::Process(float &fltCurrent)
+{
+	fltCurrent+=CalculateCurrent(); 
+}
+
+/**
+\brief	Calculates the synaptic current for this synapse.
+
+\author	dcofer
+\date	6/11/2014
+
+\return	Synaptic current.
+**/
+float Synapse::CalculateCurrent()
+{
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "3ce79124-1a4b-4a34-8399-56dfe1814515")
+	//	i=6;
+
+	float fltI = (this->FromNeuron()->FiringFreq(m_lpFRModule) * this->Weight() * this->CalculateModulation(m_lpFRModule) );
+
+	if(m_bHasDelay)
+	{
+		float fltNextI = m_aryDelayBuffer.GetHead();
+		//Now set the current value into the buffer.
+		m_aryDelayBuffer.AddEnd(fltI);
+		return fltNextI;
+	}
+	else
+		return fltI;
+}
 
 /**
 \brief	Gets a pointer to the synaptic weight.
@@ -134,7 +264,7 @@ Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 
 \param	strXml	The xml packet to load. 
 **/
-void Synapse::AddSynapse(string strXml, BOOL bDoNotInit)
+void Synapse::AddSynapse(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -156,7 +286,7 @@ void Synapse::AddSynapse(string strXml, BOOL bDoNotInit)
 \param	strID	   	GUID ID for the synaspe to remove. 
 \param	bThrowError	true to throw error if synapse is not found. 
 **/
-void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
+void Synapse::RemoveSynapse(std::string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
@@ -168,14 +298,14 @@ void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
 \author	dcofer
 \date	3/29/2011
 
-\param	strID	   	Identifier for the string. 
+\param	strID	   	Identifier for the std::string. 
 \param	bThrowError	true to throw error. 
 
 \return	The found synapse list position.
 **/
-int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
+int Synapse::FindSynapseListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -226,11 +356,13 @@ void Synapse::Initialize()
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_arySynapses[iIndex]->Initialize();
+
+	SetDelayBufferSize();
 }
 
-void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, FALSE);
+	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpFRModule = dynamic_cast<FiringRateModule *>(lpModule);
 
@@ -250,9 +382,9 @@ void Synapse::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Synapse::GetDataPointer(const string &strDataType)
+float *Synapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "WEIGHT")
 		return &m_fltWeight;
@@ -262,42 +394,57 @@ float *Synapse::GetDataPointer(const string &strDataType)
 	return NULL;
 }
 
-BOOL Synapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Synapse::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 		
-	if(Link::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Link::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "WEIGHT")
 	{
 		Weight(atof(strValue.c_str()));
-		return TRUE;
+		return true;
+	}
+
+	if(strType == "HASDELAY")
+	{
+		HasDelay(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "DELAYINTERVAL")
+	{
+		DelayInterval(atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Synapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Link::QueryProperties(aryNames, aryTypes);
+	Link::QueryProperties(aryProperties);
 
-	aryNames.Add("Weight");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("Weight", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("HasDelay", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DelayInterval", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
-BOOL Synapse::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Synapse::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		AddSynapse(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 
@@ -305,30 +452,34 @@ BOOL Synapse::AddItem(const string &strItemType, const string &strXml, BOOL bThr
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Synapse::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Synapse::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		RemoveSynapse(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
 
 void Synapse::ResetSimulation()
 {
+	int iSize = m_aryDelayBuffer.GetSize();
+	for(int iIdx=0; iIdx<iSize; iIdx++)
+		m_aryDelayBuffer[iIdx] = 0;
+
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_arySynapses[iIndex]->ResetSimulation();
@@ -348,13 +499,16 @@ void Synapse::Load(CStdXml &oXml)
 	if(Std_IsBlank(m_strFromID)) 
 		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: FromID");
 
-	m_bEnabled = oXml.GetChildBool("Enabled", TRUE);
+	m_bEnabled = oXml.GetChildBool("Enabled", true);
 	m_fltWeight = oXml.GetChildFloat("Weight");
+
+	m_bHasDelay = oXml.GetChildBool("HasDelay", m_bHasDelay);
+	m_fltDelayInterval = oXml.GetChildFloat("DelayInterval", m_fltDelayInterval);
 
 	m_arySynapses.RemoveAll();
 
 	//*** Begin Loading CompoundSynapses. *****
-	if(oXml.FindChildElement("CompoundSynapses", FALSE))
+	if(oXml.FindChildElement("CompoundSynapses", false))
 	{
 		oXml.IntoChildElement("CompoundSynapses");
 
@@ -385,7 +539,7 @@ void Synapse::Load(CStdXml &oXml)
 Synapse *Synapse::LoadSynapse(CStdXml &oXml)
 {
 	Synapse *lpSynapse=NULL;
-	string strType;
+	std::string strType;
 
 try
 {
@@ -397,7 +551,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, m_lpNode, TRUE);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, m_lpNode, true);
 	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
 

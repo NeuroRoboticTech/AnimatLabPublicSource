@@ -1,92 +1,93 @@
 #ifndef __STD_ADT_DLL_H__
 #define __STD_ADT_DLL_H__
 
+
 template <class T>
 // the linked list class
-class CStdPtrArray : public vector<T*>
+class CStdPtrArray : public std::vector<T*>
 {
 
 public:
-	virtual ~CStdPtrArray() {clear();};
+	virtual ~CStdPtrArray() {this->clear();};
 
 	virtual void Add(T *lpVal)
-	{push_back(lpVal);};
-	
+	{this->push_back(lpVal);};
+
 	virtual void clear()
-	{		
-		int iCount = size();
+	{
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			T *lpVal = at(i);
-			if(lpVal) 
+			T *lpVal = this->at(i);
+			if(lpVal)
 				delete lpVal;
 
-			at(i) = NULL;
+			this->at(i) = NULL;
 		}
 
-		vector<T*>::clear();
+		std::vector<T*>::clear();
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
+
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(vector<T*>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename std::vector<T*>::iterator oPos)
+	{this->erase(oPos);}
 
-	virtual void erase(vector<T*>::iterator oPos)
+	virtual void erase(typename std::vector<T*>::iterator oPos)
 	{
-		if(oPos!=end())
+		if(oPos!=this->end())
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
 
-		vector<T*>::erase(oPos);
+		std::vector<T*>::erase(oPos);
 	}
 
-	virtual void erase(vector<T*>::iterator oBegin, vector<T*>::iterator oEnd)
+	virtual void erase(typename std::vector<T*>::iterator oBegin, typename std::vector<T*>::iterator oEnd)
 	{
-		vector<T*>::iterator oPos;
+		typename std::vector<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
 
-		vector<T*>::erase(oBegin, oEnd);
+		std::vector<T*>::erase(oBegin, oEnd);
 	}
 
 
 	virtual void SetSize(long lSize)
-	{resize(lSize);};
+	{this->resize(lSize);};
 
 	virtual void InsertAt(int iPos, T *lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos > iSize) )
 			return;
 		else if(iPos == iSize)
 			Add(lpVal);
 		else
-			insert((begin()+iPos), lpVal);
+			this->insert((this->begin()+iPos), lpVal);
 	};
 
-
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 
 };
 
@@ -104,7 +105,7 @@ void CopyPtrArray(CStdPtrArray<T> &oSource, CStdPtrArray<T> &oDest)
 	{
 		lpOldObj = oSource[iIndex];
 		lpNewObj = dynamic_cast<T *>(lpOldObj->Clone());
-		
+
 		if(lpNewObj)
 			oDest.Add(lpNewObj);
 	}
@@ -113,244 +114,291 @@ void CopyPtrArray(CStdPtrArray<T> &oSource, CStdPtrArray<T> &oDest)
 
 template <class T>
 // the linked list class
-class CStdArray : public vector<T>
+class CStdArray : public std::vector<T>
 {
 
 public:
-	virtual ~CStdArray() {clear();};
+	virtual ~CStdArray() {this->clear();};
 
 	virtual void Add(T lpVal)
-	{push_back(lpVal);};
-	
-	virtual void RemoveAll() {clear();};
+	{this->push_back(lpVal);};
+
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(vector<T>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename std::vector<T>::iterator oPos)
+	{this->erase(oPos);}
 
 	virtual void SetSize(long lSize)
-	{resize(lSize);};
+	{this->resize(lSize);};
 
 	virtual void InsertAt(int iPos, T lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos > iSize) )
 			return;
 		else if(iPos == iSize)
 			Add(lpVal);
 		else
-			insert((begin()+iPos), lpVal);
+			this->insert((this->begin()+iPos), lpVal);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 
 };
 
 
 template <class T>
 // the linked list class
-class CStdPtrDeque : public deque<T*>
+class CStdCircularArray : public CStdArray<T>
+{
+protected:
+    int m_iCurrentPos;
+
+public:
+	CStdCircularArray()
+    {
+        m_iCurrentPos = 0;
+    };
+
+	virtual ~CStdCircularArray() {};
+
+    virtual int CurrentPos() {return m_iCurrentPos;}
+
+    virtual T GetHead()
+    {
+		int iPos = m_iCurrentPos+1;
+		iPos%=this->GetSize();
+		return (*this)[iPos];
+    }
+
+    virtual void AddEnd(T newNum)
+    {
+        (*this)[m_iCurrentPos] = newNum;
+	    m_iCurrentPos++;
+	    m_iCurrentPos%=this->GetSize();
+    }
+
+    T GetAt(int iPos)
+    {
+        return (*this)[(m_iCurrentPos+iPos)%this->GetSize()];
+    }
+
+    virtual float Average()
+    {
+        float fltTotal = 0;
+        for(int iIdx=0; iIdx<this->GetSize(); iIdx++)
+            fltTotal += (float) (*this)[iIdx];
+
+        float fltAvg = fltTotal/this->GetSize();
+        return fltAvg;
+    }
+};
+
+
+template <class T>
+// the linked list class
+class CStdPtrDeque : public std::deque<T*>
 {
 
 public:
-	virtual ~CStdPtrDeque() {clear();};
+	virtual ~CStdPtrDeque() {this->clear();};
 
 	virtual void AddFront(T *lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 
 	virtual void AddBack(T *lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 
 	virtual void Add(T *lpVal)
-	{push_back(lpVal);};
-	
+	{this->push_back(lpVal);};
+
 	virtual void Push(T lpVal)
-	{push_front(lpVal);};
-	
+	{this->push_front(lpVal);};
+
 	virtual T Pop()
 	{
-		T lpVal = front();
-		pop_front();
+		T lpVal = this->front();
+		this->pop_front();
 		return lpVal;
 	};
-	
+
 	virtual void clear()
-	{		
-		int iCount = size();
+	{
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			if(at(i)) delete at(i);
-			at(i) = NULL;
+			if(this->at(i)) delete this->at(i);
+			this->at(i) = NULL;
 		}
 
-		deque<T*>::clear();
+		std::deque<T*>::clear();
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(deque<T*>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename std::deque<T*>::iterator oPos)
+	{this->erase(oPos);}
 
-	virtual void erase(deque<T*>::iterator oPos)
+	virtual void erase(typename std::deque<T*>::iterator oPos)
 	{
-		if(oPos!=end())
+		if(oPos!=this->end())
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
 
-		deque<T*>::erase(oPos);
+		std::deque<T*>::erase(oPos);
 	}
 
-	virtual void erase(deque<T*>::iterator oBegin, deque<T*>::iterator oEnd)
+	virtual void erase(typename std::deque<T*>::iterator oBegin, typename std::deque<T*>::iterator oEnd)
 	{
-		deque<T*>::iterator oPos;
+		typename std::deque<T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
-			if(*oPos) 
+			if(*oPos)
 				delete *oPos;
 			*oPos = NULL;
 		}
 
-		deque<T*>::erase(oBegin, oEnd);
+		std::deque<T*>::erase(oBegin, oEnd);
 	}
 
 
 	virtual void InsertAt(int iPos, T *lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		insert((begin()+iPos), lpVal);
+		this->insert((this->begin()+iPos), lpVal);
 	};
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 
 };
 
 
-
 template <class T>
 // the linked list class
-class CStdDeque : public deque<T>
+class CStdDeque : public std::deque<T>
 {
 
 public:
-	virtual ~CStdDeque() {clear();};
+	virtual ~CStdDeque() {this->clear();};
 
 	virtual void AddFront(T lpVal)
-	{push_front(lpVal);};
+	{this->push_front(lpVal);};
 
 	virtual void AddBack(T lpVal)
-	{push_back(lpVal);};
+	{this->push_back(lpVal);};
 
 	virtual void Add(T lpVal)
-	{push_back(lpVal);};
-	
+	{this->push_back(lpVal);};
+
 	virtual void Push(T lpVal)
-	{push_front(lpVal);};
-	
+	{this->push_front(lpVal);};
+
 	virtual T Pop()
 	{
-		T lpVal = front();
-		pop_front();
+		T lpVal = this->front();
+		this->pop_front();
 		return lpVal;
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void RemoveAt(int iPos)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		erase(begin()+iPos);
+		this->erase(this->begin()+iPos);
 	};
 
-	virtual void RemoveAt(deque<T>::iterator oPos)
-	{erase(oPos);}
+	virtual void RemoveAt(typename std::deque<T>::iterator oPos)
+	{this->erase(oPos);}
 
 
 	virtual void InsertAt(int iPos, T lpVal)
 	{
-		int iSize = size();
+		int iSize = this->size();
 
 		if( (iPos < 0) || (iPos >= iSize) )
 			return;
 
-		insert((begin()+iPos), lpVal);
+		this->insert((this->begin()+iPos), lpVal);
 	};
 
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 
 };
 
 
 template <class T>
 // the Stack class
-class CStdPtrStack : public stack<T*>
+class CStdPtrStack : public std::stack<T*>
 {
 public:
-	virtual ~CStdPtrStack() {clear();};
+	virtual ~CStdPtrStack() {this->clear();};
 
-	virtual void RemoveAll() {clear();};
-	virtual void Clear() {clear();};
+	virtual void RemoveAll() {this->clear();};
+	virtual void Clear() {this->clear();};
 	virtual void clear()
-	{	
+	{
 		T *lpNode;
 
-		int iCount = size();
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
 		{
-			lpNode = Pop();
+			lpNode = this->Pop();
 			if(lpNode) delete lpNode;
 		}
 	};
 
 	virtual void Push(T *lpElement)
-	{push(lpElement);};
+	{this->push(lpElement);};
 
 	virtual T *Pop()
 	{
 		T *lpElement = NULL;
 
-		if( size() > 0 )
+		if( this->size() > 0 )
 			{
-				lpElement = top();
-				pop();
+				lpElement = this->top();
+				this->pop();
 				return lpElement;
 			}
 			else
@@ -359,12 +407,12 @@ public:
 
 	virtual T *Top() {return Examine();}
 
-	virtual int IsEmpty() {return !size();};
-	virtual int GetSize() {return size();};
+	virtual int IsEmpty() {return !this->size();};
+	virtual int GetSize() {return this->size();};
 	virtual T *Examine()
 	{
-	   	if( size() )
-				return top();
+	   	if( this->size() )
+				return this->top();
 			else
 				return NULL;
 	};
@@ -373,105 +421,99 @@ public:
 
 template <class T>
 // the Stack class
-class CStdStack : public stack<T>
+class CStdStack : public std::stack<T>
 {
 public:
-	virtual ~CStdStack() {clear();};
+	virtual ~CStdStack() {this->clear();};
 
-	virtual void RemoveAll() {clear();};
-	virtual void Clear() {clear();};
+	virtual void RemoveAll() {this->clear();};
+	virtual void Clear() {this->clear();};
 	virtual void clear()
-	{	
-		int iCount = size();
+	{
+		int iCount = this->size();
 		for(int i=0; i<iCount; i++)
-			pop();
+			this->pop();
 	};
 
 	virtual void Push(T lpElement)
-	{push(lpElement);};
+	{this->push(lpElement);};
 
 	virtual T Pop()
 	{
 		T oElement;
 
-		if( size() > 0 )
-			{
-				oElement = top();
-				pop();
-				return oElement;
-			}
-			else
-				return NULL;
+		oElement = this->top();
+		this->pop();
+		return oElement;
 	};
 
 	virtual T Top() {return Examine();}
 
-	virtual int IsEmpty() {return !size();};
-	virtual int GetSize() {return size();};
+	virtual int IsEmpty() {return !this->size();};
+	virtual int GetSize() {return this->size();};
 	virtual T Examine()
 	{return Top();};
 };
 
 
-
 template <class Key, class T>
 // the linked list class
-class CStdPtrMap : public map<Key, T*>
+class CStdPtrMap : public std::map<Key, T*>
 {
 
 public:
-	virtual ~CStdPtrMap() {clear();};
+	virtual ~CStdPtrMap() {this->clear();};
 
 	virtual void Add(Key oKey, T *lpVal)
 	{
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos!=end())
-			THROW_ERROR(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap); 
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end())
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		insert(make_pair(oKey, lpVal));
+		this->insert(std::make_pair(oKey, lpVal));
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
 	virtual void Remove(const Key &oKey)
 	{
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos==end())
-			THROW_ERROR(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap); 
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos==this->end())
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
-		erase(oKey);
+		this->erase(oKey);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 
 	virtual void clear()
-	{	
+	{
 		//Lets go through and delete all the non null pointers.
-		map<Key, T*>::iterator oPos;
-		for(oPos=begin(); oPos!=end(); ++oPos)
+		typename std::map<Key, T*>::iterator oPos;
+		for(oPos=this->begin(); oPos!=this->end(); ++oPos)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
-		
-		map<Key, T*>::clear();
+
+		std::map<Key, T*>::clear();
 	};
 
-	virtual size_type erase(const Key &oKey)
-	{	
-		map<Key, T*>::iterator oPos = find(oKey);
-		if(oPos!=end() && oPos->second)
+	virtual typename std::map<Key, T*>::size_type erase(const Key &oKey)
+	{
+		typename std::map<Key, T*>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end() && oPos->second)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
-		return map<Key, T*>::erase(oKey);
+		return std::map<Key, T*>::erase(oKey);
 	}
 
 /*
-	virtual void erase(map<Key, T*>::iterator oPos)
+	virtual void erase(std::map<Key, T*>::iterator oPos)
 	{
 		if(oPos!=end() && oPos->second)
 		{
@@ -479,19 +521,19 @@ public:
 			oPos->second = NULL;
 		}
 
-		map<Key, T*>::erase(oPos);
+		std::map<Key, T*>::erase(oPos);
 	}
 
-	virtual void erase(map<Key, T*>::iterator oBegin, map<Key, T*>::iterator oEnd)
+	virtual void erase(std::map<Key, T*>::iterator oBegin, std::map<Key, T*>::iterator oEnd)
 	{
-		map<Key, T*>::iterator oPos;
+		std::map<Key, T*>::iterator oPos;
 		for(oPos=oBegin; oPos!=oEnd; ++oPos)
 		{
 			if(oPos->second) delete oPos->second;
 			oPos->second = NULL;
 		}
 
-		map<Key, T*>::erase(oBegin, oEnd);
+		std::map<Key, T*>::erase(oBegin, oEnd);
 	}
 	*/
 };
@@ -504,10 +546,10 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 
 	oDest.RemoveAll();
 
-	map<Key, T*>::iterator oPos;
+	typename std::map<Key, T*>::iterator oPos;
 	for(oPos=oSource.begin(); oPos!=oSource.end(); ++oPos)
 	{
-		if(oPos->second) 
+		if(oPos->second)
 			lpNewObj = dynamic_cast<T *>(oPos->second->Clone());
 		else
 			lpNewObj = NULL;
@@ -519,38 +561,38 @@ void CopyPtrMap(CStdPtrMap<Key, T> &oSource, CStdPtrMap<Key, T> &oDest)
 
 template <class Key, class T>
 // the linked list class
-class CStdMap : public map<Key, T>
+class CStdMap : public std::map<Key, T>
 {
 
 public:
-	virtual ~CStdMap() {clear();};
+	virtual ~CStdMap() {this->clear();};
 
 	virtual void Add(Key oKey, T oVal)
 	{
-		map<Key, T>::iterator oPos = find(oKey);
-		if(oPos!=end())
-			THROW_ERROR(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap); 
+		typename std::map<Key, T>::iterator oPos = this->find(oKey);
+		if(oPos!=this->end())
+			StdUtils::Std_ThrowError(Std_Err_lDuplicateKeyInMap, Std_Err_strDuplicateKeyInMap, __FILE__, __LINE__, "");
 
-		insert(make_pair(oKey, oVal));
+		this->insert(std::make_pair(oKey, oVal));
 	};
 
-	virtual void RemoveAll() {clear();};
+	virtual void RemoveAll() {this->clear();};
 
-	virtual void RemoveAt(iterator it)
-	{erase(it);};
+	virtual void RemoveAt(typename std::map<Key, T>::iterator it)
+	{this->erase(it);};
 
 	virtual void Remove(const Key &oKey)
 	{
-		map<Key, T>::iterator oPos = find(oKey);
-		if(oPos==end())
-			THROW_ERROR(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap); 
+		typename std::map<Key, T>::iterator oPos = this->find(oKey);
+		if(oPos==this->end())
+			StdUtils::Std_ThrowError(Std_Err_lKeyNotFoundInMap, Std_Err_strKeyNotFoundInMap, __FILE__, __LINE__, "");
 
-		erase(oKey);
+		this->erase(oKey);
 	};
 
 	//These are for backward compatibility
-	virtual int GetSize() {return size();}; 
-	virtual void Clear() {clear();};
+	virtual int GetSize() {return this->size();};
+	virtual void Clear() {this->clear();};
 };
 
 
@@ -585,17 +627,23 @@ public:
 
 	bool operator==(const CStdPoint<T> &oPoint)
 	{
-		if( (x == oPoint.x) && (y == oPoint.y) && (z == oPoint.z) )
-			return true;
-		return false;
+		return Equal(oPoint, 1e-6);
 	};
 
 	bool operator!=(const CStdPoint<T> &oPoint)
 	{
-		if( (x == oPoint.x) && (y == oPoint.y) && (z == oPoint.z) )
-			return false;
-		return true;
+        return !Equal(oPoint, 1e-6);
 	};
+
+    bool Equal(const CStdPoint<T> &oPoint, double fltTolerance)
+    {
+        if( (fabs((double)(x - oPoint.x)) < fltTolerance) &&
+            (fabs((double)(y - oPoint.y)) < fltTolerance) &&
+            (fabs((double)(z - oPoint.z)) < fltTolerance) )
+            return true;
+        else
+            return false;
+    }
 
 	void operator=(const CStdPoint<T> &oPoint)
 	{
@@ -638,6 +686,43 @@ public:
 		return oNewPoint;
 	};
 
+	CStdPoint<T> operator*(const CStdPoint<T> &oPoint)
+	{
+		CStdPoint<T> oNewPoint;
+
+		oNewPoint.x = x * oPoint.x;
+		oNewPoint.y = y * oPoint.y;
+		oNewPoint.z = z * oPoint.z;
+		return oNewPoint;
+	};
+
+	float dot(const CStdPoint<T> &oPoint)
+	{
+        return ( (x * oPoint.x) + (y * oPoint.y) + (z * oPoint.z) );
+	};
+
+	CStdPoint<T> operator/(const CStdPoint<T> &oPoint)
+	{
+		CStdPoint<T> oNewPoint;
+
+        if(oPoint.x)
+    		oNewPoint.x = x / oPoint.x;
+        else
+            oNewPoint.x = 0;
+
+        if(oPoint.y)
+    		oNewPoint.y = y * oPoint.y;
+        else
+            oNewPoint.y = 0;
+
+        if(oPoint.z)
+    		oNewPoint.z = z * oPoint.z;
+        else
+            oNewPoint.z = 0;
+
+		return oNewPoint;
+	};
+
 	void operator+=(const float fltVal)
 	{
 		x+=fltVal;
@@ -668,7 +753,7 @@ public:
 			z/=fltVal;
 		}
 		else
-			THROW_ERROR(Std_Err_lDivByZero, Std_Err_strDivByZero);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 	};
 
 	CStdPoint<T> operator+(const float fltVal)
@@ -704,7 +789,7 @@ public:
 	CStdPoint<T> operator/(const float fltVal)
 	{
 		if(!fltVal)
-			THROW_ERROR(Std_Err_lDivByZero, Std_Err_strDivByZero);
+			StdUtils::Std_ThrowError(Std_Err_lDivByZero, Std_Err_strDivByZero, __FILE__, __LINE__, "");
 
 		CStdPoint<T> oNewPoint;
 
@@ -714,8 +799,18 @@ public:
 		return oNewPoint;
 	};
 
+	CStdPoint<T> operator^(const CStdPoint<T> &vVal)
+	{
+		CStdPoint<T> oNewPoint;
+
+		oNewPoint.x = y*vVal.z - z*vVal.y;
+		oNewPoint.y = z*vVal.x - x*vVal.z;
+		oNewPoint.z = x*vVal.y - y*vVal.x;
+		return oNewPoint;
+	};
+
 	double Magnitude()
-	{return sqrt( (x*x) + (y*y) + (z*z) );};
+	{return sqrt((double)((x*x) + (y*y) + (z*z)) );};
 
 	void Normalize()
 	{
@@ -739,15 +834,15 @@ public:
 	//If it is then it just sets it to zero.
 	void ClearNearZero(float fltTolerance = 1e-5f)
 	{
-		if(fabs(x) < fltTolerance)
+		if(fabs((float)x) < fltTolerance)
 			x = 0;
-		if(fabs(y) < fltTolerance)
+		if(fabs((float)y) < fltTolerance)
 			y = 0;
-		if(fabs(z) < fltTolerance)
+		if(fabs((float)z) < fltTolerance)
 			z = 0;
 	}
 
-	T operator[](const int iIndex)
+	T &operator[](const int iIndex)
 	{
 		switch(iIndex)
 		{
@@ -758,9 +853,9 @@ public:
 		case 2:
 			return z;
 		default:
-			THROW_PARAM_ERROR(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, "Index", iIndex);
+			StdUtils::Std_ThrowError(Std_Err_lInvalidIndex, Std_Err_strInvalidIndex, __FILE__, __LINE__, "");
 		}
-		return 0;
+		return z;
 	};
 };
 
@@ -820,18 +915,17 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 #define CStdFPoint CStdPoint<float>
 #define CStdDPoint CStdPoint<double>
 
-#define IntVector vector<int>
-#define LongVector vector<long>
-#define FloatVector vector<float>
-#define DoubleVector vector<float>
-
+#define IntVector std::vector<int>
+#define LongVector std::vector<long>
+#define FloatVector std::vector<float>
+#define DoubleVector std::vector<float>
 
 #ifdef NOTDEFINEDNOW
 	template<typename T>
 	void TraceSTL_Obj(const char* SourceFileName, int SourceLineNum, const char* ObjectName, T t, int Index = -1, bool bShowSource = true)
 	{
 		std::ostringstream oss;
-		
+
 		oss << ObjectName;
 		if (Index > -1) oss << "[" << Index << "]";
 		oss << " = " << t;
@@ -915,9 +1009,9 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 	#define TRACE_STL_ARRAY_DESC(t, c, n)					TraceSTL_Array(__FILE__, __LINE__, #t, t, c, n)
 #else //STD_TRACING_ON
 	#define TRACE_STL_OBJ_NS(t)
-	#define TRACE_STL_OBJ(t)             
-	#define TRACE_STL_CONTAINER(t)             
-	#define TRACE_STL_CONTAINER_DESC(t, n)             
+	#define TRACE_STL_OBJ(t)
+	#define TRACE_STL_CONTAINER(t)
+	#define TRACE_STL_CONTAINER_DESC(t, n)
 	#define TRACE_STL_ASSC_CONTAINER(t)
 	#define TRACE_STL_ASSC_CONTAINER_DESC(t)
 	#define TRACE_STL_ARRAY(t, c)
@@ -941,7 +1035,7 @@ void SaveToTextSTL_Container(const char* ObjectName, T &t, std::ostringstream &o
 	 oss << Description << "\r\n";
 
 	int Idx = 0;
-	for (T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
+	for (typename T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
 	{
 			std::string szObjectName = ObjectName;
 			SaveToTextSTL_Obj(ObjectName, *i, oss, Idx);
@@ -957,7 +1051,7 @@ void SaveToTextSTL_AsscContainer(const char* ObjectName, T &t, std::ostringstrea
 	 oss << Description << "\r\n";
 
 	int Idx = 0;
-	for (T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
+	for (typename T::const_iterator i = t.begin();i != t.end();++i, ++Idx)
 	{
 			std::string szObjectName = ObjectName;
 			SaveToTextSTL_Obj(ObjectName, i->first, oss, Idx);

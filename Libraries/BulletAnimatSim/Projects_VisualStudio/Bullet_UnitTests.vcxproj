@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug_Double|Win32">
+			<Configuration>Debug_Double</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release_Double|Win32">
+			<Configuration>Release_Double</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{7C64427E-0468-E645-B464-F5FBD7FE1481}</ProjectGuid>
+		<RootNamespace>Bullet_UnitTests</RootNamespace>
+		<Keyword>Win32Proj</Keyword>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings">
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup>
+		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\bin\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\x32\Debug\Bullet_UnitTests\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Bullet_UnitTests_single</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\bin\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\x32\Release\Bullet_UnitTests\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Bullet_UnitTests_single</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">..\..\..\bin\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">obj\x32\Debug_Double\Bullet_UnitTests\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">Bullet_UnitTests_double</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">..\..\..\bin\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">obj\x32\Release_Double\Bullet_UnitTests\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">Bullet_UnitTests_double</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_single.lib;osgbCollisiond_single.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_single_debug.lib;BulletCollision_vs2010_single_debug.lib;LinearMath_vs2010_single_debug.lib;BulletSoftBody_vs2010_single_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Bullet_UnitTests_single.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)Bullet_UnitTests_single.pdb</ProgramDataBaseFileName>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX86</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_single.lib;osgbCollision_single.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_single.lib;BulletCollision_vs2010_single.lib;LinearMath_vs2010_single.lib;BulletSoftBody_vs2010_single.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Bullet_UnitTests_single.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX86</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double|Win32'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;opengl32.lib;osgbDynamicsd_double.lib;osgbCollisiond_double.lib;osgwControlsd.lib;osgwQueryd.lib;osgwToolsd.lib;BulletDynamics_vs2010_double_debug.lib;BulletCollision_vs2010_double_debug.lib;LinearMath_vs2010_double_debug.lib;BulletSoftBody_vs2010_double_debug.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Bullet_UnitTests_double.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)Bullet_UnitTests_double.pdb</ProgramDataBaseFileName>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX86</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double|Win32'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OSGBULLET_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\include;..\..\..\..\3rdParty\osgWorks_03_00_00\include;..\..\..\..\3rdParty\Bullet-2.82\src;..\..\..\..\3rdParty\osgBullet_03_00_00\include;..\..\StdUtils;..\..\AnimatSim;..\..\OsgAnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;opengl32.lib;osgbDynamics_double.lib;osgbCollision_double.lib;osgwControls.lib;osgwQuery.lib;osgwTools.lib;BulletDynamics_vs2010_double.lib;BulletCollision_vs2010_double.lib;LinearMath_vs2010_double.lib;BulletSoftBody_vs2010_double.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Bullet_UnitTests_double.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\OpenSceneGraph-3.0.1\lib;..\..\..\..\3rdParty\osgWorks_03_00_00\lib;..\..\..\..\3rdParty\Bullet-2.82\lib;..\..\..\..\3rdParty\osgBullet_03_00_00\lib;..\..\..\..\3rdParty\boost_1_54_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX86</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="..\Bullet_UnitTests\stdafx.h" />
+		<ClInclude Include="..\Bullet_UnitTests\targetver.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="..\Bullet_UnitTests\Bullet_UnitTests.cpp">
+		</ClCompile>
+		<ClCompile Include="..\Bullet_UnitTests\Rotation_Tests.cpp">
+		</ClCompile>
+		<ClCompile Include="..\Bullet_UnitTests\stdafx.cpp">
+		</ClCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+	</ImportGroup>
+</Project>

@@ -34,7 +34,10 @@ namespace VortexAnimatSim
 			osg::ref_ptr<osg::Group> m_osgSelectedGroup;
 			osg::ref_ptr<VsDragger> m_osgDragger;
 
-			osg::Matrix m_osgLocalMatrix;		
+			osg::Matrix m_osgLocalMatrix;	
+
+            /// This is used to report back 0 from GetDataPointer for items that are not supported in vortex.
+            float m_fltNullReport;
 
 			/// Sometimes it is necessary to rotate the geometry that was generated to match the correct
 			/// orientation of the physics geometry. If this MT is set then this is added 
@@ -45,7 +48,7 @@ namespace VortexAnimatSim
 			//Some parts, like joints, have an additional offset matrix. This
 			//Final Matrix is the combination of the local and offset matrix. 
 			osg::Matrix m_osgFinalMatrix;		
-			BOOL m_bCullBackfaces;
+			bool m_bCullBackfaces;
 			osg::StateAttribute::GLMode m_eTextureMode;
 
 			osg::ref_ptr<osg::MatrixTransform> m_osgSelVertexMT;
@@ -59,11 +62,11 @@ namespace VortexAnimatSim
 			virtual void SetupPhysics() = 0;
 			virtual void DeleteGraphics();
 			virtual void DeletePhysics() = 0;
-			virtual void CreateSelectedGraphics(string strName);
-			virtual void CreateDragger(string strName);
-			virtual void CreateSelectedVertex(string strName);
+			virtual void CreateSelectedGraphics(std::string strName);
+			virtual void CreateDragger(std::string strName);
+			virtual void CreateSelectedVertex(std::string strName);
 			virtual void DeleteSelectedVertex();
-			virtual void AttachedPartMovedOrRotated(string strID);
+			virtual void AttachedPartMovedOrRotated(std::string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 
@@ -98,39 +101,42 @@ namespace VortexAnimatSim
 
 			//virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
 			virtual CStdFPoint GetOSGWorldCoords();
-			virtual osg::Matrix GetOSGWorldMatrix(BOOL bUpdate = FALSE);
+			virtual osg::Matrix GetOSGWorldMatrix(bool bUpdate = false);
 			//virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
 
 			virtual void EndGripDrag();
 
-			virtual string Physics_ID();
+			virtual std::string Physics_ID();
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_ResetGraphicsAndPhysics();
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
 			virtual void Physics_UpdateAbsolutePosition();
-			virtual void Physics_Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void Physics_Selected(bool bValue, bool bSelectMultiple); 
 			virtual float Physics_GetBoundingRadius();
 			virtual BoundingBox Physics_GetBoundingBox();
 			virtual void Physics_SetColor() {};
 			virtual void Physics_TextureChanged() {};
 			virtual void Physics_CollectData();
+            virtual void Physics_CollectExtraData() {};
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_AfterResetSimulation() {};
-			virtual float *Physics_GetDataPointer(const string &strDataType);
+			virtual float *Physics_GetDataPointer(const std::string &strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
-			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
-			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
+			virtual bool Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			virtual void Physics_LoadLocalTransformMatrix(CStdXml &oXml);
+			virtual void Physics_SaveLocalTransformMatrix(CStdXml &oXml);
+			virtual std::string Physics_GetLocalTransformMatrixString();
 			virtual void Physics_ResizeDragHandler(float fltRadius);
 
-			virtual void SetTexture(string strTexture);
+			virtual void SetTexture(std::string strTexture);
 			virtual void SetCulling();
 			virtual void SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess);
 			virtual void SetAlpha();
 			virtual void SetMaterialAlpha(osg::Material *osgMat, osg::StateSet *ss, float fltAlpha);
-			virtual void SetVisible(BOOL bVisible);
-			virtual void SetVisible(osg::Node *osgNode, BOOL bVisible);
+			virtual void SetVisible(bool bVisible);
+			virtual void SetVisible(osg::Node *osgNode, bool bVisible);
 			//virtual osg::Vec3 FindPointOnSurface(osg::Vec3 vDirection);
 
 			//virtual void Initialize() = 0;
@@ -143,7 +149,7 @@ namespace VortexAnimatSim
 			virtual osg::MatrixTransform* GetCameraMatrixTransform();
 
 			virtual void BuildLocalMatrix();
-			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
+			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName);
 			virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);
 
 		};

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug_x64|x64">
+			<Configuration>Debug_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release_x64|x64">
+			<Configuration>Release_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug_Double_x64|x64">
+			<Configuration>Debug_Double_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release_Double_x64|x64">
+			<Configuration>Release_Double_x64</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{810BB260-C1D4-5D4B-B17C-E45501ABC479}</ProjectGuid>
+		<RootNamespace>Robotics_UnitTests_x64</RootNamespace>
+		<Keyword>Win32Proj</Keyword>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<UseDebugLibraries>true</UseDebugLibraries>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>MultiByte</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<UseDebugLibraries>false</UseDebugLibraries>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings">
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup>
+		<_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">..\..\..\bin_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">obj\x64\Debug_x64\Robotics_UnitTests_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">Robotics_UnitTests_x64</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">..\..\..\bin_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">obj\x64\Release_x64\Robotics_UnitTests_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">Robotics_UnitTests_x64</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">false</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">..\..\..\bin_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">obj\x64\Debug_Double_x64\Robotics_UnitTests_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">Robotics_UnitTests_x64</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">true</LinkIncremental>
+		<OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">..\..\..\bin_x64\</OutDir>
+		<IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">obj\x64\Release_Double_x64\Robotics_UnitTests_x64\</IntDir>
+		<TargetName Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">Robotics_UnitTests_x64</TargetName>
+		<LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_x64|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>OldStyle</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreadsd.lib;osgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Robotics_UnitTests_x64.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)Robotics_UnitTests_x64.pdb</ProgramDataBaseFileName>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_x64|x64'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreads.lib;osg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Robotics_UnitTests_x64.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Double_x64|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat>OldStyle</DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\include;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreadsd.lib;osgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Robotics_UnitTests_x64.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<ProgramDataBaseFileName>$(OutDir)Robotics_UnitTests_x64.pdb</ProgramDataBaseFileName>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Double_x64|x64'">
+		<ClCompile>
+			<Optimization>Full</Optimization>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<MinimalRebuild>false</MinimalRebuild>
+			<StringPooling>true</StringPooling>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<FunctionLevelLinking>true</FunctionLevelLinking>
+			<PrecompiledHeader></PrecompiledHeader>
+			<WarningLevel>Level3</WarningLevel>
+		<ExceptionHandling>Async</ExceptionHandling>
+			<DebugInformationFormat></DebugInformationFormat>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\..\include;..\..\StdUtils;..\..\AnimatSim;..;..\..\..\..\3rdParty\boost_1_54_0;..\..\..\..\3rdParty\DynamixelSDK\x64\import;..\..\..\..\3rdParty\openFrameworksArduino\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Link>
+			<AdditionalDependencies>wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;OpenThreads.lib;osg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<OutputFile>$(OutDir)Robotics_UnitTests_x64.exe</OutputFile>
+			<AdditionalLibraryDirectories>..\..\..\lib;$(OutDir);..\..\..\..\3rdParty\boost_1_54_0\lib_x64;..\..\..\..\3rdParty\OpenSceneGraph-3.0.1_x64\lib;..\..\..\..\3rdParty\DynamixelSDK\x64\import;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+			<SubSystem>Console</SubSystem>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+			<TargetMachine>MachineX64</TargetMachine>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="..\Robotics_UnitTests\stdafx.h" />
+		<ClInclude Include="..\Robotics_UnitTests\targetver.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="..\Robotics_UnitTests\Robotics_UnitTests.cpp">
+		</ClCompile>
+		<ClCompile Include="..\Robotics_UnitTests\Rotation_Tests.cpp">
+		</ClCompile>
+		<ClCompile Include="..\Robotics_UnitTests\stdafx.cpp">
+		</ClCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+	</ImportGroup>
+</Project>

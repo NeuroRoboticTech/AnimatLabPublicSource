@@ -47,7 +47,7 @@ VsFluidPlane::~VsFluidPlane()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsFluidPlane/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsFluidPlane/\r\n", "", -1, false, true);}
 }
 
 void VsFluidPlane::CreateGraphicsGeometry()
@@ -85,7 +85,7 @@ void VsFluidPlane::SetGravity()
 		m_vxFluidPlane->setGravity(VxVector3(0, m_lpSim->Gravity(), 0));
 }
 
-void VsFluidPlane::Velocity(CStdFPoint &oPoint, BOOL bUseScaling)
+void VsFluidPlane::Velocity(CStdFPoint &oPoint, bool bUseScaling)
 {
 	FluidPlane::Velocity(oPoint, bUseScaling);
 
@@ -114,7 +114,7 @@ void VsFluidPlane::UpdateFluidPlaneHeight()
 	}
 }
 
-void VsFluidPlane::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+void VsFluidPlane::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix)
 {
 	FluidPlane::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
 	UpdateFluidPlaneHeight();

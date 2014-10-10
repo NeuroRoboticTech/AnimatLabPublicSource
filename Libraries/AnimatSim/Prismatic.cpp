@@ -4,7 +4,7 @@
 \brief	Implements the prismatic class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMotorizedJoint.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -85,7 +85,7 @@ try
 	}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Prismatic\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Prismatic\r\n", "", -1, false, true);}
 }
 
 /**
@@ -116,7 +116,7 @@ float Prismatic::BoxSize()
 	return m_fltSize * 3;
 };
 
-void Prismatic::Enabled(BOOL bValue) 
+void Prismatic::Enabled(bool bValue) 
 {
 	EnableMotor(m_bEnableMotorInit);
 	m_bEnabled = bValue;
@@ -163,23 +163,37 @@ float Prismatic::GetLimitRange()
 		return -1;
 }
 
-BOOL Prismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Prismatic::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(MotorizedJoint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(MotorizedJoint::SetData(strType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Prismatic::AddExternalNodeInput(float fltInput)
+int Prismatic::GetTargetDataTypeIndex(const std::string &strDataType)
 {
-	m_fltDesiredVelocity += fltInput;
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "DESIREDPOSITION")
+		return DESIRED_POSITION_TYPE;
+	else
+		return DESIRED_VELOCITY_TYPE;
+
+}
+
+void Prismatic::AddExternalNodeInput(int iTargetDataType, float fltInput)
+{
+	if(iTargetDataType == DESIRED_POSITION_TYPE)
+		m_fltDesiredPosition += fltInput;
+	else
+		m_fltDesiredVelocity += fltInput;
 }
 
 void Prismatic::Load(CStdXml &oXml)
@@ -188,8 +202,8 @@ void Prismatic::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
-	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
 	m_lpUpperLimit->Load(oXml, "UpperLimit");

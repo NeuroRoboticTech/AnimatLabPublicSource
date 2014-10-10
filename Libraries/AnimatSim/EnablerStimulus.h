@@ -20,29 +20,31 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the target node to enable.
-			string m_strTargetNodeID;
+			std::string m_strTargetNodeID;
 
 			/// Tells whether the node is enabled while stimulus is active or not.
-			BOOL m_bEnableWhenActive;
+			bool m_bEnableWhenActive;
 
 		public:
 			EnablerStimulus();
 			virtual ~EnablerStimulus();
 			
-			virtual string Type();
+			static EnablerStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<EnablerStimulus*>(lpBase);}
+			
+			virtual std::string Type();
 
-			virtual string TargetNodeID();
-			virtual void TargetNodeID(string strID);
+			virtual std::string TargetNodeID();
+			virtual void TargetNodeID(std::string strID);
 
-			virtual BOOL EnableWhenActive();
-			virtual void EnableWhenActive(BOOL bVal);
+			virtual bool EnableWhenActive();
+			virtual void EnableWhenActive(bool bVal);
 
 			virtual void Initialize();
 			virtual void Activate();
 			virtual void StepSimulation();
 			virtual void Deactivate();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
 

@@ -19,6 +19,8 @@ namespace AnimatSim
 	public:
 		Hud();
 		virtual ~Hud();
+			
+		static Hud *CastToDerived(AnimatBase *lpBase) {return static_cast<Hud*>(lpBase);}
 
 		virtual void Reset();
 		virtual void ResetSimulation();

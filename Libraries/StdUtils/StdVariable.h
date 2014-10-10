@@ -18,7 +18,7 @@ class STD_UTILS_PORT CStdVariable
 {
 public:
 	/// The variable name.
-	string m_strVariable;
+	std::string m_strVariable;
 
 	/// The variable value.
 	double m_dblValue;

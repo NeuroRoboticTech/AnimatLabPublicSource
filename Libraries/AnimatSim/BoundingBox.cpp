@@ -4,7 +4,7 @@
 \brief	Implements the bounding box class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "BoundingBox.h"
 
 namespace AnimatSim
@@ -58,16 +58,28 @@ float BoundingBox::Height()
 	return Max.y - Min.y;
 }
 
+float BoundingBox::GetDimensionSize(int iAxis)
+{
+	if(iAxis == 0)
+		return Length();
+	else if(iAxis == 1)
+		return Height();
+	else if(iAxis == 2)
+		return Width();
+	else
+		return -1;
+}
+
 float BoundingBox::MaxDimension()
 {
 	float fltMax = -1;
 
-	fltMax = max(fabs(Min.x), fabs(Min.y));
-	fltMax = max(fltMax, fabs(Min.z));
+	fltMax = STD_MAX(fabs(Min.x), fabs(Min.y));
+	fltMax = STD_MAX((double) fltMax, fabs(Min.z));
 
-	fltMax = max(fltMax, fabs(Max.x));
-	fltMax = max(fltMax, fabs(Max.y));
-	fltMax = max(fltMax, fabs(Max.z));
+	fltMax = STD_MAX((double) fltMax, fabs(Max.x));
+	fltMax = STD_MAX((double) fltMax, fabs(Max.y));
+	fltMax = STD_MAX((double) fltMax, fabs(Max.z));
 
 	return fltMax;
 }

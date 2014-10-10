@@ -27,12 +27,10 @@ namespace AnimatSim
 	class ANIMAT_PORT ActivatedItem : public AnimatBase  
 	{
 	protected:
-		/// Tells if this item is enabled or not. If it is not enabled then it is not run.
-		BOOL m_bEnabled;
 
 		/// Keeps track of whether we loaded in time values or time slices. This is used
 		/// during the initialization procedures.
-		BOOL m_bLoadedTime;
+		bool m_bLoadedTime;
 
 		/// The time slice where this item becomes active.
 		long m_lStartSlice;
@@ -58,37 +56,39 @@ namespace AnimatSim
 		int m_iStepIntervalCount;     
 
 		/// Determines whether this item is always active during simulation
-		BOOL m_bAlwaysActive;
+		bool m_bAlwaysActive;
 
 		/// true if item has been initialized
-		BOOL m_bInitialized;
+		bool m_bInitialized;
 
 		/// true if item has been activated
-		BOOL m_bIsActivated;
+		bool m_bIsActivated;
 
 		virtual void SetSliceData();
 
 	public:
 		ActivatedItem();
 		virtual ~ActivatedItem();
+		
+		static ActivatedItem *CastToDerived(AnimatBase *lpBase) {return static_cast<ActivatedItem*>(lpBase);}
 
-		virtual BOOL Enabled();
-		virtual void Enabled(BOOL bVal);
+		virtual bool Enabled();
+		virtual void Enabled(bool bVal);
 
-		virtual BOOL LoadedTime();
-		virtual void LoadedTime(BOOL bVal);
+		virtual bool LoadedTime();
+		virtual void LoadedTime(bool bVal);
 
 		virtual long StartSlice();
-		virtual void StartSlice(long lVal, BOOL bReInit = TRUE);
+		virtual void StartSlice(long lVal, bool bReInit = true);
 
 		virtual long EndSlice();
-		virtual void EndSlice(long lVal, BOOL bReInit = TRUE);
+		virtual void EndSlice(long lVal, bool bReInit = true);
 
 		virtual float StartTime();
-		virtual void StartTime(float fltVal, BOOL bReInit = TRUE);
+		virtual void StartTime(float fltVal, bool bReInit = true);
 
 		virtual float EndTime();
-		virtual void EndTime(float fltVal, BOOL bReInit = TRUE);
+		virtual void EndTime(float fltVal, bool bReInit = true);
 
 		virtual int StepInterval();
 		virtual void StepInterval(int iVal);
@@ -96,17 +96,17 @@ namespace AnimatSim
 		virtual int StepIntervalCount();
 		virtual void StepIntervalCount(int iVal);
 
-		virtual BOOL AlwaysActive();
-		virtual void AlwaysActive(BOOL bVal);
+		virtual bool AlwaysActive();
+		virtual void AlwaysActive(bool bVal);
 
-		BOOL IsActivated();
-		BOOL IsInitialized();
+		bool IsActivated();
+		bool IsInitialized();
 
-		BOOL NeedToActivate();
-		BOOL NeedToDeactivate();
+		bool NeedToActivate();
+		bool NeedToDeactivate();
 
 		/**
-		\fn	virtual BOOL ActivatedItem::operator<(ActivatedItem *lpItem) = 0;
+		\fn	virtual bool ActivatedItem::operator<(ActivatedItem *lpItem) = 0;
 		
 		\brief	Less-than comparison operator. 
 
@@ -120,21 +120,21 @@ namespace AnimatSim
 		
 		\return	true if the first parameter is less than the second. 
 		**/
-		virtual BOOL operator<(ActivatedItem *lpItem) = 0;
+		virtual bool operator<(ActivatedItem *lpItem) = 0;
 
 		virtual void Initialize();
 		virtual void ReInitialize();
-		virtual BOOL NeedToStep();
+		virtual bool NeedToStep();
 		virtual void ResetSimulation();
 		virtual void Activate();
 		virtual void Deactivate();
 		virtual void TimeStepModified();
 
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-		virtual BOOL Overlaps(ActivatedItem *lpItem);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual bool Overlaps(ActivatedItem *lpItem);
 		virtual void Load(CStdXml &oXml);
 	};
 
-	BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
+	bool ANIMAT_PORT LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);
 
 }			//AnimatSim

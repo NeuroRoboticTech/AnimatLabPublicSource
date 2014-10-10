@@ -20,8 +20,6 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_ButtonImage As System.Drawing.Image
-
 #End Region
 
 #Region " Properties "
@@ -75,31 +73,6 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property ButtonImage() As System.Drawing.Image
-            Get
-                If m_ButtonImage Is Nothing AndAlso Me.ButtonImageName.Trim.Length > 0 Then
-                    Dim myAssembly As System.Reflection.Assembly
-                    myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
-                    m_ButtonImage = ImageManager.LoadImage(myAssembly, Me.ButtonImageName)
-                End If
-
-                Return m_ButtonImage
-            End Get
-            Set(ByVal Value As System.Drawing.Image)
-                If Not Value Is Nothing Then
-                    m_ButtonImage = Value
-                End If
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property ButtonImageName() As String
-            Get
-                Return ""
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overrides ReadOnly Property StructureID() As String
             Get
                 If Not Me.ParentStructure Is Nothing Then
@@ -136,13 +109,6 @@ Namespace DataObjects.Physical
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_thDataTypes Is Nothing Then m_thDataTypes.ClearIsDirty()
-        End Sub
-
-        Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
-            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-            Dim bpOrig As BodyPart = DirectCast(doOriginal, BodyPart)
-
         End Sub
 
         'This method is called for each part type during the catalog of the modules. It sets up the 
@@ -214,6 +180,7 @@ Namespace DataObjects.Physical
                     If Not m_doInterface Is Nothing Then
                         RemoveHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
                         RemoveHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                        RemoveHandler m_doInterface.OnSizeChanged, AddressOf Me.OnSizeChanged
                         RemoveHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
                     End If
 
@@ -399,6 +366,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
 
+
             oXml.OutOfElem() 'Outof BodyPart Element
         End Sub
 
@@ -493,6 +461,7 @@ Namespace DataObjects.Physical
             End Try
 
         End Sub
+
 
 #Region " Copy/Paste Methods "
 

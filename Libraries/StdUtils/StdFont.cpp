@@ -4,7 +4,7 @@
 \brief	Implements the standard font class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -46,7 +46,7 @@ CStdFont::~CStdFont()
 \param	strParamName	Name of the font xml parameter. 
 \param	bThrowError 	true to throw error if there is a problem. 
 **/
-void CStdFont::Load(CStdXml &oXml, string strParamName, bool bThrowError)
+void CStdFont::Load(CStdXml &oXml, std::string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
 	{
@@ -73,7 +73,7 @@ void CStdFont::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 \param [in,out]	oXml	The xml to save. 
 \param	strParamName	Name of the font xml parameter. 
 **/
-void CStdFont::Save(CStdXml &oXml, string strParamName)
+void CStdFont::Save(CStdXml &oXml, std::string strParamName)
 {
 	oXml.AddChildElement(strParamName);
 	oXml.SetChildAttrib("Name", m_strName);

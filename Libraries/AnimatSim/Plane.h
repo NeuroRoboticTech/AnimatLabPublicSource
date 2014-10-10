@@ -50,6 +50,8 @@ namespace AnimatSim
 				Plane();
 				virtual ~Plane();
 
+				static Plane *CastToDerived(AnimatBase *lpBase) {return static_cast<Plane*>(lpBase);}
+
 				virtual float CornerX();
 				virtual float CornerY();
 				
@@ -57,8 +59,8 @@ namespace AnimatSim
 				virtual float GridY();
 
 				virtual CStdFPoint Size();
-				virtual void Size(CStdFPoint ptPoint, BOOL bUseScaling = TRUE);
-				virtual void Size(string strXml, BOOL bUseScaling = TRUE);
+				virtual void Size(CStdFPoint ptPoint, bool bUseScaling = true);
+				virtual void Size(std::string strXml, bool bUseScaling = true);
 
 				virtual int WidthSegments();
 				virtual void WidthSegments(int iVal);
@@ -66,8 +68,8 @@ namespace AnimatSim
 				virtual int LengthSegments();
 				virtual void LengthSegments(int iVal);
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

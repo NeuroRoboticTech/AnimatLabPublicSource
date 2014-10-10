@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical
 
-    Public Class ConstraintRelaxation
+    Public MustInherit Class ConstraintRelaxation
         Inherits Framework.DataObject
 
 #Region " Enums "
@@ -27,6 +27,15 @@ Namespace DataObjects.Physical
             Relaxation6 = 5
         End Enum
 
+        Public Enum enumCoordinateAxis
+            LinearX = 1
+            LinearY = 2
+            LinearZ = 3
+            AngularX = 4
+            AngularY = 5
+            AngularZ = 6
+        End Enum
+
 #End Region
 
 #Region " Attributes "
@@ -37,20 +46,19 @@ Namespace DataObjects.Physical
         'The coordinate ID that this is associated with
         Protected m_eCoordinateID As enumCoordinateID = enumCoordinateID.Relaxation1
 
+        Protected m_eCoordinateAxis As enumCoordinateAxis = enumCoordinateAxis.LinearX
+
         'The stiffness of the constraint coordinate.
         Protected m_snStiffness As ScaledNumber
 
         'The damping of the constraint coordinate
         Protected m_snDamping As ScaledNumber
 
-        'The loss for the constraint coordinate.
-        Protected m_snLoss As ScaledNumber
-
 #End Region
 
 #Region " Properties "
 
-        Public Overridable Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return m_strDescription
             End Get
@@ -69,13 +77,22 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable Property CoordinateAxis() As enumCoordinateAxis
+            Get
+                Return m_eCoordinateAxis
+            End Get
+            Set(ByVal Value As enumCoordinateAxis)
+                m_eCoordinateAxis = Value
+            End Set
+        End Property
+
         Public Overridable Property Stiffness() As ScaledNumber
             Get
                 Return m_snStiffness
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The stiffness of the collision between materials can not be less than zero.")
+                    Throw New System.Exception("The stiffness can not be less than zero.")
                 End If
                 SetSimData("Stiffness", Value.ActualValue.ToString, True)
                 m_snStiffness.CopyData(Value)
@@ -89,23 +106,10 @@ Namespace DataObjects.Physical
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The damping of the collision between materials can not be less than zero.")
+                    Throw New System.Exception("The damping can not be less than zero.")
                 End If
                 SetSimData("Damping", Value.ActualValue.ToString, True)
                 m_snDamping.CopyData(Value)
-            End Set
-        End Property
-
-        Public Overridable Property Loss() As ScaledNumber
-            Get
-                Return m_snLoss
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The Loss of the collision between materials can not be less than zero.")
-                End If
-                SetSimData("Loss", Value.ActualValue.ToString, True)
-                m_snLoss.CopyData(Value)
             End Set
         End Property
 
@@ -118,21 +122,20 @@ Namespace DataObjects.Physical
 
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
             m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 5, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
-            m_snLoss = New AnimatGUI.Framework.ScaledNumber(Me, "Loss", 0, ScaledNumber.enumNumericScale.None)
             m_bEnabled = False
 
         End Sub
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strDescription As String, ByVal eCoordID As enumCoordinateID)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strDescription As String, ByVal eCoordID As enumCoordinateID, ByVal eCoordAxis As enumCoordinateAxis)
             MyBase.New(doParent)
 
             m_strName = strName
             m_strDescription = strDescription
             m_eCoordinateID = eCoordID
+            m_eCoordinateAxis = eCoordAxis
 
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 100, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
             m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 5, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
-            m_snLoss = New AnimatGUI.Framework.ScaledNumber(Me, "Loss", 0, ScaledNumber.enumNumericScale.None)
             m_bEnabled = False
 
         End Sub
@@ -142,16 +145,8 @@ Namespace DataObjects.Physical
 
             m_snStiffness.ClearIsDirty()
             m_snDamping.ClearIsDirty()
-            m_snLoss.ClearIsDirty()
 
         End Sub
-
-        Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
-            Dim oNewNode As New ConstraintRelaxation(doParent)
-            oNewNode.CloneInternal(Me, bCutData, doRoot)
-            If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
-            Return oNewNode
-        End Function
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
@@ -163,7 +158,7 @@ Namespace DataObjects.Physical
             m_strDescription = m_strDescription
             m_snStiffness = DirectCast(doOrig.m_snStiffness.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snDamping = DirectCast(doOrig.m_snDamping.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-            m_snLoss = DirectCast(doOrig.m_snLoss.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_eCoordinateAxis = doOrig.m_eCoordinateAxis
 
         End Sub
 
@@ -188,11 +183,6 @@ Namespace DataObjects.Physical
             pbNumberBag = m_snDamping.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), "Damping", _
                             "Relaxation Properties", "The damping for this constraint coordinate axis.", pbNumberBag, _
-                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snLoss.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Loss", pbNumberBag.GetType(), "Loss", _
-                            "Relaxation Properties", "The velocicty loss for this constraint coordinate axis.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
@@ -225,7 +215,6 @@ Namespace DataObjects.Physical
 
                 m_snStiffness.LoadData(oXml, "Stiffness")
                 m_snDamping.LoadData(oXml, "Damping")
-                m_snLoss.LoadData(oXml, "Loss")
 
                 oXml.OutOfElem()
             End If
@@ -246,7 +235,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("CoordinateID", Convert.ToInt32(m_eCoordinateID))
             m_snStiffness.SaveData(oXml, "Stiffness")
             m_snDamping.SaveData(oXml, "Damping")
-            m_snLoss.SaveData(oXml, "Loss")
 
             oXml.OutOfElem()
 
@@ -265,7 +253,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("CoordinateID", Convert.ToInt32(m_eCoordinateID))
             m_snStiffness.SaveSimulationXml(oXml, Me, "Stiffness")
             m_snDamping.SaveSimulationXml(oXml, Me, "Damping")
-            m_snLoss.SaveSimulationXml(oXml, Me, "Loss")
 
             oXml.OutOfElem()
         End Sub
@@ -312,7 +299,7 @@ Namespace DataObjects.Physical
                 Dim svValue As ConstraintRelaxation = DirectCast(value, ConstraintRelaxation)
 
                 If svValue.Enabled Then
-                    Return svValue.Stiffness.ToString
+                    Return svValue.Stiffness.Text
                 Else
                     Return ""
                 End If

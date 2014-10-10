@@ -4,7 +4,7 @@
 \brief	Implements the receptive field pair class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -66,7 +66,7 @@ ReceptiveFieldPair::~ReceptiveFieldPair()
 {
 }
 
-void ReceptiveFieldPair::FieldID(string strID)
+void ReceptiveFieldPair::FieldID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
@@ -74,9 +74,9 @@ void ReceptiveFieldPair::FieldID(string strID)
 	m_strFieldID = strID;
 }
 
-string ReceptiveFieldPair::FieldID() {return m_strFieldID;}
+std::string ReceptiveFieldPair::FieldID() {return m_strFieldID;}
 
-void ReceptiveFieldPair::TargetNodeID(string strID)
+void ReceptiveFieldPair::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
@@ -84,7 +84,7 @@ void ReceptiveFieldPair::TargetNodeID(string strID)
 	m_strTargetNodeID = strID;
 }
 
-string ReceptiveFieldPair::TargetNodeID() {return m_strTargetNodeID;}
+std::string ReceptiveFieldPair::TargetNodeID() {return m_strTargetNodeID;}
 
 ReceptiveField *ReceptiveFieldPair::Field() {return m_lpField;}
 
@@ -104,7 +104,7 @@ void ReceptiveFieldPair::Initialize()
 void ReceptiveFieldPair::StepSimulation()
 {
 	if(m_lpField && m_lpNode)
-		m_lpNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
+		m_lpNode->AddExternalNodeInput(0, m_lpField->m_fltCurrent);
 }
 
 

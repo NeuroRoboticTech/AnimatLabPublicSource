@@ -37,6 +37,8 @@ Namespace Framework
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_tnWorkspaceNode As Crownwood.DotNetMagic.Controls.Node
 
+        Protected m_ButtonImage As System.Drawing.Image
+
         Protected m_oTag As Object
 
         Protected m_bIsInitialized As Boolean = False
@@ -62,6 +64,15 @@ Namespace Framework
                     m_tnWorkspaceNode.Text = m_strName
                     Util.ProjectWorkspace.TreeView.Sort()
                 End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property Description() As String
+            Get
+                Return ""
+            End Get
+            Set(ByVal Value As String)
             End Set
         End Property
 
@@ -198,6 +209,12 @@ Namespace Framework
             End Get
         End Property
 
+        Public Overridable ReadOnly Property ModuleFilename() As String
+            Get
+                Return Util.Application.Physics.LibraryPrefix & Me.ModuleName & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
+            End Get
+        End Property
+
         <Browsable(False)> _
         Public Overridable ReadOnly Property ClassName() As String
             Get
@@ -253,6 +270,32 @@ Namespace Framework
             Set(ByVal value As Crownwood.DotNetMagic.Controls.Node)
                 m_tnWorkspaceNode = value
             End Set
+        End Property
+
+
+        <Browsable(False)> _
+        Public Overridable Property ButtonImage() As System.Drawing.Image
+            Get
+                If m_ButtonImage Is Nothing AndAlso Me.ButtonImageName.Trim.Length > 0 Then
+                    Dim myAssembly As System.Reflection.Assembly
+                    myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
+                    m_ButtonImage = ImageManager.LoadImage(myAssembly, Me.ButtonImageName)
+                End If
+
+                Return m_ButtonImage
+            End Get
+            Set(ByVal Value As System.Drawing.Image)
+                If Not Value Is Nothing Then
+                    m_ButtonImage = Value
+                End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property ButtonImageName() As String
+            Get
+                Return ""
+            End Get
         End Property
 
         <Browsable(False)> _
@@ -396,10 +439,17 @@ Namespace Framework
 
         Protected Overridable Sub Properties_GetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
             Try
-                Dim propInfo As System.Reflection.PropertyInfo = Me.GetType().GetProperty(e.Property.PropertyName)
+                'Sometimes we may want to have the property name actually be a string of properties like this.a.b
+                'This method parses that string and finds the correct object to get the value from.
+                Dim oRoot As Object = Nothing
+                Dim doRoot As DataObject = Nothing
+                Dim strPropName As String = ""
+                Util.GetParentObjectProperty(Me, e.Property.PropertyName, oRoot, doRoot, strPropName)
+
+                Dim propInfo As System.Reflection.PropertyInfo = oRoot.GetType().GetProperty(strPropName)
                 If Not propInfo Is Nothing Then
                     If propInfo.CanRead Then
-                        e.Value = propInfo.GetValue(Me, Nothing)
+                        e.Value = propInfo.GetValue(oRoot, Nothing)
                     Else
                         Throw New System.Exception("The property '" & propInfo.Name & "' is write only.")
                     End If
@@ -430,11 +480,11 @@ Namespace Framework
             End Try
         End Sub
 
-        Protected Overridable Function GetOriginalValueForHistory(ByVal propInfo As System.Reflection.PropertyInfo) As Object
+        Protected Overridable Function GetOriginalValueForHistory(ByVal oRoot As Object, ByVal propInfo As System.Reflection.PropertyInfo) As Object
             Dim origValue As Object
 
             If propInfo.CanRead AndAlso Util.ModificationHistory.AllowAddHistory Then
-                Dim tempValue As Object = propInfo.GetValue(Me, Nothing)
+                Dim tempValue As Object = propInfo.GetValue(oRoot, Nothing)
 
                 If Not tempValue Is Nothing AndAlso TypeOf tempValue Is AnimatGUI.Framework.DataObject Then
                     Dim doTemp As AnimatGUI.Framework.DataObject = DirectCast(tempValue, AnimatGUI.Framework.DataObject)
@@ -482,23 +532,33 @@ Namespace Framework
         Public Overridable Sub Properties_SetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
             Dim origValue As Object
             Dim propInfo As System.Reflection.PropertyInfo
+            'Sometimes we may want to have the property name actually be a string of properties like this.a.b
+            'This method parses that string and finds the correct object to get the value from.
+            Dim oRoot As Object = Nothing
+            Dim doRoot As DataObject = Nothing
+            Dim strPropName As String = ""
 
             Try
-                propInfo = Me.GetType().GetProperty(e.Property.PropertyName)
+                Util.GetParentObjectProperty(Me, e.Property.PropertyName, oRoot, doRoot, strPropName)
+                If doRoot Is Nothing Then doRoot = Me
+
+                propInfo = oRoot.GetType().GetProperty(strPropName)
 
                 If Not propInfo Is Nothing Then
                     If propInfo.CanWrite Then
                         Dim lModificationCount As Long = Util.ModificationHistory.ModificationCount
-                        origValue = GetOriginalValueForHistory(propInfo)
+                        origValue = GetOriginalValueForHistory(oRoot, propInfo)
 
-                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & Me.ID & _
-                                           ", Object Name: " & Me.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
-                                           propInfo.GetValue(Me, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        If Not e.Value Is Nothing Then
+                            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & doRoot.ID & _
+                                               ", Object Name: " & doRoot.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
+                                               propInfo.GetValue(doRoot, Nothing).ToString & ", New Value: " & e.Value.ToString)
+                        End If
 
-                        SignalBeforePropertyChanged(Me, propInfo)
+                        SignalBeforePropertyChanged(doRoot, propInfo)
 
                         m_bSetValueInProgress = True
-                        propInfo.SetValue(Me, e.Value, Nothing)
+                        propInfo.SetValue(oRoot, e.Value, Nothing)
                         m_bSetValueInProgress = False
                         Me.IsDirty = True
 
@@ -507,7 +567,7 @@ Namespace Framework
                         'be saved correctly.
                         Util.Application.IsDirty = True
 
-                        SignalAfterPropertyChanged(Me, propInfo)
+                        SignalAfterPropertyChanged(doRoot, propInfo)
 
                         'Only add the history for this propchange if the property did not already add it itself.
                         If lModificationCount = Util.ModificationHistory.ModificationCount AndAlso Util.ModificationHistory.AllowAddHistory Then
@@ -534,7 +594,11 @@ Namespace Framework
                 'If we got an error while trying to set the value to a new value then we need to change back the
                 'value that is currently displayed to the previous value.
                 Try
-                    e.Value = Me.GetType().GetProperty(e.Property.PropertyName).GetValue(Me, Nothing)
+                    If Not oRoot Is Nothing Then
+                        e.Value = oRoot.GetType().GetProperty(strPropName).GetValue(oRoot, Nothing)
+                    Else
+                        e.Value = Me.GetType().GetProperty(e.Property.PropertyName).GetValue(Me, Nothing)
+                    End If
                 Catch InnerEx As System.Exception
                     'If we could not fix it then do nothing
                 End Try
@@ -1036,6 +1100,9 @@ Namespace Framework
         Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
+        Public Event ReloadSourceDataTypes()
+        Public Event ReloadTargetDataTypes()
+
         Public Overridable Sub SignalBeforePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
@@ -1066,6 +1133,14 @@ Namespace Framework
 
         Protected Overridable Sub SignalItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent ItemDeselected(doObject)
+        End Sub
+
+        Protected Overridable Sub SignalReloadSourceDataTypes()
+            RaiseEvent ReloadSourceDataTypes()
+        End Sub
+
+        Protected Overridable Sub SignalReloadTargetDataTypes()
+            RaiseEvent ReloadTargetDataTypes()
         End Sub
 
         Protected Overridable Sub OnApplicationExiting()

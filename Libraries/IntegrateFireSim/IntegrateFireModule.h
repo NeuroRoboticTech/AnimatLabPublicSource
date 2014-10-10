@@ -26,20 +26,20 @@ namespace IntegrateFireSim
 		double m_dTimeStep;
 
 		/// true if ttx drug is applied to the nervous system.
-		BOOL m_bTTX;
+		bool m_bTTX;
 
 		/// true if cadium is applied to the nervous system.
-		BOOL m_bCd;
+		bool m_bCd;
 
 		/// true if this nervous system is using a hodgkin-huxely model.
-		BOOL m_bHH;
+		bool m_bHH;
 
 	// NervousSystem/Synapses/SpikingSynapses
 		/// true to retain hebbian memory
-		BOOL m_bRetainHebbMemory;
+		bool m_bRetainHebbMemory;
 
 		/// true to use critical period during hebbian learning.
-		BOOL m_bUseCriticalPeriod;
+		bool m_bUseCriticalPeriod;
 
 		/// The start time of the critical period for hebbian learning.
 		double m_dStartCriticalPeriod;
@@ -48,17 +48,17 @@ namespace IntegrateFireSim
 		double m_dEndCriticalPeriod;
 
 		/// true to freeze hebbian learning.
-		BOOL m_bFreezeHebb;
+		bool m_bFreezeHebb;
 
 	// internal Hebb stuff
 		/// true if hebbian learning needs to be initialized
-		BOOL m_bNeedInitialiseHebb;		
+		bool m_bNeedInitialiseHebb;		
 
 		/// true to randomise hebbian learning values.
-		BOOL m_bRandomisedHebb;
+		bool m_bRandomisedHebb;
 
 		/// true to freeze learning.
-		BOOL m_bFreezeLearning;	// used internally as flag, not saved
+		bool m_bFreezeLearning;	// used internally as flag, not saved
 
 		/// The array of neurons in this neural module.
 		CStdPtrArray<Neuron> m_aryNeurons;
@@ -111,23 +111,23 @@ namespace IntegrateFireSim
 		int GetConnexionCount();
 		Connexion *GetConnexionAt(int i);
 
-		void Cd(BOOL bVal);
-		BOOL Cd();
+		void Cd(bool bVal);
+		bool Cd();
 
-		void TTX(BOOL bVal);
-		BOOL TTX();
+		void TTX(bool bVal);
+		bool TTX();
 
-		void HH(BOOL bVal);
-		BOOL HH();
+		void HH(bool bVal);
+		bool HH();
 
 		virtual void TimeStep(float fltVal);
 		virtual float TimeStep();
 
-		void RetainHebbMemory(BOOL bVal);
-		BOOL RetainHebbMemory();
+		void RetainHebbMemory(bool bVal);
+		bool RetainHebbMemory();
 
-		void UseCriticalPeriod(BOOL bVal);
-		BOOL UseCriticalPeriod();
+		void UseCriticalPeriod(bool bVal);
+		bool UseCriticalPeriod();
 
 		void StartCriticalPeriod(double dVal); 
 		double StartCriticalPeriod();
@@ -135,8 +135,8 @@ namespace IntegrateFireSim
 		void EndCriticalPeriod(double dVal);
 		double EndCriticalPeriod();
 
-		void FreezeHebb(BOOL bVal);
-		BOOL FreezeHebb();
+		void FreezeHebb(bool bVal);
+		bool FreezeHebb();
 
 		void SpikePeak(double dVal); 
 		double SpikePeak();
@@ -162,7 +162,7 @@ namespace IntegrateFireSim
 		ElectricalSynapse *GetElecSynAt(int i);
 
 		//NeuralModule Overrides
-		virtual string ModuleName();
+		virtual std::string ModuleName();
 
 #pragma endregion
 
@@ -177,27 +177,27 @@ namespace IntegrateFireSim
 
 
 #pragma region DataAccesMethods
-		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddNeuron(string strXml, BOOL bDoNotInit);
-		virtual void RemoveNeuron(string strID, BOOL bThrowError = TRUE);
-		virtual int FindNeuronListPos(string strID, BOOL bThrowError = TRUE);
+		virtual void AddNeuron(std::string strXml, bool bDoNotInit);
+		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
+		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
 
-		virtual void AddSynapse(string strXml, BOOL bDoNotInit);
-		virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
-		virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
+		virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 
-		virtual void AddSynapseType(string strXml, BOOL bDoNotInit);
-		virtual void RemoveSynapseType(string strID, BOOL bThrowError = TRUE);
-		virtual int FindSpikingChemListPos(string strID, BOOL bThrowError = TRUE);
-		virtual int FindNonSpikingChemListPos(string strID, BOOL bThrowError = TRUE);
-		virtual int FindElectricalListPos(string strID, BOOL bThrowError = TRUE);
+		virtual void AddSynapseType(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapseType(std::string strID, bool bThrowError = true);
+		virtual int FindSpikingChemListPos(std::string strID, bool bThrowError = true);
+		virtual int FindNonSpikingChemListPos(std::string strID, bool bThrowError = true);
+		virtual int FindElectricalListPos(std::string strID, bool bThrowError = true);
 
-		virtual void Kill(BOOL bState = TRUE);
+		virtual void Kill(bool bState = true);
 
 		virtual long CalculateSnapshotByteSize()  {return 0;};
 		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};

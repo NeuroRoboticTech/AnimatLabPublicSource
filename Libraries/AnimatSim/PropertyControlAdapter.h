@@ -38,20 +38,22 @@ namespace AnimatSim
 			float m_fltInitialValue;
 			float m_fltFinalValue;
 
-			string m_strPropertyName;
-			AnimatBase::AnimatPropertyType m_ePropertyType;
+			std::string m_strPropertyName;
+			AnimatPropertyType m_ePropertyType;
 
 			virtual void SetPropertyValue(float fltVal);
-			virtual void SetDestinationID(string strXml);
+			virtual void SetDestinationID(std::string strXml);
 
 		public:
 			PropertyControlAdapter();
 			virtual ~PropertyControlAdapter();
 
+			static PropertyControlAdapter *CastToDerived(AnimatBase *lpBase) {return static_cast<PropertyControlAdapter*>(lpBase);}
+
 			virtual AnimatBase *TargetObject();
 			
-			virtual void PropertyName(string strPropName);
-			virtual string PropertyName();
+			virtual void PropertyName(std::string strPropName);
+			virtual std::string PropertyName();
 
 			virtual void SetThreshold(float fltThreshold);
 			virtual float SetThreshold();
@@ -65,8 +67,8 @@ namespace AnimatSim
 			virtual void Initialize();
 			virtual void ResetSimulation();
 			virtual void SimStarting();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};

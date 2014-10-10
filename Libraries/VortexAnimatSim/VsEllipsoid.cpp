@@ -42,12 +42,20 @@ VsEllipsoid::~VsEllipsoid()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsEllipsoid/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsEllipsoid/\r\n", "", -1, false, true);}
 }
 
 void VsEllipsoid::CreateGraphicsGeometry()
 {
 	m_osgGeometry = CreateEllipsoidGeometry(m_iLatSegments, m_iLongSegments, m_fltMajorRadius, m_fltMinorRadius);
+}
+
+void VsEllipsoid::CalculateEstimatedMassAndVolume()
+{
+    float fltVolume = (4/3.0)*osg::PI*m_fltMajorRadius*m_fltMajorRadius*m_fltMinorRadius;
+
+    m_fltEstimatedVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);;
+    m_fltEstimatedMass = (m_fltDensity * fltVolume) * m_lpSim->DisplayMassUnits();
 }
 
 void VsEllipsoid::CreatePhysicsGeometry()
@@ -61,6 +69,8 @@ void VsEllipsoid::CreatePhysicsGeometry()
 
 		m_vxGeometry = GetVsSimulator()->CreateConvexMeshFromOsg(osgNode.get());
 	}
+
+    CalculateEstimatedMassAndVolume();
 }
 
 void VsEllipsoid::CreateParts()
@@ -94,6 +104,8 @@ void VsEllipsoid::ResizePhysicsGeometry()
 		CreatePhysicsGeometry();
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

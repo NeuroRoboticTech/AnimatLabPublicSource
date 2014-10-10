@@ -1,10 +1,10 @@
 /**
 \file	ActivatedItem.cpp
 
-\brief	Implements the activated item class. 
+\brief	Implements the activated item class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -39,30 +39,30 @@ namespace AnimatSim
 /**
 \fn	ActivatedItem::ActivatedItem()
 
-\brief	Default constructor. 
+\brief	Default constructor.
 
 \author	dcofer
 \date	3/1/2011
 **/
 ActivatedItem::ActivatedItem()
 {
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_lStartSlice = 0;
 	m_lEndSlice = 0;
 	m_fltStartTime = 0;
 	m_fltEndTime = 0;
-	m_bLoadedTime = FALSE;
+	m_bLoadedTime = false;
 	m_iStepInterval = 1;
 	m_iStepIntervalCount = 1;
-	m_bAlwaysActive = FALSE;
-	m_bInitialized = FALSE;
-	m_bIsActivated = FALSE;
+	m_bAlwaysActive = false;
+	m_bInitialized = false;
+	m_bIsActivated = false;
 }
 
 /**
 \fn	ActivatedItem::~ActivatedItem()
 
-\brief	Destructor. 
+\brief	Destructor.
 
 \author	dcofer
 \date	3/1/2011
@@ -73,29 +73,29 @@ ActivatedItem::~ActivatedItem()
 }
 
 /**
-\fn	BOOL ActivatedItem::Enabled()
+\fn	bool ActivatedItem::Enabled()
 
-\brief	Gets whether the item is enabled or not. 
+\brief	Gets whether the item is enabled or not.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	true if it enabled, false if not. 
+\return	true if it enabled, false if not.
 **/
-BOOL ActivatedItem::Enabled()
+bool ActivatedItem::Enabled()
 {return m_bEnabled;}
 
 /**
-\fn	void ActivatedItem::Enabled(BOOL bVal)
+\fn	void ActivatedItem::Enabled(bool bVal)
 
-\brief	Enables the item. 
+\brief	Enables the item.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	bVal	true to enable, false to disable. 
+\param	bVal	true to enable, false to disable.
 **/
-void ActivatedItem::Enabled(BOOL bVal)
+void ActivatedItem::Enabled(bool bVal)
 {
 	m_bEnabled = bVal;
 
@@ -109,59 +109,59 @@ void ActivatedItem::Enabled(BOOL bVal)
 }
 
 /**
-\fn	BOOL ActivatedItem::LoadedTime()
+\fn	bool ActivatedItem::LoadedTime()
 
-\brief	Gets whether time was loaded or time slices. 
+\brief	Gets whether time was loaded or time slices.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	true if time loaded, false if timeslices loaded. 
+\return	true if time loaded, false if timeslices loaded.
 **/
-BOOL ActivatedItem::LoadedTime()
+bool ActivatedItem::LoadedTime()
 {return m_bLoadedTime;}
 
 /**
-\fn	void ActivatedItem::LoadedTime(BOOL bVal)
+\fn	void ActivatedItem::LoadedTime(bool bVal)
 
-\brief	Sets whether time was loaded. 
+\brief	Sets whether time was loaded.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	bVal	true if time loaded. 
+\param	bVal	true if time loaded.
 **/
-void ActivatedItem::LoadedTime(BOOL bVal)
+void ActivatedItem::LoadedTime(bool bVal)
 {m_bLoadedTime = bVal;}
 
 /**
 \fn	long ActivatedItem::StartSlice()
 
-\brief	Returns the starts slice for activation. 
+\brief	Returns the starts slice for activation.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	Start time slice for activation. 
+\return	Start time slice for activation.
 **/
-long ActivatedItem::StartSlice() 
+long ActivatedItem::StartSlice()
 {return m_lStartSlice;}
 
 /**
 \fn	void ActivatedItem::StartSlice(long lVal)
 
-\brief	Sets the start time slice for activation. 
+\brief	Sets the start time slice for activation.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	lVal	The start time slice for activation. 
+\param	lVal	The start time slice for activation.
 \param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::StartSlice(long lVal, BOOL bReInit) 
+void ActivatedItem::StartSlice(long lVal, bool bReInit)
 {
-	Std_IsAboveMin((long) -1, lVal, TRUE, "StartSlice");
-	Std_IsBelowMax(m_lEndSlice, lVal, TRUE, "StartSlice");
+	Std_IsAboveMin((long) -1, lVal, true, "StartSlice");
+	Std_IsBelowMax(m_lEndSlice, lVal, true, "StartSlice");
 
 	m_lStartSlice = lVal;
 	m_fltStartTime = m_lStartSlice* m_lpSim->TimeStep();
@@ -170,31 +170,31 @@ void ActivatedItem::StartSlice(long lVal, BOOL bReInit)
 /**
 \fn	long ActivatedItem::EndSlice()
 
-\brief	Gets the end time slice for deactivation. 
+\brief	Gets the end time slice for deactivation.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	End time slice for deactivation. 
+\return	End time slice for deactivation.
 **/
-long ActivatedItem::EndSlice() 
+long ActivatedItem::EndSlice()
 {return m_lEndSlice;}
 
 /**
 \fn	void ActivatedItem::EndSlice(long lVal)
 
-\brief	Sets the ends time slice for deactivation. 
+\brief	Sets the ends time slice for deactivation.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	lVal	The ends time slice for deactivation. 
+\param	lVal	The ends time slice for deactivation.
 \param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::EndSlice(long lVal, BOOL bReInit) 
+void ActivatedItem::EndSlice(long lVal, bool bReInit)
 {
-	Std_IsAboveMin((long) -1, lVal, TRUE, "EndSlice");
-	Std_IsAboveMin(m_lStartSlice, lVal, TRUE, "EndSlice");
+	Std_IsAboveMin((long) -1, lVal, true, "EndSlice");
+	Std_IsAboveMin(m_lStartSlice, lVal, true, "EndSlice");
 
 	m_lEndSlice = lVal;
 	m_fltEndTime = m_lEndSlice* m_lpSim->TimeStep();
@@ -203,31 +203,31 @@ void ActivatedItem::EndSlice(long lVal, BOOL bReInit)
 /**
 \fn	float ActivatedItem::StartTime()
 
-\brief	Gets the simulation start time for activation. 
+\brief	Gets the simulation start time for activation.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	Time for activation. 
+\return	Time for activation.
 **/
-float ActivatedItem::StartTime() 
+float ActivatedItem::StartTime()
 {return m_fltStartTime;}
 
 /**
 \fn	void ActivatedItem::StartTime(float fltVal)
 
-\brief	Sets the start simulation time for activation. 
+\brief	Sets the start simulation time for activation.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	fltVal	The simulation time for activation. 
+\param	fltVal	The simulation time for activation.
 \param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::StartTime(float fltVal, BOOL bReInit) 
+void ActivatedItem::StartTime(float fltVal, bool bReInit)
 {
-	Std_IsAboveMin((float) -1, fltVal, TRUE, "StartTime");
-	Std_IsBelowMax(m_fltEndTime, fltVal, TRUE, "StartTime");
+	Std_IsAboveMin((float) -1, fltVal, true, "StartTime");
+	Std_IsBelowMax(m_fltEndTime, fltVal, true, "StartTime");
 
 	m_fltStartTime = fltVal;
 	m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
@@ -236,31 +236,31 @@ void ActivatedItem::StartTime(float fltVal, BOOL bReInit)
 /**
 \fn	float ActivatedItem::EndTime()
 
-\brief	Gets the end simulation time for deactivation. 
+\brief	Gets the end simulation time for deactivation.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	the end simulation time for deactivation.. 
+\return	the end simulation time for deactivation..
 **/
-float ActivatedItem::EndTime() 
+float ActivatedItem::EndTime()
 {return m_fltEndTime;}
 
 /**
 \fn	void ActivatedItem::EndTime(float fltVal)
 
-\brief	Sets the ends simulation time for deactivation. 
+\brief	Sets the ends simulation time for deactivation.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	fltVal	The ends simulation time for deactivation. 
+\param	fltVal	The ends simulation time for deactivation.
 \param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::EndTime(float fltVal, BOOL bReInit) 
+void ActivatedItem::EndTime(float fltVal, bool bReInit)
 {
-	Std_IsAboveMin((float) -1, fltVal, TRUE, "EndTime");
-	Std_IsAboveMin(m_fltStartTime, fltVal, TRUE, "EndTime");
+	Std_IsAboveMin((float) -1, fltVal, true, "EndTime");
+	Std_IsAboveMin(m_fltStartTime, fltVal, true, "EndTime");
 
 	m_fltEndTime = fltVal;
 	m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
@@ -269,29 +269,29 @@ void ActivatedItem::EndTime(float fltVal, BOOL bReInit)
 /**
 \fn	int ActivatedItem::StepInterval()
 
-\brief	Gets the step interval. 
+\brief	Gets the step interval.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	Step Interval value. 
+\return	Step Interval value.
 **/
-int ActivatedItem::StepInterval() 
+int ActivatedItem::StepInterval()
 {return m_iStepInterval;}
 
 /**
 \fn	void ActivatedItem::StepInterval(int iVal)
 
-\brief	Sets the step interval. 
+\brief	Sets the step interval.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	iVal The step interval value. 
+\param	iVal The step interval value.
 **/
-void ActivatedItem::StepInterval(int iVal) 
+void ActivatedItem::StepInterval(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "StepInterval");	
+	Std_IsAboveMin((int) 0, iVal, true, "StepInterval");
 
 	m_iStepInterval = iVal;
 }
@@ -299,126 +299,126 @@ void ActivatedItem::StepInterval(int iVal)
 /**
 \fn	int ActivatedItem::StepIntervalCount()
 
-\brief	Gets the step interval count. 
+\brief	Gets the step interval count.
 
 \details Keeps track of how many iterations till we reach the StepInterval and call StepSimulation again.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	Step interval count. 
+\return	Step interval count.
 **/
-int ActivatedItem::StepIntervalCount() 
+int ActivatedItem::StepIntervalCount()
 {return m_iStepIntervalCount;}
 
 /**
 \fn	void ActivatedItem::StepIntervalCount(int iVal)
 
-\brief	Step interval count. 
+\brief	Step interval count.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	iVal The step interval count value. 
+\param	iVal The step interval count value.
 **/
-void ActivatedItem::StepIntervalCount(int iVal) 
+void ActivatedItem::StepIntervalCount(int iVal)
 {m_iStepIntervalCount = iVal;}
 
 /**
-\fn	BOOL ActivatedItem::AlwaysActive()
+\fn	bool ActivatedItem::AlwaysActive()
 
-\brief	Gets whether this item is always active. 
+\brief	Gets whether this item is always active.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	true if always active, false if not. 
+\return	true if always active, false if not.
 **/
-BOOL ActivatedItem::AlwaysActive()
+bool ActivatedItem::AlwaysActive()
 {return m_bAlwaysActive;}
 
 /**
-\fn	void ActivatedItem::AlwaysActive(BOOL bVal)
+\fn	void ActivatedItem::AlwaysActive(bool bVal)
 
-\brief	Sets whether this item is always active. 
+\brief	Sets whether this item is always active.
 
 \author	dcofer
 \date	3/1/2011
 
-\param	bVal true if always active. 
+\param	bVal true if always active.
 **/
-void ActivatedItem::AlwaysActive(BOOL bVal)
+void ActivatedItem::AlwaysActive(bool bVal)
 {m_bAlwaysActive = bVal;}
 
 /**
-\fn	BOOL ActivatedItem::IsActivated()
+\fn	bool ActivatedItem::IsActivated()
 
-\brief	Query if this object is activated. 
-
-\author	dcofer
-\date	3/1/2011
-
-\return	true if activated, false if not. 
-**/
-BOOL ActivatedItem::IsActivated() {return m_bIsActivated;}
-
-/**
-\fn	BOOL ActivatedItem::IsInitialized()
-
-\brief	Query if this object is initialized. 
+\brief	Query if this object is activated.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	true if initialized, false if not. 
+\return	true if activated, false if not.
 **/
-BOOL ActivatedItem::IsInitialized() {return m_bInitialized;}
+bool ActivatedItem::IsActivated() {return m_bIsActivated;}
 
 /**
-\fn	BOOL ActivatedItem::NeedToActivate()
+\fn	bool ActivatedItem::IsInitialized()
 
-\brief	Determines if this item needs to be activated. 
+\brief	Query if this object is initialized.
+
+\author	dcofer
+\date	3/1/2011
+
+\return	true if initialized, false if not.
+**/
+bool ActivatedItem::IsInitialized() {return m_bInitialized;}
+
+/**
+\fn	bool ActivatedItem::NeedToActivate()
+
+\brief	Determines if this item needs to be activated.
 
 \author	dcofer
 \date	3/1/2011
 
 \return	true if the item is enabled and it is always active or if the current simulation time is
-within the start and end times. 
+within the start and end times.
 **/
 
-BOOL ActivatedItem::NeedToActivate()
+bool ActivatedItem::NeedToActivate()
 {
 	if(!m_bIsActivated && m_bEnabled && (m_bAlwaysActive || (m_lStartSlice <= m_lpSim->TimeSlice() && m_lEndSlice >= m_lpSim->TimeSlice())))
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 /**
-\fn	BOOL ActivatedItem::NeedToDeactivate()
+\fn	bool ActivatedItem::NeedToDeactivate()
 
-\brief	Determines if this item needs to be deactivated. 
+\brief	Determines if this item needs to be deactivated.
 
 \author	dcofer
 \date	3/1/2011
 
 \return	true if the item is not enabled or it is not always active and the current simulation
-time is outside of the start and end times. 
+time is outside of the start and end times.
 **/
 
-BOOL ActivatedItem::NeedToDeactivate()
+bool ActivatedItem::NeedToDeactivate()
 {
 	if(m_bIsActivated && !m_bEnabled)
-		return TRUE;
+		return true;
 
 	if(m_bIsActivated && !m_bAlwaysActive && !(m_lStartSlice <= m_lpSim->TimeSlice() && m_lEndSlice >= m_lpSim->TimeSlice()) )
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 /**
 \fn	void ActivatedItem::Activate()
 
-\brief	Activates this item. 
+\brief	Activates this item.
 
 \author	dcofer
 \date	3/1/2011
@@ -426,13 +426,13 @@ BOOL ActivatedItem::NeedToDeactivate()
 
 void ActivatedItem::Activate()
 {
-	m_bIsActivated = TRUE;
+	m_bIsActivated = true;
 }
 
 /**
 \fn	void ActivatedItem::Deactivate()
 
-\brief	Deactivates this item. 
+\brief	Deactivates this item.
 
 \author	dcofer
 \date	3/1/2011
@@ -440,35 +440,35 @@ void ActivatedItem::Activate()
 
 void ActivatedItem::Deactivate()
 {
-	m_bIsActivated = FALSE;
+	m_bIsActivated = false;
 }
 
 void ActivatedItem::ResetSimulation()
 {
-	m_bIsActivated = FALSE;
+	m_bIsActivated = false;
 }
 
 /**
-\fn	BOOL ActivatedItem::Overlaps(ActivatedItem *lpItem)
+\fn	bool ActivatedItem::Overlaps(ActivatedItem *lpItem)
 
-\brief	Query if this object overlaps the time period for another ActivatedItem. 
+\brief	Query if this object overlaps the time period for another ActivatedItem.
 
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	lpItem	Pointer to the item to test against. 
+\param [in,out]	lpItem	Pointer to the item to test against.
 
-\return	true if it overlaps, false if not. 
+\return	true if it overlaps, false if not.
 **/
-BOOL ActivatedItem::Overlaps(ActivatedItem *lpItem)
+bool ActivatedItem::Overlaps(ActivatedItem *lpItem)
 {
 	if( (lpItem->StartSlice() >= this->StartSlice()) && (lpItem->StartSlice() <= this->EndSlice()) )
-		return TRUE;
+		return true;
 
 	if( (lpItem->EndSlice() >= this->StartSlice()) && (lpItem->EndSlice() <= this->EndSlice()) )
-		return TRUE;
+		return true;
 
-	return FALSE;
+	return false;
 }
 
 
@@ -476,7 +476,7 @@ void ActivatedItem::Initialize()
 {
 	AnimatBase::Initialize();
 	SetSliceData();
-	m_bInitialized = TRUE;
+	m_bInitialized = true;
 }
 
 void ActivatedItem::SetSliceData()
@@ -486,8 +486,8 @@ void ActivatedItem::SetSliceData()
 		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
 		m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 
-		Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
-		Std_IsAboveMin(m_lStartSlice, m_lEndSlice, TRUE, "EndSlice");
+		Std_IsAboveMin((long) -1, m_lStartSlice, true, "StartSlice");
+		Std_IsAboveMin(m_lStartSlice, m_lEndSlice, true, "EndSlice");
 	}
 	else
 	{
@@ -510,75 +510,75 @@ void ActivatedItem::TimeStepModified()
 }
 
 /**
-\fn	BOOL ActivatedItem::NeedToStep()
+\fn	bool ActivatedItem::NeedToStep()
 
-\brief	Tells if this item needs to call StepSimulation or not. 
+\brief	Tells if this item needs to call StepSimulation or not.
 
 \author	dcofer
 \date	3/1/2011
 
-\return	If StepInterval is less than 1 then it always returns true. 
-Otherwise, it returns true if the StepIntervalCount is equal to the 
-StepInterval. 
+\return	If StepInterval is less than 1 then it always returns true.
+Otherwise, it returns true if the StepIntervalCount is equal to the
+StepInterval.
 **/
-BOOL ActivatedItem::NeedToStep()
+bool ActivatedItem::NeedToStep()
 {
 	if(m_iStepInterval <= 1)
-		return TRUE;
+		return true;
 	else if(m_iStepIntervalCount == -1 || m_iStepIntervalCount == m_iStepInterval)
 	{
 		m_iStepIntervalCount = 1;
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		m_iStepIntervalCount++;
-		return FALSE;
+		return false;
 	}
 }
 
-BOOL ActivatedItem::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ActivatedItem::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
-	
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	std::string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "STARTTIME")
 	{
-		StartTime(atof(strValue.c_str()));
-		return TRUE;
+		StartTime((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "ENDTIME")
 	{
-		EndTime(atof(strValue.c_str()));
-		return TRUE;
+		EndTime((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "ALWAYSACTIVE")
 	{
 		AlwaysActive(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "STEPINTERVAL")
 	{
-		StepInterval(atoi(strValue.c_str()));
-		return TRUE;
+		StepInterval((float) atoi(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 void ActivatedItem::Load(CStdXml &oXml)
@@ -590,17 +590,17 @@ void ActivatedItem::Load(CStdXml &oXml)
 	//Do not call the mutator here because it will run code we do not want to run on load.
 	m_bEnabled = oXml.GetChildBool("Enabled", "True");
 
-	if(oXml.FindChildElement("StartTime", FALSE))
+	if(oXml.FindChildElement("StartTime", false))
 	{
-		m_bLoadedTime = TRUE;
-		EndTime(oXml.GetChildFloat("EndTime"), FALSE);
-		StartTime(oXml.GetChildFloat("StartTime"), FALSE);
+		m_bLoadedTime = true;
+		EndTime(oXml.GetChildFloat("EndTime"), false);
+		StartTime(oXml.GetChildFloat("StartTime"), false);
 	}
 	else
 	{
-		m_bLoadedTime = FALSE;
-		EndSlice(oXml.GetChildLong("EndSlice"), FALSE);
-		StartSlice(oXml.GetChildLong("StartSlice"), FALSE);
+		m_bLoadedTime = false;
+		EndSlice(oXml.GetChildLong("EndSlice"), false);
+		StartSlice(oXml.GetChildLong("StartSlice"), false);
 	}
 
 	StepInterval(oXml.GetChildInt("StepInterval", m_iStepInterval));
@@ -610,7 +610,7 @@ void ActivatedItem::Load(CStdXml &oXml)
 }
 
 /**
-\fn	BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
+\fn	bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
 
 \brief	Compares the start times of two activated items to see which is sooner.
 
@@ -619,13 +619,13 @@ void ActivatedItem::Load(CStdXml &oXml)
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	The first pointer to an item. 
-\param [in,out]	The second pointer to an item. 
+\param [in,out]	The first pointer to an item.
+\param [in,out]	The second pointer to an item.
 
-\return	true if it item1 less than item 2. 
+\return	true if it item1 less than item 2.
 **/
 
-BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
+bool LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2)
 {
 	return lpItem1->operator<(lpItem2);
 }

@@ -18,6 +18,9 @@ Namespace TypeHelpers
 
         Protected m_strPropertyName As String
 
+        Protected m_bIncludeInputs As Boolean = False
+        Protected m_bIncludeOutputs As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -28,22 +31,39 @@ Namespace TypeHelpers
             End Get
         End Property
 
+        Public Overridable ReadOnly Property IncludeInputs() As Boolean
+            Get
+                Return m_bIncludeInputs
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property IncludeOutputs() As Boolean
+            Get
+                Return m_bIncludeOutputs
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
 
-        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject)
+        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject, ByVal bIncludeInputs As Boolean, ByVal bIncludeOutputs As Boolean)
             MyBase.New(doItem)
+            m_bIncludeInputs = bIncludeInputs
+            m_bIncludeOutputs = bIncludeOutputs
         End Sub
 
-        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject, ByVal strPropertyName As String)
+        Public Sub New(ByVal doItem As AnimatGUI.Framework.DataObject, ByVal strPropertyName As String, ByVal bIncludeInputs As Boolean, ByVal bIncludeOutputs As Boolean)
             MyBase.New(doItem)
+            m_bIncludeInputs = bIncludeInputs
+            m_bIncludeOutputs = bIncludeOutputs
             m_strPropertyName = strPropertyName
 
             If Not doItem Is Nothing AndAlso Not doItem.SimInterface Is Nothing Then
                 Dim aryNames As New System.Collections.ArrayList
                 Dim aryTypes As New System.Collections.ArrayList
-                m_doItem.SimInterface.QueryProperties(aryNames, aryTypes)
+                Dim aryDirections As New System.Collections.ArrayList
+                m_doItem.SimInterface.QueryProperties(aryNames, aryTypes, aryDirections)
 
                 If Not aryNames.Contains(strPropertyName) Then
                     Throw New System.Exception("No Property was found for object '" & doItem.ID & "' with the property name '" & strPropertyName & "'")
@@ -54,7 +74,7 @@ Namespace TypeHelpers
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim oNew As New LinkedDataObjectPropertiesList(doParent)
+            Dim oNew As New LinkedDataObjectPropertiesList(doParent, m_bIncludeInputs, m_bIncludeOutputs)
             oNew.CloneInternal(Me, bCutData, doRoot)
             Return oNew
         End Function
@@ -75,7 +95,8 @@ Namespace TypeHelpers
             Dim colParts As New AnimatGUI.Collections.DataObjects(Nothing)
             Dim aryNames As New System.Collections.ArrayList
             Dim aryTypes As New System.Collections.ArrayList
-            m_doItem.SimInterface.QueryProperties(aryNames, aryTypes)
+            Dim aryDirections As New System.Collections.ArrayList
+            m_doItem.SimInterface.QueryProperties(aryNames, aryTypes, aryDirections)
 
             lbList.BeginUpdate()
             lbList.Items.Clear()
@@ -83,9 +104,11 @@ Namespace TypeHelpers
             For iIdx As Integer = 0 To (aryNames.Count - 1)
                 Dim strPropName As String = aryNames(iIdx).ToString
                 Dim strPropType As String = aryTypes(iIdx).ToString
+                Dim strDir As String = aryDirections(iIdx).ToString
 
-                If strPropType = "Boolean" OrElse strPropType = "Integer" OrElse strPropType = "Float" Then
-                    Dim thLinkedProp As LinkedDataObjectPropertiesList = New LinkedDataObjectPropertiesList(m_doItem, strPropName)
+                If (strPropType = "Boolean" OrElse strPropType = "Integer" OrElse strPropType = "Float") AndAlso _
+                    ((m_bIncludeInputs AndAlso (strDir = "Get" OrElse strDir = "Both")) OrElse (m_bIncludeOutputs AndAlso (strDir = "Set" OrElse strDir = "Both"))) Then
+                    Dim thLinkedProp As LinkedDataObjectPropertiesList = New LinkedDataObjectPropertiesList(m_doItem, strPropName, m_bIncludeInputs, m_bIncludeOutputs)
                     Dim leItem As New AnimatGUI.TypeHelpers.DropDownEntry(strPropName, thLinkedProp)
 
                     lbList.Items.Add(leItem)

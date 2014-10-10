@@ -4,7 +4,7 @@
 \brief	Implements the standard variant class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 namespace StdUtils
 {
@@ -48,7 +48,7 @@ try
 	Reset();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of CStdVariant\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of CStdVariant\r\n", "", -1, false, true);}
 }
 
 /**
@@ -70,7 +70,7 @@ int CStdVariant::VariantType()
 
 \return	type.
 **/
-string CStdVariant::VariantTypeName()
+std::string CStdVariant::VariantTypeName()
 {return Std_ConstToVariantType(m_iVariantType);}
 
 /**
@@ -1254,7 +1254,7 @@ void CStdVariant::SetPtr(unsigned int *lpVal)
 
 \return	The numeric string.
 **/
-string CStdVariant::GetNumericString()
+std::string CStdVariant::GetNumericString()
 {
 	switch (m_iVariantType)
 	{
@@ -1303,7 +1303,7 @@ string CStdVariant::GetNumericString()
 
 \return	The string.
 **/
-string CStdVariant::GetString(bool bConvert)
+std::string CStdVariant::GetString(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtString) )
 		THROW_PARAM_ERROR(Std_Err_lVariantParamUndefined, Std_Err_strVariantParamUndefined, "Param", "String");
@@ -1355,7 +1355,7 @@ string CStdVariant::GetString(bool bConvert)
 
 \return	exception if it fails, else pointer to a value.
 **/
-string *CStdVariant::GetStringPtr()
+std::string *CStdVariant::GetStringPtr()
 {
 	if(!m_lpString || (m_iVariantType!=StdVtString) )
 		THROW_PARAM_ERROR(Std_Err_lVariantParamUndefined, Std_Err_strVariantParamUndefined, "Param", "String");
@@ -1370,11 +1370,11 @@ string *CStdVariant::GetStringPtr()
 
 \param	Val	The value. 
 **/
-void CStdVariant::SetValue(string Val)
+void CStdVariant::SetValue(std::string Val)
 {
 	Reset();
 	m_iVariantType = StdVtShort;
-	m_lpString = new string;
+	m_lpString = new std::string;
 	m_bCreatedVar = true;
 	*m_lpString = Val;
 }
@@ -1387,7 +1387,7 @@ void CStdVariant::SetValue(string Val)
 
 \param [in,out]	lpVal	Pointer to a value. 
 **/
-void CStdVariant::SetPtr(string *lpVal)
+void CStdVariant::SetPtr(std::string *lpVal)
 {
 	Reset();
 	m_iVariantType = StdVtShort;
@@ -1570,7 +1570,7 @@ catch(...)
 
 \param [in,out]	oOs	The output stream. 
 **/
-void CStdVariant::Trace(ostream &oOs)
+void CStdVariant::Trace(std::ostream &oOs)
 {
 	oOs << "(VT: " << Std_ConstToVariantType(m_iVariantType) << "\tVal: ";
 
@@ -1646,11 +1646,11 @@ void CStdVariant::Load(CStdXml &oXml)
 	unsigned long ulVal;
 	int iVal;
 	unsigned int uiVal;
-	string strVal;
+	std::string strVal;
 
 	oXml.IntoElem();  //Into Variant Element
 
-	string strVariantType = oXml.GetChildString("VariantType");
+	std::string strVariantType = oXml.GetChildString("VariantType");
 	m_iVariantType = Std_VariantTypeToConst(strVariantType);
 	
 	switch (m_iVariantType)
@@ -1736,12 +1736,12 @@ void CStdVariant::Load(CStdXml &oXml)
 **/
 void CStdVariant::Save(CStdXml &oXml)
 {
-	string strEmpty;
+	std::string strEmpty;
 
 	oXml.AddChildElement("Variant");
 	oXml.IntoElem();  //Into Variant Element
 
-	string strVariantType = Std_ConstToVariantType(m_iVariantType);
+	std::string strVariantType = Std_ConstToVariantType(m_iVariantType);
 	oXml.AddChildElement("VariantType", strVariantType);
 
 	switch (m_iVariantType)

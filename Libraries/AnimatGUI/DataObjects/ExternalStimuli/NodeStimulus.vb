@@ -37,6 +37,18 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
+        Public Overrides Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
+            Get
+                Return m_doOrganism
+            End Get
+            Set(ByVal Value As DataObjects.Physical.PhysicalStructure)
+                If Util.IsTypeOf(Value.GetType(), GetType(Physical.Organism), False) Then
+                    m_doOrganism = DirectCast(Value, Physical.Organism)
+                End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property OrganismName() As String
             Get
                 If Not m_doOrganism Is Nothing Then

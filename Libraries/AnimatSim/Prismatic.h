@@ -46,10 +46,12 @@ namespace AnimatSim
 				Prismatic();
 				virtual ~Prismatic();
 
+				static Prismatic *CastToDerived(AnimatBase *lpBase) {return static_cast<Prismatic*>(lpBase);}
+
 				float CylinderRadius();
 				float BoxSize();
 
-				virtual void Enabled(BOOL bValue);
+				virtual void Enabled(bool bValue);
 
 				virtual ConstraintLimit *UpperLimit() ;
 				virtual ConstraintLimit *LowerLimit();
@@ -57,10 +59,11 @@ namespace AnimatSim
 				virtual float GetPositionWithinLimits(float fltPos);
 				virtual float GetLimitRange();
 
-				virtual BOOL UsesRadians() {return FALSE;};
+				virtual bool UsesRadians() {return false;};
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void AddExternalNodeInput(float fltInput);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
+				virtual int GetTargetDataTypeIndex(const std::string &strDataType);
 
 				virtual void Load(CStdXml &oXml);
 			};

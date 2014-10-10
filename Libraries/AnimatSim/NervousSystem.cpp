@@ -4,7 +4,7 @@
 \brief	Implements the nervous system class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -69,7 +69,7 @@ try
 	m_aryNeuralModules.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, false, true);}
 }
 
 
@@ -101,7 +101,7 @@ void NervousSystem::AddNeuralModule(NeuralModule *lpModule)
 }
 
 /**
-\fn	void NervousSystem::AddNeuralModule(string strXml)
+\fn	void NervousSystem::AddNeuralModule(std::string strXml)
 
 \brief	Creates and adds a new neural module from an XML definition.
 
@@ -115,7 +115,7 @@ new module when the user does so in the GUI.
 \param	strXml	The string xml for loading the new module. 
 **/
 
-void NervousSystem::AddNeuralModule(string strXml)
+void NervousSystem::AddNeuralModule(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -127,7 +127,7 @@ void NervousSystem::AddNeuralModule(string strXml)
 }
 
 /**
-\fn	void NervousSystem::RemoveNeuralModule(string strID)
+\fn	void NervousSystem::RemoveNeuralModule(std::string strID)
 
 \brief	Removes the neural module based on its ID.
 
@@ -140,14 +140,14 @@ neural module when the user needs to do so.
 \param	strID	Unique GUID ID string of the module to delete. 
 **/
 
-void NervousSystem::RemoveNeuralModule(string strID)
+void NervousSystem::RemoveNeuralModule(std::string strID)
 {
 	m_aryNeuralModules.Remove(strID);
 }
 
 
 /**
-\fn	NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
+\fn	NeuralModule *NervousSystem::FindNeuralModule(std::string strModuleName, bool bThrowError)
 
 \brief	Searches for a neural module with a matching module name. 
 
@@ -162,10 +162,10 @@ void NervousSystem::RemoveNeuralModule(string strID)
 \return	null if it fails, else the found neural module. 
 \exception If bThrowError is true and nothing is found.
 **/
-NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
+NeuralModule *NervousSystem::FindNeuralModule(std::string strModuleName, bool bThrowError)
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	oPos = m_aryNeuralModules.find(Std_CheckString(strModuleName));
 
 	if(oPos != m_aryNeuralModules.end())
@@ -177,10 +177,10 @@ NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowE
 }
 
 
-void NervousSystem::Kill(BOOL bState)
+void NervousSystem::Kill(bool bState)
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
@@ -191,7 +191,7 @@ void NervousSystem::Kill(BOOL bState)
 void NervousSystem::ResetSimulation()
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
@@ -199,9 +199,9 @@ void NervousSystem::ResetSimulation()
 	}
 }
 
-void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
@@ -224,7 +224,7 @@ void NervousSystem::Initialize()
 	AnimatBase::Initialize();
 
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 
 	//Initialize the neural modules
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
@@ -237,7 +237,7 @@ void NervousSystem::Initialize()
 void NervousSystem::MinTimeStep(float &fltMin)
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
@@ -257,13 +257,13 @@ void NervousSystem::StepSimulation()
 void NervousSystem::StepSim()
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
 
-		if(lpModule->NeedToStep(TRUE))
+		if(lpModule->NeedToStep(true))
 			lpModule->StepSimulation();
 	}
 }
@@ -271,13 +271,13 @@ void NervousSystem::StepSim()
 void NervousSystem::StepAdapters()
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
 
-		if(lpModule->NeedToStep(FALSE))
+		if(lpModule->NeedToStep(false))
 		{
 			lpModule->StepAdapters();
 			lpModule->ResetStepCounter();
@@ -288,7 +288,7 @@ void NervousSystem::StepAdapters()
 long NervousSystem::CalculateSnapshotByteSize()
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 	long lSize = 0;
 
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
@@ -304,7 +304,7 @@ long NervousSystem::CalculateSnapshotByteSize()
 void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
@@ -317,7 +317,7 @@ void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;
-	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	CStdPtrMap<std::string, NeuralModule>::iterator oPos;
 
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
@@ -364,7 +364,7 @@ NeuralModule *NervousSystem::LoadNeuralModule(CStdXml &oXml)
 {
 	IStdClassFactory *lpFactory = NULL;
 	NeuralModule *lpModule = NULL;
-	string strModuleName, strModuleFileName, strModuleType;
+	std::string strModuleName, strModuleFileName, strModuleType;
 
 try
 {
@@ -378,11 +378,11 @@ try
 	lpFactory = m_lpSim->LoadClassFactory(strModuleFileName);
 
 	//Now create an instance of a neural module. There is only one type of 
-	lpModule = dynamic_cast<NeuralModule *>(lpFactory->CreateObject("NeuralModule", strModuleType, TRUE));
+	lpModule = dynamic_cast<NeuralModule *>(lpFactory->CreateObject("NeuralModule", strModuleType, true));
 	if(!lpModule)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "NeuralModule");
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 
 	//Clean up the original class factory. We will use the one in the NeuralModule from now on.
 	if(lpFactory)
@@ -393,7 +393,7 @@ try
 	//that the sim have a pointer to this factory.
 	m_lpSim->AddNeuralModuleFactory(strModuleName, lpModule);
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, true);
 	lpModule->Load(oXml);
 
 	AddNeuralModule(lpModule);

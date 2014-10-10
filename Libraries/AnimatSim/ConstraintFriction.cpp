@@ -4,7 +4,7 @@
 \brief	Implements the material pair class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -49,8 +49,8 @@ ConstraintFriction::ConstraintFriction()
 	m_fltCoefficient = 1;
 	m_fltMaxForce = 10;
 	m_fltLoss = 0;
-    m_bEnabled = TRUE;
-    m_bProportional = TRUE;
+    m_bEnabled = true;
+    m_bProportional = true;
     m_fltStaticFrictionScale = 1;
 }
 
@@ -65,7 +65,7 @@ ConstraintFriction::~ConstraintFriction()
 }
 
 /**
-\fn	BOOL Enabled()
+\fn	bool Enabled()
 
 \brief	Gets whether the item is enabled or not. 
 
@@ -74,11 +74,11 @@ ConstraintFriction::~ConstraintFriction()
 
 \return	true if it enabled, false if not. 
 **/
-BOOL ConstraintFriction::Enabled()
+bool ConstraintFriction::Enabled()
 {return m_bEnabled;}
 
 /**
-\fn	void Enabled(BOOL bVal)
+\fn	void Enabled(bool bVal)
 
 \brief	Enables the item. 
 
@@ -87,7 +87,7 @@ BOOL ConstraintFriction::Enabled()
 
 \param	bVal	true to enable, false to disable. 
 **/
-void ConstraintFriction::Enabled(BOOL bVal)
+void ConstraintFriction::Enabled(bool bVal)
 {
 	m_bEnabled = bVal;
 	SetFrictionProperties();
@@ -113,7 +113,7 @@ float ConstraintFriction::Coefficient() {return m_fltCoefficient;}
 **/
 void ConstraintFriction::Coefficient(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Coefficient", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Coefficient", true);
 	
 	m_fltCoefficient = fltVal;
 	SetFrictionProperties();
@@ -138,9 +138,9 @@ float ConstraintFriction::MaxForce() {return m_fltMaxForce;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void ConstraintFriction::MaxForce(float fltVal, BOOL bUseScaling) 
+void ConstraintFriction::MaxForce(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxForce", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxForce", true);
 
 	if(bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
@@ -172,9 +172,9 @@ float ConstraintFriction::Loss() {return m_fltLoss;}
 \param	fltVal	The new value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void ConstraintFriction::Loss(float fltVal, BOOL bUseScaling) 
+void ConstraintFriction::Loss(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Loss", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Loss", true);
 
 	if(bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
@@ -191,7 +191,7 @@ void ConstraintFriction::Loss(float fltVal, BOOL bUseScaling)
 
 \return	proportional flag.
 **/
-BOOL ConstraintFriction::Proportional() {return m_bProportional;}
+bool ConstraintFriction::Proportional() {return m_bProportional;}
 
 /**
 \brief	Sets whether the friction force should be scaled based on the amount of force applied to the joint
@@ -201,7 +201,7 @@ BOOL ConstraintFriction::Proportional() {return m_bProportional;}
 
 \param	fltVal	The new value. 
 **/
-void ConstraintFriction::Proportional(BOOL bVal) 
+void ConstraintFriction::Proportional(bool bVal) 
 {
 	m_bProportional = bVal;
 	SetFrictionProperties();
@@ -227,7 +227,7 @@ float ConstraintFriction::StaticFrictionScale() {return m_fltCoefficient;}
 **/
 void ConstraintFriction::StaticFrictionScale(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "StaticFrictionScale", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "StaticFrictionScale", true);
 	
 	m_fltStaticFrictionScale = fltVal;
 	SetFrictionProperties();
@@ -245,8 +245,8 @@ void ConstraintFriction::CreateDefaultUnits()
 	m_fltCoefficient = 1;
 	m_fltMaxForce = 10;
 	m_fltLoss = 0;
-    m_bProportional = TRUE;
-    m_bEnabled = TRUE;
+    m_bProportional = true;
+    m_bEnabled = true;
     m_fltStaticFrictionScale = 1;
 
 	//scale the varios units to be consistent
@@ -255,77 +255,66 @@ void ConstraintFriction::CreateDefaultUnits()
 	m_fltLoss *= m_lpSim->MassUnits();  //Slip units are s/Kg
 }
 
-BOOL ConstraintFriction::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ConstraintFriction::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "COEFFICIENT")
 	{
-		Coefficient(atof(strValue.c_str()));
-		return TRUE;
+		Coefficient((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "MAXFORCE")
 	{
-		MaxForce(atof(strValue.c_str()));
-		return TRUE;
+		MaxForce((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "LOSS")
 	{
-		Loss(atof(strValue.c_str()));
-		return TRUE;
+		Loss((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "PROPORTIONAL")
 	{
 		Proportional(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "STATICFRICTIONSCALE")
 	{
-		StaticFrictionScale(atof(strValue.c_str()));
-		return TRUE;
+		StaticFrictionScale((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void ConstraintFriction::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ConstraintFriction::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-    aryNames.Add("Coefficient");
-	aryTypes.Add("Float");
-
-    aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaxForce");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Loss");
-	aryTypes.Add("Float");
-
-    aryNames.Add("Proportional");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("StaticFrictionScale");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Coefficient", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("MaxForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Loss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Proportional", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StaticFrictionScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void ConstraintFriction::Load(CStdXml &oXml)

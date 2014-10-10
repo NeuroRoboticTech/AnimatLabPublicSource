@@ -640,7 +640,7 @@ Namespace Forms
 
             End Sub
 
-            Public Overridable Function GenerateSimWindowXml() As String
+            Public Overridable Function GenerateSimWindowMgrXml() As String
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 oXml.AddElement("WindowMgr")
@@ -1022,7 +1022,7 @@ Namespace Forms
                             End If
                         End If
 
-                        Dim strWinXml As String = GenerateSimWindowXml()
+                        Dim strWinXml As String = GenerateSimWindowMgrXml()
                         Util.Application.SimulationInterface.AddWindow(Me.Handle, "ScriptedSimWindow", strWinXml)
                         InitializeSimulationReferences()
 
@@ -1194,7 +1194,7 @@ Namespace Forms
 
             'These three events handlers are called whenever a user manually changes the value of the position or rotation.
             'This is different from the OnPositionChanged event. Those events come up from the simulation.
-            Protected Overridable Sub OnDefaultPositionValueChanged()
+            Protected Overridable Sub OnDefaultPositionValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
                 Try
                     If Not Util.ProjectProperties Is Nothing Then
                         Me.SetSimData("Position", m_svDefaultPosition.GetSimulationXml("Position"), True)

@@ -4,7 +4,7 @@
 \brief	Implements the random neuron class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"
@@ -57,7 +57,7 @@ try
 	if(m_lpIBurstGraph) delete m_lpIBurstGraph;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of RandomNeuron\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of RandomNeuron\r\n", "", -1, false, true);}
 }
 
 /**
@@ -80,7 +80,10 @@ float RandomNeuron::ITime()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::ITime(float fltVal)
-{m_fltITime=fltVal;}
+{
+	m_fltITime=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the active intrinsic type (HI or LOW).
@@ -102,7 +105,10 @@ unsigned char RandomNeuron::IntrinsicType()
 \param	iVal	The new value. 
 **/
 void RandomNeuron::IntrinsicType(unsigned char iVal)
-{m_iIntrinsicType=iVal;}
+{
+	m_iIntrinsicType=iVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the active intrinsic current.
@@ -124,7 +130,10 @@ float RandomNeuron::IntrinsicCurrent()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::IntrinsicCurrent(float fltVal)
-{m_fltIntrinsic=fltVal;}
+{
+	m_fltIntrinsic=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the low current.
@@ -146,7 +155,10 @@ float RandomNeuron::Il()
 \param	fltVal	The new value. 
 **/
 void RandomNeuron::Il(float fltVal)
-{m_fltIl=fltVal;}
+{
+	m_fltIl=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the low current init value.
@@ -171,6 +183,7 @@ void RandomNeuron::Ilinit(float fltVal)
 {
 	m_fltIlinit=fltVal;
 	m_fltIl = m_fltIlinit;
+	TemplateNodeChanged();
 }
 
 /**
@@ -183,6 +196,47 @@ void RandomNeuron::Ilinit(float fltVal)
 **/
 unsigned char RandomNeuron::NeuronType()
 {return RANDOM_NEURON;}
+
+void RandomNeuron::Copy(CStdSerialize *lpSource)
+{
+	Neuron::Copy(lpSource);
+
+	RandomNeuron *lpOrig = dynamic_cast<RandomNeuron *>(lpSource);
+
+	m_fltITime = lpOrig->m_fltITime;
+	m_iIntrinsicTypeDefault = lpOrig->m_iIntrinsicTypeDefault;
+	m_iIntrinsicType = lpOrig->m_iIntrinsicType;
+	m_fltIntrinsic = lpOrig->m_fltIntrinsic;
+	m_fltIlinit = lpOrig->m_fltIlinit;
+	m_fltIl = lpOrig->m_fltIl;
+
+	if(m_lpCurrentGraph)
+	{
+		delete m_lpCurrentGraph;
+		m_lpCurrentGraph = NULL;
+	}
+
+	if(lpOrig->m_lpCurrentGraph)
+		m_lpCurrentGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpCurrentGraph->Clone());
+
+	if(m_lpBurstGraph)
+	{
+		delete m_lpBurstGraph;
+		m_lpBurstGraph = NULL;
+	}
+
+	if(lpOrig->m_lpBurstGraph)
+		m_lpBurstGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpBurstGraph->Clone());
+
+	if(m_lpIBurstGraph)
+	{
+		delete m_lpIBurstGraph;
+		m_lpIBurstGraph = NULL;
+	}
+
+	if(lpOrig->m_lpIBurstGraph)
+		m_lpIBurstGraph = dynamic_cast<AnimatSim::Gains::Gain *>(lpOrig->m_lpIBurstGraph->Clone());
+}
 
 /**
 \brief	Sets the current distribution.
@@ -200,6 +254,7 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 			{delete m_lpCurrentGraph; m_lpCurrentGraph = NULL;}
 		m_lpCurrentGraph = lpGain;
 	}
+	TemplateNodeChanged();
 }
 
 /**
@@ -210,7 +265,7 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::CurrentDistribution(string strXml)
+void RandomNeuron::CurrentDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -245,7 +300,7 @@ void RandomNeuron::BurstLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::BurstLengthDistribution(string strXml)
+void RandomNeuron::BurstLengthDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -280,7 +335,7 @@ void RandomNeuron::InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void RandomNeuron::InterbusrtLengthDistribution(string strXml)
+void RandomNeuron::InterbusrtLengthDistribution(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -390,35 +445,35 @@ void RandomNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 #pragma region DataAccesMethods
 
-BOOL RandomNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool RandomNeuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Neuron::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Neuron::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "IL")
 	{
 		Ilinit(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CURRENTDISTRIBUTION")
 	{
 		CurrentDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "BURSTLENGTHDISTRIBUTION")
 	{
 		BurstLengthDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "INTERBURSTLENGTHDISTRIBUTION")
 	{
 		InterbusrtLengthDistribution(strValue);
-		return TRUE;
+		return true;
 	}
 
 
@@ -426,24 +481,17 @@ BOOL RandomNeuron::SetData(const string &strDataType, const string &strValue, BO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void RandomNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void RandomNeuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Neuron::QueryProperties(aryNames, aryTypes);
+	Neuron::QueryProperties(aryProperties);
 
-	aryNames.Add("Il");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CurrentDistribution");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BurstLengthDistribution");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("InterbusrtLengthDistribution");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("Il", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CurrentDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BurstLengthDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InterbusrtLengthDistribution", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

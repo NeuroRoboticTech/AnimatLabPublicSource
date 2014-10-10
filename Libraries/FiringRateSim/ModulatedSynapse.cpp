@@ -4,7 +4,7 @@
 \brief	Implements the modulated synapse class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "ModulatedSynapse.h"
@@ -40,14 +40,21 @@ ModulatedSynapse::~ModulatedSynapse()
 
 #pragma region DataAccesMethods
 
-float *ModulatedSynapse::GetDataPointer(const string &strDataType)
+float *ModulatedSynapse::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;
 
 	return Synapse::GetDataPointer(strDataType);
+}
+
+void ModulatedSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+{
+	Synapse::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("Modulation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion

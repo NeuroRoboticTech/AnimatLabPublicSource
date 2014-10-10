@@ -4,7 +4,7 @@
 \brief	Implements the stomach class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -48,7 +48,7 @@ namespace AnimatSim
 **/
 Stomach::Stomach()
 {
-	m_bKilled = FALSE;
+	m_bKilled = false;
 	m_fltReportAlive = 1;
 	m_fltMaxEnergyLevel = 100000;
 	m_fltEnergyLevel = 2000;
@@ -71,7 +71,7 @@ Stomach::~Stomach()
 	{
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of Stomach\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of Stomach\r\n", "", -1, false, true);}
 }
 
 /**
@@ -137,7 +137,7 @@ float Stomach::ConsumptionRate() {return m_fltConsumptionRate;}
 **/
 void Stomach::ConsumptionRate(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "ConsumptionRate", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "ConsumptionRate", true);
 	m_fltConsumptionRate = fltVal;
 }
 
@@ -162,7 +162,7 @@ float Stomach::BaseConsumptionRate() {return m_fltBaseConsumptionRate;}
 **/
 void Stomach::BaseConsumptionRate(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BaseConsumptionRate", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "BaseConsumptionRate", true);
 	m_fltBaseConsumptionRate = fltVal;
 }
 
@@ -187,7 +187,7 @@ float Stomach::MaxEnergyLevel() {return m_fltMaxEnergyLevel;}
 **/
 void Stomach::MaxEnergyLevel(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxEnergyLevel");
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxEnergyLevel");
 	m_fltMaxEnergyLevel = fltVal;
 }
 
@@ -199,7 +199,7 @@ void Stomach::MaxEnergyLevel(float fltVal)
 
 \return	true if it should be killed when energy reaches zero. 
 **/
-BOOL Stomach::KillOrganism() {return m_bKillOrganism;}
+bool Stomach::KillOrganism() {return m_bKillOrganism;}
 
 /**
 \brief	Sets whether or not to kill the organism when the energy level reaches zero. 
@@ -209,7 +209,7 @@ BOOL Stomach::KillOrganism() {return m_bKillOrganism;}
 
 \param	bVal	true to value. 
 **/
-void Stomach::KillOrganism(BOOL bVal) {m_bKillOrganism = bVal;}
+void Stomach::KillOrganism(bool bVal) {m_bKillOrganism = bVal;}
 
 
 // There are no parts or joints to create for muscle attachment points.
@@ -222,7 +222,7 @@ void Stomach::ResetSimulation()
 	m_fltEnergyLevel = m_fltInitEnergyLevel;
 	m_fltConsumptionRate = 0;
 	m_fltAdapterConsumptionRate = 0;
-	m_bKilled = FALSE;
+	m_bKilled = false;
 	m_fltReportAlive = 1;
 }
 
@@ -245,70 +245,68 @@ void Stomach::StepSimulation()
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		lpOrganism->Kill(TRUE);
-		m_bKilled = TRUE;
+		lpOrganism->Kill(true);
+		m_bKilled = true;
 		m_fltReportAlive = 0;
 	}
 }
 
-BOOL Stomach::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Stomach::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "KILLORGANISM")
 	{
 		KillOrganism(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ENERGYLEVEL")
 	{
-		EnergyLevel(atof(strValue.c_str()));
-		return TRUE;
+		EnergyLevel((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "MAXENERGYLEVEL")
 	{
-		MaxEnergyLevel(atof(strValue.c_str()));
-		return TRUE;
+		MaxEnergyLevel((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "BASECONSUMPTIONRATE")
 	{
-		BaseConsumptionRate(atof(strValue.c_str()));
-		return TRUE;
+		BaseConsumptionRate((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Stomach::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Stomach::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("KillOrganism");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("ConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ConsumptionForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AdapterConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Alive", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 
-	aryNames.Add("EnergyLevel");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxEnergyLevel");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BaseConsumptionRate");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("KillOrganism", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("MaxEnergyLevel", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BaseConsumptionRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
-float *Stomach::GetDataPointer(const string &strDataType)
+float *Stomach::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "ENERGYLEVEL")
 		return &m_fltEnergyLevel;
@@ -328,7 +326,7 @@ float *Stomach::GetDataPointer(const string &strDataType)
 	return RigidBody::GetDataPointer(strDataType);
 }
 
-void Stomach::AddExternalNodeInput(float fltInput)
+void Stomach::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltAdapterConsumptionRate += fltInput;
 	if(m_fltAdapterConsumptionRate < 0)
@@ -344,7 +342,7 @@ void Stomach::Load(CStdXml &oXml)
 	MaxEnergyLevel(oXml.GetChildFloat("MaxEnergyLevel", m_fltMaxEnergyLevel));
 	EnergyLevel(oXml.GetChildFloat("EnergyLevel", m_fltEnergyLevel));
 	BaseConsumptionRate(oXml.GetChildFloat("BaseConsumptionRate", m_fltBaseConsumptionRate));
-	KillOrganism(oXml.GetChildBool("KillOrganism", TRUE));
+	KillOrganism(oXml.GetChildBool("KillOrganism", true));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

@@ -327,7 +327,7 @@ Namespace Forms.BodyPlan
             SetSelectedGridObject(doType)
         End Sub
 
-        Public Sub Automation_RemoveOdorType()
+        Public Sub Automation_RemoveMaterialType()
             btnRemoveMaterial.PerformClick()
         End Sub
 
@@ -347,6 +347,16 @@ Namespace Forms.BodyPlan
             Util.SetObjectProperty(m_doSelectedGridItem, strProperty, strValue)
 
         End Sub
+
+        Public Function Automation_GetSelectedItemProperty(ByVal strProperty As String) As Single
+
+            If m_doSelectedGridItem Is Nothing Then
+                Throw New System.Exception("No material item is currently selected.")
+            End If
+
+            Return CSng(Util.GetObjectProperty(m_doSelectedGridItem, strProperty))
+
+        End Function
 
 #End Region
 

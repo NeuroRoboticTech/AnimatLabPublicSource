@@ -28,15 +28,17 @@ namespace AnimatSim
 		{
 		protected:
 			/// Critical section to lock access to the data buffer for writing.
-			CStdCriticalSection m_oRowCountLock;
+			CStdCriticalSection *m_oRowCountLock;
 
 		public:
 			MemoryChart();
 			virtual ~MemoryChart();
 
-			virtual string Type();
+			static MemoryChart *CastToDerived(AnimatBase *lpBase) {return static_cast<MemoryChart*>(lpBase);}
 
-			virtual BOOL Lock();
+			virtual std::string Type();
+
+			virtual bool Lock();
 			virtual void Unlock();
 
 			virtual void Initialize();

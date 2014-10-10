@@ -26,7 +26,10 @@ namespace FiringRateSim
 			/// The active intrinsic current
 			float m_fltIntrinsic;
 
-			/// The threshold voltage
+			/// The initial switch threshold voltage
+			float m_fltVsthi;
+
+			/// The siwtch threshold voltage
 			float m_fltVsth;
 
 			/// The low current
@@ -41,8 +44,8 @@ namespace FiringRateSim
 			BistableNeuron();
 			virtual ~BistableNeuron();
 
-			float Vsth();
-			void Vsth(float fltVal);
+			float Vsthi();
+			void Vsthi(float fltVal);
 
 			float IntrinsicCurrent();
 			void IntrinsicCurrent(float fltVal);
@@ -54,10 +57,13 @@ namespace FiringRateSim
 			void Ih(float fltVal);
 
 			virtual unsigned char NeuronType();
+			
+			virtual void Copy(CStdSerialize *lpSource);
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void ResetSimulation();
+			virtual void StepSimulation();
 
 			virtual void Load(CStdXml &oXml);
 		};

@@ -24,7 +24,7 @@ VsScriptedSimulationWindow::VsScriptedSimulationWindow()
 {
 	m_lpCurrentPath = NULL;
 	//Scripted sim window always has track camera as true.
-	m_bTrackCamera = TRUE;
+	m_bTrackCamera = true;
 	m_lpDefaultTrackBody = NULL;
 	m_lpOriginalTrackBody = NULL;
 }
@@ -52,7 +52,7 @@ CStdFPoint VsScriptedSimulationWindow::DefaultPosition() {return m_vDefaultPosit
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void VsScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, BOOL bUseScaling) 
+void VsScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, bool bUseScaling) 
 {
 	CStdFPoint oNewPoint, oReportPosition;
 	if(bUseScaling && m_lpSim)
@@ -81,7 +81,7 @@ void VsScriptedSimulationWindow::DefaultPosition(CStdFPoint &oPoint, BOOL bUseSc
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void VsScriptedSimulationWindow::DefaultPosition(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+void VsScriptedSimulationWindow::DefaultPosition(float fltX, float fltY, float fltZ, bool bUseScaling) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	DefaultPosition(vPos, bUseScaling);
@@ -98,7 +98,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void VsScriptedSimulationWindow::DefaultPosition(string strXml, BOOL bUseScaling)
+void VsScriptedSimulationWindow::DefaultPosition(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -110,9 +110,9 @@ void VsScriptedSimulationWindow::DefaultPosition(string strXml, BOOL bUseScaling
 	DefaultPosition(vPos, bUseScaling);
 }
 		
-string VsScriptedSimulationWindow::DefaultPartID() {return m_strDefaultPartID;}
+std::string VsScriptedSimulationWindow::DefaultPartID() {return m_strDefaultPartID;}
 
-void VsScriptedSimulationWindow::DefaultPartID(string strID)
+void VsScriptedSimulationWindow::DefaultPartID(std::string strID)
 {
 	m_strDefaultPartID = strID;
 
@@ -125,30 +125,30 @@ void VsScriptedSimulationWindow::DefaultPartID(string strID)
 	}
 }
 
-BOOL VsScriptedSimulationWindow::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsScriptedSimulationWindow::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
-	if(VsSimulationWindow::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(VsSimulationWindow::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "POSITION")
 	{
 		DefaultPosition(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DEFAULTPARTID")
 	{
 		DefaultPartID(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -161,7 +161,7 @@ BOOL VsScriptedSimulationWindow::SetData(const string &strDataType, const string
 
 \param	strXml	The xml configuration data packet. 
 **/
-void VsScriptedSimulationWindow::AddCameraPath(string strXml)
+void VsScriptedSimulationWindow::AddCameraPath(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -187,14 +187,14 @@ the user does this in the GUI.
 
 \return	true if it succeeds, false if it fails. 
 **/
-void VsScriptedSimulationWindow::RemoveCameraPath(string strID, BOOL bThrowError)
+void VsScriptedSimulationWindow::RemoveCameraPath(std::string strID, bool bThrowError)
 {
 	int iIdx = FindCameraPath(strID);
 	m_aryCameraPaths.RemoveAt(iIdx);
 	SortPaths();
 }
 
-int VsScriptedSimulationWindow::FindCameraPath(string strID, BOOL bThrowError)
+int VsScriptedSimulationWindow::FindCameraPath(std::string strID, bool bThrowError)
 {
 	int iCount = m_aryCameraPaths.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -218,38 +218,38 @@ void VsScriptedSimulationWindow::SortPaths()
 	}
 }
 
-BOOL VsScriptedSimulationWindow::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool VsScriptedSimulationWindow::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
 		AddCameraPath(strXml);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL VsScriptedSimulationWindow::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool VsScriptedSimulationWindow::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "CAMERAPATH")
 	{
 		RemoveCameraPath(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 void VsScriptedSimulationWindow::Initialize()
@@ -317,7 +317,7 @@ void VsScriptedSimulationWindow::TrackCamera()
 
 				osg::Vec3d vPos = m_lpCurrentPath->GetInterpPosition();
 
-				string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
+				std::string strMesage = "Time: " + STR(m_lpSim->Time()) + ", Pos: [" + STR(vPos.x()) + ", " +  STR(vPos.y()) + ", " +  STR(vPos.z()) + "]\n";
 				OutputDebugString(strMesage.c_str());
 
 				SetCameraPositionAndLookAt(vPos, vTargetPos);			
@@ -343,8 +343,8 @@ void VsScriptedSimulationWindow::Load(CStdXml &oXml)
 
 	oXml.IntoElem(); //Into Window Element
 
-	string m_strDefaultStructureID;
-	string m_strDefaultPartID;
+	std::string m_strDefaultStructureID;
+	std::string m_strDefaultPartID;
 
 	DefaultPartID(oXml.GetChildString("LookAtBodyID", m_strDefaultPartID));
 
@@ -389,7 +389,7 @@ try
 {
 	lpSpline = new OsgLinearPath;
 
-	lpSpline->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	lpSpline->SetSystemPointers(m_lpSim, NULL, NULL, NULL, true);
 	lpSpline->ParentWindow(this);
 
 	lpSpline->Load(oXml);

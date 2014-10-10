@@ -4,7 +4,7 @@
 \brief	Implements the gain base class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -52,7 +52,7 @@ namespace AnimatSim
 **/
 Gain::Gain()
 {
-	m_bUseLimits = FALSE;
+	m_bUseLimits = false;
 	m_fltLowerLimit = 0;
 	m_fltLowerOutput = 0;
 	m_fltUpperLimit = 0;
@@ -72,7 +72,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Gain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Gain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -83,7 +83,7 @@ catch(...)
 
 \return	true if using limits, false otherwise. 
 **/
-BOOL Gain::UseLimits() {return m_bUseLimits;}
+bool Gain::UseLimits() {return m_bUseLimits;}
 
 /**
 \brief	Sets if limits should be used. 
@@ -93,7 +93,7 @@ BOOL Gain::UseLimits() {return m_bUseLimits;}
 
 \param	bVal	true to use limits. 
 **/
-void Gain::UseLimits(BOOL bVal) {m_bUseLimits = bVal;}
+void Gain::UseLimits(bool bVal) {m_bUseLimits = bVal;}
 
 /**
 \brief	Gets the lower limit. 
@@ -115,7 +115,7 @@ float Gain::LowerLimit() {return m_fltLowerLimit;}
 **/
 void Gain::LowerLimit(float fltVal) 
 {
-	Std_IsAboveMin(fltVal, m_fltUpperLimit, TRUE, "LowerLimit");
+	Std_IsAboveMin(fltVal, m_fltUpperLimit, true, "LowerLimit");
 	m_fltLowerLimit = fltVal;
 }
 
@@ -139,7 +139,7 @@ float Gain::UpperLimit() {return m_fltUpperLimit;}
 **/
 void Gain::UpperLimit(float fltVal) 
 {
-	Std_IsAboveMin(m_fltLowerLimit, fltVal, TRUE, "UpperLimit");
+	Std_IsAboveMin(m_fltLowerLimit, fltVal, true, "UpperLimit");
 	m_fltUpperLimit = fltVal;
 }
 
@@ -173,7 +173,20 @@ void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
 **/
 float Gain::UpperOutput() {return m_fltUpperOutput;}
 
-BOOL Gain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+void Gain::Copy(CStdSerialize *lpSource)
+{
+	AnimatBase::Copy(lpSource);
+
+	Gain *lpOrig = dynamic_cast<Gain *>(lpSource);
+
+	m_bUseLimits = lpOrig->m_bUseLimits;
+	m_fltLowerLimit = lpOrig->m_fltLowerLimit;
+	m_fltLowerOutput = lpOrig->m_fltLowerOutput;
+	m_fltUpperLimit = lpOrig->m_fltUpperLimit;
+	m_fltUpperOutput = lpOrig->m_fltUpperOutput;
+}
+
+bool Gain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;
@@ -186,25 +199,25 @@ BOOL Gain::SetData(const string &strDataType, const string &strValue, BOOL bThro
 
 	if(strDataType == "LOWERLIMIT")
 	{
-		LowerLimit(atof(strValue.c_str()));
+		LowerLimit((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "LOWEROUTPUT")
 	{
-		LowerOutput(atof(strValue.c_str()));
+		LowerOutput((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "UPPERLIMIT")
 	{
-		UpperLimit(atof(strValue.c_str()));
+		UpperLimit((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "UPPEROUTPUT")
 	{
-		UpperOutput(atof(strValue.c_str()));
+		UpperOutput((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -212,27 +225,18 @@ BOOL Gain::SetData(const string &strDataType, const string &strValue, BOOL bThro
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Gain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Gain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("AnimatBase");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("LowerLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LowerOutput");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UpperLimit");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UpperOutput");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("UseLimits", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LowerLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LowerOutput", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpperLimit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UpperOutput", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -260,7 +264,7 @@ void Gain::Load(CStdXml &oXml)
 		m_fltLowerOutput = oXml.GetChildFloat("LowerOutput");
 		m_fltUpperOutput = oXml.GetChildFloat("UpperOutput");
 		
-		Std_IsAboveMin(m_fltLowerLimit, m_fltUpperLimit, TRUE, "UpperLimit");
+		Std_IsAboveMin(m_fltLowerLimit, m_fltUpperLimit, true, "UpperLimit");
 	}
 
 	oXml.OutOfElem(); //OutOf Adapter Element
@@ -279,7 +283,7 @@ void Gain::Load(CStdXml &oXml)
 \return	Pointer to the loaded gain. 
 \exception Throws an exception if there is a problem during the load.
 **/
-Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
+Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, std::string strName, CStdXml &oXml)
 {
 	Gain *lpGain = NULL;
 
@@ -287,15 +291,15 @@ Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
 	{
 		//Now lets load this Current Graph object.
 		oXml.IntoChildElement(strName);
-		string strModuleName = oXml.GetChildString("ModuleName", "");
-		string strType = oXml.GetChildString("Type");
+		std::string strModuleName = oXml.GetChildString("ModuleName", "");
+		std::string strType = oXml.GetChildString("Type");
 		oXml.OutOfElem(); //OutOf Gain Element
 
 		Gain *lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
 		if(!lpGain)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "CurrentGraph");
 
-		lpGain->SetSystemPointers(lpSim, NULL, NULL, NULL, TRUE);
+		lpGain->SetSystemPointers(lpSim, NULL, NULL, NULL, true);
 		lpGain->Load(oXml);
 
 		return lpGain;

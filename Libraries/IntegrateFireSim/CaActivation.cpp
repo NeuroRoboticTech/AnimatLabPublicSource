@@ -18,7 +18,7 @@
 namespace IntegrateFireSim
 {
 
-CaActivation::CaActivation(Neuron *lpParent, string strActivationType)
+CaActivation::CaActivation(Neuron *lpParent, std::string strActivationType)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -37,12 +37,12 @@ CaActivation::~CaActivation()
 {
 }
 
-BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool CaActivation::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "MIDPOINT")
 	{
@@ -50,7 +50,7 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstVm(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstVh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SLOPE")
@@ -59,7 +59,7 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstSm(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstSh(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "TIMECONSTANT")
@@ -68,28 +68,23 @@ BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BO
 			m_lpParent->BurstMTimeConstant(atof(strValue.c_str()));
 		else
 			m_lpParent->BurstHTimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void CaActivation::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void CaActivation::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Midpoint");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Slope");
-	aryTypes.Add("Float");
-
-	aryNames.Add("TimeConstant");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Midpoint", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Slope", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void CaActivation::Load(CStdXml &oXml)

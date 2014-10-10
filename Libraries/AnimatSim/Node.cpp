@@ -4,7 +4,7 @@
 \brief	Implements the node class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -48,9 +48,11 @@ namespace AnimatSim
 Node::Node()
 {
 	m_lpOrganism = NULL;	
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 	m_bInitEnabled = m_bEnabled;
 	m_fltEnabled = 0;
+	m_bTemplateNode = false;
+	m_iTemplateNodeCount = 1;
 }
 
 /**
@@ -66,7 +68,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, false, true);}
 }
 
 /**
@@ -80,7 +82,7 @@ what enabled state the node is in. This will not apply to every node object type
 
 \return	true if it enabled, false if not. 
 **/
-BOOL Node::Enabled() {return m_bEnabled;}
+bool Node::Enabled() {return m_bEnabled;}
 
 /**
 \brief	Enables the node.
@@ -92,7 +94,7 @@ BOOL Node::Enabled() {return m_bEnabled;}
 
 \param	bValue	true to enable. 
 **/
-void Node::Enabled(BOOL bValue) 
+void Node::Enabled(bool bValue) 
 {
 	m_bEnabled = bValue;
 	m_fltEnabled = (float) m_bEnabled;
@@ -111,12 +113,59 @@ void Node::ResetSimulation()
 	Enabled(m_bInitEnabled);
 }
 
-void Node::Kill(BOOL bState)
+void Node::Kill(bool bState)
 {
 	if(bState)
-		Enabled(FALSE);
+		Enabled(false);
 	else
 		Enabled(m_bInitEnabled);
+}
+
+
+bool Node::TemplateNode() {return m_bTemplateNode;}
+
+void Node::TemplateNode(bool bVal) 
+{
+	m_bTemplateNode = bVal;
+
+	if(bVal)
+		SetupTemplateNodes();
+	else
+		DestroyTemplateNodes();
+}
+
+int Node::TemplateNodeCount() {return m_iTemplateNodeCount;}
+
+void Node::TemplateNodeCount(int iVal)
+{
+	Std_IsAboveMin((int) 1, iVal, true, "TemplateNodeCount", true);
+	m_iTemplateNodeCount = iVal;
+
+	SetupTemplateNodes();
+}
+
+std::string Node::TemplateChangeScript() {return m_strTemplateChangeScript;}
+
+void Node::TemplateChangeScript(std::string strVal)
+{
+	m_strTemplateChangeScript = strVal;
+
+	TemplateNodeChanged();
+}
+
+void Node::Copy(CStdSerialize *lpSource)
+{
+	AnimatBase::Copy(lpSource);
+
+	Node *lpOrig = dynamic_cast<Node *>(lpSource);
+
+	m_lpOrganism = lpOrig->m_lpOrganism;
+	m_bInitEnabled = lpOrig->m_bInitEnabled;
+	m_fltEnabled = lpOrig->m_fltEnabled;
+	m_bTemplateNode = false;
+	m_iTemplateNodeCount = 1;
+	m_strTemplateChangeScript = "";
+	m_aryTemplateChildNodes.RemoveAll();
 }
 
 /**
@@ -128,9 +177,56 @@ void Node::Kill(BOOL bState)
 void Node::UpdateData()
 {}
 
-void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+/**
+\brief	Creates and initializes all of the nodes that are baesd on this template node. 
+
+\author	dcofer
+\date	7/25/2014
+**/
+void Node::SetupTemplateNodes()
+{}
+
+/**
+\brief	Destroys all of the nodes that are baesd on this template node. 
+
+\author	dcofer
+\date	7/25/2014
+**/
+void Node::DestroyTemplateNodes()
+{}
+
+/**
+\brief	Called anytime that a key param of this node is modified. 
+
+\author	dcofer
+\date	7/25/2014
+**/
+void Node::TemplateNodeChanged()
+{}
+
+
+/**
+\brief	Used to convert a string target data type into an integer index.
+
+\details We do not want to be doing any string comparisons within the main simulation loop.
+To avoid this we need to convert the target data type into an index to use when AddExternalNodeInput
+is called so it knows to which input we are adding.
+
+\author	dcofer
+\date	6/16/2014
+
+\param	strDataType	String descriptor of the target data we want. 
+
+\return	index. Zero is the default. 
+**/
+int Node::GetTargetDataTypeIndex(const std::string &strDataType)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	return 0;
+}
+
+void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
+{
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
@@ -145,32 +241,49 @@ void Node::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
 }
 
-BOOL Node::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Node::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
+	if(AnimatBase::SetData(strType, strValue, false))
 		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
+	}
+	else if(strType == "TEMPLATENODE")
+	{
+		TemplateNode(Std_ToBool(strValue));
+		return true;
+	}
+	else if(strType == "TEMPLATENODECOUNT")
+	{
+		TemplateNodeCount(atoi(strValue.c_str()));
+		return true;
+	}
+	else if(strType == "TEMPLATECHANGESCRIPT")
+	{
+		TemplateChangeScript(strValue);
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Node::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Node::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("TemplateNode", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TemplateNodeCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TemplateChangeScript", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 }			//AnimatSim

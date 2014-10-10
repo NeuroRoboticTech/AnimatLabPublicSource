@@ -4,7 +4,7 @@
 \brief	Implements the linear hill muscle class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -110,7 +110,7 @@ LinearHillMuscle::~LinearHillMuscle()
 
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of LinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of LinearHillMuscle\r\n", "", -1, false, true);}
 }
 
 /**
@@ -133,7 +133,7 @@ float LinearHillMuscle::Kse() {return m_fltKse;}
 **/
 void LinearHillMuscle::Kse(float fltVal)
 {
-	Std_InValidRange((float) 0.00001, (float) 1e11, fltVal, TRUE, "Kse");
+	Std_InValidRange((float) 0.00001, (float) 1e11, fltVal, true, "Kse");
 	m_fltKse = fltVal;
 	m_fltKseByB = m_fltKse/m_fltB;
 	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
@@ -159,7 +159,7 @@ float LinearHillMuscle::Kpe() {return m_fltKpe;}
 **/
 void LinearHillMuscle::Kpe(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "Kpe");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "Kpe");
 	m_fltKpe = fltVal;
 	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
 }
@@ -184,7 +184,7 @@ float LinearHillMuscle::B() {return m_fltB;}
 **/
 void LinearHillMuscle::B(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "B");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "B");
 	m_fltB = fltVal;
 	m_fltKseByB = m_fltKse/m_fltB;
 }
@@ -229,7 +229,7 @@ float LinearHillMuscle::IbDischargeConstant() {return m_fltIbDischargeConstant;}
 **/
 void LinearHillMuscle::IbDischargeConstant(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IbDischargeConstant");
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, true, "IbDischargeConstant");
 	m_fltIbDischargeConstant = fltVal;
 }
 
@@ -323,7 +323,7 @@ float LinearHillMuscle::InternalTension() {return m_fltInternalTension;}
 **/
 float LinearHillMuscle::Vmuscle() {return m_fltVmuscle;}
 
-void LinearHillMuscle::Enabled(BOOL bVal)
+void LinearHillMuscle::Enabled(bool bVal)
 {
 	MuscleBase::Enabled(bVal);
 
@@ -419,8 +419,9 @@ void LinearHillMuscle::AfterResetSimulation()
 
 void LinearHillMuscle::CalculateTension()
 {
+    ////Test Code
 	//int i=0;
-	//if(lpSim->Time() >= 0.419)
+    //if(m_lpSim->Time() >= 0.5)
 	//	i=6;
 
 	//Store the previous muscle length
@@ -549,10 +550,10 @@ void LinearHillMuscle::CreateJoints()
 		m_aryMuscleVelocities[i] = 0;
 }
 
-float *LinearHillMuscle::GetDataPointer(const string &strDataType)
+float *LinearHillMuscle::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpVal = NULL; 
 
@@ -588,32 +589,32 @@ float *LinearHillMuscle::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearHillMuscle::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(MuscleBase::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "KSE")
 	{
-		Kse(atof(strValue.c_str()));
+		Kse((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "KPE")
 	{
-		Kpe(atof(strValue.c_str()));
+		Kpe((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "B")
 	{
-		B(atof(strValue.c_str()));
+		B((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "IBDISCHARGE")
 	{
-		IbDischargeConstant(atof(strValue.c_str()));
+		IbDischargeConstant((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -621,24 +622,31 @@ BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void LinearHillMuscle::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LinearHillMuscle::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	MuscleBase::QueryProperties(aryNames, aryTypes);
+	MuscleBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Kse");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Vmuscle", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Vse", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Vpe", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AvgVMuscle", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Displacement", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("DisplacementRatio", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Activation", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SeLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PeLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SeDisplacement", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Ib", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tl", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Kpe");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("IbDischarge");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Kse", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Kpe", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IbDischarge", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void LinearHillMuscle::Load(CStdXml &oXml)

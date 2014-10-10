@@ -36,15 +36,16 @@ Namespace Forms
         'Do not modify it using the code editor.
         Friend WithEvents btnCancel As System.Windows.Forms.Button
         Friend WithEvents btnOk As System.Windows.Forms.Button
-        Friend WithEvents TextBox1 As System.Windows.Forms.RichTextBox
+        Friend WithEvents txtEdit As System.Windows.Forms.RichTextBox
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.btnCancel = New System.Windows.Forms.Button
-            Me.btnOk = New System.Windows.Forms.Button
-            Me.TextBox1 = New System.Windows.Forms.RichTextBox
+            Me.btnCancel = New System.Windows.Forms.Button()
+            Me.btnOk = New System.Windows.Forms.Button()
+            Me.txtEdit = New System.Windows.Forms.RichTextBox()
             Me.SuspendLayout()
             '
             'btnCancel
             '
+            Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.btnCancel.Location = New System.Drawing.Point(232, 120)
             Me.btnCancel.Name = "btnCancel"
@@ -54,6 +55,7 @@ Namespace Forms
             '
             'btnOk
             '
+            Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK
             Me.btnOk.Location = New System.Drawing.Point(312, 120)
             Me.btnOk.Name = "btnOk"
@@ -61,24 +63,24 @@ Namespace Forms
             Me.btnOk.TabIndex = 3
             Me.btnOk.Text = "&Ok"
             '
-            'TextBox1
+            'txtEdit
             '
-            Me.TextBox1.Location = New System.Drawing.Point(0, 0)
-            Me.TextBox1.Multiline = True
-            Me.TextBox1.Name = "TextBox1"
-            Me.TextBox1.Size = New System.Drawing.Size(392, 112)
-            Me.TextBox1.TabIndex = 5
-            Me.TextBox1.Text = ""
-            Me.TextBox1.DetectUrls = True
+            Me.txtEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.txtEdit.Location = New System.Drawing.Point(0, 0)
+            Me.txtEdit.Name = "txtEdit"
+            Me.txtEdit.Size = New System.Drawing.Size(392, 112)
+            Me.txtEdit.TabIndex = 5
+            Me.txtEdit.Text = ""
             '
             'MultiLineStringEditor
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
             Me.ClientSize = New System.Drawing.Size(392, 149)
-            Me.Controls.Add(Me.TextBox1)
+            Me.Controls.Add(Me.txtEdit)
             Me.Controls.Add(Me.btnCancel)
             Me.Controls.Add(Me.btnOk)
-            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
             Me.Name = "MultiLineStringEditor"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.ResumeLayout(False)
@@ -105,10 +107,10 @@ Namespace Forms
 
         Public Property TextData() As String
             Get
-                Return CType(TextBox1.Text, String)
+                Return CType(txtEdit.Text, String)
             End Get
             Set(ByVal Value As String)
-                TextBox1.Text = Value
+                txtEdit.Text = Value
             End Set
         End Property
 
@@ -135,7 +137,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub TextBox1_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles TextBox1.LinkClicked
+        Private Sub TextBox1_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles txtEdit.LinkClicked
             Try
                 System.Diagnostics.Process.Start(e.LinkText)
             Catch ex As System.Exception

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="BulletAnimatSim" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/libBulletAnimatSim_debug_single.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DOSGBULLET_STATIC" />
+					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/OsgAnimatSim" />
+					<Add directory="/usr/local/include/bullet" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+					<Add library="OsgAnimatSim_debug" />
+					<Add library="OpenThreads" />
+					<Add library="osgAnimation" />
+					<Add library="osg" />
+					<Add library="osgDB" />
+					<Add library="osgFX" />
+					<Add library="osgGA" />
+					<Add library="osgManipulator" />
+					<Add library="osgParticle" />
+					<Add library="osgShadow" />
+					<Add library="osgSim" />
+					<Add library="osgTerrain" />
+					<Add library="osgText" />
+					<Add library="osgUtil" />
+					<Add library="osgViewer" />
+					<Add library="osgVolume" />
+					<Add library="osgWidget" />
+					<Add library="osgbDynamics_single_debug" />
+					<Add library="osgbCollision_single_debug" />
+					<Add library="osgwQuery_animat_debug" />
+					<Add library="osgwTools_animat_debug" />
+					<Add library="BulletCollision_single_debug" />
+					<Add library="BulletDynamics_single_debug" />
+					<Add library="LinearMath_single_debug" />
+					<Add library="BulletSoftBody_single_debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libBulletAnimatSim_debug_single.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/libBulletAnimatSim_single.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DOSGBULLET_STATIC" />
+					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/OsgAnimatSim" />
+					<Add directory="/usr/local/include/bullet" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+					<Add library="OsgAnimatSim" />
+					<Add library="OpenThreads" />
+					<Add library="osgAnimation" />
+					<Add library="osg" />
+					<Add library="osgDB" />
+					<Add library="osgFX" />
+					<Add library="osgGA" />
+					<Add library="osgManipulator" />
+					<Add library="osgParticle" />
+					<Add library="osgShadow" />
+					<Add library="osgSim" />
+					<Add library="osgTerrain" />
+					<Add library="osgText" />
+					<Add library="osgUtil" />
+					<Add library="osgViewer" />
+					<Add library="osgVolume" />
+					<Add library="osgWidget" />
+					<Add library="osgbDynamics_single" />
+					<Add library="osgbCollision_single" />
+					<Add library="osgwQuery_animat" />
+					<Add library="osgwTools_animat" />
+					<Add library="BulletCollision_single" />
+					<Add library="BulletDynamics_single" />
+					<Add library="LinearMath_single" />
+					<Add library="BulletSoftBody_single" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libBulletAnimatSim_single.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Debug_Double">
+				<Option output="Debug/libBulletAnimatSim_debug_double.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug_Double" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DOSGBULLET_STATIC" />
+					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
+					<Add option="-DBT_USE_DOUBLE_PRECISION" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/OsgAnimatSim" />
+					<Add directory="/usr/local/include/bullet" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+					<Add library="OsgAnimatSim_debug" />
+					<Add library="OpenThreads" />
+					<Add library="osgAnimation" />
+					<Add library="osg" />
+					<Add library="osgDB" />
+					<Add library="osgFX" />
+					<Add library="osgGA" />
+					<Add library="osgManipulator" />
+					<Add library="osgParticle" />
+					<Add library="osgShadow" />
+					<Add library="osgSim" />
+					<Add library="osgTerrain" />
+					<Add library="osgText" />
+					<Add library="osgUtil" />
+					<Add library="osgViewer" />
+					<Add library="osgVolume" />
+					<Add library="osgWidget" />
+					<Add library="osgbDynamics_double_debug" />
+					<Add library="osgbCollision_double_debug" />
+					<Add library="osgwQuery_animat_debug" />
+					<Add library="osgwTools_animat_debug" />
+					<Add library="BulletCollision_double_debug" />
+					<Add library="BulletDynamics_double_debug" />
+					<Add library="LinearMath_double_debug" />
+					<Add library="BulletSoftBody_double_debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libBulletAnimatSim_debug_double.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release_Double">
+				<Option output="Release/libBulletAnimatSim_double.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release_Double" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DOSGBULLET_STATIC" />
+					<Add option="-DBULLETANIMATLIBRARY_EXPORTS" />
+					<Add option="-DBT_USE_DOUBLE_PRECISION" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+					<Add directory="../../../Libraries/OsgAnimatSim" />
+					<Add directory="/usr/local/include/bullet" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+					<Add library="OsgAnimatSim" />
+					<Add library="OpenThreads" />
+					<Add library="osgAnimation" />
+					<Add library="osg" />
+					<Add library="osgDB" />
+					<Add library="osgFX" />
+					<Add library="osgGA" />
+					<Add library="osgManipulator" />
+					<Add library="osgParticle" />
+					<Add library="osgShadow" />
+					<Add library="osgSim" />
+					<Add library="osgTerrain" />
+					<Add library="osgText" />
+					<Add library="osgUtil" />
+					<Add library="osgViewer" />
+					<Add library="osgVolume" />
+					<Add library="osgWidget" />
+					<Add library="osgbDynamics_double" />
+					<Add library="osgbCollision_double" />
+					<Add library="osgwQuery_animat" />
+					<Add library="osgwTools_animat" />
+					<Add library="BulletCollision_double" />
+					<Add library="BulletDynamics_double" />
+					<Add library="LinearMath_double" />
+					<Add library="BulletSoftBody_double" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libBulletAnimatSim_double.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="../BlAnimatCollisionDispatcher.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlBallSocket.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlBox.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlClassFactory.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlCone.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlConstraintFriction.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlConstraintRelaxation.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlCylinder.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlDistanceJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlEllipsoid.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlFluidPlane.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlHinge.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlHingeLimit.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLine.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLinearHillMuscle.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLinearHillStretchReceptor.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMaterialType.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMesh.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMeshBase.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMotorizedJoint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlOsgGeometry.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPlane.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPrismatic.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPrismaticLimit.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlRigidBody.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlRPRO.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSimulator.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSphere.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSpring.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlTerrain.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlTorus.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlUniversal.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../btAnimatGeneric6DofConstraint.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlAnimatCollisionDispatcher.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlBallSocket.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlBox.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlClassFactory.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlCone.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlConstraintFriction.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlConstraintRelaxation.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlCylinder.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlDistanceJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlEllipsoid.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlFluidPlane.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlHinge.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlHingeLimit.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLine.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLinearHillMuscle.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlLinearHillStretchReceptor.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMaterialType.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMesh.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMeshBase.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlMotorizedJoint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlOsgGeometry.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPlane.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPrismatic.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlPrismaticLimit.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlRigidBody.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlRPRO.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSimulator.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSphere.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlSpring.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlTerrain.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlTorus.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BlUniversal.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../btAnimatGeneric6DofConstraint.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../BulletAnimatSim.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+

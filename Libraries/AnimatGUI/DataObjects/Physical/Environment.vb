@@ -41,6 +41,8 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_snPhysicsTimeStep As ScaledNumber
+        Protected m_iPhysicsSubsteps As Integer = 1
+
         Protected m_snGravity As ScaledNumber
 
         Protected m_snMouseSpringStiffness As ScaledNumber
@@ -81,6 +83,8 @@ Namespace DataObjects.Physical
 
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
+
+        Protected m_doScript As Scripting.ScriptProcessor
 
 #End Region
 
@@ -156,6 +160,23 @@ Namespace DataObjects.Physical
                 Util.Application.SignalTimeStepChanged(Me)
             End Set
         End Property
+
+        Public Property PhysicsSubsteps() As Integer
+            Get
+                Return m_iPhysicsSubsteps
+            End Get
+            Set(ByVal Value As Integer)
+                If Value <= 0 Then
+                    Throw New System.Exception("You can not set the physics substep value to be less than or equal to zero!")
+                ElseIf Value >= 5000 Then
+                    Throw New System.Exception("You can not set the physics substep value to be greater than or equal to 5000!")
+                End If
+
+                Me.SetSimData("PhysicsSubsteps", CStr(Value), True)
+                m_iPhysicsSubsteps = Value
+            End Set
+        End Property
+
 
         Public Property Gravity() As ScaledNumber
             Get
@@ -642,6 +663,16 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Script() As Scripting.ScriptProcessor
+            Get
+                Return m_doScript
+            End Get
+            Set(ByVal Value As Scripting.ScriptProcessor)
+                m_doScript = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -683,7 +714,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Function AddMaterialType() As MaterialType
-            Dim doType As New DataObjects.Physical.MaterialType(Util.Environment)
+            Dim doType As MaterialType = MaterialType.CreateMaterialType(Me, False, Nothing)
             doType.Name = "Material_" & (Me.MaterialTypes.Count + 1)
             Me.MaterialTypes.Add(doType.ID, doType, True)
 
@@ -732,6 +763,10 @@ Namespace DataObjects.Physical
             m_iNewOrganismCount = Util.ExtractIDCount("Organism", m_aryOrganisms)
             m_iNewStructureCount = Util.ExtractIDCount("Structure", m_aryStructures)
             m_iNewLightCount = Util.ExtractIDCount("Light", m_aryLights)
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            End If
 
         End Sub
 
@@ -784,6 +819,10 @@ Namespace DataObjects.Physical
                 Next
             End If
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            End If
+
             Return tnNode
         End Function
 
@@ -829,9 +868,18 @@ Namespace DataObjects.Physical
                 mcExpandAll.Tag = tnSelectedNode
                 mcCollapseAll.Tag = tnSelectedNode
 
-                ' Create the popup menu object
                 Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+
+                If m_doScript Is Nothing Then
+                    Dim mcAddScript As New System.Windows.Forms.ToolStripMenuItem("Add script", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddScript))
+                    popup.Items.Add(mcAddScript)
+                End If
+
+                ' Create the popup menu object
                 popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+
+                Return True
             End If
 
             Return False
@@ -993,6 +1041,9 @@ Namespace DataObjects.Physical
             m_aryOdorTypes.FindChildrenOfType(tpTemplate, colDataObjects)
             m_aryLights.FindChildrenOfType(tpTemplate, colDataObjects)
             m_aryMaterialTypes.FindChildrenOfType(tpTemplate, colDataObjects)
+            If Not m_doScript Is Nothing Then
+                m_doScript.FindChildrenOfType(tpTemplate, colDataObjects)
+            End If
 
         End Sub
 
@@ -1006,6 +1057,11 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                         "Settings", "This is the increment that is taken between each time step of the physics simulator. ", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            If Util.Application.Physics.AllowPhysicsSubsteps Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Substeps", Me.PhysicsSubsteps.GetType(), "PhysicsSubsteps", _
+                                            "Settings", "Allows you to specify the number of substeps that the physics engine will iterate through between each physics step.", Me.PhysicsSubsteps))
+            End If
 
             pbNumberBag = m_snGravity.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Gravity", pbNumberBag.GetType(), "Gravity", _
@@ -1058,8 +1114,10 @@ Namespace DataObjects.Physical
                                         "Mouse Spring Settings", "Sets the damping of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stability Scale", m_fltStabilityScale.GetType(), "StabilityScale", _
-                                        "World Stability", "Scales the stability parameters linearly using this scale factor.", m_fltStabilityScale))
+            If Util.Application.Physics.AllowPhysicsSubsteps <> True Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stability Scale", m_fltStabilityScale.GetType(), "StabilityScale", _
+                                            "World Stability", "Scales the stability parameters linearly using this scale factor.", m_fltStabilityScale))
+            End If
 
             'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Calc Sim Params", Me.CalculateCriticalSimulationParams.GetType(), "CalculateCriticalSimulationParams", _
             '                            "World Stability", "Determines if the critical simulation params are automatically calculated or are specified manually.", Me.CalculateCriticalSimulationParams))
@@ -1118,6 +1176,7 @@ Namespace DataObjects.Physical
             If Not m_snAngularDamping Is Nothing Then m_snAngularDamping.ClearIsDirty()
             If Not m_snAngularKineticLoss Is Nothing Then m_snAngularKineticLoss.ClearIsDirty()
             If Not m_snRecFieldSelRadius Is Nothing Then m_snRecFieldSelRadius.ClearIsDirty()
+            If Not m_doScript Is Nothing Then m_doScript.ClearIsDirty()
 
         End Sub
 
@@ -1153,6 +1212,7 @@ Namespace DataObjects.Physical
             m_iNewOrganismCount = doOrig.m_iNewOrganismCount
             m_iNewStructureCount = doOrig.m_iNewStructureCount
             m_iNewLightCount = doOrig.m_iNewLightCount
+            If Not doOrig.m_doScript Is Nothing Then m_doScript = DirectCast(doOrig.m_doScript.Clone(Me, bCutData, doRoot), Scripting.ScriptProcessor)
 
         End Sub
 
@@ -1192,6 +1252,11 @@ Namespace DataObjects.Physical
                 doLight.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             Next
 
+            Dim doMaterial As DataObjects.Physical.MaterialType
+            For Each deEntry As DictionaryEntry In m_aryMaterialTypes
+                doMaterial = DirectCast(deEntry.Value, DataObjects.Physical.MaterialType)
+                doMaterial.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            Next
 
         End Sub
 
@@ -1219,6 +1284,7 @@ Namespace DataObjects.Physical
             oXml.IntoChildElement("Environment") 'Into Environment Element
 
             m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
+            m_iPhysicsSubsteps = oXml.GetChildInt("PhysicsSubsteps", 1)
             m_snGravity.LoadData(oXml, "Gravity")
             m_snMouseSpringStiffness.LoadData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.LoadData(oXml, "MouseSpringDamping")
@@ -1326,6 +1392,19 @@ Namespace DataObjects.Physical
                 AddDefaultLights()
             End If
 
+            Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " script processor"
+            If oXml.FindChildElement("Script", False) Then
+                oXml.IntoChildElement("Script")
+                Dim strAssemblyFile As String = oXml.GetChildString("AssemblyFile")
+                Dim strClassName As String = oXml.GetChildString("ClassName")
+                oXml.OutOfElem()
+
+                m_doScript = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), Scripting.ScriptProcessor)
+                m_doScript.LoadData(oXml)
+            Else
+                m_doScript = Nothing
+            End If
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1354,14 +1433,9 @@ Namespace DataObjects.Physical
         End Sub
 
         Protected Overridable Sub AddDefaultMaterialType(ByVal bCallSimMethods As Boolean)
-            Dim doMat As New DataObjects.Physical.MaterialType(Me)
+            Dim doMat As MaterialType = MaterialType.CreateMaterialType(Me, False, Nothing)
             doMat.ID = "DEFAULTMATERIAL"
             doMat.Name = "Default"
-
-            If Not Util.Environment Is Nothing Then
-                doMat.Compliance.ActualValue = 0.000001 * Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
-                doMat.Damping.ActualValue = 50000000 / Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
-            End If
 
             m_aryMaterialTypes.Add(doMat.ID, doMat, bCallSimMethods)
         End Sub
@@ -1381,7 +1455,7 @@ Namespace DataObjects.Physical
                     iCount = oXml.NumberOfChildren() - 1
                     For iIndex As Integer = 0 To iCount
                         oXml.FindChildByIndex(iIndex)
-                        doType = New DataObjects.Physical.MaterialType(Me)
+                        doType = MaterialType.CreateMaterialType(Me, False, Nothing)
                         doType.LoadData(oXml)
                         m_aryMaterialTypes.Add(doType.ID, doType, False)
                     Next
@@ -1405,6 +1479,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem()
 
             m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
+            oXml.AddChildElement("PhysicsSubsteps", m_iPhysicsSubsteps)
             m_snGravity.SaveData(oXml, "Gravity")
             m_snMouseSpringStiffness.SaveData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.SaveData(oXml, "MouseSpringDamping")
@@ -1476,6 +1551,10 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1500,7 +1579,13 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Environment")
             oXml.IntoElem()
 
-            oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
+            Else
+                oXml.AddChildElement("PhysicsTimeStep", Util.ExportRobotInterface.PhysicsTimeStep.ActualValue)
+            End If
+
+            oXml.AddChildElement("PhysicsSubsteps", m_iPhysicsSubsteps)
             oXml.AddChildElement("Gravity", m_snGravity.ActualValue)
             oXml.AddChildElement("MouseSpringStiffness", m_snMouseSpringStiffness.ActualValue)
             oXml.AddChildElement("MouseSpringDamping", m_snMouseSpringDamping.ActualValue)
@@ -1551,27 +1636,35 @@ Namespace DataObjects.Physical
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
                 doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                doOrganism.SaveSimulationXml(oXml, Me, "Organism")
+                If Util.ExportRobotInterface Is Nothing OrElse Util.ExportRobotInterface.Organism Is doOrganism Then
+                    doOrganism.SaveSimulationXml(oXml, Me, "Organism")
+                End If
             Next
             oXml.OutOfElem() 'Outof Organisms Element
 
-            oXml.AddChildElement("Structures")
-            oXml.IntoElem()
-            Dim doStructure As DataObjects.Physical.PhysicalStructure
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                doStructure.SaveSimulationXml(oXml, Me, "Structure")
-            Next
-            oXml.OutOfElem() 'Outof Structures Element
+            If Util.ExportRobotInterface Is Nothing Then
+                oXml.AddChildElement("Structures")
+                oXml.IntoElem()
+                Dim doStructure As DataObjects.Physical.PhysicalStructure
+                For Each deEntry As DictionaryEntry In m_aryStructures
+                    doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+                    doStructure.SaveSimulationXml(oXml, Me, "Structure")
+                Next
+                oXml.OutOfElem() 'Outof Structures Element
 
-            oXml.AddChildElement("Lights")
-            oXml.IntoElem()
-            Dim doLight As DataObjects.Physical.Light
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
-                doLight.SaveSimulationXml(oXml, Me)
-            Next
-            oXml.OutOfElem() 'Outof Structures Element
+                oXml.AddChildElement("Lights")
+                oXml.IntoElem()
+                Dim doLight As DataObjects.Physical.Light
+                For Each deEntry As DictionaryEntry In m_aryLights
+                    doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                    doLight.SaveSimulationXml(oXml, Me)
+                Next
+                oXml.OutOfElem() 'Outof Structures Element
+            End If
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.SaveSimulationXml(oXml, Me)
+            End If
 
             oXml.OutOfElem() 'Outof Environment Element
 
@@ -1598,6 +1691,10 @@ Namespace DataObjects.Physical
             m_aryLights.InitializeAfterLoad()
             m_aryMaterialTypes.InitializeAfterLoad()
 
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeAfterLoad()
+            End If
+
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
@@ -1608,6 +1705,7 @@ Namespace DataObjects.Physical
             If doObject Is Nothing AndAlso Not m_aryOdorTypes Is Nothing Then doObject = m_aryOdorTypes.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryLights Is Nothing Then doObject = m_aryLights.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryMaterialTypes Is Nothing Then doObject = m_aryMaterialTypes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doScript Is Nothing Then doObject = m_doScript.FindObjectByID(strID)
 
             Return doObject
 
@@ -1624,6 +1722,10 @@ Namespace DataObjects.Physical
             m_aryStructures.InitializeSimulationReferences(bShowError)
             m_aryLights.InitializeSimulationReferences(bShowError)
             m_aryMaterialTypes.InitializeSimulationReferences(bShowError)
+
+            If Not m_doScript Is Nothing Then
+                m_doScript.InitializeSimulationReferences(bShowError)
+            End If
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then
@@ -1700,6 +1802,41 @@ Namespace DataObjects.Physical
 
                 doLight.CreateWorkspaceTreeView(Me, m_tnStructures)
                 doLight.SelectItem()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+
+        Protected Overridable Sub OnAddScript(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = Util.Application.ScriptProcessors
+                frmSelInterface.PartTypeName = "Script"
+
+                If Not m_doScript Is Nothing Then
+                    If Util.ShowMessage("There is already a script associated with this simulation environment. Do you want to replace it?", "Replace script", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return
+                    End If
+                End If
+
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    'First remove the old one if it exists
+                    If Not m_doScript Is Nothing Then
+                        m_doScript.RemoveWorksapceTreeView()
+                        m_doScript.RemoveFromSim(True)
+                        m_doScript = Nothing
+                    End If
+
+                    'Then create the new one.
+                    Dim doScript As Scripting.ScriptProcessor = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Scripting.ScriptProcessor)
+                    doScript.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                    doScript.AddToSim(True)
+                    m_doScript = doScript
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

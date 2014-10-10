@@ -40,7 +40,7 @@ Namespace DataObjects.ExternalStimuli
                 DisconnectItemEvents()
                 m_doStimulatedItem = value
                 Me.LinkedObject = New TypeHelpers.LinkedDataObjectTree(value)
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(value)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(value, False, True)
                 ConnectItemEvents()
             End Set
         End Property
@@ -60,9 +60,30 @@ Namespace DataObjects.ExternalStimuli
                 m_thLinkedObject = Value
 
                 If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is m_doStimulatedItem Then
-                    m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+                    m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
                     Me.StimulatedItem = m_thLinkedObject.Item
                 End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
+            Get
+                If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
+                    If Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Physical.BodyPart), False) Then
+                        Dim bpPart As DataObjects.Physical.BodyPart = DirectCast(m_thLinkedObject.Item, DataObjects.Physical.BodyPart)
+                        Return bpPart.ParentStructure
+                    ElseIf Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Behavior.Node), False) Then
+                        Dim bpPart As DataObjects.Behavior.Node = DirectCast(m_thLinkedObject.Item, DataObjects.Behavior.Node)
+                        Return bpPart.Organism
+                    ElseIf Util.IsTypeOf(m_thLinkedObject.Item.GetType(), GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                        Dim bpPart As DataObjects.Physical.PhysicalStructure = DirectCast(m_thLinkedObject.Item, DataObjects.Physical.PhysicalStructure)
+                        Return bpPart
+                    End If
+                End If
+                Return Nothing
+            End Get
+            Set(ByVal Value As DataObjects.Physical.PhysicalStructure)
             End Set
         End Property
 
@@ -96,7 +117,7 @@ Namespace DataObjects.ExternalStimuli
                     Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
                 End If
 
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value, False, True)
             End Set
         End Property
 
@@ -189,10 +210,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus can set any property of any object within the system."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         Public Overrides ReadOnly Property StimulusClassType() As String
@@ -215,7 +238,7 @@ Namespace DataObjects.ExternalStimuli
             MyBase.New(doParent)
 
             m_thLinkedObject = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(Nothing)
-            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
+            m_thLinkedProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, False, True)
         End Sub
 
         Protected Overrides Sub SetSimEquation(ByVal strEquation As String)
@@ -285,7 +308,7 @@ Namespace DataObjects.ExternalStimuli
 
             If m_strLinkedObjectID.Trim.Length > 0 Then
                 Me.StimulatedItem = Util.Simulation.FindObjectByID(m_strLinkedObjectID)
-                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Me.StimulatedItem, m_strLinkedObjectProperty)
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Me.StimulatedItem, m_strLinkedObjectProperty, False, True)
             End If
         End Sub
 

@@ -4,7 +4,7 @@
 \brief	Implements the linear 1-D, 2-D, and 3-D class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -63,9 +63,9 @@ LinearJoint::~LinearJoint()
 
 }
 
-void LinearJoint::LinearType(string strType)
+void LinearJoint::LinearType(std::string strType)
 {
-	string strTP = Std_ToUpper(Std_Trim(strType));
+	std::string strTP = Std_ToUpper(Std_Trim(strType));
 
 	if(strTP == "LINEAR1D")
 		LinearType(0);
@@ -79,7 +79,7 @@ void LinearJoint::LinearType(string strType)
 
 void LinearJoint::LinearType(int iType)
 {
-	Std_InValidRange((int) 0, (int) 2, iType, TRUE, "LinearType");
+	Std_InValidRange((int) 0, (int) 2, iType, true, "LinearType");
 	m_iLinearType = iType;
 }
 
@@ -95,12 +95,12 @@ float  LinearJoint::CylinderHeight()  {return m_fltSize;}
 
 #pragma region DataAccesMethods
 
-BOOL LinearJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool LinearJoint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(Joint::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(Joint::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "LINEARTYPE")
 	{
@@ -112,15 +112,14 @@ BOOL LinearJoint::SetData(const string &strDataType, const string &strValue, BOO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void LinearJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void LinearJoint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Joint::QueryProperties(aryNames, aryTypes);
+	Joint::QueryProperties(aryProperties);
 
-	aryNames.Add("LinearType");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("LinearType", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

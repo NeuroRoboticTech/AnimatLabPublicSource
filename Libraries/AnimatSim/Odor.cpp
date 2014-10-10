@@ -4,7 +4,7 @@
 \brief	Implements the odor class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -51,8 +51,8 @@ Odor::Odor(RigidBody *lpParent)
 	m_lpParent = lpParent;
 	m_lpOdorType = NULL;
 	m_fltQuantity = 100;
-	m_bUseFoodQuantity = FALSE;
-	m_bEnabled = TRUE;
+	m_bUseFoodQuantity = false;
+	m_bEnabled = true;
 }
 
 /**
@@ -69,11 +69,11 @@ try
 	m_lpParent = NULL;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, false, true);}
 }
 
 /**
-\fn	BOOL Odor::Enabled()
+\fn	bool Odor::Enabled()
 
 \brief	Gets whether the odor is enabled or not. 
 
@@ -82,11 +82,11 @@ catch(...)
 
 \return	true if it enabled, false if not. 
 **/
-BOOL Odor::Enabled()
+bool Odor::Enabled()
 {return m_bEnabled;}
 
 /**
-\fn	void Odor::Enabled(BOOL bVal)
+\fn	void Odor::Enabled(bool bVal)
 
 \brief	Enables the odor. 
 
@@ -95,7 +95,7 @@ BOOL Odor::Enabled()
 
 \param	bVal	true to enable, false to disable. 
 **/
-void Odor::Enabled(BOOL bVal)
+void Odor::Enabled(bool bVal)
 {
 	m_bEnabled = bVal;
 }
@@ -110,7 +110,7 @@ void Odor::Enabled(BOOL bVal)
 
 \param	strType	OdorType ID. 
 **/
-void Odor::SetOdorType(string strType)
+void Odor::SetOdorType(std::string strType)
 {
 	//Now lets find the odor type for this odor and add this one to it.
 	m_lpOdorType = m_lpSim->FindOdorType(strType);
@@ -139,7 +139,7 @@ OdorType  *Odor::GetOdorType() {return m_lpOdorType;}
 **/
 void Odor::Quantity(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, m_fltQuantity, TRUE, "Quantity");
+	Std_IsAboveMin((float) 0, m_fltQuantity, true, "Quantity");
 	m_fltQuantity = fltVal;
 }
 
@@ -170,7 +170,7 @@ float Odor::Quantity()
 
 \return	true if it uses RigidBody food quantity, false else.
 **/
-BOOL Odor::UseFoodQuantity() {return m_bUseFoodQuantity;}
+bool Odor::UseFoodQuantity() {return m_bUseFoodQuantity;}
 
 /**
 \brief	Sets whether we should use the FoodQuantity of the parent RigidBody when calculating the odor value.
@@ -180,7 +180,7 @@ BOOL Odor::UseFoodQuantity() {return m_bUseFoodQuantity;}
 
 \param	bVal	true if it uses RigidBody food quantity, false else.
 **/
-void Odor::UseFoodQuantity(BOOL bVal) {m_bUseFoodQuantity = bVal;}
+void Odor::UseFoodQuantity(bool bVal) {m_bUseFoodQuantity = bVal;}
 
 /**
 \brief	Calculates the odor value for this Odorant for a given odor sensor somewhere in the environment.
@@ -209,50 +209,45 @@ float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-BOOL Odor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Odor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(AnimatBase::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(AnimatBase::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "QUANTITY")
 	{
 		Quantity(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "USEFOODQUANTITY")
 	{
 		UseFoodQuantity(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Odor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Odor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("Enabled");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("Quantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("UseFoodQuantity");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Quantity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("UseFoodQuantity", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void Odor::Load(CStdXml &oXml)

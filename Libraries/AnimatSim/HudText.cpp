@@ -43,7 +43,7 @@ HudText::HudText()
 	//Default color is white
 	m_aryColor.Set(1, 1, 1, 1);
 	m_ptPosition.Set(10,10, 0); //Default to the lower left corner
-	m_strFont = "fonts/Arial.ttf";
+	m_strFont = "fonts/arial.ttf";
 	m_iCharSize = 30;
 	m_strText = "";
 	m_lpDisplayData = NULL;
@@ -51,7 +51,7 @@ HudText::HudText()
 	m_fltUpdateInterval = 1;
 }
 
-HudText::HudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval)
+HudText::HudText(float *aryColor, CStdFPoint &ptPosition, std::string strFont, int iCharSize, std::string strText, std::string strDisplayTargetID, std::string strDisplayDataType, std::string strUpdateTargetID, std::string strUpdateDataType, float fltUpdateInterval)
 {
 	m_aryColor.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
 	m_ptPosition = ptPosition;
@@ -86,8 +86,8 @@ void HudText::Load(CStdXml &oXml)
 
 	oXml.IntoElem();
 
-	m_aryColor.Load(oXml, "Color", FALSE);
-	Std_LoadPoint(oXml, "Position", m_ptPosition, FALSE);
+	m_aryColor.Load(oXml, "Color", false);
+	Std_LoadPoint(oXml, "Position", m_ptPosition, false);
 	m_strFont = oXml.GetChildString("Font", m_strFont);
 	m_iCharSize = oXml.GetChildInt("CharSize", m_iCharSize);
 	m_strText = oXml.GetChildString("Text", m_strText);

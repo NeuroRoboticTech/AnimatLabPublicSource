@@ -1,13 +1,21 @@
 #ifndef __REALISTIC_NEURAL_NET_LIB_DLL_H__
 #define __REALISTIC_NEURAL_NET_LIB_DLL_H__
 
-#ifndef _REALISTIC_NEURAL_NET_LIB_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "RealisticNeuralNet_vc10D.lib")
-	#else
-		#pragma comment(lib, "RealisticNeuralNet_vc10.lib")
-	#endif
-#endif          // _REALISTIC_NEURAL_NET_DLL_NOFORCELIBS
+#ifndef _IGF_NEURAL_NET_LIB_DLL_NOFORCELIBS
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "IntegrateFireSim_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "IntegrateFireSim_vc10.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "IntegrateFireSim_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "IntegrateFireSim_vc10_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
+#endif          // _IGF_NEURAL_NET_LIB_DLL_NOFORCELIBS
 
 #define ADV_NEURAL_PORT __declspec( dllimport )
 

@@ -158,9 +158,9 @@ Namespace DataObjects.Behavior
         Protected m_aryInLinks As New Collections.SortedLinks(Me)
         Protected m_aryOutLinks As New Collections.SortedLinks(Me)
 
-        'Used to temporarilly store the id's of the in and out links during loading.
-        'Protected m_aryLoadingInLinkIDs As New ArrayList
-        'Protected m_aryLoadingOutLinkIDs As New ArrayList
+        Protected m_bTemplateNode As Boolean = False
+        Protected m_iTemplateNodeCount As Integer = 1
+        Protected m_strTemplateChangeScript As String = ""
 
         Protected m_aryCompatibleLinks As New Collections.Links(Me)
 
@@ -688,6 +688,61 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property IsSensorOrMotor() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TemplateNode() As Boolean
+            Get
+                Return m_bTemplateNode
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("TemplateNode", Value.ToString(), True)
+                m_bTemplateNode = Value
+
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TemplateNodeCount() As Integer
+            Get
+                Return m_iTemplateNodeCount
+            End Get
+            Set(ByVal Value As Integer)
+                If Value < 1 Then
+                    Throw New System.Exception("There must be at least 1 node for the template node.")
+                End If
+
+                SetSimData("TemplateNodeCount", Value.ToString(), True)
+                m_iTemplateNodeCount = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TemplateChangeScript() As String
+            Get
+                Return m_strTemplateChangeScript
+            End Get
+            Set(ByVal Value As String)
+                SetSimData("TemplateNodeScript", Value, True)
+                m_strTemplateChangeScript = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowTemplateNode() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -775,6 +830,9 @@ Namespace DataObjects.Behavior
             m_bYMoveable = bnOrig.m_bYMoveable
             m_bYSizeable = bnOrig.m_bYSizeable
             m_iZOrder = bnOrig.m_iZOrder
+            m_bTemplateNode = bnOrig.m_bTemplateNode
+            m_iTemplateNodeCount = bnOrig.m_iTemplateNodeCount
+            m_strTemplateChangeScript = bnOrig.m_strTemplateChangeScript
         End Sub
 
         Public Sub BeginEdit()
@@ -1213,6 +1271,24 @@ Namespace DataObjects.Behavior
                                         "Graphical Properties", "Sets the image file to use for this node.", Me.ImageName, _
                                         GetType(TypeHelpers.ImageFileEditor)))
 
+            If AllowTemplateNode Then
+                If Not TemplateNode Then
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Template Node", GetType(Boolean), "TemplateNode", _
+                                                "Node Properties", "If true then this node is a template for many similar nodes in the simulation.", Me.TemplateNode))
+                Else
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Template Node", GetType(Boolean), "TemplateNode", _
+                                                "Template Properties", "If true then this node is a template for many similar nodes in the simulation.", Me.TemplateNode))
+
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Node Count", GetType(Integer), "TemplateNodeCount", _
+                                                "Template Properties", "Determines how many nodes are actually represented by this template.", Me.TemplateNodeCount))
+
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Change Script", Me.TemplateChangeScript.GetType(), "TemplateChangeScript", _
+                                                "Template Properties", "Python script that is run whenver any propery of this template node is modified.", _
+                                                Me.TemplateChangeScript, GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+                End If
+
+            End If
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -1303,6 +1379,10 @@ Namespace DataObjects.Behavior
                 m_bYMoveable = oXml.GetChildBool("YMoveable")
                 m_bYSizeable = oXml.GetChildBool("YSizeable")
                 m_iZOrder = oXml.GetChildInt("ZOrder")
+
+                m_bTemplateNode = oXml.GetChildBool("TemplateNode", False)
+                m_iTemplateNodeCount = oXml.GetChildInt("TemplateNodeCount", 0)
+                m_strTemplateChangeScript = oXml.GetChildString("TemplateChangeScript", "")
 
                 oXml.OutOfElem()  'Outof Node Element
 
@@ -1397,6 +1477,12 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("YMoveable", m_bYMoveable)
                 oXml.AddChildElement("YSizeable", m_bYSizeable)
                 oXml.AddChildElement("ZOrder", m_iZOrder)
+
+                oXml.AddChildElement("ZOrder", m_iZOrder)
+
+                oXml.AddChildElement("TemplateNode", m_bTemplateNode)
+                oXml.AddChildElement("TemplateNodeCount", TemplateNodeCount)
+                oXml.AddChildElement("TemplateChangeScript", TemplateChangeScript)
 
                 'Now lets write out the in and out links.
                 Dim blLink As AnimatGUI.DataObjects.Behavior.Link

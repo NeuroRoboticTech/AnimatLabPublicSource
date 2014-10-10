@@ -1,0 +1,18 @@
+AnimatSimulator -Library BulletAnimatSim_vc10D_single.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Single_x32_Debug.asim"
+AnimatSimulator -Library BulletAnimatSim_vc10D_double.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Double_x32_Debug.asim"
+AnimatSimulator -Library BulletAnimatSim_vc10_single.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Single_x32.asim"
+AnimatSimulator -Library BulletAnimatSim_vc10_double.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Double_x32.asim"
+
+AnimatSimulator_x64 -Library BulletAnimatSim_vc10D_single_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Single_x64_Debug.asim"
+AnimatSimulator_x64 -Library BulletAnimatSim_vc10D_double_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Double_x64_Debug.asim"
+AnimatSimulator_x64 -Library BulletAnimatSim_vc10_single_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Single_x64.asim"
+AnimatSimulator_x64 -Library BulletAnimatSim_vc10_double_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Bullet_Double_x64.asim"
+
+
+AnimatSimulator -Library VortexAnimatSim_vc10D.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Vortex_x32_Debug.asim"
+AnimatSimulator -Library VortexAnimatSim_vc10.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Vortex_x32.asim"
+
+AnimatSimulator_x64 -Library VortexAnimatSim_vc10D_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Vortex_x64_Debug.asim"
+AnimatSimulator_x64 -Library VortexAnimatSim_vc10_x64.dll -Project "C:\Projects\AnimatLabSDK\AnimatLabPrivateSource\Experiment\StandAloneSimTest\Vortex_x64.asim"
+
+

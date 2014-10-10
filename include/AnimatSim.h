@@ -2,14 +2,26 @@
 #define __ANIMAT_LIB_DLL_H__
 
 #ifndef _ANIMAT_LIB_DLL_NOFORCELIBS
-	#ifdef _DEBUG
-		#pragma comment(lib, "AnimatSim_vc10D.lib")
-	#else
-		#pragma comment(lib, "AnimatSim_vc10.lib")
-	#endif
+    #ifndef _WIN64
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "AnimatSim_vc10D.lib")
+	    #else
+		    #pragma comment(lib, "AnimatSim_vc10.lib")
+	    #endif      // _DEBUG  
+    #else
+	    #ifdef _DEBUG
+		    #pragma comment(lib, "AnimatSim_vc10D_x64.lib")
+	    #else
+		    #pragma comment(lib, "AnimatSim_vc10_x64.lib")
+	    #endif      // _DEBUG  
+    #endif          // _WIN64
 #endif          // _ANIMAT_LIB_DLL_NOFORCELIBS
 
-#define ANIMAT_PORT __declspec( dllimport )
+#ifdef WIN32	
+	#define ANIMAT_PORT __declspec( dllimport )
+#else
+	#define ANIMAT_PORT
+#endif
 
 #include "StdUtils.h"
 #include "AnimatConstants.h"
@@ -21,6 +33,8 @@ namespace AnimatSim
 	class IGUI_AppCallback;
 	class AnimatBase;
 	class Simulator;
+	class SimulationThread;
+	class SimulationMgr;
 	class Node;
 	class Link;
 	class ActivatedItem;
@@ -32,6 +46,11 @@ namespace AnimatSim
 	class Hud;
 	class HudItem;
 	class HudText;
+    class PidControl;
+    class ThreadProcessor;
+    class ModuleThreadProcessor;
+	class TypeProperty;
+	class ScriptProcessor;
 
 	namespace Adapters
 	{
@@ -44,7 +63,7 @@ namespace AnimatSim
 	{
 		class NervousSystem;
 		class NeuralModule;
-		class PhysicalNeuralModule;
+		class PhysicsNeuralModule;
 	}
 
 	namespace Charting
@@ -66,6 +85,7 @@ namespace AnimatSim
 		class IPhysicsMovableItem;
 		class IPhysicsBody;
 		class IMotorizedJoint;
+        class IRobotInterface;
 		class BodyPart;
 		class ConstraintLimit;
         class ConstratinRelaxation;
@@ -129,6 +149,8 @@ namespace AnimatSim
 		class VoltageClamp;
 		class InverseMuscleCurrent;
 		class PropertyControlStimulus;
+        class MotorVelocityStimulus;
+        class ForceStimulus;
 	}
 
 	namespace Gains
@@ -146,6 +168,17 @@ namespace AnimatSim
 		class KeyFrame;
 		class SimulationRecorder;
 	}
+
+    namespace Robotics
+    {
+        class RobotInterface;
+		class RobotIOControl;
+        class RobotPartInterface;
+		class RemoteControl;
+		class RemoteControlLinkage;
+		class PassThroughLinkage;
+		class PulsedLinkage;
+    }
 }
 
 using namespace AnimatSim;
@@ -159,7 +192,10 @@ using namespace AnimatSim::Environment::Joints;
 using namespace AnimatSim::ExternalStimuli;
 using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
+using namespace AnimatSim::Robotics;
 
+#include "AnimatUtils.h"
+#include "TypeProperty.h"
 #include "IMovableItemCallback.h"
 #include "IMotorizedJoint.h"
 #include "ISimGUICallback.h"
@@ -220,7 +256,7 @@ using namespace AnimatSim::Recording;
 #include "Structure.h"
 #include "NervousSystem.h"
 #include "NeuralModule.h"
-#include "PhysicalNeuralModule.h"
+#include "PhysicsNeuralModule.h"
 #include "Organism.h"
 #include "Light.h"
 #include "LightManager.h"
@@ -240,6 +276,8 @@ using namespace AnimatSim::Recording;
 #include "VoltageClamp.h"
 #include "InverseMuscleCurrent.h"
 #include "PropertyControlStimulus.h"
+#include "MotorVelocityStimulus.h"
+#include "ForceStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
 #include "MaterialType.h"
@@ -250,9 +288,18 @@ using namespace AnimatSim::Recording;
 #include "SimulationWindow.h"
 #include "HudItem.h"
 #include "Hud.h"
+#include "ScriptProcessor.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
+#include "SimulationThread.h"
+#include "SimulationMgr.h"
 
-#include "AnimatUtils.h"
+#include "RobotInterface.h"
+#include "RobotIOControl.h"
+#include "RobotPartInterface.h"
+#include "RemoteControlLinkage.h"
+#include "PassThroughLinkage.h"
+#include "PulsedLinkage.h"
+#include "RemoteControl.h"
 
 #endif // __ANIMAT_LIB_DLL_H__

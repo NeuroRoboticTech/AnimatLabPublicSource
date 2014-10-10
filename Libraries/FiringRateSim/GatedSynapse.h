@@ -38,9 +38,9 @@ namespace FiringRateSim
 			virtual float CalculateModulation(FiringRateModule *lpModule);
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 #pragma endregion
 
 			virtual void Load(CStdXml &oXml);

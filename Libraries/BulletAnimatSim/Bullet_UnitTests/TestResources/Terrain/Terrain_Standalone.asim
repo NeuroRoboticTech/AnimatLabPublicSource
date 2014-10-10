@@ -1,0 +1,285 @@
+<Simulation>
+<ProjectPath/>
+<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+<UpdateDataInterval>250</UpdateDataInterval>
+<StartPaused>False</StartPaused>
+<EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>False</SetSimEnd>
+<APIFile/>
+<SimEndTime>1</SimEndTime>
+<PlaybackControlMode>0</PlaybackControlMode>
+<PresetPlaybackTimeStep>0.003</PresetPlaybackTimeStep>
+<Environment>
+<PhysicsTimeStep>0.0005</PhysicsTimeStep>
+<Gravity>-9.81</Gravity>
+<MouseSpringStiffness>0.5</MouseSpringStiffness>
+<MouseSpringDamping>200</MouseSpringDamping>
+<StabilityScale>1</StabilityScale>
+<RecFieldSelRadius>0.005</RecFieldSelRadius>
+<BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
+<AlphaThreshold>0.2</AlphaThreshold>
+<SimulateHydrodynamics>False</SimulateHydrodynamics>
+<MassUnits>Kilograms</MassUnits>
+<DistanceUnits>Meters</DistanceUnits>
+<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<Materials>
+<MaterialTypes>
+<MaterialType>
+<ID>DEFAULTMATERIAL</ID>
+<Name>Default</Name>
+<Type>Default</Type>
+<FrictionLinearPrimary>1</FrictionLinearPrimary>
+<FrictionLinearSecondary>1</FrictionLinearSecondary>
+<FrictionAngularNormal>0</FrictionAngularNormal>
+<FrictionAngularPrimary>0</FrictionAngularPrimary>
+<FrictionAngularSecondary>0</FrictionAngularSecondary>
+<FrictionLinearPrimaryMax>10</FrictionLinearPrimaryMax>
+<FrictionLinearSecondaryMax>10</FrictionLinearSecondaryMax>
+<FrictionAngularNormalMax>10</FrictionAngularNormalMax>
+<FrictionAngularPrimaryMax>10</FrictionAngularPrimaryMax>
+<FrictionAngularSecondaryMax>10</FrictionAngularSecondaryMax>
+<Compliance>1e-009</Compliance>
+<Damping>5e+010</Damping>
+<Restitution>0</Restitution>
+<SlipLinearPrimary>0</SlipLinearPrimary>
+<SlipLinearSecondary>0</SlipLinearSecondary>
+<SlipAngularNormal>0</SlipAngularNormal>
+<SlipAngularPrimary>0</SlipAngularPrimary>
+<SlipAngularSecondary>0</SlipAngularSecondary>
+<SlideLinearPrimary>0</SlideLinearPrimary>
+<SlideLinearSecondary>0</SlideLinearSecondary>
+<SlideAngularNormal>0</SlideAngularNormal>
+<SlideAngularPrimary>0</SlideAngularPrimary>
+<SlideAngularSecondary>0</SlideAngularSecondary>
+<MaximumAdhesion>0</MaximumAdhesion>
+</MaterialType>
+</MaterialTypes>
+</Materials>
+<Organisms/>
+<Structures>
+<Structure>
+<Name>Structure_2</Name>
+<ID>887436c0-5381-4592-9629-e99c0d893a48</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-26.178" y="30" z="-17.714"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Ball</Name>
+<ID>b2d27545-d113-45f8-8ea4-4bbfc9cc62df</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>1</DraggerSize>
+<Type>Sphere</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Sphere</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag x="1" y="1" z="1"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>1000</Density>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>1</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>
+<Structure>
+<Name>Structure_1</Name>
+<ID>749fe3a3-81b7-4506-a49e-b99bc5c41c2a</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>e848cc59-a55f-4d42-9aa0-0b232348dd17</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>1</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture>Terrain_TextureMap.jpg</Texture>
+<Position x="0" y="0" z="0"/>
+<Rotation x="-1.571" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Terrain</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Terrain</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag x="1" y="1" z="1"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>1000</Density>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<MeshFile>Terrain_Height.jpg</MeshFile>
+<MeshType>Convex</MeshType>
+<ConvexMeshFile/>
+<Scale x="1" y="1" z="1"/>
+<SegmentWidth>3</SegmentWidth>
+<SegmentLength>2</SegmentLength>
+<MaxHeight>20</MaxHeight>
+<TextureLengthSegments>10</TextureLengthSegments>
+<TextureWidthSegments>10</TextureWidthSegments>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>
+</Structures>
+<Lights>
+<Light>
+<Name>Light_2</Name>
+<ID>6e5abcd8-adc0-40ad-a5c1-0931d7a490e1</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-1" y="2" z="-1"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Light</Type>
+<Enabled>True</Enabled>
+<Radius>0.05</Radius>
+<ConstantAttenuation>0</ConstantAttenuation>
+<LinearAttenuationDistance>0</LinearAttenuationDistance>
+<QuadraticAttenuationDistance>75</QuadraticAttenuationDistance>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+<Light>
+<Name>Light_1</Name>
+<ID>ac13dd8a-5e8c-47f0-948c-6d4123bb1c6e</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="1" y="2" z="1"/>
+<Rotation x="0" y="0" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Light</Type>
+<Enabled>True</Enabled>
+<Radius>0.05</Radius>
+<ConstantAttenuation>0.7</ConstantAttenuation>
+<LinearAttenuationDistance>0</LinearAttenuationDistance>
+<QuadraticAttenuationDistance>0</QuadraticAttenuationDistance>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+</Lights>
+</Environment>
+<ExternalStimuli/>
+<DataCharts/>
+<WindowMgr>
+<Hud>
+<Type>Hud</Type>
+<HudItems>
+<HudItem>
+<ModuleName/>
+<Type>HudText</Type>
+<Name>6e115634-9b46-407e-b252-bb09ec33c648</Name>
+<ID>6e115634-9b46-407e-b252-bb09ec33c648</ID>
+<Type>HudText</Type>
+<CharSize>30</CharSize>
+<Text>Time: %3.3f</Text>
+<DisplayTargetID>Simulator</DisplayTargetID>
+<DisplayDataType>Time</DisplayDataType>
+<UpdateTargetID>Simulator</UpdateTargetID>
+<UpdateDataType>RealTime</UpdateDataType>
+<UpdateInterval>1</UpdateInterval>
+<Position x="10" y="10"/>
+<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+</HudItem>
+</HudItems>
+</Hud>
+<Windows>
+<Window>
+<Name>Structure_1 Body</Name>
+<ID>5cf87baf-c727-4ee7-aabf-1f4e775c7da0</ID>
+<Type>Basic</Type>
+<StandAlone>True</StandAlone>
+<TrackCamera>True</TrackCamera>
+<LookAtStructureID>887436c0-5381-4592-9629-e99c0d893a48</LookAtStructureID>
+<LookAtBodyID>b2d27545-d113-45f8-8ea4-4bbfc9cc62df</LookAtBodyID>
+<Position x="100" y="100" z="0"/>
+<Size x="640" y="480" z="0"/>
+</Window>
+</Windows>
+</WindowMgr>
+</Simulation>

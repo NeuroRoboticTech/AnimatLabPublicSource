@@ -24,36 +24,38 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the source RigidBody.
-			string m_strSourceBodyID;
+			std::string m_strSourceBodyID;
 
 			/// The name of the target NeuralModule.
-			string m_strTargetModule;
+			std::string m_strTargetModule;
 
 			/// The array of ReceptiveFieldPair objects.
 			CStdPtrArray<ReceptiveFieldPair> m_aryFieldPairs; 
 
 			ReceptiveFieldPair *LoadFieldPair(CStdXml &oXml);
 
-			virtual void ContactAdapter::AddFieldPair(string strXml, BOOL bDoNotInit);
-			virtual void ContactAdapter::RemoveFieldPair(string strID, BOOL bThrowError = TRUE);
-			virtual int ContactAdapter::FindFieldPairListPos(string strID, BOOL bThrowError = TRUE);
+			virtual void AddFieldPair(std::string strXml, bool bDoNotInit);
+			virtual void RemoveFieldPair(std::string strID, bool bThrowError = true);
+			virtual int FindFieldPairListPos(std::string strID, bool bThrowError = true);
 
 		public:
 			ContactAdapter();
 			virtual ~ContactAdapter();
+			
+			static ContactAdapter *CastToDerived(AnimatBase *lpBase) {return static_cast<ContactAdapter*>(lpBase);}
 
-			virtual string SourceBodyID();
-			virtual void SourceBodyID(string strID);
+			virtual std::string SourceBodyID();
+			virtual void SourceBodyID(std::string strID);
 
-			virtual string SourceModule();
+			virtual std::string SourceModule();
 
-			virtual string TargetModule();
-			virtual void TargetModule(string strModule);
+			virtual std::string TargetModule();
+			virtual void TargetModule(std::string strModule);
 			
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

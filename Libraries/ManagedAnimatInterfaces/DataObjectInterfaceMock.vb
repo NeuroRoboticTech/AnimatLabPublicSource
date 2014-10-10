@@ -22,6 +22,10 @@ Public Class DataObjectInterfaceMock
 
     End Sub
 
+    Public Sub FireSizeChangedEvent() Implements IDataObjectInterface.FireSizeChangedEvent
+
+    End Sub
+
     Public Sub FireSelectedVertexChangedEvent(fltPosX As Single, fltPosY As Single, fltPosZ As Single) Implements IDataObjectInterface.FireSelectedVertexChangedEvent
 
     End Sub
@@ -59,6 +63,8 @@ Public Class DataObjectInterfaceMock
 
     Public Event OnRotationChanged() Implements IDataObjectInterface.OnRotationChanged
 
+    Public Event OnSizeChanged() Implements IDataObjectInterface.OnSizeChanged
+
     Public Event OnSelectedVertexChanged(fltPosX As Single, fltPosY As Single, fltPosZ As Single) Implements IDataObjectInterface.OnSelectedVertexChanged
 
     Public Event OnSelectionChanged(bSelected As Boolean, bSelectMultiple As Boolean) Implements IDataObjectInterface.OnSelectionChanged
@@ -93,7 +99,7 @@ Public Class DataObjectInterfaceMock
         Return False
     End Function
 
-    Public Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList) Implements IDataObjectInterface.QueryProperties
+    Public Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList, ByVal aryDirections As System.Collections.ArrayList) Implements IDataObjectInterface.QueryProperties
 
     End Sub
 
@@ -113,5 +119,9 @@ Public Class DataObjectInterfaceMock
     Public Sub DisableCollisions(ByVal strOtherBodyID As String) Implements IDataObjectInterface.DisableCollisions
 
     End Sub
+
+    Public Function GetLocalTransformMatrixString() As String Implements IDataObjectInterface.GetLocalTransformMatrixString
+        Return ""
+    End Function
 
 End Class

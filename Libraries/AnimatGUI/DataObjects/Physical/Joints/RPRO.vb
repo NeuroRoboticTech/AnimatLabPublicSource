@@ -62,13 +62,6 @@ Namespace DataObjects.Physical.Joints
             MyBase.New(doParent)
             m_strDescription = ""
 
-            m_doRelaxation1 = New ConstraintRelaxation(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
-            m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
-            m_doRelaxation3 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
-            m_doRelaxation4 = New ConstraintRelaxation(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
-            m_doRelaxation5 = New ConstraintRelaxation(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5)
-            m_doRelaxation6 = New ConstraintRelaxation(Me, "Z Axis Rotation", "Sets the relaxation for the Z rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation6)
-
         End Sub
 
         Public Overrides Sub SetDefaultSizes()

@@ -1,0 +1,769 @@
+<Simulation>
+	<ProjectPath/>
+	<AnimatModule>BulletAnimatSim_VC10D.dll</AnimatModule>
+	<UpdateDataInterval>250</UpdateDataInterval>
+	<StartPaused>False</StartPaused>
+	<EnableSimRecording>True</EnableSimRecording>
+	<SetSimEnd>False</SetSimEnd>
+	<APIFile/>
+	<SimEndTime>1</SimEndTime>
+	<PlaybackControlMode>0</PlaybackControlMode>
+	<PresetPlaybackTimeStep>0.1</PresetPlaybackTimeStep>
+	<Environment>
+		<PhysicsTimeStep>0.0005</PhysicsTimeStep>
+		<Gravity>-9.81</Gravity>
+		<MouseSpringStiffness>0.5</MouseSpringStiffness>
+		<MouseSpringDamping>200</MouseSpringDamping>
+		<StabilityScale>1</StabilityScale>
+		<RecFieldSelRadius>0.005</RecFieldSelRadius>
+		<BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
+		<AlphaThreshold>0.2</AlphaThreshold>
+		<SimulateHydrodynamics>False</SimulateHydrodynamics>
+		<MassUnits>Grams</MassUnits>
+		<DistanceUnits>Decimeters</DistanceUnits>
+		<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+		<ManualRandomSeed>12345</ManualRandomSeed>
+		<Materials>
+			<MaterialTypes>
+				<MaterialType>
+					<ID>DEFAULTMATERIAL</ID>
+					<Name>Default</Name>
+					<Type>Default</Type>
+					<FrictionLinearPrimary>1</FrictionLinearPrimary>
+					<FrictionLinearSecondary>1</FrictionLinearSecondary>
+					<FrictionAngularNormal>0</FrictionAngularNormal>
+					<FrictionAngularPrimary>0</FrictionAngularPrimary>
+					<FrictionAngularSecondary>0</FrictionAngularSecondary>
+					<FrictionLinearPrimaryMax>10</FrictionLinearPrimaryMax>
+					<FrictionLinearSecondaryMax>10</FrictionLinearSecondaryMax>
+					<FrictionAngularNormalMax>10</FrictionAngularNormalMax>
+					<FrictionAngularPrimaryMax>10</FrictionAngularPrimaryMax>
+					<FrictionAngularSecondaryMax>10</FrictionAngularSecondaryMax>
+					<Compliance>1e-009</Compliance>
+					<Damping>5e+010</Damping>
+					<Restitution>0</Restitution>
+					<SlipLinearPrimary>0</SlipLinearPrimary>
+					<SlipLinearSecondary>0</SlipLinearSecondary>
+					<SlipAngularNormal>0</SlipAngularNormal>
+					<SlipAngularPrimary>0</SlipAngularPrimary>
+					<SlipAngularSecondary>0</SlipAngularSecondary>
+					<SlideLinearPrimary>0</SlideLinearPrimary>
+					<SlideLinearSecondary>0</SlideLinearSecondary>
+					<SlideAngularNormal>0</SlideAngularNormal>
+					<SlideAngularPrimary>0</SlideAngularPrimary>
+					<SlideAngularSecondary>0</SlideAngularSecondary>
+					<MaximumAdhesion>0</MaximumAdhesion>
+				</MaterialType>
+			</MaterialTypes>
+		</Materials>
+		<Organisms>
+			<Organism>
+				<Name>Organism_1</Name>
+				<ID>543a9a7f-422d-4760-982b-de8a9e002701</ID>
+				<Description/>
+				<GraphicsAlpha>0.5</GraphicsAlpha>
+				<CollisionsAlpha>0.5</CollisionsAlpha>
+				<JointsAlpha>0.5</JointsAlpha>
+				<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+				<SimulationAlpha>0</SimulationAlpha>
+				<IsVisible>True</IsVisible>
+				<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+				<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+				<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+				<Shininess>64</Shininess>
+				<Texture/>
+				<Position x="0" y="0.18505" z="-0.34045"/>
+				<Rotation x="0" y="0" z="0"/>
+				<DraggerSize>-1</DraggerSize>
+				<Type>Basic</Type>
+				<RigidBody>
+					<Name>Root</Name>
+					<ID>02e9d4e0-5095-418b-ab37-fcca6614807c</ID>
+					<Description/>
+					<GraphicsAlpha>0.5</GraphicsAlpha>
+					<CollisionsAlpha>1</CollisionsAlpha>
+					<JointsAlpha>0.5</JointsAlpha>
+					<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+					<SimulationAlpha>1</SimulationAlpha>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+					<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<Position x="0" y="0" z="0"/>
+					<Rotation x="0" y="0" z="0"/>
+					<DraggerSize>-1</DraggerSize>
+					<Type>Box</Type>
+					<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+					<IsContactSensor>False</IsContactSensor>
+					<IsCollisionObject>True</IsCollisionObject>
+					<BuoyancyCenter x="0" y="0" z="0"/>
+					<BuoyancyScale>1</BuoyancyScale>
+					<Drag x="1" y="1" z="1"/>
+					<Magnus>0</Magnus>
+					<EnableFluids>False</EnableFluids>
+					<Density>1</Density>
+					<COM x="0" y="0" z="0"/>
+					<Freeze>False</Freeze>
+					<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+					<FoodSource>False</FoodSource>
+					<FoodQuantity>100</FoodQuantity>
+					<MaxFoodQuantity>10000</MaxFoodQuantity>
+					<FoodReplenishRate>1</FoodReplenishRate>
+					<FoodEnergyContent>1000</FoodEnergyContent>
+					<ContactSensor>
+						<ID>1dd4dd2e-30ab-4dde-aaa3-029e85e4d4aa</ID>
+						<FieldGain>
+							<ID>669222a6-ef10-48de-8e4d-b105a91a0e3b</ID>
+							<Type>Bell</Type>
+							<UseLimits>False</UseLimits>
+							<A>0</A>
+							<B>1</B>
+							<C>80</C>
+							<D>0</D>
+						</FieldGain>
+						<CurrentGain>
+							<ID>b91ae8d4-0315-4170-b85b-f9fd1314ceaf</ID>
+							<Type>Polynomial</Type>
+							<UseLimits>True</UseLimits>
+							<LowerLimit>0</LowerLimit>
+							<UpperLimit>10</UpperLimit>
+							<LowerOutput>0</LowerOutput>
+							<UpperOutput>7e-008</UpperOutput>
+							<A>0</A>
+							<B>0</B>
+							<C>1e-009</C>
+							<D>0</D>
+						</CurrentGain>
+						<Fields>
+							<ReceptiveField>
+								<ID>0cf1d3da-e612-45b5-b4e6-3797ff9ade2b</ID>
+								<Vertex x="-0.5" y="0.5" z="-0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>3dc7edb9-9ab3-479f-a323-f1d56e945416</ID>
+								<Vertex x="0.5" y="0.5" z="-0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>651e7d38-d1a1-4c03-858e-cc6cb8be4e68</ID>
+								<Vertex x="-0.5" y="-0.5" z="-0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>7f6d67a4-d447-487a-9cb2-86afff04d15e</ID>
+								<Vertex x="0.5" y="-0.5" z="0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>82d4af4e-7c01-453b-a061-0ef537092bb4</ID>
+								<Vertex x="-0.5" y="-0.5" z="0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>da8f4944-3cc0-4234-b2f1-f5c37d0e544e</ID>
+								<Vertex x="0.5" y="0.5" z="0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>dafcde94-6eb7-4b55-a1eb-2c29845b3329</ID>
+								<Vertex x="-0.5" y="0.5" z="0.5"/>
+							</ReceptiveField>
+							<ReceptiveField>
+								<ID>f48ae948-c400-4741-98e1-f968aa5ef110</ID>
+								<Vertex x="0.5" y="-0.5" z="-0.5"/>
+							</ReceptiveField>
+						</Fields>
+					</ContactSensor>
+					<Length>0.1</Length>
+					<Width>0.1</Width>
+					<Height>0.1</Height>
+					<LengthSections>1</LengthSections>
+					<WidthSections>1</WidthSections>
+					<HeightSections>1</HeightSections>
+				</RigidBody>
+				<CollisionExclusionPairs/>
+				<NervousSystem>
+					<NeuralModules>
+						<NeuralModule>
+							<ID>21191e34-5cab-49ae-9401-945575e9f383</ID>
+							<ModuleName>FiringRateSim</ModuleName>
+							<ModuleFileName>FiringRateSim_VC10D.dll</ModuleFileName>
+							<Type>FiringRateSimModule</Type>
+							<TimeStep>0.0025</TimeStep>
+							<Neurons>
+								<Neuron>
+									<ID>29069ca3-d33d-416c-ab90-892e5641967b</ID>
+									<Name>1</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>44c1a9d5-ffd2-41eb-83f7-504e62ce990c</ID>
+									<Name>4</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>7ec8abcb-3b28-426f-ba81-a4e296116ed8</ID>
+									<Name>3</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>2ed89a09-ebc1-41bb-b2e9-24c6c57aaa35</ID>
+									<Name>6</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>678fe4b8-fd7d-40da-ae30-307057c10c33</ID>
+									<Name>8</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>0bc898dd-1c8e-4a21-8a6c-2be708adb938</ID>
+									<Name>2</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>b1df0d18-9f29-4dac-aafe-9199c6046cf3</ID>
+									<Name>7</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+								<Neuron>
+									<ID>6f0b682f-ac5e-4e2d-b118-f9c77eb1db10</ID>
+									<Name>5</Name>
+									<Type>Regular</Type>
+									<Enabled>True</Enabled>
+									<Cn>1e-008</Cn>
+									<Gn>1e-007</Gn>
+									<Vth>-0.07</Vth>
+									<Vrest>-0.07</Vrest>
+									<Fmin>0</Fmin>
+									<Gain>10</Gain>
+									<ExternalI>0</ExternalI>
+									<VNoiseMax>0</VNoiseMax>
+									<RelativeAccom>0</RelativeAccom>
+									<AccomTimeConst>0.03</AccomTimeConst>
+									<GainType>False</GainType>
+									<Synapses/>
+								</Neuron>
+							</Neurons>
+						</NeuralModule>
+						<NeuralModule>
+							<ID>384f659a-b18a-4e90-b6d3-e639bd948b60</ID>
+							<ModuleName>PhysicsModule</ModuleName>
+							<ModuleFileName>VortexAnimatPrivateSim_VC10D.dll</ModuleFileName>
+							<Type>PhysicsNeuralModule</Type>
+							<TimeStep>0.0005</TimeStep>
+							<Adapters>
+								<Adapter>
+									<ID>6b85d0a8-18a3-4591-8fd2-ee10440053b7</ID>
+									<Name>Contact Adapter</Name>
+									<Type>Contact</Type>
+									<SourceBodyID>02e9d4e0-5095-418b-ab37-fcca6614807c</SourceBodyID>
+									<TargetModule>FiringRateSim</TargetModule>
+									<FieldPairs>
+										<FieldPair>
+											<ID>1ec39402-1f0e-40ed-8d23-e398d30532f6</ID>
+											<FieldID>82d4af4e-7c01-453b-a061-0ef537092bb4</FieldID>
+											<TargetNodeID>44c1a9d5-ffd2-41eb-83f7-504e62ce990c</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>2f75fd49-9321-45ec-8937-81bc343ac8b8</ID>
+											<FieldID>651e7d38-d1a1-4c03-858e-cc6cb8be4e68</FieldID>
+											<TargetNodeID>7ec8abcb-3b28-426f-ba81-a4e296116ed8</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>3c81197b-b7b0-45f0-8eec-360bde633ca3</ID>
+											<FieldID>3dc7edb9-9ab3-479f-a323-f1d56e945416</FieldID>
+											<TargetNodeID>2ed89a09-ebc1-41bb-b2e9-24c6c57aaa35</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>4ccbbf09-3442-4c8d-ba64-9b9653a743d3</ID>
+											<FieldID>dafcde94-6eb7-4b55-a1eb-2c29845b3329</FieldID>
+											<TargetNodeID>678fe4b8-fd7d-40da-ae30-307057c10c33</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>5458e03d-96fa-4176-88e3-5e7fca276244</ID>
+											<FieldID>7f6d67a4-d447-487a-9cb2-86afff04d15e</FieldID>
+											<TargetNodeID>29069ca3-d33d-416c-ab90-892e5641967b</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>81f4be54-2bf9-4096-abfa-58c7e24bc9c4</ID>
+											<FieldID>0cf1d3da-e612-45b5-b4e6-3797ff9ade2b</FieldID>
+											<TargetNodeID>b1df0d18-9f29-4dac-aafe-9199c6046cf3</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>8d2db493-343c-47e0-b6e9-dc6c0ffbea0b</ID>
+											<FieldID>da8f4944-3cc0-4234-b2f1-f5c37d0e544e</FieldID>
+											<TargetNodeID>6f0b682f-ac5e-4e2d-b118-f9c77eb1db10</TargetNodeID>
+										</FieldPair>
+										<FieldPair>
+											<ID>f8709cfd-3198-4581-b046-0cf481ddeba1</ID>
+											<FieldID>f48ae948-c400-4741-98e1-f968aa5ef110</FieldID>
+											<TargetNodeID>0bc898dd-1c8e-4a21-8a6c-2be708adb938</TargetNodeID>
+										</FieldPair>
+									</FieldPairs>
+								</Adapter>
+							</Adapters>
+						</NeuralModule>
+					</NeuralModules>
+				</NervousSystem>
+			</Organism>
+		</Organisms>
+		<Structures>
+			<Structure>
+				<Name>Structure_2</Name>
+				<ID>7c1ed533-1270-4217-b06b-de965e278bbd</ID>
+				<Description/>
+				<GraphicsAlpha>0.5</GraphicsAlpha>
+				<CollisionsAlpha>0.5</CollisionsAlpha>
+				<JointsAlpha>0.5</JointsAlpha>
+				<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+				<SimulationAlpha>0</SimulationAlpha>
+				<IsVisible>True</IsVisible>
+				<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+				<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+				<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+				<Shininess>64</Shininess>
+				<Texture/>
+				<Position x="0" y="0.3" z="0"/>
+				<Rotation x="0" y="0" z="0"/>
+				<DraggerSize>-1</DraggerSize>
+				<Type>Basic</Type>
+				<RigidBody>
+					<Name>Root</Name>
+					<ID>a1560ff7-a475-479b-847a-9d8d98056d79</ID>
+					<Description/>
+					<GraphicsAlpha>0.5</GraphicsAlpha>
+					<CollisionsAlpha>1</CollisionsAlpha>
+					<JointsAlpha>0.5</JointsAlpha>
+					<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+					<SimulationAlpha>1</SimulationAlpha>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+					<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<Position x="0" y="0" z="0"/>
+					<Rotation x="0.7961" y="0" z="0"/>
+					<DraggerSize>-1</DraggerSize>
+					<Type>Box</Type>
+					<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+					<IsContactSensor>False</IsContactSensor>
+					<IsCollisionObject>True</IsCollisionObject>
+					<BuoyancyCenter x="0" y="0" z="0"/>
+					<BuoyancyScale>1</BuoyancyScale>
+					<Drag x="1" y="1" z="1"/>
+					<Magnus>0</Magnus>
+					<EnableFluids>False</EnableFluids>
+					<Density>1</Density>
+					<COM x="0" y="0" z="0"/>
+					<Freeze>False</Freeze>
+					<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+					<ChildBodies>
+						<RigidBody>
+							<Name>Body_1</Name>
+							<ID>ceb4159b-91cf-44e2-9f7e-25a80f0d31a4</ID>
+							<Description/>
+							<GraphicsAlpha>0.5</GraphicsAlpha>
+							<CollisionsAlpha>1</CollisionsAlpha>
+							<JointsAlpha>0.5</JointsAlpha>
+							<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+							<SimulationAlpha>1</SimulationAlpha>
+							<IsVisible>True</IsVisible>
+							<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+							<Diffuse Red="1" Green="0" Blue="1" Alpha="1"/>
+							<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+							<Shininess>64</Shininess>
+							<Texture/>
+							<Position x="0" y="0.2" z="0"/>
+							<Rotation x="0" y="0" z="0"/>
+							<DraggerSize>-1</DraggerSize>
+							<Type>Box</Type>
+							<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+							<IsContactSensor>True</IsContactSensor>
+							<IsCollisionObject>True</IsCollisionObject>
+							<BuoyancyCenter x="0" y="0" z="0"/>
+							<BuoyancyScale>1</BuoyancyScale>
+							<Drag x="1" y="1" z="1"/>
+							<Magnus>0</Magnus>
+							<EnableFluids>False</EnableFluids>
+							<Density>1</Density>
+							<COM x="0" y="0" z="0"/>
+							<Freeze>False</Freeze>
+							<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+							<FoodSource>False</FoodSource>
+							<FoodQuantity>100</FoodQuantity>
+							<MaxFoodQuantity>10000</MaxFoodQuantity>
+							<FoodReplenishRate>1</FoodReplenishRate>
+							<FoodEnergyContent>1000</FoodEnergyContent>
+							<Length>0.15</Length>
+							<Width>0.15</Width>
+							<Height>0.05</Height>
+							<LengthSections>1</LengthSections>
+							<WidthSections>1</WidthSections>
+							<HeightSections>1</HeightSections>
+						</RigidBody>
+					</ChildBodies>
+					<FoodSource>False</FoodSource>
+					<FoodQuantity>100</FoodQuantity>
+					<MaxFoodQuantity>10000</MaxFoodQuantity>
+					<FoodReplenishRate>1</FoodReplenishRate>
+					<FoodEnergyContent>1000</FoodEnergyContent>
+					<Length>0.1</Length>
+					<Width>0.1</Width>
+					<Height>0.1</Height>
+					<LengthSections>1</LengthSections>
+					<WidthSections>1</WidthSections>
+					<HeightSections>1</HeightSections>
+				</RigidBody>
+				<CollisionExclusionPairs/>
+			</Structure>
+			<Structure>
+				<Name>Structure_1</Name>
+				<ID>941ec13a-9d22-4156-a74e-b45f4005bdbc</ID>
+				<Description/>
+				<GraphicsAlpha>0.5</GraphicsAlpha>
+				<CollisionsAlpha>0.5</CollisionsAlpha>
+				<JointsAlpha>0.5</JointsAlpha>
+				<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+				<SimulationAlpha>0</SimulationAlpha>
+				<IsVisible>True</IsVisible>
+				<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+				<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+				<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+				<Shininess>64</Shininess>
+				<Texture/>
+				<Position x="0" y="0" z="0"/>
+				<Rotation x="0" y="0" z="0"/>
+				<DraggerSize>-1</DraggerSize>
+				<Type>Basic</Type>
+				<RigidBody>
+					<Name>Root</Name>
+					<ID>490e3110-4895-4755-afda-1fd29bd33453</ID>
+					<Description/>
+					<GraphicsAlpha>1</GraphicsAlpha>
+					<CollisionsAlpha>1</CollisionsAlpha>
+					<JointsAlpha>1</JointsAlpha>
+					<ReceptiveFieldsAlpha>1</ReceptiveFieldsAlpha>
+					<SimulationAlpha>1</SimulationAlpha>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.803922" Green="0.360784" Blue="0.360784" Alpha="1"/>
+					<Diffuse Red="1" Green="0.501961" Blue="0.501961" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<Position x="0" y="0" z="0"/>
+					<Rotation x="-1.571" y="0" z="0"/>
+					<DraggerSize>-1</DraggerSize>
+					<Type>Plane</Type>
+					<PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
+					<IsContactSensor>False</IsContactSensor>
+					<IsCollisionObject>True</IsCollisionObject>
+					<BuoyancyCenter x="0" y="0" z="0"/>
+					<BuoyancyScale>1</BuoyancyScale>
+					<Drag x="1" y="1" z="1"/>
+					<Magnus>0</Magnus>
+					<EnableFluids>False</EnableFluids>
+					<Density>1</Density>
+					<COM x="0" y="0" z="0"/>
+					<Freeze>True</Freeze>
+					<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+					<FoodSource>False</FoodSource>
+					<FoodQuantity>100</FoodQuantity>
+					<MaxFoodQuantity>10000</MaxFoodQuantity>
+					<FoodReplenishRate>1</FoodReplenishRate>
+					<FoodEnergyContent>1000</FoodEnergyContent>
+					<Size x="10" y="10"/>
+					<WidthSegments>1</WidthSegments>
+					<LengthSegments>1</LengthSegments>
+				</RigidBody>
+				<CollisionExclusionPairs/>
+			</Structure>
+		</Structures>
+		<Lights>
+			<Light>
+				<Name>Light_2</Name>
+				<ID>7962c639-6029-4cec-9a2f-fbda010c15b2</ID>
+				<Description/>
+				<GraphicsAlpha>0.5</GraphicsAlpha>
+				<CollisionsAlpha>0.5</CollisionsAlpha>
+				<JointsAlpha>0.5</JointsAlpha>
+				<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+				<SimulationAlpha>0</SimulationAlpha>
+				<IsVisible>True</IsVisible>
+				<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Shininess>64</Shininess>
+				<Texture/>
+				<Position x="-1" y="2" z="-1"/>
+				<Rotation x="0" y="0" z="0"/>
+				<DraggerSize>-1</DraggerSize>
+				<Type>Light</Type>
+				<Enabled>True</Enabled>
+				<Radius>0.05</Radius>
+				<ConstantAttenuation>0</ConstantAttenuation>
+				<LinearAttenuationDistance>0</LinearAttenuationDistance>
+				<QuadraticAttenuationDistance>75</QuadraticAttenuationDistance>
+				<LatitudeSegments>10</LatitudeSegments>
+				<LongtitudeSegments>10</LongtitudeSegments>
+			</Light>
+			<Light>
+				<Name>Light_1</Name>
+				<ID>948d63f0-dded-4c08-a015-370a452d7dd1</ID>
+				<Description/>
+				<GraphicsAlpha>0.5</GraphicsAlpha>
+				<CollisionsAlpha>0.5</CollisionsAlpha>
+				<JointsAlpha>0.5</JointsAlpha>
+				<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+				<SimulationAlpha>0</SimulationAlpha>
+				<IsVisible>True</IsVisible>
+				<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+				<Shininess>64</Shininess>
+				<Texture/>
+				<Position x="1" y="2" z="1"/>
+				<Rotation x="0" y="0" z="0"/>
+				<DraggerSize>-1</DraggerSize>
+				<Type>Light</Type>
+				<Enabled>True</Enabled>
+				<Radius>0.05</Radius>
+				<ConstantAttenuation>0.7</ConstantAttenuation>
+				<LinearAttenuationDistance>0</LinearAttenuationDistance>
+				<QuadraticAttenuationDistance>0</QuadraticAttenuationDistance>
+				<LatitudeSegments>10</LatitudeSegments>
+				<LongtitudeSegments>10</LongtitudeSegments>
+			</Light>
+		</Lights>
+	</Environment>
+	<ExternalStimuli/>
+	<DataCharts>
+		<DataChart>
+			<ID>ea47504b-4fce-4bf9-bb67-f549fc8cd5f3</ID>
+			<Type>FileChart</Type>
+			<OutputFilename>DataTool_1.txt</OutputFilename>
+			<Name>DataTool_1</Name>
+			<SetStartEndTime>True</SetStartEndTime>
+			<CollectTimeWindow>-1</CollectTimeWindow>
+			<AlwaysActive>False</AlwaysActive>
+			<StartTime>0</StartTime>
+			<EndTime>1</EndTime>
+			<CollectInterval>0.0005</CollectInterval>
+			<DataColumns>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>c6981902-3d60-4952-aee3-a018b1132af5</ID>
+					<ColumnName>Body_1</ColumnName>
+					<DataType>ContactCount</DataType>
+					<TargetID>ceb4159b-91cf-44e2-9f7e-25a80f0d31a4</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>9c990a8c-be4a-4a99-a7c4-2ed562e6532b</ID>
+					<ColumnName>Body2PosY</ColumnName>
+					<DataType>WorldPositionY</DataType>
+					<TargetID>02e9d4e0-5095-418b-ab37-fcca6614807c</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>df047991-ccb1-44dd-ab8b-b75b8efef0ee</ID>
+					<ColumnName>Body1PosY</ColumnName>
+					<DataType>WorldPositionY</DataType>
+					<TargetID>a1560ff7-a475-479b-847a-9d8d98056d79</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>56dcaa44-4dac-4a69-82fb-871f793ca921</ID>
+					<ColumnName>6</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>2ed89a09-ebc1-41bb-b2e9-24c6c57aaa35</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>5cf2f52e-34cb-4ab9-b25f-91e4c23c6ca4</ID>
+					<ColumnName>1</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>29069ca3-d33d-416c-ab90-892e5641967b</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>63e3c266-7b4e-4c76-aae1-441178adad00</ID>
+					<ColumnName>4</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>44c1a9d5-ffd2-41eb-83f7-504e62ce990c</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>66aa913a-5470-45f7-a220-c233a98dcd88</ID>
+					<ColumnName>5</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>6f0b682f-ac5e-4e2d-b118-f9c77eb1db10</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>83b8871c-6410-4866-833e-d1ccbd5f6a18</ID>
+					<ColumnName>7</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>b1df0d18-9f29-4dac-aafe-9199c6046cf3</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>a29a6f13-060d-4a27-9182-72e94abb60e5</ID>
+					<ColumnName>3</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>7ec8abcb-3b28-426f-ba81-a4e296116ed8</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>c464b83c-71d6-45c1-a3eb-fb2bf6ac8ec7</ID>
+					<ColumnName>2</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>0bc898dd-1c8e-4a21-8a6c-2be708adb938</TargetID>
+				</DataColumn>
+				<DataColumn>
+					<ModuleName/>
+					<Type>DataColumn</Type>
+					<ID>d51dd6c7-fbf4-4bf7-8cd6-b7f20b619348</ID>
+					<ColumnName>8</ColumnName>
+					<DataType>FiringFrequency</DataType>
+					<TargetID>678fe4b8-fd7d-40da-ae30-307057c10c33</TargetID>
+				</DataColumn>
+			</DataColumns>
+		</DataChart>
+	</DataCharts>
+	<WindowMgr>
+		<Hud>
+			<Type>Hud</Type>
+			<HudItems>
+				<HudItem>
+					<ModuleName/>
+					<Type>HudText</Type>
+					<Name>97c09803-d920-4a59-ace1-ce1240dcf545</Name>
+					<ID>97c09803-d920-4a59-ace1-ce1240dcf545</ID>
+					<Type>HudText</Type>
+					<CharSize>30</CharSize>
+					<Text>Time: %3.3f</Text>
+					<DisplayTargetID>Simulator</DisplayTargetID>
+					<DisplayDataType>Time</DisplayDataType>
+					<UpdateTargetID>Simulator</UpdateTargetID>
+					<UpdateDataType>RealTime</UpdateDataType>
+					<UpdateInterval>1</UpdateInterval>
+					<Position x="10" y="10"/>
+					<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+				</HudItem>
+			</HudItems>
+		</Hud>
+		<Windows>
+			<Window>
+				<Name>Structure_2 Body</Name>
+				<ID>fde2c352-4307-4281-b141-aeae472ff8d4</ID>
+				<Type>Basic</Type>
+				<StandAlone>True</StandAlone>
+				<TrackCamera>True</TrackCamera>
+				<LookAtStructureID>543a9a7f-422d-4760-982b-de8a9e002701</LookAtStructureID>
+				<LookAtBodyID>02e9d4e0-5095-418b-ab37-fcca6614807c</LookAtBodyID>
+				<Position x="100" y="100" z="0"/>
+				<Size x="640" y="480" z="0"/>
+			</Window>
+		</Windows>
+	</WindowMgr>
+</Simulation>

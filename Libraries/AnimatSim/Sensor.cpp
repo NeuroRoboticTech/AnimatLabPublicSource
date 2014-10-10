@@ -4,7 +4,7 @@
 \brief	Implements the sensor class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -49,7 +49,7 @@ namespace AnimatSim
 Sensor::Sensor()
 {
 	m_fltDensity = 0;
-	m_bUsesJoint = FALSE;
+	m_bUsesJoint = false;
 	m_lpJointToParent = NULL;
 	m_fltRadius = 1;
 	m_iLatitudeSegments = 50;
@@ -69,9 +69,9 @@ Sensor::~Sensor()
 
 float Sensor::Radius() {return m_fltRadius;}
 
-void Sensor::Radius(float fltVal, BOOL bUseScaling)
+void Sensor::Radius(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Sensor.Radius");
+	Std_IsAboveMin((float) 0, fltVal, true, "Sensor.Radius");
 	if(bUseScaling)
 		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -82,7 +82,7 @@ void Sensor::Radius(float fltVal, BOOL bUseScaling)
 
 void Sensor::LatitudeSegments(int iVal) 
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Sensor.LatitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Sensor.LatitudeSegments", true);
 	m_iLatitudeSegments = iVal;
 	Resize();
 }
@@ -91,63 +91,58 @@ int Sensor::LatitudeSegments() {return m_iLatitudeSegments;}
 
 void Sensor::LongtitudeSegments(int iVal)
 {
-	Std_IsAboveMin((int) 10, iVal, TRUE, "Sensor.LongtitudeSegments", TRUE);
+	Std_IsAboveMin((int) 10, iVal, true, "Sensor.LongtitudeSegments", true);
 	m_iLongtitudeSegments = iVal;
 	Resize();
 }
 
 int Sensor::LongtitudeSegments() {return m_iLongtitudeSegments;}
 
-BOOL Sensor::AllowRotateDragX() {return FALSE;}
+bool Sensor::AllowRotateDragX() {return false;}
 
-BOOL Sensor::AllowRotateDragY() {return FALSE;}
+bool Sensor::AllowRotateDragY() {return false;}
 
-BOOL Sensor::AllowRotateDragZ() {return FALSE;}
+bool Sensor::AllowRotateDragZ() {return false;}
 
-BOOL Sensor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Sensor::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "RADIUS")
 	{
-		Radius(atof(strValue.c_str()));
-		return TRUE;
+		Radius((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "LATITUDESEGMENTS")
 	{
 		LatitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "LONGTITUDESEGMENTS")
 	{
 		LongtitudeSegments(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Sensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Sensor::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("Radius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LatitudeSegments");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("LongtitudeSegments");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Radius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LatitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LongtitudeSegments", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void Sensor::Initialize() 

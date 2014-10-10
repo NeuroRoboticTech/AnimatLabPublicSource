@@ -1,0 +1,31 @@
+export PATH=${PATH}:/home/dcofer/OpenSceneGraph/bin
+export LD_LIBRARY_PATH = ${LD_LIBRARY_PATH}:/home/dcofer/OpenSceneGraph/lib
+export OSG_FILE_PATH=/home/dcofer/OpenSceneGraph/OpenSceneGraph-Data:/home/dcofer/OpenSceneGraph/OpenSceneGraph-Data/Images
+
+
+cmake . -DCMAKE_BUILD_TYPE=Release $@
+
+Bullet
+cmake . -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXTRAS=on -DBUILD_DEMOS=on -DINSTALL_LIBS=on -DCMAKE_DEBUG_POSTFIX=_debug
+cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_EXTRAS=on -DBUILD_DEMOS=on -DINSTALL_LIBS=on
+
+OsgWorks
+export PATH=${PATH}:/home/dcofer/OsgWorks_2_0/lib
+export LD_LIBRARY_PATH="/home/dcofer/OsgWorks_2_0/lib"
+
+cmake . -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=off -DCMAKE_DEBUG_POSTFIX=d -DINSTALL_LIBS=on -DOSG_WORKS_BUILD_APPS=on -DOSG_WORKS_BUILD_EXAMPLES=on -DOSG_WORKS_BUILD_TESTS=on -DOSG_WORKS_INSTALL_DATA=on
+
+cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=off -DINSTALL_LIBS=on -DOSG_WORKS_BUILD_APPS=on -DOSG_WORKS_BUILD_EXAMPLES=on -DOSG_WORKS_BUILD_TESTS=on -DOSG_WORKS_INSTALL_DATA=on
+
+
+/usr/lib/x86_64-linux-gnu/libGL.so
+/usr/lib/fglrx/fglrx-libGL.so.1.2
+
+
+/home/dcofer/OsgWorks_2_0/lib/libosgwQueryd.a /home/dcofer/OsgWorks_2_0/lib/libosgwControlsd.a /home/dcofer/OsgWorks_2_0/lib/libosgwToolsd.a
+/home/dcofer/OsgBullet_2_0/lib/libosgbInteractiond.a /home/dcofer/OsgBullet_2_0/lib/libosgbDynamicsd.a /home/dcofer/OsgBullet_2_0/lib/libosgbCollisiond.a
+
+
+./AnimatSimulatorD -Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/FallingBoxOnPlane/FallingBoxOnPlane_StandaloneD.asim"
+
+./AnimatSimulatorD -Library libBulletAnimatSim_vc10D.so -Project "/media/Ubuntu_Data/Projects/AnimatLabSDK/AnimatLabPublicSource/Libraries/BulletAnimatSim/Bullet_UnitTests/TestResources/Terrain/Terrain_Standalone.asim"

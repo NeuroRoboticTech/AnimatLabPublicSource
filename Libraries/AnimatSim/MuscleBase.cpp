@@ -4,7 +4,7 @@
 \brief	Implements the muscle base class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -78,7 +78,7 @@ MuscleBase::~MuscleBase()
 	{
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of MuscleBase\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of MuscleBase\r\n", "", -1, false, true);}
 }
 
 /**
@@ -129,7 +129,7 @@ float MuscleBase::MaxTension() {return m_fltMaxTension;}
 **/
 void MuscleBase::MaxTension(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Max Tension");
+	Std_IsAboveMin((float) 0, fltVal, true, "Max Tension");
 	m_fltMaxTension = fltVal;
 }
 
@@ -171,7 +171,7 @@ float MuscleBase::PrevTension() {return m_fltPrevTension;}
 
 \return	true if it enabled, false otherwise. 
 **/
-BOOL MuscleBase::Enabled() {return m_bEnabled;};
+bool MuscleBase::Enabled() {return m_bEnabled;};
 
 /**
 \brief	Sets whether this muscle is Enabled. 
@@ -181,7 +181,7 @@ BOOL MuscleBase::Enabled() {return m_bEnabled;};
 
 \param	bVal	true to enable. 
 **/
-void MuscleBase::Enabled(BOOL bVal)
+void MuscleBase::Enabled(bool bVal)
 {
 	LineBase::Enabled(bVal);
 
@@ -203,7 +203,7 @@ SigmoidGain *MuscleBase::StimTension() {return &m_gainStimTension;}
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void MuscleBase::StimTension(string strXml)
+void MuscleBase::StimTension(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -221,7 +221,7 @@ LengthTensionGain *MuscleBase::LengthTension() {return &m_gainLengthTension;}
 
 \param	strXml	The xml packet defining the gain. 
 **/
-void MuscleBase::LengthTension(string strXml)
+void MuscleBase::LengthTension(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -230,7 +230,7 @@ void MuscleBase::LengthTension(string strXml)
 	m_gainLengthTension.Load(oXml);
 }
 
-void MuscleBase::AddExternalNodeInput(float fltInput)
+void MuscleBase::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	//We are changing this. It is now really driven by the membrane voltage of the non-spiking neuron. Integration from 
 	//different motor neurons takes place in the non-spiking neuron and we get that here instead of frequency and use that
@@ -250,7 +250,7 @@ void MuscleBase::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-void MuscleBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void MuscleBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	m_gainStimTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_gainLengthTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
@@ -264,9 +264,9 @@ void MuscleBase::VerifySystemPointers()
 	m_gainLengthTension.VerifySystemPointers();
 }
 
-float *MuscleBase::GetDataPointer(const string &strDataType)
+float *MuscleBase::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -282,14 +282,14 @@ float *MuscleBase::GetDataPointer(const string &strDataType)
 	return lpData;
 }
 
-BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool MuscleBase::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	if(LineBase::SetData(strDataType, strValue, FALSE))
+	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "MAXTENSION")
 	{
-		MaxTension(atof(strValue.c_str()));
+		MaxTension((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -309,21 +309,20 @@ BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void MuscleBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void MuscleBase::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LineBase::QueryProperties(aryNames, aryTypes);
+	LineBase::QueryProperties(aryProperties);
 
-	aryNames.Add("MaxTension");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Tension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tdot", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MembraneVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("StimTension");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("LengthTension");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("MaxTension", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StimTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LengthTension", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 #pragma endregion

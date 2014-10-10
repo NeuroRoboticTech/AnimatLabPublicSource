@@ -18,6 +18,7 @@ Namespace DataObjects.Physical
 
         Delegate Sub PositionChangedDelegate()
         Delegate Sub RotationChangedDelegate()
+        Delegate Sub SizeChangedDelegate()
         Delegate Sub SelectionChangedDelegate(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
 
 #End Region
@@ -29,6 +30,7 @@ Namespace DataObjects.Physical
         Protected m_svLocalPosition As ScaledVector3
         Protected m_svWorldPosition As ScaledVector3
         Protected m_svRotation As ScaledVector3
+        Protected m_svBoundingBox As ScaledVector3
 
         Protected m_bVisible As Boolean = True
         Protected m_Transparencies As BodyTransparencies
@@ -93,6 +95,15 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property AllowGuiCoordinateChange() As Boolean
             Get
                 Return True
+            End Get
+        End Property
+
+        'Determines whether it is okay for this body part type to allow the user to change the bounding box. This really only
+        'makes sense for a few parts like meshes.
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowGuiBoundingBoxChange() As Boolean
+            Get
+                Return False
             End Get
         End Property
 
@@ -292,7 +303,7 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return m_strDescription
             End Get
@@ -308,6 +319,18 @@ Namespace DataObjects.Physical
             Get
                 Return True
             End Get
+        End Property
+
+        Public Overridable Property BoundingBox() As Framework.ScaledVector3
+            Get
+                Return m_svBoundingBox
+            End Get
+            Set(ByVal value As Framework.ScaledVector3)
+                'We can only set one value of bounding box at a time.
+                'Me.SetSimData("BoundingBox", value.GetSimulationXml("BoundingBox"), True)
+                m_svBoundingBox.CopyData(value)
+                RaiseEvent Sized(Me)
+            End Set
         End Property
 
 #End Region
@@ -326,12 +349,14 @@ Namespace DataObjects.Physical
             m_svLocalPosition = New ScaledVector3(Me, "LocalPosition", "Location of the " & Me.TypeName & " relative to its parent.", "Meters", "m")
             m_svWorldPosition = New ScaledVector3(Me, "WorldPosition", "Location of the " & Me.TypeName & " relative to the center of the world.", "Meters", "m")
             m_svRotation = New ScaledVector3(Me, "Rotation", "Rotation of the object.", "Degrees", "Deg")
+            m_svBoundingBox = New ScaledVector3(Me, "BoundingBox", "Bounding box for this part.", "Meters", "m")
             m_snUserDefinedDraggerRadius = New ScaledNumber(Me, "Dragger Radius", -1, ScaledNumber.enumNumericScale.None, "m", "m")
             m_Transparencies = New BodyTransparencies(Me)
 
             AddHandler m_svLocalPosition.ValueChanged, AddressOf Me.OnLocalPositionValueChanged
             AddHandler m_svWorldPosition.ValueChanged, AddressOf Me.OnWorldPositionValueChanged
             AddHandler m_svRotation.ValueChanged, AddressOf Me.OnRotationValueChanged
+            AddHandler m_svBoundingBox.ValueChanged, AddressOf Me.OnBoundingBoxValueChanged
 
             SetupInitialTransparencies()
         End Sub
@@ -342,6 +367,7 @@ Namespace DataObjects.Physical
             If Not m_svLocalPosition Is Nothing Then m_svLocalPosition.ClearIsDirty()
             If Not m_svWorldPosition Is Nothing Then m_svWorldPosition.ClearIsDirty()
             If Not m_svRotation Is Nothing Then m_svRotation.ClearIsDirty()
+            If Not m_svBoundingBox Is Nothing Then m_svBoundingBox.ClearIsDirty()
             If Not m_Transparencies Is Nothing Then m_Transparencies.ClearIsDirty()
             If Not m_snUserDefinedDraggerRadius Is Nothing Then m_snUserDefinedDraggerRadius.ClearIsDirty()
         End Sub
@@ -354,6 +380,7 @@ Namespace DataObjects.Physical
             m_svLocalPosition = DirectCast(bpOrig.m_svLocalPosition.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_svWorldPosition = DirectCast(bpOrig.m_svWorldPosition.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_svRotation = DirectCast(bpOrig.m_svRotation.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
+            m_svBoundingBox = DirectCast(bpOrig.m_svBoundingBox.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_Transparencies = DirectCast(bpOrig.m_Transparencies.Clone(Me, bCutData, doRoot), BodyTransparencies)
             m_snUserDefinedDraggerRadius = DirectCast(bpOrig.m_snUserDefinedDraggerRadius.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_bVisible = bpOrig.m_bVisible
@@ -368,6 +395,7 @@ Namespace DataObjects.Physical
             AddHandler m_svLocalPosition.ValueChanged, AddressOf Me.OnLocalPositionValueChanged
             AddHandler m_svWorldPosition.ValueChanged, AddressOf Me.OnWorldPositionValueChanged
             AddHandler m_svRotation.ValueChanged, AddressOf Me.OnRotationValueChanged
+            AddHandler m_svBoundingBox.ValueChanged, AddressOf Me.OnBoundingBoxValueChanged
 
         End Sub
 
@@ -416,6 +444,11 @@ Namespace DataObjects.Physical
                                             "Coordinates", "Sets the rotation of this body part.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
+                Me.BoundingBox.PropertiesReadOnly = Not AllowGuiBoundingBoxChange
+                pbNumberBag = Me.BoundingBox.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Bounding Box", pbNumberBag.GetType(), "BoundingBox", _
+                                            "Coordinates", "The bounding box for this part.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiBoundingBoxChange()))
 
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
                                             "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
@@ -475,6 +508,7 @@ Namespace DataObjects.Physical
                 m_snUserDefinedDraggerRadius.LoadData(oXml, "DraggerSize")
             End If
 
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -502,6 +536,13 @@ Namespace DataObjects.Physical
 
             m_svLocalPosition.SaveData(oXml, "LocalPosition")
             m_svRotation.SaveData(oXml, "Rotation")
+
+            If Not m_doInterface Is Nothing Then
+                Dim strMatrix As String = m_doInterface.GetLocalTransformMatrixString()
+                If strMatrix.Trim.Length > 0 Then
+                    oXml.AddChildElement("LocalMatrix", strMatrix)
+                End If
+            End If
 
             m_snUserDefinedDraggerRadius.SaveData(oXml, "DraggerSize")
 
@@ -548,7 +589,11 @@ Namespace DataObjects.Physical
                     m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
                     AddHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
                     AddHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                    AddHandler m_doInterface.OnSizeChanged, AddressOf Me.OnSizeChanged
                     AddHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
+
+                    'Update the bounding box.
+                    SizeChangedHandler()
                 End If
             Catch ex As System.Exception
                 If bShowError Then
@@ -584,7 +629,7 @@ Namespace DataObjects.Physical
 
         'These three events handlers are called whenever a user manually changes the value of the position or rotation.
         'This is different from the OnPositionChanged event. Those events come up from the simulation.
-        Protected Overridable Sub OnLocalPositionValueChanged()
+        Protected Overridable Sub OnLocalPositionValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 If Not Util.ProjectProperties Is Nothing Then
                     Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
@@ -596,7 +641,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnWorldPositionValueChanged()
+        Protected Overridable Sub OnWorldPositionValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 If Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.BodyPart)) Then
                     Dim bpParent As DataObjects.Physical.BodyPart = DirectCast(m_doParent, DataObjects.Physical.BodyPart)
@@ -624,11 +669,31 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Protected Overridable Sub OnRotationValueChanged()
+        Protected Overridable Sub OnRotationValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
             Try
                 Me.SetSimData("Rotation", Me.RadianRotation.GetSimulationXml("Rotation"), True)
                 Util.ProjectProperties.RefreshProperties()
                 RaiseEvent Rotated(Me)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnBoundingBoxValueChanged(ByVal iIdx As Integer, ByVal snParam As ScaledNumber)
+            Try
+                If iIdx >= 0 AndAlso Not snParam Is Nothing Then
+                    If (iIdx = 0) Then
+                        Me.SetSimData("BoundingBox.X", snParam.ActualValue.ToString(), True)
+                    ElseIf (iIdx = 1) Then
+                        Me.SetSimData("BoundingBox.Y", snParam.ActualValue.ToString(), True)
+                    ElseIf (iIdx = 2) Then
+                        Me.SetSimData("BoundingBox.Z", snParam.ActualValue.ToString(), True)
+                    End If
+
+                    Util.ProjectProperties.RefreshProperties()
+                    RaiseEvent Sized(Me)
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -698,12 +763,46 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
+        Protected Overridable Sub OnSizeChanged()
+
+            Try
+                Util.Application.BeginInvoke(New SizeChangedDelegate(AddressOf Me.SizeChangedHandler), Nothing)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub SizeChangedHandler()
+            Try
+                If Not m_doInterface Is Nothing Then
+
+                    m_svBoundingBox.IgnoreChangeValueEvents = True
+                    m_svBoundingBox.X.ActualValue = CSng(m_doInterface.GetBoundingBoxValue(0))
+                    m_svBoundingBox.Y.ActualValue = CSng(m_doInterface.GetBoundingBoxValue(1))
+                    m_svBoundingBox.Z.ActualValue = CSng(m_doInterface.GetBoundingBoxValue(2))
+                    m_svBoundingBox.IgnoreChangeValueEvents = False
+
+                    RaiseEvent Sized(Me)
+
+                    If Not Util.Application Is Nothing AndAlso Not Util.Application.ProjectProperties Is Nothing Then
+                        Util.Application.ProjectProperties.RefreshProperties()
+                    End If
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
         Protected Overridable Sub SelectionChangedHandler(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
             Try
-                If bSelected Then
-                    Me.SelectItem(bSelectMultiple)
-                Else
-                    Me.DeselectItem()
+                If Not m_tnWorkspaceNode Is Nothing Then
+                    If bSelected Then
+                        Me.SelectItem(bSelectMultiple)
+                    Else
+                        Me.DeselectItem()
+                    End If
                 End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

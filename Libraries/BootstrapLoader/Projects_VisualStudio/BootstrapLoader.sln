@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "BootstrapLoader.vcxproj", "{7C588C39-BBB6-A041-A166-516553B02DE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		Debug_Double|Win32 = Debug_Double|Win32
+		Release_Double|Win32 = Release_Double|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Debug|Win32.Build.0 = Debug|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Release|Win32.ActiveCfg = Release|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Release|Win32.Build.0 = Release|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{7C588C39-BBB6-A041-A166-516553B02DE4}.Release_Double|Win32.Build.0 = Release_Double|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

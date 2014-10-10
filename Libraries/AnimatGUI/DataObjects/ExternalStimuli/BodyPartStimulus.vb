@@ -27,7 +27,7 @@ Namespace DataObjects.ExternalStimuli
 #Region " Properties "
 
         <Browsable(False)> _
-        Public Overridable Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
+        Public Overrides Property PhysicalStructure() As DataObjects.Physical.PhysicalStructure
             Get
                 Return m_doStructure
             End Get

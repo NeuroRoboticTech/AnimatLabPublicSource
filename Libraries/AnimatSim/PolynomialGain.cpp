@@ -4,7 +4,7 @@
 \brief	Implements the polynomial gain class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PolynomialGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PolynomialGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -127,6 +127,25 @@ float PolynomialGain::D() {return m_fltD;}
 **/
 void PolynomialGain::D(float fltVal) {m_fltD = fltVal;}
 
+void PolynomialGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	PolynomialGain *lpOrig = dynamic_cast<PolynomialGain *>(lpSource);
+
+	m_fltA = lpOrig->m_fltA;
+	m_fltB = lpOrig->m_fltB;
+	m_fltC = lpOrig->m_fltC;
+	m_fltD = lpOrig->m_fltD;
+}
+
+CStdSerialize *PolynomialGain::Clone()
+{
+	CStdSerialize *lpClone = new PolynomialGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float PolynomialGain::CalculateGain(float fltInput)
 {
 	//Gain = A*x^3 + B*x^2 + C*x + D
@@ -136,32 +155,32 @@ float PolynomialGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }	
 
-BOOL PolynomialGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool PolynomialGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "A")
 	{
-		A(atof(strValue.c_str()));
+		A((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "B")
 	{
-		B(atof(strValue.c_str()));
+		B((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "C")
 	{
-		C(atof(strValue.c_str()));
+		C((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "D")
 	{
-		D(atof(strValue.c_str()));
+		D((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -169,24 +188,17 @@ BOOL PolynomialGain::SetData(const string &strDataType, const string &strValue, 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void PolynomialGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PolynomialGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("A");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("C");
-	aryTypes.Add("Float");
-
-	aryNames.Add("D");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("C", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void PolynomialGain::Load(CStdXml &oXml)

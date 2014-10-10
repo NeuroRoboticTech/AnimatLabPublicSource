@@ -4,13 +4,14 @@
 \brief	Implements the simulator class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 #include "Gain.h"
 #include "Node.h"
 #include "IPhysicsMovableItem.h"
@@ -38,13 +39,15 @@
 #include "Light.h"
 #include "LightManager.h"
 #include "Simulator.h"
+#include "SimulationThread.h"
+#include "SimulationMgr.h"
 
 namespace AnimatSim
 {
 
 
 Simulator *g_lpSimulator = NULL;
-Simulator ANIMAT_PORT *GetSimulator() 
+Simulator ANIMAT_PORT *GetSimulator()
 {return g_lpSimulator;};
 
 /**
@@ -55,28 +58,29 @@ Simulator ANIMAT_PORT *GetSimulator()
 **/
 Simulator::Simulator()
 {
-	m_bSteppingSim = FALSE;
-	m_bShuttingDown = FALSE;
+	m_bSteppingSim = false;
+	m_bShuttingDown = false;
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
 	m_fltTime = 0;
 	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
+    m_iPhysicsSubsteps = 1;
+    m_fltPhysicsSubstepTime = (float) 0.01;
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lEndSimTimeSlice = -1;
-	m_lStartSimTick = 0;
-	m_bStopSimulation = FALSE;
-	m_bForceSimulationStop = FALSE;
-    m_bBlockSimulation = FALSE;
-	m_bSimBlockConfirm = FALSE;
+	m_bStopSimulation = false;
+	m_bForceSimulationStop = false;
+    m_bBlockSimulation = false;
+	m_bSimBlockConfirm = false;
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iPhysicsStepCount = 0;
 	m_iVideoLoops = 0;
 	m_lpAnimatClassFactory = NULL;
-	m_bSimulateHydrodynamics = FALSE;
+	m_bSimulateHydrodynamics = false;
 
 	m_fltGravity = (float) -9.81;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
@@ -87,6 +91,9 @@ Simulator::Simulator()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
@@ -95,34 +102,32 @@ Simulator::Simulator()
 	m_fltLinearKineticLoss = 0.1e-9f;
 	m_fltAngularKineticLoss = 1e-12f;
 
-	m_bForceFastMoving = TRUE;
+	m_bForceFastMoving = true;
 	m_iSelectionMode = COLLISION_SELECTION_MODE;
-	m_bAddBodiesMode = FALSE;
+	m_bAddBodiesMode = false;
 	m_fltRecFieldSelRadius = 0.05f;
 	m_iPhysicsBodyCount = 0;
 
-	m_bPaused = TRUE;
-	m_bInitialized = FALSE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bInitialized = false;
+	m_bSimRunning = false;
 	m_fltAlphaThreshold = 0.2f;
 
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
-	m_bManualStepSimulation = FALSE;
+	m_bManualStepSimulation = false;
 	m_lpVideoRecorder = NULL;
 	m_lpVideoPlayback = NULL;
 	m_lpSimRecorder = NULL;
 	m_lpSimStopPoint = NULL;
-	m_bEnableSimRecording = FALSE;
+	m_bEnableSimRecording = false;
 	m_lSnapshotByteSize = 0;
 
-	m_bAutoGenerateRandomSeed = TRUE;
+	m_bAutoGenerateRandomSeed = true;
 	m_iManualRandomSeed = 12345;
 
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
 	m_fltPresetPlaybackTimeStep = 0;
-	m_lStepStartTick = 0;
-	m_lStepSimEndTick = 0;
 	m_fltSimulationRealTimeToStep = 0;
 	m_fltTotalRealTimeForStep = 0;
 	m_fltPlaybackAdditionRealTimeToStep = 0;
@@ -132,7 +137,6 @@ Simulator::Simulator()
 	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
@@ -140,10 +144,9 @@ Simulator::Simulator()
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
-	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
-	m_bRecordVideo = FALSE;
+	m_bRecordVideo = false;
 	m_strVideoFilename = "Video.avi";
 	m_fltVideoRecordFrameTime = 1e-3f;
 	m_fltVideoPlaybackFrameTime = 100e-3f;
@@ -154,31 +157,30 @@ Simulator::Simulator()
 	m_lVideoStartSlice = -1;
 	m_lVideoEndSlice = -1;
 	m_lVideoFrame = 0;
-	m_lpAvi = NULL;
-
-	m_aviOpts.cbFormat = 0;
-	m_aviOpts.cbParms = 4;
-	m_aviOpts.dwBytesPerSecond = 0;
-	m_aviOpts.dwFlags = 8;
-	m_aviOpts.dwInterleaveEvery = 0;
-	m_aviOpts.dwKeyFrameEvery = 0;
-	m_aviOpts.dwQuality = 7500;
-	m_aviOpts.fccHandler = 1668707181;
-	m_aviOpts.fccType = 0;
-	m_aviOpts.lpFormat = 0;
-	m_aviOpts.lpParms = 0;
 
 	m_vBackgroundColor.Set(0.2f, 0.2f, 0.6f, 1);
 
 	m_lpSimCallback = NULL;
 	m_lpWinMgr = NULL;
-	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
+	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, true);
 
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
+
+    m_bInDrag = false;
+    m_bIsResetting = false;
+
+    m_lpNeuralThread = NULL;
+    m_lpPhysicsThread = NULL;
+    m_lpIOThread = NULL;
+
+	m_bRobotAdpaterSynch = false;
+	m_bForceNoWindows = false;
+
+	m_lpScript = NULL;
 }
 
 /**
@@ -192,8 +194,8 @@ Simulator::~Simulator()
 
 try
 {
-	m_bSteppingSim = FALSE;
-	m_bShuttingDown = TRUE;
+	m_bSteppingSim = false;
+	m_bShuttingDown = true;
 	g_lpSimulator = NULL;
 	if(m_lpAnimatClassFactory) {delete m_lpAnimatClassFactory; m_lpAnimatClassFactory = NULL;}
 	m_aryOrganisms.RemoveAll();
@@ -211,12 +213,6 @@ try
 		m_lpSimStopPoint = NULL;
 	}
 
-	if(m_lpAvi)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
-	}
-
 	if(m_lpWinMgr)
 	{
 		m_lpWinMgr->Close();
@@ -226,8 +222,32 @@ try
 
 	if(m_lpSimCallback)
 	{
-		delete m_lpSimCallback;
+		//We do not own this callback.
 		m_lpSimCallback = NULL;
+	}
+
+    //if(m_lpNeuralThread)
+    //{
+    //    delete m_lpNeuralThread;
+    //    m_lpNeuralThread = NULL;
+    //}
+
+    //if(m_lpPhysicsThread)
+    //{
+    //    delete m_lpPhysicsThread;
+    //    m_lpPhysicsThread = NULL;
+    //}
+
+    //if(m_lpIOThread)
+    //{
+    //    delete m_lpIOThread;
+    //    m_lpIOThread = NULL;
+    //}
+
+	if(m_lpScript)
+	{
+		delete 	m_lpScript;
+		m_lpScript = NULL;
 	}
 
 	m_aryNeuralModuleFactories.RemoveAll();
@@ -235,17 +255,20 @@ try
 	m_arySourcePhysicsAdapters.RemoveAll();
 	m_aryTargetPhysicsAdapters.RemoveAll();
 	m_iTargetAdapterCount = 0;
+    m_iExtraDataCount = 0;
 
 	m_aryOdorTypes.RemoveAll();
-	m_aryFoodSources.RemoveAll();	
+	m_aryFoodSources.RemoveAll();
+
+    m_aryExtraDataParts.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, false, true);}
 }
 
 
 #pragma region AccessorMutators
-			
+
 #pragma region ProjectVariables
 
 /**
@@ -256,7 +279,7 @@ catch(...)
 
 \return	Project path.
 **/
-string Simulator::ProjectPath() {return m_strProjectPath;}
+std::string Simulator::ProjectPath() {return m_strProjectPath;}
 
 /**
 \brief	Sets the project path.
@@ -264,9 +287,9 @@ string Simulator::ProjectPath() {return m_strProjectPath;}
 \author	dcofer
 \date	3/28/2011
 
-\param	strPath	Full pathname of the project file. 
+\param	strPath	Full pathname of the project file.
 **/
-void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
+void Simulator::ProjectPath(std::string strPath) {m_strProjectPath = strPath;}
 
 /**
 \brief	Gets the directory path to the executable.
@@ -276,7 +299,7 @@ void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
 
 \return	Path to the executable.
 **/
-string Simulator::ExecutablePath() {return m_strExecutablePath;}
+std::string Simulator::ExecutablePath() {return m_strExecutablePath;}
 
 /**
 \brief	Sets the Executable path.
@@ -284,9 +307,9 @@ string Simulator::ExecutablePath() {return m_strExecutablePath;}
 \author	dcofer
 \date	3/28/2011
 
-\param	strPath	Full pathname to the executable file. 
+\param	strPath	Full pathname to the executable file.
 **/
-void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
+void Simulator::ExecutablePath(std::string strPath) {m_strExecutablePath = strPath;}
 
 /**
 \brief	Gets the simulation filename.
@@ -296,7 +319,7 @@ void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
 
 \return	Simulation filename.
 **/
-string Simulator::SimulationFile() {return m_strSimulationFile;}
+std::string Simulator::SimulationFile() {return m_strSimulationFile;}
 
 /**
 \brief	Sets the simulation filename.
@@ -304,9 +327,9 @@ string Simulator::SimulationFile() {return m_strSimulationFile;}
 \author	dcofer
 \date	3/28/2011
 
-\param	strFile	The simulation filename. 
+\param	strFile	The simulation filename.
 **/
-void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
+void Simulator::SimulationFile(std::string strFile) {m_strSimulationFile = strFile;}
 
 /**
 \brief	Gets whether the Simulation is paused.
@@ -316,7 +339,7 @@ void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL Simulator::Paused() {return m_bPaused;}
+bool Simulator::Paused() {return m_bPaused;}
 
 /**
 \brief	Sets the Paused flag.
@@ -327,29 +350,29 @@ need to call the PauseSimulation method.
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to value. 
+\param	bVal	true to value.
 **/
-void Simulator::Paused(BOOL bVal) {m_bPaused = bVal;}
+void Simulator::Paused(bool bVal) {m_bPaused = bVal;}
 
 /**
-\brief	Tells if the simulation has been initialized or not. 
+\brief	Tells if the simulation has been initialized or not.
 
 \author	dcofer
 \date	3/28/2011
 
 \return	true if Initialized, false else.
 **/
-BOOL Simulator::Initialized() {return m_bInitialized;}
+bool Simulator::Initialized() {return m_bInitialized;}
 
 /**
-\brief	Sets whether the simulation has been Initialized. 
+\brief	Sets whether the simulation has been Initialized.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true if initialized. 
+\param	bVal	true if initialized.
 **/
-void Simulator::Initialized(BOOL bVal) {m_bInitialized = bVal;}
+void Simulator::Initialized(bool bVal) {m_bInitialized = bVal;}
 
 /**
 \brief	Gets the list of pointers to all objects in the simulation.
@@ -359,7 +382,7 @@ void Simulator::Initialized(BOOL bVal) {m_bInitialized = bVal;}
 
 \return	Pointer to list of objects.
 **/
-CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
+CStdMap<std::string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
 
 /**
 \brief	Gets the data chart manager.
@@ -369,7 +392,7 @@ CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;
 
 \return	Pointer to DataChartMgr.
 **/
-DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
+DataChartMgr *Simulator::GetDataChartMgr() {return &m_oDataChartMgr;}
 
 /**
 \brief	Gets the external stimuli manager.
@@ -379,7 +402,7 @@ DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
 
 \return	Pointer to ExternalStimuliMgr.
 **/
-ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
+ExternalStimuliMgr *Simulator::GetExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
 
 /**
 \brief	Gets the simulation recorder.
@@ -389,7 +412,7 @@ ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliM
 
 \return	Pointer to SimulationRecorder.
 **/
-SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
+SimulationRecorder *Simulator::GetSimulationRecorder() {return m_lpSimRecorder;}
 
 /**
 \brief	Gets the light manager.
@@ -399,7 +422,7 @@ SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
 
 \return	Pointer to the light manager.
 **/
-LightManager *Simulator::LightMgr() {return &m_oLightMgr;}
+LightManager *Simulator::GetLightMgr() {return &m_oLightMgr;}
 
 /**
 \brief	Gets the material manager.
@@ -409,7 +432,7 @@ LightManager *Simulator::LightMgr() {return &m_oLightMgr;}
 
 \return	Pointer to Materials.
 **/
-Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
+Materials *Simulator::GetMaterialMgr() {return &m_oMaterialMgr;}
 
 /**
 \brief	Gets the window manager.
@@ -419,7 +442,7 @@ Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
 
 \return	Pointer to SimulationWindowMgr.
 **/
-SimulationWindowMgr *Simulator::WindowMgr() {return m_lpWinMgr;}
+SimulationWindowMgr *Simulator::GetWindowMgr() {return m_lpWinMgr;}
 
 /**
 \brief	Gets the visual selection mode.
@@ -440,7 +463,7 @@ it know when the selection mode has changed in the GUI.
 \author	dcofer
 \date	3/28/2011
 
-\param	iVal	The new value. 
+\param	iVal	The new value.
 **/
 void Simulator::VisualSelectionMode(int iVal)
 {
@@ -448,9 +471,9 @@ void Simulator::VisualSelectionMode(int iVal)
 		THROW_PARAM_ERROR(Al_Err_lInvalidSelMode, Al_Err_strInvalidSelMode, "Selection Mode", iVal);
 
 	m_iSelectionMode = iVal;
-	
+
 	//Go through and call VisualSelectionModeChanged for all objects.
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -468,21 +491,21 @@ void Simulator::VisualSelectionMode(int iVal)
 
 \return	true if GUI is in AddBody mode, false else.
 **/
-BOOL Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
+bool Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
 
 /**
-\brief	Sets the AddBodies mode. 
+\brief	Sets the AddBodies mode.
 
-\details Within the GUI the user can select the AddBodies mode. When they click on another part it will 
-add a new part at that location. The simulation needs to know if it is in that mode in order to behave in 
+\details Within the GUI the user can select the AddBodies mode. When they click on another part it will
+add a new part at that location. The simulation needs to know if it is in that mode in order to behave in
 the correct manner. This flag lets it know the state of that mode.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	new value. 
+\param	bVal	new value.
 **/
-void Simulator::AddBodiesMode(BOOL bVal) {m_bAddBodiesMode = bVal;}
+void Simulator::AddBodiesMode(bool bVal) {m_bAddBodiesMode = bVal;}
 
 /**
 \brief	Calback object from the simulation.
@@ -504,9 +527,17 @@ ISimGUICallback *Simulator::SimCallback() {return m_lpSimCallback;}
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpCallback	Pointer to a callback. 
+\param [in,out]	lpCallback	Pointer to a callback.
 **/
 void Simulator::SimCallBack(ISimGUICallback *lpCallback) {m_lpSimCallback = lpCallback;}
+
+/**
+ \brief Returns true if the simulation is in the process of resetting. False otherwise.
+
+ \author    David Cofer
+ \date  1/14/2014
+ */
+bool Simulator::IsResetting() {return m_bIsResetting;}
 
 #pragma endregion
 
@@ -538,7 +569,7 @@ long Simulator::Millisecond() {return (long) (Time() * 1000);}
 \author	dcofer
 \date	3/28/2011
 
-\param	lMillisecond	The millisecond to convert. 
+\param	lMillisecond	The millisecond to convert.
 
 \return	Number of time slices.
 **/
@@ -550,7 +581,7 @@ long Simulator::MillisecondToSlice(long lMillisecond) {return (long) (lMilliseco
 \author	dcofer
 \date	3/28/2011
 
-\param	lSlice	The time slices to convert. 
+\param	lSlice	The time slices to convert.
 
 \return	Number of milliseconds.
 **/
@@ -582,7 +613,7 @@ long Simulator::TimeSlice() {return m_lTimeSlice;}
 \author	dcofer
 \date	3/28/2011
 
-\param	lVal	The new value. 
+\param	lVal	The new value.
 **/
 void Simulator::TimeSlice(long lVal) {m_lTimeSlice = lVal;}
 
@@ -602,7 +633,7 @@ long Simulator::PhysicsSliceCount() {return m_lPhysicsSliceCount;}
 \author	dcofer
 \date	3/28/2011
 
-\param	lVal	The new value. 
+\param	lVal	The new value.
 **/
 void Simulator::PhysicsSliceCount(long lVal) {m_lPhysicsSliceCount = lVal;}
 
@@ -614,7 +645,7 @@ void Simulator::PhysicsSliceCount(long lVal) {m_lPhysicsSliceCount = lVal;}
 
 \return	true if manual stepping, false else.
 **/
-BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
+bool Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
 
 /**
 \brief	Sets whether the simulation is being stepped manually by the user.
@@ -622,9 +653,9 @@ BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to step manually. 
+\param	bVal	true to step manually.
 **/
-void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;}
+void Simulator::ManualStepSimulation(bool bVal) {m_bManualStepSimulation = bVal;}
 
 /**
 \brief	Gets whether the simulation is running.
@@ -634,19 +665,19 @@ void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;
 
 \return	true if it is running, false else.
 **/
-BOOL Simulator::SimRunning() {return m_bSimRunning;}
+bool Simulator::SimRunning() {return m_bSimRunning;}
 
 /**
 \brief	Tells whether the simulation is shutting down or not.
 
-\details This is used by other objects in their destructor to determine whether to make certain calls or not. 
+\details This is used by other objects in their destructor to determine whether to make certain calls or not.
 
 \author	dcofer
 \date	9/25/2011
 
 \return	true if it shutting down, false otherwise.
 **/
-BOOL Simulator::ShuttingDown() {return m_bShuttingDown;}
+bool Simulator::ShuttingDown() {return m_bShuttingDown;}
 
 /**
 \brief	Gets whether we have set the simulation to force fast moving calculations.
@@ -656,7 +687,7 @@ BOOL Simulator::ShuttingDown() {return m_bShuttingDown;}
 
 \return	true if it force, false else.
 **/
-BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
+bool Simulator::ForceFastMoving() {return m_bForceFastMoving;}
 
 /**
 \brief	Set simulation to Force fast moving caculations.
@@ -664,9 +695,9 @@ BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to force. 
+\param	bVal	true to force.
 **/
-void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
+void Simulator::ForceFastMoving(bool bVal) {m_bForceFastMoving = bVal;}
 
 /**
 \brief	Gets whether to automatically generate a random seed.
@@ -676,7 +707,7 @@ void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
 
 \return	true if auto generating seed, false to if using currently set seed.
 **/
-BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
+bool Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
 
 /**
 \brief	Sets whether to automatically generate random seed.
@@ -684,9 +715,9 @@ BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to generate automatic seed. 
+\param	bVal	true to generate automatic seed.
 **/
-void Simulator::AutoGenerateRandomSeed(BOOL bVal) {m_bAutoGenerateRandomSeed = bVal;}
+void Simulator::AutoGenerateRandomSeed(bool bVal) {m_bAutoGenerateRandomSeed = bVal;}
 
 /**
 \brief	Gets the manual random seed value.
@@ -704,7 +735,7 @@ int Simulator::ManualRandomSeed() {return m_iManualRandomSeed;}
 \author	dcofer
 \date	3/28/2011
 
-\param	iSeed	The seed. 
+\param	iSeed	The seed.
 **/
 void Simulator::ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;}
 
@@ -726,7 +757,7 @@ float Simulator::StabilityScale() {return m_fltStabilityScale;}
 
 \param	fltVal	Scale factor.
 **/
-void Simulator::StabilityScale(float fltVal) {m_fltStabilityScale = fltVal;} 
+void Simulator::StabilityScale(float fltVal) {m_fltStabilityScale = fltVal;}
 
 
 /**
@@ -745,13 +776,13 @@ float Simulator::LinearCompliance() {return m_fltLinearCompliance;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearCompliance(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearCompliance");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearCompliance");
+
 	if(bUseScaling)
 		fltVal *= m_fltMassUnits;
 
@@ -774,13 +805,13 @@ float Simulator::AngularCompliance() {return m_fltAngularCompliance;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularCompliance(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularCompliance");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularCompliance");
+
 	if(bUseScaling)
 		fltVal *= m_fltMassUnits*m_fltDistanceUnits*m_fltDistanceUnits;
 
@@ -803,13 +834,13 @@ float Simulator::LinearDamping() {return m_fltLinearDamping;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearDamping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearDamping");
+
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
 
@@ -832,13 +863,13 @@ float Simulator::AngularDamping() {return m_fltAngularDamping;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularDamping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularDamping");
+
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
 
@@ -861,12 +892,12 @@ float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	The new value. 
+\param	fltVal	The new value.
 **/
-void Simulator::LinearKineticLoss(float fltVal, BOOL bUseScaling) 
+void Simulator::LinearKineticLoss(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "LinearKineticLoss");
+
 	if(bUseScaling)
 		fltVal = fltVal * this->DisplayMassUnits();
 
@@ -889,12 +920,12 @@ float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	The new value. 
+\param	fltVal	The new value.
 **/
-void Simulator::AngularKineticLoss(float fltVal, BOOL bUseScaling) 
+void Simulator::AngularKineticLoss(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
-	
+	Std_IsAboveMin((float) 0, fltVal, true, "AngularKineticLoss");
+
 	if(bUseScaling)
 		fltVal = fltVal * this->DisplayMassUnits();
 
@@ -912,7 +943,7 @@ void Simulator::AngularKineticLoss(float fltVal, BOOL bUseScaling)
 
 \return	smallest time step for the simulation.
 **/
-float Simulator::TimeStep() 
+float Simulator::TimeStep()
 {return m_fltTimeStep;}
 
 /**
@@ -923,7 +954,7 @@ float Simulator::TimeStep()
 
 \return	true to use the sim end time, false else.
 **/
-BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
+bool Simulator::SetEndSimTime() {return m_bSetEndSim;}
 
 /**
 \brief	Sets whether to use the simulation end time.
@@ -931,9 +962,9 @@ BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to use simulation end time. 
+\param	bVal	true to use simulation end time.
 **/
-void Simulator::SetEndSimTime(BOOL bVal) {m_bSetEndSim = bVal;}
+void Simulator::SetEndSimTime(bool bVal) {m_bSetEndSim = bVal;}
 
 /**
 \brief	Gets the time at which to automatically end the simulation.
@@ -951,14 +982,14 @@ float Simulator::EndSimTime() {return m_fltEndSimTime;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	The new value. 
+\param	fltVal	The new value.
 **/
-void Simulator::EndSimTime(float fltVal) 
+void Simulator::EndSimTime(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "EndSimTime");
+	Std_IsAboveMin((float) 0, fltVal, true, "EndSimTime");
 
 	m_fltEndSimTime = fltVal;
-	m_lEndSimTimeSlice = fltVal/m_fltTimeStep; 
+	m_lEndSimTimeSlice = fltVal/m_fltTimeStep;
 }
 
 /**
@@ -977,11 +1008,11 @@ long Simulator::EndSimTimeSlice() {return m_lEndSimTimeSlice;}
 \author	dcofer
 \date	3/28/2011
 
-\param	lVal	The new time slice value. 
+\param	lVal	The new time slice value.
 **/
-void Simulator::EndSimTimeSlice(long lVal) 
+void Simulator::EndSimTimeSlice(long lVal)
 {
-	Std_IsAboveMin((long) 0, lVal, TRUE, "EndSimTimeSlice");
+	Std_IsAboveMin((long) 0, lVal, true, "EndSimTimeSlice");
 
 	m_lEndSimTimeSlice = lVal;
 	m_fltEndSimTime = m_lEndSimTimeSlice*m_fltTimeStep;
@@ -995,7 +1026,7 @@ void Simulator::EndSimTimeSlice(long lVal)
 
 \return	true if it is stopped, false else.
 **/
-BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
+bool Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
 
 /**
 \brief	Gets the frame rate used for the simulation windows in cylces per second.
@@ -1025,11 +1056,11 @@ float Simulator::DesiredFrameStep() {return m_fltDesiredFrameStep;}
 \author	dcofer
 \date	3/28/2011
 
-\param	iVal	The new value. 
+\param	iVal	The new value.
 **/
 void Simulator::DesiredFrameRate(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+	Std_IsAboveMin((int) 0, iVal, true, "FrameRate");
 
 	m_iDesiredFrameRate = iVal;
  	m_fltDesiredFrameStep = ((1/ (float) m_iDesiredFrameRate)*1);
@@ -1049,8 +1080,8 @@ float Simulator::RealTime()
 /**
 \brief	Gets the physics step interval.
 
-\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the 
-smallest integration time step in the system. So this is how many total time slices occur 
+\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the
+smallest integration time step in the system. So this is how many total time slices occur
 between each iteration of the physics engine.
 
 \author	dcofer
@@ -1063,19 +1094,19 @@ short Simulator::PhysicsStepInterval() {return m_iPhysicsStepInterval;}
 /**
 \brief	Sets the physics step interval.
 
-\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the 
-smallest integration time step in the system. So this is how many total time slices occur 
+\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the
+smallest integration time step in the system. So this is how many total time slices occur
 between each iteration of the physics engine.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	iVal	The new value. 
+\param	iVal	The new value.
 **/
-void Simulator::PhysicsStepInterval(short iVal) 
+void Simulator::PhysicsStepInterval(short iVal)
 {
 	if(iVal == 0) iVal = 1;
-	Std_IsAboveMin((int) 0, (int) iVal, TRUE, "PhysicsStepInterval");
+	Std_IsAboveMin((int) 0, (int) iVal, true, "PhysicsStepInterval");
 	m_iPhysicsStepInterval = iVal;
 }
 
@@ -1085,29 +1116,35 @@ void Simulator::PhysicsStepInterval(short iVal)
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	The new value. 
+\param	fltVal	The new value.
 **/
 void Simulator::PhysicsTimeStep(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
+	Std_IsAboveMin((float) 0, fltVal, true, "PhysicsTimeStep");
 
 	//Set it so that it will be taken into consideration when finding min value.
 	m_fltPhysicsTimeStep = fltVal;
 
 	//Find min time step.
 	float fltMin = MinTimeStep();
-	
-	//Division
-	int iDiv = (int) ((fltVal / fltMin) + 0.5f);
-	
-	//Find the number of timeslices that need to occur before the physics system is updated
-	PhysicsStepInterval(iDiv);
 
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+	if(fltMin > 0 && m_iPhysicsSubsteps > 0)
+	{
+		//Division
+		int iDiv = (int) ((fltVal / fltMin) + 0.5f);
 
-	//Now reset the m_fltTimeStep of the sim.
-	if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
+		//Find the number of timeslices that need to occur before the physics system is updated
+		PhysicsStepInterval(iDiv);
+
+		//Now recaculate the physics time step using the minimum time step as the base.
+		m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+
+		//Now reset the m_fltTimeStep of the sim.
+		if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
+
+		//Reset the physics substep time if required.
+		 m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
+	}
 }
 
 /**
@@ -1134,6 +1171,45 @@ started. We use this to know how many more slices to go until the physics engine
 long Simulator::PhysicsStepCount() {return m_iPhysicsStepCount;}
 
 /**
+ \brief  This is used only for the bullet physics engine. It allows the user to specify how many substeps should
+         be made for the physics time step specified. This allows you to keep the overall physics time step you
+         wanted but subdivide it more finely if that is required. However, The larger this number the slower
+         your simulation will run.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \param iVal    New substeps greater than 0.
+ */
+void Simulator::PhysicsSubsteps(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, true, "PhysicsSubsteps");
+
+    m_iPhysicsSubsteps = iVal;
+    m_fltPhysicsSubstepTime = m_fltPhysicsTimeStep/m_iPhysicsSubsteps;
+}
+
+/**
+ \brief Gets the physics substeps.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \return physics substep count.
+ */
+int Simulator::PhysicsSubsteps() {return m_iPhysicsSubsteps;}
+
+/**
+ \brief Gets the physics substep time.
+
+ \author    David Cofer
+ \date  1/9/2014
+
+ \return  gets the time size of the substep: TimeStep/iPhysicsSubteps.
+ */
+float Simulator::PhysicsSubstepTime() {return m_fltPhysicsSubstepTime;}
+
+/**
 \brief	Gets the gravity value.
 
 \author	dcofer
@@ -1149,10 +1225,10 @@ float Simulator::Gravity() {return m_fltGravity;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::Gravity(float fltVal, BOOL bUseScaling)
+void Simulator::Gravity(float fltVal, bool bUseScaling)
 {
 	//We must convert the gravity to use the correct scale.
 	if(bUseScaling)
@@ -1179,12 +1255,12 @@ float Simulator::MouseSpringStiffness() {return m_fltMouseSpringStiffness;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
+void Simulator::MouseSpringStiffness(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringStiffness", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "MouseSpringStiffness", true);
 
 	if(bUseScaling)
 		fltVal *= this->InverseMassUnits();
@@ -1210,12 +1286,12 @@ float Simulator::MouseSpringDamping() {return m_ftlMouseSpringDamping;}
 \author	dcofer
 \date	3/28/2011
 
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
 **/
-void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
+void Simulator::MouseSpringDamping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "MouseSpringDamping", true);
 
 	if(bUseScaling)
 		fltVal = fltVal/this->DisplayMassUnits();
@@ -1223,11 +1299,94 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 }
 
 /**
+\brief	Gets the magnitude of the mouse spring force applied at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringForceMagnitude() {return m_fltMouseSpringForceMagnitude;}
+
+/**
+\brief	Sets the mouse spring force that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
+**/
+void Simulator::MouseSpringForceMagnitude(float fltVal, bool bUseScaling)
+{
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= (InverseMassUnits() * InverseDistanceUnits());
+
+	m_fltMouseSpringForceMagnitude = fltVal;
+}
+
+/**
+\brief	Gets the magnitude of the mouse spring damping force applied at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringDampingForceMagnitude() {return m_fltMouseSpringDampingForceMagnitude;}
+
+/**
+\brief	Sets the mouse spring damping force that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
+**/
+void Simulator::MouseSpringDampingForceMagnitude(float fltVal, bool bUseScaling)
+{
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= (InverseMassUnits() * InverseDistanceUnits());
+
+	m_fltMouseSpringDampingForceMagnitude = fltVal;
+}
+
+/**
+\brief	Gets the magnitude of the mouse spring length at each time step.
+
+\author	dcofer
+\date	5/4/2014
+
+\return	Force.
+**/
+float Simulator::MouseSpringLengthMagnitude() {return m_fltMouseSpringLengthMagnitude;}
+
+/**
+\brief	Sets the mouse spring length that was used in the current timestep. This is for reporting purposes only.
+
+\author	dcofer
+\date	5/4/2014
+
+\param	fltVal	   	The new value.
+\param	bUseScaling	true to use unit scaling.
+**/
+void Simulator::MouseSpringLengthMagnitude(float fltVal, bool bUseScaling)
+{
+	if(bUseScaling)
+		m_fltMouseSpringLengthMagnitude = fltVal * m_fltDistanceUnits;
+	else
+		m_fltMouseSpringLengthMagnitude = fltVal;
+}
+
+/**
 \brief	Gets whether the simulation uses hydrodynamics.
 
 \details Tells whether or not we will be doing hydrodynamic simulations.
 If you are not doing stuff underwater then be sure this is set to
-FALSE. The hydrodynamics adds extra overhead that can slow the
+false. The hydrodynamics adds extra overhead that can slow the
 simulation down slightly.
 
 \author	dcofer
@@ -1235,22 +1394,22 @@ simulation down slightly.
 
 \return	true if it uses hydrodynamics, false else.
 **/
-BOOL Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
+bool Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
 
 /**
 \brief	Sets whether the simulation uses hydrodynamics.
 
 \details Tells whether or not we will be doing hydrodynamic simulations.
 If you are not doing stuff underwater then be sure this is set to
-FALSE. The hydrodynamics adds extra overhead that can slow the
+false. The hydrodynamics adds extra overhead that can slow the
 simulation down slightly.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true use hydrodynamics. 
+\param	bVal	true use hydrodynamics.
 **/
-void Simulator::SimulateHydrodynamics(BOOL bVal)
+void Simulator::SimulateHydrodynamics(bool bVal)
 {
 	m_bSimulateHydrodynamics = bVal;
 }
@@ -1263,11 +1422,11 @@ void Simulator::SimulateHydrodynamics(BOOL bVal)
 \author	dcofer
 \date	3/28/2011
 
-\param	strID	Identifier for the material. 
+\param	strID	Identifier for the material.
 
 \return	The material identifier.
 **/
-int Simulator::GetMaterialID(string strID) {return -1;} 
+int Simulator::GetMaterialID(std::string strID) {return -1;}
 
 /**
 \brief	Query if this object is physics being updated on this time slice.
@@ -1277,12 +1436,12 @@ int Simulator::GetMaterialID(string strID) {return -1;}
 
 \return	true if physics being updated, false if not.
 **/
-BOOL Simulator::IsPhysicsBeingUpdated()
+bool Simulator::IsPhysicsBeingUpdated()
 {
 	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -1296,12 +1455,12 @@ BOOL Simulator::IsPhysicsBeingUpdated()
 CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
 
 /**
-\brief	Sets the background color. 
+\brief	Sets the background color.
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	aryColor	The color data. 
+\param [in,out]	aryColor	The color data.
 **/
 void Simulator::BackgroundColor(CStdColor &aryColor)
 {
@@ -1315,23 +1474,23 @@ void Simulator::BackgroundColor(CStdColor &aryColor)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	vColor	Pointer to the color. 
+\param [in,out]	vColor	Pointer to the color.
 **/
-void Simulator::BackgroundColor(float *aryColor) 
+void Simulator::BackgroundColor(float *aryColor)
 {
 	CStdColor vColor(aryColor[0], aryColor[1], aryColor[2], aryColor[3], 1);
 	BackgroundColor(vColor);
 }
 
 /**
-\brief	Loads the background color from an XML data packet. 
+\brief	Loads the background color from an XML data packet.
 
 \author	dcofer
 \date	3/2/2011
 
 \param	strXml	The color data in an xml data packet
 **/
-void Simulator::BackgroundColor(string strXml)
+void Simulator::BackgroundColor(std::string strXml)
 {
 	CStdColor vColor(1);
 	vColor.Load(strXml, "Color");
@@ -1342,13 +1501,13 @@ float Simulator::AlphaThreshold() {return m_fltAlphaThreshold;}
 
 void Simulator::AlphaThreshold(float fltValue)
 {
-	Std_InValidRange((float) 0, (float) 1, fltValue, TRUE, "AlphaThreshold");
+	Std_InValidRange((float) 0, (float) 1, fltValue, true, "AlphaThreshold");
 	m_fltAlphaThreshold = fltValue;
 }
 
 float Simulator::RecFieldSelRadius() {return m_fltRecFieldSelRadius;}
 
-void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdateAllBodies)
+void Simulator::RecFieldSelRadius(float fltValue, bool bUseScaling, bool bUpdateAllBodies)
 {
 	if(bUseScaling)
 		m_fltRecFieldSelRadius = fltValue * this->InverseDistanceUnits();
@@ -1357,7 +1516,7 @@ void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdate
 
 	if(bUpdateAllBodies)
 	{
-		CStdMap<string, AnimatBase *>::iterator oPos;
+		CStdMap<std::string, AnimatBase *>::iterator oPos;
 		AnimatBase *lpBase = NULL;
 		for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 		{
@@ -1375,10 +1534,10 @@ void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdate
 
 \description The follow playback control modes are supported.
 1. Fastest possible: In this mode no time delay is added to the playback at all.
-The physics and neural engines are stepped as fast as they possibly can. However, 
+The physics and neural engines are stepped as fast as they possibly can. However,
 this can lead to simulations that go too fast to see easily, and as parts of the simulation
 because more complex with a larger number of collisions the playback rate will slow down
-and then speed up again. 
+and then speed up again.
 
 2. Match Physics time step: In this mode the physics and neural engines will be stepped
 to the next physics time step, and then any remaining real time left over will be used to
@@ -1400,10 +1559,10 @@ int Simulator::PlaybackControlMode()
 
 \description The follow playback control modes are supported.
 1. Fastest possible: In this mode no time delay is added to the playback at all.
-The physics and neural engines are stepped as fast as they possibly can. However, 
+The physics and neural engines are stepped as fast as they possibly can. However,
 this can lead to simulations that go too fast to see easily, and as parts of the simulation
 because more complex with a larger number of collisions the playback rate will slow down
-and then speed up again. 
+and then speed up again.
 
 2. Match Physics time step: In this mode the physics and neural engines will be stepped
 to the next physics time step, and then any remaining real time left over will be used to
@@ -1448,7 +1607,7 @@ for the playback time step then this is the time step used.
 \author	dcofer
 \date	3/2/2011
 
-\param	lTimeStep	The time step to use. 
+\param	lTimeStep	The time step to use.
 **/
 void Simulator::PresetPlaybackTimeStep(float fltTimeStep)
 {
@@ -1465,10 +1624,72 @@ unsigned long long Simulator::StepSimEndTick()
 {return m_lStepSimEndTick;}
 
 double Simulator::CurrentRealTimeForStep_n()
-{return TimerDiff_n(m_lStepStartTick, GetTimerTick());}
+{return TimerDiff_u(m_lStepStartTick, GetTimerTick());}
 
 double Simulator::CurrentRealTimeForStep_s()
 {return TimerDiff_s(m_lStepStartTick, GetTimerTick());}
+
+/**
+\brief	Gets whether we need to synch the physics adapters in a simulation to the robot physics time step.
+
+\author	dcofer
+\date	5/13/2014
+
+\return	Whether we need to synch or not.
+**/
+bool Simulator::RobotAdpaterSynch() {return m_bRobotAdpaterSynch;}
+
+/**
+\brief	Sets whether we need to synch the physics adapters in a simulation to the robot physics time step.
+
+\author	dcofer
+\date	5/13/2014
+
+\param	bVal	new value.
+**/
+void Simulator::RobotAdpaterSynch(bool bVal)
+{
+	m_bRobotAdpaterSynch = bVal;
+}
+
+/**
+\brief	Used to determine if we are running in a simulation, or in a real control mode.
+
+\discussion The robotics simulation object will override this and return false to signify that it is in
+real-time control of physical hardware. Other simulator objects should leave this as true to signify that they
+are simulating the physical world. This are several places where we have to initialize things differently based
+on whether we are trying to run physical hardware or in simulation and this flag lets us know that.
+
+\author	dcofer
+\date	5/15/2014
+
+\return True if running in simulation, false if running on real hardware.
+**/
+bool Simulator::InSimulation() {return true;}
+
+
+bool Simulator::ForceNoWindows() {return m_bForceNoWindows;}
+
+void Simulator::ForceNoWindows(bool bVal)
+{
+	m_bForceNoWindows = bVal;
+
+	if(bVal && m_lpWinMgr)
+		m_lpWinMgr->CloseAllWindows();
+}
+
+void Simulator::Script(ScriptProcessor *lpScript) 
+{
+	if(m_lpScript)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+
+	m_lpScript = lpScript;
+}
+
+ScriptProcessor *Simulator::Script() {return m_lpScript;}
 
 #pragma endregion
 
@@ -1478,17 +1699,17 @@ double Simulator::CurrentRealTimeForStep_s()
 \brief	Sets the distance units.
 
 \details The physcis engine in AnimatLab uses an arbitrary unit for mass and distance. It is up to the user
-to decide what those units are. So for example, one distance unit can be a standard meter, or it could be a 
+to decide what those units are. So for example, one distance unit can be a standard meter, or it could be a
 centimeter. However, internally all distance measurements must remain consistent and be scaled by the same amount.
 This method calculates the conversion factor used throughout the simulation to insure that all distance units are
-scaled by the same values. 
+scaled by the same values.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string identifer of the distance units to use. 
+\param	strUnits	The string identifer of the distance units to use.
 **/
-void Simulator::DistanceUnits(string strUnits)
+void Simulator::DistanceUnits(std::string strUnits)
 {
 	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -1533,17 +1754,17 @@ float Simulator::DenominatorDistanceUnits() {return m_fltDenominatorDistanceUnit
 \brief	Sets the mass units.
 
 \details The physcis engine in AnimatLab uses an arbitrary unit for mass and distance. It is up to the user
-to decide what those units are. So for example, one mass unit can be a standard kilogram, or it could be a 
+to decide what those units are. So for example, one mass unit can be a standard kilogram, or it could be a
 gram. However, internally all mass measurements must remain consistent and be scaled by the same amount.
 This method calculates the conversion factor used throughout the simulation to insure that all distance units are
-scaled by the same values. 
+scaled by the same values.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string identifer of the mass units to use. 
+\param	strUnits	The std::string identifer of the mass units to use.
 **/
-void Simulator::MassUnits(string strUnits)
+void Simulator::MassUnits(std::string strUnits)
 {
 	m_fltMassUnits = ConvertMassUnits(strUnits);
 	m_fltInverseMassUnits = 1/m_fltMassUnits;
@@ -1584,7 +1805,7 @@ density mass unit value to do this.
 float Simulator::DisplayMassUnits() {return m_fltDisplayMassUnits;}
 
 #pragma endregion
-			
+
 #pragma region RecordingVariables
 
 /**
@@ -1603,7 +1824,7 @@ long Simulator::VideoSliceCount() {return m_lVideoSliceCount;}
 \author	dcofer
 \date	3/28/2011
 
-\param	lVal	The new value. 
+\param	lVal	The new value.
 **/
 void Simulator::VideoSliceCount(long lVal) {m_lVideoSliceCount = lVal;}
 
@@ -1623,7 +1844,7 @@ int Simulator::VideoLoops() {return m_iVideoLoops;}
 \author	dcofer
 \date	3/28/2011
 
-\param	iVal	The new value. 
+\param	iVal	The new value.
 **/
 void Simulator::VideoLoops(int iVal) {m_iVideoLoops = iVal;}
 
@@ -1642,7 +1863,7 @@ void Simulator::VideoPlayback(KeyFrame *lpFrame) {m_lpVideoPlayback = lpFrame;}
 
 \return	true if recording is enabled, false else.
 **/
-BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
+bool Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
 
 /**
 \brief	Sets whether simulation recording is Enabled.
@@ -1650,9 +1871,9 @@ BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
 \author	dcofer
 \date	3/28/2011
 
-\param	bVal	true to enable. 
+\param	bVal	true to enable.
 **/
-void Simulator::EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;}
+void Simulator::EnableSimRecording(bool bVal) {m_bEnableSimRecording = bVal;}
 
 /**
 \brief	Gets the snapshot byte size.
@@ -1701,18 +1922,27 @@ and calls their Initialize method.
 **/
 void Simulator::InitializeStructures()
 {
+    //if(!m_lpNeuralThread)
+    //    m_lpNeuralThread = new ThreadProcessor();
+
+    //if(!m_lpPhysicsThread)
+    //    m_lpPhysicsThread = new ThreadProcessor();
+
+    //if(!m_lpNeuralThread)
+    //    m_lpNeuralThread = new ThreadProcessor();
+
 	InitializeRandomNumbers();
 
 	m_oMaterialMgr.Initialize();
 
-	//We need to rerun the code to set the physics time step here in initialize. The reason is that we set this when 
+	//We need to rerun the code to set the physics time step here in initialize. The reason is that we set this when
 	//loading the simulator and neural modules, but if one of the neural modules has the miniumum time step then
 	//we need to recalculate the time slice per step for all modules in initialize after everything has loaded.
 	// Once everything is loaded and initialized, then if a given time step is changed then that one is changed in
-	// the sim, and events will change it for the rest of them afterwards, so the values should be correct. 
+	// the sim, and events will change it for the rest of them afterwards, so the values should be correct.
 	PhysicsTimeStep(m_fltPhysicsTimeStep);
 
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -1732,26 +1962,15 @@ void Simulator::InitializeStructures()
 
 		//First lets check if there is already an existing video file with that same
 		//name. If there is then get rid of it.
-		string strVideoFile = m_strProjectPath + m_strVideoFilename;
+		std::string strVideoFile = m_strProjectPath + m_strVideoFilename;
 		struct stat f__stat;
-		BOOL bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
+		bool bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
 		if(bFileExists)
 			remove(strVideoFile.c_str( ));
-
-		m_lpAvi = new CStdAvi(strVideoFile, (int) (m_fltVideoPlaybackFrameTime*1000), NULL); 
-		m_lpAvi->m_aviOpts.cbFormat = m_aviOpts.cbFormat;
-		m_lpAvi->m_aviOpts.cbParms = m_aviOpts.cbParms;
-		m_lpAvi->m_aviOpts.dwBytesPerSecond = m_aviOpts.dwBytesPerSecond;
-		m_lpAvi->m_aviOpts.dwFlags = m_aviOpts.dwFlags;
-		m_lpAvi->m_aviOpts.dwInterleaveEvery = m_aviOpts.dwInterleaveEvery;
-		m_lpAvi->m_aviOpts.dwKeyFrameEvery = m_aviOpts.dwKeyFrameEvery;
-		m_lpAvi->m_aviOpts.dwQuality = m_aviOpts.dwQuality;
-		m_lpAvi->m_aviOpts.fccHandler = m_aviOpts.fccHandler;
-		m_lpAvi->m_aviOpts.fccType = m_aviOpts.fccType;
-		m_lpAvi->m_aviOpts.lpFormat = m_aviOpts.lpFormat;
-		m_lpAvi->m_aviOpts.lpParms = m_aviOpts.lpParms;
 	}
 
+	if(m_lpScript)
+		m_lpScript->Initialize();
 }
 
 /**
@@ -1763,13 +1982,38 @@ void Simulator::InitializeStructures()
 void Simulator::NotifyTimeStepModified()
 {
 	//Go through and call TimeStepModified for all objects.
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
 		lpBase = oPos->second;
 		if(lpBase && lpBase != this)
 			lpBase->TimeStepModified();
+	}
+}
+
+
+void Simulator::NotifyRigidBodyAdded(std::string strID)
+{
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase)
+			lpBase->RigidBodyAdded(strID);
+	}
+}
+
+void Simulator::NotifyRigidBodyRemoved(std::string strID)
+{
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase)
+			lpBase->RigidBodyRemoved(strID);
 	}
 }
 
@@ -1784,7 +2028,7 @@ changes.
 \author	dcofer
 \date	3/28/2011
 **/
-void Simulator::BlockSimulation() {m_bBlockSimulation = TRUE;}
+void Simulator::BlockSimulation() {m_bBlockSimulation = true;}
 
 /**
 \brief	Unblock simulation.
@@ -1796,7 +2040,7 @@ This method unblocks the simulation to allow processing to resume.
 \author	dcofer
 \date	3/28/2011
 **/
-void Simulator::UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;}
+void Simulator::UnblockSimulation() {m_bBlockSimulation = false; m_bSimBlockConfirm = false;}
 
 /**
 \brief	Confirms that the simulation has been blocked.
@@ -1810,7 +2054,7 @@ This method tells whether the simulation has been blocked.
 
 \return	true if it is blocked, false else.
 **/
-BOOL Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
+bool Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
 
 /**
 \brief	Wait for simulation block.
@@ -1823,33 +2067,33 @@ occurs.
 \author	dcofer
 \date	3/28/2011
 
-\param	lTimeout	The timeout period in time slices. 
+\param	lTimeout	The timeout period in time slices.
 
 \return	true if it succeeds in getting the simulation block, false if it fails.
 **/
-BOOL Simulator::WaitForSimulationBlock(long lTimeout)
+bool Simulator::WaitForSimulationBlock(long lTimeout)
 {
 	if(!m_bSteppingSim)
-		return TRUE;
+		return true;
 
-	m_bBlockSimulation = TRUE;
+	m_bBlockSimulation = true;
 	long lTime = 0;
-	BOOL bDone = FALSE;
+	bool bDone = false;
 	while(!bDone)
 	{
 		if(!m_bSimBlockConfirm)
 		{
-			Sleep(10);
+            Std_Sleep(10);
 
 			lTime+=10;
 			if(lTimeout > 0 && lTime >= lTimeout)
 			{
-				bDone = TRUE;
-				m_bBlockSimulation = FALSE;
+				bDone = true;
+				m_bBlockSimulation = false;
 			}
 		}
 		else
-			bDone = TRUE;
+			bDone = true;
 	}
 
 	return m_bSimBlockConfirm;
@@ -1867,15 +2111,15 @@ This blocks the simulation and lets the WaitForSimulationBlock code to proceed.
 
 \return	true if it blocks, false if it not.
 **/
-BOOL Simulator::CheckSimulationBlock()
+bool Simulator::CheckSimulationBlock()
 {
 	if(m_bBlockSimulation)
 	{
-		m_bSimBlockConfirm = TRUE;
-		Sleep(1);
+		m_bSimBlockConfirm = true;
+        Std_Sleep(1);
 	}
 	else
-		m_bSimBlockConfirm = FALSE;
+		m_bSimBlockConfirm = false;
 
 	return m_bSimBlockConfirm;
 }
@@ -1891,17 +2135,20 @@ This will destroy all organisms and strcutres defined within the simulation
 **/
 void Simulator::Reset()
 {
+	m_bShuttingDown = true;
 	m_fltTime = 0;
 	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
+    m_iPhysicsSubsteps = 1;
+    m_fltPhysicsSubstepTime = (float) 0.01;
 	m_iPhysicsStepCount = 0;
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iVideoLoops = 0;
-	m_bSimulateHydrodynamics = FALSE;
+	m_bSimulateHydrodynamics = false;
 	m_fltGravity = (float) -9.8;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -1911,6 +2158,9 @@ void Simulator::Reset()
 	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 	m_fltStabilityScale = 1.0;
 	m_fltLinearCompliance = 0.1e-9f;
 	m_fltAngularCompliance = 0.1e-9f;
@@ -1920,8 +2170,8 @@ void Simulator::Reset()
 	m_fltAngularKineticLoss = 1e-12f;
 	m_iPhysicsBodyCount = 0;
 
-	m_bForceFastMoving = TRUE;
-	m_bSteppingSim = FALSE;
+	m_bForceFastMoving = true;
+	m_bSteppingSim = false;
 
 	if(m_lpWinMgr)
 		m_lpWinMgr->Close();
@@ -1932,12 +2182,10 @@ void Simulator::Reset()
 	m_aryAllStructures.RemoveAll();
 	m_lpVideoRecorder = NULL; //Do not delete this object. It is in the list of Keyframes.
 	m_lpVideoPlayback = NULL; //Do not delete this object. It is in the list of Keyframes.
-	m_bEnableSimRecording = FALSE;
+	m_bEnableSimRecording = false;
 	m_lSnapshotByteSize = 0;
 	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
 	m_fltPresetPlaybackTimeStep = 0;
-	m_lStepStartTick = 0;
-	m_lStepSimEndTick = 0;
 	m_fltSimulationRealTimeToStep = 0;
 	m_fltTotalRealTimeForStep = 0;
 	m_fltPlaybackAdditionRealTimeToStep = 0;
@@ -1947,7 +2195,6 @@ void Simulator::Reset()
 	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
@@ -1955,14 +2202,13 @@ void Simulator::Reset()
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
-	m_lVideoFrameStartTick = 0;
 	m_fltActualFrameRate = 0;
 
-	m_bPaused = TRUE;
-	m_bInitialized = FALSE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bInitialized = false;
+	m_bSimRunning = false;
 
-	m_bRecordVideo = FALSE;
+	m_bRecordVideo = false;
 	m_strVideoFilename = "Video.avi";
 	m_fltVideoRecordFrameTime = 1e-3f;
 	m_fltVideoPlaybackFrameTime = 100e-3f;
@@ -1973,18 +2219,6 @@ void Simulator::Reset()
 	m_lVideoStartSlice = -1;
 	m_lVideoEndSlice = -1;
 	m_lVideoFrame = 0;
-
-	m_aviOpts.cbFormat = 0;
-	m_aviOpts.cbParms = 4;
-	m_aviOpts.dwBytesPerSecond = 0;
-	m_aviOpts.dwFlags = 8;
-	m_aviOpts.dwInterleaveEvery = 0;
-	m_aviOpts.dwKeyFrameEvery = 0;
-	m_aviOpts.dwQuality = 7500;
-	m_aviOpts.fccHandler = 1668707181;
-	m_aviOpts.fccType = 0;
-	m_aviOpts.lpFormat = 0;
-	m_aviOpts.lpParms = 0;
 
 	m_oDataChartMgr.Reset();
 	m_oExternalStimuliMgr.Reset();
@@ -2002,30 +2236,54 @@ void Simulator::Reset()
 		m_lpSimStopPoint = NULL;
 	}
 
-	if(m_lpAvi)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
-	}
-
 	if(m_lpSimCallback)
 	{
-		delete m_lpSimCallback;
+		//We do not own this callback.
 		m_lpSimCallback = NULL;
 	}
+
+    //if(m_lpNeuralThread)
+    //{
+    //    delete m_lpNeuralThread;
+    //    m_lpNeuralThread = NULL;
+    //}
+
+    //if(m_lpPhysicsThread)
+    //{
+    //    delete m_lpPhysicsThread;
+    //    m_lpPhysicsThread = NULL;
+    //}
+
+    //if(m_lpIOThread)
+    //{
+    //    delete m_lpIOThread;
+    //    m_lpIOThread = NULL;
+    //}
+
+    if(m_lpScript)
+    {
+        delete m_lpScript;
+        m_lpScript = NULL;
+    }
 
 	m_aryNeuralModuleFactories.RemoveAll();
 
 	m_arySourcePhysicsAdapters.RemoveAll();
 	m_aryTargetPhysicsAdapters.RemoveAll();
 	m_iTargetAdapterCount = 0;
+    m_iExtraDataCount = 0;
 
 	m_aryOdorTypes.RemoveAll();
 	m_aryFoodSources.RemoveAll();
 
+    m_aryExtraDataParts.RemoveAll();
+
 	//Reference pointers only
 	m_lpSelOrganism = NULL;
 	m_lpSelStructure = NULL;
+	m_bShuttingDown = false;
+
+	m_bRobotAdpaterSynch = false;
 }
 
 /**
@@ -2036,17 +2294,21 @@ void Simulator::Reset()
 **/
 void Simulator::ResetSimulation()
 {
+    m_bIsResetting = true;
 	m_fltTime = 0;
 	m_lTimeSlice = 0;
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iPhysicsStepCount = 0;
-	m_bPaused = TRUE;
-	m_bSimRunning = FALSE;
+	m_bPaused = true;
+	m_bSimRunning = false;
+	m_fltMouseSpringForceMagnitude = 0;
+	m_fltMouseSpringDampingForceMagnitude = 0;
+	m_fltMouseSpringLengthMagnitude = 0;
 
 	InitializeRandomNumbers();
 
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -2066,15 +2328,20 @@ void Simulator::ResetSimulation()
 	m_oExternalStimuliMgr.ResetSimulation();
 	m_oLightMgr.ResetSimulation();
 	if(m_lpWinMgr) m_lpWinMgr->ResetSimulation();
-	
+
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
+
+	if(m_lpScript)
+		m_lpScript->ResetSimulation();
+
+    m_bIsResetting = false;
 }
 
 float Simulator::MinTimeStep()
 {
 	m_fltTimeStep = m_fltPhysicsTimeStep;
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -2087,13 +2354,22 @@ float Simulator::MinTimeStep()
 
 void Simulator::MicroWait(unsigned int iMicroTime)
 {
+	//std::cout << "MicroWait: " << iMicroTime << "\r\n";
 	unsigned long long lStart = GetTimerTick();
 	int iRemaining = iMicroTime;
+	int iCount=0;
 
 	while(iRemaining > 0)
+	{
 		iRemaining = iMicroTime - (unsigned int) TimerDiff_u(lStart, GetTimerTick());
 
-	//double dblWaitTime = TimerDiff_u(lStart, GetTimerTick());
+		iCount++;
+		if(iCount == 1000)
+			THROW_ERROR(Al_Err_lTimedOutInMicroWait, Al_Err_strTimedOutInMicroWait);
+	}
+
+	//unsigned int iWait = (unsigned int) TimerDiff_u(lStart, GetTimerTick());
+	//std::cout << "Waited: " << iWait << "\r\n";
 }
 
 void Simulator::StepPlaybackControl()
@@ -2101,7 +2377,7 @@ void Simulator::StepPlaybackControl()
 	RecordSimulationStepTimer();
 
 	//If paused or stepping fastest possible then just step the video frame and exit.
-	if(m_bPaused || m_iPlaybackControlMode == PLAYBACK_MODE_FASTEST_POSSIBLE 
+	if(m_bPaused || m_iPlaybackControlMode == PLAYBACK_MODE_FASTEST_POSSIBLE
 	   || (m_iPlaybackControlMode == PLAYBACK_MODE_PRESET_VALUE && m_fltPresetPlaybackTimeStep <= 0))
 		StepVideoFrame();
 	else
@@ -2111,12 +2387,17 @@ void Simulator::StepPlaybackControl()
 		do {
 			dblRemainingTime = (CalculateRemainingPlaybackTime()); //scale the remaining time back by 10% to account for the time of other things.
 
-			if(dblRemainingTime > m_fltDesiredFrameStep)
-				MicroSleep(m_fltDesiredFrameStep*1000000);
-			else if(dblRemainingTime > 0)
-				MicroWait(dblRemainingTime*1000000);
+			if(dblRemainingTime > 0)
+			{
+				if(dblRemainingTime > m_fltDesiredFrameStep)
+					MicroSleep(m_fltDesiredFrameStep*1000000);
+				else if(dblRemainingTime > 100e-6)
+					MicroSleep(dblRemainingTime*1000000);
+				else
+					MicroWait(dblRemainingTime*1000000);
+			}
 
-			StepVideoFrame();				
+			StepVideoFrame();
 
 		} while(dblRemainingTime > 0);
 	}
@@ -2127,6 +2408,7 @@ void Simulator::StepPlaybackControl()
 void Simulator::StepVideoFrame()
 {
 	double dblTime = TimeBetweenVideoFrames();
+	//std::cout << "Stepping video. between: " << dblTime << "\r\n";
 	if(dblTime > m_fltDesiredFrameStep)
 	{
 		UpdateSimulationWindows();
@@ -2147,15 +2429,43 @@ void Simulator::StepNeuralEngine()
 {
 	unsigned long long lStart = GetTimerTick();
 
-	for(m_oOrganismIterator=m_aryOrganisms.begin(); 
-	    m_oOrganismIterator!=m_aryOrganisms.end(); 
+	if(m_lpScript)
+		m_lpScript->BeforeStepNeuralEngine();
+
+	for(m_oOrganismIterator=m_aryOrganisms.begin();
+	    m_oOrganismIterator!=m_aryOrganisms.end();
 			++m_oOrganismIterator)
 	{
 		m_lpSelOrganism = m_oOrganismIterator->second;
 		m_lpSelOrganism->StepNeuralEngine();
 	}
 
+	if(m_lpScript)
+		m_lpScript->AfterStepNeuralEngine();
+
 	m_fltTotalNeuralStepTime += TimerDiff_s(lStart, GetTimerTick());
+}
+
+/**
+ \brief	Method called for the base Simulator object to run code after the physics engine has been fully stepped.
+ This is primarily being used to collect extra data if needed after the physics engine has been run. If you
+ are building your own physics engine you will need to remember to call this after you have stepped it.
+
+ \author	Dcofer
+ \date	1/19/2014
+ */
+void Simulator::AfterStepSimulation()
+{
+	//Now lets look thorugh all of the parts that have been tagged as needing to gather extra data
+    //and make the call to allow them to do that.
+	//This must be done after the physics step simulation is called in order to get any force info
+	// added by the physics engine itself for this time step.
+	for(int iIndex=0; iIndex<m_iExtraDataCount; iIndex++)
+		m_aryExtraDataParts[iIndex]->UpdateExtraData();
+
+	if(m_lpScript)
+		m_lpScript->AfterStepPhysicsEngine();
+
 }
 
 /**
@@ -2168,16 +2478,17 @@ void Simulator::StepPhysicsEngine()
 {
 	unsigned long long lStart = GetTimerTick();
 
-	for(m_oStructureIterator=m_aryAllStructures.begin(); 
-	    m_oStructureIterator!=m_aryAllStructures.end(); 
+	if(m_lpScript)
+		m_lpScript->BeforeStepPhysicsEngine();
+
+	for(m_oStructureIterator=m_aryAllStructures.begin();
+	    m_oStructureIterator!=m_aryAllStructures.end();
 			++m_oStructureIterator)
 	{
 		m_lpSelStructure = m_oStructureIterator->second;
 		m_lpSelStructure->StepPhysicsEngine();
 	}
 
-	//Now lets step all Target adapters. This will be all items outputing
-	//to the physics engine. Examples are motorized joints and muscles.
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
 		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation();
 
@@ -2231,13 +2542,14 @@ void Simulator::Step()
 
 	StepNeuralEngine();
 
-	if(m_lpSimRecorder) 
+	if(m_lpSimRecorder)
 		StepSimRecorder();
 
 	//Must be last in order to get all data changes that were previously made.
 	StepDataCharts();
-		
+
 	m_lTimeSlice++;
+
 	m_fltTime = m_lTimeSlice*m_fltTimeStep;
 }
 
@@ -2260,12 +2572,12 @@ void Simulator::ResetSimulationTimingParams()
 /**
 \brief	Steps the entire simulation forward by one physics integration time step.
 
-\details This method steps the entire simulation forward by one physics time step. 
+\details This method steps the entire simulation forward by one physics time step.
 Remember that there are typically multiple neural steps for a given physcis step, so this
 will step the simulation as a whole several times for a given physics time step. It goes through
 and calls StepSimulation for every structure/organism object, which in turn calls
-StepSimulation for each rigid body and joint of each of those objects. So you need 
-to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
+StepSimulation for each rigid body and joint of each of those objects. So you need
+to be VERY careful to keep all code within the StepSimulation methods short, sweet,
 and very fast. They are in the main processing loop and even a small increase in the
 amount of processing time that occurrs within this loop will lead to major impacts on
 the ultimate performance of the system.
@@ -2288,7 +2600,16 @@ void Simulator::StepSimulation()
 **/
 void Simulator::SimulateBegin()
 {
-	m_bSteppingSim = TRUE;
+	//Initialize all of our epoch counters at the start of the simulation so we do not get assertions on times being wrong.
+	m_lStartSimTick = GetTimerTick();
+	m_lStepStartTick = m_lStartSimTick;
+	m_lStepSimEndTick = m_lStartSimTick;
+	m_lVideoFrameStartTick = m_lStartSimTick;
+	m_lLastTickTaken = m_lStartSimTick;
+
+	m_bSteppingSim = true;
+
+	std::cout << "starting sim" << "\r\n";
 }
 
 /**
@@ -2325,7 +2646,7 @@ void Simulator::ProcessSimulationStep()
 	catch(CStdErrorInfo oError)
 	{
 		//A critical simulation error has occurred if we catch an exception here. We need to shut the app down.
-		string strError = "An error occurred while stepping the simulation.\nError: " + oError.m_strError;
+		std::string strError = "An error occurred while stepping the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
 	}
 	catch(...)
@@ -2339,10 +2660,10 @@ void Simulator::Simulate()
 {
 	SimulateBegin();
 
-	do 
+	do
     {
 		ProcessSimulationStep();
-	} 
+	}
     while (!m_bStopSimulation && !m_bForceSimulationStop);
 
 	SimulateEnd();
@@ -2351,7 +2672,7 @@ void Simulator::Simulate()
 /**
 \brief	Runs the simulation.
 
-\details This is primarily used when running the simulation in stand-alone mode. It loads the project file, 
+\details This is primarily used when running the simulation in stand-alone mode. It loads the project file,
 initializes the simulation, and the calls Simulate.
 
 \author	dcofer
@@ -2375,7 +2696,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimStarting()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2396,7 +2717,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimPausing()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2417,7 +2738,7 @@ objects know about this event so they can do any pre-processing required before 
 **/
 void Simulator::SimStopping()
 {
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	AnimatBase *lpBase = NULL;
 	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
 	{
@@ -2427,7 +2748,7 @@ void Simulator::SimStopping()
 	}
 }
 
-void Simulator::HandleCriticalError(string strError)
+void Simulator::HandleCriticalError(std::string strError)
 {
 	this->ShutdownSimulation();
 	if(m_lpSimCallback)
@@ -2435,17 +2756,18 @@ void Simulator::HandleCriticalError(string strError)
 
 }
 
-void Simulator::HandleNonCriticalError(string strError)
+void Simulator::HandleNonCriticalError(std::string strError)
 {
 	this->ResetSimulation();
 	if(m_lpSimCallback)
-		m_lpSimCallback->HandleCriticalError(strError);
+		m_lpSimCallback->HandleNonCriticalError(strError);
 }
 
 void Simulator::StartSimulationStepTimer()
 {
 	m_lStepStartTick = GetTimerTick();
-	m_fltRealTime = TimerDiff_s(m_lStartSimTick, m_lStepStartTick); 
+	m_fltRealTime = TimerDiff_s(m_lStartSimTick, m_lStepStartTick);
+	//std::cout << "Real Time: " << m_fltRealTime << "\r\n";
 }
 
 void Simulator::RecordSimulationStepTimer()
@@ -2474,7 +2796,7 @@ void Simulator::RecordSimulationTotalStepTimer()
 	else if(m_lTimeSlice == 5000)
 	{
 		double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
-		WriteToConsole("Average total step time: " + STR(dblAvgStepTime));
+		//WriteToConsole("Average total step time: " + STR(dblAvgStepTime));
 	}
 
 }
@@ -2485,7 +2807,7 @@ double Simulator::CalculateRemainingPlaybackTime()
 		return 0;
 	else if(m_iPlaybackControlMode ==  PLAYBACK_MODE_MATCH_PHYSICS_STEP)
 		return m_fltPhysicsTimeStep - CurrentRealTimeForStep_s();
-	else 
+	else
 		return m_fltPresetPlaybackTimeStep - CurrentRealTimeForStep_s();
 }
 
@@ -2504,7 +2826,8 @@ void Simulator::StartVideoFrameTimer()
 
 double Simulator::TimeBetweenVideoFrames()
 {
-	return TimerDiff_s(m_lVideoFrameStartTick, GetTimerTick());
+	double dblTime = TimerDiff_s(m_lVideoFrameStartTick, GetTimerTick());
+	return dblTime;
 }
 
 double Simulator::RemainingVideoFrameTime()
@@ -2514,6 +2837,7 @@ double Simulator::RemainingVideoFrameTime()
 	return dblRemaining;
 }
 
+
 /**
 \brief	Generates an automatic seed value based on the current time.
 
@@ -2522,10 +2846,14 @@ double Simulator::RemainingVideoFrameTime()
 **/
 void Simulator::GenerateAutoSeed()
 {
-	SYSTEMTIME st;
-	GetLocalTime(&st);
+    //NEED TO TEST
+    time_t rawtime;
+    struct tm * timeinfo;
 
-	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+	m_iManualRandomSeed = (unsigned) (timeinfo->tm_sec + timeinfo->tm_hour + Std_IRand(0, 1000));
 	Std_SRand(m_iManualRandomSeed);
 	srand(m_iManualRandomSeed);
 }
@@ -2561,7 +2889,7 @@ void Simulator::CheckEndSimulationTime()
 }
 
 #pragma endregion
-			
+
 #pragma region LoadMethods
 
 
@@ -2571,9 +2899,9 @@ void Simulator::CheckEndSimulationTime()
 \author	dcofer
 \date	3/28/2011
 
-\param	strFileName	The string to load. 
+\param	strFileName	The std::string to load.
 **/
-void Simulator::Load(string strFileName)
+void Simulator::Load(std::string strFileName)
 {
 	CStdXml oXml;
 
@@ -2583,7 +2911,7 @@ void Simulator::Load(string strFileName)
 	{
 	 if(Std_IsBlank(m_strSimulationFile))
 		 THROW_ERROR(Al_Err_lSimFileBlank, Al_Err_strSimFileBlank);
-	}	
+	}
 	else
 		m_strSimulationFile = strFileName;
 
@@ -2603,9 +2931,9 @@ void Simulator::Load(string strFileName)
 \author	dcofer
 \date	3/28/2011
 
-\param	strFilename	The string to save. 
+\param	strFilename	The std::string to save.
 **/
-void Simulator::Save(string strFilename) {};
+void Simulator::Save(std::string strFilename) {};
 
 
 void Simulator::Load(CStdXml &oXml)
@@ -2622,10 +2950,10 @@ void Simulator::Load(CStdXml &oXml)
 	//m_lUpdateDataInterval = oXml.GetChildLong("UpdateDataInterval", m_lUpdateDataInterval);
 	m_bPaused = oXml.GetChildBool("StartPaused", m_bPaused);
 	m_bEnableSimRecording = oXml.GetChildBool("EnableSimRecording", m_bEnableSimRecording);
-	
-	SetEndSimTime(oXml.GetChildBool("SetSimEnd", FALSE));
+
+	SetEndSimTime(oXml.GetChildBool("SetSimEnd", false));
 	EndSimTime(oXml.GetChildFloat("SimEndTime", m_fltEndSimTime));
- 
+
 	PlaybackControlMode(oXml.GetChildInt("PlaybackControlMode", m_iPlaybackControlMode));
 	PresetPlaybackTimeStep(oXml.GetChildFloat("PresetPlaybackTimeStep", m_fltPresetPlaybackTimeStep));
 
@@ -2636,13 +2964,13 @@ void Simulator::Load(CStdXml &oXml)
 	LoadEnvironment(oXml);
 	m_oDataChartMgr.Load(oXml);
 
-	if(m_lpWinMgr) 
+	if(m_lpWinMgr)
 		m_lpWinMgr->Load(oXml);
 
-	if(oXml.FindChildElement("ExternalStimuli", FALSE))
+	if(oXml.FindChildElement("ExternalStimuli", false))
 		m_oExternalStimuliMgr.Load(oXml);
 
-	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
+	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", false))
 		m_lpSimRecorder->Load(oXml);
 
 	TRACE_DEBUG("Finished loading simulator config from Xml.");
@@ -2654,28 +2982,44 @@ void Simulator::Load(CStdXml &oXml)
 \author	dcofer
 \date	3/28/2011
 
-\param	strModuleName	Name of the dll module. 
+\param	strModuleName	Name of the dll module.
 
 \return	Pointer to the class factory.
 \exception Throws an exception if there is an error creating the class factory.
 **/
-IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
+IStdClassFactory *Simulator::LoadClassFactory(std::string strModuleName, bool bThrowError)
 {
 	IStdClassFactory *lpFactory=NULL;
 
 try
 {
-	int iFindDebug = Std_ToLower(strModuleName).find("d.dll");
+#ifdef WIN32
+	int iFindDebug = Std_ToLower(strModuleName).find("_vc10d");
+	if(iFindDebug == -1) iFindDebug = Std_ToLower(strModuleName).find("_d.");
+#else
+	int iFindDebug = Std_ToLower(strModuleName).find("_debug");
+	if(iFindDebug == -1) iFindDebug = Std_ToLower(strModuleName).find("_d.");
+#endif
 
 #ifdef _DEBUG
 	if(iFindDebug == -1 )
-		THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+		else
+			return NULL;
+	}
 #else
 	if(iFindDebug != -1)
-		THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
+	{
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
+		else
+			return NULL;
+	}
 #endif
 
-	lpFactory = IStdClassFactory::LoadModule(strModuleName);
+	lpFactory = IStdClassFactory::LoadModule(strModuleName, bThrowError);
 	return lpFactory;
 }
 catch(CStdErrorInfo oError)
@@ -2699,7 +3043,7 @@ catch(...)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml	The xml. 
+\param [in,out]	oXml	The xml.
 **/
 void Simulator::LoadEnvironment(CStdXml &oXml)
 {
@@ -2720,6 +3064,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
 	m_fltPhysicsTimeStep = oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep);
+
+    m_iPhysicsSubsteps = oXml.GetChildInt("PhysicSubsteps", 1);
 
 	SimulateHydrodynamics(oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics));
 
@@ -2745,14 +3091,14 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	//}
 
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
-	
+
 	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
 
 	m_fltAlphaThreshold = oXml.GetChildFloat("AlphaThreshold", m_fltAlphaThreshold);
 
 	m_oMaterialMgr.Load(oXml);
 
-	if(oXml.FindChildElement("OdorTypes", FALSE))
+	if(oXml.FindChildElement("OdorTypes", false))
 	{
 		oXml.IntoElem();  //Into Odors Element
 		int iChildCount = oXml.NumberOfChildren();
@@ -2763,9 +3109,9 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 			LoadOdorType(oXml);
 		}
 		oXml.OutOfElem(); //OutOf Odors Element
-	}	
+	}
 
-	if(oXml.FindChildElement("Organisms", FALSE))
+	if(oXml.FindChildElement("Organisms", false))
 	{
 		oXml.IntoElem(); //Into Organisms Element
 		int iCount = oXml.NumberOfChildren();
@@ -2773,12 +3119,12 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadOrganism(oXml);		
+			LoadOrganism(oXml);
 		}
 		oXml.OutOfElem(); //OutOf Organisms Element
 	}
 
-	if(oXml.FindChildElement("Structures", FALSE))
+	if(oXml.FindChildElement("Structures", false))
 	{
 		oXml.IntoElem(); //Into Structures Element
 		int iCount = oXml.NumberOfChildren();
@@ -2794,6 +3140,9 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	m_oLightMgr.Load(oXml);
 
+	if(oXml.FindChildElement("Script", false))
+		Script(LoadScript(oXml));
+
 	oXml.OutOfElem(); //OutOf Environment Element
 
 	TRACE_DEBUG("Finished loading structures from Xml.");
@@ -2805,7 +3154,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml	The xml that defines the structure to load. 
+\param [in,out]	oXml	The xml that defines the structure to load.
 
 \return	Pointer to the structure.
 \exception Throws an exception if there is a problem creating or loading the structure.
@@ -2816,8 +3165,8 @@ Structure *Simulator::LoadStructure(CStdXml &oXml)
 
 try
 {
-	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", TRUE));
-	lpStructure->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", true));
+	lpStructure->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpStructure->Load(oXml);
 
 	AddStructure(lpStructure);
@@ -2843,7 +3192,7 @@ catch(...)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml	The xml that defines the organism to load. 
+\param [in,out]	oXml	The xml that defines the organism to load.
 
 \return	Pointer to the organism.
 \exception Throws an exception if there is a problem creating or loading the organism.
@@ -2851,8 +3200,8 @@ catch(...)
 Organism *Simulator::LoadOrganism(CStdXml &oXml)
 {
 	Organism *lpOrganism = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -2865,7 +3214,7 @@ try
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpOrganism->Load(oXml);
 
 	AddOrganism(lpOrganism);
@@ -2891,7 +3240,7 @@ catch(...)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml	The xml that defines the odor type to load. 
+\param [in,out]	oXml	The xml that defines the odor type to load.
 
 \return	Pointer to the odor type.
 \exception Throws an exception if there is a problem creating or loading the odor type.
@@ -2905,7 +3254,7 @@ try
 {
 	lpOdorType = new OdorType();
 
-	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL, true);
 	lpOdorType->Load(oXml);
 
 	AddOdorType(lpOdorType);
@@ -2926,28 +3275,52 @@ catch(...)
 }
 
 /**
-\brief	Loads an animat module name.
+\brief	Loads the script. 
 
 \author	dcofer
-\date	3/28/2011
+\date	5/23/2014
 
-\param	strFile				   	The string file. 
-\param [in,out]	strAnimatModule	The string animat module. 
+\param [in,out]	oXml The xml data packet to load. 
+
+\return	The script. 
 **/
-void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
+ScriptProcessor *Simulator::LoadScript(CStdXml &oXml)
 {
-	CStdXml oXml;
+	std::string strModule;
+	std::string strType;
+	ScriptProcessor *lpScript = NULL;
 
-	TRACE_DEBUG("Loading simulator module name file.\r\nFileName: " + strFile);
+try
+{
+	oXml.IntoElem(); //Into Child Element
+	strModule = oXml.GetChildString("ModuleName", "");
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Child Element
 
-	if(Std_IsBlank(strFile))
-		THROW_ERROR(Al_Err_lSimFileBlank, Al_Err_strSimFileBlank);
+	lpScript = dynamic_cast<ScriptProcessor *>(CreateObject(strModule, "ScriptProcessor", strType));
+	if(!lpScript)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Script");
 
-	oXml.Load(strFile);
+	lpScript->SetSystemPointers(this, NULL, NULL, NULL, true);
 
-	LoadAnimatModuleName(oXml, strAnimatModule);
+	lpScript->Load(oXml);
 
-	TRACE_DEBUG("Finished loading simulator module name.");
+	return lpScript;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpScript) delete lpScript;
+	lpScript = NULL;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
 }
 
 /**
@@ -2956,10 +3329,56 @@ void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml		   	The xml. 
-\param [in,out]	strAnimatModule	The string animat module. 
+\param	strFile				   	The string file.
+\param [in,out]	strAnimatModule	The string animat module.
 **/
-void Simulator::LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule)
+void Simulator::LoadAnimatModuleName(std::string strFile, std::string &strAnimatModule)
+{
+    std::ifstream ifSimFile;
+    char sBuffer[1000];
+
+    if(!Std_FileExists(strFile))
+		THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strFile);
+
+    ifSimFile.open(strFile);
+
+    if(ifSimFile.is_open())
+    {
+        ifSimFile.read(sBuffer, 1000);       // read the first 1000 chars. Assume the sim lib text is in it.
+        ifSimFile.close();
+
+        std::string strText = sBuffer;
+
+        int iModuleStart = strText.find("<AnimatModule>");
+        int iModuleEnd = strText.find("</AnimatModule>");
+
+        if(iModuleStart == -1)
+    		THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
+
+        if(iModuleEnd == -1)
+    		THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
+
+        int iLen = iModuleEnd - iModuleStart - 14; //Take off the <AnimatModule>
+
+        strAnimatModule = strText.substr((iModuleStart+14), iLen);
+    }
+    else
+	    THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strFile);
+
+    if(strAnimatModule.length() == 0)
+    	THROW_PARAM_ERROR(Al_Err_lAnimatModuleTagNotFound, Al_Err_strAnimatModuleTagNotFound, "Simulation File", strFile);
+}
+
+/**
+\brief	Loads an animat module name.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml		   	The xml.
+\param [in,out]	strAnimatModule	The string animat module.
+**/
+void Simulator::LoadAnimatModuleName(CStdXml &oXml, std::string &strAnimatModule)
 {
 	oXml.FindElement("Simulation");
 	oXml.FindChildElement("");
@@ -2982,18 +3401,18 @@ by simply specifying the name of the dll and the class we want.
 \author	dcofer
 \date	3/28/2011
 
-\param	strModule   	The dll module name. 
-\param	strClassName	Name of the class to create. 
-\param	strType			The specific type of the class to create. 
-\param	bThrowError 	true to throw error if there is a problem. 
+\param	strModule   	The dll module name.
+\param	strClassName	Name of the class to create.
+\param	strType			The specific type of the class to create.
+\param	bThrowError 	true to throw error if there is a problem.
 
 \return	Pointer to the created object.
 **/
-CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError)
+CStdSerialize *Simulator::CreateObject(std::string strModule, std::string strClassName, std::string strType, bool bThrowError)
 {
-	strModule = Std_CheckString(strModule);
-	
-	if(strModule == "" || strModule == "ANIMATLAB")
+	std::string strModuleCheck = Std_CheckString(strModule);
+
+	if(strModuleCheck == "" || strModuleCheck == "ANIMATLAB")
 	{
 		if(!m_lpAnimatClassFactory)
 			THROW_ERROR(Al_Err_lClassFactoryNotDefined, Al_Err_strClassFactoryNotDefined);
@@ -3002,17 +3421,27 @@ CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, st
 	}
 	else
 	{
-		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, FALSE);
+		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, false);
 
 		if(lpFactory)
 			return lpFactory->CreateObject(strClassName, strType, bThrowError);
 		else
 		{
-			//Lets load the dynamic library and get a pointer to the class factory.
-			lpFactory = LoadClassFactory(strModule);
+			std::string strFullPathModule = m_strExecutablePath + strModule;
 
-			//Now create an instance of a neural module. There is only one type of 
-			return lpFactory->CreateObject(strClassName, strType, bThrowError);
+			//Lets load the dynamic library and get a pointer to the class factory.
+			lpFactory = LoadClassFactory(strFullPathModule, false);
+
+			//If we could not load it using a full path then try just using the module name
+			if(!lpFactory)
+				lpFactory = LoadClassFactory(strModule);
+
+			//Now create an instance of a neural module. There is only one type of
+			CStdSerialize *lpObj = lpFactory->CreateObject(strClassName, strType, false);
+
+			delete lpFactory;
+
+			return lpObj;
 		}
 	}
 
@@ -3027,63 +3456,111 @@ CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, st
 \author	dcofer
 \date	3/28/2011
 
-\param	argc	The argc parameter from the command line. 
-\param	argv	The argv parameter from the command line. 
+\param	argc	The argc parameter from the command line.
+\param	argv	The argv parameter from the command line.
 
 \return	Pointer to the new simulator.
 **/
 Simulator *Simulator::CreateSimulator(int argc, const char **argv)
-{	
-	string strExecutablePath, strExeFile;
+{
+	std::string strExecutablePath, strExeFile;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//Set the log file prefix
-#ifndef _WIN32_WCE
 	if(Std_DirectoryExists(strExecutablePath + "Logs"))
 		Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
 	else
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
-#endif
 
-	string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
-	string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
+    if(argc != 2)
+		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
+
+	std::string strProject = argv[1];
+	std::string strAnimatModule = ""; //Get it from the file
 
 	if(Std_IsBlank(strProject))
 		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
 
-	if(Std_IsBlank(strAnimatModule))
-		THROW_ERROR(Al_Err_lNoModuleParamOnCommandLine, Al_Err_strNoModuleParamOnCommandLine);
-
 	return CreateSimulator(strAnimatModule, strProject);
 }
+
+/**
+\brief	Creates a simulator from a specified file.
+
+\details This method is primarily used when running the simulator in stand-alone mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	argc	The argc parameter from the command line.
+\param	argv	The argv parameter from the command line.
+\param bForceNoWindows If this is true then it forces no graphics windows to be created regardless of what the config file says.
+
+\return	Pointer to the new simulator.
+**/
+Simulator *Simulator::CreateSimulator(std::string strSimFile, bool bForceNoWindows)
+{
+	std::string strExecutablePath, strExeFile;
+
+    std::string strBuffer = Std_ExecutablePath();
+	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
+
+	//Set the log file prefix
+	if(Std_DirectoryExists(strExecutablePath + "Logs"))
+		Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
+	else
+		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
+
+	std::string strProject = strSimFile;
+	std::string strAnimatModule = ""; //Get it from the file
+
+	if(Std_IsBlank(strProject))
+		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
+
+	return CreateSimulator(strAnimatModule, strProject, bForceNoWindows);
+}
+
+/**
+\brief	Creates a simulator from a specified file and initializes it.
+
+\details This method is primarily used when running the simulator in stand-alone mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	argc	The argc parameter from the command line.
+\param	argv	The argv parameter from the command line.
+\param bForceNoWindows If this is true then it forces no graphics windows to be created regardless of what the config file says.
+
+\return	Pointer to the new simulator.
+**/
+Simulator *Simulator::CreateAndInitializeSimulator(std::string strSimFile, bool bForceNoWindows)
+{
+	Simulator *lpSim = NULL;
+
+	try
+	{
+		lpSim = CreateSimulator(strSimFile, bForceNoWindows);
+		lpSim->Load();
+		lpSim->Initialize();
+		return lpSim;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpSim) delete lpSim;
+		RELAY_ERROR(oError);
+		return NULL;
+	}
+	catch(...)
+	{
+		if(lpSim) delete lpSim;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+		return NULL;
+	}
+}
+
 
 /**
 \brief	Creates a simulator from a simulator file.
@@ -3091,52 +3568,29 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 \author	dcofer
 \date	3/28/2011
 
-\param	strSimulationFile	The string simulation file. 
+\param	strSimulationFile	The string simulation file.
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, string strSimulationFile)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strSimulationFile, bool bForceNoWindows)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
-	string strProjectPath, strProjectFile;
-	string strExecutablePath, strExeFile;
+	std::string strProjectPath, strProjectFile;
+	std::string strExecutablePath, strExeFile;
 
 try
-{ 
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+{
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	//_getcwd( strBuffer, 2000 );
 	//Std_SetLogFilePrefix(strExecutablePath + "Logs\\AnimatSimulator");
- 
+
+    if(!Std_FileExists(strSimulationFile))
+		THROW_PARAM_ERROR(Al_Err_lSimFileNotFound, Al_Err_strSimFileNotFound, "Simulation File", strSimulationFile);
+
 	Std_SplitPathAndFile(strSimulationFile, strProjectPath, strProjectFile);
 
 	if(!Std_IsFullPath(strSimulationFile))
@@ -3157,12 +3611,14 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
 	lpSim->SimulationFile(strProjectFile);
+	lpSim->ForceNoWindows(bForceNoWindows);
 
-	if(lpAnimatFactory) 
+	if(lpAnimatFactory)
 		{delete lpAnimatFactory; lpAnimatFactory = NULL;}
 
 	g_lpSimulator = lpSim;
@@ -3190,47 +3646,21 @@ catch(...)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oXml	The xml to load. 
+\param [in,out]	oXml	The xml to load.
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, CStdXml &oXml)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, CStdXml &oXml)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
-#ifdef _ANIMAT_VC8
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-#else
-	#ifdef _WIN32_WCE
-		string strBuffer;
-		wchar_t strWBuffer[2000];
-	#else
-		char strBuffer[2000];
-	#endif
-#endif
-
-	string strProjectPath, strProjectFile;
-	string strExecutablePath, strExeFile;
+	std::string strProjectPath, strProjectFile;
+	std::string strExecutablePath, strExeFile;
 
 try
-{ 
-	//Get the working directory for the exe.
-  HINSTANCE hInst = GetModuleHandle(NULL);
-
-#ifdef _ANIMAT_VC8
-	GetModuleFileName(hInst, strWBuffer, 2000);
-	strBuffer = Std_ConvertToANSI(strWBuffer);
-#else
-	#ifdef _WIN32_WCE
-		GetModuleFileName(hInst, strWBuffer, 2000);
-		strBuffer = Std_ConvertToANSI(strWBuffer);
-	#else
-		GetModuleFileName(hInst, strBuffer, 2000);
-	#endif
-#endif
-
+{
+    std::string strBuffer = Std_ExecutablePath();
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
 	if(Std_IsBlank(strAnimatModule))
@@ -3245,11 +3675,12 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
 
-	if(lpAnimatFactory) 
+	if(lpAnimatFactory)
 		{delete lpAnimatFactory; lpAnimatFactory = NULL;}
 
 	g_lpSimulator = lpSim;
@@ -3283,14 +3714,14 @@ catch(...)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath)
+Simulator *Simulator::CreateSimulator(std::string strAnimatModule, std::string strProjectPath, std::string strExecutablePath)
 {
 	Simulator *lpSim = NULL;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
 
 try
-{ 
+{
 	lpAnimatFactory = LoadClassFactory(strAnimatModule);
 
 	//Now we need to get the simulation application itself. This ALWAYS
@@ -3300,11 +3731,12 @@ try
 	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
 	if(!lpSim)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+	ActiveSim(lpSim);
 
 	lpSim->ProjectPath(strProjectPath);
 	lpSim->ExecutablePath(strExecutablePath);
 
-	if(lpAnimatFactory) 
+	if(lpAnimatFactory)
 		{delete lpAnimatFactory; lpAnimatFactory = NULL;}
 
 	g_lpSimulator = lpSim;
@@ -3328,7 +3760,7 @@ catch(...)
 
 
 #pragma endregion
-	
+
 #pragma region FindMethods
 
 /**
@@ -3337,16 +3769,16 @@ catch(...)
 \author	dcofer
 \date	3/28/2011
 
-\param	strModuleName	Name of the string module to find. 
-\param	bThrowError  	true to throw error if there is a problem. 
+\param	strModuleName	Name of the string module to find.
+\param	bThrowError  	true to throw error if there is a problem.
 
 \return	null if it fails and bThrowError=false, else the found neural module factory.
 \exception If bThrowError=True and no factory is found it throws an exception.
 **/
-IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL bThrowError)
+IStdClassFactory *Simulator::FindNeuralModuleFactory(std::string strModuleName, bool bThrowError)
 {
 	IStdClassFactory *lpFactory = NULL;
-	CStdMap<string, IStdClassFactory *>::iterator oPos;
+	CStdMap<std::string, IStdClassFactory *>::iterator oPos;
 	oPos = m_aryNeuralModuleFactories.find(Std_CheckString(strModuleName));
 
 	if(oPos != m_aryNeuralModuleFactories.end())
@@ -3365,16 +3797,16 @@ IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL 
 \author	dcofer
 \date	3/28/2011
 
-\param	strOrganismID	GUID ID for the organism. 
-\param	bThrowError  	true to throw error if no organism is found. 
+\param	strOrganismID	GUID ID for the organism.
+\param	bThrowError  	true to throw error if no organism is found.
 
 \return	null if it fails, else the found organism.
 \exception If bThrowError=True and no organism is found it throws an exception.
 **/
-Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
+Organism *Simulator::FindOrganism(std::string strOrganismID, bool bThrowError)
 {
 	Organism *lpOrganism = NULL;
-	CStdPtrMap<string, Organism>::iterator oPos;
+	CStdPtrMap<std::string, Organism>::iterator oPos;
 	oPos = m_aryOrganisms.find(Std_CheckString(strOrganismID));
 
 	if(oPos != m_aryOrganisms.end())
@@ -3395,16 +3827,16 @@ Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
 \author	dcofer
 \date	3/28/2011
 
-\param	strStructureID	GUID ID for the structure. 
-\param	bThrowError  	true to throw error if no structure is found. 
+\param	strStructureID	GUID ID for the structure.
+\param	bThrowError  	true to throw error if no structure is found.
 
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
+Structure *Simulator::FindStructure(std::string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
+	CStdPtrMap<std::string, Structure>::iterator oPos;
 	oPos = m_aryStructures.find(Std_CheckString(strStructureID));
 
 	if(oPos != m_aryStructures.end())
@@ -3421,16 +3853,16 @@ Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
 \author	dcofer
 \date	3/28/2011
 
-\param	strOdorID	GUID ID for the odor type. 
-\param	bThrowError  	true to throw error if no odor type is found. 
+\param	strOdorID	GUID ID for the odor type.
+\param	bThrowError  	true to throw error if no odor type is found.
 
 \return	null if it fails, else the found odor type.
 \exception If bThrowError=True and no odor type is found it throws an exception.
 **/
-OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
+OdorType *Simulator::FindOdorType(std::string strOdorID, bool bThrowError)
 {
 	OdorType *lpOdorType = NULL;
-	CStdPtrMap<string, OdorType>::iterator oPos;
+	CStdPtrMap<std::string, OdorType>::iterator oPos;
 	oPos = m_aryOdorTypes.find(Std_CheckString(strOdorID));
 
 	if(oPos != m_aryOdorTypes.end())
@@ -3450,16 +3882,16 @@ OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
 \author	dcofer
 \date	3/28/2011
 
-\param	strStructureID	GUID ID for the structure. 
-\param	bThrowError  	true to throw error if no structure is found. 
+\param	strStructureID	GUID ID for the structure.
+\param	bThrowError  	true to throw error if no structure is found.
 
 \return	null if it fails, else the found structure.
 \exception If bThrowError=True and no structure is found it throws an exception.
 **/
-Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowError)
+Structure *Simulator::FindStructureFromAll(std::string strStructureID, bool bThrowError)
 {
 	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
+	CStdPtrMap<std::string, Structure>::iterator oPos;
 	oPos = m_aryAllStructures.find(Std_CheckString(strStructureID));
 
 	if(oPos != m_aryAllStructures.end())
@@ -3482,15 +3914,15 @@ specified StructureID.
 \author	dcofer
 \date	3/28/2011
 
-\param	strStructureID	GUID ID for the structure. 
-\param	strJointID	  	GUID ID for the joint. 
-\param	bThrowError   	true to throw error if no structure is found. 
+\param	strStructureID	GUID ID for the structure.
+\param	strJointID	  	GUID ID for the joint.
+\param	bThrowError   	true to throw error if no structure is found.
 
 \return	null if it fails, else the found structure.
 
-\exception	If	bThrowError=True and no structure or joint is found it throws an exception. 
+\exception	If	bThrowError=True and no structure or joint is found it throws an exception.
 **/
-Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThrowError)
+Joint *Simulator::FindJoint(std::string strStructureID, std::string strJointID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3512,14 +3944,14 @@ specified StructureID.
 \author	dcofer
 \date	3/28/2011
 
-\param	strStructureID	GUID ID for the structure. 
-\param	strBodyID	  	GUID ID for the bodu. 
-\param	bThrowError   	true to throw error if no structure is found. 
+\param	strStructureID	GUID ID for the structure.
+\param	strBodyID	  	GUID ID for the bodu.
+\param	bThrowError   	true to throw error if no structure is found.
 
 \return	null if it fails, else the found structure.
-\exception	If	bThrowError=True and no structure or body is found it throws an exception. 
+\exception	If	bThrowError=True and no structure or body is found it throws an exception.
 **/
-RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError)
+RigidBody *Simulator::FindRigidBody(std::string strStructureID, std::string strBodyID, bool bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
 
@@ -3538,16 +3970,16 @@ and tries to find one with a matching ID.
 \author	dcofer
 \date	3/28/2011
 
-\param	strID	   	GUID ID for the object to find. 
-\param	bThrowError	true to throw error nothing is found. 
+\param	strID	   	GUID ID for the object to find.
+\param	bThrowError	true to throw error nothing is found.
 
 \return	null if it fails, else the found by identifier.
-\exception	If	bThrowError=True and no objects is found it throws an exception. 
+\exception	If	bThrowError=True and no objects is found it throws an exception.
 **/
-AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
+AnimatBase *Simulator::FindByID(std::string strID, bool bThrowError)
 {
 	AnimatBase *lpFind = NULL;
-	CStdMap<string, AnimatBase *>::iterator oPos;
+	CStdMap<std::string, AnimatBase *>::iterator oPos;
 	oPos = m_aryObjectList.find(Std_CheckString(strID));
 
 	if(oPos != m_aryObjectList.end())
@@ -3564,8 +3996,8 @@ AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	oMouthPos	The mouth position. 
-\param	fltMinRadius	 	The minimum radius. 
+\param [in,out]	oMouthPos	The mouth position.
+\param	fltMinRadius	 	The minimum radius.
 
 \return	null if it fails, else the found closest food source.
 **/
@@ -3581,7 +4013,8 @@ void Simulator::FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		lpFood = m_aryFoodSources[iIndex];
-		fltDist = Std_CalculateDistance(oMouthPos, lpFood->GetCurrentPosition());
+		CStdFPoint oPos = lpFood->GetCurrentPosition();
+		fltDist = Std_CalculateDistance(oMouthPos, oPos);
 
 		if( (fltDist <= fltMinRadius) && ((fltDist < fltMinDist) || !lpMinFood))
 		{
@@ -3596,16 +4029,16 @@ void Simulator::FindClosestFoodSources(CStdFPoint &oMouthPos, float fltMinRadius
 #pragma region AddRemoveMethods
 
 /**
-\brief	Adds an object to the list of all simulation objects. 
+\brief	Adds an object to the list of all simulation objects.
 
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpItem	Pointer to the item to add. 
+\param [in,out]	lpItem	Pointer to the item to add.
 **/
 void Simulator::AddToObjectList(AnimatBase *lpItem)
 {
-	if(FindByID(lpItem->ID(), FALSE) != NULL)
+	if(FindByID(lpItem->ID(), false) != NULL)
 		THROW_PARAM_ERROR(Al_Err_lDuplicateAddOfObject, Al_Err_strDuplicateAddOfObject, "ID", lpItem->ID());
 
 	m_aryObjectList.Add(lpItem->ID(), lpItem);
@@ -3617,11 +4050,11 @@ void Simulator::AddToObjectList(AnimatBase *lpItem)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpItem	Pointer to the item to remove. 
+\param [in,out]	lpItem	Pointer to the item to remove.
 **/
 void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
 {
-	if(FindByID(lpItem->ID(), FALSE))
+	if(FindByID(lpItem->ID(), false))
 		m_aryObjectList.Remove(lpItem->ID());
 }
 
@@ -3633,20 +4066,20 @@ void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
 \author	dcofer
 \date	3/28/2011
 
-\param	strModuleName   	Name of the dll module. 
-\param [in,out]	lpModule	Pointer to thea module to add. 
+\param	strModuleName   	Name of the dll module.
+\param [in,out]	lpModule	Pointer to thea module to add.
 **/
-void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule)
+void Simulator::AddNeuralModuleFactory(std::string strModuleName, NeuralModule *lpModule)
 {
 	if(!lpModule->ClassFactory())
 		THROW_PARAM_ERROR(Al_Err_lModuleClassFactoryNotDefined, Al_Err_strModuleClassFactoryNotDefined, "ModuleName", strModuleName);
 
-	if(!FindNeuralModuleFactory(strModuleName, FALSE))
+	if(!FindNeuralModuleFactory(strModuleName, false))
 		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
 }
 
 
-int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
+int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError)
 {
 	int iCount = aryAdapters.GetSize();
 	for(int iIdx=0; iIdx<iCount; iIdx++)
@@ -3665,18 +4098,18 @@ int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string str
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStructure	Pointer to a structure. 
-\param [in,out]	lpAdapter  	Pointer to an adapter. 
+\param [in,out]	lpStructure	Pointer to a structure.
+\param [in,out]	lpAdapter  	Pointer to an adapter.
 **/
 void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->SourceModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		if(FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+		if(FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false) == -1)
 			m_arySourcePhysicsAdapters.Add(lpAdapter);
 	}
 	else
@@ -3685,7 +4118,7 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->AttachSourceAdapter(lpAdapter);
 	}
 }
@@ -3696,18 +4129,18 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStructure	Pointer to a structure. 
-\param [in,out]	lpAdapter  	Pointer to an adapter. 
+\param [in,out]	lpStructure	Pointer to a structure.
+\param [in,out]	lpAdapter  	Pointer to an adapter.
 **/
 void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->SourceModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		int iIdx = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE);
+		int iIdx = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false);
 		if(iIdx > -1)
 			m_arySourcePhysicsAdapters.RemoveAt(iIdx);
 	}
@@ -3717,7 +4150,7 @@ void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->RemoveSourceAdapter(lpAdapter);
 	}
 }
@@ -3728,18 +4161,18 @@ void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStructure	Pointer to a structure. 
-\param [in,out]	lpAdapter  	Pointer to an adapter. 
+\param [in,out]	lpStructure	Pointer to a structure.
+\param [in,out]	lpAdapter  	Pointer to an adapter.
 **/
 void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->TargetModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		if(FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+		if(FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false) == -1)
 		{
 			m_aryTargetPhysicsAdapters.Add(lpAdapter);
 			m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
@@ -3751,8 +4184,11 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->AttachTargetAdapter(lpAdapter);
+
+		//Attach the target neural module to the adapter.
+		lpAdapter->SetSystemPointers(this, lpStructure, lpModule, NULL, true);
 	}
 }
 
@@ -3762,18 +4198,18 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStructure	Pointer to a structure. 
-\param [in,out]	lpAdapter  	Pointer to an adapter. 
+\param [in,out]	lpStructure	Pointer to a structure.
+\param [in,out]	lpAdapter  	Pointer to an adapter.
 **/
 void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+	std::string strModuleName = Std_CheckString(lpAdapter->TargetModule());
 
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		int iIdx = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE);
+		int iIdx = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false);
 		if(iIdx > -1)
 		{
 			m_aryTargetPhysicsAdapters.RemoveAt(iIdx);
@@ -3786,19 +4222,38 @@ void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		if(!lpOrganism)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		NeuralModule *lpModule = lpOrganism->GetNervousSystem()->FindNeuralModule(strModuleName);
 		lpModule->RemoveTargetAdapter(lpAdapter);
 	}
 }
 
+/**
+\brief	Returns true if the specified adapter is in either the source or target physics adapters list.
+
+\author	dcofer
+\date	5/13/2014
+
+\param [in]	lpAdapter	Adapter to check.
+**/
+bool Simulator::IsPhysicsAdapter(Adapter *lpAdapter)
+{
+	int iIdx1 = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), false);
+	int iIdx2 = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), false);
+
+	if(iIdx1 > -1 || iIdx2 > -1)
+		return true;
+	else
+		return false;
+}
+
 
 /**
-\brief	Adds a food source to the list of all simulation food sources. 
+\brief	Adds a food source to the list of all simulation food sources.
 
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpFood	Pointer to a food. 
+\param [in,out]	lpFood	Pointer to a food.
 **/
 void Simulator::AddFoodSource(RigidBody *lpFood)
 {
@@ -3813,7 +4268,7 @@ void Simulator::AddFoodSource(RigidBody *lpFood)
 \author	dcofer
 \date	6/3/2012
 
-\param [in,out]	lpFood	Pointer to a food. 
+\param [in,out]	lpFood	Pointer to a food.
 **/
 void Simulator::RemoveFoodSource(RigidBody *lpFood)
 {
@@ -3842,6 +4297,32 @@ int Simulator::FindFoodSourceIndex(RigidBody *lpFood)
 	return -1;
 }
 
+void Simulator::AddToExtractExtraData(BodyPart *lpPart)
+{
+	int iIndex = FindExtraDataIndex(lpPart);
+	if(iIndex < 0)
+		m_aryExtraDataParts.Add(lpPart);
+    m_iExtraDataCount = m_aryExtraDataParts.GetSize();
+}
+
+void Simulator::RemoveFromExtractExtraData(BodyPart *lpPart)
+{
+	int iIndex = FindExtraDataIndex(lpPart);
+	if(iIndex >= 0)
+		m_aryExtraDataParts.RemoveAt(iIndex);
+    m_iExtraDataCount = m_aryExtraDataParts.GetSize();
+}
+
+int Simulator::FindExtraDataIndex(BodyPart *lpPart)
+{
+	int iCount = m_aryExtraDataParts.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(m_aryExtraDataParts[iIdx] == lpPart)
+			return iIdx;
+
+	return -1;
+}
+
 void Simulator::AddOrganism(Organism *lpOrganism)
 {
 	if(!lpOrganism)
@@ -3854,22 +4335,22 @@ void Simulator::AddOrganism(Organism *lpOrganism)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		oError.m_strError += " Duplicate Organism Key: " + lpOrganism->ID(); 
+		oError.m_strError += " Duplicate Organism Key: " + lpOrganism->ID();
 		RELAY_ERROR(oError);
 	}
 }
 
 /**
-\brief	Adds an organism defined by an xml data packet. 
+\brief	Adds an organism defined by an xml data packet.
 
 \details This is primarily used by the GUI to create a new organism within the simulation.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	strXml	The xml packet to load. 
+\param	strXml	The xml packet to load.
 **/
-void Simulator::AddOrganism(string strXml)
+void Simulator::AddOrganism(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3888,10 +4369,10 @@ void Simulator::AddOrganism(string strXml)
 \author	dcofer
 \date	3/28/2011
 
-\param	strID	   	GUID ID of the organism to remove. 
-\param	bThrowError	true to throw error if the organism is not found. 
+\param	strID	   	GUID ID of the organism to remove.
+\param	bThrowError	true to throw error if the organism is not found.
 **/
-void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
+void Simulator::RemoveOrganism(std::string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryOrganisms.Remove(strID);
@@ -3909,22 +4390,22 @@ void Simulator::AddStructure(Structure *lpStructure)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		oError.m_strError += " Duplicate structure Key: " + lpStructure->ID(); 
+		oError.m_strError += " Duplicate structure Key: " + lpStructure->ID();
 		RELAY_ERROR(oError);
 	}
 }
 
 /**
-\brief	Adds an structure defined by an xml data packet. 
+\brief	Adds an structure defined by an xml data packet.
 
 \details This is primarily used by the GUI to create a new organism within the simulation.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	strXml	The xml packet to load. 
+\param	strXml	The xml packet to load.
 **/
-void Simulator::AddStructure(string strXml)
+void Simulator::AddStructure(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3944,22 +4425,22 @@ void Simulator::AddStructure(string strXml)
 \author	dcofer
 \date	3/28/2011
 
-\param	strID	   	Identifier for the structure. 
-\param	bThrowError	true to throw error if the structure is not found. 
+\param	strID	   	Identifier for the structure.
+\param	bThrowError	true to throw error if the structure is not found.
 **/
-void Simulator::RemoveStructure(string strID, BOOL bThrowError)
+void Simulator::RemoveStructure(std::string strID, bool bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryStructures.Remove(strID);
 }
 
 /**
-\brief	Adds an odor type. 
+\brief	Adds an odor type.
 
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpOdorType	Pointer to an odor type. 
+\param [in,out]	lpOdorType	Pointer to an odor type.
 **/
 void Simulator::AddOdorType(OdorType *lpOdorType)
 {
@@ -3972,12 +4453,12 @@ void Simulator::AddOdorType(OdorType *lpOdorType)
 	}
 	catch(CStdErrorInfo oError)
 	{
-		oError.m_strError += " Duplicate odor type Key: " + lpOdorType->ID(); 
+		oError.m_strError += " Duplicate odor type Key: " + lpOdorType->ID();
 		RELAY_ERROR(oError);
 	}
 }
 
-void Simulator::AddOdorType(string strXml, BOOL bDoNotInit)
+void Simulator::AddOdorType(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3990,7 +4471,7 @@ void Simulator::AddOdorType(string strXml, BOOL bDoNotInit)
 		lpType->Initialize();
 }
 
-void Simulator::RemoveOdorType(string strID, BOOL bThrowError)
+void Simulator::RemoveOdorType(std::string strID, bool bThrowError)
 {
 	m_aryOdorTypes.Remove(strID);
 }
@@ -3999,20 +4480,86 @@ void  Simulator::IncrementPhysicsBodyCount()
 {
 	m_iPhysicsBodyCount++;
 }
+/**
+\brief	Creates and adds a scripting object to this structure. 
+
+\details This method is primarily used by the GUI to add a new script objects to the structure.
+It creates the ScriptProcessor from info in the XML packet and then uses the XML to load in the new
+script.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strXml	The xml configuration data packet. 
+**/
+void Simulator::AddScript(std::string strXml)
+{
+	ScriptProcessor *lpScript = NULL;
+	try
+	{
+		CStdXml oXml;
+		oXml.Deserialize(strXml);
+		oXml.FindElement("Root");
+		oXml.FindChildElement("Script");
+
+		lpScript = LoadScript(oXml);
+		lpScript->Initialize();
+		m_lpScript = lpScript;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpScript) delete lpScript;
+		lpScript = NULL;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	}
+}
+
+/**
+\brief	Removes the script based on ID. 
+
+\details This is primarily used by the GUI to remove the script from the structure when 
+the user does this in the GUI.
+
+\author	dcofer
+\date	5/23/2014
+
+\param	strID	GUI ID of the script to remove
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+
+\return	true if it succeeds, false if it fails. 
+**/
+void Simulator::RemoveScript(std::string strID, bool bThrowError)
+{
+	if(m_lpScript && m_lpScript->ID() == strID)
+	{
+		delete m_lpScript;
+		m_lpScript = NULL;
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lRigidBodyIDNotFound, Al_Err_strRigidBodyIDNotFound, "ID", strID);
+}
 
 #pragma endregion
 
 #pragma region DataAccesMethods
 
-float *Simulator::GetDataPointer(const string &strDataType)
+float *Simulator::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "TIME")
 		lpData = &m_fltTime;
 	else if(strType == "PHYSICSTIMESTEP")
 		lpData = &m_fltPhysicsTimeStep;
+	else if(strType == "PHYSICSSUBSTEPTIME")
+		lpData = &m_fltPhysicsSubstepTime;
 	else if(strType == "SIMULATIONREALTIMETOSTEP")
 		lpData = &m_fltSimulationRealTimeToStep;
 	else if(strType == "PLAYBACKADDITIONREALTIMETOSTEP")
@@ -4037,292 +4584,255 @@ float *Simulator::GetDataPointer(const string &strDataType)
 		lpData = &m_fltSimRecorderStepTime;
 	else if(strType == "REMAININGSTEPTIME")
 		lpData = &m_fltRemainingStepTime;
+	else if(strType == "MOUSESPRINGFORCEMAGNITUDE")
+		lpData = &m_fltMouseSpringForceMagnitude;
+	else if(strType == "MOUSESPRINGDAMPINGFORCEMAGNITUDE")
+		lpData = &m_fltMouseSpringDampingForceMagnitude;
+	else if(strType == "MOUSESPRINGLENGTHMAGNITUDE")
+		lpData = &m_fltMouseSpringLengthMagnitude;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 
 	return lpData;
 }
 
-BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Simulator::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "VISUALSELECTIONMODE")
 	{
 		VisualSelectionMode(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ADDBODIESMODE")
 	{
 		AddBodiesMode(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "DISTANCEUNITS")
 	{
 		DistanceUnits(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MASSUNITS")
 	{
 		MassUnits(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "GRAVITY")
 	{
-		Gravity(atof(strValue.c_str()));
-		return TRUE;
+		Gravity((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "PHYSICSTIMESTEP")
 	{
-		PhysicsTimeStep(atof(strValue.c_str()));
-		return TRUE;
+		PhysicsTimeStep((float) atof(strValue.c_str()));
+		return true;
+	}
+	else if(strType == "PHYSICSSUBSTEPS")
+	{
+		PhysicsSubsteps((int) atoi(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "SIMULATEHYDRODYNAMICS")
 	{
 		SimulateHydrodynamics(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "AUTOGENERATERANDOMSEED")
 	{
 		AutoGenerateRandomSeed(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MANUALRANDOMSEED")
 	{
-		ManualRandomSeed(atof(strValue.c_str()));
-		return TRUE;
+		ManualRandomSeed((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "FRAMERATE")
 	{
 		DesiredFrameRate(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "FORCEFASTMOVING")
 	{
 		ForceFastMoving(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "MOUSESPRINGSTIFFNESS")
 	{
-		MouseSpringStiffness(atof(strValue.c_str()));
-		return TRUE;
+		MouseSpringStiffness((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "MOUSESPRINGDAMPING")
 	{
-		MouseSpringDamping(atof(strValue.c_str()));
-		return TRUE;
+		MouseSpringDamping((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "LINEARCOMPLIANCE")
 	{
-		LinearCompliance(atof(strValue.c_str()));
-		return TRUE;
+		LinearCompliance((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "ANGULARCOMPLIANCE")
 	{
-		AngularCompliance(atof(strValue.c_str()));
-		return TRUE;
+		AngularCompliance((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "LINEARDAMPING")
 	{
-		LinearDamping(atof(strValue.c_str()));
-		return TRUE;
+		LinearDamping((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "ANGULARDAMPING")
 	{
-		AngularDamping(atof(strValue.c_str()));
-		return TRUE;
+		AngularDamping((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "LINEARKINETICLOSS")
 	{
-		LinearKineticLoss(atof(strValue.c_str()));
-		return TRUE;
+		LinearKineticLoss((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "ANGULARKINETICLOSS")
 	{
-		AngularKineticLoss(atof(strValue.c_str()));
-		return TRUE;
+		AngularKineticLoss((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "SETENDSIMTIME")
 	{
 		SetEndSimTime(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ENDSIMTIME")
 	{
-		EndSimTime(atof(strValue.c_str()));
-		return TRUE;
+		EndSimTime((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strType == "RECFIELDSELRADIUS")
 	{
-		RecFieldSelRadius(atof(strValue.c_str()));
-		return TRUE;
+		RecFieldSelRadius((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR")
 	{
 		BackgroundColor(strValue);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "ALPHATHRESHOLD")
 	{
-		AlphaThreshold(atof(strValue.c_str()));
-		return TRUE;
+		AlphaThreshold((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		float aryVal[4] = {(float) atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.GREEN")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		float aryVal[4] = {m_vBackgroundColor.r(), (float) atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.BLUE")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), atof(strValue.c_str()), m_vBackgroundColor.a()};
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), (float) atof(strValue.c_str()), m_vBackgroundColor.a()};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "BACKGROUNDCOLOR.ALPHA")
 	{
-		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), (float) atof(strValue.c_str())};
 		BackgroundColor(aryVal);
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "TIMESTEPMODIFIED")
 	{
 		NotifyTimeStepModified();
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "PLAYBACKCONTROLMODE")
 	{
 		PlaybackControlMode(atoi(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 	else if(strDataType == "PRESETPLAYBACKTIMESTEP")
 	{
-		PresetPlaybackTimeStep(atof(strValue.c_str()));
-		return TRUE;
+		PresetPlaybackTimeStep((float) atof(strValue.c_str()));
+		return true;
 	}
 	else if(strDataType == "STABILITYSCALE")
 	{
-		StabilityScale(atof(strValue.c_str()));
-		return TRUE;
+		StabilityScale((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Simulator::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatBase::QueryProperties(aryNames, aryTypes);
+	AnimatBase::QueryProperties(aryProperties);
 
-	aryNames.Add("VisualSelectionMode");
-	aryTypes.Add("Integer");
+	aryProperties.Add(new TypeProperty("Time", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PhysicsSubStepTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SimulationRealTimeToStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PlaybackAdditionalRealTimeToStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AcutalFrameRate", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RealTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalRealTimeForStepSmoothed", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("PhysicsRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("NeuralRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ExternalStimuliRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("DataChartRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SimRecorderRealTimeForStep", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("RemainingStepTime", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("AddBodiesMode");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("DistanceUnits");
-	aryTypes.Add("String");
-
-	aryNames.Add("MassUnits");
-	aryTypes.Add("String");
-
-	aryNames.Add("Gravity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PhysicsTimeStep");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SimulateHydrodynamics");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AutoGenerateRandomSeed");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("ManualRandomSeed");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("FrameRate");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("ForceFastMoving");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("MouseSpringStiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MouseSpringDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CalcCriticalSimParams");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("LinearCompliance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularCompliance");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularDamping");
-	aryTypes.Add("Float");
-
-	aryNames.Add("LinearKineticLoss");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AngularKineticLoss");
-	aryTypes.Add("Float");
-
-	aryNames.Add("SetEndSimTime");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("EndSimTime");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RecFieldSelRadius");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BackgroundColor.Red");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Blue");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Green");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BackgroundColor.Alpha");
-	aryTypes.Add("Float");
-
-	aryNames.Add("PlaybackControlMode");
-	aryTypes.Add("Integer");
-
-	aryNames.Add("PresetPlaybackTimeStep");
-	aryTypes.Add("Float");
-
-	aryNames.Add("StabilityScale");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AlphaThreshold");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("VisualSelectionMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AddBodiesMode", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DistanceUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MassUnits", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gravity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PhysicsTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("SimulateHydrodynamics", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AutoGenerateRandomSeed", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ManualRandomSeed", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FrameRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ForceFastMoving", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MouseSpringStiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MouseSpringDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CalcCriticalSimParams", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearCompliance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularCompliance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDamping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearKineticLoss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularKineticLoss", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetEndSimTime", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EndSimTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("RecFieldSelRadius", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Red", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Blue", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Green", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BackgroundColor.Alpha", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PlaybackControlMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PresetPlaybackTimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("StabilityScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AlphaThreshold", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
-BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Simulator::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
 		return m_oExternalStimuliMgr.AddStimulus(strXml);
@@ -4333,23 +4843,28 @@ BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bT
 	else if(strType == "STRUCTURE")
 	{
 		AddStructure(strXml);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ORGANISM")
 	{
 		AddOrganism(strXml);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "HUDITEM")
 	{
 		if(m_lpWinMgr)
-			return m_lpWinMgr->AddItem(strType, strXml, TRUE);
-		return FALSE;
+			return m_lpWinMgr->AddItem(strType, strXml, true);
+		return false;
 	}
 	else if(strType == "ODORTYPE")
 	{
 		AddOdorType(strXml, bDoNotInit);
-		return TRUE;
+		return true;
+	}
+	else if(strType == "SCRIPT")
+	{
+		AddScript(strXml);
+		return true;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError, bDoNotInit);
@@ -4358,12 +4873,12 @@ BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bT
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Simulator::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
 		return m_oExternalStimuliMgr.RemoveStimulus(strID);
@@ -4374,17 +4889,22 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 	else if(strType == "STRUCTURE")
 	{
 		RemoveStructure(strID);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ORGANISM")
 	{
 		RemoveOrganism(strID);
-		return TRUE;
+		return true;
 	}
 	else if(strType == "ODORTYPE")
 	{
 		RemoveOdorType(strID);
-		return TRUE;
+		return true;
+	}
+	else if(strType == "SCRIPT")
+	{
+		RemoveScript(strID);
+		return true;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.RemoveItem(strItemType, strID, bThrowError);
@@ -4395,7 +4915,7 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -4408,9 +4928,9 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 \author	dcofer
 \date	3/28/2011
 
-\param	strKeyFrameID	GUID ID for the string key frame. 
+\param	strKeyFrameID	GUID ID for the string key frame.
 **/
-void Simulator::EnableVideoPlayback(string strKeyFrameID)
+void Simulator::EnableVideoPlayback(std::string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4473,7 +4993,7 @@ void Simulator::StopVideoPlayback()
 \author	dcofer
 \date	3/28/2011
 
-\param	iFrameCount	Number of frames. 
+\param	iFrameCount	Number of frames.
 **/
 void Simulator::StepVideoPlayback(int iFrameCount)
 {
@@ -4490,9 +5010,9 @@ void Simulator::StepVideoPlayback(int iFrameCount)
 \author	dcofer
 \date	3/28/2011
 
-\param	strPath	Full pathname of the string file. 
+\param	strPath	Full pathname of the string file.
 **/
-void Simulator::SaveVideo(string strPath)
+void Simulator::SaveVideo(std::string strPath)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4507,13 +5027,13 @@ void Simulator::SaveVideo(string strPath)
 \author	dcofer
 \date	3/28/2011
 
-\param	strType	Type of the string. 
-\param	lStart 	The start time slice. 
-\param	lEnd   	The end time slice. 
+\param	strType	Type of the string.
+\param	lStart 	The start time slice.
+\param	lEnd   	The end time slice.
 
 \return	.
 **/
-string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
+std::string Simulator::AddKeyFrame(std::string strType, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4528,9 +5048,9 @@ string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
 \author	dcofer
 \date	3/28/2011
 
-\param	strID	GUID ID for the key frame. 
+\param	strID	GUID ID for the key frame.
 **/
-void Simulator::RemoveKeyFrame(string strID)
+void Simulator::RemoveKeyFrame(std::string strID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4544,13 +5064,13 @@ void Simulator::RemoveKeyFrame(string strID)
 \author	dcofer
 \date	3/28/2011
 
-\param	strID 	GUID ID for the key frame. 
-\param	lStart 	The start time slice. 
-\param	lEnd   	The end time slice. 
+\param	strID 	GUID ID for the key frame.
+\param	lStart 	The start time slice.
+\param	lEnd   	The end time slice.
 
 \return	.
 **/
-string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
+std::string Simulator::MoveKeyFrame(std::string strID, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4573,9 +5093,9 @@ string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
 \author	dcofer
 \date	3/28/2011
 
-\param	strKeyFrameID	GUID ID for the key frame. 
+\param	strKeyFrameID	GUID ID for the key frame.
 **/
-void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
+void Simulator::MoveSimulationToKeyFrame(std::string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
@@ -4600,7 +5120,7 @@ void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
 long Simulator::CalculateSnapshotByteSize()
 {
 	long lByteSize = 0;
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4617,12 +5137,12 @@ long Simulator::CalculateSnapshotByteSize()
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	aryBytes	Array of bytes for the snapshot. 
-\param [in,out]	lIndex  	Index into the byte array. 
+\param [in,out]	aryBytes	Array of bytes for the snapshot.
+\param [in,out]	lIndex  	Index into the byte array.
 **/
 void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4637,12 +5157,12 @@ void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	aryBytes	Array of bytes for the snapshot. 
-\param [in,out]	lIndex  	Index into the byte array. 
+\param [in,out]	aryBytes	Array of bytes for the snapshot.
+\param [in,out]	lIndex  	Index into the byte array.
 **/
 void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4659,29 +5179,10 @@ void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 **/
 void Simulator::RecordVideoFrame()
 {
-	if(m_lpAvi && (m_lTimeSlice >= m_lVideoStartSlice) && (m_lTimeSlice <= m_lVideoEndSlice))
-	{
-		m_iVideoStep--;
-		if(m_iVideoStep <= 0)
-		{
-			m_lVideoFrame++;
-			//m_strVideoFile = "C:\\Projects\\Documentation\\Results\\Thesis\\Hi Speed Video\\Sim_Track_Error_Test\\VideoImages\\Frame_" + STR(m_lVideoFrame) + ".bmp";
-			//If this is the first
-			//m_lpAvi->AddWindowFrame(m_hSimulationWnd, FALSE, "");				
-			m_iVideoStep = m_iVideoStepSize;
-		}	
-	}
-
-	//If we have recorded the entire video then close it out.
-	if(m_lpAvi && m_lTimeSlice >= m_lVideoEndSlice)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
-	}
 }
 
 #pragma endregion
-			
+
 #pragma region CollisionMethods
 
 /**
@@ -4692,8 +5193,8 @@ void Simulator::RecordVideoFrame()
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStruct		  	Pointer to a structure. 
-\param [in,out]	m_aryCollisionList	List of CollisionPair objects. 
+\param [in,out]	lpStruct		  	Pointer to a structure.
+\param [in,out]	m_aryCollisionList	List of CollisionPair objects.
 **/
 void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
 {
@@ -4707,14 +5208,14 @@ void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair
 		lpPair =  m_aryCollisionList[iIndex];
 		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
 		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
-		
+
 		lpPart1->EnableCollision(lpPart2);
-	}	
+	}
 }
 
 void Simulator::EnableCollision(RigidBody *lpBody)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
@@ -4731,8 +5232,8 @@ void Simulator::EnableCollision(RigidBody *lpBody)
 \author	dcofer
 \date	3/28/2011
 
-\param [in,out]	lpStruct		  	Pointer to a structure. 
-\param [in,out]	m_aryCollisionList	List of CollisionPair objects. 
+\param [in,out]	lpStruct		  	Pointer to a structure.
+\param [in,out]	m_aryCollisionList	List of CollisionPair objects.
 **/
 void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
 {
@@ -4746,21 +5247,26 @@ void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPai
 		lpPair =  m_aryCollisionList[iIndex];
 		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
 		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
-		
+
 		lpPart1->DisableCollision(lpPart2);
-	}	
+	}
 }
 
 
 void Simulator::DisableCollision(RigidBody *lpBody)
 {
-	CStdMap<string, Structure *>::iterator oPos;
+	CStdMap<std::string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
 		lpStructure->DisableCollision(lpBody);
 	}
+}
+
+void Simulator::Initialize()
+{
+	Initialize(0, NULL);
 }
 
 #pragma endregion
@@ -4776,11 +5282,11 @@ to the distance units chosen by the user.
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string ID the distance units. 
+\param	strUnits	The string ID the distance units.
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertDistanceUnits(string strUnits)
+float Simulator::ConvertDistanceUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4819,11 +5325,11 @@ to the denominator distance units chosen by the user.
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string units. 
+\param	strUnits	The string units.
 
 \return	.
 **/
-float Simulator::ConvertDenominatorDistanceUnits(string strUnits)
+float Simulator::ConvertDenominatorDistanceUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4839,7 +5345,7 @@ float Simulator::ConvertDenominatorDistanceUnits(string strUnits)
 	if(strUnits == "METERS" || strUnits == "METER")
 		return (float) 1;
 
-	if(strUnits == "DECIMETERS" || strUnits == "DECIMETER")  //1 Unit = 10 cm 
+	if(strUnits == "DECIMETERS" || strUnits == "DECIMETER")  //1 Unit = 10 cm
 		return (float) 10;
 
 	if(strUnits == "CENTIMETERS" || strUnits == "CENTIMETER")
@@ -4862,11 +5368,11 @@ to the mass units chosen by the user.
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string ID the mass units. 
+\param	strUnits	The string ID the mass units.
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertMassUnits(string strUnits)
+float Simulator::ConvertMassUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 
@@ -4899,7 +5405,7 @@ float Simulator::ConvertMassUnits(string strUnits)
 /**
 \brief	Convert the string ID of the display units to a conversion factor.
 
-\details Withing the GUI we sometimes have to use grams as the display unit. Then they can select Kg or mg, etc.. However, 
+\details Withing the GUI we sometimes have to use grams as the display unit. Then they can select Kg or mg, etc.. However,
 the standard units are usually 1 Kg, not 1 g. So we need to do a special conversion for these display units. So for example,
 Lets say the Mass units chosen is Kg, and they have a mass of 1 kg, then this would be 1000 grams/1000 = 1 Kg. However, if they
 set the units to be grams and had a 1 Kg mass then they would have 1000 grams/1 = 1 Kg.
@@ -4907,11 +5413,11 @@ set the units to be grams and had a 1 Kg mass then they would have 1000 grams/1 
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string ID the display units. 
+\param	strUnits	The string ID the display units.
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertDisplayMassUnits(string strUnits)
+float Simulator::ConvertDisplayMassUnits(std::string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 

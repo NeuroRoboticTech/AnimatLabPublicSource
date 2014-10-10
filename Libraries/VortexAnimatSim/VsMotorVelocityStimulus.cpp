@@ -32,7 +32,7 @@ VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 	m_lpEval = NULL;
 	m_fltVelocity = 0;
 	m_fltVelocityReport = 0;
-	m_bDisableMotorWhenDone = FALSE;
+	m_bDisableMotorWhenDone = false;
 	m_lpPosition = NULL;
 	m_lpVelocity = NULL;
 }
@@ -52,7 +52,7 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, false, true);}
 }
 
 /**
@@ -61,9 +61,9 @@ catch(...)
 \author	dcofer
 \date	4/3/2011
 
-\param	strVal	The post-fix velocity equation string. 
+\param	strVal	The post-fix velocity equation std::string. 
 **/
-void VsMotorVelocityStimulus::VelocityEquation(string strVal)
+void VsMotorVelocityStimulus::VelocityEquation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -105,7 +105,7 @@ void VsMotorVelocityStimulus::Activate()
 
 	if(m_bEnabled)
 	{
-		m_lpJoint->EnableMotor(TRUE);
+		m_lpJoint->EnableMotor(true);
 		m_lpJoint->DesiredVelocity(0);
 	}
 }
@@ -158,14 +158,14 @@ void VsMotorVelocityStimulus::Deactivate()
 	{
 		m_lpJoint->DesiredVelocity(0);
 		if(m_bDisableMotorWhenDone)
-			m_lpJoint->EnableMotor(FALSE);
+			m_lpJoint->EnableMotor(false);
 	}
 }
 
-float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
+float *VsMotorVelocityStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "VELOCITY")
 		lpData = &m_fltVelocityReport;
@@ -175,44 +175,39 @@ float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsMotorVelocityStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "VELOCITY" || strType == "EQUATION")
 	{
 		VelocityEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DISABLEWHENDONE")
 	{
 		DisableMotorWhenDone(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsMotorVelocityStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("Velocity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Equation");
-	aryTypes.Add("String");
-
-	aryNames.Add("DisableMotorWhenDone");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("DisableMotorWhenDone", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
 void VsMotorVelocityStimulus::Load(CStdXml &oXml)

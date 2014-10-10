@@ -697,7 +697,7 @@ osg::Geometry VORTEX_PORT *CreateEllipsoidGeometry(int latres,
     return sphereGeom;
 }
 
-osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid, BOOL bBothSides)
+osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid, bool bBothSides)
 {
 	float A = fltCornerX;
 	float B = fltCornerY;
@@ -751,14 +751,14 @@ osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCorner
 	return geom;
 }
 
-BOOL VORTEX_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
+bool VORTEX_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 {
 	for(int iRow=0; iRow<4; iRow++)
 		for(int iCol=0; iCol<4; iCol++)
 			if(fabs(v1(iRow,iCol)-v2(iRow,iCol)) > 1e-5)
-				return FALSE;
+				return false;
 
-	return TRUE;
+	return true;
 }
 
 osg::Quat VORTEX_PORT EulerToQuaternion(float fX, float fY, float fZ)
@@ -895,7 +895,55 @@ osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 	return osgLocalMatrix;
 }
 
-void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)
+
+osg::Matrix VORTEX_PORT LoadMatrix(CStdXml &oXml, std::string strElementName)
+{
+    std::string strMatrix = oXml.GetChildString(strElementName);
+	
+	CStdArray<std::string> aryElements;
+	int iCount = Std_Split(strMatrix, ",", aryElements);
+
+	if(iCount != 16)
+		THROW_PARAM_ERROR(Al_Err_lMatrixElementCountInvalid, Al_Err_strMatrixElementCountInvalid, "Matrix count", iCount);
+	
+	float aryMT[4][4];
+	int iIndex=0;
+	for(int iX=0; iX<4; iX++)
+		for(int iY=0; iY<4; iY++, iIndex++)
+			aryMT[iX][iY] = atof(aryElements[iIndex].c_str());
+		
+	osg::Matrix osgMT(aryMT[0][0], aryMT[0][1], aryMT[0][2], aryMT[0][3], 
+					  aryMT[1][0], aryMT[1][1], aryMT[1][2], aryMT[1][3], 
+					  aryMT[2][0], aryMT[2][1], aryMT[2][2], aryMT[2][3], 
+					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
+
+    return osgMT;
+}
+
+std::string VORTEX_PORT SaveMatrixString(osg::Matrix osgMT)
+{
+    std::string strMatrix = "";
+	for(int iX=0; iX<4; iX++)
+    {
+		for(int iY=0; iY<4; iY++)
+        {
+            strMatrix += STR(osgMT(iX, iY));
+            if(iY < 3) strMatrix += ",";
+        }
+        if(iX < 3) strMatrix += ",";
+    }
+
+    return strMatrix;
+}
+
+void VORTEX_PORT SaveMatrix(CStdXml &oXml, std::string strElementName, osg::Matrix osgMT)
+{
+    std::string strMatrix = SaveMatrixString(osgMT);
+    oXml.AddChildElement(strElementName, strMatrix);
+}
+
+
+void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, std::string strTexture, osg::StateAttribute::GLMode eTextureMode)
 {
 	if(osgNode)
 	{
@@ -1248,13 +1296,13 @@ osg::Geometry VORTEX_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometr
 }
 
 /*
-osg::Geometry *CreateHeightFieldGeometry(string strFilename,  float fltLeftCorner, float fltUpperCorner, 
+osg::Geometry *CreateHeightFieldGeometry(std::string strFilename,  float fltLeftCorner, float fltUpperCorner, 
 										 float fltSegmentWidth, float fltSegmentLength, 
 										 float fltMinElevation, float fltMaxElevation)
 {
-	string strHeightMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_HeightMap.jpg"
-	string strNormalsMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_NormalsMap.jpg"
-	string strTextureMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_TextureMap.jpg"
+	std::string strHeightMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_HeightMap.jpg"
+	std::string strNormalsMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_NormalsMap.jpg"
+	std::string strTextureMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_TextureMap.jpg"
 
 	//load the images.
 	osg::Image *imgHeight = osgDB::readImageFile(strHeightMap.c_str());

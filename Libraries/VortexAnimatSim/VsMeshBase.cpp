@@ -35,7 +35,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsMeshBase\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsMeshBase\r\n", "", -1, false, true);}
 }
 
 void VsMeshBase::SetThisPointers()
@@ -53,15 +53,15 @@ void VsMeshBase::CreateGraphicsGeometry()
 
 void VsMeshBase::LoadMeshNode()
 {
-	string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
-	string strMeshFile;
+	std::string strPath = m_lpThisAB->GetSimulator()->ProjectPath();
+	std::string strMeshFile;
 	
 	if(m_lpThisRB->IsCollisionObject() && m_lpThisMesh->CollisionMeshType() == "CONVEX")
 		strMeshFile	= m_lpThisMesh->ConvexMeshFile();
 	else
 		strMeshFile	= m_lpThisMesh->MeshFile();
 
-	string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
+	std::string strFile = AnimatSim::GetFilePath(strPath, strMeshFile);
 	m_osgBaseMeshNode = GetVsSimulator()->MeshMgr()->LoadMesh(strFile);
 
 	if(!m_osgBaseMeshNode.valid())
@@ -84,6 +84,8 @@ void VsMeshBase::LoadMeshNode()
 	osgScaleMatrix.makeScale(vScale.x, vScale.y, vScale.z);
 
 	m_osgMeshNode = new osg::MatrixTransform(osgScaleMatrix);
+
+	m_osgMeshNode->getOrCreateStateSet()->setMode(GL_NORMALIZE, osg::StateAttribute::ON); 
 
 	m_osgMeshNode->addChild(m_osgBaseMeshNode.get());
 	m_osgMeshNode->setName(m_lpThisAB->Name() + "_MeshNode");
@@ -126,6 +128,18 @@ void VsMeshBase::CreateGeometry()
 	osgNodeGroup->addChild(m_osgMeshNode.get());
 }
 
+void VsMeshBase::CalculateEstimatedMassAndVolume()
+{
+    if(m_lpThisRB)
+    {
+        AnimatSim::BoundingBox bb = m_lpThisRB->GetBoundingBox();
+        
+        float fltVolume = (bb.Width() * bb.Height() * bb.Length());
+        m_fltEstimatedVolume = fltVolume*pow(m_lpThisRB->GetSimulator()->DistanceUnits(), (float) 3.0);
+        m_fltEstimatedMass = (m_lpThisRB->Density() * fltVolume) * m_lpThisRB->GetSimulator()->DisplayMassUnits();
+    }
+}
+
 void VsMeshBase::CreatePhysicsGeometry()
 {
 	if(m_lpThisRB->IsCollisionObject())
@@ -138,6 +152,8 @@ void VsMeshBase::CreatePhysicsGeometry()
 		if(!m_vxGeometry)
 			THROW_TEXT_ERROR(Vs_Err_lCreatingGeometry, Vs_Err_strCreatingGeometry, "Body: " + m_lpThisAB->Name() + " Mesh: " + AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), m_lpThisMesh->MeshFile()));
 	}
+
+    CalculateEstimatedMassAndVolume();
 }
 
 
@@ -153,6 +169,8 @@ void VsMeshBase::ResizePhysicsGeometry()
 
 		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
+
+        CalculateEstimatedMassAndVolume();
 	}
 }
 

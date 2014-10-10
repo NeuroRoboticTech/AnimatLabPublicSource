@@ -4,7 +4,7 @@
 \brief	Implements the body part class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -56,6 +56,13 @@ BodyPart::BodyPart(void)
 **/
 BodyPart::~BodyPart(void)
 {
+
+try
+{
+	m_aryRobotParts.RemoveAll();
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of BodyPart\r\n", "", -1, false, true);}
 }
 
 #pragma region AccessorMutators
@@ -71,6 +78,25 @@ void BodyPart::UpdateData()
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_CollectData();
 }
+
+/**
+ \brief UpdateData is called during this body parts sim update call, and before any of its child updates because those children may need import
+ information like this parts position. However, there are a number of pieces of information that are not critical to the part itself, but that a user
+ may have asked for. I do not want to collect that info for every part if it is not needed. So instead, if a user asks for it then this part is added
+ to a list on the simulation. After all parts have been updated for a simulation step then we loop through the list of just the necessary parts
+ and call UpdateExtraData to collect this additional data. It is important that this be done after all parts have stepped becasue some of this data
+ will only be correct at the end. An example of this is force applied to a part. Forces can be added by any child parts, so it is only at the end
+ that these values are valid.
+
+ \author    David Cofer
+ \date  12/29/2013
+ */
+void BodyPart::UpdateExtraData()
+{
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_CollectExtraData();
+}
+
 
 /**
 \brief	Gets the physics body interface pointer. This is an interface reference to the Vs version
@@ -112,11 +138,14 @@ void BodyPart::Resize()
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Resize();
+
+	if(m_lpCallback)
+		m_lpCallback->SizeChanged();
 }
 
 #pragma endregion
 
-void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)
+void BodyPart::Selected(bool bValue, bool bSelectMultiple)
 {
 	Node::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
@@ -146,38 +175,103 @@ void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float
 		m_lpCallback->AddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
 }
 
+void BodyPart::WakeDynamics()
+{
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_WakeDynamics();
+}
+
 #pragma region DataAccesMethods
 
-void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
 }
 
-float *BodyPart::GetDataPointer(const string &strDataType)
+float *BodyPart::GetDataPointer(const std::string &strDataType)
 {
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-BOOL BodyPart::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool BodyPart::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	if(Node::SetData(strDataType, strValue, FALSE))
+	if(Node::SetData(strDataType, strValue, false))
 		return true;
 
-	if(MovableItem::SetData(strDataType, strValue, FALSE))
+	if(MovableItem::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void BodyPart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void BodyPart::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
-	MovableItem::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
+	MovableItem::QueryProperties(aryProperties);
+}
+
+/**
+\brief	Gets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+**/
+CStdArray<RobotPartInterface *> *BodyPart::GetRobotPartInterfaces() {return &m_aryRobotParts;};
+
+/**
+\brief	Sets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	lpPart	The new robot part. 
+**/
+void BodyPart::AddRobotPartInterface(RobotPartInterface *lpPart) 
+{
+	if(FindRobotPartListIndex(lpPart->ID(), false) == -1)
+		m_aryRobotParts.Add(lpPart);
+};
+
+/**
+\brief	Sets a pointer to the roboto part interface associated with this body part.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	lpPart	The new robot part. 
+**/
+void BodyPart::RemoveRobotPartInterface(RobotPartInterface *lpPart) 
+{
+	int iIdx = FindRobotPartListIndex(lpPart->ID(), false);
+	if(iIdx >= 0)
+		m_aryRobotParts.RemoveAt(iIdx);
+};
+
+/**
+\brief	Finds the index of a robot part attached to this body part with the matching ID.
+
+\author	dcofer
+\date	4/25/2014
+
+\param	strID	Part ID to find. 
+\param	bThrowError	If true and the part is not found it throws an exception. If false and not found it returns -1. 
+**/
+int BodyPart::FindRobotPartListIndex(std::string strID, bool bThrowError)
+{
+	int iCount = m_aryRobotParts.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(m_aryRobotParts[iIdx]->ID() == strID)
+			return iIdx;
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lPartInterfaceIDNotFound, Al_Err_strPartInterfaceIDNotFound, "ID", strID);
+
+	return -1;
 }
 
 #pragma endregion

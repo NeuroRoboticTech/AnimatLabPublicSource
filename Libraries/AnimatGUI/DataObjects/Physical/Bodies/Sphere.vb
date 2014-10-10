@@ -60,7 +60,7 @@ Namespace DataObjects.Physical.Bodies
                 SetSimData("Radius", value.ActualValue.ToString, True)
                 m_snRadius.CopyData(value)
 
-                UpdateMassAndVolume()
+                UpdateMassVolumeDensity()
             End Set
         End Property
 

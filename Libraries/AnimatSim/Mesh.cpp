@@ -4,7 +4,7 @@
 \brief	Implements the mesh class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -72,7 +72,7 @@ Mesh::~Mesh()
 
 \return	mesh filename.
 **/
-string Mesh::MeshFile() {return m_strMeshFile;}
+std::string Mesh::MeshFile() {return m_strMeshFile;}
 
 /**
 \brief	Sets the mesh filename.
@@ -83,7 +83,7 @@ string Mesh::MeshFile() {return m_strMeshFile;}
 
 \param	strFile	The filename.
 **/
-void Mesh::MeshFile(string strFile) 
+void Mesh::MeshFile(std::string strFile) 
 {
 	m_strMeshFile = strFile;
 	Resize();
@@ -99,7 +99,7 @@ void Mesh::MeshFile(string strFile)
 
 \return	collision mesh type.
 **/
-string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
+std::string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 
 /**
 \brief	Sets the collision mesh type.
@@ -111,9 +111,9 @@ string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 
 \param	strType	Type of the mesh.
 **/
-void Mesh::CollisionMeshType(string strType)
+void Mesh::CollisionMeshType(std::string strType)
 {
-	string strUpType = Std_CheckString(strType);
+	std::string strUpType = Std_CheckString(strType);
 	if(strUpType != "TRIANGULAR" && strUpType != "CONVEX" && strUpType != "TERRAIN")
 		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
 
@@ -132,7 +132,7 @@ void Mesh::CollisionMeshType(string strType)
 
 \return	mesh filename.
 **/
-string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
+std::string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
 
 /**
 \brief	Sets the convex mesh filename.
@@ -143,7 +143,7 @@ string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
 
 \param	strFile	The filename.
 **/
-void Mesh::ConvexMeshFile(string strFile) 
+void Mesh::ConvexMeshFile(std::string strFile) 
 {
 	m_strConvexMeshFile = strFile;
 	Resize();
@@ -171,9 +171,10 @@ CStdFPoint Mesh::Scale() {return m_vScale;}
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(CStdFPoint &oPoint, BOOL bUpdateMatrix) 
+void Mesh::Scale(CStdFPoint &oPoint, bool bUpdateMatrix) 
 {
 	m_vScale = oPoint;
+	m_vReportScale = m_vScale;
 
 	if(m_lpPhysicsMovableItem && bUpdateMatrix)
 		m_lpPhysicsMovableItem->Physics_Resize();
@@ -194,7 +195,7 @@ void Mesh::Scale(CStdFPoint &oPoint, BOOL bUpdateMatrix)
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(float fltX, float fltY, float fltZ, BOOL bUpdateMatrix) 
+void Mesh::Scale(float fltX, float fltY, float fltZ, bool bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Scale(vPos);
@@ -215,7 +216,7 @@ scale of the mesh using an xml data packet.
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
-void Mesh::Scale(string strXml, BOOL bUpdateMatrix)
+void Mesh::Scale(std::string strXml, bool bUpdateMatrix)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -227,8 +228,33 @@ void Mesh::Scale(string strXml, BOOL bUpdateMatrix)
 	Scale(vPos);
 }
 
+void Mesh::SetBoundingBox(int iIdx, float fltVal)
+{
+	if(iIdx >= 0 && iIdx <= 2 && fltVal > 0)
+	{
+		BoundingBox bb = GetBoundingBox();
 
-void Mesh::SetMeshFile(string strXml)
+		//Calculate the scale change required.
+		float fltOldDim = bb.GetDimensionSize(iIdx);
+
+		if(fltOldDim > 0)
+		{
+			float fltNewDim = fltVal*m_lpSim->InverseDistanceUnits();
+			float fltConvert = fltNewDim / fltOldDim;
+
+			float fltNewX = m_vScale.x*fltConvert;
+			float fltNewY = m_vScale.y*fltConvert;
+			float fltNewZ = m_vScale.z*fltConvert;
+
+			Scale(fltNewX, fltNewY, fltNewZ);
+		}	
+	}
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidMeshScaleParam, Al_Err_strInvalidMeshScaleParam, "Data", fltVal);
+
+}
+
+void Mesh::SetMeshFile(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -240,95 +266,99 @@ void Mesh::SetMeshFile(string strXml)
 	CollisionMeshType(oXml.GetChildString("MeshType"));
 }
 
-BOOL Mesh::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+float *Mesh::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	float *lpData=NULL;
+	std::string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
-		return TRUE;
+	float *lpVal = NULL; 
+
+	if(strType == "SCALE.X")
+		lpData = &m_vReportScale.x;
+	else if(strType == "SCALE.Y")
+		lpData = &m_vReportScale.y;
+	else if(strType == "SCALE.Z")
+		lpData = &m_vReportScale.z;
+	else
+		lpData = RigidBody::GetDataPointer(strDataType);
+
+	return lpData;
+}
+
+bool Mesh::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "MESHFILE")
 	{
 		MeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "MESHTYPE")
 	{
 		CollisionMeshType(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONVEXMESHFILE")
 	{
 		ConvexMeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SETMESHFILE")
 	{
 		SetMeshFile(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE")
 	{
 		Scale(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.X")
 	{
 		Scale(atof(strValue.c_str()), m_vScale.y, m_vScale.z);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.Y")
 	{
 		Scale(m_vScale.x, atof(strValue.c_str()), m_vScale.z);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "SCALE.Z")
 	{
 		Scale(m_vScale.x, m_vScale.y, atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Mesh::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Mesh::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	RigidBody::QueryProperties(aryNames, aryTypes);
+	RigidBody::QueryProperties(aryProperties);
 
-	aryNames.Add("MeshFile");
-	aryTypes.Add("String");
-
-	aryNames.Add("MeshType");
-	aryTypes.Add("String");
-
-	aryNames.Add("ConvexMeshFile");
-	aryTypes.Add("String");
-
-	aryNames.Add("SetMeshFile");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Scale");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Scale.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Scale.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Scale.Z");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("MeshFile", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MeshType", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ConvexMeshFile", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("SetMeshFile", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Scale.X", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Scale.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Scale.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 }
 
 void Mesh::Load(CStdXml &oXml)
@@ -342,6 +372,7 @@ void Mesh::Load(CStdXml &oXml)
 	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile", ""));
 
 	Std_LoadPoint(oXml, "Scale", m_vScale, false);
+	m_vReportScale = m_vScale;
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

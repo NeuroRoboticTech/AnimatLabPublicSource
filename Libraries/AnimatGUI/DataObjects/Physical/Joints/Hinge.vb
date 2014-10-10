@@ -21,8 +21,10 @@ Namespace DataObjects.Physical.Joints
         Protected m_bEnableMotor As Boolean = False
         Protected m_snMaxForce As AnimatGUI.Framework.ScaledNumber
         Protected m_snMaxVelocity As AnimatGUI.Framework.ScaledNumber
-        Protected m_bServoMotor As Boolean = False
+        Protected m_eMotorType As Joint.enumJointMotorTypes = enumJointMotorTypes.VelocityControl
         Protected m_fltServoGain As Single = 100
+
+        Protected m_doAssistPID As PidControl
 
 #End Region
 
@@ -81,20 +83,35 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-        Public Overridable Property ServoMotor() As Boolean
+        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
             Get
-                Return m_bServoMotor
+                Return m_eMotorType
             End Get
-            Set(ByVal value As Boolean)
-                SetSimData("ServoMotor", value.ToString, True)
-                m_bServoMotor = value
+            Set(ByVal value As Joint.enumJointMotorTypes)
+                SetSimData("MotorType", Convert.ToInt32(value).ToString(), True)
+                m_eMotorType = value
 
-                If m_bServoMotor Then
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Position", "Position", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                If m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredPosition"
+                    Me.SignalReloadTargetDataTypes()
+                ElseIf m_eMotorType = enumJointMotorTypes.PositionControl Then
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredPosition", "DesiredPosition", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredPosition"
+                    Me.SignalReloadTargetDataTypes()
                 Else
-                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                    m_thIncomingDataTypes.DataTypes.Clear()
+                    m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                    m_thIncomingDataTypes.ID = "DesiredVelocity"
+                    Me.SignalReloadTargetDataTypes()
                 End If
 
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
             End Set
         End Property
 
@@ -139,6 +156,14 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
+        Public Overridable Property AssistPID() As PidControl
+            Get
+                Return m_doAssistPID
+            End Get
+            Set(ByVal value As PidControl)
+                m_doAssistPID = value
+            End Set
+        End Property
 
 #End Region
 
@@ -146,8 +171,8 @@ Namespace DataObjects.Physical.Joints
             MyBase.New(doParent)
             m_strDescription = ""
 
-            m_doLowerLimit = New ConstraintLimit(Me)
-            m_doUpperLimit = New ConstraintLimit(Me)
+            m_doLowerLimit = Util.Application.Physics.CreateConstraintLimit(Me.Type, Me)
+            m_doUpperLimit = Util.Application.Physics.CreateConstraintLimit(Me.Type, Me)
 
             m_doLowerLimit.PairedLimit = m_doUpperLimit
             m_doUpperLimit.PairedLimit = m_doLowerLimit
@@ -161,6 +186,8 @@ Namespace DataObjects.Physical.Joints
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotation", "Rotation", "Radians", "rad", -3.14, 3.14))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotationDeg", "Rotation (Deg)", "Degrees", "o", -180, 180))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredPosition", "Desired Rotation", "Radians/s", "rad/s", -3.14, 3.14))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredPositionDeg", "Desired Rotation (Deg)", "Deg/s", "o/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointActualVelocity", "Velocity", "Deg/s", "Deg/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredVelocity", "Desired Velocity", "Deg/s", "Deg/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointForce", "Force", "N", "N", -20, 20))
@@ -168,13 +195,61 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionX", "Position X Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionY", "Position Y Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.ID = "JointRotation"
 
-            m_doRelaxation1 = New ConstraintRelaxation(Me, "X Axis Displacement", "Sets the relaxation for the X displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation1)
-            m_doRelaxation2 = New ConstraintRelaxation(Me, "Y Axis Displacement", "Sets the relaxation for the Y displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation2)
-            m_doRelaxation3 = New ConstraintRelaxation(Me, "Z Axis Displacement", "Sets the relaxation for the Z displacement axis.", ConstraintRelaxation.enumCoordinateID.Relaxation3)
-            m_doRelaxation4 = New ConstraintRelaxation(Me, "X Axis Rotation", "Sets the relaxation for the X rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation4)
-            m_doRelaxation5 = New ConstraintRelaxation(Me, "Y Axis Rotation", "Sets the relaxation for the Y rotation axis.", ConstraintRelaxation.enumCoordinateID.Relaxation5)
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Temperature", "Temperature", "Celcius", "C", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Voltage", "Voltage", "Volts", "V", -20, 20))
+
+            If Util.Application.Physics.ProvidesJointForceFeedback Then
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAX", "Motor Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAY", "Motor Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAZ", "Motor Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBX", "Motor Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBY", "Motor Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBZ", "Motor Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToAMagnitude", "Motor Force A Magnitude", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorForceToBMagnitude", "Motor Force B Magnitude", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAX", "Motor Torque Applied to Body A, X Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAY", "Motor Torque Applied to Body A, Y Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAZ", "Motor Torque Applied to Body A, Z Axis", "Newton-Meters", "Nm", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBX", "Motor Torque Applied to Body B, X Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBY", "Motor Torque Applied to Body B, Y Axis", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBZ", "Motor Torque Applied to Body B, Z Axis", "Newton-Meters", "Nm", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToAMagnitude", "Motor Torque A Magnitude", "Newton-Meters", "Nm", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorTorqueToBMagnitude", "Motor Torque B Magnitude", "Newton-Meters", "Nm", -10, 10))
+            End If
+
+            m_doAssistPID = New PidControl(Me)
+            m_doAssistPID.Kp.ActualValue = 20
+            m_doAssistPID.Kd.ActualValue = 1
+            m_doAssistPID.Ki.ActualValue = 0
+            m_doAssistPID.Enabled = False
+
+            If Util.Application.Physics.GenerateMotorAssist Then
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAY", "Motor Assist Force Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAZ", "Motor Assist Force Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBX", "Motor Assist Force Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBY", "Motor Assist Force Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToBZ", "Motor Assist Force Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAX", "Motor Assist Torque Applied to Body A, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAY", "Motor Assist Torque Applied to Body A, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToAZ", "Motor Assist Torque Applied to Body A, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBX", "Motor Assist Torque Applied to Body B, X Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBY", "Motor Assist Torque Applied to Body B, Y Axis", "Newtons", "N", -10, 10))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistTorqueToBZ", "Motor Assist Torque Applied to Body B, Z Axis", "Newtons", "N", -10, 10))
+
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceMagnitude", "Motor Assist Force Magnitude", "Newtons", "N", -10, 10))
+            End If
+
+            m_thDataTypes.ID = "JointRotation"
 
             m_doFriction = New ConstraintFriction(Me)
         End Sub
@@ -192,6 +267,7 @@ Namespace DataObjects.Physical.Joints
 
             If Not m_snMaxForce Is Nothing Then m_snMaxForce.ClearIsDirty()
             If Not m_snMaxVelocity Is Nothing Then m_snMaxVelocity.ClearIsDirty()
+            If Not m_doAssistPID Is Nothing Then m_doAssistPID.ClearIsDirty()
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
@@ -215,10 +291,11 @@ Namespace DataObjects.Physical.Joints
             m_doUpperLimit.IsLowerLimit = False
 
             m_bEnableMotor = doOrig.m_bEnableMotor
-            m_bServoMotor = doOrig.m_bServoMotor
+            m_eMotorType = doOrig.m_eMotorType
             m_fltServoGain = doOrig.ServoGain
             m_snMaxForce = DirectCast(doOrig.m_snMaxForce.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snMaxVelocity = DirectCast(doOrig.m_snMaxVelocity.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_doAssistPID = DirectCast(doOrig.m_doAssistPID.Clone(Me, bCutData, doRoot), PidControl)
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
@@ -226,6 +303,9 @@ Namespace DataObjects.Physical.Joints
 
             m_doLowerLimit.InitializeSimulationReferences(bShowError)
             m_doUpperLimit.InitializeSimulationReferences(bShowError)
+
+
+            If Util.Application.Physics.GenerateMotorAssist AndAlso Not m_doAssistPID Is Nothing Then m_doAssistPID.InitializeSimulationReferences(bShowError)
         End Sub
 
         Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList, ByVal arySelectedItems As ArrayList)
@@ -233,22 +313,37 @@ Namespace DataObjects.Physical.Joints
 
             If Not m_doLowerLimit Is Nothing Then m_doLowerLimit.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
             If Not m_doUpperLimit Is Nothing Then m_doUpperLimit.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
+            If Not m_doAssistPID Is Nothing Then m_doAssistPID.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
         End Sub
+
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doAssistPID Is Nothing Then doObject = m_doAssistPID.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
 
-            pbNumberBag = m_doLowerLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Limit", pbNumberBag.GetType(), "LowerLimit", _
-                                        "Constraints", "Sets the values for the minimum angle constraint.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+            If Util.Application.Physics.ShowSeparateConstraintLimits Then
+                pbNumberBag = m_doLowerLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Limit", pbNumberBag.GetType(), "LowerLimit", _
+                                            "Constraints", "Sets the values for the minimum angle constraint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
 
-            pbNumberBag = m_doUpperLimit.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Upper Limit", pbNumberBag.GetType(), "UpperLimit", _
-                                        "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+                pbNumberBag = m_doUpperLimit.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Upper Limit", pbNumberBag.GetType(), "UpperLimit", _
+                                            "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
+            Else
+                m_doLowerLimit.BuildPropertiesInline(propTable, False, "Lower", "LowerLimit.")
+                m_doUpperLimit.BuildPropertiesInline(propTable, True, "Upper", "UpperLimit.")
+            End If
 
             pbNumberBag = m_snMaxForce.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Torque", pbNumberBag.GetType(), "MaxForce", _
@@ -263,11 +358,20 @@ Namespace DataObjects.Physical.Joints
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Motor", m_bEnableMotor.GetType(), "EnableMotor", _
                           "Motor Properties", "Sets whether the motor is enabled for this joint.", m_bEnableMotor))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Motor", m_bServoMotor.GetType(), "ServoMotor", _
-                          "Motor Properties", "Sets whether this is a servo or DC motor. If it is a servo then the Input specifies position, otherwise it specifies velocity.", m_bServoMotor))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Motor Type", m_eMotorType.GetType(), "MotorType", _
+                          "Motor Properties", "Sets the type for this motor.", m_eMotorType))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
-                          "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
+            If m_eMotorType = enumJointMotorTypes.PositionControl OrElse m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Servo Gain", m_fltServoGain.GetType(), "ServoGain", _
+                              "Motor Properties", "Sets the magnitude of the feedback gain for the servo motor.", m_fltServoGain))
+            End If
+
+            If Util.Application.Physics.GenerateMotorAssist Then
+                pbNumberBag = m_doAssistPID.Properties
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Assist PID", pbNumberBag.GetType(), "AssistPID", _
+                                                "Motor Properties", "Sets the PID controller for motor assist.", pbNumberBag, _
+                                                "", GetType(PidControlPropBagConverter)))
+            End If
 
         End Sub
 
@@ -283,8 +387,23 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.LoadData(oXml, "MaxVelocity")
 
             EnableMotor = oXml.GetChildBool("EnableMotor", m_bEnableMotor)
-            ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
+
+            If oXml.FindChildElement("MotorType", False) Then
+                MotorType = DirectCast([Enum].Parse(GetType(Joint.enumJointMotorTypes), oXml.GetChildString("MotorType"), True), Joint.enumJointMotorTypes)
+            Else
+                Dim bServoMotor As Boolean = oXml.GetChildBool("ServoMotor", False)
+                If bServoMotor Then
+                    MotorType = enumJointMotorTypes.PositionControl
+                Else
+                    MotorType = enumJointMotorTypes.VelocityControl
+                End If
+            End If
+
             ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
+
+            If Not m_doAssistPID Is Nothing AndAlso oXml.FindChildElement("PID", False) Then
+                m_doAssistPID.LoadData(oXml)
+            End If
 
             oXml.OutOfElem() 'Outof Joint Element
 
@@ -301,8 +420,12 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.SaveData(oXml, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
-            oXml.AddChildElement("ServoMotor", m_bServoMotor)
+            oXml.AddChildElement("MotorType", m_eMotorType.ToString())
             oXml.AddChildElement("ServoGain", m_fltServoGain)
+
+            If Not m_doAssistPID Is Nothing Then
+                m_doAssistPID.SaveData(oXml)
+            End If
 
             oXml.OutOfElem() 'Outof Joint Element
 
@@ -320,8 +443,12 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity.SaveSimulationXml(oXml, Me, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
-            oXml.AddChildElement("ServoMotor", m_bServoMotor)
+            oXml.AddChildElement("MotorType", Convert.ToInt32(m_eMotorType))
             oXml.AddChildElement("ServoGain", m_fltServoGain)
+
+            If Not m_doAssistPID Is Nothing AndAlso Util.Application.Physics.GenerateMotorAssist Then
+                m_doAssistPID.SaveSimulationXml(oXml, Me)
+            End If
 
             oXml.OutOfElem()
 

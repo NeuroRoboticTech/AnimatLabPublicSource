@@ -4,7 +4,7 @@
 \brief	Implements the memory chart class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -52,6 +52,7 @@ namespace AnimatSim
 **/
 MemoryChart::MemoryChart()
 {
+    m_oRowCountLock = Std_GetCriticalSection();
 }
 
 /**
@@ -65,23 +66,28 @@ MemoryChart::~MemoryChart()
 
 try
 {
+    if(m_oRowCountLock)
+        delete m_oRowCountLock;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, false, true);}
 }
 
-string MemoryChart::Type() {return "MemoryChart";}
+std::string MemoryChart::Type() {return "MemoryChart";}
 
-BOOL MemoryChart::Lock()
+bool MemoryChart::Lock()
 {
-	if(m_oRowCountLock.TryEnter())
-		return TRUE;
+	if(m_oRowCountLock && m_oRowCountLock->TryEnter())
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void MemoryChart::Unlock()
-{m_oRowCountLock.Leave();}
+{
+    if(m_oRowCountLock)
+        m_oRowCountLock->Leave();
+}
 
 void MemoryChart::Initialize()
 {
@@ -96,7 +102,7 @@ void MemoryChart::StepSimulation()
 {
 	if(!(m_lpSim->TimeSlice()%m_iCollectInterval))
 	{
-		if(m_oRowCountLock.TryEnter())
+		if(m_oRowCountLock && m_oRowCountLock->TryEnter())
 		{
 			if(m_lCurrentRow == m_lRowCount)
 			{
@@ -110,7 +116,7 @@ void MemoryChart::StepSimulation()
 			if(m_lCurrentRow < m_lRowCount)
 				DataChart::StepSimulation();
 
-			m_oRowCountLock.Leave();
+			m_oRowCountLock->Leave();
 		}
 		else
 		{

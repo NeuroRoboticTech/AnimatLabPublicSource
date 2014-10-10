@@ -52,7 +52,7 @@ VsUniversal::~VsUniversal()
 		DeletePhysics();
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of VsUniversal/\r\n", "", -1, FALSE, TRUE);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsUniversal/\r\n", "", -1, false, true);}
 }
 
 void VsUniversal::DeletePhysics()
@@ -92,12 +92,10 @@ void VsUniversal::SetupPhysics()
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
 	Vx::VxReal44 vMT;
-	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(TRUE), vMT);
+	VxOSG::copyOsgMatrix_to_VxReal44(this->GetOSGWorldMatrix(true), vMT);
 	Vx::VxTransform vTrans(vMT);
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
@@ -111,7 +109,6 @@ void VsUniversal::SetupPhysics()
 	m_vxSocket = new VxHomokinetic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 	m_vxSocket->setName(m_strID.c_str());
 
-	//lpAssem->addConstraint(m_vxHinge);
 	GetVsSimulator()->Universe()->addConstraint(m_vxSocket);
 
 	//Disable collisions between this object and its parent
@@ -130,25 +127,25 @@ void VsUniversal::CreateJoint()
 #pragma region DataAccesMethods
 
 
-BOOL VsUniversal::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool VsUniversal::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
 
-	if(BallSocket::SetData(strDataType, strValue, FALSE))
+	if(BallSocket::SetData(strDataType, strValue, false))
 		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void VsUniversal::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void VsUniversal::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
-	BallSocket::QueryProperties(aryNames, aryTypes);
+	VsJoint::Physics_QueryProperties(aryProperties);
+	BallSocket::QueryProperties(aryProperties);
 }
 
 #pragma endregion

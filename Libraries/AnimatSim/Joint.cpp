@@ -4,7 +4,7 @@
 \brief	Implements the joint class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -51,14 +51,11 @@ Joint::Joint()
 	m_fltVelocity = 0;
 	m_fltForce = 0;
 	m_fltSize = 0.02f;
-	m_bEnableLimits = TRUE;
+	m_bEnableLimits = true;
 
-    m_lpRelaxation1 = NULL;
-    m_lpRelaxation2 = NULL;
-    m_lpRelaxation3 = NULL;
-    m_lpRelaxation4 = NULL;
-    m_lpRelaxation5 = NULL;
-    m_lpRelaxation6 = NULL;
+    for(int iIdx=0; iIdx<6; iIdx++)
+        m_aryRelaxations[iIdx] = NULL;
+
     m_lpFriction = NULL;
 }
 
@@ -77,23 +74,19 @@ try
 	m_lpParent = NULL;
 	m_lpChild = NULL;
 
-    if(m_lpRelaxation1) {delete m_lpRelaxation1; m_lpRelaxation1 = NULL;}
-    if(m_lpRelaxation2) {delete m_lpRelaxation2; m_lpRelaxation2 = NULL;}
-    if(m_lpRelaxation3) {delete m_lpRelaxation3; m_lpRelaxation3 = NULL;}
-    if(m_lpRelaxation4) {delete m_lpRelaxation4; m_lpRelaxation4 = NULL;}
-    if(m_lpRelaxation5) {delete m_lpRelaxation5; m_lpRelaxation5 = NULL;}
-    if(m_lpRelaxation6) {delete m_lpRelaxation6; m_lpRelaxation6 = NULL;}
+    ClearRelaxations();
+
     if(m_lpFriction) {delete m_lpFriction; m_lpFriction = NULL;}
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Joint\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Joint\r\n", "", -1, false, true);}
 }
 
 			
 /**
 \brief	Tells whether this joint uses radians or meters for its measurements.
 
-\details This is defaulted to TRUE. You must override this and set it to the appropriate
+\details This is defaulted to true. You must override this and set it to the appropriate
 value for your derived classes.
 
 \author	dcofer
@@ -101,7 +94,7 @@ value for your derived classes.
 
 \return	true if it uses radians, false if it uses meters.
 **/
-BOOL Joint::UsesRadians() {return TRUE;}
+bool Joint::UsesRadians() {return true;}
 
 /**
 \brief	Gets the size of the graphical representation of this joint.
@@ -122,9 +115,9 @@ float Joint::Size() {return m_fltSize;};
 \param	fltVal	   	The new size value. 
 \param	bUseScaling	true to use unit scaling. 
 **/
-void Joint::Size(float fltVal, BOOL bUseScaling)
+void Joint::Size(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.Size");
+	Std_IsAboveMin((float) 0, fltVal, true, "Joint.Size");
 	if(bUseScaling)
 		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -143,7 +136,7 @@ void Joint::Size(float fltVal, BOOL bUseScaling)
 
 \return	true if it limits are enabled, false otherwise.
 **/
-BOOL Joint::EnableLimits() {return m_bEnableLimits;};
+bool Joint::EnableLimits() {return m_bEnableLimits;};
 
 /**
 \brief	Sets whether ContrainLimits are enabled or not.
@@ -153,7 +146,7 @@ BOOL Joint::EnableLimits() {return m_bEnableLimits;};
 
 \param	bVal	true to enable. 
 **/
-void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
+void Joint::EnableLimits(bool bVal) {m_bEnableLimits = bVal;}
 
 /**
 \brief	Gets the pointer to the primary axis displacement relaxation 
@@ -163,7 +156,7 @@ void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation1() {return m_lpRelaxation1;}
+ConstraintRelaxation *Joint::Relaxation1() {return m_aryRelaxations[0];}
 
 /**
 \brief	Sets the pointer to the primary axis displacement relaxation 
@@ -175,13 +168,13 @@ ConstraintRelaxation *Joint::Relaxation1() {return m_lpRelaxation1;}
 **/
 void Joint::Relaxation1(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation1)
+    if(m_aryRelaxations[0])
     {
-        delete m_lpRelaxation1;
-        m_lpRelaxation1 = NULL;
+        delete m_aryRelaxations[0];
+        m_aryRelaxations[0] = NULL;
     }
 
-    m_lpRelaxation1 = lpRelax;
+    m_aryRelaxations[0] = lpRelax;
 }
 
 /**
@@ -192,7 +185,7 @@ void Joint::Relaxation1(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation1(string strXml)
+void Joint::Relaxation1(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -209,7 +202,7 @@ void Joint::Relaxation1(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation2() {return m_lpRelaxation2;}
+ConstraintRelaxation *Joint::Relaxation2() {return m_aryRelaxations[1];}
 
 /**
 \brief	Sets the pointer to the secondary axis displacement relaxation 
@@ -221,13 +214,13 @@ ConstraintRelaxation *Joint::Relaxation2() {return m_lpRelaxation2;}
 **/
 void Joint::Relaxation2(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation2)
+    if(m_aryRelaxations[1])
     {
-        delete m_lpRelaxation2;
-        m_lpRelaxation2 = NULL;
+        delete m_aryRelaxations[1];
+        m_aryRelaxations[1] = NULL;
     }
 
-    m_lpRelaxation2 = lpRelax;
+    m_aryRelaxations[1] = lpRelax;
 }
 
 /**
@@ -238,7 +231,7 @@ void Joint::Relaxation2(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation2(string strXml)
+void Joint::Relaxation2(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -255,7 +248,7 @@ void Joint::Relaxation2(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation3() {return m_lpRelaxation3;}
+ConstraintRelaxation *Joint::Relaxation3() {return m_aryRelaxations[2];}
 
 /**
 \brief	Sets the pointer to the third axis displacement relaxation 
@@ -267,13 +260,13 @@ ConstraintRelaxation *Joint::Relaxation3() {return m_lpRelaxation3;}
 **/
 void Joint::Relaxation3(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation3)
+    if(m_aryRelaxations[2])
     {
-        delete m_lpRelaxation3;
-        m_lpRelaxation3 = NULL;
+        delete m_aryRelaxations[2];
+        m_aryRelaxations[2] = NULL;
     }
 
-    m_lpRelaxation3 = lpRelax;
+    m_aryRelaxations[2] = lpRelax;
 }
 
 /**
@@ -284,7 +277,7 @@ void Joint::Relaxation3(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation3(string strXml)
+void Joint::Relaxation3(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -301,7 +294,7 @@ void Joint::Relaxation3(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation4() {return m_lpRelaxation4;}
+ConstraintRelaxation *Joint::Relaxation4() {return m_aryRelaxations[3];}
 
 /**
 \brief	Sets the pointer to the secondary axis rotation relaxation 
@@ -313,13 +306,13 @@ ConstraintRelaxation *Joint::Relaxation4() {return m_lpRelaxation4;}
 **/
 void Joint::Relaxation4(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation4)
+    if(m_aryRelaxations[3])
     {
-        delete m_lpRelaxation4;
-        m_lpRelaxation4 = NULL;
+        delete m_aryRelaxations[3];
+        m_aryRelaxations[3] = NULL;
     }
 
-    m_lpRelaxation4 = lpRelax;
+    m_aryRelaxations[3] = lpRelax;
 }
 
 /**
@@ -330,7 +323,7 @@ void Joint::Relaxation4(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation4(string strXml)
+void Joint::Relaxation4(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -347,7 +340,7 @@ void Joint::Relaxation4(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation5() {return m_lpRelaxation5;}
+ConstraintRelaxation *Joint::Relaxation5() {return m_aryRelaxations[4];}
 
 /**
 \brief	Sets the pointer to the thirdary axis rotation relaxation 
@@ -359,13 +352,13 @@ ConstraintRelaxation *Joint::Relaxation5() {return m_lpRelaxation5;}
 **/
 void Joint::Relaxation5(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation5)
+    if(m_aryRelaxations[4])
     {
-        delete m_lpRelaxation5;
-        m_lpRelaxation5 = NULL;
+        delete m_aryRelaxations[4];
+        m_aryRelaxations[4] = NULL;
     }
 
-    m_lpRelaxation5 = lpRelax;
+    m_aryRelaxations[4] = lpRelax;
 }
 
 /**
@@ -376,7 +369,7 @@ void Joint::Relaxation5(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation5(string strXml)
+void Joint::Relaxation5(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -393,7 +386,7 @@ void Joint::Relaxation5(string strXml)
 
 \return	returns m_oPosition. 
 **/
-ConstraintRelaxation *Joint::Relaxation6() {return m_lpRelaxation6;}
+ConstraintRelaxation *Joint::Relaxation6() {return m_aryRelaxations[5];}
 
 /**
 \brief	Sets the pointer to the thirdary axis rotation relaxation 
@@ -405,13 +398,13 @@ ConstraintRelaxation *Joint::Relaxation6() {return m_lpRelaxation6;}
 **/
 void Joint::Relaxation6(ConstraintRelaxation *lpRelax)
 {
-    if(m_lpRelaxation6)
+    if(m_aryRelaxations[5])
     {
-        delete m_lpRelaxation6;
-        m_lpRelaxation6 = NULL;
+        delete m_aryRelaxations[5];
+        m_aryRelaxations[5] = NULL;
     }
 
-    m_lpRelaxation6 = lpRelax;
+    m_aryRelaxations[5] = lpRelax;
 }
 
 /**
@@ -422,7 +415,7 @@ void Joint::Relaxation6(ConstraintRelaxation *lpRelax)
 
 \param	strXml				The xml string with the data to load in the relaxation. 
 **/
-void Joint::Relaxation6(string strXml)
+void Joint::Relaxation6(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -468,7 +461,7 @@ void Joint::Friction(ConstraintFriction *lpRelax)
 
 \param	strXml				The xml string with the data to load in the friction. 
 **/
-void Joint::Friction(string strXml)
+void Joint::Friction(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -588,6 +581,14 @@ float Joint::JointForce() {return m_fltForce;}
 **/
 void Joint::JointForce(float fltForce) {m_fltForce = fltForce;}
 
+void Joint::WakeDynamics()
+{
+    if(m_lpParent)
+        m_lpParent->WakeDynamics();
+
+    if(m_lpChild)
+        m_lpChild->WakeDynamics();
+}
 
 /**
 \brief	Creates the joint.
@@ -605,25 +606,23 @@ void Joint::Initialize()
 {
     BodyPart::Initialize();
 
-    if(m_lpRelaxation1) m_lpRelaxation1->Initialize();
-    if(m_lpRelaxation2) m_lpRelaxation2->Initialize();
-    if(m_lpRelaxation3) m_lpRelaxation3->Initialize();
-    if(m_lpRelaxation4) m_lpRelaxation4->Initialize();
-    if(m_lpRelaxation5) m_lpRelaxation5->Initialize();
-    if(m_lpRelaxation6) m_lpRelaxation6->Initialize();
+    for(int iIdx=0; iIdx<6; iIdx++)
+        if(m_aryRelaxations[iIdx]) m_aryRelaxations[iIdx]->Initialize();
+
     if(m_lpFriction) m_lpFriction->Initialize();
 
 }
 
 void Joint::StepSimulation()
 {
+    BodyPart::StepSimulation();
 	UpdateData();
 }
 
 
-float *Joint::GetDataPointer(const string &strDataType)
+float *Joint::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	float *lpData = NULL;
 
@@ -640,12 +639,12 @@ float *Joint::GetDataPointer(const string &strDataType)
 	return BodyPart::GetDataPointer(strDataType);
 }
 
-BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Joint::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(BodyPart::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(BodyPart::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "ENABLELIMITS")
 	{
@@ -655,7 +654,7 @@ BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThr
 
 	if(strType == "SIZE")
 	{
-		Size(atof(strValue.c_str()));
+		Size((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -698,42 +697,27 @@ BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThr
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Joint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Joint::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BodyPart::QueryProperties(aryNames, aryTypes);
+	BodyPart::QueryProperties(aryProperties);
 
-	aryNames.Add("EnableLimits");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Size");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Relaxation1");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation2");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation3");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation4");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation5");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Relaxation6");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Friction");
-	aryTypes.Add("Xml");
+	aryProperties.Add(new TypeProperty("EnableLimits", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Size", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation1", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation2", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation3", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation4", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation5", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Relaxation6", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Friction", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
-void Joint::AddExternalNodeInput(float fltInput) {}
+void Joint::AddExternalNodeInput(int iTargetDataType, float fltInput) {}
 
 void Joint::ResetSimulation()
 {
@@ -756,6 +740,22 @@ void Joint::UpdatePhysicsPosFromGraphics()
 	UpdateAbsolutePosition();
 }
 
+/**
+ \brief Clears the relaxation pointers.
+
+ \author    David Cofer
+ \date  2/16/2014
+ */
+void Joint::ClearRelaxations()
+{
+    for(int iIdx=0; iIdx<6; iIdx++)
+    if(m_aryRelaxations[iIdx]) 
+    {
+        delete m_aryRelaxations[iIdx]; 
+        m_aryRelaxations[iIdx] = NULL;
+    }
+}
+
 void Joint::Load(CStdXml &oXml)
 {
 	BodyPart::Load(oXml);
@@ -775,31 +775,27 @@ void Joint::Load(CStdXml &oXml)
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 
-    if(m_lpRelaxation1) {delete m_lpRelaxation1; m_lpRelaxation1 = NULL;} 
-    if(m_lpRelaxation2) {delete m_lpRelaxation2; m_lpRelaxation2 = NULL;} 
-    if(m_lpRelaxation3) {delete m_lpRelaxation3; m_lpRelaxation3 = NULL;} 
-    if(m_lpRelaxation4) {delete m_lpRelaxation4; m_lpRelaxation4 = NULL;} 
-    if(m_lpRelaxation5) {delete m_lpRelaxation5; m_lpRelaxation5 = NULL;} 
-    if(m_lpRelaxation6) {delete m_lpRelaxation6; m_lpRelaxation6 = NULL;} 
+    ClearRelaxations();
+
     if(m_lpFriction) {delete m_lpFriction; m_lpFriction = NULL;} 
 
     if(oXml.FindChildElement("Relaxation1", false))
-        m_lpRelaxation1 = LoadConstraintRelaxation(oXml, "Relaxation1");
+        m_aryRelaxations[0] = LoadConstraintRelaxation(oXml, "Relaxation1");
 
     if(oXml.FindChildElement("Relaxation2", false))
-        m_lpRelaxation2 = LoadConstraintRelaxation(oXml, "Relaxation2");
+        m_aryRelaxations[1] = LoadConstraintRelaxation(oXml, "Relaxation2");
 
     if(oXml.FindChildElement("Relaxation3", false))
-        m_lpRelaxation3 = LoadConstraintRelaxation(oXml, "Relaxation3");
+        m_aryRelaxations[2] = LoadConstraintRelaxation(oXml, "Relaxation3");
 
     if(oXml.FindChildElement("Relaxation4", false))
-        m_lpRelaxation4 = LoadConstraintRelaxation(oXml, "Relaxation4");
+        m_aryRelaxations[3] = LoadConstraintRelaxation(oXml, "Relaxation4");
 
     if(oXml.FindChildElement("Relaxation5", false))
-        m_lpRelaxation5 = LoadConstraintRelaxation(oXml, "Relaxation5");
+        m_aryRelaxations[4] = LoadConstraintRelaxation(oXml, "Relaxation5");
 
     if(oXml.FindChildElement("Relaxation6", false))
-        m_lpRelaxation6 = LoadConstraintRelaxation(oXml, "Relaxation6");
+        m_aryRelaxations[5] = LoadConstraintRelaxation(oXml, "Relaxation6");
 
     if(oXml.FindChildElement("Friction", false))
         m_lpFriction = LoadConstraintFriction(oXml);    
@@ -819,11 +815,11 @@ void Joint::Load(CStdXml &oXml)
 \exception Throws an exception if there is a problem creating or loading the relaxation.
 
 **/
-ConstraintRelaxation *Joint::LoadConstraintRelaxation(CStdXml &oXml, string strName)
+ConstraintRelaxation *Joint::LoadConstraintRelaxation(CStdXml &oXml, std::string strName)
 {
 	ConstraintRelaxation *lpConstraintRelaxation = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -837,7 +833,7 @@ try
 	if(!lpConstraintRelaxation)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ConstraintRelaxation");
 
-	lpConstraintRelaxation->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	lpConstraintRelaxation->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 	lpConstraintRelaxation->Load(oXml);
 
 	return lpConstraintRelaxation;
@@ -872,8 +868,8 @@ catch(...)
 ConstraintFriction *Joint::LoadConstraintFriction(CStdXml &oXml)
 {
 	ConstraintFriction *lpConstraintFriction = NULL;
-	string strModule;
-	string strType;
+	std::string strModule;
+	std::string strType;
 
 try
 {
@@ -887,7 +883,7 @@ try
 	if(!lpConstraintFriction)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ConstraintFriction");
 
-	lpConstraintFriction->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	lpConstraintFriction->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, true);
 	lpConstraintFriction->Load(oXml);
 
 	return lpConstraintFriction;

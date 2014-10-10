@@ -25,13 +25,13 @@ namespace AnimatSim
 		protected:
 			CStdPtrArray<MaterialType> m_aryMaterialTypes;
 
-			virtual void Materials::LoadMaterialTypes(CStdXml &oXml);
-			virtual MaterialType *Materials::LoadMaterialType(CStdXml &oXml);
+			virtual void LoadMaterialTypes(CStdXml &oXml);
+			virtual MaterialType *LoadMaterialType(CStdXml &oXml);
 
-			virtual void AddMaterialType(string strXml, BOOL bDoNotInit);
-			virtual void RemoveMaterialType(string strID, BOOL bThrowError = TRUE);
+			virtual void AddMaterialType(std::string strXml, bool bDoNotInit);
+			virtual void RemoveMaterialType(std::string strID, bool bThrowError = true);
 
-			virtual int FindTypeListPos(string strID, BOOL bThrowError = TRUE);
+			virtual int FindTypeListPos(std::string strID, bool bThrowError = true);
 
 			virtual void CreateDefaultMaterial();
 
@@ -39,13 +39,15 @@ namespace AnimatSim
 			Materials();
 			virtual ~Materials();
 
+			static Materials *CastToDerived(AnimatBase *lpBase) {return static_cast<Materials*>(lpBase);}
+
 			virtual void Reset();
 			virtual void Initialize();
 
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 
 #pragma endregion
 

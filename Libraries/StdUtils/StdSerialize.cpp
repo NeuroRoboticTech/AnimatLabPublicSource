@@ -4,7 +4,7 @@
 \brief	Implements the standard serialize class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -40,6 +40,17 @@ CStdSerialize::~CStdSerialize()
 \brief	Makes a deep copy of this object.
 
 \author	dcofer
+\date	7/25/2014
+
+\param [in,out]	lpOrig	The original source that we are copying. 
+**/
+void CStdSerialize::Copy(CStdSerialize *lpSource)
+{}
+
+/**
+\brief	Makes a deep copy of this object.
+
+\author	dcofer
 \date	5/3/2011
 
 \return	null if it fails, else a copy of this object.
@@ -55,7 +66,7 @@ CStdSerialize *CStdSerialize::Clone()
 
 \param [in,out]	oOs	The output stream. 
 **/
-void CStdSerialize::Trace(ostream &oOs)
+void CStdSerialize::Trace(std::ostream &oOs)
 {}
 
 /**
@@ -85,7 +96,7 @@ void CStdSerialize::Save(CStdXml &oXml)
 
 \return	output stream
 **/
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdSerialize *lpObj)
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdSerialize *lpObj)
 {
 	lpObj->Trace(oOs);
 	return oOs;
@@ -96,7 +107,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdSerialize *lpObj)
 
 \return	output stream
 **/
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdIPoint oPoint)
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdIPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
@@ -107,7 +118,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdIPoint oPoint)
 
 \return	output stream
 **/
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdLPoint oPoint)
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdLPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
@@ -118,7 +129,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdLPoint oPoint)
 
 \return	output stream
 **/
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdFPoint oPoint)
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdFPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
@@ -129,7 +140,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdFPoint oPoint)
 
 \return	output stream
 **/
-ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint)
+std::ostream STD_UTILS_PORT &operator<<(std::ostream& oOs, CStdDPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
@@ -150,7 +161,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint)
 
 \return	True if point saved.
 **/
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPoint)
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdIPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
 	oXml.IntoChildElement(strName);
@@ -172,7 +183,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 
 \return	True if point saved.
 **/
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPoint)
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdLPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
 	oXml.IntoChildElement(strName);
@@ -194,7 +205,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 
 \return	True if point saved.
 **/
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPoint)
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdFPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
 	oXml.IntoChildElement(strName);
@@ -216,7 +227,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 
 \return	True if point saved.
 **/
-void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPoint)
+void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, std::string strName, CStdDPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
 	oXml.IntoChildElement(strName);
@@ -242,7 +253,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPo
 
 \return	True if point loaded.
 **/
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPoint, bool bThrowError)
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdIPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
 	{
@@ -272,7 +283,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 
 \return	True if point loaded.
 **/
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPoint, bool bThrowError)
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdLPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
 	{
@@ -302,7 +313,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 
 \return	True if point loaded.
 **/
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPoint, bool bThrowError)
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdFPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
 	{
@@ -332,7 +343,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 
 \return	True if point loaded.
 **/
-bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPoint, bool bThrowError)
+bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, std::string strName, CStdDPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
 	{

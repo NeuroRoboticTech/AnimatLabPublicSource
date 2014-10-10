@@ -36,7 +36,7 @@ namespace AnimatSim
 		{
 		protected:
 			/// Determines whether or not the gain uses upper and lower limits during its calculations.
-			BOOL m_bUseLimits;
+			bool m_bUseLimits;
 
 			/// The lower limit value that is checked if UseLimits is true.
 			float m_fltLowerLimit;
@@ -60,12 +60,12 @@ namespace AnimatSim
 			
 			\return	true if it is within limits, false otherwise. 
 			**/
-			BOOL InLimits(float fltInput)
+			bool InLimits(float fltInput)
 			{
 				if( m_bUseLimits && ( (fltInput < m_fltLowerLimit) || (fltInput > m_fltUpperLimit) ) ) 
-					return FALSE;
+					return false;
 				else
-					return TRUE;
+					return true;
 			}
 
 			/**
@@ -92,9 +92,11 @@ namespace AnimatSim
 		public:
 			Gain();
 			virtual ~Gain();
+			
+			static Gain *CastToDerived(AnimatBase *lpBase) {return static_cast<Gain*>(lpBase);}
 
-			BOOL UseLimits();
-			void UseLimits(BOOL bVal);
+			bool UseLimits();
+			void UseLimits(bool bVal);
 
 			float LowerLimit();
 			void LowerLimit(float fltVal);
@@ -107,6 +109,8 @@ namespace AnimatSim
 
 			float UpperOutput();
 			void UpperOutput(float fltVal);
+			
+			virtual void Copy(CStdSerialize *lpSource);
 
 			/**
 			\brief	Calculates the gain. 
@@ -124,12 +128,12 @@ namespace AnimatSim
 			**/
 			virtual float CalculateGain(float fltInput) = 0;
 
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 			virtual void Load(CStdXml &oXml);
 		};
 
-		Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml);
+		Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, std::string strName, CStdXml &oXml);
 
 	}			//Gains
 }				//AnimatSim

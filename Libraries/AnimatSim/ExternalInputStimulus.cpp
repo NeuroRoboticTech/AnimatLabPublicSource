@@ -4,7 +4,7 @@
 \brief	Implements the external input stimulus class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -71,10 +71,10 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of ExternalInputStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of ExternalInputStimulus\r\n", "", -1, false, true);}
 }
 
-string ExternalInputStimulus::Type() {return "ExternalInput";}
+std::string ExternalInputStimulus::Type() {return "ExternalInput";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be stimulated. 
@@ -84,7 +84,7 @@ string ExternalInputStimulus::Type() {return "ExternalInput";}
 
 \return	GUID ID of the node. 
 **/
-string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
+std::string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 /**
 \brief	Sets the GUID ID of the target node to stimulate. 
@@ -94,7 +94,7 @@ string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void ExternalInputStimulus::TargetNodeID(string strID)
+void ExternalInputStimulus::TargetNodeID(std::string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
@@ -129,7 +129,7 @@ void ExternalInputStimulus::Input(float fltVal) {m_fltInput = fltVal;}
 
 \return	Post-fix input equation string. 
 **/
-string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
+std::string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
 
 /**
 \brief	Sets the post-fix input equation string. 
@@ -139,7 +139,7 @@ string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
 
 \param	strVal	The new equation string. 
 **/
-void ExternalInputStimulus::InputEquation(string strVal)
+void ExternalInputStimulus::InputEquation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
@@ -172,7 +172,7 @@ void ExternalInputStimulus::StepSimulation()
 	{
 		m_lpEval->SetVariable("t", m_lpSim->Time());
 		m_fltInput = m_lpEval->Solve();
-		m_lpNode->AddExternalNodeInput(m_fltInput);
+		m_lpNode->AddExternalNodeInput(0, m_fltInput);
 	}
 	catch(...)
 	{
@@ -185,10 +185,10 @@ void ExternalInputStimulus::Deactivate()
 	ExternalStimulus::Deactivate();
 }
 
-float *ExternalInputStimulus::GetDataPointer(const string &strDataType)
+float *ExternalInputStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "INPUT")
 		lpData = &m_fltInput;
@@ -198,32 +198,33 @@ float *ExternalInputStimulus::GetDataPointer(const string &strDataType)
 	return lpData;
 } 
 
-BOOL ExternalInputStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool ExternalInputStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
-	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(ExternalStimulus::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "INPUTEQUATION")
 	{
 		InputEquation(strValue);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void ExternalInputStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void ExternalInputStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+	ExternalStimulus::QueryProperties(aryProperties);
 
-	aryNames.Add("InputEquation");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Input", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+
+	aryProperties.Add(new TypeProperty("InputEquation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void ExternalInputStimulus::Load(CStdXml &oXml)

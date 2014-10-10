@@ -24,11 +24,14 @@ namespace VortexAnimatSim
 
 VsRigidBody::VsRigidBody()
 {
-	m_bCollectExtraData = FALSE;
 	m_vxSensor = NULL;
 	m_vxPart = NULL;
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
+	m_fltBlank = 0;
+
+    m_fltEstimatedMass = 0;
+    m_fltEstimatedVolume = 0;
 
 	for(int i=0; i<3; i++)
 	{
@@ -50,7 +53,7 @@ try
 	//int i= 5;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, false, true);}
 }
 
 void VsRigidBody::SetThisPointers()
@@ -148,7 +151,7 @@ void VsRigidBody::Physics_TextureChanged()
 		SetTexture(m_lpThisRB->Texture());
 }
 
-void VsRigidBody::Physics_SetFreeze(BOOL bVal)
+void VsRigidBody::Physics_SetFreeze(bool bVal)
 {
 	if(m_vxSensor)
 		m_vxSensor->freeze(bVal);
@@ -156,11 +159,20 @@ void VsRigidBody::Physics_SetFreeze(BOOL bVal)
 
 void VsRigidBody::Physics_SetDensity(float fltVal)
 {
-	if(m_vxSensor)
+	if(m_vxCollisionGeometry)
 		m_vxCollisionGeometry->setRelativeDensity(fltVal);
+
+    //If this is a static joint then resize the parent so it gets the
+    //volume and mass reclaculated correctly.
+    if(m_lpThisRB && m_lpThisRB->HasStaticJoint())
+    {
+        VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+        if(lpVsParent)
+            lpVsParent->GetBaseValues();
+    }
 }
 
-void VsRigidBody::Physics_SetMaterialID(string strID)
+void VsRigidBody::Physics_SetMaterialID(std::string strID)
 {
 	if(m_vxCollisionGeometry && m_lpThisAB)
 	{
@@ -285,12 +297,12 @@ void  VsRigidBody::Physics_FluidDataChanged()
 		CStdFPoint vpCenter = m_lpThisRB->BuoyancyCenter();
 		Vx::VxReal3 vCenter = {vpCenter.x, vpCenter.y, vpCenter.z};
 
-		CStdFPoint vpDrag = m_lpThisRB->Drag();
+		CStdFPoint vpDrag = m_lpThisRB->LinearDrag();
 		Vx::VxReal3 vDrag = {vpDrag.x, vpDrag.y, vpDrag.z};
 
 		float fltScale = m_lpThisRB->BuoyancyScale();
 		float fltMagnus = m_lpThisRB->Magnus();
-		BOOL bEnabled = m_lpThisRB->EnableFluids();
+		bool bEnabled = m_lpThisRB->EnableFluids();
 
 		m_vxCollisionGeometry->setFluidInteractionData(vCenter, vDrag, fltScale, fltMagnus);
 
@@ -394,7 +406,7 @@ void VsRigidBody::CreateSensorPart()
 
 		m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
 		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
-		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 
 		m_vxSensor->setControl(VxEntity::kControlNode);
@@ -449,7 +461,7 @@ void VsRigidBody::CreateDynamicPart()
 
         GetBaseValues();
 
-		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+		std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 		m_vxSensor->setFastMoving(true);
 
@@ -488,7 +500,7 @@ void VsRigidBody::CreateStaticPart()
 			if(vxSensor)
 			{
 				CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
-				string strName = m_lpThisAB->ID() + "_CollisionGeometry";
+				std::string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 				m_vxCollisionGeometry->setName(strName.c_str());
 			}
 		}
@@ -547,7 +559,6 @@ void VsRigidBody::SetBody()
 {
 	if(m_vxSensor && m_lpThisAB)
 	{
-		//VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
 		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 
 		osg::MatrixTransform *lpMT = dynamic_cast<osg::MatrixTransform *>(m_osgMT.get());
@@ -556,7 +567,6 @@ void VsRigidBody::SetBody()
 		// Add the part to the universe.
 		if(lpVsSim && lpVsSim->Universe())
 			lpVsSim->Universe()->addEntity(m_vxSensor);
-		//lpAssem->addEntity(m_vxSensor);
 	}
 }
 
@@ -570,7 +580,7 @@ int VsRigidBody::GetPartIndex(VxPart *vxP0, VxPart *vxP1)
 
 void VsRigidBody::ProcessContacts()
 {
-	ContactSensor *lpSensor = m_lpThisRB->ContactSensor();
+	ContactSensor *lpSensor = m_lpThisRB->GetContactSensor();
 	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
@@ -586,7 +596,8 @@ void VsRigidBody::ProcessContacts()
 		VxReal3 vForce;
 		float fltForceMag = 0;
 
-		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
+        ////Test code
+		//if(m_lpThisRB->GetSimulator()->Time() >= 6.758)
 		//	fltForceMag = 0;
 
 		int iCount=0;
@@ -610,8 +621,6 @@ void VsRigidBody::ProcessContacts()
 
 void VsRigidBody::Physics_CollectData()
 {
-	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 	Vx::VxReal3 vData;
 
 	if(m_vxSensor)
@@ -639,7 +648,18 @@ void VsRigidBody::Physics_CollectData()
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
 	}
 
-	if(m_bCollectExtraData && m_vxPart)
+
+    if(m_lpThisRB->GetContactSensor()) 
+		ProcessContacts();
+}
+
+void VsRigidBody::Physics_CollectExtraData()
+{
+	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+	Vx::VxReal3 vData;
+
+    if(m_vxPart)
 	{
 		m_vxPart->getLinearVelocity(vData);
 		m_vLinearVelocity[0] = vData[0] * fDisUnits;
@@ -675,9 +695,8 @@ void VsRigidBody::Physics_CollectData()
 		m_vAngularAcceleration[2] = vAccel[2];
 	}
 
-	if(m_lpThisRB->ContactSensor()) 
-		ProcessContacts();
 }
+
 
 void VsRigidBody::Physics_ResetSimulation()
 {
@@ -750,72 +769,153 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
-float *VsRigidBody::Physics_GetDataPointer(const string &strDataType)
+float *VsRigidBody::Physics_GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);
 
+	if(strType == "BODYBUOYANCY")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGFORCEX")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGFORCEY")
+		return (&m_fltBlank);
+
+    if(strType == "BODYDRAGFORCEZ")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGTORQUEX")
+		return (&m_fltBlank);
+
+	if(strType == "BODYDRAGTORQUEY")
+		return (&m_fltBlank);
+
+    if(strType == "BODYDRAGTORQUEZ")
+		return (&m_fltBlank);
+
 	if(strType == "BODYTORQUEX")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[0]);
+    }
 
 	if(strType == "BODYTORQUEY")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[1]);
+    }
 
 	if(strType == "BODYTORQUEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vTorque[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vTorque[2]);
+    }
 
 	if(strType == "BODYFORCEX")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vForce[0]);
+    }
 
 	if(strType == "BODYFORCEY")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vForce[1]);
+    }
 
 	if(strType == "BODYFORCEZ")
-		{m_bCollectExtraData = TRUE; return (&m_vForce[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vForce[2]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[0]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[1]);
+    }
 
 	if(strType == "BODYLINEARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearVelocity[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearVelocity[2]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[0]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[1]);
+    }
 
 	if(strType == "BODYANGULARVELOCITYZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularVelocity[2]);
+    }
 
 	//if(strType == "BODYBUOYANCY")
-	//	{m_bCollectExtraData = TRUE; return (&m_fltReportBuoyancy);}
+	//	{m_bCollectExtraData = true; return (&m_fltReportBuoyancy);}
 
 	if(strType == "BODYLINEARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[0]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[1]);
+    }
 
 	if(strType == "BODYLINEARACCELERATIONZ")
-		return (&m_vLinearAcceleration[2]);
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vLinearAcceleration[2]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONX")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[0]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[0]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONY")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[1]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[1]);
+    }
 
 	if(strType == "BODYANGULARACCELERATIONZ")
-		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[2]);}
+	{
+        GetVsSimulator()->AddToExtractExtraData(m_lpThisRB);
+        return (&m_vAngularAcceleration[2]);
+    }
+    
+	if(strType == "ESTIMATEDMASS")
+	    return &m_fltEstimatedMass;
+    
+	if(strType == "ESTIMATEDVOLUME")
+	    return &m_fltEstimatedVolume;
 
 	return NULL;
 }
 
-void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{
@@ -841,7 +941,33 @@ void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, fl
 	}
 }
 
-void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+void VsRigidBody::Physics_AddBodyForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
+	{
+		VxReal3 fltF, fltP;
+		if(bScaleUnits)
+		{
+			fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+		}
+		else
+		{
+			fltF[0] = fltFx;
+			fltF[1] = fltFy;
+			fltF[2] = fltFz;
+		}
+
+		fltP[0] = fltPx;
+		fltP[1] = fltPy;
+		fltP[2] = fltPz;
+
+		m_vxPart->addForceAtPosition(fltF, fltP);
+	}
+}
+
+void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits)
 {
 	if(m_vxPart && (fltTx || fltTy || fltTz))
 	{
@@ -897,13 +1023,44 @@ float VsRigidBody::Physics_GetMass()
 	return fltMass;
 }
 
-BOOL VsRigidBody::Physics_HasCollisionGeometry()
+float VsRigidBody::Physics_GetDensity()
+{
+    if(m_lpThisRB)
+        return m_lpThisRB->Density();
+    else
+        return 0;
+}
+
+bool VsRigidBody::Physics_HasCollisionGeometry()
 {
 	if(m_vxSensor)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
+
+bool VsRigidBody::Physics_IsDefined()
+{
+    if(m_vxPart && m_vxSensor)
+        return true;
+    else
+        return false;
+}
+
+bool VsRigidBody::Physics_IsGeometryDefined()
+{
+    if(m_vxGeometry)
+        return true;
+    else
+        return false;
+}
+
+void VsRigidBody::Physics_WakeDynamics()
+{
+    if(m_vxPart)
+        m_vxPart->wakeDynamics();
+}
+
 
 	}			// Environment
 }				//VortexAnimatSim

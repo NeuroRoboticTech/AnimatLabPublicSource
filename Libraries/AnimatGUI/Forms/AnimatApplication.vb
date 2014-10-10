@@ -17,6 +17,7 @@ Imports AnimatGUI.Framework
 Imports System.Reflection
 Imports System.Configuration
 Imports System.Runtime.InteropServices
+Imports System.Xml
 
 Namespace Forms
 
@@ -28,6 +29,7 @@ Namespace Forms
         Private Declare Function ShowWindow Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nCmdShow As Int32) As Int32
         Private Const SW_SHOWMINNOACTIVE As Int32 = 7
         Private Const SW_SHOWNORMAL As Int32 = 1
+        Friend WithEvents ConvertPhysicsEngineToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Private Const SW_HIDE As Int32 = 0
 
 #Region " Windows Form Designer generated code "
@@ -181,8 +183,6 @@ Namespace Forms
             Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
             Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.UndoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.RunMacroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
             Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -190,6 +190,7 @@ Namespace Forms
             Me.SelectByTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.RelabelSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.CompareItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.EditMaterialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.RunSimulationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
@@ -201,14 +202,6 @@ Namespace Forms
             Me.JointsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ReceptiveFieldsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SimulationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.DisplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowGraphicsGeometryToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowCollisionGeomoetryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowJointsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowCenterOfMassToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowPartOriginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ShowContactsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddStructureToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AddOrganismToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -218,10 +211,10 @@ Namespace Forms
             Me.AddStimulusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.WarehouseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.TutorialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.MouseCheatSheetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.WarehouseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SupportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.MouseCheatSheetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.CheckForUpdatesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -245,12 +238,23 @@ Namespace Forms
             Me.SelectByTypeToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.RelabelSelectedToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.CompareItemsToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.EditMaterialsToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
             Me.SelGraphicsToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.SelCollisionToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.SelJointsToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.SelRecFieldsToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.SelSimToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.UndoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DisplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowGraphicsGeometryToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowCollisionGeomoetryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowJointsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowCenterOfMassToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowPartOriginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowContactsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.DisplayModeDropDown = New System.Windows.Forms.ToolStripDropDownButton()
             Me.ShowGraphicsGeometryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ShowCollisionGeometryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -258,8 +262,7 @@ Namespace Forms
             Me.ShowCenterOfMassToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ShowPartOriginToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ShowContactsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.EditMaterialsToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.EditMaterialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ConvertPhysicsEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AnimatStripContainer.ContentPanel.SuspendLayout()
             Me.AnimatStripContainer.TopToolStripPanel.SuspendLayout()
             Me.AnimatStripContainer.SuspendLayout()
@@ -301,23 +304,33 @@ Namespace Forms
             Me.AnimatTabbedGroups.Size = New System.Drawing.Size(713, 215)
             Me.AnimatTabbedGroups.TabIndex = 1
             '
-            'AnimatStatusPanel1
-            '
-            Me.AnimatAppStatusPanel.Name = "AnimatAppStatusPanel"
-            Me.AnimatAppStatusPanel.AutoSizing = StatusBarPanelAutoSize.Contents
-            '
-            'AnimatStatusPanel2
-            '
-            Me.AnimatUpdateStatusPanel.Name = "AnimatUpdateStatusPanel"
-            Me.AnimatUpdateStatusPanel.AutoSizing = StatusBarPanelAutoSize.Spring
-            '
             'AnimatStatusBar
             '
             Me.AnimatStatusBar.Location = New System.Drawing.Point(0, 215)
             Me.AnimatStatusBar.Name = "AnimatStatusBar"
             Me.AnimatStatusBar.Size = New System.Drawing.Size(713, 19)
-            Me.AnimatStatusBar.TabIndex = 0
             Me.AnimatStatusBar.StatusPanels.AddRange(New Crownwood.DotNetMagic.Controls.StatusPanel() {Me.AnimatAppStatusPanel, Me.AnimatUpdateStatusPanel})
+            Me.AnimatStatusBar.TabIndex = 0
+            '
+            'AnimatAppStatusPanel
+            '
+            Me.AnimatAppStatusPanel.AutoScrollMargin = New System.Drawing.Size(0, 0)
+            Me.AnimatAppStatusPanel.AutoScrollMinSize = New System.Drawing.Size(0, 0)
+            Me.AnimatAppStatusPanel.AutoSizing = System.Windows.Forms.StatusBarPanelAutoSize.Contents
+            Me.AnimatAppStatusPanel.Location = New System.Drawing.Point(2, 2)
+            Me.AnimatAppStatusPanel.Name = "AnimatAppStatusPanel"
+            Me.AnimatAppStatusPanel.Size = New System.Drawing.Size(0, 13)
+            Me.AnimatAppStatusPanel.TabIndex = 0
+            '
+            'AnimatUpdateStatusPanel
+            '
+            Me.AnimatUpdateStatusPanel.AutoScrollMargin = New System.Drawing.Size(0, 0)
+            Me.AnimatUpdateStatusPanel.AutoScrollMinSize = New System.Drawing.Size(0, 0)
+            Me.AnimatUpdateStatusPanel.AutoSizing = System.Windows.Forms.StatusBarPanelAutoSize.Spring
+            Me.AnimatUpdateStatusPanel.Location = New System.Drawing.Point(2, 2)
+            Me.AnimatUpdateStatusPanel.Name = "AnimatUpdateStatusPanel"
+            Me.AnimatUpdateStatusPanel.Size = New System.Drawing.Size(685, 13)
+            Me.AnimatUpdateStatusPanel.TabIndex = 0
             '
             'AnimatMenuStrip
             '
@@ -334,109 +347,89 @@ Namespace Forms
             '
             'FileToolStripMenuItem
             '
-            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.SnapshotSimToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
+            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.SnapshotSimToolStripMenuItem, Me.ConvertPhysicsEngineToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
             Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
             Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
             Me.FileToolStripMenuItem.Text = "&File"
             '
             'NewToolStripMenuItem
             '
-            Me.NewToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.NewProject.gif")
+            Me.NewToolStripMenuItem.Image = CType(resources.GetObject("NewToolStripMenuItem.Image"), System.Drawing.Image)
             Me.NewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
             Me.NewToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-            Me.NewToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.NewToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.NewToolStripMenuItem.Text = "&New"
             '
             'OpenToolStripMenuItem
             '
-            Me.OpenToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Open_Toolbar.gif")
+            Me.OpenToolStripMenuItem.Image = CType(resources.GetObject("OpenToolStripMenuItem.Image"), System.Drawing.Image)
             Me.OpenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
             Me.OpenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-            Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.OpenToolStripMenuItem.Text = "&Open"
             '
             'toolStripSeparator2
             '
             Me.toolStripSeparator2.Name = "toolStripSeparator2"
-            Me.toolStripSeparator2.Size = New System.Drawing.Size(189, 6)
+            Me.toolStripSeparator2.Size = New System.Drawing.Size(194, 6)
             '
             'SaveToolStripMenuItem
             '
-            Me.SaveToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Save_Toolbar.gif")
+            Me.SaveToolStripMenuItem.Image = CType(resources.GetObject("SaveToolStripMenuItem.Image"), System.Drawing.Image)
             Me.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
             Me.SaveToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-            Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.SaveToolStripMenuItem.Text = "&Save"
             '
             'SaveAsToolStripMenuItem
             '
             Me.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem"
-            Me.SaveAsToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.SaveAsToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.SaveAsToolStripMenuItem.Text = "Save &As"
             '
             'toolStripSeparator4
             '
             Me.toolStripSeparator4.Name = "toolStripSeparator4"
-            Me.toolStripSeparator4.Size = New System.Drawing.Size(189, 6)
+            Me.toolStripSeparator4.Size = New System.Drawing.Size(194, 6)
             '
             'CloseProjectToolStripMenuItem
             '
             Me.CloseProjectToolStripMenuItem.Name = "CloseProjectToolStripMenuItem"
-            Me.CloseProjectToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.CloseProjectToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.CloseProjectToolStripMenuItem.Text = "Close Project"
             '
             'ExportStandaloneToolStripMenuItem
             '
             Me.ExportStandaloneToolStripMenuItem.Name = "ExportStandaloneToolStripMenuItem"
-            Me.ExportStandaloneToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.ExportStandaloneToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.ExportStandaloneToolStripMenuItem.Text = "Export Standalone Sim"
             '
             'SnapshotSimToolStripMenuItem
             '
             Me.SnapshotSimToolStripMenuItem.Name = "SnapshotSimToolStripMenuItem"
-            Me.SnapshotSimToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.SnapshotSimToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.SnapshotSimToolStripMenuItem.Text = "Snapshot Sim"
             '
             'ToolStripSeparator8
             '
             Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-            Me.ToolStripSeparator8.Size = New System.Drawing.Size(189, 6)
+            Me.ToolStripSeparator8.Size = New System.Drawing.Size(194, 6)
             '
             'ExitToolStripMenuItem
             '
             Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-            Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
             Me.ExitToolStripMenuItem.Text = "E&xit"
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunMacroToolStripMenuItem})  'Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, 
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.DeleteToolStripMenuItem})
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, _
-                                                                                                      Me.RelabelSelectedToolStripMenuItem, _
-                                                                                                      Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunMacroToolStripMenuItem, Me.toolStripSeparator6, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
             Me.EditToolStripMenuItem.Text = "&Edit"
-            '
-            'UndoToolStripMenuItem
-            '
-            Me.UndoToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Undo.gif")
-            Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
-            Me.UndoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-            Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.UndoToolStripMenuItem.Text = "&Undo"
-            '
-            'RedoToolStripMenuItem
-            '
-            Me.RedoToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Redo.gif")
-            Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
-            Me.RedoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-            Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.RedoToolStripMenuItem.Text = "&Redo"
             '
             'RunMacroToolStripMenuItem
             '
@@ -451,7 +444,7 @@ Namespace Forms
             '
             'DeleteToolStripMenuItem
             '
-            Me.DeleteToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Delete.gif")
+            Me.DeleteToolStripMenuItem.Image = CType(resources.GetObject("DeleteToolStripMenuItem.Image"), System.Drawing.Image)
             Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
             Me.DeleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete
             Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
@@ -464,7 +457,7 @@ Namespace Forms
             '
             'SelectByTypeToolStripMenuItem
             '
-            Me.SelectByTypeToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SelectByType.gif")
+            Me.SelectByTypeToolStripMenuItem.Image = CType(resources.GetObject("SelectByTypeToolStripMenuItem.Image"), System.Drawing.Image)
             Me.SelectByTypeToolStripMenuItem.Name = "SelectByTypeToolStripMenuItem"
             Me.SelectByTypeToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.SelectByTypeToolStripMenuItem.Text = "Select By Type"
@@ -472,7 +465,7 @@ Namespace Forms
             '
             'RelabelSelectedToolStripMenuItem
             '
-            Me.RelabelSelectedToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.RelabelSelected.gif")
+            Me.RelabelSelectedToolStripMenuItem.Image = CType(resources.GetObject("RelabelSelectedToolStripMenuItem.Image"), System.Drawing.Image)
             Me.RelabelSelectedToolStripMenuItem.Name = "RelabelSelectedToolStripMenuItem"
             Me.RelabelSelectedToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.RelabelSelectedToolStripMenuItem.Text = "Relabel Selected"
@@ -480,15 +473,21 @@ Namespace Forms
             '
             'CompareItemsToolStripMenuItem
             '
-            Me.CompareItemsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Equals.gif")
+            Me.CompareItemsToolStripMenuItem.Image = CType(resources.GetObject("CompareItemsToolStripMenuItem.Image"), System.Drawing.Image)
             Me.CompareItemsToolStripMenuItem.Name = "CompareItemsToolStripMenuItem"
             Me.CompareItemsToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.CompareItemsToolStripMenuItem.Text = "Compare Items"
             Me.CompareItemsToolStripMenuItem.ToolTipText = "Compare selected items"
             '
+            'EditMaterialsToolStripMenuItem
+            '
+            Me.EditMaterialsToolStripMenuItem.Image = CType(resources.GetObject("EditMaterialsToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.EditMaterialsToolStripMenuItem.Name = "EditMaterialsToolStripMenuItem"
+            Me.EditMaterialsToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.EditMaterialsToolStripMenuItem.Text = "Edit Materials"
+            '
             'ViewToolStripMenuItem
             '
-            ', Me.DisplayToolStripMenuItem
             Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem})
             Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
             Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
@@ -496,7 +495,7 @@ Namespace Forms
             '
             'RunSimulationToolStripMenuItem
             '
-            Me.RunSimulationToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.PlayLarge.gif")
+            Me.RunSimulationToolStripMenuItem.Image = CType(resources.GetObject("RunSimulationToolStripMenuItem.Image"), System.Drawing.Image)
             Me.RunSimulationToolStripMenuItem.Name = "RunSimulationToolStripMenuItem"
             Me.RunSimulationToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
             Me.RunSimulationToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
@@ -528,46 +527,413 @@ Namespace Forms
             '
             'GraphicsObjectsToolStripMenuItem
             '
-            Me.GraphicsObjectsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.GraphicsSelectionMode_Small.gif")
+            Me.GraphicsObjectsToolStripMenuItem.Image = CType(resources.GetObject("GraphicsObjectsToolStripMenuItem.Image"), System.Drawing.Image)
             Me.GraphicsObjectsToolStripMenuItem.Name = "GraphicsObjectsToolStripMenuItem"
             Me.GraphicsObjectsToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.GraphicsObjectsToolStripMenuItem.Text = "Graphics Objects"
             '
             'CollisionObjectsToolStripMenuItem
             '
-            Me.CollisionObjectsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CollisionSelectionMode_Small.gif")
+            Me.CollisionObjectsToolStripMenuItem.Image = CType(resources.GetObject("CollisionObjectsToolStripMenuItem.Image"), System.Drawing.Image)
             Me.CollisionObjectsToolStripMenuItem.Name = "CollisionObjectsToolStripMenuItem"
             Me.CollisionObjectsToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.CollisionObjectsToolStripMenuItem.Text = "Collision Objects"
             '
             'JointsToolStripMenuItem
             '
-            Me.JointsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.JointSelectionMode_Small.gif")
+            Me.JointsToolStripMenuItem.Image = CType(resources.GetObject("JointsToolStripMenuItem.Image"), System.Drawing.Image)
             Me.JointsToolStripMenuItem.Name = "JointsToolStripMenuItem"
             Me.JointsToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.JointsToolStripMenuItem.Text = "Joints"
             '
             'ReceptiveFieldsToolStripMenuItem
             '
-            Me.ReceptiveFieldsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ReceptiveFieldMode_Small.gif")
+            Me.ReceptiveFieldsToolStripMenuItem.Image = CType(resources.GetObject("ReceptiveFieldsToolStripMenuItem.Image"), System.Drawing.Image)
             Me.ReceptiveFieldsToolStripMenuItem.Name = "ReceptiveFieldsToolStripMenuItem"
             Me.ReceptiveFieldsToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.ReceptiveFieldsToolStripMenuItem.Text = "Receptive Fields"
             '
             'SimulationToolStripMenuItem
             '
-            Me.SimulationToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SimulationSelectionMode_Small.gif")
+            Me.SimulationToolStripMenuItem.Image = CType(resources.GetObject("SimulationToolStripMenuItem.Image"), System.Drawing.Image)
             Me.SimulationToolStripMenuItem.Name = "SimulationToolStripMenuItem"
             Me.SimulationToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.SimulationToolStripMenuItem.Text = "Simulation"
             '
+            'AddItemToolStripMenuItem
+            '
+            Me.AddItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStructureToolStripMenuItem, Me.AddOrganismToolStripMenuItem, Me.AddTooToolStripMenuItem, Me.AddBodyPartToolStripMenuItem, Me.AddBodyJointToolStripMenuItem, Me.AddStimulusToolStripMenuItem})
+            Me.AddItemToolStripMenuItem.Name = "AddItemToolStripMenuItem"
+            Me.AddItemToolStripMenuItem.Size = New System.Drawing.Size(41, 20)
+            Me.AddItemToolStripMenuItem.Text = "Add"
+            '
+            'AddStructureToolStripMenuItem
+            '
+            Me.AddStructureToolStripMenuItem.Image = CType(resources.GetObject("AddStructureToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddStructureToolStripMenuItem.Name = "AddStructureToolStripMenuItem"
+            Me.AddStructureToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddStructureToolStripMenuItem.Text = "Add Structure"
+            '
+            'AddOrganismToolStripMenuItem
+            '
+            Me.AddOrganismToolStripMenuItem.Image = CType(resources.GetObject("AddOrganismToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddOrganismToolStripMenuItem.Name = "AddOrganismToolStripMenuItem"
+            Me.AddOrganismToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddOrganismToolStripMenuItem.Text = "Add Organism"
+            '
+            'AddTooToolStripMenuItem
+            '
+            Me.AddTooToolStripMenuItem.Image = CType(resources.GetObject("AddTooToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddTooToolStripMenuItem.Name = "AddTooToolStripMenuItem"
+            Me.AddTooToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddTooToolStripMenuItem.Text = "Add Tool"
+            '
+            'AddBodyPartToolStripMenuItem
+            '
+            Me.AddBodyPartToolStripMenuItem.Image = CType(resources.GetObject("AddBodyPartToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddBodyPartToolStripMenuItem.Name = "AddBodyPartToolStripMenuItem"
+            Me.AddBodyPartToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddBodyPartToolStripMenuItem.Text = "Add Body Part"
+            '
+            'AddBodyJointToolStripMenuItem
+            '
+            Me.AddBodyJointToolStripMenuItem.Enabled = False
+            Me.AddBodyJointToolStripMenuItem.Image = CType(resources.GetObject("AddBodyJointToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddBodyJointToolStripMenuItem.Name = "AddBodyJointToolStripMenuItem"
+            Me.AddBodyJointToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddBodyJointToolStripMenuItem.Text = "Add Body Joint"
+            '
+            'AddStimulusToolStripMenuItem
+            '
+            Me.AddStimulusToolStripMenuItem.Image = CType(resources.GetObject("AddStimulusToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.AddStimulusToolStripMenuItem.Name = "AddStimulusToolStripMenuItem"
+            Me.AddStimulusToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+            Me.AddStimulusToolStripMenuItem.Text = "Add Stimulus"
+            '
+            'HelpToolStripMenuItem
+            '
+            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.TutorialsToolStripMenuItem, Me.WarehouseToolStripMenuItem, Me.SupportToolStripMenuItem, Me.MouseCheatSheetToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem, Me.toolStripSeparatorHelp2, Me.RegisterStripMenuItem})
+            Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+            Me.HelpToolStripMenuItem.Text = "&Help"
+            '
+            'ContentsToolStripMenuItem
+            '
+            Me.ContentsToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpContents
+            Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+            Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.ContentsToolStripMenuItem.Text = "&Contents"
+            '
+            'TutorialsToolStripMenuItem
+            '
+            Me.TutorialsToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
+            Me.TutorialsToolStripMenuItem.Name = "TutorialsToolStripMenuItem"
+            Me.TutorialsToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.TutorialsToolStripMenuItem.Text = "&Tutorials"
+            '
+            'WarehouseToolStripMenuItem
+            '
+            Me.WarehouseToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpIndex
+            Me.WarehouseToolStripMenuItem.Name = "WarehouseToolStripMenuItem"
+            Me.WarehouseToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.WarehouseToolStripMenuItem.Text = "&Warehouse"
+            '
+            'SupportToolStripMenuItem
+            '
+            Me.SupportToolStripMenuItem.Name = "SupportToolStripMenuItem"
+            Me.SupportToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.SupportToolStripMenuItem.Text = "Support"
+            '
+            'MouseCheatSheetToolStripMenuItem
+            '
+            Me.MouseCheatSheetToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
+            Me.MouseCheatSheetToolStripMenuItem.Name = "MouseCheatSheetToolStripMenuItem"
+            Me.MouseCheatSheetToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.MouseCheatSheetToolStripMenuItem.Text = "&Simulation Mouse Controls Guide"
+            '
+            'toolStripSeparator7
+            '
+            Me.toolStripSeparator7.Name = "toolStripSeparator7"
+            Me.toolStripSeparator7.Size = New System.Drawing.Size(249, 6)
+            '
+            'AboutToolStripMenuItem
+            '
+            Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.AboutToolStripMenuItem.Text = "&About..."
+            '
+            'CheckForUpdatesStripMenuItem
+            '
+            Me.CheckForUpdatesStripMenuItem.Name = "CheckForUpdatesStripMenuItem"
+            Me.CheckForUpdatesStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.CheckForUpdatesStripMenuItem.Text = "Check for updates"
+            '
+            'toolStripSeparatorHelp2
+            '
+            Me.toolStripSeparatorHelp2.Name = "toolStripSeparatorHelp2"
+            Me.toolStripSeparatorHelp2.Size = New System.Drawing.Size(249, 6)
+            '
+            'RegisterStripMenuItem
+            '
+            Me.RegisterStripMenuItem.Name = "RegisterStripMenuItem"
+            Me.RegisterStripMenuItem.Size = New System.Drawing.Size(252, 22)
+            Me.RegisterStripMenuItem.Text = "Register AnimatLab Pro"
+            '
+            'AnimatToolStrip
+            '
+            Me.AnimatToolStrip.Dock = System.Windows.Forms.DockStyle.None
+            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.DeleteToolStripButton, Me.toolStripSeparator, Me.HelpToolStripButton, Me.ToolStripSeparator5, Me.AddOrganismStripButton, Me.AddStructureToolStripButton, Me.AddToolToolStripButton, Me.AddPartToolStripButton, Me.AddJointToolStripButton, Me.AddStimulusToolStripButton, Me.ToolStripSeparator9, Me.SelectByTypeToolStripButton, Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, Me.SelSimToolStripButton})
+            Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
+            Me.AnimatToolStrip.Name = "AnimatToolStrip"
+            Me.AnimatToolStrip.SecurityMgr = Nothing
+            Me.AnimatToolStrip.Size = New System.Drawing.Size(496, 25)
+            Me.AnimatToolStrip.TabIndex = 2
+            Me.AnimatToolStrip.ToolName = ""
+            '
+            'NewToolStripButton
+            '
+            Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.NewToolStripButton.Image = CType(resources.GetObject("NewToolStripButton.Image"), System.Drawing.Image)
+            Me.NewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.NewToolStripButton.Name = "NewToolStripButton"
+            Me.NewToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.NewToolStripButton.Text = "&New"
+            '
+            'OpenToolStripButton
+            '
+            Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
+            Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.OpenToolStripButton.Name = "OpenToolStripButton"
+            Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.OpenToolStripButton.Text = "&Open"
+            '
+            'SaveToolStripButton
+            '
+            Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
+            Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SaveToolStripButton.Name = "SaveToolStripButton"
+            Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SaveToolStripButton.Text = "&Save"
+            '
+            'DeleteToolStripButton
+            '
+            Me.DeleteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.DeleteToolStripButton.Image = CType(resources.GetObject("DeleteToolStripButton.Image"), System.Drawing.Image)
+            Me.DeleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.DeleteToolStripButton.Name = "DeleteToolStripButton"
+            Me.DeleteToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.DeleteToolStripButton.Text = "Delete"
+            Me.DeleteToolStripButton.ToolTipText = "Delete selected workspace item"
+            '
+            'toolStripSeparator
+            '
+            Me.toolStripSeparator.Name = "toolStripSeparator"
+            Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
+            '
+            'HelpToolStripButton
+            '
+            Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
+            Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.HelpToolStripButton.Name = "HelpToolStripButton"
+            Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.HelpToolStripButton.Text = "He&lp"
+            '
+            'ToolStripSeparator5
+            '
+            Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+            Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
+            '
+            'AddOrganismStripButton
+            '
+            Me.AddOrganismStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddOrganismStripButton.Image = CType(resources.GetObject("AddOrganismStripButton.Image"), System.Drawing.Image)
+            Me.AddOrganismStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddOrganismStripButton.Name = "AddOrganismStripButton"
+            Me.AddOrganismStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddOrganismStripButton.Text = "Add Organism"
+            '
+            'AddStructureToolStripButton
+            '
+            Me.AddStructureToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddStructureToolStripButton.Image = CType(resources.GetObject("AddStructureToolStripButton.Image"), System.Drawing.Image)
+            Me.AddStructureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddStructureToolStripButton.Name = "AddStructureToolStripButton"
+            Me.AddStructureToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddStructureToolStripButton.Text = "Add Structure"
+            '
+            'AddToolToolStripButton
+            '
+            Me.AddToolToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddToolToolStripButton.Image = CType(resources.GetObject("AddToolToolStripButton.Image"), System.Drawing.Image)
+            Me.AddToolToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddToolToolStripButton.Name = "AddToolToolStripButton"
+            Me.AddToolToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddToolToolStripButton.Text = "Add Data Tool"
+            '
+            'AddPartToolStripButton
+            '
+            Me.AddPartToolStripButton.CheckOnClick = True
+            Me.AddPartToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddPartToolStripButton.Image = CType(resources.GetObject("AddPartToolStripButton.Image"), System.Drawing.Image)
+            Me.AddPartToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddPartToolStripButton.Name = "AddPartToolStripButton"
+            Me.AddPartToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddPartToolStripButton.Text = "AddPartToolStripButton"
+            Me.AddPartToolStripButton.ToolTipText = "Starts 'Add Body' mode so you can click on a parent to add a child part."
+            '
+            'AddJointToolStripButton
+            '
+            Me.AddJointToolStripButton.CheckOnClick = True
+            Me.AddJointToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddJointToolStripButton.Enabled = False
+            Me.AddJointToolStripButton.Image = CType(resources.GetObject("AddJointToolStripButton.Image"), System.Drawing.Image)
+            Me.AddJointToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddJointToolStripButton.Name = "AddJointToolStripButton"
+            Me.AddJointToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddJointToolStripButton.Text = "AddJointToolStripButton"
+            Me.AddJointToolStripButton.ToolTipText = "Adds a new joint between two manually selected parts."
+            '
+            'AddStimulusToolStripButton
+            '
+            Me.AddStimulusToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddStimulusToolStripButton.Image = CType(resources.GetObject("AddStimulusToolStripButton.Image"), System.Drawing.Image)
+            Me.AddStimulusToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddStimulusToolStripButton.Name = "AddStimulusToolStripButton"
+            Me.AddStimulusToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddStimulusToolStripButton.Text = "AddStimulusToolStripButton"
+            Me.AddStimulusToolStripButton.ToolTipText = "Add a stimulus to selected parts."
+            '
+            'ToolStripSeparator9
+            '
+            Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+            Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
+            '
+            'SelectByTypeToolStripButton
+            '
+            Me.SelectByTypeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelectByTypeToolStripButton.Image = CType(resources.GetObject("SelectByTypeToolStripButton.Image"), System.Drawing.Image)
+            Me.SelectByTypeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelectByTypeToolStripButton.Name = "SelectByTypeToolStripButton"
+            Me.SelectByTypeToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelectByTypeToolStripButton.Text = "SelectByTypeToolStripButton"
+            Me.SelectByTypeToolStripButton.ToolTipText = "Select items by type"
+            '
+            'RelabelSelectedToolStripButton
+            '
+            Me.RelabelSelectedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.RelabelSelectedToolStripButton.Image = CType(resources.GetObject("RelabelSelectedToolStripButton.Image"), System.Drawing.Image)
+            Me.RelabelSelectedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.RelabelSelectedToolStripButton.Name = "RelabelSelectedToolStripButton"
+            Me.RelabelSelectedToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.RelabelSelectedToolStripButton.Text = "RelabelSelectedToolStripButton"
+            Me.RelabelSelectedToolStripButton.ToolTipText = "Relabel selected items."
+            '
+            'CompareItemsToolStripButton
+            '
+            Me.CompareItemsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CompareItemsToolStripButton.Image = CType(resources.GetObject("CompareItemsToolStripButton.Image"), System.Drawing.Image)
+            Me.CompareItemsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CompareItemsToolStripButton.Name = "CompareItemsToolStripButton"
+            Me.CompareItemsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CompareItemsToolStripButton.Text = "CompareItemsToolStripButton"
+            Me.CompareItemsToolStripButton.ToolTipText = "Compares the properties of selected items that are the same type."
+            '
+            'EditMaterialsToolStripButton
+            '
+            Me.EditMaterialsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.EditMaterialsToolStripButton.Image = CType(resources.GetObject("EditMaterialsToolStripButton.Image"), System.Drawing.Image)
+            Me.EditMaterialsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.EditMaterialsToolStripButton.Name = "EditMaterialsToolStripButton"
+            Me.EditMaterialsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.EditMaterialsToolStripButton.Text = "EditMaterialsToolStripButton"
+            Me.EditMaterialsToolStripButton.ToolTipText = "Edit Materials"
+            '
+            'ToolStripSeparator10
+            '
+            Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
+            Me.ToolStripSeparator10.Size = New System.Drawing.Size(6, 25)
+            '
+            'SelGraphicsToolStripButton
+            '
+            Me.SelGraphicsToolStripButton.CheckOnClick = True
+            Me.SelGraphicsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelGraphicsToolStripButton.Image = CType(resources.GetObject("SelGraphicsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelGraphicsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelGraphicsToolStripButton.Name = "SelGraphicsToolStripButton"
+            Me.SelGraphicsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelGraphicsToolStripButton.Text = "SelectGraphics"
+            Me.SelGraphicsToolStripButton.ToolTipText = "Select graphics objects only"
+            '
+            'SelCollisionToolStripButton
+            '
+            Me.SelCollisionToolStripButton.CheckOnClick = True
+            Me.SelCollisionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelCollisionToolStripButton.Image = CType(resources.GetObject("SelCollisionToolStripButton.Image"), System.Drawing.Image)
+            Me.SelCollisionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelCollisionToolStripButton.Name = "SelCollisionToolStripButton"
+            Me.SelCollisionToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelCollisionToolStripButton.Text = "Select Collision Objects"
+            Me.SelCollisionToolStripButton.ToolTipText = "Select collision objects only."
+            '
+            'SelJointsToolStripButton
+            '
+            Me.SelJointsToolStripButton.CheckOnClick = True
+            Me.SelJointsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelJointsToolStripButton.Image = CType(resources.GetObject("SelJointsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelJointsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelJointsToolStripButton.Name = "SelJointsToolStripButton"
+            Me.SelJointsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelJointsToolStripButton.Text = "Select Joints"
+            Me.SelJointsToolStripButton.ToolTipText = "Select joints only"
+            '
+            'SelRecFieldsToolStripButton
+            '
+            Me.SelRecFieldsToolStripButton.CheckOnClick = True
+            Me.SelRecFieldsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelRecFieldsToolStripButton.Image = CType(resources.GetObject("SelRecFieldsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelRecFieldsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelRecFieldsToolStripButton.Name = "SelRecFieldsToolStripButton"
+            Me.SelRecFieldsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelRecFieldsToolStripButton.Text = "Select Receptive Fields"
+            Me.SelRecFieldsToolStripButton.ToolTipText = "Select receptive fields only"
+            '
+            'SelSimToolStripButton
+            '
+            Me.SelSimToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelSimToolStripButton.Image = CType(resources.GetObject("SelSimToolStripButton.Image"), System.Drawing.Image)
+            Me.SelSimToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelSimToolStripButton.Name = "SelSimToolStripButton"
+            Me.SelSimToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelSimToolStripButton.Text = "Selection Simulation mode"
+            Me.SelSimToolStripButton.ToolTipText = "Simulation select mode. This allows you to pick and move objects in the simulatio" & _
+        "n using the mouse."
+            '
+            'UndoToolStripMenuItem
+            '
+            Me.UndoToolStripMenuItem.Image = CType(resources.GetObject("UndoToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
+            Me.UndoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+            Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.UndoToolStripMenuItem.Text = "&Undo"
+            '
+            'RedoToolStripMenuItem
+            '
+            Me.RedoToolStripMenuItem.Image = CType(resources.GetObject("RedoToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
+            Me.RedoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
+            Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.RedoToolStripMenuItem.Text = "&Redo"
+            '
             'ConsoleToolStripMenuItem
             '
-            Me.ConsoleToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SimulationSelectionMode_Small.gif")
+            Me.ConsoleToolStripMenuItem.CheckOnClick = True
+            Me.ConsoleToolStripMenuItem.Image = CType(resources.GetObject("ConsoleToolStripMenuItem.Image"), System.Drawing.Image)
             Me.ConsoleToolStripMenuItem.Name = "ConsoleToolStripMenuItem"
             Me.ConsoleToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.ConsoleToolStripMenuItem.Text = "Console"
-            Me.ConsoleToolStripMenuItem.CheckOnClick = True
             '
             'DisplayToolStripMenuItem
             '
@@ -611,363 +977,6 @@ Namespace Forms
             Me.ShowContactsToolStripMenuItem1.Name = "ShowContactsToolStripMenuItem1"
             Me.ShowContactsToolStripMenuItem1.Size = New System.Drawing.Size(214, 22)
             Me.ShowContactsToolStripMenuItem1.Text = "Show Contacts"
-            '
-            'AddItemToolStripMenuItem
-            '
-            Me.AddItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStructureToolStripMenuItem, Me.AddOrganismToolStripMenuItem, Me.AddTooToolStripMenuItem, Me.AddBodyPartToolStripMenuItem, Me.AddBodyJointToolStripMenuItem, Me.AddStimulusToolStripMenuItem})
-            Me.AddItemToolStripMenuItem.Name = "AddItemToolStripMenuItem"
-            Me.AddItemToolStripMenuItem.Size = New System.Drawing.Size(41, 20)
-            Me.AddItemToolStripMenuItem.Text = "Add"
-            '
-            'AddStructureToolStripMenuItem
-            '
-            Me.AddStructureToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddStructure.gif")
-            Me.AddStructureToolStripMenuItem.Name = "AddStructureToolStripMenuItem"
-            Me.AddStructureToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddStructureToolStripMenuItem.Text = "Add Structure"
-            '
-            'AddOrganismToolStripMenuItem
-            '
-            Me.AddOrganismToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddOrganism.gif")
-            Me.AddOrganismToolStripMenuItem.Name = "AddOrganismToolStripMenuItem"
-            Me.AddOrganismToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddOrganismToolStripMenuItem.Text = "Add Organism"
-            '
-            'AddTooToolStripMenuItem
-            '
-            Me.AddTooToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddDataTool.gif")
-            Me.AddTooToolStripMenuItem.Name = "AddTooToolStripMenuItem"
-            Me.AddTooToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddTooToolStripMenuItem.Text = "Add Tool"
-            '
-            'AddBodyPartToolStripMenuItem
-            '
-            Me.AddBodyPartToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddPart.gif")
-            Me.AddBodyPartToolStripMenuItem.Name = "AddBodyPartToolStripMenuItem"
-            Me.AddBodyPartToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddBodyPartToolStripMenuItem.Text = "Add Body Part"
-            '
-            'AddBodyJointToolStripMenuItem
-            '
-            Me.AddBodyJointToolStripMenuItem.Enabled = False
-            Me.AddBodyJointToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddJoint.gif")
-            Me.AddBodyJointToolStripMenuItem.Name = "AddBodyJointToolStripMenuItem"
-            Me.AddBodyJointToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddBodyJointToolStripMenuItem.Text = "Add Body Joint"
-            '
-            'AddStimulusToolStripMenuItem
-            '
-            Me.AddStimulusToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddStimulus.gif")
-            Me.AddStimulusToolStripMenuItem.Name = "AddStimulusToolStripMenuItem"
-            Me.AddStimulusToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
-            Me.AddStimulusToolStripMenuItem.Text = "Add Stimulus"
-            '
-            'HelpToolStripMenuItem
-            '
-            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.TutorialsToolStripMenuItem, _
-                                                                                                      Me.WarehouseToolStripMenuItem, Me.SupportToolStripMenuItem, _
-                                                                                                      Me.MouseCheatSheetToolStripMenuItem, Me.toolStripSeparator7, _
-                                                                                                      Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem, _
-                                                                                                      Me.toolStripSeparatorHelp2, Me.RegisterStripMenuItem})
-            Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-            Me.HelpToolStripMenuItem.Text = "&Help"
-            '
-            'ContentsToolStripMenuItem
-            '
-            Me.ContentsToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpContents
-            Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-            Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.ContentsToolStripMenuItem.Text = "&Contents"
-            '
-            'WarehouseToolStripMenuItem
-            '
-            Me.WarehouseToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpIndex
-            Me.WarehouseToolStripMenuItem.Name = "WarehouseToolStripMenuItem"
-            Me.WarehouseToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.WarehouseToolStripMenuItem.Text = "&Warehouse"
-            '
-            'TutorialsToolStripMenuItem
-            '
-            Me.TutorialsToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
-            Me.TutorialsToolStripMenuItem.Name = "TutorialsToolStripMenuItem"
-            Me.TutorialsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.TutorialsToolStripMenuItem.Text = "&Tutorials"
-            '
-            'TutorialsToolStripMenuItem
-            '
-            Me.MouseCheatSheetToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.HelpSearch
-            Me.MouseCheatSheetToolStripMenuItem.Name = "MouseCheatSheetToolStripMenuItem"
-            Me.MouseCheatSheetToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.MouseCheatSheetToolStripMenuItem.Text = "&Simulation Mouse Controls Guide"
-            '
-            'SupportToolStripMenuItem
-            '
-            Me.SupportToolStripMenuItem.Name = "SupportToolStripMenuItem"
-            Me.SupportToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.SupportToolStripMenuItem.Text = "Support"
-            '
-            'toolStripSeparator7
-            '
-            Me.toolStripSeparator7.Name = "toolStripSeparator7"
-            Me.toolStripSeparator7.Size = New System.Drawing.Size(119, 6)
-            '
-            'AboutToolStripMenuItem
-            '
-            Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.AboutToolStripMenuItem.Text = "&About..."
-            '
-            'AboutToolStripMenuItem
-            '
-            Me.CheckForUpdatesStripMenuItem.Name = "CheckForUpdatesStripMenuItem"
-            Me.CheckForUpdatesStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.CheckForUpdatesStripMenuItem.Text = "Check for updates"
-            '
-            'toolStripSeparator7
-            '
-            Me.toolStripSeparatorHelp2.Name = "toolStripSeparatorHelp2"
-            Me.toolStripSeparatorHelp2.Size = New System.Drawing.Size(119, 6)
-            '
-            'AboutToolStripMenuItem
-            '
-            Me.RegisterStripMenuItem.Name = "RegisterStripMenuItem"
-            Me.RegisterStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.RegisterStripMenuItem.Text = "Register AnimatLab Pro"
-            '
-            'AnimatToolStrip
-            '
-            Me.AnimatToolStrip.Dock = System.Windows.Forms.DockStyle.None
-            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, _
-                                                                                        Me.DeleteToolStripButton, Me.toolStripSeparator, Me.HelpToolStripButton, _
-                                                                                        Me.ToolStripSeparator5, Me.AddOrganismStripButton, _
-                                                                                        Me.AddStructureToolStripButton, Me.AddToolToolStripButton, _
-                                                                                        Me.AddPartToolStripButton, Me.AddJointToolStripButton, _
-                                                                                        Me.AddStimulusToolStripButton, Me.ToolStripSeparator9, _
-                                                                                        Me.SelectByTypeToolStripButton, _
-                                                                                        Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, _
-                                                                                        Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, _
-                                                                                        Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, _
-                                                                                        Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, _
-                                                                                        Me.SelSimToolStripButton})
-            ', Me.DisplayModeDropDown
-            Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
-            Me.AnimatToolStrip.Name = "AnimatToolStrip"
-            Me.AnimatToolStrip.SecurityMgr = Nothing
-            Me.AnimatToolStrip.Size = New System.Drawing.Size(657, 25)
-            Me.AnimatToolStrip.TabIndex = 2
-            Me.AnimatToolStrip.ToolName = ""
-            '
-            'NewToolStripButton
-            '
-            Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.NewToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.NewProject.gif")
-            Me.NewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.NewToolStripButton.Name = "NewToolStripButton"
-            Me.NewToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.NewToolStripButton.Text = "&New"
-            '
-            'OpenToolStripButton
-            '
-            Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.OpenToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Open_Toolbar.gif")
-            Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.OpenToolStripButton.Name = "OpenToolStripButton"
-            Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.OpenToolStripButton.Text = "&Open"
-            '
-            'SaveToolStripButton
-            '
-            Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SaveToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Save_Toolbar.gif")
-            Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SaveToolStripButton.Name = "SaveToolStripButton"
-            Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SaveToolStripButton.Text = "&Save"
-            '
-            'DeleteToolStripButton
-            '
-            Me.DeleteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.DeleteToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Delete.gif")
-            Me.DeleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.DeleteToolStripButton.Name = "DeleteToolStripButton"
-            Me.DeleteToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.DeleteToolStripButton.Text = "Delete"
-            Me.DeleteToolStripButton.ToolTipText = "Delete selected workspace item"
-            '
-            'toolStripSeparator
-            '
-            Me.toolStripSeparator.Name = "toolStripSeparator"
-            Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
-            '
-            'HelpToolStripButton
-            '
-            Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
-            Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.HelpToolStripButton.Name = "HelpToolStripButton"
-            Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.HelpToolStripButton.Text = "He&lp"
-            '
-            'ToolStripSeparator5
-            '
-            Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-            Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
-            '
-            'AddOrganismStripButton
-            '
-            Me.AddOrganismStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddOrganismStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddOrganism.gif")
-            Me.AddOrganismStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddOrganismStripButton.Name = "AddOrganismStripButton"
-            Me.AddOrganismStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddOrganismStripButton.Text = "Add Organism"
-            '
-            'AddStructureToolStripButton
-            '
-            Me.AddStructureToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddStructureToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddStructure.gif")
-            Me.AddStructureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddStructureToolStripButton.Name = "AddStructureToolStripButton"
-            Me.AddStructureToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddStructureToolStripButton.Text = "Add Structure"
-            '
-            'AddToolToolStripButton
-            '
-            Me.AddToolToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddToolToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddDataTool.gif")
-            Me.AddToolToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddToolToolStripButton.Name = "AddToolToolStripButton"
-            Me.AddToolToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddToolToolStripButton.Text = "Add Data Tool"
-            '
-            'AddPartToolStripButton
-            '
-            Me.AddPartToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddPartToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddPart.gif")
-            Me.AddPartToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddPartToolStripButton.Name = "AddPartToolStripButton"
-            Me.AddPartToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddPartToolStripButton.Text = "AddPartToolStripButton"
-            Me.AddPartToolStripButton.ToolTipText = "Starts 'Add Body' mode so you can click on a parent to add a child part."
-            Me.AddPartToolStripButton.CheckOnClick = True
-            '
-            'AddJointToolStripButton
-            '
-            Me.AddJointToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddJointToolStripButton.Enabled = False
-            Me.AddJointToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddJoint.gif")
-            Me.AddJointToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddJointToolStripButton.Name = "AddJointToolStripButton"
-            Me.AddJointToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddJointToolStripButton.Text = "AddJointToolStripButton"
-            Me.AddJointToolStripButton.ToolTipText = "Adds a new joint between two manually selected parts."
-            Me.AddJointToolStripButton.CheckOnClick = True
-            '
-            'AddStimulusToolStripButton
-            '
-            Me.AddStimulusToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddStimulusToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AddStimulus.gif")
-            Me.AddStimulusToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddStimulusToolStripButton.Name = "AddStimulusToolStripButton"
-            Me.AddStimulusToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddStimulusToolStripButton.Text = "AddStimulusToolStripButton"
-            Me.AddStimulusToolStripButton.ToolTipText = "Add a stimulus to selected parts."
-            '
-            'ToolStripSeparator9
-            '
-            Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-            Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
-            '
-            'SelectByTypeToolStripButton
-            '
-            Me.SelectByTypeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelectByTypeToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SelectByType.gif")
-            Me.SelectByTypeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelectByTypeToolStripButton.Name = "SelectByTypeToolStripButton"
-            Me.SelectByTypeToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelectByTypeToolStripButton.Text = "SelectByTypeToolStripButton"
-            Me.SelectByTypeToolStripButton.ToolTipText = "Select items by type"
-            '
-            'RelabelSelectedToolStripButton
-            '
-            Me.RelabelSelectedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.RelabelSelectedToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.RelabelSelected.gif")
-            Me.RelabelSelectedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.RelabelSelectedToolStripButton.Name = "RelabelSelectedToolStripButton"
-            Me.RelabelSelectedToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.RelabelSelectedToolStripButton.Text = "RelabelSelectedToolStripButton"
-            Me.RelabelSelectedToolStripButton.ToolTipText = "Relabel selected items."
-            '
-            'CompareItemsToolStripButton
-            '
-            Me.CompareItemsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.CompareItemsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Equals.gif")
-            Me.CompareItemsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CompareItemsToolStripButton.Name = "CompareItemsToolStripButton"
-            Me.CompareItemsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.CompareItemsToolStripButton.Text = "CompareItemsToolStripButton"
-            Me.CompareItemsToolStripButton.ToolTipText = "Compares the properties of selected items that are the same type."
-            '
-            'ToolStripSeparator10
-            '
-            Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-            Me.ToolStripSeparator10.Size = New System.Drawing.Size(6, 25)
-            '
-            'SelGraphicsToolStripButton
-            '
-            Me.SelGraphicsToolStripButton.CheckOnClick = True
-            Me.SelGraphicsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelGraphicsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.GraphicsSelectionMode_Small.gif")
-            Me.SelGraphicsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelGraphicsToolStripButton.Name = "SelGraphicsToolStripButton"
-            Me.SelGraphicsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelGraphicsToolStripButton.Text = "SelectGraphics"
-            Me.SelGraphicsToolStripButton.ToolTipText = "Select graphics objects only"
-            '
-            'SelCollisionToolStripButton
-            '
-            Me.SelCollisionToolStripButton.CheckOnClick = True
-            Me.SelCollisionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelCollisionToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CollisionSelectionMode_Small.gif")
-            Me.SelCollisionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelCollisionToolStripButton.Name = "SelCollisionToolStripButton"
-            Me.SelCollisionToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelCollisionToolStripButton.Text = "Select Collision Objects"
-            Me.SelCollisionToolStripButton.ToolTipText = "Select collision objects only."
-            '
-            'SelJointsToolStripButton
-            '
-            Me.SelJointsToolStripButton.CheckOnClick = True
-            Me.SelJointsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelJointsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.JointSelectionMode_Small.gif")
-            Me.SelJointsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelJointsToolStripButton.Name = "SelJointsToolStripButton"
-            Me.SelJointsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelJointsToolStripButton.Text = "Select Joints"
-            Me.SelJointsToolStripButton.ToolTipText = "Select joints only"
-            '
-            'SelRecFieldsToolStripButton
-            '
-            Me.SelRecFieldsToolStripButton.CheckOnClick = True
-            Me.SelRecFieldsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelRecFieldsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ReceptiveFieldMode_Small.gif")
-            Me.SelRecFieldsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelRecFieldsToolStripButton.Name = "SelRecFieldsToolStripButton"
-            Me.SelRecFieldsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelRecFieldsToolStripButton.Text = "Select Receptive Fields"
-            Me.SelRecFieldsToolStripButton.ToolTipText = "Select receptive fields only"
-            '
-            'SelSimToolStripButton
-            '
-            Me.SelSimToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelSimToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SimulationSelectionMode_Small.gif")
-            Me.SelSimToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelSimToolStripButton.Name = "SelSimToolStripButton"
-            Me.SelSimToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelSimToolStripButton.Text = "Selection Simulation mode"
-            Me.SelSimToolStripButton.ToolTipText = "Simulation select mode. This allows you to pick and move objects in the simulatio" & _
-                "n using the mouse."
             '
             'DisplayModeDropDown
             '
@@ -1023,31 +1032,20 @@ Namespace Forms
             Me.ShowContactsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
             Me.ShowContactsToolStripMenuItem.Text = "Show Contacts"
             '
-            'EditMaterialsToolStripButton
+            'ConvertPhysicsEngineToolStripMenuItem
             '
-            Me.EditMaterialsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.EditMaterialsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.EditMaterials.gif")
-            Me.EditMaterialsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.EditMaterialsToolStripButton.Name = "EditMaterialsToolStripButton"
-            Me.EditMaterialsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.EditMaterialsToolStripButton.Text = "EditMaterialsToolStripButton"
-            Me.EditMaterialsToolStripButton.ToolTipText = "Edit Materials"
+            Me.ConvertPhysicsEngineToolStripMenuItem.Name = "ConvertPhysicsEngineToolStripMenuItem"
+            Me.ConvertPhysicsEngineToolStripMenuItem.Size = New System.Drawing.Size(197, 22)
+            Me.ConvertPhysicsEngineToolStripMenuItem.Text = "Convert Physics Engine"
+            Me.ConvertPhysicsEngineToolStripMenuItem.Enabled = True
             '
-            'EditMaterialsToolStripMenuItem
-            '
-            Me.EditMaterialsToolStripMenuItem.Name = "EditMaterialsToolStripMenuItem"
-            Me.EditMaterialsToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.EditMaterialsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.EditMaterials.gif")
-            Me.EditMaterialsToolStripMenuItem.Text = "Edit Materials"
-            '
-            'AnimatApplication_ToolStrips
+            'AnimatApplication
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
             Me.ClientSize = New System.Drawing.Size(713, 283)
             Me.Controls.Add(Me.AnimatStripContainer)
             Me.MainMenuStrip = Me.AnimatMenuStrip
-            Me.Name = "AnimatApplication_ToolStrips"
-            Me.Text = "AnimatLab"
+            Me.Name = "AnimatApplication"
             Me.AnimatStripContainer.ContentPanel.ResumeLayout(False)
             Me.AnimatStripContainer.TopToolStripPanel.ResumeLayout(False)
             Me.AnimatStripContainer.TopToolStripPanel.PerformLayout()
@@ -1129,6 +1127,14 @@ Namespace Forms
         Protected m_aryMacros As New Collections.Macros(Nothing)
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
         Protected m_aryProjectMigrations As New Hashtable()
+        Protected m_aryPhysicsEngines As New Collections.PhysicsEngines(Nothing)
+        Protected m_aryMotorControlSystems As New Collections.MotorControlSystems(Nothing)
+        Protected m_aryInputSystems As New Collections.InputSystems(Nothing)
+        Protected m_aryRobotPartInterfaces As New Collections.RobotPartInterfaces(Nothing)
+        Protected m_aryRobotInterfaces As New Collections.RobotInterfaces(Nothing)
+        Protected m_aryRobotIOControls As New Collections.RobotIOControls(Nothing)
+        Protected m_aryScriptProcessors As New Collections.ScriptProcessors(Nothing)
+        Protected m_aryRemoteControlLinkages As New Collections.RemoteControlLinkages(Nothing)
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1199,6 +1205,8 @@ Namespace Forms
 
         Protected m_SplashTimer As New System.Timers.Timer
 
+        Protected m_bStoppingSimulation As Boolean = False
+
 #Region " Preferences "
 
         Protected m_strDefaultNewFolder As String = ""
@@ -1215,6 +1223,7 @@ Namespace Forms
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
+        Protected m_doPhysics As DataObjects.Physical.PhysicsEngine = New DataObjects.Physical.PhysicsEngines.VortexPhysicsEngine(Nothing)
 
 #End Region
 
@@ -1274,13 +1283,9 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RuntimeModePrefix() As String
+        Public Overridable ReadOnly Property Physics() As DataObjects.Physical.PhysicsEngine
             Get
-#If DEBUG Then
-                Return "D"
-#Else
-                Return ""
-#End If
+                Return m_doPhysics
             End Get
         End Property
 
@@ -1596,6 +1601,56 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property PhysicsEngines() As Collections.PhysicsEngines
+            Get
+                Return m_aryPhysicsEngines
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property MotorControlSystems() As Collections.MotorControlSystems
+            Get
+                Return m_aryMotorControlSystems
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property InputSystems() As Collections.InputSystems
+            Get
+                Return m_aryInputSystems
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RobotPartInterfaces() As Collections.RobotPartInterfaces
+            Get
+                Return m_aryRobotPartInterfaces
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RobotInterfaces() As Collections.RobotInterfaces
+            Get
+                Return m_aryRobotInterfaces
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RobotIOControls() As Collections.RobotIOControls
+            Get
+                Return m_aryRobotIOControls
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ScriptProcessors() As Collections.ScriptProcessors
+            Get
+                Return m_aryScriptProcessors
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property RemoteControlLinkages() As Collections.RemoteControlLinkages
+            Get
+                Return m_aryRemoteControlLinkages
+            End Get
+        End Property
+
+
+
         'Public Overridable Property SimWindowLocation() As System.Drawing.Point
         '    Get
         '        Return m_ptSimWindowLocation
@@ -1856,7 +1911,6 @@ Namespace Forms
             Try
                 Util.DisableDirtyFlags = True
                 Util.Application = Me
-                Me.Title = "AnimatLab"
 
                 m_doSimInterface = CreateSimInterface()
 
@@ -1897,6 +1951,12 @@ Namespace Forms
                 Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectGraphics
 
                 Me.AppStatusText = ""
+
+                If Me.SecurityMgr.IsValidSerialNumber Then
+                    Me.Title = "AnimatLab Pro"
+                Else
+                    Me.Title = "AnimatLab"
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -2168,7 +2228,6 @@ Namespace Forms
                 'Now inform any interested part that the units have changed
                 RaiseEvent UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDist, eNewDistance, fltDistanceChange)
 
-                'TODO: Need to refactor this so we do not have to save and reload entire project.
                 SaveProject(Me.ProjectPath & Me.ProjectFile)
                 LoadProject(Me.ProjectPath & Me.ProjectFile)
 
@@ -2216,6 +2275,17 @@ Namespace Forms
                 m_aryGainTypes.Clear()
                 m_aryMacros.Clear()
                 m_aryExternalStimuli.Clear()
+                m_aryPhysicsEngines.Clear()
+                m_aryMotorControlSystems.Clear()
+                m_aryInputSystems.Clear()
+                m_aryRobotPartInterfaces.Clear()
+                m_aryRobotInterfaces.Clear()
+                m_aryRobotIOControls.Clear()
+                m_aryScriptProcessors.Clear()
+                m_aryProjectMigrations.Clear()
+                m_aryRemoteControlLinkages.Clear()
+
+                DataObjects.Physical.MaterialType.ClearRegisteredMaterialTypes()
 
                 Util.DisableDirtyFlags = True
 
@@ -2385,6 +2455,63 @@ Namespace Forms
                                 Dim doConv As DataObjects.ProjectMigration = CreateProjectMigration(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
                                     m_aryProjectMigrations.Add(doConv.ConvertFrom, doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.MaterialType), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.MaterialType")
+                                Dim doConv As DataObjects.Physical.MaterialType = CreateMaterialType(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    doConv.RegisterMaterialType()
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.PhysicsEngine), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.PhysicsEngine")
+                                Dim doConv As DataObjects.Physical.PhysicsEngine = CreatePhysicsEngine(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryPhysicsEngines.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.MotorControlSystem), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.MotorControlSystem")
+                                Dim doConv As DataObjects.Robotics.MotorControlSystem = CreateMotorControlSystem(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryMotorControlSystems.Add(doConv)
+                                    m_aryRobotPartInterfaces.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.InputSystem), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.InputSystem")
+                                Dim doConv As DataObjects.Robotics.InputSystem = CreateInputSystem(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryInputSystems.Add(doConv)
+                                    m_aryRobotPartInterfaces.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.RobotInterface), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.RobotInterface")
+                                Dim doConv As DataObjects.Robotics.RobotInterface = CreateRobotInterface(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryRobotInterfaces.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.RobotIOControl), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.RobotIOControl")
+                                Dim doConv As DataObjects.Robotics.RobotIOControl = CreateRobotIOControl(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryRobotIOControls.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Scripting.ScriptProcessor), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Scripting.ScriptProcessor")
+                                Dim doConv As DataObjects.Scripting.ScriptProcessor = CreateScriptProcessor(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryScriptProcessors.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Robotics.RemoteControlLinkage), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Robotics.RemoteControlLinkage")
+                                Dim doConv As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = CreateRemoteControlLinkage(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryRemoteControlLinkages.Add(doConv)
+                                    m_aryAllDataTypes.Add(doConv)
                                 End If
                             End If
                         Next
@@ -2587,6 +2714,151 @@ Namespace Forms
 
         End Function
 
+        Protected Overridable Function CreateMaterialType(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Physical.MaterialType
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Physical.MaterialType = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Physical.MaterialType)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateMaterialType: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreatePhysicsEngine(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Physical.PhysicsEngine
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Physical.PhysicsEngine = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Physical.PhysicsEngine)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreatePhysicsEngine: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreatePhysicsEngine(ByVal strName As String, ByVal strVersion As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.Physical.PhysicsEngine
+
+            For Each doEngine As DataObjects.Physical.PhysicsEngine In m_aryPhysicsEngines
+                If doEngine.Name.ToUpper = strName.ToUpper Then
+                    Dim doRetEngine As DataObjects.Physical.PhysicsEngine = DirectCast(doEngine.Clone(Nothing, False, Nothing), DataObjects.Physical.PhysicsEngine)
+                    doRetEngine.SetLibraryVersion(strVersion, True)
+                    Return doRetEngine
+                End If
+            Next
+
+            If bThrowException Then
+                Throw New System.Exception("No physics engine with the name '" & strName & "' was found in the plug-in modules.")
+            End If
+
+            Return Nothing
+        End Function
+
+        Protected Overridable Function CreateMotorControlSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.MotorControlSystem
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.MotorControlSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.MotorControlSystem)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateMotorControlSystem: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateInputSystem(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.InputSystem
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.InputSystem = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.InputSystem)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateInputSystem: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateRobotInterface(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.RobotInterface
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.RobotInterface = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.RobotInterface)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateRobotInterface: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateRobotIOControl(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Robotics.RobotIOControl
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Robotics.RobotIOControl = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Robotics.RobotIOControl)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateRobotIOControl: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateScriptProcessor(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Scripting.ScriptProcessor
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.Scripting.ScriptProcessor = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Scripting.ScriptProcessor)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateScriptProcessor: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateRemoteControlLinkage(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As AnimatGUI.DataObjects.Robotics.RemoteControlLinkage = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), AnimatGUI.DataObjects.Robotics.RemoteControlLinkage)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateRemoteControlLinkage: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
         Protected Overridable Sub CreateBehavioralPanels()
 
             Try
@@ -2643,7 +2915,6 @@ Namespace Forms
 
                 'Now sort the panels
                 m_aryAlphabeticalBehavioralPanels.Sort(New AnimatGUI.Collections.Comparers.ComparePanelNames)
-
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3162,12 +3433,18 @@ Namespace Forms
 
             Me.ClearIsDirty()
 
-            Me.Title = "AnimatLab"
+            If Me.SecurityMgr.IsValidSerialNumber Then
+                Me.Title = "AnimatLab Pro"
+            Else
+                Me.Title = "AnimatLab"
+            End If
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
+        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean, ByVal bIncludeWindows As Boolean, _
+                                                   ByVal doPhysics As DataObjects.Physical.PhysicsEngine, ByVal doRobotInterface As DataObjects.Robotics.RobotInterface) As ManagedAnimatInterfaces.IStdXml
+            Dim doOrigPhysics As DataObjects.Physical.PhysicsEngine = m_doPhysics
 
             Try
                 Me.AppIsBusy = True
@@ -3177,6 +3454,13 @@ Namespace Forms
                 Util.ExportChartsToFile = bSaveChartsToFile
                 Util.ExportChartsInStandAloneSim = bIncludeCharts
                 Util.ExportStimsInStandAloneSim = bIncludeStims
+                Util.ExportWindowsToFile = bIncludeWindows
+                Util.ExportRobotInterface = doRobotInterface
+                Util.ExportPhysicsEngine = doPhysics
+
+                If Not Util.ExportPhysicsEngine Is Nothing Then
+                    m_doPhysics = Util.ExportPhysicsEngine
+                End If
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
@@ -3191,6 +3475,9 @@ Namespace Forms
                 Util.ExportForStandAloneSim = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
+                Util.ExportWindowsToFile = False
+                Util.ExportRobotInterface = Nothing
+                m_doPhysics = doOrigPhysics
                 Me.AppIsBusy = False
             End Try
 
@@ -3275,7 +3562,9 @@ Namespace Forms
 
                 Me.ClearIsDirty()
 
-                Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+                Dim strPro As String = ""
+                If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
 
@@ -3291,10 +3580,15 @@ Namespace Forms
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Attempted to load an old project version file: '" & strFilename & "', Old Version: " & exOldVersion.OldVersion)
                 Me.CloseProject(False)
 
-                If Util.ShowMessage("The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
-                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. ", _
-                                 "Convert Project", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion)
+                Dim frmConvert As New ConvertPhysics
+                frmConvert.lblSaveMessage.Text = "The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
+                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. "
+                frmConvert.Text = "Convert Project"
+                frmConvert.lblCurrentPhysics.Visible = False
+                frmConvert.lblNewPhysics.Text = "Please choose the physics engine for the conversion"
+                frmConvert.ShowAllPhysicsOptions = True
+                If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
+                    RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion, frmConvert.cboPhysicsEngine.SelectedItem.ToString)
                 Else
                     Throw exOldVersion
                 End If
@@ -3316,19 +3610,22 @@ Namespace Forms
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
+                Dim frmExport As New ExportStandaloneSim()
+                frmExport.Physics = Util.Application.Physics
+                If frmExport.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                    Return
+                End If
+
                 Me.AppIsBusy = True
 
                 Me.ClearIsDirty()
 
-                Dim strFilename As String = Me.ProjectName & "_Standalone.asim"
+                Dim strFilename As String = frmExport.txtProjectName.Text
 
                 Util.DisableDirtyFlags = True
-                Util.ExportForStandAloneSim = True
-                Util.ExportChartsInStandAloneSim = True
-                Util.ExportStimsInStandAloneSim = True
-                Util.ExportChartsToFile = True
 
-                Util.Simulation.SaveSimulationXml(strFilename)
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = SaveStandAlone(True, True, True, frmExport.chkShowGraphics.Checked, frmExport.Physics, Nothing)
+                oXml.Save(Util.Application.ProjectPath & "\" & strFilename)
 
                 Util.DisableDirtyFlags = False
 
@@ -3345,6 +3642,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
                 Util.ExportChartsToFile = False
+                Util.ExportWindowsToFile = False
                 Me.AppIsBusy = False
             End Try
         End Sub
@@ -3370,6 +3668,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = True
                 Util.ExportStimsInStandAloneSim = True
                 Util.ExportChartsToFile = True
+                Util.ExportWindowsToFile = True
 
                 Util.Simulation.SaveSimulationXml(strFilename)
 
@@ -3388,6 +3687,7 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
                 Util.ExportChartsToFile = False
+                Util.ExportWindowsToFile = False
                 Me.AppIsBusy = False
             End Try
 
@@ -3420,26 +3720,27 @@ Namespace Forms
             m_bAutomation_ExportedChartData = bRetVal
         End Sub
 
-        Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
+        Public Overridable Sub CopyChartData(ByVal strPhysicsEngine As String, Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CopyChartData(strPath, strPrefix)
+                    frmChart.CopyChartData(strPhysicsEngine, strPath, strPrefix)
                 End If
             Next
         End Sub
 
-        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
+        Public Overridable Sub CompareExportedDataCharts(ByVal strPhysicsEngine As String, ByVal strPrefix As String, ByVal strTemplatePath As String, _
+                                                         ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer, ByVal aryIgnoreRows As ArrayList)
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CompareExportedData(strPrefix, strTemplatePath, aryMaxErrors, iMaxRows, aryIgnoreRows)
+                    frmChart.CompareExportedData(strPhysicsEngine, strPrefix, strTemplatePath, aryMaxErrors, iMaxRows, aryIgnoreRows)
                 End If
             Next
 
@@ -3473,6 +3774,16 @@ Namespace Forms
 
                 If eLogLevel <> Me.Logger.TraceLevel Then
                     Me.Logger.TraceLevel = eLogLevel
+                End If
+
+                Dim doOldEngine As DataObjects.Physical.PhysicsEngine = m_doPhysics
+                Dim strVersion As String = oXml.GetChildString("LibraryVersion", "Double")
+                m_doPhysics = CreatePhysicsEngine(oXml.GetChildString("Physics", "Vortex"), strVersion)
+
+                'If the physics engine has changed then recreate the list of plugin modules with the new physics engine.
+                If Not doOldEngine Is m_doPhysics Then
+                    CatalogPluginModules()
+                    doOldEngine = Nothing
                 End If
 
                 Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
@@ -3625,6 +3936,8 @@ Namespace Forms
                 oXml.AddChildElement("SimulationFile", Me.SimulationFile)
                 oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
                 oXml.AddChildElement("Version", Me.XmlVersion)
+                oXml.AddChildElement("Physics", Me.Physics.Name)
+                oXml.AddChildElement("LibraryVersion", Me.Physics.LibraryVersion.ID)
 
                 m_doSimulation.SaveData(oXml)
 
@@ -4304,9 +4617,13 @@ Namespace Forms
 
                 Me.AppIsBusy = True
 
-                Me.SimulationInterface.PauseSimulation()
-                RaiseEvent SimulationStopped()
-                Me.SimulationInterface.StopSimulation()
+                If Not m_bStoppingSimulation Then
+                    m_bStoppingSimulation = True
+                    Me.SimulationInterface.PauseSimulation()
+                    RaiseEvent SimulationStopped()
+                    Me.SimulationInterface.StopSimulation()
+                    m_bStoppingSimulation = False
+                End If
 
                 Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Simulation was stopped.")
 
@@ -5159,6 +5476,22 @@ Namespace Forms
             Return oRet
         End Function
 
+        Public Overridable Function ExecuteDirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+
+            If Util.ActiveDialogs.Count = 0 Then
+                Throw New System.Exception("No dialog is currently active.")
+            End If
+
+            Dim oDlg As Object = Util.ActiveDialogs(Util.ActiveDialogs.Count - 1)
+            Dim oMethod As MethodInfo = oDlg.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
+            Dim oRet As Object = oMethod.Invoke(oDlg, aryParams)
+            Return oRet
+        End Function
+
         Public Sub ExecuteIndirecActiveDialogtMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
             Me.InternalAutomationMethodInProgress = True
 
@@ -5240,6 +5573,48 @@ Namespace Forms
             Return oMethod.Invoke(oObj, aryParams)
 
         End Function
+
+        Public Sub ReloadSimulation(ByVal bIndirect As Boolean)
+
+            Try
+                If bIndirect Then
+                    m_timerAutomation = New System.Timers.Timer(10)
+                    AddHandler m_timerAutomation.Elapsed, AddressOf Me.ReloadSimulationTimer
+                    m_timerAutomation.Enabled = True
+                Else
+                    SaveProject(Me.ProjectPath & Me.ProjectFile)
+                    LoadProject(Me.ProjectPath & Me.ProjectFile)
+                End If
+
+            Catch ex As Exception
+                Throw ex
+            End Try
+        End Sub
+
+        Private Delegate Sub ReloadSimulationDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub ReloadSimulationTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New ReloadSimulationDelegate(AddressOf ReloadSimulationTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf ReloadSimulationTimer
+                m_timerAutomation = Nothing
+
+                SaveProject(Me.ProjectPath & Me.ProjectFile)
+                LoadProject(Me.ProjectPath & Me.ProjectFile)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
 #End Region
 
 #Region "Toolstrip Handlers "
@@ -5427,7 +5802,7 @@ Namespace Forms
             m_doSimulation.NotifySimTimeStepChanged()
         End Sub
 
-        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal iOldVersion As Integer)
+        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strPhysics As String)
 
         Public Overridable Sub SignalBeforeAddNode(ByVal doNode As DataObjects.Behavior.Node)
             RaiseEvent BeforeAddNode(doNode)
@@ -5489,6 +5864,7 @@ Namespace Forms
                 Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Showing new project dialog")
 
                 frmNewProject.txtProjectName.Text = "NewProject"
+                frmNewProject.AllowUserToChoosePhysicsSystem = True
                 If frmNewProject.ShowDialog = DialogResult.OK Then
                     Me.AppIsBusy = True
 
@@ -5502,7 +5878,23 @@ Namespace Forms
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+
+                    Dim strPro As String = ""
+                    If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                    Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
+
+                    Dim doOldEngine As DataObjects.Physical.PhysicsEngine = m_doPhysics
+                    m_doPhysics = DirectCast(frmNewProject.cboPhysicsEngine.SelectedItem, DataObjects.Physical.PhysicsEngine)
+
+                    If m_doPhysics Is Nothing Then
+                        Throw New System.Exception("No physics engine defined in new project dialog.")
+                    End If
+
+                    'If the physics engine has changed then recreate the list of plugin modules with the new physics engine.
+                    If Not doOldEngine Is m_doPhysics Then
+                        CatalogPluginModules()
+                        doOldEngine = Nothing
+                    End If
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
 
@@ -5510,6 +5902,10 @@ Namespace Forms
                     System.IO.Directory.CreateDirectory(Util.Application.ProjectPath)
 
                     ResetProject(True)
+
+                    Util.Environment.MassUnits = frmNewProject.MassUnits
+                    Util.Environment.DistanceUnits = frmNewProject.DistanceUnits
+                    Util.Application.Physics.SetDefaultLibraryVersion()
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "About to call SaveProject")
 
@@ -5578,7 +5974,7 @@ Namespace Forms
                 frmSave.txtProjectName.Text = Me.ProjectName
                 frmSave.txtLocation.Text = Util.RemoveStringSections(Me.ProjectPath, "\", 1)
                 frmSave.Text = "Save Project As .."
-                frmSave.Size = New Size(318, 168)
+                frmSave.AllowUserToChoosePhysicsSystem = False
 
                 If frmSave.ShowDialog = DialogResult.OK Then
                     'Copy the current project directory
@@ -5600,7 +5996,10 @@ Namespace Forms
                     Util.Application.ProjectName = frmSave.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
+
+                    Dim strPro As String = ""
+                    If SecurityMgr.IsValidSerialNumber Then strPro = "Pro "
+                    Me.Title = "AnimatLab " & strPro & Me.ProjectName & " Project"
 
                     Me.AppIsBusy = True
 
@@ -5636,8 +6035,41 @@ Namespace Forms
             End Try
         End Sub
 
+        Private Sub ConvertPhysicsEngineToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ConvertPhysicsEngineToolStripMenuItem.Click
+            Try
+
+                Dim frmConvert As New Forms.ConvertPhysics()
+                If frmConvert.ShowDialog() = Windows.Forms.DialogResult.Yes Then
+                    'First save the current project.
+                    SaveProject(Me.ProjectFile)
+                    If ConvertPhysicsEngine(Util.Application.Physics.Name, frmConvert.cboPhysicsEngine.SelectedItem.ToString) Then
+                        'Now reopen the converted project.
+                        LoadProject(Me.ProjectPath & Me.ProjectFile)
+                    End If
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Overridable Function FindProjectMigration(ByVal strFrom As String, ByVal strTo As String, Optional ByVal bThrowException As Boolean = True) As DataObjects.ProjectMigration
+
+            For Each deEntry As DictionaryEntry In m_aryProjectMigrations
+                Dim doMigration As DataObjects.ProjectMigration = DirectCast(deEntry.Value, DataObjects.ProjectMigration)
+                If doMigration.ConvertFrom = strFrom AndAlso doMigration.ConvertTo = strTo Then
+                    Return doMigration
+                End If
+            Next
+
+            If bThrowException Then
+                Throw New System.Exception("No project conversion was found to convert from '" & strFrom & "' to '" & strTo & "'")
+            End If
+            Return Nothing
+        End Function
+
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
-            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False)
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False, False, Nothing, Nothing)
             strXml = oXml.Serialize()
         End Sub
 
@@ -5716,6 +6148,7 @@ Namespace Forms
         Protected Overridable Sub OnShutDownTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
             Try
                 m_timerShutdown.Enabled = False
+                RemoveHandler m_timerShutdown.Elapsed, AddressOf Me.OnShutDownTimer
 
                 If Me.InvokeRequired Then
                     Me.Invoke(New OnHandleShutdown(AddressOf HandleForceShutdown), Nothing)
@@ -5755,12 +6188,41 @@ Namespace Forms
                 Dim exInfo As New System.Exception(strError)
                 Util.DisplayError(exInfo)
 
-                RaiseEvent SimulationStopped()
+                m_timerShutdown = New System.Timers.Timer
+                m_timerShutdown.Interval = 100
+                m_timerShutdown.Enabled = True
+                AddHandler m_timerShutdown.Elapsed, AddressOf Me.OnStopSimTimer
 
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+
+        Private Delegate Sub OnStopSimTimerDel(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        ''' <summary> Executes the shut down timer action.</summary>
+        '''
+        ''' <remarks> This is only called from the shutdown timer from the OnHandleCriticalError event method. It shuts the app down.</remarks>
+        '''
+        ''' <param name="sender"> Source of the event.</param>
+        ''' <param name="eProps"> Event information to send to registered event handlers.</param>
+        Protected Overridable Sub OnStopSimTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+            Try
+                m_timerShutdown.Enabled = False
+
+                If Me.InvokeRequired Then
+                    Me.Invoke(New OnStopSimTimerDel(AddressOf OnStopSimTimer), New Object() {sender, eProps})
+                    Return
+                End If
+
+                RemoveHandler m_timerShutdown.Elapsed, AddressOf Me.OnStopSimTimer
+                RaiseEvent SimulationStopped()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         ''' \brief  Called when the simulation starting event is called.
@@ -6099,6 +6561,9 @@ Namespace Forms
                     End If
                 Next
 
+                'First lets deselect all of the items in the selected list and select the sim object by default since we cannot delete it.
+                Util.Simulation.SelectItem(False)
+
                 aryItems.Sort(New DeleteSortComparer)
 
                 For Each doItem In aryItems
@@ -6316,8 +6781,13 @@ Namespace Forms
                 'Lets close all of the children first.
                 'We have to do this to make certain that all of the controls are closed 
                 'down in the appropriate order.
+                Dim aryForms As New ArrayList
                 For Each oChild As Form In Me.ChildForms
-                    oChild.Close()
+                    aryForms.Add(oChild)
+                Next
+
+                For Each frmChild As Form In aryForms
+                    frmChild.Close()
                 Next
 
                 'We also need to explicitly close the docking toolbars.
@@ -6331,10 +6801,15 @@ Namespace Forms
                 End If
 
                 'close down any modal forms that are not me.
+                aryForms.Clear()
                 For Each frmModal As Form In Application.OpenForms
                     If frmModal.Modal AndAlso Not frmModal Is Me Then
-                        frmModal.Close()
+                        aryForms.Add(frmModal)
                     End If
+                Next
+
+                For Each frmModal As Form In aryForms
+                    frmModal.Close()
                 Next
 
                 m_mdiClient = Nothing
@@ -6631,17 +7106,27 @@ Namespace Forms
 
 #Region "File Conversion Event Handlers"
 
-        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer) Handles Me.ConvertFileVersion
+        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal iOldVersion As Integer, ByVal strToPhysics As String) Handles Me.ConvertFileVersion
             Try
                 Me.AppIsBusy = True
 
                 Dim iVersion As Integer = iOldVersion
                 Dim iCurrentVersion As Integer = Me.XmlVersion
+                Dim strFilePhysics As String = ""
+                Dim bSkipBackup As Boolean = False
 
                 'Keep running the file converter until we convert all the way up to the latest version.
                 While iVersion < iCurrentVersion
-                    iVersion = ConvertProjectVersion(strProjectFile, iVersion)
+                    iVersion = ConvertProjectVersion(strProjectFile, iVersion, strFilePhysics, bSkipBackup)
+
+                    'Only do the backup the first time the project conversion is run.
+                    bSkipBackup = True
                 End While
+
+                'Also convert the physics engine if required.
+                If strFilePhysics <> strToPhysics Then
+                    ConvertPhysicsEngine(strFilePhysics, strToPhysics)
+                End If
 
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     Me.LoadProject(strProjectFile)
@@ -6659,18 +7144,31 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer) As Integer
+        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal iVersion As Integer, ByRef strPhysics As String, ByVal bSkipBackup As Boolean) As Integer
 
             'Find a converter that will convert this file type to a newer version.
-            If Not m_aryProjectMigrations.ContainsKey(iVersion) Then
+            If Not m_aryProjectMigrations.ContainsKey(iVersion.ToString()) Then
                 Throw New System.Exception("No file converter was found that can convert a project version '" & iVersion & "'")
             End If
 
-            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion), DataObjects.ProjectMigration)
+            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(iVersion.ToString()), DataObjects.ProjectMigration)
 
-            doConv.ConvertFiles(strProjectFile)
+            doConv.ConvertFiles(strProjectFile, strPhysics, bSkipBackup)
 
-            Return doConv.ConvertTo
+            Return CInt(doConv.ConvertTo)
+        End Function
+
+        Protected Overridable Function ConvertPhysicsEngine(ByVal strOldPhysics As String, ByVal strNewPhysics As String) As Boolean
+
+            Dim strConvertTo As String = strNewPhysics
+
+            Dim doConv As DataObjects.ProjectMigration = FindProjectMigration(strOldPhysics, strConvertTo)
+
+            If doConv.ConvertFiles(Me.ProjectPath & Me.ProjectFile, strConvertTo, True) Then
+                Return True
+            End If
+
+            Return False
         End Function
 
 #End Region
@@ -6981,6 +7479,7 @@ Namespace Forms
         End Sub
 
 #End Region
+
 
 
     End Class

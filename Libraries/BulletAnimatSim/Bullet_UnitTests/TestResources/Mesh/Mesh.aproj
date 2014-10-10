@@ -1,0 +1,1114 @@
+<Project>
+	<ProjectName>Mesh</ProjectName>
+	<SimulationFile>Mesh.asim</SimulationFile>
+	<LogLevel>ErrorType</LogLevel>
+	<Version>3</Version>
+	<Physics>Bullet</Physics>
+	<Simulation>
+		<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\BulletAnimatSim\Bullet_UnitTests\TestResources\Mesh\</ProjectPath>
+		<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+		<UpdateDataInterval>250</UpdateDataInterval>
+		<StartPaused>False</StartPaused>
+		<EnableSimRecording>True</EnableSimRecording>
+		<SetSimEnd>False</SetSimEnd>
+		<APIFile/>
+		<SimEndTime Value="1" Scale="None" Actual="1"/>
+		<PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
+		<PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
+		<Environment>
+			<PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
+			<Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
+			<MouseSpringStiffness Value="0.5" Scale="None" Actual="0.5"/>
+			<MouseSpringDamping Value="200" Scale="None" Actual="200"/>
+			<StabilityScale>1</StabilityScale>
+			<LinearCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
+			<AngularCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
+			<LinearDamping Value="50" Scale="Giga" Actual="5e+010"/>
+			<AngularDamping Value="50" Scale="Kilo" Actual="50000"/>
+			<LinearKineticLoss Value="0.1" Scale="nano" Actual="1e-010"/>
+			<AngularKineticLoss Value="1" Scale="pico" Actual="1e-012"/>
+			<RecFieldSelRadius Value="5" Scale="milli" Actual="0.005"/>
+			<BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
+			<AlphaThreshold>0.2</AlphaThreshold>
+			<SimulateHydrodynamics>False</SimulateHydrodynamics>
+			<MassUnits>Kilograms</MassUnits>
+			<DistanceUnits>Meters</DistanceUnits>
+			<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+			<ManualRandomSeed>12345</ManualRandomSeed>
+			<MaterialTypes>
+				<MaterialType>
+					<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+					<ClassName>AnimatGUI.DataObjects.Physical.MaterialTypeBullet</ClassName>
+					<ID>DEFAULTMATERIAL</ID>
+					<Name>Default</Name>
+					<FrictionLinearPrimary Value="1" Scale="None" Actual="1"/>
+					<FrictionAngularPrimary Value="0" Scale="None" Actual="0"/>
+					<Restitution Value="0" Scale="None" Actual="0"/>
+				</MaterialType>
+			</MaterialTypes>
+			<Organisms>
+				<Organism>
+					<Name>Organism_5</Name>
+					<ID>cb3272ea-40ea-4f62-a66e-f8a702e594ad</ID>
+					<Description/>
+					<Transparencies>
+						<Graphics>50</Graphics>
+						<Collisions>50</Collisions>
+						<Joints>50</Joints>
+						<RecFields>50</RecFields>
+						<Simulation>100</Simulation>
+					</Transparencies>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+					<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<LocalPosition>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</LocalPosition>
+					<Rotation>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</Rotation>
+					<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
+					<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+					<Type>Basic</Type>
+					<CollisionExclusionPairs/>
+					<NervousSystem>
+						<NeuralModules/>
+						<Node>
+							<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+							<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>
+							<ID>594a4dcb-7428-4f5a-9b3f-741373806190</ID>
+							<Alignment>CenterMiddle</Alignment>
+							<AutoSize>None</AutoSize>
+							<BackMode>Transparent</BackMode>
+							<DashStyle>Solid</DashStyle>
+							<DrawColor>-16777216</DrawColor>
+							<DrawWidth>1</DrawWidth>
+							<FillColor>-8586240</FillColor>
+							<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+							<Gradient>False</Gradient>
+							<GradientColor>0</GradientColor>
+							<GradientMode>BackwardDiagonal</GradientMode>
+							<DiagramImageName/>
+							<ImageName/>
+							<ImageLocation x="0" y="0"/>
+							<ImagePosition>RelativeToText</ImagePosition>
+							<InLinkable>True</InLinkable>
+							<LabelEdit>True</LabelEdit>
+							<Location x="0" y="0"/>
+							<OutLinkable>True</OutLinkable>
+							<ShadowStyle>None</ShadowStyle>
+							<ShadowColor>-16777216</ShadowColor>
+							<ShadowSize Width="0" Height="0"/>
+							<Shape>Rectangle</Shape>
+							<ShapeOrientation>Angle0</ShapeOrientation>
+							<Size Width="40" Height="40"/>
+							<Text>Neural Subsystem</Text>
+							<TextColor>-16777216</TextColor>
+							<TextMargin Width="0" Height="0"/>
+							<ToolTip/>
+							<Transparent>False</Transparent>
+							<Url/>
+							<XMoveable>True</XMoveable>
+							<XSizeable>True</XSizeable>
+							<YMoveable>True</YMoveable>
+							<YSizeable>True</YSizeable>
+							<ZOrder>0</ZOrder>
+							<InLinks/>
+							<OutLinks/>
+							<Nodes/>
+							<Links/>
+							<DiagramXml>
+								<![CDATA[]]>
+							</DiagramXml>
+						</Node>
+					</NervousSystem>
+				</Organism>
+				<Organism>
+					<Name>Organism_4</Name>
+					<ID>b2a33b54-e945-4cd6-94a1-17b664bd751b</ID>
+					<Description/>
+					<Transparencies>
+						<Graphics>50</Graphics>
+						<Collisions>50</Collisions>
+						<Joints>50</Joints>
+						<RecFields>50</RecFields>
+						<Simulation>100</Simulation>
+					</Transparencies>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+					<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<LocalPosition>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="1.858" Scale="None" Actual="1.858"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</LocalPosition>
+					<Rotation>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</Rotation>
+					<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,1.858,0,1</LocalMatrix>
+					<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+					<Type>Basic</Type>
+					<RigidBody>
+						<Name>Root</Name>
+						<ID>690fe173-3970-4645-87c1-f0bf71601aac</ID>
+						<Description/>
+						<Transparencies>
+							<Graphics>50</Graphics>
+							<Collisions>0</Collisions>
+							<Joints>50</Joints>
+							<RecFields>50</RecFields>
+							<Simulation>100</Simulation>
+						</Transparencies>
+						<IsVisible>True</IsVisible>
+						<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+						<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+						<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+						<Shininess>64</Shininess>
+						<Texture/>
+						<LocalPosition>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</LocalPosition>
+						<Rotation>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</Rotation>
+						<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,1.858,0,1</LocalMatrix>
+						<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+						<Type>Mesh</Type>
+						<PartType>AnimatGUI.DataObjects.Physical.Bodies.Mesh</PartType>
+						<IsContactSensor>False</IsContactSensor>
+						<IsCollisionObject>True</IsCollisionObject>
+						<BuoyancyCenter>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</BuoyancyCenter>
+						<BuoyancyScale>1</BuoyancyScale>
+						<LinearDrag>
+							<X Value="1" Scale="None" Actual="1"/>
+							<Y Value="1" Scale="None" Actual="1"/>
+							<Z Value="1" Scale="None" Actual="1"/>
+						</LinearDrag>
+						<AngularDrag>
+							<X Value="50" Scale="milli" Actual="0.05"/>
+							<Y Value="50" Scale="milli" Actual="0.05"/>
+							<Z Value="50" Scale="milli" Actual="0.05"/>
+						</AngularDrag>
+						<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+						<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+						<Magnus>0</Magnus>
+						<EnableFluids>False</EnableFluids>
+						<Density Value="1.508" Scale="Kilo" Actual="1508"/>
+						<Mass Value="0.117" Scale="Kilo" Actual="117"/>
+						<COM>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</COM>
+						<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+						<Freeze>False</Freeze>
+						<ChildBodies>
+							<RigidBody>
+								<Name>Root_Graphics</Name>
+								<ID>421ef213-ba68-4c6d-bfc5-7d9682560bf5</ID>
+								<Description/>
+								<Transparencies>
+									<Graphics>0</Graphics>
+									<Collisions>50</Collisions>
+									<Joints>50</Joints>
+									<RecFields>50</RecFields>
+									<Simulation>0</Simulation>
+								</Transparencies>
+								<IsVisible>True</IsVisible>
+								<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+								<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+								<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+								<Shininess>64</Shininess>
+								<Texture/>
+								<LocalPosition>
+									<X Value="0" Scale="None" Actual="0"/>
+									<Y Value="0" Scale="None" Actual="0"/>
+									<Z Value="0" Scale="None" Actual="0"/>
+								</LocalPosition>
+								<Rotation>
+									<X Value="0" Scale="None" Actual="0"/>
+									<Y Value="0" Scale="None" Actual="0"/>
+									<Z Value="0" Scale="None" Actual="0"/>
+								</Rotation>
+								<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
+								<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+								<Type>Mesh</Type>
+								<PartType>AnimatGUI.DataObjects.Physical.Bodies.Mesh</PartType>
+								<IsContactSensor>False</IsContactSensor>
+								<IsCollisionObject>False</IsCollisionObject>
+								<BuoyancyCenter>
+									<X Value="0" Scale="None" Actual="0"/>
+									<Y Value="0" Scale="None" Actual="0"/>
+									<Z Value="0" Scale="None" Actual="0"/>
+								</BuoyancyCenter>
+								<BuoyancyScale>1</BuoyancyScale>
+								<LinearDrag>
+									<X Value="1" Scale="None" Actual="1"/>
+									<Y Value="1" Scale="None" Actual="1"/>
+									<Z Value="1" Scale="None" Actual="1"/>
+								</LinearDrag>
+								<AngularDrag>
+									<X Value="50" Scale="milli" Actual="0.05"/>
+									<Y Value="50" Scale="milli" Actual="0.05"/>
+									<Z Value="50" Scale="milli" Actual="0.05"/>
+								</AngularDrag>
+								<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+								<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+								<Magnus>0</Magnus>
+								<EnableFluids>False</EnableFluids>
+								<Density Value="0" Scale="None" Actual="0"/>
+								<Mass Value="0" Scale="None" Actual="0"/>
+								<COM>
+									<X Value="0" Scale="None" Actual="0"/>
+									<Y Value="0" Scale="None" Actual="0"/>
+									<Z Value="0" Scale="None" Actual="0"/>
+								</COM>
+								<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+								<Freeze>False</Freeze>
+								<FoodSource>False</FoodSource>
+								<MeshFile>Surfboard\SurfBoard.3ds</MeshFile>
+								<MeshType>Triangular</MeshType>
+								<Scale>
+									<X Value="1" Scale="None" Actual="1"/>
+									<Y Value="1" Scale="None" Actual="1"/>
+									<Z Value="1" Scale="None" Actual="1"/>
+								</Scale>
+							</RigidBody>
+						</ChildBodies>
+						<FoodSource>False</FoodSource>
+						<MeshFile>Surfboard\SurfBoard.3ds</MeshFile>
+						<MeshType>Convex</MeshType>
+						<ConvexMeshFile>Surfboard\SurfBoard_Convex.osg</ConvexMeshFile>
+						<Scale>
+							<X Value="1" Scale="None" Actual="1"/>
+							<Y Value="1" Scale="None" Actual="1"/>
+							<Z Value="1" Scale="None" Actual="1"/>
+						</Scale>
+					</RigidBody>
+					<CollisionExclusionPairs/>
+					<NervousSystem>
+						<NeuralModules/>
+						<Node>
+							<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+							<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>
+							<ID>40f0dbcd-091b-412d-81d8-46d3776bf699</ID>
+							<Alignment>CenterMiddle</Alignment>
+							<AutoSize>None</AutoSize>
+							<BackMode>Transparent</BackMode>
+							<DashStyle>Solid</DashStyle>
+							<DrawColor>-16777216</DrawColor>
+							<DrawWidth>1</DrawWidth>
+							<FillColor>-8586240</FillColor>
+							<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+							<Gradient>False</Gradient>
+							<GradientColor>0</GradientColor>
+							<GradientMode>BackwardDiagonal</GradientMode>
+							<DiagramImageName/>
+							<ImageName/>
+							<ImageLocation x="0" y="0"/>
+							<ImagePosition>RelativeToText</ImagePosition>
+							<InLinkable>True</InLinkable>
+							<LabelEdit>True</LabelEdit>
+							<Location x="0" y="0"/>
+							<OutLinkable>True</OutLinkable>
+							<ShadowStyle>None</ShadowStyle>
+							<ShadowColor>-16777216</ShadowColor>
+							<ShadowSize Width="0" Height="0"/>
+							<Shape>Rectangle</Shape>
+							<ShapeOrientation>Angle0</ShapeOrientation>
+							<Size Width="40" Height="40"/>
+							<Text>Neural Subsystem</Text>
+							<TextColor>-16777216</TextColor>
+							<TextMargin Width="0" Height="0"/>
+							<ToolTip/>
+							<Transparent>False</Transparent>
+							<Url/>
+							<XMoveable>True</XMoveable>
+							<XSizeable>True</XSizeable>
+							<YMoveable>True</YMoveable>
+							<YSizeable>True</YSizeable>
+							<ZOrder>0</ZOrder>
+							<InLinks/>
+							<OutLinks/>
+							<Nodes/>
+							<Links/>
+							<DiagramXml>
+								<![CDATA[]]>
+							</DiagramXml>
+						</Node>
+					</NervousSystem>
+				</Organism>
+			</Organisms>
+			<Structures>
+				<Structure>
+					<Name>Structure_1</Name>
+					<ID>890713be-1dd4-4513-83a7-059773d35b62</ID>
+					<Description/>
+					<Transparencies>
+						<Graphics>50</Graphics>
+						<Collisions>50</Collisions>
+						<Joints>50</Joints>
+						<RecFields>50</RecFields>
+						<Simulation>100</Simulation>
+					</Transparencies>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+					<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+					<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<LocalPosition>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</LocalPosition>
+					<Rotation>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</Rotation>
+					<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</LocalMatrix>
+					<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+					<Type>Basic</Type>
+					<RigidBody>
+						<Name>Root</Name>
+						<ID>f3c5db88-fa1a-437e-98ff-38ee19c85387</ID>
+						<Description/>
+						<Transparencies>
+							<Graphics>0</Graphics>
+							<Collisions>0</Collisions>
+							<Joints>0</Joints>
+							<RecFields>0</RecFields>
+							<Simulation>0</Simulation>
+						</Transparencies>
+						<IsVisible>True</IsVisible>
+						<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+						<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+						<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+						<Shininess>64</Shininess>
+						<Texture>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\Resources\checkerboard.bmp</Texture>
+						<LocalPosition>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</LocalPosition>
+						<Rotation>
+							<X Value="-90.012" Scale="None" Actual="-90.012"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</Rotation>
+						<LocalMatrix>1,0,0,0,0,-0.000203653,-1,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+						<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+						<Type>Plane</Type>
+						<PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
+						<IsContactSensor>False</IsContactSensor>
+						<IsCollisionObject>True</IsCollisionObject>
+						<BuoyancyCenter>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</BuoyancyCenter>
+						<BuoyancyScale>1</BuoyancyScale>
+						<LinearDrag>
+							<X Value="1" Scale="None" Actual="1"/>
+							<Y Value="1" Scale="None" Actual="1"/>
+							<Z Value="1" Scale="None" Actual="1"/>
+						</LinearDrag>
+						<AngularDrag>
+							<X Value="50" Scale="milli" Actual="0.05"/>
+							<Y Value="50" Scale="milli" Actual="0.05"/>
+							<Z Value="50" Scale="milli" Actual="0.05"/>
+						</AngularDrag>
+						<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+						<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+						<Magnus>0</Magnus>
+						<EnableFluids>False</EnableFluids>
+						<Density Value="0" Scale="None" Actual="0"/>
+						<Mass Value="1" Scale="Kilo" Actual="1000"/>
+						<COM>
+							<X Value="0" Scale="None" Actual="0"/>
+							<Y Value="0" Scale="None" Actual="0"/>
+							<Z Value="0" Scale="None" Actual="0"/>
+						</COM>
+						<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+						<Freeze>True</Freeze>
+						<FoodSource>False</FoodSource>
+						<Size>
+							<X Value="0.1" Scale="Kilo" Actual="100"/>
+							<Y Value="0.1" Scale="Kilo" Actual="100"/>
+						</Size>
+						<WidthSegments>1</WidthSegments>
+						<LengthSegments>1</LengthSegments>
+					</RigidBody>
+					<CollisionExclusionPairs/>
+				</Structure>
+			</Structures>
+			<Lights>
+				<Light>
+					<Name>Light_1</Name>
+					<ID>85045aa8-ea8e-4460-8112-708038075de8</ID>
+					<Description/>
+					<Transparencies>
+						<Graphics>50</Graphics>
+						<Collisions>50</Collisions>
+						<Joints>50</Joints>
+						<RecFields>50</RecFields>
+						<Simulation>100</Simulation>
+					</Transparencies>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<LocalPosition>
+						<X Value="1" Scale="None" Actual="1"/>
+						<Y Value="2" Scale="None" Actual="2"/>
+						<Z Value="1" Scale="None" Actual="1"/>
+					</LocalPosition>
+					<Rotation>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</Rotation>
+					<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,2,1,1</LocalMatrix>
+					<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+					<Enabled>True</Enabled>
+					<Radius Value="50" Scale="milli" Actual="0.05"/>
+					<ConstantAttenuation>0.7</ConstantAttenuation>
+					<LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
+					<QuadraticAttenuationDistance Value="0" Scale="None" Actual="0"/>
+					<LatitudeSegments>10</LatitudeSegments>
+					<LongtitudeSegments>10</LongtitudeSegments>
+				</Light>
+				<Light>
+					<Name>Light_2</Name>
+					<ID>86102d33-c13e-4fe7-a0fe-ba81654cb7c4</ID>
+					<Description/>
+					<Transparencies>
+						<Graphics>50</Graphics>
+						<Collisions>50</Collisions>
+						<Joints>50</Joints>
+						<RecFields>50</RecFields>
+						<Simulation>100</Simulation>
+					</Transparencies>
+					<IsVisible>True</IsVisible>
+					<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Shininess>64</Shininess>
+					<Texture/>
+					<LocalPosition>
+						<X Value="-1" Scale="None" Actual="-1"/>
+						<Y Value="2" Scale="None" Actual="2"/>
+						<Z Value="-1" Scale="None" Actual="-1"/>
+					</LocalPosition>
+					<Rotation>
+						<X Value="0" Scale="None" Actual="0"/>
+						<Y Value="0" Scale="None" Actual="0"/>
+						<Z Value="0" Scale="None" Actual="0"/>
+					</Rotation>
+					<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,2,-1,1</LocalMatrix>
+					<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+					<Enabled>True</Enabled>
+					<Radius Value="50" Scale="milli" Actual="0.05"/>
+					<ConstantAttenuation>0</ConstantAttenuation>
+					<LinearAttenuationDistance Value="0" Scale="None" Actual="0"/>
+					<QuadraticAttenuationDistance Value="75" Scale="None" Actual="75"/>
+					<LatitudeSegments>10</LatitudeSegments>
+					<LongtitudeSegments>10</LongtitudeSegments>
+				</Light>
+			</Lights>
+		</Environment>
+		<ToolViewers>
+			<ToolHolder>
+				<ID>0fd44984-8211-43da-b173-f2f1bd247982</ID>
+				<Name>DataTool_1</Name>
+				<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+				<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+				<ToolFormID>f0de0cdf-0724-42fc-995a-ba9706ff3dbc</ToolFormID>
+			</ToolHolder>
+		</ToolViewers>
+		<Stimuli/>
+		<HudItems>
+			<HudItem>
+				<Name>10800fb8-1abd-4aa6-a78f-5a6edf5e8301</Name>
+				<ID>10800fb8-1abd-4aa6-a78f-5a6edf5e8301</ID>
+				<Type>HudText</Type>
+				<CharSize>30</CharSize>
+				<Text>Time: %3.3f</Text>
+				<DisplayTargetID>Simulator</DisplayTargetID>
+				<DisplayDataType>Time</DisplayDataType>
+				<UpdateTargetID>Simulator</UpdateTargetID>
+				<UpdateDataType>RealTime</UpdateDataType>
+				<UpdateInterval>1</UpdateInterval>
+				<Position x="10" y="10"/>
+				<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+			</HudItem>
+		</HudItems>
+	</Simulation>
+	<DockingForms>
+		<Form>
+			<ID>3ecfabca-1376-40d7-a26d-0095e7091119</ID>
+			<Title>Receptive Field Current</Title>
+			<TabPageName>Receptive Field Current</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.ReceptiveFieldCurrent</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>f0d512be-70a5-4577-8c85-0302921926eb</ID>
+			<Title>Receptive Field Gain</Title>
+			<TabPageName>Receptive Field Gain</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.ReceptiveFieldGain</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>6ceee5be-d7f3-4534-a5c8-268aa428b6e7</ID>
+			<Title>Receptive Field Pairs</Title>
+			<TabPageName>Receptive Field Pairs</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.ReceptiveFieldPairs</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>67a1c21b-bbe2-4695-801f-beeda3d83e76</ID>
+			<Title>Toolbox</Title>
+			<TabPageName>Toolbox</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.Toolbox</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>4978ff87-1652-47c0-b00f-53d979fc2b65</ID>
+			<Title>Properties</Title>
+			<TabPageName>Properties</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.ProjectProperties</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>d8567c92-0803-4d6b-988a-30bb6265519a</ID>
+			<Title>Workspace</Title>
+			<TabPageName>Workspace</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.ProjectWorkspace</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+		<Form>
+			<ID>7b2cfb0e-ff05-4e54-9f6c-2c0a4c5a9592</ID>
+			<Title>Simulation Controller</Title>
+			<TabPageName>Simulation Controller</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.SimulationController</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+			<StartingBarTime Value="0" Scale="milli" Actual="0"/>
+			<EndingBarTime Value="5000" Scale="milli" Actual="5"/>
+			<TimeBarInterval Value="1" Scale="None" Actual="1"/>
+			<ActualTimeColor>-5383962</ActualTimeColor>
+			<CurrentTimeColor>-16776961</CurrentTimeColor>
+			<AutomaticTimeScale>True</AutomaticTimeScale>
+			<DivisionMarkFactor>4</DivisionMarkFactor>
+			<Divisions>10</Divisions>
+			<MajorInterval>200</MajorInterval>
+			<MiddleMarkFactor>3</MiddleMarkFactor>
+			<TimeScale>MilliSeconds</TimeScale>
+		</Form>
+		<Form>
+			<ID>7abf38bb-25f1-43aa-8ee2-ff1433efcc9b</ID>
+			<Title>Errors</Title>
+			<TabPageName>Errors</TabPageName>
+			<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+			<ClassName>AnimatGUI.Forms.Errors</ClassName>
+			<BackgroundForm>True</BackgroundForm>
+		</Form>
+	</DockingForms>
+	<DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
+&lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
+&lt;!-- Modifying this generated file will probably render it invalid --&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="11/22/2013 12:35:28"&gt;
+  &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockBottom" /&gt;
+      &lt;Position Size="150, 125" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Errors" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
+          &lt;Item Name="Simulation Controller" /&gt;
+          &lt;Item Name="Errors" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Errors" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="1"&gt;
+            &lt;Item Name="Simulation Controller" /&gt;
+          &lt;/Previous&gt;
+          &lt;Selected Value="False" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Simulation Controller" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockBottom" /&gt;
+      &lt;Position Size="150, 125" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Simulation Controller" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Workspace" UniqueName="" /&gt;
+        &lt;Space Value="50" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Workspace" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="1"&gt;
+          &lt;Item Name="Properties" /&gt;
+        &lt;/Next&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Workspace" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Properties" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Properties" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Properties" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="150, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Toolbox" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Toolbox" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Toolbox" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Pairs" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Pairs" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="2"&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="3"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Pairs" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="3"&gt;
+          &lt;Item Name="Receptive Field Pairs" /&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+          &lt;Next Count="2"&gt;
+            &lt;Item Name="Receptive Field Gain" /&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Gain" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Gain" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+          &lt;Next Count="1"&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Current" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Current" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+&lt;/DockingConfig&gt;</DockingConfig>
+	<TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
+&lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
+&lt;!-- Modifying this generated file will probably render it invalid --&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
+  &lt;CustomGlobalData /&gt;
+  &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
+    &lt;Leaf Count="2" Unique="3" Space="100"&gt;
+      &lt;Page Title="Organism_4 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;46a44cf3-05cf-4498-b2e4-766d540e6972&lt;/ID&gt;
+&lt;Title&gt;Structure_1 Body&lt;/Title&gt;
+&lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
+&lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
+&lt;StructureID&gt;b2a33b54-e945-4cd6-94a1-17b664bd751b&lt;/StructureID&gt;
+&lt;BodyPartID&gt;690fe173-3970-4645-87c1-f0bf71601aac&lt;/BodyPartID&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;f0de0cdf-0724-42fc-995a-ba9706ff3dbc&lt;/ID&gt;
+&lt;Title&gt;DataTool_1&lt;/Title&gt;
+&lt;TabPageName&gt;DataTool_1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;DataTool_1.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+    &lt;/Leaf&gt;
+  &lt;/Sequence&gt;
+&lt;/TabbedGroups&gt;</TabbedGroupsConfig>
+</Project>

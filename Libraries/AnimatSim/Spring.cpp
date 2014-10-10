@@ -4,7 +4,7 @@
 \brief	Implements the spring class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -49,15 +49,22 @@ namespace AnimatSim
 **/
 Spring::Spring()
 {
-	m_bInitEnabled = FALSE;
+	m_bInitEnabled = false;
 	m_fltNaturalLength = 1;
 	m_fltNaturalLengthNotScaled = m_fltNaturalLength;
 	m_fltStiffness = 5000;
 	m_fltStiffnessNotScaled = m_fltStiffness;
 	m_fltDamping = 1000;
+    m_fltDampingNotScaled = m_fltDamping;
 	m_fltDisplacement = 0;
 	m_fltTension = 0;
 	m_fltEnergy = 0;
+    m_fltVelocity = 0;
+    m_fltAvgVelocity = 0;
+    m_fltStiffnessTension = 0;
+    m_fltDampingTension = 0;
+
+    ClearVelocityAverage();
 }
 
 /**
@@ -78,13 +85,13 @@ Spring::~Spring()
 
 \return	true if it enabled at startup, false otherwise. 
 **/
-BOOL Spring::InitEnabled() {return m_bInitEnabled;}
+bool Spring::InitEnabled() {return m_bInitEnabled;}
 
 float Spring::NaturalLength() {return m_fltNaturalLength;}
 
-void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
+void Spring::NaturalLength(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.NaturalLength");
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.NaturalLength");
 
 	m_fltNaturalLengthNotScaled = fltVal;
 	if(bUseScaling)
@@ -95,9 +102,9 @@ void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
 
 float Spring::Stiffness() {return m_fltStiffness;}
 
-void Spring::Stiffness(float fltVal, BOOL bUseScaling)
+void Spring::Stiffness(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Stiffness");
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.Stiffness");
 
 	m_fltStiffnessNotScaled = fltVal;
 	if(bUseScaling)
@@ -108,10 +115,11 @@ void Spring::Stiffness(float fltVal, BOOL bUseScaling)
 
 float Spring::Damping() {return m_fltDamping;}
 
-void Spring::Damping(float fltVal, BOOL bUseScaling)
+void Spring::Damping(float fltVal, bool bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Damping", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Spring.Damping", true);
 
+    m_fltDampingNotScaled = fltVal;
 	if(bUseScaling)
 		m_fltDamping = fltVal/m_lpSim->DisplayMassUnits();
 	else
@@ -148,12 +156,75 @@ float Spring::Tension() {return m_fltTension;}
 **/
 float Spring::Energy() {return m_fltEnergy;}
 
+
+/**
+\brief	Gets the velocity of the length change of the spring. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	velocity in the spring. 
+**/
+float Spring::Velocity() {return m_fltVelocity;}
+
+void Spring::ClearVelocityAverage()
+{
+    //Setup the circular cue for calculating rolling velocity average.
+    m_fltAvgVelocity = 0;
+    m_aryVelocityAvg.Clear();
+    for(int i=0; i<5; i++)
+        m_aryVelocityAvg.Add(0);
+}
+
 // There are no parts or joints to create for muscle attachment points.
 void Spring::CreateParts()
 {
 }
 
-void Spring::AddExternalNodeInput(float fltInput)
+void Spring::ResetSimulation()
+{
+    LineBase::ResetSimulation();
+
+    m_fltLength = CalculateLength();
+    m_fltPrevLength = m_fltLength;
+
+    CalculateTension();
+
+    ClearVelocityAverage();
+    m_fltVelocity = 0;
+}
+
+void Spring::CalculateTension()
+{
+	if(m_bEnabled)
+	{
+        m_fltPrevLength = m_fltLength;
+		m_fltLength = CalculateLength();
+		m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
+
+    	m_fltVelocity = (m_fltLength-m_fltPrevLength)/m_lpSim->PhysicsTimeStep();
+
+        m_aryVelocityAvg.AddEnd(m_fltVelocity);
+        m_fltAvgVelocity = m_aryVelocityAvg.Average();
+
+        m_fltStiffnessTension = m_fltStiffnessNotScaled * m_fltDisplacement;
+        m_fltDampingTension = m_fltAvgVelocity*m_fltDamping;
+
+		m_fltTension = m_fltStiffnessTension + m_fltDampingTension;
+		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
+	}
+    else
+    {
+		m_fltDisplacement = 0;
+		m_fltTension = 0;
+		m_fltEnergy = 0;
+        m_fltVelocity = 0;
+        if(m_aryVelocityAvg.GetSize())
+            ClearVelocityAverage();
+    }
+}
+
+void Spring::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	if(m_aryAttachmentPoints.GetSize() == 2)
 	{
@@ -164,13 +235,13 @@ void Spring::AddExternalNodeInput(float fltInput)
 			Enabled(m_bInitEnabled);
 	}
 	else
-		m_bEnabled = FALSE;
+		m_bEnabled = false;
 }
 
 
-float *Spring::GetDataPointer(const string &strDataType)
+float *Spring::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "SPRINGLENGTH")
 		return &m_fltLength;
@@ -181,8 +252,17 @@ float *Spring::GetDataPointer(const string &strDataType)
 	if(strType == "TENSION")
 		return &m_fltTension;
 
+	if(strType == "STIFFNESSTENSION")
+		return &m_fltStiffnessTension;
+
+	if(strType == "DAMPINGTENSION")
+		return &m_fltDampingTension;
+
 	if(strType == "ENERGY")
 		return &m_fltEnergy;
+
+	if(strType == "VELOCITY")
+		return &m_fltAvgVelocity;
 
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
@@ -190,26 +270,26 @@ float *Spring::GetDataPointer(const string &strDataType)
 	return LineBase::GetDataPointer(strDataType);
 }
 
-BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Spring::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, false))
 		return true;
 
 	if(strDataType == "NATURALLENGTH")
 	{
-		NaturalLength(atof(strValue.c_str()));
+		NaturalLength((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "STIFFNESS")
 	{
-		Stiffness(atof(strValue.c_str()));
+		Stiffness((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strDataType == "DAMPING")
 	{
-		Damping(atof(strValue.c_str()));
+		Damping((float) atof(strValue.c_str()));
 		return true;
 	}
 
@@ -217,21 +297,25 @@ BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bTh
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Spring::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Spring::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	LineBase::QueryProperties(aryNames, aryTypes);
+	LineBase::QueryProperties(aryProperties);
 
-	aryNames.Add("NaturalLength");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("SpringLength", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Displacement", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Tension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("StiffnessTension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("DampingTension", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Energy", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Stiffness");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Damping");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("NaturalLength", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Stiffness", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Damping", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void Spring::Load(CStdXml &oXml)
@@ -244,7 +328,7 @@ void Spring::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
-		m_bEnabled = FALSE;
+		m_bEnabled = false;
 
 	NaturalLength(oXml.GetChildFloat("NaturalLength", m_fltNaturalLength));
 	Stiffness(oXml.GetChildFloat("Stiffness", m_fltStiffness));

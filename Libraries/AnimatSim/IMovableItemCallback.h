@@ -48,6 +48,14 @@ namespace AnimatSim
 		virtual void RotationChanged() = 0;
 
 		/**
+		\brief	Called to signal to the GUI that the size of the body part changed.
+		
+		\author	dcofer
+		\date	6/7/2014
+		**/
+		virtual void SizeChanged() = 0;
+
+		/**
 		\brief	Called to signal to the GUI that the selected body part changed.
 		
 		\author	dcofer
@@ -56,7 +64,7 @@ namespace AnimatSim
 		\param	bSelected	   	true if it was selected. 
 		\param	bSelectMultiple	true if multiple items were selected. 
 		**/
-		virtual void SelectionChanged(BOOL bSelected, BOOL bSelectMultiple) = 0;
+		virtual void SelectionChanged(bool bSelected, bool bSelectMultiple) = 0;
 
 		/**
 		\brief	Called to signal to the GUI that a part was clicked while AddBody mode was active.
@@ -86,4 +94,4 @@ namespace AnimatSim
 		virtual void SelectedVertexChanged(float fltPosX, float fltPosY, float fltPosZ) = 0;
 
 	};
-}
+};

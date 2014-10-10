@@ -18,6 +18,7 @@ namespace AnimatGUI
 			m_bPaused = true;
 			m_bIsLoaded = false;
 			m_bSimOpen = false;
+            m_bCriticalError = false;
 		}
 
 		SimulatorInterface::~SimulatorInterface()
@@ -27,6 +28,12 @@ namespace AnimatGUI
 			{
 				delete m_lpSim;
 				m_lpSim = NULL;
+			}
+
+			if(m_lpSimGUICallback)
+			{
+				delete m_lpSimGUICallback;
+				m_lpSimGUICallback = NULL;
 			}
 		}
 
@@ -61,6 +68,7 @@ namespace AnimatGUI
 			{
 				try
 				{
+                    m_bCriticalError = true;
 					HandleCriticalError(strError);
 				}
 				catch(...)
@@ -123,7 +131,7 @@ namespace AnimatGUI
 			{
 				m_strProjectPath = strPath;
 
-				string strProjPath = Util::StringToStd(strPath);
+				std::string strProjPath = Util::StringToStd(strPath);
 				if(m_lpSim)
 					m_lpSim->ProjectPath(strProjPath);
 			}
@@ -172,10 +180,11 @@ namespace AnimatGUI
 
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to create the simulation.");	
 	
-					m_lpSim = AnimatSim::Simulator::CreateSimulator("", oXml);					
+					m_lpSim = AnimatSim::Simulator::CreateSimulator("", oXml);	
+					ActiveSim(m_lpSim);
 
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to load the simulation.");
-					string strProjectPath = Util::StringToStd(m_strProjectPath);
+					std::string strProjectPath = Util::StringToStd(m_strProjectPath);
 					m_lpSim->ProjectPath(strProjectPath);
 					m_lpSim->Load(oXml);
 					m_lpSim->Paused(true);
@@ -188,8 +197,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to create the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to create the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -219,7 +228,7 @@ namespace AnimatGUI
 
 					//Lets block here until the the m_bSimOpen = True. This will mean that the sim has been created, loaded, and initialized.
 					int iCount = 0;
-					while(!m_bSimOpen)
+					while(!m_bSimOpen && !m_bCriticalError)
 					{
 						Sleep(10);
 						if(iCount > 1e6)
@@ -231,8 +240,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to start the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to start the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -255,8 +264,8 @@ namespace AnimatGUI
 
 					if(!m_lpSim) 
 					{
-						string strModuleName = Util::StringToStd(sModuleName);
-						string strExePath = Util::StringToStd(sExePath);
+						std::string strModuleName = Util::StringToStd(sModuleName);
+						std::string strExePath = Util::StringToStd(sExePath);
 
 						m_lpSim =  AnimatSim::Simulator::CreateSimulator(strModuleName, "", strExePath);
 
@@ -266,8 +275,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to CreateStandAloneSim.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to CreateStandAloneSim.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					if(!m_lpSim && lpSim)
 						delete lpSim;
 					throw gcnew System::Exception(m_strErrorMessage);
@@ -287,7 +296,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, BOOL bInit, HWND hWnd)
+			void SimulatorInterface::AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, bool bInit, HWND hWnd)
 			{
 				try
 				{
@@ -295,9 +304,9 @@ namespace AnimatGUI
 
 					if(m_lpSim->WaitForSimulationBlock())
 					{
-						string strWindowType = Util::StringToStd(sWindowType);
+						std::string strWindowType = Util::StringToStd(sWindowType);
 
-						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, bInit, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->GetWindowMgr()->AddSimulationWindow("", strWindowType, bInit, hWnd, Util::StringToStd(sWindowXml));
 						m_lpSim->UnblockSimulation();
 					}
 					else
@@ -306,8 +315,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to add a simulation window.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add a simulation window.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -339,10 +348,10 @@ namespace AnimatGUI
 					}
 					else 
 					{
-						string strWindowType = Util::StringToStd(sWindowType);
+						std::string strWindowType = Util::StringToStd(sWindowType);
 
 						CreateSimulation();
-						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, false, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->GetWindowMgr()->AddSimulationWindow("", strWindowType, false, hWnd, Util::StringToStd(sWindowXml));
 						Simulate(true);
 						return true;
 					}
@@ -350,8 +359,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add a window to the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add a window to the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -371,7 +380,7 @@ namespace AnimatGUI
 
 					if(m_lpSim->WaitForSimulationBlock())
 					{
-						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
+						m_lpSim->GetWindowMgr()->RemoveSimulationWindow(hWnd);
 						m_lpSim->UnblockSimulation();
 					}
 					else
@@ -380,8 +389,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to remove a simulation window.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to remove a simulation window.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -409,8 +418,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to remove a window from the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to remove a window from the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -430,9 +439,9 @@ namespace AnimatGUI
 					
 					if(m_lpSim) 
 					{
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, false));
 						if(lpWin)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
@@ -451,8 +460,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -476,9 +485,9 @@ namespace AnimatGUI
 					
 					if(m_lpSim) 
 					{
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, false));
 						if(lpWin)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
@@ -497,8 +506,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -540,8 +549,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to shutdown the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to shutdown the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -568,8 +577,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to start the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to start the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -592,8 +601,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to pause the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to pause the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -625,8 +634,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to pause the simulation.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to pause the simulation.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -645,21 +654,21 @@ namespace AnimatGUI
 			System::String ^SimulatorInterface::ErrorMessage()
 			{return m_strErrorMessage;}
 
-			void SimulatorInterface::SaveSimulationFile(String ^sFile)
+			void SimulatorInterface::SaveSimulationFile(System::String ^sFile)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strFile = Util::StringToStd(sFile);
+						std::string strFile = Util::StringToStd(sFile);
 
 						m_lpSim->Save(strFile);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to call SaveSimulationFile.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to call SaveSimulationFile.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -671,23 +680,23 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::TrackCamera(System::Boolean bTrackCamera, String ^sLookAtStructureID, String ^sLookAtBodyID)
+			void SimulatorInterface::TrackCamera(System::Boolean bTrackCamera, System::String ^sLookAtStructureID, System::String ^sLookAtBodyID)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						BOOL bVal = bTrackCamera;
-						string strLookAtStructureID = Util::StringToStd(sLookAtStructureID);
-						string strLookAtBodyID = Util::StringToStd(sLookAtBodyID);
+						bool bVal = bTrackCamera;
+						std::string strLookAtStructureID = Util::StringToStd(sLookAtStructureID);
+						std::string strLookAtBodyID = Util::StringToStd(sLookAtBodyID);
 
 						//m_lpSim->SetupTrackCamera(bTrackCamera, strLookAtStructureID, strLookAtBodyID);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to call TrackCamera.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to call TrackCamera.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -704,23 +713,23 @@ namespace AnimatGUI
 
 #pragma region VideoPlayback
 
-			String ^SimulatorInterface::AddKeyFrame(String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
+			System::String ^SimulatorInterface::AddKeyFrame(System::String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSType = Util::StringToStd(strType);
+						std::string strSType = Util::StringToStd(strType);
 						long lStart = m_lpSim->MillisecondToSlice(lStartMillisecond);
 						long lEnd = m_lpSim->MillisecondToSlice(lEndMillisecond);
 
-						return gcnew String(m_lpSim->AddKeyFrame(strSType, lStart, lEnd).c_str());
+						return gcnew System::String(m_lpSim->AddKeyFrame(strSType, lStart, lEnd).c_str());
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 					return "";
 				}
@@ -735,21 +744,21 @@ namespace AnimatGUI
 				return "";
 			}
 
-			void SimulatorInterface::RemoveKeyFrame(String ^strID)
+			void SimulatorInterface::RemoveKeyFrame(System::String ^strID)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSID = Util::StringToStd(strID);
+						std::string strSID = Util::StringToStd(strID);
 
 						m_lpSim->RemoveKeyFrame(strSID);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -761,23 +770,23 @@ namespace AnimatGUI
 				}
 			}
 
-			String ^SimulatorInterface::MoveKeyFrame(String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
+			System::String ^SimulatorInterface::MoveKeyFrame(System::String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSID = Util::StringToStd(strID);
+						std::string strSID = Util::StringToStd(strID);
 						long lStart = m_lpSim->MillisecondToSlice(lStartMillisecond);
 						long lEnd = m_lpSim->MillisecondToSlice(lEndMillisecond);
 
-						return gcnew String(m_lpSim->MoveKeyFrame(strSID, lStart, lEnd).c_str());
+						return gcnew System::String(m_lpSim->MoveKeyFrame(strSID, lStart, lEnd).c_str());
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -790,20 +799,20 @@ namespace AnimatGUI
 				return "";
 			}
 
-			void SimulatorInterface::EnableVideoPlayback(String ^strID)
+			void SimulatorInterface::EnableVideoPlayback(System::String ^strID)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSID = Util::StringToStd(strID);
+						std::string strSID = Util::StringToStd(strID);
 						m_lpSim->EnableVideoPlayback(strSID);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while enabling video playback for the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while enabling video playback for the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -824,8 +833,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to disable video playback for the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to disable video playback for the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -846,8 +855,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to play the video for the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to play the video for the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -868,8 +877,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to stop playing the video for the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to stop playing the video for the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -890,8 +899,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to step the playback of the video for the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to step the playback of the video for the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -903,20 +912,20 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::MoveSimulationToKeyFrame(String ^strID)
+			void SimulatorInterface::MoveSimulationToKeyFrame(System::String ^strID)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSID = Util::StringToStd(strID);
+						std::string strSID = Util::StringToStd(strID);
 						m_lpSim->MoveSimulationToKeyFrame(strSID);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -928,20 +937,20 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::SaveVideo(String ^strPath)
+			void SimulatorInterface::SaveVideo(System::String ^strPath)
 			{
 				try
 				{
 					if(m_lpSim) 
 					{
-						string strSPath = Util::StringToStd(strPath);
+						std::string strSPath = Util::StringToStd(strPath);
 						m_lpSim->SaveVideo(strSPath);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add the keyframe.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -965,17 +974,17 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
+						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->GetDataChartMgr();
 						lpChartMgr->ReInitialize();
 
-						AnimatSim::ExternalStimuli::ExternalStimuliMgr *lpStimMgr = m_lpSim->ExternalStimuliMgr();
+						AnimatSim::ExternalStimuli::ExternalStimuliMgr *lpStimMgr = m_lpSim->GetExternalStimuliMgr();
 						lpStimMgr->ReInitialize();
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to re-initialize the data charts.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to re-initialize the data charts.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -987,7 +996,7 @@ namespace AnimatGUI
 				}
 			}
 
-			int SimulatorInterface::RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData)
+			int SimulatorInterface::RetrieveChartData(System::String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData)
 			{
 				try
 				{
@@ -995,9 +1004,9 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						string strChartKey = Util::StringToStd(sChartKey);
+						std::string strChartKey = Util::StringToStd(sChartKey);
 
-						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
+						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->GetDataChartMgr();
 						AnimatSim::Charting::DataChart *lpChart = dynamic_cast<AnimatSim::Charting::DataChart *>(lpChartMgr->Find(strChartKey));
 
 						if(lpChart->Lock())
@@ -1054,8 +1063,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to re-initialize the data charts.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to re-initialize the data charts.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1067,7 +1076,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
+			void SimulatorInterface::GenerateCollisionMeshFile(System::String ^sOriginalMeshFile, System::String ^sCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
 			{
 				try
 				{
@@ -1075,16 +1084,16 @@ namespace AnimatGUI
 					
 					if(m_lpSim) 
 					{
-						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
-						string strCollisionMeshFile = Util::StringToStd(sCollisionMeshFile);
+						std::string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
+						std::string strCollisionMeshFile = Util::StringToStd(sCollisionMeshFile);
 
 						m_lpSim->GenerateCollisionMeshFile(strOriginalMeshFile, strCollisionMeshFile, fltScaleX, fltScaleY, fltScaleZ);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1096,7 +1105,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::ConvertV1MeshFile(String ^sOriginalMeshFile, String ^sNewMeshFile, String ^sTexture)
+			void SimulatorInterface::ConvertV1MeshFile(System::String ^sOriginalMeshFile, System::String ^sNewMeshFile, System::String ^sTexture)
 			{
 				try
 				{
@@ -1104,17 +1113,17 @@ namespace AnimatGUI
 					
 					if(m_lpSim) 
 					{
-						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
-						string strNewMeshFile = Util::StringToStd(sNewMeshFile);
-						string strTexture = Util::StringToStd(sTexture);
+						std::string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
+						std::string strNewMeshFile = Util::StringToStd(sNewMeshFile);
+						std::string strTexture = Util::StringToStd(sTexture);
 
 						m_lpSim->ConvertV1MeshFile(strOriginalMeshFile, strNewMeshFile, strTexture);
 					}
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to ConvertV1MeshFile.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to ConvertV1MeshFile.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1153,8 +1162,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1173,7 +1182,7 @@ namespace AnimatGUI
 
 #pragma region DataAccess
 
-			System::Boolean SimulatorInterface::AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit)
+			System::Boolean SimulatorInterface::AddItem(System::String ^sParentID, System::String ^sItemType, System::String ^sID, System::String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit)
 			{
 				try
 				{
@@ -1181,29 +1190,29 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
-						string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
-						string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
-						string strXml = Util::StringToStd(sXml);
-						BOOL bNoInit = FALSE;
-						if(bDoNotInit) bNoInit=TRUE;
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
+						std::string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
+						std::string strXml = Util::StringToStd(sXml);
+						bool bNoInit = false;
+						if(bDoNotInit) bNoInit=true;
 
-						string strTest = Std_CheckString(strXml);
+						std::string strTest = Std_CheckString(strXml);
 						if(strTest == "" || strTest == "<ROOT/>")
 							throw gcnew PropertyUpdateException("No xml provided for adding type '" + sItemType + "' to partID '" + sParentID + "'.");
 
 						//First check to see if this item already exists. If it does then do not attempt to add it again.
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 
 						if(lpItem != NULL)
-							return TRUE;
+							return true;
 
-						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, FALSE);
+						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, false);
 						if(lpParent)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpParent->AddItem(strItemType, strXml, bThrowError, bNoInit);
+								bool bVal = lpParent->AddItem(strItemType, strXml, bThrowError, bNoInit);
 
 								m_lpSim->UnblockSimulation();
 
@@ -1227,8 +1236,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to add a data item.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to add a data item.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1245,7 +1254,7 @@ namespace AnimatGUI
 				return false;
 			}
 
-			System::Boolean SimulatorInterface::RemoveItem(String ^sParentID, String ^sItemType, String ^sID, System::Boolean bThrowError)
+			System::Boolean SimulatorInterface::RemoveItem(System::String ^sParentID, System::String ^sItemType, System::String ^sID, System::Boolean bThrowError)
 			{
 				try
 				{
@@ -1253,16 +1262,16 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
-						string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
+						std::string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, FALSE);
+						AnimatBase *lpParent = m_lpSim->FindByID(strParentID, false);
 						if(lpParent)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpParent->RemoveItem(strItemType, strID, bThrowError);
+								bool bVal = lpParent->RemoveItem(strItemType, strID, bThrowError);
 
 								m_lpSim->UnblockSimulation();
 
@@ -1286,8 +1295,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to remove a data item.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to remove a data item.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1304,7 +1313,7 @@ namespace AnimatGUI
 				return false;
 			}
 
-			System::Boolean SimulatorInterface::SetData(String ^sID, String ^sDataType, String ^sValue, System::Boolean bThrowError)
+			System::Boolean SimulatorInterface::SetData(System::String ^sID, System::String ^sDataType, System::String ^sValue, System::Boolean bThrowError)
 			{
 				try
 				{
@@ -1312,16 +1321,16 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
-						string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
-						string strValue = Util::StringToStd(sValue);
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
+						std::string strValue = Util::StringToStd(sValue);
 
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 						if(lpItem)
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpItem->SetData(strDataType, strValue, bThrowError);
+								bool bVal = lpItem->SetData(strDataType, strValue, bThrowError);
 								m_lpSim->UnblockSimulation();
 								return bVal;
 							}
@@ -1342,8 +1351,8 @@ namespace AnimatGUI
 				catch(CStdErrorInfo oError)
 				{
 					if(m_lpSim) m_lpSim->UnblockSimulation();
-					string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1361,7 +1370,7 @@ namespace AnimatGUI
 			}
 
 			
-			System::Boolean SimulatorInterface::FindItem(String ^sID, System::Boolean bThrowError)
+			System::Boolean SimulatorInterface::FindItem(System::String ^sID, System::Boolean bThrowError)
 			{
 				try
 				{
@@ -1369,9 +1378,9 @@ namespace AnimatGUI
 
 					if(m_lpSim) 
 					{
-						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+						std::string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
 
-						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
+						AnimatBase *lpItem = m_lpSim->FindByID(strID, false);
 						if(lpItem)
 						{
 							return true;
@@ -1388,8 +1397,8 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to find an item.\nError: " + oError.m_strError;
-					m_strErrorMessage = gcnew String(strError.c_str());
+					std::string strError = "An error occurred while attempting to find an item.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew System::String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
@@ -1432,7 +1441,7 @@ namespace AnimatGUI
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to initialize the simulator");
 
 					//HWND hWnd = (HWND) m_hParentWnd.ToInt32();
-					//m_lpSim->WindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", FALSE, hWnd,  Util::StringToStd(m_strWindowXml));
+					//m_lpSim->GetWindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", false, hWnd,  Util::StringToStd(m_strWindowXml));
 
 					m_lpSim->Paused(m_bPaused);
 					m_lpSim->Initialize(0, NULL);
@@ -1485,9 +1494,9 @@ namespace AnimatGUI
 				{
 					try
 					{
-						string strError = "A critical error occured while running the simulator. The application is shutting down.\nError: " + oError.m_strError;
-						m_strErrorMessage = gcnew String(strError.c_str());
-						//this->FireHandleCriticalErrorEvent(m_strErrorMessage);
+						std::string strError = "A critical error occured while running the simulator. The application is shutting down.\nError: " + oError.m_strError;
+						m_strErrorMessage = gcnew System::String(strError.c_str());
+						this->FireHandleCriticalErrorEvent(m_strErrorMessage);
 						if(iHandle)
 						{
 							IntPtr iptr(iHandle);

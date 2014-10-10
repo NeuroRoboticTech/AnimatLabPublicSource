@@ -51,9 +51,6 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public MustOverride ReadOnly Property ModuleFilename() As String
-
-        <Browsable(False)> _
         Public Overridable ReadOnly Property ModuleType() As String
             Get
                 If m_strModuleName.Trim.Length = 0 Then

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "IntegrateFireSim.vcxproj", "{834294D7-E05E-274E-84FA-CB7054DD0F29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		Debug_Double|Win32 = Debug_Double|Win32
+		Release_Double|Win32 = Release_Double|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Debug|Win32.ActiveCfg = Debug|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Debug|Win32.Build.0 = Debug|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Release|Win32.ActiveCfg = Release|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Release|Win32.Build.0 = Release|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Debug_Double|Win32.ActiveCfg = Debug_Double|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Debug_Double|Win32.Build.0 = Debug_Double|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Release_Double|Win32.ActiveCfg = Release_Double|Win32
+		{834294D7-E05E-274E-84FA-CB7054DD0F29}.Release_Double|Win32.Build.0 = Release_Double|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

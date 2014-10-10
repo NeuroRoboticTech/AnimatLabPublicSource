@@ -104,7 +104,6 @@ Namespace TypeHelpers
         End Sub
 
         Public Overloads Overrides Function EditValue(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object) As Object
-            Dim frmPairEditor As New AnimatGUI.Forms.BodyPlan.EditCollisionPairs
 
             Try
 

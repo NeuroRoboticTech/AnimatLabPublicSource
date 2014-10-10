@@ -46,7 +46,7 @@ ClassFactory::~ClassFactory()
 // ************* External Stimulus Type Conversion functions ******************************
 
 
-ExternalStimulus *ClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
+ExternalStimulus *ClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
 {
 	ExternalStimulus *lpStimulus=NULL;
 
@@ -87,7 +87,7 @@ catch(...)
 // ************* External Neural Module Conversion functions ******************************
 
 
-NeuralModule *ClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
+NeuralModule *ClassFactory::CreateNeuralModule(std::string strType, bool bThrowError)
 {
 	NeuralModule *lpModule=NULL;
 
@@ -127,7 +127,7 @@ catch(...)
 // ************* DataColumn Type Conversion functions ******************************
 
 
-DataColumn *ClassFactory::CreateDataColumn(string strType, BOOL bThrowError)
+DataColumn *ClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
 {
 	DataColumn *lpColumn=NULL;
 
@@ -169,7 +169,7 @@ catch(...)
 // ************* Gain Type Conversion functions ******************************
 
 
-Gain *ClassFactory::CreateGain(string strType, BOOL bThrowError)
+Gain *ClassFactory::CreateGain(std::string strType, bool bThrowError)
 {
 	Gain *lpGain=NULL;
 
@@ -209,7 +209,7 @@ catch(...)
 // ************* Neuron Type Conversion functions ******************************
 
 
-Neuron *ClassFactory::CreateNeuron(string strType, BOOL bThrowError)
+Neuron *ClassFactory::CreateNeuron(std::string strType, bool bThrowError)
 {
 	Neuron *lpNeuron=NULL;
 
@@ -249,7 +249,7 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-Connexion *ClassFactory::CreateSynapse(string strType, BOOL bThrowError)
+Connexion *ClassFactory::CreateSynapse(std::string strType, bool bThrowError)
 {
 	Connexion *lpSynapse=NULL;
 
@@ -288,7 +288,7 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-SynapseType *ClassFactory::CreateSynapseType(string strType, BOOL bThrowError)
+SynapseType *ClassFactory::CreateSynapseType(std::string strType, bool bThrowError)
 {
 	SynapseType *lpSynapseType=NULL;
 
@@ -331,7 +331,7 @@ catch(...)
 // ************* Ion Channel Conversion functions ******************************
 
 
-IonChannel *ClassFactory::CreateIonChannel(string strType, BOOL bThrowError)
+IonChannel *ClassFactory::CreateIonChannel(std::string strType, bool bThrowError)
 {
 	IonChannel *lpChannel=NULL;
 
@@ -369,7 +369,7 @@ catch(...)
 
 // ************* IStdClassFactory functions ******************************
 
-CStdSerialize *ClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
+CStdSerialize *ClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
 {
 	CStdSerialize *lpObject=NULL;
 

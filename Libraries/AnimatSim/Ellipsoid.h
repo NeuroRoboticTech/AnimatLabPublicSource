@@ -39,6 +39,8 @@ namespace AnimatSim
 			public:
 				Ellipsoid();
 				virtual ~Ellipsoid();
+			
+				static Ellipsoid *CastToDerived(AnimatBase *lpBase) {return static_cast<Ellipsoid*>(lpBase);}
 
 				/**
 				\brief	Gets the major axis radius.
@@ -59,7 +61,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void MajorRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void MajorRadius(float fltVal, bool bUseScaling = true);
 
 				/**
 				\brief	Gets the minor axis radius. 
@@ -80,7 +82,7 @@ namespace AnimatSim
 				\param	fltVal		The new value. 
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/
-				virtual void MinorRadius(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void MinorRadius(float fltVal, bool bUseScaling = true);
 
 				virtual int LatSegments();
 				virtual void LatSegments(int iVal);
@@ -88,8 +90,8 @@ namespace AnimatSim
 				virtual void LongSegments(int iVal);
 				virtual int LongSegments();
 
-				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+				virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+				virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 				virtual void Load(CStdXml &oXml);
 			};
 

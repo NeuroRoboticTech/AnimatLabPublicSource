@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletAnimatSim_x64", "BulletAnimatSim_x64.vcxproj", "{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet_UnitTests_x64", "Bullet_UnitTests_x64.vcxproj", "{DE1E7ECA-4EE9-924E-8601-165B396E21C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_x64|x64 = Debug_x64|x64
+		Release_x64|x64 = Release_x64|x64
+		Debug_Double_x64|x64 = Debug_Double_x64|x64
+		Release_Double_x64|x64 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Release_x64|x64.Build.0 = Release_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{889BE35E-0E77-FE40-B8CA-0BD2034AB3CC}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Release_x64|x64.Build.0 = Release_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{DE1E7ECA-4EE9-924E-8601-165B396E21C4}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

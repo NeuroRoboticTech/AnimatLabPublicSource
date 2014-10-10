@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils_x64", "StdUtils_x64.vcxproj", "{FC3057EF-59BA-6D45-84C9-B471E15B4469}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils_UnitTests_x64", "StdUtils_UnitTests_x64.vcxproj", "{41B40533-A126-0148-BB2F-C6FF916C242F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469} = {FC3057EF-59BA-6D45-84C9-B471E15B4469}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdClassFactoryTester_x64", "StdClassFactoryTester_x64.vcxproj", "{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469} = {FC3057EF-59BA-6D45-84C9-B471E15B4469}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_x64|x64 = Debug_x64|x64
+		Release_x64|x64 = Release_x64|x64
+		Debug_Double_x64|x64 = Debug_Double_x64|x64
+		Release_Double_x64|x64 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Release_x64|x64.Build.0 = Release_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{FC3057EF-59BA-6D45-84C9-B471E15B4469}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Release_x64|x64.Build.0 = Release_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{41B40533-A126-0148-BB2F-C6FF916C242F}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Release_x64|x64.Build.0 = Release_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{A6A0F32A-1C9B-EC47-94F7-C237997C1F38}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

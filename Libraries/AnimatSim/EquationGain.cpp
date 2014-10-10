@@ -4,7 +4,7 @@
 \brief	Implements the equation gain class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -44,7 +44,7 @@ try
 		delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of EquationGain\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of EquationGain\r\n", "", -1, false, true);}
 }
 
 /**
@@ -55,7 +55,7 @@ catch(...)
 
 \return	Gain equation string. 
 **/
-string EquationGain::GainEquation() {return m_strGainEquation;}
+std::string EquationGain::GainEquation() {return m_strGainEquation;}
 
 /**
 \brief	Sets the gain equation. 
@@ -65,7 +65,7 @@ string EquationGain::GainEquation() {return m_strGainEquation;}
 
 \param	strEquation	The post fix gain equation string. 
 **/
-void EquationGain::GainEquation(string strEquation)
+void EquationGain::GainEquation(std::string strEquation)
 {
 	CStdPostFixEval *lpEval = new CStdPostFixEval;
 
@@ -91,6 +91,32 @@ void EquationGain::GainEquation(string strEquation)
 	m_lpEval = lpEval;
 }
 
+void EquationGain::Copy(CStdSerialize *lpSource)
+{
+	Gain::Copy(lpSource);
+
+	EquationGain *lpOrig = dynamic_cast<EquationGain *>(lpSource);
+
+	m_strGainEquation = lpOrig->m_strGainEquation;
+
+	if(m_lpEval)
+	{
+		delete m_lpEval;
+		m_lpEval = NULL;
+	}
+
+	//TODO Need to clone this.
+	//if(lpOrig->m_lpEval)
+	//	m_lpEval = lpOrig->m_l
+}
+
+CStdSerialize *EquationGain::Clone()
+{
+	CStdSerialize *lpClone = new EquationGain();
+	lpClone->Copy(this);
+	return lpClone;
+}
+
 float EquationGain::CalculateGain(float fltInput)
 {
 	if(InLimits(fltInput))
@@ -102,7 +128,7 @@ float EquationGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-BOOL EquationGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool EquationGain::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -117,15 +143,14 @@ BOOL EquationGain::SetData(const string &strDataType, const string &strValue, BO
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void EquationGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void EquationGain::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("Equation");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 }
 
 void EquationGain::Load(CStdXml &oXml)

@@ -29,13 +29,15 @@ namespace VortexAnimatSim
 
 VsMovableItem::VsMovableItem()
 {
-	m_bCullBackfaces = FALSE; //No backface culling by default.
+	m_bCullBackfaces = false; //No backface culling by default.
 	m_eTextureMode = GL_TEXTURE_2D;
 
 	m_lpThisAB = NULL;
 	m_lpThisMI = NULL;
 	m_lpThisVsMI = NULL;
 	m_lpParentVsMI = NULL;
+
+    m_fltNullReport = 0;
 }
 
 
@@ -68,7 +70,7 @@ void VsMovableItem::SetThisPointers()
 	m_lpThisMI->PhysicsMovableItem(this);
 }
 
-string VsMovableItem::Physics_ID()
+std::string VsMovableItem::Physics_ID()
 {
 	if(m_lpThisAB)
 		return m_lpThisAB->ID();
@@ -78,14 +80,14 @@ string VsMovableItem::Physics_ID()
 
 #pragma region Selection-Code
 
-void VsMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)  
+void VsMovableItem::Physics_Selected(bool bValue, bool bSelectMultiple)  
 {
 	if(m_osgNodeGroup.valid() && m_osgDragger.valid() && m_osgSelectedGroup.valid())
 	{
-		BOOL bIsReceptiveFieldMode = (m_lpThisAB->GetSimulator()->VisualSelectionMode() & RECEPTIVE_FIELD_SELECTION_MODE);
+		bool bIsReceptiveFieldMode = (m_lpThisAB->GetSimulator()->VisualSelectionMode() & RECEPTIVE_FIELD_SELECTION_MODE);
 
 		//If selecting and not already selected then select it
-		BOOL bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
+		bool bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
 		if(bValue && !bNodeFound)
 		{
 			m_osgNodeGroup->addChild(m_osgSelectedGroup.get());
@@ -104,7 +106,7 @@ void VsMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)
 	}
 }
 
-void VsMovableItem::CreateSelectedGraphics(string strName)
+void VsMovableItem::CreateSelectedGraphics(std::string strName)
 {
 	m_osgSelectedGroup = new osg::Group();
 	m_osgSelectedGroup->setName(strName + "_SelectedGroup");
@@ -135,9 +137,9 @@ void VsMovableItem::CreateSelectedGraphics(string strName)
 	CreateSelectedVertex(strName);
 }
 
-void VsMovableItem::CreateDragger(string strName)
+void VsMovableItem::CreateDragger(std::string strName)
 {
-	string strVers = osgGetSOVersion();  
+	std::string strVers = osgGetSOVersion();  
 
 	if(m_lpThisAB->GetSimulator())
 	{
@@ -162,7 +164,7 @@ void VsMovableItem::CreateDragger(string strName)
 	}
 }
 
-void VsMovableItem::CreateSelectedVertex(string strName)
+void VsMovableItem::CreateSelectedVertex(std::string strName)
 {
 	if(!m_osgSelVertexNode.valid())
 	{
@@ -197,7 +199,7 @@ void VsMovableItem::DeleteSelectedVertex()
 
 #pragma endregion
 
-float *VsMovableItem::Physics_GetDataPointer(const string &strDataType) {return NULL;}
+float *VsMovableItem::Physics_GetDataPointer(const std::string &strDataType) {return NULL;}
 
 void VsMovableItem::LocalMatrix(osg::Matrix osgLocalMT)
 {
@@ -216,7 +218,7 @@ void VsMovableItem::GeometryRotationMatrix(osg::Matrix osgGeometryMT)
 	m_osgGeometryRotationMT->setMatrix(osgGeometryMT);	
 }
 
-void VsMovableItem::AttachedPartMovedOrRotated(string strID)
+void VsMovableItem::AttachedPartMovedOrRotated(std::string strID)
 {
 	Physics_ResetGraphicsAndPhysics();
 }
@@ -338,7 +340,7 @@ CStdFPoint VsMovableItem::GetOSGWorldCoords()
 	return vPoint;
 }
 
-osg::Matrix VsMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
+osg::Matrix VsMovableItem::GetOSGWorldMatrix(bool bUpdate)
 {
 	if(bUpdate)
 		UpdateWorldMatrix();
@@ -346,7 +348,7 @@ osg::Matrix VsMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
 	return m_osgWorldMatrix;
 }
 
-BOOL VsMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+bool VsMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
 	VsMovableItem *lpParent = m_lpThisVsMI->VsParent();
 
@@ -369,10 +371,10 @@ BOOL VsMovableItem::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float 
 				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
 				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
 		
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
@@ -471,7 +473,7 @@ void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 	osg::Vec3 vL = osgMT.getTrans();
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
-	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
+	m_lpThisMI->Position(vLocal, false, true, false);
 		
 	//Now lets get the euler angle rotation
 	Vx::VxReal44 vxTM;
@@ -481,7 +483,7 @@ void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 	vTrans.getRotationEulerAngles(vEuler);
 	CStdFPoint vRot(vEuler[0], vEuler[1] ,vEuler[2]);
 	vRot.ClearNearZero();
-	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
+	m_lpThisMI->Rotation(vRot, true, false);
 
 	if(m_osgDragger.valid())
 		m_osgDragger->SetupMatrix();
@@ -520,7 +522,7 @@ void VsMovableItem::BuildLocalMatrix()
 	BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
 }
 
-void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
+void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, std::string strName)
 {
 	if(!m_osgMT.valid())
 	{
@@ -556,37 +558,32 @@ void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, s
 	}
 }
 
-void VsMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml) 
+void VsMovableItem::Physics_LoadLocalTransformMatrix(CStdXml &oXml) 
 {
-	string strMatrix = oXml.GetChildString("TransformMatrix");
-	
-	CStdArray<string> aryElements;
-	int iCount = Std_Split(strMatrix, ",", aryElements);
-
-	if(iCount != 16)
-		THROW_PARAM_ERROR(Al_Err_lMatrixElementCountInvalid, Al_Err_strMatrixElementCountInvalid, "Matrix count", iCount);
-	
-	float aryMT[4][4];
-	int iIndex=0;
-	for(int iX=0; iX<4; iX++)
-		for(int iY=0; iY<4; iY++, iIndex++)
-			aryMT[iX][iY] = atof(aryElements[iIndex].c_str());
-		
-	osg::Matrix osgMT(aryMT[0][0], aryMT[0][1], aryMT[0][2], aryMT[0][3], 
-					  aryMT[1][0], aryMT[1][1], aryMT[1][2], aryMT[1][3], 
-					  aryMT[2][0], aryMT[2][1], aryMT[2][2], aryMT[2][3], 
-					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
-	
+    osg::Matrix osgMT = LoadMatrix(oXml, "LocalMatrix");	
 	UpdatePositionAndRotationFromMatrix(osgMT);
+}
+
+void VsMovableItem::Physics_SaveLocalTransformMatrix(CStdXml &oXml) 
+{
+    SaveMatrix(oXml, "LocalMatrix", m_osgMT->getMatrix());
+}
+
+std::string VsMovableItem::Physics_GetLocalTransformMatrixString() 
+{
+    if(m_osgMT.valid())
+        return SaveMatrixString(m_osgMT->getMatrix());
+    else
+        return SaveMatrixString(osg::Matrixf::identity());
 }
 
 void VsMovableItem::Physics_ResizeDragHandler(float fltRadius)
 {
-	BOOL bInScene = FALSE;
+	bool bInScene = false;
 	if(m_osgDragger.valid() && m_osgDragger->IsInScene())
 	{
 		m_osgDragger->RemoveFromScene();
-		bInScene = TRUE;
+		bInScene = true;
 	}
 
 	CreateDragger(m_lpThisAB->Name());
@@ -650,13 +647,13 @@ float VsMovableItem::Physics_GetBoundingRadius()
 	//return 0.5f;
 }
 
-void VsMovableItem::SetTexture(string strTexture)
+void VsMovableItem::SetTexture(std::string strTexture)
 {
 	if(m_osgNode.valid())
 	{
 		if(!Std_IsBlank(strTexture))
 		{
-			string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
+			std::string strFile = AnimatSim::GetFilePath(m_lpThisAB->GetSimulator()->ProjectPath(), strTexture);
 			osg::ref_ptr<osg::Image> image = osgDB::readImageFile(strFile);
 			if(!image)
 				THROW_PARAM_ERROR(Vs_Err_lTextureLoad, Vs_Err_strTextureLoad, "Image File", strFile);
@@ -806,7 +803,7 @@ void VsMovableItem::SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor
 	}
 }
 
-void VsMovableItem::SetVisible(osg::Node *osgNode, BOOL bVisible)
+void VsMovableItem::SetVisible(osg::Node *osgNode, bool bVisible)
 {
 	if(osgNode)
 	{
@@ -817,7 +814,7 @@ void VsMovableItem::SetVisible(osg::Node *osgNode, BOOL bVisible)
 	}
 }
 
-void VsMovableItem::SetVisible(BOOL bVisible)
+void VsMovableItem::SetVisible(bool bVisible)
 {
 	SetVisible(m_osgNode.get(), bVisible);
 }
@@ -928,7 +925,7 @@ void VsMovableItem::Physics_OrientNewPart(float fltXPos, float fltYPos, float fl
 	osg::Vec3 vLocalPos = vWorldPos - vParent;
 
 	//Now reset our position
-	m_lpThisMI->Position(vLocalPos[0], vLocalPos[1], vLocalPos[2], FALSE, TRUE, TRUE);
+	m_lpThisMI->Position(vLocalPos[0], vLocalPos[1], vLocalPos[2], false, true, true);
 }
 
 	}			// Environment

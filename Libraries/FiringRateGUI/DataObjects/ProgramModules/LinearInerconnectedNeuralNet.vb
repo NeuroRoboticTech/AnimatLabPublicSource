@@ -20,10 +20,12 @@ Namespace DataObjects.Macros
 
 #Region " Properties "
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "Creates a set of N neurons that are all interconnected using a sine function for thier synaptic strengths."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
 #End Region

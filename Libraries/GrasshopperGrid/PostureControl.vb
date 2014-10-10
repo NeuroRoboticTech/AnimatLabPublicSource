@@ -121,6 +121,15 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
+        Public Overrides Property PhysicalStructure() As AnimatGUI.DataObjects.Physical.PhysicalStructure
+            Get
+                Return m_doOrganism
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Physical.PhysicalStructure)
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property OrganismName() As String
             Get
                 If Not m_doOrganism Is Nothing Then
@@ -130,6 +139,7 @@ Namespace DataObjects.ExternalStimuli
                 Return ""
             End Get
         End Property
+
 
         <Browsable(False)> _
         Public Overrides ReadOnly Property StimulusModuleName() As String
@@ -156,10 +166,12 @@ Namespace DataObjects.ExternalStimuli
         '    End Get
         'End Property
 
-        Public Overrides ReadOnly Property Description() As String
+        Public Overrides Property Description() As String
             Get
                 Return "This stimulus allows you to control the posutre of a grasshopper model."
             End Get
+            Set(value As String)
+            End Set
         End Property
 
         '<Browsable(False)> _

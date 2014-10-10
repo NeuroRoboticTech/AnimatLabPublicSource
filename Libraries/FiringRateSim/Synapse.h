@@ -42,13 +42,23 @@ namespace FiringRateSim
 			float m_fltModulation;
 
 			/// GUID ID of the pre-synaptic neruon.
-			string m_strFromID;
+			std::string m_strFromID;
 
 			/// The pointer to pre-synaptic neuron
 			Neuron *m_lpFromNeuron;
 
 			/// The pointer to post-synaptic neuron
 			Neuron *m_lpToNeuron;
+
+			//Determines whether this adapter uses a delay buffer. 
+			bool m_bHasDelay;
+
+			//The duration of the delay buffer.
+			float m_fltDelayInterval;
+
+			///This buffer is used if the adapter has been setup to have delays between calcuating values and 
+			///setting them in the target object. 
+			CStdCircularArray<float> m_aryDelayBuffer;
 
 			Synapse *LoadSynapse(CStdXml &oXml);
 
@@ -69,21 +79,32 @@ namespace FiringRateSim
 			float Weight();
 			void Weight(float fltVal);
 			float *WeightPointer();
+			
+			virtual bool HasDelay();
+			virtual void HasDelay(bool bVal);
+
+			virtual void DelayInterval(float fltVal);
+			virtual float DelayInterval();
+
+			virtual void SetDelayBufferSize();
+			virtual float CalculateCurrent();
 
 			float Modulation();
 			float *ModulationPointer();
 			virtual float CalculateModulation(FiringRateModule *lpModule);
 			virtual Synapse *GetCompoundSynapse(short iCompoundIndex);
-			virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
-			virtual void AddSynapse(string strXml, BOOL bDoNotInit);
-			virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
+			virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
+			virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+			virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+
+			virtual void Process(float &fltCurrent);
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(const string &strDataType);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-			virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-			virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
+			virtual float *GetDataPointer(const std::string &strDataType);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+			virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
+			virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
 			/**
@@ -108,10 +129,11 @@ namespace FiringRateSim
 			\param [in,out]	lpNode		The pointer to the parent node. 
 			\param	bVerify				true to call VerifySystemPointers. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void ResetSimulation();
 			virtual void Initialize();
+			virtual void TimeStepModified();
 			virtual void Load(CStdXml &oXml);
 		};
 

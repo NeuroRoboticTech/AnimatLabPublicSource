@@ -20,9 +20,6 @@ namespace AnimatSim
 		class ANIMAT_PORT ConstraintFriction : public AnimatBase
 		{
 		protected:
-            ///whether the relaxation is enabled or not
-            BOOL m_bEnabled;
-
 			/// The friction coefficient for this constraint.
 			float m_fltCoefficient;
 
@@ -33,7 +30,7 @@ namespace AnimatSim
 			float m_fltLoss;
 
             /// Tells if the friction force should be scaled based on the force applied to the joint.
-            BOOL m_bProportional;
+            bool m_bProportional;
 
             /// The scale ration of static to dynamic friction
             float m_fltStaticFrictionScale;
@@ -43,28 +40,30 @@ namespace AnimatSim
 		public:
 			ConstraintFriction();
 			virtual ~ConstraintFriction();
+			
+			static ConstraintFriction *CastToDerived(AnimatBase *lpBase) {return static_cast<ConstraintFriction*>(lpBase);}
 
-            virtual BOOL Enabled();
-            virtual void Enabled(BOOL bVal);
+            virtual bool Enabled();
+            virtual void Enabled(bool bVal);
 
     		virtual float Coefficient();
 			virtual void Coefficient(float fltVal);
 
 			virtual float MaxForce();
-			virtual void MaxForce(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void MaxForce(float fltVal, bool bUseScaling = true);
 
 			virtual float Loss();
-			virtual void Loss(float fltVal, BOOL bUseScaling = TRUE);
+			virtual void Loss(float fltVal, bool bUseScaling = true);
 
-    		virtual BOOL Proportional();
-			virtual void Proportional(BOOL bVal);
+    		virtual bool Proportional();
+			virtual void Proportional(bool bVal);
 
 			virtual float StaticFrictionScale();
 			virtual void StaticFrictionScale(float fltVal);
 
 			virtual void CreateDefaultUnits();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
         };

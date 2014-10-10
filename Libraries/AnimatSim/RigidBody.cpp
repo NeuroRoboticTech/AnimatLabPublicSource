@@ -4,7 +4,7 @@
 \brief	Implements the rigid body class. 
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -46,20 +46,21 @@ namespace AnimatSim
 **/
 RigidBody::RigidBody()
 {
-	m_bUsesJoint = TRUE;
+	m_bUsesJoint = true;
 	m_lpParent = NULL;
 	m_lpStructure = NULL;
 	m_fltDensity = 1.0;
+    m_fltReportDensity = m_fltDensity;
 
 	m_lpJointToParent = NULL;
-	m_bFreeze = FALSE;
-	m_bIsContactSensor = FALSE;
-	m_bIsCollisionObject = FALSE;
+	m_bFreeze = false;
+	m_bIsContactSensor = false;
+	m_bIsCollisionObject = false;
 	m_fltSurfaceContactCount= 0 ;
 	m_fltLinearVelocityDamping = 0;
 	m_fltAngularVelocityDamping = 0;
 	m_lpContactSensor = NULL;
-	m_bFoodSource = FALSE;
+	m_bFoodSource = false;
 	m_fltFoodEaten = 0;
 	m_lEatTime = 0;
 	m_fltFoodQuantity = 0;
@@ -68,15 +69,23 @@ RigidBody::RigidBody()
 	m_fltFoodReplenishRate = 0;
 	m_fltFoodEnergyContent = 0;
 
+    m_fltMaxHydroForce = 1000;
+    m_fltMaxHydroTorque = 1000;
 	m_fltBuoyancyScale = 1;
 	m_fltMagnus = 0;
-	m_bEnableFluids = FALSE;
+	m_bEnableFluids = false;
 
     m_fltMass = 0;
 	m_fltReportMass = 0;
 	m_fltReportVolume = 0;
 
+	m_bIsStickyPart = false;
+	m_fltStickyOn = 0;
+	m_lpStickyChild = NULL;
+
 	m_strMaterialID = "DEFAULTMATERIAL";
+
+    m_bDisplayDebugCollisionGraphic = false;
 }
 
 /**
@@ -101,11 +110,22 @@ try
 		delete m_lpJointToParent;
 	}
 
+	m_lpStickyChild = NULL;
+
 	if(m_lpContactSensor) delete m_lpContactSensor;
 	m_aryChildParts.RemoveAll();
+
+    //Remove this from the list of extra data parts if it is on it.
+    m_lpSim->RemoveFromExtractExtraData(this);
+
+    //If we are not shutting down then we need to remove any references to this object
+    //that are located in other parts collision exclusion lists. If we are shutting down
+    // then it does not matter, so skip it to prevent potential exceptions.
+    if(!m_lpSim->ShuttingDown())
+        RemoveCollisionExclusions();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, false, true);}
 }
 
 CStdFPoint RigidBody::Position()
@@ -119,7 +139,7 @@ CStdFPoint RigidBody::Position()
 /**
 \details For the RigidBody if it is the root then we are going to set the position of the structure.
 **/
-void RigidBody::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+void RigidBody::Position(CStdFPoint &oPoint, bool bUseScaling, bool bFireChangeEvent, bool bUpdateMatrix) 
 {
 	if(IsRoot())
  		m_lpStructure->Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
@@ -149,6 +169,43 @@ only used if the user sets it to something.
 CStdFPoint RigidBody::CenterOfMass() {return m_vCenterOfMass;}
 
 /**
+ \brief Gets the center of mass of this part with any static children added.
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return resultant center of mass of all static parts of this part.
+ */
+CStdFPoint RigidBody::CenterOfMassWithStaticChildren()
+{
+    if(HasStaticChildren())
+    {
+        float fltTotalMass = Mass();
+        CStdFPoint vMass = m_vCenterOfMass * Mass();
+
+	    int iCount = m_aryChildParts.GetSize();
+	    for(int iIndex=0; iIndex<iCount; iIndex++)
+        {
+            RigidBody *lpChild = m_aryChildParts[iIndex];
+		    if(lpChild->HasStaticJoint())
+            {
+                vMass += ( (lpChild->Position() + lpChild->CenterOfMass()) * lpChild->Mass());
+                fltTotalMass += lpChild->Mass();
+            }
+        }
+
+        if(fltTotalMass)
+            vMass /= fltTotalMass;
+
+        vMass.ClearNearZero();
+
+        return vMass;
+    }
+    else
+        return m_vCenterOfMass;
+}
+
+/**
 \brief	Sets the user specified center of mass for this part. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.   
 
 \author	dcofer
@@ -156,13 +213,22 @@ CStdFPoint RigidBody::CenterOfMass() {return m_vCenterOfMass;}
 
 \param [in,out]	oPoint	The point. 
 **/
-void RigidBody::CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling)
+void RigidBody::CenterOfMass(CStdFPoint &vPoint, bool bUseScaling)
+{
+	CenterOfMass(vPoint, bUseScaling, true);
+}
+
+void RigidBody::CenterOfMass(CStdFPoint &vPoint, bool bUseScaling, bool bPhysicsCallback)
 {
 	if(bUseScaling)
 		m_vCenterOfMass = vPoint * m_lpMovableSim->InverseDistanceUnits();
 	else
 		m_vCenterOfMass = vPoint;
+
+	if(m_lpPhysicsBody && bPhysicsCallback)
+		m_lpPhysicsBody->Physics_SetCenterOfMass(m_vCenterOfMass.x, m_vCenterOfMass.y, m_vCenterOfMass.z);
 }
+
 
 /**
 \brief	Sets the center of mass position. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.  
@@ -176,7 +242,7 @@ void RigidBody::CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling)
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::CenterOfMass(float fltX, float fltY, float fltZ, BOOL bUseScaling)
+void RigidBody::CenterOfMass(float fltX, float fltY, float fltZ, bool bUseScaling)
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	CenterOfMass(vPos, bUseScaling);
@@ -193,7 +259,7 @@ reset the local position using an xml data packet. If COM is (0,0,0) then it is 
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::CenterOfMass(string strXml, BOOL bUseScaling)
+void RigidBody::CenterOfMass(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -244,7 +310,7 @@ void RigidBody::JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;}
 
 \return	Pointer to the receptive field contact sensor object. 
 **/
-ContactSensor *RigidBody::ContactSensor() {return m_lpContactSensor;}
+ContactSensor *RigidBody::GetContactSensor() {return m_lpContactSensor;}
 
 /**
 \brief	Gets the uniform density. 
@@ -265,9 +331,9 @@ float RigidBody::Density() {return m_fltDensity;}
 \param	fltVal	The new density value. 
 \exception Density must be greater than zero.
 **/
-void RigidBody::Density(float fltVal, BOOL bUseScaling) 
+void RigidBody::Density(float fltVal, bool bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Density");
+	Std_IsAboveMin((float) 0, fltVal, true, "Density", true);
 
 	m_fltDensity = fltVal;
 	if(bUseScaling)
@@ -276,9 +342,61 @@ void RigidBody::Density(float fltVal, BOOL bUseScaling)
 		m_fltDensity *=  pow(m_lpSim->DenominatorDistanceUnits(), 3); //Perform a conversion if necessary because we may be using different units in the denominator.
 	}
 
+    m_fltReportDensity = m_fltDensity * m_lpSim->DisplayMassUnits();
+    m_fltReportDensity /= pow(m_lpSim->DenominatorDistanceUnits(), 3);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_SetDensity(m_fltDensity);
 };
+
+
+float RigidBody::Mass() {return m_fltMass;}
+
+void RigidBody::Mass(float fltVal, bool bUseScaling)
+{
+    Mass(fltVal, bUseScaling, true);
+}
+
+void RigidBody::Mass(float fltVal, bool bUseScaling, bool bPhysicsCallback)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "Mass", true);
+
+	m_fltMass = fltVal;
+	if(bUseScaling)
+		m_fltMass /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+
+    m_fltReportMass = m_fltMass * m_lpSim->DisplayMassUnits();
+
+	if(m_lpPhysicsBody && bPhysicsCallback)
+		m_lpPhysicsBody->Physics_SetMass(m_fltMass);
+}
+
+float RigidBody::MassWithChildren()
+{
+    float fltTotalMass = Mass();
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+    {
+        RigidBody *lpChild = m_aryChildParts[iIndex];
+            fltTotalMass += lpChild->MassWithChildren();
+    }
+
+    return fltTotalMass;
+}
+
+float RigidBody::Volume() {return m_fltVolume;}
+
+void RigidBody::Volume(float fltVal, bool bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "Volume");
+
+	m_fltVolume = fltVal;
+	//if(bUseScaling)
+	//	m_fltMass /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+
+	m_fltReportVolume = m_fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);
+}
+
 
 /**
 \brief	Tells if this part is frozen or not
@@ -292,7 +410,7 @@ and other forces will not act on it.
 
 \return	true if frozen, false if else. 
 **/
-BOOL RigidBody::Freeze() {return m_bFreeze;}
+bool RigidBody::Freeze() {return m_bFreeze;}
 
 /**
 \brief	Freezes. 
@@ -306,11 +424,16 @@ and other forces will not act on it.
 
 \param	bVal	true to freeze. 
 **/
-void RigidBody::Freeze(BOOL bVal)
+void RigidBody::Freeze(bool bVal)
+{
+	Freeze(bVal, true);
+}
+
+void RigidBody::Freeze(bool bVal, bool bPhysicsCallback)
 {
 	m_bFreeze = bVal;
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsBody && bPhysicsCallback)
 		m_lpPhysicsBody->Physics_SetFreeze(bVal);
 }
 
@@ -322,7 +445,7 @@ void RigidBody::Freeze(BOOL bVal)
 
 \return	true if contact sensor, false if not. 
 **/
-BOOL RigidBody::IsContactSensor() {return m_bIsContactSensor;}
+bool RigidBody::IsContactSensor() {return m_bIsContactSensor;}
 
 /**
 \brief	Sets whether this is a contact sensor. 
@@ -332,7 +455,7 @@ BOOL RigidBody::IsContactSensor() {return m_bIsContactSensor;}
 
 \param	bVal	true if it is a contact sensor. 
 **/
-void RigidBody::IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;}
+void RigidBody::IsContactSensor(bool bVal) {m_bIsContactSensor = bVal;}
 
 /**
 \brief	Query if this object is collision object. 
@@ -342,7 +465,7 @@ void RigidBody::IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;}
 
 \return	true if collision object, false if not. 
 **/
-BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
+bool RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 
 /**
 \brief	Sets whether this part is a collision object. 
@@ -352,7 +475,90 @@ BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 
 \param	bVal true if collision object, false else. 
 **/
-void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
+void RigidBody::IsCollisionObject(bool bVal) {m_bIsCollisionObject = bVal;}
+
+/**
+\brief	Query if this object acts as a sticky part. This only applies to contact sensors.
+If it is set to true and StickOn is true then when this part touches something else it will
+create a locked joint between those two parts. When StickOn goes to false then that joint
+will be removed. This allows the contact sensor to act as a kind of sticky pick up pad.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	true if sticky object, false if not. 
+**/
+bool RigidBody::IsStickyPart() {return m_bIsStickyPart;}
+
+/**
+\brief	Sets whether this part is a sticky part or not. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	bVal true if sticky object, false else. 
+**/
+void RigidBody::IsStickyPart(bool bVal) 
+{
+	m_bIsStickyPart = bVal;
+	StickyOn(false);
+
+	//If we are disabling stick parts then make sure to remove the sticky lock
+	if(m_lpPhysicsBody && !m_bIsStickyPart)
+		m_lpPhysicsBody->Physics_DeleteStickyLock();
+}
+
+/**
+\brief	Query if this stickyness is turned on or not. This only applies to contact sensors
+that also have IsStickyPart true.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	true if sticky on, false if not. 
+**/
+float RigidBody::StickyOn() {return m_fltStickyOn;}
+
+/**
+\brief	Sets whether this part has sticky on or not. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	bVal true if sticky is on, false else. 
+**/
+void RigidBody::StickyOn(float fltVal) 
+{
+	if(m_bIsStickyPart)
+		if(fltVal)
+			m_fltStickyOn = 1;
+		else
+			m_fltStickyOn = 0;
+}
+
+/**
+\brief	Gets the child body part we are stuck to for a sticky part.
+
+\author	dcofer
+\date	8/9/2014
+
+\return	Pointer to stuck child.. 
+**/
+RigidBody *RigidBody::StickyChild() {return m_lpStickyChild;}
+
+/**
+\brief	Sets the child part that we are stuck to if this is a sticky part. 
+
+\author	dcofer
+\date	8/9/2014
+
+\param	pointer to stuck child part. 
+**/
+void RigidBody::StickyChild(RigidBody *lpChild) 
+{
+	if(m_bIsStickyPart)
+		m_lpStickyChild = lpChild;
+}
 
 /**
 \brief	Query if this is the root rigid body of the structure or not.
@@ -362,9 +568,12 @@ void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
 
 \return	true if root, false if not.
 **/
-BOOL RigidBody::IsRoot()
+bool RigidBody::IsRoot()
 {
-	return (m_lpStructure->Body() == this);
+    if(m_lpStructure)
+    	return (m_lpStructure->Body() == this);
+    else
+        return false;
 }
 
 /**
@@ -375,11 +584,54 @@ BOOL RigidBody::IsRoot()
 
 \return	true if has static joint, false if not.
 **/
-BOOL RigidBody::HasStaticJoint()
+bool RigidBody::HasStaticJoint()
 {
-	if(!IsRoot() && !JointToParent())
-		return TRUE;
-	return FALSE;
+	if(!IsRoot() && !IsContactSensor() && IsCollisionObject() && !JointToParent())
+		return true;
+	return false;
+}
+
+/**
+\brief	Query if this rigid body has any static children. 
+
+\description This looks through all of the immediate children of this part to see if they 
+have a static joint. If they do it returns true, if not it returns false. It does not look
+beyond its immediate children because static parts cannot be nested. They must be placed on
+a non-static part.
+
+\author	dcofer
+\date	9/7/2013
+
+\return	true if has static children, false if not. 
+**/
+bool RigidBody::HasStaticChildren()
+{
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryChildParts[iIndex]->HasStaticJoint())
+            return true;
+
+    return false;
+}
+
+/**
+ \brief Gets the mass of all static children.
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return combined mass of static children.
+ */
+
+float RigidBody::StaticChildrenMass()
+{
+    float fltMass = 0;
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryChildParts[iIndex]->HasStaticJoint())
+            fltMass += m_aryChildParts[iIndex]->Mass();
+
+    return fltMass;
 }
 
 /**
@@ -390,7 +642,7 @@ BOOL RigidBody::HasStaticJoint()
 
 \return	true if food source, false if not. 
 **/
-BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
+bool RigidBody::IsFoodSource() {return m_bFoodSource;}
 
 /**
 \brief	Sets if this is a food source. 
@@ -400,7 +652,7 @@ BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
 
 \param	bVal	true if food source, else false. 
 **/
-void RigidBody::IsFoodSource(BOOL bVal) 
+void RigidBody::IsFoodSource(bool bVal) 
 {
 	m_bFoodSource = bVal;
 
@@ -434,7 +686,7 @@ float RigidBody::FoodQuantity() {return m_fltFoodQuantity;}
 **/
 void RigidBody::FoodQuantity(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodQuantity");
+	Std_InValidRange((float) 0, (float) 100000, fltVal, true, "FoodQuantity");
 	m_fltFoodQuantity = fltVal;
 	
 	//If the sim is running then we do not set the init Qty. Only set it if changed while the sim is not running.
@@ -482,7 +734,7 @@ float RigidBody::FoodReplenishRate() {return m_fltFoodReplenishRate;}
 **/
 void RigidBody::FoodReplenishRate(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodReplenishRate");
+	Std_InValidRange((float) 0, (float) 100000, fltVal, true, "FoodReplenishRate");
 	m_fltFoodReplenishRate = fltVal;
 }
 
@@ -507,7 +759,7 @@ float RigidBody::FoodEnergyContent() {return m_fltFoodEnergyContent;}
 **/
 void RigidBody::FoodEnergyContent(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodEnergyContent");
+	Std_InValidRange((float) 0, (float) 100000, fltVal, true, "FoodEnergyContent");
 	m_fltFoodEnergyContent = fltVal;
 }
 /**
@@ -531,7 +783,7 @@ float RigidBody::MaxFoodQuantity() {return m_fltMaxFoodQuantity;}
 **/
 void RigidBody::MaxFoodQuantity(float fltVal) 
 {
-	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "MaxFoodQuantity");
+	Std_InValidRange((float) 0, (float) 100000, fltVal, true, "MaxFoodQuantity");
 	m_fltMaxFoodQuantity = fltVal;
 }
 
@@ -554,9 +806,9 @@ float RigidBody::LinearVelocityDamping() {return m_fltLinearVelocityDamping;}
 \param	fltVal	The new value. 
 \exception Value must be zero or greater.
 **/
-void RigidBody::LinearVelocityDamping(float fltVal, BOOL bUseScaling) 
+void RigidBody::LinearVelocityDamping(float fltVal, bool bUseScaling) 
 {
-	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::LinearVelocityDamping");
+	Std_InValidRange((float) 0, (float) 1000, fltVal, true, "RigidBody::LinearVelocityDamping");
 
 	if(bUseScaling)
 		fltVal = fltVal/m_lpSim->DisplayMassUnits();
@@ -585,9 +837,9 @@ float RigidBody::AngularVelocityDamping() {return m_fltAngularVelocityDamping;}
 \param	fltVal	The new value. 
 \exception Value must be zero or greater.
 **/
-void RigidBody::AngularVelocityDamping(float fltVal, BOOL bUseScaling) 
+void RigidBody::AngularVelocityDamping(float fltVal, bool bUseScaling) 
 {
-	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::AngularVelocityDamping");
+	Std_InValidRange((float) 0, (float) 1000, fltVal, true, "RigidBody::AngularVelocityDamping");
 
 	if(bUseScaling)
 		fltVal = fltVal/m_lpSim->DisplayMassUnits();
@@ -610,7 +862,7 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 
 \return	. 
 **/
-string RigidBody::MaterialID() {return m_strMaterialID;}
+std::string RigidBody::MaterialID() {return m_strMaterialID;}
 
 /**
 \brief	Sets the Material ID for this part. 
@@ -625,7 +877,7 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 
 \param	strID	ID of the material to use. 
 **/
-void RigidBody::MaterialID(string strID) 
+void RigidBody::MaterialID(std::string strID) 
 {
 	m_strMaterialID = Std_ToUpper(strID);
 
@@ -653,7 +905,7 @@ CStdFPoint RigidBody::BuoyancyCenter() {return m_vBuoyancyCenter;}
 \param	bUseScaling   	If true then the position values that are passed in will be scaled by the
 						unit scaling values.
 **/
-void RigidBody::BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling) 
+void RigidBody::BuoyancyCenter(CStdFPoint &oPoint, bool bUseScaling) 
 {
 	if(bUseScaling)
 		m_vBuoyancyCenter = oPoint * m_lpMovableSim->InverseDistanceUnits();
@@ -676,7 +928,7 @@ void RigidBody::BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling)
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::BuoyancyCenter(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+void RigidBody::BuoyancyCenter(float fltX, float fltY, float fltZ, bool bUseScaling) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	BuoyancyCenter(vPos, bUseScaling);
@@ -693,7 +945,7 @@ reset the local position using an xml data packet.
 \param	bUseScaling			If true then the position values that are passed in will be scaled by
 							the unit scaling values. 
 **/
-void RigidBody::BuoyancyCenter(string strXml, BOOL bUseScaling)
+void RigidBody::BuoyancyCenter(std::string strXml, bool bUseScaling)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -726,7 +978,7 @@ float RigidBody::BuoyancyScale() {return m_fltBuoyancyScale;}
 **/
 void RigidBody::BuoyancyScale(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "BuoyancyScale", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "BuoyancyScale", true);
 
 	m_fltBuoyancyScale = fltVal;
 
@@ -735,33 +987,33 @@ void RigidBody::BuoyancyScale(float fltVal)
 }
 
 /**
-\brief	Gets the drag coefficients for the three axises for the body.
+\brief	Gets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
 
-\return	returns m_vDrag. 
+\return	returns m_vLinearDrag. 
 **/
-CStdFPoint RigidBody::Drag() {return m_vDrag;}
+CStdFPoint RigidBody::LinearDrag() {return m_vLinearDrag;}
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body.
+\brief	Sets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
 
 \param [in,out]	oPoint	The new point to use to set the drag.
 **/
-void RigidBody::Drag(CStdFPoint &oPoint) 
+void RigidBody::LinearDrag(CStdFPoint &oPoint) 
 {
-	m_vDrag = oPoint;
+	m_vLinearDrag = oPoint;
 
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_FluidDataChanged();
 }
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body.
+\brief	Sets the linear drag coefficients for the three axises for the body.
 
 \author	dcofer
 \date	3/2/2011
@@ -770,14 +1022,14 @@ void RigidBody::Drag(CStdFPoint &oPoint)
 \param	fltY				The y coordinate. 
 \param	fltZ				The z coordinate. 
 **/
-void RigidBody::Drag(float fltX, float fltY, float fltZ) 
+void RigidBody::LinearDrag(float fltX, float fltY, float fltZ) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
-	Drag(vPos);
+	LinearDrag(vPos);
 }
 
 /**
-\brief	Sets the drag coefficients for the three axises for the body. This method is primarily used by the GUI to
+\brief	Sets the linear drag coefficients for the three axises for the body. This method is primarily used by the GUI to
 reset the local position using an xml data packet. 
 
 \author	dcofer
@@ -785,16 +1037,137 @@ reset the local position using an xml data packet.
 
 \param	strXml				The xml string with the data to load in the position. 
 **/
-void RigidBody::Drag(string strXml)
+void RigidBody::LinearDrag(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
-	oXml.FindChildElement("Drag");
+	oXml.FindChildElement("LinearDrag");
 	
 	CStdFPoint vPos;
-	Std_LoadPoint(oXml, "Drag", vPos);
-	Drag(vPos);
+	Std_LoadPoint(oXml, "LinearDrag", vPos);
+	LinearDrag(vPos);
+}
+
+/**
+\brief	Gets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_vLinearDrag. 
+**/
+CStdFPoint RigidBody::AngularDrag() {return m_vAngularDrag;}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new point to use to set the drag.
+**/
+void RigidBody::AngularDrag(CStdFPoint &oPoint) 
+{
+	m_vAngularDrag = oPoint;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+**/
+void RigidBody::AngularDrag(float fltX, float fltY, float fltZ) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	AngularDrag(vPos);
+}
+
+/**
+\brief	Sets the angular drag coefficients for the three axises for the body. This method is primarily used by the GUI to
+reset the local position using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+**/
+void RigidBody::AngularDrag(std::string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("AngularDrag");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "AngularDrag", vPos);
+	AngularDrag(vPos);
+}
+
+/**
+\brief	Gets the maximum linear hydrodynamic force that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	max hydrodyanmic force that can be applied.
+**/
+float RigidBody::MaxHydroForce() {return m_fltMaxHydroForce;}
+
+/**
+\brief	Sets the maximum linear hydrodynamic force that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void RigidBody::MaxHydroForce(float fltVal, bool bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxHydroForce", true);
+
+	if(bUseScaling)
+		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
+
+	m_fltMaxHydroForce = fltVal;
+}
+
+/**
+\brief	Gets the maximum angular hydrodynamic torque that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	max hydrodyanmic torque that can be applied.
+**/
+float RigidBody::MaxHydroTorque() {return m_fltMaxHydroTorque;}
+
+/**
+\brief	Sets the maximum angular hydrodynamic torque that can be applied to this part.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void RigidBody::MaxHydroTorque(float fltVal, bool bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxHydroTorque", true);
+
+	if(bUseScaling)
+		fltVal *= ( m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits());
+
+	m_fltMaxHydroTorque = fltVal;
 }
 
 /**
@@ -818,7 +1191,7 @@ float RigidBody::Magnus() {return m_fltMagnus;}
 **/
 void RigidBody::Magnus(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Magnus", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Magnus", true);
 
 	m_fltMagnus = fltVal;
 
@@ -834,7 +1207,7 @@ void RigidBody::Magnus(float fltVal)
 
 \return	true if on, false if not. 
 **/
-BOOL RigidBody::EnableFluids() {return m_bEnableFluids;}
+bool RigidBody::EnableFluids() {return m_bEnableFluids;}
 
 /**
 \brief	Sets whether this object has fluid interactions turned on. 
@@ -844,7 +1217,7 @@ BOOL RigidBody::EnableFluids() {return m_bEnableFluids;}
 
 \param	bVal	true to turn on, false to turn off. 
 **/
-void RigidBody::EnableFluids(BOOL bVal) 
+void RigidBody::EnableFluids(bool bVal) 
 {
 	m_bEnableFluids = bVal;
 
@@ -852,12 +1225,12 @@ void RigidBody::EnableFluids(BOOL bVal)
 		m_lpPhysicsBody->Physics_FluidDataChanged();
 }
 
-BOOL RigidBody::HasCollisionGeometry()
+bool RigidBody::HasCollisionGeometry()
 {
 	if(m_lpPhysicsBody)
 		return m_lpPhysicsBody->Physics_HasCollisionGeometry();
 	else
-		return FALSE;
+		return false;
 }
 
 /**
@@ -910,6 +1283,31 @@ void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 		m_fltSurfaceContactCount--;
 }
 
+
+/**
+\brief	Direclty sets the surface contact count for when this part is contacting another rigid body part
+
+\details If this item is setup to be a contact sensor then when the physics engine detects when a
+collision between two objects stops, and it will provide this back to us. We then call this
+method to update the number of contacts that this object is undergoing. This value can then be
+used to detect whether, and how many, contacts are currently happening. 
+
+\author	dcofer
+\date	9/5/2013
+
+\param [in]	iCount	The number of surface contacts. Must be 0 or larger. 
+**/
+void RigidBody::SetSurfaceContactCount(int iCount)
+{
+    if(iCount >= 0)
+        m_fltSurfaceContactCount = iCount;
+
+	//Test code
+	//if(iCount > 0)
+	//	iCount = iCount;
+}
+
+
 /**
 \brief	This item is eating the specified amount of food. 
 
@@ -944,8 +1342,20 @@ method does nothing by default.
 **/
 void RigidBody::EnableCollision(RigidBody *lpBody)
 {
+    if(!lpBody)
+        THROW_TEXT_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "EnableCollision");
+
+    if(FindCollisionExclusionBody(lpBody, false))
+        m_aryExcludeCollisionSet.erase(lpBody);
+
+    if(lpBody->FindCollisionExclusionBody(this, false))
+        lpBody->m_aryExcludeCollisionSet.erase(this);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_EnableCollision(lpBody);
+
+	if(lpBody->m_lpPhysicsBody)
+		lpBody->m_lpPhysicsBody->Physics_EnableCollision(this);
 }
 
 /**
@@ -963,8 +1373,68 @@ method does nothing by default.
 **/
 void RigidBody::DisableCollision(RigidBody *lpBody)
 {
+    if(!lpBody)
+        THROW_TEXT_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "DisableCollision");
+
+    if(!FindCollisionExclusionBody(lpBody, false))
+        m_aryExcludeCollisionSet.insert(lpBody);
+
+    if(!lpBody->FindCollisionExclusionBody(this, false))
+        lpBody->m_aryExcludeCollisionSet.insert(this);
+
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_DisableCollision(lpBody);
+
+	if(lpBody->m_lpPhysicsBody)
+		lpBody->m_lpPhysicsBody->Physics_DisableCollision(this);
+}
+
+/**
+\brief	Searches the exclusion collision list to see if the specified part is already present.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lpBody	Body part to find in the exclusion list. 
+\param	bThrowError  	true to throw error if there is a problem. 
+
+\return	index of found body part, or -1 if not found
+\exception If bThrowError=True and no part is found it throws an exception.
+**/
+bool RigidBody::FindCollisionExclusionBody(RigidBody *lpBody, bool bThrowError)
+{
+    std::unordered_set<RigidBody *>::iterator oPos;
+    oPos = m_aryExcludeCollisionSet.find(lpBody);
+
+	if(oPos != m_aryExcludeCollisionSet.end())
+		return true;
+	else if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lItemNotFound, Al_Err_strItemNotFound, "Exclusion List Body Part: " + lpBody->ID());
+
+	return false;
+}
+
+/**
+ \brief Called by the desctructor. It removes this object from all other collision exclusion lists.
+ This prevents any attempt to reference this deleted object while looping through collision exclusions.
+
+ \author    David Cofer
+ \date  1/14/2014
+ */
+void RigidBody::RemoveCollisionExclusions()
+{
+    for (std::unordered_set<RigidBody *>::iterator itr = m_aryExcludeCollisionSet.begin(); itr != m_aryExcludeCollisionSet.end(); ++itr) 
+    {
+        RigidBody *lpBody = *(itr);
+
+       if(lpBody->FindCollisionExclusionBody(this, false))
+       {
+           lpBody->m_aryExcludeCollisionSet.erase(this);   
+
+           if(lpBody->m_lpPhysicsBody)
+		        lpBody->m_lpPhysicsBody->Physics_DisableCollision(this);
+       }
+    }
 }
 
 /**
@@ -985,10 +1455,10 @@ RigidBody *RigidBody::ParentWithCollisionGeometry()
 	else if(m_lpParent)
 		return m_lpParent->ParentWithCollisionGeometry();
 	else
-		return FALSE;
+		return false;
 }
 
-void RigidBody::Kill(BOOL bState)
+void RigidBody::Kill(bool bState)
 {
 	BodyPart::Kill(bState);
 
@@ -1002,6 +1472,11 @@ void RigidBody::Kill(BOOL bState)
 
 void RigidBody::ResetSimulation()
 {
+	////Test code
+	//int i=5;
+	//if(Std_ToLower(m_strID) == "b42f968f-0639-4a69-9974-9e0f411d40d8") // && m_lpSim->Time() > 1.8
+	//	i=6;
+
 	///It is <b>very</b> important that the physcis of the rigid body is reset
     /// before the joint and the child parts. The reason is that we want the position
     /// of this part to be rest first and then child parts because if we do not then
@@ -1020,6 +1495,7 @@ void RigidBody::ResetSimulation()
 	m_fltFoodQuantity = m_fltFoodQuantityInit;
 	m_fltFoodEaten = 0;
 	m_fltSurfaceContactCount = 0;
+	StickyOn(false);
 }
 
 void RigidBody::AfterResetSimulation()
@@ -1056,6 +1532,19 @@ void RigidBody::CreateParts()
 	if(m_bFoodSource)
 		m_fltFoodReplenishRate = (m_fltFoodReplenishRate * m_lpSim->PhysicsTimeStep());
 
+    CreateChildParts();
+}
+
+/**
+\brief	Loops through all the child parts of this rigid body and call CreateParts.
+
+\details This is called by CreateParts method to recursively call CreateParts for all children. 
+
+\author	dcofer
+\date	10/7/2013
+**/
+void RigidBody::CreateChildParts()
+{
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->CreateParts();
@@ -1080,17 +1569,66 @@ create the joints for its children.
 **/
 void RigidBody::CreateJoints()
 {
+    CreateChildJoints();
+}
+
+/**
+\brief	Loops through all the child parts of this rigid body and call CreateJoints.
+
+\details This is called by CreateJoints method to recursively call CreateJoints for all children. 
+
+\author	dcofer
+\date	10/7/2013
+**/
+void RigidBody::CreateChildJoints()
+{
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->CreateJoints();
 }
 
-void RigidBody::AddExternalNodeInput(float fltInput)
+void RigidBody::SimPausing()
 {
+	//If the simulation is pausing then we need to remove any sticky locks
+	if(m_lpPhysicsBody && m_bIsStickyPart)
+		m_lpPhysicsBody->Physics_DeleteStickyLock();
+}
+
+int RigidBody::GetTargetDataTypeIndex(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	if(strType == "BODYFORCEX")
+		return BODY_FORCE_X_TYPE;
+	else if(strType == "BODYFORCEY")
+		return BODY_FORCE_Y_TYPE;
+	else if(strType == "BODYFORCEZ")
+		return BODY_FORCE_Z_TYPE;
+	else if(strType == "STICKYON")
+		return STICKY_ON_TYPE;
+	else if(strType == "STICKYOFF")
+		return STICKY_OFF_TYPE;
+	else 
+		return -1;
+
+}
+
+void RigidBody::AddExternalNodeInput(int iTargetDataType, float fltInput)
+{
+	if(iTargetDataType == STICKY_ON_TYPE && fltInput > 0.5)
+		m_fltStickyOn = 1;
+	else if(iTargetDataType == STICKY_OFF_TYPE && fltInput > 0.5)
+		m_fltStickyOn = 0;
+
+	////Test Code
+	//if(m_fltStickyOn > 0.8)
+	//	fltInput = fltInput;
 }
 
 void RigidBody::StepSimulation()
 {
+    BodyPart::StepSimulation();
+
 	if(m_bFoodSource)
 	{
 		m_fltFoodQuantity = m_fltFoodQuantity + m_fltFoodReplenishRate;
@@ -1102,6 +1640,9 @@ void RigidBody::StepSimulation()
 			m_fltFoodEaten = 0;
 	}
 
+    if(m_lpPhysicsBody && m_lpSim->SimulateHydrodynamics() && m_bEnableFluids)
+        m_lpPhysicsBody->Physics_StepHydrodynamicSimulation();
+
 	//Must update the data before calling step sim on children because they may depend on 
 	//some of the data that is collected, like the world matrix for this object.
 	UpdateData();
@@ -1112,15 +1653,13 @@ void RigidBody::StepSimulation()
 
 	if(m_lpJointToParent)
 		m_lpJointToParent->StepSimulation();
-
 }
-
 
 #pragma region DataAccesMethods
 
-float *RigidBody::GetDataPointer(const string &strDataType)
+float *RigidBody::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "FOODQUANTITY")
 		return &m_fltFoodQuantity;
@@ -1130,6 +1669,11 @@ float *RigidBody::GetDataPointer(const string &strDataType)
 		return &m_fltEnabled;
 	if(strType == "CONTACTCOUNT")
 		return &m_fltSurfaceContactCount;
+	if(strType == "DENSITY")
+	{
+		GetDensity();
+		return &m_fltReportDensity;
+	}
 	if(strType == "MASS")
 	{
 		GetMass();
@@ -1139,6 +1683,10 @@ float *RigidBody::GetDataPointer(const string &strDataType)
 	{
 		GetVolume();
 		return &m_fltReportVolume;
+	}
+	if(strType == "STICKYON")
+	{
+		return &m_fltStickyOn;
 	}
 
 	float *lpData = NULL;
@@ -1153,59 +1701,65 @@ float *RigidBody::GetDataPointer(const string &strDataType)
 }
 
 
-BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool RigidBody::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
-	if(BodyPart::SetData(strType, strValue, FALSE))
-		return TRUE;
+	if(BodyPart::SetData(strType, strValue, false))
+		return true;
 
 	if(strType == "FREEZE")
 	{
 		Freeze(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "DENSITY")
 	{
-		Density(atof(strValue.c_str()));
-		return TRUE;
+		Density((float) atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MASS")
+	{
+		Mass((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strType == "COM")
 	{
 		CenterOfMass(strValue);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FOODSOURCE")
 	{
 		IsFoodSource(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 	
 	if(strType == "FOODQUANTITY")
 	{
-		FoodQuantity(atof(strValue.c_str()));
-		return TRUE;
+		FoodQuantity((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "MAXFOODQUANTITY")
 	{
-		MaxFoodQuantity(atof(strValue.c_str()));
-		return TRUE;
+		MaxFoodQuantity((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "FOODREPLENISHRATE")
 	{
-		FoodReplenishRate(atof(strValue.c_str()));
-		return TRUE;
+		FoodReplenishRate((float) atof(strValue.c_str()));
+		return true;
 	}
 	
 	if(strType == "FOODENERGYCONTENT")
 	{
-		FoodEnergyContent(atof(strValue.c_str()));
-		return TRUE;
+		FoodEnergyContent((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strDataType == "BUOYANCYCENTER")
@@ -1216,38 +1770,74 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 
 	if(strType == "BUOYANCYSCALE")
 	{
-		BuoyancyScale(atof(strValue.c_str()));
-		return TRUE;
-	}
-
-	if(strDataType == "DRAG")
-	{
-		Drag(strValue);
+		BuoyancyScale((float) atof(strValue.c_str()));
 		return true;
 	}
 
-	if(strDataType == "DRAG.X")
+	if(strDataType == "LINEARDRAG")
 	{
-		Drag(atof(strValue.c_str()), m_vDrag.y, m_vDrag.z);
+		LinearDrag(strValue);
 		return true;
 	}
 
-	if(strDataType == "DRAG.Y")
+	if(strDataType == "LINEARDRAG.X")
 	{
-		Drag(m_vDrag.x, atof(strValue.c_str()), m_vDrag.z);
+		LinearDrag(atof(strValue.c_str()), m_vLinearDrag.y, m_vLinearDrag.z);
 		return true;
 	}
 
-	if(strDataType == "DRAG.Z")
+	if(strDataType == "LINEARDRAG.Y")
 	{
-		Drag(m_vDrag.x, m_vDrag.y, atof(strValue.c_str()));
+		LinearDrag(m_vLinearDrag.x, atof(strValue.c_str()), m_vLinearDrag.z);
+		return true;
+	}
+
+	if(strDataType == "LINEARDRAG.Z")
+	{
+		LinearDrag(m_vLinearDrag.x, m_vLinearDrag.y, atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG")
+	{
+		AngularDrag(strValue);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.X")
+	{
+		AngularDrag(atof(strValue.c_str()), m_vAngularDrag.y, m_vAngularDrag.z);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.Y")
+	{
+		AngularDrag(m_vAngularDrag.x, atof(strValue.c_str()), m_vAngularDrag.z);
+		return true;
+	}
+
+	if(strDataType == "ANGULARDRAG.Z")
+	{
+		AngularDrag(m_vAngularDrag.x, m_vAngularDrag.y, atof(strValue.c_str()));
+		return true;
+	}
+    
+	if(strType == "MAXHYDROFORCE")
+	{
+		MaxHydroForce((float) atof(strValue.c_str()));
+		return true;
+	}
+    
+	if(strType == "MAXHYDROTORQUE")
+	{
+		MaxHydroTorque((float) atof(strValue.c_str()));
 		return true;
 	}
 
 	if(strType == "MAGNUS")
 	{
-		Magnus(atof(strValue.c_str()));
-		return TRUE;
+		Magnus((float) atof(strValue.c_str()));
+		return true;
 	}
 
 	if(strDataType == "ENABLEFLUIDS")
@@ -1262,125 +1852,112 @@ BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL 
 		return true;
 	}
 
+	if(strDataType == "ISSTICKYPART")
+	{
+		IsStickyPart(Std_ToBool(strValue));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void RigidBody::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	BodyPart::QueryProperties(aryNames, aryTypes);
+	BodyPart::QueryProperties(aryProperties);
 
-	aryNames.Add("Freeze");
-	aryTypes.Add("Boolean");
+	aryProperties.Add(new TypeProperty("FoodEaten", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Enable", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ContactCount", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Volume", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("StickyOn", AnimatPropertyType::Boolean, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Density");
-	aryTypes.Add("Float");
-
-	aryNames.Add("CenterOfMass");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("FoodSource");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("FoodQuantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("MaxFoodQuantity");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FoodReplenishRate");
-	aryTypes.Add("Float");
-
-	aryNames.Add("FoodEnergyContent");
-	aryTypes.Add("Float");
-
-	aryNames.Add("BuoyancyCenter");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("BuoyancyScale");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Drag");
-	aryTypes.Add("Xml");
-
-	aryNames.Add("Drag.X");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Drag.Y");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Drag.Z");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Magnus");
-	aryTypes.Add("Float");
-
-	aryNames.Add("EnableFluids");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("MaterialTypeID");
-	aryTypes.Add("String");
+	aryProperties.Add(new TypeProperty("Freeze", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Density", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Mass", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("CenterOfMass", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodSource", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodQuantity", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("MaxFoodQuantity", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodReplenishRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("FoodEnergyContent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BuoyancyCenter", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BuoyancyScale", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("LinearDrag.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.X", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.Y", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AngularDrag.Z", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHydroForce", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxHydroTorque", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Magnus", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("EnableFluids", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaterialTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("IsStickyPart", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 }
 
-BOOL RigidBody::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool RigidBody::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		AddRigidBody(strXml);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONTACTSENSOR")
 	{
 		AddContactSensor(strXml);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ODOR")
 	{
 		AddOdor(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL RigidBody::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool RigidBody::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "RIGIDBODY")
 	{
 		RemoveRigidBody(strID);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "CONTACTSENSOR")
 	{
 		RemoveContactSensor(strID);
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ODOR")
 	{
 		RemoveOdor(strID);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -1391,7 +1968,7 @@ BOOL RigidBody::RemoveItem(const string &strItemType, const string &strID, BOOL 
 
 \param	strXml	The xml data packet for loading the body. 
 **/
-void RigidBody::AddRigidBody(string strXml)
+RigidBody *RigidBody::AddRigidBody(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1407,6 +1984,15 @@ void RigidBody::AddRigidBody(string strXml)
 
 	//Then create all of the joints between the models.
 	lpBody->CreateJoints();
+
+    //Inform the physics object that we have added a child body.
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_ChildBodyAdded(lpBody);
+
+    if(m_lpSim && lpBody)
+        m_lpSim->NotifyRigidBodyAdded(lpBody->ID());
+
+    return lpBody;
 }
 
 /**
@@ -1419,12 +2005,24 @@ void RigidBody::AddRigidBody(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
+void RigidBody::RemoveRigidBody(std::string strID, bool bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
+
+    RigidBody *lpChild = m_aryChildParts[iPos];
+    bool bHasStaticJoint = bHasStaticJoint = lpChild->HasStaticJoint();
+
 	m_aryChildParts.RemoveAt(iPos);
 	m_lpStructure->RemoveRigidBody(strID);
+
+    //Inform the physics object that we are removing a child body.
+    if(m_lpPhysicsBody)
+        m_lpPhysicsBody->Physics_ChildBodyRemoved(bHasStaticJoint);    
+
+    if(m_lpSim)
+        m_lpSim->NotifyRigidBodyRemoved(strID);
 }
+
 
 /**
 \brief	Finds the array index for the child part with the specified ID
@@ -1439,9 +2037,9 @@ void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
 \return	If bThrowError is false and ID is not found returns NULL, 
 else returns the pointer to the found part.
 **/
-int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
+int RigidBody::FindChildListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1462,7 +2060,7 @@ int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 
 \param	strXml	The xml data packet for loading the body. 
 **/
-void RigidBody::AddContactSensor(string strXml)
+void RigidBody::AddContactSensor(std::string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1470,6 +2068,9 @@ void RigidBody::AddContactSensor(string strXml)
 	oXml.FindChildElement("ContactSensor");
 
 	LoadContactSensor(oXml);
+
+	if(m_lpPhysicsBody && m_lpContactSensor)
+		m_lpPhysicsBody->Physics_ContactSensorAdded(m_lpContactSensor);
 }
 
 /**
@@ -1482,12 +2083,15 @@ void RigidBody::AddContactSensor(string strXml)
 \param	bThrowError	If true and ID is not found then it will throw an error.
 \exception If bThrowError is true and ID is not found.
 **/
-void RigidBody::RemoveContactSensor(string strID, BOOL bThrowError)
+void RigidBody::RemoveContactSensor(std::string strID, bool bThrowError)
 {
 	if(m_lpContactSensor)
 	{
 		delete m_lpContactSensor;
 		m_lpContactSensor = NULL;
+
+	    if(m_lpPhysicsBody)
+		    m_lpPhysicsBody->Physics_ContactSensorRemoved();
 	}
 }
 
@@ -1496,6 +2100,11 @@ void RigidBody::UpdatePhysicsPosFromGraphics()
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_UpdateNode();
 
+    UpdateChildPhysicsPosFromGraphics();
+}
+
+void RigidBody::UpdateChildPhysicsPosFromGraphics()
+{
 	if(m_lpJointToParent)
 		m_lpJointToParent->UpdatePhysicsPosFromGraphics();
 
@@ -1514,12 +2123,14 @@ void RigidBody::LoadPosition(CStdXml &oXml)
 
 	if(!IsRoot())
 	{
-		Position(vTemp, TRUE, FALSE, FALSE);	
+		Position(vTemp, true, false, false);	
 		//AbsolutePosition(m_lpParent->AbsolutePosition() + m_oPosition);
 	}
 	else
-		BodyPart::Position(m_lpStructure->Position(), FALSE, FALSE, FALSE);
-		//AbsolutePosition(m_lpStructure->AbsolutePosition());
+	{
+		CStdFPoint oPos = m_lpStructure->Position();
+		BodyPart::Position(oPos, false, false, false);
+	}
 }
 
 void RigidBody::Load(CStdXml &oXml)
@@ -1535,20 +2146,28 @@ void RigidBody::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	if(oXml.FindChildElement("COM", FALSE))
+	vPoint.Set(0, 0, 0);
+	if(oXml.FindChildElement("COM", false))
 	{
 		Std_LoadPoint(oXml, "COM", vPoint);
-		CenterOfMass(vPoint, TRUE);
+		CenterOfMass(vPoint, true, false);
 	}
 	else
-		CenterOfMass(0, 0, 0, TRUE);
+		CenterOfMass(vPoint, true, false);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
+    //Get Mass first and only set it if it is >= 0. If it is less than this
+    //Then we need to calculate it during initialization instead of using the loaded value.
+    m_fltMass = oXml.GetChildFloat("Mass", m_fltMass);
+    if(m_fltMass >= 0)
+        Mass(m_fltMass, true, false);
+
 	MaterialID(oXml.GetChildString("MaterialTypeID", m_strMaterialID));
-	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
+	Freeze(oXml.GetChildBool("Freeze", m_bFreeze), false);
 	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
 	IsCollisionObject(oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject));
+	IsStickyPart(oXml.GetChildBool("IsStickyPart", m_bIsStickyPart));
 
 	IsFoodSource(oXml.GetChildBool("FoodSource", m_bFoodSource));
 	FoodQuantity(oXml.GetChildFloat("FoodQuantity", m_fltFoodQuantity));
@@ -1560,12 +2179,18 @@ void RigidBody::Load(CStdXml &oXml)
 	AngularVelocityDamping(oXml.GetChildFloat("AngularVelocityDamping", m_fltAngularVelocityDamping));
 
 	vPoint.Set(0, 0, 0);
-	Std_LoadPoint(oXml, "BuoyancyCenter", vPoint, FALSE);
+	Std_LoadPoint(oXml, "BuoyancyCenter", vPoint, false);
 	BuoyancyCenter(vPoint);
 
 	vPoint.Set(0, 0, 0);
-	Std_LoadPoint(oXml, "Drag", vPoint, FALSE);
-	Drag(vPoint);
+	Std_LoadPoint(oXml, "LinearDrag", vPoint, false);
+	LinearDrag(vPoint);
+
+	Std_LoadPoint(oXml, "AngularDrag", vPoint, false);
+	AngularDrag(vPoint);
+
+    MaxHydroForce(oXml.GetChildFloat("MaxHydroForce", m_fltMaxHydroForce));
+    MaxHydroTorque(oXml.GetChildFloat("MaxHydroTorque", m_fltMaxHydroTorque));
 
 	BuoyancyScale(oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale));
 	Magnus(oXml.GetChildFloat("Magnus", m_fltMagnus));
@@ -1577,13 +2202,13 @@ void RigidBody::Load(CStdXml &oXml)
 	{
 		//Static joints do not have joints specified. Any time that there is a parent but not joint defined
 		//then this signals that we need to statically add that part to the parent object geometry.
-		if(oXml.FindChildElement("Joint", FALSE))
+		if(oXml.FindChildElement("Joint", false))
 			LoadJoint(oXml);
 		else
 			m_lpJointToParent = NULL;
 	}
 
-	if(oXml.FindChildElement("ChildBodies", FALSE))
+	if(oXml.FindChildElement("ChildBodies", false))
 	{
 		oXml.IntoElem();  //Into ChildBodies Element
 		int iChildCount = oXml.NumberOfChildren();
@@ -1598,7 +2223,7 @@ void RigidBody::Load(CStdXml &oXml)
 
 	LoadContactSensor(oXml);
 
-	if(oXml.FindChildElement("OdorSources", FALSE))
+	if(oXml.FindChildElement("OdorSources", false))
 	{
 		oXml.IntoElem();  //Into OdorSources Element
 		int iChildCount = oXml.NumberOfChildren();
@@ -1619,10 +2244,10 @@ void RigidBody::LoadContactSensor(CStdXml &oXml)
 	if(m_lpContactSensor)
 		THROW_TEXT_ERROR(Al_Err_lContactSensorExists, Al_Err_strContactSensorExists, " RigidBodyID: " + m_strID);
 
-	if(oXml.FindChildElement("ContactSensor", FALSE))
+	if(oXml.FindChildElement("ContactSensor", false))
 	{
 		m_lpContactSensor = new AnimatSim::Environment::ContactSensor();
-		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 		m_lpContactSensor->Load(oXml);
 	}
 }
@@ -1641,12 +2266,12 @@ void RigidBody::LoadContactSensor(CStdXml &oXml)
 RigidBody *RigidBody::LoadRigidBody(CStdXml &oXml)
 {
 	RigidBody *lpChild = NULL;
-	string strType;
+	std::string strType;
 
 try
 {
 	oXml.IntoElem(); //Into Child Element
-	string strModule = oXml.GetChildString("ModuleName", "");
+	std::string strModule = oXml.GetChildString("ModuleName", "");
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
@@ -1655,7 +2280,7 @@ try
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	
 	lpChild->Parent(this);
-	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 
 	lpChild->Load(oXml);
 
@@ -1691,13 +2316,13 @@ catch(...)
 
 Joint *RigidBody::LoadJoint(CStdXml &oXml)
 {
-	string strType;
+	std::string strType;
 
 try
 {
 	oXml.IntoChildElement("Joint"); //Into Joint Element
-	string strModule = oXml.GetChildString("ModuleName", "");
-	string strJointType = oXml.GetChildString("Type");
+	std::string strModule = oXml.GetChildString("ModuleName", "");
+	std::string strJointType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Joint Element
 
 	m_lpJointToParent = dynamic_cast<Joint *>(m_lpSim->CreateObject(strModule, "Joint", strJointType));
@@ -1706,7 +2331,7 @@ try
 		m_lpJointToParent->Parent(m_lpParent);
 		m_lpJointToParent->Child(this);
 
-		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 
 		m_lpJointToParent->Load(oXml);
 
@@ -1757,7 +2382,7 @@ void RigidBody::AddOdor(Odor *lpOdor)
 }
 
 
-void RigidBody::AddOdor(string strXml, BOOL bDoNotInit)
+void RigidBody::AddOdor(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1770,7 +2395,7 @@ void RigidBody::AddOdor(string strXml, BOOL bDoNotInit)
 		lpOdor->Initialize();
 }
 
-void RigidBody::RemoveOdor(string strID, BOOL bThrowError)
+void RigidBody::RemoveOdor(std::string strID, bool bThrowError)
 {
 	m_aryOdorSources.Remove(strID);
 }
@@ -1794,7 +2419,7 @@ try
 {
 	lpOdor = new Odor(this);
 
-	lpOdor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	lpOdor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, true);
 	lpOdor->Load(oXml);
 
 	AddOdor(lpOdor);
@@ -1816,25 +2441,47 @@ catch(...)
 }
 
 /**
-\brief	Adds a force to this body at a specified position. 
+\brief	Adds a world-coordinate based force vector to this body at a specified local body position. 
 
 \author	dcofer
-\date	3/2/2011
+\date	2/9/2014
 
-\param	fltPx		The x position. 
-\param	fltPy		The y position.  
-\param	fltPz		The z position.  
-\param	fltFx		The x force. 
-\param	fltFy		The y force. 
-\param	fltFz		The z force. 
+\param	fltPx		The x position relative to the COM in local part coordinates. 
+\param	fltPy		The y position relative to the COM in local part coordinates.  
+\param	fltPz		The z position relative to the COM in local part coordinates.  
+\param	fltFx		The x force in world coordinates. 
+\param	fltFy		The y force in world coordinates. 
+\param	fltFz		The z force in world coordinates. 
 \param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
 					applied as provided. 
 **/
 
-void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+void RigidBody::AddForceAtLocalPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_AddBodyForce(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
+		m_lpPhysicsBody->Physics_AddBodyForceAtLocalPos(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
+}
+
+/**
+\brief	Adds a world-coordinate based force vector to this body at a specified world-coordinate body position. 
+
+\author	dcofer
+\date	2/9/2014
+
+\param	fltPx		The x position in world coordinates. 
+\param	fltPy		The y position in world coordinates. 
+\param	fltPz		The z position in world coordinates.  
+\param	fltFx		The x force in world coordinates. 
+\param	fltFy		The y force in world coordinates. 
+\param	fltFz		The z force in world coordinates. 
+\param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
+					applied as provided. 
+**/
+
+void RigidBody::AddForceAtWorldPos(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, bool bScaleUnits)
+{
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_AddBodyForceAtWorldPos(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
 }
 
 /**
@@ -1849,7 +2496,7 @@ void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, flo
 \param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
 					applied as provided. 
 **/
-void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, bool bScaleUnits)
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_AddBodyTorque(fltTx, fltTy, fltTz, bScaleUnits);
@@ -1894,6 +2541,43 @@ float RigidBody::GetMass()
 
 	return m_fltMass;
 }
+
+/**
+\brief	Gets the density of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The density. 
+**/
+float RigidBody::GetDensity()
+{
+	if(m_lpPhysicsBody)
+		m_fltDensity = m_lpPhysicsBody->Physics_GetDensity();
+
+    m_fltReportDensity = m_fltDensity * m_lpSim->DisplayMassUnits();
+    m_fltReportDensity /= pow(m_lpSim->DenominatorDistanceUnits(), 3);
+
+	return m_fltDensity;
+}
+
+/**
+ \brief Gets the mass of this part and all static children
+
+ \author    David Cofer
+ \date  10/10/2013
+
+ \return    The mass value of this part with static children.
+ */
+
+float RigidBody::GetMassValueWithStaticChildren()
+{
+    if(HasStaticChildren())
+        return m_fltMass + StaticChildrenMass();
+    else
+    	return m_fltMass;
+}
+
 
 /**
 \brief	Gets the volume of this part. 

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34D607F8-5492-6648-8C77-ACDCE8DEC310}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>CPP</Language>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG REALISTICNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libIntegrateFireSim_debug.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libIntegrateFireSim_debug.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG REALISTICNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libIntegrateFireSim.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libIntegrateFireSim.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Double|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>_DEBUG REALISTICNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libIntegrateFireSim_debug.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils_debug</Lib>
+        <Lib>AnimatSim_debug</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Debug/libIntegrateFireSim_debug.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Double|AnyCPU' ">
+    <OutputPath>Release</OutputPath>
+    <ExtraCompilerArguments>-std=c++0x -Wl,-rpath,'$ORIGIN'</ExtraCompilerArguments>
+    <DefineSymbols>NDEBUG REALISTICNEURALNET_EXPORTS</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>libIntegrateFireSim.so</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <Externalconsole>true</Externalconsole>
+    <Includes>
+      <Includes>
+        <Include>../../../../include</Include>
+        <Include>../../../StdUtils</Include>
+        <Include>../../../AnimatSim</Include>
+      </Includes>
+    </Includes>
+    <LibPaths>
+      <LibPaths>
+        <LibPath>../../../../bin</LibPath>
+      </LibPaths>
+    </LibPaths>
+    <Libs>
+      <Libs>
+        <Lib>dl</Lib>
+        <Lib>StdUtils</Lib>
+        <Lib>AnimatSim</Lib>
+      </Libs>
+    </Libs>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp Release/libIntegrateFireSim.so ../../../bin" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\CaActivation.h">
+      <Link>CaActivation.h</Link>
+    </None>
+    <None Include="..\ClassFactory.h">
+      <Link>ClassFactory.h</Link>
+    </None>
+    <None Include="..\Connexion.h">
+      <Link>Connexion.h</Link>
+    </None>
+    <None Include="..\DoubleList.h">
+      <Link>DoubleList.h</Link>
+    </None>
+    <None Include="..\ElectricalSynapse.h">
+      <Link>ElectricalSynapse.h</Link>
+    </None>
+    <None Include="..\IntegrateFireModule.h">
+      <Link>IntegrateFireModule.h</Link>
+    </None>
+    <None Include="..\IntegrateFireSimIncludes.h">
+      <Link>IntegrateFireSimIncludes.h</Link>
+    </None>
+    <None Include="..\IonChannel.h">
+      <Link>IonChannel.h</Link>
+    </None>
+    <None Include="..\IonChannelSigmoid.h">
+      <Link>IonChannelSigmoid.h</Link>
+    </None>
+    <None Include="..\NeuralUtils.h">
+      <Link>NeuralUtils.h</Link>
+    </None>
+    <None Include="..\Neuron.h">
+      <Link>Neuron.h</Link>
+    </None>
+    <None Include="..\NonSpikingChemicalSynapse.h">
+      <Link>NonSpikingChemicalSynapse.h</Link>
+    </None>
+    <None Include="..\SpikingChemicalSynapse.h">
+      <Link>SpikingChemicalSynapse.h</Link>
+    </None>
+    <None Include="..\SynapseType.h">
+      <Link>SynapseType.h</Link>
+    </None>
+    <None Include="..\stdafx.h">
+      <Link>stdafx.h</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CaActivation.cpp">
+      <Link>CaActivation.cpp</Link>
+    </Compile>
+    <Compile Include="..\ClassFactory.cpp">
+      <Link>ClassFactory.cpp</Link>
+    </Compile>
+    <Compile Include="..\Connexion.cpp">
+      <Link>Connexion.cpp</Link>
+    </Compile>
+    <Compile Include="..\DoubleList.cpp">
+      <Link>DoubleList.cpp</Link>
+    </Compile>
+    <Compile Include="..\ElectricalSynapse.cpp">
+      <Link>ElectricalSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\IntegrateFireModule.cpp">
+      <Link>IntegrateFireModule.cpp</Link>
+    </Compile>
+    <Compile Include="..\IntegrateFireSim.cpp">
+      <Link>IntegrateFireSim.cpp</Link>
+    </Compile>
+    <Compile Include="..\IonChannel.cpp">
+      <Link>IonChannel.cpp</Link>
+    </Compile>
+    <Compile Include="..\IonChannelSigmoid.cpp">
+      <Link>IonChannelSigmoid.cpp</Link>
+    </Compile>
+    <Compile Include="..\NeuralUtils.cpp">
+      <Link>NeuralUtils.cpp</Link>
+    </Compile>
+    <Compile Include="..\Neuron.cpp">
+      <Link>Neuron.cpp</Link>
+    </Compile>
+    <Compile Include="..\NonSpikingChemicalSynapse.cpp">
+      <Link>NonSpikingChemicalSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\SpikingChemicalSynapse.cpp">
+      <Link>SpikingChemicalSynapse.cpp</Link>
+    </Compile>
+    <Compile Include="..\SynapseType.cpp">
+      <Link>SynapseType.cpp</Link>
+    </Compile>
+    <Compile Include="..\stdafx.cpp">
+      <Link>stdafx.cpp</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

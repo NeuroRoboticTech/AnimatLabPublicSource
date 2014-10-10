@@ -29,7 +29,7 @@ try
 	m_lpOrganism = NULL;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PostureControlStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PostureControlStimulus\r\n", "", -1, false, true);}
 }
 
 void PostureControlStimulus::ClearValues()
@@ -40,21 +40,21 @@ void PostureControlStimulus::ClearValues()
 	m_fltDesiredDelta = 0; 
 	m_fltDesiredPitch = 0;
 	m_fltGain = 0.002f;
-	m_bTumblingSetup = FALSE;
+	m_bTumblingSetup = false;
 
 	m_fltAbDelay = 0;
 	m_fltAbPropGain = 0;
-	m_bEnableAbControl = TRUE;
-	m_bLockAbJump = TRUE;
-	m_bRelockCFJoint = FALSE;
+	m_bEnableAbControl = true;
+	m_bLockAbJump = true;
+	m_bRelockCFJoint = false;
 
 	m_fltAbPitchDiff = 0;
 	m_fltAbStart = 0;
 	m_fltAbPeriod = 35e-3f;
 	m_fltAbVel = 0;
 	m_fltLegPeriod = 40e-3f;
-	m_bSetAbMag = FALSE;
-	m_bDeactivateAbMag = FALSE;
+	m_bSetAbMag = false;
+	m_bDeactivateAbMag = false;
 	m_fltAbMag = 0;
 	m_fltRightCFMag = 0;
 	m_fltAbStart = 0;
@@ -154,8 +154,8 @@ void PostureControlStimulus::ClearValues()
 	m_fltRightBetaD=0;
 	m_fltRightBetaR=0;
 
-	m_bChangePitch = FALSE;
-	m_bChangeBeta = FALSE;
+	m_bChangePitch = false;
+	m_bChangeBeta = false;
 	m_fltLeftBetaChange = 0;
 	m_fltRightBetaChange = 0;
 	m_fltPitchChange = 0;
@@ -175,9 +175,9 @@ void PostureControlStimulus::ClearValues()
 	m_lpbRightTendonLockEnabled = NULL;
 	m_fltTendonDisabledTime = 0;
 	m_bTendonLockEnabledTime = 0;
-	m_bMotorsDisabled = FALSE;
-	m_bActiveInFlightMotor = FALSE;
-	m_bMoveTarsusStarted = FALSE;
+	m_bMotorsDisabled = false;
+	m_bActiveInFlightMotor = false;
+	m_bMoveTarsusStarted = false;
 	m_iTarsusCounter = 0;
 
 	m_lpLeftFrontFemur = NULL;
@@ -228,9 +228,9 @@ void PostureControlStimulus::ClearValues()
 	m_fltLeftMiddleFemurLength = 0;
 	m_fltLeftMiddleTibiaLength = 0;
 
-	m_bTendonLockEnabled = FALSE;
-	m_bTendonLockDisabled = FALSE;
-	m_bRearCoxaFemurEnabled = FALSE;
+	m_bTendonLockEnabled = false;
+	m_bTendonLockDisabled = false;
+	m_bRearCoxaFemurEnabled = false;
 
 	m_lpfltLeftFrontFootDown = NULL;
 	m_lpfltLeftMiddleFootDown = NULL;
@@ -301,8 +301,8 @@ void PostureControlStimulus::ClearValues()
 	m_lpfltAb1Torque = 0;
 	m_lpAb1 = NULL;
 
-	RearFemurTibiaDisabled = FALSE;
-	m_bActivateAbFlexMotor = FALSE;
+	RearFemurTibiaDisabled = false;
+	m_bActivateAbFlexMotor = false;
 }
 
 void PostureControlStimulus::Initialize()
@@ -420,7 +420,7 @@ void PostureControlStimulus::Initialize()
 
 
 	//Lets get the data pointers for the positions of our body parts.
-	string strPosData, strLinVelData;
+	std::string strPosData, strLinVelData;
 	for(int i=0; i<3; i++)
 	{
 		if(i==0)
@@ -672,7 +672,7 @@ void PostureControlStimulus::StepSimulation()
 		
 		if(!RearFemurTibiaDisabled && (m_lpSim->Time() > 50e-3) )
 		{
-			RearFemurTibiaDisabled = TRUE;
+			RearFemurTibiaDisabled = true;
 			DeactivateMotor(m_lpSim, m_lpRightRearFemurTibia);
 			DeactivateMotor(m_lpSim, m_lpLeftRearFemurTibia);
 		}
@@ -685,7 +685,7 @@ void PostureControlStimulus::StepSimulation()
 			{
 				m_fltLeftRearThoracicCoxaPos = 0;
 				m_fltRightRearThoracicCoxaPos = 0;
-				m_bTendonLockEnabled = TRUE;
+				m_bTendonLockEnabled = true;
 				m_bTendonLockEnabledTime = m_lpSim->Time();
 			}
 		}
@@ -694,7 +694,7 @@ void PostureControlStimulus::StepSimulation()
 			//If we are here then we have finished cocking and we are now waiting for triggering.
 			if( (*m_lpbLeftTendonLockEnabled <= 0 && *m_lpbRightTendonLockEnabled <= 0) && !m_bTendonLockDisabled)
 			{
-				m_bTendonLockDisabled = TRUE;
+				m_bTendonLockDisabled = true;
 				m_fltTendonDisabledTime = m_lpSim->Time();
 			}
 		}
@@ -715,7 +715,7 @@ void PostureControlStimulus::StepSimulation()
 					ActivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
 					ActivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
 
-					m_bRearCoxaFemurEnabled = TRUE;
+					m_bRearCoxaFemurEnabled = true;
 				}
 			}
 
@@ -731,7 +731,7 @@ void PostureControlStimulus::StepSimulation()
 					DeactivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
 					//DeactivateMotor(m_lpSim, m_lpLeftMiddleCoxaFemur);
 					//DeactivateMotor(m_lpSim, m_lpRightMiddleCoxaFemur);
-					m_bMoveTarsusStarted = TRUE;
+					m_bMoveTarsusStarted = true;
 				}
 				
 				////When the left or right tarsus touches the ground and is at rest for ten steps then lock it down.
@@ -893,7 +893,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *m_lpSim)
 	//float fltRightA = sqrt( pow((double) (*m_vRightMiddleCoxaFemurPos[0]-*m_vRightMiddleFemurTibiaPos[0]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[1]-*m_vRightMiddleFemurTibiaPos[1]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[2]-*m_vRightMiddleFemurTibiaPos[2]), 2.0) );
 	//float fltRightB = sqrt( pow((double) (*m_vRightMiddleFemurTibiaPos[0]-*m_vRightMiddleTibiaTarsusPos[0]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[1]-*m_vRightMiddleTibiaTarsusPos[1]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[2]-*m_vRightMiddleTibiaTarsusPos[2]), 2.0) );
  
-	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
+	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(MY_PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
 	m_fltRightMiddleCoxaFemurPos = -m_fltLeftMiddleCoxaFemurPos;
 	//m_fltRightMiddleCoxaFemurPos = -asin( (fltRightB*cos(PI/4)-fltRightD)/fltRightA );
 
@@ -903,7 +903,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *m_lpSim)
 
 	fltLeftD = *m_vLeftFrontCoxaFemurPos[1] - *m_vLeftTibiaBetaPos[1];
 
-	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
+	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(MY_PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
 	m_fltRightFrontCoxaFemurPos = m_fltLeftFrontCoxaFemurPos;
 
 	m_fltLeftFrontFemurTibiaPos = 0;
@@ -927,17 +927,17 @@ void PostureControlStimulus::CalculateFeedbackAngles(Simulator *m_lpSim)
 {
 	float fltDelta=0;
 
-	m_bChangeBeta = FALSE;
-	m_bChangePitch = FALSE;
+	m_bChangeBeta = false;
+	m_bChangePitch = false;
 	m_fltPitchChange=0;
 	m_fltLeftBetaChange=0;
 	m_fltRightBetaChange=0;
 
 	if( !m_bChangeBeta && !m_bChangePitch && (fabs(m_fltRightBetaR - m_fltDesiredBeta) > 1e-4f || fabs(m_fltLeftBetaR - m_fltDesiredBeta) > 1e-4f) )
-		m_bChangeBeta = TRUE;
+		m_bChangeBeta = true;
 
 	if( !m_bChangeBeta && !m_bChangePitch && fabs(m_fltPitchR - m_fltDesiredPitch) > 1e-4f )
-		m_bChangePitch = TRUE;
+		m_bChangePitch = true;
 
 	//Since the middle legs are out of the way we should only be using the front and rear legs
 	//to support the locust. The angles of the rear thorax-coxa, and coxa-femur joints are going 
@@ -1069,7 +1069,7 @@ void PostureControlStimulus::DeactivateMotors(Simulator *m_lpSim)
 		ActivateMotor(m_lpSim, m_lpAb4Joint);
 	}
 
-	m_bMotorsDisabled = TRUE;
+	m_bMotorsDisabled = true;
 }
 
 void PostureControlStimulus::ReactiveInFlightMotors(Simulator *m_lpSim)
@@ -1099,7 +1099,7 @@ void PostureControlStimulus::ReactiveInFlightMotors(Simulator *m_lpSim)
 	SetMotorPosition(m_lpSim, m_lpRightRearCoxaFemur, m_fltRightRearCoxaFemurPos);
 	//SetMotorPosition(m_lpSim, m_lpRightRearFemurTibia, m_fltRightRearFemurTibiaPos);
 
-	m_bMotorsDisabled = FALSE;
+	m_bMotorsDisabled = false;
 }
 
 void PostureControlStimulus::DeactiveInFlightMotors(Simulator *m_lpSim)
@@ -1112,7 +1112,7 @@ void PostureControlStimulus::DeactiveInFlightMotors(Simulator *m_lpSim)
 	DeactivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
 	//DeactivateMotor(m_lpSim, m_lpRightRearFemurTibia);
 
-	m_bMotorsDisabled = TRUE;
+	m_bMotorsDisabled = true;
 }
 
 //Torque ab control
@@ -1134,7 +1134,7 @@ void PostureControlStimulus::SetAbdomenPositions(Simulator *m_lpSim)
 	//float fltPitchVel = m_PitchDelay.ReadValue();
 	//float fltTime = (m_lpSim->Time() - m_fltTendonDisabledTime);
 
-	//if(*m_lpbRearFootDown == TRUE)
+	//if(*m_lpbRearFootDown == true)
 	//{
 	//	//if(fltPitchVel < -5)
 	//	//{
@@ -1149,40 +1149,40 @@ void PostureControlStimulus::SetAbdomenPositions(Simulator *m_lpSim)
 	//	//}
 	//}
 
-	//if(*m_lpbRearFootDown == FALSE && m_fltFootTime < 0)
+	//if(*m_lpbRearFootDown == false && m_fltFootTime < 0)
 	//	m_fltFootTime = fltTime;
 
 	////Once the legs have left the ground re-activate the motors and get the current leg amplitudes
-	//if(*m_lpbRearFootDown == FALSE && (fltTime-m_fltFootTime) >= 0)
+	//if(*m_lpbRearFootDown == false && (fltTime-m_fltFootTime) >= 0)
 	//{
 	//	if(!m_bSetAbMag)
 	//	{
 	//		if(*m_lpfltAb1JointVelocity > 0)
 	//		{
 	//			m_fltAbMag = *m_lpfltAb1JointVelocity;
-	//			m_lpAb1Joint->ServoMotor(FALSE);
+	//			m_lpAb1Joint->ServoMotor(false);
 	//			ActivateMotor(m_lpSim, m_lpAb1Joint);
 	//			SetMotorPosition(m_lpSim, m_lpAb1Joint, m_fltAbMag);
 	//			m_fltAbTime = fltTime;
-	//			m_bSetAbMag = TRUE;
+	//			m_bSetAbMag = true;
 	//		}
 	//	}
-	//	else if(*m_lpbRearFootDown == FALSE  && fltTime <= (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
+	//	else if(*m_lpbRearFootDown == false  && fltTime <= (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
 	//	{
 	//		m_fltAbVel = m_fltAbMag*cos( (PI*(fltTime-m_fltAbTime))/(2*m_fltLegPeriod) );
 	//		SetMotorPosition(m_lpSim, m_lpAb1Joint, m_fltAbVel);
 	//	}
-	//	else if(*m_lpbRearFootDown == FALSE  && fltTime > (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
+	//	else if(*m_lpbRearFootDown == false  && fltTime > (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
 	//	{
 	//		//DeactivateMotor(m_lpSim, m_lpAb1Joint);
-	//		m_bDeactivateAbMag = TRUE;
+	//		m_bDeactivateAbMag = true;
 	//	}
 	//}
 }
 
 void PostureControlStimulus::ActivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint)
 {
-	lpJoint->EnableMotor(TRUE);
+	lpJoint->EnableMotor(true);
 	lpJoint->DesiredVelocity(0);
 }
 
@@ -1205,13 +1205,13 @@ void PostureControlStimulus::SetMotorPosition(Simulator *m_lpSim, MotorizedJoint
 void PostureControlStimulus::DeactivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint)
 {
 	lpJoint->DesiredVelocity(0);
-	lpJoint->EnableMotor(FALSE);
+	lpJoint->EnableMotor(false);
 }
 
-float *PostureControlStimulus::GetDataPointer(string strDataType)
+float *PostureControlStimulus::GetDataPointer(std::string strDataType)
 {
 	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "LEFTBETAD")
 		lpData = &m_fltLeftBetaD;
@@ -1349,9 +1349,9 @@ void PostureControlStimulus::Load(CStdXml &oXml)
 	m_strDorsalAbNeuronID = oXml.GetChildString("DorsalAbNeuron");
 	//m_lVentralAbNeuronID = oXml.GetChildLong("VentralAbNeuron");
 	
-	m_bEnableAbControl = oXml.GetChildBool("EnableAbControl", FALSE);
-	m_bLockAbJump = oXml.GetChildBool("LockAbJump", FALSE);
-	m_bTumblingSetup = oXml.GetChildBool("TumblingSetup", FALSE);
+	m_bEnableAbControl = oXml.GetChildBool("EnableAbControl", false);
+	m_bLockAbJump = oXml.GetChildBool("LockAbJump", false);
+	m_bTumblingSetup = oXml.GetChildBool("TumblingSetup", false);
 
 	if(m_bTumblingSetup)
 	{
@@ -1374,9 +1374,9 @@ void PostureControlStimulus::ResetSimulation()
 	Initialize();
 }
 
-BOOL PostureControlStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+bool PostureControlStimulus::SetData(std::string strDataType, std::string strValue, bool bThrowError)
 {
-	return FALSE;
+	return false;
 }
 
 	}			//ExternalStimuli

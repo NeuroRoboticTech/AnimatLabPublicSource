@@ -4,7 +4,7 @@
 \brief	Implements the neuron class.
 **/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "Synapse.h"
 #include "Neuron.h"
@@ -25,7 +25,7 @@ Neuron::Neuron()
 {
 	m_lpFRModule = NULL;
 
-	m_bEnabled = TRUE;
+	m_bEnabled = true;
 
 	m_aryVn[0]=0.0;
 	m_aryVn[1]=0.0;
@@ -52,15 +52,20 @@ Neuron::Neuron()
 	m_fltVrest = 0;
 
 	m_fltVNoiseMax = (float) 0.1e-4; //Max noise is 0.4 mV
-	m_bUseNoise = TRUE;
+	m_bUseNoise = true;
 	m_fltVNoise = 0;
 
 	m_fltDCTH = 0;
+	m_fltAccomTimeMod = 0;
 	m_fltAccomTimeConst = (float) 100e-3;
 	m_fltRelativeAccom = 0;
-	m_bUseAccom = FALSE;
+	m_bUseAccom = false;
+	m_fltVthadd = 0;
 
-	m_bGainType = TRUE;
+	m_bGainType = true;
+
+	m_fltIinit = 0;
+	m_fltInitTime = 0;
 }
 
 /**
@@ -77,7 +82,7 @@ try
 	m_arySynapses.RemoveAll();
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of Neuron\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of Neuron\r\n", "", -1, false, true);}
 }
 
 /**
@@ -101,10 +106,11 @@ float Neuron::Cn()
 **/
 void Neuron::Cn(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cn");
+	Std_IsAboveMin((float) 0, fltVal, true, "Cn");
 
 	m_fltCn=fltVal;
 	m_fltInvCn = 1/m_fltCn;
+	TemplateNodeChanged();
 }
 
 /**
@@ -128,9 +134,10 @@ float Neuron::Gn()
 **/
 void Neuron::Gn(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cn");
+	Std_IsAboveMin((float) 0, fltVal, true, "Cn");
 
 	m_fltGn=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -161,6 +168,8 @@ void Neuron::Vth(float fltVal)
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 	m_aryVth[0] = fltDiff;
 	m_aryVth[1] = fltDiff;
+	m_fltVthadd = fltDiff;
+	TemplateNodeChanged();
 }
 
 /**
@@ -184,9 +193,10 @@ float Neuron::Fmin()
 **/
 void Neuron::Fmin(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Fmin", TRUE);
+	Std_IsAboveMin((float) 0, fltVal, true, "Fmin", true);
 
 	m_fltFmin=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -210,8 +220,9 @@ float Neuron::Gain()
 **/
 void Neuron::Gain(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Gain");
+	Std_IsAboveMin((float) 0, fltVal, true, "Gain");
 	m_fltGain=fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -234,7 +245,10 @@ float Neuron::ExternalI()
 \param	fltVal	The new value. 
 **/
 void Neuron::ExternalI(float fltVal)
-{m_fltExternalI=fltVal;}
+{
+	m_fltExternalI=fltVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Adds to the external current.
@@ -275,6 +289,7 @@ void Neuron::Vrest(float fltVal)
 
 	if(!m_lpSim->SimRunning())
 		m_fltVndisp = m_fltVrest;
+	TemplateNodeChanged();
 }
 
 /**
@@ -296,7 +311,7 @@ float Neuron::VNoiseMax()
 
 \return	true if it uses noise, false else.
 **/
-BOOL Neuron::UseNoise() {return m_bUseNoise;}
+bool Neuron::UseNoise() {return m_bUseNoise;}
 
 /**
 \brief	Sets whether to use noise.
@@ -306,7 +321,11 @@ BOOL Neuron::UseNoise() {return m_bUseNoise;}
 
 \param	bVal	true to use noise. 
 **/
-void Neuron::UseNoise(BOOL bVal) {m_bUseNoise = bVal;}
+void Neuron::UseNoise(bool bVal) 
+{
+	m_bUseNoise = bVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets whether to use accommodation.
@@ -316,7 +335,7 @@ void Neuron::UseNoise(BOOL bVal) {m_bUseNoise = bVal;}
 
 \return	true to use accommodation, false else.
 **/
-BOOL Neuron::UseAccom() {return m_bUseAccom;}
+bool Neuron::UseAccom() {return m_bUseAccom;}
 
 /**
 \brief	Sets whether to use accommodation.
@@ -326,7 +345,7 @@ BOOL Neuron::UseAccom() {return m_bUseAccom;}
 
 \param	bVal	true to use accommodation, false else.
 **/
-void Neuron::UseAccom(BOOL bVal)
+void Neuron::UseAccom(bool bVal)
 {
 	m_bUseAccom = bVal;
 
@@ -334,6 +353,7 @@ void Neuron::UseAccom(BOOL bVal)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
 }
 
 /**
@@ -349,9 +369,10 @@ void Neuron::VNoiseMax(float fltVal)
 	m_fltVNoiseMax = fltVal;
 
 	if(m_fltVNoiseMax != 0)
-		m_bUseNoise = TRUE;
+		m_bUseNoise = true;
 	else
-		m_bUseNoise = FALSE;
+		m_bUseNoise = false;
+	TemplateNodeChanged();
 }
 
 /**
@@ -375,19 +396,20 @@ float Neuron::RelativeAccommodation()
 **/
 void Neuron::RelativeAccommodation(float fltVal)
 {
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "RelativeAccomodation");
+	Std_InValidRange((float) 0, (float) 1, fltVal, true, "RelativeAccomodation");
 
 	m_fltRelativeAccom = fltVal;
 
 	if(m_fltRelativeAccom != 0)
-		m_bUseAccom = TRUE;
+		m_bUseAccom = true;
 	else
-		m_bUseAccom = FALSE;
+		m_bUseAccom = false;
 
 	if(m_bUseAccom && m_lpFRModule)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
 }
 
 /**
@@ -417,6 +439,20 @@ void Neuron::AccommodationTimeConstant(float fltVal)
 		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
+	TemplateNodeChanged();
+}
+
+float Neuron::Iinit() {return m_fltIinit;}
+
+void Neuron::Iinit(float fltVal) {m_fltIinit = fltVal;}
+
+float Neuron::InitTime() {return m_fltInitTime;}
+
+void Neuron::InitTime(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 10, fltVal, true, "InitTime");
+	m_fltInitTime = fltVal;
+	TemplateNodeChanged();
 }
 
 /**
@@ -427,7 +463,7 @@ void Neuron::AccommodationTimeConstant(float fltVal)
 
 \return	true to use new way, false to use old way.
 **/
-BOOL Neuron::GainType()
+bool Neuron::GainType()
 {return m_bGainType;}
 
 /**
@@ -438,8 +474,11 @@ BOOL Neuron::GainType()
 
 \param	bVal	true to use new way, false to use old way.
 **/
-void Neuron::GainType(BOOL bVal)
-{m_bGainType = bVal;}
+void Neuron::GainType(bool bVal)
+{
+	m_bGainType = bVal;
+	TemplateNodeChanged();
+}
 
 /**
 \brief	Gets the membrane voltage.
@@ -500,6 +539,48 @@ void Neuron::IntrinsicCurrent(float fltVal)
 unsigned char Neuron::NeuronType()
 {return RUGULAR_NEURON;}
 
+void Neuron::Copy(CStdSerialize *lpSource)
+{
+	Node::Copy(lpSource);
+
+	Neuron *lpOrig = dynamic_cast<Neuron *>(lpSource);
+
+	m_lpFRModule = lpOrig->m_lpFRModule;
+	m_fltCn = lpOrig->m_fltCn;
+	m_fltInvCn = lpOrig->m_fltInvCn;
+	m_fltGn = lpOrig->m_fltGn;
+	m_fltFmin = lpOrig->m_fltFmin;
+	m_fltGain = lpOrig->m_fltGain;
+	m_fltExternalI = lpOrig->m_fltExternalI;
+	m_fltIntrinsicI = lpOrig->m_fltIntrinsicI;
+	m_fltSynapticI = lpOrig->m_fltSynapticI;
+	m_fltAdapterI = lpOrig->m_fltAdapterI;
+	m_fltAdapterMemoryI = lpOrig->m_fltAdapterMemoryI;
+	m_fltTotalMemoryI = lpOrig->m_fltTotalMemoryI;
+	m_fltVNoiseMax = lpOrig->m_fltVNoiseMax;
+	m_bUseNoise = lpOrig->m_bUseNoise;
+	m_bGainType = lpOrig->m_bGainType;
+	m_fltDCTH = lpOrig->m_fltDCTH;
+	m_fltAccomTimeMod = lpOrig->m_fltAccomTimeMod;
+	m_fltAccomTimeConst = lpOrig->m_fltAccomTimeConst;
+	m_fltRelativeAccom = lpOrig->m_fltRelativeAccom;
+	m_bUseAccom = lpOrig->m_bUseAccom;
+	m_fltVn = lpOrig->m_fltVn;
+	m_fltFiringFreq = lpOrig->m_fltFiringFreq;
+	m_aryVn[0] = lpOrig->m_aryVn[0];
+	m_aryVn[1] = lpOrig->m_aryVn[1];
+	m_fltVNoise = lpOrig->m_fltVNoise;
+	m_fltVth = lpOrig->m_fltVth;
+	m_fltVthi = lpOrig->m_fltVthi;
+	m_fltVthadd = lpOrig->m_fltVthadd;
+	m_aryVth[0] = lpOrig->m_aryVth[0];
+	m_aryVth[1] = lpOrig->m_aryVth[1];
+	m_fltVrest = lpOrig->m_fltVrest;
+	m_fltVndisp = lpOrig->m_fltVndisp;
+	m_fltIinit = lpOrig->m_fltIinit;
+	m_fltInitTime = lpOrig->m_fltInitTime;
+}
+
 /**
 \brief	Gets a pointer to the synapses array.
 
@@ -527,7 +608,7 @@ void Neuron::AddSynapse(Synapse *lpSynapse)
 
 \param	strXml	The xml of the synapse to add. 
 **/
-void Neuron::AddSynapse(string strXml, BOOL bDoNotInit)
+void Neuron::AddSynapse(std::string strXml, bool bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -563,7 +644,7 @@ void Neuron::RemoveSynapse(int iIndex)
 \param	strID	   	GUID ID for the synapse to remove. 
 \param	bThrowError	true to throw error if synaspe not found. 
 **/
-void Neuron::RemoveSynapse(string strID, BOOL bThrowError)
+void Neuron::RemoveSynapse(std::string strID, bool bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
@@ -597,9 +678,9 @@ Synapse *Neuron::GetSynapse(int iIndex)
 
 \return	The found synapse list position.
 **/
-int Neuron::FindSynapseListPos(string strID, BOOL bThrowError)
+int Neuron::FindSynapseListPos(std::string strID, bool bThrowError)
 {
-	string sID = Std_ToUpper(Std_Trim(strID));
+	std::string sID = Std_ToUpper(Std_Trim(strID));
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -645,9 +726,21 @@ void Neuron::StepSimulation()
 
 	if(m_bEnabled)
 	{
+		////Test code
+		//int i=5;
+		//if(m_strID == "742CB5DC-6BFB-4BAB-8CC2-36A4725A33D5")
+		//	i=6;	
+
 		//Lets get the Summation of synaptic inputs
 		m_fltSynapticI = CalculateSynapticCurrent(m_lpFRModule);
 		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFRModule, m_fltExternalI+m_fltSynapticI);
+
+		//If we need to apply an init current then do so.
+		if(m_fltInitTime > 0 && m_lpSim->Time() < m_fltInitTime)
+			m_fltIntrinsicI += m_fltIinit;
+
+		//if(m_fltInitTime > 0 && m_lpSim->Time() >= m_fltInitTime)
+		//	m_fltIntrinsicI = m_fltIntrinsicI; //For testing only comment out!!
 
 		if(m_bUseNoise)
 			m_fltVNoise = Std_FRand(-m_fltVNoiseMax, m_fltVNoiseMax);
@@ -664,7 +757,13 @@ void Neuron::StepSimulation()
 		m_fltVndisp = m_fltVrest + m_fltVn;
 
 		if(m_bUseAccom)
-			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi + (m_aryVth[m_lpFRModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+		{
+			if(m_fltAccomTimeMod != 0 && m_lpFRModule)
+				m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeMod);
+
+			m_fltVthadd = (m_aryVth[m_lpFRModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi + m_fltVthadd;
+		}
 		else
 			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi;
 
@@ -759,7 +858,7 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFRModule)
 		lpSynapse = m_arySynapses[iSynapse];
 
 		if(lpSynapse->Enabled() && lpSynapse->FromNeuron())
-			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(m_lpFRModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(m_lpFRModule) ); 
+			lpSynapse->Process(fltSynapticI); 
 	}
 
 	return fltSynapticI;
@@ -788,9 +887,9 @@ void Neuron::Initialize()
 		m_arySynapses[iIndex]->Initialize();
 } 
 
-void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
-	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
 
 	m_lpFRModule = dynamic_cast<FiringRateModule *>(lpModule);
 
@@ -827,23 +926,47 @@ void Neuron::ResetSimulation()
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 	m_aryVth[0] = m_aryVth[1] = m_fltVth;
+	m_fltAccomTimeMod = 0;
+	m_fltVthadd = 0;
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iSynapse=0; iSynapse<iCount; iSynapse++)
 		m_arySynapses[iSynapse]->ResetSimulation();
 }
 
-void Neuron::AddExternalNodeInput(float fltInput)
+void Neuron::AddExternalNodeInput(int iTargetDataType, float fltInput)
 {
 	m_fltAdapterI += fltInput;
 	m_fltAdapterMemoryI = m_fltAdapterI;
 }
 
+void Neuron::SetupTemplateNodes()
+{
+	//If we are re-creatng the nodes then make sure that any old ones are cleaned-up
+	DestroyTemplateNodes();
+
+	//Now loop through all the child nodes and create them.
+	//Remember that this node is node 1.
+	for(int iChild=1; iChild<m_iTemplateNodeCount; iChild++)
+	{
+		//Now create the new node and add it to the list
+		this->Clone();
+	}
+}
+
+void Neuron::DestroyTemplateNodes()
+{
+}
+
+void Neuron::TemplateNodeChanged()
+{
+}
+
 #pragma region DataAccesMethods
 
-float *Neuron::GetDataPointer(const string &strDataType)
+float *Neuron::GetDataPointer(const std::string &strDataType)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 
 	if(strType == "INTRINSICCURRENT")
 		return &m_fltIntrinsicI;
@@ -878,138 +1001,145 @@ float *Neuron::GetDataPointer(const string &strDataType)
 	if(strType == "VREST")
 		return &m_fltVrest;
 
+	if(strType == "ACCOMTIMEMOD")
+		return &m_fltAccomTimeMod;
+
 	//If it was not one of those above then we have a problem.
 	THROW_PARAM_ERROR(Nl_Err_lInvalidNeuronDataType, Nl_Err_strInvalidNeuronDataType, "Neuron Data Type", strDataType);
 
 	return NULL;
 }
 
-BOOL Neuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool Neuron::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
-	string strType = Std_CheckString(strDataType);
+	std::string strType = Std_CheckString(strDataType);
 	
-	if(Node::SetData(strDataType, strValue, FALSE))
-		return TRUE;
+	if(Node::SetData(strDataType, strValue, false))
+		return true;
 
 	if(strType == "CM")
 	{
 		Cn(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GM")
 	{
 		Gn(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "VTH")
 	{
 		Vth(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "VREST")
 	{
 		Vrest(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "RELATIVEACCOMMODATION")
 	{
 		RelativeAccommodation(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ACCOMMODATIONTIMECONSTANT")
 	{
 		AccommodationTimeConstant(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "VNOISEMAX")
 	{
 		VNoiseMax(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "FMIN")
 	{
 		Fmin(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GAIN")
 	{
 		Gain(atof(strValue.c_str()));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "GAINTYPE")
 	{
 		GainType(Std_ToBool(strValue));
-		return TRUE;
+		return true;
 	}
 
 	if(strType == "ADDEXTERNALCURRENT")
 	{
 		AddExternalI(atof(strValue.c_str()));
-		return TRUE;
+		return true;
+	}
+
+	if(strType == "IINIT")
+	{
+		Iinit(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "INITTIME")
+	{
+		InitTime(atof(strValue.c_str()));
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Node::QueryProperties(aryNames, aryTypes);
+	Node::QueryProperties(aryProperties);
 
-	aryNames.Add("Cm");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("IntrinsicCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("ExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SynapticCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AdapterCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("TotalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("MembraneVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("FiringFrequency", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("NoiseVoltage", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("Threshold", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("AccomTimeMod", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 
-	aryNames.Add("Gm");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Vth");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Vrest");
-	aryTypes.Add("Float");
-
-	aryNames.Add("RelativeAccommodation");
-	aryTypes.Add("Float");
-
-	aryNames.Add("AccommodationTimeConstant");
-	aryTypes.Add("Float");
-
-	aryNames.Add("VNoiseMax");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Fmin");
-	aryTypes.Add("Float");
-
-	aryNames.Add("Gain");
-	aryTypes.Add("Float");
-
-	aryNames.Add("GainType");
-	aryTypes.Add("Boolean");
-
-	aryNames.Add("AddExternalCurrent");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("Cm", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gm", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Vth", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Vrest", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("RelativeAccommodation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AccommodationTimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("VNoiseMax", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Fmin", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Gain", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("GainType", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AddExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Iinit", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("InitTime", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
-BOOL Neuron::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
+bool Neuron::AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError, bool bDoNotInit)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		AddSynapse(strXml, bDoNotInit);
-		return TRUE;
+		return true;
 	}
 
 
@@ -1017,24 +1147,24 @@ BOOL Neuron::AddItem(const string &strItemType, const string &strXml, BOOL bThro
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
-BOOL Neuron::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
+bool Neuron::RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError)
 {
-	string strType = Std_CheckString(strItemType);
+	std::string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
 		RemoveSynapse(strID, bThrowError);
-		return TRUE;
+		return true;
 	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
 
-	return FALSE;
+	return false;
 }
 
 #pragma endregion
@@ -1097,7 +1227,7 @@ void Neuron::Load(CStdXml &oXml)
 
 	m_arySynapses.RemoveAll();
 
-	Enabled(oXml.GetChildBool("Enabled", TRUE));
+	Enabled(oXml.GetChildBool("Enabled", true));
 
 	Cn(oXml.GetChildFloat("Cn"));
 	Gn(oXml.GetChildFloat("Gn"));
@@ -1107,29 +1237,31 @@ void Neuron::Load(CStdXml &oXml)
 	Gain(oXml.GetChildFloat("Gain"));
 	ExternalI(oXml.GetChildFloat("ExternalI"));
 	VNoiseMax(fabs(oXml.GetChildFloat("VNoiseMax", m_fltVNoiseMax)));
+	Iinit(oXml.GetChildFloat("Iinit", m_fltIinit));
+	InitTime(oXml.GetChildFloat("InitTime", m_fltInitTime));
 
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 
-	GainType(oXml.GetChildBool("GainType", TRUE));
+	GainType(oXml.GetChildBool("GainType", true));
 
 	m_aryVth[0] = m_aryVth[1] = m_fltVth;
 
 	if(m_fltVNoiseMax != 0)
-		UseNoise(TRUE);
+		UseNoise(true);
 	else
-		UseNoise(FALSE);
+		UseNoise(false);
 
 	RelativeAccommodation(fabs(oXml.GetChildFloat("RelativeAccom", m_fltRelativeAccom)));
 	AccommodationTimeConstant(fabs(oXml.GetChildFloat("AccomTimeConst", m_fltAccomTimeConst)));
 
 	if(m_fltRelativeAccom != 0)
-		UseAccom(TRUE);
+		UseAccom(true);
 	else
-		UseAccom(FALSE);
+		UseAccom(false);
 
 	//*** Begin Loading Synapses. *****
-	if(oXml.FindChildElement("Synapses", FALSE))
+	if(oXml.FindChildElement("Synapses", false))
 	{
 		oXml.IntoElem();  //Into Synapses Element
 
@@ -1160,7 +1292,7 @@ void Neuron::Load(CStdXml &oXml)
 **/
 Synapse *Neuron::LoadSynapse(CStdXml &oXml)
 {
-	string strType;
+	std::string strType;
 	Synapse *lpSynapse=NULL;
 
 try
@@ -1173,7 +1305,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, this, TRUE);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, this, true);
 	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
 

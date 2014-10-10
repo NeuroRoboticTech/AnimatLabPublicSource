@@ -4,7 +4,7 @@
 \brief	Implements the ion channel sigmoid class.
 **/
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "IonChannelSigmoid.h"
 
 
@@ -44,7 +44,7 @@ try
 {
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of IonChannelSigmoid\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of IonChannelSigmoid\r\n", "", -1, false, true);}
 }
 
 float IonChannelSigmoid::CalculateGain(float fltInput)
@@ -55,7 +55,7 @@ float IonChannelSigmoid::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
-BOOL IonChannelSigmoid::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
+bool IonChannelSigmoid::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;
@@ -112,36 +112,21 @@ BOOL IonChannelSigmoid::SetData(const string &strDataType, const string &strValu
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
-	return FALSE;
+	return false;
 }
 
-void IonChannelSigmoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void IonChannelSigmoid::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	Gain::QueryProperties(aryNames, aryTypes);
+	Gain::QueryProperties(aryProperties);
 
-	aryNames.Add("A");
-	aryTypes.Add("Float");
-
-	aryNames.Add("B");
-	aryTypes.Add("Float");
-
-	aryNames.Add("C");
-	aryTypes.Add("Float");
-
-	aryNames.Add("D");
-	aryTypes.Add("Float");
-
-	aryNames.Add("E");
-	aryTypes.Add("Float");
-
-	aryNames.Add("F");
-	aryTypes.Add("Float");
-
-	aryNames.Add("G");
-	aryTypes.Add("Float");
-
-	aryNames.Add("H");
-	aryTypes.Add("Float");
+	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("C", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("E", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("F", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("G", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("H", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 void IonChannelSigmoid::Load(CStdXml &oXml)

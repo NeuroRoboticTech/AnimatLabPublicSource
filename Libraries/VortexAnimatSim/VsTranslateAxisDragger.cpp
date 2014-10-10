@@ -15,7 +15,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-VsTranslateAxisDragger::VsTranslateAxisDragger(BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ)
+VsTranslateAxisDragger::VsTranslateAxisDragger(bool bAllowTranslateX, bool bAllowTranslateY, bool bAllowTranslateZ)
 {
 	if(bAllowTranslateX)
 	{

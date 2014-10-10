@@ -37,9 +37,11 @@ namespace AnimatSim
 		public:
 			SimulationRecorder();
 			virtual ~SimulationRecorder();
+						
+			static SimulationRecorder *CastToDerived(AnimatBase *lpBase) {return static_cast<SimulationRecorder*>(lpBase);}
 
 			virtual void Add(ActivatedItem *lpItem);
-			virtual KeyFrame *Add(string strType, long lStart, long lEnd);
+			virtual KeyFrame *Add(std::string strType, long lStart, long lEnd);
 
 			virtual void Load(CStdXml &oXml);
 		};

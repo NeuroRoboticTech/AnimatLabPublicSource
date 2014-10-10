@@ -25,10 +25,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the target object that contains the variable we will be collecting.
-			string m_strTargetID;
+			std::string m_strTargetID;
 
 			/// The Data type of the variable we will be collecting. This is passed into the GetDataPointer method of the object.
-			string m_strDataType;
+			std::string m_strDataType;
 
 			/// Pointer to the parent DataChart.
 			DataChart *m_lpChart;
@@ -43,7 +43,7 @@ namespace AnimatSim
 			int m_iAppendSpaces;
 
 			/// true it this chart has been initialized
-			BOOL m_bInitialized;
+			bool m_bInitialized;
 
 			///This index is used to determine where in the array buffer that the data is stored. This is direclty related to the
 			/// index in the array that is used in the GUI to retrieve the data, so they must match or the data plotted in the GUI
@@ -57,22 +57,24 @@ namespace AnimatSim
 		public:
 			DataColumn();
 			virtual ~DataColumn();
+			
+			static DataColumn *CastToDerived(AnimatBase *lpBase) {return static_cast<DataColumn*>(lpBase);}
 
 			virtual int ColumnCount();
 
-			virtual void Name(string strValue);
+			virtual void Name(std::string strValue);
 
-			virtual string DataType();
-			virtual void DataType(string strType);
+			virtual std::string DataType();
+			virtual void DataType(std::string strType);
 
-			virtual string TargetID();
-			virtual void TargetID(string strID);
+			virtual std::string TargetID();
+			virtual void TargetID(std::string strID);
 
 			virtual int AppendSpaces();
 			virtual void AppendSpaces(int iSpaces);
 
-			virtual BOOL IsInitialized();
-			virtual void IsInitialized(BOOL bVal);
+			virtual bool IsInitialized();
+			virtual void IsInitialized(bool bVal);
 
 			virtual int ColumnIndex();
 			virtual void ColumnIndex(int iIndex);
@@ -95,20 +97,20 @@ namespace AnimatSim
 			\param [in,out]	lpChart	   	The pointer to the parent chart. 
 			\param	bVerify			   	true to verify. 
 			**/
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, bool bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void ReInitialize();
 			virtual void StepSimulation();
-			virtual BOOL operator<(DataColumn *lpColumn);
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool operator<(DataColumn *lpColumn);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
-			virtual void SaveColumnNames(ofstream &oStream);
+			virtual void SaveColumnNames(std::ofstream &oStream);
 		};
 
-		BOOL LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
+		bool ANIMAT_PORT LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2);
 
 	}			//Charting
 }				//AnimatSim

@@ -20,7 +20,7 @@ namespace AnimatSim
 		{
 		protected:
 			/// GUID ID of the target node to enable.
-			string m_strTargetID;
+			std::string m_strTargetID;
 
 			/// Pointer to the target node
 			AnimatBase *m_lpTargetObject;
@@ -30,27 +30,29 @@ namespace AnimatSim
 			float m_fltInitialValue;
 			float m_fltFinalValue;
 
-			string m_strEquation;
+			std::string m_strEquation;
 			CStdPostFixEval *m_lpEval;
 
-			string m_strPropertyName;
-			AnimatBase::AnimatPropertyType m_ePropertyType;
+			std::string m_strPropertyName;
+			AnimatPropertyType m_ePropertyType;
 
 			virtual void SetPropertyValue(float fltVal);
 
 		public:
 			PropertyControlStimulus();
 			virtual ~PropertyControlStimulus();
-			
-			virtual string Type();
 
-			virtual string TargetID();
-			virtual void TargetID(string strID);
+			static PropertyControlStimulus *CastToDerived(AnimatBase *lpBase) {return static_cast<PropertyControlStimulus*>(lpBase);}
+			
+			virtual std::string Type();
+
+			virtual std::string TargetID();
+			virtual void TargetID(std::string strID);
 						
 			virtual AnimatBase *TargetObject();
 
-			virtual void PropertyName(string strPropName);
-			virtual string PropertyName();
+			virtual void PropertyName(std::string strPropName);
+			virtual std::string PropertyName();
 
 			virtual void SetThreshold(float fltThreshold);
 			virtual float SetThreshold();
@@ -61,15 +63,15 @@ namespace AnimatSim
 			virtual void FinalValue(float fltVal);
 			virtual float FinalValue();
 			
-			string Equation() {return m_strEquation;};
-			void Equation(string strVal);
+			std::string Equation() {return m_strEquation;};
+			void Equation(std::string strVal);
 
 			virtual void Initialize();
 			virtual void Activate();
 			virtual void StepSimulation();
 			virtual void Deactivate();
-			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
-			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
+			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
 			virtual void Load(CStdXml &oXml);
 
