@@ -61,7 +61,13 @@ namespace AnimatSim
 		//is located in the project path.
 		std::string strPath;
 		if(!Std_IsFullPath(strFilename))
+		{
+#ifndef WIN32
+			//If we are not on a windows system then replace // slashes with \
+			strFilename = Std_Replace(strFilename, "\\", "/"); 
+#endif			
 			strPath = strProjectPath + strFilename;
+		}		
 		else
 			strPath = strFilename;
 
