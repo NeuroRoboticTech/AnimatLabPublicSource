@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoboticsAnimatSim_x64", "RoboticsAnimatSim_x64.vcxproj", "{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoboticsAnimatSim_x64", "RoboticsAnimatSim_x64.vcxproj", "{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Robotics_UnitTests_x64", "Robotics_UnitTests_x64.vcxproj", "{810BB260-C1D4-5D4B-B17C-E45501ABC479}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Robotics_UnitTests_x64", "Robotics_UnitTests_x64.vcxproj", "{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,22 +13,22 @@ Global
 		Release_Double_x64|x64 = Release_Double_x64|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Debug_x64|x64.Build.0 = Debug_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Release_x64|x64.ActiveCfg = Release_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Release_x64|x64.Build.0 = Release_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
-		{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Debug_x64|x64.Build.0 = Debug_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Release_x64|x64.ActiveCfg = Release_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Release_x64|x64.Build.0 = Release_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
-		{810BB260-C1D4-5D4B-B17C-E45501ABC479}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Release_x64|x64.Build.0 = Release_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Debug_x64|x64.ActiveCfg = Debug_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Debug_x64|x64.Build.0 = Debug_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Release_x64|x64.ActiveCfg = Release_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Release_x64|x64.Build.0 = Release_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Debug_Double_x64|x64.ActiveCfg = Debug_Double_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Debug_Double_x64|x64.Build.0 = Debug_Double_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Release_Double_x64|x64.ActiveCfg = Release_Double_x64|x64
+		{1976A5F6-6DBB-7949-8C24-1C27E6723BA8}.Release_Double_x64|x64.Build.0 = Release_Double_x64|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
