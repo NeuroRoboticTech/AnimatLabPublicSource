@@ -131,13 +131,12 @@ void PassThroughLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 
 #pragma endregion
 
-void PassThroughLinkage::StepSimulation()
+float PassThroughLinkage::CalculateAppliedCurrent()
 {
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_iTargetDataType != -1 && m_lpGain)
-	{
-		float fltOutput = m_lpGain->CalculateGain(*m_lpSourceData);
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, fltOutput);
-	}
+	if(m_lpGain)
+		return m_lpGain->CalculateGain(*m_lpSourceData);
+	else
+		return 0;
 }
 
 void PassThroughLinkage::Load(CStdXml &oXml)

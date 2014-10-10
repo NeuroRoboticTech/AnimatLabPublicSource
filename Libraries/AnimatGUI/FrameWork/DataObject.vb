@@ -292,6 +292,13 @@ Namespace Framework
         End Property
 
         <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowUserAdd() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property ButtonImageName() As String
             Get
                 Return ""
@@ -369,6 +376,10 @@ Namespace Framework
 
             If Not Util.Application Is Nothing Then
                 AddHandler Util.Application.ApplicationExiting, AddressOf Me.OnApplicationExiting
+            End If
+
+            If Not m_doParent Is Nothing Then
+                AddHandler m_doParent.BeforeRemoveItem, AddressOf Me.OnBeforeParentRemoveFromList
             End If
 
             If Not Util.Logger Is Nothing Then Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Finished Dataobject: " & Me.GetType().ToString)
@@ -1149,6 +1160,15 @@ Namespace Framework
                 m_doInterface = Nothing
             Catch ex As Exception
 
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                'Tell everyone I am also being deleted
+                Me.SignalBeforeRemoveItem(Me)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 

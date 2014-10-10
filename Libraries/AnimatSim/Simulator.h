@@ -401,6 +401,18 @@ namespace AnimatSim
 			/// This is primarily used for debuggin purposes to make sure that I have not missed anything.
 			float m_fltRemainingStepTime;
 
+			///Total time we were in microsleep during playback pause calculations;
+			float m_fltTotalMicroSleepTime;
+
+			///Total number of times we called microsleep during playback pause calculations
+			float m_fltTotalMicroSleepCount;
+
+			///Total time we were in microwait during playback pause calculations;
+			float m_fltTotalMicroWaitTime;
+
+			///Total number of loop iterations for microwait during playback pause calculations
+			float m_fltTotalMicroWaitCount;
+
 			///This is a temp variable for measuring sim time for a set period for each simulation
 			double m_dblTotalStepTime;
 

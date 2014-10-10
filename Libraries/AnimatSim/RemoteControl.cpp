@@ -226,12 +226,13 @@ any required cleanup.
 **/
 void RemoteControl::ShutdownIO()
 {
-	RobotIOControl::ShutdownIO();
-
 	int iCount = m_aryLinks.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryLinks[iIndex]->Enabled())
 			m_aryLinks[iIndex]->ShutdownIO();
+
+	//Put this last so everything gets its ShutdownIO called before we actually exit the thread.
+	RobotIOControl::ShutdownIO();
 }
 
 void RemoteControl::Initialize()

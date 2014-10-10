@@ -126,7 +126,6 @@ namespace BulletAnimatSim
 }
 
 using namespace BulletAnimatSim;
-using namespace BulletAnimatSim::ExternalStimuli;
 using namespace BulletAnimatSim::Environment;
 using namespace BulletAnimatSim::Environment::Bodies;
 using namespace BulletAnimatSim::Environment::Joints;

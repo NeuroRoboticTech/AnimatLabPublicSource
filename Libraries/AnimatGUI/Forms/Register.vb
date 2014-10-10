@@ -117,7 +117,7 @@ Namespace Forms
                 Util.Application.SecurityMgr.ValidateSerialNumber(txtSerialNumber.Text)
 
                 If Util.Application.SecurityMgr.IsValidSerialNumber() Then
-                    Util.ShowMessage("Registratioin successful. Thank you for purchasing AnimatLab Pro!", "Registration Result", MessageBoxButtons.OK)
+                    Util.ShowMessage("Registration successful. Thank you for purchasing AnimatLab Pro!", "Registration Result", MessageBoxButtons.OK)
                     Util.Application.RegisterStripMenuItem.Visible = False
                     Util.Application.toolStripSeparatorHelp2.Visible = False
 
@@ -127,7 +127,7 @@ Namespace Forms
 
                     Me.Close()
                 Else
-                    Util.ShowMessage(Util.Application.SecurityMgr.ValidationFailureError, "Registration Result", MessageBoxButtons.OK)
+                    Util.ShowMessage("Registration failed: " & Util.Application.SecurityMgr.ValidationFailureError, "Registration Result", MessageBoxButtons.OK)
                 End If
 
             Catch ex As Exception

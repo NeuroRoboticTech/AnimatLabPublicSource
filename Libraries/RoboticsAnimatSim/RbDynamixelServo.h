@@ -159,8 +159,8 @@ protected:
 	///Maximum value that can be set for the velocity
 	int m_iMaxVelocityFP; 
 
-	///Stores the maximum rot/min for this motor
-	float m_fltMaxRotMin;
+	///Stores the maximum rot/min for this motor. The max rotations (rad) per fixed point unit.
+	float m_fltRPMPerFPUnit;
 
 	///Stores the maximum rad/sec for this motor
 	float m_fltMaxPosSec; 
@@ -223,18 +223,29 @@ protected:
 	///If we are only setting values in it then there is no reason to do an update for it.
 	bool m_bQueryMotorData;
 	
-	//Hi constraint limit value
+	///Hi constraint limit value
 	float m_fltHiLimit;
 
-	//Low constraint limit value
+	///Low constraint limit value
 	float m_fltLowLimit;
 
-	//Used to report back the IO position of the servo at each step
+	///Used to report back the IO position of the servo at each step
 	float m_fltIOPos;
 
-	//Used to report back the IO velocity of the servo at each step
+	///Used to report back the IO velocity of the servo at each step
 	float m_fltIOVelocity;
 
+	///Used to keep track of whether we need to set the stop position when doing
+	///velocity control and the velocity is set to 0
+	bool m_bNeedSetVelStopPos;
+
+	///Keeps track of whether we have already set velocity to stop when doing velocity control
+	bool m_bVelStopPosSet;
+
+	///If true then we should reset to the start position at the beginning of the simulation.
+	bool m_bResetToStartPos;
+
+	///Pointer to an associated motorized joint.
     MotorizedJoint *m_lpMotorJoint;
 
 	virtual void RecalculateParams();
@@ -280,6 +291,13 @@ protected:
 
 	virtual void GetLimitValues();
 
+	virtual void ResetSimulation();
+	
+	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value) = 0;
+	virtual int GetRegister(unsigned char reg, unsigned char length) = 0;
+
+	virtual void ConfigureServo();
+
 public:
 	RbDynamixelServo();
 	virtual ~RbDynamixelServo();
@@ -305,8 +323,8 @@ public:
 	virtual void MaxVelocityFP(int iVal);
 	virtual int MaxVelocityFP();
 
-	virtual void MaxRotMin(float fltVal);
-	virtual float MaxRotMin();
+	virtual void RPMPerFPUnit(float fltVal);
+	virtual float RPMPerFPUnit();
 
 	virtual void MinLoadFP(int iVal);
 	virtual int MinLoadFP();
@@ -346,6 +364,8 @@ public:
 	virtual void SetGoalPosition(float fltPos);
 	virtual void SetNextGoalPosition(float fltPos);
 	virtual float GetGoalPosition();
+
+	virtual void Stop();
 
 	virtual int LastGoalPosition_FP();
 
@@ -406,13 +426,17 @@ public:
 
 	virtual void SetTorqueLimit_FP(int iVal);
 	virtual int GetTorqueLimit_FP();
+	
+	virtual bool ResetToStartPos();
+	virtual void ResetToStartPos(bool bVal);
 
 	virtual float QuantizeServoPosition(float fltPos);
 	virtual float QuantizeServoVelocity(float fltVel);
-	
+
 	virtual void MicroSleep(unsigned int iTime) = 0;
 	virtual Simulator *GetSimulator() = 0;
 
+	virtual void Move(float fltPos, float fltVel);
 	virtual void WaitForMoveToFinish();
 };
 

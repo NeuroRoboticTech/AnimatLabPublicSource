@@ -30,8 +30,14 @@ namespace AnimatSim
 			/// Pointer to the source data variable.
 			float *m_lpSourceData;
 			
+			///Pointer to the external current of the linked target node.
+			float *m_lpExternalCurrent;
+
 			///The total current applied during a time step
 			float m_fltAppliedCurrent;
+
+			virtual float CalculateAppliedCurrent() = 0;
+			virtual void ApplyCurrent();
 
 		public:
 			RemoteControlLinkage(void);
@@ -60,6 +66,7 @@ namespace AnimatSim
 			virtual void ShutdownIO();
 
 			virtual void Initialize();
+			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

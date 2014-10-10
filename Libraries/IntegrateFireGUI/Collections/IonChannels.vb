@@ -49,9 +49,9 @@ Namespace Collections
         Public Sub Remove(ByVal key As [String], Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As IntegrateFireGUI.DataObjects.Behavior.Neurons.IonChannel = Me(key)
 
-            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Dictionary.Remove(key)
-            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            If Not value Is Nothing Then value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Remove
 

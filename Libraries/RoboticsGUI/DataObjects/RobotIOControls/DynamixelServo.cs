@@ -12,7 +12,7 @@ namespace RoboticsGUI
             /// <summary>
             /// If true then when the simulation starts it will always reset the position of the servo to 0 to begin with.
             /// </summary>
-            protected bool m_bResetToStartPos = true;
+            protected bool m_bResetToStartPos = false;
 
             protected bool m_bQueryMotorData = true;
 
@@ -23,7 +23,7 @@ namespace RoboticsGUI
 
             protected int m_iMinVelocityFP = 1;
             protected int m_iMaxVelocityFP = 1023;
-            protected float m_fltMaxRotMin = 0.111f;
+            protected float m_fltRPMPerFPUnit = 0.111f;
 
             protected int m_iMinLoadFP = 0;
             protected int m_iMaxLoadFP = 1023;
@@ -38,8 +38,8 @@ namespace RoboticsGUI
                 get { return m_bResetToStartPos; }
                 set
                 {
-                    SetSimData("ResetToStartPos", m_bResetToStartPos.ToString(), true);
-                    m_bResetToStartPos = true;
+                    SetSimData("ResetToStartPos", value.ToString(), true);
+                    m_bResetToStartPos = value;
                 }
             }
 
@@ -123,15 +123,15 @@ namespace RoboticsGUI
                 }
             }
 
-            public virtual float MaxRotMin
+            public virtual float RPMPerFPUnit
             {
-                get { return m_fltMaxRotMin; }
+                get { return m_fltRPMPerFPUnit; }
                 set
                 {
                     if (value <= 0)
-                        throw new System.Exception("The maximum rotations per minute of the motor cannot be less than or equal to zero.");
-                    SetSimData("MaxRotMin", value.ToString(), true);
-                    m_fltMaxRotMin = value;
+                        throw new System.Exception("The RPM per FP unit of the motor cannot be less than or equal to zero.");
+                    SetSimData("RPMPerFPUnit", value.ToString(), true);
+                    m_fltRPMPerFPUnit = value;
                 }
             }
 
@@ -184,7 +184,7 @@ namespace RoboticsGUI
 
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("ReadParamTime", "Read Param Time", "Seconds", "s", 0, 1));
                 m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOPos", "IO Position", "", "", 0, 1024));
-                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOVel", "IO Velocity", "", "", 0, 2048));
+                m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("IOVelocity", "IO Velocity", "", "", 0, 2048));
 
                 m_snTranslationRange = new AnimatGUI.Framework.ScaledNumber(this, "TranslationRange", "meters", "m");
             }
@@ -213,7 +213,7 @@ namespace RoboticsGUI
                 m_fltMaxAngle = servo.m_fltMaxAngle;
                 m_iMinVelocityFP = servo.m_iMinVelocityFP;
                 m_iMaxVelocityFP = servo.m_iMaxVelocityFP;
-                m_fltMaxRotMin = servo.m_fltMaxRotMin;
+                m_fltRPMPerFPUnit = servo.m_fltRPMPerFPUnit;
                 m_iMinLoadFP = servo.m_iMinLoadFP;
                 m_iMaxLoadFP = servo.m_iMaxLoadFP;
                 m_snTranslationRange = (AnimatGUI.Framework.ScaledNumber)servo.m_snTranslationRange.Clone(this, bCutData, doRoot);
@@ -248,8 +248,8 @@ namespace RoboticsGUI
                 propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Velocity FP Max", this.MaxVelocityFP.GetType(), "MaxVelocityFP",
                     "Motor Properties", "This is the maximum fixed point velocity that the motor uses.", this.MaxVelocityFP));
 
-                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Max Rotations Per Minute", this.MaxRotMin.GetType(), "MaxRotMin",
-                    "Motor Properties", "This is the maximum speed the motor can attain in rotations per minute.", this.MaxRotMin));
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("RPM Per FP Unit", this.RPMPerFPUnit.GetType(), "RPMPerFPUnit",
+                    "Motor Properties", "This is the RPM per fixed velocity unit.", this.RPMPerFPUnit));
 
                 propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Load FP Min", this.MinLoadFP.GetType(), "MinLoadFP",
                     "Motor Properties", "This is the minimum fixed point load that the motor uses.", this.MinLoadFP));
@@ -279,7 +279,12 @@ namespace RoboticsGUI
                 m_fltMaxAngle = oXml.GetChildFloat("MaxAngle", m_fltMaxAngle);
                 m_iMinVelocityFP = oXml.GetChildInt("MinVelocityFP", m_iMinVelocityFP);
                 m_iMaxVelocityFP = oXml.GetChildInt("MaxVelocityFP", m_iMaxVelocityFP);
-                m_fltMaxRotMin = oXml.GetChildFloat("MaxRotMin", m_fltMaxRotMin);
+
+                if (oXml.FindChildElement("MaxRotMin", false))
+                    m_fltRPMPerFPUnit = oXml.GetChildFloat("MaxRotMin", m_fltRPMPerFPUnit);
+                else
+                    m_fltRPMPerFPUnit = oXml.GetChildFloat("RPMPerFPUnit", m_fltRPMPerFPUnit);
+
                 m_iMinLoadFP = oXml.GetChildInt("MinLoadFP", m_iMinLoadFP);
                 m_iMaxLoadFP = oXml.GetChildInt("MaxLoadFP", m_iMaxLoadFP);
 
@@ -302,7 +307,7 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MaxAngle", m_fltMaxAngle);
                 oXml.AddChildElement("MinVelocityFP", m_iMinVelocityFP);
                 oXml.AddChildElement("MaxVelocityFP", m_iMaxVelocityFP);
-                oXml.AddChildElement("MaxRotMin", m_fltMaxRotMin);
+                oXml.AddChildElement("RPMPerFPUnit", m_fltRPMPerFPUnit);
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
 
@@ -325,7 +330,7 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MaxAngle", m_fltMaxAngle);
                 oXml.AddChildElement("MinVelocityFP", m_iMinVelocityFP);
                 oXml.AddChildElement("MaxVelocityFP", m_iMaxVelocityFP);
-                oXml.AddChildElement("MaxRotMin", m_fltMaxRotMin);
+                oXml.AddChildElement("RPMPerFPUnit", m_fltRPMPerFPUnit);
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
                 oXml.AddChildElement("IsHinge", IsHinge);

@@ -110,6 +110,7 @@ void OdorSensor::SetOdorTypePointer(std::string strID)
 
 void OdorSensor::ResetSimulation()
 {
+	Sensor::ResetSimulation();
 	m_fltOdorValue = 0;
 }
 

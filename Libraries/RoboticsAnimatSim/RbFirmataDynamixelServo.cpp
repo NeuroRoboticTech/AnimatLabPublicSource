@@ -38,6 +38,11 @@ RbFirmataDynamixelServo::RbFirmataDynamixelServo()
 	m_iCCWAngleLimit = -1;
 	m_iCWAngleLimit = -1;
 	m_iTorqueLimit = -1;
+	m_iIsMoving = -1;
+	m_iLED = -1;
+	m_iAlarm = -1;
+	m_iLastGetRegisterID = 0;
+	m_iLastGetRegisterValue = 0;
 }
 
 RbFirmataDynamixelServo::~RbFirmataDynamixelServo()
@@ -59,6 +64,40 @@ void RbFirmataDynamixelServo::IOComponentID(int iID)
 	Std_IsAboveMin((int) 0, iID, true, "ServoID");
 	RbFirmataPart::IOComponentID(iID);
 	RbDynamixelServo::ServoID(iID);
+}
+
+int RbFirmataDynamixelServo::ReadIsMoving(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		//If we have made the call then m_iIsMoving = -2, so do not make it again till we get a response.
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MOVING, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iIsMoving;
+}
+
+int RbFirmataDynamixelServo::ReadLED(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_LED, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iLED;
+}
+
+int RbFirmataDynamixelServo::ReadAlarmShutdown(int iServoID)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_ALARM_SHUTDOWN, 1);
+		bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	}
+
+	return m_iAlarm;
 }
 
 void RbFirmataDynamixelServo::WriteReturnDelayTime(int iServoID, int iVal)
@@ -97,27 +136,74 @@ void RbFirmataDynamixelServo::WriteTorqueLimit(int iServoID, int iVal)
 	}
 }
 
+void RbFirmataDynamixelServo::WriteGoalPosition(int iServoID, int iPos) 
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_GOAL_POSITION_L, 2, iPos);
+		m_iLastGoalPos = iPos;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteMovingSpeed(int iServoID, int iVelocity)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_MOVING_SPEED_L, 2, iVelocity);
+		m_iLastGoalVelocity = iVelocity;
+	}
+}
+	
+void RbFirmataDynamixelServo::SetRegister(unsigned char reg, unsigned char length, unsigned int value)
+{
+	m_lpFirmata->sendDynamixelSetRegister(m_iServoID, reg, length, value);
+}
+
+int RbFirmataDynamixelServo::GetRegister(unsigned char reg, unsigned char length)
+{
+	m_lpFirmata->sendDynamixelGetRegister(m_iServoID, reg, length);
+	bool bRet = m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER, 2);
+	if(bRet && m_iLastGetRegisterID == reg)
+		return m_iLastGetRegisterValue;
+	else
+		return -1;
+}
+
+void RbFirmataDynamixelServo::Move(float fltPos, float fltVel)
+{
+	if(m_lpFirmata)
+	{
+		int iPos = ConvertPosFloatToFP(fltPos);
+		int iVel = 0;
+		
+		if(fltVel >= 0)
+			iVel = ConvertFloatVelocity(fltVel);
+
+		m_lpFirmata->sendDynamixelMove(m_iServoID, iPos, iVel);
+	}
+}
+
+void RbFirmataDynamixelServo::ConfigureServo()
+{
+	if(m_lpFirmata)
+	{
+		int iCWLimit = m_iMinSimPos;
+		int iCCWLimit = m_iMaxSimPos;
+		int iRetDelay = 1;
+		int iMaxTorque = 1023;
+
+		m_lpFirmata->sendDynamixelConfigureServo(m_iServoID, iCWLimit, iCCWLimit, iMaxTorque, iRetDelay);
+	}
+}
+
 void RbFirmataDynamixelServo::InitMotorData()
 {
 	if(m_lpFirmata)
 	{
 		//Hook up the dynamixel events to notify this servo object.
-		//m_EDynamixelReceived = m_lpFirmata->EDynamixelReceived.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelRecieved, this, _1));
+		//m_EDynamixelReceived = m_lpFirmata->EDynamixelKeyReceived.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelRecieved, this, _1));
 		m_EDynamixelTransmitError = m_lpFirmata->EDynamixelTransmitError.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelTransmitError, this, _1, _2));
 		m_EDynamixelGetRegister = m_lpFirmata->EDynamixelGetRegister.connect(boost::bind(&RbFirmataDynamixelServo::DynamixelGetRegister, this, _1, _2, _3));
-
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MODEL_NUMBER_L, 2);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_FIRMWARE_VERSION, 1);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_RETURN_DELAY_TIME, 1);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CCW_ANGLE_LIMIT_L, 2);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CW_ANGLE_LIMIT_L, 2);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
-		//m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_MAX_TORQUE_L, 2);
-		//m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_GET_REGISTER);
 
 		//If we are querying data from this motor then inform firmata it
 		//needs to send back constant updates.
@@ -127,6 +213,18 @@ void RbFirmataDynamixelServo::InitMotorData()
 		RbDynamixelServo::InitMotorData();
 	}
 }
+
+void RbFirmataDynamixelServo::WaitForMoveToFinish() 
+{
+	//Reset the value for a new wait sequence
+	m_iIsMoving = -1;
+
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelStopped(m_iServoID);
+		m_lpFirmata->waitForSysExMessage(SYSEX_DYNAMIXEL_STOPPED, 10);
+	}
+};
 
 #pragma region DataAccesMethods
 
@@ -213,19 +311,30 @@ void RbFirmataDynamixelServo::UpdateAllMotorData()
 	}
 }
 
-//
-//void RbFirmataDynamixelServo::DynamixelRecieved(const int &iServoID) 
-//{
-//	if(iServoID == m_iServoID)
-//	{
-//
-//	}
-//}
+
+void RbFirmataDynamixelServo::DynamixelRecieved(const int &iServoID) 
+{
+	if(iServoID == 1 && m_iServoID == 1)
+	{
+		//std::cout << "Servo: " << iServoID << ", Pos: " <<  m_iPresentPos << ", Vel: " <<  m_iPresentVelocity << "\r\n";
+		//std::cout << "Servo: " << iServoID << ", Pos: " <<  m_lpFirmata->_dynamixelServos[m_iServoID]._actualPosition << ", Vel: " <<  m_lpFirmata->_dynamixelServos[m_iServoID]._actualSpeed << "\r\n";
+	}
+}
 
 void RbFirmataDynamixelServo::DynamixelTransmitError(const int &iCmd, const int &iServoID) 
 {
 	if(iServoID == m_iServoID)
 	{
+		switch(iCmd)
+		{
+		case SYSEX_DYNAMIXEL_STOP:
+			Stop();
+			break;
+		case SYSEX_DYNAMIXEL_CONFIGURE_SERVO:
+			ConfigureServo();
+			break;
+		}
+
 		std::cout << "Transmit error Cmd: " << iCmd << ", servo: " << iServoID << "\r\n";
 	}
 }
@@ -234,7 +343,10 @@ void RbFirmataDynamixelServo::DynamixelGetRegister(const unsigned char &iServoID
 {
 	if(iServoID == m_iServoID)
 	{
-		std::cout << "Get Register Servo: " << iServoID << ", Reg: " << iReg << ", Value: " << iValue << "\r\n";
+		m_iLastGetRegisterID = iReg;
+		m_iLastGetRegisterValue = iValue;
+
+		//std::cout << "Get Register Servo: " << iServoID << ", Reg: " << iReg << ", Value: " << iValue << "\r\n";
 
 		switch(iReg)
 		{
@@ -256,6 +368,15 @@ void RbFirmataDynamixelServo::DynamixelGetRegister(const unsigned char &iServoID
 		case P_MAX_TORQUE_L:
 			m_iTorqueLimit = iValue;
 			break;
+		case P_MOVING:
+			m_iIsMoving = iValue;
+			break;
+		case P_LED:
+			m_iLED = iValue;
+			break;
+		case P_ALARM_SHUTDOWN:
+			m_iAlarm = iValue;
+			break;
 		}
 
 	}
@@ -267,6 +388,27 @@ void RbFirmataDynamixelServo::AddMotorUpdate(int iPos, int iSpeed)
 		m_lpFirmata->sendDynamixelSynchMoveAdd(m_iServoID, iPos, iSpeed);
 
 	m_fltIOValue = iSpeed;
+}
+
+///For the Firmata dynamixel we do not need to try and set the current position. It is more
+///efficient to use the stop command built into the ArbotixFirmata sketch.
+void RbFirmataDynamixelServo::Stop()
+{
+	if(!m_lpSim->InSimulation() && m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelStop(m_iServoID);
+
+		//Set the next and goal pos to the current pos so we do not
+		//attempt to resend a servo command.
+		m_iNextGoalPos = m_iPresentPos;
+		m_iLastGoalPos = m_iPresentPos;
+
+		//Do a similar thing with the velocity values so it thinks it is at 0 velocity.
+		m_iNextGoalVelocity = -1;
+		m_iLastGoalVelocity = 1;
+	}
+	else
+		RbDynamixelServo::Stop();
 }
 
 void RbFirmataDynamixelServo::Initialize()
@@ -286,9 +428,6 @@ void RbFirmataDynamixelServo::SetupIO()
 {
 	if(!m_lpSim->InSimulation() && m_lpFirmata)
 	{
-		m_lpFirmata->sendDynamixelGetRegister(m_iServoID, P_CW_ANGLE_LIMIT_L, 2);
-		MicroSleep(100);
-
 		SetMinSimPos(m_fltLowLimit);
 		SetMaxSimPos(m_fltHiLimit);
 		InitMotorData();
@@ -326,9 +465,7 @@ void RbFirmataDynamixelServo::StepSimulation()
 void RbFirmataDynamixelServo::ResetSimulation()
 {
 	RbFirmataPart::ResetSimulation();
-	m_fltReadParamTime = 0;
-	m_fltIOPos = 0;
-	m_fltIOVelocity = 0;
+	RbDynamixelServo::ResetSimulation();
 }
 
 void RbFirmataDynamixelServo::Load(StdUtils::CStdXml &oXml)

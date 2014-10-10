@@ -1,3 +1,9 @@
+/**
+\file	RobotInterface.h
+
+\brief	Declares the robotics inerface for animatlab.
+**/
+
 #pragma once
 
 namespace AnimatSim
@@ -5,6 +11,16 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+		/**
+		\brief	The Robotics interface configures a simulation to run on a microcontroller board.
+			
+		\details The robotics interface has two main purposes. The first is that it helps synchronize the simulation
+		so it runs more like it would on real hardware. The second purpose is to configure the robotics simulation to 
+		run on the real robots microcomputer board. It contains the Robot IO controllers and robot part interfaces.
+
+		\author	dcofer
+		\date	9/8/2014
+		**/
 		class ANIMAT_PORT RobotInterface : public AnimatBase
 		{
 		protected:

@@ -64,6 +64,9 @@ protected:
 
 	virtual void WriteTorqueLimit(int iServoID, int iVal) {dxl_write_word(iServoID, P_MAX_TORQUE_L, iVal);};
 	virtual int ReadTorqueLimit(int iServoID)  {return dxl_read_word(iServoID, P_MAX_TORQUE_L);};
+		
+	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value);
+	virtual int GetRegister(unsigned char reg, unsigned char length);
 
 public:
 	RbDynamixelUSBServo();

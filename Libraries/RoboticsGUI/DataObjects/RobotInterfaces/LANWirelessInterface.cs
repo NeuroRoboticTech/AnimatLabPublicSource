@@ -14,11 +14,12 @@ namespace RoboticsGUI
             public override string ButtonImageName{get {return "RoboticsGUI.Graphics.LANWirelessInterface.gif";}}
             public override string PartType {get { return "LANWirelessInterface"; }}
             public override string ModuleName {get {return "RoboticsAnimatSim";}}
+            public override bool AllowUserAdd {get {return false;}}
 
             public LANWirelessInterface(AnimatGUI.Framework.DataObject doParent)
                 : base(doParent)
             {
-                m_strName = "LANWirelessInterface";
+                m_strName = "LAN Wireless Interface";
 
                 m_doPhysics = new RoboticsGUI.RoboticsPhysicsEngine(this);
                 m_doPhysics.SetLibraryVersion("Double", true);

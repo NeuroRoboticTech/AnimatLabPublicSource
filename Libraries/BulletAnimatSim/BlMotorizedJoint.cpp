@@ -47,21 +47,24 @@ void BlMotorizedJoint::CalculateServoVelocity()
 		return;
 
 	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
-	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	//For calculating the error we need to get the actual current position of the joint, not the value that was obtained last
+	//time it called CollectData. If the motor is being synched with the robot for sim then this could be delayed. However, in the
+	//real system this type of error correction would be taking place within the actual servo's motor loop.
+	float fltError = fltTargetPos - GetCurrentBtPositionScaled();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
 	////Test Code
 	//int i=5;
-	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "5c9f7a20-c7e0-44a9-b97f-9de1132363ad") // && fabs(fltTargetPos) > 0  && GetSimulator()->Time() >= 2.5
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "c868a91a-285d-4d00-91b2-6410aead9fe8" && GetSimulator()->Time() >= 1.2) // && fabs(fltTargetPos) > 0  
 	//	i=6;
 
 	AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
-	if(MotorType == eJointMotorType::PositionControl || (MotorType == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
+	if((MotorType == eJointMotorType::PositionControl || MotorType == eJointMotorType::PositionVelocityControl) && m_lpThisMotorJoint->ReachedSetPosition() )
 	{
 		//Lock this joint position.
 		m_lpThisMotorJoint->DesiredVelocity(0); 
 	}
-	else
+	else if(MotorType == eJointMotorType::PositionVelocityControl)
 	{
 		//If we set the desired velocity and position then make sure the desired velocity is in the right direction
 		float fltDesiredVel = fabs(m_lpThisMotorJoint->DesiredVelocity()) * Std_Sign(fltError);
@@ -79,6 +82,16 @@ void BlMotorizedJoint::CalculateServoVelocity()
 
 		if(fabs(fltError) < 1e-4)
 			m_lpThisMotorJoint->ReachedSetPosition(true);
+	}
+	else if(MotorType == eJointMotorType::PositionControl)
+	{
+		if(m_lpThisJoint->EnableLimits())
+		{
+			float fltProp = fltError / m_lpThisJoint->GetLimitRange();
+			m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
+		}
+		else
+			m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity());	
 	}
 }
 
@@ -143,7 +156,7 @@ void BlMotorizedJoint::Physics_SetVelocityToDesired()
 void BlMotorizedJoint::Physics_CollectExtraData()
 {
     OsgSimulator *lpSim = GetOsgSimulator();
-	if(m_btJoint && lpSim && m_lpThisMotorJoint)
+	if(m_btJoint && lpSim && m_lpThisMotorJoint && m_lpThisJoint && m_lpThisJoint->NeedsRobotSynch())
 	{
 	    float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
 	    float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();

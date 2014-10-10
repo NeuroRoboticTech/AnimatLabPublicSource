@@ -64,6 +64,7 @@ namespace AnimatSim
 		class NervousSystem;
 		class NeuralModule;
 		class PhysicsNeuralModule;
+		class ThreadedModule;
 	}
 
 	namespace Charting
@@ -149,7 +150,7 @@ namespace AnimatSim
 		class VoltageClamp;
 		class InverseMuscleCurrent;
 		class PropertyControlStimulus;
-        class MotorVelocityStimulus;
+        class MotorStimulus;
         class ForceStimulus;
 	}
 
@@ -257,6 +258,7 @@ using namespace AnimatSim::Robotics;
 #include "NervousSystem.h"
 #include "NeuralModule.h"
 #include "PhysicsNeuralModule.h"
+#include "ThreadedModule.h"
 #include "Organism.h"
 #include "Light.h"
 #include "LightManager.h"
@@ -276,7 +278,7 @@ using namespace AnimatSim::Robotics;
 #include "VoltageClamp.h"
 #include "InverseMuscleCurrent.h"
 #include "PropertyControlStimulus.h"
-#include "MotorVelocityStimulus.h"
+#include "MotorStimulus.h"
 #include "ForceStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"

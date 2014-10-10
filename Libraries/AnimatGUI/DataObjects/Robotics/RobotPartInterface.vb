@@ -189,6 +189,8 @@ Namespace DataObjects
                 If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RobotIOControl), False) Then
                     m_bpParentIO = DirectCast(doParent, RobotIOControl)
                     Me.Organism = m_bpParentIO.Organism
+
+                    AddHandler m_bpParentIO.BeforeRemoveItem, AddressOf Me.OnBeforeParentRemoveFromList
                 End If
 
                 m_thLinkedPart = CreatePartList(m_doOrganism, Nothing)
@@ -201,6 +203,7 @@ Namespace DataObjects
 
                 m_thDataTypes.DataTypes.Clear()
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IOValue", "IO Value", "", "", 0, 1))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IOScaledValue", "IO Scaled Value", "", "", 0, 1))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("StepIODuration", "IO Duration", "Seconds", "s", 0, 1))
                 m_thDataTypes.ID = "IOValue"
 
@@ -373,6 +376,11 @@ Namespace DataObjects
                 End If
                 m_doInterface = Nothing
                 m_gnGain.RemoveFromSim(True)
+            End Sub
+
+            Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+                MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
+                DiconnectLinkedPartEvents()
             End Sub
 
 #End Region
@@ -550,6 +558,15 @@ Namespace DataObjects
             Private Sub OnAfterRemoveLinkedPart(ByRef doObject As Framework.DataObject)
                 Try
                     Me.LinkedPart = CreatePartList(m_doOrganism, Nothing)
+                Catch ex As Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+                Try
+                    DiconnectLinkedPartEvents()
+                    MyBase.OnBeforeParentRemoveFromList(doObject)
                 Catch ex As Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

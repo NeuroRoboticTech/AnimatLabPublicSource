@@ -82,7 +82,6 @@ float RandomNeuron::ITime()
 void RandomNeuron::ITime(float fltVal)
 {
 	m_fltITime=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -107,7 +106,6 @@ unsigned char RandomNeuron::IntrinsicType()
 void RandomNeuron::IntrinsicType(unsigned char iVal)
 {
 	m_iIntrinsicType=iVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -132,7 +130,6 @@ float RandomNeuron::IntrinsicCurrent()
 void RandomNeuron::IntrinsicCurrent(float fltVal)
 {
 	m_fltIntrinsic=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -157,7 +154,6 @@ float RandomNeuron::Il()
 void RandomNeuron::Il(float fltVal)
 {
 	m_fltIl=fltVal;
-	TemplateNodeChanged();
 }
 
 /**
@@ -183,7 +179,6 @@ void RandomNeuron::Ilinit(float fltVal)
 {
 	m_fltIlinit=fltVal;
 	m_fltIl = m_fltIlinit;
-	TemplateNodeChanged();
 }
 
 /**
@@ -254,7 +249,6 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 			{delete m_lpCurrentGraph; m_lpCurrentGraph = NULL;}
 		m_lpCurrentGraph = lpGain;
 	}
-	TemplateNodeChanged();
 }
 
 /**

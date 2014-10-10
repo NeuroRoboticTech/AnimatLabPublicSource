@@ -19,7 +19,7 @@ namespace RoboticsGUI
                 /// <summary>
                 /// If true then when the simulation starts it will always reset the position of the servo to 0 to begin with.
                 /// </summary>
-                protected bool m_bResetToStartPos = true;
+                protected bool m_bResetToStartPos = false;
 
                 public override string Description {get {return "Controls a standard servo motor for a hinge joint using a Firmata controller";}set { }}
                 public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.HingeServoSmall.gif";}}
@@ -101,6 +101,8 @@ namespace RoboticsGUI
 
                     propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Min Pulse", this.MinPulse.GetType(), "MinPulse", "Properties", "Minimum pulse duration of servo", this.MinPulse));
                     propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Max Pulse", this.MaxPulse.GetType(), "MaxPulse", "Properties", "Maximum pulse duration of servo", this.MaxPulse));
+                    propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Reset To Start Pos", this.ResetToStartPos.GetType(), "ResetToStartPos",
+                        "Properties", "If true then it will reset the joint to a known position at the start the simulation", this.ResetToStartPos));
                 }
 
                 public override void LoadData(ManagedAnimatInterfaces.IStdXml oXml)
@@ -110,6 +112,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     m_iMaxPulse = oXml.GetChildInt("MaxPulse", m_iMaxPulse);
                     m_iMinPulse = oXml.GetChildInt("MinPulse", m_iMinPulse);
+                    m_bResetToStartPos = oXml.GetChildBool("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
 
@@ -120,6 +123,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     oXml.AddChildElement("MaxPulse", m_iMaxPulse);
                     oXml.AddChildElement("MinPulse", m_iMinPulse);
+                    oXml.AddChildElement("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
 
@@ -130,6 +134,7 @@ namespace RoboticsGUI
                     oXml.IntoElem();
                     oXml.AddChildElement("MaxPulse", m_iMaxPulse);
                     oXml.AddChildElement("MinPulse", m_iMinPulse);
+                    oXml.AddChildElement("ResetToStartPos", m_bResetToStartPos);
                     oXml.OutOfElem();
                 }
             }

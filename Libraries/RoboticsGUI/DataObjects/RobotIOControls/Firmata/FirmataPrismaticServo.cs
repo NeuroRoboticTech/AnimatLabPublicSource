@@ -23,7 +23,7 @@ namespace RoboticsGUI
                 public FirmataPrismaticServo(AnimatGUI.Framework.DataObject doParent)
                     : base(doParent)
                 {
-                    m_strName = "Prismatic Motor";
+                    m_strName = "Standard Prismatic Motor";
 
                     m_aryCompatiblePartTypes.Clear();
                     m_aryCompatiblePartTypes.Add(typeof(AnimatGUI.DataObjects.Physical.Joints.Prismatic));

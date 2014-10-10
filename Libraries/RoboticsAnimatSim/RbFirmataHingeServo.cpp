@@ -34,7 +34,7 @@ RbFirmataHingeServo::RbFirmataHingeServo()
     m_lpJoint = NULL;
 	m_iMaxPulse = 2400;
 	m_iMinPulse = 544;
-	m_bResetToStartPos = true;
+	m_bResetToStartPos = false;
 
 	m_iMaxAngle = 179;
 	m_iMinAngle  = 0;
@@ -60,7 +60,7 @@ RbFirmataHingeServo::~RbFirmataHingeServo()
         m_lpJoint = NULL;
 	}
 	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of RbDynamixelCM5USBUARTHingeController\r\n", "", -1, false, true);}
+	{Std_TraceMsg(0, "Caught Error in desctructor of RbFirmataHingeServo\r\n", "", -1, false, true);}
 }
 
 int RbFirmataHingeServo::MaxPulse() {return m_iMaxPulse;}
@@ -201,7 +201,7 @@ void RbFirmataHingeServo::SetupIO()
 		if(m_bResetToStartPos)
 		{
 			SetGoalPosition_FP(m_iCenterAngle);
-			m_iIOValue = m_iCenterAngle;
+			IOValue(m_iCenterAngle);
 		}
 	}
 }

@@ -3201,13 +3201,14 @@ bool STD_UTILS_PORT Std_IsFullPath(std::string strPath)
 \param [in,out]	strFile	Filename.
 
 **/
-void STD_UTILS_PORT Std_SplitPathAndFile(std::string strFullPath, std::string &strPath, std::string &strFile)
+void STD_UTILS_PORT Std_SplitPathAndFile(std::string &strFullPath, std::string &strPath, std::string &strFile)
 {
     try
     {
 	    boost::filesystem::path path = boost::filesystem::canonical(strFullPath);
 	    strFile = path.filename().string();
 	    strPath = Std_Replace(path.string(), strFile, "");
+		strFullPath = path.generic_string();
     }
     catch(const boost::filesystem::filesystem_error& e)
     {

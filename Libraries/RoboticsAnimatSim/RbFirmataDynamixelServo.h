@@ -39,20 +39,35 @@ protected:
 	///Keeps track of the torque limit.
 	int m_iTorqueLimit;
 
-	virtual void WriteGoalPosition(int iServoID, int iPos) {};
+	///Keeps track of whether this servo is moving
+	int m_iIsMoving;
+
+	///Keeps track of LED Status
+	int m_iLED;
+
+	///Keeps track of alarm Status
+	int m_iAlarm;
+
+	//Stores the last reg id returned by a get register callback
+	unsigned int m_iLastGetRegisterID;
+
+	//Stores the last value returned by a get register callback
+	unsigned int m_iLastGetRegisterValue;
+
+	virtual void WriteGoalPosition(int iServoID, int iPos);
 	virtual int ReadGoalPosition(int iServoID)  {return m_iLastGoalPos;};
 	virtual int ReadPresentPosition(int iServoID)  {return m_iPresentPos;};
 
-	virtual void WriteMovingSpeed(int iServoID, int iVelocity) {};
+	virtual void WriteMovingSpeed(int iServoID, int iVelocity);
 	virtual int ReadMovingSpeed(int iServoID)  {return m_iLastGoalVelocity;};
 	virtual int ReadPresentSpeed(int iServoID)  {return m_iPresentVelocity;};
 
 	virtual int ReadPresentLoad(int iServoID)  {return m_iLoad;};
 	virtual int ReadPresentVoltage(int iServoID)  {return m_iVoltage;};
 	virtual int ReadPresentTemperature(int iServoID)  {return m_iTemperature;};
-	virtual int ReadIsMoving(int iServoID)  {return -1;};
-	virtual int ReadLED(int iServoID)  {return -1;};
-	virtual int ReadAlarmShutdown(int iServoID)  {return -1;};
+	virtual int ReadIsMoving(int iServoID);
+	virtual int ReadLED(int iServoID);
+	virtual int ReadAlarmShutdown(int iServoID);
 	virtual int ReadModelNumber(int iServoID)   {return m_iModelNum;};
 	virtual int ReadID(int iServoID)  {return m_iServoID;};
 	virtual int ReadFirmwareVersion(int iServoID)  {return m_iFirmwareVersion;};
@@ -73,7 +88,7 @@ protected:
 	boost::signals2::connection m_EDynamixelTransmitError;
 	boost::signals2::connection m_EDynamixelGetRegister;
 
-	//virtual void DynamixelRecieved(const int &iServoID);
+	virtual void DynamixelRecieved(const int &iServoID);
 	virtual void DynamixelTransmitError(const int &iCmd, const int &iServoID); 
 	virtual void DynamixelGetRegister(const unsigned char &iServoID, const unsigned char &iReg, const unsigned int &iValue);
 
@@ -81,6 +96,13 @@ protected:
 	virtual void UpdateMotorData();
 	virtual void UpdateAllMotorData();
 	virtual void UpdateKeyMotorData();
+	
+	virtual void SetRegister(unsigned char reg, unsigned char length, unsigned int value);
+	virtual int GetRegister(unsigned char reg, unsigned char length);
+
+	virtual void Move(float fltPos, float fltVel);
+	
+	virtual void ConfigureServo();
 
 public:
 	RbFirmataDynamixelServo();
@@ -92,9 +114,11 @@ public:
 
 	virtual float QuantizeServoPosition(float fltPos);
 	virtual float QuantizeServoVelocity(float fltVel);
+	
+	virtual void Stop();
 
 	virtual void InitMotorData();
-	virtual void WaitForMoveToFinish() {};
+	virtual void WaitForMoveToFinish();
 
 #pragma region DataAccesMethods
 

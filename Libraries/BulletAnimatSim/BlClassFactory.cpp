@@ -537,8 +537,8 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "MOTORVELOCITY")
-		lpStimulus = new AnimatSim::ExternalStimuli::MotorVelocityStimulus;
+	if(strType == "MOTORVELOCITY" || strType == "MOTORPOSITION")
+		lpStimulus = new AnimatSim::ExternalStimuli::MotorStimulus;
 	else if(strType == "FORCEINPUT")
 		lpStimulus = new AnimatSim::ExternalStimuli::ForceStimulus;
 	else if(strType == "NODEINPUT")

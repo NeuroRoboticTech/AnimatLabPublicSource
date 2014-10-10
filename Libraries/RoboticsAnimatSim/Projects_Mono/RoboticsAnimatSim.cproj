@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{484EBAD4-5C31-5F4B-8A30-5A06F553D58F}</ProjectGuid>
+    <ProjectGuid>{36F93F9B-295B-0A46-8587-7098CC680E6C}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -206,14 +206,11 @@
     <None Include="..\RbCylinder.h">
       <Link>RbCylinder.h</Link>
     </None>
+    <None Include="..\RbDynamixelServo.h">
+      <Link>RbDynamixelServo.h</Link>
+    </None>
     <None Include="..\RbDynamixelUSB.h">
       <Link>RbDynamixelUSB.h</Link>
-    </None>
-    <None Include="..\RbDynamixelUSBHinge.h">
-      <Link>RbDynamixelUSBHinge.h</Link>
-    </None>
-    <None Include="..\RbDynamixelUSBPrismatic.h">
-      <Link>RbDynamixelUSBPrismatic.h</Link>
     </None>
     <None Include="..\RbDynamixelUSBServo.h">
       <Link>RbDynamixelUSBServo.h</Link>
@@ -235,6 +232,9 @@
     </None>
     <None Include="..\RbFirmataDigitalOutput.h">
       <Link>RbFirmataDigitalOutput.h</Link>
+    </None>
+    <None Include="..\RbFirmataDynamixelServo.h">
+      <Link>RbFirmataDynamixelServo.h</Link>
     </None>
     <None Include="..\RbFirmataHingeServo.h">
       <Link>RbFirmataHingeServo.h</Link>
@@ -323,6 +323,9 @@
     <None Include="..\RbUniversal.h">
       <Link>RbUniversal.h</Link>
     </None>
+    <None Include="..\RbXBeeCommander.h">
+      <Link>RbXBeeCommander.h</Link>
+    </None>
     <None Include="..\StdAfx.h">
       <Link>StdAfx.h</Link>
     </None>
@@ -355,14 +358,11 @@
     <Compile Include="..\RbCylinder.cpp">
       <Link>RbCylinder.cpp</Link>
     </Compile>
+    <Compile Include="..\RbDynamixelServo.cpp">
+      <Link>RbDynamixelServo.cpp</Link>
+    </Compile>
     <Compile Include="..\RbDynamixelUSB.cpp">
       <Link>RbDynamixelUSB.cpp</Link>
-    </Compile>
-    <Compile Include="..\RbDynamixelUSBHinge.cpp">
-      <Link>RbDynamixelUSBHinge.cpp</Link>
-    </Compile>
-    <Compile Include="..\RbDynamixelUSBPrismatic.cpp">
-      <Link>RbDynamixelUSBPrismatic.cpp</Link>
     </Compile>
     <Compile Include="..\RbDynamixelUSBServo.cpp">
       <Link>RbDynamixelUSBServo.cpp</Link>
@@ -384,6 +384,9 @@
     </Compile>
     <Compile Include="..\RbFirmataDigitalOutput.cpp">
       <Link>RbFirmataDigitalOutput.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbFirmataDynamixelServo.cpp">
+      <Link>RbFirmataDynamixelServo.cpp</Link>
     </Compile>
     <Compile Include="..\RbFirmataHingeServo.cpp">
       <Link>RbFirmataHingeServo.cpp</Link>
@@ -471,6 +474,9 @@
     </Compile>
     <Compile Include="..\RbUniversal.cpp">
       <Link>RbUniversal.cpp</Link>
+    </Compile>
+    <Compile Include="..\RbXBeeCommander.cpp">
+      <Link>RbXBeeCommander.cpp</Link>
     </Compile>
     <Compile Include="..\RoboticsAnimatSim.cpp">
       <Link>RoboticsAnimatSim.cpp</Link>

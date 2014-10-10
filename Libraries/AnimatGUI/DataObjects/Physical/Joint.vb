@@ -63,16 +63,10 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property ScaleUnits() As String
             Get
                 If Me.UsesRadians Then
-                    Return "rad/s"
+                    Return "rad"
                 Else
-                    Return "m/s"
+                    Return "m"
                 End If
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property InputStimulus() As String
-            Get
-                Return "Velocity"
             End Get
         End Property
 
@@ -193,6 +187,21 @@ Namespace DataObjects.Physical
                     SetSimData("Friction", value.GetSimulationXml("Friction", Me), True)
                 End If
                 m_doFriction = value
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property IsMotorized() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
+        'Default to velocity control but you need to look at IsMotorized to see if this is a motorized joint or not.
+        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
+            Get
+                Return enumJointMotorTypes.VelocityControl
+            End Get
+            Set(ByVal value As Joint.enumJointMotorTypes)
             End Set
         End Property
 

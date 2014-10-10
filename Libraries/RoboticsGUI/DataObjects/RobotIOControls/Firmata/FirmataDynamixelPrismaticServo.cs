@@ -13,8 +13,8 @@ namespace RoboticsGUI
             public class FirmataDynamixelPrismaticServo : RoboticsGUI.RobotIOControls.DynamixelServo
             {
                 public override string Description {get {return "Controls a Dynamixel servo motor for a prismatic joint using a Firmata controller";}set { }}
-                public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.HingeServoSmall.gif";}}
-                public override string ButtonImageName {get {return "RoboticsGUI.Graphics.HingeServoLarge.gif";}}
+                public override string WorkspaceImageName {get {return "RoboticsGUI.Graphics.PrismaticServoSmall.gif";}}
+                public override string ButtonImageName { get { return "RoboticsGUI.Graphics.PrismaticServoLarge.gif"; } }
                 public override string PartType {get { return "FirmataDynamixelPrismaticServo"; }}
                 public override string ModuleName { get { return "RoboticsAnimatSim"; } }
                 protected override Type GetLinkedPartDropDownTreeType() {return typeof(AnimatGUI.TypeHelpers.DropDownTreeEditorNoFirstSelect);}

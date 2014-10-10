@@ -335,7 +335,7 @@ void STD_UTILS_PORT Std_Sleep(unsigned long lMilliseconds);
 // File Functions
 
 bool STD_UTILS_PORT Std_IsFullPath(std::string strPath);
-void STD_UTILS_PORT Std_SplitPathAndFile(std::string strFullPath, std::string &strPath, std::string &strFile);
+void STD_UTILS_PORT Std_SplitPathAndFile(std::string &strFullPath, std::string &strPath, std::string &strFile);
 bool STD_UTILS_PORT Std_DirectoryExists(std::string strPath);
 bool STD_UTILS_PORT Std_FileExists(std::string strFullPath);
 std::string STD_UTILS_PORT Std_ExecutablePath();

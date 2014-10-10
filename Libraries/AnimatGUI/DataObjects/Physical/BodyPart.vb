@@ -20,10 +20,12 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
+        Protected m_bSynchWithRobot As Boolean = False
+        Protected m_snSynchUpdateInterval As ScaledNumber
+
 #End Region
 
 #Region " Properties "
-
 
         'Type tells what type of bodypart (hinge, box, etc..
         Public MustOverride ReadOnly Property Type() As String
@@ -84,17 +86,35 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property AllowUserAdd() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overridable ReadOnly Property TotalSubChildren() As Integer
             Get
                 Return 0
             End Get
+        End Property
+
+        Public Overridable Property SynchWithRobot() As Boolean
+            Get
+                Return m_bSynchWithRobot
+            End Get
+            Set(value As Boolean)
+                SetSimData("SynchWithRobot", value.ToString, True)
+                m_bSynchWithRobot = value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property SynchUpdateInterval() As ScaledNumber
+            Get
+                Return m_snSynchUpdateInterval
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 OrElse Value.ActualValue > 5 Then
+                    Throw New System.Exception("The synch update interval must be between the range 0 to 5 s.")
+                End If
+
+                SetSimData("SynchUpdateInterval", Value.ActualValue.ToString, True)
+                m_snSynchUpdateInterval.CopyData(Value)
+            End Set
         End Property
 
 #End Region
@@ -104,11 +124,23 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
+            m_snSynchUpdateInterval = New AnimatGUI.Framework.ScaledNumber(Me, "SynchUpdateInterval", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
         End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_thDataTypes Is Nothing Then m_thDataTypes.ClearIsDirty()
+            If Not m_snSynchUpdateInterval Is Nothing Then m_snSynchUpdateInterval.ClearIsDirty()
+        End Sub
+
+        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
+            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
+
+            Dim bnOrig As BodyPart = DirectCast(doOriginal, BodyPart)
+
+            m_bSynchWithRobot = bnOrig.m_bSynchWithRobot
+            m_snSynchUpdateInterval = DirectCast(bnOrig.m_snSynchUpdateInterval.Clone(Me, bCutData, doRoot), ScaledNumber)
         End Sub
 
         'This method is called for each part type during the catalog of the modules. It sets up the 
@@ -122,6 +154,29 @@ Namespace DataObjects.Physical
             Util.Application.AddPartTypeExclusion(GetType(Bodies.OdorSensor), Me.GetType)
             Util.Application.AddPartTypeExclusion(GetType(Bodies.Stomach), Me.GetType)
             Util.Application.AddPartTypeExclusion(GetType(Bodies.Spring), Me.GetType)
+        End Sub
+
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+            MyBase.BuildProperties(propTable)
+
+            ''Only show this stuff if there is a robot interface defined for it.
+            'If Not Me.ParentStructure Is Nothing AndAlso Util.IsTypeOf(Me.ParentStructure.GetType, GetType(Organism), False) Then
+            '    Dim doOrg As Organism = DirectCast(Me.ParentStructure, Organism)
+
+            '    If Not doOrg Is Nothing AndAlso Not doOrg.RobotInterface Is Nothing Then
+            '        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SynchWithRobot", GetType(Boolean), "SynchWithRobot", _
+            '                                    "Robot Properties", "Determines whether this part is synched with a robot part during simulation." & _
+            '                                    "Note that this will only be applied if the synch with robot setting on the robot interface is true also.", m_bSynchWithRobot))
+
+            '        Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snSynchUpdateInterval.Properties
+            '        propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Synch Update Interval", pbNumberBag.GetType(), "SynchUpdateInterval", _
+            '                                    "Robot Properties", "Sets how often this part is updated when simulating a robot. " & _
+            '                                    "Acceptable values are in the range 0 to 5 s.", pbNumberBag, _
+            '                                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            '    End If
+            'End If
+
         End Sub
 
         Public Overridable Function FindBodyPart(ByVal strID As String) As BodyPart
@@ -328,6 +383,10 @@ Namespace DataObjects.Physical
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex
 
                 Util.Simulation.ProjectStimuli.Add(doStimulus.ID, doStimulus)
+
+                If Not doStimulus.WorkspaceNode Is Nothing Then
+                    doStimulus.SelectItem()
+                End If
             End If
         End Sub
 
@@ -342,6 +401,9 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into BodyPart Element
 
+            m_bSynchWithRobot = oXml.GetChildBool("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.LoadData(oXml, "SynchUpdateInterval", False)
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -353,6 +415,9 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
+
+            oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.SaveData(oXml, "SynchUpdateInterval")
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
@@ -366,6 +431,8 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("PartType", Me.PartType.ToString)
 
+            oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.SaveSimulationXml(oXml, Me, "SynchUpdateInterval")
 
             oXml.OutOfElem() 'Outof BodyPart Element
         End Sub

@@ -27,8 +27,9 @@ namespace RoboticsAnimatSim
 
 RbXBeeCommander::RbXBeeCommander() 
 {
-	m_strPort = "COM3";
+	m_strPort = "";
 	m_iBaudRate = 38400; 
+	m_iChangeSimStepCount = 5;
 
 	ResetData();
 }
@@ -56,6 +57,18 @@ void RbXBeeCommander::BaudRate(int iRate)
 }
 
 int RbXBeeCommander::BaudRate() {return m_iBaudRate;}
+
+void RbXBeeCommander::ChangeSimStepCount(int iRate)
+{
+	Std_IsAboveMin((int) 0, iRate, true, "ChangeSimStepCount");
+	m_iChangeSimStepCount = iRate;
+
+	//Reset all the button data.
+	for(int i=0; i<BUT_ID_TOTAL; i++)
+		m_ButtonData[i].m_iChangeSimStepCount = m_iChangeSimStepCount;
+}
+
+int RbXBeeCommander::ChangeSimStepCount() {return m_iChangeSimStepCount;}
 
 #pragma region DataAccesMethods
 
@@ -161,6 +174,7 @@ bool RbXBeeCommander::SetData(const std::string &strDataType, const std::string 
 	if(strType == "PORT")
 	{
 		Port(strValue);
+		Initialize();
 		return true;
 	}
 	else if(strType == "BAUDRATE")
@@ -168,8 +182,13 @@ bool RbXBeeCommander::SetData(const std::string &strDataType, const std::string 
 		BaudRate((int) atoi(strValue.c_str()));
 		return true;
 	}
+	else if(strType == "CHANGESIMSTEPCOUNT")
+	{
+		ChangeSimStepCount((int) atoi(strValue.c_str()));
+		return true;
+	}
 
-
+	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -183,6 +202,7 @@ void RbXBeeCommander::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 	aryProperties.Add(new TypeProperty("Port", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("BaudRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("ChangeSimStepCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 
 	aryProperties.Add(new TypeProperty("WalkV", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 	aryProperties.Add(new TypeProperty("WalkVStart", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
@@ -248,17 +268,33 @@ void RbXBeeCommander::Initialize()
 	// Open device. Do this before calling the Initialize on the parts so they can have communications.
 	if(m_bEnabled)
 	{
-		if(OpenIO())
+		//If the thread is running already then shut it down.
+		if(m_bSetupComplete)
+			ShutdownIO();
+
+		if(!Std_IsBlank(m_strPort))
 		{
-			StartIOThread();
-			AnimatSim::Robotics::RemoteControl::Initialize();
+			if(OpenIO())
+			{
+				StartIOThread();
+
+				int iCount = m_aryLinks.GetSize();
+				for(int iIndex=0; iIndex<iCount; iIndex++)
+					m_aryLinks[iIndex]->Initialize();
+			}
 		}
 	}
 }
 
 bool RbXBeeCommander::OpenIO()
 {
-	return m_Port.setup(m_strPort, m_iBaudRate);
+	bool bOpen = m_Port.setup(m_strPort, m_iBaudRate);
+
+	if(!m_lpSim->InSimulation() && !bOpen)
+		THROW_PARAM_ERROR(Rb_Err_lFailedUartSBeeConnection, Rb_Err_strFailedUartSBeeConnection, "ComPort", m_strPort);
+
+	return bOpen;
+	//return false;
 }
 
 void RbXBeeCommander::CloseIO()
@@ -328,17 +364,18 @@ void RbXBeeCommanderButtonData::CheckStartedStopped()
 
 void RbXBeeCommander::CheckStartedStopped()
 {
-	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-	//	m_ButtonData[iIdx].CheckStartedStopped();
+	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+		m_ButtonData[iIdx].CheckStartedStopped();
 
-	m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
+	////Test Code
+	//m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
 }
 
 void RbXBeeCommanderButtonData::ClearStartStops()
 {
-	if((m_fltStart > 0 || m_fltStop > 0))
+	if((fabs(m_fltStart) > 0 || fabs(m_fltStop) > 0))
 	{
-		if(m_iSimStepped >= 5)
+		if(m_iSimStepped >= m_iChangeSimStepCount)
 		{
 			//if(m_fltStart > 0)
 			//	OutputDebugString("Cleared Start");
@@ -356,9 +393,19 @@ void RbXBeeCommanderButtonData::ClearStartStops()
 
 void RbXBeeCommander::ClearStartStops()
 {
-	//for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-	//	m_ButtonData[iIdx].ClearStartStops();
-	m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
+	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
+		m_ButtonData[iIdx].ClearStartStops();
+
+	////Test Code
+	//m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
+}
+
+void RbXBeeCommander::WaitForThreadNotifyReady()
+{
+	RobotIOControl::WaitForThreadNotifyReady();
+
+	//Give it just a bit of time to start waiting if required.
+	boost::this_thread::sleep(boost::posix_time::microseconds(10000));
 }
 
 void RbXBeeCommander::StepIO()
@@ -366,6 +413,9 @@ void RbXBeeCommander::StepIO()
 	if(!m_lpSim->Paused())
 	{
 		bool bFound = false;
+
+		////Test Code
+		//m_ButtonData[BUT_ID_WALKH].m_fltValue = 50;
 
 		while(m_Port.available() > 0 && !bFound)
 		{
@@ -404,7 +454,7 @@ void RbXBeeCommander::StepIO()
 						if((status&0x01) > 0)
 						{     // SouthPaw
 							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
-							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 2);
+							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 1);
 							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
 							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ));
 						}
@@ -413,7 +463,7 @@ void RbXBeeCommander::StepIO()
 							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
 							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ));
 							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
-							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 2);
+							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 1);
 						}
 						m_ButtonData[BUT_ID_PAN].m_fltValue = (float) ((vals[0]<<8) + vals[1]);
 						m_ButtonData[BUT_ID_TILT].m_fltValue = (float) ((vals[2]<<8) + vals[3]);
@@ -447,10 +497,10 @@ void RbXBeeCommander::StepSimulation()
 {
 	RemoteControl::StepSimulation();
 
-	int i=4;
-	if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
-		i=6;
-
+	////Test Code
+	//int i=4;
+	//if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
+	//	i=6;
 
 	ClearStartStops();
 }
@@ -462,6 +512,7 @@ void RbXBeeCommander::Load(StdUtils::CStdXml &oXml)
 	oXml.IntoElem();
 	Port(oXml.GetChildString("Port", m_strPort));
 	BaudRate(oXml.GetChildInt("BaudRate", m_iBaudRate));
+	ChangeSimStepCount(oXml.GetChildInt("ChangeSimStepCount", m_iChangeSimStepCount));
 	oXml.OutOfElem();
 }
 

@@ -300,7 +300,7 @@
 		<Unit filename="../MotorizedJoint.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../MotorVelocityStimulus.h">
+		<Unit filename="../MotorStimulus.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Mouth.h">
@@ -333,6 +333,9 @@
 		<Unit filename="../Organism.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../PassThroughLinkage.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../PhysicsNeuralModule.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -354,10 +357,19 @@
 		<Unit filename="../PropertyControlStimulus.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../PulsedLinkage.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../ReceptiveField.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../ReceptiveFieldPair.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RemoteControl.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RemoteControlLinkage.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RigidBody.h">
@@ -615,7 +627,7 @@
 		<Unit filename="../MotorizedJoint.cpp">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../MotorVelocityStimulus.cpp">
+		<Unit filename="../MotorStimulus.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../Mouth.cpp">
@@ -648,6 +660,9 @@
 		<Unit filename="../Organism.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../PassThroughLinkage.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../PhysicsNeuralModule.cpp">
 			<Option virtualFolder="." />
 		</Unit>
@@ -669,10 +684,19 @@
 		<Unit filename="../PropertyControlStimulus.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../PulsedLinkage.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../ReceptiveField.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../ReceptiveFieldPair.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RemoteControl.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RemoteControlLinkage.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RigidBody.cpp">

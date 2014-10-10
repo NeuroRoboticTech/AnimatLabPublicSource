@@ -1,3 +1,9 @@
+/**
+\file	RobotIOControl.cpp
+
+\brief	Implements the base class for Robot IO controllers.
+**/
+
 #include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -40,9 +46,16 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotIOControl::RobotIOControl(void)
 {
 	m_lpParentInterface = NULL;
+	m_bSetupStarted = false;
 	m_bSetupComplete	= false;	// flag so we setup when its ready, you don't need to touch this :)
 	m_bStopIO = false;
 	m_bIOThreadProcessing = false;
@@ -51,8 +64,16 @@ RobotIOControl::RobotIOControl(void)
 	m_iCyclePartCount = 0;
 	m_bPauseIO = false;
 	m_bIOPaused = false;
+	m_bWaitingForThreadNotify = false;
 }
 
+
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotIOControl::~RobotIOControl(void)
 {
 try
@@ -63,10 +84,34 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RobotIOControl\r\n", "", -1, false, true);}
 }
 
+/**
+\brief	Sets the parent robot interface pointer. 
+
+\author	dcofer
+\date	9/8/2014
+
+\param	lpParent	pointer to parent robot interface
+**/
 void RobotIOControl::ParentInterface(RobotInterface *lpParent) {m_lpParentInterface = lpParent;}
 
+/**
+\brief	Gets the parent robot interface pointer. 
+
+\author	dcofer
+\date	9/8/2014
+
+\return	pointer to parent robot interface. 
+**/
 RobotInterface *RobotIOControl::ParentInterface() {return m_lpParentInterface;}
 
+/**
+\brief	Gets the array of IO controls. 
+
+\author	dcofer
+\date	9/8/2014
+
+\return	pointer to array of IO controls. 
+**/
 void RobotIOControl::PauseIO(bool bVal)
 {
 	m_bPauseIO = bVal;
@@ -246,23 +291,37 @@ int RobotIOControl::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotIOControl::StartIOThread()
 {
-	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
+	int iWaitTime = 30;
+#ifdef _DEBUG
+	iWaitTime = 200;
+#endif
 
-	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(500);
+	boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() +  boost::posix_time::seconds(iWaitTime);
 
 	boost::interprocess::scoped_lock<boost::interprocess::interprocess_mutex> lock(m_WaitForIOSetupMutex);
 
+	m_bWaitingForThreadNotify = false;
+	m_ioThread = boost::thread(&RobotIOControl::ProcessIO, this);
+
 	std::cout << "Waiting for IO thread return\r\n";
+	m_bWaitingForThreadNotify = true;
 	bool bWaitRet = m_WaitForIOSetupCond.timed_wait(lock, pt);
 
 	if(!bWaitRet)
 	{
 		std::cout << "IO thread Timed out\r\n";
-		ExitIOThread();
+		ShutdownIO();
 		THROW_ERROR(Al_Err_lErrorSettingUpIOThread, Al_Err_strErrorSettingUpIOThread);
 	}
 
 	std::cout << "IO thread returned\r\n";
+}
+
+void RobotIOControl::WaitForThreadNotifyReady()
+{
+	//Wait to fire the signal until we get notification that it is waiting.
+	while(!m_bWaitingForThreadNotify)
+		boost::this_thread::sleep(boost::posix_time::microseconds(500));
 }
 
 void RobotIOControl::ProcessIO()
@@ -274,14 +333,24 @@ void RobotIOControl::ProcessIO()
 		SetupIO();
 
 		m_bSetupComplete = true;
+
+		WaitForThreadNotifyReady();
+
+		//Notify it back that we are ready.
 		m_WaitForIOSetupCond.notify_all();
 
 		while(!m_bStopIO)
 		{
 			if(m_bPauseIO || m_lpSim->Paused())
+			{
+				m_bIOPaused = true;
 				boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+			}
 			else
+			{
+				m_bIOPaused = false;
 				StepIO();
+			}
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -298,10 +367,17 @@ void RobotIOControl::ProcessIO()
 
 void RobotIOControl::ExitIOThread()
 {
+	TRACE_DEBUG("ExitIOThread.");
+
 	if(m_bIOThreadProcessing)
 	{
+		//Close the comm channel.
 		CloseIO();
+
+		//Tell the IO thread to shutdown
 		m_bStopIO = true;
+
+		TRACE_DEBUG("Joint Thread.\r\n");
 
 	bool bTryJoin = false;
 #if (BOOST_VERSION >= 105000)
@@ -309,8 +385,6 @@ void RobotIOControl::ExitIOThread()
 #else
 	m_ioThread.join();
 #endif
-
-		ShutdownIO();
 	}
 }
 
@@ -394,6 +468,19 @@ void RobotIOControl::WaitWhilePaused()
 \brief	This method is waits until the m_bIOPaused flag is set to true.
 
 \author	dcofer
+\date	9/20/2014
+
+**/
+void RobotIOControl::WaitTillPaused()
+{
+	while(!m_bIOPaused)		
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
+}
+
+/**
+\brief	This method is waits until the m_bIOPaused flag is set to true.
+
+\author	dcofer
 \date	5/12/2014
 
 **/
@@ -436,13 +523,25 @@ any required cleanup.
 **/
 void RobotIOControl::ShutdownIO()
 {
+	//Prevent any more attempts to write to the comm channel.
+	if(m_bIOThreadProcessing)
+	{
+		StartPause();
+		WaitTillPaused();
+	}
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryParts.GetSize();
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 			if(m_aryParts[iIndex]->Enabled())
+			{
+				TRACE_DEBUG("Shutting down IO: " + m_aryParts[iIndex]->Name());
 				m_aryParts[iIndex]->ShutdownIO();
+			}
 	}
+
+	ExitIOThread();
 }
 
 void RobotIOControl::Initialize()
@@ -465,6 +564,8 @@ void RobotIOControl::Initialize()
 
 void RobotIOControl::ResetSimulation()
 {
+	AnimatBase::ResetSimulation();
+
 	if(m_bEnabled)
 	{
 		m_iCyclePartIdx = 0;
@@ -476,6 +577,8 @@ void RobotIOControl::ResetSimulation()
 
 void RobotIOControl::AfterResetSimulation()
 {
+	AnimatBase::AfterResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryParts.GetSize();
@@ -486,7 +589,9 @@ void RobotIOControl::AfterResetSimulation()
 
 void RobotIOControl::SimStopping()
 {
-	ExitIOThread();
+	AnimatBase::SimStopping();
+
+	ShutdownIO();
 }
 
 void RobotIOControl::StepSimulation()

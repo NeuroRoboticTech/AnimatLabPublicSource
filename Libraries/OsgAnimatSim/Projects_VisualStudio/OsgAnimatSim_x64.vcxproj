@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{04450129-7C42-BC4E-A327-07BF17C4A315}</ProjectGuid>
+		<ProjectGuid>{16F1B7D6-8AD2-8F49-897F-8573B1C6A7EA}</ProjectGuid>
 		<RootNamespace>OsgAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -218,6 +218,7 @@
 	<ItemGroup>
 		<ClInclude Include="..\OsgAttachment.h" />
 		<ClInclude Include="..\OsgBody.h" />
+		<ClInclude Include="..\OsgCalculateBoundingBox.h" />
 		<ClInclude Include="..\OsgCameraManipulator.h" />
 		<ClInclude Include="..\OsgDragger.h" />
 		<ClInclude Include="..\OsgDraggerHandler.h" />

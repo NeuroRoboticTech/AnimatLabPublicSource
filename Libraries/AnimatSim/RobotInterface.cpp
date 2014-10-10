@@ -1,3 +1,9 @@
+/**
+\file	RobotInterface.cpp
+
+\brief	Base class for the robotics interface for AnimatLab.
+**/
+
 #include "StdAfx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -41,12 +47,24 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotInterface::RobotInterface(void)
 {
 	m_bSynchSim = true;
 	m_fltPhysicsTimeStep = 0.02f;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	9/8/2014
+**/
 RobotInterface::~RobotInterface(void)
 {
 
@@ -247,6 +265,9 @@ void RobotInterface::RemoveIOControl(std::string strID, bool bThrowError)
 
     RobotIOControl *lpControl = m_aryIOControls[iPos];
 
+	if(lpControl)
+		lpControl->ShutdownIO();
+
 	m_aryIOControls.RemoveAt(iPos);
 }
 
@@ -283,6 +304,8 @@ int RobotInterface::FindChildListPos(std::string strID, bool bThrowError)
 
 void RobotInterface::Initialize()
 {
+	AnimatBase::Initialize();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();
@@ -293,6 +316,8 @@ void RobotInterface::Initialize()
 
 void RobotInterface::ResetSimulation()
 {
+	AnimatBase::ResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();
@@ -303,6 +328,8 @@ void RobotInterface::ResetSimulation()
 
 void RobotInterface::AfterResetSimulation()
 {
+	AnimatBase::AfterResetSimulation();
+
 	if(m_bEnabled)
 	{
 		int iCount = m_aryIOControls.GetSize();

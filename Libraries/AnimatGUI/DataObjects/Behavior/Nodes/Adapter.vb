@@ -261,7 +261,7 @@ Namespace DataObjects.Behavior.Nodes
         <Browsable(False)> _
         Public Overrides ReadOnly Property AllowTemplateNode() As Boolean
             Get
-                Return True
+                Return False
             End Get
         End Property
 
@@ -376,7 +376,10 @@ Namespace DataObjects.Behavior.Nodes
             'If this is the Origin then get the destination from the other end
             If blLink.ActualOrigin Is Me Then
                 SetDestination(blLink.Destination, False)
-                Me.m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                If Not m_bnDestination.IncomingDataTypes Is Nothing AndAlso m_bnDestination.IncomingDataTypes.ID.Trim.Length > 0 Then
+                    Me.m_thTargetDataTypes = DirectCast(m_bnDestination.IncomingDataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+                End If
 
                 If Not blLink.ActualDestination Is Nothing AndAlso blLink.ActualDestination.IsSensorOrMotor Then
                     Me.m_bSynchWithRobot = True
@@ -584,8 +587,8 @@ Namespace DataObjects.Behavior.Nodes
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
                     Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError, bDoNotInit)
                 End If
+                InitializeSimulationReferences()
             End If
-            InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
@@ -661,6 +664,10 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub InitializeAfterLoad()
 
+            If Me.ID.ToLower = "507b20a7-8084-4ea5-acad-cce3369a1485" Then
+                Dim i As Integer = 5
+            End If
+
             Try
                 If m_bnOrigin Is Nothing Then
                     If m_strOriginID.Trim.Length > 0 Then
@@ -698,9 +705,11 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
 
-                If Me.m_thTargetDataTypes Is Nothing OrElse Me.m_thTargetDataTypes.ID.Trim.Length = 0 Then
-                    m_bIsInitialized = False
-                    Return
+                If Not (Not m_bnDestination Is Nothing AndAlso m_bnDestination.IncomingDataTypes Is Nothing AndAlso m_bnDestination.IsInitialized) Then
+                    If Me.m_thTargetDataTypes Is Nothing OrElse Me.m_thTargetDataTypes.ID.Trim.Length = 0 Then
+                        m_bIsInitialized = False
+                        Return
+                    End If
                 End If
 
                 MyBase.InitializeAfterLoad()
@@ -772,6 +781,13 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             ConnectDestinationEvents()
+        End Sub
+
+        Public Overrides Sub BeforeRemoveLink(ByVal blLink As Behavior.Link)
+            If Not blLink Is Nothing Then
+                DisconnectOriginEvents()
+                DisconnectDestinationEvents()
+            End If
         End Sub
 
         Protected Sub ConnectDestinationEvents()
@@ -909,6 +925,16 @@ Namespace DataObjects.Behavior.Nodes
                 If m_bIsInitialized AndAlso Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
                     SetDestination(blLink.Destination, True)
                 End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnBeforeParentRemoveFromList(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                DisconnectOriginEvents()
+                DisconnectDestinationEvents()
+                MyBase.OnBeforeParentRemoveFromList(doObject)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

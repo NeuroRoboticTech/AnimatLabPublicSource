@@ -1,5 +1,5 @@
 /**
-\file	MotorVelocityStimulus.cpp
+\file	MotorStimulus.cpp
 
 \brief	Implements the vs motor velocity stimulus class.
 **/
@@ -43,7 +43,7 @@
 #include "LightManager.h"
 #include "Simulator.h"
 
-#include "MotorVelocityStimulus.h"
+#include "MotorStimulus.h"
 
 namespace AnimatSim
 {
@@ -55,15 +55,16 @@ namespace AnimatSim
 \author	dcofer
 \date	4/3/2011
 **/
-MotorVelocityStimulus::MotorVelocityStimulus()
+MotorStimulus::MotorStimulus()
 {
 	m_lpJoint = NULL;
 	m_lpEval = NULL;
-	m_fltVelocity = 0;
-	m_fltVelocityReport = 0;
+	m_fltValue = 0;
+	m_fltValueReport = 0;
 	m_bDisableMotorWhenDone = false;
 	m_lpPosition = NULL;
 	m_lpVelocity = NULL;
+	m_iTargetID = DESIRED_VELOCITY_TYPE;
 }
 
 /**
@@ -72,7 +73,7 @@ MotorVelocityStimulus::MotorVelocityStimulus()
 \author	dcofer
 \date	4/3/2011
 **/
-MotorVelocityStimulus::~MotorVelocityStimulus()
+MotorStimulus::~MotorStimulus()
 {
 
 try
@@ -81,7 +82,7 @@ try
 	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of MotorVelocityStimulus\r\n", "", -1, false, true);}
+{Std_TraceMsg(0, "Caught Error in desctructor of MotorStimulus\r\n", "", -1, false, true);}
 }
 
 /**
@@ -92,30 +93,50 @@ catch(...)
 
 \param	strVal	The post-fix velocity equation string. 
 **/
-void MotorVelocityStimulus::VelocityEquation(std::string strVal)
+void MotorStimulus::Equation(std::string strVal)
 {
 	//Initialize the postfix evaluator.
 	if(m_lpEval) 
 	{delete m_lpEval; m_lpEval = NULL;}
 
-	m_strVelocityEquation = strVal;
+	m_strEquation = strVal;
 	m_lpEval = new CStdPostFixEval;
 
 	m_lpEval->AddVariable("t");
 	m_lpEval->AddVariable("p");
 	m_lpEval->AddVariable("v");
-	m_lpEval->Equation(m_strVelocityEquation);
+	m_lpEval->Equation(m_strEquation);
 }
 
-void MotorVelocityStimulus::ResetSimulation()
+void MotorStimulus::TargetID(int iID) 
+{
+	if(iID == DESIRED_VELOCITY_TYPE || iID == DESIRED_POSITION_TYPE)
+		m_iTargetID = iID;
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidTargetID, Al_Err_strInvalidTargetID, "ID", iID);
+}
+
+void MotorStimulus::TargetID(std::string strID)
+{
+	std::string strId = Std_CheckString(strID);
+
+	if(strId == "VELOCITY")
+		m_iTargetID = DESIRED_VELOCITY_TYPE;
+	else if(strId == "POSITION")
+		m_iTargetID = DESIRED_POSITION_TYPE;
+	else
+		THROW_PARAM_ERROR(Al_Err_lInvalidTargetID, Al_Err_strInvalidTargetID, "ID", strID);
+}
+
+void MotorStimulus::ResetSimulation()
 {
 	ExternalStimulus::ResetSimulation();
 
-	m_fltVelocity = 0;
-	m_fltVelocityReport = 0;
+	m_fltValue = 0;
+	m_fltValueReport = 0;
 }
 
-void MotorVelocityStimulus::Initialize()
+void MotorStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
@@ -128,7 +149,7 @@ void MotorVelocityStimulus::Initialize()
 	m_lpVelocity = m_lpJoint->GetDataPointer("JOINTACTUALVELOCITY");
 }
 
-void MotorVelocityStimulus::Activate()
+void MotorStimulus::Activate()
 {
 	ExternalStimulus::Activate();
 
@@ -139,12 +160,14 @@ void MotorVelocityStimulus::Activate()
 	if(m_bEnabled)
 	{
 		m_lpJoint->EnableMotor(true);
-		m_lpJoint->DesiredVelocity(0);
+
+		if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+			m_lpJoint->DesiredVelocity(0);
 	}
 }
 
 
-void MotorVelocityStimulus::StepSimulation()
+void MotorStimulus::StepSimulation()
 {
 	//float fltVel=0;
 	//int iTest = 0;
@@ -169,13 +192,16 @@ void MotorVelocityStimulus::StepSimulation()
 				if(m_lpVelocity)
 					m_lpEval->SetVariable("v", *m_lpVelocity);
 
-				m_fltVelocityReport = m_fltVelocity = m_lpEval->Solve();
+				m_fltValueReport = m_fltValue = m_lpEval->Solve();
 				//fltVel = -sin(6.28*(m_lpSim->Time()-m_fltStartTime));
 
 				if(!m_lpJoint->UsesRadians())
-					m_fltVelocity *= m_lpSim->InverseDistanceUnits();
+					m_fltValue *= m_lpSim->InverseDistanceUnits();
 
-				m_lpJoint->DesiredVelocity(m_fltVelocity);
+				if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+					m_lpJoint->DesiredVelocity(m_fltValue);
+				else if(m_iTargetID == DESIRED_POSITION_TYPE)
+					m_lpJoint->DesiredPosition(m_fltValue);
 			}
 		}
 	}
@@ -186,32 +212,34 @@ void MotorVelocityStimulus::StepSimulation()
 }
 
 
-void MotorVelocityStimulus::Deactivate()
+void MotorStimulus::Deactivate()
 {
 	ExternalStimulus::Deactivate();
 
 	if(m_bEnabled)
 	{
-		m_lpJoint->DesiredVelocity(0);
+		if(m_iTargetID == DESIRED_VELOCITY_TYPE)
+			m_lpJoint->DesiredVelocity(0);
+
 		if(m_bDisableMotorWhenDone)
 			m_lpJoint->EnableMotor(false);
 	}
 }
 
-float *MotorVelocityStimulus::GetDataPointer(const std::string &strDataType)
+float *MotorStimulus::GetDataPointer(const std::string &strDataType)
 {
 	float *lpData=NULL;
 	std::string strType = Std_CheckString(strDataType);
 
-	if(strType == "VELOCITY")
-		lpData = &m_fltVelocityReport;
+	if(strType == "VELOCITY" || strType == "VALUE")
+		lpData = &m_fltValueReport;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "StimulusName: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	return lpData;
 } 
 
-bool MotorVelocityStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+bool MotorStimulus::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
 
@@ -220,13 +248,19 @@ bool MotorVelocityStimulus::SetData(const std::string &strDataType, const std::s
 
 	if(strType == "VELOCITY" || strType == "EQUATION")
 	{
-		VelocityEquation(strValue);
+		Equation(strValue);
 		return true;
 	}
 
 	if(strType == "DISABLEWHENDONE")
 	{
 		DisableMotorWhenDone(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "TARGETID")
+	{
+		TargetID(strValue);
 		return true;
 	}
 
@@ -237,16 +271,18 @@ bool MotorVelocityStimulus::SetData(const std::string &strDataType, const std::s
 	return false;
 }
 
-void MotorVelocityStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+void MotorStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
 	ExternalStimulus::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("Velocity", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
+	aryProperties.Add(new TypeProperty("Value", AnimatPropertyType::Float, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("DisableMotorWhenDone", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TargetID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
-void MotorVelocityStimulus::Load(CStdXml &oXml)
+void MotorStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);
 
@@ -260,8 +296,13 @@ void MotorVelocityStimulus::Load(CStdXml &oXml)
 	if(Std_IsBlank(m_strStructureID)) 
 		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
 
-	VelocityEquation(oXml.GetChildString("Velocity"));
+	if(oXml.FindChildElement("Velocity", false))
+		Equation(oXml.GetChildString("Velocity"));
+	else
+		Equation(oXml.GetChildString("Equation"));
+
 	DisableMotorWhenDone(oXml.GetChildBool("DisableMotorWhenDone", m_bDisableMotorWhenDone));
+	TargetID(oXml.GetChildString("TargetID", "Velocity"));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 }

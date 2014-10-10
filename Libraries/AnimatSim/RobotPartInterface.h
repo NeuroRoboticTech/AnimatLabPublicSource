@@ -31,6 +31,10 @@ namespace AnimatSim
 			///This stores the temporary IO value to be used later in IO calculations. 
 			int m_iIOValue;
 
+			///This is a generic variable that keeps track of the data that was sent/received AFTER it has been scled
+			///using the gain function.
+			float m_fltIOScaledValue;
+
 			///True when the value changes.
 			bool m_bChanged;
 
@@ -56,6 +60,9 @@ namespace AnimatSim
 			
 			virtual int IOValueInt();
 			virtual void IOValueInt(int iVal);
+			
+			virtual float IOScaledValue();
+			virtual void IOScaledValue(float fltVal);
 			
 			virtual bool Changed();
 			virtual void Changed(bool bVal);

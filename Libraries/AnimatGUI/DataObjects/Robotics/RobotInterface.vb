@@ -262,7 +262,10 @@ Namespace DataObjects
                     End If
 
                     Util.Application.AppIsBusy = True
+                    Me.SignalBeforeRemoveItem(Me)
                     Me.RemoveFromSim(True)
+                    Me.SignalAfterRemoveItem(Me)
+
                     m_doOrganism.RobotInterface = Nothing
                     Me.RemoveWorksapceTreeView()
                     If Not Me.Parent Is Nothing Then Me.Parent.IsDirty = True
@@ -289,7 +292,7 @@ Namespace DataObjects
                                             "Properties", "Determines whether or not the IO update of the simulation is synched with the time step of the robot.", m_bSynchSim))
 
                 Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Robot Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                             "Properties", "Overrides the physics step set in the simulation for the robot. " & _
                                             "This allows you to set a different physics time step for the robotic simulation.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
@@ -428,6 +431,10 @@ Namespace DataObjects
                         Dim doIOControl As Robotics.RobotIOControl = DirectCast(frmSelInterface.Selected.Clone(Me, False, Nothing), Robotics.RobotIOControl)
                         doIOControl.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
                         m_aryIOControls.Add(doIOControl.ID, doIOControl)
+
+                        If Not doIOControl.WorkspaceNode Is Nothing Then
+                            doIOControl.SelectItem()
+                        End If
                     End If
 
                 Catch ex As System.Exception

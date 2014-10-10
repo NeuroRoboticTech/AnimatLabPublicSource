@@ -145,6 +145,7 @@ void Mouth::Initialize()
 
 void Mouth::ResetSimulation()
 {
+	Sensor::ResetSimulation();
 	m_fltEatingRate = 0;
 }
 

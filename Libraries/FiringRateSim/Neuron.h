@@ -144,10 +144,6 @@ namespace FiringRateSim
 
 			Synapse *LoadSynapse(CStdXml &oXml);
 
-			virtual void SetupTemplateNodes();
-			virtual void DestroyTemplateNodes();
-			virtual void TemplateNodeChanged();
-					
 		public:
 			Neuron();
 			virtual ~Neuron();

@@ -72,6 +72,12 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
+        Public Overrides ReadOnly Property IsMotorized() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overridable Property EnableMotor() As Boolean
             Get
                 Return m_bEnableMotor
@@ -82,8 +88,7 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-
-        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
+        Public Overrides Property MotorType() As Joint.enumJointMotorTypes
             Get
                 Return m_eMotorType
             End Get
@@ -162,16 +167,6 @@ Namespace DataObjects.Physical.Joints
             End Get
         End Property
 
-        Public Overrides ReadOnly Property InputStimulus() As String
-            Get
-                If m_eMotorType = enumJointMotorTypes.PositionControl OrElse m_eMotorType = enumJointMotorTypes.PositionVelocityControl Then
-                    Return "Position"
-                Else
-                    Return MyBase.InputStimulus
-                End If
-            End Get
-        End Property
-
         Public Overridable Property AssistPID() As PidControl
             Get
                 Return m_doAssistPID
@@ -231,7 +226,7 @@ Namespace DataObjects.Physical.Joints
             End If
 
             m_doAssistPID = New PidControl(Me)
-            m_doAssistPID.Enabled = False
+            m_doAssistPID.Enabled = True
 
             If Util.Application.Physics.GenerateMotorAssist Then
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MotorAssistForceToAX", "Motor Assist Force Applied to Body A, X Axis", "Newtons", "N", -10, 10))
@@ -262,6 +257,7 @@ Namespace DataObjects.Physical.Joints
         Public Overrides Sub InitAfterAppStart()
             MyBase.InitAfterAppStart()
             AddCompatibleStimulusType("MotorVelocity")
+            AddCompatibleStimulusType("MotorPosition")
             AddCompatibleStimulusType("PositionClamp")
         End Sub
 

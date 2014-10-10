@@ -47,7 +47,10 @@ void VsMotorizedJoint::CalculateServoVelocity()
 		return;
 
 	float fltTargetPos = m_lpThisJoint->GetPositionWithinLimits(m_lpThisMotorJoint->DesiredPosition());
-	float fltError = fltTargetPos - m_lpThisJoint->JointPosition();
+	//For calculating the error we need to get the actual current position of the joint, not the value that was obtained last
+	//time it called CollectData. If the motor is being synched with the robot for sim then this could be delayed. However, in the
+	//real system this type of error correction would be taking place within the actual servo's motor loop.
+	float fltError = fltTargetPos - GetCurrentVxJointPos();
 	m_lpThisMotorJoint->SetPosition(fltTargetPos);
 
 	////Test Code
@@ -55,12 +58,13 @@ void VsMotorizedJoint::CalculateServoVelocity()
 	//if(m_lpThisMotorJoint->ID() == "0085EE18-89F7-4039-8648-EC51114BEEFF" && GetSimulator()->Time() >= 0.5 && fabs(fltTargetPos) > 0)
 	//	i=6;
 
-	if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl || (m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionVelocityControl && m_lpThisMotorJoint->ReachedSetPosition()) )
+	AnimatSim::Environment::eJointMotorType MotorType = m_lpThisMotorJoint->MotorType();
+	if((MotorType == eJointMotorType::PositionControl || MotorType == eJointMotorType::PositionVelocityControl) && m_lpThisMotorJoint->ReachedSetPosition() )
 	{
 		//Lock this joint position.
 		m_lpThisMotorJoint->DesiredVelocity(0); 
 	}
-	else
+	else if(MotorType == eJointMotorType::PositionVelocityControl)
 	{
 		//If we set the desired velocity and position then make sure the desired velocity is in the right direction
 		float fltDesiredVel = fabs(m_lpThisMotorJoint->DesiredVelocity()) * Std_Sign(fltError);
@@ -78,6 +82,16 @@ void VsMotorizedJoint::CalculateServoVelocity()
 
 		if(fabs(fltError) < 1e-4)
 			m_lpThisMotorJoint->ReachedSetPosition(true);
+	}
+	else if(MotorType == eJointMotorType::PositionControl)
+	{
+		if(m_lpThisJoint->EnableLimits())
+		{
+			float fltProp = fltError / m_lpThisJoint->GetLimitRange();
+			m_lpThisMotorJoint->DesiredVelocity(fltProp * m_lpThisMotorJoint->ServoGain()); 
+		}
+		else
+			m_lpThisMotorJoint->DesiredVelocity(fltError * m_lpThisMotorJoint->MaxVelocity());	
 	}
 }
 
