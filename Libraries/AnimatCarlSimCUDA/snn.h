@@ -172,11 +172,14 @@ inline bool isInhibitoryNeuron (unsigned int& nid, unsigned int& numNInhPois, un
 #define GET_FIRING_TABLE_NID(val)   ((val) & MAX_NUMBER_OF_NEURONS_MASK)
 #define GET_FIRING_TABLE_GID(val)   (((val) >> MAX_NUMBER_OF_NEURONS_BITS) & MAX_NUMBER_OF_GROUPS_MASK)
 
-//!< Used for in the function getConnectionId
-#define CHECK_CONNECTION_ID(n,total) { assert(n >= 0); assert(n < total); }
-
 ///Use exceptions instead of exiting.
 #define USE_EXCEPTIONS 1
+
+#ifdef USE_EXCEPTIONS
+#define carlsim_assert(pred) {if(!(pred)) throw std::exception("Assert triggered.\n");}
+#else
+#define carlsim_assert(pred) assert(pred)
+#endif
 
 //Various callback functions
 
@@ -739,7 +742,7 @@ class CpuSNN
   void setTuningLog(string fname)
   {
     fpTuningLog = fopen(fname.c_str(), "w");
-    assert(fpTuningLog != NULL);
+    carlsim_assert(fpTuningLog != NULL);
   }
 
   //! sets the update cycle for log messages
@@ -864,11 +867,11 @@ class CpuSNN
     //! do check to make sure appropriate flag is set
     if(simType == GPU_MODE && enableGPUSpikeCntPtr == false){
       fprintf(stderr,"Error: the enableGPUSpikeCntPtr flag must be set to true to use this function in GPU_MODE.\n");
-      assert(enableGPUSpikeCntPtr);
+      carlsim_assert(enableGPUSpikeCntPtr);
     }
     
     if(simType == GPU_MODE){
-      assert(enableGPUSpikeCntPtr);
+      carlsim_assert(enableGPUSpikeCntPtr);
     }
     
     return ((grpId == -1) ? nSpikeCnt : &nSpikeCnt[grp_Info[grpId].StartN]);
