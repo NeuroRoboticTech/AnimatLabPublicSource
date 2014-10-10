@@ -4,6 +4,8 @@
 
 #include "StdAfx.h"
 #include <stdarg.h>
+#include <osgUtil/Version>
+
 #include "OsgMovableItem.h"
 #include "OsgOrganism.h"
 #include "OsgStructure.h"
@@ -160,7 +162,9 @@ void OsgSimulator::WriteToConsole(std::string strMessage)
 void OsgSimulator::Initialize(int argc, const char **argv)
 {
 #ifndef WIN32
-	osgDB::setLibraryFilePathList("/usr/lib/osgPlugins-3.0.1");
+    std::string strVersion = osgUtilGetVersion();
+    strVersion = "/usr/lib/osgPlugins-" + strVersion;
+	osgDB::setLibraryFilePathList(strVersion);
 #endif
 
 	InitializeStructures();
