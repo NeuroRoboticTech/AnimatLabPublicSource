@@ -179,7 +179,10 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 	bool bRetrieved=false, bFound = false;
 
     if(argc != 2)
+    {
         ShowErrorText();
+        return -1;
+    }
 
     std::string strSimFile = argv[1];
     std::string strRunLibrary = "";

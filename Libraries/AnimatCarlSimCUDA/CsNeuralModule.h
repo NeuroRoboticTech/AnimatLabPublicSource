@@ -51,7 +51,18 @@ namespace AnimatCarlSim
 		///The mode of the simulation. GPU vs CPU
 		int m_iSimMode;
 
+		///Determines how many 1 ms time steps are taken by the neural simulation before it
+		///updates monitors and synchronizes with the physics simulation.
 		unsigned int m_uiUpdateSteps;
+
+		///The current time of the neural simulation
+		float m_fltNeuralTime;
+
+		///True if the neural simulation has finished and is waiting on the physics sim to catch up.
+		bool m_bWaitingForPhysicsToCatchUp;
+
+		///True if the physics simulation has finished and is waiting on the neural sim to catch up.
+		bool m_bWaitingForNeuralToCatchUp;
 
 		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
@@ -61,6 +72,9 @@ namespace AnimatCarlSim
 		virtual void CloseThread();
 
 		virtual void SetCARLSimulation();
+
+		virtual void WaitForPhysicsToCatchUp();
+		virtual void WaitForNeuralToCatchUp();
 
 	public:
 		CsNeuralModule();
@@ -86,8 +100,6 @@ namespace AnimatCarlSim
 
 		virtual void UpdateSteps(unsigned int uiVal);
 		virtual unsigned int UpdateSteps();
-
-		virtual void TimeStep(float fltVal);
 
 		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
 		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);

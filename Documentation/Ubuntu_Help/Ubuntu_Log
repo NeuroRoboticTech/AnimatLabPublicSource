@@ -526,4 +526,12 @@ Build AnimatSimulator
    ./animatsimulator /media/Ubuntu_Data/AnimatLabSDK/AnimatLabPublicSource/Tutorials/Examples/StandAloneSimTest/Bullet_Double_Linux.asim
 
 
+Python setup
+python-all-dbg
+python-all-dev
+
+to start python debug
+> python2.7-dbg
+
+
 

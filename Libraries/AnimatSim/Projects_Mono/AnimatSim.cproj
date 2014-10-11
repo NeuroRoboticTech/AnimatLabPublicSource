@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6C6AA8CF-5548-1149-891E-17A9DC9087EF}</ProjectGuid>
+    <ProjectGuid>{171E43DB-723A-E04B-AAB2-7CD8AAFC4A98}</ProjectGuid>
     <Target>Bin</Target>
     <Language>CPP</Language>
     <Compiler>
@@ -35,6 +35,7 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
         <Lib>StdUtils_debug</Lib>
       </Libs>
     </Libs>
@@ -67,6 +68,7 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
         <Lib>StdUtils</Lib>
       </Libs>
     </Libs>
@@ -99,6 +101,7 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
         <Lib>StdUtils_debug</Lib>
       </Libs>
     </Libs>
@@ -131,6 +134,7 @@
       <Libs>
         <Lib>dl</Lib>
         <Lib>boost_thread</Lib>
+        <Lib>boost_chrono</Lib>
         <Lib>StdUtils</Lib>
       </Libs>
     </Libs>
@@ -458,6 +462,9 @@
     </None>
     <None Include="..\ThreadProcessor.h">
       <Link>ThreadProcessor.h</Link>
+    </None>
+    <None Include="..\ThreadedModule.h">
+      <Link>ThreadedModule.h</Link>
     </None>
     <None Include="..\Torus.h">
       <Link>Torus.h</Link>
@@ -787,6 +794,9 @@
     </Compile>
     <Compile Include="..\ThreadProcessor.cpp">
       <Link>ThreadProcessor.cpp</Link>
+    </Compile>
+    <Compile Include="..\ThreadedModule.cpp">
+      <Link>ThreadedModule.cpp</Link>
     </Compile>
     <Compile Include="..\Torus.cpp">
       <Link>Torus.cpp</Link>
