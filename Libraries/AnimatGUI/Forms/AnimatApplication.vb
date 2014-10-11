@@ -2023,7 +2023,7 @@ Namespace Forms
 
             If Not m_auBackup Is Nothing Then
                 m_bAnnouceUpdates = bAnnouceUpdates
-                m_auBackup.ForceCheckForUpdate()
+                m_auBackup.ForceCheckForUpdate(True)
 
                 m_dtLastAutoUpdateTime = Now
                 Util.SaveUserConfigData()
