@@ -9,6 +9,8 @@
 #include "CsNeuralModule.h"
 #include "CsClassFactory.h"
 
+#define CARLSIM_STEP_INCREMENT 0.001
+
 namespace AnimatCarlSim
 {
 /**
@@ -24,6 +26,9 @@ CsNeuralModule::CsNeuralModule()
 	m_iSimMode = GPU_MODE;
 	m_uiUpdateSteps = 10;
 	m_fltTimeStep = 0.001f;
+	m_bWaitingForPhysicsToCatchUp = false;
+	m_bWaitingForNeuralToCatchUp = false;
+	m_fltNeuralTime = 0;
 }
 
 /**
@@ -57,14 +62,14 @@ void CsNeuralModule::SimMode(int iMode)
 int CsNeuralModule::SimMode() {return m_iSimMode;}
 
 
-void CsNeuralModule::UpdateSteps(unsigned int uiVal) {m_uiUpdateSteps = uiVal;};
+void CsNeuralModule::UpdateSteps(unsigned int uiVal) 
+{
+	Std_IsAboveMin((int) 0, uiVal, true, "UpdateSteps", true);
+	m_uiUpdateSteps = uiVal;
+	TimeStep(m_uiUpdateSteps*CARLSIM_STEP_INCREMENT);
+};
 
 unsigned int CsNeuralModule::UpdateSteps() {return m_uiUpdateSteps;};
-
-void CsNeuralModule::TimeStep(float fltVal)
-{
-	///Do not allow them to change the time step. It is ALWAYS 1 ms for CarlSim.
-}
 
 /**
 \brief	Searches for an item with the specified ID and sets its index in the array. 
@@ -197,8 +202,48 @@ bool CsNeuralModule::stepUpdate(CpuSNN* s, int step)
 
 void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
 {
-	int i = 5;
-	i=10;
+	//If stop threads has been set then just exit out of here.
+	if(m_bStopThread)
+		return;
+
+	m_fltNeuralTime = (float) ((step+1)*CARLSIM_STEP_INCREMENT);
+	if(!m_bWaitingForNeuralToCatchUp && m_lpSim->Time() < m_fltNeuralTime)
+		WaitForPhysicsToCatchUp();
+}
+
+void CsNeuralModule::WaitForPhysicsToCatchUp()
+{
+	m_bWaitingForPhysicsToCatchUp = true;
+
+	while(m_lpSim->Time() <= m_fltNeuralTime)
+	{
+		if(m_bStopThread || m_bWaitingForNeuralToCatchUp)
+			return;
+	}
+
+	m_bWaitingForPhysicsToCatchUp = false;
+
+	//std::string strMessage = "P:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
+	//OutputDebugString(strMessage.c_str());
+	//std::cout << "Neural: " << m_fltNeuralTime << ", Physics: " << m_lpSim->Time() << "\r\n";
+}
+
+
+void CsNeuralModule::WaitForNeuralToCatchUp()
+{
+	m_bWaitingForNeuralToCatchUp = true;
+
+	while(m_fltNeuralTime <= m_lpSim->Time())
+	{
+		if(m_bStopThread || m_bWaitingForPhysicsToCatchUp)
+			return;
+	}
+
+	m_bWaitingForNeuralToCatchUp = false;
+
+	//std::string strMessage = "N:: Neural: " + STR(m_fltNeuralTime) + ", Physics: " + STR(m_lpSim->Time()) + "\r\n";
+	//OutputDebugString(strMessage.c_str());
+	//std::cout << "Neural: " << m_fltNeuralTime << ", Physics: " << m_lpSim->Time() << "\r\n";
 }
 
 void CsNeuralModule::StepThread()
@@ -209,6 +254,9 @@ void CsNeuralModule::StepThread()
 
 void CsNeuralModule::CloseThread()
 {
+		m_bWaitingForPhysicsToCatchUp = false;
+	m_bWaitingForNeuralToCatchUp = false;
+
 }
 
 /**
@@ -227,14 +275,21 @@ void CsNeuralModule::SimStarting()
 	//Do not do this again if the thread is already running. For example, if we pause the sim and hit play again.
 	if(!m_bThreadProcessing)
 	{
-		SetCARLSimulation();
-		StartThread();
+		//Only bother running the simulation if there are some synpases in it.
+		if(m_arySynapses.size() > 0)
+		{
+			SetCARLSimulation();
+			StartThread();
+		}
 	}
 }
 
 void CsNeuralModule::ResetSimulation()
 {
 	NeuralModule::ResetSimulation();
+
+	m_fltNeuralTime = 0;
+
 	ShutdownThread();
 
 	int iCount = m_aryNeurons.GetSize();
@@ -255,6 +310,11 @@ void CsNeuralModule::Initialize()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->Initialize();
+
+	iCount = m_arySynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_arySynapses[iIndex])
+			m_arySynapses[iIndex]->Initialize();
 }
 
 void CsNeuralModule::StepSimulation()
@@ -265,6 +325,9 @@ void CsNeuralModule::StepSimulation()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->StepSimulation();
+
+	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
+		WaitForNeuralToCatchUp();
 }
 
 #pragma region DataAccesMethods
@@ -562,9 +625,6 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 	Name(oXml.GetChildString("Name", m_strName));
 	SimMode(oXml.GetChildInt("SimMode", m_iSimMode));
 	UpdateSteps(oXml.GetChildInt("UpdateSteps", m_uiUpdateSteps));
-
-	///The time step for carl sim model is always 1 ms.
-	m_fltTimeStep = 0.001f;
 
 	//This will add this object to the object list of the simulation.
 	m_lpSim->AddToObjectList(this);

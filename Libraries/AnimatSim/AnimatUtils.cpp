@@ -11,7 +11,7 @@ namespace AnimatSim
 	//float ANIMAT_PORT EvalGraph(unsigned char iGraphType, float fltA, float fltB, float fltC, float fltD, float fltQty)
 	//{
 	//	float fltVal=0;
-	//	
+	//
 
 	//	switch(iGraphType)
 	//	{
@@ -20,11 +20,11 @@ namespace AnimatSim
 	//		break;
 
 	//	case BELL_GRAPH:
-	//		if(fltB) 
+	//		if(fltB)
 	//		{
 	//			fltVal = pow((float) (fltQty-fltA), (float) 2.0);
 	//			fltVal = exp(-fltC * fltVal);
-	//			fltVal = (fltB * fltVal) + fltD;	
+	//			fltVal = (fltB * fltVal) + fltD;
 	//		}
 	//		//fltVal = (fltB * exp(-fltC * pow((fltQty-fltA), 2.0))) + fltD
 
@@ -49,7 +49,7 @@ namespace AnimatSim
 	//		break;
 
 	//	}
-	//	
+	//
 	//	return fltVal;
 	//}
 
@@ -61,7 +61,13 @@ namespace AnimatSim
 		//is located in the project path.
 		std::string strPath;
 		if(!Std_IsFullPath(strFilename))
+		{
+#ifndef WIN32
+			//If we are not on a windows system then replace // slashes with
+			strFilename = Std_Replace(strFilename, "\\", "/");
+#endif
 			strPath = strProjectPath + strFilename;
+		}
 		else
 			strPath = strFilename;
 

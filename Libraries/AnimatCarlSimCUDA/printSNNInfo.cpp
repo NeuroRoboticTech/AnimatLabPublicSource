@@ -204,7 +204,13 @@ void CpuSNN::printConnectionInfo(FILE *fp)
 
 void CpuSNN::printParameters(FILE* fp)
 {
+#ifdef USE_EXCEPTIONS
+	if(fp == NULL)
+		throw std::exception("print parmaters file was not specified.\n");
+#else
   assert(fp!=NULL);
+#endif
+
   printGroupInfo(fp);
   printConnectionInfo(fp);
 }
@@ -341,7 +347,14 @@ void CpuSNN::printPostConnection(int grpId, FILE* fp)
     for(int j=0; j < Npost[i]; j++, postIds++) {
       int post_nid = GET_CONN_NEURON_ID((*postIds));
       int post_gid = GET_CONN_GRP_ID((*postIds));
+
+#ifdef USE_EXCEPTIONS
+	  if(findGrpId(post_nid) != post_gid)
+		throw std::exception("findGrpId(post_nid) != post_gid.\n");
+#else
       assert( findGrpId(post_nid) == post_gid);
+#endif
+
       if(fp) fprintf(fp, " %3d ( D=%3d, Grp=%3d) ", post_nid, tmp_SynapticDelay[offset+j], post_gid);
     }
     if(fp) fprintf(fp, "\n");
