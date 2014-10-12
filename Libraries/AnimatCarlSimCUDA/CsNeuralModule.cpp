@@ -9,8 +9,6 @@
 #include "CsNeuralModule.h"
 #include "CsClassFactory.h"
 
-#define CARLSIM_STEP_INCREMENT 0.001
-
 namespace AnimatCarlSim
 {
 /**

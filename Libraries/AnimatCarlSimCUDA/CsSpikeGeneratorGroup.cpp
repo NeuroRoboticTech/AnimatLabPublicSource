@@ -78,6 +78,9 @@ void CsSpikeGeneratorGroup::SetCARLSimulation()
 		for (int i=0; i<m_uiNeuronCount; i++)
 			m_lpSpikeRates->rates[i] = 0;
 		m_lpCsModule->SNN()->setSpikeRate(m_iGroupID, m_lpSpikeRates, m_uiRefPeriod);
+
+		//Set this up as a spike monitor.
+		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
 	}
 }
 

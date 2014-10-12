@@ -408,9 +408,9 @@ float *CsNeuronGroup::GetDataPointer(const std::string &strDataType)
 
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
-	else if(strType == "FIRINGRATE")
+	else if(strType == "GROUPFIRINGRATE")
 		return &m_fltGroupFiringRate;
-	else if(strType == "TOTALSPIKES")
+	else if(strType == "GROUPTOTALSPIKES")
 		return &m_fltGroupTotalSpikes;
 
 	return Node::GetDataPointer(strDataType);

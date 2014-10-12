@@ -4083,7 +4083,7 @@ void CpuSNN::updateSpikeMonitor()
     int monitorId = grp_Info[grpId].MonitorId;
     if(monitorId!= -1) {
 		unsigned int total_spikes = monBufferPos[monitorId];
-		float firing_rate = ((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN);
+		float firing_rate = (((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN)/((float) (monitor_update_steps*CARLSIM_STEP_INCREMENT)));
       fprintf(stderr, "Spike Monitor for Group %s has %d spikes (%f Hz)\n",grp_Info2[grpId].Name.c_str(),total_spikes,firing_rate);
 
       // call the callback function

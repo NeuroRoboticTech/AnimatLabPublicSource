@@ -69,6 +69,7 @@ using std::map;
 
 extern RNG_rand48* gpuRand48; //!< Used by all network to generate global random number
 
+#define CARLSIM_STEP_INCREMENT 0.001
 
 #define ALL -1 //!< used for the set* methods to specify all groups and/or configIds
 

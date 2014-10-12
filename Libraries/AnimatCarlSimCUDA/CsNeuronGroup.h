@@ -25,7 +25,7 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuronGroup : public AnimatSim::Node, SpikeMonitor   
+	class ANIMAT_CARL_SIM_PORT CsNeuronGroup : public AnimatSim::Node, public SpikeMonitor   
 	{
 	protected:
 		/// Pointer to parent CsNeuralModule.
