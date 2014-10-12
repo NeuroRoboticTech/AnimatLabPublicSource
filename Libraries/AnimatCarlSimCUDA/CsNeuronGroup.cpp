@@ -26,7 +26,7 @@ CsNeuronGroup::CsNeuronGroup()
 	m_bEnabled = true;
 
 	m_uiNeuronCount = 10;
-	m_iNeuronType = EXCITATORY_NEURON;
+	m_iNeuralType = EXCITATORY_NEURON;
 	m_iGroupID = -1;
 
 	m_fltA = 0.02f;
@@ -39,10 +39,10 @@ CsNeuronGroup::CsNeuronGroup()
 	m_fltStdD = 0;
 
 	m_bEnableCOBA = true;
-	m_fltT_AMPA = 5;
-	m_fltT_NMDA = 150;
-	m_fltT_GABAa = 6;
-	m_fltT_GABAb = 150;
+	m_fltTauAMPA = 5;
+	m_fltTauNMDA = 150;
+	m_fltTauGABAa = 6;
+	m_fltTauGABAb = 150;
 
 	m_fltGroupFiringRate = 0;
 	m_fltGroupTotalSpikes = 0;
@@ -67,20 +67,21 @@ catch(...)
 
 void CsNeuronGroup::NeuronCount(unsigned int iVal)
 {	
+	Std_IsAboveMin((int) 0, (int) iVal, true, "NeuronCount");
 	m_uiNeuronCount = iVal;
 }
 
 unsigned int CsNeuronGroup::NeuronCount() {return m_uiNeuronCount;}
 
-void CsNeuronGroup::NeuronType(int iVal)
+void CsNeuronGroup::NeuralType(int iVal)
 {
 	if(iVal == 0)
-		m_iNeuronType = EXCITATORY_NEURON;
+		m_iNeuralType = EXCITATORY_NEURON;
 	else
-		m_iNeuronType = INHIBITORY_NEURON;
+		m_iNeuralType = INHIBITORY_NEURON;
 }
 
-int CsNeuronGroup::NeuronType() {return m_iNeuronType;}
+int CsNeuronGroup::NeuralType() {return m_iNeuralType;}
 
 void CsNeuronGroup::GroupID(int iVal)
 {
@@ -128,21 +129,38 @@ void CsNeuronGroup::EnableCOBA(bool bVal) {m_bEnableCOBA = bVal;}
 
 bool CsNeuronGroup::EnableCOBA() {return m_bEnableCOBA;}
 
-void CsNeuronGroup::T_AMPA(float fltVal) {m_fltT_AMPA = fltVal;}
+void CsNeuronGroup::TauAMPA(float fltVal) {m_fltTauAMPA = fltVal;}
 
-float CsNeuronGroup::T_AMPA() {return m_fltT_AMPA;}
+float CsNeuronGroup::TauAMPA() {return m_fltTauAMPA;}
 
-void CsNeuronGroup::T_NMDA(float fltVal) {m_fltT_NMDA = fltVal;}
+void CsNeuronGroup::TauNMDA(float fltVal) {m_fltTauNMDA = fltVal;}
 
-float CsNeuronGroup::T_NMDA() {return m_fltT_NMDA;}
+float CsNeuronGroup::TauNMDA() {return m_fltTauNMDA;}
 
-void CsNeuronGroup::T_GABAa(float fltVal) {m_fltT_GABAa = fltVal;}
+void CsNeuronGroup::TauGABAa(float fltVal) {m_fltTauGABAa = fltVal;}
 
-float CsNeuronGroup::T_GABAa() {return m_fltT_GABAa;}
+float CsNeuronGroup::TauGABAa() {return m_fltTauGABAa;}
 
-void CsNeuronGroup::T_GABAb(float fltVal) {m_fltT_GABAb = fltVal;}
+void CsNeuronGroup::TauGABAb(float fltVal) {m_fltTauGABAb = fltVal;}
 
-float CsNeuronGroup::T_GABAb() {return m_fltT_GABAb;}
+float CsNeuronGroup::TauGABAb() {return m_fltTauGABAb;}
+
+void CsNeuronGroup::AddCollectSpikeDataForNeuron(int iIdx)
+{
+	if(!CollectingSpikeDataForNeuron(iIdx))
+		m_aryCollectSpikeData.Add(iIdx, 1);
+}
+
+void CsNeuronGroup::RemoveCollectSpikeDataForNeuron(int iIdx)
+{
+	if(CollectingSpikeDataForNeuron(iIdx))
+		m_aryCollectSpikeData.Remove(iIdx);
+}
+
+bool CsNeuronGroup::CollectingSpikeDataForNeuron(int iIdx)
+{
+	return (bool) m_aryCollectSpikeData.count(iIdx);
+}
 
 void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 {
@@ -152,7 +170,7 @@ void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 
 	m_lpCsModule = lpOrig->m_lpCsModule;
 	m_uiNeuronCount = lpOrig->m_uiNeuronCount;
-	m_iNeuronType  = lpOrig->m_iNeuronType;
+	m_iNeuralType  = lpOrig->m_iNeuralType;
 	m_iGroupID  = lpOrig->m_iGroupID;
 
 	m_fltA = lpOrig->m_fltA;
@@ -165,19 +183,19 @@ void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 	m_fltStdD = lpOrig->m_fltStdD;
 
 	m_bEnableCOBA = lpOrig->m_bEnableCOBA;
-	m_fltT_AMPA = lpOrig->m_fltT_AMPA;
-	m_fltT_NMDA = lpOrig->m_fltT_NMDA;
-	m_fltT_GABAa = lpOrig->m_fltT_GABAa;
-	m_fltT_GABAb = lpOrig->m_fltT_GABAb;
+	m_fltTauAMPA = lpOrig->m_fltTauAMPA;
+	m_fltTauNMDA = lpOrig->m_fltTauNMDA;
+	m_fltTauGABAa = lpOrig->m_fltTauGABAa;
+	m_fltTauGABAb = lpOrig->m_fltTauGABAb;
 }
 
 void CsNeuronGroup::SetCARLSimulation()
 {
 	if(m_lpCsModule && m_lpCsModule->SNN())
 	{
-		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuronType);
+		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuralType);
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
-		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltT_AMPA, m_fltT_NMDA, m_fltT_GABAa, m_fltT_GABAb);
+		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltTauAMPA, m_fltTauNMDA, m_fltTauGABAa, m_fltTauGABAb);
 
 		//Set this up as a spike monitor.
 		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
@@ -189,6 +207,8 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 	m_fltGroupFiringRate = firing_Rate;
 	m_fltGroupTotalSpikes = total_spikes;
 
+	m_aryLastSpikeTimes.clear();
+
 	if(total_spikes > 0)
 	{
 		int pos = 0;
@@ -197,8 +217,12 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 			for (int i=0; i<timeCounts[t]; i++)
 			{
 				int id = NeuronIds[pos];
-				if (id==5)
-					std::cout << "Neuron ID 50 spiked at " << t << "ms." << endl;
+				if (m_aryCollectSpikeData.count(id))
+				{
+					//Add the spike times to the two lists.
+					m_aryLastSpikeTimes.insert(std::pair<int, int>(id, t));
+					m_arySpikeTimes.insert(std::pair<int, int>(id, t));
+				}
 				pos++;
 			}
 		}
@@ -219,6 +243,8 @@ void CsNeuronGroup::ResetSimulation()
 {
 	Node::ResetSimulation();
 
+	m_arySpikeTimes.clear();
+	m_aryLastSpikeTimes.clear();
 	m_fltGroupFiringRate = 0;
 	m_fltGroupTotalSpikes = 0;
 }
@@ -262,9 +288,9 @@ bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &s
 		return true;
 	}
 
-	if(strType == "NEURONTYPE")
+	if(strType == "NEURALTYPE")
 	{
-		NeuronType(atoi(strValue.c_str()));
+		NeuralType(atoi(strValue.c_str()));
 		return true;
 	}
 
@@ -322,27 +348,27 @@ bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &s
 		return true;
 	}
 
-	if(strType == "T_AMPA")
+	if(strType == "TAUAMPA")
 	{
-		T_AMPA(atof(strValue.c_str()));
+		TauAMPA(atof(strValue.c_str()));
 		return true;
 	}
 
-	if(strType == "T_NMDA")
+	if(strType == "TAUNMDA")
 	{
-		T_NMDA(atof(strValue.c_str()));
+		TauNMDA(atof(strValue.c_str()));
 		return true;
 	}
 
-	if(strType == "T_GABAA")
+	if(strType == "TAUGABAA")
 	{
-		T_GABAa(atof(strValue.c_str()));
+		TauGABAa(atof(strValue.c_str()));
 		return true;
 	}
 
-	if(strType == "T_GABAB")
+	if(strType == "TAUGABAB")
 	{
-		T_GABAb(atof(strValue.c_str()));
+		TauGABAb(atof(strValue.c_str()));
 		return true;
 	}
 
@@ -358,7 +384,7 @@ void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	Node::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("NeuronCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("NeuronType", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("NeuralType", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("A", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("StdA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("B", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
@@ -368,10 +394,10 @@ void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("StdD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("EnableCOBA", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("T_AMPA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("T_NMDA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("T_GABAa", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("T_GABAb", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauAMPA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauNMDA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauGABAa", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauGABAb", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 float *CsNeuronGroup::GetDataPointer(const std::string &strDataType)
@@ -401,7 +427,7 @@ void CsNeuronGroup::Load(CStdXml &oXml)
 	Enabled(oXml.GetChildBool("Enabled", true));
 
 	NeuronCount(oXml.GetChildInt("NeuronCount", m_uiNeuronCount));
-	NeuronType(oXml.GetChildInt("NeuronType", m_iNeuronType));
+	NeuralType(oXml.GetChildInt("NeuralType", m_iNeuralType));
 	A(oXml.GetChildFloat("A", m_fltA));
 	StdA(oXml.GetChildFloat("StdA", m_fltStdA));
 	B(oXml.GetChildFloat("B", m_fltB));
@@ -412,10 +438,10 @@ void CsNeuronGroup::Load(CStdXml &oXml)
 	StdD(oXml.GetChildFloat("StdD", m_fltStdD));
 
 	EnableCOBA(oXml.GetChildBool("EnableCOBA", m_bEnableCOBA));
-	T_AMPA(oXml.GetChildFloat("T_AMPA", m_fltT_AMPA));
-	T_NMDA(oXml.GetChildFloat("T_NMDA", m_fltT_NMDA));
-	T_GABAa(oXml.GetChildFloat("T_GABAa", m_fltT_GABAa));
-	T_GABAb(oXml.GetChildFloat("T_GABAb", m_fltT_GABAb));
+	TauAMPA(oXml.GetChildFloat("TauAMPA", m_fltTauAMPA));
+	TauNMDA(oXml.GetChildFloat("TauNMDA", m_fltTauNMDA));
+	TauGABAa(oXml.GetChildFloat("TauGABAa", m_fltTauGABAa));
+	TauGABAb(oXml.GetChildFloat("TauGABAb", m_fltTauGABAb));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

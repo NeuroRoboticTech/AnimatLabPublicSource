@@ -72,6 +72,23 @@ void CsNeuralModule::UpdateSteps(unsigned int uiVal)
 unsigned int CsNeuralModule::UpdateSteps() {return m_uiUpdateSteps;};
 
 /**
+\brief	Tells the number of simulation steps that other components, like stimuli, will need to use for their step interval. 
+
+\author	dcofer
+\date	10/11/2014
+
+\return	Step interval for the UpdateSteps of this module.
+**/
+unsigned int CsNeuralModule::SimulationStepInterval()
+{
+	unsigned int iInterval = 1;
+	if( m_lpSim->MinTimeStep() > 0)
+		iInterval = (unsigned int) ((((float) (m_uiUpdateSteps*CARLSIM_STEP_INCREMENT)) / m_lpSim->MinTimeStep())+0.5);
+	return iInterval;
+}
+
+
+/**
 \brief	Searches for an item with the specified ID and sets its index in the array. 
 
 \author	dcofer
@@ -207,8 +224,8 @@ void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
 		return;
 
 	m_fltNeuralTime = (float) ((step+1)*CARLSIM_STEP_INCREMENT);
-	if(!m_bWaitingForNeuralToCatchUp && m_lpSim->Time() < m_fltNeuralTime)
-		WaitForPhysicsToCatchUp();
+	//if(!m_bWaitingForNeuralToCatchUp && m_lpSim->Time() < m_fltNeuralTime)
+	//	WaitForPhysicsToCatchUp();
 }
 
 void CsNeuralModule::WaitForPhysicsToCatchUp()
@@ -326,8 +343,8 @@ void CsNeuralModule::StepSimulation()
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->StepSimulation();
 
-	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
-		WaitForNeuralToCatchUp();
+	//if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
+	//	WaitForNeuralToCatchUp();
 }
 
 #pragma region DataAccesMethods

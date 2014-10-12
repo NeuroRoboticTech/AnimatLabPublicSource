@@ -33,6 +33,8 @@ namespace AnimatCarlSim
 		///The refractory period
 		unsigned int m_uiRefPeriod;
 
+		unsigned int m_uiBaseFiringRate;
+
 		virtual void DeletePoissonRates();
 
 	public:
@@ -40,6 +42,9 @@ namespace AnimatCarlSim
 		virtual ~CsSpikeGeneratorGroup();
 
 		virtual void SetCARLSimulation();
+
+		virtual PoissonRate *SpikeRates() {return m_lpSpikeRates;};
+		virtual void SetSpikeRatesUpdated();
 
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);

@@ -101,6 +101,8 @@ namespace AnimatCarlSim
 		virtual void UpdateSteps(unsigned int uiVal);
 		virtual unsigned int UpdateSteps();
 
+		virtual unsigned int SimulationStepInterval();
+
 		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
 		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);
 		

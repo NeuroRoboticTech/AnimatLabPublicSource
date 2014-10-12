@@ -324,6 +324,9 @@ ErrorHandler:
             'rnd  = <
             strEqu = Replace(strEqu, "rnd", "<")
 
+            'Replace spaces
+            strEqu = Replace(strEqu, " ", "")
+
             ReplaceTokens = strEqu
 
 CleanUp:

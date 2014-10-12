@@ -63,6 +63,9 @@ std::string CStdPostFixEval::Equation()
 **/
 void CStdPostFixEval::Equation(std::string strVal)
 {
+	//First remove any formatting blanks.
+	strVal = Std_Replace(strVal, " ", "");
+
 	SavePostFixInArray(strVal);
 	m_strEquation = strVal;
 }

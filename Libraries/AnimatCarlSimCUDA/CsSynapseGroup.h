@@ -62,6 +62,8 @@ namespace AnimatCarlSim
 		CsSynapseGroup();
 		virtual ~CsSynapseGroup();
 
+		CsNeuralModule *GetCsModule() {return m_lpCsModule;};
+
 		/**
 		\brief	Gets the pre-synaptic neuron.
 			

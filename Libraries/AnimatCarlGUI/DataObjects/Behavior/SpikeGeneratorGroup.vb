@@ -87,9 +87,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub InitAfterAppStart()
             MyBase.InitAfterAppStart()
-            'AddCompatibleStimulusType("Current")
-            'AddCompatibleStimulusType("InverseMuscleCurrent")
-            'AddCompatibleStimulusType("VoltageClamp")
+            AddCompatibleStimulusType("FiringRate")
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

@@ -26,6 +26,7 @@ namespace AnimatCarlSim
 		/// Pointer to parent CsNeuralModule.
 		CsNeuralModule *m_lpCsModule;
 
+		///A map relating the pre/post synaptic index to a given synapse
 		std::multimap<std::pair<int, int>, CsSynapseIndividual *> m_arySynapseMap;
 
 		///The ID of the pre-synaptic neuron population

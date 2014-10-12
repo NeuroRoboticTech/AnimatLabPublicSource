@@ -14,6 +14,7 @@
 #include "CsSynapseFull.h"
 #include "CsSynapseRandom.h"
 #include "CsSynapseIndividual.h"
+#include "CsFiringRateStimulus.h"
 #include "CsClassFactory.h"
 
 namespace AnimatCarlSim
@@ -164,6 +165,44 @@ catch(...)
 // ************* Neural Module Type Conversion functions ******************************
 
 
+// ************* External Stimulus Type Conversion functions ******************************
+
+ExternalStimulus *CsClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
+{
+	ExternalStimulus *lpStimulus=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "FIRINGRATE")
+		lpStimulus = new CsFiringRateStimulus;
+	else
+	{
+		lpStimulus = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidExternalStimulusType, Al_Err_strInvalidExternalStimulusType, "ExternalStimulusType", strType);
+	}
+
+	return lpStimulus;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpStimulus) delete lpStimulus;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpStimulus) delete lpStimulus;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* External Stimulus Type Conversion functions ******************************
+
+
 // ************* IStdCsClassFactory functions ******************************
 
 CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
@@ -178,6 +217,8 @@ CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateSynapse(strObjectType, bThrowError);
 	else if(strClassType == "NEURALMODULE")
 		lpObject = CreateNeuralModule(strObjectType, bThrowError);
+	else if(strClassType == "EXTERNALSTIMULUS")
+		lpObject = CreateExternalStimulus(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

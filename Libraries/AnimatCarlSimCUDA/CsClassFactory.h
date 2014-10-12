@@ -51,6 +51,19 @@ namespace AnimatCarlSim
 		**/
 		virtual CsSynapseGroup *CreateSynapse(std::string strType, bool bThrowError = true);
 
+		/**
+		\brief	Creates an external stimuli.
+
+		\author	dcofer
+		\date	3/30/2011
+
+		\param	strType	   	Type of the class to create. 
+		\param	bThrowError	true to throw error if problem. 
+
+		\return	Pointer to created object.
+		**/
+		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, bool bThrowError = true);
+
 
 		/**
 		\brief	Creates a neural module.

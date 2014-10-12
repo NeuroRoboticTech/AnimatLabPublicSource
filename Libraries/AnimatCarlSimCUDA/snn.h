@@ -947,6 +947,8 @@ class CpuSNN
 
   unsigned int getMonitorUpdateSteps() {return monitor_update_steps;};
 
+  void setSpikeRateUpdated() {spikeRateUpdated = true;};
+
  private:
   void setGrpTimeSlice(int grpId, int timeSlice); //!< used for the Poisson generator.  It can probably be further optimized...
 

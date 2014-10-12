@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CsConnectionGenerator.h" />
+    <ClInclude Include="..\CsFiringRateStimulus.h" />
     <ClInclude Include="..\CsIncludes.h" />
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <ClCompile Include="..\CarlSim.cpp" />
     <ClCompile Include="..\CsConnectionGenerator.cpp" />
+    <ClCompile Include="..\CsFiringRateStimulus.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
     <ClCompile Include="..\CsNeuronGroup.cpp" />

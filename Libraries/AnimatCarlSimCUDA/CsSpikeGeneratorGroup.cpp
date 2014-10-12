@@ -60,18 +60,23 @@ void CsSpikeGeneratorGroup::DeletePoissonRates()
 	}
 }
 
+void CsSpikeGeneratorGroup::SetSpikeRatesUpdated()
+{
+	m_lpCsModule->SNN()->setSpikeRateUpdated();
+}
+
 void CsSpikeGeneratorGroup::SetCARLSimulation()
 {
 	if(m_lpCsModule && m_lpCsModule->SNN())
 	{
-		m_iGroupID = m_lpCsModule->SNN()->createSpikeGeneratorGroup(m_strName, m_uiNeuronCount, m_iNeuronType);
+		m_iGroupID = m_lpCsModule->SNN()->createSpikeGeneratorGroup(m_strName, m_uiNeuronCount, m_iNeuralType);
 
 		DeletePoissonRates();
 
 		// set Poisson rates for all neurons
 		m_lpSpikeRates = new PoissonRate(m_uiNeuronCount);
 		for (int i=0; i<m_uiNeuronCount; i++)
-			m_lpSpikeRates->rates[i] = 50.0f;
+			m_lpSpikeRates->rates[i] = 0;
 		m_lpCsModule->SNN()->setSpikeRate(m_iGroupID, m_lpSpikeRates, m_uiRefPeriod);
 	}
 }
