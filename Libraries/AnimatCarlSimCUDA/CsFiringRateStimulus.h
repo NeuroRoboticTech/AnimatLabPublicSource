@@ -23,6 +23,7 @@ namespace AnimatCarlSim
 			/// GUID ID of the neuron we are stimulating.
 			std::string m_strTargetNodeID;
 
+			///The spike generator this object is stimulating
 			CsSpikeGeneratorGroup *m_lpSpikeGen;
 
 			/// The post-fix string current equation

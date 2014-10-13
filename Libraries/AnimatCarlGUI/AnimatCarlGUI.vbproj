@@ -144,11 +144,13 @@
     <Compile Include="DataObjects\Behavior\NeuralModule.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Behavior\NeuronGroup.vb">
+    <Compile Include="DataObjects\Behavior\NodeTypes\NeuronGroup.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Behavior\SpikeGeneratorGroup.vb" />
-    <Compile Include="DataObjects\Behavior\SynapseGroup.vb">
+    <Compile Include="DataObjects\Behavior\NodeTypes\NodeToNodeAdapter.vb" />
+    <Compile Include="DataObjects\Behavior\NodeTypes\PhysicalToNodeAdapter.vb" />
+    <Compile Include="DataObjects\Behavior\NodeTypes\SpikeGeneratorGroup.vb" />
+    <Compile Include="DataObjects\Behavior\SynapseTypes\SynapseGroup.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Behavior\SynapseTypes\OneToOneSynapse.vb" />

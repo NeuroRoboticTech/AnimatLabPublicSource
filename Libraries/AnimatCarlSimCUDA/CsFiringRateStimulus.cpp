@@ -354,6 +354,8 @@ void CsFiringRateStimulus::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 
 	aryProperties.Add(new TypeProperty("ConstantRate", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("Equation", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("Coverage", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CellsToStim", AnimatPropertyType::Xml, AnimatPropertyDirection::Set));
 }
 
 void CsFiringRateStimulus::LoadCellsToStim(CStdXml &oXml)
@@ -377,7 +379,7 @@ void CsFiringRateStimulus::LoadCellsToStim(CStdXml &oXml)
 
 void CsFiringRateStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(oXml);
+	ExternalStimulus::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 

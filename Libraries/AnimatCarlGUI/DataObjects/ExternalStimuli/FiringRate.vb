@@ -14,15 +14,6 @@ Namespace DataObjects.ExternalStimuli
     Public Class FiringRate
         Inherits AnimatGUI.DataObjects.ExternalStimuli.NodeStimulus
 
-#Region " Enums "
-
-        Public Enum enumCoverage
-            WholePopulation
-            Individuals
-        End Enum
-
-#End Region
-
 #Region " Attributes "
 
         Protected m_snConstantRate As AnimatGUI.Framework.ScaledNumber

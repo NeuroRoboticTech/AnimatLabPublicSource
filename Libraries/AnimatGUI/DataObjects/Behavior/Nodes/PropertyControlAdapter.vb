@@ -167,6 +167,8 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("Name", Me.Name)
                 oXml.AddChildElement("Enabled", Me.Enabled)
 
+                oXml.AddChildElement("ModuleName", Me.ModuleName)
+
                 oXml.AddChildElement("Type", Me.AdapterType)
                 oXml.AddChildElement("SourceModule", nmSource.ModuleName)
                 oXml.AddChildElement("SourceID", bnOrigin.ID)

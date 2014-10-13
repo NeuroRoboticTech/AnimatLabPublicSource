@@ -8,8 +8,10 @@ Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
+Imports AnimatCarlGUI.DataObjects.Behavior.NodeTypes
+Imports AnimatCarlGUI.DataObjects.Behavior.SynapseTypes
 
-Namespace DataObjects.Behavior
+Namespace DataObjects.Behavior.SynapseTypes
 
     Public MustInherit Class SynapseGroup
         Inherits AnimatGUI.DataObjects.Behavior.Links.Synapse

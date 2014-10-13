@@ -9,12 +9,10 @@ Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
 
-Namespace DataObjects.Behavior
+Namespace DataObjects.Behavior.NodeTypes
 
     Public Class NeuronGroup
         Inherits AnimatGUI.DataObjects.Behavior.Nodes.Neuron
-
-
 
 #Region " Attributes "
 
@@ -342,9 +340,9 @@ Namespace DataObjects.Behavior
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Spike", "Neuron Spike Data", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                 m_thDataTypes.ID = "GroupFiringRate"
 
-                'm_thIncomingDataTypes.DataTypes.Clear()
-                'm_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thIncomingDataTypes.ID = "ExternalCurrent"
+                m_thIncomingDataTypes.DataTypes.Clear()
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringRate", "Firing Rate", "Hertz", "Hz", 0, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                m_thIncomingDataTypes.ID = "FiringRate"
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -496,6 +494,27 @@ Namespace DataObjects.Behavior
             m_snTauGABAb.ClearIsDirty()
 
         End Sub
+
+        Public Overrides Function CreateNewAdapter(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Behavior.Node
+
+            ''If it does require an adapter then lets add the pieces.
+            Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node
+            If bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
+                'If the origin is physics node and the destination is a regular node
+                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter(doParent)
+            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Me.IsPhysicsEngineNode Then
+                'If the origin is regular node and the destination is a physics node
+                bnAdapter = New AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter(doParent)
+            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
+                'If both the origin and destination are regular nodes.
+                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.NodeToNodeAdapter(doParent)
+            Else
+                'If both the origin and destination are physics nodes.
+                Throw New System.Exception("You can only link two physics nodes using a graphical link.")
+            End If
+
+            Return bnAdapter
+        End Function
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)

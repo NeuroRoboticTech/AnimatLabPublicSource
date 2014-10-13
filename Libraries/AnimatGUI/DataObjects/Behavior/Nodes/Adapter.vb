@@ -664,9 +664,10 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub InitializeAfterLoad()
 
-            If Me.ID.ToLower = "507b20a7-8084-4ea5-acad-cce3369a1485" Then
-                Dim i As Integer = 5
-            End If
+            ''TestCode
+            'If Me.ID.ToLower = "507b20a7-8084-4ea5-acad-cce3369a1485" Then
+            '    Dim i As Integer = 5
+            'End If
 
             Try
                 If m_bnOrigin Is Nothing Then

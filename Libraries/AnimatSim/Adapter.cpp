@@ -815,6 +815,12 @@ void Adapter::Initialize()
 	SynchUpdateStartInterval(m_fltSynchUpdateStartInterval);
 }
 
+void Adapter::ApplyExternalNodeInput(int iTargetDataType, float fltNextVal)
+{
+	if(m_lpTargetNode)
+		m_lpTargetNode->AddExternalNodeInput(iTargetDataType, fltNextVal);
+}
+
 void Adapter::StepSimulation()
 {
 	m_fltUpdatedValue = 0;
@@ -862,7 +868,7 @@ void Adapter::StepSimulation()
 		else
 			m_fltNextVal = m_fltCalculatedVal;
 
-		m_lpTargetNode->AddExternalNodeInput(m_iTargetDataType, m_fltNextVal);
+		ApplyExternalNodeInput(m_iTargetDataType, m_fltNextVal);
 
 		m_iSynchCount++;
 	}

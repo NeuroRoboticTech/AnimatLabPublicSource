@@ -16,6 +16,12 @@ Public Enum enumNeuralType
     Inhibitory
 End Enum
 
+Public Enum enumCoverage
+    WholePopulation
+    Individuals
+End Enum
+
+
 #End Region
 
 

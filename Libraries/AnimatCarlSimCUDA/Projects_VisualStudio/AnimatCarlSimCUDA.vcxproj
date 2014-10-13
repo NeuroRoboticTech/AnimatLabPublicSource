@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CsAdapter.h" />
     <ClInclude Include="..\CsConnectionGenerator.h" />
     <ClInclude Include="..\CsFiringRateStimulus.h" />
     <ClInclude Include="..\CsIncludes.h" />
@@ -49,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CarlSim.cpp" />
+    <ClCompile Include="..\CsAdapter.cpp" />
     <ClCompile Include="..\CsConnectionGenerator.cpp" />
     <ClCompile Include="..\CsFiringRateStimulus.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />

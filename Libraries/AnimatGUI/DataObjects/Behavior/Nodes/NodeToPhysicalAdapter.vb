@@ -106,6 +106,43 @@ Namespace DataObjects.Behavior.Nodes
             Return oNewNode
         End Function
 
+        Protected Overridable Sub SaveSimulationXmlInternal(ByVal oXml As ManagedAnimatInterfaces.IStdXml, _
+                                         ByVal nmSource As NeuralModule, _
+                                         ByVal bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByVal bnDestination As AnimatGUI.DataObjects.Behavior.Node, _
+                                         ByVal bpPart As DataObjects.Behavior.Nodes.BodyPart, _
+                                         Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
+            oXml.AddChildElement("Adapter")
+            oXml.IntoElem()
+
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
+            oXml.AddChildElement("Enabled", Me.Enabled)
+
+            oXml.AddChildElement("ModuleName", Me.ModuleName)
+
+            oXml.AddChildElement("Type", Me.AdapterType)
+            oXml.AddChildElement("SourceModule", nmSource.ModuleName)
+            oXml.AddChildElement("SourceID", bnOrigin.ID)
+            oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
+            oXml.AddChildElement("TargetModule", "AnimatLab")
+            oXml.AddChildElement("TargetID", bpPart.LinkedPart.BodyPart.ID())
+            oXml.AddChildElement("TargetDataType", m_thTargetDataTypes.ID)
+            oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
+            m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
+            oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
+            m_snInitIODisableDuration.SaveSimulationXml(oXml, Me, "InitIODisableDuration")
+
+            oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
+            m_snSynchUpdateInterval.SaveSimulationXml(oXml, Me, "SynchUpdateInterval")
+            m_snSynchUpdateStartInterval.SaveSimulationXml(oXml, Me, "SynchUpdateStartInterval")
+
+            m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
+
+            oXml.OutOfElem() 'Outof Neuron
+
+        End Sub
+
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             If Not m_bIsInitialized Then
@@ -159,34 +196,7 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_thSourceDataTypes Is Nothing AndAlso m_thSourceDataTypes.ID.Trim.Length > 0 AndAlso _
                Not bpPart Is Nothing AndAlso Not bpPart.LinkedPart Is Nothing AndAlso Not bpPart.LinkedPart.BodyPart Is Nothing AndAlso _
                Not m_gnGain Is Nothing Then
-
-                oXml.AddChildElement("Adapter")
-                oXml.IntoElem()
-
-                oXml.AddChildElement("ID", Me.ID)
-                oXml.AddChildElement("Name", Me.Name)
-                oXml.AddChildElement("Enabled", Me.Enabled)
-
-                oXml.AddChildElement("Type", Me.AdapterType)
-                oXml.AddChildElement("SourceModule", nmSource.ModuleName)
-                oXml.AddChildElement("SourceID", bnOrigin.ID)
-                oXml.AddChildElement("SourceDataType", m_thSourceDataTypes.ID)
-                oXml.AddChildElement("TargetModule", "AnimatLab")
-                oXml.AddChildElement("TargetID", bpPart.LinkedPart.BodyPart.ID())
-                oXml.AddChildElement("TargetDataType", m_thTargetDataTypes.ID)
-                oXml.AddChildElement("DelayBufferMode", Convert.ToInt32(m_eDelayBufferMode))
-                m_snDelayBufferInterval.SaveSimulationXml(oXml, Me, "DelayBufferInterval")
-                oXml.AddChildElement("RobotIOScale", m_fltRobotIOScale)
-                m_snInitIODisableDuration.SaveSimulationXml(oXml, Me, "InitIODisableDuration")
-
-                oXml.AddChildElement("SynchWithRobot", m_bSynchWithRobot)
-                m_snSynchUpdateInterval.SaveSimulationXml(oXml, Me, "SynchUpdateInterval")
-                m_snSynchUpdateStartInterval.SaveSimulationXml(oXml, Me, "SynchUpdateStartInterval")
-
-                m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
-
-                oXml.OutOfElem() 'Outof Neuron
-
+                SaveSimulationXmlInternal(oXml, nmSource, bnOrigin, bnDestination, bpPart, nmParentControl, strName)
             End If
 
         End Sub

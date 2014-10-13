@@ -9,7 +9,7 @@ Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
 
-Namespace DataObjects.Behavior
+Namespace DataObjects.Behavior.NodeTypes
 
     Public Class SpikeGeneratorGroup
         Inherits NeuronGroup

@@ -4,12 +4,54 @@ Imports System.ComponentModel
 Imports System.Drawing.Design
 Imports System.Windows.Forms.Design
 Imports AnimatGUI.Framework
+Imports AnimatCarlGUI.DataObjects.Behavior.NodeTypes
+Imports AnimatCarlGUI.DataObjects.Behavior.SynapseTypes
 
 Namespace TypeHelpers
 
     Public Class SelectedIndexEditor
         Inherits UITypeEditor
         Private service As IWindowsFormsEditorService
+
+        Protected Overridable Sub ProcessFiringRate(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object, _
+                                                         ByVal doRate As DataObjects.ExternalStimuli.FiringRate)
+
+            Dim doNeuron As NeuronGroup = DirectCast(doRate.Node, NeuronGroup)
+
+            If Not doNeuron Is Nothing Then
+                Dim frmEditor As New Forms.SelectIndex()
+                frmEditor.Min = 0
+                frmEditor.Max = doNeuron.NeuronCount - 1
+                frmEditor.Indices = doRate.CellsToStim
+
+                If frmEditor.ShowDialog() = DialogResult.OK Then
+                    doRate.CellsToStim.Clear()
+                    For Each iIdx As Integer In frmEditor.lbIndices.Items
+                        doRate.CellsToStim.Add(iIdx)
+                    Next
+                End If
+            End If
+        End Sub
+
+        Protected Overridable Sub ProcessAdapter(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object, _
+                                                         ByVal doAdapter As DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter)
+
+            Dim doNeuron As SpikeGeneratorGroup = DirectCast(doAdapter.Destination, SpikeGeneratorGroup)
+
+            If Not doNeuron Is Nothing Then
+                Dim frmEditor As New Forms.SelectIndex()
+                frmEditor.Min = 0
+                frmEditor.Max = doNeuron.NeuronCount - 1
+                frmEditor.Indices = doAdapter.CellsToStim
+
+                If frmEditor.ShowDialog() = DialogResult.OK Then
+                    doAdapter.CellsToStim.Clear()
+                    For Each iIdx As Integer In frmEditor.lbIndices.Items
+                        doAdapter.CellsToStim.Add(iIdx)
+                    Next
+                End If
+            End If
+        End Sub
 
         Public Overloads Overrides Function EditValue(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object) As Object
 
@@ -21,24 +63,17 @@ Namespace TypeHelpers
                     If Not pbBag.Tag Is Nothing AndAlso Util.IsTypeOf(pbBag.Tag.GetType, GetType(DataObjects.ExternalStimuli.FiringRate), False) Then
                         Dim doRate As DataObjects.ExternalStimuli.FiringRate = DirectCast(pbBag.Tag, DataObjects.ExternalStimuli.FiringRate)
 
-                        If Not doRate.Node Is Nothing AndAlso Util.IsTypeOf(doRate.Node.GetType(), GetType(DataObjects.Behavior.NeuronGroup), False) Then
-                            Dim doNeuron As DataObjects.Behavior.NeuronGroup = DirectCast(doRate.Node, DataObjects.Behavior.NeuronGroup)
+                        If Not doRate.Node Is Nothing AndAlso Util.IsTypeOf(doRate.Node.GetType(), GetType(NeuronGroup), False) Then
+                            ProcessFiringRate(context, provider, value, doRate)
+                        End If
+                    ElseIf Not pbBag.Tag Is Nothing AndAlso Util.IsTypeOf(pbBag.Tag.GetType, GetType(DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter), False) Then
+                        Dim doAdapter As DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter = DirectCast(pbBag.Tag, DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter)
 
-                            If Not doNeuron Is Nothing Then
-                                Dim frmEditor As New Forms.SelectIndex()
-                                frmEditor.Min = 0
-                                frmEditor.Max = doNeuron.NeuronCount - 1
-                                frmEditor.Indices = doRate.CellsToStim
-
-                                If frmEditor.ShowDialog() = DialogResult.OK Then
-                                    doRate.CellsToStim.Clear()
-                                    For Each iIdx As Integer In frmEditor.lbIndices.Items
-                                        doRate.CellsToStim.Add(iIdx)
-                                    Next
-                                End If
-                            End If
+                        If Not doAdapter.Destination Is Nothing AndAlso Util.IsTypeOf(doAdapter.Destination.GetType(), GetType(SpikeGeneratorGroup), False) Then
+                            ProcessAdapter(context, provider, value, doAdapter)
                         End If
                     End If
+
                 End If
 
             Catch ex As System.Exception

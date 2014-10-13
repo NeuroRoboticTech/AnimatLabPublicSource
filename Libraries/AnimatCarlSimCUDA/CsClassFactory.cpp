@@ -16,6 +16,7 @@
 #include "CsSynapseIndividual.h"
 #include "CsFiringRateStimulus.h"
 #include "CsNeuronDataColumn.h"
+#include "CsAdapter.h"
 #include "CsClassFactory.h"
 
 namespace AnimatCarlSim
@@ -242,6 +243,47 @@ catch(...)
 // ************* DataColumn Type Conversion functions ******************************
 
 
+// ************* Adapter Type Conversion functions ******************************
+
+Adapter *CsClassFactory::CreateAdapter(std::string strType, bool bThrowError)
+{
+	Adapter *lpAdapter=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "NODETONODE")
+		lpAdapter = new CsAdapter;
+	else if(strType == "PHYSICALTONODE")
+		lpAdapter = new CsAdapter;
+	else
+	{
+		lpAdapter = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidAdapterType, Al_Err_strInvalidAdapterType, "AdapterType", strType);
+	}
+
+	return lpAdapter;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpAdapter) delete lpAdapter;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpAdapter) delete lpAdapter;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* Adpater Type Conversion functions ******************************
+
+
+
 // ************* IStdCsClassFactory functions ******************************
 
 CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
@@ -260,6 +302,8 @@ CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateExternalStimulus(strObjectType, bThrowError);
 	else if(strClassType == "DATACOLUMN")
 		lpObject = CreateDataColumn(strObjectType, bThrowError);
+	else if(strClassType == "ADAPTER")
+		lpObject = CreateAdapter(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;
