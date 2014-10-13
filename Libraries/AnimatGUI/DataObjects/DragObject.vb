@@ -64,6 +64,20 @@ Namespace DataObjects
         End Property
 
         <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowDataColumnSubData() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property DataColumnSubDataName() As String
+            Get
+                Return ""
+            End Get
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property StructureID As String
             Get
                 Return ""

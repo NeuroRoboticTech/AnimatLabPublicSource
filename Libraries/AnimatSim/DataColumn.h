@@ -106,6 +106,9 @@ namespace AnimatSim
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 			virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
+			virtual void Activate();
+			virtual void Deactivate();
+
 			virtual void Load(CStdXml &oXml);
 			virtual void SaveColumnNames(std::ofstream &oStream);
 		};

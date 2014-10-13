@@ -46,6 +46,8 @@ CsNeuronGroup::CsNeuronGroup()
 
 	m_fltGroupFiringRate = 0;
 	m_fltGroupTotalSpikes = 0;
+	m_fltSpikeFake = -99999;
+	m_iLastUpdateTime = 0;
 }
 
 /**
@@ -145,16 +147,35 @@ void CsNeuronGroup::TauGABAb(float fltVal) {m_fltTauGABAb = fltVal;}
 
 float CsNeuronGroup::TauGABAb() {return m_fltTauGABAb;}
 
-void CsNeuronGroup::AddCollectSpikeDataForNeuron(int iIdx)
+std::multimap<int, int> *CsNeuronGroup::SpikeTimes() {return &m_arySpikeTimes;}
+
+std::multimap<int, int> *CsNeuronGroup::LastSpikeTimes() {return &m_aryLastSpikeTimes;}
+
+void CsNeuronGroup::IncrementCollectSpikeDataForNeuron(int iIdx)
 {
-	if(!CollectingSpikeDataForNeuron(iIdx))
+	CStdMap<int, int>::iterator oPos;
+	oPos = m_aryCollectSpikeData.find(iIdx);
+	if(oPos != m_aryCollectSpikeData.end())
+	{
+		int iVal =  oPos->second;
+		m_aryCollectSpikeData[iIdx] = iVal+1;
+	}
+	else
 		m_aryCollectSpikeData.Add(iIdx, 1);
 }
 
-void CsNeuronGroup::RemoveCollectSpikeDataForNeuron(int iIdx)
+void CsNeuronGroup::DecrementCollectSpikeDataForNeuron(int iIdx)
 {
-	if(CollectingSpikeDataForNeuron(iIdx))
-		m_aryCollectSpikeData.Remove(iIdx);
+	CStdMap<int, int>::iterator oPos;
+	oPos = m_aryCollectSpikeData.find(iIdx);
+	if(oPos != m_aryCollectSpikeData.end())
+	{
+		int iVal =  oPos->second-1;
+		if(iVal <= 0)
+			m_aryCollectSpikeData.Remove(iIdx);
+		else
+			m_aryCollectSpikeData[iIdx] = iVal;
+	}
 }
 
 bool CsNeuronGroup::CollectingSpikeDataForNeuron(int iIdx)
@@ -219,14 +240,20 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 				int id = NeuronIds[pos];
 				if (m_aryCollectSpikeData.count(id))
 				{
+					int iTime = m_iLastUpdateTime + t;
 					//Add the spike times to the two lists.
 					m_aryLastSpikeTimes.insert(std::pair<int, int>(id, t));
-					m_arySpikeTimes.insert(std::pair<int, int>(id, t));
+					m_arySpikeTimes.insert(std::pair<int, int>(id, iTime));
+
+					//std::string strMsg = "Spike [" + STR(id) + ", "+ STR(iTime) + "]\r\n";
+					//OutputDebugString(strMsg.c_str());
 				}
 				pos++;
 			}
 		}
 	}
+
+	m_iLastUpdateTime += s->getMonitorUpdateSteps();
 }
 
 void CsNeuronGroup::Initialize()
@@ -247,6 +274,8 @@ void CsNeuronGroup::ResetSimulation()
 	m_aryLastSpikeTimes.clear();
 	m_fltGroupFiringRate = 0;
 	m_fltGroupTotalSpikes = 0;
+	m_fltSpikeFake = -99999;
+	m_iLastUpdateTime = 0;
 }
 
 void CsNeuronGroup::AddExternalNodeInput(int iTargetDataType, float fltInput)
@@ -412,6 +441,8 @@ float *CsNeuronGroup::GetDataPointer(const std::string &strDataType)
 		return &m_fltGroupFiringRate;
 	else if(strType == "GROUPTOTALSPIKES")
 		return &m_fltGroupTotalSpikes;
+	else if(strType == "SPIKE")
+		return &m_fltSpikeFake;
 
 	return Node::GetDataPointer(strDataType);
 }

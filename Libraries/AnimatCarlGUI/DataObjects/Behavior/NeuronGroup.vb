@@ -58,6 +58,30 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
+        Public Overrides ReadOnly Property DataColumnModuleName As String
+            Get
+                Return "AnimatCarlSimCUDA"
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property DataColumnClassType As String
+            Get
+                Return "NeuronDataColumn"
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property AllowDataColumnSubData As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property DataColumnSubDataName As String
+            Get
+                Return "Neuron ID"
+            End Get
+        End Property
+
         <Browsable(False)> _
         Public Overrides ReadOnly Property SimClassName() As String
             Get
@@ -315,6 +339,7 @@ Namespace DataObjects.Behavior
                 'Lets add the data types that this node understands.
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("GroupFiringRate", "Group Firing Rate", "Hertz", "Hz", 0, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("GroupTotalSpikes", "Group Total Spikes", "", "", 0, 1000, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Spike", "Neuron Spike Data", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
                 m_thDataTypes.ID = "GroupFiringRate"
 
                 'm_thIncomingDataTypes.DataTypes.Clear()

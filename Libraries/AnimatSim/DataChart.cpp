@@ -268,6 +268,26 @@ void DataChart::CollectInterval(float fltVal, bool bReInit)
 }
 
 /**
+\brief	Gets the Time base used by this data chart.
+
+\author	dcofer
+\date	10/13/2014
+
+\return	Time base for this chart
+**/
+float DataChart::ChartTimeBase()
+{
+	float fltTimeBase = 0;
+	if(m_lpSim)
+	{
+		float fltMin = m_lpSim->MinTimeStep();
+		fltTimeBase = fltMin*m_iCollectInterval;
+	}
+
+	return fltTimeBase;
+}
+
+/**
 \brief	Gets the collect time window time slices.
 
 \author	dcofer
@@ -343,6 +363,16 @@ void DataChart::ProjectPath(std::string strVal) {m_strProjectPath = strVal;}
 \return	number of DataColumn objects.
 **/
 long DataChart::ColumnCount() {return m_lColumnCount;}
+
+/**
+\brief	Gets the row count.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	number of rows in this array of data.
+**/
+long DataChart::RowCount() {return m_lRowCount;}
 
 /**
 \brief	Gets the current row.
@@ -651,6 +681,24 @@ DataColumn *DataChart::FindColumn(std::string strID, int &iIndex, bool bThrowErr
 	return NULL;
 }
 
+void DataChart::Activate()
+{
+	ActivatedItem::Activate();
+
+	int iCount = m_aryDataColumns.GetSize();
+	for(int iCol=0; iCol<iCount; iCol++)
+		m_aryDataColumns[iCol]->Activate();
+}
+
+void DataChart::Deactivate()
+{
+	ActivatedItem::Deactivate();
+
+	int iCount = m_aryDataColumns.GetSize();
+	for(int iCol=0; iCol<iCount; iCol++)
+		m_aryDataColumns[iCol]->Deactivate();
+}
+
 #pragma region DataAccesMethods
 
 bool DataChart::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -776,6 +824,22 @@ void DataChart::StepSimulation()
 **/
 void DataChart::AddData(int iColumn, int iRow, float fltVal)
 {
+	SetData(iColumn, iRow, fltVal);
+	m_lCurrentCol++;
+}
+
+/**
+\brief	Sets a data element to the data buffer.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iColumn	The column in the data buffer where we need to add the value. 
+\param	iRow   	The row in the data buffer where we need to add the value.
+\param	fltVal 	The new value to add. 
+**/
+void DataChart::SetData(int iColumn, int iRow, float fltVal)
+{
 	if(iColumn < 0)
 		iColumn = m_lCurrentCol;
 	if(iRow < 0)
@@ -788,7 +852,6 @@ void DataChart::AddData(int iColumn, int iRow, float fltVal)
 		THROW_PARAM_ERROR(Std_Err_lAboveMaxValue, Std_Err_strAboveMaxValue, "Current Row Count", iRow);
 
 	m_aryDataBuffer[(iRow*m_lColumnCount) + iColumn] = fltVal;
-	m_lCurrentCol++;
 }
 
 /**

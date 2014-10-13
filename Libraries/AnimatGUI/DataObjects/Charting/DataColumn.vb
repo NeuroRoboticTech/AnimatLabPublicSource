@@ -33,6 +33,9 @@ Namespace DataObjects.Charting
         Protected m_iPrevDataSubset As Integer = -1
         Protected m_strColumnModuleName As String
         Protected m_strColumnClassType As String
+        Protected m_bColumnAllowSubData As Boolean = False
+        Protected m_strColumnSubDataName As String = ""
+        Protected m_strColumnSubData As String = ""
         Protected m_bUseIncomingDataType As Boolean = False
         Protected m_strSelectedDataTypeID As String = ""
         Protected m_iColumnIndex As Integer = 0
@@ -65,6 +68,9 @@ Namespace DataObjects.Charting
                     Me.DataItemDragImage = DirectCast(Value.DragImage.Clone(), System.Drawing.Image)
                     m_strColumnModuleName = Value.DataColumnModuleName
                     m_strColumnClassType = Value.DataColumnClassType
+                    m_bColumnAllowSubData = Value.AllowDataColumnSubData
+                    m_strColumnSubDataName = Value.DataColumnSubDataName
+
 
                     'By default we should use the normal Datatypes property from the selected object, but in 
                     'some instances we might want to limit this choice to the incoming data type for the selected object
@@ -287,6 +293,17 @@ Namespace DataObjects.Charting
         End Property
 
         <Browsable(False)> _
+        Public Overridable Property ColumnSubData() As String
+            Get
+                Return m_strColumnSubData
+            End Get
+            Set(value As String)
+                SetSimData("SubData", value, True)
+                m_strColumnSubData = value
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property AutoAddToAxis() As Boolean
             Get
                 Return m_bAutoAddToAxis
@@ -492,7 +509,11 @@ Namespace DataObjects.Charting
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("ColumnName", m_strName)
             oXml.AddChildElement("DataType", m_thDataType.ID.ToString())
-            'oXml.AddChildElement("Column", m_iColumnIndex)
+
+            If m_bColumnAllowSubData Then
+                oXml.AddChildElement("SubData", m_strColumnSubData)
+            End If
+
             oXml.OutOfElem()
 
             doItem.SaveDataColumnToXml(oXml)
@@ -564,6 +585,11 @@ Namespace DataObjects.Charting
                                             "Column Properties", "Sets the type of data to chart.", Me.DataType, _
                                             GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                             GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter)))
+
+            If m_bColumnAllowSubData Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(m_strColumnSubDataName, GetType(String), "ColumnSubData", _
+                                            "Column Properties", "The sub data item of this column.", m_strColumnSubData))
+            End If
 
         End Sub
 
@@ -662,6 +688,10 @@ Namespace DataObjects.Charting
             m_iPrevDataSubset = oXml.GetChildInt("PrevDataSubset", m_iPrevDataSubset)
             m_bUseIncomingDataType = oXml.GetChildBool("UseIncomingDataType", m_bUseIncomingDataType)
 
+            m_bColumnAllowSubData = oXml.GetChildBool("ColumnAllowSubData", m_bColumnAllowSubData)
+            m_strColumnSubDataName = oXml.GetChildString("ColumnSubDataName", m_strColumnSubDataName)
+            m_strColumnSubData = oXml.GetChildString("ColumnSubData", m_strColumnSubData)
+
             If oXml.FindChildElement("StructureID", False) Then
                 m_strStructureID = oXml.GetChildString("StructureID")
             Else
@@ -696,6 +726,12 @@ Namespace DataObjects.Charting
             oXml.AddChildElement("DataSubSet", m_iDataSubSet)
             oXml.AddChildElement("PrevDataSubset", m_iPrevDataSubset)
             oXml.AddChildElement("UseIncomingDataType", m_bUseIncomingDataType)
+
+            If m_bColumnAllowSubData Then
+                oXml.AddChildElement("ColumnAllowSubData", m_bColumnAllowSubData)
+                oXml.AddChildElement("ColumnSubDataName", m_strColumnSubDataName)
+                oXml.AddChildElement("ColumnSubData", m_strColumnSubData)
+            End If
 
             oXml.OutOfElem()
 

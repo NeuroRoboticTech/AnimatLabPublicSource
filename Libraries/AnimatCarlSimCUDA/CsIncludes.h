@@ -24,6 +24,7 @@ namespace AnimatCarlSim
 	class CsSynapseFull;
 	class CsSynapseIndividual;
 	class CsConnectionGenerator;
+	class CsNeuronDataColumn;
 }
 
 using namespace AnimatCarlSim;

@@ -3902,7 +3902,7 @@ public:
     fid = _fid;
   }
 
-  void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts)
+  void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts, unsigned int total_spikes, float firing_Rate)
   {
     int pos    = 0;
 

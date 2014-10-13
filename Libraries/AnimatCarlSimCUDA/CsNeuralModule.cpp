@@ -222,8 +222,8 @@ void CsNeuralModule::updateMonitors(CpuSNN* s, int step)
 		return;
 
 	m_fltNeuralTime = (float) ((step+1)*CARLSIM_STEP_INCREMENT);
-	//if(!m_bWaitingForNeuralToCatchUp && m_lpSim->Time() < m_fltNeuralTime)
-	//	WaitForPhysicsToCatchUp();
+	if(!m_bWaitingForNeuralToCatchUp && m_lpSim->Time() < m_fltNeuralTime)
+		WaitForPhysicsToCatchUp();
 }
 
 void CsNeuralModule::WaitForPhysicsToCatchUp()
@@ -341,8 +341,8 @@ void CsNeuralModule::StepSimulation()
 		if(m_aryNeurons[iIndex])
 			m_aryNeurons[iIndex]->StepSimulation();
 
-	//if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
-	//	WaitForNeuralToCatchUp();
+	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
+		WaitForNeuralToCatchUp();
 }
 
 #pragma region DataAccesMethods

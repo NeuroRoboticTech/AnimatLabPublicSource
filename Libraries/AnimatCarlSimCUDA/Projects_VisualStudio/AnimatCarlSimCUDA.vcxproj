@@ -25,6 +25,7 @@
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
     <ClInclude Include="..\config.h" />
+    <ClInclude Include="..\CsNeuronDataColumn.h" />
     <ClInclude Include="..\CsNeuronGroup.h" />
     <ClInclude Include="..\CsSpikeGeneratorGroup.h" />
     <ClInclude Include="..\CsSynapseFull.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="..\CsFiringRateStimulus.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
+    <ClCompile Include="..\CsNeuronDataColumn.cpp" />
     <ClCompile Include="..\CsNeuronGroup.cpp" />
     <ClCompile Include="..\CsSpikeGeneratorGroup.cpp" />
     <ClCompile Include="..\CsSynapseFull.cpp" />

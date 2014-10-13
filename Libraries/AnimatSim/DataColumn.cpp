@@ -258,6 +258,14 @@ void DataColumn::ReInitialize()
 		Initialize();
 }
 
+void DataColumn::Activate()
+{
+}
+
+void DataColumn:: Deactivate()
+{
+}
+
 bool DataColumn::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);

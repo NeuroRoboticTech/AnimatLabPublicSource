@@ -108,6 +108,8 @@ namespace AnimatSim
 			virtual void CollectInterval(int iVal, bool bReInit = true);
 			virtual void CollectInterval(float fltVal, bool bReInit = true);
 
+			virtual float ChartTimeBase();
+
 			virtual long CollectTimeWindow();
 			virtual void CollectTimeWindow(long lVal, bool bReInit = true);
 			virtual void CollectTimeWindow(float fltVal, bool bReInit = true);
@@ -116,6 +118,7 @@ namespace AnimatSim
 			virtual void ProjectPath(std::string strVal);
 
 			virtual long ColumnCount();
+			virtual long RowCount();
 
 			virtual long CurrentRow();
 			virtual void CurrentRow(long iVal);
@@ -124,6 +127,7 @@ namespace AnimatSim
 			virtual void Unlock();
 
 			virtual void AddData(int iColumn, int iRow, float fltVal);
+			virtual void SetData(int iColumn, int iRow, float fltVal);
 
 			virtual void Load(std::string strProjectPath, std::string strConfigFile);
 			virtual void Load(CStdXml &oXml);
@@ -132,6 +136,9 @@ namespace AnimatSim
 			virtual void AddColumn(std::string strXml, bool bDoNotInit);
 			virtual void RemoveColumn(std::string strID, bool bThrowError = true);
 			virtual DataColumn *FindColumn(std::string strID, bool bThrowError = true);
+
+			virtual void Activate();
+			virtual void Deactivate();
 
 #pragma region DataAccesMethods
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
