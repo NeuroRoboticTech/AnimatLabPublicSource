@@ -1,5 +1,5 @@
 /**
-\file	Neuron.cpp
+\file	CsNeuronGroup.cpp
 
 \brief	Implements the neuron class.
 **/
@@ -48,6 +48,8 @@ CsNeuronGroup::CsNeuronGroup()
 	m_fltGroupTotalSpikes = 0;
 	m_fltSpikeFake = -99999;
 	m_iLastUpdateTime = 0;
+
+	m_lpLastRecentSpikeTimes = NULL;
 }
 
 /**
@@ -61,11 +63,33 @@ CsNeuronGroup::~CsNeuronGroup()
 
 try
 {
+	ClearLastRecentSpikeTimes();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of CsNeuronGroup\r\n", "", -1, false, true);}
 }
 
+void CsNeuronGroup::ClearLastRecentSpikeTimes()
+{
+	if(m_lpLastRecentSpikeTimes)
+	{
+		delete m_lpLastRecentSpikeTimes;
+		m_lpLastRecentSpikeTimes = NULL;
+	}
+}
+
+void CsNeuronGroup::CopyRecentSpikeTimes()
+{
+	ClearLastRecentSpikeTimes();
+
+	if(!m_lpLastRecentSpikeTimes)
+	{
+		m_AccessRecentSpikes.lock();
+		m_lpLastRecentSpikeTimes = new std::multimap<int, int>(m_aryRecentSpikeTimes);
+		m_aryRecentSpikeTimes.clear();
+		m_AccessRecentSpikes.unlock();
+	}
+}
 
 void CsNeuronGroup::NeuronCount(unsigned int iVal)
 {	
@@ -149,7 +173,9 @@ float CsNeuronGroup::TauGABAb() {return m_fltTauGABAb;}
 
 std::multimap<int, int> *CsNeuronGroup::SpikeTimes() {return &m_arySpikeTimes;}
 
-std::multimap<int, int> *CsNeuronGroup::LastSpikeTimes() {return &m_aryLastSpikeTimes;}
+std::multimap<int, int> *CsNeuronGroup::RecentSpikeTimes() {return &m_aryRecentSpikeTimes;}
+
+std::multimap<int, int> *CsNeuronGroup::LastRecentSpikeTimes() {return m_lpLastRecentSpikeTimes;}
 
 void CsNeuronGroup::IncrementCollectSpikeDataForNeuron(int iIdx)
 {
@@ -228,7 +254,7 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 	m_fltGroupFiringRate = firing_Rate;
 	m_fltGroupTotalSpikes = total_spikes;
 
-	m_aryLastSpikeTimes.clear();
+	m_AccessRecentSpikes.lock();
 
 	if(total_spikes > 0)
 	{
@@ -242,7 +268,7 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 				{
 					int iTime = m_iLastUpdateTime + t;
 					//Add the spike times to the two lists.
-					m_aryLastSpikeTimes.insert(std::pair<int, int>(id, t));
+					m_aryRecentSpikeTimes.insert(std::pair<int, int>(id, t));
 					m_arySpikeTimes.insert(std::pair<int, int>(id, iTime));
 
 					//std::string strMsg = "Spike [" + STR(id) + ", "+ STR(iTime) + "]\r\n";
@@ -252,6 +278,8 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 			}
 		}
 	}
+
+	m_AccessRecentSpikes.unlock();
 
 	m_iLastUpdateTime += s->getMonitorUpdateSteps();
 }
@@ -271,7 +299,8 @@ void CsNeuronGroup::ResetSimulation()
 	Node::ResetSimulation();
 
 	m_arySpikeTimes.clear();
-	m_aryLastSpikeTimes.clear();
+	m_aryRecentSpikeTimes.clear();
+	ClearLastRecentSpikeTimes();
 	m_fltGroupFiringRate = 0;
 	m_fltGroupTotalSpikes = 0;
 	m_fltSpikeFake = -99999;

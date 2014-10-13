@@ -36,7 +36,7 @@ namespace AnimatCarlSim
 
 		\return	Pointer to created object.
 		**/
-		virtual CsNeuronGroup *CreateNeuron(std::string strType, bool bThrowError = true);
+		virtual Node *CreateNeuron(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a synapse.

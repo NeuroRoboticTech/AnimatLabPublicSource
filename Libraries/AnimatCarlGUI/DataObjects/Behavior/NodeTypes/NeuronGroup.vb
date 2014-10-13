@@ -390,6 +390,28 @@ Namespace DataObjects.Behavior.NodeTypes
 
 #Region " DataObject Methods "
 
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+            If Not NeuralModule Is Nothing Then
+                NeuralModule.VerifyExistsInSim()
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
+                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "NeuronGroup", Me.ID, Me.GetSimulationXml("NeuronGroup"), bThrowError, bDoNotInit)
+                End If
+            End If
+            InitializeSimulationReferences()
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(NeuralModule.ID(), "NeuronGroup", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
@@ -501,13 +523,13 @@ Namespace DataObjects.Behavior.NodeTypes
             Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node
             If bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
                 'If the origin is physics node and the destination is a regular node
-                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter(doParent)
+                Throw New System.Exception("You cannot create an adpater coming into a regular neuron group. You must use a Spiking Generator and stimulate it instead.")
             ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Me.IsPhysicsEngineNode Then
                 'If the origin is regular node and the destination is a physics node
                 bnAdapter = New AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter(doParent)
             ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
                 'If both the origin and destination are regular nodes.
-                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.NodeToNodeAdapter(doParent)
+                Throw New System.Exception("You cannot create an adpater coming into a regular neuron group. You must use a Spiking Generator and stimulate it instead.")
             Else
                 'If both the origin and destination are physics nodes.
                 Throw New System.Exception("You can only link two physics nodes using a graphical link.")
@@ -568,7 +590,7 @@ Namespace DataObjects.Behavior.NodeTypes
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-            oXml.AddChildElement("Neuron")
+            oXml.AddChildElement("NeuronGroup")
             oXml.IntoElem()
 
             oXml.AddChildElement("ID", Me.ID)

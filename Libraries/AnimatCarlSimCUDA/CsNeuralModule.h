@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CsNeuronGroup.h"
+#include "CsIntegrateNeuron.h"
 #include "CsSynapseGroup.h"
 #include "CsSynapseIndividual.h"
 #include "CsConnectionGenerator.h"
@@ -35,8 +36,11 @@ namespace AnimatCarlSim
 	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::ThreadedModule, StepFeedback  
 	{
 	protected:
-		/// The array of neurons in this module.
-		CStdPtrArray<CsNeuronGroup> m_aryNeurons;
+		/// The array of neuron groups in this module.
+		CStdPtrArray<CsNeuronGroup> m_aryNeuronGroups;
+
+		/// The array of individual neurons in this module.
+		CStdPtrArray<CsIntegrateNeuron> m_aryNeurons;
 
 		/// The array of synapses in this module.
 		CStdPtrArray<CsSynapseGroup> m_arySynapses;
@@ -64,7 +68,8 @@ namespace AnimatCarlSim
 		///True if the physics simulation has finished and is waiting on the neural sim to catch up.
 		bool m_bWaitingForNeuralToCatchUp;
 
-		CsNeuronGroup *LoadNeuron(CStdXml &oXml);
+		CsNeuronGroup *LoadNeuronGroup(CStdXml &oXml);
+		CsIntegrateNeuron *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
 
@@ -119,6 +124,10 @@ namespace AnimatCarlSim
 		virtual bool AddItem(const std::string &strItemType, const std::string &strXml, bool bThrowError = true, bool bDoNotInit = false);
 		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
+
+		virtual void AddNeuronGroup(std::string strXml, bool bDoNotInit = false);
+		virtual void RemoveNeuronGroup(std::string strID, bool bThrowError = true);
+		virtual int FindNeuronGroupListPos(std::string strID, bool bThrowError = true);
 
 		virtual void AddNeuron(std::string strXml, bool bDoNotInit = false);
 		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);

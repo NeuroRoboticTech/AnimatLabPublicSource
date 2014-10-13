@@ -11,10 +11,11 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Behavior.NodeTypes
 
-    Public Class SpikeGeneratorGroup
-        Inherits NeuronGroup
+    Public Class IntegrateNeuron
+        Inherits AnimatGUI.DataObjects.Behavior.Nodes.Neuron
 
 #Region " Attributes "
+
 
 #End Region
 
@@ -22,13 +23,26 @@ Namespace DataObjects.Behavior.NodeTypes
 
         Public Overrides ReadOnly Property TypeName() As String
             Get
-                Return "Spike Generator Group"
+                Return "Integrate Neuron"
             End Get
         End Property
 
-        Public Overrides ReadOnly Property NeuronType() As String
+        Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
-                Return "SpikeGeneratorGroup"
+                Return GetType(AnimatCarlGUI.DataObjects.Behavior.NeuralModule)
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property NeuronType() As String
+            Get
+                Return "IntegrateNeuron"
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property SimClassName() As String
+            Get
+                Return Me.NeuronType
             End Get
         End Property
 
@@ -58,26 +72,21 @@ Namespace DataObjects.Behavior.NodeTypes
                 myAssembly = System.Reflection.Assembly.Load("AnimatCarlGUI")
 
                 Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatCarlGUI.NormalNeuron.gif", False)
-                Me.Name = "Spike Generator Group"
+                Me.Name = "Integrate Neuron"
 
                 Me.Font = New Font("Arial", 14, FontStyle.Bold)
-                Me.Description = "A group of spike generators."
+                Me.Description = "A neuron that integrates inputs from Izhikevich spiking neurons."
+
+                AddCompatibleLink(New AnimatGUI.DataObjects.Behavior.Links.Adapter(Nothing))
+                'AddCompatibleLink(New SynapseTypes.OneToOneSynapse(Nothing))
 
                 'Lets add the data types that this node understands.
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("IntrinsicCurrent", "Intrinsic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AdapterCurrent", "Adapter Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SynapticCurrent", "Synaptic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringFrequency", "Firing Frequency", "Hertz", "Hz", 0, 1000))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NoiseVoltage", "Noise Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
-                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AccomTimeMod", "Accom Time Modulation", "Time", "s", 0, 10, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
-                'm_thDataTypes.ID = "FiringFrequency"
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
+                m_thDataTypes.ID = "MembraneVoltage"
 
-                'm_thIncomingDataTypes.DataTypes.Clear()
-                'm_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ExternalCurrent", "External Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
-                'm_thIncomingDataTypes.ID = "ExternalCurrent"
+                m_thIncomingDataTypes.DataTypes.Clear()
+                m_thIncomingDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Spikes", "Spikes", "", "", 0, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
+                m_thIncomingDataTypes.ID = "Spikes"
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -87,12 +96,11 @@ Namespace DataObjects.Behavior.NodeTypes
 
         Public Overrides Sub InitAfterAppStart()
             MyBase.InitAfterAppStart()
-            AddCompatibleStimulusType("FiringRate")
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim oNewNode As New SpikeGeneratorGroup(doParent)
+            Dim oNewNode As New IntegrateNeuron(doParent)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
@@ -102,32 +110,10 @@ Namespace DataObjects.Behavior.NodeTypes
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
-            Dim bnOrig As SpikeGeneratorGroup = DirectCast(doOriginal, SpikeGeneratorGroup)
+            Dim bnOrig As IntegrateNeuron = DirectCast(doOriginal, IntegrateNeuron)
 
-            m_bEnabled = bnOrig.m_bEnabled
 
         End Sub
-
-        Public Overrides Function CreateNewAdapter(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Behavior.Node
-
-            ''If it does require an adapter then lets add the pieces.
-            Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node
-            If bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
-                'If the origin is physics node and the destination is a regular node
-                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.PhysicalToNodeAdapter(doParent)
-            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Me.IsPhysicsEngineNode Then
-                'If the origin is regular node and the destination is a physics node
-                bnAdapter = New AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter(doParent)
-            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
-                'If both the origin and destination are regular nodes.
-                bnAdapter = New AnimatCarlGUI.DataObjects.Behavior.NodeTypes.NodeToNodeAdapter(doParent)
-            Else
-                'If both the origin and destination are physics nodes.
-                Throw New System.Exception("You can only link two physics nodes using a graphical link.")
-            End If
-
-            Return bnAdapter
-        End Function
 
 #Region " DataObject Methods "
 
@@ -140,12 +126,37 @@ Namespace DataObjects.Behavior.NodeTypes
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
+
         End Sub
+
+        Public Overrides Function CreateNewAdapter(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Behavior.Node
+
+            ''If it does require an adapter then lets add the pieces.
+            Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node
+            If bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
+                'If the origin is physics node and the destination is a regular node
+                Throw New System.Exception("You cannot create an adpater coming into a regular neuron group. You must use a Spiking Generator and stimulate it instead.")
+            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Me.IsPhysicsEngineNode Then
+                'If the origin is regular node and the destination is a physics node
+                bnAdapter = New AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter(doParent)
+            ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
+                'If both the origin and destination are regular nodes.
+                Throw New System.Exception("You cannot create an adpater coming into a regular neuron group. You must use a Spiking Generator and stimulate it instead.")
+            Else
+                'If both the origin and destination are physics nodes.
+                Throw New System.Exception("You can only link two physics nodes using a graphical link.")
+            End If
+
+            Return bnAdapter
+        End Function
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
+
+            m_bEnabled = oXml.GetChildBool("Enabled", True)
+
 
             oXml.OutOfElem()
 
@@ -156,14 +167,22 @@ Namespace DataObjects.Behavior.NodeTypes
 
             oXml.IntoElem() 'Into Node Element
 
+            oXml.AddChildElement("Enabled", m_bEnabled)
+
             oXml.OutOfElem() ' Outof Node Element
 
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
+            oXml.AddChildElement("Neuron")
             oXml.IntoElem()
+
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Text)
+            oXml.AddChildElement("Type", Me.NeuronType)
+            oXml.AddChildElement("Enabled", Me.Enabled)
+
 
             oXml.OutOfElem() 'Outof Neuron
 

@@ -58,12 +58,25 @@ Namespace DataObjects.Behavior
 
             oXml.IntoElem()  'neuralmodule xml
 
-            Dim bnNode As NeuronGroup
+            Dim bnNeuronGroup As NeuronGroup
+            oXml.AddChildElement("NeuronGroups")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryNodes
+                If Util.IsTypeOf(deEntry.Value.GetType, GetType(NeuronGroup), False) Then
+                    bnNeuronGroup = DirectCast(deEntry.Value, NeuronGroup)
+                    bnNeuronGroup.SaveSimulationXml(oXml, Me)
+                End If
+            Next
+            oXml.OutOfElem()
+
+            Dim bnNeuron As IntegrateNeuron
             oXml.AddChildElement("Neurons")
             oXml.IntoElem()
             For Each deEntry As DictionaryEntry In m_aryNodes
-                bnNode = DirectCast(deEntry.Value, NeuronGroup)
-                bnNode.SaveSimulationXml(oXml, Me)
+                If Util.IsTypeOf(deEntry.Value.GetType, GetType(IntegrateNeuron), False) Then
+                    bnNeuron = DirectCast(deEntry.Value, IntegrateNeuron)
+                    bnNeuron.SaveSimulationXml(oXml, Me)
+                End If
             Next
             oXml.OutOfElem()
 

@@ -98,10 +98,19 @@ namespace AnimatCarlSim
 		std::multimap<int, int> m_arySpikeTimes;
 
 		///A map for keeping track of a spike times in ms for individual neurons in this group since the last time the spike monitors ran
-		std::multimap<int, int> m_aryLastSpikeTimes;
+		std::multimap<int, int> m_aryRecentSpikeTimes;
+
+		///This is a copy of the last recent spike times for use by the phsyics simulation.
+		std::multimap<int, int> *m_lpLastRecentSpikeTimes;
 
 		///The last time step for which the monitor method ran.
 		unsigned int m_iLastUpdateTime;
+
+#ifndef STD_DO_NOT_ADD_BOOST
+			///mutex used to try and access matches variable.
+			boost::interprocess::interprocess_mutex m_AccessRecentSpikes;
+#endif
+
 
 	public:
 		CsNeuronGroup();
@@ -160,7 +169,16 @@ namespace AnimatCarlSim
 		virtual float TauGABAb();
 
 		virtual std::multimap<int, int> *SpikeTimes();
-		virtual std::multimap<int, int> *LastSpikeTimes();
+		virtual std::multimap<int, int> *RecentSpikeTimes();
+		virtual std::multimap<int, int> *LastRecentSpikeTimes();
+		
+#ifndef STD_DO_NOT_ADD_BOOST
+			///mutex used to try and access matches variable.
+		boost::interprocess::interprocess_mutex *AccessRecentSpikes() {return &m_AccessRecentSpikes;};
+#endif
+
+		virtual void CopyRecentSpikeTimes();
+		virtual void ClearLastRecentSpikeTimes();
 
 		virtual void IncrementCollectSpikeDataForNeuron(int iIdx);
 		virtual void DecrementCollectSpikeDataForNeuron(int iIdx);
