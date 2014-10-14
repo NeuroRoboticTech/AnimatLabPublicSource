@@ -157,32 +157,6 @@ int CsNeuralModule::FindNeuronGroupListPos(std::string strID, bool bThrowError)
 	return -1;
 }
 
-/**
-\brief	Searches for the neuron with the specified ID and returns its position in the list.
-
-\author	dcofer
-\date	3/29/2011
-
-\param	strID	   	GUID ID of the neruon to find. 
-\param	bThrowError	true to throw error if nothing found. 
-
-\return	The found neuron list position.
-**/
-int CsNeuralModule::FindNeuronListPos(std::string strID, bool bThrowError)
-{
-	std::string sID = Std_ToUpper(Std_Trim(strID));
-
-	int iCount = m_aryNeurons.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryNeurons[iIndex]->ID() == sID)
-			return iIndex;
-
-	if(bThrowError)
-		THROW_TEXT_ERROR(Cs_Err_lNeuronNotFound, Cs_Err_strNeuronNotFound, "ID");
-
-	return -1;
-}
-
 void CsNeuralModule::SetCARLSimulation()
 {
 	if(m_lpSNN)
@@ -337,6 +311,11 @@ void CsNeuralModule::ResetSimulation()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeuronGroups[iIndex])
 			m_aryNeuronGroups[iIndex]->ResetSimulation();
+
+	iCount = m_arySynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_arySynapses[iIndex])
+			m_arySynapses[iIndex]->ResetSimulation();
 }
 
 void CsNeuralModule::Initialize()
@@ -365,22 +344,12 @@ void CsNeuralModule::StepSimulation()
 	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
 		WaitForNeuralToCatchUp();
 
-	int iIntegrateCount = m_aryNeurons.GetSize();
-	if(iIntegrateCount >= 0)
-	{
-		//First have it go through and try to capture a snapshot of the spike times since the 
-		//last time we were ablet to get it.
-		int iGroupCount = m_aryNeuronGroups.GetSize();
-		for(int iIndex=0; iIndex<iGroupCount; iIndex++)
-			if(m_aryNeuronGroups[iIndex])
-				m_aryNeuronGroups[iIndex]->CopyRecentSpikeTimes();
-
-		//Now go through and step the simulation on each neuron group. Most of them will not do 
-		//anything, but the Integrate neurons will 
-		for(int iIndex=0; iIndex<iIntegrateCount; iIndex++)
-			if(m_aryNeurons[iIndex])
-				m_aryNeurons[iIndex]->StepSimulation();
-	}
+	//First have it go through and try to capture a snapshot of the spike times since the 
+	//last time we were ablet to get it.
+	int iGroupCount = m_aryNeuronGroups.GetSize();
+	for(int iIndex=0; iIndex<iGroupCount; iIndex++)
+		if(m_aryNeuronGroups[iIndex])
+			m_aryNeuronGroups[iIndex]->CopyRecentSpikeTimes();
 }
 
 #pragma region DataAccesMethods
@@ -459,41 +428,6 @@ void CsNeuralModule::RemoveNeuronGroup(std::string strID, bool bThrowError)
 {
 	int iPos = FindNeuronGroupListPos(strID, bThrowError);
 	m_aryNeuronGroups.RemoveAt(iPos);
-}
-
-/**
-\brief	Adds a neuron to the module. 
-
-\author	dcofer
-\date	3/29/2011
-
-\param	strXml	The xml to use when loading the neuron. 
-**/
-void CsNeuralModule::AddNeuron(std::string strXml, bool bDoNotInit)
-{
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("Neuron");
-
-	CsIntegrateNeuron *lpNeuron = LoadNeuron(oXml);
-	if(!bDoNotInit)
-		lpNeuron->Initialize();
-}
-
-/**
-\brief	Removes the neuron with the specified ID.
-
-\author	dcofer
-\date	3/29/2011
-
-\param	strID	   	GUID ID for the neuron. 
-\param	bThrowError	true to throw error if neuron found. 
-**/
-void CsNeuralModule::RemoveNeuron(std::string strID, bool bThrowError)
-{
-	int iPos = FindNeuronListPos(strID, bThrowError);
-	m_aryNeurons.RemoveAt(iPos);
 }
 
 /**
@@ -637,11 +571,6 @@ bool CsNeuralModule::AddItem(const std::string &strItemType, const std::string &
 		AddNeuronGroup(strXml, bDoNotInit);
 		return true;
 	}
-	else if(strType == "NEURON")
-	{
-		AddNeuron(strXml, bDoNotInit);
-		return true;
-	}
 	else if(strType == "SYNAPSE")
 	{
 		AddSynapse(strXml, bDoNotInit);
@@ -663,11 +592,6 @@ bool CsNeuralModule::RemoveItem(const std::string &strItemType, const std::strin
 	if(strType == "NEURONGROUP")
 	{
 		RemoveNeuronGroup(strID, bThrowError);
-		return true;
-	}
-	else if(strType == "NEURON")
-	{
-		RemoveNeuron(strID, bThrowError);
 		return true;
 	}
 	else if(strType == "SYNAPSE")
@@ -741,19 +665,6 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 	oXml.OutOfElem();
 	//*** End Loading Neurons groups. *****
 
-	//*** Begin Loading Neurons. *****
-	oXml.IntoChildElement("Neurons");
-
-	iTotalNeurons = oXml.NumberOfChildren();
-	for(iNeuron=0; iNeuron<iTotalNeurons; iNeuron++)
-	{
-		oXml.FindChildByIndex(iNeuron);
-		LoadNeuron(oXml);
-	}
-
-	oXml.OutOfElem();
-	//*** End Loading Neurons. *****
-
 	//*** Begin Loading Synapses. *****
 	if(oXml.FindChildElement("Synapses", false))
 	{
@@ -802,52 +713,6 @@ try
 	lpNeuron->Load(oXml);
 	
 	m_aryNeuronGroups.Add(lpNeuron);
-	return lpNeuron;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpNeuron) delete lpNeuron;
-	RELAY_ERROR(oError);
-	return NULL;
-}
-catch(...)
-{
-	if(lpNeuron) delete lpNeuron;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
-}
-
-/**
-\brief	Loads a neuron.
-
-\author	dcofer
-\date	3/29/2011
-
-\param [in,out]	oXml	The xml to load for the neuron. 
-
-\return	Pointer to the loaded neuron.
-**/
-CsIntegrateNeuron *CsNeuralModule::LoadNeuron(CStdXml &oXml)
-{
-	CsIntegrateNeuron *lpNeuron=NULL;
-	std::string strType;
-
-try
-{
-	//Now lets get the index and type of this neuron
-	oXml.IntoElem();  //Into Neuron Element
-	strType = oXml.GetChildString("Type");
-	oXml.OutOfElem();  //OutOf Neuron Element
-
-	lpNeuron = dynamic_cast<CsIntegrateNeuron *>(m_lpSim->CreateObject("AnimatCarlSimCUDA", "Neuron", strType));
-	if(!lpNeuron)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Neuron");
-
-	lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
-	lpNeuron->Load(oXml);
-	
-	m_aryNeurons.Add(lpNeuron);
 	return lpNeuron;
 }
 catch(CStdErrorInfo oError)

@@ -9,7 +9,6 @@
 #include "CsNeuralModule.h"
 #include "CsNeuronGroup.h"
 #include "CsSpikeGeneratorGroup.h"
-#include "CsIntegrateNeuron.h"
 #include "CsSynapseGroup.h"
 #include "CsSynapseOneToOne.h"
 #include "CsSynapseFull.h"
@@ -57,8 +56,6 @@ try
 		lpNeuron = new CsNeuronGroup;
 	else if(strType == "SPIKEGENERATORGROUP")
 		lpNeuron = new CsSpikeGeneratorGroup;
-	else if(strType == "INTEGRATENEURON")
-		lpNeuron = new CsIntegrateNeuron;
 	else 
 	{
 		lpNeuron = NULL;

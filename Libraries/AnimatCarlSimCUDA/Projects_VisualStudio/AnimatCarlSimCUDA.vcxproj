@@ -23,7 +23,6 @@
     <ClInclude Include="..\CsConnectionGenerator.h" />
     <ClInclude Include="..\CsFiringRateStimulus.h" />
     <ClInclude Include="..\CsIncludes.h" />
-    <ClInclude Include="..\CsIntegrateNeuron.h" />
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
     <ClInclude Include="..\config.h" />
@@ -54,7 +53,6 @@
     <ClCompile Include="..\CsAdapter.cpp" />
     <ClCompile Include="..\CsConnectionGenerator.cpp" />
     <ClCompile Include="..\CsFiringRateStimulus.cpp" />
-    <ClCompile Include="..\CsIntegrateNeuron.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
     <ClCompile Include="..\CsNeuronDataColumn.cpp" />

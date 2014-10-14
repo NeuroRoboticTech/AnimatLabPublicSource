@@ -69,17 +69,6 @@ Namespace DataObjects.Behavior
             Next
             oXml.OutOfElem()
 
-            Dim bnNeuron As IntegrateNeuron
-            oXml.AddChildElement("Neurons")
-            oXml.IntoElem()
-            For Each deEntry As DictionaryEntry In m_aryNodes
-                If Util.IsTypeOf(deEntry.Value.GetType, GetType(IntegrateNeuron), False) Then
-                    bnNeuron = DirectCast(deEntry.Value, IntegrateNeuron)
-                    bnNeuron.SaveSimulationXml(oXml, Me)
-                End If
-            Next
-            oXml.OutOfElem()
-
             Dim blSynpase As SynapseGroup
             oXml.AddChildElement("Synapses")
             oXml.IntoElem()

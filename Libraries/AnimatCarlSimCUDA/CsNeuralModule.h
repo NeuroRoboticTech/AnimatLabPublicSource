@@ -7,7 +7,6 @@
 #pragma once
 
 #include "CsNeuronGroup.h"
-#include "CsIntegrateNeuron.h"
 #include "CsSynapseGroup.h"
 #include "CsSynapseIndividual.h"
 #include "CsConnectionGenerator.h"
@@ -39,9 +38,6 @@ namespace AnimatCarlSim
 		/// The array of neuron groups in this module.
 		CStdPtrArray<CsNeuronGroup> m_aryNeuronGroups;
 
-		/// The array of individual neurons in this module.
-		CStdPtrArray<CsIntegrateNeuron> m_aryNeurons;
-
 		/// The array of synapses in this module.
 		CStdPtrArray<CsSynapseGroup> m_arySynapses;
 
@@ -69,7 +65,6 @@ namespace AnimatCarlSim
 		bool m_bWaitingForNeuralToCatchUp;
 
 		CsNeuronGroup *LoadNeuronGroup(CStdXml &oXml);
-		CsIntegrateNeuron *LoadNeuron(CStdXml &oXml);
 		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
 
@@ -128,10 +123,6 @@ namespace AnimatCarlSim
 		virtual void AddNeuronGroup(std::string strXml, bool bDoNotInit = false);
 		virtual void RemoveNeuronGroup(std::string strID, bool bThrowError = true);
 		virtual int FindNeuronGroupListPos(std::string strID, bool bThrowError = true);
-
-		virtual void AddNeuron(std::string strXml, bool bDoNotInit = false);
-		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
-		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
 
 		virtual CStdPtrArray<CsSynapseGroup> *GetSynapses();
 		/**
