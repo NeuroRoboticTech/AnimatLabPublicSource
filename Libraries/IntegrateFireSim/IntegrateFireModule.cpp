@@ -1707,6 +1707,11 @@ bool IntegrateFireNeuralModule::AddItem(const std::string &strItemType, const st
 		AddSynapse(strXml, bDoNotInit);
 		return true;
 	}
+	else if(strType == "EXTERNALSYNAPSE")
+	{
+		AddExternalSynapse(strXml, bDoNotInit);
+		return true;
+	}
 	else if(strType == "SYNAPSETYPE")
 	{
 		AddSynapseType(strXml, bDoNotInit);
@@ -1732,6 +1737,11 @@ bool IntegrateFireNeuralModule::RemoveItem(const std::string &strItemType, const
 	else if(strType == "SYNAPSE")
 	{
 		RemoveSynapse(strID, bThrowError);
+		return true;
+	}
+	else if(strType == "EXTERNALSYNAPSE")
+	{
+		RemoveExternalSynapse(strID);
 		return true;
 	}
 	else if(strType == "SYNAPSETYPE")
@@ -1819,6 +1829,8 @@ void IntegrateFireNeuralModule::Load(CStdXml &oXml)
 	}
 	else
 		LoadInternal(oXml);
+
+	LoadExternalSynapses(oXml);
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 

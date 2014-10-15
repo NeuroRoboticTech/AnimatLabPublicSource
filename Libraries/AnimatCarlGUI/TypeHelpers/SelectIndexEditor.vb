@@ -53,6 +53,26 @@ Namespace TypeHelpers
             End If
         End Sub
 
+        Protected Overridable Sub ProcessSpikingCurrentSynapse(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object, _
+                                                               ByVal doSynapse As DataObjects.Behavior.SynapseTypes.SpikingCurrentSynapse)
+
+            Dim doNeuron As NeuronGroup = DirectCast(doSynapse.Origin, NeuronGroup)
+
+            If Not doNeuron Is Nothing Then
+                Dim frmEditor As New Forms.SelectIndex()
+                frmEditor.Min = 0
+                frmEditor.Max = doNeuron.NeuronCount - 1
+                frmEditor.Indices = doSynapse.CellsToMonitor
+
+                If frmEditor.ShowDialog() = DialogResult.OK Then
+                    doSynapse.CellsToMonitor.Clear()
+                    For Each iIdx As Integer In frmEditor.lbIndices.Items
+                        doSynapse.CellsToMonitor.Add(iIdx)
+                    Next
+                End If
+            End If
+        End Sub
+
         Public Overloads Overrides Function EditValue(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object) As Object
 
             Try
@@ -72,6 +92,10 @@ Namespace TypeHelpers
                         If Not doAdapter.Destination Is Nothing AndAlso Util.IsTypeOf(doAdapter.Destination.GetType(), GetType(SpikeGeneratorGroup), False) Then
                             ProcessAdapter(context, provider, value, doAdapter)
                         End If
+                    ElseIf Not pbBag.Tag Is Nothing AndAlso Util.IsTypeOf(pbBag.Tag.GetType, GetType(DataObjects.Behavior.SynapseTypes.SpikingCurrentSynapse), False) Then
+                        Dim doSynapse As DataObjects.Behavior.SynapseTypes.SpikingCurrentSynapse = DirectCast(pbBag.Tag, DataObjects.Behavior.SynapseTypes.SpikingCurrentSynapse)
+
+                        ProcessSpikingCurrentSynapse(context, provider, value, doSynapse)
                     End If
 
                 End If

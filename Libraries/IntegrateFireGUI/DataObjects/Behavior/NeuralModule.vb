@@ -478,8 +478,17 @@ Namespace DataObjects.Behavior
                 If Util.IsTypeOf(deEntry.Value.GetType(), GetType(IntegrateFireGUI.DataObjects.Behavior.Synapse), False) Then
                     blLink = DirectCast(deEntry.Value, IntegrateFireGUI.DataObjects.Behavior.Synapse)
                     blLink.SaveSimulationXml(oXml, Me)
-                Else
-                    Throw New System.Exception("There was a link in the realistic neural module that was not derived from a synapse?")
+                End If
+            Next
+            oXml.OutOfElem()
+
+            Dim blExternal As AnimatGUI.DataObjects.Behavior.Link
+            oXml.AddChildElement("ExternalSynapses")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryLinks
+                If Not Util.IsTypeOf(deEntry.Value.GetType(), GetType(IntegrateFireGUI.DataObjects.Behavior.Synapse), False) Then
+                    blExternal = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    blExternal.SaveSimulationXml(oXml, Me)
                 End If
             Next
             oXml.OutOfElem()

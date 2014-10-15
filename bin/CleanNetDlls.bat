@@ -7,3 +7,4 @@ del LicensedAnimatGUI.dll /F /Q
 del ManagedAnimatInterfaces.dll /F /Q
 del ManagedAnimatTools.dll /F /Q
 del RoboticsGUI.dll /F /Q
+del AnimatCarlGUI.dll /F /Q

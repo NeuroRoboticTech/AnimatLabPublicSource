@@ -1,5 +1,5 @@
 /**
-\file	Synapse.h
+\file	CsSynapseGroup.h
 
 \brief	Declares the synapse class.
 **/

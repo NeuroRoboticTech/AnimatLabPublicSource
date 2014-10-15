@@ -106,6 +106,9 @@ namespace AnimatCarlSim
 		///The last time step for which the monitor method ran.
 		unsigned int m_iLastUpdateTime;
 
+		///The last time we copied the spike times for this group.
+		float m_fltLastCopySpikesTime;
+
 #ifndef STD_DO_NOT_ADD_BOOST
 			///mutex used to try and access matches variable.
 			boost::interprocess::interprocess_mutex m_AccessRecentSpikes;
@@ -171,6 +174,8 @@ namespace AnimatCarlSim
 		virtual std::multimap<int, int> *SpikeTimes();
 		virtual std::multimap<int, int> *RecentSpikeTimes();
 		virtual std::multimap<int, int> *LastRecentSpikeTimes();
+
+		virtual float LastCopySpikesTime() {return m_fltLastCopySpikesTime;}
 		
 #ifndef STD_DO_NOT_ADD_BOOST
 			///mutex used to try and access matches variable.

@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include "Gain.h"
 #include "Node.h"
+#include "Link.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "BoundingBox.h"

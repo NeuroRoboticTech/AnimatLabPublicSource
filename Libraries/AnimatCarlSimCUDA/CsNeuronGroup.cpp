@@ -48,6 +48,7 @@ CsNeuronGroup::CsNeuronGroup()
 	m_fltGroupTotalSpikes = 0;
 	m_fltSpikeFake = -99999;
 	m_iLastUpdateTime = 0;
+	m_fltLastCopySpikesTime = 0;
 
 	m_lpLastRecentSpikeTimes = NULL;
 }
@@ -88,6 +89,7 @@ void CsNeuronGroup::CopyRecentSpikeTimes()
 		m_lpLastRecentSpikeTimes = new std::multimap<int, int>(m_aryRecentSpikeTimes);
 		m_aryRecentSpikeTimes.clear();
 		m_AccessRecentSpikes.unlock();
+		m_fltLastCopySpikesTime = m_lpSim->Time();
 	}
 }
 
@@ -305,6 +307,7 @@ void CsNeuronGroup::ResetSimulation()
 	m_fltGroupTotalSpikes = 0;
 	m_fltSpikeFake = -99999;
 	m_iLastUpdateTime = 0;
+	m_fltLastCopySpikesTime = 0;
 }
 
 void CsNeuronGroup::AddExternalNodeInput(int iTargetDataType, float fltInput)

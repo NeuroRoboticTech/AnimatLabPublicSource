@@ -41,6 +41,7 @@ namespace AnimatCarlSim
 			///The value to use for active rate if the type is constant
 			float m_fltConstantRate;
 
+			///Tells whether this stimulus is applied to the entire population or just individual cells
 			bool m_bStimWholePopulation;
 
 			///An array of neuron indices for individual neurons we want to stimulate

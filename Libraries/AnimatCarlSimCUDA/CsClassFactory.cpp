@@ -14,6 +14,7 @@
 #include "CsSynapseFull.h"
 #include "CsSynapseRandom.h"
 #include "CsSynapseIndividual.h"
+#include "CsSpikingCurrentSynapse.h"
 #include "CsFiringRateStimulus.h"
 #include "CsNeuronDataColumn.h"
 #include "CsAdapter.h"
@@ -86,9 +87,9 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-CsSynapseGroup *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
+AnimatSim::Link *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
 {
-	CsSynapseGroup *lpSynapse=NULL;
+	AnimatSim::Link *lpSynapse=NULL;
 
 try
 {
@@ -102,6 +103,8 @@ try
 		lpSynapse = new CsSynapseRandom;
 	else if(strType == "INDIVIDUALSYNAPSE")
 		lpSynapse = new CsSynapseIndividual;
+	else if(strType == "SPIKINGCURRENTSYNAPSE")
+		lpSynapse = new CsSpikingCurrentSynapse;
 	else
 	{
 		lpSynapse = NULL;

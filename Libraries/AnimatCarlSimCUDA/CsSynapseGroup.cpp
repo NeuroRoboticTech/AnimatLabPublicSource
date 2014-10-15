@@ -1,5 +1,5 @@
 /**
-\file	Synapse.cpp
+\file	CsSynapseGroup.cpp
 
 \brief	Implements the synapse class.
 **/

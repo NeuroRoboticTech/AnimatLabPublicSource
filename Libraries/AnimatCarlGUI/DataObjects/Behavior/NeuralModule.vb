@@ -43,6 +43,10 @@ Namespace DataObjects.Behavior
             m_strModuleType = "CarlSimNeuralModule"
 
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+
+            Util.Application.AddAdapterPair(GetType(AnimatCarlGUI.DataObjects.Behavior.NodeTypes.NeuronGroup).ToString(), "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking", GetType(AnimatGUI.DataObjects.Behavior.Nodes.NodeToNodeAdapter).ToString())
+
+            Util.Application.AddLinkPair(GetType(AnimatCarlGUI.DataObjects.Behavior.NodeTypes.NeuronGroup).ToString, "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking", GetType(AnimatCarlGUI.DataObjects.Behavior.SynapseTypes.SpikingCurrentSynapse).ToString())
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

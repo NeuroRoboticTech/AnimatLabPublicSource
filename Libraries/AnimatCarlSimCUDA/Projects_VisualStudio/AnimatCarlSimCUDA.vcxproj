@@ -29,6 +29,7 @@
     <ClInclude Include="..\CsNeuronDataColumn.h" />
     <ClInclude Include="..\CsNeuronGroup.h" />
     <ClInclude Include="..\CsSpikeGeneratorGroup.h" />
+    <ClInclude Include="..\CsSpikingCurrentSynapse.h" />
     <ClInclude Include="..\CsSynapseFull.h" />
     <ClInclude Include="..\CsSynapseGroup.h" />
     <ClInclude Include="..\CsSynapseIndividual.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="..\CsNeuronDataColumn.cpp" />
     <ClCompile Include="..\CsNeuronGroup.cpp" />
     <ClCompile Include="..\CsSpikeGeneratorGroup.cpp" />
+    <ClCompile Include="..\CsSpikingCurrentSynapse.cpp" />
     <ClCompile Include="..\CsSynapseFull.cpp" />
     <ClCompile Include="..\CsSynapseGroup.cpp" />
     <ClCompile Include="..\CsSynapseIndividual.cpp" />

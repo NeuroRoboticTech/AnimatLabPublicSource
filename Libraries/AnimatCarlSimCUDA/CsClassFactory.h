@@ -49,7 +49,7 @@ namespace AnimatCarlSim
 
 		\return	Pointer to created object.
 		**/
-		virtual CsSynapseGroup *CreateSynapse(std::string strType, bool bThrowError = true);
+		virtual AnimatSim::Link *CreateSynapse(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates an external stimuli.

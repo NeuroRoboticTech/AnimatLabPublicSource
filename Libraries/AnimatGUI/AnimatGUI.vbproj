@@ -262,6 +262,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\Waypoints.vb" />
+    <Compile Include="DataObjects\Behavior\LinkPair.vb" />
     <Compile Include="DataObjects\Behavior\Data.vb">
       <SubType>Code</SubType>
     </Compile>

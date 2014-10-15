@@ -361,6 +361,8 @@ void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 		LoadNeuron(oXml);
 	}
 
+	LoadExternalSynapses(oXml);
+
 	oXml.OutOfElem();
 	//*** End Loading Neurons. *****
 }

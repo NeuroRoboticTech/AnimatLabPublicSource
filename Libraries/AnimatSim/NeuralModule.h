@@ -58,10 +58,15 @@ namespace AnimatSim
 			/// An array of target adapters for this module.
 			CStdArray<Adapter *> m_aryTargetAdapters;
 
+			///An array of external synapses connected to nodes within this module.
+			CStdPtrArray<AnimatSim::Link> m_aryExternalSynapses;
+
 			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
 			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, std::string strID, bool bThrowError = true);
+			virtual AnimatSim::Link *LoadExternalSynapse(CStdXml &oXml);
+			virtual void LoadExternalSynapses(CStdXml &oXml);
 
 		public:
 			NeuralModule();
@@ -165,6 +170,11 @@ namespace AnimatSim
 			virtual void RemoveTargetAdapter(Adapter *lpAdapter);
 
 			virtual float *GetDataPointer(const std::string &strDataType);
+
+			virtual void AddExternalSynapse(AnimatSim::Link *lpSynapse);
+			virtual void AddExternalSynapse(std::string strXml, bool bDoNotInit);
+			virtual void RemoveExternalSynapse(std::string strID, bool bThrowError = true);
+			virtual int FindExternalSynapseListPos(std::string strID, bool bThrowError = true);
 
 			virtual void Initialize();
 			virtual bool NeedToStep(bool bIncrement);

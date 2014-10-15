@@ -10,6 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
+#include "Link.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "BoundingBox.h"
@@ -230,6 +231,10 @@ void NeuralModule::Initialize()
 	// Once everything is loaded and initialized, then if a given time step is changed then that one is changed in
 	// the sim, and events will change it for the rest of them afterwards, so the values should be correct. 
 	TimeStep(m_fltTimeStep);
+
+	int iCount = m_aryExternalSynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryExternalSynapses[iIndex]->Initialize();
 }
 
 /**
@@ -303,6 +308,150 @@ void NeuralModule::RemoveTargetAdapter(Adapter *lpAdapter)
 	}
 }
 
+void NeuralModule::AddExternalSynapse(AnimatSim::Link *lpSynapse)
+{
+	if(!lpSynapse) 
+		THROW_ERROR(Al_Err_lSynapseToAddNull, Al_Err_strSynapseToAddNull);
+	m_aryExternalSynapses.Add(lpSynapse);
+}
+
+/**
+\brief	Adds a synapse using an xml packet. 
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml of the synapse to add. 
+**/
+void NeuralModule::AddExternalSynapse(std::string strXml, bool bDoNotInit)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Synapse");
+
+	AnimatSim::Link *lpSynapse = LoadExternalSynapse(oXml);
+	if(!bDoNotInit)
+		lpSynapse->Initialize();
+}
+
+/**
+\brief	Removes the synapse by the GUID ID.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID for the synapse to remove. 
+\param	bThrowError	true to throw error if synaspe not found. 
+**/
+void NeuralModule::RemoveExternalSynapse(std::string strID, bool bThrowError)
+{
+	int iPos = FindExternalSynapseListPos(strID, bThrowError);
+	m_aryExternalSynapses.RemoveAt(iPos);
+}
+
+/**
+\brief	Searches for a synapse with the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID of the synapse to find. 
+\param	bThrowError	true to throw error if no synapse is found. 
+
+\return	The found synapse list position.
+**/
+int NeuralModule::FindExternalSynapseListPos(std::string strID, bool bThrowError)
+{
+	std::string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryExternalSynapses.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryExternalSynapses[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lSynapseNotFound, Al_Err_strSynapseNotFound, "ID");
+
+	return -1;
+}
+
+/**
+\brief	Loads external synapses.
+
+\author	dcofer
+\date	10/15/2014
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the created synapse.
+**/
+void NeuralModule::LoadExternalSynapses(CStdXml &oXml)
+{
+
+	//*** Begin Loading Neurons. *****
+	if(oXml.FindChildElement("ExternalSynapses", false))
+	{
+		oXml.IntoChildElement("ExternalSynapses");
+
+		int iCount = oXml.NumberOfChildren();
+		for(int iIdx=0; iIdx<iCount; iIdx++)
+		{
+			oXml.FindChildByIndex(iIdx);
+			LoadExternalSynapse(oXml);
+		}
+
+		oXml.OutOfElem();
+		//*** End Loading Neurons. *****
+	}
+}
+
+/**
+\brief	Loads an external synapse.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the created synapse.
+**/
+AnimatSim::Link *NeuralModule::LoadExternalSynapse(CStdXml &oXml)
+{
+	std::string strModuleFilename, strType;
+	AnimatSim::Link *lpSynapse=NULL;
+
+try
+{
+	oXml.IntoElem();  //Into Synapse Element
+	strModuleFilename = oXml.GetChildString("ModuleFilename", "");
+	strType = oXml.GetChildString("Type");
+	oXml.OutOfElem(); //OutOf Synapse Element
+
+	lpSynapse = dynamic_cast<AnimatSim::Link *>(m_lpSim->CreateObject(strModuleFilename, "Synapse", strType));
+	if(!lpSynapse)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
+
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, true);
+	lpSynapse->Load(oXml);
+	AddExternalSynapse(lpSynapse);
+
+	return lpSynapse;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpSynapse) delete lpSynapse;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpSynapse) delete lpSynapse;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, false);
@@ -336,6 +485,9 @@ float *NeuralModule::GetDataPointer(const std::string &strDataType)
 
 void NeuralModule::StepSimulation()
 {
+	int iCount = m_aryExternalSynapses.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		m_aryExternalSynapses[iIdx]->StepSimulation();
 }
 
 void NeuralModule::StepAdapters()
