@@ -1769,6 +1769,8 @@ void IntegrateFireNeuralModule::Kill(bool bState)
 
 void IntegrateFireNeuralModule::ResetSimulation()
 {
+	NeuralModule::ResetSimulation();
+
 	m_dCurrentTime = 0;
 
 	PostCalc();

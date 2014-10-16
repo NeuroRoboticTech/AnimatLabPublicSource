@@ -118,6 +118,7 @@ public:
 	virtual void Stop();
 
 	virtual void InitMotorData();
+	virtual void ShutdownMotor();
 	virtual void WaitForMoveToFinish();
 
 #pragma region DataAccesMethods

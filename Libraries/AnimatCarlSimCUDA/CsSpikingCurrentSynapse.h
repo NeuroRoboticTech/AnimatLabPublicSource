@@ -52,6 +52,15 @@ namespace AnimatCarlSim
 		///An array of neuron indices for individual neurons we want to stimulate
 		CStdMap<int, int> m_aryCells;
 		
+		///Keeps track of the number of steps till we need to test for spikes to process
+		int m_iStepsPerTest;
+
+		///Keeps track of how my steps we have take tiil we are ready to test again.
+		int m_iStepsPerTestCount;
+
+		//Keeps track of the current Test time to check for spikes
+		unsigned long m_ulSpikeTestTime;
+
 		///The magnitude of the current applied to the target neuron.
 		float m_fltCurrentMagnitude;
 
@@ -61,11 +70,12 @@ namespace AnimatCarlSim
 		///The amount by which the current is decremented each step
 		float m_fltDecrementCurrent;
 
+		long m_lTotalSpikesAdded;
+
 		virtual void LoadCells(CStdXml &oXml);
 
-		virtual void TestSpike(float fltTime);
-		virtual void ProcessSpikesForWholePopulation();
-		virtual void ProcessSpikesForCells();
+		virtual void ProcessSpikes();
+		virtual void CalculateStepsPerTest();
 
 	public:
 		CsSpikingCurrentSynapse();

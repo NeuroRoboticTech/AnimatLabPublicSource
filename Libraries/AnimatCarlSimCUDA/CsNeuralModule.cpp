@@ -167,7 +167,7 @@ void CsNeuralModule::SetCARLSimulation()
 
 	m_lpSNN = new CpuSNN(m_strID.c_str());
 	
-	m_lpSNN->setMonitorUpdateSteps(10);
+	m_lpSNN->setMonitorUpdateSteps(m_uiUpdateSteps);
 	m_lpSNN->setStepFeedback(this);
 
 	//Go through each of the neuron group items and set them up

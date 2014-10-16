@@ -150,9 +150,9 @@ void CsNeuronDataColumn::FillInDeactivateData()
 
 		if(fltTimeBase > 0)
 		{
-			std::pair<std::multimap<int, int>::iterator, std::multimap<int, int>::iterator> arySpikeTimes = m_lpNeuron->SpikeTimes()->equal_range(m_iNeuronID);
+			std::pair<std::multimap<int, unsigned long>::iterator, std::multimap<int, unsigned long>::iterator> arySpikeTimes = m_lpNeuron->SpikeTimes()->equal_range(m_iNeuronID);
 
-			for (std::multimap<int, int>::iterator it = arySpikeTimes.first; it != arySpikeTimes.second; ++it)
+			for (std::multimap<int, unsigned long>::iterator it = arySpikeTimes.first; it != arySpikeTimes.second; ++it)
 			{
 				int iTime = (int) (*it).second;
 				float fltTime = iTime*CARLSIM_STEP_INCREMENT;

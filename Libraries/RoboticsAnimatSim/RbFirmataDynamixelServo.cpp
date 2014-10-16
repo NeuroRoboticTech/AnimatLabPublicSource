@@ -196,6 +196,15 @@ void RbFirmataDynamixelServo::ConfigureServo()
 	}
 }
 
+void RbFirmataDynamixelServo::ShutdownMotor()
+{
+	RbDynamixelServo::ShutdownMotor();
+
+	//Make sure we detach the servo from the arbotix.
+	if(m_lpFirmata && m_bQueryMotorData)
+		m_lpFirmata->sendDynamixelServoDetach(m_iServoID);
+}
+
 void RbFirmataDynamixelServo::InitMotorData()
 {
 	if(m_lpFirmata)

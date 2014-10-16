@@ -91,23 +91,28 @@ namespace AnimatCarlSim
 		///the list of spike timing data collected during the run.
 		float m_fltSpikeFake;
 
+		///If > 0 it collects data from the whole population. This is an iterator keeping track of how many things have told it to collect the whole population.
+		int m_iCollectWholePopulation;
+
 		///An array of neuron indices for individual neurons we want to collect spike data for throughout the current simulation run
 		CStdMap<int, int> m_aryCollectSpikeData;
 
 		///A map for keeping track of a spike times in ms for individual neurons in this group throughout the current simulation run.
-		std::multimap<int, int> m_arySpikeTimes;
+		std::multimap<int, unsigned long> m_arySpikeTimes;
 
 		///A map for keeping track of a spike times in ms for individual neurons in this group since the last time the spike monitors ran
-		std::multimap<int, int> m_aryRecentSpikeTimes;
+		std::multimap<unsigned long, int> m_aryRecentSpikeTimes;
 
 		///This is a copy of the last recent spike times for use by the phsyics simulation.
-		std::multimap<int, int> *m_lpLastRecentSpikeTimes;
+		std::multimap<unsigned long, int> *m_lpLastRecentSpikeTimes;
 
 		///The last time step for which the monitor method ran.
-		unsigned int m_iLastUpdateTime;
+		unsigned long m_lLastUpdateTime;
 
 		///The last time we copied the spike times for this group.
 		float m_fltLastCopySpikesTime;
+
+		unsigned long m_lTotalSpikesCollected;
 
 #ifndef STD_DO_NOT_ADD_BOOST
 			///mutex used to try and access matches variable.
@@ -171,9 +176,12 @@ namespace AnimatCarlSim
 		virtual void TauGABAb(float fltVal);
 		virtual float TauGABAb();
 
-		virtual std::multimap<int, int> *SpikeTimes();
-		virtual std::multimap<int, int> *RecentSpikeTimes();
-		virtual std::multimap<int, int> *LastRecentSpikeTimes();
+		virtual void CollectFromWholePopulation(bool bVal);
+		virtual bool CollectFromWholePopulation();
+
+		virtual std::multimap<int, unsigned long> *SpikeTimes();
+		virtual std::multimap<unsigned long, int> *RecentSpikeTimes();
+		virtual std::multimap<unsigned long, int> *LastRecentSpikeTimes();
 
 		virtual float LastCopySpikesTime() {return m_fltLastCopySpikesTime;}
 		

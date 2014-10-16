@@ -31,6 +31,10 @@ CsSpikingCurrentSynapse::CsSpikingCurrentSynapse()
 	m_fltCurrentMagnitude = 0;
 	m_fltAppliedCurrent = 0;
 	m_fltDecrementCurrent = 0;
+	m_ulSpikeTestTime = 0;
+	m_iStepsPerTest = 0;
+	m_iStepsPerTestCount = -1;
+	m_lTotalSpikesAdded = 0;
 }
 
 /**
@@ -75,16 +79,22 @@ void CsSpikingCurrentSynapse::Coverage(std::string strType)
 {
 	std::string strVal = Std_CheckString(strType);
 	if(strVal == "INDIVIDUALS")
-		m_bWholePopulation = false;
+		WholePopulation(false);
 	else if(strVal == "WHOLEPOPULATION")
-		m_bWholePopulation = true;
+		WholePopulation(true);
 	else
 		THROW_PARAM_ERROR(Cs_Err_lInvalidFiringRateCoverage, Cs_Err_strInvalidFiringRateCoverage, "Coverage", strType);
 }
 
 bool CsSpikingCurrentSynapse::WholePopulation() {return m_bWholePopulation;}
 
-void CsSpikingCurrentSynapse::WholePopulation(bool bVal) {m_bWholePopulation = bVal;}
+void CsSpikingCurrentSynapse::WholePopulation(bool bVal) 
+{
+	m_bWholePopulation = bVal;
+
+	if(m_lpFromNeuron)
+		m_lpFromNeuron->CollectFromWholePopulation(bVal);
+}
 
 void CsSpikingCurrentSynapse::Cells(std::string strXml)
 {
@@ -96,12 +106,29 @@ void CsSpikingCurrentSynapse::Cells(std::string strXml)
 	LoadCells(oXml);
 }
 
+void CsSpikingCurrentSynapse::CalculateStepsPerTest()
+{
+	m_ulSpikeTestTime = 0;
+	m_iStepsPerTestCount = -1;
+	m_ulSpikeTestTime = 0;
+
+	if(m_lpModule && m_lpModule->TimeStep() > 0)
+	{
+		m_iStepsPerTest = (int) ((CARLSIM_STEP_INCREMENT/m_lpModule->TimeStep())+0.5);
+		if(m_iStepsPerTest>0) m_iStepsPerTest--;
+	}
+	else
+		m_iStepsPerTest = 0;
+}
+
 void CsSpikingCurrentSynapse::TimeStepModified()
 {
 	Link::TimeStepModified();
 
 	//Reset the exponential pulse decay constant
 	PulseDecay(m_fltPulseDecay);
+
+	CalculateStepsPerTest();
 }
 
 void CsSpikingCurrentSynapse::Initialize()
@@ -115,6 +142,11 @@ void CsSpikingCurrentSynapse::Initialize()
 	m_lpToNeuron = dynamic_cast<AnimatSim::Node *>(m_lpSim->FindByID(m_strToID));
 	if(!m_lpToNeuron)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strToID);
+
+	CalculateStepsPerTest();
+
+	if(m_lpFromNeuron)
+		m_lpFromNeuron->CollectFromWholePopulation(m_bWholePopulation);
 }
 
 #pragma region DataAccesMethods
@@ -201,48 +233,47 @@ void CsSpikingCurrentSynapse::QueryProperties(CStdPtrArray<TypeProperty> &aryPro
 void CsSpikingCurrentSynapse::ResetSimulation()
 {
 	Link::ResetSimulation();
+
 	m_fltCurrentMagnitude = 0;
 	m_fltAppliedCurrent = 0;
 	m_fltDecrementCurrent = 0;
+	m_iStepsPerTestCount = -1;
+	m_ulSpikeTestTime = 0;
+	m_lTotalSpikesAdded = 0;
 }
 
-void CsSpikingCurrentSynapse::TestSpike(float fltTime)
+void CsSpikingCurrentSynapse::ProcessSpikes()
 {
-	float fltCompareTime = (m_lpSim->Time()-m_lpFromNeuron->LastCopySpikesTime());
-	float fltDiff = fabs(fltTime - fltCompareTime);
-	if(fltDiff < 1e-7)
-		m_fltCurrentMagnitude+=m_fltPulseMagnitude;
-}
-
-void CsSpikingCurrentSynapse::ProcessSpikesForCells()
-{
-	for( CStdMap<int,int>::iterator ii=m_aryCells.begin(); ii!=m_aryCells.end(); ++ii)
+	//If the steps per count is < 0 it is the first time so run it then, then count normally.
+	if(m_iStepsPerTestCount < 0 || m_iStepsPerTestCount == m_iStepsPerTest)
 	{
-		int iNeuronId = (*ii).first;
+		//std::string strMsg = "ProcessSpike Compare: Time: " + STR(m_lpSim->Time()) + ", ITime: " + STR(m_ulSpikeTestTime) + "\r\n";
+		//OutputDebugString(strMsg.c_str());
 
-		std::pair<std::multimap<int, int>::iterator, std::multimap<int, int>::iterator> itSpikesForID;
+		std::pair<std::multimap<unsigned long, int>::iterator, std::multimap<unsigned long, int>::iterator> itSpikesFortime;
 
-		itSpikesForID = m_lpFromNeuron->LastRecentSpikeTimes()->equal_range(iNeuronId);
+		itSpikesFortime = m_lpFromNeuron->LastRecentSpikeTimes()->equal_range(m_ulSpikeTestTime);
 
-		for (std::multimap<int, int>::iterator it2 = itSpikesForID.first; it2 != itSpikesForID.second; ++it2)
+		for (std::multimap<unsigned long, int>::iterator it2 = itSpikesFortime.first; it2 != itSpikesFortime.second; ++it2)
 		{
-			int iTime = (int) (*it2).second;
-			float fltTime = iTime*CARLSIM_STEP_INCREMENT;
-			TestSpike(fltTime);
+			int iNeuronID = (int) (*it2).second;
+
+			//If we are doing the whole population, or if not doing whole population and it is one the cells we are doing
+			//Then add the pulse magnitude to the current.
+			if(m_bWholePopulation || (!m_bWholePopulation && m_aryCells.count(iNeuronID)))
+			{
+				m_fltCurrentMagnitude+=m_fltPulseMagnitude;
+				m_lTotalSpikesAdded++;
+				//std::string strMsg = "Add Spike NeuronID: " + STR(iNeuronID) + " Time: " + STR(m_lpSim->Time()) + "]\r\n";
+				//OutputDebugString(strMsg.c_str());
+			}
 		}
-	}		
-}
 
-void CsSpikingCurrentSynapse::ProcessSpikesForWholePopulation()
-{
-	for( std::multimap<int,int>::iterator ii=m_lpFromNeuron->LastRecentSpikeTimes()->begin(); ii!=m_lpFromNeuron->LastRecentSpikeTimes()->end(); ++ii)
-	{
-		int iIdx = (*ii).first;
-		int iTime = (int) (*ii).second;
-		float fltTime = iTime*CARLSIM_STEP_INCREMENT;
-
-		TestSpike(fltTime);
-	}	
+		m_ulSpikeTestTime++;
+		m_iStepsPerTestCount = 0;
+	}
+	else
+		m_iStepsPerTestCount++;
 }
 
 void CsSpikingCurrentSynapse::StepSimulation()
@@ -256,10 +287,7 @@ void CsSpikingCurrentSynapse::StepSimulation()
 		if(m_fltCurrentMagnitude <= 0)
 			m_fltCurrentMagnitude = 0;
 
-		if(m_bWholePopulation)
-			ProcessSpikesForWholePopulation();
-		else
-			ProcessSpikesForCells();
+		ProcessSpikes();
 
 		m_fltAppliedCurrent = m_fltCurrentMagnitude * m_fltPulseSign;
 

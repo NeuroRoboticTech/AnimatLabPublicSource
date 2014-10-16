@@ -177,6 +177,7 @@ namespace AnimatSim
 			virtual int FindExternalSynapseListPos(std::string strID, bool bThrowError = true);
 
 			virtual void Initialize();
+			virtual void ResetSimulation();
 			virtual bool NeedToStep(bool bIncrement);
 			virtual void ResetStepCounter();
 			virtual void StepSimulation();

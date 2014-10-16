@@ -483,6 +483,13 @@ float *NeuralModule::GetDataPointer(const std::string &strDataType)
 	return AnimatBase::GetDataPointer(strDataType);
 }
 
+void NeuralModule::ResetSimulation()
+{
+	int iCount = m_aryExternalSynapses.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		m_aryExternalSynapses[iIdx]->ResetSimulation();
+}
+
 void NeuralModule::StepSimulation()
 {
 	int iCount = m_aryExternalSynapses.GetSize();
