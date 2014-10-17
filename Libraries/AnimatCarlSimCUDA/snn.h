@@ -69,7 +69,12 @@ using std::map;
 
 extern RNG_rand48* gpuRand48; //!< Used by all network to generate global random number
 
+//Specifies the time step used for the integration.
 #define CARLSIM_STEP_INCREMENT 0.001
+
+//This controls how many iterations are taken before an update occurs. 
+//I have it set here to 10 ms, the default for CarlSim would be 1000 for 1 second.
+#define CARLSIM_STEP_SIZE 10 
 
 #define ALL -1 //!< used for the set* methods to specify all groups and/or configIds
 
@@ -944,10 +949,6 @@ class CpuSNN
 
   void setStepFeedback(StepFeedback *feedback) {stepFeedback = feedback;};
   
-  void setMonitorUpdateSteps(unsigned int steps) {monitor_update_steps = steps;};
-
-  unsigned int getMonitorUpdateSteps() {return monitor_update_steps;};
-
   void setSpikeRateUpdated() {spikeRateUpdated = true;};
 
  private:
@@ -1378,8 +1379,6 @@ class CpuSNN
   uint32_t*	spikeGenBits;
 
   StepFeedback *stepFeedback;
-
-  unsigned int monitor_update_steps;
 
 
   /* these are deprecated, and replaced by writeNetwork(FILE*)

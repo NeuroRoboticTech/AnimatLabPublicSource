@@ -52,7 +52,7 @@
 
 RNG_rand48* gpuPoissonRand; // initialized in CpuSNNinitGPUparams
 
-#define ROUNDED_TIMING_COUNT  (((1000+MAX_SynapticDelay+1)+127) & ~(127))  // (1000+D) rounded to multiple 128
+#define ROUNDED_TIMING_COUNT  (((CARLSIM_STEP_SIZE+MAX_SynapticDelay+1)+127) & ~(127))  // (1000+D) rounded to multiple 128
 
 #define  FIRE_CHUNK_CNT    (512)
 
@@ -107,9 +107,9 @@ __device__ int  generatedSpikesE;
 __device__ int  generatedSpikesI;
 __device__ int  receivedSpikesE;
 __device__ int  receivedSpikesI;
-__device__ int  senderIdE[1000];
-__device__ int  senderIdI[1000];
-__device__ int  receiverId[1000];
+__device__ int  senderIdE[CARLSIM_STEP_SIZE];
+__device__ int  senderIdI[CARLSIM_STEP_SIZE];
+__device__ int  receiverId[CARLSIM_STEP_SIZE];
 
 __device__ __constant__ network_ptr_t		gpuPtrs;
 __device__ __constant__ network_info_t		gpuNetInfo;
@@ -2729,8 +2729,8 @@ void CpuSNN::testSpikeSenderReceiver(FILE* fpLog, int simTime)
 #endif
 
 #if 0 && (TESTING)
-  int sendId[1000];
-  int recId[1000];
+  int sendId[CARLSIM_STEP_SIZE];
+  int recId[CARLSIM_STEP_SIZE];
   int genI, genE, recE, recI;
   CUDA_CHECK_ERRORS_MACRO( cudaMemcpyFromSymbol( &recE, CUDA_CONVERT_SYMBOL(receivedSpikesE), sizeof(int), 0, cudaMemcpyDeviceToHost));
   CUDA_CHECK_ERRORS_MACRO( cudaMemcpyFromSymbol( &recI, CUDA_CONVERT_SYMBOL(receivedSpikesI), sizeof(int), 0, cudaMemcpyDeviceToHost));
@@ -2751,7 +2751,7 @@ void CpuSNN::testSpikeSenderReceiver(FILE* fpLog, int simTime)
 
   static int cntTest = 0;
 
-  if(cntTest++ == 1000) {
+  if(cntTest++ == CARLSIM_STEP_SIZE) {
     genI = 0; genE = 0; recI = 0; recE = 0;
     CUDA_CHECK_ERRORS_MACRO( cudaMemcpyToSymbol( CUDA_CONVERT_SYMBOL(receivedSpikesE), &recE, sizeof(int), 0, cudaMemcpyHostToDevice));
     CUDA_CHECK_ERRORS_MACRO( cudaMemcpyToSymbol( CUDA_CONVERT_SYMBOL(receivedSpikesI), &recI, sizeof(int), 0, cudaMemcpyHostToDevice));
@@ -3004,8 +3004,8 @@ void CpuSNN::copyFiringInfo_GPU()
   assert(gpu_secD2fireCnt<=maxSpikesD2);
   CUDA_CHECK_ERRORS( cudaMemcpy(firingTableD2, cpu_gpuNetPtrs.firingTableD2, sizeof(int)*gpu_secD2fireCnt, cudaMemcpyDeviceToHost));
   CUDA_CHECK_ERRORS( cudaMemcpy(firingTableD1, cpu_gpuNetPtrs.firingTableD1, sizeof(int)*gpu_secD1fireCnt, cudaMemcpyDeviceToHost));
-  CUDA_CHECK_ERRORS( cudaMemcpyFromSymbol(timeTableD2, timingTableD2, sizeof(int)*(1000+D+1), 0, cudaMemcpyDeviceToHost));
-  CUDA_CHECK_ERRORS( cudaMemcpyFromSymbol(timeTableD1, timingTableD1, sizeof(int)*(1000+D+1), 0, cudaMemcpyDeviceToHost));
+  CUDA_CHECK_ERRORS( cudaMemcpyFromSymbol(timeTableD2, timingTableD2, sizeof(int)*(CARLSIM_STEP_SIZE+D+1), 0, cudaMemcpyDeviceToHost));
+  CUDA_CHECK_ERRORS( cudaMemcpyFromSymbol(timeTableD1, timingTableD1, sizeof(int)*(CARLSIM_STEP_SIZE+D+1), 0, cudaMemcpyDeviceToHost));
   fprintf(stderr, "Total spikes Multiple Delays=%d, 1Ms Delay=%d\n", gpu_secD2fireCnt,gpu_secD1fireCnt);
   //getchar();
 }
@@ -3030,12 +3030,12 @@ void CpuSNN::gpuProbeInit (network_ptr_t* dest)
   CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeId, sizeof(uint32_t)*net_Info.numN*numProbe));
   CUDA_CHECK_ERRORS( cudaMemcpy( dest->probeId, &probeId, sizeof(uint32_t)*net_Info.numN*numProbe, cudaMemcpyHostToDevice));
   // allocate and assign the probes
-  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeV, 	   1000*sizeof(float)*numProbe));
-  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeI, 	   1000*sizeof(float)*numProbe));
+  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeV, 	   CARLSIM_STEP_SIZE*sizeof(float)*numProbe));
+  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeI, 	   CARLSIM_STEP_SIZE*sizeof(float)*numProbe));
 
   // homeostasis parameters
-  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeHomeoFreq, 1000*sizeof(float)*numProbe));
-  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeBaseFreq,  1000*sizeof(float)*numProbe));
+  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeHomeoFreq, CARLSIM_STEP_SIZE*sizeof(float)*numProbe));
+  CUDA_CHECK_ERRORS( cudaMalloc( (void**) &dest->probeBaseFreq,  CARLSIM_STEP_SIZE*sizeof(float)*numProbe));
 
   free(probeId);
 }

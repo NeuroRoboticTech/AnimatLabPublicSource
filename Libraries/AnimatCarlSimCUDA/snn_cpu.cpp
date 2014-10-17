@@ -149,8 +149,8 @@ void CpuSNN::resetConductances()
 
 void CpuSNN::resetTimingTable()
 {
-  memset(timeTableD2, 0, sizeof(int)*(1000+D+1));
-  memset(timeTableD1, 0, sizeof(int)*(1000+D+1));
+  memset(timeTableD2, 0, sizeof(int)*(CARLSIM_STEP_SIZE+D+1));
+  memset(timeTableD1, 0, sizeof(int)*(CARLSIM_STEP_SIZE+D+1));
 }
 
 void CpuSNN::CpuSNNInit(unsigned int _numN, unsigned int _numPostSynapses, unsigned int _numPreSynapses, unsigned int _D)
@@ -241,10 +241,10 @@ void CpuSNN::CpuSNNInit(unsigned int _numN, unsigned int _numPostSynapses, unsig
   // size due to weights and maximum weights
   cpuSnnSz.synapticInfoSize += ((2*sizeof(float)+sizeof(post_info_t))*(preSynCnt+100));
 
-  timeTableD2  = new unsigned int[1000+D+1];
-  timeTableD1  = new unsigned int[1000+D+1];
+  timeTableD2  = new unsigned int[CARLSIM_STEP_SIZE+D+1];
+  timeTableD1  = new unsigned int[CARLSIM_STEP_SIZE+D+1];
   resetTimingTable();
-  cpuSnnSz.spikingInfoSize += sizeof(int)*2*(1000+D+1);
+  cpuSnnSz.spikingInfoSize += sizeof(int)*2*(CARLSIM_STEP_SIZE+D+1);
 
   // random thalamic current included...
   //		randNeuronId = new int[numN];
@@ -519,8 +519,6 @@ void CpuSNN::deleteObjects()
 
       if(simulatorDeleted)
 	return;
-
-	monitor_update_steps  = 1000;
 
       if(fpLog) {
 	printSimSummary(fpLog); // TODO: can fpLog be stdout? In this case printSimSummary is executed twice
@@ -2201,12 +2199,12 @@ void CpuSNN::updateStateAndFiringTable()
 {
   // Read the neuron ids that fired in the last D seconds
   // and put it to the beginning of the firing table...
-  for(int p=timeTableD2[999],k=0;p<timeTableD2[999+D+1];p++,k++) {
+  for(int p=timeTableD2[CARLSIM_STEP_SIZE-1],k=0;p<timeTableD2[CARLSIM_STEP_SIZE-1+D+1];p++,k++) {
     firingTableD2[k]=firingTableD2[p];
   }
 
   for(int i=0; i < D; i++) {
-    timeTableD2[i+1] = timeTableD2[1000+i+1]-timeTableD2[1000];
+    timeTableD2[i+1] = timeTableD2[CARLSIM_STEP_SIZE+i+1]-timeTableD2[CARLSIM_STEP_SIZE];
   }
 
   timeTableD1[D] = 0;
@@ -2624,7 +2622,7 @@ bool CpuSNN::updateTime()
 
   // done one second worth of simulation
   // update relevant parameters...now
-  if(++simTimeMs == monitor_update_steps) {
+  if(++simTimeMs == CARLSIM_STEP_SIZE) {
     simTimeMs = 0;
     simTimeSec++;
     finishedOneSec = true;
@@ -3798,21 +3796,21 @@ void CpuSNN::setProbe(int g, const string& type, int startId, int cnt, uint32_t 
 
     if(type.find("current") != string::npos) {
       n->type |= PROBE_CURRENT;
-      n->bufferI = new float[1000];
-      cpuSnnSz.probeInfoSize += sizeof(float)*1000;
+      n->bufferI = new float[CARLSIM_STEP_SIZE];
+      cpuSnnSz.probeInfoSize += sizeof(float)*CARLSIM_STEP_SIZE;
     }
 
     if(type.find("voltage") != string::npos) {
       n->type |= PROBE_VOLTAGE;
-      n->bufferV = new float[1000];
-      cpuSnnSz.probeInfoSize += sizeof(float)*1000;
+      n->bufferV = new float[CARLSIM_STEP_SIZE];
+      cpuSnnSz.probeInfoSize += sizeof(float)*CARLSIM_STEP_SIZE;
     }
 
     if(type.find("firing-rate") != string::npos) {
       n->type |= PROBE_FIRING_RATE;
-      n->spikeBins   = new bool[1000];
-      n->bufferFRate = new float[1000];
-      cpuSnnSz.probeInfoSize += (sizeof(float)+sizeof(bool))*1000;
+      n->spikeBins   = new bool[CARLSIM_STEP_SIZE];
+      n->bufferFRate = new float[CARLSIM_STEP_SIZE];
+      cpuSnnSz.probeInfoSize += (sizeof(float)+sizeof(bool))*CARLSIM_STEP_SIZE;
       n->cumCount   = 0;
     }
 
@@ -3884,7 +3882,7 @@ void CpuSNN::updateMonitors()
       float frate   = n->cumCount/(NUM_BIN*BIN_SIZE);
       n->spikeBins[simTimeMs % NUM_BIN] = newSpike;
       if (simTime >= NUM_BIN)
-	n->bufferFRate[(simTime-NUM_BIN)%1000] = frate;
+	n->bufferFRate[(simTime-NUM_BIN)%CARLSIM_STEP_SIZE] = frate;
     }
 
     n=n->next;
@@ -3906,9 +3904,9 @@ public:
   {
     int pos    = 0;
 
-    for (int t=0; t < 1000; t++) {
+    for (int t=0; t < CARLSIM_STEP_SIZE; t++) {
       for(int i=0; i<timeCnts[t];i++,pos++) {
-	int time = t + s->getSimTime() - 1000;
+	int time = t + s->getSimTime() - CARLSIM_STEP_SIZE;
 	int id   = Nids[pos];
 	int cnt = fwrite(&time,sizeof(int),1,fid);
 	carlsim_assert(cnt != 0);
@@ -4008,15 +4006,15 @@ void CpuSNN::setSpikeMonitor(int grpId, SpikeMonitor* spikeMon, int configId)
 
     // create the new buffer for keeping track of all the spikes in the system
     monBufferFiring[numSpikeMonitor] = new unsigned int[buffSize];
-    monBufferTimeCnt[numSpikeMonitor]= new unsigned int[1000];
-    memset(monBufferTimeCnt[numSpikeMonitor],0,sizeof(int)*(1000));
+    monBufferTimeCnt[numSpikeMonitor]= new unsigned int[CARLSIM_STEP_SIZE];
+    memset(monBufferTimeCnt[numSpikeMonitor],0,sizeof(int)*(CARLSIM_STEP_SIZE));
 
     numSpikeMonitor++;
 
     // oh. finally update the size info that will be useful to see
     // how much memory are we eating...
     cpuSnnSz.monitorInfoSize += sizeof(int)*buffSize;
-    cpuSnnSz.monitorInfoSize += sizeof(int)*(1000);
+    cpuSnnSz.monitorInfoSize += sizeof(int)*(CARLSIM_STEP_SIZE);
   }
 }
 
@@ -4031,7 +4029,7 @@ void CpuSNN::updateSpikeMonitor()
 
   /* Reset buffer time counter */
   for(int i=0; i < numSpikeMonitor; i++)
-    memset(monBufferTimeCnt[i],0,sizeof(int)*(1000));
+    memset(monBufferTimeCnt[i],0,sizeof(int)*(CARLSIM_STEP_SIZE));
 
   /* Reset buffer position */
   memset(monBufferPos,0,sizeof(int)*numSpikeMonitor);
@@ -4047,7 +4045,7 @@ void CpuSNN::updateSpikeMonitor()
   for(int k=0; k < 2; k++) {
     unsigned int* timeTablePtr = (k==0)?timeTableD2:timeTableD1;
     unsigned int* fireTablePtr = (k==0)?firingTableD2:firingTableD1;
-    for(int t=0; t < monitor_update_steps; t++) {
+    for(int t=0; t < CARLSIM_STEP_SIZE; t++) {
       for(int i=timeTablePtr[t+D]; i<timeTablePtr[t+D+1];i++) {
 	/* retrieve the neuron id */
 	int nid   = fireTablePtr[i];
@@ -4083,7 +4081,7 @@ void CpuSNN::updateSpikeMonitor()
     int monitorId = grp_Info[grpId].MonitorId;
     if(monitorId!= -1) {
 		unsigned int total_spikes = monBufferPos[monitorId];
-		float firing_rate = (((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN)/((float) (monitor_update_steps*CARLSIM_STEP_INCREMENT)));
+		float firing_rate = (((float)monBufferPos[monitorId])/(grp_Info[grpId].SizeN)/((float) (CARLSIM_STEP_SIZE*CARLSIM_STEP_INCREMENT)));
       fprintf(stderr, "Spike Monitor for Group %s has %d spikes (%f Hz)\n",grp_Info2[grpId].Name.c_str(),total_spikes,firing_rate);
 
       // call the callback function

@@ -422,7 +422,7 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 		m_AccessRecentSpikes.unlock();
 	}
 
-	m_lLastUpdateTime += s->getMonitorUpdateSteps();
+	m_lLastUpdateTime += CARLSIM_STEP_SIZE;
 }
 
 void CsNeuronGroup::Initialize()

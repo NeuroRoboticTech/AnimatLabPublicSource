@@ -51,10 +51,6 @@ namespace AnimatCarlSim
 		///The mode of the simulation. GPU vs CPU
 		int m_iSimMode;
 
-		///Determines how many 1 ms time steps are taken by the neural simulation before it
-		///updates monitors and synchronizes with the physics simulation.
-		unsigned int m_uiUpdateSteps;
-
 		///The current time of the neural simulation
 		float m_fltNeuralTime;
 
@@ -97,9 +93,6 @@ namespace AnimatCarlSim
 
 		virtual void SimMode(int iMode);
 		virtual int SimMode();
-
-		virtual void UpdateSteps(unsigned int uiVal);
-		virtual unsigned int UpdateSteps();
 
 		virtual unsigned int SimulationStepInterval();
 

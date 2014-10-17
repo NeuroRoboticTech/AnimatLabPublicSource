@@ -22,7 +22,6 @@ CsNeuralModule::CsNeuralModule()
 	m_lpClassFactory =  new AnimatCarlSim::CsClassFactory;
 	m_lpSNN = NULL;
 	m_iSimMode = GPU_MODE;
-	m_uiUpdateSteps = 10;
 	m_fltTimeStep = 0.001f;
 	m_bWaitingForPhysicsToCatchUp = false;
 	m_bWaitingForNeuralToCatchUp = false;
@@ -59,16 +58,6 @@ void CsNeuralModule::SimMode(int iMode)
 
 int CsNeuralModule::SimMode() {return m_iSimMode;}
 
-
-void CsNeuralModule::UpdateSteps(unsigned int uiVal) 
-{
-	Std_IsAboveMin((int) 0, uiVal, true, "UpdateSteps", true);
-	m_uiUpdateSteps = uiVal;
-	TimeStep(m_uiUpdateSteps*CARLSIM_STEP_INCREMENT);
-};
-
-unsigned int CsNeuralModule::UpdateSteps() {return m_uiUpdateSteps;};
-
 /**
 \brief	Tells the number of simulation steps that other components, like stimuli, will need to use for their step interval. 
 
@@ -81,7 +70,7 @@ unsigned int CsNeuralModule::SimulationStepInterval()
 {
 	unsigned int iInterval = 1;
 	if( m_lpSim->MinTimeStep() > 0)
-		iInterval = (unsigned int) ((((float) (m_uiUpdateSteps*CARLSIM_STEP_INCREMENT)) / m_lpSim->MinTimeStep())+0.5);
+		iInterval = (unsigned int) ((((float) (CARLSIM_STEP_SIZE*CARLSIM_STEP_INCREMENT)) / m_lpSim->MinTimeStep())+0.5);
 	return iInterval;
 }
 
@@ -169,7 +158,6 @@ void CsNeuralModule::SetCARLSimulation()
 
 	m_lpSNN = new CpuSNN(m_strID.c_str());
 	
-	m_lpSNN->setMonitorUpdateSteps(m_uiUpdateSteps);
 	m_lpSNN->setStepFeedback(this);
 
 	//Go through each of the neuron group items and set them up
@@ -375,12 +363,6 @@ bool CsNeuralModule::SetData(const std::string &strDataType, const std::string &
 		return true;
 	}
 
-	if(strType == "UPDATESTEPS")
-	{
-		UpdateSteps((unsigned int) atoi(strValue.c_str()));
-		return true;
-	}
-
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -394,7 +376,6 @@ void CsNeuralModule::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 
 	aryProperties.Add(new TypeProperty("TimeStep", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SimMode", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("UpdateSteps", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 /**
@@ -649,7 +630,6 @@ void CsNeuralModule::LoadNetworkXml(CStdXml &oXml)
 	Type(oXml.GetChildString("Type", m_strType));
 	Name(oXml.GetChildString("Name", m_strName));
 	SimMode(oXml.GetChildInt("SimMode", m_iSimMode));
-	UpdateSteps(oXml.GetChildInt("UpdateSteps", m_uiUpdateSteps));
 
 	//This will add this object to the object list of the simulation.
 	m_lpSim->AddToObjectList(this);
