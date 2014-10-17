@@ -40,27 +40,31 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of CsSynapseOneToOne\r\n", "", -1, false, true);}
 }
 		
-void CsSynapseIndividual::FromIdx(unsigned int iVal) 
+void CsSynapseIndividual::FromIdx(int iVal) 
 {
+	Std_IsAboveMin((int) -1, iVal, true, "FromIdx", true); 
 	m_iFromIdx = iVal;
 	m_vSynapseKey.first = iVal;
 }
 
-unsigned int CsSynapseIndividual::FromIdx() {return m_iFromIdx;}
+int CsSynapseIndividual::FromIdx() {return m_iFromIdx;}
 		
-void CsSynapseIndividual::ToIdx(unsigned int iVal) 
+void CsSynapseIndividual::ToIdx(int iVal) 
 {
+	Std_IsAboveMin((int) -1, iVal, true, "ToIdx", true); 
 	m_iToIdx = iVal;
 	m_vSynapseKey.second = iVal;
 }
 
-unsigned int CsSynapseIndividual::ToIdx() {return m_iToIdx;}
+int CsSynapseIndividual::ToIdx() {return m_iToIdx;}
 
 std::pair<int, int> CsSynapseIndividual::SynapseIndexKey() {return m_vSynapseKey;}
 
 void CsSynapseIndividual::SetCARLSimulation()
 {
-	if(m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && m_lpFromNeuron->GroupID() >= 0 && m_lpToNeuron->GroupID() >= 0)
+	if(m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && 
+		m_iFromIdx >= 0 && m_iToIdx >= 0 &&
+		m_lpFromNeuron->GroupID() >= 0 && m_lpToNeuron->GroupID() >= 0)
 	{
 		std::string strKey = this->GeneratorKey();
 

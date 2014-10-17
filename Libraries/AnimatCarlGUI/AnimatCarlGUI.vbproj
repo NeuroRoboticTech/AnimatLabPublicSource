@@ -141,6 +141,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\NeuralIndices.vb" />
+    <Compile Include="Collections\NeuronPairIndices.vb" />
     <Compile Include="DataObjects\Behavior\NeuralModule.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -152,6 +153,7 @@
     <Compile Include="DataObjects\Behavior\NodeTypes\SpikeGeneratorGroup.vb" />
     <Compile Include="DataObjects\Behavior\SynapseTypes\FullSynapse.vb" />
     <Compile Include="DataObjects\Behavior\SynapseTypes\IndividualSynapse.vb" />
+    <Compile Include="DataObjects\Behavior\SynapseTypes\NeuronIndexPair.vb" />
     <Compile Include="DataObjects\Behavior\SynapseTypes\RandomSynapse.vb" />
     <Compile Include="DataObjects\Behavior\SynapseTypes\SpikingCurrentSynapse.vb" />
     <Compile Include="DataObjects\Behavior\SynapseTypes\SynapseGroup.vb">

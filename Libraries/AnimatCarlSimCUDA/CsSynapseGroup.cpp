@@ -104,9 +104,9 @@ std::string CsSynapseGroup::GeneratorKey()
 {
 	if(m_lpFromNeuron && m_lpToNeuron)
 		if(m_bPlastic)
-			return (STR(m_lpFromNeuron->GroupID()) + "_" + STR(m_lpToNeuron->GroupID() + "_Plastic"));
+			return (STR(m_lpFromNeuron->GroupID()) + "_" + STR(m_lpToNeuron->GroupID()) + "_Plastic");
 		else
-			return (STR(m_lpFromNeuron->GroupID()) + "_" + STR(m_lpToNeuron->GroupID() + "_Fixed"));
+			return (STR(m_lpFromNeuron->GroupID()) + "_" + STR(m_lpToNeuron->GroupID()) + "_Fixed");
 	else
 		return "_";
 }

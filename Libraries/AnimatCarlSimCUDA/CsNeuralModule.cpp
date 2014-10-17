@@ -165,6 +165,8 @@ void CsNeuralModule::SetCARLSimulation()
 		m_lpSNN = NULL;
 	}
 
+	m_aryGenerators.RemoveAll();
+
 	m_lpSNN = new CpuSNN(m_strID.c_str());
 	
 	m_lpSNN->setMonitorUpdateSteps(m_uiUpdateSteps);

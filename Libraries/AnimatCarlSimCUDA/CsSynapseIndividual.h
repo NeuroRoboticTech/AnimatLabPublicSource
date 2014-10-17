@@ -23,10 +23,10 @@ namespace AnimatCarlSim
 	{
 	protected:
 		///The Ith neuron of the pre-synaptic group to connect.
-		unsigned int m_iFromIdx;
+		int m_iFromIdx;
 
 		///The Jth neuron of the post-synaptic group to connect.
-		unsigned int m_iToIdx;
+		int m_iToIdx;
 
 		///The synapse index key used in the synapse map.
 		//CStdIPoint m_iSynpaseKey;
@@ -36,11 +36,11 @@ namespace AnimatCarlSim
 		CsSynapseIndividual();
 		virtual ~CsSynapseIndividual();
 		
-		virtual void FromIdx(unsigned int iVal);
-		virtual unsigned int FromIdx();
+		virtual void FromIdx(int iVal);
+		virtual int FromIdx();
 		
-		virtual void ToIdx(unsigned int iVal);
-		virtual unsigned int ToIdx();
+		virtual void ToIdx(int iVal);
+		virtual int ToIdx();
 
 		virtual std::pair<int, int> SynapseIndexKey();
 

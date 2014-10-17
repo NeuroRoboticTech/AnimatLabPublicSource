@@ -370,8 +370,11 @@ void CsNeuronGroup::SetCARLSimulation()
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
 		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltTauAMPA, m_fltTauNMDA, m_fltTauGABAa, m_fltTauGABAb);
 
-		//m_lpCsModule->SNN()->setSTP(m_iGroupID, m_bEnableSTP, m_fltU, m_fltTauDepression, m_fltTauFacilitation);
-		//m_lpCsModule->SNN()->setSTDP(m_iGroupID, m_bEnableSTDP, m_fltMaxLTP, m_fltTauLTP, m_fltMaxLTD, m_fltTauLTD);
+		if(m_bEnableSTP)
+			m_lpCsModule->SNN()->setSTP(m_iGroupID, true, m_fltU, m_fltTauDepression, m_fltTauFacilitation);
+
+		if(m_bEnableSTDP)
+			m_lpCsModule->SNN()->setSTDP(m_iGroupID, true, m_fltMaxLTP, m_fltTauLTP, m_fltMaxLTD, m_fltTauLTD);
 
 		//Set this up as a spike monitor.
 		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);

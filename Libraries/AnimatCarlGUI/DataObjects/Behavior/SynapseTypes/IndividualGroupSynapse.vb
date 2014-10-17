@@ -16,8 +16,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
 #Region " Attributes "
 
-        Protected m_iFromIdx As Integer = 0
-        Protected m_iToIdx As Integer = 0
+        Protected m_aryNeuronPairs As New Collections.NeuronPairIndices(Me)
 
 #End Region
 
@@ -42,47 +41,19 @@ Namespace DataObjects.Behavior.SynapseTypes
             End Get
         End Property
 
-        <Browsable(False)> _
-        Public Overridable Property FromIdx() As Integer
+        Public Overridable Property NeuronPairs As Collections.NeuronPairIndices
             Get
-                Return m_iFromIdx
+                Return m_aryNeuronPairs
             End Get
-            Set(ByVal Value As Integer)
-                If Value < -1 Then
-                    Throw New System.Exception("The neuron index must be zero or larger, or -1 to disable.")
-                End If
+            Set(value As Collections.NeuronPairIndices)
+                'Set nothing here. It is set in the property editor
 
-                If Not Me.ActualOrigin Is Nothing AndAlso Util.IsTypeOf(Me.ActualOrigin.GetType(), GetType(NodeTypes.NeuronGroup), False) Then
-                    Dim doOrigin As NodeTypes.NeuronGroup = DirectCast(Me.ActualOrigin, NodeTypes.NeuronGroup)
-                    If Value >= doOrigin.NeuronCount Then
-                        Throw New System.Exception("The index value specified exceeds the total neuron count for the pre-synaptic population.")
-                    End If
-                End If
+                'We do need to reset the list of indices in the simulator though
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
+                oXml.AddElement("Root")
+                SaveNeuronPairs(oXml)
 
-                SetSimData("FromIdx", Value.ToString, True)
-                m_iFromIdx = Value
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable Property ToIdx() As Integer
-            Get
-                Return m_iToIdx
-            End Get
-            Set(ByVal Value As Integer)
-                If Value < -1 Then
-                    Throw New System.Exception("The neuron index must be zero or larger, or -1 to disable.")
-                End If
-
-                If Not Me.ActualDestination Is Nothing AndAlso Util.IsTypeOf(Me.ActualDestination.GetType(), GetType(NodeTypes.NeuronGroup), False) Then
-                    Dim doActualDestination As NodeTypes.NeuronGroup = DirectCast(Me.ActualDestination, NodeTypes.NeuronGroup)
-                    If Value >= doActualDestination.NeuronCount Then
-                        Throw New System.Exception("The index value specified exceeds the total neuron count for the post-synaptic population.")
-                    End If
-                End If
-
-                SetSimData("ToIdx", Value.ToString, True)
-                m_iToIdx = Value
+                SetSimData("NeuronPairs", oXml.Serialize(), True)
             End Set
         End Property
 
@@ -126,47 +97,31 @@ Namespace DataObjects.Behavior.SynapseTypes
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
-            Dim doSynapse As IndividualSynapse = DirectCast(doOriginal, IndividualSynapse)
+            Dim doRate As IndividualSynapse = DirectCast(doOriginal, IndividualSynapse)
 
-            m_iFromIdx = doSynapse.m_iFromIdx
-            m_iToIdx = doSynapse.m_iToIdx
+            m_aryNeuronPairs = DirectCast(doRate.m_aryNeuronPairs.Clone(Me, bCutData, doRoot), Collections.NeuronPairIndices)
         End Sub
 
-        Protected Overridable Sub CheckNeuronIndices()
-            If Not Me.ActualOrigin Is Nothing AndAlso Util.IsTypeOf(Me.ActualOrigin.GetType(), GetType(NodeTypes.NeuronGroup), False) Then
-                Dim doOrigin As NodeTypes.NeuronGroup = DirectCast(Me.ActualOrigin, NodeTypes.NeuronGroup)
-                If m_iFromIdx >= doOrigin.NeuronCount Then
-                    m_iFromIdx = -1
-                End If
-            End If
-
-            If Not Me.ActualDestination Is Nothing AndAlso Util.IsTypeOf(Me.ActualDestination.GetType(), GetType(NodeTypes.NeuronGroup), False) Then
-                Dim doActualDestination As NodeTypes.NeuronGroup = DirectCast(Me.ActualDestination, NodeTypes.NeuronGroup)
-                If m_iToIdx >= doActualDestination.NeuronCount Then
-                    m_iToIdx = -1
-                End If
-            End If
-
+        Protected Overridable Sub SaveNeuronPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+            oXml.AddChildElement("NeuronPairs")
+            oXml.IntoElem()
+            For Each doPair As NeuronIndexPair In m_aryNeuronPairs
+                oXml.AddChildElement("Pair")
+                oXml.SetChildAttrib("From", doPair.m_iFromIdx)
+                oXml.SetChildAttrib("To", doPair.m_iToIdx)
+            Next
+            oXml.IntoElem()
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
-            CheckNeuronIndices()
-
             oXml.IntoElem()
 
-            oXml.AddChildElement("FromIdx", m_iFromIdx)
-            oXml.AddChildElement("ToIdx", m_iToIdx)
+            SaveNeuronPairs(oXml)
 
             oXml.OutOfElem()
 
-        End Sub
-
-        Public Overrides Sub InitializeAfterLoad()
-            MyBase.InitializeAfterLoad()
-
-            CheckNeuronIndices()
         End Sub
 
 #Region " DataObject Methods "
@@ -174,11 +129,8 @@ Namespace DataObjects.Behavior.SynapseTypes
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Pre-Synaptic Index", GetType(Integer), "FromIdx", _
-                                        "Synapse Properties", "Index of the pre-synaptic neuron", m_iFromIdx))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Post-Synaptic Index", GetType(Integer), "ToIdx", _
-                                        "Synapse Properties", "Index of the post-synaptic neuron", m_iFromIdx))
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("No Direct Connect", GetType(Boolean), "NoDirectConnect", _
+            '                            "Neural Properties", "If true then it does not connect pre-synaptic neuron J to the corresponding post-synaptic neuron J", m_bNoDirectConnect))
 
         End Sub
 
@@ -189,8 +141,21 @@ Namespace DataObjects.Behavior.SynapseTypes
 
                 oXml.IntoElem()
 
-                m_iFromIdx = oXml.GetChildInt("FromIdx", m_iFromIdx)
-                m_iToIdx = oXml.GetChildInt("ToIdx", m_iToIdx)
+                If oXml.FindChildElement("NeuronPairs", False) Then
+                    oXml.IntoElem()
+
+                    Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                    For iIdx As Integer = 0 To iCount
+                        oXml.FindChildByIndex(iIdx)
+                        Dim iFromIdx As Integer = oXml.GetChildAttribInt("From")
+                        Dim iToIdx As Integer = oXml.GetChildAttribInt("From")
+
+                        Dim oPair As New NeuronIndexPair(iFromIdx, iToIdx)
+                        m_aryNeuronPairs.Add(oPair)
+                    Next
+
+                    oXml.OutOfElem()
+                End If
 
                 oXml.OutOfElem()
             Catch ex As System.Exception
@@ -206,8 +171,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
                 oXml.IntoElem() 'Into Node Element
 
-                oXml.AddChildElement("FromIdx", m_iFromIdx)
-                oXml.AddChildElement("ToIdx", m_iToIdx)
+                SaveNeuronPairs(oXml)
 
                 oXml.OutOfElem() ' Outof Node Element
 
