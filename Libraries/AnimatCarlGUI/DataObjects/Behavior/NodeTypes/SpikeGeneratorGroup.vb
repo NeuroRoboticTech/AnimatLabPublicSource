@@ -129,6 +129,14 @@ Namespace DataObjects.Behavior.NodeTypes
             Return bnAdapter
         End Function
 
+        Public Overrides Sub BeforeAddLink(blLink As AnimatGUI.DataObjects.Behavior.Link)
+            MyBase.BeforeAddLink(blLink)
+
+            If blLink.ActualDestination Is Me AndAlso Not Util.IsTypeOf(blLink.GetType(), GetType(AnimatGUI.DataObjects.Behavior.Links.Adapter), False) Then
+                Throw New System.Exception("Incoming links other than adapters are not allowed for spike generators.")
+            End If
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

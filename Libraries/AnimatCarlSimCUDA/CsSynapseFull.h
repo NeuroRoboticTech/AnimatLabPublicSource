@@ -22,13 +22,23 @@ namespace AnimatCarlSim
 	class ANIMAT_CARL_SIM_PORT CsSynapseFull : public CsSynapseGroup   
 	{
 	protected:
+		bool m_bNoDirectConnect;
 
 	public:
 		CsSynapseFull();
 		virtual ~CsSynapseFull();
 
+		virtual void NoDirectConnect(bool bVal);
+		virtual bool NoDirectConnect();
+
 		virtual void SetCARLSimulation();
 
+#pragma region DataAccesMethods
+		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
+		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
+#pragma endregion
+
+		virtual void Load(CStdXml &oXml);
 	};
 
 }				//AnimatCarlSim

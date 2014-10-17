@@ -262,11 +262,6 @@ Namespace DataObjects.Behavior.SynapseTypes
                                         "Synapse Properties", "The maximum weight for the synaptic connection.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snPconnect.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Connection Probabilty", pbNumberBag.GetType(), "Pconnect", _
-                                        "Synapse Properties", "The probability that a given connection will occur for random synapses.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
             pbNumberBag = m_snMinDelay.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Min Delay", pbNumberBag.GetType(), "MinDelay", _
                                         "Synapse Properties", "The minimum delay possible for a given synaptic connection.", pbNumberBag, _

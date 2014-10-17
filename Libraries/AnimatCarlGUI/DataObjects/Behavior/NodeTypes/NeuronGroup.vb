@@ -481,6 +481,9 @@ Namespace DataObjects.Behavior.NodeTypes
 
                 AddCompatibleLink(New AnimatGUI.DataObjects.Behavior.Links.Adapter(Nothing))
                 AddCompatibleLink(New SynapseTypes.OneToOneSynapse(Nothing))
+                AddCompatibleLink(New SynapseTypes.FullSynapse(Nothing))
+                AddCompatibleLink(New SynapseTypes.RandomSynapse(Nothing))
+                AddCompatibleLink(New SynapseTypes.IndividualSynapse(Nothing))
 
                 'Lets add the data types that this node understands.
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("GroupFiringRate", "Group Firing Rate", "Hertz", "Hz", 0, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
