@@ -52,6 +52,17 @@ CsNeuronGroup::CsNeuronGroup()
 	m_iCollectWholePopulation = 0;
 	m_lTotalSpikesCollected = 0;
 
+	m_bEnableSTP = false;
+	m_fltU = 0.2f;
+	m_fltTauDepression = 800;
+	m_fltTauFacilitation = 20;
+
+	m_bEnableSTDP = false;
+	m_fltMaxLTP = 1;
+	m_fltTauLTP = 20;
+	m_fltMaxLTD = 1;
+	m_fltTauLTD = 20;
+
 	m_lpLastRecentSpikeTimes = NULL;
 }
 
@@ -159,21 +170,101 @@ void CsNeuronGroup::EnableCOBA(bool bVal) {m_bEnableCOBA = bVal;}
 
 bool CsNeuronGroup::EnableCOBA() {return m_bEnableCOBA;}
 
-void CsNeuronGroup::TauAMPA(float fltVal) {m_fltTauAMPA = fltVal;}
+void CsNeuronGroup::TauAMPA(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauAMPA", false);
+	m_fltTauAMPA = fltVal;
+}
 
 float CsNeuronGroup::TauAMPA() {return m_fltTauAMPA;}
 
-void CsNeuronGroup::TauNMDA(float fltVal) {m_fltTauNMDA = fltVal;}
+void CsNeuronGroup::TauNMDA(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauNMDA", false);
+	m_fltTauNMDA = fltVal;
+}
 
 float CsNeuronGroup::TauNMDA() {return m_fltTauNMDA;}
 
-void CsNeuronGroup::TauGABAa(float fltVal) {m_fltTauGABAa = fltVal;}
+void CsNeuronGroup::TauGABAa(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauGABAa", false);
+	m_fltTauGABAa = fltVal;
+}
 
 float CsNeuronGroup::TauGABAa() {return m_fltTauGABAa;}
 
-void CsNeuronGroup::TauGABAb(float fltVal) {m_fltTauGABAb = fltVal;}
+void CsNeuronGroup::TauGABAb(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauGABAb", false);
+	m_fltTauGABAb = fltVal;
+}
 
 float CsNeuronGroup::TauGABAb() {return m_fltTauGABAb;}
+
+void CsNeuronGroup::EnableSTP(bool bVal) {m_bEnableSTP = bVal;}
+
+bool CsNeuronGroup::EnableSTP() {return m_bEnableSTP;}
+
+void CsNeuronGroup::U(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "U", true);
+	m_fltU = fltVal;
+}
+
+float CsNeuronGroup::U() {return m_fltU;}
+
+void CsNeuronGroup::TauDepression(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauDepression", false);
+	m_fltTauDepression = fltVal;
+}
+
+float CsNeuronGroup::TauDepression() {return m_fltTauDepression;}
+
+void CsNeuronGroup::TauFacilitation(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauFacilitation", false);
+	m_fltTauFacilitation = fltVal;
+}
+
+float CsNeuronGroup::TauFacilitation() {return m_fltTauFacilitation;}
+
+void CsNeuronGroup::EnableSTDP(bool bVal) {m_bEnableSTDP = bVal;}
+
+bool CsNeuronGroup::EnableSTDP() {return m_bEnableSTDP;}
+
+void CsNeuronGroup::MaxLTP(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxLTP", true);
+	m_fltMaxLTP = fltVal;
+}
+
+float CsNeuronGroup::MaxLTP() {return m_fltMaxLTP;}
+
+void CsNeuronGroup::TauLTP(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauLTP", false);
+	m_fltTauLTP = fltVal;
+}
+
+float CsNeuronGroup::TauLTP() {return m_fltTauLTP;}
+
+void CsNeuronGroup::MaxLTD(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "MaxLTD", true);
+	m_fltMaxLTD = fltVal;
+}
+
+float CsNeuronGroup::MaxLTD() {return m_fltMaxLTD;}
+
+void CsNeuronGroup::TauLTD(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, true, "TauLTD", false);
+	m_fltTauLTD = fltVal;
+}
+
+float CsNeuronGroup::TauLTD() {return m_fltTauLTD;}
 
 void CsNeuronGroup::CollectFromWholePopulation(bool bVal) 
 {
@@ -258,6 +349,17 @@ void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 	m_fltTauNMDA = lpOrig->m_fltTauNMDA;
 	m_fltTauGABAa = lpOrig->m_fltTauGABAa;
 	m_fltTauGABAb = lpOrig->m_fltTauGABAb;
+
+	m_bEnableSTP = lpOrig->m_bEnableSTP;
+	m_fltU = lpOrig->m_fltU;
+	m_fltTauDepression = lpOrig->m_fltTauDepression;
+	m_fltTauFacilitation = lpOrig->m_fltTauFacilitation;
+
+	m_bEnableSTDP = lpOrig->m_bEnableSTDP;
+	m_fltMaxLTP = lpOrig->m_fltMaxLTP;
+	m_fltTauLTP = lpOrig->m_fltTauLTP;
+	m_fltMaxLTD = lpOrig->m_fltMaxLTD;
+	m_fltTauLTD = lpOrig->m_fltTauLTD;
 }
 
 void CsNeuronGroup::SetCARLSimulation()
@@ -267,6 +369,9 @@ void CsNeuronGroup::SetCARLSimulation()
 		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuralType);
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
 		m_lpCsModule->SNN()->setConductances(m_iGroupID, m_bEnableCOBA, m_fltTauAMPA, m_fltTauNMDA, m_fltTauGABAa, m_fltTauGABAb);
+
+		//m_lpCsModule->SNN()->setSTP(m_iGroupID, m_bEnableSTP, m_fltU, m_fltTauDepression, m_fltTauFacilitation);
+		//m_lpCsModule->SNN()->setSTDP(m_iGroupID, m_bEnableSTDP, m_fltMaxLTP, m_fltTauLTP, m_fltMaxLTD, m_fltTauLTD);
 
 		//Set this up as a spike monitor.
 		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
@@ -465,6 +570,60 @@ bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &s
 		return true;
 	}
 
+	if(strType == "ENABLESTP")
+	{
+		EnableSTP(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "U")
+	{
+		U(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "TAUD")
+	{
+		TauDepression(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "TAUF")
+	{
+		TauFacilitation(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "ENABLESTDP")
+	{
+		EnableSTDP(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "MAXLTP")
+	{
+		MaxLTP(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "TAULTP")
+	{
+		TauLTP(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXLTD")
+	{
+		MaxLTD(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "TAULTD")
+	{
+		TauLTD(atof(strValue.c_str()));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -486,11 +645,23 @@ void CsNeuronGroup::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("StdC", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("D", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("StdD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+
 	aryProperties.Add(new TypeProperty("EnableCOBA", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TauAMPA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TauNMDA", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TauGABAa", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TauGABAb", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("EnableSTP", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("U", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauF", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("EnableSTDP", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxLTP", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauLTP", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxLTD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TauLTD", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 }
 
 float *CsNeuronGroup::GetDataPointer(const std::string &strDataType)
@@ -537,6 +708,17 @@ void CsNeuronGroup::Load(CStdXml &oXml)
 	TauNMDA(oXml.GetChildFloat("TauNMDA", m_fltTauNMDA));
 	TauGABAa(oXml.GetChildFloat("TauGABAa", m_fltTauGABAa));
 	TauGABAb(oXml.GetChildFloat("TauGABAb", m_fltTauGABAb));
+
+	EnableSTP(oXml.GetChildBool("EnableSTP", m_bEnableSTP));
+	U(oXml.GetChildFloat("U", m_fltU));
+	TauDepression(oXml.GetChildFloat("TauD", m_fltTauDepression));
+	TauFacilitation(oXml.GetChildFloat("TauF", m_fltTauFacilitation));
+
+	EnableSTDP(oXml.GetChildBool("EnableSTDP", m_bEnableSTDP));
+	MaxLTP(oXml.GetChildFloat("MaxLTP", m_fltMaxLTP));
+	TauLTP(oXml.GetChildFloat("TauLTP", m_fltTauLTP));
+	MaxLTD(oXml.GetChildFloat("MaxLTD", m_fltMaxLTD));
+	TauLTD(oXml.GetChildFloat("TauLTD", m_fltTauLTD));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

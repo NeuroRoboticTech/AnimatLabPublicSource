@@ -134,6 +134,33 @@ Namespace DataObjects.Behavior.NodeTypes
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            If propTable.Properties.Contains("A") Then propTable.Properties.Remove("A")
+            If propTable.Properties.Contains("B") Then propTable.Properties.Remove("B")
+            If propTable.Properties.Contains("C") Then propTable.Properties.Remove("C")
+            If propTable.Properties.Contains("D") Then propTable.Properties.Remove("D")
+
+            If propTable.Properties.Contains("A StdDev") Then propTable.Properties.Remove("A StdDev")
+            If propTable.Properties.Contains("B StdDev") Then propTable.Properties.Remove("B StdDev")
+            If propTable.Properties.Contains("C StdDev") Then propTable.Properties.Remove("C StdDev")
+            If propTable.Properties.Contains("D StdDev") Then propTable.Properties.Remove("D StdDev")
+
+            ' If propTable.Properties.Contains("Enable COBA") Then propTable.Properties.Remove("Enable COBA")
+
+            If propTable.Properties.Contains("TauAMPA") Then propTable.Properties.Remove("TauAMPA")
+            If propTable.Properties.Contains("TauNMDA") Then propTable.Properties.Remove("TauNMDA")
+            If propTable.Properties.Contains("TauGABAa") Then propTable.Properties.Remove("TauGABAa")
+            If propTable.Properties.Contains("TauGABAb") Then propTable.Properties.Remove("TauGABAb")
+
+            If propTable.Properties.Contains("Enable STP") Then propTable.Properties.Remove("Enable STP")
+            If propTable.Properties.Contains("U") Then propTable.Properties.Remove("U")
+            If propTable.Properties.Contains("Tau Depression") Then propTable.Properties.Remove("Tau Depression")
+            If propTable.Properties.Contains("Tau Facilitation") Then propTable.Properties.Remove("Tau Facilitation")
+
+            If propTable.Properties.Contains("Enable STDP") Then propTable.Properties.Remove("Enable STDP")
+            If propTable.Properties.Contains("Max LTP") Then propTable.Properties.Remove("Max LTP")
+            If propTable.Properties.Contains("Tau LTP") Then propTable.Properties.Remove("Tau LTP")
+            If propTable.Properties.Contains("Max LTD") Then propTable.Properties.Remove("Max LTD")
+            If propTable.Properties.Contains("Tau LTD") Then propTable.Properties.Remove("Tau LTD")
 
         End Sub
 

@@ -34,6 +34,17 @@ Namespace DataObjects.Behavior.NodeTypes
         Protected m_snTauGABAa As ScaledNumber
         Protected m_snTauGABAb As ScaledNumber
 
+        Protected m_bEnableSTP As Boolean = False
+        Protected m_snU As ScaledNumber
+        Protected m_snTauDepression As ScaledNumber
+        Protected m_snTauFacilitation As ScaledNumber
+
+        Protected m_bEnableSTDP As Boolean = False
+        Protected m_snMaxLTP As ScaledNumber
+        Protected m_snTauLTP As ScaledNumber
+        Protected m_snMaxLTD As ScaledNumber
+        Protected m_snTauLTD As ScaledNumber
+
 #End Region
 
 #Region " Properties "
@@ -238,10 +249,10 @@ Namespace DataObjects.Behavior.NodeTypes
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The AMPA time constant must be greater than or equal to zero.")
+                    Throw New System.Exception("The AMPA time constant must be greater than zero.")
                 End If
 
-                SetSimData("TauAMPA", Value.ActualValue.ToString, True)
+                SetSimData("TauAMPA", CInt(Value.ActualValue * 1000).ToString, True)
                 m_snTauAMPA.CopyData(Value)
             End Set
         End Property
@@ -253,10 +264,10 @@ Namespace DataObjects.Behavior.NodeTypes
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The NMDA time constant must be greater than or equal to zero.")
+                    Throw New System.Exception("The NMDA time constant must be greater than zero.")
                 End If
 
-                SetSimData("TauNMDA", Value.ActualValue.ToString, True)
+                SetSimData("TauNMDA", CInt(Value.ActualValue * 1000).ToString, True)
                 m_snTauNMDA.CopyData(Value)
             End Set
         End Property
@@ -268,10 +279,10 @@ Namespace DataObjects.Behavior.NodeTypes
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The GABAa time constant must be greater than or equal to zero.")
+                    Throw New System.Exception("The GABAa time constant must be greater than zero.")
                 End If
 
-                SetSimData("TauGABAa", Value.ActualValue.ToString, True)
+                SetSimData("TauGABAa", CInt(Value.ActualValue * 1000).ToString, True)
                 m_snTauGABAa.CopyData(Value)
             End Set
         End Property
@@ -283,11 +294,138 @@ Namespace DataObjects.Behavior.NodeTypes
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The GABAb time constant must be greater than or equal to zero.")
+                    Throw New System.Exception("The GABAb time constant must be greater than zero.")
                 End If
 
-                SetSimData("TauGABAb", Value.ActualValue.ToString, True)
+                SetSimData("TauGABAb", CInt(Value.ActualValue * 1000).ToString, True)
                 m_snTauGABAb.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property EnableSTP() As Boolean
+            Get
+                Return m_bEnableSTP
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("EnableSTP", Value.ToString, True)
+                m_bEnableSTP = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property U() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snU
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The U increment must be greater than or equal to zero.")
+                End If
+
+                SetSimData("U", Value.ActualValue.ToString, True)
+                m_snU.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TauDepression() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snTauDepression
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The depression time constant must be greater than zero.")
+                End If
+
+                SetSimData("TauD", CInt(Value.ActualValue * 1000).ToString, True)
+                m_snTauDepression.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TauFacilitation() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snTauFacilitation
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The facilitation time constant must be greater than zero.")
+                End If
+
+                SetSimData("TauF", CInt(Value.ActualValue * 1000).ToString, True)
+                m_snTauFacilitation.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property EnableSTDP() As Boolean
+            Get
+                Return m_bEnableSTDP
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("EnableSTDP", Value.ToString, True)
+                m_bEnableSTDP = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property MaxLTP() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snMaxLTP
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("The Maximum LTP change must be greater than or equal to zero.")
+                End If
+
+                SetSimData("MaxLTP", Value.ActualValue.ToString, True)
+                m_snMaxLTP.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TauLTP() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snTauLTP
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The LTP time constant must be greater than zero.")
+                End If
+
+                SetSimData("TauLTP", CInt(Value.ActualValue * 1000).ToString, True)
+                m_snTauLTP.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property MaxLTD() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snMaxLTD
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The maximum LTD change must be greater than zero.")
+                End If
+
+                SetSimData("MaxLTD", Value.ActualValue.ToString, True)
+                m_snMaxLTD.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property TauLTD() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snTauLTP
+            End Get
+            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The LTD time constant must be greater than or equal to zero.")
+                End If
+
+                SetSimData("TauLTD", CInt(Value.ActualValue * 1000).ToString, True)
+                m_snTauLTD.CopyData(Value)
             End Set
         End Property
 
@@ -330,6 +468,16 @@ Namespace DataObjects.Behavior.NodeTypes
                 m_snTauNMDA = New AnimatGUI.Framework.ScaledNumber(Me, "TauNMDA", 150, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
                 m_snTauGABAa = New AnimatGUI.Framework.ScaledNumber(Me, "TauGABAa", 6, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
                 m_snTauGABAb = New AnimatGUI.Framework.ScaledNumber(Me, "TauGABAb", 150, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
+
+                m_snU = New AnimatGUI.Framework.ScaledNumber(Me, "U", 0.2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+                m_snTauDepression = New AnimatGUI.Framework.ScaledNumber(Me, "TauDepression", 800, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
+                m_snTauFacilitation = New AnimatGUI.Framework.ScaledNumber(Me, "TauFacilitation", 20, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
+
+                m_snU = New AnimatGUI.Framework.ScaledNumber(Me, "U", 0.2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+                m_snMaxLTP = New AnimatGUI.Framework.ScaledNumber(Me, "MaxLTP", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+                m_snTauLTP = New AnimatGUI.Framework.ScaledNumber(Me, "TauLTP", 20, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
+                m_snMaxLTD = New AnimatGUI.Framework.ScaledNumber(Me, "MaxLTD", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+                m_snTauLTD = New AnimatGUI.Framework.ScaledNumber(Me, "TauLTD", 20, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Milliseconds", "ms")
 
                 AddCompatibleLink(New AnimatGUI.DataObjects.Behavior.Links.Adapter(Nothing))
                 AddCompatibleLink(New SynapseTypes.OneToOneSynapse(Nothing))
@@ -385,6 +533,17 @@ Namespace DataObjects.Behavior.NodeTypes
             m_snTauNMDA = DirectCast(bnOrig.m_snTauNMDA.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snTauGABAa = DirectCast(bnOrig.m_snTauGABAa.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snTauGABAb = DirectCast(bnOrig.m_snTauGABAb.Clone(Me, bCutData, doRoot), ScaledNumber)
+
+            m_bEnableSTP = bnOrig.m_bEnableSTP
+            m_snU = DirectCast(bnOrig.m_snU.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snTauDepression = DirectCast(bnOrig.m_snTauDepression.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snTauFacilitation = DirectCast(bnOrig.m_snTauFacilitation.Clone(Me, bCutData, doRoot), ScaledNumber)
+
+            m_bEnableSTDP = bnOrig.m_bEnableSTDP
+            m_snMaxLTP = DirectCast(bnOrig.m_snMaxLTP.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snTauLTP = DirectCast(bnOrig.m_snTauLTP.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snMaxLTD = DirectCast(bnOrig.m_snMaxLTD.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_snTauLTD = DirectCast(bnOrig.m_snTauLTD.Clone(Me, bCutData, doRoot), ScaledNumber)
 
         End Sub
 
@@ -478,23 +637,66 @@ Namespace DataObjects.Behavior.NodeTypes
                                         "Neural Properties", "Determines if a conductance based model is used. If false then a current based model is used", m_bEnableCOBA))
 
             pbNumberBag = m_snTauAMPA.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("TauAMPA", pbNumberBag.GetType(), "TauAMPA", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau AMPA", pbNumberBag.GetType(), "TauAMPA", _
                                         "Neural Properties", "Time constant of AMPA decay.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snTauAMPA.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("TauNMDA", pbNumberBag.GetType(), "TauNMDA", _
+            pbNumberBag = m_snTauNMDA.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau NMDA", pbNumberBag.GetType(), "TauNMDA", _
                                         "Neural Properties", "Time constant of NMDA decay.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snTauAMPA.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("TauGABAa", pbNumberBag.GetType(), "TauGABAa", _
+            pbNumberBag = m_snTauGABAa.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau GABAa", pbNumberBag.GetType(), "TauGABAa", _
                                         "Neural Properties", "Time constant of GABAa decay.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snTauAMPA.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("TauGABAb", pbNumberBag.GetType(), "TauGABAb", _
+            pbNumberBag = m_snTauGABAb.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau GABAb", pbNumberBag.GetType(), "TauGABAb", _
                                         "Neural Properties", "Time constant of GABAb decay.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable STP", GetType(Boolean), "EnableSTP", _
+                                        "Neural Properties", "Determines if this neuron is exhibits short-term plasticity.", m_bEnabled))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable STDP", GetType(Boolean), "EnableSTDP", _
+                                        "Neural Properties", "Determines if this neuron is exhibits spike timing dependent plasticity.", m_bEnabled))
+
+            pbNumberBag = m_snU.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("U", pbNumberBag.GetType(), "U", _
+                                        "STP Properties", "The increment of u due to a spike.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snTauDepression.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau Depression", pbNumberBag.GetType(), "TauDepression", _
+                                        "STP Properties", "Time constant for depression term .", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snTauFacilitation.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau Facilitation", pbNumberBag.GetType(), "TauFacilitation", _
+                                        "STP Properties", "Time constant for facilitation term .", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+
+            pbNumberBag = m_snMaxLTP.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max LTP", pbNumberBag.GetType(), "MaxLTP", _
+                                        "STDP Properties", "The max magnitude for LTP change.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snTauLTP.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau LTP", pbNumberBag.GetType(), "TauLTP", _
+                                        "STDP Properties", "Decay time constant for LTP .", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snMaxLTD.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max LTD", pbNumberBag.GetType(), "MaxLTD", _
+                                        "STDP Properties", "The max magnitude for LTD change.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snTauLTD.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tau LTD", pbNumberBag.GetType(), "TauLTD", _
+                                        "STDP Properties", "Decay time constant for LTD .", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
@@ -514,6 +716,15 @@ Namespace DataObjects.Behavior.NodeTypes
             m_snTauNMDA.ClearIsDirty()
             m_snTauGABAa.ClearIsDirty()
             m_snTauGABAb.ClearIsDirty()
+
+            m_snU.ClearIsDirty()
+            m_snTauDepression.ClearIsDirty()
+            m_snTauFacilitation.ClearIsDirty()
+
+            m_snMaxLTP.ClearIsDirty()
+            m_snTauLTP.ClearIsDirty()
+            m_snMaxLTD.ClearIsDirty()
+            m_snTauLTD.ClearIsDirty()
 
         End Sub
 
@@ -559,6 +770,17 @@ Namespace DataObjects.Behavior.NodeTypes
             m_snTauGABAa.LoadData(oXml, "TauGABAa", False)
             m_snTauGABAb.LoadData(oXml, "TauGABAb", False)
 
+            m_bEnableSTP = oXml.GetChildBool("EnableSTP", m_bEnableSTP)
+            m_snU.LoadData(oXml, "U", False)
+            m_snTauDepression.LoadData(oXml, "TauD", False)
+            m_snTauFacilitation.LoadData(oXml, "TauF", False)
+
+            m_bEnableSTDP = oXml.GetChildBool("EnableSTDP", m_bEnableSTDP)
+            m_snMaxLTP.LoadData(oXml, "MaxLTP", False)
+            m_snTauLTP.LoadData(oXml, "TauLTP", False)
+            m_snMaxLTD.LoadData(oXml, "MaxLTD", False)
+            m_snTauLTD.LoadData(oXml, "TauLTD", False)
+
             oXml.OutOfElem()
 
         End Sub
@@ -583,6 +805,17 @@ Namespace DataObjects.Behavior.NodeTypes
             m_snTauNMDA.SaveData(oXml, "TauNMDA")
             m_snTauGABAa.SaveData(oXml, "TauGABAa")
             m_snTauGABAb.SaveData(oXml, "TauGABAb")
+
+            oXml.AddChildElement("EnableSTP", m_bEnableSTP)
+            m_snU.SaveData(oXml, "U")
+            m_snTauDepression.SaveData(oXml, "TauD")
+            m_snTauFacilitation.SaveData(oXml, "TauF")
+
+            oXml.AddChildElement("EnableSTDP", m_bEnableSTDP)
+            m_snMaxLTP.SaveData(oXml, "MaxLTP")
+            m_snTauLTP.SaveData(oXml, "TauLTP")
+            m_snMaxLTD.SaveData(oXml, "MaxLTD")
+            m_snTauLTD.SaveData(oXml, "TauLTD")
 
             oXml.OutOfElem() ' Outof Node Element
 
@@ -614,6 +847,17 @@ Namespace DataObjects.Behavior.NodeTypes
             oXml.AddChildElement("TauNMDA", CInt(m_snTauNMDA.ActualValue * 1000))
             oXml.AddChildElement("TauGABAa", CInt(m_snTauGABAa.ActualValue * 1000))
             oXml.AddChildElement("TauGABAb", CInt(m_snTauGABAb.ActualValue * 1000))
+
+            oXml.AddChildElement("EnableSTP", m_bEnableSTP)
+            m_snU.SaveSimulationXml(oXml, Me, "U")
+            oXml.AddChildElement("TauD", CInt(m_snTauDepression.ActualValue * 1000))
+            oXml.AddChildElement("TauF", CInt(m_snTauFacilitation.ActualValue * 1000))
+
+            oXml.AddChildElement("EnableSTDP", m_bEnableSTDP)
+            m_snMaxLTP.SaveSimulationXml(oXml, Me, "MaxLTP")
+            oXml.AddChildElement("TauLTP", CInt(m_snTauLTP.ActualValue * 1000))
+            m_snMaxLTD.SaveSimulationXml(oXml, Me, "MaxLTD")
+            oXml.AddChildElement("TauLTD", CInt(m_snTauLTD.ActualValue * 1000))
 
             oXml.OutOfElem() 'Outof Neuron
 

@@ -79,7 +79,35 @@ namespace AnimatCarlSim
 
 		///Time constant of GABAb decay (ms); for example, 150.0
 		float m_fltTauGABAb;
-					
+
+		///Tells whether this group of neurons exhibits Short term plasticity
+		bool m_bEnableSTP;
+
+		///the increment of u due to a spike for STP
+		float m_fltU;
+
+		///the time constant for depression term for STP
+		float m_fltTauDepression;
+
+		///the time constant for facilitation term for STP
+		float m_fltTauFacilitation;
+
+		///Tells whether this group of neurons exhibits spike-timing dependent plasticity
+		bool m_bEnableSTDP;
+
+		///the max magnitude for LTP change for STDP
+		float m_fltMaxLTP;
+
+		///the decay time constant for LTP change for STDP
+		float m_fltTauLTP;
+
+		///the max magnitude for LTD change for STDP
+		float m_fltMaxLTD;
+
+		///the decay time constant for LTD change for STDP
+		float m_fltTauLTD;
+
+
 		///The firing rate of this entire group of neurons.
 		float m_fltGroupFiringRate;
 
@@ -175,6 +203,33 @@ namespace AnimatCarlSim
 
 		virtual void TauGABAb(float fltVal);
 		virtual float TauGABAb();
+
+		virtual void EnableSTP(bool bVal);
+		virtual bool EnableSTP();
+
+		virtual void U(float fltVal);
+		virtual float U();
+
+		virtual void TauDepression(float fltVal);
+		virtual float TauDepression();
+
+		virtual void TauFacilitation(float fltVal);
+		virtual float TauFacilitation();
+
+		virtual void EnableSTDP(bool bVal);
+		virtual bool EnableSTDP();
+
+		virtual void MaxLTP(float fltVal);
+		virtual float MaxLTP();
+
+		virtual void TauLTP(float fltVal);
+		virtual float TauLTP();
+
+		virtual void MaxLTD(float fltVal);
+		virtual float MaxLTD();
+
+		virtual void TauLTD(float fltVal);
+		virtual float TauLTD();
 
 		virtual void CollectFromWholePopulation(bool bVal);
 		virtual bool CollectFromWholePopulation();
