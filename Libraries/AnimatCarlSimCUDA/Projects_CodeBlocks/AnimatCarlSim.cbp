@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="AnimatCarlSim" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/libAnimatCarlSim_debug.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DANIMATCARLSIM_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="cudart" />
+					<Add library="StdUtils_debug" />
+					<Add library="AnimatSim_debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Debug/libAnimatCarlSim_debug.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/libAnimatCarlSim.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="0" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-fPIC" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DANIMATCARLSIM_EXPORTS" />
+					<Add option="-std=c++0x" />
+					<Add directory="../../../include" />
+					<Add directory="../../../Libraries/StdUtils" />
+					<Add directory="../../../Libraries/AnimatSim" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-shared" />
+					<Add directory="../../../bin" />
+					<Add library="dl" />
+					<Add library="cudart" />
+					<Add library="StdUtils" />
+					<Add library="AnimatSim" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cp Release/libAnimatCarlSim.so ../../../bin" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="../config.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsAdapter.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsClassFactory.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsConnectionGenerator.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsFiringRateStimulus.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsIncludes.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuralModule.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuronDataColumn.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuronGroup.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSpikeGeneratorGroup.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSpikingCurrentSynapse.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseFull.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseGroup.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseIndividual.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseOneToOne.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseRandom.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CUDAVersionControl.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../errorCode.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../gpu.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../gpu_random.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../mtrand.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../PropagatedSpikeBuffer.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn - Copy.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn_helper.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CarlSim.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsAdapter.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsClassFactory.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsConnectionGenerator.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsFiringRateStimulus.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuralModule.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuronDataColumn.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuronGroup.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSpikeGeneratorGroup.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSpikingCurrentSynapse.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseFull.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseGroup.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseIndividual.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseOneToOne.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseRandom.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../mtrand.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../printSNNInfo.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../PropagatedSpikeBuffer.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn_cpu - Copy.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn_cpu.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn_helper.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../StdAfx.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../gpu_random.cu">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../snn_gpu.cu">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../v1ColorME.2.1.cu">
+			<Option virtualFolder="." />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+

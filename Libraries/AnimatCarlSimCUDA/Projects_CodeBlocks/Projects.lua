@@ -3,15 +3,16 @@
 		language "C++"
 		kind     "SharedLib"
 		files  { "../*.h",
-				 "../*.cpp"}
+				 "../*.cpp",
+				 "../*.cu"}
 		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
 					  "../../AnimatSim" }
 		libdirs { "../../../bin" }
-		links { "dl"}
+		links { "dl", "cudart" }
 	  
-		configuration { "Debug or Debug_Double", "linux" }
+		configuration { "Debug", "linux" }
 			defines { "_DEBUG", "ANIMATCARLSIM_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
@@ -20,7 +21,7 @@
 					"AnimatSim_debug"}
 			postbuildcommands { "cp Debug/libAnimatCarlSim_debug.so ../../../bin" }
 	 
-		configuration { "Release or Release_Double", "linux" }
+		configuration { "Release", "linux" }
 			defines { "NDEBUG", "ANIMATCARLSIM_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
