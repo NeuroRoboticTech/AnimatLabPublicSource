@@ -535,3 +535,14 @@ to start python debug
 
 
 
+10/17/2014
+CUDA on Jetson TK1
+1. Follow these steps in CUDA in codeblocks.pdf.
+2. Download the Cuda samples projects.
+3. Some minor modifications are required.
+  A. cutils is no longer used after version 5. You will need to go through and check the link objects to make sure they are correct. Use the make files in the specific projects.
+  B. In step where you add /your_location/NVIDIA_CUDA_SDK2/common/lib/linux to the library search list, you instead need to add /your_location/NVIDIA_CUDA_SDK2/common/lib/linux/armv71/  in order to get the glew linkage.
+
+
+
+
