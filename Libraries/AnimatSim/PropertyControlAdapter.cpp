@@ -10,6 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
+#include "Link.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "BoundingBox.h"
@@ -74,6 +75,12 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlAdapter\r\n", "", -1, false, true);}
+}
+
+void PropertyControlAdapter::TargetID(std::string strID)
+{
+	Adapter::TargetID(strID);
+	m_lpTargetObject = NULL;
 }
 
 /**

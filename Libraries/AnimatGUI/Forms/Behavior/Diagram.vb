@@ -294,6 +294,28 @@ Namespace Forms.Behavior
 
         End Function
 
+        'This method looks through the list of link pairs in the application to see if there are any that match
+        'This allows other modules to add link types between nodes in different modules. 
+        Protected Sub AddLinkPairs(ByRef bnOrigin As DataObjects.Behavior.Node, _
+                                   ByRef bnDestination As DataObjects.Behavior.Node, _
+                                   ByVal aryCompatible As Collections.Links)
+
+            If Not bnOrigin Is Nothing AndAlso Not bnDestination Is Nothing Then
+                For Each doPair As AnimatGUI.DataObjects.Behavior.LinkPair In Util.Application.LinkPairs
+                    If doPair.CompareNodes(bnOrigin.GetType().ToString(), bnDestination.GetType().ToString()) Then
+                        Dim oLink As Object = Util.LoadClass(doPair.m_strLinkType, Nothing, True)
+
+                        If Util.IsTypeOf(oLink.GetType, GetType(AnimatGUI.DataObjects.Behavior.Link), False) Then
+                            Dim blLink As DataObjects.Behavior.Link = DirectCast(oLink, DataObjects.Behavior.Link)
+                            aryCompatible.Add(blLink)
+                        End If
+                    End If
+                Next
+
+            End If
+
+        End Sub
+
         Protected Overridable Function FindCompatibleLinkTypes(ByRef bnOrigin As DataObjects.Behavior.Node, _
                                                                ByRef bnDestination As DataObjects.Behavior.Node) _
                                                                As Collections.Links
@@ -317,6 +339,8 @@ Namespace Forms.Behavior
                     iIndex = iIndex + 1
                 End While
             Next
+
+            AddLinkPairs(bnOrigin, bnDestination, aryCompatible)
 
             Return aryCompatible
         End Function

@@ -7,8 +7,17 @@
 #include "StdAfx.h"
 
 #include "CsNeuralModule.h"
-#include "CsNeuron.h"
-#include "CsSynapse.h"
+#include "CsNeuronGroup.h"
+#include "CsSpikeGeneratorGroup.h"
+#include "CsSynapseGroup.h"
+#include "CsSynapseOneToOne.h"
+#include "CsSynapseFull.h"
+#include "CsSynapseRandom.h"
+#include "CsSynapseIndividual.h"
+#include "CsSpikingCurrentSynapse.h"
+#include "CsFiringRateStimulus.h"
+#include "CsNeuronDataColumn.h"
+#include "CsAdapter.h"
 #include "CsClassFactory.h"
 
 namespace AnimatCarlSim
@@ -36,16 +45,18 @@ CsClassFactory::~CsClassFactory()
 
 }
 
-CsNeuron *CsClassFactory::CreateNeuron(std::string strType, bool bThrowError)
+Node *CsClassFactory::CreateNeuron(std::string strType, bool bThrowError)
 {
-	CsNeuron *lpNeuron=NULL;
+	Node *lpNeuron=NULL;
 
 try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REGULAR")
-		lpNeuron = new CsNeuron;
+	if(strType == "NEURONGROUP")
+		lpNeuron = new CsNeuronGroup;
+	else if(strType == "SPIKEGENERATORGROUP")
+		lpNeuron = new CsSpikeGeneratorGroup;
 	else 
 	{
 		lpNeuron = NULL;
@@ -76,16 +87,24 @@ catch(...)
 // ************* Synapse Type Conversion functions ******************************
 
 
-CsSynapse *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
+AnimatSim::Link *CsClassFactory::CreateSynapse(std::string strType, bool bThrowError)
 {
-	CsSynapse *lpSynapse=NULL;
+	AnimatSim::Link *lpSynapse=NULL;
 
 try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REGULAR")
-		lpSynapse = new CsSynapse;
+	if(strType == "ONETOONESYNAPSE")
+		lpSynapse = new CsSynapseOneToOne;
+	else if(strType == "FULLSYNAPSE")
+		lpSynapse = new CsSynapseFull;
+	else if(strType == "RANDOMSYNAPSE")
+		lpSynapse = new CsSynapseRandom;
+	else if(strType == "INDIVIDUALSYNAPSE")
+		lpSynapse = new CsSynapseIndividual;
+	else if(strType == "SPIKINGCURRENTSYNAPSE")
+		lpSynapse = new CsSpikingCurrentSynapse;
 	else
 	{
 		lpSynapse = NULL;
@@ -151,6 +170,123 @@ catch(...)
 // ************* Neural Module Type Conversion functions ******************************
 
 
+// ************* External Stimulus Type Conversion functions ******************************
+
+ExternalStimulus *CsClassFactory::CreateExternalStimulus(std::string strType, bool bThrowError)
+{
+	ExternalStimulus *lpStimulus=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "FIRINGRATE")
+		lpStimulus = new CsFiringRateStimulus;
+	else
+	{
+		lpStimulus = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidExternalStimulusType, Al_Err_strInvalidExternalStimulusType, "ExternalStimulusType", strType);
+	}
+
+	return lpStimulus;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpStimulus) delete lpStimulus;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpStimulus) delete lpStimulus;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* External Stimulus Type Conversion functions ******************************
+
+
+// ************* DataColumn Type Conversion functions ******************************
+
+DataColumn *CsClassFactory::CreateDataColumn(std::string strType, bool bThrowError)
+{
+	DataColumn *lpColumn=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "NEURONDATACOLUMN")
+		lpColumn = new CsNeuronDataColumn;
+	else
+	{
+		lpColumn = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidDataColumnType, Al_Err_strInvalidDataColumnType, "DataColumnType", strType);
+	}
+
+	return lpColumn;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpColumn) delete lpColumn;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpColumn) delete lpColumn;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* DataColumn Type Conversion functions ******************************
+
+
+// ************* Adapter Type Conversion functions ******************************
+
+Adapter *CsClassFactory::CreateAdapter(std::string strType, bool bThrowError)
+{
+	Adapter *lpAdapter=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "NODETONODE")
+		lpAdapter = new CsAdapter;
+	else if(strType == "PHYSICALTONODE")
+		lpAdapter = new CsAdapter;
+	else
+	{
+		lpAdapter = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidAdapterType, Al_Err_strInvalidAdapterType, "AdapterType", strType);
+	}
+
+	return lpAdapter;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpAdapter) delete lpAdapter;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpAdapter) delete lpAdapter;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* Adpater Type Conversion functions ******************************
+
+
+
 // ************* IStdCsClassFactory functions ******************************
 
 CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError)
@@ -165,6 +301,12 @@ CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::strin
 		lpObject = CreateSynapse(strObjectType, bThrowError);
 	else if(strClassType == "NEURALMODULE")
 		lpObject = CreateNeuralModule(strObjectType, bThrowError);
+	else if(strClassType == "EXTERNALSTIMULUS")
+		lpObject = CreateExternalStimulus(strObjectType, bThrowError);
+	else if(strClassType == "DATACOLUMN")
+		lpObject = CreateDataColumn(strObjectType, bThrowError);
+	else if(strClassType == "ADAPTER")
+		lpObject = CreateAdapter(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;
@@ -178,3 +320,13 @@ CStdSerialize *CsClassFactory::CreateObject(std::string strClassType, std::strin
 // ************* IStdCsClassFactory functions ******************************
 
 }				//AnimatCarlSim
+
+#ifdef WIN32
+extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
+#else
+extern "C" IStdClassFactory* GetStdClassFactory() 
+#endif
+{
+	IStdClassFactory *lpFactory = new CsClassFactory;
+	return lpFactory;
+}

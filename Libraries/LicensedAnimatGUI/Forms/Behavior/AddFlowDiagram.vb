@@ -2745,6 +2745,25 @@ Namespace Forms.Behavior
 
         End Sub
 
+        Protected Overridable Function CreateNewAdapter(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, _
+                                                        ByRef bnDestination As AnimatGUI.DataObjects.Behavior.Node, _
+                                                        ByRef doParent As AnimatGUI.Framework.DataObject) As AnimatGUI.DataObjects.Behavior.Node
+            Dim doPair As AnimatGUI.DataObjects.Behavior.LinkPair = Util.Application.FindAdapterPair(bnOrigin.GetType().ToString, bnDestination.GetType().ToString())
+
+            If Not doPair Is Nothing Then
+                Dim oAdapter As Object = Util.LoadClass(doPair.m_strLinkType, doParent)
+
+                If Not Util.IsTypeOf(oAdapter.GetType(), GetType(AnimatGUI.DataObjects.Behavior.Node), False) Then
+                    Throw New System.Exception("Invalid adapter type specified in adapter pair: " & doPair.ToString())
+                End If
+
+                Return DirectCast(oAdapter, AnimatGUI.DataObjects.Behavior.Node)
+            Else
+                Return bnDestination.CreateNewAdapter(bnOrigin, doParent)
+            End If
+
+        End Function
+
 #End Region
 
 #Region " Print "
@@ -3703,7 +3722,7 @@ Namespace Forms.Behavior
                 Else
 
                     ''If it does require an adapter then lets add the pieces.
-                    Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = bnDestination.CreateNewAdapter(bnOrigin, Me.FormHelper)
+                    Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = CreateNewAdapter(bnOrigin, bnDestination, Me.FormHelper)
                     bnAdapter = bnOrigin.ValidateDestinationAdapterChosen(bnAdapter)
 
                     bnAdapter.Location = FindHalfwayLocation(bnOrigin, bnDestination, bnAdapter.Size)

@@ -141,6 +141,8 @@ int FiringRateModule::FindNeuronListPos(std::string strID, bool bThrowError)
 
 void FiringRateModule::ResetSimulation()
 {
+	NeuralModule::ResetSimulation();
+
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
@@ -360,6 +362,8 @@ void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 		oXml.FindChildByIndex(iNeuron);
 		LoadNeuron(oXml);
 	}
+
+	LoadExternalSynapses(oXml);
 
 	oXml.OutOfElem();
 	//*** End Loading Neurons. *****

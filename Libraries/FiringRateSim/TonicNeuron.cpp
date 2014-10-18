@@ -60,7 +60,6 @@ float TonicNeuron::Ih()
 void TonicNeuron::Ih(float fltVal)
 {
 	m_fltIh=fltVal;
-	TemplateNodeChanged();
 }
 
 /**

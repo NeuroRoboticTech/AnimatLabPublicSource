@@ -19,7 +19,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{8D08EF2E-1903-1B47-B4B2-2F525A54F1FC}</ProjectGuid>
+		<ProjectGuid>{F2C79C6D-62C4-F94B-84D1-147CCE0D614B}</ProjectGuid>
 		<RootNamespace>RoboticsAnimatSim_x64</RootNamespace>
 		<Keyword>Win32Proj</Keyword>
 	</PropertyGroup>
@@ -225,9 +225,8 @@
 		<ClInclude Include="..\RbConstraintFriction.h" />
 		<ClInclude Include="..\RbConstraintRelaxation.h" />
 		<ClInclude Include="..\RbCylinder.h" />
+		<ClInclude Include="..\RbDynamixelServo.h" />
 		<ClInclude Include="..\RbDynamixelUSB.h" />
-		<ClInclude Include="..\RbDynamixelUSBHinge.h" />
-		<ClInclude Include="..\RbDynamixelUSBPrismatic.h" />
 		<ClInclude Include="..\RbDynamixelUSBServo.h" />
 		<ClInclude Include="..\RbEllipsoid.h" />
 		<ClInclude Include="..\RbFirmataAnalogInput.h" />
@@ -235,6 +234,7 @@
 		<ClInclude Include="..\RbFirmataController.h" />
 		<ClInclude Include="..\RbFirmataDigitalInput.h" />
 		<ClInclude Include="..\RbFirmataDigitalOutput.h" />
+		<ClInclude Include="..\RbFirmataDynamixelServo.h" />
 		<ClInclude Include="..\RbFirmataHingeServo.h" />
 		<ClInclude Include="..\RbFirmataPart.h" />
 		<ClInclude Include="..\RbFirmataPrismaticServo.h" />
@@ -264,6 +264,7 @@
 		<ClInclude Include="..\RbStructure.h" />
 		<ClInclude Include="..\RbTorus.h" />
 		<ClInclude Include="..\RbUniversal.h" />
+		<ClInclude Include="..\RbXBeeCommander.h" />
 		<ClInclude Include="..\StdAfx.h" />
 	</ItemGroup>
 	<ItemGroup>
@@ -285,11 +286,9 @@
 		</ClCompile>
 		<ClCompile Include="..\RbCylinder.cpp">
 		</ClCompile>
+		<ClCompile Include="..\RbDynamixelServo.cpp">
+		</ClCompile>
 		<ClCompile Include="..\RbDynamixelUSB.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSBHinge.cpp">
-		</ClCompile>
-		<ClCompile Include="..\RbDynamixelUSBPrismatic.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbDynamixelUSBServo.cpp">
 		</ClCompile>
@@ -304,6 +303,8 @@
 		<ClCompile Include="..\RbFirmataDigitalInput.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbFirmataDigitalOutput.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbFirmataDynamixelServo.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbFirmataHingeServo.cpp">
 		</ClCompile>
@@ -362,6 +363,8 @@
 		<ClCompile Include="..\RbTorus.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RbUniversal.cpp">
+		</ClCompile>
+		<ClCompile Include="..\RbXBeeCommander.cpp">
 		</ClCompile>
 		<ClCompile Include="..\RoboticsAnimatSim.cpp">
 		</ClCompile>

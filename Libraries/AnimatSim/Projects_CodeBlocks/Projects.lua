@@ -9,7 +9,8 @@
 					  "../../StdUtils" }
 		libdirs { "../../../bin" }
 		links { "dl", 
-				"boost_thread" }
+				"boost_thread",
+				"boost_chrono" }
 	  
 		configuration { "Debug or Debug_Double", "linux" }
 			defines { "_DEBUG", "ANIMATLIBRARY_EXPORTS"	}

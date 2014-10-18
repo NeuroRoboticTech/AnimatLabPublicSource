@@ -1136,6 +1136,10 @@ Namespace Forms
         Protected m_aryScriptProcessors As New Collections.ScriptProcessors(Nothing)
         Protected m_aryRemoteControlLinkages As New Collections.RemoteControlLinkages(Nothing)
 
+        'List of adapter pairs
+        Protected m_aryAdapterPairs As New ArrayList()
+        Protected m_aryLinkPairs As New ArrayList()
+
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcToolboxContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1649,6 +1653,17 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property AdapterPairs() As ArrayList
+            Get
+                Return m_aryAdapterPairs
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property LinkPairs() As ArrayList
+            Get
+                Return m_aryLinkPairs
+            End Get
+        End Property
 
 
         'Public Overridable Property SimWindowLocation() As System.Drawing.Point
@@ -2023,7 +2038,7 @@ Namespace Forms
 
             If Not m_auBackup Is Nothing Then
                 m_bAnnouceUpdates = bAnnouceUpdates
-                m_auBackup.ForceCheckForUpdate()
+                m_auBackup.ForceCheckForUpdate(True)
 
                 m_dtLastAutoUpdateTime = Now
                 Util.SaveUserConfigData()
@@ -2264,7 +2279,6 @@ Namespace Forms
 
                 m_aryAllDataTypes.Clear()
                 m_aryNeuralModules.Clear()
-                m_aryNeuralModules.Clear()
                 m_aryPlugInAssemblies.Clear()
                 m_aryBehavioralNodes.Clear()
                 m_aryBehavioralLinks.Clear()
@@ -2284,6 +2298,8 @@ Namespace Forms
                 m_aryScriptProcessors.Clear()
                 m_aryProjectMigrations.Clear()
                 m_aryRemoteControlLinkages.Clear()
+                m_aryAdapterPairs.Clear()
+                m_aryLinkPairs.Clear()
 
                 DataObjects.Physical.MaterialType.ClearRegisteredMaterialTypes()
 
@@ -4016,6 +4032,86 @@ Namespace Forms
 
             m_aryDeleteAfterLoad.Clear()
         End Sub
+
+        Public Overridable Sub AddLinkPair(ByVal strOriginType As String, ByVal strDestinationType As String, ByVal strLinkType As String)
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, strLinkType)
+
+            If FindLinkPair(strOriginType, strDestinationType, strLinkType) Is Nothing Then
+                m_aryLinkPairs.Add(doNewLinkPair)
+            End If
+
+        End Sub
+
+        Public Overridable Sub RemoveLinkPair(ByVal strOriginType As String, ByVal strDestinationType As String, ByVal strLinkType As String)
+            Dim doPair As DataObjects.Behavior.LinkPair = FindLinkPair(strOriginType, strDestinationType, strLinkType)
+
+            If Not doPair Is Nothing Then
+                m_aryLinkPairs.Remove(doPair)
+            End If
+
+        End Sub
+
+        Public Overridable Function FindLinkPair(ByVal strOriginType As String, ByVal strDestinationType As String) As DataObjects.Behavior.LinkPair
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, "")
+            For Each doPair As DataObjects.Behavior.LinkPair In m_aryLinkPairs
+                If DataObjects.Behavior.LinkPair.CompareNodes(doPair, doNewLinkPair) Then
+                    Return doPair
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Overridable Function FindLinkPair(ByVal strOriginType As String, ByVal strDestinationType As String, ByVal strLinkType As String) As DataObjects.Behavior.LinkPair
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, strLinkType)
+            For Each doPair As DataObjects.Behavior.LinkPair In m_aryLinkPairs
+                If doPair = doNewLinkPair Then
+                    Return doPair
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Overridable Sub AddAdapterPair(ByVal strOriginType As String, ByVal strDestinationType As String, ByVal strLinkType As String)
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, strLinkType)
+
+            If FindAdapterPair(strOriginType, strDestinationType) Is Nothing Then
+                m_aryAdapterPairs.Add(doNewLinkPair)
+            End If
+
+        End Sub
+
+        Public Overridable Sub RemoveAdapterPair(ByVal strOriginType As String, ByVal strDestinationType As String)
+            Dim doPair As DataObjects.Behavior.LinkPair = FindAdapterPair(strOriginType, strDestinationType)
+
+            If Not doPair Is Nothing Then
+                m_aryAdapterPairs.Remove(doPair)
+            End If
+
+        End Sub
+
+        Public Overridable Function FindAdapterPair(ByVal strOriginType As String, ByVal strDestinationType As String) As DataObjects.Behavior.LinkPair
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, "")
+            For Each doPair As DataObjects.Behavior.LinkPair In m_aryAdapterPairs
+                If DataObjects.Behavior.LinkPair.CompareNodes(doPair, doNewLinkPair) Then
+                    Return doPair
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Overridable Function FindAdapterPair(ByVal strOriginType As String, ByVal strDestinationType As String, ByVal strLinkType As String) As DataObjects.Behavior.LinkPair
+            Dim doNewLinkPair As New DataObjects.Behavior.LinkPair(strOriginType, strDestinationType, strLinkType)
+            For Each doPair As DataObjects.Behavior.LinkPair In m_aryAdapterPairs
+                If doPair = doNewLinkPair Then
+                    Return doPair
+                End If
+            Next
+
+            Return Nothing
+        End Function
 
 #End Region
 

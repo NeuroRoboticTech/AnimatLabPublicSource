@@ -142,9 +142,6 @@
 		<Unit filename="../ModulateNeuronPropSynapse.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../ModulatePropSynapse - Copy.h">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../NeuralUtils.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -185,9 +182,6 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../ModulateNeuronPropSynapse.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../ModulatePropSynapse - Copy.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../NeuralUtils.cpp">

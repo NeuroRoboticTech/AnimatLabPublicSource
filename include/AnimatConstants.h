@@ -508,6 +508,12 @@
 #define Al_Err_lInvalidTargetID -4091
 #define Al_Err_strInvalidTargetID "Invalid target ID."
 
+#define Al_Err_lSynapseToAddNull -4092
+#define Al_Err_strSynapseToAddNull "Synapse to add is not defined."
+
+#define Al_Err_lSynapseNotFound -4093
+#define Al_Err_strSynapseNotFound "Specified synapse was not found."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 

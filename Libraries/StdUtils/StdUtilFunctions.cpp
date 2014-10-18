@@ -392,6 +392,24 @@ std::string STD_UTILS_PORT Std_ToStr(int iVal)
 }
 
 /**
+\brief	Converts a value to a std::string
+
+\author	dcofer
+\date	5/3/2011
+
+\param	iVal	The value.
+
+\return	.
+**/
+std::string STD_UTILS_PORT Std_ToStr(unsigned int iVal)
+{
+	std::ostringstream buf;
+	buf << iVal ;
+	std::string str = buf.str() ;
+	return str;
+}
+
+/**
 \brief	Converts a value to a string
 
 \author	dcofer
@@ -402,6 +420,24 @@ std::string STD_UTILS_PORT Std_ToStr(int iVal)
 \return	.
 **/
 std::string STD_UTILS_PORT Std_ToStr(long lVal)
+{
+	std::ostringstream buf;
+	buf << lVal ;
+	std::string str = buf.str() ;
+	return str;
+}
+
+/**
+\brief	Converts a value to a string
+
+\author	dcofer
+\date	5/3/2011
+
+\param	lVal	The value.
+
+\return	.
+**/
+std::string STD_UTILS_PORT Std_ToStr(unsigned long lVal)
 {
 	std::ostringstream buf;
 	buf << lVal ;

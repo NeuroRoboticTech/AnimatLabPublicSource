@@ -205,6 +205,8 @@ Namespace DataObjects.Behavior.Nodes
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Name", Me.Name)
 
+            oXml.AddChildElement("ModuleName", Me.ModuleName)
+
             oXml.AddChildElement("Type", Me.AdapterType)
             oXml.AddChildElement("SourceBodyID", m_doRigidBody.ID)
             oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)

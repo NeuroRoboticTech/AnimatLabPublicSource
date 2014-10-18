@@ -19,12 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CsAdapter.h" />
+    <ClInclude Include="..\CsConnectionGenerator.h" />
+    <ClInclude Include="..\CsFiringRateStimulus.h" />
     <ClInclude Include="..\CsIncludes.h" />
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
     <ClInclude Include="..\config.h" />
-    <ClInclude Include="..\CsNeuron.h" />
-    <ClInclude Include="..\CsSynapse.h" />
+    <ClInclude Include="..\CsNeuronDataColumn.h" />
+    <ClInclude Include="..\CsNeuronGroup.h" />
+    <ClInclude Include="..\CsSpikeGeneratorGroup.h" />
+    <ClInclude Include="..\CsSpikingCurrentSynapse.h" />
+    <ClInclude Include="..\CsSynapseFull.h" />
+    <ClInclude Include="..\CsSynapseGroup.h" />
+    <ClInclude Include="..\CsSynapseIndividual.h" />
+    <ClInclude Include="..\CsSynapseOneToOne.h" />
+    <ClInclude Include="..\CsSynapseRandom.h" />
     <ClInclude Include="..\CUDAVersionControl.h" />
     <ClInclude Include="..\errorCode.h" />
     <ClInclude Include="..\gpu.h" />
@@ -41,10 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CarlSim.cpp" />
+    <ClCompile Include="..\CsAdapter.cpp" />
+    <ClCompile Include="..\CsConnectionGenerator.cpp" />
+    <ClCompile Include="..\CsFiringRateStimulus.cpp" />
     <ClCompile Include="..\CsNeuralModule.cpp" />
     <ClCompile Include="..\CsClassFactory.cpp" />
-    <ClCompile Include="..\CsNeuron.cpp" />
-    <ClCompile Include="..\CsSynapse.cpp" />
+    <ClCompile Include="..\CsNeuronDataColumn.cpp" />
+    <ClCompile Include="..\CsNeuronGroup.cpp" />
+    <ClCompile Include="..\CsSpikeGeneratorGroup.cpp" />
+    <ClCompile Include="..\CsSpikingCurrentSynapse.cpp" />
+    <ClCompile Include="..\CsSynapseFull.cpp" />
+    <ClCompile Include="..\CsSynapseGroup.cpp" />
+    <ClCompile Include="..\CsSynapseIndividual.cpp" />
+    <ClCompile Include="..\CsSynapseOneToOne.cpp" />
+    <ClCompile Include="..\CsSynapseRandom.cpp" />
     <ClCompile Include="..\mtrand.cpp" />
     <ClCompile Include="..\printSNNInfo.cpp" />
     <ClCompile Include="..\PropagatedSpikeBuffer.cpp" />
@@ -117,8 +137,9 @@
       <AdditionalLibraryDirectories>../../../lib;../../../../3rdParty/boost_1_54_0/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+      <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"
+Copy $(OutDir)AnimatCarlSimCUDA_vc10D.lib ..\..\..\lib\AnimatCarlSimCUDA_vc10D.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CodeGeneration>compute_20,sm_20</CodeGeneration>
@@ -159,8 +180,9 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
+      <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"
+Copy $(OutDir)AnimatCarlSimCUDA_vc10.lib ..\..\..\lib\AnimatCarlSimCUDA_vc10.lib
+Copy $(TargetPath) ..\..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -19,44 +19,41 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsSynapse : public AnimatSim::Link   
+	class ANIMAT_CARL_SIM_PORT CsSynapseIndividual : public CsSynapseGroup   
 	{
 	protected:
-		/// Pointer to parent CsNeuralModule.
-		//CsNeuralModule *m_lpCsModule;
+		///The Ith neuron of the pre-synaptic group to connect.
+		int m_iFromIdx;
 
-		/// GUID ID of the pre-synaptic neruon.
-		std::string m_strFromID;
+		///The Jth neuron of the post-synaptic group to connect.
+		int m_iToIdx;
 
-		/// The pointer to pre-synaptic neuron
-		CsNeuron *m_lpFromNeuron;
-
-		/// The pointer to post-synaptic neuron
-		CsNeuron *m_lpToNeuron;
+		///The synapse index key used in the synapse map.
+		//CStdIPoint m_iSynpaseKey;
+		std::pair<int, int> m_vSynapseKey;
 
 	public:
-		CsSynapse();
-		virtual ~CsSynapse();
+		CsSynapseIndividual();
+		virtual ~CsSynapseIndividual();
+		
+		virtual void FromIdx(int iVal);
+		virtual int FromIdx();
+		
+		virtual void ToIdx(int iVal);
+		virtual int ToIdx();
 
-		/**
-		\brief	Gets the pre-synaptic neuron.
-			
-		\author	dcofer
-		\date	3/29/2011
-			
-		\return	Pointer to the neuron.
-		**/
-		CsNeuron *FromNeuron() {return m_lpFromNeuron;};
+		virtual std::pair<int, int> SynapseIndexKey();
+
+		virtual void SetCARLSimulation();
+		virtual bool SetCARLSimulation(int iFromIdx, int iToIdx, float& weight, float& maxWt, float& delay, bool& connected);
 
 #pragma region DataAccesMethods
 		virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 		virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 #pragma endregion
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
-		virtual void VerifySystemPointers();
-		virtual void Initialize();
 		virtual void Load(CStdXml &oXml);
+
 	};
 
 }				//AnimatCarlSim

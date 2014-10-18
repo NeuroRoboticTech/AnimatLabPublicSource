@@ -6,6 +6,11 @@
 
 #pragma once
 
+#include "CsNeuronGroup.h"
+#include "CsSynapseGroup.h"
+#include "CsSynapseIndividual.h"
+#include "CsConnectionGenerator.h"
+
 /**
 \brief	Contains all of the classes that imlement the firing rate neural model.
 **/
@@ -27,17 +32,45 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::NeuralModule  
+	class ANIMAT_CARL_SIM_PORT CsNeuralModule : public AnimatSim::Behavior::ThreadedModule, StepFeedback  
 	{
 	protected:
-		/// The array of neurons in this module.
-		CStdPtrArray<CsNeuron> m_aryNeurons;
+		/// The array of neuron groups in this module.
+		CStdPtrArray<CsNeuronGroup> m_aryNeuronGroups;
 
 		/// The array of synapses in this module.
-		CStdPtrArray<CsSynapse> m_arySynapses;
+		CStdPtrArray<CsSynapseGroup> m_arySynapses;
 
-		CsNeuron *LoadNeuron(CStdXml &oXml);
+		/// This is a list of connection generators for building individual 
+		///connections between populations of neurons.
+		CStdPtrMap<std::string, CsConnectionGenerator> m_aryGenerators;
+
+		///Pointer to the CARLsim simulator
+		CpuSNN *m_lpSNN;
+
+		///The mode of the simulation. GPU vs CPU
+		int m_iSimMode;
+
+		///The current time of the neural simulation
+		float m_fltNeuralTime;
+
+		///True if the neural simulation has finished and is waiting on the physics sim to catch up.
+		bool m_bWaitingForPhysicsToCatchUp;
+
+		///True if the physics simulation has finished and is waiting on the neural sim to catch up.
+		bool m_bWaitingForNeuralToCatchUp;
+
+		CsNeuronGroup *LoadNeuronGroup(CStdXml &oXml);
+		CsSynapseGroup *LoadSynapse(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
+
+		virtual void StepThread();
+		virtual void CloseThread();
+
+		virtual void SetCARLSimulation();
+
+		virtual void WaitForPhysicsToCatchUp();
+		virtual void WaitForNeuralToCatchUp();
 
 	public:
 		CsNeuralModule();
@@ -53,8 +86,22 @@ namespace AnimatCarlSim
 		**/
 		virtual std::string ModuleName();
 
+		virtual CpuSNN *SNN() {return m_lpSNN;};
+
+		virtual bool stepUpdate(CpuSNN* s, int step);
+		virtual void updateMonitors(CpuSNN* s, int step);
+
+		virtual void SimMode(int iMode);
+		virtual int SimMode();
+
+		virtual unsigned int SimulationStepInterval();
+
+		virtual CsConnectionGenerator *FindConnectionGenerator(std::string strID, bool bThrowError = true);
+		virtual void AddConnectionGenerator(std::string strID, CsConnectionGenerator *lpGen);
+		
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
+		virtual void SimStarting();
 		virtual void ResetSimulation();
 		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
@@ -66,9 +113,27 @@ namespace AnimatCarlSim
 		virtual bool RemoveItem(const std::string &strItemType, const std::string &strID, bool bThrowError = true);
 #pragma endregion
 
-		virtual void AddNeuron(std::string strXml, bool bDoNotInit = false);
-		virtual void RemoveNeuron(std::string strID, bool bThrowError = true);
-		virtual int FindNeuronListPos(std::string strID, bool bThrowError = true);
+		virtual void AddNeuronGroup(std::string strXml, bool bDoNotInit = false);
+		virtual void RemoveNeuronGroup(std::string strID, bool bThrowError = true);
+		virtual int FindNeuronGroupListPos(std::string strID, bool bThrowError = true);
+
+		virtual CStdPtrArray<CsSynapseGroup> *GetSynapses();
+		/**
+		\brief	Adds a synapse to this module. 
+
+		\author	dcofer
+		\date	9/28/2014
+
+		\param [in,out]	lpSynapse	Pointer to the synapse to add. 
+		**/
+		virtual void AddSynapse(CsSynapseGroup *lpSynapse);
+		virtual void AddSynapse(std::string strXml, bool bDoNotInit);
+		virtual void RemoveSynapse(int iIndex);
+		virtual void RemoveSynapse(std::string strID, bool bThrowError = true);
+		virtual CsSynapseGroup *GetSynapse(int iIndex);
+		virtual int TotalSynapses();
+		virtual void ClearSynapses();
+		virtual int FindSynapseListPos(std::string strID, bool bThrowError = true);
 	};
 
 }				//FiringRateSim

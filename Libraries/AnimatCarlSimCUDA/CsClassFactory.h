@@ -36,7 +36,7 @@ namespace AnimatCarlSim
 
 		\return	Pointer to created object.
 		**/
-		virtual CsNeuron *CreateNeuron(std::string strType, bool bThrowError = true);
+		virtual Node *CreateNeuron(std::string strType, bool bThrowError = true);
 
 		/**
 		\brief	Creates a synapse.
@@ -49,7 +49,20 @@ namespace AnimatCarlSim
 
 		\return	Pointer to created object.
 		**/
-		virtual CsSynapse *CreateSynapse(std::string strType, bool bThrowError = true);
+		virtual AnimatSim::Link *CreateSynapse(std::string strType, bool bThrowError = true);
+
+		/**
+		\brief	Creates an external stimuli.
+
+		\author	dcofer
+		\date	3/30/2011
+
+		\param	strType	   	Type of the class to create. 
+		\param	bThrowError	true to throw error if problem. 
+
+		\return	Pointer to created object.
+		**/
+		virtual ExternalStimulus *CreateExternalStimulus(std::string strType, bool bThrowError = true);
 
 
 		/**
@@ -64,6 +77,9 @@ namespace AnimatCarlSim
 		\return	null if it fails, else.
 		**/
 		virtual NeuralModule *CreateNeuralModule(std::string strType, bool bThrowError = true);
+
+		virtual DataColumn *CreateDataColumn(std::string strType, bool bThrowError = true);
+		virtual Adapter *CreateAdapter(std::string strType, bool bThrowError = true);
 
 		virtual CStdSerialize *CreateObject(std::string strClassType, std::string strObjectType, bool bThrowError = true);
 	};

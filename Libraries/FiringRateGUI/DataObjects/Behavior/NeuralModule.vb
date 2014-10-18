@@ -63,6 +63,17 @@ Namespace DataObjects.Behavior
             Next
             oXml.OutOfElem()
 
+            Dim blExternal As AnimatGUI.DataObjects.Behavior.Link
+            oXml.AddChildElement("ExternalSynapses")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryLinks
+                If Not Util.IsTypeOf(deEntry.Value.GetType(), GetType(FiringRateGUI.DataObjects.Behavior.FastSynapse), False) Then
+                    blExternal = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    blExternal.SaveSimulationXml(oXml, Me)
+                End If
+            Next
+            oXml.OutOfElem()
+
             oXml.OutOfElem()  'neuralmodule xml
 
         End Sub

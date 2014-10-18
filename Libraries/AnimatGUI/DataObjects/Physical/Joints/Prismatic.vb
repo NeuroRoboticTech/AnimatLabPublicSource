@@ -72,6 +72,12 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
+        Public Overrides ReadOnly Property IsMotorized() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overridable Property EnableMotor() As Boolean
             Get
                 Return m_bEnableMotor
@@ -82,8 +88,7 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-
-        Public Overridable Property MotorType() As Joint.enumJointMotorTypes
+        Public Overrides Property MotorType() As Joint.enumJointMotorTypes
             Get
                 Return m_eMotorType
             End Get

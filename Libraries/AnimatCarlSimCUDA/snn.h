@@ -69,6 +69,12 @@ using std::map;
 
 extern RNG_rand48* gpuRand48; //!< Used by all network to generate global random number
 
+//Specifies the time step used for the integration.
+#define CARLSIM_STEP_INCREMENT 0.001
+
+//This controls how many iterations are taken before an update occurs. 
+//I have it set here to 10 ms, the default for CarlSim would be 1000 for 1 second.
+#define CARLSIM_STEP_SIZE 10 
 
 #define ALL -1 //!< used for the set* methods to specify all groups and/or configIds
 
@@ -172,12 +178,34 @@ inline bool isInhibitoryNeuron (unsigned int& nid, unsigned int& numNInhPois, un
 #define GET_FIRING_TABLE_NID(val)   ((val) & MAX_NUMBER_OF_NEURONS_MASK)
 #define GET_FIRING_TABLE_GID(val)   (((val) >> MAX_NUMBER_OF_NEURONS_BITS) & MAX_NUMBER_OF_GROUPS_MASK)
 
-//!< Used for in the function getConnectionId
-#define CHECK_CONNECTION_ID(n,total) { assert(n >= 0); assert(n < total); }
+///Use exceptions instead of exiting.
+#define USE_EXCEPTIONS 1
+
+#ifdef USE_EXCEPTIONS
+#define carlsim_assert(pred) {if(!(pred)) throw std::exception("Assert triggered.\n");}
+#else
+#define carlsim_assert(pred) assert(pred)
+#endif
 
 //Various callback functions
 
 class CpuSNN;
+
+//! used for fine-grained control over the stepping behavior during a runNetwork execution
+/*!
+ * If this callback is set then the using application is notified each time the simulation is stepped
+   and if it passes back a true then then stepping stops at that point and the runNetwork call exists.
+ */
+class StepFeedback {
+ public:
+  StepFeedback() {};
+
+  /*! \attention The virtual method should never be called directly */
+  virtual bool stepUpdate(CpuSNN* s, int step) { assert(false); return false;}; // the virtual method should never be called directly
+  virtual void updateMonitors(CpuSNN* s, int step) { assert(false);}; // the virtual method should never be called directly
+};
+
+
 
 //! used for fine-grained control over spike generation, using a callback mechanism
 /*! Spike generation can be performed using spike generators. Spike generators are dummy-neurons that have their spikes
@@ -233,7 +261,7 @@ class SpikeMonitor {
 
   //! Controls actions that are performed when certain neurons fire (user-defined).
   /*! \attention The virtual method should never be called directly */
-  virtual void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts) {};
+  virtual void update(CpuSNN* s, int grpId, unsigned int* Nids, unsigned int* timeCnts, unsigned int total_spikes, float firing_Rate) {};
 };
 
 
@@ -586,7 +614,7 @@ class CpuSNN
  public:
 
   const static unsigned int MAJOR_VERSION = 2; //!< major release version, as in CARLsim X
-  const static unsigned int MINOR_VERSION = 2; //!< minor release version, as in CARLsim 2.X
+  const static unsigned int MINOR_VERSION = 3; //!< minor release version, as in CARLsim 2.X
 
   CpuSNN(const string& _name, int _numConfig = 1, int randomize = 0, int mode=CPU_MODE);
   ~CpuSNN();
@@ -720,7 +748,7 @@ class CpuSNN
   void setTuningLog(string fname)
   {
     fpTuningLog = fopen(fname.c_str(), "w");
-    assert(fpTuningLog != NULL);
+    carlsim_assert(fpTuningLog != NULL);
   }
 
   //! sets the update cycle for log messages
@@ -845,11 +873,11 @@ class CpuSNN
     //! do check to make sure appropriate flag is set
     if(simType == GPU_MODE && enableGPUSpikeCntPtr == false){
       fprintf(stderr,"Error: the enableGPUSpikeCntPtr flag must be set to true to use this function in GPU_MODE.\n");
-      assert(enableGPUSpikeCntPtr);
+      carlsim_assert(enableGPUSpikeCntPtr);
     }
     
     if(simType == GPU_MODE){
-      assert(enableGPUSpikeCntPtr);
+      carlsim_assert(enableGPUSpikeCntPtr);
     }
     
     return ((grpId == -1) ? nSpikeCnt : &nSpikeCnt[grp_Info[grpId].StartN]);
@@ -918,6 +946,10 @@ class CpuSNN
   
   //! Utility function to clear spike counts in the GPU code.
   void resetSpikeCnt_GPU(int _startGrp, int _endGrp);
+
+  void setStepFeedback(StepFeedback *feedback) {stepFeedback = feedback;};
+  
+  void setSpikeRateUpdated() {spikeRateUpdated = true;};
 
  private:
   void setGrpTimeSlice(int grpId, int timeSlice); //!< used for the Poisson generator.  It can probably be further optimized...
@@ -994,7 +1026,7 @@ class CpuSNN
   void connectOneToOne(grpConnectInfo_t* info);
   void connectFromMatrix(SparseWeightDelayMatrix* mat, int connProp);
 
-  void exitSimulation(int val);
+  void exitSimulation(int val, const char *errorString);
 
   void deleteObjects(); //!< deallocates all used data structures in snn_cpu.cpp
   void deleteObjectsGPU(); //!< deallocates all used data structures in snn_gpu.cu
@@ -1143,8 +1175,6 @@ class CpuSNN
   void setDefaultParameters(float alpha_ltp=0, float tau_ltp=0, float alpha_ltd=0, float tau_ltd=0);
 
   void setupNetwork(int simType=CPU_MODE, int ithGPU=0, bool removeTempMemory=true);
-
-
 
  private:
   SparseWeightDelayMatrix* tmp_SynapseMatrix_fixed;
@@ -1347,6 +1377,8 @@ class CpuSNN
   group_info2_t		grp_Info2[MAX_GRP_PER_SNN];
   float*			testVar, *testVar2;
   uint32_t*	spikeGenBits;
+
+  StepFeedback *stepFeedback;
 
 
   /* these are deprecated, and replaced by writeNetwork(FILE*)

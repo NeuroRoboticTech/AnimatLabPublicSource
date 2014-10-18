@@ -1,7 +1,7 @@
 /**
-\file	CsNeuron.h
+\file	CsNeuronGroup.h
 
-\brief	Declares the CsNeuron class.
+\brief	Declares the CsNeuronGroup class.
 **/
 
 #pragma once
@@ -25,21 +25,30 @@ namespace AnimatCarlSim
 	\author	dcofer
 	\date	3/29/2011
 	**/
-	class ANIMAT_CARL_SIM_PORT CsNeuron : public AnimatSim::Node   
+	class ANIMAT_CARL_SIM_PORT CsSpikeGeneratorGroup : public CsNeuronGroup   
 	{
 	protected:
-		/// Pointer to parent CsNeuralModule.
-		//CsNeuralModule *m_lpCsModule;
-					
+		PoissonRate *m_lpSpikeRates;
+
+		///The refractory period
+		unsigned int m_uiRefPeriod;
+
+		unsigned int m_uiBaseFiringRate;
+
+		virtual void DeletePoissonRates();
+
 	public:
-		CsNeuron();
-		virtual ~CsNeuron();
-		
+		CsSpikeGeneratorGroup();
+		virtual ~CsSpikeGeneratorGroup();
+
+		virtual void SetCARLSimulation();
+
+		virtual PoissonRate *SpikeRates() {return m_lpSpikeRates;};
+		virtual void SetSpikeRatesUpdated();
+
 		virtual void AddExternalNodeInput(int iTargetDataType, float fltInput);
 		virtual void Copy(CStdSerialize *lpSource);
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, bool bVerify);
-		virtual void VerifySystemPointers();
 		virtual void Initialize();
 		virtual void StepSimulation();
 

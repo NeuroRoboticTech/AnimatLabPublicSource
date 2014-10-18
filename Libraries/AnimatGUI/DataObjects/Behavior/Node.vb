@@ -890,6 +890,11 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub BeforeRemoveLink(ByVal blLink As Behavior.Link)
+            If Not blLink Is Nothing Then
+                RemoveHandler blLink.AfterPropertyChanged, AddressOf Me.OnLinkModified
+                RemoveHandler blLink.OriginModified, AddressOf Me.OnOriginModified
+                RemoveHandler blLink.DestinationModified, AddressOf Me.OnDestinationModified
+            End If
         End Sub
 
         Public Overridable Sub AfterRemoveLink(ByVal blLink As Behavior.Link)

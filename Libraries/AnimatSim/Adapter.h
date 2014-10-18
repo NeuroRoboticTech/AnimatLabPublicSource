@@ -141,6 +141,8 @@ namespace AnimatSim
 
 			virtual bool NeedsRobotSynch();
 
+			virtual void ApplyExternalNodeInput(int iTargetDataType, float fltNextVal);
+
 		public:
 			Adapter();
 			virtual ~Adapter();
