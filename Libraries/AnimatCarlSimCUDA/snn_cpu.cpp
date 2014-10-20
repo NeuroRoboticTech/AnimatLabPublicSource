@@ -36,8 +36,8 @@
  *
  * CARLsim available from http://socsci.uci.edu/~jkrichma/CARLsim/
  * Ver 07/13/2013
- */ 
- 
+ */
+
 #include "snn.h"
 #include <sstream>
 
@@ -74,9 +74,12 @@ RNG_rand48* gpuRand48 = NULL;
 
 // includes for mkdir
 #if defined(CREATE_SPIKEDIR_IF_NOT_EXISTS)
-#include <sys/stat.h>
-#include <errno.h>
-//#include <libgen.h>
+    #include <sys/stat.h>
+    #include <errno.h>
+
+    #if ! (_WIN32 || _WIN64)
+        #include <libgen.h>
+    #endif
 #endif
 
 
@@ -302,7 +305,7 @@ void CpuSNN::resetSpikeCnt(int my_grpId )
     startGrp = my_grpId;
     endGrp   = my_grpId+numConfig;
   }
-  
+
   for( int grpId=startGrp; grpId < endGrp; grpId++) {
     int startN = grp_Info[grpId].StartN;
     int endN   = grp_Info[grpId].EndN+1;
@@ -328,11 +331,11 @@ void CpuSNN::resetSpikeCntUtil(int my_grpId )
     else {
       startGrp = my_grpId;
       endGrp   = my_grpId+numConfig;
-    } 
+    }
     resetSpikeCnt_GPU(startGrp, endGrp);
     return;
   }
-    
+
   if (my_grpId == -1) {
     startGrp = 0;
     endGrp   = numGrp;
@@ -341,7 +344,7 @@ void CpuSNN::resetSpikeCntUtil(int my_grpId )
     startGrp = my_grpId;
     endGrp   = my_grpId+numConfig;
   }
-  
+
   for( int grpId=startGrp; grpId < endGrp; grpId++) {
     int startN = grp_Info[grpId].StartN;
     int endN   = grp_Info[grpId].EndN+1;
@@ -478,7 +481,7 @@ CpuSNN::CpuSNN(const string& _name, int _numConfig, int _randSeed, int _mode)
   if (fpParam==NULL) {
     fprintf(stderr, "WARNING !!! Unable to open/create parameter file 'param.txt'; check if current directory is writable \n");
 #ifdef USE_EXCEPTIONS
-	throw std::exception("WARNING !!! Unable to open/create parameter file 'param.txt'; check if current directory is writable \n");
+	throw std::runtime_error("WARNING !!! Unable to open/create parameter file 'param.txt'; check if current directory is writable \n");
 #else
     exit(1);
 #endif
@@ -614,7 +617,7 @@ void CpuSNN::exitSimulation(int val, const char *errorString)
   deleteObjects();
 
 #ifdef USE_EXCEPTIONS
-	throw std::exception(errorString);
+	throw std::runtime_error(errorString);
 #else
 	exit(val);
 #endif
@@ -652,7 +655,7 @@ void CpuSNN::setSTDP( int grpId, bool enable, float ALPHA_LTP, float TAU_LTP, fl
     int cGrpId = getGroupId(grpId, configId);
 
     sim_with_stdp |= enable;
-			
+
     grp_Info[cGrpId].WithSTDP      = enable;
     grp_Info[cGrpId].ALPHA_LTP     = ALPHA_LTP;
     grp_Info[cGrpId].ALPHA_LTD     = ALPHA_LTD;
@@ -689,7 +692,7 @@ void CpuSNN::setSTP(int grpId, bool enable, float STP_U, float STP_tD, float STP
     int cGrpId = getGroupId(grpId, configId);
 
     sim_with_stp |= enable;
-			
+
     grp_Info[cGrpId].WithSTP     = enable;
     grp_Info[cGrpId].STP_U=STP_U;
     grp_Info[cGrpId].STP_tD=STP_tD;
@@ -761,7 +764,7 @@ void CpuSNN::setHomeostasis(int grpId, bool enable, float homeostasisScale, floa
       setHomeostasis(grpId, enable, homeostasisScale, avgTimeScale, c);
   } else {
     int cGrpId = getGroupId(grpId, configId);
-    
+
     grp_Info[cGrpId].WithHomeostasis    = enable;
     grp_Info[cGrpId].homeostasisScale   = homeostasisScale;
     grp_Info[cGrpId].avgTimeScale       = avgTimeScale;
@@ -801,7 +804,7 @@ int CpuSNN::createGroup(const string& _name, unsigned int _numN, int _nType, int
     grp_Info[numGrp].WithSTP		= false;
     grp_Info[numGrp].WithSTDP		= false;
     grp_Info[numGrp].WithHomeostasis	= false;
-    
+
     if ( (_nType&TARGET_GABAa) || (_nType&TARGET_GABAb)) {
       grp_Info[numGrp].MaxFiringRate 	= INHIBITORY_NEURON_MAX_FIRING_RATE;
     }
@@ -1015,7 +1018,7 @@ void CpuSNN::resetNeuron(unsigned int nid, int grpId)
 #ifdef USE_EXCEPTIONS
 	  std::ostringstream stringStream;
 	  stringStream << "setNeuronParameters must be called for group " << grp_Info2[grpId].Name.c_str() << "(" << grpId << ")\n";
-	  throw std::exception(stringStream.str().c_str());
+	  throw std::runtime_error(stringStream.str().c_str());
 #else
       exit(-1);
 #endif
@@ -1031,8 +1034,8 @@ void CpuSNN::resetNeuron(unsigned int nid, int grpId)
 
   voltage[nid] = Izh_c[nid];	// initial values for new_v
   recovery[nid] = 0.2f*voltage[nid];   		// initial values for u
-  
- 
+
+
   // set the baseFiring with some standard deviation.
   if(drand48()>0.5)   {
     baseFiring[nid] = grp_Info2[grpId].baseFiring + grp_Info2[grpId].baseFiringSD*-log(drand48());
@@ -1049,7 +1052,7 @@ void CpuSNN::resetNeuron(unsigned int nid, int grpId)
     baseFiring[nid] = 0.0;
     avgFiring[nid]  = 0;
   }
-  
+
   lastSpikeTime[nid]  = MAX_SIMULATION_TIME;
 
   if(grp_Info[grpId].WithSTP) {
@@ -1164,7 +1167,7 @@ void CpuSNN::getPopWeights(int grpPreId, int grpPostId, float*& weights, int& ma
   post_info_t* preId;
   int pre_nid, pos_ij;
   int numPre, numPost;
-  
+
   if(configId < 0){
     printf("Invalid configId.  You can not pass the ALL (ALL=-1) argument.\n");
     carlsim_assert(false);
@@ -1175,7 +1178,7 @@ void CpuSNN::getPopWeights(int grpPreId, int grpPostId, float*& weights, int& ma
   //population sizes
   numPre = grp_Info[cGrpIdPre].SizeN;
   numPost = grp_Info[cGrpIdPost].SizeN;
-  
+
   //first iteration gets the number of synaptic weights to place in our
   //weight matrix.
   matrixSize=0;
@@ -1194,7 +1197,7 @@ void CpuSNN::getPopWeights(int grpPreId, int grpPostId, float*& weights, int& ma
   }
   //now we have the correct size matrix
   weights = new float[matrixSize];
- 
+
   //second iteration assigns the weights
   int curr = 0; // iterator for return array
   //iterate over all neurons in the post group
@@ -1225,7 +1228,7 @@ void CpuSNN::getPopWeights(int grpPreId, int grpPostId, float*& weights, int& ma
 void CpuSNN::writePopWeights(string fname, int grpPreId, int grpPostId, int configId){
   float* weights;
   int matrixSize;
-  FILE* fid; 
+  FILE* fid;
   int numPre, numPost;
   fid = fopen(fname.c_str(), "wb");
   carlsim_assert(fid != NULL);
@@ -1245,11 +1248,11 @@ void CpuSNN::writePopWeights(string fname, int grpPreId, int grpPostId, int conf
 
   int cGrpIdPre = getGroupId(grpPreId, configId);
   int cGrpIdPost = getGroupId(grpPostId, configId);
- 
+
   //population sizes
   numPre = grp_Info[cGrpIdPre].SizeN;
   numPost = grp_Info[cGrpIdPost].SizeN;
-   
+
   //first iteration gets the number of synaptic weights to place in our
   //weight matrix.
   matrixSize=0;
@@ -1288,7 +1291,7 @@ void CpuSNN::writePopWeights(string fname, int grpPreId, int grpPostId, int conf
       curr++;
     }
   }
-  
+
   fwrite(weights,sizeof(float),matrixSize,fid);
   fclose(fid);
   //Let my memory FREE!!!
@@ -1664,8 +1667,8 @@ int CpuSNN::connect(int grpId1, int grpId2, const string& _type, float initWt, f
     }
 
     // update the pre and post size...
-    // Subtlety: each group has numPost/PreSynapses from multiple connections.  
-    // The newInfo->numPost/PreSynapses are just for this specific connection.  
+    // Subtlety: each group has numPost/PreSynapses from multiple connections.
+    // The newInfo->numPost/PreSynapses are just for this specific connection.
     // We are adding the synapses counted in this specific connection to the totals for both groups.
     grp_Info[grpId1].numPostSynapses 	+= newInfo->numPostSynapses;
     grp_Info[grpId2].numPreSynapses 	+= newInfo->numPreSynapses;
@@ -2224,7 +2227,7 @@ void CpuSNN::updateStateAndFiringTable()
       unsigned int offset = cumulativePre[i];
       float diff_firing  = 0.0;
       float homeostasisScale = 1.0;
-      
+
       if(grp_Info[g].WithHomeostasis) {
 		carlsim_assert(baseFiring[i]>0);
 		diff_firing = 1-avgFiring[i]/baseFiring[i];
@@ -2240,13 +2243,13 @@ void CpuSNN::updateStateAndFiringTable()
 	  fprintf(fpProgLog,"%1.2f %1.2f \t", wt[offset+j]*10, wtChange[offset+j]*10);
 	// homeostatic weight update
 	if(grp_Info[g].WithHomeostasis) {
-	  if ((showLogMode >= 3) && (i==grp_Info[g].StartN)) 
+	  if ((showLogMode >= 3) && (i==grp_Info[g].StartN))
 	    fprintf(fpProgLog,"%f\t",(diff_firing*(0.0+wt[offset+j]) + wtChange[offset+j])/10/(Npre_plastic[i]+10)/(grp_Info[g].avgTimeScale*2/1000.0)*baseFiring[i]/(1+fabs(diff_firing)*50));
 	  //need to figure out exactly why we change the weight to this value.  Specifically, what is with the second term?  -- KDC
 	  wt[offset+j] += (diff_firing*wt[offset+j]*homeostasisScale + wtChange[offset+j])*baseFiring[i]/grp_Info[g].avgTimeScale/(1+fabs(diff_firing)*50);
 	} else{
 	  // just STDP weight update
-	  wt[offset+j] += wtChange[offset+j]; 
+	  wt[offset+j] += wtChange[offset+j];
 	  // STDP weight update that is biased towards learning
 	  //wt[offset+j] += (wtChange[offset+j]+0.1f);
 	}
@@ -2435,7 +2438,7 @@ void  CpuSNN::globalStateUpdate()
   //fprintf(stdout, "---%d ----\n", simTime);
   // now we update the state of all the neurons
   for(int g=0; g < numGrp; g++) {
-    if (grp_Info[g].Type&POISSON_NEURON){ 
+    if (grp_Info[g].Type&POISSON_NEURON){
       for(int i=grp_Info[g].StartN; i <= grp_Info[g].EndN; i++)
 	avgFiring[i] *= grp_Info[g].avgTimeScale_decay;
       continue;
@@ -2717,7 +2720,7 @@ int CpuSNN::runNetwork(int _nsec, int _nmsec, int simType, int ithGPU, bool enab
        }
      }
    }
-  
+
   // keep track of simulation time...
   CUDA_STOP_TIMER(timer);
   lastExecutionTime = CUDA_GET_TIMER_VALUE(timer);
@@ -3476,7 +3479,7 @@ void CpuSNN::resetSynapticConnections(bool changeWeights)
 	int preId    = GET_CONN_NEURON_ID((*preIdPtr));
 	carlsim_assert(preId < numN);
 	int srcGrp   = findGrpId(preId);
-	grpConnectInfo_t* connInfo;	      
+	grpConnectInfo_t* connInfo;
 	grpConnectInfo_t* connIterator = connectBegin;
 	while(connIterator){
 	  if(connIterator->grpSrc == srcGrp && connIterator->grpDest == destGrp){
@@ -3944,7 +3947,7 @@ void CpuSNN::setSpikeMonitor(int gid, const string& fname, int configId) {
 #ifdef USE_EXCEPTIONS
   	          std::ostringstream stringStream;
 	          stringStream << "ERROR " << errno << ": could not create spike file '" << fname << "', directory '%%CARLSIM_ROOT%%/results/' does not exist\n";
-	          throw std::exception(stringStream.str().c_str());
+	          throw std::runtime_error(stringStream.str().c_str());
 #else
               exit(1);
 #endif
@@ -3962,10 +3965,10 @@ void CpuSNN::setSpikeMonitor(int gid, const string& fname, int configId) {
 #ifdef USE_EXCEPTIONS
   	        std::ostringstream stringStream;
 	        stringStream << "ERROR " << errno << " File \"" << fname << "\" could not be opened, please check if it exists.\n       Enable option CREATE_SPIKEDIR_IF_NOT_EXISTS in config.h to attempt creating thespecified subdirectory automatically.\n";
-	        throw std::exception(stringStream.str().c_str());
+	        throw std::runtime_error(stringStream.str().c_str());
 #else
 			exit(1);
-#endif			
+#endif
 		    return;
 #endif
 		    }
@@ -4053,7 +4056,7 @@ void CpuSNN::updateSpikeMonitor()
 	  nid = GET_FIRING_TABLE_NID(nid);
 	//fprintf(fpLog, "%d %d \n", t, nid);
 	carlsim_assert(nid < numN);
-	  
+
 	int grpId = findGrpId(nid);
 	int monitorId = grp_Info[grpId].MonitorId;
 	if(monitorId!= -1) {
@@ -4143,13 +4146,13 @@ void CpuSNN::reassignFixedWeights(int connectId, float weightMatrix[], int sizeM
   //after all configurations and weights have been set, copy them back to the GPU if
   //necessary:
   if(currentMode == GPU_MODE)
-    copyUpdateVariables_GPU();  
+    copyUpdateVariables_GPU();
 }
 
 // returns the number of synaptic connections associated with this connection.
 int CpuSNN::getNumConnections(int connectionId)
 {
-  grpConnectInfo_t* connInfo;	      
+  grpConnectInfo_t* connInfo;
   grpConnectInfo_t* connIterator = connectBegin;
   while(connIterator){
     if(connIterator->connId == connectionId){
@@ -4161,7 +4164,7 @@ int CpuSNN::getNumConnections(int connectionId)
   }
   //we didn't find the connection.
   printf("Connection ID was not found.  Quitting.\n");
-  carlsim_assert(false);  
+  carlsim_assert(false);
 }
 
 

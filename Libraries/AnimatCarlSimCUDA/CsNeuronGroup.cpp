@@ -107,7 +107,7 @@ void CsNeuronGroup::CopyRecentSpikeTimes()
 }
 
 void CsNeuronGroup::NeuronCount(unsigned int iVal)
-{	
+{
 	Std_IsAboveMin((int) 0, (int) iVal, true, "NeuronCount");
 	m_uiNeuronCount = iVal;
 }
@@ -170,7 +170,7 @@ void CsNeuronGroup::EnableCOBA(bool bVal) {m_bEnableCOBA = bVal;}
 
 bool CsNeuronGroup::EnableCOBA() {return m_bEnableCOBA;}
 
-void CsNeuronGroup::TauAMPA(float fltVal) 
+void CsNeuronGroup::TauAMPA(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "TauAMPA", false);
 	m_fltTauAMPA = fltVal;
@@ -178,7 +178,7 @@ void CsNeuronGroup::TauAMPA(float fltVal)
 
 float CsNeuronGroup::TauAMPA() {return m_fltTauAMPA;}
 
-void CsNeuronGroup::TauNMDA(float fltVal) 
+void CsNeuronGroup::TauNMDA(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "TauNMDA", false);
 	m_fltTauNMDA = fltVal;
@@ -186,7 +186,7 @@ void CsNeuronGroup::TauNMDA(float fltVal)
 
 float CsNeuronGroup::TauNMDA() {return m_fltTauNMDA;}
 
-void CsNeuronGroup::TauGABAa(float fltVal) 
+void CsNeuronGroup::TauGABAa(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "TauGABAa", false);
 	m_fltTauGABAa = fltVal;
@@ -194,7 +194,7 @@ void CsNeuronGroup::TauGABAa(float fltVal)
 
 float CsNeuronGroup::TauGABAa() {return m_fltTauGABAa;}
 
-void CsNeuronGroup::TauGABAb(float fltVal) 
+void CsNeuronGroup::TauGABAb(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "TauGABAb", false);
 	m_fltTauGABAb = fltVal;
@@ -206,7 +206,7 @@ void CsNeuronGroup::EnableSTP(bool bVal) {m_bEnableSTP = bVal;}
 
 bool CsNeuronGroup::EnableSTP() {return m_bEnableSTP;}
 
-void CsNeuronGroup::U(float fltVal) 
+void CsNeuronGroup::U(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, true, "U", true);
 	m_fltU = fltVal;
@@ -266,7 +266,7 @@ void CsNeuronGroup::TauLTD(float fltVal)
 
 float CsNeuronGroup::TauLTD() {return m_fltTauLTD;}
 
-void CsNeuronGroup::CollectFromWholePopulation(bool bVal) 
+void CsNeuronGroup::CollectFromWholePopulation(bool bVal)
 {
 	if(bVal)
 		m_iCollectWholePopulation++;
@@ -278,7 +278,7 @@ void CsNeuronGroup::CollectFromWholePopulation(bool bVal)
 	}
 }
 
-bool CsNeuronGroup::CollectFromWholePopulation() 
+bool CsNeuronGroup::CollectFromWholePopulation()
 {
 	if(m_iCollectWholePopulation > 0)
 		return true;
@@ -411,8 +411,8 @@ void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsign
 					////Test Code
 					//if(id == 3)
 					//{
-						std::string strMsg = "Spike for " + STR(id) + " [" + STR(id) + ", "+ STR(lTime) + "]\r\n";
-						OutputDebugString(strMsg.c_str());
+					//	std::string strMsg = "Spike for " + STR(id) + " [" + STR(id) + ", "+ STR(lTime) + "]\r\n";
+					//	OutputDebugString(strMsg.c_str());
 					//}
 				}
 				pos++;
@@ -470,7 +470,7 @@ void CsNeuronGroup::VerifySystemPointers()
 	if(!m_lpCsModule)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpCsModule->ID());
 
-	if(!m_lpOrganism) 
+	if(!m_lpOrganism)
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
 }
 
@@ -479,7 +479,7 @@ void CsNeuronGroup::VerifySystemPointers()
 bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
-	
+
 	if(Node::SetData(strDataType, strValue, false))
 		return true;
 

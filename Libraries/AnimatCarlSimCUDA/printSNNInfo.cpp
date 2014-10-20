@@ -36,7 +36,7 @@
  *
  * CARLsim available from http://socsci.uci.edu/~jkrichma/CARLsim/
  * Ver 07/13/2013
- */ 
+ */
 
 #include "snn.h"
 
@@ -206,7 +206,7 @@ void CpuSNN::printParameters(FILE* fp)
 {
 #ifdef USE_EXCEPTIONS
 	if(fp == NULL)
-		throw std::exception("print parmaters file was not specified.\n");
+		throw std::runtime_error("print parmaters file was not specified.\n");
 #else
   assert(fp!=NULL);
 #endif
@@ -350,7 +350,7 @@ void CpuSNN::printPostConnection(int grpId, FILE* fp)
 
 #ifdef USE_EXCEPTIONS
 	  if(findGrpId(post_nid) != post_gid)
-		throw std::exception("findGrpId(post_nid) != post_gid.\n");
+		throw std::runtime_error("findGrpId(post_nid) != post_gid.\n");
 #else
       assert( findGrpId(post_nid) == post_gid);
 #endif
