@@ -23,6 +23,8 @@
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/CARLsim/src" />
+					<Add directory="/usr/local/cuda/include" />
+					<Add directory="/home/ubuntu/NVIDIA_CUDA-6.0_Samples/common/inc" />
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
@@ -55,6 +57,8 @@
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
 					<Add directory="../../../../3rdParty/CARLsim/src" />
+					<Add directory="/usr/local/cuda/include" />
+					<Add directory="/home/ubuntu/NVIDIA_CUDA-6.0_Samples/common/inc" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

@@ -9,7 +9,9 @@
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
 					  "../../AnimatSim",
-					  "../../../../3rdParty/CARLsim/src" }
+					  "../../../../3rdParty/CARLsim/src",
+					  "/usr/local/cuda/include", 
+					  "/home/ubuntu/NVIDIA_CUDA-6.0_Samples/common/inc" }
 		libdirs { "../../../bin",
 				  "../../../../3rdParty/CARLsim/bin" }
 		links { "dl", "cudart" }
