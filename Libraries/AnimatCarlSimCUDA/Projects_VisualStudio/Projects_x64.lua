@@ -7,8 +7,10 @@
 		includedirs { "../../../include", 
 					  "../../StdUtils",
 					  "../../AnimatSim",
-					  "../../../../3rdParty/boost_1_54_0"}	  
+					  "../../../../3rdParty/boost_1_54_0",
+					  "../../../../3rdParty/Carlsim/src"}	  
 		libdirs { "../../../lib", 
+				  "../../../../3rdParty/CARLsim/lib_x64",
 				  "../../../../3rdParty/boost_1_54_0/lib_x64" }
 
 		configuration { "Debug_x64 or Debug_Double_x64", "windows" }
@@ -16,6 +18,7 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug_x64")
 			targetname ("AnimatCarlSim_vc10D_x64")
+			links { "CARLsim_debug_x64" } 
 			postbuildcommands { "Copy $(OutDir)AnimatCarlSim_vc10D_x64.lib ..\\..\\..\\lib\\AnimatCarlSim_vc10D_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64" }
 	 
@@ -24,5 +27,6 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release_x64")
 			targetname ("AnimatCarlSim_vc10_x64")
+			links { "CARLsim_x64" } 
 			postbuildcommands { "Copy $(OutDir)AnimatCarlSim_vc10_x64.lib ..\\..\\..\\lib\\AnimatCarlSim_vc10_x64.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin_x64" }

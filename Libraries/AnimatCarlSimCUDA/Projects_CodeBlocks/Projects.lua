@@ -8,8 +8,10 @@
 		buildoptions { "-std=c++0x" }
 		includedirs { "../../../include", 
 					  "../../StdUtils", 
-					  "../../AnimatSim" }
-		libdirs { "../../../bin" }
+					  "../../AnimatSim",
+					  "../../../../3rdParty/CARLsim/src" }
+		libdirs { "../../../bin",
+				  "../../../../3rdParty/CARLsim/bin" }
 		links { "dl", "cudart" }
 	  
 		configuration { "Debug", "linux" }
@@ -18,7 +20,8 @@
 			targetdir ("Debug")
 			targetname ("AnimatCarlSim_debug")
 			links { "StdUtils_debug", 
-					"AnimatSim_debug"}
+					"AnimatSim_debug", 
+					"CarlSim_debug"}
 			postbuildcommands { "cp Debug/libAnimatCarlSim_debug.so ../../../bin" }
 	 
 		configuration { "Release", "linux" }
@@ -27,5 +30,6 @@
 			targetdir ("Release")
 			targetname ("AnimatCarlSim")
 			links { "StdUtils",
-					"AnimatSim"}
+					"AnimatSim", 
+					"CarlSim"}
 			postbuildcommands { "cp Release/libAnimatCarlSim.so ../../../bin" }

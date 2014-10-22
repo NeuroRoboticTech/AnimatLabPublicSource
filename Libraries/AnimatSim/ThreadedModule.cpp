@@ -245,6 +245,9 @@ all the parts.
 **/
 void ThreadedModule::SetupThread()
 {
+	//make sure we wait until the other thread is waiting before sending our completed signal
+	while(!m_bWaitingForThreadNotify)
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000));
 }
 
 void ThreadedModule::CloseThread()

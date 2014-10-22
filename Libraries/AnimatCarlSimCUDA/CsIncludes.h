@@ -11,6 +11,10 @@
 #include "AnimatCarlSimConstants.h"
 #include "snn.h"
 
+#include <boost/timer.hpp>
+#include <boost/signals2/signal.hpp>
+#include <boost/bind.hpp>
+
 //Simulation Objects
 namespace AnimatCarlSim
 {

@@ -25,7 +25,6 @@
     <ClInclude Include="..\CsIncludes.h" />
     <ClInclude Include="..\CsNeuralModule.h" />
     <ClInclude Include="..\CsClassFactory.h" />
-    <ClInclude Include="..\config.h" />
     <ClInclude Include="..\CsNeuronDataColumn.h" />
     <ClInclude Include="..\CsNeuronGroup.h" />
     <ClInclude Include="..\CsSpikeGeneratorGroup.h" />
@@ -35,19 +34,7 @@
     <ClInclude Include="..\CsSynapseIndividual.h" />
     <ClInclude Include="..\CsSynapseOneToOne.h" />
     <ClInclude Include="..\CsSynapseRandom.h" />
-    <ClInclude Include="..\CUDAVersionControl.h" />
-    <ClInclude Include="..\errorCode.h" />
-    <ClInclude Include="..\gpu.h" />
-    <ClInclude Include="..\gpu_random.h" />
-    <ClInclude Include="..\mtrand.h" />
-    <ClInclude Include="..\PropagatedSpikeBuffer.h" />
-    <ClInclude Include="..\snn.h" />
     <ClInclude Include="..\StdAfx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="..\gpu_random.cu" />
-    <CudaCompile Include="..\snn_gpu.cu" />
-    <CudaCompile Include="..\v1ColorME.2.1.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CarlSim.cpp" />
@@ -65,10 +52,6 @@
     <ClCompile Include="..\CsSynapseIndividual.cpp" />
     <ClCompile Include="..\CsSynapseOneToOne.cpp" />
     <ClCompile Include="..\CsSynapseRandom.cpp" />
-    <ClCompile Include="..\mtrand.cpp" />
-    <ClCompile Include="..\printSNNInfo.cpp" />
-    <ClCompile Include="..\PropagatedSpikeBuffer.cpp" />
-    <ClCompile Include="..\snn_cpu.cpp" />
     <ClCompile Include="..\StdAfx.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -128,13 +111,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../../include;../../StdUtils;../../AnimatSim;../../../../3rdParty/boost_1_54_0;$(NVCUDASAMPLES_ROOT)/common/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../StdUtils;../../AnimatSim;../../../../3rdParty/boost_1_54_0;$(NVCUDASAMPLES_ROOT)/common/inc;../../../../3rdParty/Carlsim/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../lib;../../../../3rdParty/boost_1_54_0/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cudart.lib;CARLsim_debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../lib;../../../../3rdParty/boost_1_54_0/lib;../../../../3rdParty/CARLsim/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"
@@ -171,13 +154,15 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../include;../../StdUtils;../../AnimatSim;../../../../3rdParty/boost_1_54_0;$(NVCUDASAMPLES_ROOT)/common/inc;../../../../3rdParty/Carlsim/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cudart.lib;CARLsim.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../lib;../../../../3rdParty/boost_1_54_0/lib;../../../../3rdParty/CARLsim/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(CudaToolkitBinDir)\cudart*.dll" "..\..\..\bin"

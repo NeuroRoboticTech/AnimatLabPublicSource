@@ -10,6 +10,6 @@ TIMEOUT /T 2
 TIMEOUT /T 2
 ..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/AnimatLabPublicSource/bin" "../../../bin"
 TIMEOUT /T 2
-..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/3rdParty/stlsoft-1.9.117/include" "../../../../3rdParty/stlsoft-1.9.117/include"
+..\..\..\bin\fart *.cbp "C:/Projects/AnimatLabSDK/3rdParty/CARLsim/" "../../../../3rdParty/CARLsim/"
 
 @pause

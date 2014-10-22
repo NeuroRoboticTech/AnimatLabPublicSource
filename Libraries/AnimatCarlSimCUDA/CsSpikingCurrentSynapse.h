@@ -72,10 +72,22 @@ namespace AnimatCarlSim
 
 		long m_lTotalSpikesAdded;
 
+		CStdArray<long> m_arySpikeTimes;
+
 		virtual void LoadCells(CStdXml &oXml);
 
 		virtual void ProcessSpikes();
 		virtual void CalculateStepsPerTest();
+
+		virtual void MonitorSpikeEventFired(int iGroupID, int iNeuronID, long lTimeIdx);
+
+#ifndef STD_DO_NOT_ADD_BOOST
+			//Signal for when a spike occurs
+			boost::signals2::connection m_MonitoredSpikeEvent;
+
+			///mutex used to try and access matches variable.
+			boost::interprocess::interprocess_mutex m_AccessSpikes;
+#endif
 
 	public:
 		CsSpikingCurrentSynapse();

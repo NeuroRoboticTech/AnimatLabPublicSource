@@ -224,6 +224,9 @@ void CsNeuralModule::WaitForPhysicsToCatchUp()
 	{
 		if(m_bStopThread || m_bWaitingForNeuralToCatchUp)
 			return;
+
+		if(m_bPauseThread)
+			m_bThreadPaused = true;
 	}
 
 	m_bWaitingForPhysicsToCatchUp = false;
@@ -289,6 +292,13 @@ void CsNeuralModule::SimStarting()
 	}
 }
 
+void CsNeuralModule::SimStopping()
+{
+	NeuralModule::SimStopping();
+
+	ShutdownThread();
+}
+
 void CsNeuralModule::ResetSimulation()
 {
 	NeuralModule::ResetSimulation();
@@ -333,13 +343,6 @@ void CsNeuralModule::StepSimulation()
 
 	if(m_bThreadProcessing && !m_bWaitingForPhysicsToCatchUp && m_fltNeuralTime < m_lpSim->Time())
 		WaitForNeuralToCatchUp();
-
-	//First have it go through and try to capture a snapshot of the spike times since the 
-	//last time we were ablet to get it.
-	int iGroupCount = m_aryNeuronGroups.GetSize();
-	for(int iIndex=0; iIndex<iGroupCount; iIndex++)
-		if(m_aryNeuronGroups[iIndex])
-			m_aryNeuronGroups[iIndex]->CopyRecentSpikeTimes();
 }
 
 #pragma region DataAccesMethods

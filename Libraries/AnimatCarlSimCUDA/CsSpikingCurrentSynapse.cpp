@@ -48,6 +48,7 @@ CsSpikingCurrentSynapse::~CsSpikingCurrentSynapse()
 
 try
 {
+	m_arySpikeTimes.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of CsSpikingCurrentSynapse\r\n", "", -1, false, true);}
@@ -131,6 +132,20 @@ void CsSpikingCurrentSynapse::TimeStepModified()
 	CalculateStepsPerTest();
 }
 
+void CsSpikingCurrentSynapse::MonitorSpikeEventFired(int iGroupID, int iNeuronID, long lTimeIdx)
+{
+	if(m_lpFromNeuron && m_lpFromNeuron->GroupID() == iGroupID && (m_bWholePopulation || (!m_bWholePopulation && m_aryCells.count(iNeuronID))) )
+	{
+		m_AccessSpikes.lock();
+		m_arySpikeTimes.Add(lTimeIdx);
+		m_AccessSpikes.unlock();
+
+		//std::string strMsg = "Received Spike Group: " + STR(iGroupID) + ", Neuron: " + STR(iNeuronID) + ", Time: " + STR(lTimeIdx) + "\r\n";
+		//OutputDebugString(strMsg.c_str());
+	}
+}
+
+
 void CsSpikingCurrentSynapse::Initialize()
 {
 	Link::Initialize();
@@ -146,7 +161,15 @@ void CsSpikingCurrentSynapse::Initialize()
 	CalculateStepsPerTest();
 
 	if(m_lpFromNeuron)
+	{
+
 		m_lpFromNeuron->CollectFromWholePopulation(m_bWholePopulation);
+
+		if(m_MonitoredSpikeEvent.connected())
+			m_MonitoredSpikeEvent.disconnect();
+
+		m_MonitoredSpikeEvent = m_lpFromNeuron->MonitoredSpikeEvent.connect(boost::bind(&CsSpikingCurrentSynapse::MonitorSpikeEventFired, this, _1, _2, _3));
+	}
 }
 
 #pragma region DataAccesMethods
@@ -250,22 +273,32 @@ void CsSpikingCurrentSynapse::ProcessSpikes()
 		//std::string strMsg = "ProcessSpike Compare: Time: " + STR(m_lpSim->Time()) + ", ITime: " + STR(m_ulSpikeTestTime) + "\r\n";
 		//OutputDebugString(strMsg.c_str());
 
-		std::pair<std::multimap<unsigned long, int>::iterator, std::multimap<unsigned long, int>::iterator> itSpikesFortime;
-
-		itSpikesFortime = m_lpFromNeuron->LastRecentSpikeTimes()->equal_range(m_ulSpikeTestTime);
-
-		for (std::multimap<unsigned long, int>::iterator it2 = itSpikesFortime.first; it2 != itSpikesFortime.second; ++it2)
+		if(m_arySpikeTimes.GetSize() > 0)
 		{
-			int iNeuronID = (int) (*it2).second;
+			int iIdx=0;
+			long lNextTime = m_arySpikeTimes[iIdx];
+			bool bDone = false;
 
-			//If we are doing the whole population, or if not doing whole population and it is one the cells we are doing
-			//Then add the pulse magnitude to the current.
-			if(m_bWholePopulation || (!m_bWholePopulation && m_aryCells.count(iNeuronID)))
+			while(lNextTime <= m_ulSpikeTestTime && !bDone)
 			{
 				m_fltCurrentMagnitude+=m_fltPulseMagnitude;
 				m_lTotalSpikesAdded++;
-				//std::string strMsg = "Add Spike NeuronID: " + STR(iNeuronID) + " Time: " + STR(m_lpSim->Time()) + "]\r\n";
+				//std::string strMsg = "Added Spike Time: " + STR(m_lpSim->Time()) + "]\r\n";
 				//OutputDebugString(strMsg.c_str());
+
+				iIdx++;
+				if(iIdx >= m_arySpikeTimes.GetSize())
+					bDone = true;
+				else
+					lNextTime = m_arySpikeTimes[iIdx];
+			}
+
+			if(iIdx > 0)
+			{
+				m_AccessSpikes.lock();
+				for(int iIdx2=0; iIdx2<iIdx; iIdx2++)
+					m_arySpikeTimes.RemoveAt(0);
+				m_AccessSpikes.unlock();
 			}
 		}
 
@@ -278,7 +311,7 @@ void CsSpikingCurrentSynapse::ProcessSpikes()
 
 void CsSpikingCurrentSynapse::StepSimulation()
 {
-	if(m_bEnabled && m_lpFromNeuron && m_lpFromNeuron->LastRecentSpikeTimes())
+	if(m_bEnabled && m_lpFromNeuron)
 	{
 
 		m_fltDecrementCurrent = (m_fltCurrentMagnitude*m_fltPulseTC);

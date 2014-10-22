@@ -10,9 +10,10 @@
 					  "../../AnimatSim",
 					  "../../../../3rdParty/boost_1_54_0",
 					  "$(NVCUDASAMPLES_ROOT)/common/inc",
-					  "../../../../3rdParty/carlsim-2.2.0/src"}	  
+					  "../../../../3rdParty/Carlsim/src"}	  
 		libdirs { "../../../lib", 
 				  "../../../../3rdParty/boost_1_54_0/lib",
+				  "../../../../3rdParty/CARLsim/lib",
 				  "$(CudaToolkitLibDir)"}
 		links { "cudart" } 
 				  
@@ -21,6 +22,7 @@
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
 			targetname ("AnimatCarlSimCUDA_vc10D")
+			links { "CARLsim_debug" } 
 			postbuildcommands { "Copy $(OutDir)AnimatCarlSim_vc10D.lib ..\\..\\..\\lib\\AnimatCarlSim_vc10D.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin" }
 	 
@@ -29,5 +31,6 @@
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
 			targetname ("AnimatCarlSimCUDA_vc10")
+			links { "CARLsim" } 
 			postbuildcommands { "Copy $(OutDir)AnimatCarlSim_vc10.lib ..\\..\\..\\lib\\AnimatCarlSim_vc10.lib", 
 			                    "Copy $(TargetPath) ..\\..\\..\\bin" }

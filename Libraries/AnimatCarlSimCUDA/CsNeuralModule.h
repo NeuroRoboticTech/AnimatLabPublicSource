@@ -102,6 +102,7 @@ namespace AnimatCarlSim
 		virtual void Kill(bool bState = true);
 		virtual void Initialize();
 		virtual void SimStarting();
+		virtual void SimStopping();
 		virtual void ResetSimulation();
 		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
