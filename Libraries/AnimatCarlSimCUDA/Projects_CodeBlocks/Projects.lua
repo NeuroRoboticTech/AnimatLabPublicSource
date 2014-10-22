@@ -1,5 +1,5 @@
 
-	project "AnimatCarlSim"
+	project "AnimatCarlSimCUDA"
 		language "C++"
 		kind     "SharedLib"
 		files  { "../*.h",
@@ -20,18 +20,18 @@
 			defines { "_DEBUG", "ANIMATCARLSIM_EXPORTS"	}
 			flags   { "Symbols", "SEH" }
 			targetdir ("Debug")
-			targetname ("AnimatCarlSim_debug")
+			targetname ("AnimatCarlSimCUDA_debug")
 			links { "StdUtils_debug", 
 					"AnimatSim_debug", 
 					"CarlSim_debug"}
-			postbuildcommands { "cp Debug/libAnimatCarlSim_debug.so ../../../bin" }
+			postbuildcommands { "cp Debug/libAnimatCarlSimCUDA_debug.so ../../../bin" }
 	 
 		configuration { "Release", "linux" }
 			defines { "NDEBUG", "ANIMATCARLSIM_EXPORTS" }
 			flags   { "Optimize", "SEH" }
 			targetdir ("Release")
-			targetname ("AnimatCarlSim")
+			targetname ("AnimatCarlSimCUDA")
 			links { "StdUtils",
 					"AnimatSim", 
 					"CarlSim"}
-			postbuildcommands { "cp Release/libAnimatCarlSim.so ../../../bin" }
+			postbuildcommands { "cp Release/libAnimatCarlSimCUDA.so ../../../bin" }
