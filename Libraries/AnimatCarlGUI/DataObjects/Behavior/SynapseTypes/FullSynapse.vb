@@ -24,7 +24,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         Public Overrides ReadOnly Property TypeName() As String
             Get
-                Return "One To One Synapse"
+                Return "Full Synapse"
             End Get
         End Property
 
@@ -37,7 +37,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatCarlGUI.ExcitatorySynapse.gif"
+                Return "AnimatCarlGUI.FullSynapse.gif"
             End Get
         End Property
 
@@ -69,7 +69,7 @@ Namespace DataObjects.Behavior.SynapseTypes
             Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatCarlGUI.ExcitatorySynapse.gif", False)
             Me.Name = "Full Connectivity"
 
-            Me.ArrowDestination = New Arrow(Me, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Fork, AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Medium, AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg30, False)
+            Me.ArrowDestination = New Arrow(Me, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Losange, AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Medium, AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg30, False)
 
             Me.Font = New Font("Arial", 12)
             Me.Description = "A group of synapses that connects every neuron in the pre-synaptic population to every neuron in the post-synaptic population."

@@ -39,7 +39,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         Public Overrides ReadOnly Property ModuleFilename As String
             Get
-                Return "AnimatCarlSimCUDA" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
+                Return Util.Application.Physics.LibraryPrefix & "AnimatCarlSimCUDA" & Util.Application.Physics.SimVCVersion & Util.Application.Physics.RuntimeModePrefix & Util.Application.Physics.BinaryModPrefix & Util.Application.Physics.LibraryExtension
             End Get
         End Property
 

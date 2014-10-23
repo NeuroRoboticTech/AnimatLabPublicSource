@@ -35,7 +35,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatCarlGUI.ExcitatorySynapse.gif"
+                Return "AnimatCarlGUI.OneToOneSynapse.gif"
             End Get
         End Property
 

@@ -172,14 +172,6 @@
     <EmbeddedResource Include="Forms\SelectIndex.resx">
       <DependentUpon>SelectIndex.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graphics\BistableNeuron.gif" />
-    <EmbeddedResource Include="Graphics\ExcitatorySynapse.gif" />
-    <EmbeddedResource Include="Graphics\GatedSynapse.gif" />
-    <EmbeddedResource Include="Graphics\ModulatorySynapse.gif" />
-    <EmbeddedResource Include="Graphics\NormalNeuron.gif" />
-    <EmbeddedResource Include="Graphics\PacemakerNeuron.gif" />
-    <EmbeddedResource Include="Graphics\RandomNeuron.gif" />
-    <EmbeddedResource Include="Graphics\TonicNeuron.gif" />
     <EmbeddedResource Include="ModuleInformation.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -218,6 +210,14 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\FullSynapse.gif" />
+    <EmbeddedResource Include="Graphics\IndividualSynapse.gif" />
+    <EmbeddedResource Include="Graphics\NeuronGroup.gif" />
+    <EmbeddedResource Include="Graphics\OneToOneSynapse.gif" />
+    <EmbeddedResource Include="Graphics\RandomSynapse.gif" />
+    <EmbeddedResource Include="Graphics\SpikeGeneratorGroup.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
