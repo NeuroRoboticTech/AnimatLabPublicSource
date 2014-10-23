@@ -36,7 +36,7 @@ IStdClassFactory::~IStdClassFactory()
 \author	dcofer
 \date	5/3/2011
 
-\param	strModuleName	Name of the DLL module. 
+\param	strModuleName	Name of the DLL module.
 
 \return	Pointer to the loaded module, exception if not found.
 **/
@@ -50,12 +50,12 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool b
 	HMODULE hMod = NULL;
 
 	hMod = LoadLibrary(strModuleName.c_str());
-	
+
 	if(!hMod)
     {
 	    if(bThrowError)
 	    {
-	        int iError = GetLastError();        
+	        int iError = GetLastError();
 			THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModuleName + ", Last Error: " + STR(iError));
 			return NULL;
 	    }
@@ -67,7 +67,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool b
 
 	TRACE_DEBUG("  Gettting the classfactory pointer.");
 
-    lpFactoryFunc = (GetClassFactory) GetProcAddress(hMod, "GetStdClassFactory"); 
+    lpFactoryFunc = (GetClassFactory) GetProcAddress(hMod, "GetStdClassFactory");
 
 	if(!lpFactoryFunc)
 	{
@@ -88,7 +88,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool b
 \author	dcofer
 \date	5/3/2011
 
-\param	strModuleName	Name of the DLL module. 
+\param	strModuleName	Name of the DLL module.
 
 \return	Pointer to the loaded module, exception if not found.
 **/
@@ -102,19 +102,22 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool b
 	//If the module name already has .so in it then do not modfiy it.
 	std::string strModRenamed = strModuleName;
 	if(Std_ToLower(strModuleName).find(".so") == -1)
-	{  
+	{
 		strModRenamed = "lib" + Std_Replace(strModuleName, ".dll", ".so");
 		strModRenamed = Std_Replace(strModRenamed, "VC10", "vc10");
 	}
-	
+
 	void *hMod = NULL;
 
 	hMod = dlopen(strModRenamed.c_str(), RTLD_LAZY);
-	
+
 	if(!hMod)
 	{
 		if(bThrowError)
-			THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strModRenamed + ", Last Error: " + dlerror());
+        {
+            std::string strError = strModRenamed + ", Last Error: " + dlerror();
+			THROW_PARAM_ERROR(Std_Err_lModuleNotLoaded, Std_Err_strModuleNotLoaded, "Module", strError);
+        }
 		else
 			return NULL;
 	}
@@ -135,7 +138,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(std::string strModuleName, bool b
 
 	TRACE_DEBUG("Finished Loading Module: " + strModRenamed);
 	IStdClassFactory *lpFact = lpFactoryFunc();
-	
+
 	TRACE_DEBUG("Returning class factory: " + strModRenamed);
 	return lpFact;
 }

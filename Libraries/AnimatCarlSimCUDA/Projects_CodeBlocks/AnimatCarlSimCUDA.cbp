@@ -5,20 +5,20 @@
 		<Option title="AnimatCarlSimCUDA" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="./;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="Debug/libAnimatCarlSimCUDA_debug.so" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/Debug" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-std=c++0x" />
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DANIMATCARLSIM_EXPORTS" />
-					<Add option="-std=c++0x" />
 					<Add directory="../../../include" />
 					<Add directory="../../../Libraries/StdUtils" />
 					<Add directory="../../../Libraries/AnimatSim" />
@@ -28,13 +28,14 @@
 				</Compiler>
 				<Linker>
 					<Add option="-shared" />
-					<Add directory="../../../bin" />
-					<Add directory="../../../../3rdParty/CARLsim/bin" />
 					<Add library="dl" />
 					<Add library="cudart" />
 					<Add library="StdUtils_debug" />
 					<Add library="AnimatSim_debug" />
 					<Add library="CarlSim_debug" />
+					<Add directory="../../../bin" />
+					<Add directory="../../../../3rdParty/CARLsim/bin" />
+					<Add directory="/usr/local/cuda/lib" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Debug/libAnimatCarlSimCUDA_debug.so ../../../bin" />
@@ -45,7 +46,6 @@
 				<Option object_output="obj/Release" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option createDefFile="0" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -63,26 +63,41 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-shared" />
-					<Add directory="../../../bin" />
-					<Add directory="../../../../3rdParty/CARLsim/bin" />
 					<Add library="dl" />
 					<Add library="cudart" />
 					<Add library="StdUtils" />
 					<Add library="AnimatSim" />
 					<Add library="CarlSim" />
+					<Add directory="../../../bin" />
+					<Add directory="../../../../3rdParty/CARLsim/bin" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cp Release/libAnimatCarlSimCUDA.so ../../../bin" />
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="../CarlSim.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsAdapter.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsAdapter.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsClassFactory.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsClassFactory.h">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsConnectionGenerator.cpp">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsConnectionGenerator.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsFiringRateStimulus.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsFiringRateStimulus.h">
@@ -91,89 +106,76 @@
 		<Unit filename="../CsIncludes.h">
 			<Option virtualFolder="." />
 		</Unit>
-		<Unit filename="../CsNeuralModule.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsNeuronDataColumn.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsNeuronGroup.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSpikeGeneratorGroup.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSpikingCurrentSynapse.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSynapseFull.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSynapseGroup.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSynapseIndividual.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSynapseOneToOne.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsSynapseRandom.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../StdAfx.h">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CarlSim.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsAdapter.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsClassFactory.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsConnectionGenerator.cpp">
-			<Option virtualFolder="." />
-		</Unit>
-		<Unit filename="../CsFiringRateStimulus.cpp">
-			<Option virtualFolder="." />
-		</Unit>
 		<Unit filename="../CsNeuralModule.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuralModule.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsNeuronDataColumn.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsNeuronDataColumn.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsNeuronGroup.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsNeuronGroup.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsSpikeGeneratorGroup.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsSpikeGeneratorGroup.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsSpikingCurrentSynapse.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSpikingCurrentSynapse.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsSynapseFull.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsSynapseFull.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsSynapseGroup.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseGroup.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsSynapseIndividual.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsSynapseIndividual.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../CsSynapseOneToOne.cpp">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../CsSynapseOneToOne.h">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../CsSynapseRandom.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../CsSynapseRandom.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../StdAfx.cpp">
 			<Option virtualFolder="." />
 		</Unit>
+		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
-
