@@ -38,7 +38,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatCarlGUI.ExcitatorySynapse.gif"
+                Return "AnimatCarlGUI.IndividualSynapse.gif"
             End Get
         End Property
 
@@ -103,7 +103,7 @@ Namespace DataObjects.Behavior.SynapseTypes
             Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatCarlGUI.ExcitatorySynapse.gif", False)
             Me.Name = "Individual"
 
-            Me.ArrowDestination = New Arrow(Me, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Fork, AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Medium, AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg30, False)
+            Me.ArrowDestination = New Arrow(Me, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.HalfArrow, AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Medium, AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg30, False)
 
             Me.Font = New Font("Arial", 12)
             Me.Description = "A Synapse that connects individual neruons between two groups."

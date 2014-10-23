@@ -60,6 +60,12 @@ Namespace DataObjects.Behavior.SynapseTypes
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 SetSimData("InitWt", Value.ActualValue.ToString, True)
                 m_snInitialWeight.CopyData(Value)
+
+                If Value.ActualValue < 0 AndAlso m_snMaxWeight.ActualValue < 0 Then
+                    Me.ArrowDestination.Filled = True
+                Else
+                    Me.ArrowDestination.Filled = False
+                End If
             End Set
         End Property
 
@@ -71,6 +77,12 @@ Namespace DataObjects.Behavior.SynapseTypes
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
                 SetSimData("MaxWt", Value.ActualValue.ToString, True)
                 m_snMaxWeight.CopyData(Value)
+
+                If Value.ActualValue < 0 AndAlso m_snInitialWeight.ActualValue < 0 Then
+                    Me.ArrowDestination.Filled = True
+                Else
+                    Me.ArrowDestination.Filled = False
+                End If
             End Set
         End Property
 
@@ -153,6 +165,7 @@ Namespace DataObjects.Behavior.SynapseTypes
             Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatCarlGUI.ExcitatorySynapse.gif", False)
             Me.Name = "Synapse Group"
 
+            Me.DrawWidth = 3
             Me.ArrowDestination = New Arrow(Me, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Fork, AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Medium, AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg30, False)
 
             Me.Font = New Font("Arial", 12)

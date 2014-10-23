@@ -100,7 +100,7 @@ Namespace DataObjects.Behavior.NodeTypes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatCarlGUI.NormalNeuron.gif"
+                Return "AnimatCarlGUI.NeuronGroup.gif"
             End Get
         End Property
 
@@ -440,10 +440,10 @@ Namespace DataObjects.Behavior.NodeTypes
 
                 m_bEnabled = True
 
-                Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Ellipse
+                Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.MultiDocument
                 Size = New SizeF(40, 40)
                 Me.DrawColor = Color.Black
-                Me.FillColor = Color.White
+                Me.FillColor = Color.LightBlue
 
                 Dim myAssembly As System.Reflection.Assembly
                 myAssembly = System.Reflection.Assembly.Load("AnimatCarlGUI")
