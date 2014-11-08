@@ -87,12 +87,23 @@ void CsNeuronGroup::NeuronCount(unsigned int iVal)
 
 unsigned int CsNeuronGroup::NeuronCount() {return m_uiNeuronCount;}
 
+void NeuralType(std::string strType);
+
+void CsNeuronGroup::NeuralType(std::string strType)
+{
+	std::string strNtype = Std_CheckString(strType);
+
+	if(strNtype == "EXCITATORY")
+		m_iNeuralType = EXCITATORY_NEURON;
+	else if(strNtype == "INHIBITORY")
+		m_iNeuralType = INHIBITORY_NEURON;
+	else
+		THROW_PARAM_ERROR(Cs_Err_strInvalidNeuralType, Cs_Err_lInvalidNeuralType, "Type: ",m_strType);
+}
+
 void CsNeuronGroup::NeuralType(int iVal)
 {
-	if(iVal == 0)
-		m_iNeuralType = EXCITATORY_NEURON;
-	else
-		m_iNeuralType = INHIBITORY_NEURON;
+	m_iNeuralType = iVal;
 }
 
 int CsNeuronGroup::NeuralType() {return m_iNeuralType;}
@@ -333,7 +344,7 @@ void CsNeuronGroup::Copy(CStdSerialize *lpSource)
 
 void CsNeuronGroup::SetCARLSimulation()
 {
-	if(m_lpCsModule && m_lpCsModule->SNN())
+	if(m_lpCsModule && m_lpCsModule->SNN() && m_bEnabled)
 	{
 		m_iGroupID = m_lpCsModule->SNN()->createGroup(m_strName, m_uiNeuronCount, m_iNeuralType);
 		m_lpCsModule->SNN()->setNeuronParameters(m_iGroupID, m_fltA, m_fltStdA, m_fltB, m_fltStdB, m_fltC, m_fltStdC, m_fltD, m_fltStdD);
@@ -341,13 +352,20 @@ void CsNeuronGroup::SetCARLSimulation()
 
 		if(m_bEnableSTP)
 			m_lpCsModule->SNN()->setSTP(m_iGroupID, true, m_fltU, m_fltTauDepression, m_fltTauFacilitation);
+		else
+			m_lpCsModule->SNN()->setSTP(m_iGroupID, false);
+
 
 		if(m_bEnableSTDP)
 			m_lpCsModule->SNN()->setSTDP(m_iGroupID, true, m_fltMaxLTP, m_fltTauLTP, m_fltMaxLTD, m_fltTauLTD);
+		else
+			m_lpCsModule->SNN()->setSTDP(m_iGroupID, false);
 
 		//Set this up as a spike monitor.
 		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
 	}
+	else
+		m_iGroupID = -1;
 }
 
 void CsNeuronGroup::update(CpuSNN* s, int grpId, unsigned int* NeuronIds, unsigned int *timeCounts, unsigned int total_spikes, float firing_Rate)
@@ -456,7 +474,7 @@ bool CsNeuronGroup::SetData(const std::string &strDataType, const std::string &s
 
 	if(strType == "NEURALTYPE")
 	{
-		NeuralType(atoi(strValue.c_str()));
+		NeuralType(strValue);
 		return true;
 	}
 
@@ -661,7 +679,7 @@ void CsNeuronGroup::Load(CStdXml &oXml)
 	Enabled(oXml.GetChildBool("Enabled", true));
 
 	NeuronCount(oXml.GetChildInt("NeuronCount", m_uiNeuronCount));
-	NeuralType(oXml.GetChildInt("NeuralType", m_iNeuralType));
+	NeuralType(oXml.GetChildString("NeuralType", "Excitatory"));
 	A(oXml.GetChildFloat("A", m_fltA));
 	StdA(oXml.GetChildFloat("StdA", m_fltStdA));
 	B(oXml.GetChildFloat("B", m_fltB));

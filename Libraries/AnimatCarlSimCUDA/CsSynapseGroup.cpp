@@ -29,7 +29,7 @@ CsSynapseGroup::CsSynapseGroup()
 	m_bEnabled = true;
 	m_fltInitWt = 1;
 	m_fltMaxWt = 1;
-	m_fltPconnect = 0.1f;
+	m_fltPconnect = 1.0f;
 	m_iMinDelay = 1;
 	m_iMaxDelay = 20;
 	m_bPlastic = true;
@@ -54,7 +54,7 @@ catch(...)
 
 void CsSynapseGroup::InitWt(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, true, "InitWt", true);
+	Std_IsBelowMax(m_fltMaxWt, fltVal, true, "InitWt", true);
 	m_fltInitWt = fltVal;
 }
 
@@ -62,7 +62,7 @@ float CsSynapseGroup::InitWt() {return m_fltInitWt;}
 
 void CsSynapseGroup::MaxWt(float fltVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, true, "MaxWt", true);
+	Std_IsAboveMin(m_fltInitWt, fltVal, true, "MaxWt", true);
 	m_fltMaxWt = fltVal;
 }
 
@@ -79,6 +79,7 @@ float CsSynapseGroup::Pconnect() {return m_fltPconnect;}
 
 void CsSynapseGroup::MinDelay(unsigned char iVal)
 {
+	Std_IsBelowMax(m_iMaxDelay, iVal, true, "MinDelay", true);
 	m_iMinDelay = iVal;
 }
 
@@ -86,6 +87,7 @@ unsigned char CsSynapseGroup::MinDelay() {return m_iMinDelay;}
 
 void CsSynapseGroup::MaxDelay(unsigned char iVal)
 {
+	Std_IsAboveMin(m_iMinDelay, iVal, true, "MaxDelay", true);
 	m_iMaxDelay = iVal;
 }
 

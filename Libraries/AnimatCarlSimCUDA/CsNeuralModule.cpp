@@ -181,6 +181,7 @@ void CsNeuralModule::SetCARLSimulation()
 		lpGen->SetCARLSimulation();
 	}
 
+	//m_iSimMode = CPU_MODE;
 
 	//Initalize the network
 	m_lpSNN->runNetwork(0, 0, m_iSimMode);

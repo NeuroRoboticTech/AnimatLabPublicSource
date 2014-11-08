@@ -150,6 +150,7 @@ namespace AnimatCarlSim
 		virtual void NeuronCount(unsigned int iVal);
 		virtual unsigned int NeuronCount();
 
+		virtual void NeuralType(std::string strType);
 		virtual void NeuralType(int iVal);
 		virtual int NeuralType();
 

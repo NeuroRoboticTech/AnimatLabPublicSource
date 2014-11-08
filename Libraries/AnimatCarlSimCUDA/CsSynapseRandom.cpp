@@ -42,7 +42,7 @@ catch(...)
 
 void CsSynapseRandom::SetCARLSimulation()
 {
-	if(m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && m_lpFromNeuron->GroupID() >= 0 && m_lpToNeuron->GroupID() >= 0)
+	if(m_bEnabled && m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && m_lpFromNeuron->GroupID() >= 0 && m_lpToNeuron->GroupID() >= 0)
 	{
 		m_iSynapsesCreated = m_lpCsModule->SNN()->connect(m_lpFromNeuron->GroupID(), m_lpToNeuron->GroupID(), "random", m_fltInitWt, m_fltMaxWt, m_fltPconnect, m_iMinDelay, m_iMaxDelay, m_bPlastic);
 	}	

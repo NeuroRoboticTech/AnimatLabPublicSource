@@ -58,6 +58,10 @@ Namespace DataObjects.Behavior.SynapseTypes
                 Return m_snInitialWeight
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue > m_snMaxWeight.ActualValue Then
+                    Throw New System.Exception("The initial weight must be less than or equal to the maximum weight.")
+                End If
+
                 SetSimData("InitWt", Value.ActualValue.ToString, True)
                 m_snInitialWeight.CopyData(Value)
 
@@ -75,6 +79,10 @@ Namespace DataObjects.Behavior.SynapseTypes
                 Return m_snMaxWeight
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                If Value.ActualValue < m_snInitialWeight.ActualValue Then
+                    Throw New System.Exception("The maximum weight must be greater than or equal to the initial weight.")
+                End If
+
                 SetSimData("MaxWt", Value.ActualValue.ToString, True)
                 m_snMaxWeight.CopyData(Value)
 
@@ -173,7 +181,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
             m_snInitialWeight = New AnimatGUI.Framework.ScaledNumber(Me, "InitialWeight", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
             m_snMaxWeight = New AnimatGUI.Framework.ScaledNumber(Me, "MaxWeight", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
-            m_snPconnect = New AnimatGUI.Framework.ScaledNumber(Me, "Pconnect", 0.1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+            m_snPconnect = New AnimatGUI.Framework.ScaledNumber(Me, "Pconnect", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
             m_snMinDelay = New AnimatGUI.Framework.ScaledNumber(Me, "MinDelay", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Seconds", "s")
             m_snMaxDelay = New AnimatGUI.Framework.ScaledNumber(Me, "MaxDelay", 20, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Seconds", "s")
 
@@ -251,8 +259,12 @@ Namespace DataObjects.Behavior.SynapseTypes
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            If propTable.Properties.Contains("ID") Then propTable.Properties.Remove("ID")
             If propTable.Properties.Contains("Text") Then propTable.Properties.Remove("Text")
             If propTable.Properties.Contains("Link Type") Then propTable.Properties.Remove("Link Type")
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
+                                        "Synapse Properties", "ID", Me.ID, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Text", m_strUserText.GetType(), "UserText", _
                                         "Synapse Properties", "Sets or returns the user text associated with the link.", _
@@ -285,8 +297,8 @@ Namespace DataObjects.Behavior.SynapseTypes
                                         "Synapse Properties", "The maximum delay possible for a given synaptic connection.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Plastice", m_bPlastic.GetType(), "Plastic", _
-                                        "Stimulus Properties", "Determines whether these synapses are fixed or plastic.", m_bPlastic))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Plastic", m_bPlastic.GetType(), "Plastic", _
+                                        "Synapse Properties", "Determines whether these synapses are fixed or plastic.", m_bPlastic))
 
 
         End Sub

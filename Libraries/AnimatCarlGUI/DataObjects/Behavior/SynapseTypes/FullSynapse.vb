@@ -114,7 +114,7 @@ Namespace DataObjects.Behavior.SynapseTypes
             MyBase.BuildProperties(propTable)
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("No Direct Connect", GetType(Boolean), "NoDirectConnect", _
-                                        "Neural Properties", "If true then it does not connect pre-synaptic neuron J to the corresponding post-synaptic neuron J", m_bNoDirectConnect))
+                                        "Synapse Properties", "If true then it does not connect pre-synaptic neuron J to the corresponding post-synaptic neuron J", m_bNoDirectConnect))
 
         End Sub
 

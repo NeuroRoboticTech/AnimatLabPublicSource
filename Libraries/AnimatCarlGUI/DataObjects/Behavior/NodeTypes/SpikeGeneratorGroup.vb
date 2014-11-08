@@ -154,10 +154,10 @@ Namespace DataObjects.Behavior.NodeTypes
 
             ' If propTable.Properties.Contains("Enable COBA") Then propTable.Properties.Remove("Enable COBA")
 
-            If propTable.Properties.Contains("TauAMPA") Then propTable.Properties.Remove("TauAMPA")
-            If propTable.Properties.Contains("TauNMDA") Then propTable.Properties.Remove("TauNMDA")
-            If propTable.Properties.Contains("TauGABAa") Then propTable.Properties.Remove("TauGABAa")
-            If propTable.Properties.Contains("TauGABAb") Then propTable.Properties.Remove("TauGABAb")
+            If propTable.Properties.Contains("Tau AMPA") Then propTable.Properties.Remove("Tau AMPA")
+            If propTable.Properties.Contains("Tau NMDA") Then propTable.Properties.Remove("Tau NMDA")
+            If propTable.Properties.Contains("Tau GABAa") Then propTable.Properties.Remove("Tau GABAa")
+            If propTable.Properties.Contains("Tau GABAb") Then propTable.Properties.Remove("Tau GABAb")
 
             If propTable.Properties.Contains("Enable STP") Then propTable.Properties.Remove("Enable STP")
             If propTable.Properties.Contains("U") Then propTable.Properties.Remove("U")

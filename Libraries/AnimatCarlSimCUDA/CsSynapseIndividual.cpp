@@ -62,7 +62,7 @@ std::pair<int, int> CsSynapseIndividual::SynapseIndexKey() {return m_vSynapseKey
 
 void CsSynapseIndividual::SetCARLSimulation()
 {
-	if(m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && 
+	if(m_bEnabled && m_lpCsModule && m_lpCsModule->SNN() && m_lpFromNeuron && m_lpToNeuron && 
 		m_iFromIdx >= 0 && m_iToIdx >= 0 &&
 		m_lpFromNeuron->GroupID() >= 0 && m_lpToNeuron->GroupID() >= 0)
 	{

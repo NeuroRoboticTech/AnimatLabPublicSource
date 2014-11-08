@@ -67,7 +67,7 @@ void CsSpikeGeneratorGroup::SetSpikeRatesUpdated()
 
 void CsSpikeGeneratorGroup::SetCARLSimulation()
 {
-	if(m_lpCsModule && m_lpCsModule->SNN())
+	if(m_lpCsModule && m_lpCsModule->SNN() && m_bEnabled)
 	{
 		m_iGroupID = m_lpCsModule->SNN()->createSpikeGeneratorGroup(m_strName, m_uiNeuronCount, m_iNeuralType);
 
@@ -82,6 +82,8 @@ void CsSpikeGeneratorGroup::SetCARLSimulation()
 		//Set this up as a spike monitor.
 		m_lpCsModule->SNN()->setSpikeMonitor(m_iGroupID, this);
 	}
+	else
+		m_iGroupID = -1;
 }
 
 void CsSpikeGeneratorGroup::Initialize()

@@ -31,4 +31,8 @@
 #define Cs_Err_lNotSpikeGeneratorType -3036
 #define Cs_Err_strNotSpikeGeneratorType "The neuron group was not a spike generator type."
 
+#define Cs_Err_strInvalidNeuralType -3037
+#define Cs_Err_lInvalidNeuralType "Invalid neural type specified."
+
+
 #endif // __ANIMAT_CARL_SIM_CONSTANTS_H__
