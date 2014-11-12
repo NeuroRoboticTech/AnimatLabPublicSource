@@ -61,15 +61,16 @@ void RbMotorizedJoint::Physics_SetVelocityToDesired()
 {
 	////Test code
 	//int i=5;
-	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "0085ee18-89f7-4039-8648-ec51114beeff") // && m_lpSim->Time() > 1 
+	//if(Std_ToLower(m_lpThisMotorJoint->ID()) == "c868a91a-285d-4d00-91b2-6410aead9fe8" && GetSimulator()->Time() > 0.5) //  
 	//	i=6;
 
 	if(m_lpThisMotorJoint->EnableMotor())
 	{			
 		if(m_lpThisMotorJoint->MotorType() == eJointMotorType::PositionControl)
 		{
-			m_lpThisJoint->JointPosition(m_lpThisMotorJoint->DesiredPosition());
+			m_lpThisMotorJoint->SetPosition(m_lpThisMotorJoint->DesiredPosition());
 			m_lpThisMotorJoint->DesiredVelocity(0);
+			m_lpThisMotorJoint->DesiredPosition(0);
 		}
 		else
 		{
