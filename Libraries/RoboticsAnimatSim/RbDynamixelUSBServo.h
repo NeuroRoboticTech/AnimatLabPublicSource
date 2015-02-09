@@ -53,6 +53,21 @@ protected:
 	virtual int ReadID(int iServoID)  {return dxl_read_byte(iServoID, P_ID);};
 	virtual int ReadFirmwareVersion(int iServoID)  {return dxl_read_byte(iServoID, P_FIRMWARE_VERSION);};
 
+	virtual void WriteCWComplianceMargin(int iServoID, int iVal) {dxl_write_byte(iServoID, P_CW_COMPLIANCE_MARGIN, iVal);};
+	virtual int ReadCWComplianceMargin(int iServoID)  {return dxl_read_byte(iServoID, P_CW_COMPLIANCE_MARGIN);};
+
+	virtual void WriteCCWComplianceMargin(int iServoID, int iVal) {dxl_write_byte(iServoID, P_CCW_COMPLIANCE_MARGIN, iVal);};
+	virtual int ReadCCWComplianceMargin(int iServoID)  {return dxl_read_byte(iServoID, P_CCW_COMPLIANCE_MARGIN);};
+
+	virtual void WriteCWComplianceSlope(int iServoID, int iVal) {dxl_write_byte(iServoID, P_CW_COMPLIANCE_SLOPE, iVal);};
+	virtual int ReadCWComplianceSlope(int iServoID)  {return dxl_read_byte(iServoID, P_CW_COMPLIANCE_SLOPE);};
+
+	virtual void WriteCCWComplianceSlope(int iServoID, int iVal) {dxl_write_byte(iServoID, P_CCW_COMPLIANCE_SLOPE, iVal);};
+	virtual int ReadCCWComplianceSlope(int iServoID)  {return dxl_read_byte(iServoID, P_CCW_COMPLIANCE_SLOPE);};
+
+	virtual void WriteMaxTorque(int iServoID, int iVal) {dxl_write_word(iServoID, P_MAX_TORQUE_L, iVal);};
+	virtual int ReadMaxTorque(int iServoID)  {return dxl_read_word(iServoID, P_MAX_TORQUE_L);};
+
 	virtual void WriteReturnDelayTime(int iServoID, int iVal) {dxl_write_byte(iServoID, P_RETURN_DELAY_TIME, iVal);};
 	virtual int ReadReturnDelayTime(int iServoID)  {return dxl_read_byte(iServoID, P_RETURN_DELAY_TIME);};
 

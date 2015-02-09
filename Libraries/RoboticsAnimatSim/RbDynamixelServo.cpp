@@ -87,6 +87,14 @@ RbDynamixelServo::RbDynamixelServo()
 	m_bVelStopPosSet = false;
 	m_bResetToStartPos = false;
 
+	m_iCWComplianceMargin = 1;
+	m_iCCWComplianceMargin = 1;
+
+	m_iCWComplianceSlope = 32;
+	m_iCCWComplianceSlope = 32;
+
+	m_iMaxTorque = 1023;
+
 	RecalculateParams();
 }
 
@@ -228,6 +236,46 @@ void RbDynamixelServo::MaxLoadFP(int iVal)
 }
 
 int RbDynamixelServo::MaxLoadFP() {return m_iMaxLoadFP;}
+
+int RbDynamixelServo::CWComplianceMargin() {return m_iCWComplianceMargin;}
+
+void RbDynamixelServo::CWComplianceMargin(int iVal)
+{
+	Std_InValidRange((int) 0, (int) 255, iVal, true, "CWComplianceMargin");
+	m_iCWComplianceMargin = iVal;
+}
+
+int RbDynamixelServo::CCWComplianceMargin() {return m_iCCWComplianceMargin;}
+
+void RbDynamixelServo::CCWComplianceMargin(int iVal)
+{
+	Std_InValidRange((int) 0, (int) 255, iVal, true, "CCWComplianceMargin");
+	m_iCCWComplianceMargin = iVal;
+}
+
+int RbDynamixelServo::CWComplianceSlope() {return m_iCWComplianceSlope;}
+
+void RbDynamixelServo::CWComplianceSlope(int iVal)
+{
+	Std_InValidRange((int) 0, (int) 255, iVal, true, "CWComplianceSlope");
+	m_iCWComplianceSlope = iVal;
+}
+
+int RbDynamixelServo::CCWComplianceSlope() {return m_iCCWComplianceSlope;}
+
+void RbDynamixelServo::CCWComplianceSlope(int iVal)
+{
+	Std_InValidRange((int) 0, (int) 255, iVal, true, "CCWComplianceSlope");
+	m_iCCWComplianceSlope = iVal;
+}
+
+int RbDynamixelServo::MaxTorque() {return m_iMaxTorque;}
+
+void RbDynamixelServo::MaxTorque(int iVal)
+{
+	Std_InValidRange((int) 0, (int) 1023, iVal, true, "MaxTorque");
+	m_iMaxTorque = iVal;
+}
 
 float RbDynamixelServo::ConvertPosFPToFloat(int iPos)
 {
@@ -903,6 +951,10 @@ void RbDynamixelServo::ConfigureServo()
 	int iMaxPos = GetCCWAngleLimit_FP();
 	int iRetDelay = GetReturnDelayTime_FP();
 	int iRetTorqueLimit = GetTorqueLimit_FP();
+	int iRetCWComplMargin = GetCWComplianceMargin_FP();
+	int iRetCCWComplMargin = GetCCWComplianceMargin_FP();
+	int iRetCWComplSlope = GetCWComplianceSlope_FP();
+	int iRetCCWComplSlope = GetCCWComplianceSlope_FP();
 
 	if(iMinPos != m_iMinSimPos)
 		SetCWAngleLimit_FP(m_iMinSimPos);
@@ -913,8 +965,20 @@ void RbDynamixelServo::ConfigureServo()
 	if(iRetDelay > 1)
 		SetReturnDelayTime_FP(1);
 
-	if(iRetTorqueLimit != 1023)
-		SetTorqueLimit_FP(1023);
+	//if(iRetTorqueLimit != m_iMaxTorque)
+	//	SetMaxTorque_FP(m_iMaxTorque);
+
+	if(iRetCWComplMargin != m_iCWComplianceMargin)
+		SetCWComplianceMargin_FP(m_iCWComplianceMargin);
+
+	if(iRetCCWComplMargin != m_iCCWComplianceMargin)
+		SetCCWComplianceMargin_FP(m_iCCWComplianceMargin);
+
+	if(iRetCWComplSlope != m_iCWComplianceSlope)
+		SetCWComplianceSlope_FP(m_iCWComplianceSlope);
+
+	if(iRetCCWComplSlope != m_iCCWComplianceSlope)
+		SetCCWComplianceSlope_FP(m_iCCWComplianceSlope);
 }
 
 /**
@@ -1057,6 +1121,7 @@ int RbDynamixelServo::GetCCWAngleLimit_FP()
 	return ReadCCWAngleLimit(m_iServoID);
 }
 
+
 /**
 \brief	Gets the limit for the CCW limit of the servo in radian values.
 
@@ -1124,6 +1189,61 @@ float RbDynamixelServo::GetCWAngleLimit()
 {
 	int iPos = GetCWAngleLimit_FP();
 	return ConvertPosFPToFloat(iPos);
+}
+
+void RbDynamixelServo::SetCWComplianceMargin_FP(int iVal)
+{
+	if(iVal >= 0 && iVal <= 255)
+		WriteCWComplianceMargin(m_iServoID, iVal);
+}
+
+int RbDynamixelServo::GetCWComplianceMargin_FP()
+{
+	return ReadCWComplianceMargin(m_iServoID);
+}
+
+void RbDynamixelServo::SetCCWComplianceMargin_FP(int iVal)
+{
+	if(iVal >= 0 && iVal <= 255)
+		WriteCCWComplianceMargin(m_iServoID, iVal);
+}
+
+int RbDynamixelServo::GetCCWComplianceMargin_FP()
+{
+	return ReadCCWComplianceMargin(m_iServoID);
+}
+
+void RbDynamixelServo::SetCWComplianceSlope_FP(int iVal)
+{
+	if(iVal >= 0 && iVal <= 255)
+		WriteCWComplianceSlope(m_iServoID, iVal);
+}
+
+int RbDynamixelServo::GetCWComplianceSlope_FP()
+{
+	return ReadCWComplianceSlope(m_iServoID);
+}
+
+void RbDynamixelServo::SetCCWComplianceSlope_FP(int iVal)
+{
+	if(iVal >= 0 && iVal <= 255)
+		WriteCCWComplianceSlope(m_iServoID, iVal);
+}
+
+int RbDynamixelServo::GetCCWComplianceSlope_FP()
+{
+	return ReadCCWComplianceSlope(m_iServoID);
+}
+
+void RbDynamixelServo::SetMaxTorque_FP(int iVal)
+{
+	if(iVal >= 0 && iVal <= 1023)
+		WriteMaxTorque(m_iServoID, iVal);
+}
+
+int RbDynamixelServo::GetMaxTorque_FP()
+{
+	return ReadMaxTorque(m_iServoID);
 }
 
 /**
@@ -1348,6 +1468,36 @@ bool RbDynamixelServo::SetData(const std::string &strDataType, const std::string
 		return true;
 	}
 
+	if(strType == "CWCOMPLIANCEMARGIN")
+	{
+		CWComplianceMargin((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "CCWCOMPLIANCEMARGIN")
+	{
+		CCWComplianceMargin((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "CWCOMPLIANCEMSLOPE")
+	{
+		CWComplianceSlope((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "CCWCOMPLIANCESLOPE")
+	{
+		CCWComplianceSlope((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXTORQUE")
+	{
+		MaxTorque((int) atoi(strValue.c_str()));
+		return true;
+	}
+
 	if(strType == "RPMPERFPUNIT")
 	{
 		RPMPerFPUnit((float) atof(strValue.c_str()));
@@ -1401,6 +1551,12 @@ void RbDynamixelServo::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties
 	aryProperties.Add(new TypeProperty("MaxLoadFP", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TranslationRange", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("ResetToStartPos", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
+
+	aryProperties.Add(new TypeProperty("CWComplianceMargin", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CCWComplianceMargin", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CWComplianceSlope", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("CCWComplianceSlope", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("MaxTorque", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 }
 
 void RbDynamixelServo::ResetSimulation()
@@ -1525,6 +1681,12 @@ void RbDynamixelServo::Load(StdUtils::CStdXml &oXml)
 	m_bIsHinge = oXml.GetChildBool("IsHinge", m_bIsHinge);
     TranslationRange(oXml.GetChildFloat("TranslationRange", m_fltTranslationRange));
 	ResetToStartPos(oXml.GetChildBool("ResetToStartPos", m_bResetToStartPos));
+
+    CWComplianceMargin(oXml.GetChildInt("CWComplianceMargin", m_iCWComplianceMargin));
+    CCWComplianceMargin(oXml.GetChildInt("CCWComplianceMargin", m_iCCWComplianceMargin));
+    CWComplianceSlope(oXml.GetChildInt("CWComplianceSlope", m_iCWComplianceSlope));
+    CCWComplianceSlope(oXml.GetChildInt("CCWComplianceSlope", m_iCCWComplianceSlope));
+    MaxTorque(oXml.GetChildInt("MaxTorque", m_iMaxTorque));
 
 	oXml.OutOfElem();
 }

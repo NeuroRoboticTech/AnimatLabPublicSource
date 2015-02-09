@@ -32,6 +32,8 @@ RbFirmataController::RbFirmataController()
 {
 	m_strComPort = "COM4";
 	m_iBaudRate = 115200;
+	m_fltMotorSendTime = 0;
+	m_lMotorSendStart = 0;
 
 	// listen for EInitialized notification. this indicates that
 	// the arduino is ready to receive commands and it is safe to
@@ -76,10 +78,10 @@ float *RbFirmataController::GetDataPointer(const std::string &strDataType)
 	
 	return RobotIOControl::GetDataPointer(strDataType);
 
-	//if(strType == "LIMITPOS")
-	//	return &m_fltLimitPos;
-	//else
-	//	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
+	if(strType == "MOTORSENDTIME")
+		return &m_fltMotorSendTime;
+	else
+		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	//return NULL;
 }
@@ -171,6 +173,9 @@ void RbFirmataController::ProcessIO()
 			}
 		}
 
+		//Start the timer to measure motor send timing.
+		m_lMotorSendStart = GetSimulator()->GetTimerTick();
+
 		//Now that setup has compled lets do our main loop
 		while(!m_bStopIO)
 		{
@@ -189,9 +194,18 @@ void RbFirmataController::ProcessIO()
 				//Do not try and step IO until it has been setup correctly.
 				StepIO();
 
-				//Execute any synch moves that were setup for this IO loop in StepIO
-				//If none were setup it will ignore this call.
-				sendDynamixelSynchMoveExecute();
+				if(_dynamixelMoveAdds > 0)
+				{
+					//Get the motor send time
+					m_fltMotorSendTime = GetSimulator()->TimerDiff_m(m_lMotorSendStart, GetSimulator()->GetTimerTick());
+
+					//Execute any synch moves that were setup for this IO loop in StepIO
+					//If none were setup it will ignore this call.
+					sendDynamixelSynchMoveExecute();
+
+					//Star the timer again.
+					m_lMotorSendStart = GetSimulator()->GetTimerTick();
+				}
 			}
 		}
 	}

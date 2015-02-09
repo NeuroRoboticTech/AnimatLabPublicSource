@@ -72,6 +72,21 @@ protected:
 	virtual int ReadID(int iServoID)  {return m_iServoID;};
 	virtual int ReadFirmwareVersion(int iServoID)  {return m_iFirmwareVersion;};
 
+	virtual void WriteCWComplianceMargin(int iServoID, int iVal);
+	virtual int ReadCWComplianceMargin(int iServoID) {return m_iCWComplianceMargin;}
+
+	virtual void WriteCCWComplianceMargin(int iServoID, int iVal);
+	virtual int ReadCCWComplianceMargin(int iServoID) {return m_iCCWComplianceMargin;}
+
+	virtual void WriteCWComplianceSlope(int iServoID, int iVal);
+	virtual int ReadCWComplianceSlope(int iServoID) {return m_iCWComplianceSlope;}
+
+	virtual void WriteCCWComplianceSlope(int iServoID, int iVal);
+	virtual int ReadCCWComplianceSlope(int iServoID) {return m_iCCWComplianceSlope;}
+
+	virtual void WriteMaxTorque(int iServoID, int iVal);
+	virtual int ReadMaxTorque(int iServoID)  {return m_iMaxTorque;};
+
 	virtual void WriteReturnDelayTime(int iServoID, int iVal);
 	virtual int ReadReturnDelayTime(int iServoID)  {return m_iReturnDelayTime;};
 

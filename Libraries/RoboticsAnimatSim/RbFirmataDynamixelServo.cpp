@@ -127,6 +127,51 @@ void RbFirmataDynamixelServo::WriteCWAngleLimit(int iServoID, int iVal)
 	}
 }
 
+void RbFirmataDynamixelServo::WriteCWComplianceMargin(int iServoID, int iVal)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_CW_COMPLIANCE_MARGIN, 1, iVal);
+		m_iCWComplianceMargin = iVal;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteCCWComplianceMargin(int iServoID, int iVal)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_CCW_COMPLIANCE_MARGIN, 1, iVal);
+		m_iCCWComplianceMargin = iVal;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteCWComplianceSlope(int iServoID, int iVal)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_CW_COMPLIANCE_SLOPE, 1, iVal);
+		m_iCWComplianceSlope = iVal;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteCCWComplianceSlope(int iServoID, int iVal)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_CCW_COMPLIANCE_SLOPE, 1, iVal);
+		m_iCCWComplianceSlope = iVal;
+	}
+}
+
+void RbFirmataDynamixelServo::WriteMaxTorque(int iServoID, int iVal)
+{
+	if(m_lpFirmata)
+	{
+		m_lpFirmata->sendDynamixelSetRegister(m_iServoID, P_MAX_TORQUE_L, 2, iVal);
+		m_iMaxTorque = iVal;
+	}
+}
+
 void RbFirmataDynamixelServo::WriteTorqueLimit(int iServoID, int iVal)
 {
 	if(m_lpFirmata)
@@ -190,9 +235,10 @@ void RbFirmataDynamixelServo::ConfigureServo()
 		int iCWLimit = m_iMinSimPos;
 		int iCCWLimit = m_iMaxSimPos;
 		int iRetDelay = 1;
-		int iMaxTorque = 1023;
 
-		m_lpFirmata->sendDynamixelConfigureServo(m_iServoID, iCWLimit, iCCWLimit, iMaxTorque, iRetDelay);
+		m_lpFirmata->sendDynamixelConfigureServo(m_iServoID, iCWLimit, iCCWLimit, m_iMaxTorque, iRetDelay, 
+											    m_iCWComplianceMargin, m_iCCWComplianceMargin, 
+												m_iCWComplianceSlope, m_iCCWComplianceSlope);
 	}
 }
 
