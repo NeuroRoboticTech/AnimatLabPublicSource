@@ -1480,7 +1480,7 @@ bool RbDynamixelServo::SetData(const std::string &strDataType, const std::string
 		return true;
 	}
 
-	if(strType == "CWCOMPLIANCEMSLOPE")
+	if(strType == "CWCOMPLIANCESLOPE")
 	{
 		CWComplianceSlope((int) atoi(strValue.c_str()));
 		return true;

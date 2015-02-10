@@ -76,14 +76,10 @@ float *RbFirmataController::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 	
-	return RobotIOControl::GetDataPointer(strDataType);
-
 	if(strType == "MOTORSENDTIME")
 		return &m_fltMotorSendTime;
 	else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	//return NULL;
+		return RobotIOControl::GetDataPointer(strDataType);
 }
 
 bool RbFirmataController::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
@@ -120,6 +116,14 @@ void RbFirmataController::QueryProperties(CStdPtrArray<TypeProperty> &aryPropert
 }
 
 #pragma endregion
+
+void RbFirmataController::ResetSimulation()
+{
+	RobotIOControl::ResetSimulation();
+
+	m_fltMotorSendTime = 0;
+	m_lMotorSendStart = 0;
+}
 
 bool RbFirmataController::OpenIO()
 {

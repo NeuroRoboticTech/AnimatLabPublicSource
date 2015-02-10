@@ -57,6 +57,7 @@ public:
 
 #pragma endregion
 
+	virtual void ResetSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 
