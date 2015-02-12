@@ -55,7 +55,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The after-hyperpolarizing equilibrium potential must be between the range -150 to -10 mV.")
                 End If
 
-                SetSimData("AHPEquilPot", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("AHPEquilPot", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snAHPEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -70,7 +70,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The spike peak must be between the range -30 to 50 mV.")
                 End If
 
-                SetSimData("SpikePeak", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("SpikePeak", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snSpikePeak.CopyData(Value)
             End Set
         End Property
@@ -100,7 +100,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The calcium equilibrium potential must be between the range -100 to 500 mV.")
                 End If
 
-                SetSimData("CaEquilPot", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("CaEquilPot", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snCaEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -115,7 +115,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The absolute refractory period must be between the range 1 to 50 ms.")
                 End If
 
-                SetSimData("AbsoluteRefr", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("AbsoluteRefr", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snRefractoryPeriod.CopyData(Value)
             End Set
         End Property
@@ -395,15 +395,15 @@ Namespace DataObjects.Behavior
 
             oXml.IntoElem()  'neuralmodule xml
 
-            oXml.AddChildElement("SpikePeak", m_snSpikePeak.ValueFromDefaultScale)
+            oXml.AddChildElement("SpikePeak", m_snSpikePeak.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("SpikeStrength", m_fltSpikeStrength)
-            oXml.AddChildElement("AHPEquilPot", m_snAHPEquilibriumPotential.ValueFromDefaultScale)
-            oXml.AddChildElement("CaEquilPot", m_snCaEquilibriumPotential.ValueFromDefaultScale)
-            oXml.AddChildElement("AbsoluteRefr", m_snRefractoryPeriod.ValueFromDefaultScale)
+            oXml.AddChildElement("AHPEquilPot", m_snAHPEquilibriumPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("CaEquilPot", m_snCaEquilibriumPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("AbsoluteRefr", m_snRefractoryPeriod.ValueFromScale(ScaledNumber.enumNumericScale.milli))
 
             oXml.AddChildElement("UseCriticalPeriod ", m_bUseCriticalPeriod)
-            oXml.AddChildElement("StartCriticalPeriod", m_snStartCriticalPeriod.ValueFromDefaultScale)
-            oXml.AddChildElement("EndCriticalPeriod", m_snEndCriticalPeriod.ValueFromDefaultScale)
+            oXml.AddChildElement("StartCriticalPeriod", m_snStartCriticalPeriod.ActualValue)
+            oXml.AddChildElement("EndCriticalPeriod", m_snEndCriticalPeriod.ActualValue)
 
             oXml.AddChildElement("TTX", m_bTTX)
             oXml.AddChildElement("Cd", m_bCd)

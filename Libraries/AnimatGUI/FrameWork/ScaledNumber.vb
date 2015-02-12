@@ -309,6 +309,10 @@ Namespace Framework
             SetFromValue(CDbl(fltActualValue), eUsingScale)
         End Sub
 
+        Public Function ValueFromScale(ByVal eScale As ScaledNumber.enumNumericScale) As Double
+            Return ActualValue / (10 ^ eScale)
+        End Function
+
         Public Class myPointSorter
             Implements IComparer
 

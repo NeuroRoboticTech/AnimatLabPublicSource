@@ -67,7 +67,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The resting potential must be between the range -100 mV and -20 mV.")
                 End If
 
-                SetSimData("RestingPotential", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("RestingPotential", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snRestingPotential.CopyData(Value)
             End Set
         End Property
@@ -82,7 +82,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The relative electrical size must be between the range 0.0001 and 10000.")
                 End If
 
-                SetSimData("RelativeSize", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("RelativeSize", Value.ActualValue.ToString, True)
                 m_snRelativeSize.CopyData(Value)
             End Set
         End Property
@@ -97,7 +97,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The membrane time constant must be between the range 0.01 mS and 1000 mS.")
                 End If
 
-                SetSimData("TimeConstant", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TimeConstant", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snTimeConstant.CopyData(Value)
             End Set
         End Property
@@ -112,7 +112,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The initial threshold must be between the range -100 mV and 100 mV.")
                 End If
 
-                SetSimData("InitialThreshold", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("InitialThreshold", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snInitialThreshold.CopyData(Value)
             End Set
         End Property
@@ -127,7 +127,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The relative accomodation must be between the range 0 and 1.")
                 End If
 
-                SetSimData("RelativeAccomodation", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("RelativeAccomodation", Value.ActualValue.ToString, True)
                 m_snRelativeAccomodation.CopyData(Value)
             End Set
         End Property
@@ -142,7 +142,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The accomodation time constant must be between the range 1 ms and 40 s.")
                 End If
 
-                SetSimData("AccomodationTimeConstant", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("AccomodationTimeConstant", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snAccomodationTimeConstant.CopyData(Value)
             End Set
         End Property
@@ -157,7 +157,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The after-hyperpolarization conductance must be between the range 0 S and 100 uS.")
                 End If
 
-                SetSimData("AHP_Conductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("AHP_Conductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snAHP_Conductance.CopyData(Value)
             End Set
         End Property
@@ -172,7 +172,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The after-hyperpolarization time constant must be between the range 1 ms and 100 ms.")
                 End If
 
-                SetSimData("AHP_TimeConstant", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("AHP_TimeConstant", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snAHP_TimeConstant.CopyData(Value)
             End Set
         End Property
@@ -187,7 +187,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The maximum calcium conductance must be between the range 0 S and 100 uS.")
                 End If
 
-                SetSimData("MaxCaConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("MaxCaConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snMaxCaConductance.CopyData(Value)
             End Set
         End Property
@@ -228,7 +228,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The tonic stimulus current must be between the range -1000 nA and 1000 nA.")
                 End If
 
-                SetSimData("TonicStimulus", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TonicStimulus", Value.ValueFromScale(ScaledNumber.enumNumericScale.nano).ToString, True)
                 m_snTonicStimulus.CopyData(Value)
             End Set
         End Property
@@ -243,7 +243,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The tonic membrane noise must be between the range 0 mV and 5 mV.")
                 End If
 
-                SetSimData("TonicNoise", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TonicNoise", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snTonicNoise.CopyData(Value)
             End Set
         End Property
@@ -440,17 +440,17 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Name", Me.Text)
             oXml.AddChildElement("Enabled", m_bEnabled)
-            oXml.AddChildElement("TonicStimulus", m_snTonicStimulus.ValueFromDefaultScale)
-            oXml.AddChildElement("Noise", m_snTonicNoise.ValueFromDefaultScale)
-            oXml.AddChildElement("RestingPot", m_snRestingPotential.ValueFromDefaultScale)
-            oXml.AddChildElement("Size", m_snRelativeSize.ValueFromDefaultScale)
-            oXml.AddChildElement("TimeConst", m_snTimeConstant.ValueFromDefaultScale)
-            oXml.AddChildElement("InitialThresh", m_snInitialThreshold.ValueFromDefaultScale)
-            oXml.AddChildElement("RelativeAccom", m_snRelativeAccomodation.ValueFromDefaultScale)
-            oXml.AddChildElement("AccomTimeConst", m_snAccomodationTimeConstant.ValueFromDefaultScale)
-            oXml.AddChildElement("AHPAmp", m_snAHP_Conductance.ValueFromDefaultScale)
-            oXml.AddChildElement("AHPTimeConst", m_snAHP_TimeConstant.ValueFromDefaultScale)
-            oXml.AddChildElement("GMaxCa", m_snMaxCaConductance.ValueFromDefaultScale)
+            oXml.AddChildElement("TonicStimulus", m_snTonicStimulus.ValueFromScale(ScaledNumber.enumNumericScale.nano))
+            oXml.AddChildElement("Noise", m_snTonicNoise.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("RestingPot", m_snRestingPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("Size", m_snRelativeSize.ActualValue)
+            oXml.AddChildElement("TimeConst", m_snTimeConstant.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("InitialThresh", m_snInitialThreshold.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("RelativeAccom", m_snRelativeAccomodation.ActualValue)
+            oXml.AddChildElement("AccomTimeConst", m_snAccomodationTimeConstant.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("AHPAmp", m_snAHP_Conductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("AHPTimeConst", m_snAHP_TimeConstant.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("GMaxCa", m_snMaxCaConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
 
             m_atCaActivation.SaveSimulationXml(oXml, Nothing, "CaActivation")
             m_atCaDeactivation.SaveSimulationXml(oXml, Nothing, "CaDeactivation")
@@ -832,7 +832,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("MidPoint", Value.ValueFromDefaultScale.ToString, True)
+                    SetSimData("MidPoint", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                     m_snMidPoint.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -854,7 +854,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("Slope", Value.ValueFromDefaultScale.ToString, True)
+                    SetSimData("Slope", Value.ActualValue.ToString, True)
                     m_snSlope.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -874,7 +874,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("TimeConstant", Value.ValueFromDefaultScale.ToString, True)
+                    SetSimData("TimeConstant", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                     m_snTimeConstant.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -1018,9 +1018,9 @@ Namespace DataObjects.Behavior.Neurons
                 oXml.IntoElem()
 
                 oXml.AddChildElement("ID", m_strID)
-                oXml.AddChildElement("MidPoint", m_snMidPoint.ValueFromDefaultScale)
-                oXml.AddChildElement("Slope", m_snSlope.ValueFromDefaultScale)
-                oXml.AddChildElement("TimeConstant", m_snTimeConstant.ValueFromDefaultScale)
+                oXml.AddChildElement("MidPoint", m_snMidPoint.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+                oXml.AddChildElement("Slope", m_snSlope.ActualValue)
+                oXml.AddChildElement("TimeConstant", m_snTimeConstant.ValueFromScale(ScaledNumber.enumNumericScale.milli))
                 oXml.AddChildElement("ActivationType", m_bActivationType)
 
                 oXml.OutOfElem()

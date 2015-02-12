@@ -60,7 +60,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The equilibrium potential must be between the range -100 to 300 mV.")
                 End If
 
-                SetSimData("EquilibriumPotential", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("EquilibriumPotential", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -75,7 +75,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The synaptic conductance must be between the range 0 to 100 uS/size.")
                 End If
 
-                SetSimData("SynapticConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("SynapticConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snSynapticConductance.CopyData(Value)
             End Set
         End Property
@@ -90,7 +90,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The decay rate must be between the range 0.01 to 1000 ms.")
                 End If
 
-                SetSimData("DecayRate", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("DecayRate", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snDecayRate.CopyData(Value)
             End Set
         End Property
@@ -105,7 +105,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The relative facilitation must be between the range 0 to 10.")
                 End If
 
-                SetSimData("RelativeFacilitation", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("RelativeFacilitation", Value.ActualValue.ToString, True)
                 m_snRelativeFacilitation.CopyData(Value)
             End Set
         End Property
@@ -120,7 +120,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The facilitation decay must be between the range 0.01 to 1000 ms.")
                 End If
 
-                SetSimData("FacilitationDecay", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("FacilitationDecay", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snFacilitationDecay.CopyData(Value)
             End Set
         End Property
@@ -146,7 +146,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The maximum unblocked relative conductance must be between the range 1 to 1000 uS.")
                 End If
 
-                SetSimData("MaxRelativeConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("MaxRelativeConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snMaxRelativeConductance.CopyData(Value)
             End Set
         End Property
@@ -161,7 +161,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The saturate post-synaptic potential must be between the range -100 to 100 mV.")
                 End If
 
-                SetSimData("SaturatePotential", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("SaturatePotential", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snSaturatePotential.CopyData(Value)
             End Set
         End Property
@@ -176,7 +176,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The threshold post-synaptic potential must be between the range -100 to 100 mV.")
                 End If
 
-                SetSimData("ThresholdPotential", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("ThresholdPotential", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snThresholdPotential.CopyData(Value)
             End Set
         End Property
@@ -202,7 +202,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The maximum augmented conductance must be between the range 0 to 1000 uS.")
                 End If
 
-                SetSimData("MaxAugmentedConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("MaxAugmentedConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snMaxAugmentedConductance.CopyData(Value)
             End Set
         End Property
@@ -232,7 +232,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The learning time window must be between the range 1 to 1000 msec.")
                 End If
 
-                SetSimData("LearningTimeWindow", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("LearningTimeWindow", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snLearningTimeWindow.CopyData(Value)
             End Set
         End Property
@@ -258,7 +258,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The forgetting time window must be between the range 0 to 10000000 msec.")
                 End If
 
-                SetSimData("ForgettingTimeWindow", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("ForgettingTimeWindow", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snForgettingTimeWindow.CopyData(Value)
             End Set
         End Property
@@ -379,21 +379,21 @@ Namespace DataObjects.Behavior.SynapseTypes
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Type", "SpikingChemical")
-            oXml.AddChildElement("Equil", m_snEquilibriumPotential.ValueFromDefaultScale)
-            oXml.AddChildElement("SynAmp", m_snSynapticConductance.ValueFromDefaultScale)
-            oXml.AddChildElement("Decay", m_snDecayRate.ValueFromDefaultScale)
-            oXml.AddChildElement("RelFacil", m_snRelativeFacilitation.ValueFromDefaultScale)
-            oXml.AddChildElement("FacilDecay", m_snFacilitationDecay.ValueFromDefaultScale)
+            oXml.AddChildElement("Equil", m_snEquilibriumPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("SynAmp", m_snSynapticConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("Decay", m_snDecayRate.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("RelFacil", m_snRelativeFacilitation.ActualValue)
+            oXml.AddChildElement("FacilDecay", m_snFacilitationDecay.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("VoltDep", m_bVoltageDependent)
-            oXml.AddChildElement("MaxRelCond", m_snMaxRelativeConductance.ValueFromDefaultScale)
-            oXml.AddChildElement("SatPSPot", m_snSaturatePotential.ValueFromDefaultScale)
-            oXml.AddChildElement("ThreshPSPot", m_snThresholdPotential.ValueFromDefaultScale)
+            oXml.AddChildElement("MaxRelCond", m_snMaxRelativeConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("SatPSPot", m_snSaturatePotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("ThreshPSPot", m_snThresholdPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("Hebbian", m_bHebbian)
-            oXml.AddChildElement("MaxAugCond", m_snMaxAugmentedConductance.ValueFromDefaultScale)
+            oXml.AddChildElement("MaxAugCond", m_snMaxAugmentedConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
             oXml.AddChildElement("LearningInc", m_fltLearningIncrement)
-            oXml.AddChildElement("LearningTime", m_snLearningTimeWindow.ValueFromDefaultScale)
+            oXml.AddChildElement("LearningTime", m_snLearningTimeWindow.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("AllowForget", m_bAllowForgetting)
-            oXml.AddChildElement("ForgetTime", m_snForgettingTimeWindow.ValueFromDefaultScale)
+            oXml.AddChildElement("ForgetTime", m_snForgettingTimeWindow.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("Consolidation", m_fltConsolidationFactor)
 
             oXml.OutOfElem() 'Outof Neuron

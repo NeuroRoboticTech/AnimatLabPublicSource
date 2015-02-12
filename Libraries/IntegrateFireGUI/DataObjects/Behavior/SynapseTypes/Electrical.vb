@@ -43,7 +43,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The low coupling must be between the range 0 to 100 uS.")
                 End If
 
-                SetSimData("LowCoupling", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("LowCoupling", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snLowCoupling.CopyData(Value)
             End Set
         End Property
@@ -58,7 +58,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The high coupling must be between the range 0 to 100 uS.")
                 End If
 
-                SetSimData("HighCoupling", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("HighCoupling", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snHighCoupling.CopyData(Value)
             End Set
         End Property
@@ -73,7 +73,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The turn on junctional threshold must be between the range -100 to 300 mV.")
                 End If
 
-                SetSimData("TurnOnThreshold", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TurnOnThreshold", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snTurnOnThreshold.CopyData(Value)
             End Set
         End Property
@@ -88,7 +88,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The saturation junctional potential must be between the range -100 to 300 mV.")
                 End If
 
-                SetSimData("TurnOnSaturate", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TurnOnSaturate", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snTurnOnSaturate.CopyData(Value)
             End Set
         End Property
@@ -163,10 +163,10 @@ Namespace DataObjects.Behavior.SynapseTypes
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Type", "Electrical")
-            oXml.AddChildElement("LowCoup", m_snLowCoupling.ValueFromDefaultScale)
-            oXml.AddChildElement("HiCoup", m_snHighCoupling.ValueFromDefaultScale)
-            oXml.AddChildElement("TurnOnV", m_snTurnOnThreshold.ValueFromDefaultScale)
-            oXml.AddChildElement("SaturateV", m_snTurnOnSaturate.ValueFromDefaultScale)
+            oXml.AddChildElement("LowCoup", m_snLowCoupling.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("HiCoup", m_snHighCoupling.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("TurnOnV", m_snTurnOnThreshold.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("SaturateV", m_snTurnOnSaturate.ValueFromScale(ScaledNumber.enumNumericScale.milli))
 
             oXml.OutOfElem() 'Outof Neuron
 

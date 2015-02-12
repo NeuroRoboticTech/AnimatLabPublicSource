@@ -123,7 +123,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The synaptic conductance must be between the range 0 to 100 uS/size.")
                 End If
 
-                SetSimData("SynapticConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("SynapticConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snSynapticConductance.CopyData(Value)
 
                 If Not m_snSynapticConductance Is Nothing AndAlso Not m_stSynapseType Is Nothing _
@@ -144,7 +144,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The conduction delay must be between the range 0 to 100 ms.")
                 End If
 
-                SetSimData("ConductionDelay", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("ConductionDelay", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snConductionDelay.CopyData(Value)
             End Set
         End Property
@@ -336,8 +336,8 @@ Namespace DataObjects.Behavior
             oXml.AddChildElement("Type", m_stSynapseType.SynapseType)
             'oXml.AddChildElement("SynapseID", m_stSynapseType.LinkIndex)
             oXml.AddChildElement("SynapseTypeID", m_stSynapseType.ID)
-            oXml.AddChildElement("Delay", m_snConductionDelay.ValueFromDefaultScale)
-            oXml.AddChildElement("G", m_snSynapticConductance.ValueFromDefaultScale)
+            oXml.AddChildElement("Delay", m_snConductionDelay.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("G", m_snSynapticConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
 
             oXml.OutOfElem() 'Outof Connexion
 

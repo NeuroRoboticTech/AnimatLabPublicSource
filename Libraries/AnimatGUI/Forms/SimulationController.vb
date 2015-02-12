@@ -421,7 +421,7 @@ Namespace Forms
                 End If
 
                 m_snStartingBarTime.CopyData(Value)
-                Me.ctrlTimeRuler.StartMillisecond = CLng(m_snStartingBarTime.ValueFromDefaultScale)
+                Me.ctrlTimeRuler.StartMillisecond = CLng(m_snStartingBarTime.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             End Set
         End Property
 
@@ -439,7 +439,7 @@ Namespace Forms
                 End If
 
                 m_snEndingBarTime.CopyData(Value)
-                Me.ctrlTimeRuler.EndMillisecond = CLng(m_snEndingBarTime.ValueFromDefaultScale)
+                Me.ctrlTimeRuler.EndMillisecond = CLng(m_snEndingBarTime.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             End Set
         End Property
 
@@ -763,8 +763,8 @@ Namespace Forms
             End If
             m_Timer.Interval = CInt(m_snTimeBarInterval.ActualValue * 1000)
 
-            Me.ctrlTimeRuler.StartMillisecond = CLng(m_snStartingBarTime.ValueFromDefaultScale)
-            Me.ctrlTimeRuler.EndMillisecond = CLng(m_snEndingBarTime.ValueFromDefaultScale)
+            Me.ctrlTimeRuler.StartMillisecond = CLng(m_snStartingBarTime.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            Me.ctrlTimeRuler.EndMillisecond = CLng(m_snEndingBarTime.ValueFromScale(ScaledNumber.enumNumericScale.milli))
 
             Me.ctrlTimeRuler.ActualTimeColor = Color.FromArgb(oXml.GetChildInt("ActualTimeColor", Me.ctrlTimeRuler.ActualTimeColor.ToArgb))
             Me.ctrlTimeRuler.CurrentTimeColor = Color.FromArgb(oXml.GetChildInt("CurrentTimeColor", Me.ctrlTimeRuler.CurrentTimeColor.ToArgb))

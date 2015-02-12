@@ -43,7 +43,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The equilibrium potential must be between the range -100 to 300 mV.")
                 End If
 
-                SetSimData("EquilibriumPotential", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("EquilibriumPotential", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -58,7 +58,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The maximum synaptic conductance must be between the range 0 to 100 uS/size.")
                 End If
 
-                SetSimData("MaxSynapticConductance", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("MaxSynapticConductance", Value.ValueFromScale(ScaledNumber.enumNumericScale.micro).ToString, True)
                 m_snMaxSynapticConductance.CopyData(Value)
             End Set
         End Property
@@ -73,7 +73,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The pre-synaptic threshold must be between the range -100 to 100 mV.")
                 End If
 
-                SetSimData("PreSynapticThreshold", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("PreSynapticThreshold", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snPreSynapticThreshold.CopyData(Value)
             End Set
         End Property
@@ -88,7 +88,7 @@ Namespace DataObjects.Behavior.SynapseTypes
                     Throw New System.Exception("The pre-synaptic saturation level must be between the range -100 to 100 mV.")
                 End If
 
-                SetSimData("PreSynapticSaturationLevel", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("PreSynapticSaturationLevel", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
                 m_snPreSynapticSaturationLevel.CopyData(Value)
             End Set
         End Property
@@ -161,10 +161,10 @@ Namespace DataObjects.Behavior.SynapseTypes
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Type", "NonSpikingChemical")
-            oXml.AddChildElement("Equil", m_snEquilibriumPotential.ValueFromDefaultScale)
-            oXml.AddChildElement("SynAmp", m_snMaxSynapticConductance.ValueFromDefaultScale)
-            oXml.AddChildElement("ThreshV", m_snPreSynapticThreshold.ValueFromDefaultScale)
-            oXml.AddChildElement("SaturateV", m_snPreSynapticSaturationLevel.ValueFromDefaultScale)
+            oXml.AddChildElement("Equil", m_snEquilibriumPotential.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("SynAmp", m_snMaxSynapticConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("ThreshV", m_snPreSynapticThreshold.ValueFromScale(ScaledNumber.enumNumericScale.milli))
+            oXml.AddChildElement("SaturateV", m_snPreSynapticSaturationLevel.ValueFromScale(ScaledNumber.enumNumericScale.milli))
 
             oXml.OutOfElem() 'Outof Neuron
 
