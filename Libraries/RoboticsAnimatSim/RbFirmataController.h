@@ -22,6 +22,12 @@ protected:
 	//Baud rate for the connection to the Arduino
 	int m_iBaudRate;
 
+	///The time between when synchronous motor commands are sent.
+	float m_fltMotorSendTime;
+
+	///Tick to measure the the timing for sending motor commands
+	unsigned long long m_lMotorSendStart;
+
 	boost::signals2::connection m_EInitializedConnection;
 	boost::signals2::connection m_EDigitalPinChanged;
 	boost::signals2::connection m_EAnalogPinChanged;
@@ -51,6 +57,7 @@ public:
 
 #pragma endregion
 
+	virtual void ResetSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 

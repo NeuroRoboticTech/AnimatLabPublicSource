@@ -76,6 +76,8 @@ namespace RoboticsGUI
                     m_aryAvailablePartTypes.Add(new FirmataPWMOutput(this));
                     m_aryAvailablePartTypes.Add(new FirmataDynamixelHingeServo(this));
                     m_aryAvailablePartTypes.Add(new FirmataDynamixelPrismaticServo(this));
+
+                    m_thDataTypes.DataTypes.Add(new AnimatGUI.DataObjects.DataType("MotorSendTime", "Motor Send Time", "Seconds", "s", 0, 1));
                 }
 
                 public override AnimatGUI.Framework.DataObject Clone(AnimatGUI.Framework.DataObject doParent, bool bCutData, AnimatGUI.Framework.DataObject doRoot)

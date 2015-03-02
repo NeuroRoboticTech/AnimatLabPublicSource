@@ -248,6 +248,21 @@ protected:
 	///Pointer to an associated motorized joint.
     MotorizedJoint *m_lpMotorJoint;
 
+	///Used to set the CW compliance margin of the servo
+    int m_iCWComplianceMargin;
+
+	///Used to set the CCW compliance margin of the servo
+	int m_iCCWComplianceMargin;
+
+	///Used to set the CW compliance slope of the servo
+    int m_iCWComplianceSlope;
+
+	///Used to set the CCW compliance slope of the servo
+    int m_iCCWComplianceSlope;
+
+	///Used to set the maximum torque of the servo
+    int m_iMaxTorque;
+
 	virtual void RecalculateParams();
 
 	virtual void WriteGoalPosition(int iServoID, int iPos) = 0;
@@ -267,6 +282,21 @@ protected:
 	virtual int ReadModelNumber(int iServoID) = 0;
 	virtual int ReadID(int iServoID) = 0;
 	virtual int ReadFirmwareVersion(int iServoID) = 0;
+
+	virtual void WriteCWComplianceMargin(int iServoID, int iVal) = 0;
+	virtual int ReadCWComplianceMargin(int iServoID) = 0;
+
+	virtual void WriteCCWComplianceMargin(int iServoID, int iVal) = 0;
+	virtual int ReadCCWComplianceMargin(int iServoID) = 0;
+
+	virtual void WriteCWComplianceSlope(int iServoID, int iVal) = 0;
+	virtual int ReadCWComplianceSlope(int iServoID) = 0;
+
+	virtual void WriteCCWComplianceSlope(int iServoID, int iVal) = 0;
+	virtual int ReadCCWComplianceSlope(int iServoID) = 0;
+
+	virtual void WriteMaxTorque(int iServoID, int iVal) = 0;
+	virtual int ReadMaxTorque(int iServoID) = 0;
 
 	virtual void WriteReturnDelayTime(int iServoID, int iVal) = 0;
 	virtual int ReadReturnDelayTime(int iServoID) = 0;
@@ -331,6 +361,21 @@ public:
 
 	virtual void MaxLoadFP(int iVal);
 	virtual int MaxLoadFP();
+	
+	virtual void CWComplianceMargin(int iVal);
+	virtual int CWComplianceMargin();
+	
+	virtual void CCWComplianceMargin(int iVal);
+	virtual int CCWComplianceMargin();
+
+	virtual void CWComplianceSlope(int iVal);
+	virtual int CWComplianceSlope();
+
+	virtual void CCWComplianceSlope(int iVal);
+	virtual int CCWComplianceSlope();
+
+	virtual void MaxTorque(int iVal);
+	virtual int MaxTorque();
 
 	virtual float ConvertPosFPToFloat(int iPos);
 	virtual int ConvertPosFloatToFP(float fltPos);
@@ -415,6 +460,21 @@ public:
 	virtual void SetCCWAngleLimit(float fltLimit);
 	virtual int GetCCWAngleLimit_FP();
 	virtual float GetCCWAngleLimit();
+
+	virtual void SetCWComplianceMargin_FP(int iVal);
+	virtual int GetCWComplianceMargin_FP();
+
+	virtual void SetCCWComplianceMargin_FP(int iVal);
+	virtual int GetCCWComplianceMargin_FP();
+
+	virtual void SetCWComplianceSlope_FP(int iVal);
+	virtual int GetCWComplianceSlope_FP();
+
+	virtual void SetCCWComplianceSlope_FP(int iVal);
+	virtual int GetCCWComplianceSlope_FP();
+
+	virtual void SetMaxTorque_FP(int iVal);
+	virtual int GetMaxTorque_FP();
 
 	virtual int GetMinSimPos_FP();
 	virtual float GetMinSimPos();

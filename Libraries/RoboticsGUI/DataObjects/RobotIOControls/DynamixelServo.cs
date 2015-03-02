@@ -28,6 +28,14 @@ namespace RoboticsGUI
             protected int m_iMinLoadFP = 0;
             protected int m_iMaxLoadFP = 1023;
 
+            protected int m_iCWComplianceMargin = 1;
+            protected int m_iCCWComplianceMargin = 1;
+
+            protected int m_iCWComplianceSlope = 32;
+            protected int m_iCCWComplianceSlope = 32;
+
+            protected int m_iMaxTorque = 1023;
+
             protected AnimatGUI.Framework.ScaledNumber m_snTranslationRange; 
 
             public override string ModuleName { get { return "RoboticsAnimatSim"; } }
@@ -159,6 +167,66 @@ namespace RoboticsGUI
                 }
             }
 
+            public virtual int CWComplianceMargin
+            {
+                get { return m_iCWComplianceMargin; }
+                set
+                {
+                    if (value <= 0 || value > 255)
+                        throw new System.Exception("The complaince margin must be between 0 and 255.");
+                    SetSimData("CWComplianceMargin", value.ToString(), true);
+                    m_iCWComplianceMargin = value;
+                }
+            }
+
+            public virtual int CCWComplianceMargin
+            {
+                get { return m_iCCWComplianceMargin; }
+                set
+                {
+                    if (value <= 0 || value > 255)
+                        throw new System.Exception("The complaince margin must be between 0 and 255.");
+                    SetSimData("CCWComplianceMargin", value.ToString(), true);
+                    m_iCCWComplianceMargin = value;
+                }
+            }
+
+            public virtual int CWComplianceSlope
+            {
+                get { return m_iCWComplianceSlope; }
+                set
+                {
+                    if (value <= 0 || value > 255)
+                        throw new System.Exception("The complaince slope must be between 0 and 255.");
+                    SetSimData("CWComplianceSlope", value.ToString(), true);
+                    m_iCWComplianceSlope = value;
+                }
+            }
+
+            public virtual int CCWComplianceSlope
+            {
+                get { return m_iCCWComplianceSlope; }
+                set
+                {
+                    if (value <= 0 || value > 255)
+                        throw new System.Exception("The complaince slope must be between 0 and 255.");
+                    SetSimData("CCWComplianceSlope", value.ToString(), true);
+                    m_iCCWComplianceSlope = value;
+                }
+            }
+
+            public virtual int MaxTorque
+            {
+                get { return m_iMaxTorque; }
+                set
+                {
+                    if (value < 0 || value > 1023)
+                        throw new System.Exception("The maximum torque of the motor must be between 0 and 1023.");
+                    SetSimData("MaxTorque", value.ToString(), true);
+                    m_iMaxTorque = value;
+                }
+            }
+
             public virtual AnimatGUI.Framework.ScaledNumber TranslationRange
             {
                 get { return m_snTranslationRange; }
@@ -217,7 +285,11 @@ namespace RoboticsGUI
                 m_iMinLoadFP = servo.m_iMinLoadFP;
                 m_iMaxLoadFP = servo.m_iMaxLoadFP;
                 m_snTranslationRange = (AnimatGUI.Framework.ScaledNumber)servo.m_snTranslationRange.Clone(this, bCutData, doRoot);
-
+                m_iCWComplianceMargin = servo.m_iCWComplianceMargin;
+                m_iCCWComplianceMargin = servo.m_iCCWComplianceMargin;
+                m_iCWComplianceSlope = servo.m_iCWComplianceSlope;
+                m_iCCWComplianceSlope = servo.m_iCCWComplianceSlope;
+                m_iMaxTorque = servo.m_iMaxTorque;
             }
 
             public override void BuildProperties(ref AnimatGuiCtrls.Controls.PropertyTable propTable)
@@ -257,6 +329,21 @@ namespace RoboticsGUI
                 propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Load FP Max", this.MaxLoadFP.GetType(), "MaxLoadFP",
                     "Motor Properties", "This is the maximum fixed point load that the motor uses.", this.MaxLoadFP));
 
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("CW Compliance Margin", this.CWComplianceMargin.GetType(), "CWComplianceMargin",
+                    "Motor Properties", "This is the clock-wise compliance margin used by this servo.", this.CWComplianceMargin));
+
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("CCW Compliance Margin", this.CCWComplianceMargin.GetType(), "CCWComplianceMargin",
+                    "Motor Properties", "This is the counter clock-wise compliance margin used by this servo.", this.CCWComplianceMargin));
+
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("CW Compliance Slope", this.CWComplianceSlope.GetType(), "CWComplianceSlope",
+                    "Motor Properties", "This is the clock-wise compliance slope used by this servo.", this.CWComplianceSlope));
+
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("CCW Compliance Slope", this.CCWComplianceSlope.GetType(), "CCWComplianceSlope",
+                    "Motor Properties", "This is the counter clock-wise compliance slope used by this servo.", this.CCWComplianceSlope));
+
+                propTable.Properties.Add(new AnimatGuiCtrls.Controls.PropertySpec("Max Torque", this.MaxTorque.GetType(), "MaxTorque",
+                    "Motor Properties", "This is the maximum torque setting used by this servo.", this.MaxTorque));
+
                 if (!IsHinge)
                 {
                     AnimatGuiCtrls.Controls.PropertyBag pbNumberBag = m_snTranslationRange.Properties;
@@ -279,6 +366,14 @@ namespace RoboticsGUI
                 m_fltMaxAngle = oXml.GetChildFloat("MaxAngle", m_fltMaxAngle);
                 m_iMinVelocityFP = oXml.GetChildInt("MinVelocityFP", m_iMinVelocityFP);
                 m_iMaxVelocityFP = oXml.GetChildInt("MaxVelocityFP", m_iMaxVelocityFP);
+
+                m_iCWComplianceMargin = oXml.GetChildInt("CWComplianceMargin", m_iCWComplianceMargin);
+                m_iCCWComplianceMargin = oXml.GetChildInt("CCWComplianceMargin", m_iCCWComplianceMargin);
+
+                m_iCWComplianceSlope = oXml.GetChildInt("CWComplianceSlope", m_iCWComplianceSlope);
+                m_iCCWComplianceSlope = oXml.GetChildInt("CCWComplianceSlope", m_iCCWComplianceSlope);
+
+                m_iMaxTorque = oXml.GetChildInt("MaxTorque", m_iMaxTorque);
 
                 if (oXml.FindChildElement("MaxRotMin", false))
                     m_fltRPMPerFPUnit = oXml.GetChildFloat("MaxRotMin", m_fltRPMPerFPUnit);
@@ -311,6 +406,14 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
 
+                oXml.AddChildElement("CWComplianceMargin", m_iCWComplianceMargin);
+                oXml.AddChildElement("CCWComplianceMargin", m_iCCWComplianceMargin);
+
+                oXml.AddChildElement("CWComplianceSlope", m_iCWComplianceSlope);
+                oXml.AddChildElement("CCWComplianceSlope", m_iCCWComplianceSlope);
+
+                oXml.AddChildElement("MaxTorque", m_iMaxTorque);
+
                 if (!IsHinge)
                     m_snTranslationRange.SaveData(oXml, "TranslationRange");
 
@@ -334,6 +437,14 @@ namespace RoboticsGUI
                 oXml.AddChildElement("MinLoadFP", m_iMinLoadFP);
                 oXml.AddChildElement("MaxLoadFP", m_iMaxLoadFP);
                 oXml.AddChildElement("IsHinge", IsHinge);
+
+                oXml.AddChildElement("CWComplianceMargin", m_iCWComplianceMargin);
+                oXml.AddChildElement("CCWComplianceMargin", m_iCCWComplianceMargin);
+
+                oXml.AddChildElement("CWComplianceSlope", m_iCWComplianceSlope);
+                oXml.AddChildElement("CCWComplianceSlope", m_iCCWComplianceSlope);
+
+                oXml.AddChildElement("MaxTorque", m_iMaxTorque);
 
                 if (!IsHinge)
                     m_snTranslationRange.SaveSimulationXml(oXml, ref nmParentControl, "TranslationRange");
