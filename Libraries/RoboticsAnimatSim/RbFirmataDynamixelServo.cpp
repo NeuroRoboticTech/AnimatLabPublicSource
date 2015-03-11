@@ -266,6 +266,8 @@ void RbFirmataDynamixelServo::InitMotorData()
 			m_lpFirmata->sendDynamixelServoAttach(m_iServoID);
 
 		RbDynamixelServo::InitMotorData();
+
+		m_lStartServoUpdateTick = m_lpSim->GetTimerTick();
 	}
 }
 

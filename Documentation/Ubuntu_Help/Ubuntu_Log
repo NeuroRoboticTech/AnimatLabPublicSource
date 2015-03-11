@@ -545,4 +545,26 @@ CUDA on Jetson TK1
 
 
 
+11/22/14
+CLONING JETSON
+cd Linux_for_Tegra/bootloader
+sudo rm system.img
+sudo ./nvflash --read APP system.img --bl ardbeg/fastboot.bin --go
+
+
+Make sure the Linux_for_Tegra/kernel/zImage and the 
+Linux_for_Tegra/ntfs/boot/zImage and tegra124-pm375.dtb and dts are updated to the latest
+kernel build you want.
+
+
+Restoring
+cd ../
+sudo ./flash.sh -r -S 14580MiB -L bootloader/ardbeg/u-boot.bin jetson-tk1 mmcblk0p1
+
+
+
+
+
+
+
 
