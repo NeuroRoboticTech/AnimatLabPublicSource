@@ -110,8 +110,8 @@ Namespace DataObjects
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Matches", "Matches", "", "", 0, 1))
             End Sub
 
-            Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)
-                MyBase.New(doParent)
+            Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain, ByVal bInLink As Boolean)
+                MyBase.New(doParent, strName, strSourceDataTypeID, doGain, bInLink)
 
                 m_snPulseDuration = New AnimatGUI.Framework.ScaledNumber(Me, "PulseDuration", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
                 m_snPulseCurrent = New AnimatGUI.Framework.ScaledNumber(Me, "PulseCurrent", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amp", "A")

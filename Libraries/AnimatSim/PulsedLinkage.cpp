@@ -155,7 +155,7 @@ void PulsedLinkage::ResetSimulation()
 	m_aryPulses.clear();
 }
 
-float PulsedLinkage::CalculateAppliedCurrent()
+float PulsedLinkage::CalculateAppliedValue()
 {
 	float fltTotal = 0;
 	int iCount = m_aryPulses.size();
@@ -183,6 +183,9 @@ void PulsedLinkage::CullPulses()
 		{
 			//If we found one to delete then get rid of it.
 			m_aryPulses.RemoveAt(iDeleteID);
+
+			////Test Code
+			//OutputDebugString("Pulse Culled\r\n");
 		}
 		else
 			bDone = true;
@@ -194,6 +197,10 @@ void  PulsedLinkage::IncrementMatches()
 	m_AccessMatchesMutex.lock();
 	m_iMatches++;
 	m_AccessMatchesMutex.unlock();
+
+	////Test Code
+	//std::string strVal = "Matches: " + STR((int) m_iMatches) + "\r\n";
+	//OutputDebugString(strVal.c_str());
 }
 
 void PulsedLinkage::StepIO()
@@ -212,7 +219,7 @@ void PulsedLinkage::StepIO()
 
 void PulsedLinkage::StepSimulation()
 {
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_lpExternalCurrent)
+	if(m_bEnabled && m_lpSourceData && m_lpTarget && m_lpTargetData)
 	{
 		//Set the reporting value
 		m_fltMatchesReport = m_iMatches;
@@ -241,7 +248,7 @@ void PulsedLinkage::StepSimulation()
 			m_AccessMatchesMutex.unlock();
 		}
 
-		ApplyCurrent();
+		ApplyValue();
 
 		if(m_aryPulses.size() > 0)
 			CullPulses();

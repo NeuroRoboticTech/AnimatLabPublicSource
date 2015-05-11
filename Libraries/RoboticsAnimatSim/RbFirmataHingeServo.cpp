@@ -222,8 +222,8 @@ void RbFirmataHingeServo::StepSimulation()
 		float fltSetPosition = m_lpJoint->JointPosition();
 		m_iIOValue = ConvertPosRadToFP(fltSetPosition);
 
-		if(m_iIOValue > 179)
-			m_iIOValue = m_iIOValue;
+		//if(m_iIOValue > 179)
+		//	m_iIOValue = m_iIOValue;
 
 		m_fltIOValue = m_iIOValue;
 	}

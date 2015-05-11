@@ -344,13 +344,15 @@ void RbXBeeCommanderButtonData::CheckStartedStopped()
 			m_iStartDir = Std_Sign(m_fltValue);
 			m_fltStart = 1*m_iStartDir;
 			m_bStarted = true;
-			//OutputDebugString("Start");
+			////Test Code
+			//OutputDebugString("Start\r\n");
 		}
 		else if(m_bStarted && m_fltValue == 0)
 		{
 			m_fltStop = m_iStartDir;
 			m_bStarted = false;
-			//OutputDebugString("Stop");
+			////Test Code
+			//OutputDebugString("Stop\r\n");
 		}
 
 		m_iCount = 0;
@@ -358,6 +360,7 @@ void RbXBeeCommanderButtonData::CheckStartedStopped()
 
 	m_fltPrev = m_fltValue;
 
+	////Test Code
 	//std::string strVal = "Val: " + STR((int) m_fltValue) + " Prev: " + STR((int) m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
 	//OutputDebugString(strVal.c_str());
 }
@@ -368,7 +371,7 @@ void RbXBeeCommander::CheckStartedStopped()
 		m_ButtonData[iIdx].CheckStartedStopped();
 
 	////Test Code
-	//m_ButtonData[BUT_ID_LOOKH].CheckStartedStopped();
+	//m_ButtonData[BUT_ID_RT].CheckStartedStopped();
 }
 
 void RbXBeeCommanderButtonData::ClearStartStops()
@@ -377,10 +380,11 @@ void RbXBeeCommanderButtonData::ClearStartStops()
 	{
 		if(m_iSimStepped >= m_iChangeSimStepCount)
 		{
+			////Test Code
 			//if(m_fltStart > 0)
-			//	OutputDebugString("Cleared Start");
+			//	OutputDebugString("Cleared Start\r\n");
 			//if(m_fltStop > 0)
-			//	OutputDebugString("Cleared Stop");
+			//	OutputDebugString("Cleared Stop\r\n");
 
 			m_fltStart = 0;
 			m_fltStop = 0;

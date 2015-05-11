@@ -12,11 +12,17 @@ namespace AnimatSim
 			///Pointer tho the parent remote control
 			RemoteControl *m_lpParentRemoteControl;
 
-			///Target node we are inserting into
-			Node *m_lpTargetNode;
+			///Source object we are inserting from
+			AnimatBase *m_lpSource;
 
-			///ID of the source node. This is only used during loading.
-			std::string m_strLinkedNodeID;
+			///Target object we are inserting into
+			AnimatBase *m_lpTarget;
+
+			///ID of the source. This is only used during loading.
+			std::string m_strSourceID;
+
+			///ID of the target. This is only used during loading.
+			std::string m_strTargetID;
 
 			///ID of the source data type. This is only used during loading.
 			std::string m_strSourceDataTypeID;
@@ -30,14 +36,14 @@ namespace AnimatSim
 			/// Pointer to the source data variable.
 			float *m_lpSourceData;
 			
-			///Pointer to the external current of the linked target node.
-			float *m_lpExternalCurrent;
+			///Pointer to the external value of the linked target.
+			float *m_lpTargetData;
 
-			///The total current applied during a time step
-			float m_fltAppliedCurrent;
+			///The total value applied during a time step
+			float m_fltAppliedValue;
 
-			virtual float CalculateAppliedCurrent() = 0;
-			virtual void ApplyCurrent();
+			virtual float CalculateAppliedValue() = 0;
+			virtual void ApplyValue();
 
 		public:
 			RemoteControlLinkage(void);
@@ -48,14 +54,17 @@ namespace AnimatSim
 			virtual void ParentRemoteControl(RemoteControl *lpParent);
 			virtual RemoteControl *ParentRemoteControl();
 
+			virtual std::string SourceID();
+			virtual void SourceID(std::string strID);
+
+			virtual std::string TargetID();
+			virtual void TargetID(std::string strID);
+
 			virtual std::string SourceDataTypeID();
 			virtual void SourceDataTypeID(std::string strTypeID);
 
 			virtual std::string TargetDataTypeID();
 			virtual void TargetDataTypeID(std::string strTypeID);
-
-			virtual std::string LinkedNodeID();
-			virtual void LinkedNodeID(std::string strID);
 
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

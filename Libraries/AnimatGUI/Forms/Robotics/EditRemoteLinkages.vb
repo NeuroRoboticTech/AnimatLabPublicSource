@@ -48,6 +48,7 @@ Namespace Forms
             Friend WithEvents pgLinkProperties As System.Windows.Forms.PropertyGrid
             Friend WithEvents btnAddLink As System.Windows.Forms.Button
             Friend WithEvents btnDeleteLink As System.Windows.Forms.Button
+            Friend WithEvents btnAddOutputLink As System.Windows.Forms.Button
             Friend WithEvents btnOk As System.Windows.Forms.Button
             <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
                 Me.btnOk = New System.Windows.Forms.Button()
@@ -56,6 +57,7 @@ Namespace Forms
                 Me.pgLinkProperties = New System.Windows.Forms.PropertyGrid()
                 Me.btnAddLink = New System.Windows.Forms.Button()
                 Me.btnDeleteLink = New System.Windows.Forms.Button()
+                Me.btnAddOutputLink = New System.Windows.Forms.Button()
                 Me.SuspendLayout()
                 '
                 'btnOk
@@ -104,24 +106,34 @@ Namespace Forms
                 Me.btnAddLink.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
                 Me.btnAddLink.Location = New System.Drawing.Point(2, 432)
                 Me.btnAddLink.Name = "btnAddLink"
-                Me.btnAddLink.Size = New System.Drawing.Size(81, 24)
+                Me.btnAddLink.Size = New System.Drawing.Size(100, 25)
                 Me.btnAddLink.TabIndex = 16
-                Me.btnAddLink.Text = "Add Link"
+                Me.btnAddLink.Text = "Add Input Link"
                 '
                 'btnDeleteLink
                 '
                 Me.btnDeleteLink.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
                 Me.btnDeleteLink.Enabled = False
-                Me.btnDeleteLink.Location = New System.Drawing.Point(89, 432)
+                Me.btnDeleteLink.Location = New System.Drawing.Point(214, 432)
                 Me.btnDeleteLink.Name = "btnDeleteLink"
-                Me.btnDeleteLink.Size = New System.Drawing.Size(81, 24)
+                Me.btnDeleteLink.Size = New System.Drawing.Size(81, 25)
                 Me.btnDeleteLink.TabIndex = 17
                 Me.btnDeleteLink.Text = "Delete Link"
+                '
+                'btnAddOutputLink
+                '
+                Me.btnAddOutputLink.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+                Me.btnAddOutputLink.Location = New System.Drawing.Point(108, 432)
+                Me.btnAddOutputLink.Name = "btnAddOutputLink"
+                Me.btnAddOutputLink.Size = New System.Drawing.Size(100, 25)
+                Me.btnAddOutputLink.TabIndex = 18
+                Me.btnAddOutputLink.Text = "Add Output Link"
                 '
                 'EditRemoteLinkages
                 '
                 Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
                 Me.ClientSize = New System.Drawing.Size(388, 463)
+                Me.Controls.Add(Me.btnAddOutputLink)
                 Me.Controls.Add(Me.btnDeleteLink)
                 Me.Controls.Add(Me.btnAddLink)
                 Me.Controls.Add(Me.pgLinkProperties)
@@ -206,27 +218,45 @@ Namespace Forms
                 End Try
             End Sub
 
-            Private Sub btnAddLink_Click(sender As System.Object, e As System.EventArgs) Handles btnAddLink.Click
-                Try
-                    Dim frmSelInterface As New Forms.SelectObject()
-                    frmSelInterface.Objects = Util.Application.RemoteControlLinkages
-                    frmSelInterface.PartTypeName = "RemoteControlLinkage"
+            Private Sub AddLinkage(ByVal bInLink As Boolean)
+                Dim frmSelInterface As New Forms.SelectObject()
+                frmSelInterface.Objects = Util.Application.RemoteControlLinkages
+                frmSelInterface.PartTypeName = "RemoteControlLinkage"
 
-                    If frmSelInterface.ShowDialog() = DialogResult.OK Then
-                        'Then create the new one.
-                        Dim doLink As DataObjects.Robotics.RemoteControlLinkage = DirectCast(frmSelInterface.Selected.Clone(m_doRemoteControl, False, Nothing), DataObjects.Robotics.RemoteControlLinkage)
-                        doLink.LinkedNode.Organism = m_doRemoteControl.Organism
-                        doLink.SourceDataTypes = DirectCast(m_doRemoteControl.DataTypes.Clone(doLink, False, Nothing), TypeHelpers.DataTypeID)
-                        doLink.Name = "New " + doLink.Name
-                        m_doRemoteControl.Links.Add(doLink.ID, doLink)
-                        Dim liItem As New ListViewItem(doLink.ToString)
-                        liItem.Tag = doLink
-                        lvLinkages.Items.Add(liItem)
+                If frmSelInterface.ShowDialog() = DialogResult.OK Then
+                    'Then create the new one.
+                    Dim doLink As DataObjects.Robotics.RemoteControlLinkage = DirectCast(frmSelInterface.Selected.Clone(m_doRemoteControl, False, Nothing), DataObjects.Robotics.RemoteControlLinkage)
+                    doLink.InLink = bInLink
+                    doLink.Name = "New " + doLink.Name
 
-                        lvLinkages.SelectedItems.Clear()
-                        liItem.Selected = True
+                    If bInLink Then
+                        doLink.LinkedSource = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(m_doRemoteControl)
+                    Else
+                        doLink.LinkedTarget = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(m_doRemoteControl)
                     End If
 
+                    m_doRemoteControl.Links.Add(doLink.ID, doLink)
+                    Dim liItem As New ListViewItem(doLink.ToString)
+                    liItem.Tag = doLink
+                    lvLinkages.Items.Add(liItem)
+
+                    lvLinkages.SelectedItems.Clear()
+                    liItem.Selected = True
+                End If
+
+            End Sub
+
+            Private Sub btnAddInputLink_Click(sender As System.Object, e As System.EventArgs) Handles btnAddLink.Click
+                Try
+                    AddLinkage(True)
+                Catch ex As System.Exception
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End Try
+            End Sub
+
+            Private Sub btnAddOutputLink_Click(sender As System.Object, e As System.EventArgs) Handles btnAddOutputLink.Click
+                Try
+                    AddLinkage(False)
                 Catch ex As System.Exception
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End Try

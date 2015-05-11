@@ -46,20 +46,22 @@ namespace AnimatSim
 RemoteControlLinkage::RemoteControlLinkage(void)
 {
 	m_lpParentRemoteControl = NULL;
+	m_lpSource = NULL;
+	m_lpTarget = NULL;
 	m_lpSourceData = NULL;
-	m_lpTargetNode = NULL;
-	m_lpExternalCurrent = NULL;
+	m_lpTargetData = NULL;
 	m_iTargetDataType = -1;
-	m_fltAppliedCurrent = 0;
+	m_fltAppliedValue = 0;
 }
 
 RemoteControlLinkage::~RemoteControlLinkage(void)
 {
 try
 {
+	m_lpSource = NULL;
+	m_lpTarget = NULL;
 	m_lpSourceData = NULL;
-	m_lpTargetNode = NULL;
-	m_lpExternalCurrent = NULL;
+	m_lpTargetData = NULL;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RemoteControlLinkage\r\n", "", -1, false, true);}
@@ -69,6 +71,54 @@ void RemoteControlLinkage::ParentRemoteControl(RemoteControl *lpParent) {m_lpPar
 
 RemoteControl *RemoteControlLinkage::ParentRemoteControl() {return m_lpParentRemoteControl;}
 
+
+/**
+\brief	Gets the source ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Source ID.
+**/
+std::string RemoteControlLinkage::SourceID() {return m_strSourceID;}
+
+/**
+\brief	Sets the source ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	Target DataType. 
+**/
+void RemoteControlLinkage::SourceID(std::string strID)
+{
+	m_strSourceID = strID;
+	Initialize();
+}
+
+/**
+\brief	Gets the target ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Target ID.
+**/
+std::string RemoteControlLinkage::TargetID() {return m_strTargetID;}
+
+/**
+\brief	Sets the target ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	Target ID. 
+**/
+void RemoteControlLinkage::TargetID(std::string strID)
+{
+	m_strTargetID = strID;
+	Initialize();
+}
 
 /**
 \brief	Gets the target data type.
@@ -94,30 +144,6 @@ void RemoteControlLinkage::SourceDataTypeID(std::string strTypeID)
 	Initialize();
 }
 
-/**
-\brief	Gets the target data type.
-
-\author	dcofer
-\date	3/18/2011
-
-\return	Target data type.
-**/
-std::string RemoteControlLinkage::LinkedNodeID() {return m_strLinkedNodeID;}
-
-/**
-\brief	Sets the target data type.
-
-\author	dcofer
-\date	3/18/2011
-
-\param	strType	Target DataType. 
-**/
-void RemoteControlLinkage::LinkedNodeID(std::string strID)
-{
-	m_strLinkedNodeID = strID;
-	//m_strTargetDataTypeID = "";
-	Initialize();
-}
 
 /**
 \brief	Gets the target data type.
@@ -149,8 +175,8 @@ float *RemoteControlLinkage::GetDataPointer(const std::string &strDataType)
 {
 	std::string strType = Std_CheckString(strDataType);
 
-	if(strType == "APPLIEDCURRENT")
-		return &m_fltAppliedCurrent;
+	if(strType == "APPLIEDCURRENT" || strType == "APPLIEDVALUE")
+		return &m_fltAppliedValue;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Robot Interface ID: " + STR(m_strName) + "  DataType: " + strDataType);
 
@@ -179,9 +205,14 @@ bool RemoteControlLinkage::SetData(const std::string &strDataType, const std::st
 		TargetDataTypeID(strValue);
 		return true;
 	}
-	else if(strType == "LINKEDNODEID")
+	else if(strType == "SOURCEID")
 	{
-		LinkedNodeID(strValue);
+		SourceID(strValue);
+		return true;
+	}
+	else if(strType == "TARGETID")
+	{
+		TargetID(strValue);
 		return true;
 	}
 
@@ -199,9 +230,9 @@ void RemoteControlLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 	aryProperties.Add(new TypeProperty("Enabled", AnimatPropertyType::Boolean, AnimatPropertyDirection::Both));
 	aryProperties.Add(new TypeProperty("SourceDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TargetDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
-	aryProperties.Add(new TypeProperty("LinkedNodeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
-
-	aryProperties.Add(new TypeProperty("AppliedCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	aryProperties.Add(new TypeProperty("SourceID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("TargetID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("AppliedValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
 #pragma endregion
@@ -247,57 +278,69 @@ void RemoteControlLinkage::ShutdownIO()
 
 void RemoteControlLinkage::Initialize()
 {
-	if(!Std_IsBlank(m_strLinkedNodeID))
+	if(!Std_IsBlank(m_strSourceID))
 	{
-		m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strLinkedNodeID));
-		if(!m_lpTargetNode)
-			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strLinkedNodeID);
+		m_lpSource = dynamic_cast<AnimatBase *>(m_lpSim->FindByID(m_strSourceID));
+		if(!m_lpSource)
+			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strSourceID);
+
+		if(m_lpSource && !Std_IsBlank(m_strSourceDataTypeID))
+			m_lpSourceData = m_lpSource->GetDataPointer(m_strSourceDataTypeID);
+		else
+			m_lpSourceData = NULL;	
 	}
 	else
 	{
-		m_lpTargetNode = NULL;
+		m_lpSource = NULL;
 		m_lpSourceData = NULL;
 	}
 
-	if(m_lpTargetNode)
-		m_lpExternalCurrent = m_lpTargetNode->GetDataPointer("ExternalCurrent");
-	else
-		m_lpExternalCurrent = NULL;
 
-	//Get the integer of the target data type we should use when calling AddExternalNodeInput. Zero is the default and only one most
-	//systems use.
-	//if(m_lpTargetNode && !Std_IsBlank(m_strTargetDataTypeID))
-	//	m_iTargetDataType = m_lpTargetNode->GetTargetDataTypeIndex(m_strTargetDataTypeID);
 
-	if(m_lpParentRemoteControl && !Std_IsBlank(m_strSourceDataTypeID))
-		m_lpSourceData = m_lpParentRemoteControl->GetDataPointer(m_strSourceDataTypeID);
+	if(!Std_IsBlank(m_strTargetID))
+	{
+		m_lpTarget = dynamic_cast<AnimatBase *>(m_lpSim->FindByID(m_strTargetID));
+		if(!m_lpTarget)
+			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
+
+		if(m_lpTarget && !Std_IsBlank(m_strTargetDataTypeID))
+			m_lpTargetData = m_lpTarget->GetDataPointer(m_strTargetDataTypeID);
+		else
+			m_lpTargetData = NULL;	
+	}
 	else
-		m_lpSourceData = NULL;
+	{
+		m_lpTarget = NULL;
+		m_lpTargetData = NULL;
+	}
 }
 
-void RemoteControlLinkage::ApplyCurrent()
+void RemoteControlLinkage::ApplyValue()
 {
-	if(m_bEnabled && m_lpSourceData && m_lpTargetNode && m_lpExternalCurrent)
+	if(m_bEnabled && m_lpSourceData && m_lpTarget && m_lpTargetData)
 	{	
 		////Test Code
-		//int i=5;
-		//if(Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85") //   && GetSimulator()->Time() >= 0.2  && fabs(*m_lpSourceData) > 0
+		//int i=5; //Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85")   && fabs(*m_lpSourceData) > 0
+		//if(GetSimulator()->Time() >= 0.2)
 		//	i=6;
 
+		//std::string strVal = "WalkV: " + STR((float) *m_lpSourceData) + "\r\n";
+		//OutputDebugString(strVal.c_str());
+
 		//Remove any previously applied current from this linkage.
-		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltAppliedCurrent;
+		*m_lpTargetData = *m_lpTargetData - m_fltAppliedValue;
 
 		//Calculate the new current to apply.
-		m_fltAppliedCurrent = CalculateAppliedCurrent();
+		m_fltAppliedValue = CalculateAppliedValue();
 
 		//Add the new applied current
-		*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltAppliedCurrent;
+		*m_lpTargetData = *m_lpTargetData + m_fltAppliedValue;
 	}
 }
 
 void RemoteControlLinkage::StepSimulation()
 {
-	ApplyCurrent();
+	ApplyValue();
 }
 
 void RemoteControlLinkage::Load(CStdXml &oXml)
@@ -306,7 +349,8 @@ void RemoteControlLinkage::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Link Element
 
-	LinkedNodeID(oXml.GetChildString("LinkedNodeID", ""));
+	SourceID(oXml.GetChildString("SourceID", ""));
+	TargetID(oXml.GetChildString("TargetID", ""));
 	SourceDataTypeID(oXml.GetChildString("SourceDataTypeID", ""));
 	TargetDataTypeID(oXml.GetChildString("TargetDataTypeID", ""));
 

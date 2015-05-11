@@ -23,19 +23,6 @@ Namespace DataObjects
 
 #Region " Properties "
 
-            <Browsable(False)> _
-            Public Overrides Property SourceDataTypes() As TypeHelpers.DataTypeID
-                Get
-                    Return m_thSourceDataTypes
-                End Get
-                Set(ByVal Value As TypeHelpers.DataTypeID)
-                    If Not Value Is Nothing Then
-                        m_thSourceDataTypes = Value
-                        Me.SetSimData("SourceDataTypeID", m_thSourceDataTypes.ID, True)
-                        SetGainLimits()
-                    End If
-                End Set
-            End Property
 
             <EditorAttribute(GetType(TypeHelpers.GainTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
             Public Overridable Property Gain() As AnimatGUI.DataObjects.Gain
@@ -51,8 +38,7 @@ Namespace DataObjects
 
                         If Not m_gnGain Is Nothing Then m_gnGain.ParentData = Nothing
                         m_gnGain = Value
-                        If Not m_gnGain Is Nothing AndAlso Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                            m_gnGain.ParentData = m_thLinkedNode.Node
+                        If Not m_gnGain Is Nothing Then
                             m_gnGain.GainPropertyName = "Gain"
                         End If
                     End If
@@ -89,8 +75,8 @@ Namespace DataObjects
                 m_gnGain = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "Gain", "Input Variable", "Output Variable", False, False)
             End Sub
 
-            Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain)
-                MyBase.New(doParent)
+            Public Sub New(ByVal doParent As Framework.DataObject, ByVal strName As String, ByVal strSourceDataTypeID As String, ByVal doGain As Gain, ByVal bInLink As Boolean)
+                MyBase.New(doParent, strName, strSourceDataTypeID, doGain, bInLink)
 
                 If Not doGain Is Nothing Then
                     m_gnGain = DirectCast(doGain.Clone(Me, False, Nothing), Gain)
@@ -125,19 +111,6 @@ Namespace DataObjects
                 MyBase.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
 
                 m_gnGain.AddToReplaceIDList(aryReplaceIDList, arySelectedItems)
-            End Sub
-
-            Protected Sub SetGainLimits()
-                If Not m_gnGain Is Nothing AndAlso Not m_thSourceDataTypes Is Nothing AndAlso Not m_thSourceDataTypes.Value Is Nothing Then
-                    m_gnGain.UpperLimit = New ScaledNumber(m_gnGain, "UpperLimit", m_thSourceDataTypes.Value.UpperLimit, _
-                                                           m_thSourceDataTypes.Value.UpperLimitscale, _
-                                                           m_thSourceDataTypes.Value.Units, _
-                                                           m_thSourceDataTypes.Value.UnitsAbbreviation)
-                    m_gnGain.LowerLimit = New ScaledNumber(m_gnGain, "LowerLimit", m_thSourceDataTypes.Value.LowerLimit, _
-                                                           m_thSourceDataTypes.Value.LowerLimitscale, _
-                                                           m_thSourceDataTypes.Value.Units, _
-                                                           m_thSourceDataTypes.Value.UnitsAbbreviation)
-                End If
             End Sub
 
             Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
