@@ -128,6 +128,10 @@ namespace IntegrateFireSim
 			/// The pointer to the calcium inactivation object.
 			CaActivation *m_lpCaInactive;
 
+			///If this is true then when Max Burst Ca is > 0 then it will
+			///reset the burst params. If it is false it will start at equilibruim
+			bool m_bBurstInitAtBottom;
+
 	//////////////////////////////
 	// WORKING STUFF
 		/// The statoc time step.
@@ -349,6 +353,9 @@ namespace IntegrateFireSim
 
 		void BurstHTimeConstant(double dVal);
 		double BurstHTimeConstant();
+
+		void BurstInitAtBottom(bool bVal);
+		bool BurstInitAtBottom();
 		
 		void TonicStimulus(double dblVal);
 		double TonicStimulus();

@@ -30,6 +30,7 @@ Namespace DataObjects.Behavior.Neurons
         Protected m_snMaxCaConductance As AnimatGUI.Framework.ScaledNumber
         Protected m_atCaActivation As ActivationType
         Protected m_atCaDeactivation As ActivationType
+        Protected m_bInitAtBottom As Boolean = True
 
         'Tonic Input
         Protected m_snTonicStimulus As AnimatGUI.Framework.ScaledNumber
@@ -219,6 +220,17 @@ Namespace DataObjects.Behavior.Neurons
         End Property
 
         <Browsable(False)> _
+        Public Property InitAtBottom() As Boolean
+            Get
+                Return m_bInitAtBottom
+            End Get
+            Set(value As Boolean)
+                SetSimData("BurstInitAtBottom", value.ToString, True)
+                m_bInitAtBottom = value
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property TonicStimulus() As AnimatGUI.Framework.ScaledNumber
             Get
                 Return m_snTonicStimulus
@@ -391,6 +403,7 @@ Namespace DataObjects.Behavior.Neurons
             m_snMaxCaConductance = DirectCast(bnOrig.m_snMaxCaConductance.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_atCaActivation = DirectCast(bnOrig.m_atCaActivation.Clone(Me, bCutData, doRoot), ActivationType)
             m_atCaDeactivation = DirectCast(bnOrig.m_atCaDeactivation.Clone(Me, bCutData, doRoot), ActivationType)
+            m_bInitAtBottom = bnOrig.m_bInitAtBottom
 
             m_snTonicStimulus = DirectCast(bnOrig.m_snTonicStimulus.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snTonicNoise = DirectCast(bnOrig.m_snTonicNoise.Clone(Me, bCutData, doRoot), ScaledNumber)
@@ -451,6 +464,7 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("AHPAmp", m_snAHP_Conductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
             oXml.AddChildElement("AHPTimeConst", m_snAHP_TimeConstant.ValueFromScale(ScaledNumber.enumNumericScale.milli))
             oXml.AddChildElement("GMaxCa", m_snMaxCaConductance.ValueFromScale(ScaledNumber.enumNumericScale.micro))
+            oXml.AddChildElement("BurstInitAtBottom", m_bInitAtBottom)
 
             m_atCaActivation.SaveSimulationXml(oXml, Nothing, "CaActivation")
             m_atCaDeactivation.SaveSimulationXml(oXml, Nothing, "CaDeactivation")
@@ -677,6 +691,10 @@ Namespace DataObjects.Behavior.Neurons
                                         "Busrting Properties", "Sets the deactivation properties of the calcium current.", pbNumberBag, _
                                         "", GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Init At Bottom", m_bInitAtBottom.GetType(), "InitAtBottom", _
+                                        "Busrting Properties", "If this is true then when Max Burst Ca is > 0 then it will " & _
+                                        "reset the burst params. If it is false it will start at equilibruim.", m_bInitAtBottom))
+
             pbNumberBag = m_snTonicStimulus.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tonic Stimulus", pbNumberBag.GetType(), "TonicStimulus", _
                                         "Tonic Stimulus Properties", "Sets the value of the constant current which will be injected into this neuron. " & _
@@ -734,6 +752,7 @@ Namespace DataObjects.Behavior.Neurons
             m_snMaxCaConductance.LoadData(oXml, "MaxCaConductance")
             m_atCaActivation.LoadData(oXml, "CaActivation")
             m_atCaDeactivation.LoadData(oXml, "CaDeactivation")
+            m_bInitAtBottom = oXml.GetChildBool("InitAtBottom", m_bInitAtBottom)
 
             m_snTonicStimulus.LoadData(oXml, "TonicStimulus")
             m_snTonicNoise.LoadData(oXml, "TonicNoise")
@@ -777,6 +796,7 @@ Namespace DataObjects.Behavior.Neurons
             m_snMaxCaConductance.SaveData(oXml, "MaxCaConductance")
             m_atCaActivation.SaveData(oXml, "CaActivation")
             m_atCaDeactivation.SaveData(oXml, "CaDeactivation")
+            oXml.AddChildElement("InitAtBottom", m_bInitAtBottom)
 
             m_snTonicStimulus.SaveData(oXml, "TonicStimulus")
             m_snTonicNoise.SaveData(oXml, "TonicNoise")

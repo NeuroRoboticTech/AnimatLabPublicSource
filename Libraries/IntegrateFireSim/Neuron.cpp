@@ -78,6 +78,7 @@ Neuron::Neuron()
 	m_dM = 0;
 	m_dH = 0;
 	m_fltEMemory = 0;
+	m_bBurstInitAtBottom = true;
 
 	m_iNeuronID = 0;
 	m_fltAdapterI = 0;
@@ -472,7 +473,24 @@ double Neuron::AHPTimeConstant() {return m_dAHPTimeConst;}
 
 \param	dVal	The value. 
 **/
-void Neuron::BurstGMaxCa(double dVal) {m_dGMaxCa = dVal;}
+void Neuron::BurstGMaxCa(double dVal) 
+{
+	m_dGMaxCa = dVal;
+
+	if (m_dGMaxCa>0 && m_bBurstInitAtBottom) 
+	{
+		m_dMemPot=m_dRestingPot+7.408;
+		m_dM=0.0945;
+		m_dH=0.0208;
+	}
+	else
+	{
+		m_dMemPot=m_dRestingPot;
+		m_dM=0.0f;
+		m_dH=0.0f;
+	}
+
+}
 
 /**
 \brief	Gets the burst maximum calcium conductance.
@@ -605,6 +623,30 @@ void Neuron::BurstHTimeConstant(double dVal) {m_dHTimeConst = dVal;}
 double Neuron::BurstHTimeConstant() {return m_dHTimeConst;}
 
 /**
+\brief	Sets the burst inactivation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstInitAtBottom(bool bVal) 
+{
+	m_bBurstInitAtBottom = bVal;
+	BurstGMaxCa(m_dGMaxCa);
+}
+
+/**
+\brief	Gets the burst inactivation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	time constant.
+**/
+bool Neuron::BurstInitAtBottom() {return m_bBurstInitAtBottom;}
+
+/**
 \brief	Sets the neurons tonic stimulus current.
 
 \author	dcofer
@@ -678,6 +720,7 @@ void Neuron::Load(CStdXml &oXml)
 	m_dAHPAmp=oXml.GetChildDouble("AHPAmp");
 	m_dAHPTimeConst=oXml.GetChildDouble("AHPTimeConst");
 	m_dGMaxCa=oXml.GetChildDouble("GMaxCa");
+	m_bBurstInitAtBottom=oXml.GetChildBool("BurstInitAtBottom", m_bBurstInitAtBottom);
 
 	if(oXml.FindChildElement("CaActivation", false))
 	{
@@ -930,11 +973,17 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 
 // burster bits
 // initialise to bottom of burst??
-	if (m_dGMaxCa>0) 
+	if (m_dGMaxCa>0 && m_bBurstInitAtBottom) 
 	{
 		m_dMemPot=m_dRestingPot+7.408;
 		m_dM=0.0945;
 		m_dH=0.0208;
+	}
+	else
+	{
+		m_dMemPot=m_dRestingPot;
+		m_dM=0.0f;
+		m_dH=0.0f;
 	}
 
 	m_dElecSynCur=m_dElecSynCond=0;
@@ -1322,11 +1371,17 @@ void Neuron::ResetSimulation()
 	m_dMemPot=m_dNewMemPot=m_dRestingPot;
 	m_dThresh=m_dInitialThresh;
 	m_fltThresholdMemory = (float) m_dThresh * 0.001;
-	if (m_dGMaxCa>0) 
+	if (m_dGMaxCa>0 && m_bBurstInitAtBottom) 
 	{
 		m_dMemPot=m_dRestingPot+7.408;
 		m_dM=0.0945;
 		m_dH=0.0208;
+	}
+	else
+	{
+		m_dMemPot=m_dRestingPot;
+		m_dM=0.0f;
+		m_dH=0.0f;
 	}
 
 	m_dElecSynCur=m_dElecSynCond=0;
@@ -1481,7 +1536,13 @@ bool Neuron::SetData(const std::string &strDataType, const std::string &strValue
 		BurstGMaxCa(atof(strValue.c_str()));
 		return true;
 	}
-	
+
+	if(strType == "BURSTINITATBOTTOM")
+	{
+		BurstInitAtBottom(Std_ToBool(strValue));
+		return true;
+	}
+
 	if(strType == "TONICSTIMULUS")
 	{
 		TonicStimulus(atof(strValue.c_str()));
@@ -1537,6 +1598,7 @@ void Neuron::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 	aryProperties.Add(new TypeProperty("AHP_Conductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AHP_TimeConstant", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("MaxCAConductance", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("BurstInitAtBottom", AnimatPropertyType::Boolean, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TonicStimulus", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TonicNoise", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AddExternalCurrent", AnimatPropertyType::Float, AnimatPropertyDirection::Set));
