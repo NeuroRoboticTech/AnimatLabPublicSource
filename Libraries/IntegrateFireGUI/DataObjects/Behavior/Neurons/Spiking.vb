@@ -94,8 +94,8 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_snTimeConstant
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                If Value.ActualValue < 0.00001 OrElse Value.ActualValue > 1 Then
-                    Throw New System.Exception("The membrane time constant must be between the range 0.01 mS and 1000 mS.")
+                If Value.ActualValue < 0.00001 OrElse Value.ActualValue > 30 Then
+                    Throw New System.Exception("The membrane time constant must be between the range 0.01 mS and 30 seconds.")
                 End If
 
                 SetSimData("TimeConstant", Value.ValueFromScale(ScaledNumber.enumNumericScale.milli).ToString, True)
