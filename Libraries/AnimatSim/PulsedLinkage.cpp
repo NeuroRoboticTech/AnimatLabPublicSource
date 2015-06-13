@@ -207,7 +207,11 @@ void PulsedLinkage::StepIO()
 {
 	if(m_bEnabled && !m_lpSim->Paused())
 	{
-		int iSource = (int) *m_lpSourceData;
+		int iSource = (int) (*m_lpSourceData + 0.5);
+
+		if(*m_lpSourceData > 0.5)
+			iSource = iSource;
+
 		if(m_bMatchOnChange && iSource != m_iPrevValue && iSource == m_iMatchValue)
 			IncrementMatches();
 		else if(!m_bMatchOnChange && iSource == m_iMatchValue)
@@ -248,7 +252,7 @@ void PulsedLinkage::StepSimulation()
 			m_AccessMatchesMutex.unlock();
 		}
 
-		ApplyValue();
+		ApplyValue(*m_lpSourceData);
 
 		if(m_aryPulses.size() > 0)
 			CullPulses();

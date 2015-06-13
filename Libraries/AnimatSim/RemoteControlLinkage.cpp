@@ -96,7 +96,7 @@ void RemoteControlData::CheckStartedStopped()
 	m_fltPrev = m_fltValue;
 
 	////Test Code
-	//std::string strVal = "Val: " + STR((int) m_fltValue) + " Prev: " + STR((int) m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
+	//std::string strVal = "Val: " + STR(m_fltValue) + " Prev: " + STR(m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
 	//OutputDebugString(strVal.c_str());
 }
 
@@ -286,6 +286,10 @@ void RemoteControlLinkage::InLink(bool bVal)
 	m_bInLink = bVal;
 }
 
+float RemoteControlLinkage::AppliedValue() {return m_fltAppliedValue;}
+
+void RemoteControlLinkage::AppliedValue(float fltVal) {m_fltAppliedValue = fltVal;}
+
 #pragma region DataAccesMethods
 
 float *RemoteControlLinkage::GetDataPointer(const std::string &strDataType)
@@ -431,7 +435,8 @@ void RemoteControlLinkage::Initialize()
 		if(!m_lpTarget)
 			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
 
-		if(m_lpTarget && !Std_IsBlank(m_strTargetDataTypeID))
+		if(m_lpTarget && !Std_IsBlank(m_strTargetDataTypeID) && 
+			(m_bInLink || (!m_bInLink && m_lpParentRemoteControl->FindLinkageWithPropertyName(m_strTargetDataTypeID, false))))
 			m_lpTargetData = m_lpTarget->GetDataPointer(m_strTargetDataTypeID);
 		else
 			m_lpTargetData = NULL;	
@@ -443,12 +448,10 @@ void RemoteControlLinkage::Initialize()
 	}
 }
 
-void RemoteControlLinkage::ApplyValue()
+void RemoteControlLinkage::ApplyValue(float fltData)
 {
 	if(m_bEnabled && m_lpSourceData && m_lpTarget && m_lpTargetData)
 	{	
-		float fltData = *m_lpSourceData;
-
 		////Test Code
 		//int i=5; //Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85")   
 		//if(GetSimulator()->Time() >= 0.2 && fabs(fltData) > 0)
@@ -475,7 +478,13 @@ void RemoteControlLinkage::ResetSimulation()
 
 void RemoteControlLinkage::StepSimulation()
 {
-	ApplyValue();
+	if(m_bEnabled && m_lpSourceData)
+	{
+		if(m_bInLink)
+			ApplyValue(*m_lpSourceData);
+		else
+			m_Data.m_fltValue = *m_lpSourceData;
+	}
 }
 
 void RemoteControlLinkage::Load(CStdXml &oXml)

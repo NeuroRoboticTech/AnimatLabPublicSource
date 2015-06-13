@@ -25,6 +25,11 @@ protected:
 	 unsigned char bval[4];
 	 float fval;
 	} m_value;
+	
+	union size_tag {
+	 unsigned char bval[2];
+	 unsigned short ival;
+	} m_size;
 
 	///The serial port this Xbee communicates on.
 	std::string m_strPort;
@@ -49,6 +54,10 @@ protected:
 	virtual void ResetData();
 	virtual void WaitForThreadNotifyReady();
 	virtual void ReadData();
+	virtual void WriteData();
+	virtual void WriteData(CStdArray<RemoteControlLinkage *> &aryWrites);
+	virtual void WriteAllData();
+	virtual void WriteResendData();
 
 public:
 	RbAnimatSerial();

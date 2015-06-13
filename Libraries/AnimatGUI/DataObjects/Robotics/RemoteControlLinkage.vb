@@ -90,8 +90,8 @@ Namespace DataObjects
                 End Get
                 Set(value As String)
                     If m_bInLink Then
-                        SetSimData("SourceDataTypeID", value, True)
                         SetSimData("PropertyName", value, True)
+                        SetSimData("SourceDataTypeID", value, True)
                     End If
 
                     m_strLinkedSourceProperty = value
@@ -149,8 +149,8 @@ Namespace DataObjects
                 End Get
                 Set(value As String)
                     If Not m_bInLink Then
-                        SetSimData("TargetDataTypeID", value, True)
                         SetSimData("PropertyName", value, True)
+                        SetSimData("TargetDataTypeID", value, True)
                     End If
 
                     m_strLinkedTargetProperty = value

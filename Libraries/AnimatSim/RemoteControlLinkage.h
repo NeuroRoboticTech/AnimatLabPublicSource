@@ -107,7 +107,7 @@ namespace AnimatSim
 			bool m_bInLink;
 
 			virtual float CalculateAppliedValue(float fltData) = 0;
-			virtual void ApplyValue();
+			virtual void ApplyValue(float fltData);
 
 		public:
 			RemoteControlLinkage(void);
@@ -141,6 +141,9 @@ namespace AnimatSim
 
 			virtual bool InLink();
 			virtual void InLink(bool bVal);
+
+			virtual float AppliedValue();
+			virtual void AppliedValue(float fltVal);
 
 			virtual float *GetDataPointer(const std::string &strDataType);
 			virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);

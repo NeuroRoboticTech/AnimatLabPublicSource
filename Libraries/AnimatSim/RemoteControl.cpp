@@ -469,6 +469,24 @@ void RemoteControl::CreateDataIDMap()
 {
 }
 
+bool RemoteControl::FindDataToWrite(CStdArray<RemoteControlLinkage *> &aryWrites)
+{
+	int iCount = m_aryOutLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		if(fabs(m_aryOutLinks[iIndex]->m_Data.m_fltValue - m_aryOutLinks[iIndex]->m_Data.m_fltPrev) > 1e-10)
+		{
+			m_aryOutLinks[iIndex]->m_Data.m_fltPrev = m_aryOutLinks[iIndex]->m_Data.m_fltValue;
+			aryWrites.Add(m_aryOutLinks[iIndex]);
+		}
+	}
+
+	if(aryWrites.GetSize() > 0)
+		return true;
+	else
+		return false;
+}
+
 void RemoteControl::SetDataValue(int iID, float fltVal)
 {
 	if(m_aryData.find(iID) != m_aryData.end())

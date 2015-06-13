@@ -16,7 +16,9 @@
 
 #define PACKET_INFO_SIZE 6  //Size of the header, packet size, message id, and checksum in bytes
 #define START_MESSAGE_INFO_BYTE 5
+#define HEADER_SIZE 5
 #define DATA_SIZE 6
+#define FOOTER_SIZE 1
 
 //Union to store bytes and float on top of each other
 typedef union {
@@ -260,24 +262,31 @@ void RbAnimatSerial::ReadData()
 
 				if(m_checksum%256 != iChecksum)
 				{
+					OutputDebugString("Checksum error. Writing Resend message.");
+					WriteResendData();
 					// packet error!
 					m_index = -1;
 					return; // 0
 				}
 				else
 				{
-					int iStop = m_iPacketSize - 1; //Exclude the checksum at the end
-
-					for(int iIdx=START_MESSAGE_INFO_BYTE; iIdx<iStop; iIdx+=DATA_SIZE)
+					if(m_iMessageID == 2)
+						WriteAllData();
+					else if(m_iMessageID == 1)
 					{
-						m_id.bval[0] = m_vals[iIdx];
-						m_id.bval[1] = m_vals[iIdx+1];
-						m_value.bval[0] = m_vals[iIdx+2];
-						m_value.bval[1] = m_vals[iIdx+3];
-						m_value.bval[2] = m_vals[iIdx+4];
-						m_value.bval[3] = m_vals[iIdx+5];
+						int iStop = m_iPacketSize - 1; //Exclude the checksum at the end
 
-						SetDataValue(m_id.ival, m_value.fval);
+						for(int iIdx=START_MESSAGE_INFO_BYTE; iIdx<iStop; iIdx+=DATA_SIZE)
+						{
+							m_id.bval[0] = m_vals[iIdx];
+							m_id.bval[1] = m_vals[iIdx+1];
+							m_value.bval[0] = m_vals[iIdx+2];
+							m_value.bval[1] = m_vals[iIdx+3];
+							m_value.bval[2] = m_vals[iIdx+4];
+							m_value.bval[3] = m_vals[iIdx+5];
+
+							SetDataValue(m_id.ival, m_value.fval);
+						}
 					}
 				}
 
@@ -298,11 +307,104 @@ void RbAnimatSerial::ReadData()
 	}
 }
 
+
+void RbAnimatSerial::WriteData()
+{
+	CStdArray<RemoteControlLinkage *> aryWrites;
+
+	if(FindDataToWrite(aryWrites)) 
+		WriteData(aryWrites);
+}
+
+void RbAnimatSerial::WriteData(CStdArray<RemoteControlLinkage *> &aryWrites)
+{
+	int iCount = aryWrites.GetSize();
+	int checksum = 0xFF + 0xFF + 0x01;
+		
+	//First write the header
+	m_Port.writeByte((unsigned char) 0xFF);
+	m_Port.writeByte((unsigned char) 0xFF);
+	m_Port.writeByte((unsigned char) 0x01);
+
+	m_size.ival = HEADER_SIZE + (DATA_SIZE * iCount) + FOOTER_SIZE;
+	m_Port.writeByte((unsigned char) m_size.bval[0]);
+	checksum += m_size.bval[0];
+	m_Port.writeByte((unsigned char) m_size.bval[1]);
+	checksum += m_size.bval[1];
+		
+	for(int i=0; i<iCount; i++) 
+	{
+		m_id.ival = aryWrites[i]->m_Data.m_iButtonID;
+		m_value.fval = aryWrites[i]->m_Data.m_fltValue;
+		aryWrites[i]->AppliedValue(aryWrites[i]->m_Data.m_fltValue);
+
+		m_Port.writeByte((unsigned char) m_id.bval[0]);
+		m_Port.writeByte((unsigned char) m_id.bval[1]);
+		m_Port.writeByte((unsigned char) m_value.bval[0]);
+		m_Port.writeByte((unsigned char) m_value.bval[1]);
+		m_Port.writeByte((unsigned char) m_value.bval[2]);
+		m_Port.writeByte((unsigned char) m_value.bval[3]);
+
+		////Test Code
+		//std::string strDebug = "Val: " + STR((int) m_value.bval[0]) + ", " + STR((int) m_value.bval[1]) + ", " + STR((int) m_value.bval[2]) + ", " + STR((int) m_value.bval[3]) + "\r\n";
+		//OutputDebugString(strDebug.c_str());
+
+		checksum += m_id.bval[0];
+		checksum += m_id.bval[1];
+		checksum += m_value.bval[0];
+		checksum += m_value.bval[1];
+		checksum += m_value.bval[2];
+		checksum += m_value.bval[3];
+	}
+
+	unsigned char bchecksum = (unsigned char) (checksum%256);
+	m_Port.writeByte(bchecksum);
+
+	////Test Code
+	//std::string strDebug = "Send Data ID: " + STR(m_id.ival) + ", Val: " + STR(m_value.fval) + "\r\n";
+	//OutputDebugString(strDebug.c_str());
+}
+
+void RbAnimatSerial::WriteAllData()
+{
+	CStdArray<RemoteControlLinkage *> aryWrites;
+
+	int iCount = m_aryOutLinks.GetSize();
+	for(int i=0; i<iCount; i++)
+		aryWrites.Add(m_aryOutLinks[i]);
+
+	WriteData(aryWrites);
+}
+
+void RbAnimatSerial::WriteResendData()
+{
+	int checksum = 0xFF + 0xFF + 0x02;
+		
+	//First write the header
+	m_Port.writeByte((unsigned char) 0xFF);
+	m_Port.writeByte((unsigned char) 0xFF);
+	m_Port.writeByte((unsigned char) 0x02);
+
+	m_size.ival = HEADER_SIZE + FOOTER_SIZE;
+	m_Port.writeByte((unsigned char) m_size.bval[0]);
+	checksum += m_size.bval[0];
+	m_Port.writeByte((unsigned char) m_size.bval[1]);
+	checksum += m_size.bval[1];
+		
+	unsigned char bchecksum = (unsigned char) (checksum%256);
+	m_Port.writeByte(bchecksum);
+
+	////Test Code
+	//std::string strDebug = "Send Data ID: " + STR(m_id.ival) + ", Val: " + STR(m_value.fval) + "\r\n";
+	//OutputDebugString(strDebug.c_str());
+}
+
 void RbAnimatSerial::StepIO()
 {
 	if(!m_lpSim->Paused())
 	{
 		ReadData();
+		WriteData();
 		CheckStartedStopped();
 		AnimatSim::Robotics::RemoteControl::StepIO();
 	}

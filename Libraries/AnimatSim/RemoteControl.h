@@ -38,6 +38,7 @@ namespace AnimatSim
 			virtual void RemoveRemoteControlLinkage(std::string strID, bool bThrowError = true);
 			virtual int FindLinkageChildListPos(std::string strID, bool bThrowError = true);
 			virtual int FindLinkageChildListPos(CStdArray<RemoteControlLinkage *> &aryLinks, std::string strID, bool bThrowError = true);
+			virtual bool FindDataToWrite(CStdArray<RemoteControlLinkage *> &aryWrites);
 
 			virtual void SetDataValue(int iButtonID, float fltVal);
 			virtual void ResetData();
