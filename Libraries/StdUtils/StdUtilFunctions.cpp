@@ -967,7 +967,7 @@ std::string STD_UTILS_PORT Std_TrimRight(std::string strVal)
 bool STD_UTILS_PORT Std_IsNumeric(std::string strVal)
 {
 	int iPos = strVal.find_first_not_of("0123456789.+-eE");
-	if(iPos == -1)
+	if(iPos == -1 && strVal.length() > 0)
 		return true;
 	else
 		return false;

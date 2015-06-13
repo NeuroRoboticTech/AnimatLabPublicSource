@@ -112,6 +112,7 @@ namespace RoboticsAnimatSim
 			}
 
 			class RbXBeeCommander;
+			class RbAnimatSerial;
 		}
     }
 }

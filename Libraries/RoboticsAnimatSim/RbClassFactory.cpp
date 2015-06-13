@@ -58,6 +58,7 @@
 
 #include "RbFirmataDynamixelServo.h"
 #include "RbXBeeCommander.h"
+#include "RbAnimatSerial.h"
 
 #ifdef _WINDOWS
 	extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 
@@ -950,6 +951,10 @@ try
 	else if(strType == "XBEECOMMANDER")
 	{
 		lpControl = new RbXBeeCommander;
+	}
+	else if(strType == "ANIMATSERIAL")
+	{
+		lpControl = new RbAnimatSerial;
 	}
 	else
 	{

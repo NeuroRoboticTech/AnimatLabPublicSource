@@ -19,6 +19,11 @@ Namespace DataObjects
 
             Protected m_aryLinks As New Collections.SortedRemoteControlLinkages(Me)
 
+            'If this is true then when linkages are added they will try and use the datatypes
+            'for the remote control to allow the user to pick one. If this is false then 
+            'the user will be able to enter in a variable name and that variable will be created.
+            Protected m_bUseRemoteDataTypes As Boolean = True
+
 #End Region
 
 #Region " Properties "
@@ -30,6 +35,12 @@ Namespace DataObjects
                 Set(value As Collections.SortedRemoteControlLinkages)
                     'Do nothing here.
                 End Set
+            End Property
+
+            Public Overridable ReadOnly Property UseRemoteDataTypes As Boolean
+                Get
+                    Return m_bUseRemoteDataTypes
+                End Get
             End Property
 
 #End Region
@@ -55,6 +66,7 @@ Namespace DataObjects
                 Dim OrigNode As RemoteControl = DirectCast(doOriginal, RemoteControl)
 
                 m_aryLinks = DirectCast(OrigNode.m_aryLinks.Clone(Me, bCutData, doRoot), Collections.SortedRemoteControlLinkages)
+                m_bUseRemoteDataTypes = OrigNode.m_bUseRemoteDataTypes
             End Sub
 
 #Region " Workspace TreeView "
@@ -137,6 +149,9 @@ Namespace DataObjects
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Links", pbNumberBag.GetType(), "Links", _
                                             "Properties", "The list of remote control linkages.", pbNumberBag, _
                                             GetType(AnimatGUI.TypeHelpers.RemoteControlLinkagesEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
+
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Use Remote Data Types", GetType(Boolean), "UseRemoteDataTypes", _
+                                            "Properties", "Tells whether remote control data types are pre-configured or setup by the user.", m_bUseRemoteDataTypes, True))
 
             End Sub
 

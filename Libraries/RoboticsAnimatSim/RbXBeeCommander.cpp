@@ -29,7 +29,23 @@ RbXBeeCommander::RbXBeeCommander()
 {
 	m_strPort = "";
 	m_iBaudRate = 38400; 
-	m_iChangeSimStepCount = 5;
+
+	m_aryData.RemoveAll();
+
+	//m_aryData.Add(BUT_ID_WALKV, new RemoteControlData("WalkV", BUT_ID_WALKV, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_WALKH, new RemoteControlData("WalkH", BUT_ID_WALKH, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_LOOKV, new RemoteControlData("LookV", BUT_ID_LOOKV, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_LOOKH, new RemoteControlData("LookH", BUT_ID_LOOKH, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_PAN, new RemoteControlData("Pan", BUT_ID_PAN, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_TILT, new RemoteControlData("Tilt", BUT_ID_TILT, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_R1, new RemoteControlData("R1", BUT_ID_R1, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_R2, new RemoteControlData("R2", BUT_ID_R2, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_R3, new RemoteControlData("R3", BUT_ID_R3, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_L4, new RemoteControlData("L4", BUT_ID_L4, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_L5, new RemoteControlData("L5", BUT_ID_L5, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_L6, new RemoteControlData("L6", BUT_ID_L6, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_RT, new RemoteControlData("RT", BUT_ID_RT, m_iChangeSimStepCount));
+	//m_aryData.Add(BUT_ID_LT, new RemoteControlData("LT", BUT_ID_LT, m_iChangeSimStepCount));
 
 	ResetData();
 }
@@ -41,6 +57,25 @@ RbXBeeCommander::~RbXBeeCommander()
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of RbXBeeCommander\r\n", "", -1, false, true);}
+}
+
+void RbXBeeCommander::CreateDataIDMap()
+{
+	m_aryDataIDMap.RemoveAll();
+	m_aryDataIDMap.Add("WalkV", BUT_ID_WALKV);
+	m_aryDataIDMap.Add("WalkH", BUT_ID_WALKH);
+	m_aryDataIDMap.Add("LookV", BUT_ID_LOOKV);
+	m_aryDataIDMap.Add("LookH", BUT_ID_LOOKH);
+	m_aryDataIDMap.Add("Pan", BUT_ID_PAN);
+	m_aryDataIDMap.Add("Tilt", BUT_ID_TILT);
+	m_aryDataIDMap.Add("R1", BUT_ID_R1);
+	m_aryDataIDMap.Add("R2", BUT_ID_R2);
+	m_aryDataIDMap.Add("R3", BUT_ID_R2);
+	m_aryDataIDMap.Add("L4", BUT_ID_L4);
+	m_aryDataIDMap.Add("L5", BUT_ID_L5);
+	m_aryDataIDMap.Add("L6", BUT_ID_L6);
+	m_aryDataIDMap.Add("RT", BUT_ID_RT);
+	m_aryDataIDMap.Add("LT", BUT_ID_LT);
 }
 
 void RbXBeeCommander::Port(std::string strPort)
@@ -58,111 +93,7 @@ void RbXBeeCommander::BaudRate(int iRate)
 
 int RbXBeeCommander::BaudRate() {return m_iBaudRate;}
 
-void RbXBeeCommander::ChangeSimStepCount(int iRate)
-{
-	Std_IsAboveMin((int) 0, iRate, true, "ChangeSimStepCount");
-	m_iChangeSimStepCount = iRate;
-
-	//Reset all the button data.
-	for(int i=0; i<BUT_ID_TOTAL; i++)
-		m_ButtonData[i].m_iChangeSimStepCount = m_iChangeSimStepCount;
-}
-
-int RbXBeeCommander::ChangeSimStepCount() {return m_iChangeSimStepCount;}
-
 #pragma region DataAccesMethods
-
-float *RbXBeeCommander::GetDataPointer(const std::string &strDataType)
-{
-	std::string strType = Std_CheckString(strDataType);
-
-	if(strType == "WALKV")
-		return &m_ButtonData[BUT_ID_WALKV].m_fltValue;
-	else if(strType == "WALKVSTART")
-		return &m_ButtonData[BUT_ID_WALKV].m_fltStart;
-	else if(strType == "WALKVSTOP")
-		return &m_ButtonData[BUT_ID_WALKV].m_fltStop;
-	else if(strType == "WALKH")
-		return &m_ButtonData[BUT_ID_WALKH].m_fltValue;
-	else if(strType == "WALKHSTART")
-		return &m_ButtonData[BUT_ID_WALKH].m_fltStart;
-	else if(strType == "WALKHSTOP")
-		return &m_ButtonData[BUT_ID_WALKH].m_fltStop;
-	else if(strType == "LOOKV")
-		return &m_ButtonData[BUT_ID_LOOKV].m_fltValue;
-	else if(strType == "LOOKVSTART")
-		return &m_ButtonData[BUT_ID_LOOKV].m_fltStart;
-	else if(strType == "LOOKVSTOP")
-		return &m_ButtonData[BUT_ID_LOOKV].m_fltStop;
-	else if(strType == "LOOKH")
-		return &m_ButtonData[BUT_ID_LOOKH].m_fltValue;
-	else if(strType == "LOOKHSTART")
-		return &m_ButtonData[BUT_ID_LOOKH].m_fltStart;
-	else if(strType == "LOOKHSTOP")
-		return &m_ButtonData[BUT_ID_LOOKH].m_fltStop;
-	else if(strType == "PAN")
-		return &m_ButtonData[BUT_ID_PAN].m_fltValue;
-	else if(strType == "PANSTART")
-		return &m_ButtonData[BUT_ID_PAN].m_fltStart;
-	else if(strType == "PANSTOP")
-		return &m_ButtonData[BUT_ID_PAN].m_fltStop;
-	else if(strType == "TILT")
-		return &m_ButtonData[BUT_ID_TILT].m_fltValue;
-	else if(strType == "TILTSTART")
-		return &m_ButtonData[BUT_ID_TILT].m_fltStart;
-	else if(strType == "TILTSTOP")
-		return &m_ButtonData[BUT_ID_TILT].m_fltStop;
-	else if(strType == "R1")
-		return &m_ButtonData[BUT_ID_R1].m_fltValue;
-	else if(strType == "R1START")
-		return &m_ButtonData[BUT_ID_R1].m_fltStart;
-	else if(strType == "R1STOP")
-		return &m_ButtonData[BUT_ID_R1].m_fltStop;
-	else if(strType == "R2")
-		return &m_ButtonData[BUT_ID_R2].m_fltValue;
-	else if(strType == "R2START")
-		return &m_ButtonData[BUT_ID_R2].m_fltStart;
-	else if(strType == "R2STOP")
-		return &m_ButtonData[BUT_ID_R2].m_fltStop;
-	else if(strType == "R3")
-		return &m_ButtonData[BUT_ID_R3].m_fltValue;
-	else if(strType == "R3START")
-		return &m_ButtonData[BUT_ID_R3].m_fltStart;
-	else if(strType == "R3STOP")
-		return &m_ButtonData[BUT_ID_R3].m_fltStop;
-	else if(strType == "L4")
-		return &m_ButtonData[BUT_ID_L4].m_fltValue;
-	else if(strType == "L4START")
-		return &m_ButtonData[BUT_ID_L4].m_fltStart;
-	else if(strType == "L4STOP")
-		return &m_ButtonData[BUT_ID_L4].m_fltStop;
-	else if(strType == "L5")
-		return &m_ButtonData[BUT_ID_L5].m_fltValue;
-	else if(strType == "L5START")
-		return &m_ButtonData[BUT_ID_L5].m_fltStart;
-	else if(strType == "L5STOP")
-		return &m_ButtonData[BUT_ID_L5].m_fltStop;
-	else if(strType == "L6")
-		return &m_ButtonData[BUT_ID_L6].m_fltValue;
-	else if(strType == "L6START")
-		return &m_ButtonData[BUT_ID_L6].m_fltStart;
-	else if(strType == "L6STOP")
-		return &m_ButtonData[BUT_ID_L6].m_fltStop;
-	else if(strType == "RT")
-		return &m_ButtonData[BUT_ID_RT].m_fltValue;
-	else if(strType == "RTSTART")
-		return &m_ButtonData[BUT_ID_RT].m_fltStart;
-	else if(strType == "RTSTOP")
-		return &m_ButtonData[BUT_ID_RT].m_fltStop;
-	else if(strType == "LT")
-		return &m_ButtonData[BUT_ID_LT].m_fltValue;
-	else if(strType == "LTSTART")
-		return &m_ButtonData[BUT_ID_LT].m_fltStart;
-	else if(strType == "LTSTOP")
-		return &m_ButtonData[BUT_ID_LT].m_fltStop;
-
-	return AnimatSim::Robotics::RemoteControl::GetDataPointer(strDataType);
-}
 
 bool RbXBeeCommander::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
@@ -182,12 +113,6 @@ bool RbXBeeCommander::SetData(const std::string &strDataType, const std::string 
 		BaudRate((int) atoi(strValue.c_str()));
 		return true;
 	}
-	else if(strType == "CHANGESIMSTEPCOUNT")
-	{
-		ChangeSimStepCount((int) atoi(strValue.c_str()));
-		return true;
-	}
-
 	
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -198,7 +123,7 @@ bool RbXBeeCommander::SetData(const std::string &strDataType, const std::string 
 
 void RbXBeeCommander::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
 {
-	AnimatSim::Robotics::RemoteControl::QueryProperties(aryProperties);
+	AnimatSim::Robotics::RobotIOControl::QueryProperties(aryProperties);
 
 	aryProperties.Add(new TypeProperty("Port", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("BaudRate", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
@@ -281,6 +206,10 @@ void RbXBeeCommander::Initialize()
 				int iCount = m_aryLinks.GetSize();
 				for(int iIndex=0; iIndex<iCount; iIndex++)
 					m_aryLinks[iIndex]->Initialize();
+
+				CreateDataTypes();
+
+				ResetData();
 			}
 		}
 	}
@@ -304,20 +233,14 @@ void RbXBeeCommander::CloseIO()
 
 void RbXBeeCommander::ResetData()
 {
-	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-		m_ButtonData[iIdx].ClearData();
+	RemoteControl::ResetData();
 
 	m_iButtons = 0;
 	m_iExt = 0;
 
     index = -1;
+	checksum = 0;
     status = 0;
-}
-
-void RbXBeeCommander::ResetSimulation()
-{
-	RemoteControl::ResetSimulation();
-	ResetData();
 }
 
 void RbXBeeCommander::SimStarting()
@@ -328,80 +251,6 @@ void RbXBeeCommander::SimStarting()
 
 	//Clear out anything that happened the first time we got stuff.
 	m_Port.flush();
-}
-
-void RbXBeeCommanderButtonData::CheckStartedStopped()
-{
-	if(m_fltValue == m_fltPrev)
-		m_iCount++;
-	else
-		m_iCount = 0;
-
-	if(m_iCount == 3)
-	{
-		if(!m_bStarted && m_fltValue != 0)
-		{
-			m_iStartDir = Std_Sign(m_fltValue);
-			m_fltStart = 1*m_iStartDir;
-			m_bStarted = true;
-			////Test Code
-			//OutputDebugString("Start\r\n");
-		}
-		else if(m_bStarted && m_fltValue == 0)
-		{
-			m_fltStop = m_iStartDir;
-			m_bStarted = false;
-			////Test Code
-			//OutputDebugString("Stop\r\n");
-		}
-
-		m_iCount = 0;
-	}
-
-	m_fltPrev = m_fltValue;
-
-	////Test Code
-	//std::string strVal = "Val: " + STR((int) m_fltValue) + " Prev: " + STR((int) m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
-	//OutputDebugString(strVal.c_str());
-}
-
-void RbXBeeCommander::CheckStartedStopped()
-{
-	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-		m_ButtonData[iIdx].CheckStartedStopped();
-
-	////Test Code
-	//m_ButtonData[BUT_ID_RT].CheckStartedStopped();
-}
-
-void RbXBeeCommanderButtonData::ClearStartStops()
-{
-	if((fabs(m_fltStart) > 0 || fabs(m_fltStop) > 0))
-	{
-		if(m_iSimStepped >= m_iChangeSimStepCount)
-		{
-			////Test Code
-			//if(m_fltStart > 0)
-			//	OutputDebugString("Cleared Start\r\n");
-			//if(m_fltStop > 0)
-			//	OutputDebugString("Cleared Stop\r\n");
-
-			m_fltStart = 0;
-			m_fltStop = 0;
-			m_iSimStepped = 0;
-		}
-		else
-			m_iSimStepped++;
-	}
-}
-
-void RbXBeeCommander::ClearStartStops()
-{
-	for(int iIdx=0; iIdx<BUT_ID_TOTAL; iIdx++)
-		m_ButtonData[iIdx].ClearStartStops();
-
-	////Test Code
-	//m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
 }
 
 void RbXBeeCommander::WaitForThreadNotifyReady()
@@ -417,9 +266,9 @@ void RbXBeeCommander::StepIO()
 	if(!m_lpSim->Paused())
 	{
 		bool bFound = false;
-
+									
 		////Test Code
-		//m_ButtonData[BUT_ID_WALKH].m_fltValue = 50;
+		//m_aryData[BUT_ID_WALKH].m_fltValue = 50;
 
 		while(m_Port.available() > 0 && !bFound)
 		{
@@ -439,6 +288,8 @@ void RbXBeeCommander::StepIO()
 					checksum += (int) vals[index];
 					index++;
 				}
+				else
+					index = -1;  //Start over if the second byte is not 0xff
 			}
 			else
 			{
@@ -457,31 +308,33 @@ void RbXBeeCommander::StepIO()
 					{
 						if((status&0x01) > 0)
 						{     // SouthPaw
-							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
-							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ) + 1);
-							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
-							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ));
+							SetDataValue(BUT_ID_WALKV, (float) ((signed char)( (int)vals[0]-128 )));
+							SetDataValue(BUT_ID_WALKH, (float) ((signed char)( (int)vals[1]-128 ) + 1));
+							SetDataValue(BUT_ID_LOOKV, (float) ((signed char)( (int)vals[2]-128 )));
+							SetDataValue(BUT_ID_LOOKH, (float) ((signed char)( (int)vals[3]-128 )));
 						}
 						else
 						{
-							m_ButtonData[BUT_ID_LOOKV].m_fltValue = (float) ((signed char)( (int)vals[0]-128 ));
-							m_ButtonData[BUT_ID_LOOKH].m_fltValue = (float) ((signed char)( (int)vals[1]-128 ));
-							m_ButtonData[BUT_ID_WALKV].m_fltValue = (float) ((signed char)( (int)vals[2]-128 ));
-							m_ButtonData[BUT_ID_WALKH].m_fltValue = (float) ((signed char)( (int)vals[3]-128 ) - 1);
+							SetDataValue(BUT_ID_LOOKV, (float) ((signed char)( (int)vals[0]-128 )));
+							SetDataValue(BUT_ID_LOOKH, (float) ((signed char)( (int)vals[1]-128 )));
+							SetDataValue(BUT_ID_WALKV, (float) ((signed char)( (int)vals[2]-128 )));
+							SetDataValue(BUT_ID_WALKH, (float) ((signed char)( (int)vals[3]-128 ) - 1));
 						}
-						m_ButtonData[BUT_ID_PAN].m_fltValue = (float) ((vals[0]<<8) + vals[1]);
-						m_ButtonData[BUT_ID_TILT].m_fltValue = (float) ((vals[2]<<8) + vals[3]);
+
+						SetDataValue(BUT_ID_PAN, (float) ((vals[0]<<8) + vals[1]));
+						SetDataValue(BUT_ID_TILT, (float) ((vals[2]<<8) + vals[3]));
+
 						m_iButtons = vals[4];
 						m_iExt = vals[5];
 
-						m_ButtonData[BUT_ID_R1].m_fltValue = (m_iButtons & BUT_R1);
-						m_ButtonData[BUT_ID_R2].m_fltValue = (m_iButtons & BUT_R2);
-						m_ButtonData[BUT_ID_R3].m_fltValue = (m_iButtons & BUT_R3);
-						m_ButtonData[BUT_ID_L4].m_fltValue = (m_iButtons & BUT_L4);
-						m_ButtonData[BUT_ID_L5].m_fltValue = (m_iButtons & BUT_L5);
-						m_ButtonData[BUT_ID_L6].m_fltValue = (m_iButtons & BUT_L6);
-						m_ButtonData[BUT_ID_RT].m_fltValue = (m_iButtons & BUT_RT);
-						m_ButtonData[BUT_ID_LT].m_fltValue = (m_iButtons & BUT_LT);
+						SetDataValue(BUT_ID_R1, (m_iButtons & BUT_R1));
+						SetDataValue(BUT_ID_R2, (m_iButtons & BUT_R2));
+						SetDataValue(BUT_ID_R3, (m_iButtons & BUT_R3));
+						SetDataValue(BUT_ID_L4, (m_iButtons & BUT_L4));
+						SetDataValue(BUT_ID_L5, (m_iButtons & BUT_L5));
+						SetDataValue(BUT_ID_L6, (m_iButtons & BUT_L6));
+						SetDataValue(BUT_ID_RT, (m_iButtons & BUT_RT));
+						SetDataValue(BUT_ID_LT, (m_iButtons & BUT_LT));
 					}
 
 					index = -1;
@@ -497,18 +350,6 @@ void RbXBeeCommander::StepIO()
 	}
 }
 
-void RbXBeeCommander::StepSimulation()
-{
-	RemoteControl::StepSimulation();
-
-	////Test Code
-	//int i=4;
-	//if(	m_ButtonData[BUT_ID_LOOKH].m_fltStart > 0 || m_ButtonData[BUT_ID_LOOKH].m_fltStop > 0)
-	//	i=6;
-
-	ClearStartStops();
-}
-
 void RbXBeeCommander::Load(StdUtils::CStdXml &oXml)
 {
 	AnimatSim::Robotics::RemoteControl::Load(oXml);
@@ -516,7 +357,6 @@ void RbXBeeCommander::Load(StdUtils::CStdXml &oXml)
 	oXml.IntoElem();
 	Port(oXml.GetChildString("Port", m_strPort));
 	BaudRate(oXml.GetChildInt("BaudRate", m_iBaudRate));
-	ChangeSimStepCount(oXml.GetChildInt("ChangeSimStepCount", m_iChangeSimStepCount));
 	oXml.OutOfElem();
 }
 

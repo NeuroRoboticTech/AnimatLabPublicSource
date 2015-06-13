@@ -37,52 +37,6 @@ namespace RoboticsAnimatSim
 		namespace RobotIOControls
 		{
 
-class ROBOTICS_PORT RbXBeeCommanderButtonData
-{
-public:
-    // joystick values are -125 to 125
-
-	///The array index of this button
-	int m_iButtonID;
-	float m_fltStart;
-    float m_fltValue;      // vertical stick movement = forward speed
-	float m_fltStop;
-	float m_fltPrev;
-	int m_iCount;
-	bool m_bStarted;
-	int m_iStartDir;
-
-	///This keeps track of whether the sim has already stepped over a change or not.
-	///The first time start or stop is set and sim is called we do not want to reset it to zero
-	///right then so that the rest of the app can see it. We do want to reset it the next time though.
-	int m_iSimStepped;
-
-	///The number of simulation time slices to keep a start/stop signal active.
-	int m_iChangeSimStepCount;
-
-	RbXBeeCommanderButtonData()
-	{
-		m_iButtonID = -1;
-		m_iChangeSimStepCount = 5;
-		ClearData();
-	}
-
-	void ClearData()
-	{
-		m_fltStart = 0;
-		m_fltValue = 0;      
-		m_fltStop = 0;
-		m_fltPrev = 0;
-		m_iCount = 0;
-		m_bStarted = 0;
-		m_iSimStepped = 0;
-		m_iStartDir = 1;
-	}
-
-	void CheckStartedStopped();
-	void ClearStartStops();
-};
-
 class ROBOTICS_PORT RbXBeeCommander : public AnimatSim::Robotics::RemoteControl
 {
 protected:
@@ -91,12 +45,6 @@ protected:
 
 	///The baud rate of communications for this XBee
 	int m_iBaudRate;
-	
-	///The number of simulation time slices to keep a start/stop signal active.
-	int m_iChangeSimStepCount;
-
-	///Array of button information to keep track of incoming data.
-	RbXBeeCommanderButtonData m_ButtonData[BUT_ID_TOTAL];
 
 	/// buttons are 0 or 1 (PRESSED), and bitmapped
     unsigned char m_iButtons;  // 
@@ -115,10 +63,9 @@ protected:
 	virtual void CloseIO();
 
 	virtual void ResetData();
-	virtual void CheckStartedStopped();
-
-	virtual void ClearStartStops();
 	virtual void WaitForThreadNotifyReady();
+
+	virtual void CreateDataIDMap();
 
 public:
 	RbXBeeCommander();
@@ -130,12 +77,8 @@ public:
 	virtual void BaudRate(int iRate);
 	virtual int BaudRate();
 
-	virtual void ChangeSimStepCount(int iRate);
-	virtual int ChangeSimStepCount();
-
 #pragma region DataAccesMethods
 
-	virtual float *GetDataPointer(const std::string &strDataType);
 	virtual bool SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError = true);
 	virtual void QueryProperties(CStdPtrArray<TypeProperty> &aryProperties);
 
@@ -144,8 +87,6 @@ public:
 	virtual void SimStarting();
 
 	virtual void Initialize();
-	virtual void ResetSimulation();
-	virtual void StepSimulation();
 	virtual void Load(StdUtils::CStdXml &oXml);
 };
 

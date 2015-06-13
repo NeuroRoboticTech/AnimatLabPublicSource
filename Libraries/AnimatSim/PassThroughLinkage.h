@@ -13,7 +13,7 @@ namespace AnimatSim
 			Gain *m_lpGain;
 
 			virtual void AddGain(std::string strXml);
-			virtual float CalculateAppliedValue();
+			virtual float CalculateAppliedValue(float fltData);
 
 		public:
 			PassThroughLinkage(void);

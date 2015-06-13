@@ -43,6 +43,63 @@ namespace AnimatSim
 	namespace Robotics
 	{
 
+
+void RemoteControlData::ClearStartStops()
+{
+	if((fabs(m_fltStart) > 0 || fabs(m_fltStop) > 0))
+	{
+		if(m_iSimStepped >= m_iChangeSimStepCount)
+		{
+			////Test Code
+			//if(m_fltStart > 0)
+			//	OutputDebugString("Cleared Start\r\n");
+			//if(m_fltStop > 0)
+			//	OutputDebugString("Cleared Stop\r\n");
+
+			m_fltStart = 0;
+			m_fltStop = 0;
+			m_iSimStepped = 0;
+		}
+		else
+			m_iSimStepped++;
+	}
+}
+
+void RemoteControlData::CheckStartedStopped()
+{
+	if(m_fltValue == m_fltPrev)
+		m_iCount++;
+	else
+		m_iCount = 0;
+
+	if(m_iCount == 3)
+	{
+		if(!m_bStarted && m_fltValue != 0)
+		{
+			m_iStartDir = Std_Sign(m_fltValue);
+			m_fltStart = 1*m_iStartDir;
+			m_bStarted = true;
+			////Test Code
+			//OutputDebugString("Start\r\n");
+		}
+		else if(m_bStarted && m_fltValue == 0)
+		{
+			m_fltStop = m_iStartDir;
+			m_bStarted = false;
+			////Test Code
+			//OutputDebugString("Stop\r\n");
+		}
+
+		m_iCount = 0;
+	}
+
+	m_fltPrev = m_fltValue;
+
+	////Test Code
+	//std::string strVal = "Val: " + STR((int) m_fltValue) + " Prev: " + STR((int) m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
+	//OutputDebugString(strVal.c_str());
+}
+
 RemoteControlLinkage::RemoteControlLinkage(void)
 {
 	m_lpParentRemoteControl = NULL;
@@ -52,6 +109,8 @@ RemoteControlLinkage::RemoteControlLinkage(void)
 	m_lpTargetData = NULL;
 	m_iTargetDataType = -1;
 	m_fltAppliedValue = 0;
+	m_bInLink = true;
+	m_iPropertyID = -1;
 }
 
 RemoteControlLinkage::~RemoteControlLinkage(void)
@@ -144,7 +203,6 @@ void RemoteControlLinkage::SourceDataTypeID(std::string strTypeID)
 	Initialize();
 }
 
-
 /**
 \brief	Gets the target data type.
 
@@ -167,6 +225,65 @@ void RemoteControlLinkage::TargetDataTypeID(std::string strTypeID)
 {
 	m_strTargetDataTypeID = strTypeID;
 	Initialize();
+}
+
+int RemoteControlLinkage::PropertyID() {return m_iPropertyID;}
+
+void RemoteControlLinkage::PropertyID(int iID, bool bCreateDataTypes) 
+{
+	m_iPropertyID = iID;
+	m_Data.m_iButtonID = iID;
+	if(m_lpParentRemoteControl && bCreateDataTypes)
+		m_lpParentRemoteControl->CreateDataTypes();
+}
+
+/**
+\brief	Gets the property name.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	property name.
+**/
+std::string RemoteControlLinkage::PropertyName() {return m_strPropertyName;}
+
+/**
+\brief	Sets the property name.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	property name. 
+**/
+void RemoteControlLinkage::PropertyName(std::string strTypeID)
+{
+	m_strPropertyName = strTypeID;
+	m_Data.m_strProperty = strTypeID;
+	if(m_lpParentRemoteControl)
+		m_lpParentRemoteControl->CreateDataTypes();
+}
+
+/**
+\brief	Gets the inlink value.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	inlink.
+**/
+bool RemoteControlLinkage::InLink() {return m_bInLink;}
+
+/**
+\brief	Sets the inlink property.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	inlink value. 
+**/
+void RemoteControlLinkage::InLink(bool bVal)
+{
+	m_bInLink = bVal;
 }
 
 #pragma region DataAccesMethods
@@ -215,6 +332,16 @@ bool RemoteControlLinkage::SetData(const std::string &strDataType, const std::st
 		TargetID(strValue);
 		return true;
 	}
+	else if(strType == "PROPERTYNAME")
+	{
+		PropertyName(strValue);
+		return true;
+	}
+	else if(strType == "PROPERTYID")
+	{
+		PropertyID(atoi(strValue.c_str()));
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -232,6 +359,8 @@ void RemoteControlLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProper
 	aryProperties.Add(new TypeProperty("TargetDataTypeID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("SourceID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("TargetID", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PropertyName", AnimatPropertyType::String, AnimatPropertyDirection::Set));
+	aryProperties.Add(new TypeProperty("PropertyID", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
 	aryProperties.Add(new TypeProperty("AppliedValue", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
 }
 
@@ -284,7 +413,8 @@ void RemoteControlLinkage::Initialize()
 		if(!m_lpSource)
 			THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strSourceID);
 
-		if(m_lpSource && !Std_IsBlank(m_strSourceDataTypeID))
+		if(m_lpSource && !Std_IsBlank(m_strSourceDataTypeID) && m_lpParentRemoteControl && 
+			(!m_bInLink || (m_bInLink && m_lpParentRemoteControl->FindLinkageWithPropertyName(m_strSourceDataTypeID, false))))
 			m_lpSourceData = m_lpSource->GetDataPointer(m_strSourceDataTypeID);
 		else
 			m_lpSourceData = NULL;	
@@ -294,8 +424,6 @@ void RemoteControlLinkage::Initialize()
 		m_lpSource = NULL;
 		m_lpSourceData = NULL;
 	}
-
-
 
 	if(!Std_IsBlank(m_strTargetID))
 	{
@@ -319,9 +447,11 @@ void RemoteControlLinkage::ApplyValue()
 {
 	if(m_bEnabled && m_lpSourceData && m_lpTarget && m_lpTargetData)
 	{	
+		float fltData = *m_lpSourceData;
+
 		////Test Code
-		//int i=5; //Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85")   && fabs(*m_lpSourceData) > 0
-		//if(GetSimulator()->Time() >= 0.2)
+		//int i=5; //Std_ToLower(m_strID) == "079087db-7a2b-4e2b-82ab-cdd407ad3d85")   
+		//if(GetSimulator()->Time() >= 0.2 && fabs(fltData) > 0)
 		//	i=6;
 
 		//std::string strVal = "WalkV: " + STR((float) *m_lpSourceData) + "\r\n";
@@ -331,11 +461,16 @@ void RemoteControlLinkage::ApplyValue()
 		*m_lpTargetData = *m_lpTargetData - m_fltAppliedValue;
 
 		//Calculate the new current to apply.
-		m_fltAppliedValue = CalculateAppliedValue();
+		m_fltAppliedValue = CalculateAppliedValue(fltData);
 
 		//Add the new applied current
 		*m_lpTargetData = *m_lpTargetData + m_fltAppliedValue;
 	}
+}
+
+void RemoteControlLinkage::ResetSimulation()
+{
+	m_fltAppliedValue = 0;
 }
 
 void RemoteControlLinkage::StepSimulation()
@@ -349,10 +484,13 @@ void RemoteControlLinkage::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Link Element
 
+	InLink(oXml.GetChildBool("InLink", true));
 	SourceID(oXml.GetChildString("SourceID", ""));
 	TargetID(oXml.GetChildString("TargetID", ""));
 	SourceDataTypeID(oXml.GetChildString("SourceDataTypeID", ""));
 	TargetDataTypeID(oXml.GetChildString("TargetDataTypeID", ""));
+	PropertyName(oXml.GetChildString("PropertyName", ""));
+	PropertyID(oXml.GetChildInt("PropertyID", -1));
 
 	oXml.OutOfElem(); //OutOf Link Element
 }

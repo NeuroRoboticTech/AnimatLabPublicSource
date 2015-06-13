@@ -44,6 +44,8 @@ namespace AnimatSim
 
 RemoteControl::RemoteControl(void)
 {
+	m_iChangeSimStepCount = 5;
+	m_bUseRemoteDataTypes = true;
 }
 
 RemoteControl::~RemoteControl(void)
@@ -65,6 +67,52 @@ catch(...)
 \return	pointer to remote control links.
 **/
 CStdPtrArray<RemoteControlLinkage> *RemoteControl::Links() {return &m_aryLinks;}
+
+/**
+\brief	Gets the array of remote control in links.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	pointer to remote control in links.
+**/
+CStdArray<RemoteControlLinkage *> *RemoteControl::InLinks() {return &m_aryInLinks;}
+
+/**
+\brief	Gets the array of remote control out links.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	pointer to remote control out links.
+**/
+CStdArray<RemoteControlLinkage *> *RemoteControl::OutLinks() {return &m_aryOutLinks;}
+
+/**
+\brief	Gets the array of data elements.
+
+\author	dcofer
+\date	5/1/2015
+
+\return	pointer to data elements.
+**/
+CStdMap<int, RemoteControlLinkage *> *RemoteControl::Data() {return &m_aryData;}
+
+void RemoteControl::ChangeSimStepCount(int iRate)
+{
+	Std_IsAboveMin((int) 0, iRate, true, "ChangeSimStepCount");
+	m_iChangeSimStepCount = iRate;
+
+	//Reset all the button data.
+
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryLinks[iIndex]->m_Data.m_iChangeSimStepCount = m_iChangeSimStepCount;
+}
+
+int RemoteControl::ChangeSimStepCount() {return m_iChangeSimStepCount;}
+
+bool RemoteControl::UseRemoteDataTypes() {return m_bUseRemoteDataTypes;}
 
 #pragma region DataAccesMethods
 
@@ -93,6 +141,64 @@ bool RemoteControl::RemoveItem(const std::string &strItemType, const std::string
 
 	return RobotIOControl::RemoveItem(strItemType, strID, bThrowError);
 }
+#pragma region DataAccesMethods
+
+float *RemoteControl::GetDataPointer(const std::string &strDataType)
+{
+	std::string strType = Std_CheckString(strDataType);
+
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty))
+			return &m_aryLinks[iIndex]->m_Data.m_fltValue;
+		
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty + "START"))
+			return &m_aryLinks[iIndex]->m_Data.m_fltStart;
+
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty + "STOP"))
+			return &m_aryLinks[iIndex]->m_Data.m_fltStop;
+
+	return RobotIOControl::GetDataPointer(strDataType);
+}
+
+bool RemoteControl::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
+{
+	std::string strType = Std_CheckString(strDataType);
+	
+	if(RobotIOControl::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strType == "CHANGESIMSTEPCOUNT")
+	{
+		ChangeSimStepCount((int) atoi(strValue.c_str()));
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return false;
+}
+
+void RemoteControl::QueryProperties(CStdPtrArray<TypeProperty> &aryProperties)
+{
+	RobotIOControl::QueryProperties(aryProperties);
+
+	aryProperties.Add(new TypeProperty("ChangeSimStepCount", AnimatPropertyType::Integer, AnimatPropertyDirection::Set));
+
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		aryProperties.Add(new TypeProperty(m_aryLinks[iIndex]->m_Data.m_strProperty, AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+		aryProperties.Add(new TypeProperty(m_aryLinks[iIndex]->m_Data.m_strProperty + "START", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+		aryProperties.Add(new TypeProperty(m_aryLinks[iIndex]->m_Data.m_strProperty + "STOP", AnimatPropertyType::Float, AnimatPropertyDirection::Get));
+	}
+}
+
+#pragma endregion
 
 /**
 \brief	Creates and adds a robot IO control.
@@ -113,6 +219,8 @@ RemoteControlLinkage *RemoteControl::AddRemoteControlLinkage(std::string strXml)
 
 	lpPart->Initialize();
 
+	CreateDataTypes();
+
     return lpPart;
 }
 
@@ -128,11 +236,25 @@ RemoteControlLinkage *RemoteControl::AddRemoteControlLinkage(std::string strXml)
 **/
 void RemoteControl::RemoveRemoteControlLinkage(std::string strID, bool bThrowError)
 {
-	int iPos = FindLinkageChildListPos(strID, bThrowError);
+	int iPos = FindLinkageChildListPos(strID, bThrowError), iLinkPos = -1;
 
     RemoteControlLinkage *lpPart = m_aryLinks[iPos];
 
+	//Remove it from the data list.
+	if(m_aryData.find(lpPart->PropertyID()) != m_aryData.end())
+		m_aryData.Remove(lpPart->PropertyID());
+
+	if(lpPart->InLink())
+		iLinkPos = FindLinkageChildListPos(m_aryInLinks, strID, bThrowError);
+	else
+		iLinkPos = FindLinkageChildListPos(m_aryOutLinks, strID, bThrowError);
+
 	StartPause();
+	if(lpPart->InLink())
+		m_aryInLinks.RemoveAt(iLinkPos);
+	else
+		m_aryOutLinks.RemoveAt(iLinkPos);
+
 	m_aryLinks.RemoveAt(iPos);
 	ExitPause();
 }
@@ -166,7 +288,76 @@ int RemoteControl::FindLinkageChildListPos(std::string strID, bool bThrowError)
 	return -1;
 }
 
+/**
+\brief	Finds the array index for the child part with the specified ID
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID ID of part to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL,
+else returns the pointer to the found part.
+**/
+int RemoteControl::FindLinkageChildListPos(CStdArray<RemoteControlLinkage *> &aryLinks, std::string strID, bool bThrowError)
+{
+	std::string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(aryLinks[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lPartInterfaceIDNotFound, Al_Err_strPartInterfaceIDNotFound, "ID", strID);
+
+	return -1;
+}
+
+RemoteControlLinkage *RemoteControl::FindLinkageWithPropertyName(std::string strName, bool bThrowError)
+{
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryLinks[iIndex]->PropertyName() == strName)
+			return m_aryLinks[iIndex];
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lPartInterfaceIDNotFound, Al_Err_strPartInterfaceIDNotFound, "PropertyName", strName);
+
+	return NULL;
+}
+
 #pragma endregion
+
+void RemoteControl::ResetData()
+{
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryLinks[iIndex]->m_Data.ClearData();
+}
+
+void RemoteControl::CheckStartedStopped()
+{
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryLinks[iIndex]->m_Data.CheckStartedStopped();
+
+	////Test Code
+	//m_ButtonData[BUT_ID_RT].CheckStartedStopped();
+}
+
+void RemoteControl::ClearStartStops()
+{
+
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryLinks[iIndex]->m_Data.ClearStartStops();
+
+	////Test Code
+	//m_ButtonData[BUT_ID_LOOKH].ClearStartStops();
+}
 
 /**
 \brief	This method is called after all connections to whatever control board have been made. It calls
@@ -236,6 +427,55 @@ void RemoteControl::ShutdownIO()
 	RobotIOControl::ShutdownIO();
 }
 
+void RemoteControl::CreateDataTypes()
+{
+	if(m_bUseRemoteDataTypes && m_aryDataIDMap.GetSize() == 0)
+		CreateDataIDMap();
+
+	m_aryData.RemoveAll();
+	int iCount = m_aryLinks.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		if(!m_bUseRemoteDataTypes)
+		{
+			if(m_aryLinks[iIndex]->PropertyID() >= 0 && m_aryData.find(m_aryLinks[iIndex]->PropertyID()) == m_aryData.end())
+			{
+				m_aryLinks[iIndex]->m_Data.m_iChangeSimStepCount = m_iChangeSimStepCount;
+				m_aryLinks[iIndex]->m_Data.ClearData();
+				m_aryData.Add(m_aryLinks[iIndex]->PropertyID(), m_aryLinks[iIndex]);
+			}
+
+		}
+		else
+		{
+			std::string strProperty = m_aryLinks[iIndex]->PropertyName();
+			if(m_aryDataIDMap.find(strProperty) != m_aryDataIDMap.end())
+			{
+				int iID = m_aryDataIDMap[strProperty];
+
+				if(m_aryData.find(iID) == m_aryData.end())
+				{
+					m_aryLinks[iIndex]->m_Data.m_iChangeSimStepCount = m_iChangeSimStepCount;
+					m_aryLinks[iIndex]->m_Data.ClearData();
+					m_aryLinks[iIndex]->PropertyID(iID, false);
+					m_aryData.Add(iID, m_aryLinks[iIndex]);
+				}
+			}
+		}
+	}
+}
+
+void RemoteControl::CreateDataIDMap()
+{
+}
+
+void RemoteControl::SetDataValue(int iID, float fltVal)
+{
+	if(m_aryData.find(iID) != m_aryData.end())
+		if(m_aryData[iID]->InLink())
+			m_aryData[iID]->m_Data.m_fltValue = fltVal;
+}
+
 void RemoteControl::Initialize()
 {
 	RobotIOControl::Initialize();
@@ -243,6 +483,13 @@ void RemoteControl::Initialize()
 	int iCount = m_aryLinks.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryLinks[iIndex]->Initialize();
+
+	//If this remote control is not pre-defined with data types in the derived class
+	//then we need to create them now from the remote linkages.
+	if(!m_bUseRemoteDataTypes)
+		CreateDataTypes();
+
+	ResetData();
 }
 
 void RemoteControl::ResetSimulation()
@@ -253,6 +500,8 @@ void RemoteControl::ResetSimulation()
 	int iCount = m_aryLinks.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryLinks[iIndex]->ResetSimulation();
+
+	ResetData();
 }
 
 void RemoteControl::AfterResetSimulation()
@@ -272,6 +521,8 @@ void RemoteControl::StepSimulation()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryLinks[iIndex]->Enabled())
 			m_aryLinks[iIndex]->StepSimulation();
+
+	ClearStartStops();
 }
 
 void RemoteControl::Load(CStdXml &oXml)
@@ -279,6 +530,8 @@ void RemoteControl::Load(CStdXml &oXml)
 	RobotIOControl::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
+
+	ChangeSimStepCount(oXml.GetChildInt("ChangeSimStepCount", m_iChangeSimStepCount));
 
 	if(oXml.FindChildElement("Links", false))
 	{
@@ -329,6 +582,11 @@ try
 	lpChild->Load(oXml);
 
 	m_aryLinks.Add(lpChild);
+
+	if(lpChild->InLink())
+		m_aryInLinks.Add(lpChild);
+	else
+		m_aryOutLinks.Add(lpChild);
 
 	return lpChild;
 }

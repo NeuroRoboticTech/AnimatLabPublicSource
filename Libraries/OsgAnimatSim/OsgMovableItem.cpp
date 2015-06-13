@@ -180,7 +180,7 @@ void OsgMovableItem::CreateSelectedVertex(std::string strName)
 	{
 		m_osgSelVertexNode = new osg::Geode();
 		m_osgSelVertexNode->setName(strName + "SelVertex");
-		float fltRadius = m_lpThisAB->GetSimulator()->RecFieldSelRadius();
+		float fltRadius = 1.0; //m_lpThisAB->GetSimulator()->RecFieldSelRadius();
 		osg::ShapeDrawable *osgDraw = new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0, 0, 0), fltRadius));
 		osgDraw->setColor(osg::Vec4(0, 1, 0, 0));
 		m_osgSelVertexNode->addDrawable(osgDraw);

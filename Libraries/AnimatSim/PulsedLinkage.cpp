@@ -155,7 +155,7 @@ void PulsedLinkage::ResetSimulation()
 	m_aryPulses.clear();
 }
 
-float PulsedLinkage::CalculateAppliedValue()
+float PulsedLinkage::CalculateAppliedValue(float fltData)
 {
 	float fltTotal = 0;
 	int iCount = m_aryPulses.size();

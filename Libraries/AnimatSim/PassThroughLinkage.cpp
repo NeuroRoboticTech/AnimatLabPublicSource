@@ -132,10 +132,10 @@ void PassThroughLinkage::QueryProperties(CStdPtrArray<TypeProperty> &aryProperti
 
 #pragma endregion
 
-float PassThroughLinkage::CalculateAppliedValue()
+float PassThroughLinkage::CalculateAppliedValue(float fltData)
 {
 	if(m_lpGain)
-		return m_lpGain->CalculateGain(*m_lpSourceData);
+		return m_lpGain->CalculateGain(fltData);
 	else
 		return 0;
 }

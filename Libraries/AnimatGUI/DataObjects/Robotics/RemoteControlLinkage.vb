@@ -27,6 +27,8 @@ Namespace DataObjects
             Protected m_thLinkedTarget As AnimatGUI.TypeHelpers.LinkedDataObjectTree
             Protected m_thLinkedTargetProperty As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList
 
+            Protected m_iPropertyID As Integer = 0
+
             'Only used during loading
             Protected m_strLinkedSourceID As String = ""
             Protected m_strLinkedSourceProperty As String = ""
@@ -65,8 +67,16 @@ Namespace DataObjects
                 Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList)
                     If Not Value Is Nothing AndAlso Not Value.Item Is Nothing AndAlso Not Value.PropertyName Is Nothing Then
                         SetSimData("SourceDataTypeID", Value.PropertyName, True)
+
+                        If m_bInLink Then
+                            SetSimData("PropertyName", Value.PropertyName, True)
+                        End If
                     Else
                         SetSimData("SourceDataTypeID", "", True)
+
+                        If m_bInLink Then
+                            SetSimData("PropertyName", "", True)
+                        End If
                     End If
 
                     m_thLinkedSourceProperty = Value
@@ -76,18 +86,15 @@ Namespace DataObjects
             <Browsable(False)> _
             Public Overridable Property LinkedSourcePropertyName() As String
                 Get
-                    If Not m_thLinkedSourceProperty Is Nothing AndAlso Not m_thLinkedSourceProperty.PropertyName Is Nothing Then
-                        Return m_thLinkedSourceProperty.PropertyName
-                    Else
-                        Return ""
-                    End If
+                    Return m_strLinkedSourceProperty
                 End Get
                 Set(value As String)
-                    If m_thLinkedSource Is Nothing OrElse m_thLinkedSource.Item Is Nothing Then
-                        Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
+                    If m_bInLink Then
+                        SetSimData("SourceDataTypeID", value, True)
+                        SetSimData("PropertyName", value, True)
                     End If
 
-                    Me.LinkedSourceProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedSource.Item, value, True, False)
+                    m_strLinkedSourceProperty = value
                 End Set
             End Property
 
@@ -119,8 +126,16 @@ Namespace DataObjects
                 Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList)
                     If Not Value Is Nothing AndAlso Not Value.Item Is Nothing AndAlso Not Value.PropertyName Is Nothing Then
                         SetSimData("TargetDataTypeID", Value.PropertyName, True)
+
+                        If Not m_bInLink Then
+                            SetSimData("PropertyName", Value.PropertyName, True)
+                        End If
                     Else
                         SetSimData("TargetDataTypeID", "", True)
+
+                        If Not m_bInLink Then
+                            SetSimData("PropertyName", "", True)
+                        End If
                     End If
 
                     m_thLinkedTargetProperty = Value
@@ -130,18 +145,15 @@ Namespace DataObjects
             <Browsable(False)> _
             Public Overridable Property LinkedTargetPropertyName() As String
                 Get
-                    If Not m_thLinkedTargetProperty Is Nothing AndAlso Not m_thLinkedTargetProperty.PropertyName Is Nothing Then
-                        Return m_thLinkedTargetProperty.PropertyName
-                    Else
-                        Return ""
-                    End If
+                    Return m_strLinkedTargetProperty
                 End Get
                 Set(value As String)
-                    If m_thLinkedTarget Is Nothing OrElse m_thLinkedTarget.Item Is Nothing Then
-                        Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
+                    If Not m_bInLink Then
+                        SetSimData("TargetDataTypeID", value, True)
+                        SetSimData("PropertyName", value, True)
                     End If
 
-                    Me.LinkedTargetProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedTarget.Item, value, True, False)
+                    m_strLinkedTargetProperty = value
                 End Set
             End Property
 
@@ -152,6 +164,17 @@ Namespace DataObjects
                 End Get
                 Set(value As Boolean)
                     m_bInLink = value
+                End Set
+            End Property
+
+            <Browsable(False)> _
+            Public Overridable Property PropertyID() As Integer
+                Get
+                    Return m_iPropertyID
+                End Get
+                Set(value As Integer)
+                    SetSimData("PropertyID", value.ToString(), True)
+                    m_iPropertyID = value
                 End Set
             End Property
 
@@ -225,7 +248,12 @@ Namespace DataObjects
                     If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RemoteControl), False) Then
                         m_doParentRemoteControl = DirectCast(doParent, RemoteControl)
                         m_thLinkedSource = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(m_doParentRemoteControl)
-                        m_thLinkedSourceProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(m_doParentRemoteControl, strDataTypeID, True, False)
+
+                        If m_doParentRemoteControl.UseRemoteDataTypes Then
+                            m_thLinkedSourceProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(m_doParentRemoteControl, strDataTypeID, True, False)
+                        Else
+                            m_thLinkedSourceProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, True, False)
+                        End If
 
                         m_thLinkedTarget = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(Nothing)
                         m_thLinkedTargetProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, True, False)
@@ -242,7 +270,12 @@ Namespace DataObjects
                     If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType(), GetType(RemoteControl), False) Then
                         m_doParentRemoteControl = DirectCast(doParent, RemoteControl)
                         m_thLinkedTarget = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(m_doParentRemoteControl)
-                        m_thLinkedTargetProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(m_doParentRemoteControl, strDataTypeID, True, False)
+
+                        If m_doParentRemoteControl.UseRemoteDataTypes Then
+                            m_thLinkedTargetProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(m_doParentRemoteControl, strDataTypeID, True, False)
+                        Else
+                            m_thLinkedTargetProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, True, False)
+                        End If
 
                         m_thLinkedSource = New AnimatGUI.TypeHelpers.LinkedDataObjectTree(Nothing)
                         m_thLinkedSourceProperty = New AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList(Nothing, True, False)
@@ -279,9 +312,13 @@ Namespace DataObjects
 
                 m_thLinkedSource = DirectCast(OrigNode.m_thLinkedSource.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedDataObjectTree)
                 m_thLinkedSourceProperty = DirectCast(OrigNode.m_thLinkedSourceProperty.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedDataObjectPropertiesList)
+                m_strLinkedSourceProperty = OrigNode.m_strLinkedSourceProperty
 
                 m_thLinkedTarget = DirectCast(OrigNode.m_thLinkedTarget.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedDataObjectTree)
                 m_thLinkedTargetProperty = DirectCast(OrigNode.m_thLinkedTargetProperty.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedDataObjectPropertiesList)
+                m_strLinkedTargetProperty = OrigNode.m_strLinkedTargetProperty
+
+                m_iPropertyID = OrigNode.m_iPropertyID
 
                 m_bInLink = OrigNode.m_bInLink
             End Sub
@@ -342,20 +379,35 @@ Namespace DataObjects
                                                 GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor), _
                                                 GetType(AnimatGUI.TypeHelpers.LinkedDataObjectTypeConverter)))
 
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Property", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList), "LinkedTargetProperty", _
-                                            "Properties", "Determines the property that is set by this linkage.", m_thLinkedTargetProperty, _
-                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
-                                            GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesTypeConverter)))
+                If m_doParentRemoteControl.UseRemoteDataTypes OrElse m_bInLink Then
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Property", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList), "LinkedTargetProperty", _
+                                                "Properties", "Determines the property that is set by this linkage.", m_thLinkedTargetProperty, _
+                                                GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                                GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesTypeConverter)))
+                Else
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Target Property ", GetType(String), "LinkedTargetPropertyName", _
+                                           "Properties", "Sets he property that is set by this linkage.", Me.LinkedTargetPropertyName))
+                End If
 
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Source", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectTree), "LinkedSource", _
                                             "Properties", "Sets the object that is associated with this linkage.", m_thLinkedSource, _
                                             GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor), _
                                             GetType(AnimatGUI.TypeHelpers.LinkedDataObjectTypeConverter)))
 
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Source Property", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList), "LinkedSourceProperty", _
-                                            "Properties", "Determines the property that is set by this linkage.", m_thLinkedSourceProperty, _
-                                            GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
-                                            GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesTypeConverter)))
+                If m_doParentRemoteControl.UseRemoteDataTypes OrElse Not m_bInLink Then
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Source Property", GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesList), "LinkedSourceProperty", _
+                                                "Properties", "Determines the property that is set by this linkage.", m_thLinkedSourceProperty, _
+                                                GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                                                GetType(AnimatGUI.TypeHelpers.LinkedDataObjectPropertiesTypeConverter)))
+                Else
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Source Property ", GetType(String), "LinkedSourcePropertyName", _
+                                           "Properties", "Sets the property that is set by this linkage.", Me.LinkedSourcePropertyName))
+                End If
+
+                If Not m_doParentRemoteControl.UseRemoteDataTypes Then
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Data ID", Me.PropertyID.GetType(), "PropertyID", _
+                                                "Properties", "ID of the data type associated with this parameter", Me.PropertyID))
+                End If
 
             End Sub
 
@@ -417,7 +469,10 @@ Namespace DataObjects
 
                         If Not doSource Is Nothing Then
                             Me.LinkedSource = New TypeHelpers.LinkedDataObjectTree(doSource)
-                            Me.LinkedSourceProperty = New TypeHelpers.LinkedDataObjectPropertiesList(doSource, m_strLinkedSourceProperty, True, False)
+
+                            If Not m_bInLink OrElse m_doParentRemoteControl.UseRemoteDataTypes Then
+                                Me.LinkedSourceProperty = New TypeHelpers.LinkedDataObjectPropertiesList(doSource, m_strLinkedSourceProperty, True, False)
+                            End If
                         Else
                             Util.Application.DeleteItemAfterLoading(Me)
                             Util.DisplayError(New System.Exception("The remote control linkage connector ID: " & Me.ID & " was unable to find its linked source object ID: " & m_strLinkedSourceID & ". This node and all links will be removed."))
@@ -429,7 +484,10 @@ Namespace DataObjects
 
                         If Not doTarget Is Nothing Then
                             Me.LinkedTarget = New TypeHelpers.LinkedDataObjectTree(doTarget)
-                            Me.LinkedTargetProperty = New TypeHelpers.LinkedDataObjectPropertiesList(doTarget, m_strLinkedTargetProperty, True, False)
+
+                            If m_bInLink OrElse m_doParentRemoteControl.UseRemoteDataTypes Then
+                                Me.LinkedTargetProperty = New TypeHelpers.LinkedDataObjectPropertiesList(doTarget, m_strLinkedTargetProperty, True, False)
+                            End If
                         Else
                             Util.Application.DeleteItemAfterLoading(Me)
                             Util.DisplayError(New System.Exception("The remote control linkage connector ID: " & Me.ID & " was unable to find its linked target object ID: " & m_strLinkedTargetID & ". This node and all links will be removed."))
@@ -451,6 +509,7 @@ Namespace DataObjects
                 m_strID = oXml.GetChildString("ID", Me.ID)
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
                 m_bInLink = oXml.GetChildBool("InLink", m_bInLink)
+                m_iPropertyID = oXml.GetChildInt("PropertyID", m_iPropertyID)
 
                 If oXml.FindChildElement("LinkedNodeID", False) Then
                     If Not m_doParentRemoteControl Is Nothing Then
@@ -480,21 +539,30 @@ Namespace DataObjects
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
                 oXml.AddChildElement("InLink", Me.InLink)
+                oXml.AddChildElement("PropertyID", Me.PropertyID)
 
                 If Not m_thLinkedSource Is Nothing AndAlso Not m_thLinkedSource.Item Is Nothing Then
                     oXml.AddChildElement("LinkedSourceID", m_thLinkedSource.Item.ID)
                 End If
 
-                If Not m_thLinkedSourceProperty Is Nothing AndAlso Not m_thLinkedSourceProperty.PropertyName Is Nothing Then
-                    oXml.AddChildElement("LinkedSourcePropertyID", m_thLinkedSourceProperty.PropertyName)
+                If m_doParentRemoteControl.UseRemoteDataTypes OrElse Not m_bInLink Then
+                    If Not m_thLinkedSourceProperty Is Nothing AndAlso Not m_thLinkedSourceProperty.PropertyName Is Nothing Then
+                        oXml.AddChildElement("LinkedSourcePropertyID", m_thLinkedSourceProperty.PropertyName)
+                    End If
+                Else
+                    oXml.AddChildElement("LinkedSourcePropertyID", m_strLinkedSourceProperty)
                 End If
 
                 If Not m_thLinkedTarget Is Nothing AndAlso Not m_thLinkedTarget.Item Is Nothing Then
                     oXml.AddChildElement("LinkedTargetID", m_thLinkedTarget.Item.ID)
                 End If
 
-                If Not m_thLinkedTargetProperty Is Nothing AndAlso Not m_thLinkedTargetProperty.PropertyName Is Nothing Then
-                    oXml.AddChildElement("LinkedTargetPropertyID", m_thLinkedTargetProperty.PropertyName)
+                If m_doParentRemoteControl.UseRemoteDataTypes OrElse m_bInLink Then
+                    If Not m_thLinkedTargetProperty Is Nothing AndAlso Not m_thLinkedTargetProperty.PropertyName Is Nothing Then
+                        oXml.AddChildElement("LinkedTargetPropertyID", m_thLinkedTargetProperty.PropertyName)
+                    End If
+                Else
+                    oXml.AddChildElement("LinkedTargetPropertyID", m_strLinkedTargetProperty)
                 End If
 
                 oXml.OutOfElem()
@@ -509,6 +577,8 @@ Namespace DataObjects
                 oXml.AddChildElement("Name", Me.Name)
                 oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Type", Me.LinkageType)
+                oXml.AddChildElement("InLink", Me.InLink)
+                oXml.AddChildElement("PropertyID", Me.PropertyID)
 
                 If Not m_thLinkedSource Is Nothing AndAlso Not m_thLinkedSource.Item Is Nothing Then
                     oXml.AddChildElement("SourceID", m_thLinkedSource.Item.ID)
@@ -516,6 +586,13 @@ Namespace DataObjects
 
                 If Not m_thLinkedSourceProperty Is Nothing AndAlso Not m_thLinkedSourceProperty.PropertyName Is Nothing Then
                     oXml.AddChildElement("SourceDataTypeID", m_thLinkedSourceProperty.PropertyName)
+
+                    If m_bInLink Then
+                        oXml.AddChildElement("PropertyName", m_thLinkedSourceProperty.PropertyName)
+                    End If
+                ElseIf m_bInLink Then
+                    oXml.AddChildElement("SourceDataTypeID", m_strLinkedSourceProperty)
+                    oXml.AddChildElement("PropertyName", m_strLinkedSourceProperty)
                 End If
 
                 If Not m_thLinkedTarget Is Nothing AndAlso Not m_thLinkedTarget.Item Is Nothing Then
@@ -524,6 +601,13 @@ Namespace DataObjects
 
                 If Not m_thLinkedTargetProperty Is Nothing AndAlso Not m_thLinkedTargetProperty.PropertyName Is Nothing Then
                     oXml.AddChildElement("TargetDataTypeID", m_thLinkedTargetProperty.PropertyName)
+
+                    If Not m_bInLink Then
+                        oXml.AddChildElement("PropertyName", m_thLinkedTargetProperty.PropertyName)
+                    End If
+                ElseIf Not m_bInLink Then
+                    oXml.AddChildElement("TargetDataTypeID", m_strLinkedTargetProperty)
+                    oXml.AddChildElement("PropertyName", m_strLinkedTargetProperty)
                 End If
 
                 oXml.OutOfElem()
