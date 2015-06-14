@@ -96,8 +96,11 @@ void RemoteControlData::CheckStartedStopped()
 	m_fltPrev = m_fltValue;
 
 	////Test Code
-	//std::string strVal = "Val: " + STR(m_fltValue) + " Prev: " + STR(m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
-	//OutputDebugString(strVal.c_str());
+	//if(m_fltValue > 0)
+	//{
+	//	std::string strVal = "Val: " + STR(m_fltValue) + " Prev: " + STR(m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
+	//	OutputDebugString(strVal.c_str());
+	//}
 }
 
 RemoteControlLinkage::RemoteControlLinkage(void)

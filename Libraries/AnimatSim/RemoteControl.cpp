@@ -150,15 +150,14 @@ float *RemoteControl::GetDataPointer(const std::string &strDataType)
 	int iCount = m_aryLinks.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty))
-			return &m_aryLinks[iIndex]->m_Data.m_fltValue;
-		
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty + "START"))
-			return &m_aryLinks[iIndex]->m_Data.m_fltStart;
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(strType == Std_CheckString(m_aryLinks[iIndex]->m_Data.m_strProperty + "STOP"))
-			return &m_aryLinks[iIndex]->m_Data.m_fltStop;
+		{
+			if(strType.substr(strType.length() - 5, 5) == "START")
+				return &m_aryLinks[iIndex]->m_Data.m_fltStart;
+			else if(strType.substr(strType.length() - 4, 4) == "STOP")
+				return &m_aryLinks[iIndex]->m_Data.m_fltStop;
+			else
+				return &m_aryLinks[iIndex]->m_Data.m_fltValue;
+		}	
 
 	return RobotIOControl::GetDataPointer(strDataType);
 }
