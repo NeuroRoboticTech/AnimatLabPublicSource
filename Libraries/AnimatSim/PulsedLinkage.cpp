@@ -207,10 +207,7 @@ void PulsedLinkage::StepIO()
 {
 	if(m_bEnabled && !m_lpSim->Paused())
 	{
-		int iSource = (int) (*m_lpSourceData + 0.5);
-
-		if(*m_lpSourceData > 0.5)
-			iSource = iSource;
+		int iSource = (int) (*m_lpSourceData + (Std_Sign(*m_lpSourceData) * 0.5));
 
 		if(m_bMatchOnChange && iSource != m_iPrevValue && iSource == m_iMatchValue)
 			IncrementMatches();

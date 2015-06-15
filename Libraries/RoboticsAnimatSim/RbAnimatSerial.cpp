@@ -134,10 +134,6 @@ void RbAnimatSerial::Initialize()
 				for(int iIndex=0; iIndex<iCount; iIndex++)
 					m_aryLinks[iIndex]->Initialize();
 
-				//If this remote control is not pre-defined with data types in the derived class
-				//then we need to create them now from the remote linkages.
-				CreateDataTypes();
-
 				ResetData();
 			}
 		}

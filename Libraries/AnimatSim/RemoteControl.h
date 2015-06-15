@@ -19,9 +19,6 @@ namespace AnimatSim
 			///Only the linkages that are outlinks
 			CStdArray<RemoteControlLinkage *> m_aryOutLinks;
 
-			///Array of button information to keep track of incoming/outgoing data.
-			CStdMap<int, RemoteControlLinkage *> m_aryData;
-
 			///Used to map property names to IDs when UseRemoteDataTypes is true.
 			CStdMap<std::string, int> m_aryDataIDMap;
 
@@ -56,13 +53,12 @@ namespace AnimatSim
 			virtual CStdPtrArray<RemoteControlLinkage>* Links();
 			virtual CStdArray<RemoteControlLinkage *>* InLinks();
 			virtual CStdArray<RemoteControlLinkage *>* OutLinks();
-			virtual CStdMap<int, RemoteControlLinkage *>* Data();
+			virtual CStdMap<std::string, int>* DataIDMap();
 			
 			virtual void ChangeSimStepCount(int iRate);
 			virtual int ChangeSimStepCount();
 			
 			virtual bool UseRemoteDataTypes();
-			virtual void CreateDataTypes();
 
 			virtual RemoteControlLinkage *FindLinkageWithPropertyName(std::string strName, bool bThrowError = true);
 

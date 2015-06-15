@@ -98,8 +98,8 @@ void RemoteControlData::CheckStartedStopped()
 	////Test Code
 	//if(m_fltValue > 0)
 	//{
-	//	std::string strVal = "Val: " + STR(m_fltValue) + " Prev: " + STR(m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
-	//	OutputDebugString(strVal.c_str());
+		//std::string strVal = "Val: " + STR(m_fltValue) + " Prev: " + STR(m_fltPrev) + " Count: " + STR(m_iCount) + " Started: " + STR(m_bStarted) + " Start: " + STR((int) m_fltStart) + " Stop: " + STR((int) m_fltStop) + "\r\n";
+		//OutputDebugString(strVal.c_str());
 	//}
 }
 
@@ -234,10 +234,11 @@ int RemoteControlLinkage::PropertyID() {return m_iPropertyID;}
 
 void RemoteControlLinkage::PropertyID(int iID, bool bCreateDataTypes) 
 {
-	m_iPropertyID = iID;
-	m_Data.m_iButtonID = iID;
-	if(m_lpParentRemoteControl && bCreateDataTypes)
-		m_lpParentRemoteControl->CreateDataTypes();
+	if(m_lpParentRemoteControl && !m_lpParentRemoteControl->UseRemoteDataTypes())
+	{
+		m_iPropertyID = iID;
+		m_Data.m_iButtonID = iID;
+	}
 }
 
 /**
@@ -261,9 +262,21 @@ std::string RemoteControlLinkage::PropertyName() {return m_strPropertyName;}
 void RemoteControlLinkage::PropertyName(std::string strTypeID)
 {
 	m_strPropertyName = strTypeID;
-	m_Data.m_strProperty = strTypeID;
-	if(m_lpParentRemoteControl)
-		m_lpParentRemoteControl->CreateDataTypes();
+
+	std::string strProp = Std_CheckString(m_strPropertyName);
+	int iLen = strProp.length();
+	if(((iLen-5) >= 0) && strProp.substr(strProp.length() - 5, 5) == "START")
+		m_Data.m_strProperty = m_strPropertyName.substr(0, m_strPropertyName.length() - 5);
+	else if(((iLen-4) >= 0) && strProp.substr(strProp.length() - 4, 4) == "STOP")
+		m_Data.m_strProperty = m_strPropertyName.substr(0, m_strPropertyName.length() - 4);
+	else
+		m_Data.m_strProperty = m_strPropertyName;
+
+	if(m_lpParentRemoteControl && m_lpParentRemoteControl->DataIDMap())
+	{
+		if(m_lpParentRemoteControl->DataIDMap()->find(m_Data.m_strProperty) != m_lpParentRemoteControl->DataIDMap()->end())
+			m_Data.m_iButtonID = (int) m_lpParentRemoteControl->DataIDMap()->find(m_Data.m_strProperty)->second;
+	}
 }
 
 /**

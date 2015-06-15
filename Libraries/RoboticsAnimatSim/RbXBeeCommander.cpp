@@ -30,7 +30,7 @@ RbXBeeCommander::RbXBeeCommander()
 	m_strPort = "";
 	m_iBaudRate = 38400; 
 
-	m_aryData.RemoveAll();
+	//m_aryData.RemoveAll();
 
 	//m_aryData.Add(BUT_ID_WALKV, new RemoteControlData("WalkV", BUT_ID_WALKV, m_iChangeSimStepCount));
 	//m_aryData.Add(BUT_ID_WALKH, new RemoteControlData("WalkH", BUT_ID_WALKH, m_iChangeSimStepCount));
@@ -206,8 +206,6 @@ void RbXBeeCommander::Initialize()
 				int iCount = m_aryLinks.GetSize();
 				for(int iIndex=0; iIndex<iCount; iIndex++)
 					m_aryLinks[iIndex]->Initialize();
-
-				CreateDataTypes();
 
 				ResetData();
 			}
