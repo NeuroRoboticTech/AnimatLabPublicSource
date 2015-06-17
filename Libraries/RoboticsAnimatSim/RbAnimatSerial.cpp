@@ -37,10 +37,10 @@ namespace RoboticsAnimatSim
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-RbAnimatSerial::RbAnimatSerial() 
+RbAnimatSerial::RbAnimatSerial()
 {
 	m_strPort = "";
-	m_iBaudRate = 38400; 
+	m_iBaudRate = 38400;
 
     m_index = -1;
 	m_checksum = 0;
@@ -81,7 +81,7 @@ int RbAnimatSerial::BaudRate() {return m_iBaudRate;}
 bool RbAnimatSerial::SetData(const std::string &strDataType, const std::string &strValue, bool bThrowError)
 {
 	std::string strType = Std_CheckString(strDataType);
-	
+
 	if(AnimatSim::Robotics::RemoteControl::SetData(strDataType, strValue, false))
 		return true;
 
@@ -96,7 +96,7 @@ bool RbAnimatSerial::SetData(const std::string &strDataType, const std::string &
 		BaudRate((int) atoi(strValue.c_str()));
 		return true;
 	}
-	
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -191,7 +191,7 @@ void RbAnimatSerial::ReadData()
 	{
 		//Get first header byte
 		if(m_index == -1)
-		{        
+		{
 			// looking for new packet
 			if(m_Port.readByte() == 0xff)
 			{
@@ -207,7 +207,7 @@ void RbAnimatSerial::ReadData()
 		{
 			m_vals[m_index] = (unsigned char) m_Port.readByte();
 			if(m_vals[m_index] == 0xff)
-			{            
+			{
 				m_checksum += (int) m_vals[m_index];
 				m_index++;
 			}
@@ -258,7 +258,7 @@ void RbAnimatSerial::ReadData()
 
 				if(m_checksum%256 != iChecksum)
 				{
-					OutputDebugString("Checksum error. Writing Resend message.");
+				    std::cout << "Checksum error. Writing Resend message.";
 					WriteResendData();
 					// packet error!
 					m_index = -1;
@@ -308,7 +308,7 @@ void RbAnimatSerial::WriteData()
 {
 	CStdArray<RemoteControlLinkage *> aryWrites;
 
-	if(FindDataToWrite(aryWrites)) 
+	if(FindDataToWrite(aryWrites))
 		WriteData(aryWrites);
 }
 
@@ -316,7 +316,7 @@ void RbAnimatSerial::WriteData(CStdArray<RemoteControlLinkage *> &aryWrites)
 {
 	int iCount = aryWrites.GetSize();
 	int checksum = 0xFF + 0xFF + 0x01;
-		
+
 	//First write the header
 	m_Port.writeByte((unsigned char) 0xFF);
 	m_Port.writeByte((unsigned char) 0xFF);
@@ -327,8 +327,8 @@ void RbAnimatSerial::WriteData(CStdArray<RemoteControlLinkage *> &aryWrites)
 	checksum += m_size.bval[0];
 	m_Port.writeByte((unsigned char) m_size.bval[1]);
 	checksum += m_size.bval[1];
-		
-	for(int i=0; i<iCount; i++) 
+
+	for(int i=0; i<iCount; i++)
 	{
 		m_id.ival = aryWrites[i]->m_Data.m_iButtonID;
 		m_value.fval = aryWrites[i]->m_Data.m_fltValue;
@@ -375,7 +375,7 @@ void RbAnimatSerial::WriteAllData()
 void RbAnimatSerial::WriteResendData()
 {
 	int checksum = 0xFF + 0xFF + 0x02;
-		
+
 	//First write the header
 	m_Port.writeByte((unsigned char) 0xFF);
 	m_Port.writeByte((unsigned char) 0xFF);
@@ -386,7 +386,7 @@ void RbAnimatSerial::WriteResendData()
 	checksum += m_size.bval[0];
 	m_Port.writeByte((unsigned char) m_size.bval[1]);
 	checksum += m_size.bval[1];
-		
+
 	unsigned char bchecksum = (unsigned char) (checksum%256);
 	m_Port.writeByte(bchecksum);
 
