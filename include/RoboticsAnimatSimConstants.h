@@ -246,6 +246,9 @@
 #define Rb_Err_lFailedUartSBeeConnection -4047
 #define Rb_Err_strFailedUartSBeeConnection "Failed to connect to the UartSBee."
 
+#define Rb_Err_lFailedAnimatSerialConnection -4048
+#define Rb_Err_strFailedAnimatSerialConnection "Failed to connect to the AnimatSerial port."
+
 #define RB_PI 3.14159
 
 #endif // __RB_ERROR_CONSTANTS_H__

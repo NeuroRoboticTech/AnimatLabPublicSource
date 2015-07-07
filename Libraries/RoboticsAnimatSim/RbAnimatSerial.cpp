@@ -145,7 +145,7 @@ bool RbAnimatSerial::OpenIO()
 	bool bOpen = m_Port.setup(m_strPort, m_iBaudRate);
 
 	if(!m_lpSim->InSimulation() && !bOpen)
-		THROW_PARAM_ERROR(Rb_Err_lFailedUartSBeeConnection, Rb_Err_strFailedUartSBeeConnection, "ComPort", m_strPort);
+		THROW_PARAM_ERROR(Rb_Err_lFailedAnimatSerialConnection, Rb_Err_strFailedAnimatSerialConnection, "ComPort", m_strPort);
 
 	return bOpen;
 }
