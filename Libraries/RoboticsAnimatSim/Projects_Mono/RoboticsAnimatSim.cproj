@@ -179,6 +179,9 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\RbAnimatSerial.h">
+      <Link>RbAttachment.h</Link>
+    </None>
     <None Include="..\RbAttachment.h">
       <Link>RbAttachment.h</Link>
     </None>
@@ -331,6 +334,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RbAnimatSerial.cpp">
+      <Link>RbAnimatSerial.cpp</Link>
+    </Compile>
     <Compile Include="..\RbAttachment.cpp">
       <Link>RbAttachment.cpp</Link>
     </Compile>

@@ -155,6 +155,9 @@
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="../RbAnimatSerial.h">
+			<Option virtualFolder="." />
+		</Unit>
 		<Unit filename="../RbAttachment.h">
 			<Option virtualFolder="." />
 		</Unit>
@@ -303,6 +306,9 @@
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../StdAfx.h">
+			<Option virtualFolder="." />
+		</Unit>
+		<Unit filename="../RbAnimatSerial.cpp">
 			<Option virtualFolder="." />
 		</Unit>
 		<Unit filename="../RbAttachment.cpp">
