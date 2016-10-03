@@ -3,7 +3,7 @@
 AnimatSerial animat(&Serial1, 10, 10);
 
 #define PI 3.14159
-#define 2_PI 2*3.14159
+#define PI2 2*3.14159
 
 float x=0;
 int counter=0;
@@ -50,7 +50,7 @@ void loop() {
     float val1 = 10*sin(x), val2=0;
 
     x += 0.01;
-    if(x > 2_PI)
+    if(x > PI2)
     {
       val2=1;
       //Serial.println("Pulsing Val2");
@@ -64,7 +64,7 @@ void loop() {
     //Serial.println("Writing data");
     animat.writeMsgs();
     
-    if(x > 2_PI)
+    if(x > PI2)
       x = 0;
       
     counter = 0;

@@ -411,6 +411,7 @@
     <Compile Include="DataObjects\Gains\Sigmoid.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\OpenSourceSecurityCtrl.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Attachment.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
