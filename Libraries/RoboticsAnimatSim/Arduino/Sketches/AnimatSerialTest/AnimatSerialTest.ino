@@ -1,9 +1,9 @@
 #include "AnimatSerial.h"
 
-AnimatSerial animat(&Serial1, 10, 10);
+AnimatSerial animat(&Serial, 10, 10);
 
 #define PI 3.14159
-#define 2_PI 2*3.14159
+#define PI_2 2*3.14159
 
 float x=0;
 int counter=0;
@@ -11,9 +11,9 @@ int counterror=0;
 AnimatData data;
 
 void setup() {
-  Serial.begin(57600);
-  while(!Serial);
-  Serial.println("Starting setup");
+  //Serial.begin(57600);
+  //while(!Serial);
+  //Serial.println("Starting setup");
 
   animat.begin(38400);  // 115200
 }
@@ -28,10 +28,10 @@ void loop() {
     {
       if(animat.isChanged(i) && animat.getData(i, data))
       {
-        Serial.print("Received Data ID: ");
-        Serial.print(i);
-        Serial.print(", val: ");
-        Serial.println(data.value.fval, 8);
+        //Serial.print("Received Data ID: ");
+        //Serial.print(i);
+        //Serial.print(", val: ");
+        //Serial.println(data.value.fval, 8);
       }
     }
     
@@ -50,7 +50,7 @@ void loop() {
     float val1 = 10*sin(x), val2=0;
 
     x += 0.01;
-    if(x > 2_PI)
+    if(x > PI_2)
     {
       val2=1;
       //Serial.println("Pulsing Val2");
@@ -64,7 +64,7 @@ void loop() {
     //Serial.println("Writing data");
     animat.writeMsgs();
     
-    if(x > 2_PI)
+    if(x > PI_2)
       x = 0;
       
     counter = 0;

@@ -215,6 +215,11 @@ void PulsedLinkage::StepIO()
 			IncrementMatches();
 
 		m_iPrevValue = iSource;
+
+		// Reset the source data to an invalid value once it is used so it can be set correctly 
+		// again later. Otherwise, if you only send a periodic signal then it will not work 
+		// correctly.
+		*m_lpSourceData = -1000000;
 	}
 }
 

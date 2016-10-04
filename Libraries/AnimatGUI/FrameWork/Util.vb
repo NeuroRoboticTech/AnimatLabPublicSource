@@ -68,7 +68,7 @@ Namespace Framework
         Protected Shared m_bExportWindowsToFile As Boolean = False 'Determines if windows are saved to a file or kept in memory for sim.
         Protected Shared m_doExportRobotInterface As DataObjects.Robotics.RobotInterface
         Protected Shared m_doExportPhysicsEngine As DataObjects.Physical.PhysicsEngine
-        Protected Shared m_strVersionNumber As String = "2.1.3"
+        Protected Shared m_strVersionNumber As String = "2.1.4"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
 
