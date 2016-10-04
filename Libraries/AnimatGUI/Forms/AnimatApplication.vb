@@ -1816,7 +1816,7 @@ Namespace Forms
 
             Try
 
-                m_SecurityMgr = DirectCast(oSecCtrl, AnimatGuiCtrls.Security.SecurityManager)
+                m_SecurityMgr = New OpenSourceSecurityManager(Me) 'DirectCast(oSecCtrl, AnimatGuiCtrls.Security.SecurityManager)
                 If m_SecurityMgr Is Nothing Then
                     Throw New System.Exception("Security manager was not defined.")
                 End If
